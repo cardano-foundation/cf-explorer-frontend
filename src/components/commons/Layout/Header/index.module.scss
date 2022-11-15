@@ -1,0 +1,34 @@
+@import '../../../../themes/variable.scss';
+
+header {
+  background: var(--header-background);
+  color: var(--text-color-reverse);
+
+  .container {
+    @include container;
+
+    padding: 20px 10px;
+
+    .headerTop {
+      @include flex-between-center;
+
+      .headerMenu {
+        @include flex-end-center;
+        gap: var(--menu-item-gap);
+      }
+    }
+
+    .headerMain {
+      text-align: center;
+      padding: 100px 0px 150px;
+
+      &>h1 {
+        color: var(--text-color-reverse);
+      }
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    background: var(--header-background-mobile);
+  }
+}

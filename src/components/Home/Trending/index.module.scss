@@ -1,0 +1,6 @@
+@import '../../../themes/variable.scss';
+
+.trending {
+  @include box-shadow-raised;
+  width: 100%;
+}

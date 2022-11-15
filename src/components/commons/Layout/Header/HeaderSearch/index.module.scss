@@ -1,0 +1,49 @@
+@import '../../../../../themes/variable.scss';
+
+.searchBox {
+  @include flex-center-center;
+  max-width: 785px;
+  margin: auto;
+  border-radius: 30px;
+  background-color: #FFF;
+  color: var(--text-color);
+  padding: 0px 15px;
+  border: 1px solid var(--border-color);
+  margin-top: 30px;
+
+
+  .filterSelect {
+    font-size: var(--font-size-text-large);
+    min-width: 140px;
+
+    &>div {
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+      border: none !important;
+      box-shadow: none !important;
+      height: 52px !important;
+      border-radius: 30px !important;
+    }
+  }
+
+  .inputSearch {
+    padding: 15px;
+    border: none;
+    box-shadow: none !important;
+    border-left: 1px solid var(--border-color);
+    border-radius: 0;
+    margin-left: 5px;
+    font-size: var(--font-size-text-large);
+  }
+
+  .buttonSearch {
+    padding: 0px 6px;
+    border: none;
+    box-shadow: none;
+    border-radius: 50%;
+  }
+}
+
+.filterOption {
+  font-size: var(--font-size-text-large);
+}

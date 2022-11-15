@@ -1,0 +1,191 @@
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./commons/resources/fonts/SpaceMono-Regular.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(./commons/resources/fonts/SpaceMono-Bold.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Helvetica-Regular'), url(./commons/resources/fonts/Helvetica.ttf) format('ttf');
+}
+
+@font-face {
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Helvetica-Bold'), url(./commons/resources/fonts/Helvetica-Bold.ttf) format('ttf');
+}
+
+
+:root {
+  --font-family-title: 'Space Mono', monospace, sans-serif;
+  --font-family-text: 'Helvetica', sans-serif, monospace;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+  --font-size-text: 16px;
+  --font-size-text-large: 18px;
+  --font-size-text-small: 12px;
+  --container-margin: auto;
+  --container-max-width: 1360px;
+  --menu-item-gap: 32px;
+}
+
+@media screen and (max-width: 1400px) {
+  :root {
+    --container-max-width: calc(100% - 40px);
+    --menu-item-gap: 24px;
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  :root {
+    --container-max-width: 960px;
+    --container-max-width: calc(100% - 40px);
+    --menu-item-gap: 10px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  :root {
+    --container-max-width: 720px;
+    --container-max-width: calc(100% - 30px);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  :root {
+    --font-size-text: 14px;
+    --font-size-text-large: 16px;
+    --container-max-width: 540px;
+    --container-max-width: calc(100% - 10px);
+  }
+}
+
+@media screen and (max-width: 575px) {
+  :root {
+    --font-size-text: 13px;
+    --font-size-text-large: 14px;
+    --font-size-text-small: 11px;
+    --container-margin: 5px;
+    --container-max-width: calc(100% - 10px);
+  }
+}
+
+
+html {
+  &>body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    font-family: var(--font-family-text);
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size-text);
+    text-align: center;
+    background-color: #F5F5F5;
+    color: var(--text-color);
+
+    &>iframe {
+      pointer-events: none;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-family-title);
+    margin-bottom: 0.5em;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.5;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  h5 {
+    font-size: 0.83rem;
+  }
+
+  h6 {
+    font-size: 0.67rem;
+  }
+
+  p {
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+
+  span {
+    line-height: 1.15;
+  }
+
+  small {
+    font-size: var(--font-size-text-small);
+    line-height: 1.15;
+  }
+
+
+  a,
+  a:link,
+  a:hover,
+  a:visited {
+    text-decoration: none;
+    font-family: var(--font-family-title);
+    color: var(--text-color);
+  }
+
+  a:hover {
+    color: var(--text-color-hover);
+  }
+
+  button,
+  button:focus,
+  button:hover {
+    outline: none;
+  }
+
+  input,
+  input:focus,
+  input:hover {
+    outline: none;
+  }
+
+  ul,
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
