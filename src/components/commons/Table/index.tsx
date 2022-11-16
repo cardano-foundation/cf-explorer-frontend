@@ -46,13 +46,17 @@ const TableBody = <T extends ColumnType>({ data, columns }: TableProps<T>) => {
   return (
     <tbody className={styles.tableBody}>
       {data.map((row, index) => (
-        <TableRow row={row} key={index} columns={columns} />
+        <TableRow row={row} key={index} columns={columns} index={index} />
       ))}
     </tbody>
   );
 };
 
-const TableRow = <T extends ColumnType>({ row, columns }: TableRowProps<T>) => {
+const TableRow = <T extends ColumnType>({
+  row,
+  columns,
+  index,
+}: TableRowProps<T>) => {
   return (
     <tr className={styles.bodyRow}>
       {columns.map((column, idx) => {
@@ -64,7 +68,7 @@ const TableRow = <T extends ColumnType>({ row, columns }: TableRowProps<T>) => {
               minWidth: column.minWidth ? column.minWidth : "max-content",
             }}
           >
-            {column.render ? column.render(row, idx) : row[column.key]}
+            {column.render ? column.render(row, index) : row[column.key]}
           </td>
         );
       })}
@@ -129,7 +133,6 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
           />
         </div>
       )}
-      {/* <div></div> */}
     </div>
   );
 };
@@ -140,6 +143,7 @@ interface ColumnType {
 
 type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
   row: T;
+  index: number;
 };
 
 type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns">;
