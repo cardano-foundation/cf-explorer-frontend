@@ -1,7 +1,44 @@
 import React, { ReactNode, useState } from "react";
-import { Pagination, PaginationProps, Select } from "antd";
+import { Pagination, PaginationProps, Select, Spin } from "antd";
+
+import noData from "../../../commons/resources/images/noData.png";
 
 import styles from "./index.module.scss";
+
+interface ColumnType {
+  [key: string | number | symbol]: any;
+}
+
+type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
+  row: T;
+  index: number;
+};
+
+type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns">;
+
+interface TableProps<T extends ColumnType = any> {
+  columns: Column<T>[];
+  data: T[];
+  className?: string;
+  loading?: boolean;
+  total?: {
+    count: number;
+    title: string;
+  };
+  pagination?: PaginationProps;
+  allowSelect?: boolean;
+}
+
+export interface Column<T extends ColumnType = any> {
+  key: string;
+  title?: string;
+  minWidth?: string;
+  render?: (data: T, index: number) => ReactNode;
+}
+interface FooterTableProps {
+  total: TableProps["total"];
+  pagination: TableProps["pagination"];
+}
 
 const Table: React.FC<TableProps> = ({
   columns,
@@ -9,15 +46,23 @@ const Table: React.FC<TableProps> = ({
   total,
   pagination,
   className,
+  loading,
 }) => {
   return (
     <div className={`${styles.wrapper} ${className}`}>
       <table className={styles.table}>
         <TableHeader columns={columns} />
-        <TableBody columns={columns} data={data} />
+        {!loading && <TableBody columns={columns} data={data} />}
       </table>
-      {data.length === 0 && (
-        <div className={styles.noData}>No Data To Show</div>
+      {!loading && data.length === 0 && (
+        <div className={styles.noData}>
+          <img src={noData} alt="no data" />
+        </div>
+      )}
+      {loading && (
+        <div className={styles.loading}>
+          <Spin />
+        </div>
       )}
       <FooterTable total={total} pagination={pagination} />
     </div>
@@ -76,11 +121,6 @@ const TableRow = <T extends ColumnType>({
   );
 };
 
-interface FooterTableProps {
-  total: TableProps["total"];
-  pagination: TableProps["pagination"];
-}
-
 const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
   const [pageSize, setPageSize] = useState(pagination?.pageSize || 10);
   const renderPagination = (
@@ -120,7 +160,10 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
                 style={{ border: "none", fontWeight: 700 }}
                 value={pageSize}
                 bordered={false}
-                onChange={(value) => setPageSize(value)}
+                onChange={(value) => {
+                  setPageSize(value);
+                  pagination.onChange && pagination.onChange(1, value);
+                }}
               />
             </div>
           )}
@@ -136,36 +179,3 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
     </div>
   );
 };
-
-interface ColumnType {
-  [key: string | number | symbol]: any;
-}
-
-type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
-  row: T;
-  index: number;
-};
-
-type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns">;
-
-interface TableProps<T extends ColumnType = any> {
-  columns: Column<T>[];
-  data: T[];
-  className?: string;
-  loading?: boolean;
-  total?: {
-    count: number;
-    title: string;
-  };
-  pagination?: PaginationProps;
-  allowSelect?: boolean;
-  // headerRender?: (value) => ReactNode;
-  // footerRender?: (value) => ReactNode;
-}
-
-export interface Column<T extends ColumnType = any> {
-  key: string;
-  title?: string;
-  minWidth?: string;
-  render?: (data: T, index: number) => ReactNode;
-}

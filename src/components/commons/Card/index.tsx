@@ -11,7 +11,7 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ title, children, className = "" }) => {
   return (
     <div className={`${styles.card} ${className}`}>
-      {title && <div className={styles.title}>{title}</div>}
+      {title && <h2 className={styles.title}>{title}</h2>}
       {children}
     </div>
   );
