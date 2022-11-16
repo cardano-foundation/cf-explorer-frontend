@@ -16,6 +16,10 @@ import TelegramIcon from './icons/telegram.svg';
 import TwitterIcon from './icons/twitter.svg';
 import YoutubeIcon from './icons/youtube.svg';
 import NotFoundIcon from './images/icon-404.png';
+import AdaPriceIcon from './icons/ada-price.svg';
+import MarketCapIcon from './icons/market-cap.svg';
+import CurentEpochIcon from './icons/curent-epoch.svg';
+import TotalADAStakeIcon from './icons/total-ada-stake.svg';
 
 
 export {
@@ -36,5 +40,9 @@ export {
     TelegramIcon,
     TwitterIcon,
     YoutubeIcon,
-    NotFoundIcon
+    NotFoundIcon,
+    AdaPriceIcon,
+    MarketCapIcon,
+    CurentEpochIcon,
+    TotalADAStakeIcon,
 }
