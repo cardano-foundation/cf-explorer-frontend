@@ -1,0 +1,6 @@
+@import '../../../../themes/variable.scss';
+
+.transaction {
+  @include box-shadow-raised;
+  margin-bottom: 24px;
+}

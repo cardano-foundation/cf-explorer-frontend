@@ -1,7 +1,40 @@
 @import '../../../themes/variable.scss';
 
 .statistic {
-  @include box-shadow-raised;
-  margin-bottom: 1.5em;
   width: 100%;
+
+  .box {
+    @include box-shadow-raised;
+    position: relative;
+    padding-top: 54px;
+    margin-bottom: 24px;
+    text-align: left;
+
+    img {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 50px;
+      height: 50px;
+    }
+
+    h3 {
+      font-family: var(--font-family-text);
+      margin-bottom: 0px;
+    }
+
+    .content {
+      min-height: 3.8215rem;
+
+      .leftLeft {
+        color: var(--text-color-pale);
+      }
+
+      .textRight {
+        text-align: right;
+        color: var(--text-color-pale);
+      }
+    }
+
+  }
 }

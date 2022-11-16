@@ -1,14 +1,20 @@
+import { Col, Row } from 'antd';
 import React from 'react';
 import styles from './index.module.scss';
+import TransactionChart from './TransactionChart';
 
 interface Props { }
 
 const HomeTrending: React.FC<Props> = () => {
 
   return (
-    <div className={styles.trending}>
-      HomeTrending
-    </div>
+    <Row gutter={24}>
+      <Col span={24} xl={12}>
+        <TransactionChart />
+      </Col>
+      <Col span={24} xl={12}>
+      </Col>
+    </Row>
   )
 
 }

@@ -40,3 +40,16 @@ export const getNumberFromCurrency = (value?: string | number, groupSeparator: s
     const str = value.toString();
     return str.replace(new RegExp(groupSeparator, 'g'), '');
 };
+
+export const LARGE_NUMBER_ABBREVIATIONS = ['', 'K', 'M', 'B', 't', 'q', 'Q', 's', 'S'];
+
+export const formatPrice = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
+    if (!value) return `0${abbreviations[0]}`;
+    const bigValue = new BigNumber(value.toString());
+    const length = bigValue.toFixed().toString().length;
+    const exponential = Math.floor((length - 1) / 3) * 3;
+    console.log(length % 3 + 1)
+    const newValue = bigValue.div(10 ** exponential).toFixed(3 - (length - 1) % 3);
+    const syntax = abbreviations[exponential / 3];
+    return `${newValue}${syntax ?? `x 10^${exponential}`}`;
+};
