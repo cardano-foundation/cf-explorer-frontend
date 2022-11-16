@@ -3,6 +3,7 @@
   width: 100%;
   min-height: 250px;
   .info {
+    box-shadow: var(--shadow-raised);
     text-align: left;
     background-color: #fff;
     height: 100%;
@@ -35,6 +36,7 @@
     }
   }
   .progress {
+    box-shadow: var(--shadow-raised);
     background-color: #fff;
     display: flex;
     justify-content: space-around;
