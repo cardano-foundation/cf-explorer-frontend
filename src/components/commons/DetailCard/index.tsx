@@ -26,7 +26,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress }) => {
           <div>
             {listDetails.map((item, idx) => {
               return (
-                <div className={styles.detailItem}>
+                <div className={styles.detailItem} key={idx}>
                   <div>
                     <img src={infoIcon} alt="info" className={styles.img} />
                   </div>

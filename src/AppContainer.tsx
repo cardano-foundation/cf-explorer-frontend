@@ -10,7 +10,7 @@ interface Props {
 
 const AppContainer: React.FC<Props> = (props) => {
   const { children } = props;
-  const theme = useSelector((state) => state.user.theme);
+  const theme = useSelector((state) => (state as any).user.theme);
 
   return (
     <Layout data-theme={theme}>

@@ -32,8 +32,8 @@ const TableHeader = <T extends ColumnType>({
   return (
     <thead className={styles.headerRow}>
       <tr>
-        {columns.map((column) => (
-          <th className={styles.header} key={column.key}>
+        {columns.map((column, idx) => (
+          <th className={styles.header} key={idx}>
             {column.title}
           </th>
         ))}
@@ -59,7 +59,7 @@ const TableRow = <T extends ColumnType>({ row, columns }: TableRowProps<T>) => {
         return (
           <td
             className={styles.col}
-            key={column.key}
+            key={idx}
             style={{
               minWidth: column.minWidth ? column.minWidth : "max-content",
             }}
@@ -117,7 +117,6 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
                 value={pageSize}
                 bordered={false}
                 onChange={(value) => setPageSize(value)}
-                
               />
             </div>
           )}
