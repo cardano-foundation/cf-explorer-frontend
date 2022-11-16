@@ -44,6 +44,7 @@
   background: #FFFFFF;
   box-shadow:var(--shadow-raised);
   padding: 18px;
+  border-radius: 10px;
 }
 
 @mixin animation($delay, $duration, $animation, $direction: forward, $fillmode: fowards) {
