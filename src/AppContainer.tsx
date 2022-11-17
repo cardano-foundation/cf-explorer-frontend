@@ -2,6 +2,7 @@ import React from "react";
 import { Layout } from "antd";
 import { useSelector } from "react-redux";
 import CustomLayout from "./components/commons/Layout";
+import { RootState } from "./stores/types";
 
 interface Props {
   children: React.ReactNode
@@ -10,7 +11,7 @@ interface Props {
 
 const AppContainer: React.FC<Props> = (props) => {
   const { children } = props;
-  const theme = useSelector((state) => state.user.theme);
+  const theme = useSelector((state) => (state as RootState).user.theme);
 
   return (
     <Layout data-theme={theme}>
