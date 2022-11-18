@@ -11,6 +11,7 @@ import BlockList from "./pages/BlockList";
 import BlockListDetail from "./pages/BlockListDetail";
 import NotFound from "./pages/NotFound";
 import Epoch from "./pages/Epoch";
+import EpochDetail from "./pages/EpochDetail";
 
 const Routes: React.FC<RouteComponentProps> = () => {
   return (
@@ -19,6 +20,7 @@ const Routes: React.FC<RouteComponentProps> = () => {
       <Route path={routers.BLOCK_LIST} exact component={BlockList} />
       <Route path={routers.BLOCK_LIST_DETAIL} component={BlockListDetail} />
       <Route path={routers.EPOCH} component={Epoch} />
+      <Route path={routers.EPOCH_DETAIL} component={EpochDetail} />
       <Route path={routers.NOT_FOUND} exact component={NotFound} />
     </Switch>
   );
