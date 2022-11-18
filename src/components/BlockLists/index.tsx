@@ -1,6 +1,6 @@
-import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { BiLinkExternal } from "react-icons/bi";
+import moment from "moment";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
@@ -10,7 +10,7 @@ import styles from "./index.module.scss";
 import AIcon from "../../commons/resources/images/AIcon.png";
 
 const BlockList = () => {
-  const columns: Column<typeof data[number]>[] = [
+  const columns: Column<Block>[] = [
     {
       title: "Slot",
       key: "slot",
@@ -24,7 +24,10 @@ const BlockList = () => {
       key: "blockId",
       minWidth: "150px",
       render: (r) => (
-        <Link to={`/block-list/${r.blockId}`} className={`${styles.fwBlod} ${styles.link}`}>
+        <Link
+          to={`/block-list/${r.blockId}`}
+          className={`${styles.fwBlod} ${styles.link}`}
+        >
           <div>{getShortWallet(r.blockId)}</div>
           <BiLinkExternal fontSize={18} style={{ marginLeft: 8 }} />
         </Link>
@@ -36,7 +39,7 @@ const BlockList = () => {
       minWidth: "150px",
       render: (r) => (
         <>
-          {r.createdAt ? dayjs(r.createdAt).format("MM/DD/YYYY HH:mm:ss") : ""}
+          {r.createdAt ? moment(r.createdAt).format("MM/DD/YYYY HH:mm:ss") : ""}
         </>
       ),
     },
@@ -48,19 +51,19 @@ const BlockList = () => {
     },
     {
       title: "Fees",
-      key: "fee",
+      key: "fees",
       render: (r) => (
         <div className={styles.fwBlod}>
-          <img src={AIcon} alt="a icon" /> {r.fee || 0}
+          <img src={AIcon} alt="a icon" /> {r.fees || 0}
         </div>
       ),
     },
     {
       title: "Output",
-      key: "ouput",
+      key: "output",
       render: (r) => (
         <div className={styles.fwBlod}>
-          <img src={AIcon} alt="a icon" /> {r.fee || 0}
+          <img src={AIcon} alt="a icon" /> {r.output || 0}
         </div>
       ),
       minWidth: "100px",
@@ -97,55 +100,55 @@ const data = [
     blockId: "d0437081d2a1234b12342506307",
     createdAt: "2022-11-15T08:52:40.188Z",
     transactions: 18,
-    fee: 0.25461,
-    ouput: 1333.25461,
+    fees: 0.25461,
+    output: 1333.25461,
   },
   {
     slot: 7903486,
     blockId: "d0437081d2a1234b12342506307",
     createdAt: "2022-11-15T08:52:40.188Z",
     transactions: 18,
-    fee: 0.25461,
-    ouput: 1333.25461,
+    fees: 0.25461,
+    output: 1333.25461,
   },
   {
     slot: 7903486,
     blockId: "d0437081d2a1234b12342506307",
     createdAt: "2022-11-15T08:52:40.188Z",
     transactions: 18,
-    fee: 0.25461,
-    ouput: 1333.25461,
+    fees: 0.25461,
+    output: 1333.25461,
   },
   {
     slot: 7903486,
     blockId: "d0437081d2a1234b12342506307",
     createdAt: "2022-11-15T08:52:40.188Z",
     transactions: 18,
-    fee: 0.25461,
-    ouput: 1333.25461,
+    fees: 0.25461,
+    output: 1333.25461,
   },
   {
     slot: 7903486,
     blockId: "d0437081d2a1234b12342506307",
     createdAt: "2022-11-15T08:52:40.188Z",
     transactions: 18,
-    fee: 0.25461,
-    ouput: 1333.25461,
+    fees: 0.25461,
+    output: 1333.25461,
   },
   {
     slot: 7903486,
     blockId: "d0437081d2a1234b12342506307",
     createdAt: "2022-11-15T08:52:40.188Z",
     transactions: 18,
-    fee: 0.25461,
-    ouput: 1333.25461,
+    fees: 0.25461,
+    output: 1333.25461,
   },
   {
     slot: 7903486,
     blockId: "d0437081d2a1234b12342506307",
     createdAt: "2022-11-15T08:52:40.188Z",
     transactions: 18,
-    fee: 0.25461,
-    ouput: 1333.25461,
+    fees: 0.25461,
+    output: 1333.25461,
   },
 ];

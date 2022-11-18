@@ -25,6 +25,10 @@
         background-color: #98a2b328;
       }
     }
+    .loading {
+      text-align: center;
+      padding: 30px 0;
+    }
     .tableBody {
       position: relative;
       top: -20px;
@@ -52,8 +56,7 @@
   }
   .noData {
     text-align: center;
-    color: var(--text-color-pale);
-    font-style: italic;
+    padding: 30px 0;
   }
   .footer {
     display: flex;

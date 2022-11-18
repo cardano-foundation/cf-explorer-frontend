@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 
 import Card from "../commons/Card";
@@ -8,9 +7,10 @@ import { getShortWallet } from "../../commons/utils/helper";
 import styles from "./index.module.scss";
 
 import AIcon from "../../commons/resources/images/AIcon.png";
+import moment from "moment";
 
 const BlockList = () => {
-  const columns: Column<typeof data[number]>[] = [
+  const columns: Column<Transactions>[] = [
     {
       title: "#",
       key: "id",
@@ -30,7 +30,7 @@ const BlockList = () => {
             {getShortWallet("d0437081d2a1234b12342506307")}
           </Link>
           <div>
-            {dayjs("2022-11-15T08:52:40.188Z").format("MM/DD/YYYY HH:mm:ss")}
+            {moment("2022-11-15T08:52:40.188Z").format("MM/DD/YYYY HH:mm:ss")}
           </div>
         </div>
       ),

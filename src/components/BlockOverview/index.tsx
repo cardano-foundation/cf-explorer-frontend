@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { BiLinkExternal } from "react-icons/bi";
 
@@ -8,8 +7,9 @@ import { getShortWallet } from "../../commons/utils/helper";
 
 import styles from "./index.module.scss";
 import aIcon from "../../commons/resources/images/AIcon.png";
+import moment from "moment";
 
-const BlockListTable = () => {
+const BlockOverview = () => {
   const listDetails = [
     {
       title: "Block ID",
@@ -23,7 +23,7 @@ const BlockListTable = () => {
 
     {
       title: "Created at",
-      value: dayjs("2022-11-15T08:52:40.188Z").format("MM/DD/YYYY HH:mm:ss"),
+      value: moment("2022-11-15T08:52:40.188Z").format("MM/DD/YYYY HH:mm:ss"),
     },
     {
       title: "Transaction",
@@ -56,7 +56,6 @@ const BlockListTable = () => {
         </Link>
       ),
     },
-    
   ];
 
   return (
@@ -74,4 +73,4 @@ const BlockListTable = () => {
   );
 };
 
-export default BlockListTable;
+export default BlockOverview;

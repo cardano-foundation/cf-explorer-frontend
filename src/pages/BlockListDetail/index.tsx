@@ -1,14 +1,14 @@
 import React from "react";
 
 import TransactionLists from "../../components/TransactionLists";
-import BlockListDetail from "../../components/BlockListDetail";
+import BlockOverview from "../../components/BlockOverview";
 
 import styles from "./index.module.scss";
 
 const BlockList = () => {
   return (
     <div className={styles.container}>
-      <BlockListDetail />
+      <BlockOverview />
       <TransactionLists />
     </div>
   );
