@@ -1,0 +1,29 @@
+@import "../../themes/variable.scss";
+
+.table {
+  margin-top: 18px;
+  .input {
+    display: flex;
+    .title{
+      min-width: 60px;
+    }
+  }
+  .output {
+    display: flex;
+    padding-top: 8px;
+    .title{
+      min-width: 60px;
+    }
+  }
+  .link {
+    font-family: var(--font-family-text) !important;
+    color: var(--color-blue) !important;
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+  }
+
+  .fwBold {
+    font-weight: var(--font-weight-bold);
+  }
+}
