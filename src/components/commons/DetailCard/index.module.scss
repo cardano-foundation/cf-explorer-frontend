@@ -1,0 +1,90 @@
+.wrapper {
+  margin-top: 24px;
+  width: 100%;
+  min-height: 250px;
+  .skeleton {
+    height: 250px;
+    border-radius: 10px;
+  }
+  .info {
+    box-shadow: var(--shadow-raised);
+    text-align: left;
+    background-color: #fff;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    .title {
+      font-family: var(--font-family-title);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-title);
+      padding-bottom: 4px;
+    }
+    .detailItem {
+      font-size: var(--font-size-text);
+      padding: 4px 0;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      .img {
+        margin-right: 8px;
+        display: block;
+        height: 100%;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        .value {
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+  .progress {
+    box-shadow: var(--shadow-raised);
+    background-color: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 100%;
+    overflow-x: auto;
+    .epoch {
+      font-size: 56px;
+      font-weight: var(--font-weight-bold);
+      font-family: var(--font-family-title);
+      color: #29744d;
+    }
+    .epochTitle {
+      font-size: var(--font-size-text);
+      font-family: var(--font-family-text);
+      color: var(--title-color-pale);
+      margin-top: 8px;
+    }
+
+    .progessInfo {
+      margin-top: 14px;
+      text-align: left;
+      .row {
+        display: flex;
+        align-items: center;
+        margin-top: 12px;
+        font-size: var(--font-size-text-large);
+        .img {
+          margin-right: 8px;
+        }
+        .link {
+          font-family: var(--font-family-text) !important;
+          color: var(--color-blue) !important;
+        }
+        .title {
+          font-size: var(--font-size-text-small);
+          font-family: var(--font-family-text);
+          color: var(--title-color);
+        }
+      }
+    }
+  }
+}
+.fwBold {
+  font-weight: var(--font-weight-bold);
+}
