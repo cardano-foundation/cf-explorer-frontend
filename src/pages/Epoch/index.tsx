@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import useFetch from '../../commons/hooks/useFetch';
+import AIcon from '../../commons/resources/images/AIcon.png';
 import { checkStatus } from '../../commons/utils/helper';
 import Card from '../../components/commons/Card';
 import Table, { Column } from '../../components/commons/Table';
@@ -23,19 +24,24 @@ interface IEpoch {
   totalPages: number;
 }
 
-const styleFont = {
+const styleFont700 = {
+  fontSize: '17px',
+  fontWeight: 700,
+  color: '#273253',
+};
+
+const styleFont400 = {
   fontSize: '17px',
   fontWeight: 400,
   color: '#273253',
 };
-
 const columns: Column<IDataEpoch>[] = [
   {
     title: '#',
     key: '#',
     minWidth: '100px',
     render: r => {
-      return <span style={styleFont}>{r.no}</span>;
+      return <span style={styleFont400}>{r.no}</span>;
     },
   },
   {
@@ -51,7 +57,7 @@ const columns: Column<IDataEpoch>[] = [
     key: 'startTime',
     minWidth: '100px',
     render: r => {
-      return <span style={styleFont}>{r.startTime}</span>;
+      return <span style={styleFont400}>{r.startTime}</span>;
     },
   },
   {
@@ -59,7 +65,7 @@ const columns: Column<IDataEpoch>[] = [
     key: 'endTime',
     minWidth: '100px',
     render: r => {
-      return <span style={styleFont}>{r.endTime}</span>;
+      return <span style={styleFont400}>{r.endTime}</span>;
     },
   },
   {
@@ -67,7 +73,12 @@ const columns: Column<IDataEpoch>[] = [
     key: 'blkCount',
     minWidth: '100px',
     render: r => {
-      return <span style={styleFont}>{r.blkCount}</span>;
+      return (
+        <div>
+          <img style={{ marginRight: '8px' }} src={AIcon} alt="a icon" />
+          <span style={styleFont700}>{r.blkCount}</span>
+        </div>
+      );
     },
   },
   {
@@ -75,7 +86,12 @@ const columns: Column<IDataEpoch>[] = [
     key: 'outSum',
     minWidth: '100px',
     render: r => {
-      return <span style={styleFont}>{r.outSum}</span>;
+      return (
+        <div>
+          <img style={{ marginRight: '8px' }} src={AIcon} alt="a icon" />
+          <span style={styleFont700}>{r.outSum}</span>
+        </div>
+      );
     },
   },
 ];
@@ -90,13 +106,8 @@ const Epoch: React.FC = () => {
     return Number(page);
   }, [search]);
 
-  const { data, error, loading, refesh } = useFetch<IEpoch>(`epoch/list?page=${page}&size=${limit}`);
-  if (error) {
-    return <div>{error}</div>;
-  }
-  if (loading) {
-    return <div>loading...</div>;
-  }
+  const { data, refesh } = useFetch<IEpoch>(`epoch/list?page=${page}&size=${limit}`);
+
   if (!data?.data) return null;
 
   const excuteScroll = () => ref.current?.scrollIntoView();
@@ -108,7 +119,7 @@ const Epoch: React.FC = () => {
           className={styles.table}
           columns={columns}
           data={data?.data}
-          total={{ count: 1000, title: "Total Transactions" }}
+          total={{ count: 1000, title: 'Total Transactions' }}
           pagination={{
             defaultCurrent: page,
             total: data.totalItems,
