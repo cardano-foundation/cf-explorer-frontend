@@ -4,13 +4,3 @@
   @include container;
   padding: 30px 0px 40px;
 }
-
-.finish {
-  @include font(14px, 700, var(--text-color-reverse));
-}
-.reward {
-  @include font(14px, 700, var(--text-color-reverse));
-}
-.inprogress {
-  @include font(14px, 700, var(--text-color-reverse));
-}
