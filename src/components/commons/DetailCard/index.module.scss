@@ -2,6 +2,10 @@
   margin-top: 24px;
   width: 100%;
   min-height: 250px;
+  .skeleton {
+    height: 250px;
+    border-radius: 10px;
+  }
   .info {
     box-shadow: var(--shadow-raised);
     text-align: left;

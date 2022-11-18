@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from "react";
 import { Pagination, PaginationProps, Select, Spin } from "antd";
 
 import noData from "../../../commons/resources/images/noData.png";
+import { numberWithCommas } from "../../../commons/utils/helper";
 
 import styles from "./index.module.scss";
 
@@ -144,7 +145,8 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
     >
       {total && (
         <div className={styles.total}>
-          {total.title}: <span className={styles.fwBold}>{total.count}</span>
+          {total.title}:{" "}
+          <span className={styles.fwBold}>{numberWithCommas(total.count)}</span>
         </div>
       )}
       {pagination && (
@@ -169,6 +171,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
           )}
           <Pagination
             {...pagination}
+            showSizeChanger={false}
             itemRender={(page, type, originalElement) =>
               renderPagination(page, type, originalElement)
             }

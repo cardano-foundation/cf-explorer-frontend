@@ -1,4 +1,4 @@
-import { Col, Progress, Row } from "antd";
+import { Col, Progress, Row, Skeleton } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -14,11 +14,27 @@ interface DetailCardProps {
     epoch: number;
     block: number;
     currentSlot: number;
-    totalSlot: number;
   };
+  loading: boolean;
 }
 
-const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress }) => {
+const DetailCard: React.FC<DetailCardProps> = ({
+  listDetails,
+  progress,
+  loading,
+}) => {
+  if (loading) {
+    return (
+      <Row className={styles.wrapper} gutter={[16, 16]}>
+        <Col span={24} xl={14}>
+          <Skeleton.Input active block className={styles.skeleton} />
+        </Col>
+        <Col span={24} xl={10}>
+          <Skeleton.Input active className={styles.skeleton} block />
+        </Col>
+      </Row>
+    );
+  }
   return (
     <Row className={styles.wrapper} gutter={[16, 16]}>
       <Col span={24} xl={14}>
@@ -58,7 +74,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress }) => {
             )}
             strokeWidth={6}
             width={200}
-            percent={(progress.currentSlot / progress.totalSlot) * 100}
+            percent={(progress.currentSlot / 432000) * 100}
           />
 
           <div className={styles.progessInfo}>
@@ -81,7 +97,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress }) => {
                 <div className={styles.title}>Slot</div>
                 <div>
                   <span className={styles.fwBold}>{progress.currentSlot}</span>/
-                  {progress.totalSlot}
+                  432000
                 </div>
               </div>
             </div>
