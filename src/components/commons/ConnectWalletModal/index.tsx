@@ -43,17 +43,12 @@ const ConnectWalletModal: React.FC = () => {
           return (
             <div
               key={wallet.name}
-<<<<<<< HEAD
-              className={`${styles.wallet} ${walletConnecting === wallet.name ? styles.selected : ""}`}
-              onClick={() => (walletConnecting ? null : handleConnect(wallet.name))}
-=======
               className={`${styles.wallet} ${
                 walletConnecting === wallet.name ? styles.selected : ""
               }`}
               onClick={() =>
                 walletConnecting ? null : handleConnect(wallet.name)
               }
->>>>>>> d3d14c148c7a3049619e4d2e4d335fe809103dff
             >
               <img src={wallet.icon} alt={wallet.name} />
               {walletConnecting === wallet.name ? (
