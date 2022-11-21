@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Route,
-  RouteComponentProps,
-  Switch,
-  withRouter,
-} from "react-router-dom";
+import { Route, RouteComponentProps, Switch, withRouter } from "react-router-dom";
 import { routers } from "./commons/routers";
 import Home from "./pages/Home";
 import BlockList from "./pages/BlockList";
@@ -25,7 +20,7 @@ const Routes: React.FC<RouteComponentProps> = () => {
       <Route path={routers.TRANSACTION_DETAIL} exact component={TransactionDetail} />
       <Route path={routers.EPOCH_LIST} exact component={Epoch} />
       <Route path={routers.EPOCH_DETAIL} exact component={EpochDetail} />
-      <Route path={routers.NOT_FOUND} exact component={NotFound} />
+      <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );
 };

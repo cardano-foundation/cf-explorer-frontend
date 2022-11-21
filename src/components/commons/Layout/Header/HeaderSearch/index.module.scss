@@ -1,22 +1,22 @@
-@import '../../../../../themes/variable.scss';
+@import "../../../../../themes/variable.scss";
 
-.searchBox {
+.searchBox,
+.searchBoxHome {
   @include flex-center-center;
   max-width: 785px;
   margin: auto;
   border-radius: 30px;
-  background-color: #FFF;
+  background-color: #fff;
   color: var(--text-color);
   padding: 0px 15px;
   border: 1px solid var(--border-color);
   margin-top: 30px;
 
-
   .filterSelect {
     font-size: var(--font-size-text-large);
     min-width: 140px;
 
-    &>div {
+    & > div {
       padding-top: 10px !important;
       padding-bottom: 10px !important;
       border: none !important;
@@ -43,7 +43,12 @@
     border-radius: 50%;
   }
 }
+.searchBox {
+  filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.1));
+}
 
 .filterOption {
   font-size: var(--font-size-text-large);
+  color: var(--text-color);
+  font-weight: var(--font-weight-normal);
 }
