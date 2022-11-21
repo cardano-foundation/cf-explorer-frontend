@@ -4,3 +4,17 @@
   @include container;
   padding: 30px 0px 40px;
 }
+
+.table {
+  margin-top: 18px;
+  .link {
+    font-family: var(--font-family-text) !important;
+    color: var(--color-blue) !important;
+    display: flex;
+    align-items: center;
+  }
+
+  .fwBlod {
+    font-weight: var(--font-weight-bold);
+  }
+}
