@@ -20,11 +20,11 @@ const Routes: React.FC<RouteComponentProps> = () => {
     <Switch>
       <Route path={routers.HOME} exact component={Home} />
       <Route path={routers.BLOCK_LIST} exact component={BlockList} />
-      <Route path={routers.BLOCK_LIST_DETAIL} component={BlockDetail} />
+      <Route path={routers.BLOCK_DETAIL} component={BlockDetail} />
       <Route path={routers.TRANSACTION_LIST} exact component={TransactionList} />
       <Route path={routers.TRANSACTION_DETAIL} exact component={TransactionDetail} />
-      <Route path={routers.EPOCH} component={Epoch} />
-      <Route path={routers.EPOCH_DETAIL} component={EpochDetail} />
+      <Route path={routers.EPOCH_LIST} exact component={Epoch} />
+      <Route path={routers.EPOCH_DETAIL} exact component={EpochDetail} />
       <Route path={routers.NOT_FOUND} exact component={NotFound} />
     </Switch>
   );
