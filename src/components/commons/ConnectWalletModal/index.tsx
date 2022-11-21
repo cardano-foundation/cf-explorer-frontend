@@ -5,13 +5,11 @@ import { setOpenModal } from "../../../stores/user";
 import { SUPPORTED_WALLETS } from "../../../commons/utils/constants";
 import styles from "./index.module.scss";
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
-import { UserStoreType } from "../../../types/user";
+import { RootState } from "../../../stores/types";
 
 const ConnectWalletModal: React.FC = () => {
   const { connect } = useCardano();
-  const { openModal, theme } = useSelector(
-    ({ user }: { user: UserStoreType }) => user
-  );
+  const { openModal, theme } = useSelector(({ user }: RootState) => user);
   const [walletConnecting, setWalletConnecting] = useState<string | null>(null);
 
   const handleClose = () => {

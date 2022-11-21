@@ -1,5 +1,6 @@
 import BigNumber from "bignumber.js";
 import _ from "lodash";
+import { EPOCH_STATUS } from './constants';
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const getShortWallet = (address: string) => {
@@ -123,3 +124,44 @@ export const formatADA = (
 
   return `${numberWithCommas(numberWithCommas(_.round(+Ada, 5)))}`;
 };
+
+export const checkStatus = (status: string) => {
+    switch (status) {
+      case EPOCH_STATUS.FINISH:
+        return {
+          color: '#ffffff',
+          fontSize: '14px',
+          fontWeight: 700,
+          background: '#1FC1C3',
+          padding: '7.5px 11.5px',
+          borderRadius: '6px',
+        };
+      case EPOCH_STATUS.REWARD:
+        return {
+          color: '#ffffff',
+          fontSize: '14px',
+          fontWeight: 700,
+          padding: '7.5px 11.5px',
+          borderRadius: '6px',
+          background: '#5A9C56',
+        };
+      case EPOCH_STATUS.INPROGRESS:
+        return {
+          color: '#ffffff',
+          fontSize: '14px',
+          fontWeight: 700,
+          padding: '7.5px 11.5px',
+          borderRadius: '6px',
+          background: 'rgba(69, 99, 172, 0.5) ',
+        };
+      default:
+        return {
+          color: '#ffffff',
+          fontSize: '14px',
+          fontWeight: 700,
+          background: 'rgba(69, 99, 172, 0.5)',
+          padding: '7.5px 11.5px',
+          borderRadius: '6px',
+        };
+    }
+  };

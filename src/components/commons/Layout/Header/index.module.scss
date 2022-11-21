@@ -1,7 +1,7 @@
 @import '../../../../themes/variable.scss';
 
 header {
-  background: var(--header-background);
+  background: var(--linear-gradient-green);
   color: var(--text-color-reverse);
 
   .container {
@@ -29,6 +29,6 @@ header {
   }
 
   @media screen and (max-width: 767px) {
-    background: var(--header-background-mobile);
+    background: var(--linear-gradient-green);
   }
 }
