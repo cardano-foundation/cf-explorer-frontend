@@ -9,6 +9,7 @@ import { getShortWallet, formatADA } from "../../commons/utils/helper";
 
 import styles from "./index.module.scss";
 import AIcon from "../../commons/resources/images/AIcon.png";
+import { routers } from "../../commons/routers";
 
 interface BlockListProps {
   blockLists: Block[];
@@ -44,7 +45,7 @@ const BlockList: React.FC<BlockListProps> = ({
       minWidth: "150px",
       render: (r) => (
         <Link
-          to={`/block-list/${r.blockNo}`}
+          to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}
           className={`${styles.fwBlod} ${styles.link}`}
         >
           <div>{getShortWallet(`${r.hash}`)}</div>

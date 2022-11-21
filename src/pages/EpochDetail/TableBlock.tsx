@@ -1,5 +1,6 @@
 import { Link, useHistory } from 'react-router-dom';
 import AIcon from '../../commons/resources/images/AIcon.png';
+import { routers } from '../../commons/routers';
 import Card from '../../components/commons/Card';
 import Table, { Column } from '../../components/commons/Table';
 import styles from './index.module.scss';
@@ -11,7 +12,7 @@ const columns: Column<IBlockEpochDetail>[] = [
     minWidth: '100px',
     render: r => {
       return (
-        <Link to={`/epoch/${r.no}`}>
+        <Link to={routers.EPOCH_DETAIL.replace(":epochId", `${r.no}`)}>
           <span>{r.no}</span>
         </Link>
       );
@@ -23,7 +24,7 @@ const columns: Column<IBlockEpochDetail>[] = [
     minWidth: '100px',
     render: r => {
       return (
-        <Link to={`/epoch/${r.no}`}>
+        <Link to={routers.EPOCH_DETAIL.replace(":epochId", `${r.no}`)}>
           <span>{r.status}</span>
         </Link>
       );

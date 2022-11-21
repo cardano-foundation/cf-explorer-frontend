@@ -1,3 +1,5 @@
+import { routers } from "./routers";
+
 interface Menu {
   title: string;
   href?: string;
@@ -10,18 +12,18 @@ export const menus: Menu[] = [
   {
     title: "Blockchain",
     children: [
-      { title: "Epoch", href: "/epochs" },
-      { title: "Blocks", href: "/blocks" },
-      { title: "Transactions API", href: "/transactions" },
+      { title: "Epoch", href: routers.EPOCH_LIST },
+      { title: "Blocks", href: routers.BLOCK_LIST },
+      { title: "Transactions API", href: routers.TRANSACTION_LIST },
       { title: "Tokens", href: "/tokens" },
-      { title: "Top Delegators", href: "/delegators" },
-      { title: "Top Addresses", href: "/sddresses" },
+      { title: "Top Delegators", href: routers.POOL_LIST },
+      { title: "Top Addresses", href: "/addresses" },
     ],
   },
   {
     title: "Delegate Pools",
     children: [
-      { title: "Delegation Pools", href: "/delegation-pools" },
+      { title: "Delegation Pools", href: routers.POOL_LIST },
       { title: "Stake key registration", href: "/Stake-key-registration" },
       { title: "Pool Registration", href: "/Pool-Registration" },
     ],

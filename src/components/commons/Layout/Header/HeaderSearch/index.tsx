@@ -3,6 +3,7 @@ import { Button, Form, Input, Select } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { HeaderSearchIcon } from '../../../../../commons/resources';
 import styles from './index.module.scss';
+import { routers } from '../../../../../commons/routers';
 
 interface FormValues {
   filter: string;
@@ -16,7 +17,7 @@ const HeaderSearch: React.FC = () => {
   const handleSearch = () => {
     const values = form.getFieldsValue();
     if (values.search) {
-      history.push(`/transaction/${values.search}${values.filter ? `?filter=${values.filter}` : ""}`);
+      history.push(`${routers.TRANSACTION_LIST}?txs=${values.search}${values.filter ? `&filter=${values.filter}` : ""}`);
       form.resetFields();
     }
   }
