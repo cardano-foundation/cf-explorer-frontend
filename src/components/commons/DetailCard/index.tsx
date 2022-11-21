@@ -69,7 +69,7 @@ const DetailCard: React.FC<DetailCardProps> = ({
             format={() => (
               <>
                 <div className={styles.epoch}>{progress.epoch} </div>
-                <div className={styles.epochTitle}>Epoch </div>
+                <div className={styles.epochTitle}>EPOCH </div>
               </>
             )}
             strokeWidth={6}

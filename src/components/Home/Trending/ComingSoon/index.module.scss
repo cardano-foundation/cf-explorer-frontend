@@ -1,0 +1,19 @@
+@import "../../../../themes/variable.scss";
+
+.transactionChart {
+  @include box-shadow-raised;
+  margin-bottom: 24px;
+  padding: 72px;
+  img {
+    width: auto;
+    height: 166px;
+    margin-bottom: 1rem;
+  }
+  h3 {
+    margin-bottom: 0;
+  }
+  @media screen and (max-width: 991px) { 
+    padding: 48px;
+  }
+
+}

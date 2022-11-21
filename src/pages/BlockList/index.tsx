@@ -2,7 +2,7 @@ import { parse } from "qs";
 import { useLocation } from "react-router-dom";
 
 import useFetchList from "../../commons/hooks/useFetchList";
-import BlockListTable from "../../components/BlockLists";
+import BlockListTable from "../../components/BlockLists/index";
 
 import styles from "./index.module.scss";
 
@@ -12,7 +12,7 @@ const BlockList = () => {
   const query = parse(search.split("?")[1]);
 
   const { data, loading, total, totalPage, currentPage } =
-    useFetchList<Block>("http://172.16.1.230:8033/api/v1/block/list", {
+    useFetchList<Block>("block/list", {
       page: query.page ? +query.page - 1 : 0,
       size: query.size ? (query.size as string) : 10,
     });

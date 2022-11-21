@@ -5,19 +5,17 @@
   --text-color-reverse: #ffffff;
   --text-color-hover: #13152f;
   --text-color-reverse-hover: #ffffff;
-  --color-green: #438f68;
-  --color-green-light: #5a9c56;
+  --color-green: #29744d;
+  --color-green-light: #438f68;
+  --color-green-pale: #438f6833;
   --color-green-dark: #184c78;
   --color-blue: #108aef;
   --color-blue-dark: #13152f;
-  --color-red: #f75e5e;
+  --color-red: #dd4343;
+  --color-yellow: #ffa800;
+  --color-black: #000000;
   --border-color: #e3e5e9;
-  --header-background: linear-gradient(263.55deg, #5a9c56 0%, #184c78 100%);
-  --header-background-mobile: linear-gradient(
-    263.55deg,
-    #5a9c56 0%,
-    #184c78 100%
-  );
+  --linear-gradient-green: linear-gradient(263.55deg, #5a9c56 0%, #184c78 100%);
   --menu-item-selected-text: #353945;
   --menu-item-text: #b1b5c3;
   --modal-background: #f5f5f5;
@@ -27,8 +25,7 @@
   --footer-color: #eeeff4;
   --copyright-background-color: #1f213a;
   --copyrightColor: #d9dbe1;
-  --shadow-raised: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-raised: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12);
   --border-radius: 10px;
 }
 
@@ -38,19 +35,17 @@
   --text-color-reverse: #13152f;
   --text-color-hover: #ffffff;
   --text-color-reverse-hover: #13152f;
-  --color-green: #438f68;
-  --color-green-light: #5a9c56;
+  --color-green: #29744d;
+  --color-green-light: #438f68;
+  --color-green-pale: #438f6833;
   --color-green-dark: #184c78;
   --color-blue: #108aef;
   --color-blue-dark: #13152f;
   --color-red: #f75e5e;
+  --color-yellow: #ffa800;
+  --color-black: #000000;
   --border-color: #13152f;
-  --header-background: linear-gradient(263.55deg, #5a9c56 0%, #184c78 100%);
-  --header-background-mobile: linear-gradient(
-    263.55deg,
-    #5a9c56 0%,
-    #184c78 100%
-  );
+  --linear-gradient-green: linear-gradient(263.55deg, #5a9c56 0%, #184c78 100%);
   --menu-item-selected-text: #fff;
   --menu-item-text: #777e90;
   --modal-background: #f5f5f5;
@@ -59,7 +54,6 @@
   --footer-background-image: url(../commons/resources/icons/footer-bg.svg);
   --footer-color: #ffffff;
   --copyright-background-color: #1f213a;
-  --shadow-raised: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-raised: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12);
   --border-radius: 10px;
 }

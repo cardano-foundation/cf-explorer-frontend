@@ -19,7 +19,14 @@ import NotFoundIcon from './images/icon-404.png';
 import AdaPriceIcon from './icons/ada-price.svg';
 import MarketCapIcon from './icons/market-cap.svg';
 import CurentEpochIcon from './icons/curent-epoch.svg';
+import LiveStakeIcon from './icons/live-stake.svg';
 import TotalADAStakeIcon from './icons/total-ada-stake.svg';
+import ComingSoonIcon from './icons/coming-soon.svg';
+import DownRedIcon from './icons/down-red.svg';
+import UpGreenIcon from './icons/up-green.svg';
+import CheckGreenIcon from './icons/check-green.svg';
+import BlankBlueIcon from './icons/blank-blue.svg';
+import CalenderPaleIcon from './icons/calender-pale.svg';
 
 
 export {
@@ -44,5 +51,12 @@ export {
     AdaPriceIcon,
     MarketCapIcon,
     CurentEpochIcon,
+    LiveStakeIcon,
     TotalADAStakeIcon,
+    ComingSoonIcon,
+    UpGreenIcon,
+    DownRedIcon,
+    CheckGreenIcon,
+    BlankBlueIcon,
+    CalenderPaleIcon
 }

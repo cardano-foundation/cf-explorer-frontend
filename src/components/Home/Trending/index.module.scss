@@ -1,2 +1,5 @@
-@import '../../../themes/variable.scss';
+@import "../../../themes/variable.scss";
 
+.trending {
+  width: var(--row-6-to-5-col);
+}
