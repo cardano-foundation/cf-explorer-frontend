@@ -7,19 +7,9 @@ import DetailCard from '../../components/commons/DetailCard';
 import styles from './index.module.scss';
 import TableBlock from './TableBlock';
 
-interface IEpochDetail {
-  blkCount: number;
-  endTime: string;
-  no: number;
-  outSum: number;
-  startTime: string;
-  status: string;
-  txCount: number;
-}
-
 const EpochDetail: React.FC = () => {
   const { epochId } = useParams<any>();
-  const { data, loading } = useFetch<IEpochDetail>(`epoch/${epochId}`);
+  const { data, loading } = useFetch<IDataEpoch>(`epoch/${epochId}`);
 
   const dataMemo = useMemo(() => {
     if (!data) {

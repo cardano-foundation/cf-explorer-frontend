@@ -20,3 +20,4 @@ interface IBlockEpochDetail extends IDataEpoch {
   createdBy: string;
   transaction: string;
 }
+
