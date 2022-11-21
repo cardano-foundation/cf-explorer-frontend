@@ -1,40 +1,84 @@
-@import '../../../themes/variable.scss';
+@import "../../../themes/variable.scss";
 
 .statistic {
-  width: 100%;
+  width: var(--row-6-to-5-col);
 
   .box {
     @include box-shadow-raised;
     position: relative;
-    padding-top: 54px;
+    padding-top: 30px;
     margin-bottom: 24px;
     text-align: left;
-
-    img {
+    .icon {
       position: absolute;
-      top: 18px;
-      right: 18px;
+      top: 15px;
+      right: 20px;
       width: 50px;
       height: 50px;
     }
-
-    h3 {
-      font-family: var(--font-family-text);
-      margin-bottom: 0px;
-    }
-
     .content {
-      min-height: 3.8215rem;
+      min-height: 9.1425rem;
 
-      .leftLeft {
-        color: var(--text-color-pale);
+      h4 {
+        width: calc(100% - 70px);
+        margin-bottom: 0.75rem;
+      }
+      h3 {
+        font-family: var(--font-family-text);
+        margin-bottom: 0.25rem;
       }
 
-      .textRight {
-        text-align: right;
+      small {
         color: var(--text-color-pale);
+        white-space: nowrap;
+      }
+      .adaPrice {
+        @include flex-start-center;
+        gap: 8px;
+        .priceValue {
+          font-weight: var(--font-weight-bold);
+        }
+        .priceRate {
+          @include flex-start-center;
+          gap: 5px;
+          font-weight: var(--font-weight-bold);
+          color: var(--color-red);
+          .priceUp {
+            color: var(--color-green);
+          }
+          .priceDown {
+            color: var(--color-red);
+          }
+        }
+      }
+      .epochValue {
+        font-weight: var(--font-weight-bold);
+        color: var(--color-green);
+      }
+      .progress {
+        display: flex;
+        width: 100%;
+        height: 12px;
+        border-radius: 10px;
+        overflow: hidden;
+        font-size: 10px;
+        font-weight: var(--font-weight-bold);
+        color: var(--text-color-reverse);
+        margin-bottom: 0.5rem;
+
+        .progressActive {
+          @include flex-center-center;
+          background-color: var(--color-green-light);
+        }
+        .progressPending {
+          @include flex-center-center;
+          background-color: var(--color-yellow);
+        }
+      }
+      .progressRate {
+        font-weight: var(--font-weight-bold);
+        color: var(--color-green);
       }
     }
-
   }
 }

@@ -1,0 +1,89 @@
+@import "../../../themes/variable.scss";
+
+.topDelegation {
+  @include box-shadow-raised;
+  margin-bottom: 24px;
+  padding: 24px 30px;
+  text-align: left;
+
+  h3 {
+    position: relative;
+    text-align: left;
+
+    &::after {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      content: "";
+      width: 50px;
+      height: 4px;
+      background: var(--color-green-light);
+    }
+  }
+  .table {
+    overflow-x: auto;
+    table {
+      min-width: 1200px;
+      tr {
+        th {
+          background-color: transparent;
+          border-bottom-width: 2px;
+          font-size: var(--font-size-text-small);
+          color: var(--title-color);
+          font-weight: var(--font-weight-bold);
+
+          &::before {
+            content: unset !important;
+          }
+        }
+        td {
+          font-size: var(--font-size-text);
+
+          .poolName {
+            font-family: var(--font-family-text);
+            color: var(--color-blue);
+          }
+
+          .priceRate {
+            @include flex-start-center;
+            gap: 5px;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-red);
+            img {
+              width: 1.5rem;
+              height: 1.5rem;
+            }
+            .priceUp {
+              color: var(--color-green);
+            }
+            .priceDown {
+              color: var(--color-red);
+            }
+          }
+          .progress {
+            @include flex-start-center;
+
+            span {
+              line-height: 1;
+            }
+
+            .progressBar {
+              width: 150px;
+              height: 12px;
+              line-height: 8px;
+              margin-left: 8px;
+            }
+          }
+          .actionDetail {
+            display: block;
+            padding: 6.5px 20px;  
+            background: var(--text-color);
+            color: var(--text-color-reverse);
+            border-radius: 6px;
+            font-weight: var(--font-weight-bold);
+          }
+        }
+      }
+    }
+  }
+}

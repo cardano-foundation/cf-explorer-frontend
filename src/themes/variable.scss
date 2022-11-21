@@ -41,9 +41,9 @@
 }
 
 @mixin box-shadow-raised {
-  background: #FFFFFF;
-  box-shadow:var(--shadow-raised);
-  padding: 18px;
+  background: #ffffff;
+  box-shadow: var(--shadow-raised);
+  padding: 20px;
   border-radius: 10px;
 }
 
