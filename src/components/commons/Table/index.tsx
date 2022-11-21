@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from "react";
 import { Pagination, PaginationProps, Select, Spin } from "antd";
 
 import noData from "../../../commons/resources/images/noData.png";
+import { numberWithCommas } from "../../../commons/utils/helper";
 
 import styles from "./index.module.scss";
 
@@ -40,30 +41,25 @@ interface FooterTableProps {
   pagination: TableProps["pagination"];
 }
 
-const Table: React.FC<TableProps> = ({
-  columns,
-  data,
-  total,
-  pagination,
-  className,
-  loading,
-}) => {
+const Table: React.FC<TableProps> = ({ columns, data, total, pagination, className, loading }) => {
   return (
     <div className={`${styles.wrapper} ${className}`}>
-      <table className={styles.table}>
-        <TableHeader columns={columns} />
-        {!loading && <TableBody columns={columns} data={data} />}
-      </table>
-      {!loading && data.length === 0 && (
-        <div className={styles.noData}>
-          <img src={noData} alt="no data" />
-        </div>
-      )}
-      {loading && (
-        <div className={styles.loading}>
-          <Spin />
-        </div>
-      )}
+      <div className={styles.tableWrapper}>
+        <table className={styles.table}>
+          <TableHeader columns={columns} />
+          {!loading && <TableBody columns={columns} data={data} />}
+        </table>
+        {!loading && data.length === 0 && (
+          <div className={styles.noData}>
+            <img src={noData} alt="no data" />
+          </div>
+        )}
+        {loading && (
+          <div className={styles.loading}>
+            <Spin />
+          </div>
+        )}
+      </div>
       <FooterTable total={total} pagination={pagination} />
     </div>
   );
@@ -71,9 +67,7 @@ const Table: React.FC<TableProps> = ({
 
 export default Table;
 
-const TableHeader = <T extends ColumnType>({
-  columns,
-}: TableHeaderProps<T>) => {
+const TableHeader = <T extends ColumnType>({ columns }: TableHeaderProps<T>) => {
   return (
     <thead className={styles.headerRow}>
       <tr>
@@ -97,11 +91,7 @@ const TableBody = <T extends ColumnType>({ data, columns }: TableProps<T>) => {
   );
 };
 
-const TableRow = <T extends ColumnType>({
-  row,
-  columns,
-  index,
-}: TableRowProps<T>) => {
+const TableRow = <T extends ColumnType>({ row, columns, index }: TableRowProps<T>) => {
   return (
     <tr className={styles.bodyRow}>
       {columns.map((column, idx) => {
@@ -138,13 +128,10 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
   };
 
   return (
-    <div
-      className={styles.footer}
-      style={{ justifyContent: total ? "space-between" : "flex-end" }}
-    >
+    <div className={styles.footer} style={{ justifyContent: total ? "space-between" : "flex-end" }}>
       {total && (
         <div className={styles.total}>
-          {total.title}: <span className={styles.fwBold}>{total.count}</span>
+          {total.title}: <span className={styles.fwBold}>{numberWithCommas(total.count)}</span>
         </div>
       )}
       {pagination && (
@@ -153,14 +140,14 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
             <div className={styles.total}>
               Rows per page:
               <Select
-                options={pagination.pageSizeOptions.map((page) => ({
+                options={pagination.pageSizeOptions.map(page => ({
                   label: page,
                   value: page,
                 }))}
                 style={{ border: "none", fontWeight: 700 }}
                 value={pageSize}
                 bordered={false}
-                onChange={(value) => {
+                onChange={value => {
                   setPageSize(value);
                   pagination.onChange && pagination.onChange(1, value);
                 }}
@@ -169,9 +156,8 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
           )}
           <Pagination
             {...pagination}
-            itemRender={(page, type, originalElement) =>
-              renderPagination(page, type, originalElement)
-            }
+            showSizeChanger={false}
+            itemRender={(page, type, originalElement) => renderPagination(page, type, originalElement)}
             pageSize={pageSize}
           />
         </div>

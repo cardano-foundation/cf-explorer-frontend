@@ -1,15 +1,39 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { stringify } from "qs";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import { BiLinkExternal } from "react-icons/bi";
-import { getShortWallet } from "../../commons/utils/helper";
+import {
+  formatADA,
+  getShortHash,
+  getShortWallet,
+} from "../../commons/utils/helper";
 import styles from "./index.module.scss";
 
 import AIcon from "../../commons/resources/images/AIcon.png";
 import moment from "moment";
 
-const BlockList = () => {
+interface TransactionListProps {
+  transactions: Transactions[];
+  loading: boolean;
+  total: number;
+  totalPage: number;
+  currentPage: number;
+}
+
+const TransactionList: React.FC<TransactionListProps> = ({
+  currentPage,
+  loading,
+  total,
+  totalPage,
+  transactions,
+}) => {
+  const history = useHistory();
+  const setQuery = (query: any) => {
+    history.push({ search: stringify(query) });
+  };
+
   const columns: Column<Transactions>[] = [
     {
       title: "#",
@@ -27,7 +51,7 @@ const BlockList = () => {
       render: (r) => (
         <div>
           <Link to={`#`} className={`${styles.fwBold} ${styles.link}`}>
-            {getShortWallet("d0437081d2a1234b12342506307")}
+            {getShortHash(r.hash)}
           </Link>
           <div>
             {moment("2022-11-15T08:52:40.188Z").format("MM/DD/YYYY HH:mm:ss")}
@@ -41,10 +65,13 @@ const BlockList = () => {
       minWidth: "200px",
       render: (r) => (
         <>
-          <Link to={`#`} className={`${styles.fwBold} ${styles.link}`}>
-            7903486369
+          <Link
+            to={`/block-list/${r.blockNo}`}
+            className={`${styles.fwBold} ${styles.link}`}
+          >
+            {r.blockNo}
           </Link>
-          / 205687
+          / {r.slot}
         </>
       ),
     },
@@ -52,26 +79,51 @@ const BlockList = () => {
       title: "Address",
       key: "address",
       minWidth: "200px",
-      render(data, index) {
+      render(r, index) {
         return (
           <div>
-            <div className={styles.output}>
-              Input:
-              <Link to={`#`} className={`${styles.fwBold} ${styles.link}`}>
-                {getShortWallet("d0437081d2a1234b12342506307")}
-                <BiLinkExternal style={{ marginLeft: 8 }} />
-              </Link>
+            <div className={styles.input}>
+              <div className={styles.title}> Input: </div>
+              <div>
+                {r.addressesInput.slice(0, 2).map((tx, key) => {
+                  return (
+                    <Link
+                      to={`#`}
+                      className={`${styles.fwBold} ${styles.link}`}
+                      key={key}
+                    >
+                      {getShortWallet(tx)}
+                      <BiLinkExternal style={{ marginLeft: 8 }} />
+                    </Link>
+                  );
+                })}
+                {r.addressesInput.length > 2 && (
+                  <Link to={`#`} className={`${styles.fwBold} ${styles.link}`}>
+                    ...
+                  </Link>
+                )}
+              </div>
             </div>
             <div className={styles.output}>
-              <div>Output: </div>
+              <div className={styles.title}>Output: </div>
               <div>
-                <Link to={`#`} className={`${styles.fwBold} ${styles.link}`}>
-                  {getShortWallet("d0437081d2a1234b12342506307")}
-                  <BiLinkExternal style={{ marginLeft: 8 }} />
-                </Link>
-                <Link to={`#`} className={`${styles.fwBold} ${styles.link}`}>
-                  ...
-                </Link>
+                {r.addressesOutput.slice(0, 2).map((tx, key) => {
+                  return (
+                    <Link
+                      to={`#`}
+                      className={`${styles.fwBold} ${styles.link}`}
+                      key={key}
+                    >
+                      {getShortWallet(tx)}
+                      <BiLinkExternal style={{ marginLeft: 8 }} />
+                    </Link>
+                  );
+                })}
+                {r.addressesOutput.length > 2 && (
+                  <Link to={`#`} className={`${styles.fwBold} ${styles.link}`}>
+                    ...
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -84,7 +136,7 @@ const BlockList = () => {
       minWidth: "120px",
       render: (r) => (
         <div className={styles.fwBold}>
-          <img src={AIcon} alt="a icon" /> {r.fee || 0}
+          <img src={AIcon} alt="a icon" /> {formatADA(r.fee) || 0}
         </div>
       ),
     },
@@ -94,7 +146,7 @@ const BlockList = () => {
       key: "ouput",
       render: (r) => (
         <div className={styles.fwBold}>
-          <img src={AIcon} alt="a icon" /> {r.ouput || 0}
+          <img src={AIcon} alt="a icon" /> {formatADA(r.totalOutput) || 0}
         </div>
       ),
     },
@@ -105,16 +157,17 @@ const BlockList = () => {
       <Table
         className={styles.table}
         columns={columns}
-        data={data}
-        total={{ count: 1000, title: "Total Transactions" }}
+        data={transactions}
+        total={{ count: total, title: "Total Transactions" }}
+        loading={loading}
         pagination={{
-          defaultCurrent: 1,
-          total: 50,
+          current: currentPage + 1 || 1,
+          total: total,
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
           size: "small",
           pageSizeOptions: [10, 20, 50],
           onChange(page, pageSize) {
-            console.log(page, pageSize);
+            setQuery({ page, size: pageSize });
           },
         }}
       />
@@ -122,63 +175,4 @@ const BlockList = () => {
   );
 };
 
-export default BlockList;
-
-const data = [
-  {
-    slot: 7903486,
-    blockId: "d0437081d2a1234b12342506307",
-    createdAt: "2022-11-15T08:52:40.188Z",
-    transactions: 18,
-    fee: 0.25461,
-    ouput: 1333.25461,
-  },
-  {
-    slot: 7903486,
-    blockId: "d0437081d2a1234b12342506307",
-    createdAt: "2022-11-15T08:52:40.188Z",
-    transactions: 18,
-    fee: 0.25461,
-    ouput: 1333.25461,
-  },
-  {
-    slot: 7903486,
-    blockId: "d0437081d2a1234b12342506307",
-    createdAt: "2022-11-15T08:52:40.188Z",
-    transactions: 18,
-    fee: 0.25461,
-    ouput: 1333.25461,
-  },
-  {
-    slot: 7903486,
-    blockId: "d0437081d2a1234b12342506307",
-    createdAt: "2022-11-15T08:52:40.188Z",
-    transactions: 18,
-    fee: 0.25461,
-    ouput: 1333.25461,
-  },
-  {
-    slot: 7903486,
-    blockId: "d0437081d2a1234b12342506307",
-    createdAt: "2022-11-15T08:52:40.188Z",
-    transactions: 18,
-    fee: 0.25461,
-    ouput: 1333.25461,
-  },
-  {
-    slot: 7903486,
-    blockId: "d0437081d2a1234b12342506307",
-    createdAt: "2022-11-15T08:52:40.188Z",
-    transactions: 18,
-    fee: 0.25461,
-    ouput: 1333.25461,
-  },
-  {
-    slot: 7903486,
-    blockId: "d0437081d2a1234b12342506307",
-    createdAt: "2022-11-15T08:52:40.188Z",
-    transactions: 18,
-    fee: 0.25461,
-    ouput: 1333.25461,
-  },
-];
+export default TransactionList;
