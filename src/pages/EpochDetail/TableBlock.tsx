@@ -1,3 +1,4 @@
+import { BiLinkExternal } from 'react-icons/bi';
 import { Link, useHistory } from 'react-router-dom';
 import AIcon from '../../commons/resources/images/AIcon.png';
 import { routers } from '../../commons/routers';
@@ -19,8 +20,8 @@ const columns: Column<IBlockEpochDetail>[] = [
     },
   },
   {
-    title: 'Status',
-    key: 'status',
+    title: 'Block',
+    key: 'block',
     minWidth: '100px',
     render: r => {
       return (
@@ -31,30 +32,38 @@ const columns: Column<IBlockEpochDetail>[] = [
     },
   },
   {
-    title: 'Start date',
-    key: 'startTime',
+    title: 'Slot',
+    key: 'slot',
     minWidth: '100px',
     render: r => {
-      return <span>{r.startTime}</span>;
+      return (
+        <>
+          <span>{`7903486369`}</span>/<span>{` 205687`}</span>
+        </>
+      );
     },
   },
   {
-    title: 'End date',
-    key: 'endTime',
+    title: 'Created by',
+    key: 'createdBy',
     minWidth: '100px',
     render: r => {
-      return <span>{r.endTime}</span>;
+      return (
+        <div>
+          Input: <span>fa173...b098</span>
+          <BiLinkExternal fontSize={18} style={{ marginLeft: 8 }} />
+        </div>
+      );
     },
   },
   {
-    title: 'Blocks',
+    title: 'Transactions',
     key: 'blkCount',
     minWidth: '100px',
     render: r => {
       return (
         <div>
-          <img src={AIcon} alt="a icon" />
-          <span>{r.blkCount}</span>
+          <span>{`25879`}</span>
         </div>
       );
     },
@@ -67,7 +76,7 @@ const columns: Column<IBlockEpochDetail>[] = [
       return (
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <img style={{ marginRight: '8px' }} src={AIcon} alt="a icon" />
-          <span>{r.outSum}</span>
+          <span>{r.outSum || 0}</span>
         </div>
       );
     },
