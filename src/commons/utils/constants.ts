@@ -8,3 +8,9 @@ export const SUPPORTED_WALLETS: Wallet[] = [
     { name: "Eternl", icon: EternlIcon },
     { name: "Yoroi", icon: YoroiIcon }
 ];
+
+export const EPOCH_STATUS = {
+    FINISH: 'FINISHED',
+    REWARD: 'REWARDING',
+    INPROGRESS:'INPROGRESS'
+}
