@@ -1,14 +1,21 @@
 import React from "react";
 import { Route, RouteComponentProps, Switch, withRouter } from "react-router-dom";
 import { routers } from "./commons/routers";
-import Home from './pages/Home';
-import NotFound from './pages/NotFound';
-
+import Home from "./pages/Home";
+import BlockList from "./pages/BlockList";
+import BlockListDetail from "./pages/BlockListDetail";
+import TransactionList from "./pages/TransactionList";
+import TransactionDetail from "./pages/TransactionDetail";
+import NotFound from "./pages/NotFound";
 
 const Routes: React.FC<RouteComponentProps> = () => {
   return (
     <Switch>
       <Route path={routers.HOME} exact component={Home} />
+      <Route path={routers.BLOCK_LIST} exact component={BlockList} />
+      <Route path={routers.BLOCK_LIST_DETAIL} component={BlockListDetail} />
+      <Route path={routers.TRANSACTION_LIST} exact component={TransactionList} />
+      <Route path={routers.TRANSACTION_DETAIL} exact component={TransactionDetail} />
       <Route path={routers.NOT_FOUND} exact component={NotFound} />
     </Switch>
   );
