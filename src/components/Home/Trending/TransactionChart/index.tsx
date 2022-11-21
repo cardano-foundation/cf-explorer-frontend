@@ -66,6 +66,7 @@ const options: Highcharts.Options = {
   ],
 };
 const TransactionChart: React.FC<Props> = () => {
+
   return (
     <div className={styles.transactionChart}>
       <h3>Transaction in past 15 days</h3>

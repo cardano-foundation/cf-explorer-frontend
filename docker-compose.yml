@@ -1,0 +1,19 @@
+version: '3.9'
+networks:
+  default:
+    name: infrastructure-net
+    external: true
+
+services:
+  cardano-explorer-fe:
+    stdin_open: true
+    container_name: cardano-explorer-fe
+    image: cardano-explorer-fe
+    build:
+      context: .
+    environment:
+      - PORT=${PORT}
+      - REACT_APP_NETWORK=${REACT_APP_NETWORK}
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+    ports:
+      - '9296:1102'
