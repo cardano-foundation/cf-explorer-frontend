@@ -121,7 +121,7 @@
 
 html {
   font-size: var(--font-size-text);
-
+  scroll-behavior: smooth;
   & > body {
     scroll-behavior: smooth;
     margin: 0;
