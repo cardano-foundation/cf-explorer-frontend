@@ -9,7 +9,7 @@ import slotImg from "../../../commons/resources/images/slot.png";
 import Card from "../Card";
 
 interface DetailCardProps {
-  listDetails: { title: string; value: React.ReactNode }[];
+  listDetails: { title?: string; value: React.ReactNode }[];
   progress: {
     epoch: number;
     block: number;
@@ -18,11 +18,7 @@ interface DetailCardProps {
   loading: boolean;
 }
 
-const DetailCard: React.FC<DetailCardProps> = ({
-  listDetails,
-  progress,
-  loading,
-}) => {
+const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading }) => {
   if (loading) {
     return (
       <Row className={styles.wrapper} gutter={[16, 16]}>
@@ -39,22 +35,24 @@ const DetailCard: React.FC<DetailCardProps> = ({
     <Row className={styles.wrapper} gutter={[16, 16]}>
       <Col span={24} xl={14}>
         <Card className={styles.info}>
-          <div>
-            {listDetails.map((item, idx) => {
-              return (
-                <div className={styles.detailItem} key={idx}>
-                  <div>
-                    <img src={infoIcon} alt="info" className={styles.img} />
-                  </div>
-                  <div className={styles.row}>
-                    <div style={{ minWidth: 150 }}>{item.title}</div> :{" "}
-                    <div className={` ${styles.fwBold} ${styles.value}`}>
-                      {item.value}
+          <div style={{ width: "100%" }}>
+            {listDetails.map((item, idx) => (
+              <div className={styles.detailItem} key={idx}>
+                {item.title ? (
+                  <>
+                    <div>
+                      <img src={infoIcon} alt="info" className={styles.img} />
                     </div>
-                  </div>
-                </div>
-              );
-            })}
+                    <div className={styles.row}>
+                      <div style={{ minWidth: 150 }}>{item.title}</div>:
+                      <div className={` ${styles.fwBold} ${styles.value}`}>{item.value}</div>
+                    </div>
+                  </>
+                ) : (
+                  <>{item.value}</>
+                )}
+              </div>
+            ))}
           </div>
         </Card>
       </Col>
@@ -96,8 +94,7 @@ const DetailCard: React.FC<DetailCardProps> = ({
               <div>
                 <div className={styles.title}>Slot</div>
                 <div>
-                  <span className={styles.fwBold}>{progress.currentSlot}</span>/
-                  432000
+                  <span className={styles.fwBold}>{progress.currentSlot}</span>/ 432000
                 </div>
               </div>
             </div>

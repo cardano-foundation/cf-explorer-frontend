@@ -6,6 +6,7 @@ interface IDataEpoch {
   startTime: string;
   outSum: number;
   txCount: number;
+  epochSlotNo: number;
 }
 
 interface IEpoch {

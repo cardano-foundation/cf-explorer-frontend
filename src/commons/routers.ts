@@ -1,10 +1,10 @@
 export const routers = {
   HOME: "/",
-  BLOCK_LIST: "/block-list",
-  BLOCK_LIST_DETAIL: "/block-list/:blockId",
+  BLOCK_LIST: "/blocks",
+  BLOCK_LIST_DETAIL: "/blocks/:blockId",
   TRANSACTION_LIST: "/transactions",
   TRANSACTION_DETAIL: "/transactions/:trxId",
-  EPOCH: "/epoch",
-  EPOCH_DETAIL:"/epoch/:epochId",
+  EPOCH: "/epochs",
+  EPOCH_DETAIL:"/epochs/:epochId",
   NOT_FOUND: "/*",
 };
