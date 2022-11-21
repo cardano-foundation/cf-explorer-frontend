@@ -22,7 +22,7 @@ export const checkStatus = (status: string) => {
   }
 };
 const styleFont400 = {
-  fontSize: "17px",
+  fontSize: '16px',
   fontWeight: 400,
   color: "#273253",
   display: "block",
@@ -48,7 +48,7 @@ const columns: Column<IDataEpoch>[] = [
     minWidth: "100px",
     render: r => {
       return (
-        <Link to={`/epoch/${r.no}`}>
+        <Link to={`/epoch/${r.no}`} className={styles.link}>
           <span className={checkStatus(r.status)}>{r.status}</span>
         </Link>
       );

@@ -1,6 +1,5 @@
 import BigNumber from "bignumber.js";
 import _ from "lodash";
-import { EPOCH_STATUS } from './constants';
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const getShortWallet = (address: string) => {
