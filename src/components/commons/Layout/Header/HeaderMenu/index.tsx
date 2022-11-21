@@ -10,37 +10,28 @@ const HeaderMenu: React.FC<Props> = () => {
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     let target = e.target as Element;
+    if (target.parentElement?.tagName === "A") {
+      const list = document.querySelectorAll(`.${styles.menu} li`);
+      for (const element of Array.from(list)) {
+        if (element.className && element.className?.search(` ${styles.active}`) >= 0) {
+          element.className = element.className.replace(` ${styles.active}`, "");
+        }
+      }
+    }
     if (target.parentElement?.tagName === "LI") target = target.parentElement;
-    if (
-      target.className &&
-      target.className?.search(` ${styles.active}`) >= 0
-    ) {
+    if (target.className && target.className?.search(` ${styles.active}`) >= 0) {
       target.className = target.className.replace(` ${styles.active}`, "");
       const list = document.querySelectorAll(`.${styles.menu} li`);
       for (const element of Array.from(list)) {
-        if (
-          target.contains(element) &&
-          element.className &&
-          element.className?.search(` ${styles.active}`) >= 0
-        ) {
-          element.className = element.className.replace(
-            ` ${styles.active}`,
-            ""
-          );
+        if (target.contains(element) && element.className && element.className?.search(` ${styles.active}`) >= 0) {
+          element.className = element.className.replace(` ${styles.active}`, "");
         }
       }
     } else {
       const list = document.querySelectorAll(`.${styles.menu} li`);
       for (const element of Array.from(list)) {
-        if (
-          !element.contains(target) &&
-          element.className &&
-          element.className?.search(` ${styles.active}`) >= 0
-        ) {
-          element.className = element.className.replace(
-            ` ${styles.active}`,
-            ""
-          );
+        if (!element.contains(target) && element.className && element.className?.search(` ${styles.active}`) >= 0) {
+          element.className = element.className.replace(` ${styles.active}`, "");
         }
       }
       target.className += ` ${styles.active}`;
@@ -53,14 +44,8 @@ const HeaderMenu: React.FC<Props> = () => {
       if (!ref.current?.contains(target)) {
         const list = document.querySelectorAll(`.${styles.menu} li`);
         for (const element of Array.from(list)) {
-          if (
-            element.className &&
-            element.className?.search(` ${styles.active}`) >= 0
-          ) {
-            element.className = element.className.replace(
-              ` ${styles.active}`,
-              ""
-            );
+          if (element.className && element.className?.search(` ${styles.active}`) >= 0) {
+            element.className = element.className.replace(` ${styles.active}`, "");
           }
         }
       }
@@ -79,17 +64,9 @@ const HeaderMenu: React.FC<Props> = () => {
       <ul className={styles.menu}>
         {menus.map((level_1, idx) => {
           const { href, title, children, mega } = level_1;
-          const target =
-            href &&
-            (href.search("http://") >= 0 || href.search("https://") >= 0)
-              ? "_blank"
-              : null;
+          const target = href && (href.search("http://") >= 0 || href.search("https://") >= 0) ? "_blank" : null;
           return (
-            <li
-              key={idx}
-              className={children ? styles.parent : ""}
-              onClick={handleClick}
-            >
+            <li key={idx} className={children ? styles.parent : ""} onClick={handleClick}>
               {href ? (
                 target ? (
                   <a href={href} target={target} rel="noreferrer" title={title}>
@@ -116,21 +93,12 @@ const HeaderMenu: React.FC<Props> = () => {
                     ) => {
                       const { href, title, children } = level_2;
                       const target =
-                        href &&
-                        (href.search("http://") >= 0 ||
-                          href.search("https://") >= 0)
-                          ? "_blank"
-                          : null;
+                        href && (href.search("http://") >= 0 || href.search("https://") >= 0) ? "_blank" : null;
                       return (
                         <li key={idx} onClick={handleClick}>
                           {href ? (
                             target ? (
-                              <a
-                                href={href}
-                                target={target}
-                                rel="noreferrer"
-                                title={title}
-                              >
+                              <a href={href} target={target} rel="noreferrer" title={title}>
                                 <span>{title}</span>
                               </a>
                             ) : (
@@ -143,38 +111,26 @@ const HeaderMenu: React.FC<Props> = () => {
                           )}
                           {children ? (
                             <ul>
-                              {children.map(
-                                (
-                                  level_3: { title: string; href: string },
-                                  idx
-                                ) => {
-                                  const { href, title } = level_3;
-                                  const target =
-                                    href &&
-                                    (href.search("http://") >= 0 ||
-                                      href.search("https://") >= 0)
-                                      ? "_blank"
-                                      : null;
-                                  return (
-                                    <li key={idx}>
-                                      {target ? (
-                                        <a
-                                          href={href}
-                                          target={target}
-                                          rel="noreferrer"
-                                          title={title}
-                                        >
-                                          <span>{title}</span>
-                                        </a>
-                                      ) : (
-                                        <NavLink to={href}>
-                                          <span>{title}</span>
-                                        </NavLink>
-                                      )}
-                                    </li>
-                                  );
-                                }
-                              )}
+                              {children.map((level_3: { title: string; href: string }, idx) => {
+                                const { href, title } = level_3;
+                                const target =
+                                  href && (href.search("http://") >= 0 || href.search("https://") >= 0)
+                                    ? "_blank"
+                                    : null;
+                                return (
+                                  <li key={idx}>
+                                    {target ? (
+                                      <a href={href} target={target} rel="noreferrer" title={title}>
+                                        <span>{title}</span>
+                                      </a>
+                                    ) : (
+                                      <NavLink to={href}>
+                                        <span>{title}</span>
+                                      </NavLink>
+                                    )}
+                                  </li>
+                                );
+                              })}
                             </ul>
                           ) : null}
                         </li>
