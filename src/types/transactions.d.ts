@@ -1,8 +1,10 @@
 interface Transactions {
+  hash: string;
+  blockNo: number;
+  epochNo: number;
   slot: number;
-  blockId: string;
-  createdAt: string;
-  transactions: number;
+  addressesInput: string[];
+  addressesOutput: string[];
   fee: number;
-  ouput: number;
+  totalOutput: number;
 }

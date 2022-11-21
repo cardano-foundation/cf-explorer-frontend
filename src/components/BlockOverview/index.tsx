@@ -3,19 +3,24 @@ import { BiLinkExternal } from "react-icons/bi";
 
 import Card from "../commons/Card";
 import DetailCard from "../commons/DetailCard";
-import { getShortWallet } from "../../commons/utils/helper";
+import { formatADA, getShortWallet } from "../../commons/utils/helper";
 
 import styles from "./index.module.scss";
 import aIcon from "../../commons/resources/images/AIcon.png";
 import moment from "moment";
 
-const BlockOverview = () => {
+interface BlockOverviewProps {
+  data: BlockDetail | null;
+  loading: boolean;
+}
+
+const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
   const listDetails = [
     {
       title: "Block ID",
-      value: (
+      value: data?.hash && (
         <Link to={`#`} className={styles.link}>
-          {getShortWallet("d0437081d2a1234b12342506307")}
+          {getShortWallet(data?.hash || "")}
           <BiLinkExternal className={styles.icon} />
         </Link>
       ),
@@ -23,18 +28,22 @@ const BlockOverview = () => {
 
     {
       title: "Created at",
-      value: moment("2022-11-15T08:52:40.188Z").format("MM/DD/YYYY HH:mm:ss"),
+      value: data?.time ? moment(data?.time).format("MM/DD/YYYY HH:mm:ss") : "",
     },
     {
       title: "Transaction",
-      value: 18,
+      value: data?.txCount,
     },
     {
       title: "Transaction Fees",
       value: (
         <span className={styles.transaction}>
-          <div>331.38573 ADA</div>{" "}
-          <img className={styles.img} alt="ada icon" src={aIcon} />
+          {data?.totalFees && (
+            <>
+              <div>{formatADA(data?.totalFees)} ADA</div>{" "}
+              <img className={styles.img} alt="ada icon" src={aIcon} />
+            </>
+          )}
         </span>
       ),
     },
@@ -42,16 +51,20 @@ const BlockOverview = () => {
       title: "Total Output",
       value: (
         <span style={{ display: "flex", alignItems: "center" }}>
-          <div> 33124891829341.38573 ADA</div>{" "}
-          <img className={styles.img} alt="ada icon" src={aIcon} />
+          {data?.totalOutput && (
+            <>
+              <div> {formatADA(data?.totalOutput)} ADA</div>{" "}
+              <img className={styles.img} alt="ada icon" src={aIcon} />
+            </>
+          )}
         </span>
       ),
     },
     {
       title: "Slot leader",
-      value: (
+      value: data?.slotLeader && (
         <Link to={`#`} className={styles.link}>
-          {getShortWallet("d0437081d2a1234b12342506307")}
+          {getShortWallet(data?.slotLeader || "")}
           <BiLinkExternal className={styles.icon} />
         </Link>
       ),
@@ -59,14 +72,17 @@ const BlockOverview = () => {
   ];
 
   return (
-    <Card className={styles.wrapper} title={"Block Detail: 761236"}>
+    <Card
+      className={styles.wrapper}
+      title={`Block Detail: ${data?.blockNo || 0} `}
+    >
       <DetailCard
+        loading={loading}
         listDetails={listDetails}
         progress={{
-          block: 766582,
-          currentSlot: 325120,
-          epoch: 362,
-          totalSlot: 432000,
+          block: data?.blockNo || 0,
+          currentSlot: data?.epochSlotNo || 0,
+          epoch: data?.epochNo || 0,
         }}
       />
     </Card>
