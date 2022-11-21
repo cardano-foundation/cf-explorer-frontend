@@ -1,4 +1,4 @@
-@import '../../../../../themes/variable.scss';
+@import "../../../../../themes/variable.scss";
 
 @include keyframe(fade) {
   0% {
@@ -17,8 +17,7 @@ ul.menu {
   li {
     text-align: left;
     cursor: pointer;
-    margin-bottom: .5rem;
-
+    margin-bottom: 0.5rem;
     a,
     a:visited,
     a:hover {
@@ -34,21 +33,31 @@ ul.menu {
       &.title {
         display: block;
         font-weight: var(--font-weight-bold);
-        margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
         cursor: default;
       }
     }
 
     &:hover {
-
-      &>a,
-      &>span {
-        color: #FFF;
+      & > a,
+      & > span {
+        color: #fff;
+      }
+    }
+    & > ul > li {
+      &:last-child {
+        margin-bottom: 0px;
+      }
+      &:hover {
+        & > a,
+        & > span {
+          color: var(--text-color-hover);
+        }
       }
     }
   }
 
-  &>li {
+  & > li {
     @include flex-center-center;
     position: relative;
     padding: 10px 0px;
@@ -72,14 +81,16 @@ ul.menu {
       }
     }
 
-    &>ul {
+    & > ul {
       position: absolute;
       z-index: 1;
       top: 100%;
       padding: 20px;
-      background: var(--linear-gradient-green);
-      box-shadow: 4px 5px 7px -1px rgb(0 0 0 / 20%), 0px 1px 1px rgb(0 0 0 / 14%), 0px 1px 3px rgb(0 0 0 / 12%);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow-raised);
+      backdrop-filter: blur(2px);
       border-radius: 10px;
+      color: var(--color-black);
       visibility: hidden;
 
       &.mega {
@@ -92,12 +103,10 @@ ul.menu {
 
     // &:hover,
     &.active {
-      &>ul {
+      & > ul {
         visibility: visible;
         @include animation(0, 0.4s, fade);
       }
     }
   }
 }
-
-@media screen and (max-width: 767px) {}

@@ -60,7 +60,7 @@ const LatestStories: React.FC<Props> = () => {
           );
         })}
       </Row>
-      <Link to={routers.BLOCK_LIST} className={styles.seemore}>
+      <Link to={routers.STORY_LIST} className={styles.seemore}>
         <small>See All</small>
       </Link>
     </div>
