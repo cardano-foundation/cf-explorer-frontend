@@ -4,19 +4,23 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import AIcon from "../../commons/resources/images/AIcon.png";
 import { routers } from "../../commons/routers";
-import { checkStatus } from "../../commons/utils/helper";
+import { EPOCH_STATUS } from "../../commons/utils/constants";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import styles from "./index.module.scss";
 
-const styleFont700 = {
-  fontSize: "17px",
-  fontWeight: 700,
-  color: "#273253",
-  display: "block",
-  cursor: "pointer",
+export const checkStatus = (status: string) => {
+  switch (status) {
+    case EPOCH_STATUS.FINISH:
+      return styles.finished;
+    case EPOCH_STATUS.REWARD:
+      return styles.reward;
+    case EPOCH_STATUS.INPROGRESS:
+      return styles.inprogress;
+    default:
+      return styles.finished;
+  }
 };
-
 const styleFont400 = {
   fontSize: "17px",
   fontWeight: 400,
@@ -44,8 +48,8 @@ const columns: Column<IDataEpoch>[] = [
     minWidth: "100px",
     render: r => {
       return (
-        <Link to={routers.EPOCH_DETAIL.replace(":epochId", `${r.no}`)}>
-          <span style={checkStatus(r.status)}>{r.status}</span>
+        <Link to={`/epoch/${r.no}`}>
+          <span className={checkStatus(r.status)}>{r.status}</span>
         </Link>
       );
     },
@@ -72,9 +76,9 @@ const columns: Column<IDataEpoch>[] = [
     minWidth: "100px",
     render: r => {
       return (
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <img style={{ marginRight: "8px" }} src={AIcon} alt="a icon" />
-          <span style={styleFont700}>{r.blkCount}</span>
+        <div className={styles.blockRow}>
+          <img src={AIcon} alt="a icon" />
+          <span>{r.blkCount}</span>
         </div>
       );
     },
@@ -85,9 +89,9 @@ const columns: Column<IDataEpoch>[] = [
     minWidth: "100px",
     render: r => {
       return (
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <img style={{ marginRight: "8px" }} src={AIcon} alt="a icon" />
-          <span style={styleFont700}>{r.outSum}</span>
+        <div className={styles.blockRow}>
+          <img src={AIcon} alt="a icon" />
+          <span>{r.outSum}</span>
         </div>
       );
     },
