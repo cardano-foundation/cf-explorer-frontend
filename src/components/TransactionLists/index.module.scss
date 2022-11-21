@@ -2,8 +2,18 @@
 
 .table {
   margin-top: 18px;
+  .input {
+    display: flex;
+    .title{
+      min-width: 60px;
+    }
+  }
   .output {
     display: flex;
+    padding-top: 8px;
+    .title{
+      min-width: 60px;
+    }
   }
   .link {
     font-family: var(--font-family-text) !important;

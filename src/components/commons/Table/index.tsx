@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from "react";
-import { Pagination, PaginationProps, Select, Spin } from "antd";
+import { Pagination, PaginationProps, Select, Skeleton } from "antd";
 
 import noData from "../../../commons/resources/images/noData.png";
 import { numberWithCommas } from "../../../commons/utils/helper";
@@ -19,7 +19,7 @@ type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns">;
 
 interface TableProps<T extends ColumnType = any> {
   columns: Column<T>[];
-  data: T[];
+  data?: T[];
   className?: string;
   loading?: boolean;
   total?: {
@@ -48,15 +48,11 @@ const Table: React.FC<TableProps> = ({ columns, data, total, pagination, classNa
         <table className={styles.table}>
           <TableHeader columns={columns} />
           {!loading && <TableBody columns={columns} data={data} />}
+          {loading && <TableSekeleton columns={columns} />}
         </table>
-        {!loading && data.length === 0 && (
+        {!loading && data && data.length === 0 && (
           <div className={styles.noData}>
             <img src={noData} alt="no data" />
-          </div>
-        )}
-        {loading && (
-          <div className={styles.loading}>
-            <Spin />
           </div>
         )}
       </div>
@@ -84,9 +80,7 @@ const TableHeader = <T extends ColumnType>({ columns }: TableHeaderProps<T>) => 
 const TableBody = <T extends ColumnType>({ data, columns }: TableProps<T>) => {
   return (
     <tbody className={styles.tableBody}>
-      {data.map((row, index) => (
-        <TableRow row={row} key={index} columns={columns} index={index} />
-      ))}
+      {data && data.map((row, index) => <TableRow row={row} key={index} columns={columns} index={index} />)}
     </tbody>
   );
 };
@@ -163,5 +157,34 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
         </div>
       )}
     </div>
+  );
+};
+
+const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
+  return (
+    <tbody className={styles.tableBody}>
+      {[...Array(10)].map((_i, ii) => {
+        return (
+          <tr key={ii} className={styles.bodyRow}>
+            {columns.map((column, idx) => {
+              return (
+                <td
+                  className={styles.col}
+                  key={idx}
+                  style={{
+                    minWidth: column.minWidth ? column.minWidth : "max-content",
+                    padding: "0",
+                    height: "75px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <Skeleton.Input size="large" style={{ height: "75px" }} active block />
+                </td>
+              );
+            })}
+          </tr>
+        );
+      })}
+    </tbody>
   );
 };

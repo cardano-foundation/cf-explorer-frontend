@@ -3,9 +3,8 @@
   font-style: normal;
   font-weight: 400;
   src: url(./commons/resources/fonts/SpaceMono-Regular.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
-    U+FEFF, U+FFFD;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC,
+    U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
@@ -14,25 +13,22 @@
   font-weight: 700;
   font-display: swap;
   src: url(./commons/resources/fonts/SpaceMono-Bold.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
-    U+FEFF, U+FFFD;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC,
+    U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
   font-family: "Helvetica";
   font-style: normal;
   font-weight: 400;
-  src: local("Helvetica-Regular"),
-    url(./commons/resources/fonts/Helvetica.ttf) format("ttf");
+  src: local("Helvetica-Regular"), url(./commons/resources/fonts/Helvetica.ttf) format("ttf");
 }
 
 @font-face {
   font-family: "Helvetica";
   font-style: normal;
   font-weight: 700;
-  src: local("Helvetica-Bold"),
-    url(./commons/resources/fonts/Helvetica-Bold.ttf) format("ttf");
+  src: local("Helvetica-Bold"), url(./commons/resources/fonts/Helvetica-Bold.ttf) format("ttf");
 }
 
 :root {
@@ -43,6 +39,7 @@
   --font-size-text: 16px;
   --font-size-text-large: 18px;
   --font-size-text-small: 12px;
+  --font-size-text-medium: 14px;
   --font-size-title: 24px;
   --container-margin: auto;
   --container-max-width: 1360px;
@@ -74,6 +71,7 @@
 @media screen and (max-width: 767px) {
   :root {
     --font-size-text: 14px;
+    --font-size-text-medium: 13px;
     --font-size-text-large: 16px;
     --font-size-title: 23px;
     --container-max-width: 540px;
@@ -85,6 +83,7 @@
   :root {
     --font-size-text: 13px;
     --font-size-text-large: 14px;
+    --font-size-text-medium: 12px;
     --font-size-text-small: 11px;
     --font-size-title: 22px;
     --container-margin: 5px;
@@ -95,7 +94,7 @@
 html {
   font-size: var(--font-size-text);
 
-  &>body {
+  & > body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;

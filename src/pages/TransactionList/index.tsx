@@ -7,7 +7,8 @@ interface Props {}
 const Transactions: React.FC<Props> = () => {
   return (
     <div className={styles.container}>
-      <TransactionList />
+      {/* TO DO : call APi */}
+      {/* <TransactionList /> */}
     </div>
   );
 };
