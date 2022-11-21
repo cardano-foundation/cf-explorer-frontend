@@ -16,7 +16,7 @@ const BlockDetail = () => {
 
   const { data: blockDetail, loading: blockDetailLoading } =
     useFetch<BlockDetail>(
-      `http://172.16.1.230:8033/api/v1/block/${params.blockId}`
+      `block/${params.blockId}`
     );
   //TO DO
   const {
@@ -25,7 +25,7 @@ const BlockDetail = () => {
     total,
     totalPage,
     currentPage,
-  } = useFetchList<Transactions>("http://172.16.1.230:8033/api/v1/tx/list", {
+  } = useFetchList<Transactions>("tx/list", {
     page: query.page ? +query.page - 1 : 0,
     size: query.size ? (query.size as string) : 10,
     blockNo: params.blockId,
