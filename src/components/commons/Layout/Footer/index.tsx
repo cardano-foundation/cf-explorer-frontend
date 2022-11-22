@@ -47,7 +47,7 @@ const Footer: React.FC<Props> = () => {
               </div>
             </Col>
             <Col span={12} className={styles.right}>
-              <Row className={styles.parentRow}>
+              <Row gutter={[0,10]} className={styles.parentRow}>
                 <Col span={8} className={`${styles.col} ${styles.col_1}`}>
                   <div className={styles.title}>
                     <span>Browser</span>
