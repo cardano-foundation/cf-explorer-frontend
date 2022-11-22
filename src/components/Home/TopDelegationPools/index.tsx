@@ -3,6 +3,7 @@ import { ColumnType } from "antd/lib/table";
 import React from "react";
 import { Link } from "react-router-dom";
 import { DownRedIcon, UpGreenIcon } from "../../../commons/resources";
+import { routers } from "../../../commons/routers";
 import { formatPrice } from "../../../commons/utils/helper";
 import styles from "./index.module.scss";
 
@@ -108,7 +109,7 @@ const TopDelegationPools: React.FC<Props> = () => {
       title: "",
       key: "action",
       render: r => (
-        <Link to={`/delegation-pool/${r.id}`} className={styles.actionDetail}>
+        <Link to={routers.POOL_LIST.replace(":poolId", `${r.blockNo}`)} className={styles.actionDetail}>
           <small>Detail</small>
         </Link>
       ),

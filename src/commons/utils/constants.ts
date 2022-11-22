@@ -12,5 +12,5 @@ export const SUPPORTED_WALLETS: Wallet[] = [
 export const EPOCH_STATUS = {
     FINISH: 'FINISHED',
     REWARD: 'REWARDING',
-    INPROGRESS:'INPROGRESS'
+    INPROGRESS:'IN_PROGRESS'
 }

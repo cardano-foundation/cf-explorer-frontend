@@ -1,0 +1,20 @@
+@import "../../themes/variable.scss";
+
+.table {
+    margin-top: 18px;
+
+    .input {
+        display: flex;
+    }
+
+    .link {
+        font-family: var(--font-family-text);
+        color: var(--color-blue);
+        display: flex;
+        align-items: center;
+    }
+
+    .fwBold {
+        font-weight: var(--font-weight-bold);
+    }
+}

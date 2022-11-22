@@ -16,12 +16,11 @@ interface EpochkOverviewProps {
 
 const EpochOverview: React.FC<EpochkOverviewProps> = ({ data, loading }) => {
   const percentage = useMemo(() => {
+    // TODO: Format string
     if (data?.startTime && data?.endTime) {
-      const start = new Date(data?.startTime);
-      const end = new Date(data.endTime);
-      start.setDate(start.getDate() + 5);
-
-      return end.getTime() / start.getTime() * 100;
+      const start = moment(data?.startTime);
+      const end = moment(data?.endTime);
+      return (moment().diff(start)) / (end.diff(start));
     }
     return 0;
   }, [data?.startTime, data?.endTime]);
