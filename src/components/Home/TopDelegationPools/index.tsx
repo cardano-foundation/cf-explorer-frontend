@@ -117,8 +117,16 @@ const TopDelegationPools: React.FC<Props> = () => {
   ];
   return (
     <div className={styles.topDelegation}>
-      <h3>Top Delegation Pools</h3>
+      <div className={styles.title}>
+        <h3>Transaction in past 15 days</h3>
+        <Link to={routers.POOL_LIST} className={styles.seemoreDesktop}>
+          <small>See All</small>
+        </Link>
+      </div>
       <Table className={styles.table} columns={columns} pagination={false} dataSource={data} />
+      <Link to={routers.POOL_LIST} className={styles.seemoreMobile}>
+        <small>See All</small>
+      </Link>
     </div>
   );
 };
