@@ -12,7 +12,6 @@ import {
   YoutubeIcon,
 } from "../../../../commons/resources";
 import styles from "./index.module.scss";
-import "./override.scss";
 
 interface Props {}
 
@@ -31,50 +30,62 @@ const Footer: React.FC<Props> = () => {
     <footer>
       <div className={styles.container}>
         <div className={styles.footerMenu}>
-          <Row className="Row">
-            <Col span={12} className="Row__left">
+          <Row className={styles.Row}>
+            <Col span={12} className={styles.left}>
               <img src={LogoIcon} alt="logo" />
               <p>
                 We are running the oldest and most featured explorer on Cardano network since Incentivised Testnet ages.
               </p>
-              <div className="network-list">
+              <div className={styles.network_list}>
                 <h4>Networks</h4>
-                <div className="network-list__chain">
-                  <div className="network-list__chain__mainnet">Mainnet</div>
-                  <div className="network-list__chain__preprod">Preprod</div>
-                  <div className="network-list__chain__preview">Preview</div>
-                  <div className="network-list__chain__testnet">Testnet (legacy)</div>
+                <div className={styles.chain}>
+                  <div className={styles.mainnet}>Mainnet</div>
+                  <div className={styles.preprod}>Preprod</div>
+                  <div className={styles.preview}>Preview</div>
+                  <div className={styles.testnet}>Testnet (legacy)</div>
                 </div>
               </div>
             </Col>
-            <Col span={12} className="Row__right">
-              <Row className="Row__right__parentRow">
-                <Col span={8} className="Row__right__parentRow__col col_1">
-                  <div className="title">
+            <Col span={12} className={styles.right}>
+              <Row className={styles.parentRow}>
+                <Col span={8} className={`${styles.col} ${styles.col_1}`}>
+                  <div className={styles.title}>
                     <span>Browser</span>
-                    <ul className="list_menu_footer">
+                    <ul className={styles.list_menu_footer}>
                       {browse.map((item: any) => {
-                        return <li onClick={() => window.open(item.href)} key={item.title}>{item.title}</li>;
+                        return (
+                          <li onClick={() => window.open(item.href)} key={item.title}>
+                            {item.title}
+                          </li>
+                        );
                       })}
                     </ul>
                   </div>
                 </Col>
-                <Col className="Row__right__parentRow__col col_1" span={8}>
-                  <div className="title">
+                <Col className={`${styles.col} ${styles.col_1}`} span={8}>
+                  <div className={styles.title}>
                     <span>Browser</span>
-                    <ul className="list_menu_footer">
+                    <ul className={styles.list_menu_footer}>
                       {community.map((item: any) => {
-                           return <li onClick={() => window.open(item.href)} key={item.title}>{item.title}</li>;
+                        return (
+                          <li onClick={() => window.open(item.href)} key={item.title}>
+                            {item.title}
+                          </li>
+                        );
                       })}
                     </ul>
                   </div>
                 </Col>
-                <Col className="Row__right__parentRow__col" span={8}>
-                  <div className="title">
+                <Col className={`${styles.col}`} span={8}>
+                  <div className={styles.title}>
                     <span>Browser</span>
-                    <ul className="list_menu_footer">
+                    <ul className={styles.list_menu_footer}>
                       {resource.map((item: any) => {
-                           return <li onClick={() => window.open(item.href)} key={item.title}>{item.title}</li>;
+                        return (
+                          <li onClick={() => window.open(item.href)} key={item.title}>
+                            {item.title}
+                          </li>
+                        );
                       })}
                     </ul>
                   </div>

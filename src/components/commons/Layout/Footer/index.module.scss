@@ -1,5 +1,32 @@
 @import "../../../../themes/variable.scss";
 
+$color-text-p: #e3e5e9;
+$color-text-h4: #667085;
+$color-text-menu: #98a2b3;
+$background-box-mainnet: rgba(67, 143, 104, 0.2);
+$background-box-preprod: rgba(16, 138, 239, 0.2);
+$background-box-preview: rgba(16, 138, 239, 0.2);
+$background-box-testnet: rgba(249, 183, 54, 0.2);
+$color-box-mainnet: #438f68;
+$color-box-primary: #108aef;
+$color-box-testnet: #f9b736;
+$font-family-spacemono: "Space Mono";
+$font-family-helvetica: "Helvetica";
+
+@mixin flex($align-items, $justify-content, $flex-direction) {
+  display: flex;
+  align-items: $align-items;
+  justify-content: $justify-content;
+  flex-direction: $flex-direction;
+}
+
+@mixin font($fon-family, $font-style, $font-weight, $font-size) {
+  font-family: $fon-family;
+  font-style: $font-style;
+  font-weight: $font-weight;
+  font-size: $font-size;
+}
+
 footer {
   background-color: var(--footer-background-color);
   background-image: var(--footer-background-image);
@@ -12,6 +39,110 @@ footer {
     padding: 80px 123px 30px 50px;
     @media screen and (max-width: 767px) {
       padding: 86px 0px 76px;
+    }
+
+    .Row {
+      font-size: 16px;
+      .left {
+        text-align: left;
+        & > img {
+          padding-bottom: 20px;
+        }
+        & > p {
+          @include font($font-family-spacemono, normal, 400, 1em);
+          color: $color-text-p;
+          width: 52%;
+          padding-bottom: 1.875em;
+        }
+        .network_list {
+          & > h4 {
+            @include font($font-family-helvetica, normal, 700, 0.75em);
+            color: $color-text-h4;
+          }
+          .chain {
+            text-align: left;
+            @include flex(center, flex-start, row);
+            .mainnet,
+            .preprod,
+            .preview,
+            .testnet {
+              padding: 0.40625em 0.75em;
+              border-radius: 6px;
+              @include font($font-family-spacemono, normal, 700, 0.875em);
+            }
+            .mainnet {
+              background: $background-box-mainnet;
+              margin-right: 0.3125em;
+              color: $color-box-mainnet;
+            }
+            .preprod {
+              background: $background-box-preprod;
+              margin-right: 0.3125em;
+              color: $color-box-primary;
+            }
+            .preview {
+              background: $background-box-preview;
+              margin-right: 0.3125em;
+              color: $color-box-primary;
+            }
+            .testnet {
+              background: $background-box-testnet;
+              color: $color-box-testnet;
+            }
+          }
+        }
+      }
+      .right {
+        .parentRow {
+          .col {
+            .title {
+              & > span {
+                @include font($font-family-spacemono, normal, 700, 1.25em);
+                @include flex(flex-start, unset, column-reverse);
+                position: relative;
+                margin-bottom: 25px;
+                &::after {
+                  content: "";
+                  height: 1px;
+                  width: 207px;
+                  background: #344054;
+                  position: absolute;
+                  top: 1.5625em;
+                  z-index: 1;
+                }
+                &::before {
+                  content: "";
+                  height: 2px;
+                  width: 85px;
+                  position: absolute;
+                  top: 1.5625em;
+                  z-index: 2;
+                  background: #29744d;
+                }
+              }
+              .list_menu_footer {
+                text-align: left;
+                & > li {
+                  @include font($font-family-helvetica, normal, 400, 0.9375em);
+                  color: $color-text-menu;
+                  @include flex(center, unset, row);
+                  padding-left: 1.25em;
+                  padding-bottom: 1.25em;
+                  &::after {
+                    content: "";
+                    position: absolute;
+                    width: 5px;
+                    height: 5px;
+                    background: #29744d;
+                    border-radius: 50%;
+                    left: 0;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 
