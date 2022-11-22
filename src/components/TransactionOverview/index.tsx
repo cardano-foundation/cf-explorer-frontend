@@ -1,60 +1,64 @@
-import { Link } from "react-router-dom";
-import { BiLinkExternal } from "react-icons/bi";
-import moment from "moment";
-import React from "react";
+import { Link } from 'react-router-dom';
+import { BiLinkExternal } from 'react-icons/bi';
+import moment from 'moment';
+import React from 'react';
 
-import Card from "../commons/Card";
-import DetailCard from "../commons/DetailCard";
-import { getShortWallet } from "../../commons/utils/helper";
+import Card from '../commons/Card';
+import DetailCard from '../commons/DetailCard';
+import { formatADA, getShortHash, getShortWallet } from '../../commons/utils/helper';
 
-import styles from "./index.module.scss";
-import aIcon from "../../commons/resources/images/AIcon.png";
+import styles from './index.module.scss';
+import aIcon from '../../commons/resources/images/AIcon.png';
 
-interface Props {}
+interface Props {
+  data: Transaction | null;
+  loading: boolean;
+}
 
-const TransactionOverview: React.FC<Props> = () => {
+const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   const listDetails = [
     {
-      title: "Transaction hash",
-      value: (
+      title: 'Transaction hash',
+      value: data?.tx.hash && (
         <Link to={`#`} className={`${styles.alignCenter} ${styles.link}`}>
-          {getShortWallet("d0437081d2a1234b12342506307")}
+          {getShortHash(data?.tx.hash || '')}
           <BiLinkExternal className={styles.icon} />
         </Link>
       ),
     },
 
     {
-      title: "Time",
-      value: moment("2022-11-15T08:52:40.188Z").format("MM/DD/YYYY HH:mm:ss"),
+      title: 'Time',
+      value: data?.tx.time && moment(data?.tx.time).format('MM/DD/YYYY HH:mm:ss'),
     },
     {
-      title: "More",
-      value: <h4 className={`${styles.status} ${styles.green}`}>SUCCESS</h4>,
+      title: 'Status',
+      value: <h4 className={`${styles.status} ${styles.green}`}>{data?.tx.status}</h4>,
     },
     {
-      title: "Confirmation",
+      title: 'Confirmation',
       value: (
         <div className={styles.alignCenter}>
-          10
-          <h4 className={`${styles.status} ${styles.yellow} ${styles.ml10}`}>MEDIUM</h4>
+          {data?.tx.confirmation}
+          {/* TO DO: check before BA answer */}
+          {/* <h4 className={`${styles.status} ${styles.yellow} ${styles.ml10}`}>MEDIUM</h4> */}
         </div>
       ),
     },
     {
-      title: "Transaction Fees",
-      value: (
+      title: 'Transaction Fees',
+      value: data?.tx.fee && (
         <div className={styles.alignCenter}>
-          <span>331.36871 ADA</span>
+          <span>{formatADA(data?.tx.fee || 0)} ADA </span>
           <img className={styles.img} alt="ada icon" src={aIcon} />
         </div>
       ),
     },
     {
-      title: "Total Output",
-      value: (
+      title: 'Total Output',
+      value: data?.tx.totalOutput && (
         <div className={styles.alignCenter}>
-          <span>33359648234154851.36871 ADA</span>
+          <span>{formatADA(data?.tx.totalOutput || 0)} ADA </span>
           <img className={styles.img} alt="ada icon" src={aIcon} />
         </div>
       ),
@@ -62,16 +66,15 @@ const TransactionOverview: React.FC<Props> = () => {
   ];
 
   return (
-    <Card className={styles.wrapper} title={"Transactions Detail"}>
+    <Card className={styles.wrapper} title={'Transactions Detail'}>
       <DetailCard
         listDetails={listDetails}
         progress={{
-          block: 766582,
-          currentSlot: 325120,
-          epoch: 362,
+          block: data?.tx.blockNo || 0,
+          currentSlot: data?.tx.blockSlot || 0,
+          epoch: data?.tx.epochNo || 0,
         }}
-        //TO DO
-        loading={false}
+        loading={loading}
       />
     </Card>
   );

@@ -1,14 +1,37 @@
-import React from "react";
-import TransactionList from "../../components/TransactionLists";
-import styles from "./index.module.scss";
+import React from 'react';
+import { useLocation } from 'react-router-dom';
+import { parse } from 'qs';
+
+import useFetchList from '../../commons/hooks/useFetchList';
+import TransactionList from '../../components/TransactionLists';
+import styles from './index.module.scss';
 
 interface Props {}
 
 const Transactions: React.FC<Props> = () => {
+  const { search } = useLocation();
+  const query = parse(search.split('?')[1]);
+
+  const {
+    data: transactions,
+    loading: transactionsLoading,
+    total,
+    totalPage,
+    currentPage,
+  } = useFetchList<Transactions>('tx/list', {
+    page: query.page ? +query.page - 1 : 0,
+    size: query.size ? (query.size as string) : 10,
+  });
+
   return (
     <div className={styles.container}>
-      {/* TO DO : call APi */}
-      {/* <TransactionList /> */}
+      <TransactionList
+        currentPage={currentPage}
+        loading={transactionsLoading}
+        transactions={transactions}
+        total={total}
+        totalPage={totalPage}
+      />
     </div>
   );
 };

@@ -2,6 +2,7 @@
     font-family: var(--font-family-title);
     font-weight: var(--font-weight-bold);
     color: #98A2B3;
+    font-size: var(--font-size-text)
 }
 
 .ant-tabs-tab:hover {
