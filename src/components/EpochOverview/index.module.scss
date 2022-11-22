@@ -24,6 +24,14 @@
         .progressDetail {
             display: flex;
             justify-content: space-between;
+
+            .status {
+                font-weight: var(--font-weight-normal);
+            }
+
+            .percentage {
+                color: var(--color-green-light);
+            }
         }
     }
 }

@@ -57,8 +57,8 @@ const EpochOverview: React.FC<EpochkOverviewProps> = ({ data, loading }) => {
             showInfo={false}
           />
           <div className={styles.progressDetail}>
-            <h4 style={{fontWeight: "var(--font-weight-normal)"}}>{data?.status}</h4>
-            <h4 style={{color: "var(--color-green-light)"}}>{percentage}%</h4>
+            <h4 className={styles.status}>{data?.status}</h4>
+            <h4 className={styles.percentage}>{percentage}%</h4>
           </div>
         </div>
       ),

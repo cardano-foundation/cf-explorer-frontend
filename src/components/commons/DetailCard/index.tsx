@@ -35,7 +35,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading 
     <Row className={styles.wrapper} gutter={[16, 16]}>
       <Col span={24} xl={14}>
         <Card className={styles.info}>
-          <div style={{ width: "100%" }}>
+          <div className={styles.fullWidth}>
             {listDetails.map((item, idx) => (
               <div className={styles.detailItem} key={idx}>
                 {item.title ? (

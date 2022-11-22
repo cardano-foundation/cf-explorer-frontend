@@ -25,6 +25,8 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
   };
+  console.log(data);
+  
 
   const columns: Column<BlockDetail>[] = [
     {
