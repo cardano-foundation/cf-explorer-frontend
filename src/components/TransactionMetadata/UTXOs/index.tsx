@@ -1,20 +1,20 @@
-import React, { useMemo } from 'react';
-import { IoMdCopy } from 'react-icons/io';
-import { useCopyToClipboard } from 'react-use';
+import React, { useMemo } from "react";
+import { IoMdCopy } from "react-icons/io";
+import { useCopyToClipboard } from "react-use";
 
-import { getShortWallet } from '../../../commons/utils/helper';
-import WalletIcon from '../../../commons/resources/images/Wallet.png';
+import { getShortWallet } from "../../../commons/utils/helper";
+import WalletIcon from "../../../commons/resources/images/Wallet.png";
 
-import styles from './index.module.scss';
-import aIcon from '../../../commons/resources/images/AIcon.png';
-import walletImg from '../../../commons/resources/images/Wallet.png';
-import sendImg from '../../../commons/resources/images/summary-up.png';
-import receiveImg from '../../../commons/resources/images/summary-down.png';
-import AIconImg from '../../../commons/resources/images/AIcon.png';
-import { BiCheckCircle } from 'react-icons/bi';
+import styles from "./index.module.scss";
+import aIcon from "../../../commons/resources/images/AIcon.png";
+import walletImg from "../../../commons/resources/images/Wallet.png";
+import sendImg from "../../../commons/resources/images/summary-up.png";
+import receiveImg from "../../../commons/resources/images/summary-down.png";
+import AIconImg from "../../../commons/resources/images/AIcon.png";
+import { BiCheckCircle } from "react-icons/bi";
 
 interface Props {
-  data: Transaction['utxOs'] | null;
+  data: Transaction["utxOs"] | null;
 }
 
 const UTXO: React.FC<Props> = ({ data }) => {
@@ -26,13 +26,18 @@ const UTXO: React.FC<Props> = ({ data }) => {
   //   return data.output?.reduce((pre, cur) => pre + cur.value, 0);
   // }, [data.output]);
 
-  return <div>{data && data.inputs.map((otx, key) => <Card type="down" item={otx} key={key} />)}</div>;
+  return (
+    <div>
+      {data && data.inputs.map((otx, key) => <Card type="down" item={otx} key={key} />)}
+      {data && data.outputs.map((otx, key) => <Card type="up" item={otx} key={key} />)}
+    </div>
+  );
 };
 
 export default UTXO;
 
-const Card = ({ type, item }: { type: 'up' | 'down'; item: Required<Transaction>['utxOs']['inputs'][number] }) => {
-  console.log('🚀 ~ file: index.tsx ~ line 35 ~ Card ~ item', item);
+const Card = ({ type, item }: { type: "up" | "down"; item: Required<Transaction>["utxOs"]["inputs"][number] }) => {
+  console.log("🚀 ~ file: index.tsx ~ line 35 ~ Card ~ item", item);
   const [state, copyToClipboard] = useCopyToClipboard();
 
   return (
@@ -48,7 +53,7 @@ const Card = ({ type, item }: { type: 'up' | 'down'; item: Required<Transaction>
           <div className={styles.top}>
             <img className={styles.img} src={walletImg} alt="wallet icon" />
             <div>
-              From: <span className={styles.address}>{getShortWallet(item.address)}</span>{' '}
+              From: <span className={styles.address}>{getShortWallet(item.address)}</span>{" "}
               {state.value === item.address ? (
                 <BiCheckCircle size={20} className={styles.icon} />
               ) : (
@@ -57,22 +62,22 @@ const Card = ({ type, item }: { type: 'up' | 'down'; item: Required<Transaction>
             </div>
           </div>
           <div>
-            <span className={`${styles.address} ${type === 'up' ? styles.up : styles.down}`}>
-              {type === 'down' ? '-22.24%' : '+16.41%'}
+            <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
+              {type === "down" ? "-22.24%" : "+16.41%"}
             </span>
             <img src={AIconImg} alt="ADA icon" />
           </div>
         </div>
         <div className={`${styles.paddingTop} ${styles.bottom}`}>
           <div>
-            <img src={type === 'down' ? receiveImg : sendImg} className={styles.img} alt="send icon" />
+            <img src={type === "down" ? receiveImg : sendImg} className={styles.img} alt="send icon" />
             {/* TO DO */}
-            c9a17c34be01c7aa6339735f94e13a938811d6987b95ad225a3af3734bc7a3a1{' '}
+            {item.txHash}
             {/* To Do: check lại icon khi copy cái khác thì hoàn trả icon cũ */}
             {state.value ? (
               <BiCheckCircle size={20} className={styles.icon} />
             ) : (
-              <IoMdCopy size={20} className={styles.icon} onClick={() => copyToClipboard('d0437081d2...42506307')} />
+              <IoMdCopy size={20} className={styles.icon} onClick={() => copyToClipboard("d0437081d2...42506307")} />
             )}
           </div>
           <div>
@@ -84,8 +89,8 @@ const Card = ({ type, item }: { type: 'up' | 'down'; item: Required<Transaction>
       <div className={styles.footer}>
         <div>Total Input</div>
         <div>
-          <span className={`${styles.address} ${type === 'up' ? styles.up : styles.down}`}>
-            {type === 'down' ? '-22.24%' : '+16.41%'}
+          <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
+            {type === "down" ? "-22.24%" : "+16.41%"}
           </span>
           <img src={AIconImg} alt="ADA icon" />
         </div>

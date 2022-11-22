@@ -71,7 +71,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         listDetails={listDetails}
         progress={{
           block: data?.tx.blockNo || 0,
-          currentSlot: data?.tx.blockSlot || 0,
+          currentSlot: data?.tx.epochSlot || 0,
           epoch: data?.tx.epochNo || 0,
         }}
         loading={loading}

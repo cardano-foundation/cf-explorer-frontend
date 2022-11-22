@@ -14,7 +14,7 @@ interface Transaction {
     hash: string;
     time: string;
     blockNo: number;
-    blockSlot: number;
+    epochSlot: number;
     epochNo: number;
     status: string;
     confirmation: number;
@@ -47,10 +47,12 @@ interface Transaction {
     inputs: {
       address: string;
       value: number;
+      txHash: string;
     }[];
     outputs: {
       address: string;
       value: number;
+      txHash: string;
     }[];
   };
 }
