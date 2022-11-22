@@ -33,3 +33,88 @@ export const menus: Menu[] = [
     href: "/tools",
   },
 ];
+
+export const browse = [
+  {
+    href: "#",
+    title: "About us",
+  },
+  {
+    href: "#",
+    title: "Contact Us",
+  },
+  {
+    href: "#",
+    title: "Github",
+  },
+  {
+    href: "#",
+    title: "Documentation",
+  },
+  {
+    href: "#",
+    title: "News and Blog",
+  },
+];
+
+export const community = [
+  {
+    href: "#",
+    title: "Line",
+  },
+  {
+    href: "#",
+    title: "LinkedIn",
+  },
+  {
+    href: "#",
+    title: "Meet up",
+  },
+  {
+    href: "#",
+    title: "Medium",
+  },
+  {
+    href: "#",
+    title: "Reddit",
+  },
+  {
+    href: "#",
+    title: "Reddit",
+  },
+  {
+    href: "#",
+    title: "Telegram",
+  },
+  {
+    href: "#",
+    title: "Weibo",
+  },
+  {
+    href: "#",
+    title: "Youtube",
+  },
+];
+
+export const resource = [
+  {
+    href: "#",
+    title: "Academy",
+  },
+  {
+    href: "#",
+    title: "Dapps",
+  },
+  {
+    href: "#",
+    title: "ICO",
+  },
+  {
+    href: "#",
+    title: "Development",
+  },
+  {
+    href: "#",
+    title: "Project",
+  },
+];

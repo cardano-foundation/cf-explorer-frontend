@@ -1,4 +1,4 @@
-@import '../../../../themes/variable.scss';
+@import "../../../../themes/variable.scss";
 
 footer {
   background-color: var(--footer-background-color);
@@ -9,9 +9,7 @@ footer {
   color: var(--footer-color);
 
   .container {
-    @include container;
-    padding: 86px 120px 76px;
-
+    padding: 80px 123px 30px 50px;
     @media screen and (max-width: 767px) {
       padding: 86px 0px 76px;
     }
@@ -32,7 +30,6 @@ footer {
 
       @media screen and (max-width: 767px) {
         padding: 30px 0px 15px;
-
       }
     }
   }
