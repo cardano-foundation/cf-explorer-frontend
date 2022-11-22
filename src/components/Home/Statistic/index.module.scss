@@ -19,6 +19,12 @@
     .content {
       min-height: 9.1425rem;
 
+      .skeleton {
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+      
+      .title,
       h4 {
         width: calc(100% - 70px);
         margin-bottom: 0.75rem;

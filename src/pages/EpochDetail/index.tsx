@@ -1,70 +1,36 @@
-import React, { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
-import useFetch from '../../commons/hooks/useFetch';
-import AIcon from '../../commons/resources/images/AIcon.png';
-import Card from '../../components/commons/Card';
-import DetailCard from '../../components/commons/DetailCard';
-import styles from './index.module.scss';
-import TableBlock from './TableBlock';
+import React from "react";
+import { useParams } from "react-router-dom";
+
+import useFetch from "../../commons/hooks/useFetch";
+import useFetchList from "../../commons/hooks/useFetchList";
+import EpochBlockList from "../../components/EpochBlockList";
+import EpochOverview from "../../components/EpochOverview";
+
+import styles from "./index.module.scss";
 
 const EpochDetail: React.FC = () => {
-  const { epochId } = useParams<any>();
-  const { data, loading } = useFetch<IDataEpoch>(`epoch/${epochId}`);
+  const { epochId } = useParams<{ epochId: string }>();
 
-  const dataMemo = useMemo(() => {
-    if (!data) {
-      return {
-        blkCount: 1,
-        endTime: '',
-        no: 1,
-        outSum: 1,
-        startTime: '',
-        status: '',
-        txCount: 1,
-      };
-    }
-    return data;
-  }, [data]);
-
-  const listDetails = [
-    {
-      title: 'Start time:',
-      value: dataMemo.startTime,
-    },
-
-    {
-      title: 'End time:',
-      value: dataMemo.endTime,
-    },
-    {
-      title: 'Blocks: ',
-      value: dataMemo.blkCount,
-    },
-    {
-      title: 'Total Output:',
-      value: (
-        <div className={styles.transaction}>
-          <span>{dataMemo.outSum || 0}</span> <img className={styles.img} alt="ada icon" src={AIcon} />
-        </div>
-      ),
-    },
-  ];
+  const { data: EpochDetail, loading: EpochDetailLoading } = useFetch<IDataEpoch>(`epoch/${epochId}`);
+  const {
+    data: BlockList,
+    loading,
+    total,
+    totalPage,
+    currentPage,
+  } = useFetchList<BlockDetail>("block/list", { epochNo: epochId });
 
   return (
-    <>
-      <Card className={styles.wrapper} title={`Epoch Detail: ${dataMemo?.no}`}>
-        <DetailCard
-          listDetails={listDetails}
-          loading={loading}
-          progress={{
-            block: dataMemo.blkCount,
-            currentSlot: 325120,
-            epoch: dataMemo.no,
-          }}
-        />
-      </Card>
-      <TableBlock />
-    </>
+    <div className={styles.container}>
+      <EpochOverview data={EpochDetail} loading={EpochDetailLoading} />
+      <EpochBlockList
+        data={BlockList}
+        loading={loading}
+        currentPage={currentPage}
+        total={total}
+        totalPage={totalPage}
+      />
+    </div>
   );
 };
 
