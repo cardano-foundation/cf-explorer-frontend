@@ -15,6 +15,9 @@ interface EpochkOverviewProps {
 }
 
 const EpochOverview: React.FC<EpochkOverviewProps> = ({ data, loading }) => {
+  console.log(data);
+  
+
   const percentage = useMemo(() => {
     // TODO: Format string
     if (data?.startTime && data?.endTime) {

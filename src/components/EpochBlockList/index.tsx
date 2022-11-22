@@ -25,8 +25,6 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
   };
-  console.log(data);
-  
 
   const columns: Column<BlockDetail>[] = [
     {
@@ -55,9 +53,13 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
       key: "slot",
       minWidth: "100px",
       render: r => (
-        // TODO: Update slot format base on BE output
-        <div style={{display: "flex", alignItems: "center"}}>
-          <Link to={"#"} className={`${styles.fwBold} ${styles.link}`}>{r.slotNo}</Link><span> / {}</span>
+        <div className={styles.flexCol}>
+          <Link to={"#"} className={`${styles.fwBold} ${styles.link}`}>
+            {r.slotNo}
+          </Link>
+          <span>
+            {r.epochNo} / {r.epochSlotNo}
+          </span>
         </div>
       ),
     },

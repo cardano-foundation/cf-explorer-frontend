@@ -17,4 +17,9 @@
     .fwBold {
         font-weight: var(--font-weight-bold);
     }
+
+    .flexCol {
+        display: flex;
+        flex-direction: column;
+    }
 }
