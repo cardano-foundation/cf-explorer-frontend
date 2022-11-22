@@ -4,7 +4,7 @@ import styles from "./index.module.scss";
 
 interface CardProps {
   title?: string;
-  children: ReactNode;
+  children?: ReactNode;
   className?: string;
 }
 

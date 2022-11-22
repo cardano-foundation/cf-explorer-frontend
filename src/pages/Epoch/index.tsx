@@ -5,6 +5,7 @@ import useFetchList from "../../commons/hooks/useFetchList";
 import AIcon from "../../commons/resources/images/AIcon.png";
 import { routers } from "../../commons/routers";
 import { EPOCH_STATUS } from "../../commons/utils/constants";
+import { formatADA } from "../../commons/utils/helper";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import styles from "./index.module.scss";
@@ -22,7 +23,7 @@ export const checkStatus = (status: string) => {
   }
 };
 const styleFont400 = {
-  fontSize: '16px',
+  fontSize: "16px",
   fontWeight: 400,
   color: "#273253",
   display: "block",
@@ -77,7 +78,6 @@ const columns: Column<IDataEpoch>[] = [
     render: r => {
       return (
         <div className={styles.blockRow}>
-          <img src={AIcon} alt="a icon" />
           <span>{r.blkCount}</span>
         </div>
       );
@@ -91,7 +91,7 @@ const columns: Column<IDataEpoch>[] = [
       return (
         <div className={styles.blockRow}>
           <img src={AIcon} alt="a icon" />
-          <span>{r.outSum}</span>
+          <span>{formatADA(r.outSum)}</span>
         </div>
       );
     },

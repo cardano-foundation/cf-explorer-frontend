@@ -12,7 +12,5 @@ type BlockDetail = Block & {
   epochNo: number;
   epochSlotNo: number;
   slotNo: number;
-  slot: number;
   totalSlot: number;
-  slotLeaded: string;
 };
