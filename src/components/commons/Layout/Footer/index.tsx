@@ -64,7 +64,7 @@ const Footer: React.FC<Props> = () => {
                 </Col>
                 <Col className={`${styles.col} ${styles.col_1}`} span={8}>
                   <div className={styles.title}>
-                    <span>Browser</span>
+                    <span>Community</span>
                     <ul className={styles.list_menu_footer}>
                       {community.map((item: any) => {
                         return (
@@ -78,7 +78,7 @@ const Footer: React.FC<Props> = () => {
                 </Col>
                 <Col className={`${styles.col}`} span={8}>
                   <div className={styles.title}>
-                    <span>Browser</span>
+                    <span>Resources</span>
                     <ul className={styles.list_menu_footer}>
                       {resource.map((item: any) => {
                         return (
