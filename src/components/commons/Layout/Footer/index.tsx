@@ -47,15 +47,18 @@ const Footer: React.FC<Props> = () => {
               </div>
             </Col>
             <Col span={12} className={styles.right}>
-              <Row gutter={[0,10]} className={styles.parentRow}>
+              <Row gutter={[0, 12]} className={styles.parentRow}>
                 <Col span={8} className={`${styles.col} ${styles.col_1}`}>
                   <div className={styles.title}>
                     <span>Browser</span>
                     <ul className={styles.list_menu_footer}>
                       {browse.map((item: any) => {
                         return (
-                          <li onClick={() => window.open(item.href)} key={item.title}>
-                            {item.title}
+                          <li key={item.title}>
+                            <a target="_blank" rel="noreferrer" href={item.href}>
+                              {" "}
+                              {item.title}
+                            </a>
                           </li>
                         );
                       })}
@@ -68,8 +71,11 @@ const Footer: React.FC<Props> = () => {
                     <ul className={styles.list_menu_footer}>
                       {community.map((item: any) => {
                         return (
-                          <li onClick={() => window.open(item.href)} key={item.title}>
-                            {item.title}
+                          <li key={item.title}>
+                            <a target="_blank" rel="noreferrer" href={item.href}>
+                              {" "}
+                              {item.title}
+                            </a>
                           </li>
                         );
                       })}
@@ -82,8 +88,11 @@ const Footer: React.FC<Props> = () => {
                     <ul className={styles.list_menu_footer}>
                       {resource.map((item: any) => {
                         return (
-                          <li onClick={() => window.open(item.href)} key={item.title}>
-                            {item.title}
+                          <li key={item.title}>
+                            <a target="_blank" rel="noreferrer" href={item.href}>
+                              {" "}
+                              {item.title}
+                            </a>
                           </li>
                         );
                       })}

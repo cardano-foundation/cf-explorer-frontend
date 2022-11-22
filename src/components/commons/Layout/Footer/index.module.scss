@@ -117,21 +117,24 @@ footer {
               .list_menu_footer {
                 text-align: left;
                 & > li {
-                  @include font($font-family-helvetica, normal, 400, 0.9375em);
-                  color: $color-text-menu;
-                  @include flex(center, unset, row);
-                  padding-left: 1.25em;
-                  padding-bottom: 1.25em;
-                  cursor: pointer;
-                  &::after {
-                    content: "";
-                    position: absolute;
-                    width: 5px;
-                    height: 5px;
-                    background: #29744d;
-                    border-radius: 50%;
-                    left: 0;
+                  & > a {
+                    @include font($font-family-helvetica, normal, 400, 0.9375em);
+                    color: $color-text-menu;
+                    @include flex(center, unset, row);
+                    padding-left: 1.25em;
+                    padding-bottom: 1.25em;
+                    cursor: pointer;
+                    &::after {
+                      content: "";
+                      position: absolute;
+                      width: 5px;
+                      height: 5px;
+                      background: #29744d;
+                      border-radius: 50%;
+                      left: 0;
+                    }
                   }
+                 
                 }
               }
             }

@@ -44,7 +44,7 @@ export const browse = [
     title: "Contact Us",
   },
   {
-    href: "#",
+    href: "https://github.com",
     title: "Github",
   },
   {
@@ -59,39 +59,35 @@ export const browse = [
 
 export const community = [
   {
-    href: "#",
+    href: "https://line.me/en/",
     title: "Line",
   },
   {
-    href: "#",
+    href: "https://www.linkedin.com/",
     title: "LinkedIn",
   },
   {
-    href: "#",
+    href: "https://meet.google.com/",
     title: "Meet up",
   },
   {
-    href: "#",
+    href: "https://medium.com/",
     title: "Medium",
   },
   {
-    href: "#",
+    href: "https://www.reddit.com/",
     title: "Reddit",
   },
   {
-    href: "#",
-    title: "Reddit",
-  },
-  {
-    href: "#",
+    href: "https://telegram.org/",
     title: "Telegram",
   },
   {
-    href: "#",
+    href: "https://weibo.com/overseas",
     title: "Weibo",
   },
   {
-    href: "#",
+    href: "https://www.youtube.com/",
     title: "Youtube",
   },
 ];
