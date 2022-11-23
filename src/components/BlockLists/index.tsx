@@ -96,6 +96,7 @@ const BlockList: React.FC<BlockListProps> = ({
         columns={columns}
         data={blockLists}
         total={{ count: total, title: "Total Transactions" }}
+        onClickRow={(_, r: Block) => history.push(routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`))}
         pagination={{
           current: currentPage + 1 || 1,
           total: total,

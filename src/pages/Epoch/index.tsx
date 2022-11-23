@@ -49,9 +49,9 @@ const columns: Column<IDataEpoch>[] = [
     minWidth: "100px",
     render: r => {
       return (
-        <Link to={`/epoch/${r.no}`} className={styles.link}>
+        <div className={styles.link}>
           <span className={checkStatus(r.status)}>{EPOCH_STATUS[r.status]}</span>
-        </Link>
+        </div>
       );
     },
   },
@@ -106,14 +106,14 @@ const Epoch: React.FC = () => {
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
   };
-  const { data, total, currentPage, loading } = useFetchList<IEpoch>(`epoch/list`, {
+  const { data, total, currentPage, loading } = useFetchList<IDataEpoch>(`epoch/list`, {
     page: query.page ? +query.page - 1 : 0,
     size: query.size ? (query.size as string) : 10,
   });
   if (!data) return null;
 
   const excuteScroll = () => ref.current?.scrollIntoView();
-  
+
   return (
     <div className={styles.container} ref={ref}>
       <Card title={"Epoch"}>
@@ -122,6 +122,7 @@ const Epoch: React.FC = () => {
           loading={loading}
           columns={columns}
           data={data}
+          onClickRow={(_, r: IDataEpoch) => history.push(routers.EPOCH_DETAIL.replace(":epochId", `${r.no}`))}
           total={{ count: total, title: "Total Transactions" }}
           pagination={{
             current: currentPage + 1 || 1,

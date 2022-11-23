@@ -12,7 +12,7 @@ const LatestTransactions: React.FC<Props> = () => {
   return (
     <div className={styles.latestTransaction}>
       <div className={styles.title}>
-        <h3>Transaction in past 15 days</h3>
+        <h3>Latest Transactions</h3>
         <NavLink to={routers.BLOCK_LIST} className={styles.seemoreDesktop}>
           <small>See All</small>
         </NavLink>

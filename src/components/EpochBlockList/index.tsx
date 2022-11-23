@@ -109,6 +109,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
         columns={columns}
         data={data}
         total={{ count: total, title: "Total Transactions" }}
+        onClickRow={(_, r) => history.push(routers.EPOCH_DETAIL.replace(":epochId", `${r.blockNo}`))}
         pagination={{
           defaultCurrent: 1,
           total: totalPage,

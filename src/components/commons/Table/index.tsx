@@ -1,22 +1,23 @@
-import React, { ReactNode, useState } from 'react';
-import { Pagination, PaginationProps, Select, Skeleton } from 'antd';
+import React, { ReactNode, useState } from "react";
+import { Pagination, PaginationProps, Select, Skeleton } from "antd";
 
-import { numberWithCommas } from '../../../commons/utils/helper';
+import { numberWithCommas } from "../../../commons/utils/helper";
 
-import noData from '../../../commons/resources/images/noData.png';
+import noData from "../../../commons/resources/images/noData.png";
 
-import styles from './index.module.scss';
+import styles from "./index.module.scss";
 
 interface ColumnType {
   [key: string | number | symbol]: any;
 }
 
-type TableRowProps<T extends ColumnType> = Pick<TableProps, 'columns'> & {
+type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
   row: T;
   index: number;
+  onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
 };
 
-type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, 'columns'>;
+type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns">;
 
 interface TableProps<T extends ColumnType = any> {
   columns: Column<T>[];
@@ -29,6 +30,7 @@ interface TableProps<T extends ColumnType = any> {
   };
   pagination?: PaginationProps;
   allowSelect?: boolean;
+  onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
 }
 
 export interface Column<T extends ColumnType = any> {
@@ -38,17 +40,17 @@ export interface Column<T extends ColumnType = any> {
   render?: (data: T, index: number) => ReactNode;
 }
 interface FooterTableProps {
-  total: TableProps['total'];
-  pagination: TableProps['pagination'];
+  total: TableProps["total"];
+  pagination: TableProps["pagination"];
 }
 
-const Table: React.FC<TableProps> = ({ columns, data, total, pagination, className, loading }) => {
+const Table: React.FC<TableProps> = ({ columns, data, total, pagination, className, loading, onClickRow }) => {
   return (
     <div className={`${styles.wrapper} ${className}`}>
       <div className={styles.tableWrapper}>
         <table className={styles.table}>
           <TableHeader columns={columns} />
-          {!loading && <TableBody columns={columns} data={data} />}
+          {!loading && <TableBody columns={columns} data={data} onClickRow={onClickRow} />}
           {loading && <TableSekeleton columns={columns} />}
         </table>
         {!loading && data && data.length === 0 && (
@@ -78,24 +80,27 @@ const TableHeader = <T extends ColumnType>({ columns }: TableHeaderProps<T>) => 
   );
 };
 
-const TableBody = <T extends ColumnType>({ data, columns }: TableProps<T>) => {
+const TableBody = <T extends ColumnType>({ data, columns, onClickRow }: TableProps<T>) => {
   return (
     <tbody className={styles.tableBody}>
-      {data && data.map((row, index) => <TableRow row={row} key={index} columns={columns} index={index} />)}
+      {data &&
+        data.map((row, index) => (
+          <TableRow row={row} key={index} columns={columns} index={index} onClickRow={onClickRow} />
+        ))}
     </tbody>
   );
 };
 
-const TableRow = <T extends ColumnType>({ row, columns, index }: TableRowProps<T>) => {
+const TableRow = <T extends ColumnType>({ row, columns, index, onClickRow }: TableRowProps<T>) => {
   return (
-    <tr className={styles.bodyRow}>
+    <tr className={styles.bodyRow} onClick={e => onClickRow?.(e, row, index)}>
       {columns.map((column, idx) => {
         return (
           <td
             className={styles.col}
             key={idx}
             style={{
-              minWidth: column.minWidth ? column.minWidth : 'max-content',
+              minWidth: column.minWidth ? column.minWidth : "max-content",
             }}
           >
             {column.render ? column.render(row, index) : row[column.key]}
@@ -110,27 +115,27 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
   const [pageSize, setPageSize] = useState(pagination?.pageSize || 10);
   const renderPagination = (
     current: number,
-    type: 'prev' | 'next' | 'page' | 'jump-prev' | 'jump-next',
+    type: "prev" | "next" | "page" | "jump-prev" | "jump-next",
     originalElement: React.ReactNode
   ) => {
-    if (type === 'prev') {
+    if (type === "prev") {
       return <span> {`<`} </span>;
     }
-    if (type === 'next') {
+    if (type === "next") {
       return <span> {`>`} </span>;
     }
     return originalElement;
   };
 
   return (
-    <div className={styles.footer} style={{ justifyContent: total ? 'space-between' : 'flex-end' }}>
+    <div className={styles.footer} style={{ justifyContent: total ? "space-between" : "flex-end" }}>
       {total && (
         <div className={styles.total}>
           {total.title}: <span className={styles.fwBold}>{numberWithCommas(total.count)}</span>
         </div>
       )}
       {pagination && (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
           {pagination.pageSizeOptions && (
             <div className={styles.total}>
               Rows per page:
@@ -139,7 +144,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
                   label: page,
                   value: page,
                 }))}
-                style={{ border: 'none', fontWeight: 700 }}
+                style={{ border: "none", fontWeight: 700 }}
                 value={pageSize}
                 bordered={false}
                 onChange={value => {
@@ -173,13 +178,13 @@ const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
                   className={styles.col}
                   key={idx}
                   style={{
-                    minWidth: column.minWidth ? column.minWidth : 'max-content',
-                    padding: '0',
-                    height: '75px',
-                    overflow: 'hidden',
+                    minWidth: column.minWidth ? column.minWidth : "max-content",
+                    padding: "0",
+                    height: "75px",
+                    overflow: "hidden",
                   }}
                 >
-                  <Skeleton.Input size="large" style={{ height: '75px' }} active block />
+                  <Skeleton.Input size="large" style={{ height: "75px" }} active block />
                 </td>
               );
             })}

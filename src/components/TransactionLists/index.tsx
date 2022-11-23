@@ -1,11 +1,11 @@
-import { Link, useHistory } from 'react-router-dom';
-import { stringify } from 'qs';
+import { Link, useHistory } from "react-router-dom";
+import { stringify } from "qs";
 
-import Card from '../commons/Card';
-import Table, { Column } from '../commons/Table';
-import { BiLinkExternal } from 'react-icons/bi';
-import { formatADA, getShortHash, getShortWallet } from '../../commons/utils/helper';
-import styles from './index.module.scss';
+import Card from "../commons/Card";
+import Table, { Column } from "../commons/Table";
+import { BiLinkExternal } from "react-icons/bi";
+import { formatADA, getShortHash, getShortWallet } from "../../commons/utils/helper";
+import styles from "./index.module.scss";
 
 import AIcon from "../../commons/resources/images/AIcon.png";
 import moment from "moment";
@@ -27,31 +27,35 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
 
   const columns: Column<Transactions>[] = [
     {
-      title: '#',
-      key: 'id',
-      minWidth: '40px',
+      title: "#",
+      key: "id",
+      minWidth: "40px",
       render: (data, index) => {
         return <div className={styles.fwBold}>{index + 1}</div>;
       },
     },
     {
-      title: 'Trx Hash',
-      key: 'trxhash',
-      minWidth: '200px',
+      title: "Trx Hash",
+      key: "trxhash",
+      minWidth: "200px",
 
       render: r => (
         <div>
-          <Link to={`transactions/${r.hash}`} className={`${styles.fwBold} ${styles.link}`} style={{ margin: 0 }}>
+          <Link
+            to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}
+            className={`${styles.fwBold} ${styles.link}`}
+            style={{ margin: 0 }}
+          >
             {getShortHash(r.hash)}
           </Link>
-          <div>{moment('2022-11-15T08:52:40.188Z').format('MM/DD/YYYY HH:mm:ss')}</div>
+          <div>{moment("2022-11-15T08:52:40.188Z").format("MM/DD/YYYY HH:mm:ss")}</div>
         </div>
       ),
     },
     {
-      title: 'Block',
-      key: 'block',
-      minWidth: '200px',
+      title: "Block",
+      key: "block",
+      minWidth: "200px",
       render: r => (
         <>
           <Link
@@ -65,9 +69,9 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
       ),
     },
     {
-      title: 'Address',
-      key: 'address',
-      minWidth: '200px',
+      title: "Address",
+      key: "address",
+      minWidth: "200px",
       render(r, index) {
         return (
           <div>
@@ -112,9 +116,9 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
       },
     },
     {
-      title: 'Fees',
-      key: 'fee',
-      minWidth: '120px',
+      title: "Fees",
+      key: "fee",
+      minWidth: "120px",
       render: r => (
         <div className={styles.fwBold}>
           <img src={AIcon} alt="a icon" /> {formatADA(r.fee) || 0}
@@ -122,9 +126,9 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
       ),
     },
     {
-      title: 'Output',
-      minWidth: '120px',
-      key: 'ouput',
+      title: "Output",
+      minWidth: "120px",
+      key: "ouput",
       render: r => (
         <div className={styles.fwBold}>
           <img src={AIcon} alt="a icon" /> {formatADA(r.totalOutput) || 0}
@@ -134,18 +138,19 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
   ];
 
   return (
-    <Card title={'Transactions'}>
+    <Card title={"Transactions"}>
       <Table
         className={styles.table}
         columns={columns}
         data={transactions}
-        total={{ count: total, title: 'Total Transactions' }}
+        total={{ count: total, title: "Total Transactions" }}
         loading={loading}
+        onClickRow={(_, r: Transactions) => history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`))}
         pagination={{
           current: currentPage + 1 || 1,
           total: total,
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
-          size: 'small',
+          size: "small",
           pageSizeOptions: [10, 20, 50],
           onChange(page, pageSize) {
             setQuery({ page, size: pageSize });

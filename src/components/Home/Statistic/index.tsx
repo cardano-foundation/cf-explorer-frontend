@@ -27,12 +27,8 @@ const SkeletonBox = () => (
 );
 
 const HomeStatistic: React.FC<Props> = () => {
-  const { data: currentEpochNumber, loading: loadingNumber } = useFetch<IDataEpoch>(`epoch/current`);
-  const { data: currentEpoch, loading: loadingCurrent } = useFetch<IDataEpoch>(
-    `${currentEpochNumber ? `epoch/${currentEpochNumber}` : ""}`
-  );
+  const { data: currentEpoch, loading: loadingEpoch } = useFetch<EpochCurrentType>(`epoch/current`);
   const adaPrice = 1;
-  const loadingEpoch = loadingNumber || loadingCurrent;
   return (
     <Row gutter={15} className={styles.statistic}>
       <Col span={24} sm={24} xl={{ span: 12, offset: 0 }}>
@@ -81,8 +77,11 @@ const HomeStatistic: React.FC<Props> = () => {
                   <small>
                     Epoch: <small className={styles.epochValue}>{formatCurrency(currentEpoch?.no || 0)}</small>
                     <br />
-                    Slot: <small className={styles.epochValue}>{formatCurrency(currentEpoch?.blkCount || 0)}</small>/
-                    {formatCurrency(MAX_SLOT_EPOCH)}
+                    Slot:{" "}
+                    <small className={styles.epochValue}>
+                      {formatCurrency((currentEpoch?.slot || 0) % MAX_SLOT_EPOCH)}
+                    </small>
+                    /{formatCurrency(MAX_SLOT_EPOCH)}
                   </small>
                 </div>
               </div>
