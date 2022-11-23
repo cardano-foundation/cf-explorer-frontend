@@ -8,10 +8,13 @@ export const SUPPORTED_WALLETS: Wallet[] = [
   { name: "Yoroi", icon: YoroiIcon },
 ];
 
-export const EPOCH_STATUS = {
+export const EPOCH_STATUS: any = {
   FINISH: "FINISHED",
   REWARD: "REWARDING",
   INPROGRESS: "IN_PROGRESS",
+  FINISHED: "Finish",
+  REWARDING: "Rewarding",
+  IN_PROGRESS: "In Progress",
 };
 
 export const MAX_SLOT_EPOCH = 432000;

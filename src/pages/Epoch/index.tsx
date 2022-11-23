@@ -50,7 +50,7 @@ const columns: Column<IDataEpoch>[] = [
     render: r => {
       return (
         <Link to={`/epoch/${r.no}`} className={styles.link}>
-          <span className={checkStatus(r.status)}>{r.status}</span>
+          <span className={checkStatus(r.status)}>{EPOCH_STATUS[r.status]}</span>
         </Link>
       );
     },
