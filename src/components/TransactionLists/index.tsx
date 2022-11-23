@@ -42,7 +42,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
 
       render: r => (
         <div>
-          <Tooltip title={r.hash} placement="bottom">
+          <Tooltip title={r.hash} placement="top">
             <Link
               to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}
               className={`${styles.fwBold} ${styles.link}`}
@@ -72,7 +72,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
               to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epochNo}`)}
               className={`${styles.fwBold} ${styles.link}`}
             >
-              {r.epochNo}{" "}
+              {r.epochNo}
             </Link>
             / {r.slot}
           </div>
@@ -91,7 +91,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
               <div>
                 {r.addressesInput.slice(0, 2).map((tx, key) => {
                   return (
-                    <Tooltip title={tx} placement="bottom">
+                    <Tooltip title={tx} placement="top">
                       <Link to={`#`} className={`${styles.fwBold} ${styles.link}`} key={key}>
                         {getShortWallet(tx)}
                         <BiLinkExternal style={{ marginLeft: 8 }} />
@@ -111,7 +111,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
               <div>
                 {r.addressesOutput.slice(0, 2).map((tx, key) => {
                   return (
-                    <Tooltip title={tx} placement="bottom">
+                    <Tooltip title={tx} placement="top">
                       <Link to={`#`} className={`${styles.fwBold} ${styles.link}`} key={key}>
                         {getShortWallet(tx)}
                         <BiLinkExternal style={{ marginLeft: 8 }} />

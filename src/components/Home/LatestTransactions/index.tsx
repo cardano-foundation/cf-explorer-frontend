@@ -1,10 +1,10 @@
-import { Col, Row, Skeleton } from "antd";
+import { Col, Row, Skeleton, Tooltip } from "antd";
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { BlankBlueIcon, CheckGreenIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
-import { formatCurrency, getShortWallet } from "../../../commons/utils/helper";
+import { formatCurrency, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import styles from "./index.module.scss";
 
 const LatestTransactions: React.FC = () => {
@@ -47,7 +47,9 @@ const LatestTransactions: React.FC = () => {
                   </div>
                   <p>
                     <small>Transaction hash: </small>
-                    <small className={styles.txsDetail}>{getShortWallet(hash)}</small>
+                    <Tooltip placement="top" title={hash}>
+                      <small className={styles.txsDetail}>{getShortHash(hash)}</small>
+                    </Tooltip>
                   </p>
                   <p>
                     <small>Block: </small>
@@ -59,10 +61,12 @@ const LatestTransactions: React.FC = () => {
                     return (
                       <p key={add}>
                         <small>From: </small>
-                        <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
-                          <small>{getShortWallet(add)}</small>
-                          <img src={BlankBlueIcon} alt="blank blue" />
-                        </Link>
+                        <Tooltip placement="top" title={add}>
+                          <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
+                            <small>{getShortWallet(add)}</small>
+                            <img src={BlankBlueIcon} alt="blank blue" />
+                          </Link>
+                        </Tooltip>
                       </p>
                     );
                   })}
@@ -70,10 +74,12 @@ const LatestTransactions: React.FC = () => {
                     return (
                       <p key={add}>
                         <small>To: </small>
-                        <a href={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
-                          <small>{getShortWallet(add)}</small>
-                          <img src={BlankBlueIcon} alt="blank blue" />
-                        </a>
+                        <Tooltip placement="top" title={add}>
+                          <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
+                            <small>{getShortWallet(add)}</small>
+                            <img src={BlankBlueIcon} alt="blank blue" />
+                          </Link>
+                        </Tooltip>
                       </p>
                     );
                   })}

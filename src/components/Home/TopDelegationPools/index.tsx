@@ -80,7 +80,7 @@ const TopDelegationPools: React.FC<Props> = () => {
       title: "",
       key: "action",
       render: r => (
-        <Link to={routers.DELEGATION_POOLS.replace(":poolId", `${r.poolId}`)} className={styles.actionDetail}>
+        <Link to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`)} className={styles.actionDetail}>
           <small>Detail</small>
         </Link>
       ),

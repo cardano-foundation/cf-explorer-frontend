@@ -20,7 +20,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
     {
       title: "Block ID",
       value: data?.hash && (
-        <Tooltip title={data?.hash || ""} placement="bottom">
+        <Tooltip title={data?.hash || ""} placement="top">
           <Link to={`#`} className={styles.link}>
             {getShortWallet(data?.hash || "")}
           </Link>
@@ -63,7 +63,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
     {
       title: "Slot leader",
       value: data?.slotLeader && (
-        <Tooltip title={data?.slotLeader || ""} placement="bottom">
+        <Tooltip title={data?.slotLeader || ""} placement="top">
           <Link to={`#`} className={styles.link}>
             {getShortWallet(data?.slotLeader || "")}
           </Link>
