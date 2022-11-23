@@ -1,6 +1,6 @@
 import React from "react";
 import { BiLinkExternal } from "react-icons/bi";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { stringify } from "qs";
 
 import Card from "../commons/Card";
@@ -11,6 +11,7 @@ import AIcon from "../../commons/resources/images/AIcon.png";
 import { routers } from "../../commons/routers";
 
 import styles from "./index.module.scss";
+import { Tooltip } from "antd";
 
 interface IEpochBlockList {
   data: Block[];
@@ -39,7 +40,11 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
       title: "Block",
       key: "block",
       minWidth: "100px",
-      render: r => <span className={`${styles.fwBold} ${styles.link}`}>{r.blockNo}</span>,
+      render: r => (
+        <Link to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>
+          <span className={`${styles.fwBold} ${styles.link}`}>{r.blockNo}</span>
+        </Link>
+      ),
     },
     {
       title: "Slot",
@@ -49,7 +54,10 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
         <>
           <span className={`${styles.fwBold} ${styles.link}`}>{r.slotNo}</span>
           <div>
-            <span className={`${styles.fwBold} ${styles.link}`}>{r.epochNo}</span> / {r.epochSlotNo}
+            <Link to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epochNo}`)}>
+              <span className={`${styles.fwBold} ${styles.link}`}>{r.epochNo}</span>
+            </Link>{" "}
+            / {r.epochSlotNo}
           </div>
         </>
       ),
@@ -62,10 +70,14 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
         return (
           <>
             Address:
-            <span className={`${styles.fwBold} ${styles.link} ${styles.ml15}`}>
-              {getShortWallet(r.slotLeader ?? "")}
-              <BiLinkExternal className={styles.icon} />
-            </span>
+            <Tooltip placement="top" title={r.slotLeader}>
+              <Link to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>
+                <span className={`${styles.fwBold} ${styles.link} ${styles.ml15}`}>
+                  {getShortWallet(r.slotLeader ?? "")}
+                  <BiLinkExternal className={styles.icon} />
+                </span>
+              </Link>
+            </Tooltip>
           </>
         );
       },

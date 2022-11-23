@@ -40,7 +40,7 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, total, curre
       key: "blockId",
       minWidth: "150px",
       render: r => (
-        <Tooltip placement="bottom" title={r.hash}>
+        <Tooltip placement="top" title={r.hash}>
           <Link
             to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}
             className={`${styles.fwBlod} ${styles.link}`}

@@ -1,5 +1,6 @@
 import { Col, Row, Skeleton } from "antd";
 import React from "react";
+import { Link } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import {
   AdaPriceIcon,
@@ -10,6 +11,7 @@ import {
   TotalADAStakeIcon,
   UpGreenIcon,
 } from "../../../commons/resources";
+import { routers } from "../../../commons/routers";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { formatCurrency, formatPrice } from "../../../commons/utils/helper";
 import styles from "./index.module.scss";
@@ -41,14 +43,14 @@ const HomeStatistic: React.FC<Props> = () => {
                 <img className={styles.icon} src={AdaPriceIcon} alt="Ada Price" />
                 <div className={styles.content}>
                   <h4>Ada Price</h4>
-                  <h3>$0.4607</h3>
-                  <div className={styles.adaPrice}>
-                    <small className={styles.priceValue}>0.0714 BTC</small>
+                  <h3>TBA</h3>
+                  {/* <div className={styles.adaPrice}>
+                    <small className={styles.priceValue}>TBA</small>
                     <span className={styles.priceRate}>
                       <img src={adaPrice > 0 ? UpGreenIcon : DownRedIcon} alt="price rate" />
-                      <small className={adaPrice > 0 ? styles.priceUp : styles.priceDown}>-10,24 %</small>
+                      <small className={adaPrice > 0 ? styles.priceUp : styles.priceDown}>TBA</small>
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             )}
@@ -61,7 +63,7 @@ const HomeStatistic: React.FC<Props> = () => {
                 <img className={styles.icon} src={MarketCapIcon} alt="Market cap" />
                 <div className={styles.content}>
                   <h4>Market cap</h4>
-                  <h3>${formatCurrency(15592559326)}</h3>
+                  <h3>TBA</h3>
                 </div>
               </div>
             )}
@@ -70,7 +72,7 @@ const HomeStatistic: React.FC<Props> = () => {
             {loadingEpoch ? (
               <SkeletonBox />
             ) : (
-              <div className={styles.box}>
+              <Link to={routers.EPOCH_DETAIL.replace(":epochId", `${currentEpoch?.no}`)} className={styles.box}>
                 <img className={styles.icon} src={CurentEpochIcon} alt="Curent Epoch" />
                 <div className={styles.content}>
                   <h4>Curent Epoch</h4>
@@ -84,7 +86,7 @@ const HomeStatistic: React.FC<Props> = () => {
                     /{formatCurrency(MAX_SLOT_EPOCH)}
                   </small>
                 </div>
-              </div>
+              </Link>
             )}
           </Col>
         </Row>
@@ -99,8 +101,8 @@ const HomeStatistic: React.FC<Props> = () => {
                 <img className={styles.icon} src={LiveStakeIcon} alt="Total ADA Stake" />
                 <div className={styles.content}>
                   <h4>Live Stake</h4>
-                  <h3>{formatPrice(20714000000)}</h3>
-                  <div className={styles.progress}>
+                  <h3>TBA</h3>
+                  {/* <div className={styles.progress}>
                     <div className={styles.progressActive} style={{ width: "70%" }}>
                       {"70%"}
                     </div>
@@ -115,7 +117,7 @@ const HomeStatistic: React.FC<Props> = () => {
                       {formatPrice(35.12 * 10 ** 9)}
                     </small>{" "}
                     (78%)
-                  </small>
+                  </small> */}
                 </div>
               </div>
             )}
@@ -128,7 +130,7 @@ const HomeStatistic: React.FC<Props> = () => {
                 <img className={styles.icon} src={TotalADAStakeIcon} alt="Total ADA Stake" />
                 <div className={styles.content}>
                   <h4>Total ADA Stake</h4>
-                  <h3>{formatPrice(24770000000)}</h3>
+                  <h3>TBA</h3>
                 </div>
               </div>
             )}

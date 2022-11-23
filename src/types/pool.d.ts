@@ -1,11 +1,11 @@
 interface DelegationPool {
-  id: string;
-  name: string;
-  size: number;
+  poolId: string;
+  poolName: string;
+  poolSize: number;
   reward: number;
-  fee: number;
-  feeA: number;
-  declaredPledge: number;
+  feePercent: number;
+  feeAmount: number;
+  pledge: number;
   saturation: number;
 }
 

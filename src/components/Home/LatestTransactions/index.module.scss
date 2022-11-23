@@ -46,11 +46,14 @@
     height: auto;
   }
   .item {
+    display: block;
     position: relative;
     padding: 20px;
     margin-bottom: 20px;
     border: 1.5px solid #e3e5e9;
     border-radius: 10px;
+    font-family: var(--font-family-text);
+
     .priceValue {
       @include flex-start-center;
       gap: 8px;
@@ -88,6 +91,9 @@
           vertical-align: baseline;
         }
       }
+    }
+    &:hover{
+      @include box-shadow-raised
     }
   }
 
