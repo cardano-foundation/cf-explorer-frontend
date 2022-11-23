@@ -44,7 +44,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading 
                       <img src={infoIcon} alt="info" className={styles.img} />
                     </div>
                     <div className={styles.row}>
-                      <div style={{ minWidth: 150 }}>{item.title}</div>:
+                      <div style={{ minWidth: 150 }}>{item.title}:</div>
                       <div className={` ${styles.fwBold} ${styles.value}`}>{item.value}</div>
                     </div>
                   </>
@@ -66,8 +66,8 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading 
             }}
             format={() => (
               <>
-                <div className={styles.epoch}>{progress.epoch} </div>
-                <div className={styles.epochTitle}>EPOCH </div>
+                <div className={styles.epoch}>{progress.epoch}</div>
+                <div className={styles.epochTitle}>EPOCH</div>
               </>
             )}
             strokeWidth={6}

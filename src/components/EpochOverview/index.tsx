@@ -8,24 +8,37 @@ import DetailCard from "../commons/DetailCard";
 
 import styles from "./index.module.scss";
 import aIcon from "../../commons/resources/images/AIcon.png";
+import { EPOCH_STATUS } from "../../commons/utils/constants";
 
 interface EpochkOverviewProps {
   data: IDataEpoch | null;
   loading: boolean;
 }
 
-const EpochOverview: React.FC<EpochkOverviewProps> = ({ data, loading }) => {
-  console.log(data);
-  
+// console.log(EPOCH_STATUS["IN_PROGRESS"]);
 
-  const percentage = useMemo(() => {
-    // TODO: Format string
+
+// const getStatus = (status: string | undefined) => {
+//   switch (status) {
+//     case EPOCH_STATUS.FINISH:
+//       return "Finished";
+//     case EPOCH_STATUS.INPROGRESS:
+//       return "In Progress";
+//     case EPOCH_STATUS.REWARD:
+//       return "Rewarding";
+//     default:
+//       return "";
+//   }
+// };
+
+const EpochOverview: React.FC<EpochkOverviewProps> = ({ data, loading }) => {
+  const { slot, percentage } = useMemo(() => {
     if (data?.startTime && data?.endTime) {
-      const start = moment(data?.startTime);
-      const end = moment(data?.endTime);
-      return (moment().diff(start)) / (end.diff(start));
+      const slot = moment.min(moment(), moment(data?.endTime)).diff(data?.startTime) / 1000;
+      const percentage = +(slot / 4320).toFixed(2);
+      return { slot, percentage };
     }
-    return 0;
+    return { slot: 0, percentage: 0 };
   }, [data?.startTime, data?.endTime]);
 
   const listDetails = [
@@ -60,7 +73,7 @@ const EpochOverview: React.FC<EpochkOverviewProps> = ({ data, loading }) => {
             showInfo={false}
           />
           <div className={styles.progressDetail}>
-            <h4 className={styles.status}>{data?.status}</h4>
+            <h4 className={styles.status}>{data?.status ? EPOCH_STATUS[data?.status] : ""}</h4>
             <h4 className={styles.percentage}>{percentage}%</h4>
           </div>
         </div>
@@ -75,8 +88,8 @@ const EpochOverview: React.FC<EpochkOverviewProps> = ({ data, loading }) => {
         listDetails={listDetails}
         progress={{
           block: data?.blkCount || 0,
-          currentSlot: data?.no || 0,
-          epoch: data?.epochSlotNo || 0,
+          currentSlot: slot,
+          epoch: data?.no || 0,
         }}
       />
     </Card>
