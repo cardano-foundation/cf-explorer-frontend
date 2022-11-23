@@ -1,6 +1,6 @@
 import React from "react";
 import { BiLinkExternal } from "react-icons/bi";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 
 import Card from "../commons/Card";
@@ -39,28 +39,19 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
       title: "Block",
       key: "block",
       minWidth: "100px",
-      render: r => (
-        <Link
-          to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}
-          className={`${styles.fwBold} ${styles.link}`}
-        >
-          <span>{r.blockNo}</span>
-        </Link>
-      ),
+      render: r => <span className={`${styles.fwBold} ${styles.link}`}>{r.blockNo}</span>,
     },
     {
       title: "Slot",
       key: "slot",
       minWidth: "100px",
       render: r => (
-        <div className={styles.flexCol}>
-          <Link to={"#"} className={`${styles.fwBold} ${styles.link}`}>
-            {r.slotNo}
-          </Link>
-          <span>
-            {r.epochNo} / {r.epochSlotNo}
-          </span>
-        </div>
+        <>
+          <span className={`${styles.fwBold} ${styles.link}`}>{r.slotNo}</span>
+          <div>
+            <span className={`${styles.fwBold} ${styles.link}`}>{r.epochNo}</span> / {r.epochSlotNo}
+          </div>
+        </>
       ),
     },
     {
@@ -69,13 +60,13 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
       minWidth: "100px",
       render: r => {
         return (
-          <div className={styles.input}>
-            Input:
-            <Link to={`#`} className={`${styles.fwBold} ${styles.link}`} style={{ marginLeft: 15 }}>
+          <>
+            Address:
+            <span className={`${styles.fwBold} ${styles.link} ${styles.ml15}`}>
               {getShortWallet(r.slotLeader ?? "")}
-              <BiLinkExternal fontSize={18} style={{ marginLeft: 8 }} />
-            </Link>
-          </div>
+              <BiLinkExternal className={styles.icon} />
+            </span>
+          </>
         );
       },
     },
@@ -109,9 +100,9 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
         columns={columns}
         data={data}
         total={{ count: total, title: "Total Transactions" }}
-        onClickRow={(_, r) => history.push(routers.EPOCH_DETAIL.replace(":epochId", `${r.blockNo}`))}
+        onClickRow={(_, r) => history.push(routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`))}
         pagination={{
-          defaultCurrent: 1,
+          current: currentPage + 1 || 1,
           total: totalPage,
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
           size: "small",
