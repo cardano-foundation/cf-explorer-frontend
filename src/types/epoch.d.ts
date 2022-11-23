@@ -21,4 +21,8 @@ interface IBlockEpochDetail extends IDataEpoch {
   createdBy: string;
   transaction: string;
 }
-
+interface EpochCurrentType {
+  no: number;
+  slot: number;
+  totalSlot: number;
+}

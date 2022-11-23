@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
               {footerMenus.map(level_1 => {
                 const { title, children } = level_1;
                 return (
-                  <Col span={24} md={8}>
+                  <Col key={title} span={24} md={8}>
                     <h3>{title}</h3>
                     <ul>
                       {children?.map(level_2 => {
@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
                         const target =
                           href && (href.search("http://") >= 0 || href.search("https://") >= 0) ? "_blank" : null;
                         return (
-                          <li>
+                          <li key={title}>
                             {href ? (
                               target ? (
                                 <a href={href} target={target} rel="noreferrer" title={title}>

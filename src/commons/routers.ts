@@ -3,7 +3,7 @@ export const routers = {
   BLOCK_LIST: "/blocks",
   BLOCK_DETAIL: "/block/:blockId",
   TRANSACTION_LIST: "/transactions",
-  TRANSACTION_DETAIL: "/transactions/:trxHash",
+  TRANSACTION_DETAIL: "/transaction/:trxHash",
   EPOCH_LIST: "/epochs",
   EPOCH_DETAIL: "/epoch/:epochId",
   POOL_LIST: "/pools",
