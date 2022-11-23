@@ -40,8 +40,6 @@ pipeline {
                     }
                 }
                 sh "docker-compose --env-file ${envFileDeploy} up -d --build"
-                sh "sleep 5s"
-				sh "docker images -f 'dangling=true' -q --no-trunc | xargs docker rmi"
             }
         }
     }

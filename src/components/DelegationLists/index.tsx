@@ -90,6 +90,7 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading }
             }}
             strokeWidth={8}
             percent={80}
+            status='active'
           />
         </div>
       ),

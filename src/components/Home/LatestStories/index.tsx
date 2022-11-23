@@ -51,7 +51,7 @@ const LatestStories: React.FC<Props> = () => {
         {data.map(({ id, image, author, title, createdDate }) => {
           return (
             <Col span={24} sm={12} xl={6} key={id}>
-              <Link className={styles.box} to={`/artic/${id}`} title={title}>
+              <Link className={styles.box} to={routers.STORY_DETAIL.replace(":storyId", `${id}`)} title={title}>
                 <img className={styles.image} src={image} alt={title} />
                 <h6>{author}</h6>
                 <h4>{title}</h4>

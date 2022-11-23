@@ -1,73 +1,44 @@
-import { Progress, Table } from "antd";
-import { ColumnType } from "antd/lib/table";
+import { Progress } from "antd";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import useFetchList from "../../../commons/hooks/useFetchList";
 import { DownRedIcon, UpGreenIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
 import { formatPrice } from "../../../commons/utils/helper";
+import Table, { Column } from "../../commons/Table";
 import styles from "./index.module.scss";
 
 interface Props {}
 
 const ABBREVIATIONS = ["", "k", "m", "b", "t", "q", "Q", "s", "S"];
 
-const data: DelegationPool[] = [
-  {
-    id: "1",
-    name: "[NORTH] #2 Nordic Pool",
-    size: 63.41 * 10 ** 6,
-    reward: 16.24,
-    fee: 2.5,
-    feeA: 500,
-    declaredPledge: 1 * 10 ** 6,
-    saturation: 80,
-  },
-  {
-    id: "2",
-    name: "[NORTH] #2 Nordic Pool",
-    size: 63.41 * 10 ** 6,
-    reward: -10.24,
-    fee: 2.5,
-    feeA: 500,
-    declaredPledge: 1 * 10 ** 6,
-    saturation: 80,
-  },
-  {
-    id: "3",
-    name: "[NORTH] #2 Nordic Pool",
-    size: 63.41 * 10 ** 6,
-    reward: 16.24,
-    fee: 2.5,
-    feeA: 500,
-    declaredPledge: 1 * 10 ** 6,
-    saturation: 80,
-  },
-];
 const TopDelegationPools: React.FC<Props> = () => {
-  const columns: ColumnType<DelegationPool>[] = [
+  const { data, loading } = useFetchList<DelegationPool>(`delegation/pool-list?search=`, { page: 1, size: 4 });
+  const history = useHistory();
+  const columns: Column<DelegationPool>[] = [
     {
       title: "Pool",
       key: "name",
       render: r => (
-        <Link to={`/delegation-pool/${r.id}`} className={styles.poolName}>
-          <span>{r.name}</span>
+        <Link to={`/delegation-pool/${r.poolId}`} className={styles.poolName}>
+          <span>{r.poolName}</span>
         </Link>
       ),
     },
     {
       title: "Pool size (A)",
       key: "size",
-      render: r => <span>{formatPrice(r.size, ABBREVIATIONS)}</span>,
+      render: r => <span>{formatPrice(r.poolSize || 63.41 * 10 ** 6, ABBREVIATIONS)}</span>,
     },
     {
       title: "Reward",
       key: "reward",
       render: r => (
         <span className={styles.priceRate}>
-          <img src={r.reward > 0 ? UpGreenIcon : DownRedIcon} alt="price rate" />
-          <span className={r.reward > 0 ? styles.priceUp : styles.priceDown}>
-            {r.reward > 0 ? "+" : ""}
-            {r.reward.toString().replace(".", ",")} %
+          <img src={(r.reward || 16.24) > 0 ? UpGreenIcon : DownRedIcon} alt="price rate" />
+          <span className={(r.reward || 16.24) > 0 ? styles.priceUp : styles.priceDown}>
+            {(r.reward || 16.24) > 0 ? "+" : ""}
+            {(r.reward || 16.24)?.toString().replace(".", ",") || 0} %
           </span>
         </span>
       ),
@@ -77,25 +48,25 @@ const TopDelegationPools: React.FC<Props> = () => {
       key: "fee",
       render: r => (
         <span>
-          {r.fee}% ({r.feeA} A)
+          {r.feePercent || 2.5}% ({r.feeAmount || 500} A)
         </span>
       ),
     },
     {
       title: "Declared Pledge (A)",
       key: "declaredPledge",
-      render: r => <span>{formatPrice(r.declaredPledge, ABBREVIATIONS)}</span>,
+      render: r => <span>{formatPrice(r.pledge, ABBREVIATIONS)}</span>,
     },
     {
       title: "Saturation",
       key: "output",
       render: r => (
         <div className={styles.progress}>
-          <span>{r.saturation}%</span>
+          <span>{r.saturation || 80}%</span>
           <Progress
             className={styles.progressBar}
             gapPosition="top"
-            percent={r.saturation}
+            percent={r.saturation || 80}
             status="active"
             strokeColor={"var(--linear-gradient-green)"}
             trailColor={"var(--border-color)"}
@@ -109,7 +80,7 @@ const TopDelegationPools: React.FC<Props> = () => {
       title: "",
       key: "action",
       render: r => (
-        <Link to={routers.POOL_LIST.replace(":poolId", `${r.blockNo}`)} className={styles.actionDetail}>
+        <Link to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`)} className={styles.actionDetail}>
           <small>Detail</small>
         </Link>
       ),
@@ -119,12 +90,20 @@ const TopDelegationPools: React.FC<Props> = () => {
     <div className={styles.topDelegation}>
       <div className={styles.title}>
         <h3>Top Delegation Pools</h3>
-        <Link to={routers.POOL_LIST} className={styles.seemoreDesktop}>
+        <Link to={routers.DELEGATION_POOLS} className={styles.seemoreDesktop}>
           <small>See All</small>
         </Link>
       </div>
-      <Table className={styles.table} columns={columns} pagination={false} dataSource={data} />
-      <Link to={routers.POOL_LIST} className={styles.seemoreMobile}>
+      <Table
+        className={styles.table}
+        loading={loading}
+        columns={columns}
+        data={data}
+        onClickRow={(_, r: DelegationPool) =>
+          history.push(routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`))
+        }
+      />
+      <Link to={routers.DELEGATION_POOLS} className={styles.seemoreMobile}>
         <small>See All</small>
       </Link>
     </div>

@@ -50,17 +50,18 @@
       min-width: 1200px;
       tr {
         th {
-          background-color: transparent;
-          border-bottom-width: 2px;
-          font-size: var(--font-size-text-small);
-          color: var(--title-color);
-          font-weight: var(--font-weight-bold);
+          background-color: transparent !important;
+          border-bottom-width: 2px !important;
+          font-size: var(--font-size-text-small) !important;
+          color: var(--title-color) !important;
+          font-weight: var(--font-weight-bold) !important;
 
           &::before {
             content: unset !important;
           }
         }
         td {
+          cursor: pointer;
           font-size: var(--font-size-text);
 
           .poolName {
@@ -112,6 +113,9 @@
             border-bottom: none;
           }
         }
+      }
+      tbody {
+        top: 0 !important;
       }
     }
   }

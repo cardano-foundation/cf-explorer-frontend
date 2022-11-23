@@ -11,6 +11,7 @@ import AIcon from "../../commons/resources/images/AIcon.png";
 import { routers } from "../../commons/routers";
 
 import styles from "./index.module.scss";
+import { Tooltip } from "antd";
 
 interface IEpochBlockList {
   data: Block[];
@@ -40,11 +41,8 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
       key: "block",
       minWidth: "100px",
       render: r => (
-        <Link
-          to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}
-          className={`${styles.fwBold} ${styles.link}`}
-        >
-          <span>{r.blockNo}</span>
+        <Link to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>
+          <span className={`${styles.fwBold} ${styles.link}`}>{r.blockNo}</span>
         </Link>
       ),
     },
@@ -53,14 +51,15 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
       key: "slot",
       minWidth: "100px",
       render: r => (
-        <div className={styles.flexCol}>
-          <Link to={"#"} className={`${styles.fwBold} ${styles.link}`}>
-            {r.slotNo}
-          </Link>
-          <span>
-            {r.epochNo} / {r.epochSlotNo}
-          </span>
-        </div>
+        <>
+          <span className={`${styles.fwBold} ${styles.link}`}>{r.slotNo}</span>
+          <div>
+            <Link to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epochNo}`)}>
+              <span className={`${styles.fwBold} ${styles.link}`}>{r.epochNo}</span>
+            </Link>{" "}
+            / {r.epochSlotNo}
+          </div>
+        </>
       ),
     },
     {
@@ -69,13 +68,17 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
       minWidth: "100px",
       render: r => {
         return (
-          <div className={styles.input}>
-            Input:
-            <Link to={`#`} className={`${styles.fwBold} ${styles.link}`} style={{ marginLeft: 15 }}>
-              {getShortWallet(r.slotLeader ?? "")}
-              <BiLinkExternal fontSize={18} style={{ marginLeft: 8 }} />
-            </Link>
-          </div>
+          <>
+            Address:
+            <Tooltip placement="top" title={r.slotLeader}>
+              <Link to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>
+                <span className={`${styles.fwBold} ${styles.link} ${styles.ml15}`}>
+                  {getShortWallet(r.slotLeader ?? "")}
+                  <BiLinkExternal className={styles.icon} />
+                </span>
+              </Link>
+            </Tooltip>
+          </>
         );
       },
     },
@@ -109,9 +112,9 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
         columns={columns}
         data={data}
         total={{ count: total, title: "Total Transactions" }}
-        onClickRow={(_, r) => history.push(routers.EPOCH_DETAIL.replace(":epochId", `${r.blockNo}`))}
+        onClickRow={(_, r) => history.push(routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`))}
         pagination={{
-          defaultCurrent: 1,
+          current: currentPage + 1 || 1,
           total: totalPage,
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
           size: "small",
