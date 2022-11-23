@@ -1,5 +1,6 @@
+import { parse } from "qs";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 import useFetch from "../../commons/hooks/useFetch";
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -10,6 +11,8 @@ import styles from "./index.module.scss";
 
 const EpochDetail: React.FC = () => {
   const { epochId } = useParams<{ epochId: string }>();
+  const { search } = useLocation();
+  const query = parse(search.split("?")[1]);
 
   const { data: EpochDetail, loading: EpochDetailLoading } = useFetch<IDataEpoch>(`epoch/${epochId}`);
   const {
@@ -18,7 +21,11 @@ const EpochDetail: React.FC = () => {
     total,
     totalPage,
     currentPage,
-  } = useFetchList<BlockDetail>("block/list", { epochNo: epochId });
+  } = useFetchList<BlockDetail>("block/list", {
+    epochNo: epochId,
+    page: query.page ? +query.page - 1 : 0,
+    size: query.size ? (query.size as string) : 10,
+  });
 
   return (
     <div className={styles.container}>
