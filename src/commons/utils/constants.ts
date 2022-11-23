@@ -16,3 +16,5 @@ export const EPOCH_STATUS: any = {
   REWARDING: "Rewarding",
   IN_PROGRESS: "In Progress",
 };
+
+export const MAX_SLOT_EPOCH = 432000;

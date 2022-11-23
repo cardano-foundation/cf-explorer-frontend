@@ -8,34 +8,18 @@ import DetailCard from "../commons/DetailCard";
 
 import styles from "./index.module.scss";
 import aIcon from "../../commons/resources/images/AIcon.png";
-import { EPOCH_STATUS } from "../../commons/utils/constants";
+import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../commons/utils/constants";
 
 interface EpochkOverviewProps {
   data: IDataEpoch | null;
   loading: boolean;
 }
 
-// console.log(EPOCH_STATUS["IN_PROGRESS"]);
-
-
-// const getStatus = (status: string | undefined) => {
-//   switch (status) {
-//     case EPOCH_STATUS.FINISH:
-//       return "Finished";
-//     case EPOCH_STATUS.INPROGRESS:
-//       return "In Progress";
-//     case EPOCH_STATUS.REWARD:
-//       return "Rewarding";
-//     default:
-//       return "";
-//   }
-// };
-
 const EpochOverview: React.FC<EpochkOverviewProps> = ({ data, loading }) => {
   const { slot, percentage } = useMemo(() => {
     if (data?.startTime && data?.endTime) {
       const slot = moment.min(moment(), moment(data?.endTime)).diff(data?.startTime) / 1000;
-      const percentage = +(slot / 4320).toFixed(2);
+      const percentage = +(slot / MAX_SLOT_EPOCH * 100).toFixed(2);
       return { slot, percentage };
     }
     return { slot: 0, percentage: 0 };

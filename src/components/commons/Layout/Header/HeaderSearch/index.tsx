@@ -1,44 +1,46 @@
-import React from 'react';
-import { Button, Form, Input, Select } from 'antd';
-import { useHistory } from 'react-router-dom';
-import { HeaderSearchIcon } from '../../../../../commons/resources';
-import styles from './index.module.scss';
-import { routers } from '../../../../../commons/routers';
+import React from "react";
+import { Button, Form, Input, Select } from "antd";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import { HeaderSearchIcon } from "../../../../../commons/resources";
+import styles from "./index.module.scss";
+import { routers } from "../../../../../commons/routers";
+import { stringify } from "qs";
 
 interface FormValues {
   filter: string;
-  search: string
+  search: string;
 }
 
-const HeaderSearch: React.FC = () => {
-  const history = useHistory();
+const HeaderSearch: React.FC<RouteComponentProps> = props => {
+  const { history } = props;
   const [form] = Form.useForm<FormValues>();
-  
+
   const handleSearch = () => {
     const values = form.getFieldsValue();
-    if (values.search) {
-      history.push(`${routers.TRANSACTION_LIST}?txs=${values.search}${values.filter ? `&filter=${values.filter}` : ""}`);
+    const { search, filter } = values;
+    if (search) {
+      history.push(`${routers.TRANSACTION_LIST}?${stringify({ search, filter: filter || undefined })}`);
       form.resetFields();
     }
-  }
+  };
   const handleKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" || e.code === "Enter" || e.keyCode === 13 || e.which === 13) {
       handleSearch();
     }
-  }
+  };
 
   return (
-    <Form className={styles.searchBox} form={form}>
+    <Form form={form} className={history.location.pathname === "/" ? styles.searchBoxHome : styles.searchBox}>
       <Form.Item name="filter" noStyle initialValue="">
         <Select
           className={styles.filterSelect}
           options={[
             {
-              value: '',
+              value: "",
               label: <span className={styles.filterOption}>All Filters</span>,
             },
             {
-              value: 'other',
+              value: "other",
               label: <span className={styles.filterOption}>Other Filter</span>,
             },
           ]}
@@ -58,8 +60,7 @@ const HeaderSearch: React.FC = () => {
         <img src={HeaderSearchIcon} alt="search" />
       </Button>
     </Form>
-  )
+  );
+};
 
-}
-
-export default HeaderSearch;
+export default withRouter(HeaderSearch);

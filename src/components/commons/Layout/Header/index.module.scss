@@ -1,11 +1,13 @@
-@import '../../../../themes/variable.scss';
+@import "../../../../themes/variable.scss";
 
 header {
-  background: var(--linear-gradient-green);
+  background-image: var(--linear-gradient-green);
   color: var(--text-color-reverse);
+  position: relative;
 
   .container {
     @include container;
+    position: relative;
 
     padding: 20px 10px;
 
@@ -22,10 +24,36 @@ header {
       text-align: center;
       padding: 100px 0px 150px;
 
-      &>h1 {
+      & > h1 {
         color: var(--text-color-reverse);
       }
     }
+  }
+  &.home {
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: var(--header-background-image);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      mix-blend-mode: luminosity;
+    }
+  }
+  &.page {
+    .container {
+      .headerMain {
+        & > h1 {
+          display: none;
+        }
+        padding: 70px 0px 0px;
+        margin-bottom: calc(-25px - 1.5715rem);
+      }
+    }
+    margin-bottom: 15px;
   }
 
   @media screen and (max-width: 767px) {

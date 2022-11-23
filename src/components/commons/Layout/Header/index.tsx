@@ -1,18 +1,17 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { LogoIcon } from '../../../../commons/resources';
-import ConnectWalletModal from '../../ConnectWalletModal';
-import ConnectWallet from './ConnectWallet';
-import HeaderMenu from './HeaderMenu';
-import HeaderSearch from './HeaderSearch';
-import styles from './index.module.scss';
+import React from "react";
+import { NavLink, RouteComponentProps, useHistory, withRouter } from "react-router-dom";
+import { LogoIcon } from "../../../../commons/resources";
+import ConnectWalletModal from "../../ConnectWalletModal";
+import ConnectWallet from "./ConnectWallet";
+import HeaderMenu from "./HeaderMenu";
+import HeaderSearch from "./HeaderSearch";
+import styles from "./index.module.scss";
 
-interface Props { }
-
-const Header: React.FC<Props> = () => {
-
+const Header: React.FC<RouteComponentProps> = props => {
+  const { history } = props;
   return (
-    <header>
+    <header className={history.location.pathname === "/" ? styles.home : styles.page}>
+      <div className={styles.background} />
       <div className={styles.container}>
         <div className={styles.headerTop}>
           <NavLink to="/">
@@ -30,8 +29,7 @@ const Header: React.FC<Props> = () => {
       </div>
       <ConnectWalletModal />
     </header>
-  )
+  );
+};
 
-}
-
-export default Header;
+export default withRouter(Header);

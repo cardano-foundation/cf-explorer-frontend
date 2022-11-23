@@ -5,20 +5,44 @@
   margin-bottom: 24px;
   padding: 24px 30px;
   text-align: left;
+  .title {
+    @include flex-between-center;
+    margin-bottom: 1.5rem;
 
-  h3 {
-    position: relative;
-    text-align: left;
+    h3 {
+      position: relative;
+      text-align: left;
+      margin-bottom: 0px;
 
-    &::after {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      content: "";
-      width: 50px;
-      height: 4px;
-      background: var(--color-green-light);
+      &::after {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        content: "";
+        width: 50px;
+        height: 4px;
+        background: var(--color-green-light);
+      }
     }
+  }
+  .seemoreDesktop,
+  .seemoreMobile {
+    display: block;
+    small {
+      display: block;
+      width: max-content;
+      margin: auto;
+      padding: 6.5px 20px;
+      border: 2px solid var(--color-green-light);
+      border-radius: 5px;
+      color: var(--color-green-light);
+      font-weight: var(--font-weight-bold);
+    }
+  }
+  .seemoreMobile {
+    display: none;
+    text-align: center;
+    height: auto;
   }
   .table {
     overflow-x: auto;
@@ -75,15 +99,29 @@
             }
           }
           .actionDetail {
-            display: block;
-            padding: 6.5px 20px;  
+            display: inline-block;
+            padding: 6.5px 20px;
             background: var(--text-color);
             color: var(--text-color-reverse);
             border-radius: 6px;
             font-weight: var(--font-weight-bold);
           }
         }
+        &:last-child {
+          td {
+            border-bottom: none;
+          }
+        }
       }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .seemoreDesktop {
+      display: none;
+    }
+    .seemoreMobile {
+      display: block;
+      margin-top: 20px;
     }
   }
 }

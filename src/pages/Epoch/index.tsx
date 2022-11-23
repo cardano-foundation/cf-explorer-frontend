@@ -111,8 +111,9 @@ const Epoch: React.FC = () => {
     size: query.size ? (query.size as string) : 10,
   });
   if (!data) return null;
-  const excuteScroll = () => ref.current?.scrollIntoView();
 
+  const excuteScroll = () => ref.current?.scrollIntoView();
+  
   return (
     <div className={styles.container} ref={ref}>
       <Card title={"Epoch"}>

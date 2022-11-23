@@ -1,38 +1,150 @@
-@import '../../../../themes/variable.scss';
+@import "../../../../themes/variable.scss";
 
 footer {
   background-color: var(--footer-background-color);
-  background-image: var(--footer-background-image);
-  background-position: 0% 50%;
-  background-repeat: no-repeat;
-  background-size: contain;
   color: var(--footer-color);
+  padding-top: 80px;
+  text-align: left;
 
   .container {
     @include container;
-    padding: 86px 120px 76px;
 
-    @media screen and (max-width: 767px) {
-      padding: 86px 0px 76px;
+    .footerMenu {
+      .info {
+        margin-bottom: 30px;
+        img {
+          width: auto;
+          height: 60px;
+          margin-bottom: 20px;
+        }
+        p {
+          font-family: var(--font-family-title);
+          line-height: 1.5rem;
+          max-width: 440px;
+          margin-bottom: 30px;
+          color: #e3e5e9;
+        }
+        .network {
+          display: block;
+          font-size: 0.75rem;
+          color: var(--text-color-pale);
+          margin-bottom: 0.75rem;
+          text-transform: uppercase;
+          font-weight: var(--font-weight-bold);
+        }
+        .chain {
+          @include flex-start-center;
+          gap: 5px;
+          flex-wrap: wrap;
+
+          small {
+            position: relative;
+            padding: 6.5px 12px;
+            font-weight: var(--font-weight-bold);
+            font-family: var(--font-family-title);
+            line-height: 1.5;
+
+            &::after {
+              content: "";
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              opacity: 0.2;
+              border-radius: 6px;
+            }
+          }
+          .mainnet {
+            color: var(--color-green-light);
+            &::after {
+              background: var(--color-green-light);
+            }
+          }
+          .preprod {
+            color: var(--color-blue);
+            &::after {
+              background: var(--color-blue);
+            }
+          }
+          .preview {
+            color: var(--color-blue);
+            &::after {
+              background: var(--color-blue);
+            }
+          }
+          .testnet {
+            color: var(--color-yellow);
+            &::after {
+              background: var(--color-yellow);
+            }
+          }
+        }
+      }
+      .menu {
+        h3 {
+          position: relative;
+          font-size: 1.25rem;
+          color: #f4f5f7;
+          border-bottom: 1px solid #344054;
+          padding-bottom: 0.5rem;
+          margin-bottom: 1.5rem;
+
+          &::before {
+            content: "";
+            position: absolute;
+            height: 2px;
+            width: 85px;
+            bottom: -1px;
+            background: var(--footer-color-green);
+          }
+        }
+        ul {
+          margin-bottom: 30px;
+          li {
+            margin-bottom: 20px;
+            &::before {
+              content: "\2022";
+              color: var(--footer-color-green);
+              font-weight: bold;
+              display: inline-block;
+              width: 1em;
+            }
+            span {
+              color: var(--footer-color);
+              font-family: var(--font-family-text);
+            }
+          }
+        }
+      }
     }
   }
 
   .copyright {
     background-color: var(--copyright-background-color);
-    color: var(--copyrightColor);
-
-    .container {
-      @include flex-between-center;
-      padding: 30px 120px 15px;
-
-      ul {
-        @include flex-end-center;
-        gap: 16px;
+    font-family: var(--font-family-title);
+    color: var(--footer-color);
+    padding: 1.5rem 0;
+    .term {
+      text-align: right;
+      span {
+        color: var(--footer-color-green);
       }
-
-      @media screen and (max-width: 767px) {
-        padding: 30px 0px 15px;
-
+      i {
+        display: inline-block;
+        margin: 0.25rem 25px;
+        width: 4px;
+        height: 4px;
+        background-color: var(--text-color-pale);
+        border-radius: 50%;
+      }
+    }
+    @media screen and (max-width: 1199px) {
+      padding: 1rem 0;
+      text-align: center;
+      .term {
+        text-align: center;
+        margin-top: 5px;
       }
     }
   }
