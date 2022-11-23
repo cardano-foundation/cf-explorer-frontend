@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import { Pagination, PaginationProps, Select, Skeleton } from "antd";
 
-import { numberWithCommas } from "../../../commons/utils/helper";
+import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
 
 import noData from "../../../commons/resources/images/noData.png";
 
@@ -94,7 +94,7 @@ const TableBody = <T extends ColumnType>({ data, columns, onClickRow }: TablePro
 
 const TableRow = <T extends ColumnType>({ row, columns, index, onClickRow }: TableRowProps<T>) => {
   return (
-    <tr className={styles.bodyRow} onClick={e => onClickRow?.(e, row, index)}>
+    <tr className={styles.bodyRow} onClick={e => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))}>
       {columns.map((column, idx) => {
         return (
           <td

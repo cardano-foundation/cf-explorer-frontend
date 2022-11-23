@@ -1,4 +1,4 @@
-@import '../../themes/variable.scss';
+@import "../../themes/variable.scss";
 
 .container {
   @include container;
@@ -11,7 +11,12 @@
       display: flex;
       align-items: center;
     }
-
+    span {
+      font-family: var(--font-family-text);
+      color: #273253;
+      display: block;
+      cursor: pointer;
+    }
     .fwBlod {
       font-weight: var(--font-weight-bold);
     }
@@ -20,7 +25,7 @@
       color: var(--color-blue) !important;
       display: flex;
       align-items: center;
-      
+
       & > span.finished {
         color: #108aef;
         font-size: 14px;
