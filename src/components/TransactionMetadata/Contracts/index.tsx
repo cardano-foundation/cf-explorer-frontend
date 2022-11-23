@@ -10,7 +10,6 @@ interface ContractsProps {
 }
 
 const Contracts: React.FC<ContractsProps> = ({ data }) => {
-  console.log('🚀 ~ file: index.tsx ~ line 13 ~ data', data);
   const [state, copyToClipboard] = useCopyToClipboard();
 
   return (
