@@ -107,7 +107,7 @@ const OverViews: React.FC<OverViewProps> = ({ data, loading }) => {
               {/* To Do */}
               End in:{" "}
               <span className={styles.value}>
-                {duration.days()} day {duration.hours()} hours {duration.minutes()} minutes {duration.seconds()} seconds
+                {duration.days()} day {duration.hours()} hours {duration.minutes()} minutes
               </span>
             </div>
           </div>
