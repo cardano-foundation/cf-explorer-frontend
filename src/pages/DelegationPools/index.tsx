@@ -117,6 +117,7 @@ const OverViews: React.FC<OverViewProps> = ({ data, loading }) => {
               "0%": "#184C78",
               "100%": "#5A9C56",
             }}
+            status="active"
             format={() => (
               <>
                 <div className={styles.epochTitle}>{data?.epochNo || 0} </div>
@@ -124,7 +125,7 @@ const OverViews: React.FC<OverViewProps> = ({ data, loading }) => {
             )}
             strokeWidth={6}
             width={96}
-            percent={80}
+            percent={((data?.epochSlotNo || 0) / 432000) * 100}
           />
         </div>
       </Col>
@@ -144,8 +145,9 @@ const OverViews: React.FC<OverViewProps> = ({ data, loading }) => {
               }}
               strokeWidth={8}
               width={200}
-              percent={80}
+              percent={((data?.epochSlotNo || 0) / 432000) * 100}
               format={(p, c) => ""}
+              status="active"
             />
           </div>
           <div>
