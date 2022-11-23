@@ -1,96 +1,122 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { IoMdCopy } from "react-icons/io";
 import { useCopyToClipboard } from "react-use";
 
-import { getShortWallet } from "../../../commons/utils/helper";
-import WalletIcon from "../../../commons/resources/images/Wallet.png";
+import { getShortWallet, formatADA } from "../../../commons/utils/helper";
 
 import styles from "./index.module.scss";
-import aIcon from "../../../commons/resources/images/AIcon.png";
 import walletImg from "../../../commons/resources/images/Wallet.png";
 import sendImg from "../../../commons/resources/images/summary-up.png";
 import receiveImg from "../../../commons/resources/images/summary-down.png";
 import AIconImg from "../../../commons/resources/images/AIcon.png";
+import feeImg from "../../../commons/resources/images/fee.png";
 import { BiCheckCircle } from "react-icons/bi";
 
 interface Props {
   data: Transaction["utxOs"] | null;
+  fee: number;
 }
 
-const UTXO: React.FC<Props> = ({ data }) => {
-  // const inputTotal = useMemo(() => {
-  //   return data.input?.reduce((pre, cur) => pre + cur.value, 0);
-  // }, [data.input]);
-
-  // const outputTotal = useMemo(() => {
-  //   return data.output?.reduce((pre, cur) => pre + cur.value, 0);
-  // }, [data.output]);
-
+const UTXO: React.FC<Props> = ({ data, fee }) => {
   return (
     <div>
-      {data && data.inputs.map((otx, key) => <Card type="down" item={otx} key={key} />)}
-      {data && data.outputs.map((otx, key) => <Card type="up" item={otx} key={key} />)}
+      <Card type="down" item={data?.inputs} />
+      <Card type="up" item={data?.outputs} fee={fee} />
     </div>
   );
 };
 
 export default UTXO;
 
-const Card = ({ type, item }: { type: "up" | "down"; item: Required<Transaction>["utxOs"]["inputs"][number] }) => {
-  console.log("🚀 ~ file: index.tsx ~ line 35 ~ Card ~ item", item);
+const Card = ({
+  type,
+  item,
+  fee,
+}: {
+  type: "up" | "down";
+  item?: Required<Transaction>["utxOs"]["inputs"];
+  fee?: number;
+}) => {
   const [state, copyToClipboard] = useCopyToClipboard();
-
+  const totalADA =
+    item &&
+    item.reduce((prv, i) => {
+      return prv + i.value;
+    }, fee || 0);
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <div>
-          <div className={styles.type}>Input</div>Wallet Addresses
+          <div className={styles.type}>{type === "down" ? "Input" : "Output"}</div>Wallet Addresses
         </div>
         <div>Amount</div>
       </div>
-      <div className={styles.item}>
-        <div className={styles.bottom}>
-          <div className={styles.top}>
-            <img className={styles.img} src={walletImg} alt="wallet icon" />
+      {item &&
+        item.map((i, ii) => (
+          <>
+            <div className={styles.item} key={ii}>
+              <div className={styles.bottom}>
+                <div className={styles.top}>
+                  <img className={styles.img} src={walletImg} alt="wallet icon" />
+                  <div>
+                    {type === "down" ? "From" : "To"}:{" "}
+                    <span className={styles.address}>{getShortWallet(i.address)}</span>{" "}
+                    {state.value === i.address ? (
+                      <BiCheckCircle size={20} className={styles.icon} />
+                    ) : (
+                      <IoMdCopy size={20} className={styles.icon} onClick={() => copyToClipboard(i.address)} />
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
+                    {type === "down" ? `- ${formatADA(i.value)}` : `+ ${formatADA(i.value)}`}
+                  </span>
+                  <img src={AIconImg} alt="ADA icon" />
+                </div>
+              </div>
+              <div className={`${styles.paddingTop} ${styles.bottom}`}>
+                {type === "down" && (
+                  <>
+                    <div>
+                      <img src={type === "down" ? receiveImg : sendImg} className={styles.img} alt="send icon" />
+                      {i.txHash}
+                      {state.value === i.txHash ? (
+                        <BiCheckCircle size={20} className={styles.icon} />
+                      ) : (
+                        <IoMdCopy size={20} className={styles.icon} onClick={() => copyToClipboard(i.txHash)} />
+                      )}
+                    </div>
+                    <div>
+                      <div className={styles.status}>GAME</div>
+                      <div className={styles.status}>Montley moon234</div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </>
+        ))}
+      {type === "up" && (
+        <div className={styles.item}>
+          <div className={styles.bottom}>
+            <div className={styles.top}>
+              <img className={styles.img} src={feeImg} alt="wallet icon" />
+              <div>Fee</div>
+            </div>
             <div>
-              From: <span className={styles.address}>{getShortWallet(item.address)}</span>{" "}
-              {state.value === item.address ? (
-                <BiCheckCircle size={20} className={styles.icon} />
-              ) : (
-                <IoMdCopy size={20} className={styles.icon} onClick={() => copyToClipboard(item.address)} />
-              )}
+              <span className={`${styles.address} ${styles.up}`}>{formatADA(fee)}</span>
+              <img src={AIconImg} alt="ADA icon" />
             </div>
           </div>
-          <div>
-            <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
-              {type === "down" ? "-22.24%" : "+16.41%"}
-            </span>
-            <img src={AIconImg} alt="ADA icon" />
-          </div>
+          <div className={`${styles.paddingTop} ${styles.bottom}`}></div>
         </div>
-        <div className={`${styles.paddingTop} ${styles.bottom}`}>
-          <div>
-            <img src={type === "down" ? receiveImg : sendImg} className={styles.img} alt="send icon" />
-            {/* TO DO */}
-            {item.txHash}
-            {/* To Do: check lại icon khi copy cái khác thì hoàn trả icon cũ */}
-            {state.value ? (
-              <BiCheckCircle size={20} className={styles.icon} />
-            ) : (
-              <IoMdCopy size={20} className={styles.icon} onClick={() => copyToClipboard("d0437081d2...42506307")} />
-            )}
-          </div>
-          <div>
-            <div className={styles.status}>GAME</div>
-            <div className={styles.status}>Montley moon234</div>
-          </div>
-        </div>
-      </div>
+      )}
       <div className={styles.footer}>
-        <div>Total Input</div>
+        <div>Total {type === "down" ? "Input" : "Output"}</div>
         <div>
           <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
-            {type === "down" ? "-22.24%" : "+16.41%"}
+            {type === "down" ? `- ${formatADA(totalADA)}` : `+ ${formatADA(totalADA)}`}
           </span>
           <img src={AIconImg} alt="ADA icon" />
         </div>
