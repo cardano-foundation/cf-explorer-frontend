@@ -1,14 +1,15 @@
-import { Link } from 'react-router-dom';
-import { BiLinkExternal } from 'react-icons/bi';
-import moment from 'moment';
-import React from 'react';
+import { Link } from "react-router-dom";
+import { BiLinkExternal } from "react-icons/bi";
+import moment from "moment";
+import React from "react";
 
-import Card from '../commons/Card';
-import DetailCard from '../commons/DetailCard';
-import { formatADA, getShortHash, getShortWallet } from '../../commons/utils/helper';
+import Card from "../commons/Card";
+import DetailCard from "../commons/DetailCard";
+import { formatADA, getShortHash, getShortWallet } from "../../commons/utils/helper";
 
-import styles from './index.module.scss';
-import aIcon from '../../commons/resources/images/AIcon.png';
+import styles from "./index.module.scss";
+import aIcon from "../../commons/resources/images/AIcon.png";
+import { Tooltip } from "antd";
 
 interface Props {
   data: Transaction | null;
@@ -18,25 +19,26 @@ interface Props {
 const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   const listDetails = [
     {
-      title: 'Transaction hash',
+      title: "Transaction hash",
       value: data?.tx.hash && (
-        <Link to={`#`} className={`${styles.alignCenter} ${styles.link}`}>
-          {getShortHash(data?.tx.hash || '')}
-          <BiLinkExternal className={styles.icon} />
-        </Link>
+        <Tooltip title={data?.tx.hash || ""} placement='bottom'>
+          <Link to={`#`} className={`${styles.alignCenter} ${styles.link}`}>
+            {getShortHash(data?.tx.hash || "")}
+          </Link>
+        </Tooltip>
       ),
     },
 
     {
-      title: 'Time',
-      value: data?.tx.time && moment(data?.tx.time).format('MM/DD/YYYY HH:mm:ss'),
+      title: "Time",
+      value: data?.tx.time && moment(data?.tx.time).format("MM/DD/YYYY HH:mm:ss"),
     },
     {
-      title: 'Status',
+      title: "Status",
       value: <h4 className={`${styles.status} ${styles.green}`}>{data?.tx.status}</h4>,
     },
     {
-      title: 'Confirmation',
+      title: "Confirmation",
       value: (
         <div className={styles.alignCenter}>
           {data?.tx.confirmation}
@@ -46,7 +48,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
     },
     {
-      title: 'Transaction Fees',
+      title: "Transaction Fees",
       value: data?.tx.fee && (
         <div className={styles.alignCenter}>
           <span>{formatADA(data?.tx.fee || 0)} ADA </span>
@@ -55,7 +57,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
     },
     {
-      title: 'Total Output',
+      title: "Total Output",
       value: data?.tx.totalOutput && (
         <div className={styles.alignCenter}>
           <span>{formatADA(data?.tx.totalOutput || 0)} ADA </span>
@@ -66,7 +68,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   ];
 
   return (
-    <Card className={styles.wrapper} title={'Transactions Detail'}>
+    <Card className={styles.wrapper} title={"Transactions Detail"}>
       <DetailCard
         listDetails={listDetails}
         progress={{

@@ -8,6 +8,7 @@ import { formatADA, getShortWallet } from "../../commons/utils/helper";
 import styles from "./index.module.scss";
 import aIcon from "../../commons/resources/images/AIcon.png";
 import moment from "moment";
+import { Tooltip } from "antd";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
@@ -19,10 +20,11 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
     {
       title: "Block ID",
       value: data?.hash && (
-        <Link to={`#`} className={styles.link}>
-          {getShortWallet(data?.hash || "")}
-          <BiLinkExternal className={styles.icon} />
-        </Link>
+        <Tooltip title={data?.hash || ""} placement="bottom">
+          <Link to={`#`} className={styles.link}>
+            {getShortWallet(data?.hash || "")}
+          </Link>
+        </Tooltip>
       ),
     },
 
@@ -40,8 +42,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
         <span className={styles.transaction}>
           {data?.totalFees && (
             <>
-              <div>{formatADA(data?.totalFees)} ADA</div>{" "}
-              <img className={styles.img} alt="ada icon" src={aIcon} />
+              <div>{formatADA(data?.totalFees)} ADA</div> <img className={styles.img} alt="ada icon" src={aIcon} />
             </>
           )}
         </span>
@@ -53,8 +54,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
         <span style={{ display: "flex", alignItems: "center" }}>
           {data?.totalOutput && (
             <>
-              <div> {formatADA(data?.totalOutput)} ADA</div>{" "}
-              <img className={styles.img} alt="ada icon" src={aIcon} />
+              <div> {formatADA(data?.totalOutput)} ADA</div> <img className={styles.img} alt="ada icon" src={aIcon} />
             </>
           )}
         </span>
@@ -63,19 +63,17 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
     {
       title: "Slot leader",
       value: data?.slotLeader && (
-        <Link to={`#`} className={styles.link}>
-          {getShortWallet(data?.slotLeader || "")}
-          <BiLinkExternal className={styles.icon} />
-        </Link>
+        <Tooltip title={data?.slotLeader || ""} placement="bottom">
+          <Link to={`#`} className={styles.link}>
+            {getShortWallet(data?.slotLeader || "")}
+          </Link>
+        </Tooltip>
       ),
     },
   ];
 
   return (
-    <Card
-      className={styles.wrapper}
-      title={`Block Detail: ${data?.blockNo || 0} `}
-    >
+    <Card className={styles.wrapper} title={`Block Detail: ${data?.blockNo || 0} `}>
       <DetailCard
         loading={loading}
         listDetails={listDetails}

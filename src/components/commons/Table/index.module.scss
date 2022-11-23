@@ -38,6 +38,7 @@
           background-color: #fff;
           width: 100%;
           padding: 10px 0;
+          cursor: pointer;
           td:first-child {
             border-radius: 10px 0 0 10px;
           }
@@ -53,6 +54,9 @@
             color: var(--text-color);
             padding: 24px 20px;
           }
+        }
+        .bodyRow:hover {
+          background-color: rgba($color: #000000, $alpha: 0.03);
         }
       }
     }

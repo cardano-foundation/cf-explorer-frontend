@@ -10,6 +10,7 @@ import styles from "./index.module.scss";
 import AIcon from "../../commons/resources/images/AIcon.png";
 import moment from "moment";
 import { routers } from "../../commons/routers";
+import { Tooltip } from "antd";
 
 interface TransactionListProps {
   transactions: Transactions[];
@@ -41,13 +42,15 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
 
       render: r => (
         <div>
-          <Link
-            to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}
-            className={`${styles.fwBold} ${styles.link}`}
-            style={{ margin: 0 }}
-          >
-            {getShortHash(r.hash)}
-          </Link>
+          <Tooltip title={r.hash} placement="bottom">
+            <Link
+              to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}
+              className={`${styles.fwBold} ${styles.link}`}
+              style={{ margin: 0 }}
+            >
+              {getShortHash(r.hash)}
+            </Link>
+          </Tooltip>
           <div>{moment("2022-11-15T08:52:40.188Z").format("MM/DD/YYYY HH:mm:ss")}</div>
         </div>
       ),
@@ -64,7 +67,15 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
           >
             {r.blockNo}
           </Link>
-          / {r.slot}
+          <div style={{ display: "flex" }}>
+            <Link
+              to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epochNo}`)}
+              className={`${styles.fwBold} ${styles.link}`}
+            >
+              {r.epochNo}{" "}
+            </Link>
+            / {r.slot}
+          </div>
         </>
       ),
     },
@@ -80,10 +91,12 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
               <div>
                 {r.addressesInput.slice(0, 2).map((tx, key) => {
                   return (
-                    <Link to={`#`} className={`${styles.fwBold} ${styles.link}`} key={key}>
-                      {getShortWallet(tx)}
-                      <BiLinkExternal style={{ marginLeft: 8 }} />
-                    </Link>
+                    <Tooltip title={tx} placement="bottom">
+                      <Link to={`#`} className={`${styles.fwBold} ${styles.link}`} key={key}>
+                        {getShortWallet(tx)}
+                        <BiLinkExternal style={{ marginLeft: 8 }} />
+                      </Link>
+                    </Tooltip>
                   );
                 })}
                 {r.addressesInput.length > 2 && (
@@ -98,10 +111,12 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
               <div>
                 {r.addressesOutput.slice(0, 2).map((tx, key) => {
                   return (
-                    <Link to={`#`} className={`${styles.fwBold} ${styles.link}`} key={key}>
-                      {getShortWallet(tx)}
-                      <BiLinkExternal style={{ marginLeft: 8 }} />
-                    </Link>
+                    <Tooltip title={tx} placement="bottom">
+                      <Link to={`#`} className={`${styles.fwBold} ${styles.link}`} key={key}>
+                        {getShortWallet(tx)}
+                        <BiLinkExternal style={{ marginLeft: 8 }} />
+                      </Link>
+                    </Tooltip>
                   );
                 })}
                 {r.addressesOutput.length > 2 && (

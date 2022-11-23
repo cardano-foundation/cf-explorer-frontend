@@ -3,23 +3,24 @@
 .table {
     margin-top: 18px;
 
-    .input {
+    .addr {
         display: flex;
     }
 
     .link {
         font-family: var(--font-family-text);
         color: var(--color-blue);
-        display: flex;
-        align-items: center;
     }
 
     .fwBold {
         font-weight: var(--font-weight-bold);
     }
 
-    .flexCol {
-        display: flex;
-        flex-direction: column;
+    .icon {
+        margin-left: 8px;
+    } 
+
+    .ml15 {
+        margin-left: 15px;
     }
 }

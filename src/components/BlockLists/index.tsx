@@ -10,6 +10,7 @@ import { getShortWallet, formatADA } from "../../commons/utils/helper";
 import styles from "./index.module.scss";
 import AIcon from "../../commons/resources/images/AIcon.png";
 import { routers } from "../../commons/routers";
+import { Tooltip } from "antd";
 
 interface BlockListProps {
   blockLists: Block[];
@@ -19,12 +20,7 @@ interface BlockListProps {
   currentPage: number;
 }
 
-const BlockList: React.FC<BlockListProps> = ({
-  blockLists,
-  loading,
-  total,
-  currentPage,
-}) => {
+const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, total, currentPage }) => {
   const history = useHistory();
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
@@ -35,7 +31,7 @@ const BlockList: React.FC<BlockListProps> = ({
       title: "Block No.",
       key: "blockNo",
       minWidth: "100px",
-      render: (r) => {
+      render: r => {
         return <span className={styles.fwBlod}>{r.blockNo}</span>;
       },
     },
@@ -43,34 +39,34 @@ const BlockList: React.FC<BlockListProps> = ({
       title: "Block Id",
       key: "blockId",
       minWidth: "150px",
-      render: (r) => (
-        <Link
-          to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}
-          className={`${styles.fwBlod} ${styles.link}`}
-        >
-          <div>{getShortWallet(`${r.hash}`)}</div>
-          <BiLinkExternal fontSize={18} style={{ marginLeft: 8 }} />
-        </Link>
+      render: r => (
+        <Tooltip placement="bottom" title={r.hash}>
+          <Link
+            to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}
+            className={`${styles.fwBlod} ${styles.link}`}
+          >
+            <div>{getShortWallet(`${r.hash}`)}</div>
+            <BiLinkExternal fontSize={18} style={{ marginLeft: 8 }} />
+          </Link>
+        </Tooltip>
       ),
     },
     {
       title: "Created at",
       key: "createdAt",
       minWidth: "150px",
-      render: (r) => (
-        <>{r.time ? moment(r.time).format("MM/DD/YYYY HH:mm:ss") : ""}</>
-      ),
+      render: r => <>{r.time ? moment(r.time).format("MM/DD/YYYY HH:mm:ss") : ""}</>,
     },
     {
       title: "Transactions",
       key: "transactions",
       minWidth: "150px",
-      render: (r) => <div className={styles.fwBlod}>{r.txCount}</div>,
+      render: r => <div className={styles.fwBlod}>{r.txCount}</div>,
     },
     {
       title: "Fees",
       key: "fees",
-      render: (r) => (
+      render: r => (
         <div className={styles.fwBlod}>
           <img src={AIcon} alt="a icon" /> {formatADA(r.totalFees) || 0}
         </div>
@@ -79,7 +75,7 @@ const BlockList: React.FC<BlockListProps> = ({
     {
       title: "Output",
       key: "output",
-      render: (r) => (
+      render: r => (
         <div className={styles.fwBlod}>
           <img src={AIcon} alt="a icon" /> {formatADA(r.totalOutput) || 0}
         </div>
