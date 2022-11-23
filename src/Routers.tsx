@@ -9,6 +9,7 @@ import TransactionDetail from "./pages/TransactionDetail";
 import NotFound from "./pages/NotFound";
 import Epoch from "./pages/Epoch";
 import EpochDetail from "./pages/EpochDetail";
+import DelegationPools from "./pages/DelegationPools";
 
 const Routes: React.FC<RouteComponentProps> = () => {
   return (
@@ -20,6 +21,7 @@ const Routes: React.FC<RouteComponentProps> = () => {
       <Route path={routers.TRANSACTION_DETAIL} exact component={TransactionDetail} />
       <Route path={routers.EPOCH_LIST} exact component={Epoch} />
       <Route path={routers.EPOCH_DETAIL} exact component={EpochDetail} />
+      <Route path={routers.DELEGATION_POOLS} exact component={DelegationPools} />
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );

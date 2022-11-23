@@ -1,0 +1,23 @@
+@import '../../../themes/variable.scss';
+
+.wrapper {
+  min-height: 400px;
+  background: var(--background);
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-overflow: clip;
+  padding: 25px 0;
+  .address {
+    width: 70%;
+    margin: 0 auto;
+    padding: 10px 0 0;
+    font-family: var(--font-family-title);
+    color: var(--text-color);
+    word-break: break-all;
+  }
+  .icon {
+    color: var(--text-color-pale);
+  }
+}
