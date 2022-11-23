@@ -56,15 +56,6 @@
         }
       }
     }
-    .noData {
-      text-align: center;
-      padding: 30px 0;
-      background: #e7e8eb;
-      position: relative;
-      top: -15px;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-    }
   }
   .footer {
     display: flex;
@@ -78,4 +69,14 @@
 
 .fwBold {
   font-weight: var(--font-weight-bold);
+}
+
+.noData {
+  text-align: center;
+  padding: 30px 0;
+  background: #e7e8eb;
+  position: relative;
+  top: -15px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }

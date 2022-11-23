@@ -7,6 +7,11 @@ import noData from "../../../commons/resources/images/noData.png";
 
 import styles from "./index.module.scss";
 
+export const EmptyRecord = () => (
+  <div className={styles.noData}>
+    <img src={noData} alt="no data" />
+  </div>
+);
 interface ColumnType {
   [key: string | number | symbol]: any;
 }
@@ -53,11 +58,7 @@ const Table: React.FC<TableProps> = ({ columns, data, total, pagination, classNa
           {!loading && <TableBody columns={columns} data={data} onClickRow={onClickRow} />}
           {loading && <TableSekeleton columns={columns} />}
         </table>
-        {!loading && data && data.length === 0 && (
-          <div className={styles.noData}>
-            <img src={noData} alt="no data" />
-          </div>
-        )}
+        {!loading && data && data.length === 0 && <EmptyRecord />}
       </div>
       <FooterTable total={total} pagination={pagination} />
     </div>

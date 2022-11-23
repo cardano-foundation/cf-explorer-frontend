@@ -17,7 +17,6 @@ ul.menu {
   li {
     text-align: left;
     cursor: pointer;
-    margin-bottom: 0.5rem;
     a,
     a:visited,
     a:hover {
@@ -41,20 +40,25 @@ ul.menu {
     &:hover {
       & > a,
       & > span {
-        color: #fff;
+        color: var(--text-color-reverse-hover);
+        text-shadow: 1px 1px 5px var(--text-color-reverse-hover);
       }
     }
     & > ul > li {
       span {
+        padding: 0.25rem 48px 0.25rem 20px;
+        display: block;
         font-weight: var(--font-weight-normal);
+        line-height: 1.5;
       }
       &:last-child {
         margin-bottom: 0px;
       }
       &:hover {
+        background-color: var(--border-color);
         & > a,
         & > span {
-          color: var(--text-color-hover);
+          color: var(--text-color-pale);
         }
       }
     }
@@ -64,7 +68,6 @@ ul.menu {
     @include flex-center-center;
     position: relative;
     padding: 10px 0px;
-    margin-bottom: 0;
 
     &.parent {
       padding-right: 22px;
@@ -88,27 +91,37 @@ ul.menu {
       position: absolute;
       z-index: 1;
       top: 100%;
-      padding: 20px 48px 20px 20px;
       background: rgba(255, 255, 255, 0.9);
       box-shadow: var(--shadow-raised);
       backdrop-filter: blur(2px);
       border-radius: 10px;
       color: var(--color-black);
       visibility: hidden;
+      padding: 20px 0px;
 
       &.mega {
         @include flex-between-start;
         padding: 20px 40px;
         right: unset;
         width: 60vw;
+        li {
+        }
       }
     }
 
-    // &:hover,
-    &.active {
+    &:hover {
       & > ul {
         visibility: visible;
         @include animation(0, 0.4s, fade);
+      }
+    }
+
+    @media screen and (max-width: 991px) {
+      &.active {
+        & > ul {
+          visibility: visible;
+          @include animation(0, 0.4s, fade);
+        }
       }
     }
   }
