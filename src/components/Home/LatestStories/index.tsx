@@ -2,9 +2,13 @@ import { Col, Row } from "antd";
 import moment from "moment";
 import React from "react";
 import { Link } from "react-router-dom";
-import { CalenderPaleIcon, MarketCapIcon } from "../../../commons/resources";
+import { CalenderPaleIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
 import styles from "./index.module.scss";
+import Temp from "../../../commons/resources/temp/Rectangle 31.png";
+import Temp1 from "../../../commons/resources/temp/Rectangle 31 (1).png";
+import Temp2 from "../../../commons/resources/temp/Rectangle 31 (2).png";
+import Temp3 from "../../../commons/resources/temp/Rectangle 31 (3).png";
 
 interface Props {}
 
@@ -13,28 +17,28 @@ const data: Story[] = [
     id: "1",
     title: "Cardano Foundation Partners with Georgian National Wine Agency",
     author: "Cardano Academy",
-    image: MarketCapIcon,
+    image: Temp,
     createdDate: "10/10/2022",
   },
   {
     id: "2",
     title: "Cardano Foundation Partners with Georgian National Wine Agency with Georgian National Wine Agency",
     author: "Cardano Academy",
-    image: MarketCapIcon,
+    image: Temp1,
     createdDate: "10/10/2022",
   },
   {
     id: "3",
     title: "Cardano Foundation Partners",
     author: "Cardano Academy",
-    image: MarketCapIcon,
+    image: Temp2,
     createdDate: "10/10/2022",
   },
   {
     id: "4",
     title: "Cardano Foundation Partners",
     author: "Cardano Academy",
-    image: MarketCapIcon,
+    image: Temp3,
     createdDate: "10/10/2022",
   },
 ];

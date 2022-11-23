@@ -14,6 +14,11 @@
     display: flex;
     align-items: center;
     overflow-x: auto;
+
+    .fullWidth {
+      width: 100%;
+    }
+    
     .title {
       font-family: var(--font-family-title);
       font-weight: var(--font-weight-bold);
