@@ -18,8 +18,8 @@ interface EpochkOverviewProps {
 const EpochOverview: React.FC<EpochkOverviewProps> = ({ data, loading }) => {
   const { slot, percentage } = useMemo(() => {
     if (data?.startTime && data?.endTime) {
-      const slot = moment.min(moment(), moment(data?.endTime)).diff(data?.startTime) / 1000;
-      const percentage = +(slot / MAX_SLOT_EPOCH * 100).toFixed(2);
+      const slot = moment(data?.endTime).diff(data?.startTime) / 1000;
+      const percentage = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(2);
       return { slot, percentage };
     }
     return { slot: 0, percentage: 0 };
