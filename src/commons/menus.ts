@@ -16,14 +16,14 @@ export const menus: Menu[] = [
       { title: "Blocks", href: routers.BLOCK_LIST },
       { title: "Transactions", href: routers.TRANSACTION_LIST },
       { title: "Tokens", href: "/tokens" },
-      { title: "Top Delegators", href: routers.POOL_LIST },
+      { title: "Top Delegators", href: routers.DELEGATION_POOLS },
       { title: "Top Addresses", href: "/addresses" },
     ],
   },
   {
     title: "Delegate Pools",
     children: [
-      { title: "Delegation Pools", href: routers.POOL_LIST },
+      { title: "Delegation Pools", href: routers.DELEGATION_POOLS },
       { title: "Stake key registration", href: "/Stake-key-registration" },
       { title: "Pool Registration", href: "/Pool-Registration" },
     ],
