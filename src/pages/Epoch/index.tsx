@@ -22,13 +22,6 @@ export const checkStatus = (status: string) => {
       return styles.finished;
   }
 };
-const styleFont400 = {
-  fontSize: "16px",
-  fontWeight: 400,
-  color: "#273253",
-  display: "block",
-  cursor: "pointer",
-};
 
 const columns: Column<IDataEpoch>[] = [
   {
@@ -38,7 +31,7 @@ const columns: Column<IDataEpoch>[] = [
     render: r => {
       return (
         <Link to={routers.EPOCH_DETAIL.replace(":epochId", `${r.no}`)}>
-          <span style={styleFont400}>{r.no}</span>
+          <span><b>{r.no}</b></span>
         </Link>
       );
     },
@@ -60,7 +53,7 @@ const columns: Column<IDataEpoch>[] = [
     key: "startTime",
     minWidth: "100px",
     render: r => {
-      return <span style={styleFont400}>{r.startTime}</span>;
+      return <span>{r.startTime}</span>;
     },
   },
   {
@@ -68,7 +61,7 @@ const columns: Column<IDataEpoch>[] = [
     key: "endTime",
     minWidth: "100px",
     render: r => {
-      return <span style={styleFont400}>{r.endTime}</span>;
+      return <span>{r.endTime}</span>;
     },
   },
   {

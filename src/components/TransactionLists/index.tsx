@@ -91,7 +91,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
               <div>
                 {r.addressesInput.slice(0, 2).map((tx, key) => {
                   return (
-                    <Tooltip title={tx} placement="top">
+                    <Tooltip key={key} title={tx} placement="top">
                       <Link to={`#`} className={`${styles.fwBold} ${styles.link}`} key={key}>
                         {getShortWallet(tx)}
                         <BiLinkExternal style={{ marginLeft: 8 }} />
@@ -111,7 +111,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
               <div>
                 {r.addressesOutput.slice(0, 2).map((tx, key) => {
                   return (
-                    <Tooltip title={tx} placement="top">
+                    <Tooltip key={key} title={tx} placement="top">
                       <Link to={`#`} className={`${styles.fwBold} ${styles.link}`} key={key}>
                         {getShortWallet(tx)}
                         <BiLinkExternal style={{ marginLeft: 8 }} />

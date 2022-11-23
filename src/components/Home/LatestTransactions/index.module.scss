@@ -53,6 +53,7 @@
     border: 1.5px solid #e3e5e9;
     border-radius: 10px;
     font-family: var(--font-family-text);
+    cursor: pointer;
 
     .priceValue {
       @include flex-start-center;
