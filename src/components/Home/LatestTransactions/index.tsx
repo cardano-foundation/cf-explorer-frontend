@@ -1,15 +1,15 @@
 import { Col, Row, Skeleton, Tooltip } from "antd";
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { BlankBlueIcon, CheckGreenIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
-import { formatCurrency, getShortHash, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
 import styles from "./index.module.scss";
 
 const LatestTransactions: React.FC = () => {
   const { data, loading } = useFetchList<Transactions>(`tx/list`, { page: 0, size: 4 });
-
+  const history = useHistory();
   return (
     <div className={styles.latestTransaction}>
       <div className={styles.title}>
@@ -39,11 +39,18 @@ const LatestTransactions: React.FC = () => {
           {data.slice(0, 4).map(item => {
             const { hash, addressesInput, addressesOutput, blockNo, totalOutput } = item;
             return (
-              <Col span={24} sm={12} lg={6}>
-                <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)} className={styles.item}>
+              <Col key={hash} span={24} sm={12} lg={6}>
+                <div
+                  onClick={e =>
+                    handleClicktWithoutAnchor(e, () =>
+                      history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`))
+                    )
+                  }
+                  className={styles.item}
+                >
                   <div className={styles.priceValue}>
                     <img className={styles.icon} src={CheckGreenIcon} alt="check green" />
-                    <span>${formatCurrency(totalOutput)}</span>
+                    <span>${formatADA(totalOutput)}</span>
                   </div>
                   <p>
                     <small>Transaction hash: </small>
@@ -83,7 +90,7 @@ const LatestTransactions: React.FC = () => {
                       </p>
                     );
                   })}
-                </Link>
+                </div>
               </Col>
             );
           })}

@@ -63,6 +63,7 @@
         td {
           cursor: pointer;
           font-size: var(--font-size-text);
+          border-bottom: 1px solid var(--border-color);
 
           .poolName {
             font-family: var(--font-family-text);
