@@ -7,6 +7,7 @@ interface Transactions {
   addressesOutput: string[];
   fee: number;
   totalOutput: number;
+  time: string;
 }
 
 interface Transaction {
@@ -55,4 +56,22 @@ interface Transaction {
       txHash: string;
     }[];
   };
+  mints?: {
+    assetName: string;
+    amount: number;
+    policy: {
+      policyId: string;
+      totalToken: number;
+      policyScript: string;
+    };
+  }[];
+  delegations?: {
+    address: string;
+    poolId: string;
+  }[];
+  withdrawals?: {
+    stakeAddressFrom: string;
+    addressTo: string[];
+    amount: 0;
+  }[];
 }

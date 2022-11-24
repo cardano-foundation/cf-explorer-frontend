@@ -1,33 +1,24 @@
-import React, { useEffect } from 'react';
-import { IoMdCopy } from 'react-icons/io';
-import { BiCheckCircle } from 'react-icons/bi';
-import { useCopyToClipboard } from 'react-use';
+import React, { useEffect, useState } from "react";
+import { IoMdCopy } from "react-icons/io";
+import { BiCheckCircle } from "react-icons/bi";
+import { useCopyToClipboard } from "react-use";
 
-import styles from './index.module.scss';
-import walletImg from '../../../commons/resources/images/Wallet.png';
-import sendImg from '../../../commons/resources/images/summary-up.png';
-import receiveImg from '../../../commons/resources/images/summary-down.png';
-import AIconImg from '../../../commons/resources/images/AIcon.png';
-import messageImg from '../../../commons/resources/images/summary-message.png';
-import { formatADA, getShortWallet } from '../../../commons/utils/helper';
-import { CopyToClipboardState } from 'react-use/lib/useCopyToClipboard';
+import styles from "./index.module.scss";
+import walletImg from "../../../commons/resources/images/Wallet.png";
+import sendImg from "../../../commons/resources/images/summary-up.png";
+import receiveImg from "../../../commons/resources/images/summary-down.png";
+import AIconImg from "../../../commons/resources/images/AIcon.png";
+import messageImg from "../../../commons/resources/images/summary-message.png";
+import { formatADA, getShortWallet } from "../../../commons/utils/helper";
 
 interface SummaryProps {
-  data: Transaction['summary'] | null;
+  data: Transaction["summary"] | null;
 }
 const Summary: React.FC<SummaryProps> = ({ data }) => {
-  const [state, copyToClipboard] = useCopyToClipboard();
-
   return (
     <div>
-      {data &&
-        data.stakeAddressTxInputs.map((tx, key) => (
-          <SummaryItems key={key} item={tx} type="down" copyToClipboard={copyToClipboard} copyValue={state} />
-        ))}
-      {data &&
-        data.stakeAddressTxOutputs.map((tx, key) => (
-          <SummaryItems key={key} item={tx} type="up" copyToClipboard={copyToClipboard} copyValue={state} />
-        ))}
+      {data && data.stakeAddressTxInputs.map((tx, key) => <SummaryItems key={key} item={tx} type="down" />)}
+      {data && data.stakeAddressTxOutputs.map((tx, key) => <SummaryItems key={key} item={tx} type="up" />)}
 
       <div className={styles.item}>
         <div className={styles.top}>
@@ -48,33 +39,47 @@ export default Summary;
 const SummaryItems = ({
   item,
   type,
-  copyToClipboard,
-  copyValue,
 }: {
-  item: Transaction['summary']['stakeAddressTxInputs'][number];
-  type?: 'up' | 'down';
-  copyToClipboard: (value: string) => void;
-  copyValue: CopyToClipboardState;
+  item: Transaction["summary"]["stakeAddressTxInputs"][number];
+  type?: "up" | "down";
 }) => {
+  const [, copyToClipboard] = useCopyToClipboard();
+  const [selected, setSelected] = useState<string>();
+
+  useEffect(() => {
+    if (selected) {
+      setTimeout(() => {
+        setSelected("");
+      }, 3000);
+    }
+  }, [selected]);
+
   return (
     <div className={styles.item}>
       <div className={styles.top}>
         <img className={styles.img} src={walletImg} alt="wallet icon" />
         <div>
-          {type === 'down' ? 'From' : 'To'}: <span className={styles.address}>{getShortWallet(item.address)}</span>{' '}
-          {copyValue.value === item.address ? (
+          {type === "down" ? "From" : "To"}: <span className={styles.address}>{getShortWallet(item.address)}</span>{" "}
+          {selected === item.address ? (
             <BiCheckCircle size={20} className={styles.icon} />
           ) : (
-            <IoMdCopy size={20} className={styles.icon} onClick={() => copyToClipboard(item.address)} />
+            <IoMdCopy
+              size={20}
+              className={styles.icon}
+              onClick={() => {
+                copyToClipboard(item.address);
+                setSelected(item.address);
+              }}
+            />
           )}
         </div>
       </div>
       <div className={styles.bottom}>
         <div>
-          <img src={type === 'down' ? receiveImg : sendImg} className={styles.img} alt="send icon" />
-          ADA sent:{' '}
-          <span className={`${styles.address} ${type === 'up' ? styles.up : styles.down}`}>
-            {type === 'down' ? `-${formatADA(item.value)}` : `+${formatADA(item.value)}`}
+          <img src={type === "down" ? receiveImg : sendImg} className={styles.img} alt="send icon" />
+          ADA sent:{" "}
+          <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
+            {type === "down" ? `-${formatADA(item.value)}` : `+${formatADA(item.value)}`}
           </span>
           <img src={AIconImg} alt="ADA icon" />
         </div>

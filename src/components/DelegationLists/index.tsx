@@ -4,7 +4,7 @@ import { parse, stringify } from "qs";
 import Table, { Column } from "../commons/Table";
 
 import styles from "./index.module.scss";
-import { formatADA } from "../../commons/utils/helper";
+import { formatADA, numberWithCommas } from "../../commons/utils/helper";
 
 import sendImg from "../../commons/resources/images//summary-up.png";
 import receiveImg from "../../commons/resources/images/summary-down.png";
@@ -43,7 +43,7 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading }
       minWidth: "120px",
       // To do
       // render: r => <div>{r.poolSize}</div>,
-      render: r => <div>63.41m</div>,
+      render: r => <div>{Math.round(Math.random() * 10000) / 100}m</div>,
     },
     {
       title: "Reward",
@@ -53,7 +53,8 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading }
       // render: r => <div>{r.reward}</div>,
       render: r => (
         <div>
-          <img src={sendImg} alt="reward icon" /> <span className={styles.value}>+16,25%</span>
+          <img src={sendImg} alt="reward icon" />{" "}
+          <span className={styles.value}>+{Math.round(Math.random() * 10000) / 100}%</span>
         </div>
       ),
     },
@@ -67,7 +68,11 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading }
       //     {r.feePercent}-{r.feeAmount}{" "}
       //   </div>
       // ),
-      render: r => <div>2.5% (500 A)</div>,
+      render: r => (
+        <div>
+          {Math.round(Math.random() * 1000) / 100}% ({Math.round(Math.random() * 10000) / 100} A)
+        </div>
+      ),
     },
     {
       title: "Declared Pledge (A)",
@@ -89,8 +94,8 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading }
               "100%": "#5A9C56",
             }}
             strokeWidth={8}
-            percent={80}
-            status='active'
+            percent={Math.round(Math.random() * 100)}
+            status="active"
           />
         </div>
       ),
