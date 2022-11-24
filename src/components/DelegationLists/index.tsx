@@ -4,7 +4,7 @@ import { parse, stringify } from "qs";
 import Table, { Column } from "../commons/Table";
 
 import styles from "./index.module.scss";
-import { formatADA, numberWithCommas } from "../../commons/utils/helper";
+import { formatADA } from "../../commons/utils/helper";
 
 import sendImg from "../../commons/resources/images//summary-up.png";
 import receiveImg from "../../commons/resources/images/summary-down.png";
@@ -54,7 +54,7 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading }
       render: r => (
         <div>
           <img src={sendImg} alt="reward icon" />{" "}
-          <span className={styles.value}>+{Math.round(Math.random() * 10000) / 100}%</span>
+          <span className={styles.value}>+{Math.round((Math.random() * 4 + 2) * 100) / 100}%</span>
         </div>
       ),
     },
@@ -70,7 +70,7 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading }
       // ),
       render: r => (
         <div>
-          {Math.round(Math.random() * 1000) / 100}% ({Math.round(Math.random() * 10000) / 100} A)
+          {Math.round((Math.random() + 2) * 100) / 100}% ({Math.round(Math.random() * 10000) / 100} A)
         </div>
       ),
     },
