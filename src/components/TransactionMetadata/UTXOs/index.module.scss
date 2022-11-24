@@ -1,4 +1,4 @@
-@import '../../../themes/variable.scss';
+@import "../../../themes/variable.scss";
 .wrapper {
   background-color: var(--background);
   border-radius: var(--border-radius);
@@ -43,10 +43,7 @@
       }
       .address {
         font-weight: var(--font-weight-bold);
-        padding: 8px 0 8px 8px;
-      }
-      .icon {
-        cursor: pointer;
+        // padding: 8px 0 8px 8px;
       }
     }
     .bottom {
@@ -111,4 +108,9 @@
 
 .paddingTop {
   padding-top: 8px;
+}
+
+.icon {
+  cursor: pointer;
+  margin-left: 8px;
 }

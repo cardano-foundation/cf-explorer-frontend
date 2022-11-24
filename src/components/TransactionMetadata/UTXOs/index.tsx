@@ -7,10 +7,10 @@ import { getShortWallet, formatADA } from "../../../commons/utils/helper";
 import styles from "./index.module.scss";
 import walletImg from "../../../commons/resources/images/Wallet.png";
 import sendImg from "../../../commons/resources/images/summary-up.png";
-import receiveImg from "../../../commons/resources/images/summary-down.png"; 
+import receiveImg from "../../../commons/resources/images/summary-down.png";
+import AIconImg from "../../../commons/resources/images/AIcon.png";
 import feeImg from "../../../commons/resources/images/fee.png";
 import { BiCheckCircle } from "react-icons/bi";
-import { AIcon } from "../../../commons/resources";
 
 interface Props {
   data: Transaction["utxOs"] | null;
@@ -89,7 +89,7 @@ const Card = ({
                   <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
                     {type === "down" ? `- ${formatADA(i.value)}` : `+ ${formatADA(i.value)}`}
                   </span>
-                  <img src={AIcon} alt="ADA icon" />
+                  <img src={AIconImg} alt="ADA icon" />
                 </div>
               </div>
               <div className={`${styles.paddingTop} ${styles.bottom}`}>
@@ -123,7 +123,7 @@ const Card = ({
             </div>
             <div>
               <span className={`${styles.address} ${styles.up}`}>{formatADA(fee)}</span>
-              <img src={AIcon} alt="ADA icon" />
+              <img src={AIconImg} alt="ADA icon" />
             </div>
           </div>
           <div className={`${styles.paddingTop} ${styles.bottom}`}></div>
@@ -135,7 +135,7 @@ const Card = ({
           <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
             {type === "down" ? `- ${formatADA(totalADA)}` : `+ ${formatADA(totalADA)}`}
           </span>
-          <img src={AIcon} alt="ADA icon" />
+          <img src={AIconImg} alt="ADA icon" />
         </div>
       </div>
     </div>
