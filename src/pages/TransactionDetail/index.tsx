@@ -1,8 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-import TransactionOverview from "../../components/TransactionOverview";
-import TransactionMetadata from "../../components/TransactionMetadata";
+import TransactionOverview from "../../components/TransactionDetail/TransactionOverview";
+import TransactionMetadata from "../../components/TransactionDetail/TransactionMetadata";
 import styles from "./index.module.scss";
 import useFetch from "../../commons/hooks/useFetch";
 import { Skeleton } from "antd";

@@ -3,7 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { parse } from 'qs';
 
 import TransactionLists from '../../components/TransactionLists';
-import BlockOverview from '../../components/BlockOverview';
+import BlockOverview from '../../components/BlockDetail/BlockOverview';
 
 import styles from './index.module.scss';
 import useFetch from '../../commons/hooks/useFetch';

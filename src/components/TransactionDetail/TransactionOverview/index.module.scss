@@ -1,0 +1,45 @@
+@import "../../../themes/variable.scss";
+
+.wrapper {
+  .alignCenter {
+    display: flex;
+    align-items: center;
+  }
+
+  .link {
+    font-family: var(--font-family-text) !important;
+    color: var(--color-blue) !important;
+    margin: 0;
+
+    .icon {
+      margin-left: 8px;
+    }
+  }
+
+  .ml10 {
+    margin-left: 10px !important;
+  }
+
+  .status {
+    margin: 0;
+    text-transform: uppercase;
+    border-radius: 2px;
+    padding: 0 12px;
+  }
+
+  .green {
+    color: var(--color-green);
+    background: rgba(67, 143, 104, 0.2);
+  }
+
+  .yellow {
+    color: #FFA800;
+    background: rgba(255, 168, 0, 0.2);
+  }
+  
+  .img {
+    display: block;
+    padding-left: 8px;
+  }
+}
+  
