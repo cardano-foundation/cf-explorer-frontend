@@ -72,7 +72,12 @@
     p {
       color: var(--text-color-pale);
 
-      .txsDetail {
+      .hash {
+        font-style: normal;
+        font-weight: var(--font-weight-bold);
+      }
+      .blockNo {
+        font-style: normal;
         color: var(--color-black);
         font-weight: var(--font-weight-bold);
       }

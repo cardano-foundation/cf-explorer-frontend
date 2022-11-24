@@ -15,6 +15,15 @@ const ABBREVIATIONS = ["", "k", "m", "b", "t", "q", "Q", "s", "S"];
 const TopDelegationPools: React.FC<Props> = () => {
   const { data, loading } = useFetchList<DelegationPool>(`delegation/pool-list?search=`, { page: 1, size: 4 });
   const history = useHistory();
+  data.forEach(item => {
+    if (!item.poolSize) {
+      item.poolSize = Math.floor(Math.random() * 10 ** 13);
+      item.feePercent = Number((Math.floor(Math.random() * 2 * 10) / 10).toFixed(1)) + 1;
+      item.feeAmount = (item.poolSize * item.feePercent) / 100;
+      item.reward = Math.floor((Math.random() * 20 * 100) / 100) + 10;
+      item.saturation = Math.floor(Math.random() * 60) + 30;
+    }
+  });
   const columns: Column<DelegationPool>[] = [
     {
       title: "Pool",
@@ -28,17 +37,17 @@ const TopDelegationPools: React.FC<Props> = () => {
     {
       title: "Pool size (A)",
       key: "size",
-      render: r => <span>{formatPrice(r.poolSize || 63.41 * 10 ** 6, ABBREVIATIONS)}</span>,
+      render: r => <span>{formatPrice(r.poolSize / 10 ** 6, ABBREVIATIONS)}</span>,
     },
     {
       title: "Reward",
       key: "reward",
       render: r => (
         <span className={styles.priceRate}>
-          <img src={(r.reward || 16.24) > 0 ? UpGreenIcon : DownRedIcon} alt="price rate" />
-          <span className={(r.reward || 16.24) > 0 ? styles.priceUp : styles.priceDown}>
-            {(r.reward || 16.24) > 0 ? "+" : ""}
-            {(r.reward || 16.24)?.toString().replace(".", ",") || 0} %
+          <img src={r.reward > 0 ? UpGreenIcon : DownRedIcon} alt="price rate" />
+          <span className={r.reward > 0 ? styles.priceUp : styles.priceDown}>
+            {r.reward > 0 ? "+" : ""}
+            {r.reward?.toString().replace(".", ",") || 0} %
           </span>
         </span>
       ),
@@ -48,14 +57,14 @@ const TopDelegationPools: React.FC<Props> = () => {
       key: "fee",
       render: r => (
         <span>
-          {r.feePercent || 2.5}% ({r.feeAmount || 500} A)
+          {r.feePercent}% ({formatPrice(r.feeAmount / 10 ** 6, ABBREVIATIONS)} A)
         </span>
       ),
     },
     {
       title: "Declared Pledge (A)",
       key: "declaredPledge",
-      render: r => <span>{formatPrice(r.pledge, ABBREVIATIONS)}</span>,
+      render: r => <span>{formatPrice(r.pledge / 10 ** 6, ABBREVIATIONS)}</span>,
     },
     {
       title: "Saturation",

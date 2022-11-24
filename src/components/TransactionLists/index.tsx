@@ -6,11 +6,11 @@ import Table, { Column } from "../commons/Table";
 import { BiLinkExternal } from "react-icons/bi";
 import { formatADA, getShortHash, getShortWallet } from "../../commons/utils/helper";
 import styles from "./index.module.scss";
-
-import AIcon from "../../commons/resources/images/AIcon.png";
+ 
 import moment from "moment";
 import { routers } from "../../commons/routers";
 import { Tooltip } from "antd";
+import { AIcon } from "../../commons/resources";
 
 interface TransactionListProps {
   transactions: Transactions[];

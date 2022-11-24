@@ -64,6 +64,7 @@
           cursor: pointer;
           font-size: var(--font-size-text);
           border-bottom: 1px solid var(--border-color);
+          border-radius: 0 !important;
 
           .poolName {
             font-family: var(--font-family-text);

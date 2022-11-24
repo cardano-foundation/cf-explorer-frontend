@@ -8,9 +8,9 @@ import Table, { Column } from "../commons/Table";
 import { getShortWallet, formatADA } from "../../commons/utils/helper";
 
 import styles from "./index.module.scss";
-import AIcon from "../../commons/resources/images/AIcon.png";
 import { routers } from "../../commons/routers";
 import { Tooltip } from "antd";
+import { AIcon } from "../../commons/resources";
 
 interface BlockListProps {
   blockLists: Block[];

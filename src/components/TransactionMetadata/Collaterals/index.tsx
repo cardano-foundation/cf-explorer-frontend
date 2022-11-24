@@ -5,10 +5,10 @@ import { useCopyToClipboard } from "react-use";
 import styles from "./index.module.scss";
 import walletImg from "../../../commons/resources/images/Wallet.png";
 import sendImg from "../../../commons/resources/images/summary-up.png";
-import receiveImg from "../../../commons/resources/images/summary-down.png";
-import AIconImg from "../../../commons/resources/images/AIcon.png";
+import receiveImg from "../../../commons/resources/images/summary-down.png"; 
 import { formatADA, getShortWallet } from "../../../commons/utils/helper";
 import { useEffect, useState } from "react";
+import { AIcon } from "../../../commons/resources";
 
 interface CollateralProps {
   data: Transaction["collaterals"] | null;
@@ -68,7 +68,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
           <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
             {type === "down" ? `- ${formatADA(item?.amount)}` : `+ ${formatADA(item?.amount)}`}
           </span>
-          <img src={AIconImg} alt="ADA icon" />
+          <img src={AIcon} alt="ADA icon" />
         </div>
       </div>
     </div>

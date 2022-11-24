@@ -7,7 +7,6 @@ import styles from "./index.module.scss";
 import { formatADA } from "../../commons/utils/helper";
 
 import sendImg from "../../commons/resources/images//summary-up.png";
-import receiveImg from "../../commons/resources/images/summary-down.png";
 import { Progress } from "antd";
 
 interface DelegationListProps {

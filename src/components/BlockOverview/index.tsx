@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
-import { BiLinkExternal } from "react-icons/bi";
 
 import Card from "../commons/Card";
 import DetailCard from "../commons/DetailCard";
 import { formatADA, getShortWallet } from "../../commons/utils/helper";
 
 import styles from "./index.module.scss";
-import aIcon from "../../commons/resources/images/AIcon.png";
 import moment from "moment";
 import { Tooltip } from "antd";
+import { AIcon } from "../../commons/resources";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
@@ -42,7 +41,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
         <span className={styles.transaction}>
           {data?.totalFees && (
             <>
-              <div>{formatADA(data?.totalFees)} ADA</div> <img className={styles.img} alt="ada icon" src={aIcon} />
+              <div>{formatADA(data?.totalFees)} ADA</div> <img className={styles.img} alt="ada icon" src={AIcon} />
             </>
           )}
         </span>
@@ -54,7 +53,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
         <span style={{ display: "flex", alignItems: "center" }}>
           {data?.totalOutput && (
             <>
-              <div> {formatADA(data?.totalOutput)} ADA</div> <img className={styles.img} alt="ada icon" src={aIcon} />
+              <div> {formatADA(data?.totalOutput)} ADA</div> <img className={styles.img} alt="ada icon" src={AIcon} />
             </>
           )}
         </span>
