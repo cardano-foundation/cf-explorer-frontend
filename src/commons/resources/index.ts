@@ -27,6 +27,7 @@ import UpGreenIcon from "./icons/up-green.svg";
 import CheckGreenIcon from "./icons/check-green.svg";
 import BlankBlueIcon from "./icons/blank-blue.svg";
 import CalenderPaleIcon from "./icons/calender-pale.svg";
+import AIcon from "./images/AIcon.png";
 
 export {
   LogoIcon,
@@ -58,4 +59,5 @@ export {
   CheckGreenIcon,
   BlankBlueIcon,
   CalenderPaleIcon,
+  AIcon
 };

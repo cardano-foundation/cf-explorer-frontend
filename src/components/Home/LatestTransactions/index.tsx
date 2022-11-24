@@ -2,7 +2,7 @@ import { Col, Row, Skeleton, Tooltip } from "antd";
 import React from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
-import { BlankBlueIcon, CheckGreenIcon } from "../../../commons/resources";
+import { BlankBlueIcon, AIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
 import styles from "./index.module.scss";
@@ -49,19 +49,21 @@ const LatestTransactions: React.FC = () => {
                   className={styles.item}
                 >
                   <div className={styles.priceValue}>
-                    <img className={styles.icon} src={CheckGreenIcon} alt="check green" />
-                    <span>${formatADA(totalOutput)}</span>
+                    <img className={styles.icon} src={AIcon} alt="check green" />
+                    <span>{formatADA(totalOutput)}</span>
                   </div>
                   <p>
                     <small>Transaction hash: </small>
                     <Tooltip placement="top" title={hash}>
-                      <small className={styles.txsDetail}>{getShortHash(hash)}</small>
+                      <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
+                        <small className={styles.hash}>{getShortHash(hash)}</small>
+                      </Link>
                     </Tooltip>
                   </p>
                   <p>
                     <small>Block: </small>
                     <Link to={routers.BLOCK_DETAIL.replace(":blockId", `${blockNo}`)}>
-                      <small className={styles.txsDetail}>{blockNo}</small>
+                      <small className={styles.blockNo}>{blockNo}</small>
                     </Link>
                   </p>
                   {addressesOutput?.slice(0, 1).map(add => {

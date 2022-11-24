@@ -55,7 +55,7 @@ export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "t", "q", "Q", "s"
 export const formatPrice = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
   if (!value) return `0${abbreviations[0]}`;
   const bigValue = new BigNumber(value.toString());
-  const length = bigValue.toFixed().toString().length;
+  const length = bigValue.toFixed(0).toString().length;
   const exponential = Math.floor((length - 1) / 3) * 3;
   const newValue = bigValue.div(10 ** exponential).toFixed(3 - ((length - 1) % 3));
   const syntax = abbreviations[exponential / 3];

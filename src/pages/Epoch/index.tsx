@@ -1,8 +1,8 @@
 import { parse, stringify } from "qs";
 import { useRef } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import useFetchList from "../../commons/hooks/useFetchList";
-import AIcon from "../../commons/resources/images/AIcon.png";
+import useFetchList from "../../commons/hooks/useFetchList"; 
+import { AIcon } from "../../commons/resources";
 import { routers } from "../../commons/routers";
 import { EPOCH_STATUS } from "../../commons/utils/constants";
 import { formatADA } from "../../commons/utils/helper";

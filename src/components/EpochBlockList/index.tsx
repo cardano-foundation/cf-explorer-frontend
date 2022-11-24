@@ -7,11 +7,11 @@ import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 
 import { formatADA, getShortWallet } from "../../commons/utils/helper";
-import AIcon from "../../commons/resources/images/AIcon.png";
 import { routers } from "../../commons/routers";
 
 import styles from "./index.module.scss";
 import { Tooltip } from "antd";
+import { AIcon } from "../../commons/resources";
 
 interface IEpochBlockList {
   data: Block[];
