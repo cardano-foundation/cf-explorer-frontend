@@ -13,7 +13,31 @@ header {
 
     .headerTop {
       @include flex-between-center;
-
+      .logo {
+        position: relative;
+        small {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          transform: translateY(50%);
+          font-weight: var(--font-weight-bold);
+          font-family: var(--font-family-title);
+          color: var(--color-yellow);
+          text-transform: uppercase;
+          &.mainnet {
+            color: var(--color-green-light);
+          }
+          &.preprod {
+            color: var(--color-blue);
+          }
+          &.preview {
+            color: var(--color-blue);
+          }
+          &.testnet {
+            color: var(--color-yellow);
+          }
+        }
+      }
       .headerMenu {
         @include flex-end-center;
         gap: var(--menu-item-gap);

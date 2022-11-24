@@ -1,15 +1,21 @@
-import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { Button, Spin } from "antd";
 import React from "react";
+import { useSelector } from "react-redux";
 import { WalletIcon } from "../../../../../commons/resources";
 import { getShortWallet } from "../../../../../commons/utils/helper";
+import { RootState } from "../../../../../stores/types";
 import { setOpenModal } from "../../../../../stores/user";
 import styles from "./index.module.scss";
 
 interface Props {}
 
 const ConnectWallet: React.FC<Props> = () => {
-  const { isEnabled, stakeAddress, isConnected } = useCardano();
+  const { network } = useSelector(({ user }: RootState) => user);
+  
+  const { isEnabled, stakeAddress, isConnected } = useCardano({
+    limitNetwork: network === "mainnet" ? NetworkType.MAINNET : NetworkType.TESTNET,
+  });
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     setOpenModal(true);
   };

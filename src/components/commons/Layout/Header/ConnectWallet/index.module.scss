@@ -9,7 +9,7 @@
   cursor: pointer;
   height: auto;
   border: none;
-  font-size: var(--font-size-normal);
+  font-size: var(--font-size-text);
 
   .loading {
     @include flex-center-center;
