@@ -13,7 +13,10 @@ interface Props {}
 const ABBREVIATIONS = ["", "k", "m", "b", "t", "q", "Q", "s", "S"];
 
 const TopDelegationPools: React.FC<Props> = () => {
-  const { data, loading } = useFetchList<DelegationPool>(`delegation/pool-list?search=`, { page: 1, size: 4 });
+  const { data, loading, initialized } = useFetchList<DelegationPool>(`delegation/pool-list?search=`, {
+    page: 1,
+    size: 4,
+  });
   const history = useHistory();
   data.forEach(item => {
     if (!item.poolSize) {
@@ -106,6 +109,7 @@ const TopDelegationPools: React.FC<Props> = () => {
       <Table
         className={styles.table}
         loading={loading}
+        initialized={initialized}
         columns={columns}
         data={data}
         onClickRow={(_, r: DelegationPool) =>

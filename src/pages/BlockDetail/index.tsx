@@ -18,6 +18,7 @@ const BlockDetail = () => {
   const {
     data: transactions,
     loading: transactionsLoading,
+    initialized,
     total,
     totalPage,
     currentPage,
@@ -32,6 +33,7 @@ const BlockDetail = () => {
       <TransactionLists
         currentPage={currentPage}
         loading={transactionsLoading}
+        initialized={initialized}
         transactions={transactions}
         total={total}
         totalPage={totalPage}

@@ -15,20 +15,26 @@ export const EmptyRecord = () => (
 interface ColumnType {
   [key: string | number | symbol]: any;
 }
+export interface Column<T extends ColumnType = any> {
+  key: string;
+  title?: string;
+  minWidth?: string;
+  render?: (data: T, index: number) => ReactNode;
+}
+
+type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns">;
 
 type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
   row: T;
   index: number;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
 };
-
-type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns">;
-
 interface TableProps<T extends ColumnType = any> {
   columns: Column<T>[];
   data?: T[];
   className?: string;
   loading?: boolean;
+  initialized?: boolean;
   total?: {
     count: number;
     title: string;
@@ -37,35 +43,10 @@ interface TableProps<T extends ColumnType = any> {
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
 }
-
-export interface Column<T extends ColumnType = any> {
-  key: string;
-  title?: string;
-  minWidth?: string;
-  render?: (data: T, index: number) => ReactNode;
-}
 interface FooterTableProps {
   total: TableProps["total"];
   pagination: TableProps["pagination"];
 }
-
-const Table: React.FC<TableProps> = ({ columns, data, total, pagination, className, loading, onClickRow }) => {
-  return (
-    <div className={`${styles.wrapper} ${className}`}>
-      <div className={styles.tableWrapper}>
-        <table className={styles.table}>
-          <TableHeader columns={columns} />
-          {!loading && <TableBody columns={columns} data={data} onClickRow={onClickRow} />}
-          {loading && <TableSekeleton columns={columns} />}
-        </table>
-        {!loading && data && data.length === 0 && <EmptyRecord />}
-      </div>
-      <FooterTable total={total} pagination={pagination} />
-    </div>
-  );
-};
-
-export default Table;
 
 const TableHeader = <T extends ColumnType>({ columns }: TableHeaderProps<T>) => {
   return (
@@ -78,17 +59,6 @@ const TableHeader = <T extends ColumnType>({ columns }: TableHeaderProps<T>) => 
         ))}
       </tr>
     </thead>
-  );
-};
-
-const TableBody = <T extends ColumnType>({ data, columns, onClickRow }: TableProps<T>) => {
-  return (
-    <tbody className={styles.tableBody}>
-      {data &&
-        data.map((row, index) => (
-          <TableRow row={row} key={index} columns={columns} index={index} onClickRow={onClickRow} />
-        ))}
-    </tbody>
   );
 };
 
@@ -109,6 +79,46 @@ const TableRow = <T extends ColumnType>({ row, columns, index, onClickRow }: Tab
         );
       })}
     </tr>
+  );
+};
+
+const TableBody = <T extends ColumnType>({ data, columns, onClickRow }: TableProps<T>) => {
+  return (
+    <tbody className={styles.tableBody}>
+      {data &&
+        data.map((row, index) => (
+          <TableRow row={row} key={index} columns={columns} index={index} onClickRow={onClickRow} />
+        ))}
+    </tbody>
+  );
+};
+
+const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
+  return (
+    <tbody className={styles.tableBody}>
+      {[...Array(10)].map((_, i) => {
+        return (
+          <tr key={i} className={styles.bodyRow}>
+            {columns.map((column, idx) => {
+              return (
+                <td
+                  className={styles.col}
+                  key={idx}
+                  style={{
+                    minWidth: column.minWidth ? column.minWidth : "max-content",
+                    padding: "0",
+                    height: "75px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <Skeleton.Input size="large" style={{ height: "75px" }} active block />
+                </td>
+              );
+            })}
+          </tr>
+        );
+      })}
+    </tbody>
   );
 };
 
@@ -167,31 +177,32 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
   );
 };
 
-const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
+const Table: React.FC<TableProps> = ({
+  columns,
+  data,
+  total,
+  pagination,
+  className,
+  loading,
+  initialized = true,
+  onClickRow,
+}) => {
   return (
-    <tbody className={styles.tableBody}>
-      {[...Array(10)].map((_i, ii) => {
-        return (
-          <tr key={ii} className={styles.bodyRow}>
-            {columns.map((column, idx) => {
-              return (
-                <td
-                  className={styles.col}
-                  key={idx}
-                  style={{
-                    minWidth: column.minWidth ? column.minWidth : "max-content",
-                    padding: "0",
-                    height: "75px",
-                    overflow: "hidden",
-                  }}
-                >
-                  <Skeleton.Input size="large" style={{ height: "75px" }} active block />
-                </td>
-              );
-            })}
-          </tr>
-        );
-      })}
-    </tbody>
+    <div className={`${styles.wrapper} ${className}`}>
+      <div className={styles.tableWrapper}>
+        <table className={styles.table}>
+          <TableHeader columns={columns} />
+          {!initialized && loading ? (
+            <TableSekeleton columns={columns} />
+          ) : (
+            <TableBody columns={columns} data={data} onClickRow={onClickRow} />
+          )}
+        </table>
+        {!initialized && !loading && data && data.length === 0 && <EmptyRecord />}
+      </div>
+      <FooterTable total={total} pagination={pagination} />
+    </div>
   );
 };
+
+export default Table;

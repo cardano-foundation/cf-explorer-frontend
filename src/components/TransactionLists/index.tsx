@@ -6,7 +6,7 @@ import Table, { Column } from "../commons/Table";
 import { BiLinkExternal } from "react-icons/bi";
 import { formatADA, getShortHash, getShortWallet } from "../../commons/utils/helper";
 import styles from "./index.module.scss";
- 
+
 import moment from "moment";
 import { routers } from "../../commons/routers";
 import { Tooltip } from "antd";
@@ -15,12 +15,19 @@ import { AIcon } from "../../commons/resources";
 interface TransactionListProps {
   transactions: Transactions[];
   loading: boolean;
+  initialized: boolean;
   total: number;
   totalPage: number;
   currentPage: number;
 }
 
-const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading, total, totalPage, transactions }) => {
+const TransactionList: React.FC<TransactionListProps> = ({
+  currentPage,
+  loading,
+  initialized,
+  total,
+  transactions,
+}) => {
   const history = useHistory();
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
@@ -160,6 +167,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
         data={transactions}
         total={{ count: total, title: "Total Transactions" }}
         loading={loading}
+        initialized={initialized}
         onClickRow={(_, r: Transactions) => history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`))}
         pagination={{
           current: currentPage + 1 || 1,

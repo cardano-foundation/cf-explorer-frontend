@@ -19,7 +19,9 @@ const Footer: React.FC = () => {
             <small className={styles.network}>Networks</small>
             <div className={styles.chain}>
               {Object.entries(NETWORKS).map(([network, name]) => (
-                <small className={styles[network]}>{name}</small>
+                <small key={network} className={styles[network]}>
+                  {name}
+                </small>
               ))}
             </div>
           </Col>

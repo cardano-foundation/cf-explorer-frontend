@@ -11,11 +11,10 @@ const BlockList = () => {
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
 
-  const { data, loading, total, totalPage, currentPage } =
-    useFetchList<Block>("block/list", {
-      page: query.page ? +query.page - 1 : 0,
-      size: query.size ? (query.size as string) : 10,
-    });
+  const { data, loading, initialized, total, totalPage, currentPage } = useFetchList<Block>("block/list", {
+    page: query.page ? +query.page - 1 : 0,
+    size: query.size ? (query.size as string) : 10,
+  });
 
   return (
     <div className={styles.container}>
@@ -25,6 +24,7 @@ const BlockList = () => {
         totalPage={totalPage}
         currentPage={currentPage}
         loading={loading}
+        initialized={initialized}
       />
     </div>
   );
