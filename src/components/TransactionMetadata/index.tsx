@@ -8,6 +8,8 @@ import Summary from "./Summary";
 import Contracts from "./Contracts";
 import Collaterals from "./Collaterals";
 import Withdrawals from "./Withdrawals";
+import Delegations from "./Delegations";
+import Minting from "./Minting";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
@@ -49,12 +51,12 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
     {
       label: `Delegations(${data?.delegations?.length || 0})`,
       key: "delegations",
-      children: "",
+      children: <Delegations data={(data && data["delegations"]) || null} />,
     },
     {
       label: `Mints(${data?.mints?.length || 0})`,
       key: "mints",
-      children: "",
+      children: <Minting data={(data && data["mints"]) || null} />,
     },
   ];
 
