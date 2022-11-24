@@ -6,10 +6,10 @@ import { useCopyToClipboard } from "react-use";
 import styles from "./index.module.scss";
 import walletImg from "../../../commons/resources/images/Wallet.png";
 import sendImg from "../../../commons/resources/images/summary-up.png";
-import receiveImg from "../../../commons/resources/images/summary-down.png";
-import AIconImg from "../../../commons/resources/images/AIcon.png";
+import receiveImg from "../../../commons/resources/images/summary-down.png"; 
 import messageImg from "../../../commons/resources/images/summary-message.png";
 import { formatADA, getShortWallet } from "../../../commons/utils/helper";
+import { AIcon } from "../../../commons/resources";
 
 interface SummaryProps {
   data: Transaction["summary"] | null;
@@ -81,7 +81,7 @@ const SummaryItems = ({
           <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
             {type === "down" ? `-${formatADA(item.value)}` : `+${formatADA(item.value)}`}
           </span>
-          <img src={AIconImg} alt="ADA icon" />
+          <img src={AIcon} alt="ADA icon" />
         </div>
         <h4 className={`${styles.status} ${styles.yellow} ${styles.ml10}`}>Native Token</h4>
       </div>

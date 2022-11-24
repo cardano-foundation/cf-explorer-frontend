@@ -6,9 +6,9 @@ import { formatADA } from "../../commons/utils/helper";
 import Card from "../commons/Card";
 import DetailCard from "../commons/DetailCard";
 
-import styles from "./index.module.scss";
-import aIcon from "../../commons/resources/images/AIcon.png";
+import styles from "./index.module.scss"; 
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../commons/utils/constants";
+import { AIcon } from "../../commons/resources";
 
 interface EpochkOverviewProps {
   data: IDataEpoch | null;
@@ -36,7 +36,7 @@ const EpochOverview: React.FC<EpochkOverviewProps> = ({ data, loading }) => {
           {data?.outSum && (
             <>
               <div>{formatADA(data?.outSum)} ADA</div>
-              <img className={styles.img} alt="ada icon" src={aIcon} />
+              <img className={styles.img} alt="ada icon" src={AIcon} />
             </>
           )}
         </span>

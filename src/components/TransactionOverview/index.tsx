@@ -9,9 +9,9 @@ import Card from "../commons/Card";
 import DetailCard from "../commons/DetailCard";
 import { formatADA, getShortHash } from "../../commons/utils/helper";
 
-import styles from "./index.module.scss";
-import aIcon from "../../commons/resources/images/AIcon.png";
+import styles from "./index.module.scss"; 
 import { Tooltip } from "antd";
+import { AIcon } from "../../commons/resources";
 
 interface Props {
   data: Transaction | null;
@@ -76,7 +76,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       value: data?.tx.fee && (
         <div className={styles.alignCenter}>
           <span>{formatADA(data?.tx.fee || 0)} ADA </span>
-          <img className={styles.img} alt="ada icon" src={aIcon} />
+          <img className={styles.img} alt="ada icon" src={AIcon} />
         </div>
       ),
     },
@@ -85,7 +85,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       value: data?.tx.totalOutput && (
         <div className={styles.alignCenter}>
           <span>{formatADA(data?.tx.totalOutput || 0)} ADA </span>
-          <img className={styles.img} alt="ada icon" src={aIcon} />
+          <img className={styles.img} alt="ada icon" src={AIcon} />
         </div>
       ),
     },
