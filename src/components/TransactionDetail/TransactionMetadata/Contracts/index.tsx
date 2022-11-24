@@ -5,6 +5,9 @@ import { useCopyToClipboard } from "react-use";
 
 import contractImg from "../../../../commons/resources/images/trx-contract.png";
 import { useEffect, useState } from "react";
+import { getShortWallet } from "../../../../commons/utils/helper";
+import { Tooltip } from "antd";
+import { Link } from "react-router-dom";
 
 interface ContractsProps {
   data: Transaction["contracts"] | null;
@@ -28,8 +31,12 @@ const Contracts: React.FC<ContractsProps> = ({ data }) => {
         {data &&
           data.map((ct, key) => {
             return (
-              <div key={key}>
-                <div className={styles.address}>{ct.contract}</div>
+              <div key={key} className={styles.item}>
+                <Tooltip title={ct.contract} placement="bottom">
+                  <Link to="#">
+                    <div className={styles.address}>{getShortWallet(ct.contract)}</div>
+                  </Link>
+                </Tooltip>
                 {selected === ct.contract ? (
                   <BiCheckCircle size={20} className={styles.icon} />
                 ) : (
