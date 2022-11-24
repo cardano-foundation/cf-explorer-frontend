@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { footerMenus } from "../../../../commons/menus";
 import { LogoIcon } from "../../../../commons/resources";
+import { NETWORKS } from "../../../../commons/utils/constants";
 import styles from "./index.module.scss";
 
 const Footer: React.FC = () => {
@@ -17,10 +18,9 @@ const Footer: React.FC = () => {
             </p>
             <small className={styles.network}>Networks</small>
             <div className={styles.chain}>
-              <small className={styles.mainnet}>Mainnet</small>
-              <small className={styles.preprod}>Preprod</small>
-              <small className={styles.preview}>Preview</small>
-              <small className={styles.testnet}>Testnet (legacy)</small>
+              {Object.entries(NETWORKS).map(([network, name]) => (
+                <small className={styles[network]}>{name}</small>
+              ))}
             </div>
           </Col>
           <Col span={24} xl={13} className={styles.menu}>

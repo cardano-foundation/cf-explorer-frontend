@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Store } from "@reduxjs/toolkit";
-import StorageUtils, { STORAGE_KEYS } from "../commons/utils/storage";
+import { NETWORKS } from "../commons/utils/constants";
 import { SupportedWallets, ThemeType, UserDataType, UserStoreType } from "../types/user";
 
 let userStore: Store | undefined;
@@ -9,13 +9,14 @@ export const setStoreUser = (store: Store) => {
 };
 
 const initialState: UserStoreType = {
-  theme: StorageUtils.getItem(STORAGE_KEYS.THEME, "light") as ThemeType,
-  userData: StorageUtils.getUserData(),
+  theme: "light",
+  userData: null,
   chainID: null,
   address: null,
   wallet: null,
   provider: null,
-  openModal: false
+  openModal: false,
+  network: "testnet",
 };
 
 const storeWallet = createSlice({
@@ -24,32 +25,36 @@ const storeWallet = createSlice({
   reducers: {
     setTheme: (state, action: PayloadAction<ThemeType>) => ({
       ...state,
-      theme: action.payload
+      theme: action.payload,
     }),
     setUserData: (state, action: PayloadAction<UserDataType>) => ({
       ...state,
-      userData: action.payload
+      userData: action.payload,
     }),
     setChainID: (state, action: PayloadAction<string | null>) => ({
       ...state,
-      chainID: action.payload
+      chainID: action.payload,
     }),
     setWallet: (state, action: PayloadAction<SupportedWallets | null>) => ({
       ...state,
-      wallet: action.payload
+      wallet: action.payload,
     }),
     setAddress: (state, action: PayloadAction<string | null>) => ({
       ...state,
-      address: action.payload
+      address: action.payload,
     }),
     setProvider: (state, action: PayloadAction<any>) => ({
       ...state,
-      provider: action.payload
+      provider: action.payload,
     }),
     setOpenModal: (state, action: PayloadAction<boolean>) => ({
       ...state,
-      openModal: action.payload
-    })
+      openModal: action.payload,
+    }),
+    setNetwork: (state, action: PayloadAction<keyof typeof NETWORKS>) => ({
+      ...state,
+      network: action.payload,
+    }),
   },
 });
 
@@ -79,6 +84,9 @@ export const setProvider = (provider: any) => {
 
 export const setOpenModal = (openModal: boolean) => {
   userStore?.dispatch(storeWallet.actions.setOpenModal(openModal));
+};
+export const setNetwork = (network: keyof typeof NETWORKS) => {
+  userStore?.dispatch(storeWallet.actions.setNetwork(network));
 };
 
 export default storeWallet.reducer;

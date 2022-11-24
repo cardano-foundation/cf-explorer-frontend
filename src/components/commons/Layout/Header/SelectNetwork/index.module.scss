@@ -1,0 +1,28 @@
+@import "../../../../../themes/variable.scss";
+
+.select {
+  @include flex-center-end;
+  font-family: var(--font-family-title) !important;
+
+  & > div {
+    border: none !important;
+    border-radius: 8px !important;
+    font-size: var(--font-size-small);
+    padding-top: 3px !important;
+    min-height: 38px;
+    color: var(--text-color-pale);
+  }
+  * {
+    font-weight: var(--font-weight-bold) !important;
+  }
+}
+.dropdown {
+  font-family: var(--font-family-title) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: var(--font-size-text);
+  font-weight: var(--font-weight-bold) !important;
+  * {
+    color: var(--text-color-pale);
+  }
+}

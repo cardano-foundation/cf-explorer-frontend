@@ -11,7 +11,7 @@ interface Props {
 
 const AppContainer: React.FC<Props> = props => {
   const { children } = props;
-  const theme = useSelector(state => (state as RootState).user.theme);
+  const { theme } = useSelector(({ user }: RootState) => user);
   const history = useHistory();
   useEffect(() => {
     const unlisten = history.listen(() => {
@@ -20,7 +20,7 @@ const AppContainer: React.FC<Props> = props => {
     return () => {
       unlisten();
     };
-  }, []);
+  }, [history]);
 
   return (
     <Layout data-theme={theme}>

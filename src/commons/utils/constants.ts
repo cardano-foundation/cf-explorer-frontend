@@ -18,3 +18,10 @@ export const EPOCH_STATUS: any = {
 };
 
 export const MAX_SLOT_EPOCH = 432000;
+
+export enum NETWORKS {
+  mainnet = "Mainnet",
+  preprod = "Preprod",
+  preview = "Preview",
+  testnet = "Testnet (legacy)",
+}
