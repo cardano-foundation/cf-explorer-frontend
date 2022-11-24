@@ -1,3 +1,4 @@
+import React from "react";
 import { IoMdCopy } from "react-icons/io";
 import { BiCheckCircle } from "react-icons/bi";
 import { useCopyToClipboard } from "react-use";
@@ -8,13 +9,12 @@ import sendImg from "../../../commons/resources/images/summary-up.png";
 import receiveImg from "../../../commons/resources/images/summary-down.png";
 import AIconImg from "../../../commons/resources/images/AIcon.png";
 import { formatADA, getShortWallet } from "../../../commons/utils/helper";
-import { useEffect, useState } from "react";
 
-interface CollateralProps {
-  data: Transaction["collaterals"] | null;
+interface WithdrawalsProps {
+  data: Transaction["withdrawals"] | null;
 }
 
-const Collaterals: React.FC<CollateralProps> = ({ data }) => {
+const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -26,43 +26,39 @@ const Collaterals: React.FC<CollateralProps> = ({ data }) => {
   );
 };
 
-export default Collaterals;
+export default Withdrawals;
 
-const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][number]; type?: "up" | "down" }) => {
-  const [, copyToClipboard] = useCopyToClipboard();
-  const [selected, setSelected] = useState<string>();
+const Items = ({ item, type }: { item?: Required<Transaction>["withdrawals"][number]; type?: "up" | "down" }) => {
+  const [state, copyToClipboard] = useCopyToClipboard();
 
-  useEffect(() => {
-    if (selected) {
-      setTimeout(() => {
-        setSelected("");
-      }, 3000);
-    }
-  }, [selected]);
   return (
     <div className={styles.item}>
       <div className={styles.top}>
         <img className={styles.img} src={walletImg} alt="wallet icon" />
         <div>
-          From: <span className={styles.address}>{getShortWallet(item?.address || "")}</span>{" "}
+          From: <span className={styles.address}>{getShortWallet(item?.stakeAddressFrom || "")}</span>{" "}
         </div>
       </div>
       <div className={styles.bottom}>
-        <div>
-          <img src={type === "down" ? receiveImg : sendImg} className={styles.img} alt="send icon" />
-          {item?.txHash || ""}
-          {selected === item?.txHash ? (
-            <BiCheckCircle size={20} className={styles.icon} />
-          ) : (
-            <IoMdCopy
-              size={20}
-              className={styles.icon}
-              onClick={() => {
-                setSelected(item?.txHash);
-                copyToClipboard(item?.txHash || "");
-              }}
-            />
-          )}
+        <div className={styles.right}>
+          <img className={styles.img} src={walletImg} alt="wallet icon" />
+          <div>
+            To:
+            {item?.addressTo.map((adr, idx) => {
+              return (
+                <>
+                  <span className={styles.address}>{getShortWallet(adr)}</span>
+                  {state.value === adr ? (
+                    <BiCheckCircle size={20} className={styles.icon} />
+                  ) : (
+                    <IoMdCopy size={20} className={styles.icon} onClick={() => copyToClipboard(adr)} />
+                  )}
+                  <br />
+                </>
+              );
+            })}
+          </div>
+          {/* To Do: check lại icon khi copy cái khác thì hoàn trả icon cũ */}
         </div>
         <div>
           <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>

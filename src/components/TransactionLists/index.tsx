@@ -51,7 +51,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentPage, loading,
               {getShortHash(r.hash)}
             </Link>
           </Tooltip>
-          <div>{moment("2022-11-15T08:52:40.188Z").format("MM/DD/YYYY HH:mm:ss")}</div>
+          <div>{moment(r.time).format("MM/DD/YYYY HH:mm:ss")}</div>
         </div>
       ),
     },

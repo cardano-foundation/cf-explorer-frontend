@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
-import { BiLinkExternal } from "react-icons/bi";
 import moment from "moment";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useCopyToClipboard } from "react-use";
+import { IoMdCopy } from "react-icons/io";
+import { BiCheckCircle } from "react-icons/bi";
 
 import Card from "../commons/Card";
 import DetailCard from "../commons/DetailCard";
-import { formatADA, getShortHash, getShortWallet } from "../../commons/utils/helper";
+import { formatADA, getShortHash } from "../../commons/utils/helper";
 
 import styles from "./index.module.scss";
 import aIcon from "../../commons/resources/images/AIcon.png";
@@ -17,13 +19,35 @@ interface Props {
 }
 
 const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
+  const [, copyToClipboard] = useCopyToClipboard();
+  const [selected, setSelected] = useState<string>();
+
+  useEffect(() => {
+    if (selected) {
+      setTimeout(() => {
+        setSelected("");
+      }, 3000);
+    }
+  }, [selected]);
   const listDetails = [
     {
       title: "Transaction hash",
       value: data?.tx.hash && (
-        <Tooltip title={data?.tx.hash || ""} placement='bottom'>
+        <Tooltip title={data?.tx.hash || ""} placement="bottom">
           <Link to={`#`} className={`${styles.alignCenter} ${styles.link}`}>
             {getShortHash(data?.tx.hash || "")}
+            {selected === data?.tx.hash ? (
+              <BiCheckCircle size={20} className={styles.icon} />
+            ) : (
+              <IoMdCopy
+                size={20}
+                className={styles.icon}
+                onClick={() => {
+                  copyToClipboard(data?.tx.hash);
+                  setSelected(data?.tx.hash);
+                }}
+              />
+            )}
           </Link>
         </Tooltip>
       ),

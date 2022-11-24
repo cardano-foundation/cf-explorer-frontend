@@ -7,6 +7,7 @@ import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import blockImg from "../../../commons/resources/images/block.png";
 import slotImg from "../../../commons/resources/images/slot.png";
 import Card from "../Card";
+import { routers } from "../../../commons/routers";
 
 interface DetailCardProps {
   listDetails: { title?: string; value: React.ReactNode }[];
@@ -82,7 +83,10 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading 
               </div>
               <div>
                 <div className={styles.title}>Block</div>
-                <Link className={`${styles.fwBold} ${styles.link}`} to="#">
+                <Link
+                  className={`${styles.fwBold} ${styles.link}`}
+                  to={routers.BLOCK_DETAIL.replace(":blockId", `${progress.block}`)}
+                >
                   {progress.block}
                 </Link>
               </div>
