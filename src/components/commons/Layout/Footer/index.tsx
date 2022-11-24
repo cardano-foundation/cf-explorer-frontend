@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { footerMenus } from "../../../../commons/menus";
 import { LogoIcon } from "../../../../commons/resources";
 import styles from "./index.module.scss";
@@ -43,9 +43,9 @@ const Footer: React.FC = () => {
                                   <span>{title}</span>
                                 </a>
                               ) : (
-                                <NavLink to={href}>
+                                <Link to={href}>
                                   <span>{title}</span>
-                                </NavLink>
+                                </Link>
                               )
                             ) : (
                               <span className={styles.title}>{title}</span>

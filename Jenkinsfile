@@ -35,6 +35,9 @@ pipeline {
                     if (env.BRANCH_NAME == 'prod') {
                         envFileDeploy = '/tmp/prod-fe.env'
                     }
+                    if (env.BRANCH_NAME == 'demo') {
+                        envFileDeploy = '/tmp/dev-fe.env'
+                    }
                 }
                 sh "docker-compose --env-file ${envFileDeploy} up -d --build"
             }
