@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdCopy } from "react-icons/io";
 import { useCopyToClipboard } from "react-use";
 
@@ -38,6 +38,16 @@ const Card = ({
   fee?: number;
 }) => {
   const [state, copyToClipboard] = useCopyToClipboard();
+  const [selected, setSelected] = useState<string>();
+
+  useEffect(() => {
+    if (selected) {
+      setTimeout(() => {
+        setSelected("");
+      }, 3000);
+    }
+  }, [selected]);
+
   const totalADA =
     item &&
     item.reduce((prv, i) => {
@@ -61,10 +71,17 @@ const Card = ({
                   <div>
                     {type === "down" ? "From" : "To"}:{" "}
                     <span className={styles.address}>{getShortWallet(i.address)}</span>{" "}
-                    {state.value === i.address ? (
+                    {selected === i.address ? (
                       <BiCheckCircle size={20} className={styles.icon} />
                     ) : (
-                      <IoMdCopy size={20} className={styles.icon} onClick={() => copyToClipboard(i.address)} />
+                      <IoMdCopy
+                        size={20}
+                        className={styles.icon}
+                        onClick={() => {
+                          setSelected(i.address);
+                          copyToClipboard(i.address);
+                        }}
+                      />
                     )}
                   </div>
                 </div>
@@ -88,8 +105,8 @@ const Card = ({
                       )}
                     </div>
                     <div>
-                      <div className={styles.status}>GAME</div>
-                      <div className={styles.status}>Montley moon234</div>
+                      {/* <div className={styles.status}>GAME</div>
+                      <div className={styles.status}>Montley moon234</div> */}
                     </div>
                   </>
                 )}
