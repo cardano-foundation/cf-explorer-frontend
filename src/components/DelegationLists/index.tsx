@@ -24,7 +24,7 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading }
   };
   const query = parse(search.split("?")[1]);
 
-  const columns: Column<Delegators>[] = [
+  const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     {
       title: "Pool",
       key: "Pool",
@@ -43,7 +43,7 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading }
       minWidth: "120px",
       // To do
       // render: r => <div>{r.poolSize}</div>,
-      render: r => <div>{Math.round(Math.random() * 10000) / 100}m</div>,
+      render: r => <div>{r.adaFake}m</div>,
     },
     {
       title: "Reward",
@@ -70,7 +70,7 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading }
       // ),
       render: r => (
         <div>
-          {Math.round((Math.random() + 2) * 100) / 100}% ({Math.round(Math.random() * 10000) / 100} A)
+          {r.feeFake}% ({formatADA((r.adaFake * 100000000 * r.feeFake) / 100)} A)
         </div>
       ),
     },
@@ -110,7 +110,14 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading }
   return (
     <Table
       columns={columns}
-      data={data}
+      // To do
+      data={data.map(item => {
+        return {
+          ...item,
+          adaFake: Math.round(Math.random() * 10000) / 100,
+          feeFake: Math.round((Math.random() + 2) * 100) / 100,
+        };
+      })}
       total={{ count: total, title: "Total Transactions" }}
       loading={loading}
       pagination={{
