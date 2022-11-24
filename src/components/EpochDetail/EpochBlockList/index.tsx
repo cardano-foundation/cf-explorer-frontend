@@ -16,12 +16,13 @@ import { AIcon } from "../../../commons/resources";
 interface IEpochBlockList {
   data: Block[];
   loading: boolean;
+  initialized: boolean;
   total: number;
   totalPage: number;
   currentPage: number;
 }
 
-const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, totalPage, currentPage }) => {
+const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized, total, totalPage, currentPage }) => {
   const history = useHistory();
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
@@ -110,6 +111,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
       <Table
         className={styles.table}
         loading={loading}
+        initialized={initialized}
         columns={columns}
         data={data}
         total={{ count: total, title: "Total Transactions" }}

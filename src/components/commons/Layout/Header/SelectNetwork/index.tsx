@@ -15,7 +15,7 @@ const SelectNetwork: React.FC = () => {
       value={network}
       onChange={value => setNetwork(value)}
       className={styles.select}
-      dropdownClassName={styles.dropdown}
+      popupClassName={styles.dropdown}
       options={Object.entries(NETWORKS).map(([value, name]) => ({
         value,
         label: <span className={styles.value}>{value === "testnet" ? "Testnet" : name}</span>,

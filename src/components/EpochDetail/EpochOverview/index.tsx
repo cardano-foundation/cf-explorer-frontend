@@ -6,7 +6,7 @@ import { formatADA } from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
 import DetailCard from "../../commons/DetailCard";
 
-import styles from "./index.module.scss"; 
+import styles from "./index.module.scss";
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { AIcon } from "../../../commons/resources";
 

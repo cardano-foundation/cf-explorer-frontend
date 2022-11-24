@@ -14,6 +14,7 @@ import useFetch from "../../commons/hooks/useFetch";
 import { useHistory, useLocation } from "react-router-dom";
 import { parse, stringify } from "qs";
 import moment from "moment";
+import { MAX_SLOT_EPOCH } from "../../commons/utils/constants";
 
 const Delegations = () => {
   const { search } = useLocation();
@@ -30,6 +31,7 @@ const Delegations = () => {
     data: delegationLists,
     total,
     loading,
+    initialized,
   } = useFetchList<Delegators>("/delegation/pool-list", {
     page: query.page ? +query.page : 1,
     size: query.size ? (query.size as string) : 10,
@@ -66,7 +68,7 @@ const Delegations = () => {
           </button>
         </div>
       </div>
-      <DelegationLists data={delegationLists} total={total} loading={loading} />
+      <DelegationLists data={delegationLists} total={total} loading={loading} initialized={initialized} />
     </div>
   );
 };
@@ -125,7 +127,7 @@ const OverViews: React.FC<OverViewProps> = ({ data, loading }) => {
             )}
             strokeWidth={6}
             width={96}
-            percent={((data?.epochSlotNo || 0) / 432000) * 100}
+            percent={((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100}
           />
         </div>
       </Col>
@@ -135,7 +137,8 @@ const OverViews: React.FC<OverViewProps> = ({ data, loading }) => {
             <div className={styles.title}>Slot</div>
             <div className={styles.subtitle}>
               {" "}
-              <span className={styles.value}>{data?.epochSlotNo || 0} / </span>432000
+              <span className={styles.value}>{data?.epochSlotNo || 0} / </span>
+              {MAX_SLOT_EPOCH}
             </div>
             <Progress
               type="line"
@@ -145,7 +148,7 @@ const OverViews: React.FC<OverViewProps> = ({ data, loading }) => {
               }}
               strokeWidth={8}
               width={200}
-              percent={((data?.epochSlotNo || 0) / 432000) * 100}
+              percent={((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100}
               format={(p, c) => ""}
               status="active"
             />

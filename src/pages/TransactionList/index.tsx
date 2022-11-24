@@ -15,6 +15,7 @@ const Transactions: React.FC<Props> = () => {
   const {
     data: transactions,
     loading: transactionsLoading,
+    initialized,
     total,
     totalPage,
     currentPage,
@@ -28,6 +29,7 @@ const Transactions: React.FC<Props> = () => {
       <TransactionList
         currentPage={currentPage}
         loading={transactionsLoading}
+        initialized={initialized}
         transactions={transactions}
         total={total}
         totalPage={totalPage}

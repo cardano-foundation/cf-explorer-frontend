@@ -8,6 +8,7 @@ import blockImg from "../../../commons/resources/images/block.png";
 import slotImg from "../../../commons/resources/images/slot.png";
 import Card from "../Card";
 import { routers } from "../../../commons/routers";
+import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 
 interface DetailCardProps {
   listDetails: { title?: string; value: React.ReactNode }[];
@@ -73,7 +74,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading 
             )}
             strokeWidth={6}
             width={200}
-            percent={(progress.currentSlot / 432000) * 100}
+            percent={(progress.currentSlot / MAX_SLOT_EPOCH) * 100}
           />
 
           <div className={styles.progessInfo}>
@@ -98,7 +99,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading 
               <div>
                 <div className={styles.title}>Slot</div>
                 <div>
-                  <span className={styles.fwBold}>{progress.currentSlot}</span>/ 432000
+                  <span className={styles.fwBold}>{progress.currentSlot}</span>/ {MAX_SLOT_EPOCH}
                 </div>
               </div>
             </div>

@@ -14,7 +14,7 @@ const EpochDetail: React.FC = () => {
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
 
-  const { data: EpochDetail, loading: EpochDetailLoading } = useFetch<IDataEpoch>(`epoch/${epochId}`);
+  const { data: EpochDetail, loading: EpochDetailLoading, initialized } = useFetch<IDataEpoch>(`epoch/${epochId}`);
   const {
     data: BlockList,
     loading,
@@ -33,6 +33,7 @@ const EpochDetail: React.FC = () => {
       <EpochBlockList
         data={BlockList}
         loading={loading}
+        initialized={initialized}
         currentPage={currentPage}
         total={total}
         totalPage={totalPage}

@@ -18,9 +18,10 @@ interface BlockListProps {
   total: number;
   totalPage: number;
   currentPage: number;
+  initialized: boolean;
 }
 
-const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, total, currentPage }) => {
+const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized, total, currentPage }) => {
   const history = useHistory();
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
@@ -88,6 +89,7 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, total, curre
     <Card title={"Blocks"}>
       <Table
         loading={loading}
+        initialized={initialized}
         className={styles.table}
         columns={columns}
         data={blockLists}

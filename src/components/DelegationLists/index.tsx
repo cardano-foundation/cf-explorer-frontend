@@ -13,9 +13,10 @@ interface DelegationListProps {
   data: Delegators[];
   total: number;
   loading: boolean;
+  initialized: boolean;
 }
 
-const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading }) => {
+const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, initialized }) => {
   const { search } = useLocation();
   const history = useHistory();
   const setQuery = (query: any) => {
@@ -119,6 +120,7 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading }
       })}
       total={{ count: total, title: "Total Transactions" }}
       loading={loading}
+      initialized={initialized}
       pagination={{
         current: query.page ? +query.page : 1,
         total: total,
