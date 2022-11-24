@@ -10,6 +10,7 @@ import styles from "./index.module.scss";
 
 interface MintingProps {
   data: Transaction["mints"] | null;
+
 }
 
 const Minting: React.FC<MintingProps> = ({ data }) => {
