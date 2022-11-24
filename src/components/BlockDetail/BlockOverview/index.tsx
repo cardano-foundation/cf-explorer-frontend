@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 
-import Card from "../commons/Card";
-import DetailCard from "../commons/DetailCard";
-import { formatADA, getShortWallet } from "../../commons/utils/helper";
+import Card from "../../commons/Card";
+import DetailCard from "../../commons/DetailCard";
+import { formatADA, getShortWallet } from "../../../commons/utils/helper";
 
 import styles from "./index.module.scss";
 import moment from "moment";
 import { Tooltip } from "antd";
-import { AIcon } from "../../commons/resources";
+import { AIcon } from "../../../commons/resources";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;

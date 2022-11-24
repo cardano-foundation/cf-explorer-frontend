@@ -1,4 +1,4 @@
-@import '../../../themes/variable.scss';
+@import "../../../../themes/variable.scss";
 
 .wrapper {
   background: var(--background);
@@ -45,22 +45,30 @@
       padding-top: 12px;
       display: flex;
       justify-content: space-between;
-      .img {
-        padding-right: 10px;
-        width: 35px;
+      .right {
+        display: flex;
+        align-items: center;
+        .img {
+          padding-right: 10px;
+          width: 35px;
+        }
+        .address {
+          font-weight: var(--font-weight-bold);
+          padding: 8px;
+        }
+        .status {
+          margin: 0;
+          text-transform: uppercase;
+          border-radius: 2px;
+          padding: 0 12px;
+          color: var(--text-color-pale);
+          background-color: #ced1d8;
+          line-height: 2rem;
+        }
       }
       .address {
         font-weight: var(--font-weight-bold);
         padding: 8px;
-      }
-      .status {
-        margin: 0;
-        text-transform: uppercase;
-        border-radius: 2px;
-        padding: 0 12px;
-        color: var(--text-color-pale);
-        background-color: #ced1d8;
-        line-height: 2rem;
       }
       .up {
         color: var(--color-green-light);

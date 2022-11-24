@@ -5,13 +5,13 @@ import { useCopyToClipboard } from "react-use";
 import { IoMdCopy } from "react-icons/io";
 import { BiCheckCircle } from "react-icons/bi";
 
-import Card from "../commons/Card";
-import DetailCard from "../commons/DetailCard";
-import { formatADA, getShortHash } from "../../commons/utils/helper";
+import Card from "../../commons/Card";
+import DetailCard from "../../commons/DetailCard";
+import { formatADA, getShortHash } from "../../../commons/utils/helper";
 
 import styles from "./index.module.scss"; 
 import { Tooltip } from "antd";
-import { AIcon } from "../../commons/resources";
+import { AIcon } from "../../../commons/resources";
 
 interface Props {
   data: Transaction | null;

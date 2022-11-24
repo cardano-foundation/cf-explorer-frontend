@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { IoMdCopy } from "react-icons/io";
 import { useCopyToClipboard } from "react-use";
 
-import { getShortWallet, formatADA } from "../../../commons/utils/helper";
+import { getShortWallet, formatADA } from "../../../../commons/utils/helper";
 
 import styles from "./index.module.scss";
-import walletImg from "../../../commons/resources/images/Wallet.png";
-import sendImg from "../../../commons/resources/images/summary-up.png";
-import receiveImg from "../../../commons/resources/images/summary-down.png"; 
-import feeImg from "../../../commons/resources/images/fee.png";
+import walletImg from "../../../../commons/resources/images/Wallet.png";
+import sendImg from "../../../../commons/resources/images/summary-up.png";
+import receiveImg from "../../../../commons/resources/images/summary-down.png"; 
+import feeImg from "../../../../commons/resources/images/fee.png";
 import { BiCheckCircle } from "react-icons/bi";
-import { AIcon } from "../../../commons/resources";
+import { AIcon } from "../../../../commons/resources";
 
 interface Props {
   data: Transaction["utxOs"] | null;

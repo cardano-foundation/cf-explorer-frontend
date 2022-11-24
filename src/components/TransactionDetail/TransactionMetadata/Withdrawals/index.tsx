@@ -4,9 +4,9 @@ import { BiCheckCircle } from "react-icons/bi";
 import { useCopyToClipboard } from "react-use";
 
 import styles from "./index.module.scss";
-import walletImg from "../../../commons/resources/images/Wallet.png";
-import { formatADA, getShortWallet } from "../../../commons/utils/helper";
-import { AIcon } from "../../../commons/resources";
+import walletImg from "../../../../commons/resources/images/Wallet.png";
+import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
+import { AIcon } from "../../../../commons/resources";
 
 interface WithdrawalsProps {
   data: Transaction["withdrawals"] | null;

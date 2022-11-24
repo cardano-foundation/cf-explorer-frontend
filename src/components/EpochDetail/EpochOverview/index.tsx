@@ -2,13 +2,13 @@ import moment from "moment";
 import React, { useMemo } from "react";
 import { Progress } from "antd";
 
-import { formatADA } from "../../commons/utils/helper";
-import Card from "../commons/Card";
-import DetailCard from "../commons/DetailCard";
+import { formatADA } from "../../../commons/utils/helper";
+import Card from "../../commons/Card";
+import DetailCard from "../../commons/DetailCard";
 
 import styles from "./index.module.scss"; 
-import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../commons/utils/constants";
-import { AIcon } from "../../commons/resources";
+import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { AIcon } from "../../../commons/resources";
 
 interface EpochkOverviewProps {
   data: IDataEpoch | null;

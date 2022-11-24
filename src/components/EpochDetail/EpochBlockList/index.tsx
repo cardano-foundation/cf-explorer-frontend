@@ -3,15 +3,15 @@ import { BiLinkExternal } from "react-icons/bi";
 import { Link, useHistory } from "react-router-dom";
 import { stringify } from "qs";
 
-import Card from "../commons/Card";
-import Table, { Column } from "../commons/Table";
+import Card from "../../commons/Card";
+import Table, { Column } from "../../commons/Table";
 
-import { formatADA, getShortWallet } from "../../commons/utils/helper";
-import { routers } from "../../commons/routers";
+import { formatADA, getShortWallet } from "../../../commons/utils/helper";
+import { routers } from "../../../commons/routers";
 
 import styles from "./index.module.scss";
 import { Tooltip } from "antd";
-import { AIcon } from "../../commons/resources";
+import { AIcon } from "../../../commons/resources";
 
 interface IEpochBlockList {
   data: Block[];
@@ -109,6 +109,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, total, total
     <Card title={"Blocks"}>
       <Table
         className={styles.table}
+        loading={loading}
         columns={columns}
         data={data}
         total={{ count: total, title: "Total Transactions" }}

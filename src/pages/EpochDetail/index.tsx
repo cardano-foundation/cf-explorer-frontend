@@ -4,8 +4,8 @@ import { useLocation, useParams } from "react-router-dom";
 
 import useFetch from "../../commons/hooks/useFetch";
 import useFetchList from "../../commons/hooks/useFetchList";
-import EpochBlockList from "../../components/EpochBlockList";
-import EpochOverview from "../../components/EpochOverview";
+import EpochBlockList from "../../components/EpochDetail/EpochBlockList";
+import EpochOverview from "../../components/EpochDetail/EpochOverview";
 
 import styles from "./index.module.scss";
 

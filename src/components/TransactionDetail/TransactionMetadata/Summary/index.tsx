@@ -4,12 +4,12 @@ import { BiCheckCircle } from "react-icons/bi";
 import { useCopyToClipboard } from "react-use";
 
 import styles from "./index.module.scss";
-import walletImg from "../../../commons/resources/images/Wallet.png";
-import sendImg from "../../../commons/resources/images/summary-up.png";
-import receiveImg from "../../../commons/resources/images/summary-down.png"; 
-import messageImg from "../../../commons/resources/images/summary-message.png";
-import { formatADA, getShortWallet } from "../../../commons/utils/helper";
-import { AIcon } from "../../../commons/resources";
+import walletImg from "../../../../commons/resources/images/Wallet.png";
+import sendImg from "../../../../commons/resources/images/summary-up.png";
+import receiveImg from "../../../../commons/resources/images/summary-down.png"; 
+import messageImg from "../../../../commons/resources/images/summary-message.png";
+import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
+import { AIcon } from "../../../../commons/resources";
 
 interface SummaryProps {
   data: Transaction["summary"] | null;

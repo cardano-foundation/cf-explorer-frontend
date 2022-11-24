@@ -3,7 +3,7 @@ import { BiCheckCircle } from "react-icons/bi";
 import { IoMdCopy } from "react-icons/io";
 import { useCopyToClipboard } from "react-use";
 
-import contractImg from "../../../commons/resources/images/trx-contract.png";
+import contractImg from "../../../../commons/resources/images/trx-contract.png";
 import { useEffect, useState } from "react";
 
 interface ContractsProps {

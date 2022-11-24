@@ -3,12 +3,12 @@ import { BiCheckCircle } from "react-icons/bi";
 import { useCopyToClipboard } from "react-use";
 
 import styles from "./index.module.scss";
-import walletImg from "../../../commons/resources/images/Wallet.png";
-import sendImg from "../../../commons/resources/images/summary-up.png";
-import receiveImg from "../../../commons/resources/images/summary-down.png"; 
-import { formatADA, getShortWallet } from "../../../commons/utils/helper";
+import walletImg from "../../../../commons/resources/images/Wallet.png";
+import sendImg from "../../../../commons/resources/images/summary-up.png";
+import receiveImg from "../../../../commons/resources/images/summary-down.png"; 
+import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
 import { useEffect, useState } from "react";
-import { AIcon } from "../../../commons/resources";
+import { AIcon } from "../../../../commons/resources";
 
 interface CollateralProps {
   data: Transaction["collaterals"] | null;
