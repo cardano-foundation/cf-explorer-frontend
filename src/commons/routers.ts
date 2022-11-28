@@ -7,7 +7,7 @@ export const routers = {
   EPOCH_LIST: "/epochs",
   EPOCH_DETAIL: "/epoch/:epochId",
   DELEGATION_POOLS: "/delegation-pools",
-  DELEGATION_POOL_DETAIL: "/delegation-pool/:poolId",
+  DELEGATION_POOL_DETAIL: "/delegation-pool/:poolId/:tab",
   STORY_LIST: "/stories",
   STORY_DETAIL: "/story/:storyId",
   NOT_FOUND: "/*",

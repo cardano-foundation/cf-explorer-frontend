@@ -8,6 +8,7 @@ import { formatADA } from "../../commons/utils/helper";
 
 import sendImg from "../../commons/resources/images//summary-up.png";
 import { Progress } from "antd";
+import { routers } from "../../commons/routers";
 
 interface DelegationListProps {
   data: Delegators[];
@@ -31,7 +32,10 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       minWidth: "40px",
       render: r => {
         return (
-          <Link to={"#"} className={`${styles.fwBlod} ${styles.link}`}>
+          <Link
+            to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`).replace(":tab", `epoch`)}
+            className={`${styles.fwBlod} ${styles.link}`}
+          >
             {r.poolName}
           </Link>
         );
@@ -104,7 +108,11 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       title: "",
       minWidth: "120px",
       key: "Saturation",
-      render: r => <button className={styles.button}>Detail</button>,
+      render: r => (
+        <Link to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`)} className={styles.button}>
+          Detail
+        </Link>
+      ),
     },
   ];
   return (

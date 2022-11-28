@@ -18,7 +18,46 @@
     .fullWidth {
       width: 100%;
     }
-    
+
+    .title {
+      font-family: var(--font-family-title);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-title);
+      padding-bottom: 4px;
+    }
+    .detailItem {
+      font-size: var(--font-size-text);
+      padding: 4px 0;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      .img {
+        margin-right: 8px;
+        display: block;
+        height: 100%;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        .value {
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+  .delegation {
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+
+    .fullWidth {
+      width: 100%;
+    }
+
     .title {
       font-family: var(--font-family-title);
       font-weight: var(--font-weight-bold);
