@@ -11,7 +11,6 @@ const DelegationDetailList = () => {
       title: "Blocks",
       key: "block",
       minWidth: "120px",
-      render
     },
     {
       title: "Stake Amount(A)",
