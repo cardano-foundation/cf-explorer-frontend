@@ -3,64 +3,32 @@
 .latestStories {
   text-align: center;
   padding: 1rem 0px;
+  margin-bottom: 30px;
 
-  h3 {
-    @include flex-center-center;
-    position: relative;
-    margin-bottom: 2rem;
+  .title {
+    @include flex-between-center;
+    margin-bottom: 1.5rem;
+    gap: 10px;
 
-    &::after {
-      position: absolute;
-      top: 100%;
-      content: "";
-      width: 50px;
-      height: 4px;
-      background: var(--color-green-light);
+    h3 {
+      position: relative;
+      text-align: left;
+      margin-bottom: 0px;
+
+      &::after {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        content: "";
+        width: 50px;
+        height: 4px;
+        background: var(--color-green-light);
+      }
     }
   }
-  .box {
-    @include box-shadow-raised;
+  .seemoreDesktop,
+  .seemoreMobile {
     display: block;
-    margin-bottom: 24px;
-    text-align: left;
-
-    .image {
-      aspect-ratio: 280/155;
-      width: 100%;
-      border-radius: 5px;
-      margin-bottom: 15px;
-      background-color: var(--body-background);
-    }
-
-    h6 {
-      font-family: var(--font-family-text);
-      color: var(--color-green-light);
-      background-color: var(--color-green-pale);
-      padding: 3px 4.5px;
-      letter-spacing: 0.12em;
-      width: max-content;
-      text-transform: uppercase;
-    }
-    h4 {
-      display: -webkit-box;
-      width: 100%;
-      height: 4.5rem;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
-      overflow: hidden;
-      margin-bottom: 1rem;
-    }
-    small {
-      @include flex-start-center;
-      gap: 6px;
-      font-family: var(--font-family-text);
-      color: var(--text-color-pale);
-    }
-  }
-
-  .seemore {
-    text-align: center;
-    height: auto;
     small {
       display: block;
       width: max-content;
@@ -71,5 +39,106 @@
       color: var(--color-green-light);
       font-weight: var(--font-weight-bold);
     }
+  }
+  .seemoreMobile {
+    display: none;
+    text-align: center;
+    height: auto;
+  }
+  .slick {
+    div[class*="slick-list"] {
+      margin: 0 -10px;
+
+      div[class*="slick-slide"] > div {
+        padding: 0 10px;
+
+        .box {
+          @include box-shadow-raised;
+          display: block;
+          margin-bottom: 15px;
+          text-align: left;
+          img {
+            width: auto;
+          }
+
+          .image {
+            aspect-ratio: 280/155;
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            background-color: var(--body-background);
+          }
+
+          h6 {
+            font-family: var(--font-family-text);
+            color: var(--color-green-light);
+            background-color: var(--color-green-pale);
+            padding: 3px 4.5px;
+            letter-spacing: 0.12em;
+            width: max-content;
+            text-transform: uppercase;
+          }
+          h4 {
+            display: -webkit-box;
+            width: 100%;
+            height: 4.5rem;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+            margin-bottom: 1rem;
+          }
+          small {
+            @include flex-start-center;
+            gap: 6px;
+            font-family: var(--font-family-text);
+            color: var(--text-color-pale);
+          }
+        }
+      }
+    }
+    .dots {
+      li {
+        margin: 0;
+        width: 16px;
+        height: 16px;
+        button {
+          position: relative;
+          text-align: center;
+          width: 16px;
+          height: 16px;
+          padding: 5px;
+
+          &::before {
+            content: "";
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 6px;
+            background: #98a2b3;
+            opacity: 0.3;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
+          }
+        }
+        &[class="slick-active"] {
+          button::before {
+            width: 8px;
+            height: 8px;
+            background: #438f68;
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    // .seemoreDesktop {
+    //   display: none;
+    // }
+    // .seemoreMobile {
+    //   display: block;
+    // }
   }
 }
