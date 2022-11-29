@@ -1,3 +1,4 @@
+import LogoMobileIcon from "./icons/logo-mobile.svg";
 import LogoIcon from "./icons/logo.svg";
 import WalletIcon from "./icons/wallet.svg";
 import FlintIcon from "./images/flint.jpg";
@@ -30,6 +31,7 @@ import CalenderPaleIcon from "./icons/calender-pale.svg";
 import AIcon from "./images/AIcon.png";
 
 export {
+  LogoMobileIcon,
   LogoIcon,
   WalletIcon,
   FlintIcon,
@@ -59,5 +61,5 @@ export {
   CheckGreenIcon,
   BlankBlueIcon,
   CalenderPaleIcon,
-  AIcon
+  AIcon,
 };

@@ -5,9 +5,11 @@
   margin-bottom: 24px;
   padding: 24px 30px;
   text-align: left;
+
   .title {
     @include flex-between-center;
     margin-bottom: 1.5rem;
+    gap: 10px;
 
     h3 {
       position: relative;
@@ -122,12 +124,13 @@
     }
   }
   @media screen and (max-width: 767px) {
-    .seemoreDesktop {
-      display: none;
-    }
-    .seemoreMobile {
-      display: block;
-      margin-top: 20px;
-    }
+    padding: 25px 20px;
+    // .seemoreDesktop {
+    //   display: none;
+    // }
+    // .seemoreMobile {
+    //   display: block;
+    //   margin-top: 20px;
+    // }
   }
 }

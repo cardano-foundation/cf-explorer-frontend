@@ -126,19 +126,18 @@
     --font-size-text-small: 13px;
     --font-size-title: 23px;
     --container-max-width: 540px;
-    --container-max-width: calc(100% - 10px);
+    --container-max-width: calc(100% - 30px);
   }
 }
 
 @media screen and (max-width: 575px) {
   :root {
-    --font-size-text: 13px;
+    --font-size-text: 14px;
     --font-size-text-x-large: 16px;
-    --font-size-text-large: 14px;
+    --font-size-text-large: 15px;
     --font-size-text-small: 12px;
     --font-size-title: 22px;
-    --container-margin: 5px;
-    --container-max-width: calc(100% - 10px);
+    --container-max-width: calc(100% - 30px);
   }
 }
 

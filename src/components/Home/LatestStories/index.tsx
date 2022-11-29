@@ -1,7 +1,7 @@
-import { Col, Row } from "antd";
 import moment from "moment";
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
+import Slider from "react-slick";
 import { CalenderPaleIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
 import styles from "./index.module.scss";
@@ -44,27 +44,52 @@ const data: Story[] = [
 ];
 
 const LatestStories: React.FC<Props> = () => {
+  const drag = useRef<boolean>(false);
   return (
     <div className={styles.latestStories}>
-      <h3>Latest Stories</h3>
-      <Row gutter={20}>
+      <div className={styles.title}>
+        <h3>Latest Stories</h3>
+        <Link to={routers.STORY_LIST} className={styles.seemoreDesktop}>
+          <small>See All</small>
+        </Link>
+      </div>
+      <Slider
+        className={styles.slick}
+        dots
+        arrows={false}
+        dotsClass={`slick-dots ${styles.dots}`}
+        autoplay={true}
+        infinite={true}
+        draggable={true}
+        slidesToShow={4}
+        beforeChange={() => (drag.current = true)}
+        afterChange={() => (drag.current = false)}
+        responsive={[
+          { breakpoint: 1024, settings: { slidesToShow: 2, slidesToScroll: 2, dots: true } },
+          { breakpoint: 576, settings: { slidesToShow: 1, slidesToScroll: 1, dots: true } },
+        ]}
+      >
         {data.map(({ id, image, author, title, createdDate }) => {
           return (
-            <Col span={24} sm={12} xl={6} key={id}>
-              <Link className={styles.box} to={routers.STORY_DETAIL.replace(":storyId", `${id}`)} title={title}>
-                <img className={styles.image} src={image} alt={title} />
-                <h6>{author}</h6>
-                <h4>{title}</h4>
-                <small>
-                  <img src={CalenderPaleIcon} alt="calender pale" />
-                  {moment(createdDate).format("MM/DD/YYYY")}
-                </small>
-              </Link>
-            </Col>
+            <Link
+              key={id}
+              className={styles.box}
+              to={routers.STORY_DETAIL.replace(":storyId", `${id}`)}
+              title={title}
+              onClick={e => drag.current && e.preventDefault()}
+            >
+              <img className={styles.image} src={image} alt={title} />
+              <h6>{author}</h6>
+              <h4>{title}</h4>
+              <small>
+                <img src={CalenderPaleIcon} alt="calender pale" />
+                {moment(createdDate).format("MM/DD/YYYY")}
+              </small>
+            </Link>
           );
         })}
-      </Row>
-      <Link to={routers.STORY_LIST} className={styles.seemore}>
+      </Slider>
+      <Link to={routers.STORY_LIST} className={styles.seemoreMobile}>
         <small>See All</small>
       </Link>
     </div>
