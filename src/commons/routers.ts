@@ -10,5 +10,7 @@ export const routers = {
   DELEGATION_POOL_DETAIL: "/delegation-pool/:poolId",
   STORY_LIST: "/stories",
   STORY_DETAIL: "/story/:storyId",
+  TOKEN_LIST: "/tokens",
+  TOKEN_DETAIL: "/token/:tokenId",
   NOT_FOUND: "/*",
 };
