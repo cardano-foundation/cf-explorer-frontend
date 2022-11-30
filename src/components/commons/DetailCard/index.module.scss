@@ -2,7 +2,6 @@
 
 .wrapper {
   margin-top: 24px;
-  width: 100%;
   min-height: 250px;
   .skeleton {
     height: 250px;
@@ -19,7 +18,21 @@
     align-items: center;
     justify-content: space-between;
     overflow-x: auto;
+    padding: 25px 30px;
+    @media screen and (max-width: 767px) {
+      padding: 25px 20px;
+    }
 
+    .fullWidth {
+      width: 100%;
+    }
+
+    .title {
+      font-family: var(--font-family-title);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-title);
+      padding-bottom: 4px;
+    }
     .detailItem {
       font-size: var(--font-size-text);
       display: flex;
@@ -35,22 +48,36 @@
       .row {
         display: flex;
         align-items: center;
+        .label {
+          min-width: 150px;
+          @media screen and (max-width: 767px) {
+            min-width: 120px;
+          }
+        }
 
         .value {
-          margin-left: 8px;
+          margin-left: 0.5rem;
+          font-weight: var(--font-weight-bold);
+          white-space: nowrap;
         }
       }
     }
   }
 
   .progress {
+    @include flex-around-end;
     box-shadow: var(--shadow-raised);
     background-color: #fff;
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
     height: 100%;
     overflow-x: auto;
+    padding: 25px 30px;
+    gap: 10px;
+
+    @media screen and (max-width: 767px) {
+      @include flex-center-center;
+      padding: 25px 20px;
+      flex-wrap: wrap;
+    }
     .epoch {
       font-size: 56px;
       font-weight: var(--font-weight-bold);
@@ -66,6 +93,12 @@
     .progessInfo {
       margin-top: 14px;
       text-align: left;
+
+      @media screen and (max-width: 575px) {
+        width: 100%;
+        @include flex-between-center;
+        flex-wrap: wrap;
+      }
       .row {
         display: flex;
         align-items: center;

@@ -78,7 +78,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
               <div>
                 <div className={styles.title}>Slot</div>
                 <div>
-                  <span className={styles.fwBold}>{progress.currentSlot}</span>/ {MAX_SLOT_EPOCH}
+                  <span className={styles.fwBold}>{progress.currentSlot}</span> / {MAX_SLOT_EPOCH}
                 </div>
               </div>
             </div>

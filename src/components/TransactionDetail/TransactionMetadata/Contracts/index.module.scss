@@ -1,4 +1,4 @@
-@import '../../../../themes/variable.scss';
+@import "../../../../themes/variable.scss";
 
 .wrapper {
   min-height: 400px;
@@ -12,11 +12,10 @@
   .item {
     display: flex;
     align-items: center;
-    padding: 5px 0;
+    padding: 15px 0 0;
   }
   .address {
     margin: 0 auto;
-    padding: 10px 0 0;
     font-family: var(--font-family-title);
     word-break: break-all;
     color: var(--color-blue) !important;
@@ -24,7 +23,11 @@
     align-items: center;
   }
   .icon {
-    color: var(--text-color-pale);
-    margin-left: 10px;
+    > svg {
+      color: var(--text-color-pale);
+      margin-left: 10px;
+      width: 1em;
+      height: 1em;
+    }
   }
 }

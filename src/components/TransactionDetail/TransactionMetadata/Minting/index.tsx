@@ -10,7 +10,6 @@ import styles from "./index.module.scss";
 
 interface MintingProps {
   data: Transaction["mints"] | null;
-
 }
 
 const Minting: React.FC<MintingProps> = ({ data }) => {
@@ -25,7 +24,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       render: (r, index) => {
         return (
           <Link to="#" className={styles.link}>
-            {getShortWallet(r.assetName)}
+            {r.assetName}
           </Link>
         );
       },

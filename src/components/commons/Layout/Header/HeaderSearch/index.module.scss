@@ -1,4 +1,5 @@
 @import "../../../../../themes/variable.scss";
+$borderColor: var(--border-color);
 
 .searchBox,
 .searchBoxHome {
@@ -15,14 +16,28 @@
   .filterSelect {
     font-size: var(--font-size-text-large);
     min-width: 140px;
+    position: relative;
 
-    & > div {
-      padding-top: 10px !important;
-      padding-bottom: 10px !important;
-      border: none !important;
+    div[class*="ant-select-selector"] {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      border: none;
       box-shadow: none !important;
-      height: 52px !important;
-      border-radius: 30px !important;
+      height: 52px;
+      border-radius: 30px;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -5px;
+      width: 1px;
+      height: 2rem;
+      background-color: var(--border-color);
+      transform: translateY(-50%);
+      @media screen and (max-width: 767px) {
+        height: 1.2rem;
+      }
     }
   }
 
@@ -30,7 +45,6 @@
     padding: 15px;
     border: none;
     box-shadow: none !important;
-    border-left: 1px solid var(--border-color);
     border-radius: 0;
     margin-left: 5px;
     font-size: var(--font-size-text-large);
