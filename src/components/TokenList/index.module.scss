@@ -1,0 +1,14 @@
+@import "../../themes/variable.scss";
+
+.table {
+    margin-top: 18px;
+
+    .link {
+        font-family: var(--font-family-text);
+        color: var(--color-blue);
+    }
+
+    .fwBold {
+        font-weight: var(--font-weight-bold);
+    }
+}

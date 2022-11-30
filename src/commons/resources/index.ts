@@ -29,6 +29,7 @@ import CheckGreenIcon from "./icons/check-green.svg";
 import BlankBlueIcon from "./icons/blank-blue.svg";
 import CalenderPaleIcon from "./icons/calender-pale.svg";
 import AIcon from "./images/AIcon.png";
+import Policy from "./icons/policy.svg"
 
 export {
   LogoMobileIcon,
@@ -62,4 +63,5 @@ export {
   BlankBlueIcon,
   CalenderPaleIcon,
   AIcon,
+  Policy
 };
