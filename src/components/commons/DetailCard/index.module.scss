@@ -12,6 +12,11 @@
     text-align: left;
     background-color: #fff;
     height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     overflow-x: auto;
     padding: 25px 30px;
     @media screen and (max-width: 767px) {
@@ -30,15 +35,16 @@
     }
     .detailItem {
       font-size: var(--font-size-text);
-      padding: 4px 0;
       display: flex;
       align-items: center;
       height: 100%;
+      width: 100%;
+
       .img {
         margin-right: 8px;
         display: block;
-        height: 100%;
       }
+
       .row {
         display: flex;
         align-items: center;
@@ -48,6 +54,7 @@
             min-width: 120px;
           }
         }
+
         .value {
           margin-left: 0.5rem;
           font-weight: var(--font-weight-bold);
@@ -56,6 +63,7 @@
       }
     }
   }
+
   .progress {
     @include flex-around-end;
     box-shadow: var(--shadow-raised);
@@ -82,7 +90,6 @@
       color: var(--title-color-pale);
       margin-top: 8px;
     }
-
     .progessInfo {
       margin-top: 14px;
       text-align: left;
@@ -112,7 +119,84 @@
       }
     }
   }
+
+  .token {
+    text-align: left;
+    background-color: #fff;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+
+    .policy {
+      display: flex;
+      align-items: center;
+
+      & > h3 {
+        margin: 0;
+        margin-left: 10px;
+      }
+    }
+
+    .bridgeInfo {
+      @include flex-between-center;
+
+      background: rgba(24, 76, 120, 0.1);
+      border-radius: 5px;
+      margin-top: 15px;
+      padding: 13px 15px;
+
+      & > div {
+        display: flex;
+        flex-direction: column;
+        
+        .title {
+          font-weight: var(--font-weight-bold);
+          font-size: 18px;
+        }
+
+        .details {
+          color: #667085;
+          font-size: 12px;
+          margin-top: 5px;
+        }
+      }
+
+    }
+
+    .tokenInfo {
+      margin-top: 20px;
+      display: flex;
+
+      .tokenWrapper {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+
+        .title {
+          color: #667085;
+          font-size: 14px;
+        }
+  
+        .details {
+          font-weight: var(--font-weight-bold);
+          margin-top: 8px;
+          font-size: 18px;
+        }
+      }
+
+      .borderLeft {
+        border-left: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .pl15 {
+        padding-left: 15px;
+      }
+    }
+  }
 }
+
 .fwBold {
   font-weight: var(--font-weight-bold);
 }

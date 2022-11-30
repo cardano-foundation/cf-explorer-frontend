@@ -31,6 +31,7 @@ import CalenderPaleIcon from "./icons/calender-pale.svg";
 import ArrowDownIcon from "./icons/arrow-down.svg";
 import ArrowDropDownIcon from "./icons/arrow-drop-down.svg";
 import AIcon from "./images/AIcon.png";
+import Policy from "./icons/policy.svg"
 
 export {
   LogoMobileIcon,
@@ -66,4 +67,5 @@ export {
   AIcon,
   ArrowDownIcon,
   ArrowDropDownIcon,
+  Policy
 };

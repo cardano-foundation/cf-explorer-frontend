@@ -12,5 +12,7 @@ export const routers = {
   STORY_DETAIL: "/story/:storyId",
   ADDRESS_LIST: "/addresses",
   ADDRESS_DETAIL: "/address/:address",
+  TOKEN_LIST: "/tokens",
+  TOKEN_DETAIL: "/token/:tokenId",
   NOT_FOUND: "/*",
 };
