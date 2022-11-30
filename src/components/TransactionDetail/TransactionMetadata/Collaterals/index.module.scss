@@ -34,10 +34,8 @@
       }
       .address {
         font-weight: var(--font-weight-bold);
-        padding: 8px 0 8px 8px;
-      }
-      .icon {
-        cursor: pointer;
+        font-family: var(--font-size-text);
+        color: var(--color-blue);
       }
     }
     .bottom {
@@ -50,8 +48,8 @@
         width: 35px;
       }
       .address {
-        font-weight: var(--font-weight-bold);
-        padding: 8px;
+        font-family: var(--font-size-text);
+        color: var(--color-blue);
       }
       .status {
         margin: 0;
@@ -69,5 +67,9 @@
         color: var(--color-red);
       }
     }
+  }
+  .icon {
+    cursor: pointer;
+    margin-left: 5px;
   }
 }

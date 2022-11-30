@@ -34,7 +34,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading 
     );
   }
   return (
-    <Row className={styles.wrapper} gutter={[16, 16]}>
+    <Row className={styles.wrapper} gutter={[20, 20]}>
       <Col span={24} xl={14}>
         <Card className={styles.info}>
           <div className={styles.fullWidth}>
@@ -46,8 +46,8 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading 
                       <img src={infoIcon} alt="info" className={styles.img} />
                     </div>
                     <div className={styles.row}>
-                      <div style={{ minWidth: 150 }}>{item.title}:</div>
-                      <div className={` ${styles.fwBold} ${styles.value}`}>{item.value}</div>
+                      <div className={styles.label}>{item.title}:</div>
+                      <div className={`${styles.value}`}>{item.value}</div>
                     </div>
                   </>
                 ) : (
@@ -99,7 +99,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading 
               <div>
                 <div className={styles.title}>Slot</div>
                 <div>
-                  <span className={styles.fwBold}>{progress.currentSlot}</span>/ {MAX_SLOT_EPOCH}
+                  <span className={styles.fwBold}>{progress.currentSlot}</span> / {MAX_SLOT_EPOCH}
                 </div>
               </div>
             </div>

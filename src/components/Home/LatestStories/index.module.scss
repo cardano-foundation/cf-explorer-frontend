@@ -121,7 +121,7 @@
             transform: translateY(-50%) translateX(-50%);
           }
         }
-        &[class="slick-active"] {
+        &[class*="slick-active"] {
           button::before {
             width: 8px;
             height: 8px;

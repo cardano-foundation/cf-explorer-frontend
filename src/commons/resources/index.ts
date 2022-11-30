@@ -28,6 +28,8 @@ import UpGreenIcon from "./icons/up-green.svg";
 import CheckGreenIcon from "./icons/check-green.svg";
 import BlankBlueIcon from "./icons/blank-blue.svg";
 import CalenderPaleIcon from "./icons/calender-pale.svg";
+import ArrowDownIcon from "./icons/arrow-down.svg";
+import ArrowDropDownIcon from "./icons/arrow-drop-down.svg";
 import AIcon from "./images/AIcon.png";
 
 export {
@@ -62,4 +64,6 @@ export {
   BlankBlueIcon,
   CalenderPaleIcon,
   AIcon,
+  ArrowDownIcon,
+  ArrowDropDownIcon,
 };

@@ -6,6 +6,7 @@ import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/ut
 import noData from "../../../commons/resources/images/noData.png";
 
 import styles from "./index.module.scss";
+import { ArrowDropDownIcon } from "../../../commons/resources";
 
 export const EmptyRecord = () => (
   <div className={styles.noData}>
@@ -139,14 +140,14 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
   };
 
   return (
-    <div className={styles.footer} style={{ justifyContent: total ? "space-between" : "flex-end" }}>
+    <div className={`${styles.footer} ${total ? styles.hasTotal : ""}`}>
       {total && (
         <div className={styles.total}>
-          {total.title}: <span className={styles.fwBold}>{numberWithCommas(total.count)}</span>
+          {total.title}: <span className={styles.totalNumber}>{numberWithCommas(total.count)}</span>
         </div>
       )}
       {pagination && (
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div className={styles.paginationContainer}>
           {pagination.pageSizeOptions && (
             <div className={styles.total}>
               Rows per page:
@@ -155,7 +156,8 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
                   label: page,
                   value: page,
                 }))}
-                style={{ border: "none", fontWeight: 700 }}
+                suffixIcon={<img src={ArrowDropDownIcon} className={styles.selectIcon} />}
+                className={styles.selectPageSize}
                 value={pageSize}
                 bordered={false}
                 onChange={value => {
@@ -168,6 +170,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
           <Pagination
             {...pagination}
             showSizeChanger={false}
+            className={`${styles.pagitation} ${pagination.className || ""}`}
             itemRender={(page, type, originalElement) => renderPagination(page, type, originalElement)}
             pageSize={pageSize}
           />

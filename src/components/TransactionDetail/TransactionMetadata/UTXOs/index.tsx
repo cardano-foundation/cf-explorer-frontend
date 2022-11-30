@@ -2,15 +2,19 @@ import React, { useEffect, useState } from "react";
 import { IoMdCopy } from "react-icons/io";
 import { useCopyToClipboard } from "react-use";
 
-import { getShortWallet, formatADA } from "../../../../commons/utils/helper";
+import { getShortWallet, formatADA, getShortHash } from "../../../../commons/utils/helper";
 
 import styles from "./index.module.scss";
 import walletImg from "../../../../commons/resources/images/Wallet.png";
 import sendImg from "../../../../commons/resources/images/summary-up.png";
-import receiveImg from "../../../../commons/resources/images/summary-down.png"; 
+import receiveImg from "../../../../commons/resources/images/summary-down.png";
 import feeImg from "../../../../commons/resources/images/fee.png";
 import { BiCheckCircle } from "react-icons/bi";
 import { AIcon } from "../../../../commons/resources";
+import { Link } from "react-router-dom";
+import CopyButton from "../../../commons/CopyButton";
+import { routers } from "../../../../commons/routers";
+import { Tooltip } from "antd";
 
 interface Props {
   data: Transaction["utxOs"] | null;
@@ -37,17 +41,6 @@ const Card = ({
   item?: Required<Transaction>["utxOs"]["inputs"];
   fee?: number;
 }) => {
-  const [state, copyToClipboard] = useCopyToClipboard();
-  const [selected, setSelected] = useState<string>();
-
-  useEffect(() => {
-    if (selected) {
-      setTimeout(() => {
-        setSelected("");
-      }, 3000);
-    }
-  }, [selected]);
-
   const totalADA =
     item &&
     item.reduce((prv, i) => {
@@ -65,50 +58,42 @@ const Card = ({
         item.map((i, ii) => (
           <>
             <div className={styles.item} key={ii}>
-              <div className={styles.bottom}>
-                <div className={styles.top}>
+              <div className={styles.transfer}>
+                <div className={styles.wallet}>
                   <img className={styles.img} src={walletImg} alt="wallet icon" />
-                  <div>
-                    {type === "down" ? "From" : "To"}:{" "}
-                    <span className={styles.address}>{getShortWallet(i.address)}</span>{" "}
-                    {selected === i.address ? (
-                      <BiCheckCircle size={20} className={styles.icon} />
-                    ) : (
-                      <IoMdCopy
-                        size={20}
-                        className={styles.icon}
-                        onClick={() => {
-                          setSelected(i.address);
-                          copyToClipboard(i.address);
-                        }}
-                      />
-                    )}
+                  {type === "down" ? "From" : "To"}:
+                </div>
+                <div className={styles.transferInfo}>
+                  <div className={styles.transferAddress}>
+                    <Link to={routers.ADDRESS_DETAIL.replace(":address", i.address)} className={styles.address}>
+                      <Tooltip title={i.address} placement="top">
+                        {getShortWallet(i.address)}
+                      </Tooltip>
+                    </Link>{" "}
+                    <CopyButton text={i.address} className={styles.icon} />
+                  </div>
+                  <div className={styles.transferValue}>
+                    <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
+                      {type === "down" ? `- ${formatADA(i.value)}` : `+ ${formatADA(i.value)}`}
+                    </span>
+                    <img src={AIcon} alt="ADA icon" />
                   </div>
                 </div>
-                <div>
-                  <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
-                    {type === "down" ? `- ${formatADA(i.value)}` : `+ ${formatADA(i.value)}`}
-                  </span>
-                  <img src={AIcon} alt="ADA icon" />
-                </div>
               </div>
-              <div className={`${styles.paddingTop} ${styles.bottom}`}>
+              <div className={styles.transfer}>
                 {type === "down" && (
-                  <>
-                    <div>
+                  <div className={styles.transferInfo}>
+                    <div className={styles.transferHash}>
                       <img src={type === "down" ? receiveImg : sendImg} className={styles.img} alt="send icon" />
-                      {i.txHash}
-                      {state.value === i.txHash ? (
-                        <BiCheckCircle size={20} className={styles.icon} />
-                      ) : (
-                        <IoMdCopy size={20} className={styles.icon} onClick={() => copyToClipboard(i.txHash)} />
-                      )}
+                      <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", i.txHash)} className={styles.txHash}>
+                        <Tooltip title={i.txHash} placement="top">
+                          <span className={styles.txHashDesktop}>{i.txHash}</span>
+                          <span className={styles.txHashMobile}>{getShortHash(i.txHash)}</span>
+                        </Tooltip>
+                      </Link>
+                      <CopyButton text={i.txHash} className={styles.icon} />
                     </div>
-                    <div>
-                      {/* <div className={styles.status}>GAME</div>
-                      <div className={styles.status}>Montley moon234</div> */}
-                    </div>
-                  </>
+                  </div>
                 )}
               </div>
             </div>
@@ -116,8 +101,8 @@ const Card = ({
         ))}
       {type === "up" && (
         <div className={styles.item}>
-          <div className={styles.bottom}>
-            <div className={styles.top}>
+          <div className={styles.transfer}>
+            <div className={styles.transferInfo}>
               <img className={styles.img} src={feeImg} alt="wallet icon" />
               <div>Fee</div>
             </div>
@@ -126,7 +111,7 @@ const Card = ({
               <img src={AIcon} alt="ADA icon" />
             </div>
           </div>
-          <div className={`${styles.paddingTop} ${styles.bottom}`}></div>
+          <div className={`${styles.paddingTop} ${styles.transfer}`}></div>
         </div>
       )}
       <div className={styles.footer}>

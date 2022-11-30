@@ -8,6 +8,8 @@ import styles from "./index.module.scss";
 import moment from "moment";
 import { Tooltip } from "antd";
 import { AIcon } from "../../../commons/resources";
+import { routers } from "../../../commons/routers";
+import CopyButton from "../../commons/CopyButton";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
@@ -18,12 +20,15 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
   const listDetails = [
     {
       title: "Block ID",
-      value: data?.hash && (
-        <Tooltip title={data?.hash || ""} placement="top">
-          <Link to={`#`} className={styles.link}>
-            {getShortWallet(data?.hash || "")}
+      value: data?.blockNo && (
+        <div className={styles.alignCenter}>
+          <Link to={routers.BLOCK_DETAIL.replace(":blockId", `${data?.blockNo || ""}`)} className={styles.link}>
+            <Tooltip title={`${data?.blockNo || ""}`} placement="top">
+              {data?.blockNo || ""}
+            </Tooltip>
           </Link>
-        </Tooltip>
+          <CopyButton text={`${data?.blockNo || ""}`} className={styles.icon} />
+        </div>
       ),
     },
 

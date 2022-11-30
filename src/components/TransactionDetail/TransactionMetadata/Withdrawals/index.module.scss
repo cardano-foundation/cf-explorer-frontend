@@ -21,10 +21,6 @@
     font-size: var(--font-size-text);
     border-bottom: 1px solid #0000001a;
 
-    .textMessage {
-      font-weight: var(--font-weight-bold);
-      width: 50% !important;
-    }
     .top {
       display: flex;
       align-items: center;
@@ -34,7 +30,8 @@
       }
       .address {
         font-weight: var(--font-weight-bold);
-        padding: 8px 0 8px 8px;
+        font-family: var(--font-size-text);
+        color: var(--color-blue);
       }
       .icon {
         cursor: pointer;
@@ -54,30 +51,24 @@
         }
         .address {
           font-weight: var(--font-weight-bold);
-          padding: 8px;
-        }
-        .status {
-          margin: 0;
-          text-transform: uppercase;
-          border-radius: 2px;
-          padding: 0 12px;
-          color: var(--text-color-pale);
-          background-color: #ced1d8;
-          line-height: 2rem;
+          font-family: var(--font-size-text);
+          color: var(--color-blue);
         }
       }
       .address {
         font-weight: var(--font-weight-bold);
-        padding: 8px;
+        font-family: var(--font-size-text);
         .icon {
           margin-left: 8px;
         }
       }
       .up {
         color: var(--color-green-light);
+        margin-right: 8px;
       }
       .down {
         color: var(--color-red);
+        margin-right: 8px;
       }
     }
   }
