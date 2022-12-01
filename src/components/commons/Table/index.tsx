@@ -6,6 +6,7 @@ import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/ut
 import noData from "../../../commons/resources/images/noData.png";
 
 import styles from "./index.module.scss";
+import { useWindowSize } from "react-use";
 
 export const EmptyRecord = () => (
   <div className={styles.noData}>
@@ -124,6 +125,8 @@ const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
 
 const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
   const [pageSize, setPageSize] = useState(pagination?.pageSize || 10);
+  const { width } = useWindowSize();
+
   const renderPagination = (
     current: number,
     type: "prev" | "next" | "page" | "jump-prev" | "jump-next",
@@ -139,15 +142,15 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
   };
 
   return (
-    <div className={styles.footer} style={{ justifyContent: total ? "space-between" : "flex-end" }}>
-      {total && (
+    <div className={styles.footer} style={{ justifyContent: total && width > 800 ? "space-between" : "center" }}>
+      {total && width > 800 && (
         <div className={styles.total}>
           {total.title}: <span className={styles.fwBold}>{numberWithCommas(total.count)}</span>
         </div>
       )}
       {pagination && (
-        <div style={{ display: "flex", alignItems: "center" }}>
-          {pagination.pageSizeOptions && (
+        <div style={{ display: "flex", alignItems: "center", textAlign: "left" }}>
+          {pagination.pageSizeOptions && width > 800 && (
             <div className={styles.total}>
               Rows per page:
               <Select
@@ -165,11 +168,13 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
               />
             </div>
           )}
+
           <Pagination
             {...pagination}
             showSizeChanger={false}
             itemRender={(page, type, originalElement) => renderPagination(page, type, originalElement)}
             pageSize={pageSize}
+            showTotal={width > 800 ? pagination.showTotal : undefined}
           />
         </div>
       )}

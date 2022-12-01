@@ -46,3 +46,9 @@ interface DelegatorEpoch {
   fees: number;
   ros: number;
 }
+interface StakingDelegators {
+  delegator: string;
+  value: number;
+  stekedTime: string;
+  fee: number;
+}
