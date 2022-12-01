@@ -32,7 +32,7 @@ const TokenTableData: React.FC<ITokenTableData> = () => {
   return (
     <Card
       title={getTitle(selected)}
-      titleItem={
+      extra={
         <Select
           className={styles.select}
           defaultValue="transactions"

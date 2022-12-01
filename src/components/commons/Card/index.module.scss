@@ -4,24 +4,28 @@
   background-color: transparent;
   padding: 25px 0px;
   border-radius: var(--border-radius);
+  .groupTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  .header {
-    @include flex-between-center;
-    
-    .title {
-      text-align: left;
-      padding-bottom: 8px;
-      position: relative;
-    }
+    .header {
+      @include flex-between-center;
 
-    .title::after {
-      content: "";
-      position: absolute;
-      width: 100px;
-      height: 4px;
-      background-color: var(--color-green-light);
-      left: 0;
-      bottom: 0;
+      .title {
+        text-align: left;
+        padding-bottom: 8px;
+        position: relative;
+      }
+      .title::after {
+        content: "";
+        position: absolute;
+        width: 50px;
+        height: 4px;
+        background-color: var(--color-green-light);
+        left: 0;
+        bottom: 0;
+      }
     }
   }
 }

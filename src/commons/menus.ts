@@ -25,7 +25,7 @@ export const menus: Menu[] = [
     children: [
       { title: "Delegation Pools", href: routers.DELEGATION_POOLS },
       { title: "Stake key registration", href: "/Stake-key-registration" },
-      { title: "Pool Registration", href: "/Pool-Registration" },
+      { title: "Pool Registration", href: "/registration-pools" },
     ],
   },
   {

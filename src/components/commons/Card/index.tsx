@@ -3,18 +3,18 @@ import React, { ReactNode } from "react";
 import styles from "./index.module.scss";
 
 interface CardProps {
-  title?: string;
-  titleItem?: ReactNode;
+  title?: React.ReactNode | string;
   children?: ReactNode;
   className?: string;
+  extra?: React.ReactNode;
 }
 
-const Card: React.FC<CardProps> = ({ title, titleItem, children, className = "" }) => {
+const Card: React.FC<CardProps> = ({ title, children, className = "", extra }) => {
   return (
     <div className={`${styles.card} ${className}`}>
-      <div className={styles.header}>
+      <div className={styles.groupTitle}>
         {title && <h2 className={styles.title}>{title}</h2>}
-        {titleItem}
+        {extra && <div>{extra}</div>}
       </div>
       {children}
     </div>

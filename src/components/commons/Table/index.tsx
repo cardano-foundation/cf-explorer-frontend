@@ -6,6 +6,7 @@ import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/ut
 import noData from "../../../commons/resources/images/noData.png";
 
 import styles from "./index.module.scss";
+import { useWindowSize } from "react-use";
 import { ArrowDropDownIcon } from "../../../commons/resources";
 
 export const EmptyRecord = () => (
@@ -125,6 +126,8 @@ const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
 
 const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
   const [pageSize, setPageSize] = useState(pagination?.pageSize || 10);
+  const { width } = useWindowSize();
+
   const renderPagination = (
     current: number,
     type: "prev" | "next" | "page" | "jump-prev" | "jump-next",
@@ -140,15 +143,15 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
   };
 
   return (
-    <div className={`${styles.footer} ${total ? styles.hasTotal : ""}`}>
-      {total && (
+    <div className={styles.footer} style={{ justifyContent: total && width > 800 ? "space-between" : "center" }}>
+      {total && width > 800 && (
         <div className={styles.total}>
           {total.title}: <span className={styles.totalNumber}>{numberWithCommas(total.count)}</span>
         </div>
       )}
       {pagination && (
-        <div className={styles.paginationContainer}>
-          {pagination.pageSizeOptions && (
+        <div style={{ display: "flex", alignItems: "center", textAlign: "left" }}>
+          {pagination.pageSizeOptions && width > 800 && (
             <div className={styles.total}>
               Rows per page:
               <Select
@@ -156,6 +159,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
                   label: page,
                   value: page,
                 }))}
+                // eslint-disable-next-line jsx-a11y/alt-text
                 suffixIcon={<img src={ArrowDropDownIcon} className={styles.selectIcon} />}
                 className={styles.selectPageSize}
                 value={pageSize}
@@ -167,12 +171,14 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
               />
             </div>
           )}
+
           <Pagination
             {...pagination}
             showSizeChanger={false}
             className={`${styles.pagitation} ${pagination.className || ""}`}
             itemRender={(page, type, originalElement) => renderPagination(page, type, originalElement)}
             pageSize={pageSize}
+            showTotal={width > 800 ? pagination.showTotal : undefined}
           />
         </div>
       )}
