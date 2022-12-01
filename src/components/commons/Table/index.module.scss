@@ -54,19 +54,71 @@
             color: var(--text-color);
             padding: 24px 20px;
           }
-        }
-        .bodyRow:hover {
-          background-color: rgba($color: #000000, $alpha: 0.03);
+          &:hover {
+            @include box-shadow-raised;
+            background-color: #ededed;
+          }
         }
       }
     }
   }
   .footer {
-    display: flex;
-    align-items: center;
+    @include flex-end-center;
+    color: var(--text-color-pale);
     flex-wrap: wrap;
+    margin-top: 10px;
+
+    &.hasTotal {
+      @include flex-between-center;
+    }
+    @media screen and (max-width: 1024px) {
+      @include flex-end-center;
+      &.hasTotal {
+        @include flex-end-center;
+      }
+    }
     .total {
-      color: var(--text-color-pale);
+      .totalNumber {
+        color: var(--text-color);
+        font-weight: var(--font-weight-bold);
+      }
+      @media screen and (max-width: 1024px) {
+        display: none;
+      }
+    }
+    .selectPageSize {
+      border: none;
+      [class*="ant-select-selection-item"] {
+        font-weight: var(--font-weight-bold);
+      }
+      .selectIcon {
+        filter: brightness(1);
+      }
+    }
+    .paginationContainer {
+      @include flex-end-center;
+    }
+    .pagitation {
+      font-weight: var(--font-weight-bold);
+      a,
+      a:link,
+      a:hover,
+      a:visited {
+        font-family: var(--font-family-text);
+        color: var(--text-color);
+        [class*="ant-pagination-item-ellipsis"] {
+          top: unset;
+        }
+      }
+      [class*="ant-pagination-item-active"] {
+        border-color: var(--border-color);
+        a {
+          cursor: not-allowed;
+        }
+      }
+      [class*="ant-pagination-item-link-icon"] {
+        color: var(--text-color) !important;
+      }
     }
   }
 }

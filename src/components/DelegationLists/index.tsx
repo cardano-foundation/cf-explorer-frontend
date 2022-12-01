@@ -129,6 +129,7 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       total={{ count: total, title: "Total Transactions" }}
       loading={loading}
       initialized={initialized}
+      onClickRow={(_, r) => history.push(routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`))}
       pagination={{
         current: query.page ? +query.page : 1,
         total: total,

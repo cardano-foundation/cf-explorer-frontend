@@ -17,46 +17,46 @@ interface TransactionMetadataProps {
 }
 
 const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading }) => {
-  const tabs: { label: string; key: keyof Transaction; children: React.ReactNode }[] = [
+  const tabs: { label: React.ReactNode; key: keyof Transaction; children: React.ReactNode }[] = [
     {
-      label: "Summary",
+      label: <h3 className={styles.title}>Summary</h3>,
       key: "summary",
-      children: <Summary data={(data && data["summary"]) || null} />,
+      children: <Summary data={data?.summary || null} />,
     },
     {
-      label: "UTXOs",
+      label: <h3 className={styles.title}>UTXOs</h3>,
       key: "utxOs",
-      children: <UTXO data={(data && data["utxOs"]) || null} fee={data?.tx.fee || 0} />,
+      children: <UTXO data={data?.utxOs || null} fee={data?.tx.fee || 0} />,
     },
     {
-      label: `Contracts(${data?.contracts?.length || 0})`,
+      label: <h3 className={styles.title}>Contracts({data?.contracts?.length || 0})</h3>,
       key: "contracts",
-      children: <Contracts data={(data && data["contracts"]) || null} />,
+      children: <Contracts data={data?.contracts || null} />,
     },
     {
-      label: `Collaterals(${data?.collaterals?.length || 0})`,
+      label: <h3 className={styles.title}>Collaterals({data?.collaterals?.length || 0})</h3>,
       key: "collaterals",
-      children: <Collaterals data={(data && data["collaterals"]) || null} />,
+      children: <Collaterals data={data?.collaterals || null} />,
     },
     {
-      label: `Notes(${data?.notes?.length || 0})`,
+      label: <h3 className={styles.title}>Notes({data?.notes?.length || 0})</h3>,
       key: "notes",
       children: "",
     },
     {
-      label: `Withdrawals(${data?.withdrawals?.length || 0})`,
+      label: <h3 className={styles.title}>Withdrawals({data?.withdrawals?.length || 0})</h3>,
       key: "withdrawals",
-      children: <Withdrawals data={(data && data["withdrawals"]) || null} />,
+      children: <Withdrawals data={data?.withdrawals || null} />,
     },
     {
-      label: `Delegations(${data?.delegations?.length || 0})`,
+      label: <h3 className={styles.title}>Delegations({data?.delegations?.length || 0})</h3>,
       key: "delegations",
-      children: <Delegations data={(data && data["delegations"]) || null} />,
+      children: <Delegations data={data?.delegations || null} />,
     },
     {
-      label: `Mints(${data?.mints?.length || 0})`,
+      label: <h3 className={styles.title}>Minting</h3>,
       key: "mints",
-      children: <Minting data={(data && data["mints"]) || null} />,
+      children: <Minting data={data?.mints || null} />,
     },
   ];
 

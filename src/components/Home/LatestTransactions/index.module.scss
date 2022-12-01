@@ -1,14 +1,14 @@
 @import "../../../themes/variable.scss";
 
 .latestTransaction {
-  @include box-shadow-raised;
   margin-bottom: 24px;
-  padding: 24px 30px;
+  padding: 24px 0px;
   text-align: left;
 
   .title {
     @include flex-between-center;
     margin-bottom: 1.5rem;
+    gap: 10px;
 
     h3 {
       position: relative;
@@ -46,6 +46,7 @@
     height: auto;
   }
   .item {
+    @include box-shadow-raised;
     display: block;
     position: relative;
     padding: 20px;
@@ -98,17 +99,23 @@
         }
       }
     }
-    &:hover{
-      @include box-shadow-raised
+    &:hover {
+      @include box-shadow-raised;
     }
   }
 
   @media screen and (max-width: 767px) {
-    .seemoreDesktop {
-      display: none;
+    @include box-shadow-raised;
+    padding: 25px 20px;
+
+    .item {
+      box-shadow: none;
     }
-    .seemoreMobile {
-      display: block;
-    }
+    // .seemoreDesktop {
+    //   display: none;
+    // }
+    // .seemoreMobile {
+    //   display: block;
+    // }
   }
 }

@@ -1,4 +1,4 @@
-@import '../../../../themes/variable.scss';
+@import "../../../../themes/variable.scss";
 .wrapper {
   background-color: var(--background);
   border-radius: var(--border-radius);
@@ -34,38 +34,49 @@
       font-weight: var(--font-weight-bold);
       width: 50% !important;
     }
-    .top {
-      display: flex;
-      align-items: center;
-      .img {
-        padding-right: 10px;
-        width: 35px;
-      }
-      .address {
-        font-weight: var(--font-weight-bold);
-        // padding: 8px 0 8px 8px;
-      }
-    }
-    .bottom {
+    .transfer {
+      @include flex-between-center;
+      flex-wrap: wrap;
       width: 100%;
-      display: flex;
-      justify-content: space-between;
-      .img {
+      .wallet {
+        @include flex-start-center;
         padding-right: 10px;
-        width: 35px;
+        margin-bottom: 8px;
+        .img {
+          padding-right: 10px;
+          width: 35px;
+        }
+      }
+
+      .transferInfo {
+        @include flex-between-center;
+        flex: 1;
+        margin-bottom: 8px;
+
+        .transferAddress,
+        .transferValue,
+        .transferHash {
+          @include flex-start-center;
+          flex-wrap: nowrap;
+          width: auto;
+        }
+        .img {
+          padding-right: 10px;
+          width: 35px;
+        }
+        .address {
+          font-weight: var(--font-weight-bold);
+          margin-right: 8px;
+        }
       }
       .address {
         font-weight: var(--font-weight-bold);
-        padding: 8px;
+        font-family: var(--font-family-text);
+        color: var(--color-blue);
       }
-      .status {
-        margin: 0;
-        text-transform: uppercase;
-        border-radius: 2px;
-        padding: 0 12px;
-        color: var(--text-color-pale);
-        background-color: #ced1d8;
-        line-height: 2rem;
+      .up,
+      .down {
+        white-space: nowrap;
       }
       .up {
         color: var(--color-green-light);
@@ -73,14 +84,34 @@
       .down {
         color: var(--color-red);
       }
+      .txHash {
+        font-family: var(--font-family-text);
+        color: var(--color-blue);
+        white-space: wrap;
+        margin-right: 8px;
+        .txHashMobile {
+          display: none;
+        }
+        @media screen and (max-width: 991px) {
+          .txHashDesktop {
+            display: none;
+          }
+
+          .txHashMobile {
+            display: inline-block;
+          }
+        }
+      }
       .status {
         margin: 0;
         text-transform: uppercase;
         border-radius: 2px;
         padding: 0 12px;
         font-family: var(--font-family-title);
+        background-color: #ced1d8;
         color: var(--text-color-pale);
         font-weight: var(--font-weight-bold);
+        line-height: 2rem;
         display: inline;
         margin-right: 4px;
       }
@@ -110,7 +141,3 @@
   padding-top: 8px;
 }
 
-.icon {
-  cursor: pointer;
-  margin-left: 8px;
-}

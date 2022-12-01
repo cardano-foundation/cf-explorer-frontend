@@ -1,3 +1,4 @@
+import LogoMobileIcon from "./icons/logo-mobile.svg";
 import LogoIcon from "./icons/logo.svg";
 import WalletIcon from "./icons/wallet.svg";
 import FlintIcon from "./images/flint.jpg";
@@ -27,9 +28,13 @@ import UpGreenIcon from "./icons/up-green.svg";
 import CheckGreenIcon from "./icons/check-green.svg";
 import BlankBlueIcon from "./icons/blank-blue.svg";
 import CalenderPaleIcon from "./icons/calender-pale.svg";
+import ArrowDownIcon from "./icons/arrow-down.svg";
+import ArrowDropDownIcon from "./icons/arrow-drop-down.svg";
 import AIcon from "./images/AIcon.png";
+import Policy from "./icons/policy.svg"
 
 export {
+  LogoMobileIcon,
   LogoIcon,
   WalletIcon,
   FlintIcon,
@@ -59,5 +64,8 @@ export {
   CheckGreenIcon,
   BlankBlueIcon,
   CalenderPaleIcon,
-  AIcon
+  AIcon,
+  ArrowDownIcon,
+  ArrowDropDownIcon,
+  Policy
 };

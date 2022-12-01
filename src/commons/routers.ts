@@ -11,5 +11,9 @@ export const routers = {
   REGISTRATION_POOLS: "/registration-pools",
   STORY_LIST: "/stories",
   STORY_DETAIL: "/story/:storyId",
+  ADDRESS_LIST: "/addresses",
+  ADDRESS_DETAIL: "/address/:address",
+  TOKEN_LIST: "/tokens",
+  TOKEN_DETAIL: "/token/:tokenId",
   NOT_FOUND: "/*",
 };

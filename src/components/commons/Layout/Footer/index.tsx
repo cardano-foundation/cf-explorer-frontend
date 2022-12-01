@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
               {footerMenus.map(level_1 => {
                 const { title, children } = level_1;
                 return (
-                  <Col key={title} span={24} md={8}>
+                  <Col key={title} span={24} md={8} sm={12}>
                     <h3>{title}</h3>
                     <ul>
                       {children?.map(level_2 => {

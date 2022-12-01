@@ -12,6 +12,8 @@ import EpochDetail from "./pages/EpochDetail";
 import DelegationPools from "./pages/DelegationPools";
 import DelegationDetail from "./pages/DelegationDetail";
 import RegistrationPools from "./pages/RegistrationPools";
+import TokenList from "./pages/TokenList";
+import TokenDetail from "./pages/TokenDetail";
 
 const Routes: React.FC<RouteComponentProps> = () => {
   return (
@@ -26,6 +28,8 @@ const Routes: React.FC<RouteComponentProps> = () => {
       <Route path={routers.DELEGATION_POOLS} exact component={DelegationPools} />
       <Route path={routers.DELEGATION_POOL_DETAIL} exact component={DelegationDetail} />
       <Route path={routers.REGISTRATION_POOLS} exact component={RegistrationPools} />
+      <Route path={routers.TOKEN_LIST} exact component={TokenList} />
+      <Route path={routers.TOKEN_DETAIL} exact component={TokenDetail} />
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );

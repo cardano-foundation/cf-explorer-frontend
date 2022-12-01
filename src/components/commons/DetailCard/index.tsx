@@ -9,6 +9,7 @@ import slotImg from "../../../commons/resources/images/slot.png";
 import Card from "../Card";
 import { routers } from "../../../commons/routers";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { Policy } from "../../../commons/resources";
 
 interface DetailCardProps {
   listDetails: { title?: string; value: React.ReactNode }[];
@@ -24,9 +25,13 @@ interface DetailCardProps {
     delegators: number;
     satulation: string;
   };
+  tokenDetail?: {
+    decimal: number;
+    totalSupply: string;
+  };
 }
 
-const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading, delegationPools }) => {
+const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading, tokenDetail, delegationPools }) => {
   if (loading) {
     return (
       <Row className={styles.wrapper} gutter={[16, 16]}>
@@ -63,9 +68,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
 
           <div className={styles.progessInfo}>
             <div className={styles.row}>
-              <div>
-                <img className={styles.img} src={blockImg} alt="Block Icon" />
-              </div>
+              <img className={styles.img} src={blockImg} alt="Block Icon" />
               <div>
                 <div className={styles.title}>Block</div>
                 <Link
@@ -77,13 +80,11 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
               </div>
             </div>
             <div className={styles.row}>
-              <div>
-                <img className={styles.img} src={slotImg} alt="Slot Icon" />
-              </div>
+              <img className={styles.img} src={slotImg} alt="Slot Icon" />
               <div>
                 <div className={styles.title}>Slot</div>
                 <div>
-                  <span className={styles.fwBold}>{progress.currentSlot}</span>/ {MAX_SLOT_EPOCH}
+                  <span className={styles.fwBold}>{progress.currentSlot}</span> / {MAX_SLOT_EPOCH}
                 </div>
               </div>
             </div>
@@ -129,6 +130,34 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
         </div>
       );
     }
+    if (tokenDetail) {
+      return (
+        <div className={styles.token}>
+          <div className={styles.policy}>
+            <img src={Policy} alt="Policy Script Icon" />
+            <h3>Policy Script</h3>
+          </div>
+          <div className={styles.bridgeInfo}>
+            <div>
+              <span className={styles.title}>WETH</span>
+              <span className={styles.details}>Wrapped ether bridged through Nomda</span>
+            </div>
+            <img src={infoIcon} alt="info" />
+          </div>
+          <div className={styles.tokenInfo}>
+            <div className={styles.tokenWrapper}>
+              <span className={styles.title}>Total Supply</span>
+              <span className={styles.details}>{tokenDetail.totalSupply}</span>
+            </div>
+            <div className={`${styles.tokenWrapper} ${styles.borderLeft} ${styles.pl15}`}>
+              <span className={styles.title}>Decimal</span>
+              <span className={styles.details}>{tokenDetail.decimal}</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return <></>;
   };
 

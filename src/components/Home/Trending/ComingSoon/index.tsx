@@ -7,7 +7,7 @@ interface Props { }
 const ComingSoon: React.FC<Props> = () => {
 
   return (
-    <div className={styles.transactionChart}>
+    <div className={styles.comingsoon}>
       <img src={ComingSoonIcon} alt="Coming soon"/>
       <h3>Coming Soon</h3>
     </div>

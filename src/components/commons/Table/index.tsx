@@ -7,6 +7,7 @@ import noData from "../../../commons/resources/images/noData.png";
 
 import styles from "./index.module.scss";
 import { useWindowSize } from "react-use";
+import { ArrowDropDownIcon } from "../../../commons/resources";
 
 export const EmptyRecord = () => (
   <div className={styles.noData}>
@@ -145,7 +146,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
     <div className={styles.footer} style={{ justifyContent: total && width > 800 ? "space-between" : "center" }}>
       {total && width > 800 && (
         <div className={styles.total}>
-          {total.title}: <span className={styles.fwBold}>{numberWithCommas(total.count)}</span>
+          {total.title}: <span className={styles.totalNumber}>{numberWithCommas(total.count)}</span>
         </div>
       )}
       {pagination && (
@@ -158,7 +159,9 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
                   label: page,
                   value: page,
                 }))}
-                style={{ border: "none", fontWeight: 700 }}
+                // eslint-disable-next-line jsx-a11y/alt-text
+                suffixIcon={<img src={ArrowDropDownIcon} className={styles.selectIcon} />}
+                className={styles.selectPageSize}
                 value={pageSize}
                 bordered={false}
                 onChange={value => {
@@ -172,6 +175,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
           <Pagination
             {...pagination}
             showSizeChanger={false}
+            className={`${styles.pagitation} ${pagination.className || ""}`}
             itemRender={(page, type, originalElement) => renderPagination(page, type, originalElement)}
             pageSize={pageSize}
             showTotal={width > 800 ? pagination.showTotal : undefined}

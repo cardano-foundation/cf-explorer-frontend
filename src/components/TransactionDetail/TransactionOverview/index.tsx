@@ -9,9 +9,11 @@ import Card from "../../commons/Card";
 import DetailCard from "../../commons/DetailCard";
 import { formatADA, getShortHash } from "../../../commons/utils/helper";
 
-import styles from "./index.module.scss"; 
+import styles from "./index.module.scss";
 import { Tooltip } from "antd";
 import { AIcon } from "../../../commons/resources";
+import { routers } from "../../../commons/routers";
+import CopyButton from "../../commons/CopyButton";
 
 interface Props {
   data: Transaction | null;
@@ -19,37 +21,18 @@ interface Props {
 }
 
 const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
-  const [, copyToClipboard] = useCopyToClipboard();
-  const [selected, setSelected] = useState<string>();
-
-  useEffect(() => {
-    if (selected) {
-      setTimeout(() => {
-        setSelected("");
-      }, 3000);
-    }
-  }, [selected]);
   const listDetails = [
     {
       title: "Transaction hash",
       value: data?.tx.hash && (
-        <Tooltip title={data?.tx.hash || ""} placement="bottom">
-          <Link to={`#`} className={`${styles.alignCenter} ${styles.link}`}>
-            {getShortHash(data?.tx.hash || "")}
-            {selected === data?.tx.hash ? (
-              <BiCheckCircle size={20} className={styles.icon} />
-            ) : (
-              <IoMdCopy
-                size={20}
-                className={styles.icon}
-                onClick={() => {
-                  copyToClipboard(data?.tx.hash);
-                  setSelected(data?.tx.hash);
-                }}
-              />
-            )}
+        <div className={styles.alignCenter}>
+          <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", data?.tx.hash || "")} className={styles.link}>
+            <Tooltip title={data?.tx.hash || ""} placement="top">
+              {getShortHash(data?.tx.hash || "")}
+            </Tooltip>
           </Link>
-        </Tooltip>
+          <CopyButton text={data?.tx.hash || ""} className={styles.icon} />
+        </div>
       ),
     },
 
