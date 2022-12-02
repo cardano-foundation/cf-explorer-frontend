@@ -36,6 +36,16 @@
   .chart {
     padding-top: 20px;
   }
+  @media screen and (max-width: 1200px) {
+    .chart {
+      padding-bottom: 20px;
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .chart {
+      padding-right: 20px;
+    }
+  }
   .right {
     height: 100%;
     .col {

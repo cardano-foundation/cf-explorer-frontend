@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useState, useEffect } from "react";
 import { Pagination, PaginationProps, Select, Skeleton } from "antd";
 
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
@@ -8,6 +8,7 @@ import noData from "../../../commons/resources/images/noData.png";
 import styles from "./index.module.scss";
 import { useWindowSize } from "react-use";
 import { ArrowDropDownIcon } from "../../../commons/resources";
+import { useHistory } from "react-router-dom";
 
 export const EmptyRecord = () => (
   <div className={styles.noData}>
@@ -159,8 +160,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
                   label: page,
                   value: page,
                 }))}
-                // eslint-disable-next-line jsx-a11y/alt-text
-                suffixIcon={<img src={ArrowDropDownIcon} className={styles.selectIcon} />}
+                suffixIcon={<img src={ArrowDropDownIcon} alt="" className={styles.selectIcon} />}
                 className={styles.selectPageSize}
                 value={pageSize}
                 bordered={false}

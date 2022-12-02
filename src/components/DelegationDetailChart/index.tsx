@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Col, Row } from "antd";
+import React, { useEffect, useState } from "react";
+import { Col, Row, Skeleton } from "antd";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
@@ -9,30 +9,37 @@ import styles from "./index.module.scss";
 import highestIcon from "../../commons/resources/images/highestIcon.png";
 import lowestIcon from "../../commons/resources/images/lowestIcon.png";
 import moment from "moment";
+import { formatADA, formatNumber, numberWithCommas } from "../../commons/utils/helper";
 
-const DelegationDetailChart = () => {
-  const [selectAnalytic, setSelectAnalytic] = useState<"epoch" | "delegator">("epoch");
+interface DelegationDetailChartProps {
+  data: AnalyticsDelegators | null;
+  loading: boolean;
+}
+
+const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ data, loading }) => {
+  const [selectAnalytic, setSelectAnalytic] = useState<"epochChart" | "delegatorChart">("epochChart");
   return (
     <Card title="Analytics">
       <Row className={styles.wrapper}>
         <Col span={24} xl={18}>
           <div className={styles.tab}>
             <button
-              className={`${styles.button} ${selectAnalytic === "epoch" ? styles.active : ""}`}
+              className={`${styles.button} ${selectAnalytic === "epochChart" ? styles.active : ""}`}
               style={{ marginRight: 5 }}
-              onClick={() => setSelectAnalytic("epoch")}
+              onClick={() => setSelectAnalytic("epochChart")}
             >
               Epoch
             </button>
             <button
-              className={`${styles.button}  ${selectAnalytic === "delegator" ? styles.active : ""}`}
-              onClick={() => setSelectAnalytic("delegator")}
+              className={`${styles.button}  ${selectAnalytic === "delegatorChart" ? styles.active : ""}`}
+              onClick={() => setSelectAnalytic("delegatorChart")}
             >
               Delegator
             </button>
           </div>
           <div className={styles.chart}>
-            <Chart />
+            {loading && <Skeleton.Input active block style={{ height: "280px" }} />}
+            {!loading && <Chart data={data ? data[selectAnalytic].dataByDays : []} />}
           </div>
         </Col>
         <Col span={24} xl={6}>
@@ -42,9 +49,17 @@ const DelegationDetailChart = () => {
                 <div>
                   <img src={highestIcon} alt="heighest icon" />
                   <div className={styles.title}>
-                    {selectAnalytic === "epoch" ? "Highest stake" : "Highest number of delegators"}
+                    {selectAnalytic === "epochChart" ? "Highest stake" : "Highest number of delegators"}
                   </div>
-                  <div className={styles.value}>179</div>
+                  <div className={styles.value}>
+                    {loading && <Skeleton.Input active block />}
+                    {!loading &&
+                      (data
+                        ? selectAnalytic === "epochChart"
+                          ? formatADA(data[selectAnalytic].highest)
+                          : data[selectAnalytic].highest
+                        : 0)}
+                  </div>
                 </div>
               </div>
             </Col>
@@ -54,38 +69,39 @@ const DelegationDetailChart = () => {
                 <div>
                   <img src={lowestIcon} alt="lowest icon" />
                   <div className={styles.title}>
-                    {selectAnalytic === "epoch" ? "Lowest stake" : "Lowest number of delegators"}
+                    {selectAnalytic === "epochChart" ? "Lowest stake" : "Lowest number of delegators"}
                   </div>
-                  <div className={styles.value}>179</div>
+                  <div className={styles.value}>
+                    {loading && <Skeleton.Input active block />}
+                    {!loading &&
+                      (data
+                        ? selectAnalytic === "epochChart"
+                          ? formatADA(data[selectAnalytic].lowest)
+                          : data[selectAnalytic].lowest
+                        : 0)}
+                  </div>
                 </div>
               </div>
             </Col>
           </Row>
         </Col>
       </Row>
-      {/* <HighchartsReact highcharts={Highcharts} constructorType={"stockChart"} options={chartOptions} /> */}
     </Card>
   );
 };
 
 export default DelegationDetailChart;
 
-const Chart = () => {
-  const data: [string, number][] = new Array(16).fill(0).map((_, i) => [
-    moment()
-      .add(i - 15, "day")
-      .format("MMM DD")
-      .toString(),
-    880000 + Math.floor(100000 * i * (Math.random() - 0.3)),
-  ]);
-  const categories = new Array(16).fill(0).map((_, i) =>
-    !i || i === 15
-      ? moment()
-          .add(i - 15, "day")
-          .format("MMM DD")
-          .toString()
-      : ""
-  );
+const Chart = ({ data }: { data: AnalyticsDelegators["epochChart"]["dataByDays"] | [] }) => {
+  const [dataChart, setData] = useState<number[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (data) {
+      setData(data.map(i => i.dataChart));
+      setCategories(data.map(i => moment(i.timeChart).format("MMM DD").toString()));
+    }
+  }, [data]);
 
   return (
     <HighchartsReact
@@ -104,14 +120,15 @@ const Chart = () => {
           lineWidth: 1,
           lineColor: "#E3E5E9",
           plotLines: [],
+          angle: 0,
         },
         legend: { enabled: false },
-        tooltip: { shared: true, valueSuffix: " transactions" },
+        tooltip: { shared: true },
         credits: { enabled: false },
         series: [
           {
             name: "",
-            pointPlacement: "between",
+            pointPlacement: "on",
             type: "areaspline",
             marker: { enabled: false },
             color: {
@@ -128,7 +145,7 @@ const Chart = () => {
                 [1, "rgba(90, 156, 86, 0)"],
               ],
             },
-            data,
+            data: dataChart,
           },
         ],
       }}

@@ -24,7 +24,7 @@ interface DetailCardProps {
     poolSize: React.ReactNode;
     stakeLimit: React.ReactNode;
     delegators: number;
-    satulation: string;
+    satulation: number;
   };
   tokenDetail?: {
     decimal: number;
