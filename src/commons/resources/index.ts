@@ -30,8 +30,10 @@ import BlankBlueIcon from "./icons/blank-blue.svg";
 import CalenderPaleIcon from "./icons/calender-pale.svg";
 import ArrowDownIcon from "./icons/arrow-down.svg";
 import ArrowDropDownIcon from "./icons/arrow-drop-down.svg";
+import CollapseIcon from "./icons/menu.svg";
 import AIcon from "./images/AIcon.png";
-import Policy from "./icons/policy.svg"
+import Policy from "./icons/policy.svg";
+import HeaderBackground from "./images/header-bg.png";
 
 export {
   LogoMobileIcon,
@@ -67,5 +69,7 @@ export {
   AIcon,
   ArrowDownIcon,
   ArrowDropDownIcon,
-  Policy
+  Policy,
+  HeaderBackground,
+  CollapseIcon,
 };

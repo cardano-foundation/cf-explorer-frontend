@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Form, Input, Select } from "antd";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, useHistory } from "react-router-dom";
 import { HeaderSearchIcon } from "../../../../../commons/resources";
 import styles from "./index.module.scss";
 import { routers } from "../../../../../commons/routers";
@@ -11,8 +11,8 @@ interface FormValues {
   search: string;
 }
 
-const HeaderSearch: React.FC<RouteComponentProps> = props => {
-  const { history } = props;
+const HeaderSearch: React.FC = () => {
+  const history = useHistory();
   const [form] = Form.useForm<FormValues>();
 
   const handleSearch = () => {
@@ -63,4 +63,4 @@ const HeaderSearch: React.FC<RouteComponentProps> = props => {
   );
 };
 
-export default withRouter(HeaderSearch);
+export default HeaderSearch;

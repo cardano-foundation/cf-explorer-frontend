@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, RouteComponentProps, Switch, withRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { routers } from "./commons/routers";
 import Home from "./pages/Home";
 import BlockList from "./pages/BlockList";
@@ -13,7 +13,7 @@ import DelegationPools from "./pages/DelegationPools";
 import TokenList from "./pages/TokenList";
 import TokenDetail from "./pages/TokenDetail";
 
-const Routes: React.FC<RouteComponentProps> = () => {
+const Routes: React.FC = () => {
   return (
     <Switch>
       <Route path={routers.HOME} exact component={Home} />
@@ -31,4 +31,4 @@ const Routes: React.FC<RouteComponentProps> = () => {
   );
 };
 
-export default withRouter(Routes);
+export default Routes;

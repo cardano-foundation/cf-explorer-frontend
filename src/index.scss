@@ -74,25 +74,6 @@
   --container-max-width: 1340px;
   --menu-item-gap: 32px;
   --row-6-to-5-col: calc(120% + 16.8px);
-
-  --text-color: #13152f;
-  --title-color: #98a2b3;
-  --text-color-pale: #667085;
-  --text-color-reverse: #ffffff;
-  --text-color-hover: #13152f;
-  --text-color-reverse-hover: #ffffff;
-  --color-green: #29744d;
-  --color-green-light: #438f68;
-  --color-green-pale: #438f6833;
-  --color-green-dark: #184c78;
-  --color-blue: #108aef;
-  --color-blue-dark: #13152f;
-  --color-red: #dd4343;
-  --color-yellow: #ffa800;
-  --color-black: #000000;
-  --border-color: #e3e5e9;
-  --body-background: #f5f5f5;
-  --background: #e9eaec;
   
   @media screen and (max-width: 1400px) {
     --container-max-width: calc(100% - 40px);
