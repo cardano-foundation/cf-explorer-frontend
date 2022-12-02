@@ -45,7 +45,6 @@ interface TableProps<T extends ColumnType = any> {
   pagination?: PaginationProps;
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
-  scrollTop?: boolean;
 }
 interface FooterTableProps {
   total: TableProps["total"];
@@ -196,19 +195,7 @@ const Table: React.FC<TableProps> = ({
   loading,
   initialized = true,
   onClickRow,
-  scrollTop = true,
 }) => {
-
-  const history = useHistory();
-  useEffect(() => {
-    const unlisten = history.listen(() => {
-      scrollTop && window.scrollTo(0, 0);
-    });
-    return () => {
-      unlisten();
-    };
-  }, [history]);
-
   return (
     <div className={`${styles.wrapper} ${className}`}>
       <div className={styles.tableWrapper}>

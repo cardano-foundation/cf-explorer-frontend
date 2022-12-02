@@ -12,11 +12,13 @@ const DelegationEpochList = ({
   loading,
   total,
   initialized,
+  scrollEffect,
 }: {
   data: DelegationEpoch[] | null;
   loading: boolean;
   initialized: boolean;
   total: number;
+  scrollEffect: () => void;
 }) => {
   const history = useHistory();
   const { search } = useLocation();
@@ -78,7 +80,6 @@ const DelegationEpochList = ({
       onClickRow={(_, r) => history.push(routers.EPOCH_DETAIL.replace(":epochId", `${r.epoch}`))}
       total={{ count: total, title: "Total" }}
       loading={loading}
-      scrollTop={false}
       initialized={initialized}
       pagination={{
         current: query.page ? +query.page : 1,
@@ -88,6 +89,7 @@ const DelegationEpochList = ({
         pageSizeOptions: [10, 20, 50],
         onChange(page, pageSize) {
           setQuery({ page, size: pageSize });
+          scrollEffect();
         },
       }}
     />
@@ -99,11 +101,13 @@ const DelegationStakingDelegatorsList = ({
   initialized,
   loading,
   total,
+  scrollEffect,
 }: {
   data: StakingDelegators[] | null;
   loading: boolean;
   initialized: boolean;
   total: number;
+  scrollEffect: () => void;
 }) => {
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
@@ -153,8 +157,6 @@ const DelegationStakingDelegatorsList = ({
     <Table
       columns={columns}
       data={data ? data : []}
-      scrollTop={false}
-      // onClickRow={(_, r) => history.push(routers.EPOCH_DETAIL.replace(":epochId", `${r.epoch}`))}
       total={{ count: total, title: "Total" }}
       loading={loading}
       initialized={initialized}
@@ -166,6 +168,7 @@ const DelegationStakingDelegatorsList = ({
         pageSizeOptions: [10, 20, 50],
         onChange(page, pageSize) {
           setQuery({ page, size: pageSize });
+          scrollEffect();
         },
       }}
     />
@@ -173,36 +176,3 @@ const DelegationStakingDelegatorsList = ({
 };
 
 export { DelegationEpochList, DelegationStakingDelegatorsList };
-
-const fakeDataDelegator = [
-  {
-    delegator: "stake_test1uz9y7juwzcyanva4x4fzpx7tft6ckntn6ulsjjd2k7a0pxgldmzp5",
-    value: 135687,
-    stekedTime: "26/09/2022 13:02:39",
-    fees: 12000000000,
-  },
-  {
-    delegator: "stake_test1uz9y7juwzcyanva4x4fzpx7tft6ckntn6ulsjjd2k7a0pxgldmzp5",
-    value: 135687,
-    stekedTime: "26/09/2022 13:02:39",
-    fees: 12000000000,
-  },
-  {
-    delegator: "stake_test1uz9y7juwzcyanva4x4fzpx7tft6ckntn6ulsjjd2k7a0pxgldmzp5",
-    value: 135687,
-    stekedTime: "26/09/2022 13:02:39",
-    fees: 12000000000,
-  },
-  {
-    delegator: "stake_test1uz9y7juwzcyanva4x4fzpx7tft6ckntn6ulsjjd2k7a0pxgldmzp5",
-    value: 135687,
-    stekedTime: "26/09/2022 13:02:39",
-    fees: 12000000000,
-  },
-  {
-    delegator: "stake_test1uz9y7juwzcyanva4x4fzpx7tft6ckntn6ulsjjd2k7a0pxgldmzp5",
-    value: 135687,
-    stekedTime: "26/09/2022 13:02:39",
-    fees: 12000000000,
-  },
-];

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 
 import { DelegationEpochList, DelegationStakingDelegatorsList } from "../../components/DelegationDetailList";
@@ -20,13 +20,25 @@ import { parse, stringify } from "qs";
 
 const DelegationDetail = () => {
   const { poolId } = useParams<{ poolId: string }>();
-  const { search } = useLocation();
+  const { search, pathname } = useLocation();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
+  const [tab, setTab] = useState<"epochs" | "delegators">("epochs");
+  const tableRef = useRef(null);
+
+  const scrollEffect = () => {
+    tableRef !== null &&
+      tableRef.current &&
+      (tableRef.current as any).scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+  };
+
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
   };
-  const [tab, setTab] = useState<"epochs" | "delegators">("epochs");
+
   const { data, loading } = useFetch<DelegationOverview>(`/delegation/pool-detail-header/${poolId}`);
   const {
     data: analyticsData,
@@ -86,22 +98,28 @@ const DelegationDetail = () => {
   const render = () => {
     if (tab === "epochs") {
       return (
-        <DelegationEpochList
-          data={dataTable as DelegationEpoch[]}
-          loading={loadingTable}
-          initialized={initialized}
-          total={total}
-        />
+        <div ref={tableRef}>
+          <DelegationEpochList
+            data={dataTable as DelegationEpoch[]}
+            loading={loadingTable}
+            initialized={initialized}
+            total={total}
+            scrollEffect={scrollEffect}
+          />
+        </div>
       );
     }
     if (tab === "delegators") {
       return (
-        <DelegationStakingDelegatorsList
-          data={dataTable as StakingDelegators[]}
-          loading={loadingTable}
-          initialized={initialized}
-          total={total}
-        />
+        <div ref={tableRef}>
+          <DelegationStakingDelegatorsList
+            data={dataTable as StakingDelegators[]}
+            loading={loadingTable}
+            initialized={initialized}
+            total={total}
+            scrollEffect={scrollEffect}
+          />
+        </div>
       );
     }
   };
@@ -152,6 +170,7 @@ const DelegationDetail = () => {
               onChange={e => {
                 setTab(e);
                 setQuery({ page: 1, size: 10 });
+                scrollEffect();
               }}
             />
           </div>
