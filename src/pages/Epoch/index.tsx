@@ -98,7 +98,7 @@ const Epoch: React.FC = () => {
 
   return (
     <div className={styles.container} ref={ref}>
-      <Card title={"Epoch"}>
+      <Card title={"Epochs"}>
         <Table
           className={styles.table}
           loading={loading}

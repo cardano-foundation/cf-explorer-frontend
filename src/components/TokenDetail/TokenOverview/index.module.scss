@@ -1,3 +1,18 @@
 @import "../../../themes/variable.scss"; 
 
-.wrapper {}
+.wrapper {
+    .tokenId {
+        @include flex-center-center;
+
+        & > span {
+            color: var(--color-blue);
+            margin-right: 12.25px;
+        }
+    }
+
+    .logo {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+    }
+}

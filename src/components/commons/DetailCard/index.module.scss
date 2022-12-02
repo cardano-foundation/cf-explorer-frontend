@@ -3,95 +3,37 @@
 .wrapper {
   margin-top: 24px;
   min-height: 250px;
+
   .skeleton {
     height: 250px;
     border-radius: 10px;
   }
+
   .info {
-    box-shadow: var(--shadow-raised);
+    padding: 15px 40px;
     text-align: left;
     background-color: #fff;
     height: 100%;
     width: 100%;
     display: flex;
+    justify-content: space-between;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     overflow-x: auto;
-    padding: 25px 30px;
-    @media screen and (max-width: 767px) {
-      padding: 25px 20px;
-    }
 
-    .fullWidth {
-      width: 100%;
-    }
-
-    .title {
-      font-family: var(--font-family-title);
-      font-weight: var(--font-weight-bold);
-      font-size: var(--font-size-title);
-      padding-bottom: 4px;
-    }
     .detailItem {
       font-size: var(--font-size-text);
-      padding: 4px 0;
       display: flex;
       align-items: center;
+      height: 100%;
+
       .img {
-        margin-right: 8px;
+        margin-right: 8px; 
         display: block;
         height: 100%;
       }
       .row {
         display: flex;
         align-items: center;
-        .value {
-          margin-left: 8px;
-        }
-      }
-    }
-  }
-  .delegation {
-    width: 100%;
-    height: 100%;
-    text-align: left;
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-    overflow-x: auto;
-
-    .fullWidth {
-      width: 100%;
-    }
-
-    .title {
-      font-family: var(--font-family-title);
-      font-weight: var(--font-weight-bold);
-      font-size: var(--font-size-title);
-      padding-bottom: 4px;
-    }
-    .detailItem {
-      font-size: var(--font-size-text);
-      display: flex;
-      align-items: center;
-      height: 100%;
-      width: 100%;
-
-      .img {
-        margin-right: 8px;
-        display: block;
-      }
-
-      .row {
-        display: flex;
-        align-items: center;
-        .label {
-          min-width: 150px;
-          @media screen and (max-width: 767px) {
-            min-width: 120px;
-          }
-        }
 
         .value {
           margin-left: 0.5rem;
@@ -128,6 +70,7 @@
       color: var(--title-color-pale);
       margin-top: 8px;
     }
+
     .progessInfo {
       margin-top: 14px;
       text-align: left;
@@ -179,6 +122,7 @@
 
     .bridgeInfo {
       @include flex-between-center;
+      border: none;
 
       background: rgba(24, 76, 120, 0.1);
       border-radius: 5px;
@@ -188,6 +132,7 @@
       & > div {
         display: flex;
         flex-direction: column;
+        text-align: left;
 
         .title {
           font-weight: var(--font-weight-bold);
@@ -234,7 +179,6 @@
     }
   }
 }
-
 .fwBold {
   font-weight: var(--font-weight-bold);
 }
