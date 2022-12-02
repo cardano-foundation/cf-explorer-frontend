@@ -10,6 +10,7 @@ import Card from "../Card";
 import { routers } from "../../../commons/routers";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { Policy } from "../../../commons/resources";
+import { numberWithCommas } from "../../../commons/utils/helper";
 
 interface DetailCardProps {
   listDetails: { title?: string; value: React.ReactNode }[];
@@ -27,7 +28,7 @@ interface DetailCardProps {
   };
   tokenDetail?: {
     decimal: number;
-    totalSupply: string;
+    totalSupply: number;
   };
 }
 
@@ -137,17 +138,18 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
             <img src={Policy} alt="Policy Script Icon" />
             <h3>Policy Script</h3>
           </div>
-          <div className={styles.bridgeInfo}>
+          {/* TODO - add behavior */}
+          <button className={styles.bridgeInfo}>
             <div>
               <span className={styles.title}>WETH</span>
               <span className={styles.details}>Wrapped ether bridged through Nomda</span>
             </div>
             <img src={infoIcon} alt="info" />
-          </div>
+          </button>
           <div className={styles.tokenInfo}>
             <div className={styles.tokenWrapper}>
               <span className={styles.title}>Total Supply</span>
-              <span className={styles.details}>{tokenDetail.totalSupply}</span>
+              <span className={styles.details}>{numberWithCommas(tokenDetail.totalSupply)}</span>
             </div>
             <div className={`${styles.tokenWrapper} ${styles.borderLeft} ${styles.pl15}`}>
               <span className={styles.title}>Decimal</span>
@@ -165,25 +167,23 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
     <Row className={styles.wrapper} gutter={[16, 16]}>
       <Col span={24} xl={14}>
         <Card className={styles.info}>
-          <div className={styles.fullWidth}>
-            {listDetails.map((item, idx) => (
-              <div className={styles.detailItem} key={idx}>
-                {item.title ? (
-                  <>
-                    <div>
-                      <img src={infoIcon} alt="info" className={styles.img} />
-                    </div>
-                    <div className={styles.row}>
-                      <div style={{ minWidth: 150 }}>{item.title}:</div>
-                      <div className={` ${styles.fwBold} ${styles.value}`}>{item.value}</div>
-                    </div>
-                  </>
-                ) : (
-                  <>{item.value}</>
-                )}
-              </div>
-            ))}
-          </div>
+          {listDetails.map((item, idx) => (
+            <div className={styles.detailItem} key={idx}>
+              {item.title ? (
+                <>
+                  <div>
+                    <img src={infoIcon} alt="info" className={styles.img} />
+                  </div>
+                  <div className={styles.row}>
+                    <div style={{ minWidth: 150 }}>{item.title}:</div>
+                    <div className={` ${styles.fwBold} ${styles.value}`}>{item.value}</div>
+                  </div>
+                </>
+              ) : (
+                <>{item.value}</>
+              )}
+            </div>
+          ))}
         </Card>
       </Col>
       <Col span={24} xl={10}>

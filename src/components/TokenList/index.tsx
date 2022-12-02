@@ -1,19 +1,20 @@
 import { stringify } from "qs";
 import React from "react";
 import { useHistory } from "react-router-dom";
+import moment from "moment";
 
 import Card from "../commons/Card";
+import TokenLogo from "../commons/TokenLogo";
 import Table, { Column } from "../commons/Table";
 import { routers } from "../../commons/routers";
-import AIcon from "../../commons/resources/images/AIcon.png";
+import { numberWithCommas } from "../../commons/utils/helper";
 // import { routers } from "../../commons/routers";
 
 import styles from "./index.module.scss";
-import moment from "moment";
 
 interface ITokenListTable {
   // TODO
-  tokenList: Token[];
+  tokenList: IToken[];
   loading: boolean;
   total: number;
   totalPage: number;
@@ -26,36 +27,36 @@ const TokenListTable: React.FC<ITokenListTable> = ({ tokenList, loading, total, 
     history.push({ search: stringify(query) });
   };
 
-  const columns: Column<Token>[] = [
+  const columns: Column<IToken>[] = [
     {
-      title: "Slot",
-      key: "slot",
+      title: "Logo",
+      key: "logo",
       minWidth: "100px",
-      render: r => (r.icon ? "Icon Here" : <img src={AIcon} alt="ADA Icon" />),
+      render: r => <TokenLogo tokenId={r.tokenId} className={styles.logo} />,
     },
     {
       title: "Asset Name",
       key: "assetName",
       minWidth: "150px",
-      render: r => <span className={`${styles.link} ${styles.fwBold}`}>{r.assetName}</span>,
+      render: r => <span className={styles.link}>{r.assetName}</span>,
     },
     {
       title: "Total Transactions",
       key: "totalTransactions",
       minWidth: "150px",
-      render: r => <>{r.totalTransactions}</>,
+      render: r => <>{numberWithCommas(r.totalTransactions)}</>,
     },
     {
       title: "Total Supply",
       key: "totalSupply",
       minWidth: "150px",
-      render: r => <>{r.totalSupply}</>,
+      render: r => <>{numberWithCommas(r.totalSupply)}</>,
     },
     {
       title: "Created",
       key: "created",
       minWidth: "150px",
-      render: r => <>{moment(r.createdTime).format("MM/DD/YYYY HH:mm:ss")}</>,
+      render: r => <>{moment(r.dateCreated).format("MM/DD/YYYY HH:mm:ss")}</>,
     },
   ];
 
@@ -67,7 +68,7 @@ const TokenListTable: React.FC<ITokenListTable> = ({ tokenList, loading, total, 
         columns={columns}
         data={tokenList}
         total={{ count: total, title: "Total Transactions" }}
-        onClickRow={(_, r) => history.push(routers.TOKEN_DETAIL.replace(":tokenId", r.assetName))}
+        onClickRow={(_, r) => history.push(routers.TOKEN_DETAIL.replace(":tokenId", r.tokenId))}
         pagination={{
           current: currentPage + 1 || 1,
           total: total,
