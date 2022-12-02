@@ -8,6 +8,7 @@ import { formatADA } from "../../commons/utils/helper";
 
 import sendImg from "../../commons/resources/images//summary-up.png";
 import { Progress } from "antd";
+import { routers } from "../../commons/routers";
 
 interface DelegationListProps {
   data: Delegators[];
@@ -31,7 +32,10 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       minWidth: "40px",
       render: r => {
         return (
-          <Link to={"#"} className={`${styles.fwBlod} ${styles.link}`}>
+          <Link
+            to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`)}
+            className={`${styles.fwBlod} ${styles.link}`}
+          >
             {r.poolName}
           </Link>
         );
@@ -42,8 +46,7 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       key: "PoolsizeA",
       minWidth: "120px",
       // To do
-      // render: r => <div>{r.poolSize}</div>,
-      render: r => <div>{r.adaFake}m</div>,
+      render: r => <div>{formatADA(r.poolSize)}</div>,
     },
     {
       title: "Reward",
@@ -104,7 +107,11 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       title: "",
       minWidth: "120px",
       key: "Saturation",
-      render: r => <button className={styles.button}>Detail</button>,
+      render: r => (
+        <Link to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`)} className={styles.button}>
+          Detail
+        </Link>
+      ),
     },
   ];
   return (
@@ -118,9 +125,10 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
           feeFake: Math.round((Math.random() + 2) * 100) / 100,
         };
       })}
-      total={{ count: total, title: "Total Transactions" }}
+      total={{ count: total, title: "Total" }}
       loading={loading}
       initialized={initialized}
+      onClickRow={(_, r) => history.push(routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`))}
       pagination={{
         current: query.page ? +query.page : 1,
         total: total,

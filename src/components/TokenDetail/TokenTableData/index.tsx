@@ -16,8 +16,8 @@ const TokenTableData: React.FC<ITokenTableData> = () => {
     { value: "minting", label: <span className={styles.selectOption}>Minting</span> },
   ];
 
-  const getTitle = (value: string) => {
-    switch (value) {
+  const getTitle = () => {
+    switch (selected) {
       case "transactions":
         return "Transactions";
       case "topHolders":
@@ -29,10 +29,23 @@ const TokenTableData: React.FC<ITokenTableData> = () => {
     }
   };
 
+  const renderTable = () => {
+    switch (selected) {
+      case "transactions":
+        return <>Transaction Table</>;
+      case "topHolders":
+        return <>Top Holders Table</>;
+      case "minting":
+        return <>Minting Table</>;
+      default:
+        return null;
+    }
+  };
+
   return (
     <Card
-      title={getTitle(selected)}
-      titleItem={
+      title={getTitle()}
+      extra={
         <Select
           className={styles.select}
           defaultValue="transactions"
@@ -40,7 +53,9 @@ const TokenTableData: React.FC<ITokenTableData> = () => {
           options={options}
         />
       }
-    ></Card>
+    >
+      {renderTable()}
+    </Card>
   );
 };
 

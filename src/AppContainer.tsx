@@ -12,6 +12,7 @@ interface Props {
 const AppContainer: React.FC<Props> = props => {
   const { children } = props;
   const { theme } = useSelector(({ user }: RootState) => user);
+
   const history = useHistory();
   useEffect(() => {
     const unlisten = history.listen(() => {

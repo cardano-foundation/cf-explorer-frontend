@@ -8,6 +8,7 @@ export const routers = {
   EPOCH_DETAIL: "/epoch/:epochId",
   DELEGATION_POOLS: "/delegation-pools",
   DELEGATION_POOL_DETAIL: "/delegation-pool/:poolId",
+  REGISTRATION_POOLS: "/registration-pools",
   STORY_LIST: "/stories",
   STORY_DETAIL: "/story/:storyId",
   ADDRESS_LIST: "/addresses",

@@ -43,22 +43,22 @@ const EpochOverview: React.FC<EpochkOverviewProps> = ({ data, loading }) => {
       ),
     },
     {
-      value: <div className={styles.horizon} />,
-    },
-    {
       value: (
-        <div className={styles.progress}>
-          <Progress
-            className={styles.progressBar}
-            percent={percentage}
-            status="active"
-            strokeColor={"var(--linear-gradient-green)"}
-            trailColor={"var(--border-color)"}
-            showInfo={false}
-          />
-          <div className={styles.progressDetail}>
-            <h4 className={styles.status}>{data?.status ? EPOCH_STATUS[data?.status] : ""}</h4>
-            <h4 className={styles.percentage}>{percentage}%</h4>
+        <div className={styles.progressWrapper}>
+          <div className={styles.horizon} />
+          <div className={styles.progress}>
+            <Progress
+              className={styles.progressBar}
+              percent={percentage}
+              status="active"
+              strokeColor={"var(--linear-gradient-green)"}
+              trailColor={"var(--border-color)"}
+              showInfo={false}
+            />
+            <div className={styles.progressDetail}>
+              <h4 className={styles.status}>{data?.status ? EPOCH_STATUS[data?.status] : ""}</h4>
+              <h4 className={styles.percentage}>{percentage}%</h4>
+            </div>
           </div>
         </div>
       ),

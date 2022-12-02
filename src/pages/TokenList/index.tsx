@@ -13,7 +13,7 @@ const TokenList: React.FC<ITokenList> = () => {
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
 
-  const { data, loading, total, totalPage, currentPage } = useFetchList<Token>("/todo", {
+  const { data, loading, total, totalPage, currentPage } = useFetchList<IToken>("/todo", {
     page: query.page ? +query.page - 1 : 0,
     size: query.size ? (query.size as string) : 10,
   });
@@ -23,11 +23,11 @@ const TokenList: React.FC<ITokenList> = () => {
       <TokenListTable
         tokenList={[
           {
-            id: "id",
+            tokenId: "14696a4676909f4e3cb1f2e60e2e08e5abed70caf5c02699be97113943554259",
             assetName: "CUBY",
-            totalTransactions: "999,999,999,113",
-            totalSupply: "100,123,123,141.12312",
-            createdTime: "10/24/2022 14:09:02",
+            totalTransactions: 999999999113,
+            totalSupply: 100123123141.12312,
+            dateCreated: "10/24/2022 14:09:02 ",
           },
         ]}
         loading={loading}

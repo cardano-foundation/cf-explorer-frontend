@@ -14,7 +14,7 @@
 .button {
   border-radius: var(--border-radius);
   background-color: var(--text-color);
-  color: white;
+  color: white !important;
   padding: 6px 28px;
   margin-left: 12px;
   cursor: pointer;

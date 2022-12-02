@@ -10,6 +10,7 @@ import Card from "../Card";
 import { routers } from "../../../commons/routers";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { Policy } from "../../../commons/resources";
+import { numberWithCommas } from "../../../commons/utils/helper";
 
 interface DetailCardProps {
   listDetails: { title?: string; value: React.ReactNode }[];
@@ -19,13 +20,19 @@ interface DetailCardProps {
     block: number;
     currentSlot: number;
   };
+  delegationPools?: {
+    poolSize: React.ReactNode;
+    stakeLimit: React.ReactNode;
+    delegators: number;
+    satulation: number;
+  };
   tokenDetail?: {
     decimal: number;
-    totalSupply: string;
+    totalSupply: number;
   };
 }
 
-const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading, tokenDetail }) => {
+const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading, tokenDetail, delegationPools }) => {
   if (loading) {
     return (
       <Row className={styles.wrapper} gutter={[16, 16]}>
@@ -87,6 +94,43 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
       );
     }
 
+    if (delegationPools) {
+      return (
+        <div className={styles.delegation}>
+          <div className={styles.fullWidth}>
+            {Object.keys(delegationPools).map((k, i) => {
+              return (
+                <div className={styles.detailItem} key={i}>
+                  <div>
+                    <img src={infoIcon} alt="info" className={styles.img} />
+                  </div>
+                  <div className={styles.row}>
+                    <div style={{ minWidth: 100 }}>
+                      {delegationPoolsTitle[k as keyof Required<DetailCardProps>["delegationPools"]] || 0}:
+                    </div>
+                    <div className={` ${styles.fwBold} ${styles.value}`}>
+                      {delegationPools[k as keyof Required<DetailCardProps>["delegationPools"]] || 0}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+            <div className={styles.fullWidth}>
+              <Progress
+                strokeColor={{
+                  "0%": "#184C78",
+                  "100%": "#5A9C56",
+                }}
+                strokeWidth={10}
+                percent={+delegationPools.satulation}
+                status="active"
+                showInfo={false}
+              />
+            </div>
+          </div>
+        </div>
+      );
+    }
     if (tokenDetail) {
       return (
         <div className={styles.token}>
@@ -94,17 +138,18 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
             <img src={Policy} alt="Policy Script Icon" />
             <h3>Policy Script</h3>
           </div>
-          <div className={styles.bridgeInfo}>
+          {/* TODO - add behavior */}
+          <button className={styles.bridgeInfo}>
             <div>
               <span className={styles.title}>WETH</span>
               <span className={styles.details}>Wrapped ether bridged through Nomda</span>
             </div>
             <img src={infoIcon} alt="info" />
-          </div>
+          </button>
           <div className={styles.tokenInfo}>
             <div className={styles.tokenWrapper}>
               <span className={styles.title}>Total Supply</span>
-              <span className={styles.details}>{tokenDetail.totalSupply}</span>
+              <span className={styles.details}>{numberWithCommas(tokenDetail.totalSupply)}</span>
             </div>
             <div className={`${styles.tokenWrapper} ${styles.borderLeft} ${styles.pl15}`}>
               <span className={styles.title}>Decimal</span>
@@ -123,10 +168,12 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
       <Col span={24} xl={14}>
         <Card className={styles.info}>
           {listDetails.map((item, idx) => (
-            <div key={idx} className={styles.detailItem}>
+            <div className={styles.detailItem} key={idx}>
               {item.title ? (
                 <>
-                  <img src={infoIcon} alt="info" className={styles.img} />
+                  <div>
+                    <img src={infoIcon} alt="info" className={styles.img} />
+                  </div>
                   <div className={styles.row}>
                     <div style={{ minWidth: 150 }}>{item.title}:</div>
                     <div className={` ${styles.fwBold} ${styles.value}`}>{item.value}</div>
@@ -147,3 +194,10 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
 };
 
 export default DetailCard;
+
+const delegationPoolsTitle = {
+  poolSize: "Pool size",
+  stakeLimit: "Stake limit",
+  delegators: "Delegators",
+  satulation: "Saturation",
+};

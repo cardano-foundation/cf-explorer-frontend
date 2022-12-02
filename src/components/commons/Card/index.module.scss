@@ -4,10 +4,12 @@
   background-color: transparent;
   padding: 25px 0px;
   border-radius: var(--border-radius);
+  .groupTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  .header {
-    @include flex-between-center;
-    
+
     .title {
       text-align: left;
       padding-bottom: 8px;
