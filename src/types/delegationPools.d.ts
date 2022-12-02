@@ -17,7 +17,7 @@ interface Delegators {
   saturation: number;
 }
 
-interface Delegator {
+interface DelegationOverview {
   poolName: string;
   tickerName: string;
   poolView: string;
@@ -38,7 +38,7 @@ interface Delegator {
   lifetimeBlock: number;
 }
 
-interface DelegatorEpoch {
+interface DelegationEpoch {
   epoch: number;
   block: number;
   stakeAmount: number;
@@ -47,8 +47,30 @@ interface DelegatorEpoch {
   ros: number;
 }
 interface StakingDelegators {
-  delegator: string;
-  value: number;
-  stekedTime: string;
+  address: string;
+  totalStake: number;
+  time: string;
   fee: number;
+}
+interface AnalyticsDelegators {
+  epochChart: {
+    highest: number;
+    lowest: number;
+    dataByDays: [
+      {
+        timeChart: string;
+        dataChart: number;
+      }
+    ];
+  };
+  delegatorChart: {
+    highest: number;
+    lowest: number;
+    dataByDays: [
+      {
+        timeChart: string;
+        dataChart: number;
+      }
+    ];
+  };
 }

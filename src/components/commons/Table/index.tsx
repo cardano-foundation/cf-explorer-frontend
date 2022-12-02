@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useState, useEffect } from "react";
 import { Pagination, PaginationProps, Select, Skeleton } from "antd";
 
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
@@ -8,6 +8,7 @@ import noData from "../../../commons/resources/images/noData.png";
 import styles from "./index.module.scss";
 import { useWindowSize } from "react-use";
 import { ArrowDropDownIcon } from "../../../commons/resources";
+import { useHistory } from "react-router-dom";
 
 export const EmptyRecord = () => (
   <div className={styles.noData}>
@@ -44,6 +45,7 @@ interface TableProps<T extends ColumnType = any> {
   pagination?: PaginationProps;
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
+  scrollTop?: boolean;
 }
 interface FooterTableProps {
   total: TableProps["total"];
@@ -159,8 +161,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
                   label: page,
                   value: page,
                 }))}
-                // eslint-disable-next-line jsx-a11y/alt-text
-                suffixIcon={<img src={ArrowDropDownIcon} className={styles.selectIcon} />}
+                suffixIcon={<img src={ArrowDropDownIcon} alt="" className={styles.selectIcon} />}
                 className={styles.selectPageSize}
                 value={pageSize}
                 bordered={false}
@@ -195,7 +196,19 @@ const Table: React.FC<TableProps> = ({
   loading,
   initialized = true,
   onClickRow,
+  scrollTop = true,
 }) => {
+
+  const history = useHistory();
+  useEffect(() => {
+    const unlisten = history.listen(() => {
+      scrollTop && window.scrollTo(0, 0);
+    });
+    return () => {
+      unlisten();
+    };
+  }, [history]);
+
   return (
     <div className={`${styles.wrapper} ${className}`}>
       <div className={styles.tableWrapper}>

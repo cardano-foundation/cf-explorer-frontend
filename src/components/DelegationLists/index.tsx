@@ -46,8 +46,7 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       key: "PoolsizeA",
       minWidth: "120px",
       // To do
-      // render: r => <div>{r.poolSize}</div>,
-      render: r => <div>{r.adaFake}m</div>,
+      render: r => <div>{formatADA(r.poolSize)}</div>,
     },
     {
       title: "Reward",
@@ -126,7 +125,7 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
           feeFake: Math.round((Math.random() + 2) * 100) / 100,
         };
       })}
-      total={{ count: total, title: "Total Transactions" }}
+      total={{ count: total, title: "Total" }}
       loading={loading}
       initialized={initialized}
       onClickRow={(_, r) => history.push(routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`))}
