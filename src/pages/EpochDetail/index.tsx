@@ -4,10 +4,11 @@ import { useLocation, useParams } from "react-router-dom";
 
 import useFetch from "../../commons/hooks/useFetch";
 import useFetchList from "../../commons/hooks/useFetchList";
+
 import EpochBlockList from "../../components/EpochDetail/EpochBlockList";
 import EpochOverview from "../../components/EpochDetail/EpochOverview";
 
-import styles from "./index.module.scss";
+import { Container } from "./styles";
 
 const EpochDetail: React.FC = () => {
   const { epochId } = useParams<{ epochId: string }>();
@@ -28,7 +29,7 @@ const EpochDetail: React.FC = () => {
   });
 
   return (
-    <div className={styles.container}>
+    <Container>
       <EpochOverview data={EpochDetail} loading={EpochDetailLoading} />
       <EpochBlockList
         data={BlockList}
@@ -38,7 +39,7 @@ const EpochDetail: React.FC = () => {
         total={total}
         totalPage={totalPage}
       />
-    </div>
+    </Container>
   );
 };
 

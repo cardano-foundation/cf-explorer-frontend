@@ -1,15 +1,12 @@
-import { Link } from "react-router-dom";
+import moment from "moment";
 
 import Card from "../../commons/Card";
 import DetailCard from "../../commons/DetailCard";
 import { formatADA, getShortWallet } from "../../../commons/utils/helper";
 
-import styles from "./index.module.scss";
-import moment from "moment";
-import { Tooltip } from "antd";
 import { AIcon } from "../../../commons/resources";
-import { routers } from "../../../commons/routers";
-import CopyButton from "../../commons/CopyButton";
+import { Flex, StyledIcon, StyledImage, StyledLink, StyledSpan } from "./styles";
+import { Tooltip } from "@mui/material";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
@@ -21,14 +18,12 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
     {
       title: "Block ID",
       value: data?.blockNo && (
-        <div className={styles.alignCenter}>
-          <Link to={routers.BLOCK_DETAIL.replace(":blockId", `${data?.blockNo || ""}`)} className={styles.link}>
-            <Tooltip title={`${data?.blockNo || ""}`} placement="top">
-              {data?.blockNo || ""}
-            </Tooltip>
-          </Link>
-          <CopyButton text={`${data?.blockNo || ""}`} className={styles.icon} />
-        </div>
+        <Flex>
+          <Tooltip title={`${data?.blockNo || ""}`} placement="top">
+            <StyledLink>{data?.blockNo || ""}</StyledLink>
+          </Tooltip>
+          <StyledIcon />
+        </Flex>
       ),
     },
 
@@ -43,41 +38,36 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
     {
       title: "Transaction Fees",
       value: (
-        <span className={styles.transaction}>
-          {data?.totalFees && (
-            <>
-              <div>{formatADA(data?.totalFees)} ADA</div> <img className={styles.img} alt="ada icon" src={AIcon} />
-            </>
-          )}
-        </span>
+        <StyledSpan>
+          {data?.totalFees && <>{formatADA(data?.totalFees)} ADA</>}
+          <StyledImage src={AIcon} alt="ADA Icon" />
+        </StyledSpan>
       ),
     },
     {
       title: "Total Output",
       value: (
-        <span style={{ display: "flex", alignItems: "center" }}>
-          {data?.totalOutput && (
-            <>
-              <div> {formatADA(data?.totalOutput)} ADA</div> <img className={styles.img} alt="ada icon" src={AIcon} />
-            </>
-          )}
-        </span>
+        <StyledSpan>
+          {data?.totalOutput && <>{formatADA(data?.totalOutput)} ADA</>}
+          <StyledImage src={AIcon} alt="ADA Icon" />
+        </StyledSpan>
       ),
     },
     {
       title: "Slot leader",
       value: data?.slotLeader && (
-        <Tooltip title={data?.slotLeader || ""} placement="top">
-          <Link to={`#`} className={styles.link}>
-            {getShortWallet(data?.slotLeader || "")}
-          </Link>
-        </Tooltip>
+        <Flex>
+          <Tooltip title={`${data?.slotLeader || ""}`} placement="top">
+            <StyledLink>{getShortWallet(data?.slotLeader || "")}</StyledLink>
+          </Tooltip>
+          <StyledIcon />
+        </Flex>
       ),
     },
   ];
 
   return (
-    <Card className={styles.wrapper} title={`Block Detail: ${data?.blockNo || 0} `}>
+    <Card title={`Block Detail: ${data?.blockNo || 0} `}>
       <DetailCard
         loading={loading}
         listDetails={listDetails}

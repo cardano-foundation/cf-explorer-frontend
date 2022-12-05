@@ -1,14 +1,21 @@
 import moment from "moment";
 import React, { useMemo } from "react";
-import { Progress } from "antd";
 
-import { formatADA } from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
 import DetailCard from "../../commons/DetailCard";
-
-import styles from "./index.module.scss";
-import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { AIcon } from "../../../commons/resources";
+import { formatADA } from "../../../commons/utils/helper";
+import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+
+import {
+  HorizonDiv,
+  ProcessDiv,
+  ProgressInfoDiv,
+  ProgressPercent,
+  ProgressStatus,
+  StyledLinearProgress,
+  StyledSpan,
+} from "./styles";
 
 interface EpochkOverviewProps {
   data: IDataEpoch | null;
@@ -26,47 +33,49 @@ const EpochOverview: React.FC<EpochkOverviewProps> = ({ data, loading }) => {
   }, [data?.startTime, data?.endTime]);
 
   const listDetails = [
-    { title: "Start time", value: data?.startTime ? moment(data?.startTime).format("MM/DD/YYYY HH:mm:ss") : "" },
-    { title: "End time", value: data?.endTime ? moment(data?.endTime).format("MM/DD/YYYY HH:mm:ss") : "" },
-    { title: "Block", value: data?.blkCount },
+    {
+      title: "Start time",
+      value: data?.startTime ? moment(data?.startTime).format("MM/DD/YYYY HH:mm:ss") : "",
+    },
+    {
+      title: "End time",
+      value: data?.endTime ? moment(data?.endTime).format("MM/DD/YYYY HH:mm:ss") : "",
+    },
+    {
+      title: "Block",
+      value: data?.blkCount,
+    },
     {
       title: "Total Output",
       value: (
-        <span style={{ display: "flex", alignItems: "center" }}>
+        <StyledSpan>
           {data?.outSum && (
             <>
               <div>{formatADA(data?.outSum)} ADA</div>
-              <img className={styles.img} alt="ada icon" src={AIcon} />
+              <img src={AIcon} alt={"Ada Icon"} />
             </>
           )}
-        </span>
+        </StyledSpan>
       ),
     },
     {
+      value: <HorizonDiv />,
+    },
+    {
       value: (
-        <div className={styles.progressWrapper}>
-          <div className={styles.horizon} />
-          <div className={styles.progress}>
-            <Progress
-              className={styles.progressBar}
-              percent={percentage}
-              status="active"
-              strokeColor={"var(--linear-gradient-green)"}
-              trailColor={"var(--border-color)"}
-              showInfo={false}
-            />
-            <div className={styles.progressDetail}>
-              <h4 className={styles.status}>{data?.status ? EPOCH_STATUS[data?.status] : ""}</h4>
-              <h4 className={styles.percentage}>{percentage}%</h4>
-            </div>
-          </div>
-        </div>
+        <ProcessDiv>
+          <StyledLinearProgress variant="determinate" value={percentage} />
+          <ProgressInfoDiv>
+            <ProgressStatus>{data?.status ? EPOCH_STATUS[data?.status] : ""}</ProgressStatus>
+            <ProgressPercent>{percentage}%</ProgressPercent>
+          </ProgressInfoDiv>
+        </ProcessDiv>
       ),
     },
   ];
 
   return (
-    <Card className={styles.wrapper} title={`Epoch Detail: ${data?.no || 0}`}>
+    <Card title={`Epoch Detail: ${data?.no || 0}`}>
       <DetailCard
         loading={loading}
         listDetails={listDetails}
