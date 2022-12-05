@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { IoMdCopy } from "react-icons/io";
-import { BiCheckCircle } from "react-icons/bi";
-import { useCopyToClipboard } from "react-use";
+import React from "react";
+import { Tooltip } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import styles from "./index.module.scss";
 import walletImg from "../../../../commons/resources/images/Wallet.png";
 import { getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import upIcon from "../../../../commons/resources/images/summary-up.png";
-import { Tooltip } from "antd";
-import { Link } from "react-router-dom";
 import { routers } from "../../../../commons/routers";
 import CopyButton from "../../../commons/CopyButton";
 
@@ -38,7 +35,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["delegations"][num
           From:{" "}
           <Link to={routers.ADDRESS_DETAIL.replace(":address", item?.address || "")} className={styles.address}>
             <Tooltip title={item?.address} placement="top">
-              <span className={styles.address}> {getShortWallet(item?.address || "")} </span>{" "}
+              <span className={styles.address}> {getShortWallet(item?.address || "")} </span>
             </Tooltip>
           </Link>
           <CopyButton text={item?.poolId || ""} className={styles.icon} />
@@ -51,7 +48,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["delegations"][num
             <div style={{ minWidth: "4rem" }}>Pool ID:</div>
             <Link to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", item?.poolId || "")} className={styles.address}>
               <Tooltip title={item?.poolId || ""} placement="top">
-                {getShortHash(item?.poolId || "")}
+                <div>{getShortHash(item?.poolId || "")}</div>
               </Tooltip>
             </Link>
             <CopyButton text={item?.poolId || ""} className={styles.icon} />

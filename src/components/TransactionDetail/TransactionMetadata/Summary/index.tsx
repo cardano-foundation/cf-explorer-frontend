@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { IoMdCopy } from "react-icons/io";
-import { BiCheckCircle } from "react-icons/bi";
-import { useCopyToClipboard } from "react-use";
+import React from "react";
+import { Tooltip } from "@mui/material";
 
 import styles from "./index.module.scss";
 import walletImg from "../../../../commons/resources/images/Wallet.png";
@@ -10,7 +8,6 @@ import receiveImg from "../../../../commons/resources/images/summary-down.png";
 import messageImg from "../../../../commons/resources/images/summary-message.png";
 import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
 import { AIcon } from "../../../../commons/resources";
-import { Tooltip } from "antd";
 import CopyButton from "../../../commons/CopyButton";
 import { routers } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
@@ -34,7 +31,7 @@ const SummaryItems = ({
             <div className={styles.transferAddress}>
               <Link to={routers.ADDRESS_DETAIL.replace(":address", item.address)} className={styles.address}>
                 <Tooltip title={item.address} placement="top">
-                  {getShortWallet(item.address)}
+                  <div> {getShortWallet(item.address)}</div>
                 </Tooltip>
               </Link>
               <CopyButton text={item.address} className={styles.icon} />

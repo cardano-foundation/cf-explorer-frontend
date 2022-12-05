@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
-import { useCopyToClipboard } from "react-use";
-import { IoMdCopy } from "react-icons/io";
-import { BiCheckCircle } from "react-icons/bi";
+import React from "react";
 
 import Card from "../../commons/Card";
 import DetailCard from "../../commons/DetailCard";

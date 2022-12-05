@@ -32,7 +32,7 @@ const TransactionChart: React.FC = () => {
       plotLines: [],
       angle: 0,
       labels: {
-        overflow: "visible",
+        overflow: "allow",
         rotation: 0,
         align: "left",
         step: 14,

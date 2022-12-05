@@ -82,15 +82,11 @@ const DelegationEpochList = ({
       loading={loading}
       initialized={initialized}
       pagination={{
-        current: query.page ? +query.page : 1,
-        total: total,
-        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
-        size: "small",
-        pageSizeOptions: [10, 20, 50],
-        onChange(page, pageSize) {
-          setQuery({ page, size: pageSize });
-          scrollEffect();
+        onChange: (page, size) => {
+          setQuery({ page, size });
         },
+        page: query.page ? +query.page - 1 : 0,
+        total: total,
       }}
     />
   );
@@ -161,15 +157,11 @@ const DelegationStakingDelegatorsList = ({
       loading={loading}
       initialized={initialized}
       pagination={{
-        current: query.page ? +query.page : 1,
-        total: total,
-        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
-        size: "small",
-        pageSizeOptions: [10, 20, 50],
-        onChange(page, pageSize) {
-          setQuery({ page, size: pageSize });
-          scrollEffect();
+        onChange: (page, size) => {
+          setQuery({ page, size });
         },
+        page: query.page ? +query.page - 1 : 0,
+        total: total,
       }}
     />
   );

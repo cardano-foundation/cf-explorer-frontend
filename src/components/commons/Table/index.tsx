@@ -1,5 +1,5 @@
-import React, { ReactNode, useState, useEffect } from "react";
-import { Pagination, PaginationProps, Select, Skeleton } from "antd";
+import React, { ReactNode, useState } from "react";
+import { TablePagination, Skeleton } from "@mui/material";
 
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
 
@@ -7,8 +7,6 @@ import noData from "../../../commons/resources/images/noData.png";
 
 import styles from "./index.module.scss";
 import { useWindowSize } from "react-use";
-import { ArrowDropDownIcon } from "../../../commons/resources";
-import { useHistory } from "react-router-dom";
 
 export const EmptyRecord = () => (
   <div className={styles.noData}>
@@ -42,7 +40,12 @@ interface TableProps<T extends ColumnType = any> {
     count: number;
     title: string;
   };
-  pagination?: PaginationProps;
+  pagination?: {
+    onChange?: (page: number, size: number) => void;
+    page?: number;
+    size?: number;
+    total?: number;
+  };
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
 }
@@ -114,7 +117,7 @@ const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
                     overflow: "hidden",
                   }}
                 >
-                  <Skeleton.Input size="large" style={{ height: "75px" }} active block />
+                  <Skeleton variant="rectangular" style={{ height: "75px" }} animation="wave" />
                 </td>
               );
             })}
@@ -126,23 +129,19 @@ const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
 };
 
 const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
-  const [pageSize, setPageSize] = useState(pagination?.pageSize || 10);
   const { width } = useWindowSize();
-
-  const renderPagination = (
-    current: number,
-    type: "prev" | "next" | "page" | "jump-prev" | "jump-next",
-    originalElement: React.ReactNode
-  ) => {
-    if (type === "prev") {
-      return <span> {`<`} </span>;
-    }
-    if (type === "next") {
-      return <span> {`>`} </span>;
-    }
-    return originalElement;
+  const [page, setPage] = useState(pagination?.page || 0);
+  const [rowsPerPage, setRowsPerPage] = useState(pagination?.size || 10);
+  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
+    pagination && pagination.onChange && pagination.onChange(page + 1, rowsPerPage);
+    setPage(page);
   };
 
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+    pagination && pagination.onChange && pagination.onChange(1, parseInt(event.target.value, 10));
+  };
   return (
     <div className={styles.footer} style={{ justifyContent: total && width > 800 ? "space-between" : "center" }}>
       {total && width > 800 && (
@@ -150,38 +149,23 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
           {total.title}: <span className={styles.totalNumber}>{numberWithCommas(total.count)}</span>
         </div>
       )}
-      {pagination && (
-        <div style={{ display: "flex", alignItems: "center", textAlign: "left" }}>
-          {pagination.pageSizeOptions && width > 800 && (
-            <div className={styles.total}>
-              Rows per page:
-              <Select
-                options={pagination.pageSizeOptions.map(page => ({
-                  label: page,
-                  value: page,
-                }))}
-                suffixIcon={<img src={ArrowDropDownIcon} alt="" className={styles.selectIcon} />}
-                className={styles.selectPageSize}
-                value={pageSize}
-                bordered={false}
-                onChange={value => {
-                  setPageSize(value);
-                  pagination.onChange && pagination.onChange(1, value);
-                }}
-              />
-            </div>
-          )}
-
-          <Pagination
-            {...pagination}
-            showSizeChanger={false}
-            className={`${styles.pagitation} ${pagination.className || ""}`}
-            itemRender={(page, type, originalElement) => renderPagination(page, type, originalElement)}
-            pageSize={pageSize}
-            showTotal={width > 800 ? pagination.showTotal : undefined}
+      <div>
+        {pagination && (
+          <TablePagination
+            component="div"
+            count={pagination.total || 0}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{
+              ".MuiToolbar-root": {
+                alignItems: "baseline",
+              },
+            }}
           />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

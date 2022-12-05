@@ -1,8 +1,9 @@
-import { Button, Modal } from "antd";
 import React, { useState } from "react";
+import { Button, Dialog, DialogTitle } from "@mui/material";
+
 import { IoMdCopy } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADA } from "../../../../commons/utils/helper";
 
 import Table, { Column } from "../../../commons/Table";
 
@@ -73,26 +74,19 @@ interface ModalMintingProps {
 }
 const ModalMinting: React.FC<ModalMintingProps> = ({ open, setOpen, selectedItem }) => {
   return (
-    <Modal
-      width="60vw"
-      title={
-        <div>
-          Poilcy Id: <span className={styles.bold}>{selectedItem?.policy.policyId || ""}</span>{" "}
+    <Dialog maxWidth={"xl"} onClose={setOpen} open={open} className={styles.modal}>
+      <DialogTitle className={styles.title}>
+        Poilcy Id: <span className={styles.bold}>{selectedItem?.policy.policyId || ""}</span>
+      </DialogTitle>
+      <div className={styles.body}>
+        <div className={styles.totalToken}>
+          Total Token: <span className={styles.value}>1</span>
         </div>
-      }
-      open={open}
-      onCancel={setOpen}
-      className={styles.modal}
-      footer={[
-        <Button key="back" onClick={setOpen} type="primary">
-          OK
-        </Button>,
-      ]}
-    >
-      <div className={styles.totalToken}>
-        Total Token: <span className={styles.value}>1</span>
-      </div>{" "}
-      <div className={styles.Policy}>Policy Script </div> <div className={styles.script}></div>
-    </Modal>
+        <div className={styles.Policy}>Policy Script </div> <div className={styles.script}></div>
+      </div>
+      <div className={styles.footer}>
+        <Button variant="contained" onClick={setOpen}>OK</Button>
+      </div>
+    </Dialog>
   );
 };
