@@ -90,6 +90,7 @@ const Epoch: React.FC = () => {
           pagination={{
             onChange: (page, size) => {
               setQuery({ page, size });
+              excuteScroll();
             },
             page: currentPage || 0,
             total: total,
