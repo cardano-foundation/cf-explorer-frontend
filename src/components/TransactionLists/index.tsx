@@ -170,14 +170,11 @@ const TransactionList: React.FC<TransactionListProps> = ({
         initialized={initialized}
         onClickRow={(_, r: Transactions) => history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`))}
         pagination={{
-          current: currentPage + 1 || 1,
-          total: total,
-          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
-          size: "small",
-          pageSizeOptions: [10, 20, 50],
-          onChange(page, pageSize) {
-            setQuery({ page, size: pageSize });
+          onChange: (page, size) => {
+            setQuery({ page, size });
           },
+          page: currentPage || 0,
+          total: total,
         }}
       />
     </Card>

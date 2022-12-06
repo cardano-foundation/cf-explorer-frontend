@@ -1,17 +1,13 @@
-import { IoMdCopy } from "react-icons/io";
-import { BiCheckCircle } from "react-icons/bi";
-import { useCopyToClipboard } from "react-use";
+import { Tooltip } from "@mui/material";
 
 import styles from "./index.module.scss";
 import walletImg from "../../../../commons/resources/images/Wallet.png";
 import sendImg from "../../../../commons/resources/images/summary-up.png";
 import receiveImg from "../../../../commons/resources/images/summary-down.png";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import { useEffect, useState } from "react";
 import { AIcon } from "../../../../commons/resources";
 import { routers } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
-import { Tooltip } from "antd";
 import CopyButton from "../../../commons/CopyButton";
 
 interface CollateralProps {
@@ -41,7 +37,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
           From:{" "}
           <Link to={routers.ADDRESS_DETAIL.replace(":address", item?.address || "")} className={styles.address}>
             <Tooltip title={item?.address} placement="top">
-              <span className={styles.address}> {getShortWallet(item?.address || "")} </span>{" "}
+              <span className={styles.address}> {getShortWallet(item?.address || "")} </span>
             </Tooltip>
           </Link>
           <CopyButton text={item?.address || ""} className={styles.icon} />
@@ -52,7 +48,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
           <img src={type === "down" ? receiveImg : sendImg} className={styles.img} alt="send icon" />
           <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", item?.txHash || "")} className={styles.address}>
             <Tooltip title={item?.txHash || ""} placement="top">
-              {getShortHash(item?.txHash || "")}
+              <div>{getShortHash(item?.txHash || "")}</div>
             </Tooltip>
           </Link>
           <CopyButton text={item?.txHash || ""} className={styles.icon} />

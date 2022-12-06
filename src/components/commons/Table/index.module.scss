@@ -67,7 +67,7 @@
     color: var(--text-color-pale);
     flex-wrap: wrap;
     margin-top: 10px;
-
+    align-items: baseline;
     &.hasTotal {
       @include flex-between-center;
     }

@@ -1,6 +1,8 @@
-import { Col, Progress, Row, Skeleton } from "antd";
 import React from "react";
+import { Progress } from "antd";
+import { Grid, Skeleton } from "@mui/material";
 import { Link } from "react-router-dom";
+import "react-circular-progressbar/dist/styles.css";
 
 import styles from "./index.module.scss";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
@@ -11,6 +13,7 @@ import { routers } from "../../../commons/routers";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { Policy } from "../../../commons/resources";
 import { numberWithCommas } from "../../../commons/utils/helper";
+import ProgressCircle from "../ProgressCircle";
 
 interface DetailCardProps {
   listDetails: { title?: string; value: React.ReactNode }[];
@@ -19,6 +22,7 @@ interface DetailCardProps {
     epoch: number;
     block: number;
     currentSlot: number;
+    gradientId?: string;
   };
   delegationPools?: {
     poolSize: React.ReactNode;
@@ -35,37 +39,26 @@ interface DetailCardProps {
 const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading, tokenDetail, delegationPools }) => {
   if (loading) {
     return (
-      <Row className={styles.wrapper} gutter={[16, 16]}>
-        <Col span={24} xl={14}>
-          <Skeleton.Input active block className={styles.skeleton} />
-        </Col>
-        <Col span={24} xl={10}>
-          <Skeleton.Input active className={styles.skeleton} block />
-        </Col>
-      </Row>
+      <Grid container className={styles.wrapper} spacing={2}>
+        <Grid item md={7} xs={12}>
+          <Skeleton className={styles.skeleton} variant="rectangular" />
+        </Grid>
+        <Grid item md={5} xs={12}>
+          <Skeleton className={styles.skeleton} variant="rectangular" />
+        </Grid>
+      </Grid>
     );
   }
-
   const renderCard = () => {
     if (progress) {
       return (
         <>
-          <Progress
-            type="circle"
-            strokeColor={{
-              "0%": "#184C78",
-              "100%": "#5A9C56",
-            }}
-            format={() => (
-              <>
-                <div className={styles.epoch}>{progress.epoch}</div>
-                <div className={styles.epochTitle}>EPOCH</div>
-              </>
-            )}
-            strokeWidth={6}
-            width={200}
-            percent={(progress.currentSlot / MAX_SLOT_EPOCH) * 100}
-          />
+          <ProgressCircle percent={(progress.currentSlot / MAX_SLOT_EPOCH) * 100}>
+            <>
+              <div className={styles.epoch}>{progress.epoch}</div>
+              <div className={styles.epochTitle}>EPOCH</div>
+            </>
+          </ProgressCircle>
 
           <div className={styles.progessInfo}>
             <div className={styles.row}>
@@ -97,36 +90,36 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
     if (delegationPools) {
       return (
         <div className={styles.delegation}>
-          <div className={styles.fullWidth}>
-            {Object.keys(delegationPools).map((k, i) => {
-              return (
-                <div className={styles.detailItem} key={i}>
-                  <div>
-                    <img src={infoIcon} alt="info" className={styles.img} />
+          {Object.keys(delegationPools).map((k, i) => {
+            return (
+              <div className={styles.detailItem} key={i}>
+                <div>
+                  <img src={infoIcon} alt="info" className={styles.img} />
+                </div>
+                <div className={styles.row}>
+                  <div style={{ minWidth: 100 }}>
+                    {delegationPoolsTitle[k as keyof Required<DetailCardProps>["delegationPools"]] || 0}:
                   </div>
-                  <div className={styles.row}>
-                    <div style={{ minWidth: 100 }}>
-                      {delegationPoolsTitle[k as keyof Required<DetailCardProps>["delegationPools"]] || 0}:
-                    </div>
-                    <div className={` ${styles.fwBold} ${styles.value}`}>
-                      {delegationPools[k as keyof Required<DetailCardProps>["delegationPools"]] || 0}
-                    </div>
+                  <div className={` ${styles.fwBold} ${styles.value}`}>
+                    {delegationPools[k as keyof Required<DetailCardProps>["delegationPools"]] || 0}
                   </div>
                 </div>
-              );
-            })}
-            <div className={styles.fullWidth}>
-              <Progress
-                strokeColor={{
-                  "0%": "#184C78",
-                  "100%": "#5A9C56",
-                }}
-                strokeWidth={10}
-                percent={+delegationPools.satulation}
-                status="active"
-                showInfo={false}
-              />
-            </div>
+              </div>
+            );
+          })}
+          <div className={styles.fullWidth}>
+            {/* <ProgressCircle percent={+delegationPools.satulation} /> */}
+
+            <Progress
+              strokeColor={{
+                "0%": "#184C78",
+                "100%": "#5A9C56",
+              }}
+              strokeWidth={10}
+              percent={+delegationPools.satulation}
+              status="active"
+              showInfo={false}
+            />
           </div>
         </div>
       );
@@ -164,8 +157,8 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
   };
 
   return (
-    <Row className={styles.wrapper} gutter={[16, 16]}>
-      <Col span={24} xl={14}>
+    <Grid container className={styles.wrapper} spacing={2}>
+      <Grid item md={7} xs={12}>
         <Card className={styles.info}>
           {listDetails.map((item, idx) => (
             <div className={styles.detailItem} key={idx}>
@@ -185,11 +178,11 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
             </div>
           ))}
         </Card>
-      </Col>
-      <Col span={24} xl={10}>
+      </Grid>
+      <Grid item md={5} xs={12}>
         <Card className={styles.progress}>{renderCard()}</Card>
-      </Col>
-    </Row>
+      </Grid>
+    </Grid>
   );
 };
 

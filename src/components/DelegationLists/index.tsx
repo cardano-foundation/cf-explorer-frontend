@@ -130,14 +130,11 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       initialized={initialized}
       onClickRow={(_, r) => history.push(routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`))}
       pagination={{
-        current: query.page ? +query.page : 1,
-        total: total,
-        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
-        size: "small",
-        pageSizeOptions: [10, 20, 50],
-        onChange(page, pageSize) {
-          setQuery({ searchPools: query.searchPools ? (query.searchPools as string) : "", page, size: pageSize });
+        onChange: (page, size) => {
+          setQuery({ page, size });
         },
+        page: query.page ? +query.page - 1 : 0,
+        total: total,
       }}
     />
   );
