@@ -108,15 +108,11 @@ const Epoch: React.FC = () => {
           onClickRow={(_, r: IDataEpoch) => history.push(routers.EPOCH_DETAIL.replace(":epochId", `${r.no}`))}
           total={{ count: total, title: "Total Transactions" }}
           pagination={{
-            current: currentPage + 1 || 1,
-            total: total,
-            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
-            size: "small",
-            pageSizeOptions: [10, 20, 50],
-            onChange(page, pageSize) {
-              setQuery({ page, size: pageSize });
-              excuteScroll();
+            onChange: (page, size) => {
+              setQuery({ page, size });
             },
+            page: currentPage || 0,
+            total: total,
           }}
         />
       </Card>

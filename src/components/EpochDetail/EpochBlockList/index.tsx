@@ -117,14 +117,11 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
         total={{ count: total, title: "Total Transactions" }}
         onClickRow={(_, r) => history.push(routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`))}
         pagination={{
-          current: currentPage + 1 || 1,
-          total: totalPage,
-          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
-          size: "small",
-          pageSizeOptions: [10, 20, 50],
-          onChange(page, pageSize) {
-            setQuery({ page, size: pageSize });
+          onChange: (page, size) => {
+            setQuery({ page, size });
           },
+          page: currentPage || 0,
+          total: total,
         }}
       />
     </Card>

@@ -234,38 +234,3 @@ const title = {
   epochs: "Epoch",
   delegators: "Staking delegators",
 };
-
-const dataOverviewFake = [
-  {
-    title: "Reward",
-    value: "5%",
-  },
-  {
-    title: "Fee",
-    value: "2.1%",
-  },
-  {
-    title: "ROS",
-    value: "100%",
-  },
-  {
-    title: "Pledge(A)",
-    value: "1m",
-  },
-  {
-    title: "Cost(A)",
-    value: "8,888,888",
-  },
-  {
-    title: "Margin",
-    value: "0%",
-  },
-  {
-    title: "Epoch Block",
-    value: "25",
-  },
-  {
-    title: "Lifetime Block",
-    value: "12,568",
-  },
-];
