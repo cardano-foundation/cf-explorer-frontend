@@ -2,6 +2,7 @@ import React from "react";
 import { Progress } from "antd";
 import { Grid, Skeleton } from "@mui/material";
 import { Link } from "react-router-dom";
+import "react-circular-progressbar/dist/styles.css";
 
 import styles from "./index.module.scss";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
@@ -12,6 +13,7 @@ import { routers } from "../../../commons/routers";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { Policy } from "../../../commons/resources";
 import { numberWithCommas } from "../../../commons/utils/helper";
+import ProgressCircle from "../ProgressCircle";
 
 interface DetailCardProps {
   listDetails: { title?: string; value: React.ReactNode }[];
@@ -20,6 +22,7 @@ interface DetailCardProps {
     epoch: number;
     block: number;
     currentSlot: number;
+    gradientId?: string;
   };
   delegationPools?: {
     poolSize: React.ReactNode;
@@ -46,27 +49,16 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
       </Grid>
     );
   }
-
   const renderCard = () => {
     if (progress) {
       return (
         <>
-          <Progress
-            type="circle"
-            strokeColor={{
-              "0%": "#184C78",
-              "100%": "#5A9C56",
-            }}
-            format={() => (
-              <>
-                <div className={styles.epoch}>{progress.epoch}</div>
-                <div className={styles.epochTitle}>EPOCH</div>
-              </>
-            )}
-            strokeWidth={6}
-            width={200}
-            percent={(progress.currentSlot / MAX_SLOT_EPOCH) * 100}
-          />
+          <ProgressCircle percent={(progress.currentSlot / MAX_SLOT_EPOCH) * 100}>
+            <>
+              <div className={styles.epoch}>{progress.epoch}</div>
+              <div className={styles.epochTitle}>EPOCH</div>
+            </>
+          </ProgressCircle>
 
           <div className={styles.progessInfo}>
             <div className={styles.row}>
@@ -116,6 +108,8 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
             );
           })}
           <div className={styles.fullWidth}>
+            {/* <ProgressCircle percent={+delegationPools.satulation} /> */}
+
             <Progress
               strokeColor={{
                 "0%": "#184C78",
