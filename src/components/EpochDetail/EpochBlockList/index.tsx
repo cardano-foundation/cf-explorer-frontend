@@ -1,17 +1,16 @@
 import React from "react";
-import { BiLinkExternal } from "react-icons/bi";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
+import { Tooltip } from "@mui/material";
 
 import Card from "../../commons/Card";
 import Table, { Column } from "../../commons/Table";
-
 import { formatADA, getShortWallet } from "../../../commons/utils/helper";
 import { routers } from "../../../commons/routers";
-
-import styles from "./index.module.scss";
-import { Tooltip } from "antd";
 import { AIcon } from "../../../commons/resources";
+import CopyButton from "../../commons/CopyButton";
+
+import { StyledAddress, StyledLink, StyledOutput, StyledAIcon } from "./styles";
 
 interface IEpochBlockList {
   data: Block[];
@@ -33,19 +32,15 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
       title: "#",
       key: "#",
       minWidth: "100px",
-      render: (data, index) => {
-        return <div className={styles.fwBold}>{index + 1}</div>;
+      render: (_, index) => {
+        return <b>{index + 1}</b>;
       },
     },
     {
       title: "Block",
       key: "block",
       minWidth: "100px",
-      render: r => (
-        <Link to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>
-          <span className={`${styles.fwBold} ${styles.link}`}>{r.blockNo}</span>
-        </Link>
-      ),
+      render: r => <StyledLink>{r.blockNo}</StyledLink>,
     },
     {
       title: "Slot",
@@ -53,12 +48,9 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
       minWidth: "100px",
       render: r => (
         <>
-          <span className={`${styles.fwBold} ${styles.link}`}>{r.slotNo}</span>
+          <StyledLink>{r.slotNo}</StyledLink>
           <div>
-            <Link to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epochNo}`)}>
-              <span className={`${styles.fwBold} ${styles.link}`}>{r.epochNo}</span>
-            </Link>{" "}
-            / {r.epochSlotNo}
+            <StyledLink>{r.epochNo}</StyledLink>/ {r.epochSlotNo}
           </div>
         </>
       ),
@@ -67,49 +59,40 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
       title: "Created by",
       key: "createdBy",
       minWidth: "100px",
-      render: r => {
-        return (
-          <>
-            Address:
-            <Tooltip placement="top" title={r.slotLeader}>
-              <Link to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>
-                <span className={`${styles.fwBold} ${styles.link} ${styles.ml15}`}>
-                  {getShortWallet(r.slotLeader ?? "")}
-                  <BiLinkExternal className={styles.icon} />
-                </span>
-              </Link>
-            </Tooltip>
-          </>
-        );
-      },
+      render: r => (
+        <>
+          Address:
+          <Tooltip placement="top" title={r.slotLeader}>
+            <StyledAddress to={"#"}>
+              {getShortWallet(r.slotLeader)}
+              <CopyButton text={r.slotLeader}/>
+            </StyledAddress>
+          </Tooltip>
+        </>
+      ),
     },
     {
       title: "Transactions",
       key: "blkCount",
       minWidth: "100px",
-      render: r => {
-        return <span className={styles.fwBold}>{r.txCount}</span>;
-      },
+      render: r => <b>{r.txCount}</b>,
     },
     {
       title: "Output",
       key: "outSum",
       minWidth: "100px",
-      render: r => {
-        return (
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <img style={{ marginRight: "8px" }} src={AIcon} alt="a icon" />
-            <span className={styles.fwBold}>{formatADA(r.totalFees) || 0}</span>
-          </div>
-        );
-      },
+      render: r => (
+        <StyledOutput>
+          <StyledAIcon src={AIcon} alt="ADA Icon" />
+          <b>{formatADA(r.totalFees) || 0}</b>
+        </StyledOutput>
+      ),
     },
   ];
 
   return (
     <Card title={"Blocks"}>
       <Table
-        className={styles.table}
         loading={loading}
         initialized={initialized}
         columns={columns}

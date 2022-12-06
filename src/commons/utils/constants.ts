@@ -9,7 +9,7 @@ export const SUPPORTED_WALLETS: Wallet[] = [
 ];
 
 export enum EPOCH_STATUS {
-  FINISHED = "Finish",
+  FINISHED = "Finished",
   REWARDING = "Rewarding",
   IN_PROGRESS = "In Progress",
 }

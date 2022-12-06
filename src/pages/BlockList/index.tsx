@@ -2,9 +2,9 @@ import { parse } from "qs";
 import { useLocation } from "react-router-dom";
 
 import useFetchList from "../../commons/hooks/useFetchList";
-import BlockListTable from "../../components/BlockLists/index";
+import BlockListTable from "../../components/BlockLists";
 
-import styles from "./index.module.scss";
+import { Container } from "./styles";
 
 const BlockList = () => {
   //TO DO
@@ -17,7 +17,7 @@ const BlockList = () => {
   });
 
   return (
-    <div className={styles.container}>
+    <Container>
       <BlockListTable
         blockLists={data}
         total={total}
@@ -26,7 +26,7 @@ const BlockList = () => {
         loading={loading}
         initialized={initialized}
       />
-    </div>
+    </Container>
   );
 };
 
