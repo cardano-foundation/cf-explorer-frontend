@@ -5,8 +5,9 @@ import Card from "../../commons/Card";
 import DetailCard from "../../commons/DetailCard";
 import { formatADA, getShortWallet } from "../../../commons/utils/helper";
 import { AIcon } from "../../../commons/resources";
+import CopyButton from "../../commons/CopyButton";
 
-import { Flex, StyledCopyButton, StyledImage, StyledLink, StyledSpan } from "./styles";
+import { Flex, StyledImage, StyledLink, StyledSpan } from "./styles";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
@@ -22,7 +23,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
           <Tooltip title={`${data?.blockNo || ""}`} placement="top">
             <StyledLink>{data?.blockNo || ""}</StyledLink>
           </Tooltip>
-          <StyledCopyButton />
+          <CopyButton text={"" + data?.blockNo} />
         </Flex>
       ),
     },
@@ -60,7 +61,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
           <Tooltip title={`${data?.slotLeader || ""}`} placement="top">
             <StyledLink>{getShortWallet(data?.slotLeader || "")}</StyledLink>
           </Tooltip>
-          <StyledCopyButton />
+          <CopyButton text={data?.slotLeader}/>
         </Flex>
       ),
     },

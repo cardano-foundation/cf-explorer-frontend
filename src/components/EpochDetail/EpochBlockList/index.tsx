@@ -1,18 +1,16 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
+import { Tooltip } from "@mui/material";
 
 import Card from "../../commons/Card";
 import Table, { Column } from "../../commons/Table";
-
 import { formatADA, getShortWallet } from "../../../commons/utils/helper";
 import { routers } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
+import CopyButton from "../../commons/CopyButton";
 
-import { StyledAddress, StyledBold, StyledDiv, StyledCopyIcon, StyledLink, StyledOutput, StyledAIcon } from "./styles";
-import { Tooltip } from "@mui/material";
-
-// import styles from "./index.module.scss";
+import { StyledAddress, StyledLink, StyledOutput, StyledAIcon } from "./styles";
 
 interface IEpochBlockList {
   data: Block[];
@@ -35,7 +33,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
       key: "#",
       minWidth: "100px",
       render: (_, index) => {
-        return <StyledDiv>{index + 1}</StyledDiv>;
+        return <b>{index + 1}</b>;
       },
     },
     {
@@ -65,9 +63,9 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
         <>
           Address:
           <Tooltip placement="top" title={r.slotLeader}>
-            <StyledAddress>
-              {getShortWallet(r.slotLeader ?? "")}
-              <StyledCopyIcon />
+            <StyledAddress to={"#"}>
+              {getShortWallet(r.slotLeader)}
+              <CopyButton text={r.slotLeader}/>
             </StyledAddress>
           </Tooltip>
         </>
@@ -77,7 +75,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
       title: "Transactions",
       key: "blkCount",
       minWidth: "100px",
-      render: r => <StyledBold>{r.txCount}</StyledBold>,
+      render: r => <b>{r.txCount}</b>,
     },
     {
       title: "Output",
@@ -86,7 +84,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
       render: r => (
         <StyledOutput>
           <StyledAIcon src={AIcon} alt="ADA Icon" />
-          <StyledBold>{formatADA(r.totalFees) || 0}</StyledBold>
+          <b>{formatADA(r.totalFees) || 0}</b>
         </StyledOutput>
       ),
     },
@@ -95,7 +93,6 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
   return (
     <Card title={"Blocks"}>
       <Table
-        // className={styles.table}
         loading={loading}
         initialized={initialized}
         columns={columns}
