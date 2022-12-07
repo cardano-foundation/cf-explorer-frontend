@@ -17,15 +17,28 @@ export const MenuIcon = styled("img")<{ iconOnly?: boolean; active?: boolean; te
 `;
 
 export const SubMenu = styled(List)<{ isActive?: boolean }>`
-  margin-left: 39px;
+  margin-left: 0px;
 `;
 
 export const MenuText = styled(ListItemText)<{ open?: boolean; active?: boolean; textOnly?: boolean }>`
   opacity: ${props => (props.open ? 1 : 0)};
   * {
-    font-family: var(--font-family-title);
-    ${props => (props.textOnly && props.active ? `font-weight: var(--font-weight-bold);` : ``)}
-    color: ${props => (!props.textOnly && props.active ? props.theme.textColorReverse : props.theme.textColor)};
+    font-family: var(--font-family-title) !important;
+    font-weight: var(--font-weight-bold) !important;
+    color: ${props => (props.active ? props.theme.textColor : props.theme.textColorPale)};
+    color: ${props =>
+      props.active
+        ? props.textOnly
+          ? props.theme.textColor
+          : props.theme.textColorReverse
+        : props.theme.textColorPale};
     white-space: break-spaces;
+  }
+`;
+
+export const SubMenuText = styled(MenuText)`
+  * {
+    font-weight: var(--font-weight-normal) !important;
+    color: ${props => (props.active ? props.theme.textColorReverse : props.theme.textColorPale)};
   }
 `;
