@@ -1,6 +1,5 @@
 import React from "react";
-import { Progress } from "antd";
-import { Grid, Skeleton } from "@mui/material";
+import { Grid, LinearProgress, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-circular-progressbar/dist/styles.css";
 
@@ -108,18 +107,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
             );
           })}
           <div className={styles.fullWidth}>
-            {/* <ProgressCircle percent={+delegationPools.satulation} /> */}
-
-            <Progress
-              strokeColor={{
-                "0%": "#184C78",
-                "100%": "#5A9C56",
-              }}
-              strokeWidth={10}
-              percent={+delegationPools.satulation}
-              status="active"
-              showInfo={false}
-            />
+            <StyledLinearProgress variant="determinate" value={+delegationPools.satulation} />
           </div>
         </div>
       );
@@ -194,3 +182,16 @@ const delegationPoolsTitle = {
   delegators: "Delegators",
   satulation: "Saturation",
 };
+
+const StyledLinearProgress = styled(LinearProgress)`
+  margin-top: 10px;
+  width: 100%;
+  height: 10px;
+  border-radius: 34px;
+  background: rgba(0, 0, 0, 0.1);
+
+  & > .MuiLinearProgress-barColorPrimary {
+    border-radius: 34px;
+    background: ${props => props.theme.linearGradientGreen};
+  }
+`;
