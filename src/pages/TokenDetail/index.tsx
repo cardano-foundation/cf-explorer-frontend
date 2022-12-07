@@ -1,31 +1,50 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import useFetch from "../../commons/hooks/useFetch";
 import TokenOverview from "../../components/TokenDetail/TokenOverview";
-import TokenTableData from "../../components/TokenDetail/TokenTableData";
 
-import styles from "./index.module.scss";
+import { StyledContainer } from "./styles";
 
 interface ITokenDetail {}
 
 const TokenDetail: React.FC<ITokenDetail> = () => {
   const params = useParams<{ tokenId: string }>();
-  // const { data: tokenDetail, loading } = useFetch<IToken>(`TODO/${params.tokenId}`);
+  const { data: tokenOverview, loading } = useFetch<ITokenOverview>(`tokens/${params.tokenId}`);
 
-  // TODO: Remove later
-  const tokenDetail: IToken = {
-    tokenId: "14696a4676909f4e3cb1f2e60e2e08e5abed70caf5c02699be97113943554259",
-    assetName: "CUBY",
-    totalTransactions: 999999999113,
-    totalSupply: 100123123141.12312,
-    dateCreated: "10/24/2022 14:09:02 ",
-  };
+  const [tokenMetadata, setTokenMetadata] = useState<ITokenMetadata>({});
+
+  useEffect(() => {
+    async function loadMetadata() {
+      if (tokenOverview) {
+        const {
+          data: { subjects },
+        } = await axios.post("/metadata/query", {
+          subjects: [`${tokenOverview.policy}${tokenOverview.name}`],
+          properties: ["policy", "logo", "decimals"],
+        });
+
+        setTokenMetadata({
+          policy: subjects[0].policy,
+          logo: subjects[0].logo.value,
+          decimals: subjects[0].decimals.value,
+        });
+      }
+    }
+    loadMetadata();
+  }, [tokenOverview]);
+
+  const mergedToken: IToken = useMemo(
+    () => ({ ...tokenOverview, logo: tokenMetadata.logo, decimals: tokenMetadata.decimals }),
+    [tokenOverview, tokenMetadata]
+  );
 
   return (
-    <div className={styles.container}>
-      <TokenOverview data={tokenDetail} loading={false} />
-      <TokenTableData />
-    </div>
+    <StyledContainer>
+      <TokenOverview data={mergedToken} loading={loading} />
+      {/* <TokenTableData /> */}
+    </StyledContainer>
   );
 };
 
