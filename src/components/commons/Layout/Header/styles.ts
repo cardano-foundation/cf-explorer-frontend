@@ -1,13 +1,11 @@
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
-import { CollapseIcon } from "../../../../commons/resources";
-import { NETWORKS } from "../../../../commons/utils/constants";
+import Container from "../../Container";
 
 export const HeaderContainer = styled.header`
   background-image: ${props => props.theme.linearGradientGreen};
   color: ${props => props.theme.textColorReverse};
   position: relative;
-  @media (max-width: 1199px) {
+  @media (max-width: 1023px) {
     padding-top: 78px;
   }
 `;
@@ -24,122 +22,23 @@ export const HeaderBackground = styled.div<{ isHome: boolean }>`
   background-size: cover;
   mix-blend-mode: luminosity;
   display: ${props => (props.isHome ? "block" : "none")};
-  @media screen and (max-width: 1199px) {
+  @media screen and (max-width: 1023px) {
     display: block;
   }
 `;
-export const BackDrop = styled.div<{ isShow: boolean }>`
-  position: fixed;
-  z-index: 997;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #0006;
-  display: none;
-  @media screen and (max-width: 1199px) {
-    display: ${props => (props.isShow ? "block" : "none")};
-  }
-`;
 
-export const HeaderTop = styled.div`
-  position: relative;
-  padding: 20px 0px;
-  @media screen and (max-width: 1199px) {
-    padding: 16px 0px;
-    background-color: #ffffff;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 998;
-    box-shadow: ${props => props.theme.shadowRaised};
-  }
-  & > div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-`;
-
-export const LogoLink = styled(Link)`
-  position: relative;
-`;
-
-export const LogoDesktop = styled.img`
-  height: 50px;
-  width: auto;
-  @media screen and (max-width: 1199px) {
+export const HeaderTop = styled(Container)`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  padding: 30px 0px;
+  @media screen and (max-width: 1023px) {
     display: none;
   }
 `;
 
-export const LogoMobile = styled.img`
-  height: 46px;
-  width: auto;
-  display: none;
-  @media screen and (max-width: 1199px) {
-    display: block;
-  }
-`;
-
-export const NetworkName = styled.small<{ network: keyof typeof NETWORKS }>`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  transform: translateY(50%);
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-title);
-  color: ${props => {
-    switch (props.network) {
-      case "mainnet": {
-        return props.theme.colorGreenLight;
-      }
-      case "preprod": {
-        return props.theme.colorBlue;
-      }
-      case "preview": {
-        return props.theme.colorBlue;
-      }
-      default: {
-        return props.theme.colorYellow;
-      }
-    }
-  }};
-  text-transform: uppercase;
-`;
-
-export const Collapse = styled.i`
-  width: 30px;
-  height: 30px;
-  background-image: url(${CollapseIcon});
-  display: none;
-  @media screen and (max-width: 1199px) {
-    display: block;
-  }
-`;
-
-export const HeaderBar = styled.div<{ active: boolean }>`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: var(--menu-item-gap);
-  @media screen and (max-width: 1199px) {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
-    position: absolute;
-    z-index: 999;
-    top: 100%;
-    right: ${props => (props.active ? "0%" : "100%")};
-    width: 100%;
-    background-color: #ffffff;
-    color: ${props => props.theme.textColor};
-    gap: 15px;
-    box-shadow: ${props => props.theme.shadowRaised};  
-`;
-
-export const HeaderMain = styled.div<{ isHome: boolean }>`
+export const HeaderMain = styled(Container)<{ isHome: boolean }>`
   position: relative;
   text-align: center;
   padding: ${props => (props.isHome ? "80px 0px 170px" : "20px 0px")};

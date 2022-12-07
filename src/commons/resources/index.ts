@@ -34,6 +34,11 @@ import CollapseIcon from "./icons/menu.svg";
 import AIcon from "./images/AIcon.png";
 import Policy from "./icons/policy.svg";
 import HeaderBackground from "./images/header-bg.png";
+import DIDMenuIcon from "./icons/menus/did.svg";
+import SupplyChainMenuIcon from "./icons/menus/supplychain.svg";
+import BlockChainMenuIcon from "./icons/menus/blockchain.svg";
+import DelegatePoolMenuIcon from "./icons/menus/delegate.svg";
+import ToolMenuIcon from "./icons/menus/tool.svg";
 
 export {
   LogoMobileIcon,
@@ -72,4 +77,9 @@ export {
   Policy,
   HeaderBackground,
   CollapseIcon,
+  DIDMenuIcon,
+  SupplyChainMenuIcon,
+  BlockChainMenuIcon,
+  DelegatePoolMenuIcon,
+  ToolMenuIcon,
 };

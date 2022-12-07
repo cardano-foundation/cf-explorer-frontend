@@ -1,3 +1,4 @@
+import { BlockChainMenuIcon, DelegatePoolMenuIcon, DIDMenuIcon, SupplyChainMenuIcon, ToolMenuIcon } from "./resources";
 import { routers } from "./routers";
 
 interface Menu {
@@ -5,12 +6,14 @@ interface Menu {
   href?: string;
   mega?: boolean;
   children?: Menu[];
+  icon?: string;
 }
 export const menus: Menu[] = [
-  { title: "DID", href: "/did" },
-  { title: "Supply Chain", href: "/chains" },
+  { title: "DID", href: "/did", icon: DIDMenuIcon },
+  { title: "Supply Chain", href: "/chains", icon: SupplyChainMenuIcon },
   {
     title: "Blockchain",
+    icon: BlockChainMenuIcon,
     children: [
       { title: "Epoch", href: routers.EPOCH_LIST },
       { title: "Blocks", href: routers.BLOCK_LIST },
@@ -22,6 +25,7 @@ export const menus: Menu[] = [
   },
   {
     title: "Delegate Pools",
+    icon: DelegatePoolMenuIcon,
     children: [
       { title: "Delegation Pools", href: routers.DELEGATION_POOLS },
       { title: "Stake key registration", href: "/Stake-key-registration" },
@@ -31,6 +35,7 @@ export const menus: Menu[] = [
   {
     title: "Tool",
     href: "/tools",
+    icon: ToolMenuIcon,
   },
 ];
 export const footerMenus: Menu[] = [

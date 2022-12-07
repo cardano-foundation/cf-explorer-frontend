@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { footerMenus } from "../../../../commons/menus";
 import { LogoIcon } from "../../../../commons/resources";
 import { NETWORKS } from "../../../../commons/utils/constants";
+import { isExtenalLink } from "../../../../commons/utils/helper";
 import styles from "./index.module.scss";
 
 const Footer: React.FC = () => {
@@ -35,13 +36,11 @@ const Footer: React.FC = () => {
                     <ul>
                       {children?.map(level_2 => {
                         const { href, title } = level_2;
-                        const target =
-                          href && (href.search("http://") >= 0 || href.search("https://") >= 0) ? "_blank" : null;
                         return (
                           <li key={title}>
                             {href ? (
-                              target ? (
-                                <a href={href} target={target} rel="noreferrer" title={title}>
+                              isExtenalLink(href) ? (
+                                <a href={href} target="_blank" rel="noreferrer" title={title}>
                                   <span>{title}</span>
                                 </a>
                               ) : (
