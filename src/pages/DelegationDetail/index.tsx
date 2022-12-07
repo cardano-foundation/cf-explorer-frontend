@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { Grid, Skeleton, styled, Tooltip } from "@mui/material";
 
 import { DelegationEpochList, DelegationStakingDelegatorsList } from "../../components/DelegationDetailList";
 import DelegationDetailChart from "../../components/DelegationDetailChart";
@@ -12,7 +13,6 @@ import { formatADA, getShortWallet, numberWithCommas } from "../../commons/utils
 
 import styles from "./index.module.scss";
 import AIcon from "../../commons/resources/images/AIcon.png";
-import { Col, Row, Select, Skeleton, Tooltip } from "antd";
 
 import "./select.css";
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -20,7 +20,7 @@ import { parse, stringify } from "qs";
 
 const DelegationDetail = () => {
   const { poolId } = useParams<{ poolId: string }>();
-  const { search, pathname } = useLocation();
+  const { search } = useLocation();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
   const [tab, setTab] = useState<"epochs" | "delegators">("epochs");
@@ -160,19 +160,17 @@ const DelegationDetail = () => {
         title={title[tab]}
         extra={
           <div className={styles.filter}>
-            <Select
-              options={[
-                { label: "Epochs", value: "epochs" },
-                { label: "Staking delegators", value: "delegators" },
-              ]}
+            <SelectComponent
               value={tab || "epochs"}
-              style={{ borderRadius: "8px", minWidth: 250 }}
               onChange={e => {
-                setTab(e);
+                setTab(e.target.value as typeof tab);
                 setQuery({ page: 1, size: 10 });
                 scrollEffect();
               }}
-            />
+            >
+              <OptionSelect value={"epochs"}>Epochs</OptionSelect>
+              <OptionSelect value={"delegators"}>Staking delegators</OptionSelect>
+            </SelectComponent>
           </div>
         }
       >
@@ -198,34 +196,34 @@ const OverviewCard = ({ data, loading }: { data: DelegationOverview | null; load
   if (loading) {
     return (
       <div className={styles.overview}>
-        <Row gutter={8} justify="center">
+        <Grid container columns={24} spacing={2}>
           {Object.keys(overviewData).map((i, ii) => {
             return (
-              <Col key={ii} className={styles.col} span={12} sm={8} md={6} xl={4} xxl={3}>
-                <Skeleton.Input className={styles.itemSkeleton} block active />
-              </Col>
+              <Grid item xs={12} sm={8} md={6} key={ii} xl={3} className={styles.col}>
+                <Skeleton variant="rectangular" className={styles.itemSkeleton} />
+              </Grid>
             );
           })}
-        </Row>
+        </Grid>
       </div>
     );
   }
   return (
     <div className={styles.overview}>
-      <Row gutter={8} justify="center">
+      <Grid container columns={24} spacing={2}>
         {Object.keys(overviewData).map((i, ii) => {
           return (
-            <Col key={ii} className={styles.col} span={12} sm={8} md={6} xl={4} xxl={3}>
+            <Grid item xs={12} sm={8} md={6} key={ii} xl={3} className={styles.col}>
               <div className={styles.item}>
                 <div>
                   <div className={styles.title}>{i}</div>
                   <div className={styles.value}>{overviewData[i as keyof typeof overviewData]}</div>
                 </div>
               </div>
-            </Col>
+            </Grid>
           );
         })}
-      </Row>
+      </Grid>
     </div>
   );
 };
@@ -234,3 +232,22 @@ const title = {
   epochs: "Epoch",
   delegators: "Staking delegators",
 };
+
+const SelectComponent = styled("select")(({ theme }) => ({
+  height: "40px",
+  minWidth: 250,
+  borderRadius: theme.borderRadius,
+  border: "1px solid #0000001a",
+  padding: "0 10px",
+  color: theme.textColor,
+  textAlignLast: "left",
+  ":focus-visible": {
+    outline: "none",
+  },
+}));
+
+const OptionSelect = styled("option")(({ theme }) => ({
+  padding: "6px 0",
+  textAlign: "center",
+  height: "40px",
+}));

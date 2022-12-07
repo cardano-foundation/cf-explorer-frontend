@@ -9,6 +9,7 @@ import { formatADA } from "../../commons/utils/helper";
 import sendImg from "../../commons/resources/images//summary-up.png";
 import { Progress } from "antd";
 import { routers } from "../../commons/routers";
+import { LinearProgress, styled } from "@mui/material";
 
 interface DelegationListProps {
   data: Delegators[];
@@ -90,16 +91,9 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       // To do
       // render: r => <div>{r.saturation} </div>,
       render: r => (
-        <div>
-          <Progress
-            strokeColor={{
-              "0%": "#184C78",
-              "100%": "#5A9C56",
-            }}
-            strokeWidth={8}
-            percent={Math.round(Math.random() * 100)}
-            status="active"
-          />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <StyledLinearProgress variant="determinate" value={Math.round(Math.random() * 100)} />
+          <span>{Math.round(Math.random() * 100)}%</span>
         </div>
       ),
     },
@@ -141,3 +135,16 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
 };
 
 export default DelegationLists;
+
+const StyledLinearProgress = styled(LinearProgress)`
+  display: inline-block;
+  width: 100%;
+  height: 8px;
+  border-radius: 34px;
+  background: rgba(0, 0, 0, 0.1);
+  margin-right: 8px;
+  & > .MuiLinearProgress-barColorPrimary {
+    border-radius: 34px;
+    background: ${props => props.theme.linearGradientGreen};
+  }
+`;

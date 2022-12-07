@@ -49,9 +49,16 @@
     justify-content: flex-end;
     .group {
       display: flex;
-      .input {
+      .inputGroup {
+        border: 1px solid rgba(17, 17, 17, 0.153);
         border-radius: var(--border-radius);
-        min-width: 350px;
+        overflow: hidden;
+        padding: 6px 12px;
+        background-color: #fff;
+        .input {
+          min-width: 350px;
+          border: none;
+        }
       }
       .button {
         border-radius: var(--border-radius);

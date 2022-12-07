@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Col, Input, Progress, Row, Skeleton } from "antd";
-import Card from "../../components/commons/Card";
+import { Grid, LinearProgress, Skeleton, styled } from "@mui/material";
 
+import Card from "../../components/commons/Card";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { formatADA, numberWithCommas } from "../../commons/utils/helper";
 import DelegationLists from "../../components/DelegationLists";
@@ -15,6 +15,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { parse, stringify } from "qs";
 import moment from "moment";
 import { MAX_SLOT_EPOCH } from "../../commons/utils/constants";
+import ProgressCircle from "../../components/commons/ProgressCircle";
 
 const Delegations = () => {
   const { search } = useLocation();
@@ -45,27 +46,28 @@ const Delegations = () => {
       </Card>
       <div className={styles.search}>
         <div className={styles.group}>
-          <Input
-            className={styles.input}
-            size="large"
-            placeholder="Search transaction, address, block, epoch, pool..."
-            prefix={<img src={searchImg} alt="search icon" />}
-            onChange={e => setSearchPools(e.target.value)}
-            value={searchPools || ""}
-            onKeyUp={e => {
-              if (e.key === "Enter") {
-                setQuery({ searchPools, page: 1, size: 10 });
-              }
-            }}
-          />
-          <button
+          <div className={styles.inputGroup}>
+            <input
+              className={styles.input}
+              placeholder="Search Pools"
+              onChange={e => setSearchPools(e.target.value)}
+              value={searchPools || ""}
+              onKeyUp={e => {
+                if (e.key === "Enter") {
+                  setQuery({ searchPools, page: 1, size: 10 });
+                }
+              }}
+            />
+            <img src={searchImg} alt="search icon" />
+          </div>
+          {/* <button
             className={styles.button}
             onClick={() => {
               setQuery({ searchPools, page: 1, size: 10 });
             }}
           >
             Search
-          </button>
+          </button> */}
         </div>
       </div>
       <DelegationLists data={delegationLists} total={total} loading={loading} initialized={initialized} />
@@ -85,82 +87,55 @@ const OverViews: React.FC<OverViewProps> = ({ data, loading }) => {
 
   if (loading) {
     return (
-      <Row gutter={[10, 10]}>
-        <Col span={24} md={12} xl={8}>
-          <Skeleton.Input block active className={styles.sekeletion} />
-        </Col>
-        <Col span={24} md={12} xl={8}>
-          <Skeleton.Input block active className={styles.sekeletion} />
-        </Col>
-        <Col span={24} md={12} xl={8}>
-          <Skeleton.Input block active className={styles.sekeletion} />
-        </Col>
-      </Row>
+      <Grid container spacing={2}>
+        <Grid item xl={4} md={6} xs={12}>
+          <Skeleton variant="rectangular" className={styles.sekeletion} />
+        </Grid>
+        <Grid item xl={4} md={6} xs={12}>
+          <Skeleton variant="rectangular" className={styles.sekeletion} />
+        </Grid>
+        <Grid item xl={4} md={6} xs={12}>
+          <Skeleton variant="rectangular" className={styles.sekeletion} />
+        </Grid>
+      </Grid>
     );
   }
 
   return (
-    <Row gutter={[10, 10]}>
-      <Col span={24} md={12} xl={8}>
+    <Grid container spacing={2}>
+      <Grid item xl={4} md={6} xs={12}>
         <div className={styles.card}>
           <div>
             <div className={styles.title}>Epoch</div>
             <div className={styles.subtitle}>
-              {/* To Do */}
               End in:{" "}
               <span className={styles.value}>
                 {duration.days()} day {duration.hours()} hours {duration.minutes()} minutes
               </span>
             </div>
           </div>
-          <Progress
-            type="circle"
-            strokeColor={{
-              "0%": "#184C78",
-              "100%": "#5A9C56",
-            }}
-            status="active"
-            format={() => (
-              <>
-                <div className={styles.epochTitle}>{data?.epochNo || 0} </div>
-              </>
-            )}
-            strokeWidth={6}
-            width={96}
-            percent={((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100}
-          />
+          <ProgressCircle percent={((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100} width={96}>
+            <div className={styles.epochTitle}>{data?.epochNo || 0} </div>
+          </ProgressCircle>
         </div>
-      </Col>
-      <Col span={24} md={12} xl={8}>
+      </Grid>
+      <Grid item xl={4} md={6} xs={12}>
         <div className={styles.card}>
           <div style={{ width: "80%" }}>
             <div className={styles.title}>Slot</div>
             <div className={styles.subtitle}>
-              {" "}
               <span className={styles.value}>{data?.epochSlotNo || 0} / </span>
               {MAX_SLOT_EPOCH}
             </div>
-            <Progress
-              type="line"
-              strokeColor={{
-                "0%": "#184C78",
-                "100%": "#5A9C56",
-              }}
-              strokeWidth={8}
-              width={200}
-              percent={((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100}
-              format={(p, c) => ""}
-              status="active"
-            />
+            <StyledLinearProgress variant="determinate" value={((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100} />
           </div>
           <div>
             <img src={rocketImg} alt="rocket icon" />
           </div>
         </div>
-      </Col>
-      <Col span={24} md={12} xl={8}>
+      </Grid>
+      <Grid item xl={4} md={6} xs={12}>
         <div className={styles.card}>
-          {" "}
           <div>
             <div className={styles.title}>
               Live Stake: <span className={styles.value}>{formatADA(data?.liveStake)}</span>
@@ -173,7 +148,20 @@ const OverViews: React.FC<OverViewProps> = ({ data, loading }) => {
             <img src={moneyImg} alt="money icon" />
           </div>
         </div>
-      </Col>
-    </Row>
+      </Grid>
+    </Grid>
   );
 };
+
+const StyledLinearProgress = styled(LinearProgress)`
+  margin-top: 10px;
+  width: 100%;
+  height: 10px;
+  border-radius: 34px;
+  background: rgba(0, 0, 0, 0.1);
+
+  & > .MuiLinearProgress-barColorPrimary {
+    border-radius: 34px;
+    background: ${props => props.theme.linearGradientGreen};
+  }
+`;
