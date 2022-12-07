@@ -1,35 +1,36 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Header from "./Header";
 import Footer from "./Footer";
-import NavBar from "./NavBar";
+import Sidebar from "./Sidebar";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { Drawer, ToggleMenu } from "./styles";
+import { Drawer, Layout, ToggleMenu, Main, BackDrop } from "./styles";
+import { useSelector } from "react-redux";
+import { setSidebar } from "../../../stores/user";
+import { RootState } from "../../../stores/types";
 
 interface Props {
   children: React.ReactNode;
 }
 const CustomLayout: React.FC<Props> = ({ children }) => {
-  const [open, setOpen] = React.useState(true);
+  const { sidebar } = useSelector(({ user }: RootState) => user);
 
-  const handleToggle = () => {
-    setOpen(!open);
-  };
+  const handleToggle = () => setSidebar(!sidebar);
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <Drawer variant="permanent" open={open}>
+    <Layout>
+      <BackDrop isShow={sidebar} onClick={handleToggle} />
+      <Drawer variant="permanent" open={sidebar}>
         <ToggleMenu onClick={handleToggle} type="button">
-          {open ? <FaArrowLeft /> : <FaArrowRight />}
+          {sidebar ? <FaArrowLeft /> : <FaArrowRight />}
         </ToggleMenu>
-        <NavBar open={open} />
+        <Sidebar />
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, overflow: "hidden" }}>
+      <Main component="main">
         <Header />
         {children}
         <Footer />
-      </Box>
-    </Box>
+      </Main>
+    </Layout>
   );
 };
 

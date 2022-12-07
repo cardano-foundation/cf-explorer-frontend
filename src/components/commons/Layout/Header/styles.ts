@@ -1,16 +1,27 @@
-import styled from "@emotion/styled";
-import Container from "../../Container";
+import { Container, styled } from "@mui/material";
 
-export const HeaderContainer = styled.header`
-  background-image: ${props => props.theme.linearGradientGreen};
+export const HeaderContainer = styled("header")<{ isHome: boolean }>`
+  background-image: ${props => (props.isHome ? props.theme.linearGradientGreen : `none`)};
   color: ${props => props.theme.textColorReverse};
   position: relative;
   @media (max-width: 1023px) {
     padding-top: 78px;
+    background-image: ${props => props.theme.linearGradientGreen};
   }
 `;
 
-export const HeaderBackground = styled.div<{ isHome: boolean }>`
+export const HeaderBox = styled(Container)<{ isHome: boolean }>`
+  ${props =>
+    props.isHome
+      ? ``
+      : ` 
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        align-items:center;
+      `}
+`;
+export const HeaderBackground = styled("div")<{ isHome: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
@@ -27,7 +38,7 @@ export const HeaderBackground = styled.div<{ isHome: boolean }>`
   }
 `;
 
-export const HeaderTop = styled(Container)`
+export const HeaderTop = styled("div")`
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -38,7 +49,7 @@ export const HeaderTop = styled(Container)`
   }
 `;
 
-export const HeaderMain = styled(Container)<{ isHome: boolean }>`
+export const HeaderMain = styled("div")<{ isHome: boolean }>`
   position: relative;
   text-align: center;
   padding: ${props => (props.isHome ? "80px 0px 170px" : "20px 0px")};
@@ -52,7 +63,7 @@ export const HeaderMain = styled(Container)<{ isHome: boolean }>`
   }
 `;
 
-export const Title = styled.h1<{ isHome: boolean }>`
+export const Title = styled("h1")<{ isHome: boolean }>`
   color: ${props => props.theme.textColorReverse};
   display: ${props => (props.isHome ? "block" : "none")};
   @media screen and (max-width: 767px) {

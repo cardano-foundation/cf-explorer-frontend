@@ -17,6 +17,7 @@ const initialState: UserStoreType = {
   provider: null,
   openModal: false,
   network: "testnet",
+  sidebar: true,
 };
 
 const storeWallet = createSlice({
@@ -55,6 +56,10 @@ const storeWallet = createSlice({
       ...state,
       network: action.payload,
     }),
+    setSidebar: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      sidebar: action.payload,
+    }),
   },
 });
 
@@ -87,6 +92,10 @@ export const setOpenModal = (openModal: boolean) => {
 };
 export const setNetwork = (network: keyof typeof NETWORKS) => {
   userStore?.dispatch(storeWallet.actions.setNetwork(network));
+};
+
+export const setSidebar = (sidebar: boolean) => {
+  userStore?.dispatch(storeWallet.actions.setSidebar(sidebar));
 };
 
 export default storeWallet.reducer;
