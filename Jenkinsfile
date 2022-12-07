@@ -40,6 +40,7 @@ pipeline {
                     }
                 }
                 sh "docker-compose --env-file ${envFileDeploy} up -d --build"
+				sh "docker images -f 'dangling=true' -q --no-trunc | xargs --no-run-if-empty docker rmi"
             }
         }
     }
