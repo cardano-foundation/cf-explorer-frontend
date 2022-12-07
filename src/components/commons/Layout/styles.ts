@@ -1,9 +1,30 @@
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
+import { Box } from "@mui/material";
 
 const drawerWidth = 260;
 const drawerCollaspWidth = 85;
 
+export const Layout = styled(Box)`
+  display: flex;
+  @media screen and (max-width: 1023px) {
+    flex-direction: column;
+  }
+`;
+
+export const BackDrop = styled("div")<{ isShow: boolean }>`
+  position: fixed;
+  z-index: 997;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #0006;
+  display: none;
+  @media screen and (max-width: 1023px) {
+    display: ${props => (props.isShow ? "block" : "none")};
+  }
+`;
 export const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   minWidth: drawerCollaspWidth,
@@ -14,9 +35,10 @@ export const openedMixin = (theme: Theme): CSSObject => ({
   overflowY: "unset",
   borderRightWidth: 0,
   [theme.breakpoints.down(1023)]: {
-    minWidth: 0,
-    width: 0,
-    transform: "translateX(-1px)",
+    width: "100%",
+    minWidth: "100%",
+    height: "auto",
+    boxShadow: theme.shadowRaised,
   },
 });
 
@@ -29,9 +51,9 @@ export const closedMixin = (theme: Theme): CSSObject => ({
   width: drawerCollaspWidth,
   borderRightWidth: 0,
   [theme.breakpoints.down(1023)]: {
-    minWidth: 0,
-    width: 0,
-    transform: "translateX(-1px)",
+    width: "100%",
+    height: "auto",
+    boxShadow: theme.shadowRaised,
   },
 });
 
@@ -41,6 +63,7 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== "o
   whiteSpace: "nowrap",
   boxSizing: "border-box",
   borderRightWidth: 0,
+  boxShadow: "0px 1px 20px rgba(0, 0, 0, 0.05)",
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),
@@ -49,6 +72,11 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== "o
     ...closedMixin(theme),
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
+  [theme.breakpoints.down(1023)]: {
+    width: "100%",
+    height: "auto",
+    boxShadow: theme.shadowRaised,
+  },
 }));
 
 export const ToggleMenu = styled("button")`
@@ -72,4 +100,9 @@ export const ToggleMenu = styled("button")`
   @media screen and (max-width: 1023px) {
     display: none;
   }
+`;
+
+export const Main = styled(Box)`
+  flex-grow: 1;
+  overflow: hidden;
 `;

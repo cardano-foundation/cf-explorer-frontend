@@ -2,7 +2,25 @@ import { createTheme } from "@mui/material";
 import { HeaderBackground } from "../commons/resources";
 import { ThemeType } from "../types/user";
 
+const breakpoints = {
+  values: {
+    xs: 0,
+    sm: 540,
+    md: 1024,
+    lg: 1370,
+    xl: 1536,
+  },
+};
+
+const typography = { fontFamily: "Helvetica, sans-serif, monospace" };
+
+const themeDefault = {
+  breakpoints,
+  typography,
+};
+
 const lightTheme = {
+  ...themeDefault,
   textColor: "#13152f",
   titleColor: "#98a2b3",
   textColorPale: "#667085",
@@ -34,6 +52,7 @@ const lightTheme = {
 };
 
 export const darkTheme: typeof lightTheme = {
+  ...themeDefault,
   textColor: "#ffffff",
   titleColor: "#98a2b3",
   textColorPale: "#667085",
@@ -78,9 +97,12 @@ declare module "@emotion/react" {
   interface ThemeOptions extends CustomTheme {}
 }
 
-const themes: { [key in ThemeType]: CustomTheme } = {
-  light: createTheme(lightTheme),
-  dark: createTheme(darkTheme),
+const light = createTheme(lightTheme);
+const dark = createTheme(lightTheme);
+
+const themes: { [key in ThemeType]: typeof light } = {
+  light,
+  dark,
 };
 
 export default themes;

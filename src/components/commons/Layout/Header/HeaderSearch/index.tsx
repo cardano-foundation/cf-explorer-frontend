@@ -11,29 +11,30 @@ const Form = styled("form")<{ isHome: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 785px;
-  height: 60px;
+  width: 100%;
+  max-width: ${props => (props.isHome ? 785 : 400)}px;
+  height: ${props => (props.isHome ? 60 : 44)}px;
   margin: auto;
-  border-radius: 30px;
+  border-radius: ${props => (props.isHome ? 30 : 8)}px;
   background-color: #fff;
   color: ${props => props.theme.textColor};
-  padding: 0px 0px 0px 15px;
+  padding: 0px 0px 0px ${props => (props.isHome ? 15 : 0)}px;
   border: 1px solid ${props => props.theme.borderColor};
-  margin-top: 30px;
+  margin-top: ${props => (props.isHome ? 30 : 0)}px;
 `;
 
-const StyledSelect = styled(Select)`
-  font-size: var(--font-size-text-large);
-  min-width: 150px;
+const StyledSelect = styled(Select)<{ isHome: boolean }>`
+  font-size: ${props => (props.isHome ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
+  min-width: ${props => (props.isHome ? 150 : 130)}px;
   position: relative;
   @media screen and (max-width: 539px) {
-    min-width: 130px;
+    min-width: ${props => (props.isHome ? 130 : 110)}px;
   }
   & > div {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50px !important;
+    height: ${props => (props.isHome ? 50 : 34)}px !important;
     padding: 5px;
     font-weight: var(--font-weight-normal);
     border-radius: 0px !important;
@@ -49,39 +50,42 @@ const StyledSelect = styled(Select)`
     font-size: 1.75rem;
   }
 `;
-const Option = styled(MenuItem)`
-  font-size: var(--font-size-text-large);
+const Option = styled(MenuItem)<{ isHome: boolean }>`
+  font-size: ${props => (props.isHome ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
   color: ${props => props.theme.textColor};
   font-weight: var(--font-weight-normal);
 `;
 
-const StyledInput = styled(Input)`
-  padding: 0px 0px 0px 20px;
+const StyledInput = styled(Input)<{ isHome: boolean }>`
+  padding: 0px 0px 0px ${props => (props.isHome ? 20 : 10)}px;
   border: none;
   box-shadow: none !important;
   border-radius: 0;
-  font-size: var(--font-size-text-large);
+  font-size: ${props => (props.isHome ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
   width: 100%;
   border-left: 2px solid ${props => props.theme.borderColor};
   @media screen and (max-width: 539px) {
     padding: 0px 0px 0px 10px;
   }
+  & > input {
+    padding: ${props => (props.isHome ? 5 : 0)}px;
+  }
 `;
 
-const SubmitButton = styled(Button)`
+const SubmitButton = styled(Button)<{ isHome: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
   border: none;
   box-shadow: none;
-  border-radius: 50%;
-  min-width: 60px;
-  width: 60px;
-  height: 60px;
+  border-radius: ${props => (props.isHome ? 50 : 12.5)}%;
+  min-width: ${props => (props.isHome ? 60 : 44)}px;
+  width: ${props => (props.isHome ? 60 : 44)}px;
+  height: ${props => (props.isHome ? 60 : 44)}px;
 `;
-const Image = styled("img")`
-  width: 24px;
-  height: 24px;
+const Image = styled("img")<{ isHome: boolean }>`
+  width: ${props => (props.isHome ? 24 : 20)}px;
+  height: ${props => (props.isHome ? 24 : 20)}px;
 `;
 
 interface Props {
@@ -137,14 +141,15 @@ const HeaderSearch: React.FC<Props> = ({ isHome }) => {
 
   return (
     <Form onSubmit={handleSearch} isHome={isHome}>
-      <StyledSelect onChange={handleChangeFilter} value={filter} IconComponent={BiChevronDown}>
+      <StyledSelect onChange={handleChangeFilter} value={filter} IconComponent={BiChevronDown} isHome={isHome}>
         {options.map(({ value, label }) => (
-          <Option key={value} value={value}>
+          <Option key={value} value={value} isHome={isHome}>
             {label}
           </Option>
         ))}
       </StyledSelect>
       <StyledInput
+        isHome={isHome}
         required
         type="search"
         spellCheck={false}
@@ -153,8 +158,8 @@ const HeaderSearch: React.FC<Props> = ({ isHome }) => {
         onKeyDown={handleKeydown}
         disableUnderline
       />
-      <SubmitButton className={styles.buttonSearch} type="submit">
-        <Image src={HeaderSearchIcon} alt="search" />
+      <SubmitButton className={styles.buttonSearch} type="submit" isHome={isHome}>
+        <Image src={HeaderSearchIcon} alt="search" isHome={isHome} />
       </SubmitButton>
     </Form>
   );
