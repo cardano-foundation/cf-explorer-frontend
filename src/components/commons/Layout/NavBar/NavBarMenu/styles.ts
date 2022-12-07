@@ -33,6 +33,7 @@ export const MenuText = styled(ListItemText)<{ open?: boolean; active?: boolean;
           : props.theme.textColorReverse
         : props.theme.textColorPale};
     white-space: break-spaces;
+    width: 165px;
   }
 `;
 

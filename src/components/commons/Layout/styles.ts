@@ -12,6 +12,7 @@ export const openedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowY: "unset",
+  borderRightWidth: 0,
   [theme.breakpoints.down(1023)]: {
     minWidth: 0,
     width: 0,
@@ -26,6 +27,7 @@ export const closedMixin = (theme: Theme): CSSObject => ({
   }),
   overflowY: "unset",
   width: drawerCollaspWidth,
+  borderRightWidth: 0,
   [theme.breakpoints.down(1023)]: {
     minWidth: 0,
     width: 0,
@@ -38,6 +40,7 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== "o
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
+  borderRightWidth: 0,
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),

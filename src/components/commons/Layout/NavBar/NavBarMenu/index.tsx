@@ -14,6 +14,7 @@ const itemStyle: SxProps = {
   minHeight: 48,
   padding: "8px 20px 8px 30px",
   cursor: "pointer",
+  marginBottom: "5px",
 };
 
 const NavBarMenu: React.FC<Props> = ({ open, history }) => {
