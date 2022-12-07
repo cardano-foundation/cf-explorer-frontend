@@ -1,6 +1,5 @@
-@import '../../../themes/variable.scss';
+@import "../../../themes/variable.scss";
 
 .trending {
-  @include box-shadow-raised;
-  width: 100%;
+  width: var(--row-6-to-5-col);
 }

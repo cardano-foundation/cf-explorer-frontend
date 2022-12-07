@@ -1,24 +1,35 @@
-import React from "react";
-import { Layout } from "antd";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import CustomLayout from "./components/commons/Layout";
-
+import { RootState } from "./stores/types";
+import { useHistory } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+import themes from "./themes";
 interface Props {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
-
-const AppContainer: React.FC<Props> = (props) => {
+const AppContainer: React.FC<Props> = props => {
   const { children } = props;
-  const theme = useSelector((state) => state.user.theme);
+  const { theme } = useSelector(({ user }: RootState) => user);
+
+  const history = useHistory();
+  useEffect(() => {
+    const unlisten = history.listen(() => {
+      window.scrollTo(0, 0);
+    });
+    return () => {
+      unlisten();
+    };
+  }, [history]);
 
   return (
-    <Layout data-theme={theme}>
-      <CustomLayout>
-        {children}
-      </CustomLayout>
-    </Layout>
+    <ThemeProvider theme={themes[theme]}>
+      <div data-theme={theme}>
+        <CustomLayout>{children}</CustomLayout>
+      </div>
+    </ThemeProvider>
   );
-}
+};
 
 export default AppContainer;

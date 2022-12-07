@@ -1,7 +1,8 @@
 import { Store } from "@reduxjs/toolkit";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { applyMiddleware, combineReducers, createStore } from "redux";
-import { persistStore } from "redux-persist";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import { RootState } from "./types";
 import userReducer, { setStoreUser } from "./user";
 
@@ -9,6 +10,12 @@ let customStore: Store | undefined;
 
 const setStore = (store: Store) => {
   customStore = store;
+};
+
+const persistConfig = {
+  key: "root",
+  storage: storage,
+  whitelist: ["user"],
 };
 
 export const getStore = (): Store<RootState> => {
@@ -28,13 +35,14 @@ const middleWares: any[] = [];
 
 const enhancer = composeWithDevTools(applyMiddleware(...middleWares));
 
-export const store = createStore(rootReducer, enhancer);
 
-export const persistor = persistStore(store);
+const pReducer = persistReducer(persistConfig, rootReducer);
 
+export const store = createStore(pReducer, enhancer);
+
+export const persistor = persistStore(store, {});
 
 setStore(store);
 setStoreUser(store);
 
 export default store;
-

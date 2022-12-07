@@ -1,0 +1,16 @@
+@import "../../themes/variable.scss";
+
+.table {
+    margin-top: 18px;
+
+    .logo {
+        width: 30px;
+        height: 30px;
+    }
+
+    .link {
+        font-family: var(--font-family-text);
+        color: var(--color-blue);
+        font-weight: var(--font-weight-bold);
+    }
+}

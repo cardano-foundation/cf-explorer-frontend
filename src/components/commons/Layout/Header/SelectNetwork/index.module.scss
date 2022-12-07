@@ -1,0 +1,38 @@
+@import "../../../../../themes/variable.scss";
+
+.select {
+  @include flex-center-end;
+  font-family: var(--font-family-title) !important;
+
+  & > div {
+    border-width: 0 !important;
+    border-radius: 8px !important;
+    font-size: var(--font-size-small);
+    padding-top: 3px !important;
+    min-height: 38px;
+    color: var(--text-color-pale);
+    box-shadow: none !important;
+    @media screen and (max-width: 1199px) {
+      border-width: 1px !important;
+      color: var(--text-color);
+    }
+  }
+  * {
+    font-weight: var(--font-weight-bold) !important;
+  }
+}
+.dropdown {
+  z-index: 1000;
+  font-family: var(--font-family-title) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: var(--font-size-text);
+  font-weight: var(--font-weight-bold) !important;
+  outline: none !important;
+  * {
+    color: var(--text-color-pale);
+    @media screen and (max-width: 1199px) {
+      color: var(--text-color);
+    }
+  }
+}

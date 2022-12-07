@@ -1,0 +1,71 @@
+@import "../../themes/variable.scss";
+
+.container {
+  @include container;
+  padding: 30px 0px 40px;
+  .table {
+    margin-top: 18px;
+    .link {
+      font-family: var(--font-family-text) !important;
+      color: var(--color-blue) !important;
+      display: flex;
+      align-items: center;
+    }
+    span {
+      font-family: var(--font-family-text);
+      color: #273253;
+      display: block;
+      cursor: pointer;
+    }
+    .fwBlod {
+      font-weight: var(--font-weight-bold);
+    }
+    .link {
+      font-family: var(--font-family-text) !important;
+      color: var(--color-blue) !important;
+      display: flex;
+      align-items: center;
+
+      & > span.finished {
+        color: #108aef;
+        font-size: 14px;
+        font-weight: 700;
+        background: rgba(16, 138, 239, 0.2);
+        padding: 7.5px 11.5px;
+        border-radius: 6px;
+      }
+      & > span.rewarding {
+        color: #438f68;
+        font-size: 14px;
+        font-weight: 700;
+        background: rgba(67, 143, 104, 0.2);
+        padding: 7.5px 11.5px;
+        border-radius: 6px;
+      }
+      & > span.in_progress {
+        color: #ffa800;
+        font-size: 14px;
+        font-weight: 700;
+        background: rgba(255, 168, 0, 0.2);
+        padding: 7.5px 11.5px;
+        border-radius: 6px;
+      }
+    }
+
+    .blockRow {
+      display: flex;
+      align-items: center;
+      & > img {
+        margin-right: 8px;
+      }
+
+      & > span {
+        font-size: 17px;
+        font-weight: 700;
+        color: #273253;
+        display: block;
+        cursor: pointer;
+      }
+    }
+  }
+}

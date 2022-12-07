@@ -1,34 +1,154 @@
-@import '../../../../themes/variable.scss';
+@import "../../../../themes/variable.scss";
 
 header {
-  background: var(--header-background);
+  background-image: var(--linear-gradient-green);
   color: var(--text-color-reverse);
+  position: relative;
 
   .container {
     @include container;
+  }
+  .headerTop {
+    position: relative;
+    padding: 20px 0px;
 
-    padding: 20px 10px;
-
-    .headerTop {
+    .container {
       @include flex-between-center;
-
+      .logo {
+        position: relative;
+        .logoDesktop {
+          height: 50px;
+          width: auto;
+        }
+        .logoMobile {
+          height: 46px;
+          width: auto;
+        }
+        small {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          transform: translateY(50%);
+          font-weight: var(--font-weight-bold);
+          font-family: var(--font-family-title);
+          color: var(--color-yellow);
+          text-transform: uppercase;
+          &.mainnet {
+            color: var(--color-green-light);
+          }
+          &.preprod {
+            color: var(--color-blue);
+          }
+          &.preview {
+            color: var(--color-blue);
+          }
+          &.testnet {
+            color: var(--color-yellow);
+          }
+        }
+      }
+      .collapse {
+        width: 30px;
+        height: 30px;
+        background-image: url("../../../../commons/resources/icons/menu.svg");
+      }
+      .logoMobile,
+      .collapse {
+        display: none;
+      }
       .headerMenu {
         @include flex-end-center;
         gap: var(--menu-item-gap);
       }
     }
+  }
 
-    .headerMain {
-      text-align: center;
-      padding: 100px 0px 150px;
+  .headerMain {
+    position: relative;
+    text-align: center;
+    padding: 80px 0px 170px;
 
-      &>h1 {
+    .container {
+      & > h1 {
         color: var(--text-color-reverse);
+        @media screen and (max-width: 767px) {
+          font-size: 30px;;
+        }
+      }
+    }
+  }
+  &.home {
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: var(--header-background-image);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      mix-blend-mode: luminosity;
+    }
+  }
+  &.page {
+    .headerMain {
+      padding: 20px 0px;
+      .container {
+        padding: 30px 0px 0px;
+        margin-bottom: calc(-25px - 1.5715rem);
+        & > h1 {
+          display: none;
+        }
       }
     }
   }
 
+  @media screen and (max-width: 1199px) {
+    padding-top: 78px;
+    .headerTop {
+      padding: 16px 0px;
+      background-color: #ffffff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9998;
+      box-shadow: var(--shadow-raised);
+
+      .container {
+        .logoDesktop {
+          display: none;
+        }
+        .logoMobile,
+        .collapse {
+          display: block;
+        }
+        .headerMenu {
+          @include flex-center-start;
+          flex-direction: column;
+          padding: 20px;
+          position: absolute;
+          z-index: 9999;
+          top: 100%;
+          right: 100%;
+          width: 100%;
+          background-color: #ffffff;
+          color: var(--text-color);
+          gap: 15px;
+          box-shadow: var(--shadow-raised);
+
+          &.active {
+            right: 0%;
+          }
+        }
+      }
+    }
+  }
   @media screen and (max-width: 767px) {
-    background: var(--header-background-mobile);
+    background: var(--linear-gradient-green);
+    .headerMain {
+      padding: 62px 0px 48px;
+    }
   }
 }
