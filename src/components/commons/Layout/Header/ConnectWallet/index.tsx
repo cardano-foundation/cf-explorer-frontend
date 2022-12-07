@@ -24,7 +24,7 @@ const StyledButton = styled(ButtonBase)`
   line-height: 1;
   height: 40px;
   
-  @media screen and (max-width: 1199px) {
+  @media screen and (max-width: 1023px) {
     width: 160px;
     padding: 12px;
     gap: 8px;

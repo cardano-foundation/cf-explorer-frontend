@@ -93,3 +93,5 @@ export const handleClicktWithoutAnchor = (e: React.MouseEvent, fn: (e: React.Mou
   }
   fn(e);
 };
+
+export const isExtenalLink = (href?: string) => href && (href.search("http://") >= 0 || href.search("https://") >= 0);
