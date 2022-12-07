@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { menus } from "../../../../../commons/menus";
-import { Menu, MenuIcon, MenuText, SubMenu } from "./styles";
+import { Menu, MenuIcon, MenuText, SubMenu, SubMenuText } from "./styles";
 import { Collapse, ListItem, SxProps } from "@mui/material";
 import { isExtenalLink } from "../../../../../commons/utils/helper";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
@@ -96,10 +96,10 @@ const NavBarMenu: React.FC<Props> = ({ open, history }) => {
                           target="_blank"
                           rel="noreferrer"
                           title={title}
-                          sx={{ ...itemStyle, justifyContent: open ? "initial" : "center" }}
+                          sx={{ ...itemStyle, justifyContent: open ? "initial" : "center", paddingLeft: "69px" }}
                         >
                           {icon ? <MenuIcon src={icon} alt={title} iconOnly={!open} /> : null}
-                          <MenuText primary={title} open={open} />
+                          <SubMenuText primary={title} open={open} />
                         </ListItem>
                       ) : (
                         <ListItem
@@ -113,12 +113,13 @@ const NavBarMenu: React.FC<Props> = ({ open, history }) => {
                               ? { backgroundColor: theme => `${theme.colorGreen} !important` }
                               : {}),
                             justifyContent: open ? "initial" : "center",
+                            paddingLeft: "69px",
                           }}
                         >
                           {icon ? (
                             <MenuIcon src={icon} alt={title} iconOnly={!open} active={pathname === href} />
                           ) : null}
-                          <MenuText primary={title} open={open} active={pathname === href} />
+                          <SubMenuText primary={title} open={open} active={pathname === href} />
                         </ListItem>
                       )
                     ) : null;
