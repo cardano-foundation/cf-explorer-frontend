@@ -1,18 +1,33 @@
-import React from 'react'; 
-import { ComingSoonIcon } from '../../../../commons/resources';
-import styles from './index.module.scss';
+import { styled } from "@mui/material";
+import React from "react";
+import { ComingSoonIcon } from "../../../../commons/resources";
+import { BoxRaised } from "../../../commons/BoxRaised";
 
-interface Props { }
- 
+interface Props {}
+
+const ComingSoonContainer = styled(BoxRaised)`
+  margin-bottom: 24px;
+  padding: 72px;
+  @media screen and (max-width: 1023px) {
+    padding: 48px;
+  }
+`;
+const Image = styled("img")`
+  width: auto;
+  height: 166px;
+  margin-bottom: 1rem;
+`;
+
+const Title = styled("h3")`
+  margin-bottom: 0;
+`;
 const ComingSoon: React.FC<Props> = () => {
-
   return (
-    <div className={styles.comingsoon}>
-      <img src={ComingSoonIcon} alt="Coming soon"/>
-      <h3>Coming Soon</h3>
-    </div>
-  )
-
-}
+    <ComingSoonContainer>
+      <Image src={ComingSoonIcon} alt="Coming soon" />
+      <Title>Coming Soon</Title>
+    </ComingSoonContainer>
+  );
+};
 
 export default ComingSoon;
