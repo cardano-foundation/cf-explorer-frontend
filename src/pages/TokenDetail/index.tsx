@@ -26,13 +26,15 @@ const TokenDetail: React.FC<ITokenDetail> = () => {
         });
 
         setTokenMetadata({
-          policy: subjects[0].policy,
-          logo: subjects[0].logo.value,
-          decimals: subjects[0].decimals.value,
+          policy: subjects[0]?.policy,
+          logo: subjects[0]?.logo.value,
+          decimals: subjects[0]?.decimals.value,
         });
       }
     }
-    loadMetadata();
+    try {
+      loadMetadata();
+    } catch (err) {}
   }, [tokenOverview]);
 
   const mergedToken: IToken = useMemo(

@@ -50,10 +50,12 @@ const Tokens: React.FC<ITokenList> = () => {
         );
       }
     }
-    loadMetadata();
+
+    try {
+      loadMetadata();
+    } catch (err) {}
   }, [tokensOverview]);
 
-  // TODO: udpate mergeToken later
   const mergedToken: IToken[] = useMemo(() => {
     return tokensOverview.map(token => {
       const findedToken = tokenMetadata.find(_ => token.policy === _.policy);

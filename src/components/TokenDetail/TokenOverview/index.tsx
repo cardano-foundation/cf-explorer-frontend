@@ -8,7 +8,7 @@ import Card from "../../commons/Card";
 import CopyButton from "../../commons/CopyButton";
 import DetailCard from "../../commons/DetailCard";
 
-import { Logo, TokenId, TokenIdValue } from "./styles";
+import { AssetName, Logo, TokenId, TokenIdValue } from "./styles";
 
 interface ITokenOverview {
   data: IToken | null;
@@ -31,10 +31,10 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
     {
       title: "Asset Name",
       value: (
-        <>
+        <AssetName>
           {data?.logo && <Logo src={`data:/image/png;base64,${data.logo}`} alt="Logo Icon" />}
           {data?.displayName}
-        </>
+        </AssetName>
       ),
     },
 

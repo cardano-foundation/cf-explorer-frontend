@@ -6,6 +6,11 @@ export const TokenId = styled("div")`
   justify-content: center;
 `;
 
+export const AssetName = styled("div")`
+  display: flex;
+  align-items: center;
+`;
+
 export const TokenIdValue = styled("span")`
   color: ${props => props.theme.colorBlue};
   margin-right: 12.25px;
