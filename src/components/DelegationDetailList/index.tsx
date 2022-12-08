@@ -1,4 +1,4 @@
-import { Tooltip } from "antd";
+import { Tooltip } from "@mui/material";
 import { parse, stringify } from "qs";
 import { Link, useHistory, useLocation } from "react-router-dom";
 
@@ -121,13 +121,14 @@ const DelegationStakingDelegatorsList = ({
       title: "Delegator",
       key: "delegator",
       minWidth: "50px",
-      render: data => (
-        <Tooltip placement="bottom" title={data.address || ""}>
-          <Link to={"#"} className={`${styles.col} ${styles.link}`}>
-            {getShortWallet(data.address || "")}
-          </Link>
-        </Tooltip>
-      ),
+      render: data =>
+        data.address && (
+          <Tooltip placement="bottom" title={data.address || ""}>
+            <Link to={"#"} className={`${styles.col} ${styles.link}`}>
+              {getShortWallet(data.address || "")}
+            </Link>
+          </Tooltip>
+        ),
     },
     {
       title: "Total Value(A)",

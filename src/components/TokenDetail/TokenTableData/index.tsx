@@ -1,4 +1,4 @@
-import { Select } from "antd";
+import { styled } from "@mui/material";
 import { useState } from "react";
 
 import Card from "../../commons/Card";
@@ -46,12 +46,18 @@ const TokenTableData: React.FC<ITokenTableData> = () => {
     <Card
       title={getTitle()}
       extra={
-        <Select
-          className={styles.select}
-          defaultValue="transactions"
-          onChange={(value: string) => setSelect(value)}
-          options={options}
-        />
+        <SelectComponent
+          value={selected || "transactions"}
+          onChange={e => {
+            setSelect(e.target.value);
+          }}
+        >
+          {options.map((o, i) => (
+            <OptionSelect key={i} value={o.value}>
+              {o.label}
+            </OptionSelect>
+          ))}
+        </SelectComponent>
       }
     >
       {renderTable()}
@@ -60,3 +66,22 @@ const TokenTableData: React.FC<ITokenTableData> = () => {
 };
 
 export default TokenTableData;
+
+const SelectComponent = styled("select")(({ theme }) => ({
+  height: "40px",
+  minWidth: 250,
+  borderRadius: theme.borderRadius,
+  border: "1px solid #0000001a",
+  padding: "0 10px",
+  color: theme.textColor,
+  textAlignLast: "left",
+  ":focus-visible": {
+    outline: "none",
+  },
+}));
+
+const OptionSelect = styled("option")(({ theme }) => ({
+  padding: "6px 0",
+  textAlign: "center",
+  height: "40px",
+}));

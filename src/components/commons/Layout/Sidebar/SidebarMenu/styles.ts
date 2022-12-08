@@ -4,9 +4,7 @@ export const Menu = styled(List)`
   max-height: calc(100vh - 105px);
   overflow-y: auto;
   overflow-x: hidden;
-  @media screen and (max-width: 1023px) {
-    color: inherit;
-  }
+  margin-bottom: 5px;
 `;
 
 export const MenuIcon = styled("img")<{ iconOnly?: boolean; active?: boolean; textOnly?: boolean }>`
@@ -41,5 +39,17 @@ export const SubMenuText = styled(MenuText)`
   * {
     font-weight: var(--font-weight-normal) !important;
     color: ${props => (props.active ? props.theme.textColorReverse : props.theme.textColorPale)};
+  }
+`;
+
+export const NavbarMenuBottom = styled("div")`
+  display: none;
+  @media screen and (max-width: 1023px) {
+    display: flex;
+    align-items: center;
+    gap: 10px 20px;
+    flex-wrap: wrap;
+    padding: 0px 20px 10px;
+    margin-bottom: 10px;
   }
 `;
