@@ -94,7 +94,12 @@ const SidebarMenu: React.FC<Props> = ({ history }) => {
                   sx={theme => ({
                     ...itemStyle,
                     justifyContent: sidebar ? "initial" : "center",
-                    ...(pathname === href ? { backgroundColor: theme => `${theme.colorGreen} !important` } : {}),
+                    ...(index === active
+                      ? {
+                          backgroundColor: theme => `${theme.colorGreenPale} !important`,
+                          color: theme => theme.colorGreen,
+                        }
+                      : { color: theme => theme.textColorPale }),
                     [theme.breakpoints.down(1023)]: {
                       padding: "5px 20px",
                       marginBottom: 0,

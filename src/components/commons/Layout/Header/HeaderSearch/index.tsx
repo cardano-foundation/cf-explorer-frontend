@@ -2,7 +2,6 @@ import React, { FormEvent, useState } from "react";
 import { Button, Input, MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { HeaderSearchIcon } from "../../../../../commons/resources";
-import styles from "./index.module.scss";
 import { routers } from "../../../../../commons/routers";
 import { stringify } from "qs";
 import { BiChevronDown } from "react-icons/bi";
@@ -50,7 +49,7 @@ const StyledSelect = styled(Select)<{ isHome: boolean }>`
     font-size: 1.75rem;
   }
 `;
-const Option = styled(MenuItem)<{ isHome: boolean }>`
+const SelectOption = styled(MenuItem)<{ isHome: boolean }>`
   font-size: ${props => (props.isHome ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
   color: ${props => props.theme.textColor};
   font-weight: var(--font-weight-normal);
@@ -143,9 +142,9 @@ const HeaderSearch: React.FC<Props> = ({ isHome }) => {
     <Form onSubmit={handleSearch} isHome={isHome}>
       <StyledSelect onChange={handleChangeFilter} value={filter} IconComponent={BiChevronDown} isHome={isHome}>
         {options.map(({ value, label }) => (
-          <Option key={value} value={value} isHome={isHome}>
+          <SelectOption key={value} value={value} isHome={isHome}>
             {label}
-          </Option>
+          </SelectOption>
         ))}
       </StyledSelect>
       <StyledInput
@@ -158,7 +157,7 @@ const HeaderSearch: React.FC<Props> = ({ isHome }) => {
         onKeyDown={handleKeydown}
         disableUnderline
       />
-      <SubmitButton className={styles.buttonSearch} type="submit" isHome={isHome}>
+      <SubmitButton type="submit" isHome={isHome}>
         <Image src={HeaderSearchIcon} alt="search" isHome={isHome} />
       </SubmitButton>
     </Form>
