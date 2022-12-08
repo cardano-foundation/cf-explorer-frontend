@@ -1,4 +1,4 @@
-import { Skeleton } from "antd";
+import { Skeleton } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -23,7 +23,7 @@ const TokenLogo: React.FC<ITokenLogo> = ({ tokenId, className }) => {
     loadImage();
   }, []);
 
-  if (loading) return <Skeleton.Input active className={className} />;
+  if (loading) return <Skeleton variant="rectangular" className={className} />;
   return <img src={`data:/image/png;base64,${logo}`} alt="Icon Logo" className={className} />;
 };
 

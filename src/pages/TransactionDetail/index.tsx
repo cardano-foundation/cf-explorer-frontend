@@ -1,11 +1,11 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import { Skeleton } from "@mui/material";
 
 import TransactionOverview from "../../components/TransactionDetail/TransactionOverview";
 import TransactionMetadata from "../../components/TransactionDetail/TransactionMetadata";
 import styles from "./index.module.scss";
 import useFetch from "../../commons/hooks/useFetch";
-import { Skeleton } from "antd";
 import Card from "../../components/commons/Card";
 
 interface Props {}
@@ -28,8 +28,8 @@ export default Transaction;
 const TransactionMetadataSekeleton = () => {
   return (
     <Card>
-      <Skeleton.Input block active className={styles.header} />
-      <Skeleton.Input block active className={styles.body} />
+      <Skeleton variant="rectangular" className={styles.header} />
+      <Skeleton variant="rectangular" className={styles.body} />
     </Card>
   );
 };

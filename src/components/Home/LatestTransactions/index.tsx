@@ -1,5 +1,4 @@
-import { Grid, Skeleton } from "@mui/material";
-import { Tooltip } from "antd";
+import { Grid, Skeleton, Tooltip } from "@mui/material"; 
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
@@ -42,10 +41,14 @@ const LatestTransactions: React.FC = () => {
                   <Grid item xl lg={3} xs={6} key={index}>
                     <Item>
                       <ItemHeader>
-                        <Skeleton />
-                        <Skeleton />
+                        <Skeleton variant="circular" width={50} height={40} />
+                        <Skeleton variant="text" width={"100%"} />
                       </ItemHeader>
                       <Skeleton />
+                      <Skeleton variant="text" height={30} width={"100%"} />
+                      <Skeleton variant="text" height={30} width={"100%"} />
+                      <Skeleton variant="text" height={30} width={"100%"} />
+                      <Skeleton variant="text" height={30} width={"100%"} />
                     </Item>
                   </Grid>
                 );

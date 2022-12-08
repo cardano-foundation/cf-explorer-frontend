@@ -17,7 +17,7 @@ import {
   ProgressTitle,
   SeemoreButton,
   SeemoreText,
-  StyledProgress,
+  StyledLinearProgress,
   Title,
   TopDelegateContainer,
 } from "./style";
@@ -81,7 +81,7 @@ const TopDelegationPools: React.FC<Props> = () => {
       render: r => (
         <ProgressContainer>
           <ProgressTitle>{r.saturation || 80}%</ProgressTitle>
-          <StyledProgress value={r.saturation || 80} width={150} />
+          <StyledLinearProgress variant="determinate" value={r.saturation || 80} style={{ width: 150 }} />
         </ProgressContainer>
       ),
     },

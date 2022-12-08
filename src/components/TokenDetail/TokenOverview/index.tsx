@@ -1,4 +1,4 @@
-import { Tooltip } from "antd";
+import { Tooltip } from "@mui/material";
 import moment from "moment";
 import React from "react";
 import { getShortHash, numberWithCommas } from "../../../commons/utils/helper";

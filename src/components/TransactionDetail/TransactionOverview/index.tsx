@@ -7,7 +7,7 @@ import DetailCard from "../../commons/DetailCard";
 import { formatADA, getShortHash } from "../../../commons/utils/helper";
 
 import styles from "./index.module.scss";
-import { Tooltip } from "antd";
+import { Tooltip } from "@mui/material";
 import { AIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
 import CopyButton from "../../commons/CopyButton";
@@ -25,7 +25,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         <div className={styles.alignCenter}>
           <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", data?.tx.hash || "")} className={styles.link}>
             <Tooltip title={data?.tx.hash || ""} placement="top">
-              {getShortHash(data?.tx.hash || "")}
+              <span>{getShortHash(data?.tx.hash || "")}</span>
             </Tooltip>
           </Link>
           <CopyButton text={data?.tx.hash || ""} className={styles.icon} />

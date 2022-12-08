@@ -3,18 +3,18 @@
 .wrapper {
   margin-top: 24px;
   min-height: 250px;
-
+  height: 100%;
   .skeleton {
     height: 250px;
     border-radius: 10px;
   }
 
   .info {
-    padding: 15px 40px;
+    padding-left: 40px;
+    padding-right: 40px;
     text-align: left;
     background-color: #fff;
     height: 100%;
-    width: 100%;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -94,15 +94,17 @@
     }
   }
   .progress {
-    @include flex-around-end;
+    display: flex;
+    align-items: center;
     box-shadow: var(--shadow-raised);
     background-color: #fff;
     height: 100%;
     overflow-x: auto;
     padding: 25px 30px;
     gap: 10px;
-
+    justify-content: space-evenly;
     @media screen and (max-width: 767px) {
+      height: auto;
       @include flex-center-center;
       padding: 25px 20px;
       flex-wrap: wrap;
@@ -119,32 +121,36 @@
       color: var(--title-color-pale);
       margin-top: 8px;
     }
+    .data {
+      display: flex;
+      align-items: flex-end;
+      height: 100%;
+      .progessInfo {
+        margin-top: 14px;
+        text-align: left;
 
-    .progessInfo {
-      margin-top: 14px;
-      text-align: left;
-
-      @media screen and (max-width: 575px) {
-        width: 100%;
-        @include flex-between-center;
-        flex-wrap: wrap;
-      }
-      .row {
-        display: flex;
-        align-items: center;
-        margin-top: 12px;
-        font-size: var(--font-size-text-large);
-        .img {
-          margin-right: 8px;
+        @media screen and (max-width: 575px) {
+          width: 100%;
+          @include flex-between-center;
+          flex-wrap: wrap;
         }
-        .link {
-          font-family: var(--font-family-text) !important;
-          color: var(--color-blue) !important;
-        }
-        .title {
-          font-size: var(--font-size-text-small);
-          font-family: var(--font-family-text);
-          color: var(--title-color);
+        .row {
+          display: flex;
+          align-items: center;
+          margin-top: 12px;
+          font-size: var(--font-size-text-large);
+          .img {
+            margin-right: 8px;
+          }
+          .link {
+            font-family: var(--font-family-text) !important;
+            color: var(--color-blue) !important;
+          }
+          .title {
+            font-size: var(--font-size-text-small);
+            font-family: var(--font-family-text);
+            color: var(--title-color);
+          }
         }
       }
     }
@@ -204,7 +210,6 @@
         width: 50%;
         display: flex;
         flex-direction: column;
-
         .title {
           color: #667085;
           font-size: 14px;

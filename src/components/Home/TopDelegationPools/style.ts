@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, LinearProgress, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 import { BoxRaised } from "../../commons/BoxRaised";
 import Table from "../../commons/Table";
@@ -134,6 +134,19 @@ export const StyledProgress = styled("div")<{ value: number; width?: number }>`
     height: 100%;
     border-radius: 6px;
     width: ${props => props.value}%;
+    background: ${props => props.theme.linearGradientGreen};
+  }
+`;
+
+export const StyledLinearProgress = styled(LinearProgress)`
+  display: inline-block;
+  width: 100%;
+  height: 8px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  margin-left: 8px;
+  & > .MuiLinearProgress-barColorPrimary {
+    border-radius: 8px;
     background: ${props => props.theme.linearGradientGreen};
   }
 `;
