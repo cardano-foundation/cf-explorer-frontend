@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import BlockListTable from "../../components/BlockLists";
 
-import { Container } from "./styles";
+import { StyledContainer } from "./styles";
 
 const BlockList = () => {
   //TO DO
@@ -17,7 +17,7 @@ const BlockList = () => {
   });
 
   return (
-    <Container>
+    <StyledContainer>
       <BlockListTable
         blockLists={data}
         total={total}
@@ -26,7 +26,7 @@ const BlockList = () => {
         loading={loading}
         initialized={initialized}
       />
-    </Container>
+    </StyledContainer>
   );
 };
 

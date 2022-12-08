@@ -1,6 +1,7 @@
 import { styled } from "@mui/material";
+import Container from "../../components/commons/Container";
 
-export const Container = styled("div")`
+export const StyledContainer = styled(Container)`
   width: 100%;
   max-width: var(--container-max-width);
   margin: 0px var(--container-margin);

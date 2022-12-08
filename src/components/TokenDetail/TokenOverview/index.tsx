@@ -1,4 +1,4 @@
-import { Tooltip } from "@mui/material";
+import { Skeleton, Tooltip } from "@mui/material";
 import moment from "moment";
 import React from "react";
 
@@ -13,9 +13,10 @@ import { AssetName, Logo, TokenId, TokenIdValue } from "./styles";
 interface ITokenOverview {
   data: IToken | null;
   loading: boolean;
+  tokenMetadataLoading: boolean;
 }
 
-const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
+const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataLoading }) => {
   const listDetails = [
     {
       title: "Token ID",
@@ -32,7 +33,11 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: "Asset Name",
       value: (
         <AssetName>
-          {data?.logo && <Logo src={`data:/image/png;base64,${data.logo}`} alt="Logo Icon" />}
+          {tokenMetadataLoading ? (
+            <Skeleton style={{ width: 30, height: 30, marginRight: 5 }} />
+          ) : data?.logo ? (
+            <Logo src={`data:/image/png;base64,${data.logo}`} alt="Logo" />
+          ) : null}
           {data?.displayName}
         </AssetName>
       ),

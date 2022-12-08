@@ -13,28 +13,36 @@ const TokenDetail: React.FC<ITokenDetail> = () => {
   const params = useParams<{ tokenId: string }>();
   const { data: tokenOverview, loading } = useFetch<ITokenOverview>(`tokens/${params.tokenId}`);
 
+  const [tokenMetadataLoading, setTokenMetadataLoading] = useState<boolean>(false);
   const [tokenMetadata, setTokenMetadata] = useState<ITokenMetadata>({});
 
   useEffect(() => {
     async function loadMetadata() {
       if (tokenOverview) {
-        const {
-          data: { subjects },
-        } = await axios.post("/metadata/query", {
-          subjects: [`${tokenOverview.policy}${tokenOverview.name}`],
-          properties: ["policy", "logo", "decimals"],
-        });
+        setTokenMetadataLoading(true);
 
-        setTokenMetadata({
-          policy: subjects[0]?.policy,
-          logo: subjects[0]?.logo.value,
-          decimals: subjects[0]?.decimals.value,
-        });
+        try {
+          const {
+            data: { subjects },
+          } = await axios.post("/metadata/query", {
+            subjects: [`${tokenOverview.policy}${tokenOverview.name}`],
+            properties: ["policy", "logo", "decimals"],
+          });
+
+          if (subjects.length !== 0) {
+            setTokenMetadata({
+              policy: subjects[0]?.policy,
+              logo: subjects[0]?.logo.value,
+              decimals: subjects[0]?.decimals.value,
+            });
+          }
+        } catch (err) {}
+
+        setTokenMetadataLoading(false);
       }
+      return true;
     }
-    try {
-      loadMetadata();
-    } catch (err) {}
+    loadMetadata();
   }, [tokenOverview]);
 
   const mergedToken: IToken = useMemo(
@@ -44,7 +52,7 @@ const TokenDetail: React.FC<ITokenDetail> = () => {
 
   return (
     <StyledContainer>
-      <TokenOverview data={mergedToken} loading={loading} />
+      <TokenOverview data={mergedToken} loading={loading} tokenMetadataLoading={tokenMetadataLoading} />
       {/* <TokenTableData /> */}
     </StyledContainer>
   );

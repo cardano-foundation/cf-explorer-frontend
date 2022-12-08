@@ -14,6 +14,7 @@ const Tokens: React.FC<ITokenList> = () => {
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
 
+  const [tokenMetadataLoading, setTokenMetadataLoading] = useState<boolean>(false);
   const [tokenMetadata, setTokenMetadata] = useState<ITokenMetadata[]>([]);
 
   const {
@@ -33,27 +34,31 @@ const Tokens: React.FC<ITokenList> = () => {
   useEffect(() => {
     async function loadMetadata() {
       if (tokensOverview) {
+        setTokenMetadataLoading(true);
         const query: string[] = tokensOverview.map(token => `${token?.policy}${token?.name}`);
-        const {
-          data: { subjects },
-        } = await axios.post("/metadata/query", {
-          subjects: query,
-          properties: ["policy", "logo", "decimals"],
-        });
 
-        setTokenMetadata(
-          subjects.map((item: any) => ({
-            policy: item.policy,
-            logo: item.logo.value,
-            decimals: item.decimals.value,
-          }))
-        );
+        try {
+          const {
+            data: { subjects },
+          } = await axios.post("/metadata/query", {
+            subjects: query,
+            properties: ["policy", "logo"],
+          });
+
+          setTokenMetadata(
+            subjects.map((item: any) => ({
+              policy: item.policy,
+              logo: item.logo.value,
+            }))
+          );
+        } catch (err) {}
+
+        setTokenMetadataLoading(false);
       }
+      return true;
     }
 
-    try {
-      loadMetadata();
-    } catch (err) {}
+    loadMetadata();
   }, [tokensOverview]);
 
   const mergedToken: IToken[] = useMemo(() => {
@@ -68,6 +73,7 @@ const Tokens: React.FC<ITokenList> = () => {
       <TokenList
         tokens={mergedToken}
         tokensLoading={tokensLoading}
+        tokensMetadataLoading={tokenMetadataLoading}
         initialized={initialized}
         currentPage={currentPage}
         total={total}
