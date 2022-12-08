@@ -1,4 +1,5 @@
-import Tooltip, { TooltipPlacement } from "antd/es/tooltip";
+import { Tooltip, TooltipProps } from "@mui/material";
+
 import React, { useEffect, useState } from "react";
 import { BiCheckCircle } from "react-icons/bi";
 import { IoMdCopy } from "react-icons/io";
@@ -8,7 +9,7 @@ import styles from "./index.module.scss";
 
 interface CopyButtonProps {
   text?: string;
-  placement?: TooltipPlacement;
+  placement?: TooltipProps["placement"];
   className?: string;
   children?: React.ReactNode;
   onClick?: (e: React.MouseEvent) => void;

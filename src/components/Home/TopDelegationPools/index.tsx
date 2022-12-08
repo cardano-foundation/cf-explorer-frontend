@@ -1,4 +1,4 @@
-import { Progress } from "antd";
+import { LinearProgress, styled } from "@mui/material";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
@@ -74,16 +74,12 @@ const TopDelegationPools: React.FC<Props> = () => {
       key: "output",
       render: r => (
         <div className={styles.progress}>
-          <span>{r.saturation || 80}%</span>
-          <Progress
+          <span>{r.saturation || 0}%</span>
+          <StyledLinearProgress
+            variant="determinate"
             className={styles.progressBar}
-            gapPosition="top"
-            percent={r.saturation || 80}
-            status="active"
-            strokeColor={"var(--linear-gradient-green)"}
-            trailColor={"var(--border-color)"}
-            width={150}
-            showInfo={false}
+            value={r.saturation || 0}
+            style={{ width: 150 }}
           />
         </div>
       ),
@@ -124,3 +120,16 @@ const TopDelegationPools: React.FC<Props> = () => {
 };
 
 export default TopDelegationPools;
+
+const StyledLinearProgress = styled(LinearProgress)`
+  display: inline-block;
+  width: 100%;
+  height: 8px;
+  border-radius: 34px;
+  background: rgba(0, 0, 0, 0.1);
+  margin-right: 8px;
+  & > .MuiLinearProgress-barColorPrimary {
+    border-radius: 34px;
+    background: ${props => props.theme.linearGradientGreen};
+  }
+`;

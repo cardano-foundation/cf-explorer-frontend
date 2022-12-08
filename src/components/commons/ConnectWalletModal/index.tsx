@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { Modal, Spin } from "antd";
 import { useSelector } from "react-redux";
 import { setOpenModal } from "../../../stores/user";
 import { SUPPORTED_WALLETS } from "../../../commons/utils/constants";
 import styles from "./index.module.scss";
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { RootState } from "../../../stores/types";
+import { CircularProgress, Dialog, DialogTitle, IconButton } from "@mui/material";
+import { IoMdClose } from "react-icons/io";
 
 const ConnectWalletModal: React.FC = () => {
   const { connect } = useCardano();
-  const { openModal, theme } = useSelector(({ user }: RootState) => user);
+  const { openModal } = useSelector(({ user }: RootState) => user);
   const [walletConnecting, setWalletConnecting] = useState<string | null>(null);
 
   const handleClose = () => {
@@ -28,40 +29,34 @@ const ConnectWalletModal: React.FC = () => {
   };
 
   return (
-    <Modal
+    <Dialog
+      onClose={walletConnecting ? undefined : handleClose}
       open={openModal}
-      onCancel={walletConnecting ? undefined : handleClose}
-      footer={null}
-      data-theme={theme}
-      className={`${styles.connectModal} ${
-        walletConnecting ? styles.connecting : ""
-      }`}
+      className={`${styles.connectModal} ${walletConnecting ? styles.connecting : ""}`}
+      PaperProps={{ style: { borderRadius: 20 } }}
     >
       <div className={styles.connectContainer}>
-        <h3>Connect to a wallet</h3>
-        {SUPPORTED_WALLETS.map((wallet) => {
+        <DialogTitle className={styles.dialogTitle}>
+          <h3 className={styles.title}>Connect to a Wallet</h3>
+          <IconButton onClick={handleClose} className={styles.closeIcon}>
+            <IoMdClose />
+          </IconButton>
+        </DialogTitle>
+        {SUPPORTED_WALLETS.map(wallet => {
           return (
             <div
               key={wallet.name}
-              className={`${styles.wallet} ${
-                walletConnecting === wallet.name ? styles.selected : ""
-              }`}
-              onClick={() =>
-                walletConnecting ? null : handleConnect(wallet.name)
-              }
+              className={`${styles.wallet} ${walletConnecting === wallet.name ? styles.selected : ""}`}
+              onClick={() => (walletConnecting ? null : handleConnect(wallet.name))}
             >
               <img src={wallet.icon} alt={wallet.name} />
-              {walletConnecting === wallet.name ? (
-                <Spin className={styles.loading} />
-              ) : (
-                ""
-              )}
+              {walletConnecting === wallet.name ? <CircularProgress className={styles.loading} /> : ""}
               <h4>{wallet.name}</h4>
             </div>
           );
         })}
       </div>
-    </Modal>
+    </Dialog>
   );
 };
 

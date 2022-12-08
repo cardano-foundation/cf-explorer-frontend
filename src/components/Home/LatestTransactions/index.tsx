@@ -1,5 +1,5 @@
-import { Col, Row, Skeleton, Tooltip } from "antd";
 import React from "react";
+import { Grid, Skeleton, Tooltip } from "@mui/material";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { BlankBlueIcon, AIcon } from "../../../commons/resources";
@@ -18,28 +18,32 @@ const LatestTransactions: React.FC = () => {
           <small>See All</small>
         </NavLink>
       </div>
-      {loading ? (
-        <Row gutter={15}>
+      {loading && (
+        <Grid container columns={24} spacing={2}>
           {new Array(4).fill(0).map((_, index) => {
             return (
-              <Col span={24} sm={12} lg={6} key={index}>
+              <Grid item xs={24} sm={12} lg={6} key={index}>
                 <div className={styles.item}>
                   <div className={styles.priceValue}>
-                    <Skeleton.Avatar className={styles.icon} />
-                    <Skeleton.Input />
+                    <Skeleton variant="circular" width={50} height={40} />
+                    <Skeleton variant="text" width={"100%"} />
                   </div>
-                  <Skeleton />
+                  <Skeleton variant="text" height={30} width={"100%"} />
+                  <Skeleton variant="text" height={30} width={"100%"} />
+                  <Skeleton variant="text" height={30} width={"100%"} />
+                  <Skeleton variant="text" height={30} width={"100%"} />
                 </div>
-              </Col>
+              </Grid>
             );
           })}
-        </Row>
-      ) : (
-        <Row gutter={15}>
+        </Grid>
+      )}
+      {!loading && (
+        <Grid container columns={24} spacing={2}>
           {data.slice(0, 4).map(item => {
             const { hash, addressesInput, addressesOutput, blockNo, totalOutput } = item;
             return (
-              <Col key={hash} span={24} sm={12} lg={6}>
+              <Grid item xs={24} sm={12} lg={6} key={hash}>
                 <div
                   onClick={e =>
                     handleClicktWithoutAnchor(e, () =>
@@ -93,10 +97,10 @@ const LatestTransactions: React.FC = () => {
                     );
                   })}
                 </div>
-              </Col>
+              </Grid>
             );
           })}
-        </Row>
+        </Grid>
       )}
       <NavLink to={routers.BLOCK_LIST} className={styles.seemoreMobile}>
         <small>See All</small>

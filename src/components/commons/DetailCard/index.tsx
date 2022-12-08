@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, LinearProgress, Skeleton, styled } from "@mui/material";
+import { Box, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-circular-progressbar/dist/styles.css";
 
@@ -58,26 +58,27 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
               <div className={styles.epochTitle}>EPOCH</div>
             </>
           </ProgressCircle>
-
-          <div className={styles.progessInfo}>
-            <div className={styles.row}>
-              <img className={styles.img} src={blockImg} alt="Block Icon" />
-              <div>
-                <div className={styles.title}>Block</div>
-                <Link
-                  className={`${styles.fwBold} ${styles.link}`}
-                  to={routers.BLOCK_DETAIL.replace(":blockId", `${progress.block}`)}
-                >
-                  {progress.block}
-                </Link>
-              </div>
-            </div>
-            <div className={styles.row}>
-              <img className={styles.img} src={slotImg} alt="Slot Icon" />
-              <div>
-                <div className={styles.title}>Slot</div>
+          <div className={styles.data}>
+            <div className={styles.progessInfo}>
+              <div className={styles.row}>
+                <img className={styles.img} src={blockImg} alt="Block Icon" />
                 <div>
-                  <span className={styles.fwBold}>{progress.currentSlot}</span> / {MAX_SLOT_EPOCH}
+                  <div className={styles.title}>Block</div>
+                  <Link
+                    className={`${styles.fwBold} ${styles.link}`}
+                    to={routers.BLOCK_DETAIL.replace(":blockId", `${progress.block}`)}
+                  >
+                    {progress.block}
+                  </Link>
+                </div>
+              </div>
+              <div className={styles.row}>
+                <img className={styles.img} src={slotImg} alt="Slot Icon" />
+                <div>
+                  <div className={styles.title}>Slot</div>
+                  <div>
+                    <span className={styles.fwBold}>{progress.currentSlot}</span> / {MAX_SLOT_EPOCH}
+                  </div>
                 </div>
               </div>
             </div>
@@ -146,28 +147,28 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
 
   return (
     <Grid container className={styles.wrapper} spacing={2}>
-      <Grid item md={7} xs={12}>
+      <Grid item lg={7} md={12}>
         <Card className={styles.info}>
           {listDetails.map((item, idx) => (
-            <div className={styles.detailItem} key={idx}>
+            <Box className={styles.detailItem} key={idx}>
               {item.title ? (
                 <>
-                  <div>
+                  <Box>
                     <img src={infoIcon} alt="info" className={styles.img} />
-                  </div>
-                  <div className={styles.row}>
-                    <div style={{ minWidth: 150 }}>{item.title}:</div>
-                    <div className={` ${styles.fwBold} ${styles.value}`}>{item.value}</div>
-                  </div>
+                  </Box>
+                  <Box className={styles.row}>
+                    <Box style={{ minWidth: 150 }}>{item.title}:</Box>
+                    <Box className={` ${styles.fwBold} ${styles.value}`}>{item.value}</Box>
+                  </Box>
                 </>
               ) : (
                 <>{item.value}</>
               )}
-            </div>
+            </Box>
           ))}
         </Card>
       </Grid>
-      <Grid item md={5} xs={12}>
+      <Grid item lg={5} md={12}>
         <Card className={styles.progress}>{renderCard()}</Card>
       </Grid>
     </Grid>

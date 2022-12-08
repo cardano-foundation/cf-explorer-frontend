@@ -7,7 +7,6 @@ import styles from "./index.module.scss";
 import { formatADA } from "../../commons/utils/helper";
 
 import sendImg from "../../commons/resources/images//summary-up.png";
-import { Progress } from "antd";
 import { routers } from "../../commons/routers";
 import { LinearProgress, styled } from "@mui/material";
 

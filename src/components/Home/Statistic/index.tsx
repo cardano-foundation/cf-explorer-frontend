@@ -1,108 +1,101 @@
-import { Col, Row, Skeleton } from "antd";
+import { Skeleton } from "@mui/material";
+import { Grid } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import {
   AdaPriceIcon,
   CurentEpochIcon,
-  DownRedIcon,
   LiveStakeIcon,
   MarketCapIcon,
   TotalADAStakeIcon,
-  UpGreenIcon,
 } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import { formatCurrency, formatPrice } from "../../../commons/utils/helper";
+import { formatCurrency } from "../../../commons/utils/helper";
 import styles from "./index.module.scss";
 
 interface Props {}
 
-const SkeletonBox = () => (
-  <div className={styles.box}>
-    <div className={styles.content}>
-      <Skeleton.Input active />
-      <Skeleton.Input active className={styles.skeleton} />
-      <Skeleton.Input active className={styles.skeleton} />
-    </div>
-  </div>
-);
+// const SkeletonBox = () => (
+//   <div className={styles.box}>
+//     <div className={styles.content}>
+//       <Skeleton variant="rectangular" />
+//       <Skeleton variant="rectangular" className={styles.skeleton} />
+//       <Skeleton variant="rectangular" className={styles.skeleton} />
+//     </div>
+//   </div>
+// );
 
 const HomeStatistic: React.FC<Props> = () => {
   const { data: currentEpoch, loading: loadingEpoch } = useFetch<EpochCurrentType>(`epoch/current`);
-  const adaPrice = 1;
+  // const adaPrice = 1;
   return (
-    <Row gutter={15} className={styles.statistic}>
-      <Col span={24} sm={24} xl={{ span: 12, offset: 0 }}>
-        <Row gutter={15}>
-          <Col span={24} sm={12} lg={8}>
-            {loadingEpoch ? (
-              <SkeletonBox />
-            ) : (
-              <div className={styles.box}>
-                <img className={styles.icon} src={AdaPriceIcon} alt="Ada Price" />
-                <div className={styles.content}>
-                  <h4>Ada Price</h4>
-                  <h3>TBA</h3>
-                  {/* <div className={styles.adaPrice}>
+    <>
+      <Grid container columns={30} spacing={2} className={styles.statistic}>
+        <Grid item xs={30} sm={15} md={10} xl={6}>
+          <div className={styles.box}>
+            <img className={styles.icon} src={AdaPriceIcon} alt="Ada Price" />
+            <div className={styles.content}>
+              <h4>Ada Price</h4>
+              {/* {loadingEpoch && <Skeleton variant="rectangular" height={25} className={styles.skeleton} />} */}
+              <h3>TBA</h3>
+              {/*{!loadingEpoch && <div className={styles.adaPrice}>
                     <small className={styles.priceValue}>TBA</small>
                     <span className={styles.priceRate}>
                       <img src={adaPrice > 0 ? UpGreenIcon : DownRedIcon} alt="price rate" />
                       <small className={adaPrice > 0 ? styles.priceUp : styles.priceDown}>TBA</small>
                     </span>
-                  </div> */}
-                </div>
-              </div>
-            )}
-          </Col>
-          <Col span={24} sm={12} lg={8}>
-            {loadingEpoch ? (
-              <SkeletonBox />
-            ) : (
-              <div className={styles.box}>
-                <img className={styles.icon} src={MarketCapIcon} alt="Market cap" />
-                <div className={styles.content}>
-                  <h4>Market cap</h4>
-                  <h3>TBA</h3>
-                </div>
-              </div>
-            )}
-          </Col>
-          <Col span={24} sm={{ span: 12, offset: 6 }} lg={{ span: 8, offset: 0 }}>
-            {loadingEpoch ? (
-              <SkeletonBox />
-            ) : (
-              <Link to={routers.EPOCH_DETAIL.replace(":epochId", `${currentEpoch?.no}`)} className={styles.box}>
-                <img className={styles.icon} src={CurentEpochIcon} alt="Curent Epoch" />
-                <div className={styles.content}>
-                  <h4>Curent Epoch</h4>
-                  <small>
+                  </div>} */}
+            </div>
+          </div>
+        </Grid>
+        <Grid item xs={30} sm={15} md={10} xl={6}>
+          <div className={styles.box}>
+            <img className={styles.icon} src={MarketCapIcon} alt="Market cap" />
+            <div className={styles.content}>
+              <h4>Market cap</h4>
+              <h3>TBA</h3>
+              {/* {loadingEpoch && <Skeleton variant="rectangular" height={25} className={styles.skeleton} />} */}
+            </div>
+          </div>
+        </Grid>
+        <Grid item xs={30} sm={15} md={10} xl={6}>
+          <Link to={routers.EPOCH_DETAIL.replace(":epochId", `${currentEpoch?.no}`)} className={styles.box}>
+            <img className={styles.icon} src={CurentEpochIcon} alt="Curent Epoch" />
+            <div className={styles.content}>
+              <h4>Curent Epoch</h4>
+              <small>
+                {loadingEpoch && <Skeleton variant="rectangular" height={25} className={styles.skeleton} />}
+                {!loadingEpoch && (
+                  <>
                     Epoch: <small className={styles.epochValue}>{formatCurrency(currentEpoch?.no || 0)}</small>
-                    <br />
+                  </>
+                )}
+                <br />
+                {loadingEpoch && <Skeleton variant="rectangular" height={25} className={styles.skeleton} />}
+                {!loadingEpoch && (
+                  <>
                     Slot:{" "}
                     <small className={styles.epochValue}>
                       {formatCurrency((currentEpoch?.slot || 0) % MAX_SLOT_EPOCH)}
                     </small>
-                    /{formatCurrency(MAX_SLOT_EPOCH)}
-                  </small>
-                </div>
-              </Link>
-            )}
-          </Col>
-        </Row>
-      </Col>
-      <Col span={24} lg={{ span: 16, offset: 4 }} xl={{ span: 8, offset: 0 }}>
-        <Row gutter={15}>
-          <Col span={24} sm={12}>
-            {loadingEpoch ? (
-              <SkeletonBox />
-            ) : (
-              <div className={styles.box}>
-                <img className={styles.icon} src={LiveStakeIcon} alt="Total ADA Stake" />
-                <div className={styles.content}>
-                  <h4>Live Stake</h4>
-                  <h3>TBA</h3>
-                  {/* <div className={styles.progress}>
+                    /{formatCurrency(MAX_SLOT_EPOCH)}{" "}
+                  </>
+                )}
+              </small>
+            </div>
+          </Link>
+        </Grid>
+        <Grid item xs={30} sm={15} md={10} xl={6}>
+          <div className={styles.box}>
+            <img className={styles.icon} src={LiveStakeIcon} alt="Total ADA Stake" />
+            <div className={styles.content}>
+              <h4>Live Stake</h4>
+              <h3>TBA</h3>
+              {/* {loadingEpoch && <Skeleton variant="rectangular" height={25} className={styles.skeleton} />} */}
+
+              {/* <div className={styles.progress}>
                     <div className={styles.progressActive} style={{ width: "70%" }}>
                       {"70%"}
                     </div>
@@ -118,26 +111,21 @@ const HomeStatistic: React.FC<Props> = () => {
                     </small>{" "}
                     (78%)
                   </small> */}
-                </div>
-              </div>
-            )}
-          </Col>
-          <Col span={24} sm={12}>
-            {loadingEpoch ? (
-              <SkeletonBox />
-            ) : (
-              <div className={styles.box}>
-                <img className={styles.icon} src={TotalADAStakeIcon} alt="Total ADA Stake" />
-                <div className={styles.content}>
-                  <h4>Total ADA Stake</h4>
-                  <h3>TBA</h3>
-                </div>
-              </div>
-            )}
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+            </div>
+          </div>
+        </Grid>
+        <Grid item xs={30} sm={15} md={10} xl={6}>
+          <div className={styles.box}>
+            <img className={styles.icon} src={TotalADAStakeIcon} alt="Total ADA Stake" />
+            <div className={styles.content}>
+              <h4>Total ADA Stake</h4>
+              <h3>TBA</h3>
+              {/* {loadingEpoch && <Skeleton variant="rectangular" height={25} className={styles.skeleton} />} */}
+            </div>
+          </div>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 
