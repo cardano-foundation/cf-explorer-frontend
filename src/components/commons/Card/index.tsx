@@ -14,7 +14,7 @@ const Card: React.FC<CardProps> = ({ title, children, className = "", extra }) =
     <div className={`${styles.card} ${className}`}>
       <div className={styles.groupTitle}>
         {title && <h2 className={styles.title}>{title}</h2>}
-        {extra && <div>{extra}</div>}
+        {extra && <>{extra}</>}
       </div>
       {children}
     </div>

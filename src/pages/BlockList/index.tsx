@@ -7,7 +7,6 @@ import BlockListTable from "../../components/BlockLists";
 import { StyledContainer } from "./styles";
 
 const BlockList = () => {
-  //TO DO
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
 

@@ -15,3 +15,17 @@ interface ITokenMetadata {
 }
 
 interface IToken extends ITokenOverview, ITokenMetadata {}
+
+interface ITokenTopHolderTable {
+  address: string;
+  name: string;
+  displayName: string;
+  fingerprint: string;
+  quantity: number;
+}
+
+interface ITokenMintingTable {
+  txHash: string;
+  amount: number;
+  time: string;
+}
