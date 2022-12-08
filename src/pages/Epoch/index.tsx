@@ -11,7 +11,7 @@ import { routers } from "../../commons/routers";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 
-import { Blocks, Container, Output, Status, StyledBold, StyledColorBlueDard } from "./styles";
+import { Blocks, StyledContainer, Output, Status, StyledBold, StyledColorBlueDard } from "./styles";
 
 const columns: Column<IDataEpoch>[] = [
   {
@@ -77,7 +77,7 @@ const Epoch: React.FC = () => {
   if (!data) return null;
 
   return (
-    <Container ref={ref}>
+    <StyledContainer>
       <Card title={"Epochs"}>
         <Table
           // className={styles.table}
@@ -97,7 +97,7 @@ const Epoch: React.FC = () => {
           }}
         />
       </Card>
-    </Container>
+    </StyledContainer>
   );
 };
 

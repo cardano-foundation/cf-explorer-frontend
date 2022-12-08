@@ -13,6 +13,7 @@ import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { Policy } from "../../../commons/resources";
 import { numberWithCommas } from "../../../commons/utils/helper";
 import ProgressCircle from "../ProgressCircle";
+import { Token } from "./styles";
 
 interface DetailCardProps {
   listDetails: { title?: string; value: React.ReactNode }[];
@@ -30,8 +31,8 @@ interface DetailCardProps {
     satulation: number;
   };
   tokenDetail?: {
-    decimal: number;
-    totalSupply: number;
+    decimal?: number;
+    totalSupply?: number;
   };
 }
 
@@ -115,30 +116,31 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
     }
     if (tokenDetail) {
       return (
-        <div className={styles.token}>
-          <div className={styles.policy}>
+        <Token.TokenWrapper>
+          <Token.PolicyHeader>
             <img src={Policy} alt="Policy Script Icon" />
             <h3>Policy Script</h3>
-          </div>
-          {/* TODO - add behavior */}
-          <button className={styles.bridgeInfo}>
+          </Token.PolicyHeader>
+          <Token.PolicyBody>
             <div>
-              <span className={styles.title}>WETH</span>
-              <span className={styles.details}>Wrapped ether bridged through Nomda</span>
+              <Token.PolicyBodyTitle>WETH</Token.PolicyBodyTitle>
+              <Token.PolicyBodyDetail>Wrapped ether bridged through Nomda</Token.PolicyBodyDetail>
             </div>
             <img src={infoIcon} alt="info" />
-          </button>
-          <div className={styles.tokenInfo}>
-            <div className={styles.tokenWrapper}>
-              <span className={styles.title}>Total Supply</span>
-              <span className={styles.details}>{numberWithCommas(tokenDetail.totalSupply)}</span>
-            </div>
-            <div className={`${styles.tokenWrapper} ${styles.borderLeft} ${styles.pl15}`}>
-              <span className={styles.title}>Decimal</span>
-              <span className={styles.details}>{tokenDetail.decimal}</span>
-            </div>
-          </div>
-        </div>
+          </Token.PolicyBody>
+          <Token.TokenDetail>
+            <Token.TokenDetailSupply>
+              <Token.TokenDetailTitle>Total Supply</Token.TokenDetailTitle>
+              <Token.TokenDetailDetail>
+                {tokenDetail?.totalSupply && numberWithCommas(tokenDetail.totalSupply)}
+              </Token.TokenDetailDetail>
+            </Token.TokenDetailSupply>
+            <Token.TokenDetailDecimal>
+              <Token.TokenDetailTitle>Decimal</Token.TokenDetailTitle>
+              <Token.TokenDetailDetail>{tokenDetail.decimal}</Token.TokenDetailDetail>
+            </Token.TokenDetailDecimal>
+          </Token.TokenDetail>
+        </Token.TokenWrapper>
       );
     }
 

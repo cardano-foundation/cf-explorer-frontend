@@ -1,8 +1,6 @@
 import { styled } from "@mui/material";
+import Container from "../../components/commons/Container";
 
-export const Container = styled("div")`
-  width: 100%;
-  max-width: var(--container-max-width);
-  margin: 0px var(--container-margin);
+export const StyledContainer = styled(Container)`
   padding: 30px 0 40px;
 `;
