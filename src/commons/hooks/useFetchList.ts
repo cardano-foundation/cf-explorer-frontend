@@ -54,6 +54,8 @@ const useFetchList = <T>(url: string, params: Params = {}): FetchReturnType<T> =
             setError(error?.response?.data?.message || error?.message);
         }
         setLoading(false);
+        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url, ...Object.values(params || {})]);
 
     useEffect(() => {

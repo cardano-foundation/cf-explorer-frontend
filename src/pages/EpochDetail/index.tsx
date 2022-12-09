@@ -8,7 +8,7 @@ import useFetchList from "../../commons/hooks/useFetchList";
 import EpochBlockList from "../../components/EpochDetail/EpochBlockList";
 import EpochOverview from "../../components/EpochDetail/EpochOverview";
 
-import { Container } from "./styles";
+import { StyledContainer } from "./styles";
 
 const EpochDetail: React.FC = () => {
   const { epochId } = useParams<{ epochId: string }>();
@@ -29,7 +29,7 @@ const EpochDetail: React.FC = () => {
   });
 
   return (
-    <Container>
+    <StyledContainer>
       <EpochOverview data={EpochDetail} loading={EpochDetailLoading} />
       <EpochBlockList
         data={BlockList}
@@ -39,7 +39,7 @@ const EpochDetail: React.FC = () => {
         total={total}
         totalPage={totalPage}
       />
-    </Container>
+    </StyledContainer>
   );
 };
 

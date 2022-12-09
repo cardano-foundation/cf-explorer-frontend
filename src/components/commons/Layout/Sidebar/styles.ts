@@ -9,39 +9,20 @@ export const NavbarContainer = styled.nav`
   overflow: hidden;
   padding: 25px 0px 0px;
   text-align: left;
-`;
-
-export const BackDrop = styled.div<{ isShow: boolean }>`
-  position: fixed;
-  z-index: 997;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #0006;
-  display: none;
   @media screen and (max-width: 1023px) {
-    display: ${props => (props.isShow ? "block" : "none")};
-  }
-`;
-
-export const HeaderTop = styled.div`
-  position: relative;
-  padding: 20px 0px;
-  @media screen and (max-width: 1023px) {
-    padding: 16px 0px;
+    height: auto;
     background-color: #ffffff;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 998;
-    box-shadow: ${props => props.theme.shadowRaised};
+    padding: 0px;
   }
-  & > div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+`;
+
+export const HeaderTop = styled("div")`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 998;
+  @media screen and (max-width: 1023px) {
+    padding: 15px;
   }
 `;
 
@@ -51,6 +32,9 @@ export const LogoLink = styled(Link)<{ open?: boolean }>`
   margin-left: ${props => (props.open ? 30 : 15)}px;
   margin-bottom: 30px;
   width: max-content;
+  @media screen and (max-width: 1023px) {
+    margin: 0;
+  }
 `;
 
 export const NavBarLogo = styled.img`

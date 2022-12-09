@@ -1,7 +1,6 @@
 import moment from "moment";
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import Slider from "react-slick";
 import { CalenderPaleIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
 import styles from "./index.module.scss";
@@ -9,6 +8,20 @@ import Temp from "../../../commons/resources/temp/Rectangle 31.png";
 import Temp1 from "../../../commons/resources/temp/Rectangle 31 (1).png";
 import Temp2 from "../../../commons/resources/temp/Rectangle 31 (2).png";
 import Temp3 from "../../../commons/resources/temp/Rectangle 31 (3).png";
+import {
+  Author,
+  Header,
+  Image,
+  Item,
+  ItemTitle,
+  LatestStoriesContainer,
+  SeemoreButton,
+  SeemoreText,
+  StyledSlider,
+  Time,
+  TimeIcon,
+  Title,
+} from "./style";
 
 interface Props {}
 
@@ -46,15 +59,14 @@ const data: Story[] = [
 const LatestStories: React.FC<Props> = () => {
   const drag = useRef<boolean>(false);
   return (
-    <div className={styles.latestStories}>
-      <div className={styles.title}>
-        <h3>Latest Stories</h3>
-        <Link to={routers.STORY_LIST} className={styles.seemoreDesktop}>
-          <small>See All</small>
-        </Link>
-      </div>
-      <Slider
-        className={styles.slick}
+    <LatestStoriesContainer>
+      <Header>
+        <Title>Latest Stories</Title>
+        <SeemoreButton to={routers.STORY_LIST}>
+          <SeemoreText>See All</SeemoreText>
+        </SeemoreButton>
+      </Header>
+      <StyledSlider
         dots
         arrows={false}
         dotsClass={`slick-dots ${styles.dots}`}
@@ -73,26 +85,27 @@ const LatestStories: React.FC<Props> = () => {
           return (
             <Link
               key={id}
-              className={styles.box}
               to={routers.STORY_DETAIL.replace(":storyId", `${id}`)}
               title={title}
               onClick={e => drag.current && e.preventDefault()}
             >
-              <img className={styles.image} src={image} alt={title} />
-              <h6>{author}</h6>
-              <h4>{title}</h4>
-              <small>
-                <img src={CalenderPaleIcon} alt="calender pale" />
-                {moment(createdDate).format("MM/DD/YYYY")}
-              </small>
+              <Item>
+                <Image src={image} alt={title} />
+                <Author>{author}</Author>
+                <ItemTitle>{title}</ItemTitle>
+                <Time>
+                  <TimeIcon src={CalenderPaleIcon} alt="calender pale" />
+                  {moment(createdDate).format("MM/DD/YYYY")}
+                </Time>
+              </Item>
             </Link>
           );
         })}
-      </Slider>
-      <Link to={routers.STORY_LIST} className={styles.seemoreMobile}>
-        <small>See All</small>
-      </Link>
-    </div>
+      </StyledSlider>
+      <SeemoreButton to={routers.STORY_LIST} mobile>
+        <SeemoreText>See All</SeemoreText>
+      </SeemoreButton>
+    </LatestStoriesContainer>
   );
 };
 

@@ -1,5 +1,6 @@
 import { Link, useHistory } from "react-router-dom";
 import { stringify } from "qs";
+import { Tooltip } from "@mui/material";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
@@ -9,7 +10,6 @@ import styles from "./index.module.scss";
 
 import moment from "moment";
 import { routers } from "../../commons/routers";
-import { Tooltip } from "antd";
 import { AIcon } from "../../commons/resources";
 
 interface TransactionListProps {

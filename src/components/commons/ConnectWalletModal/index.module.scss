@@ -1,24 +1,36 @@
-@import '../../../themes/variable.scss';
-
+@import "../../../themes/variable.scss";
 
 .connectModal {
-  max-width: 450px;
-  padding-bottom: 0px;
-  border-radius: 20px;
-  background: var(--modal-background);
-  overflow: hidden;
-
   .connectContainer {
+    // min-width: 450px;
+    overflow: hidden;
+    border-radius: 20px;
     text-align: left;
-    margin-bottom: 20px;
-    padding: 0px 10px;
+    padding: 0 30px 30px;
+    .dialogTitle {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .closeIcon {
+        position: absolute;
+        top: 5px;
+        right: -25px;
+        &:hover {
+          background: none;
+        }
+      }
+      .title {
+        padding: 40px 0 0 0;
+      }
+    }
 
     .wallet {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 20px;
-      margin-top: 36px;
+      margin-top: 20px;
 
       border: 1px solid var(--border-color);
       box-sizing: border-box;
@@ -38,10 +50,8 @@
         }
       }
 
-
       h4 {
         margin-bottom: 0px;
-
       }
 
       &:hover,

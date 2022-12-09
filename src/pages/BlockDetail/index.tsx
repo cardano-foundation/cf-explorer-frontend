@@ -6,7 +6,7 @@ import BlockOverview from "../../components/BlockDetail/BlockOverview";
 import useFetch from "../../commons/hooks/useFetch";
 import useFetchList from "../../commons/hooks/useFetchList";
 
-import { Container } from "./styles";
+import { StyledContainer } from "./styles";
 
 const BlockDetail = () => {
   const params = useParams<{ blockId: string }>();
@@ -28,7 +28,7 @@ const BlockDetail = () => {
   });
 
   return (
-    <Container>
+    <StyledContainer>
       <BlockOverview data={blockDetail} loading={blockDetailLoading} />
       <TransactionLists
         currentPage={currentPage}
@@ -38,7 +38,7 @@ const BlockDetail = () => {
         total={total}
         totalPage={totalPage}
       />
-    </Container>
+    </StyledContainer>
   );
 };
 
