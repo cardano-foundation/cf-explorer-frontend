@@ -29,13 +29,13 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
 
   const columns: Column<Block>[] = [
     {
-      title: "Block No.",
+      title: "Block Number",
       key: "blockNo",
       minWidth: "100px",
       render: r => <FWBold>{r.blockNo}</FWBold>,
     },
     {
-      title: "Block Id",
+      title: "Block ID",
       key: "blockId",
       minWidth: "150px",
       render: r => (

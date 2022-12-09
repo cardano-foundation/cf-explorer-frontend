@@ -89,7 +89,7 @@ const TokenList: React.FC<ITokenList> = ({
             setQuery({ page, size });
           },
           page: currentPage || 0,
-          total: totalPage,
+          total: total,
         }}
       />
     </Card>
