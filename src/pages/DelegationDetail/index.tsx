@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import { Grid, Skeleton, styled, Tooltip } from "@mui/material";
+import { parse, stringify } from "qs";
 
 import { DelegationEpochList, DelegationStakingDelegatorsList } from "../../components/DelegationDetailList";
 import DelegationDetailChart from "../../components/DelegationDetailChart";
@@ -8,15 +9,14 @@ import DetailCard from "../../components/commons/DetailCard";
 
 import useFetch from "../../commons/hooks/useFetch";
 import Card from "../../components/commons/Card";
-import CopyText from "../../components/commons/CopyText";
 import { formatADA, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 
 import styles from "./index.module.scss";
-import AIcon from "../../commons/resources/images/AIcon.png";
 
 import "./select.css";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { parse, stringify } from "qs";
+import CopyButton from "../../components/commons/CopyButton";
+import { AIcon } from "../../commons/resources";
 
 const DelegationDetail = () => {
   const { poolId } = useParams<{ poolId: string }>();
@@ -76,7 +76,7 @@ const DelegationDetail = () => {
               {getShortWallet(data?.rewardAccount || "")}
             </Link>
           </Tooltip>
-          <CopyText text={data?.rewardAccount || ""} />
+          <CopyButton text={data?.rewardAccount || ""} />
         </>
       ),
     },
@@ -89,7 +89,7 @@ const DelegationDetail = () => {
               {getShortWallet(data?.ownerAccount || "")}
             </Link>
           </Tooltip>
-          <CopyText text={data?.ownerAccount || ""} />
+          <CopyButton text={data?.ownerAccount || ""} />
         </>
       ),
     },

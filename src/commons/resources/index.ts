@@ -30,7 +30,7 @@ import BlankBlueIcon from "./icons/blank-blue.svg";
 import CalenderPaleIcon from "./icons/calender-pale.svg";
 import ArrowDownIcon from "./icons/arrow-down.svg";
 import ArrowDropDownIcon from "./icons/arrow-drop-down.svg";
-import CollapseIcon from "./icons/menu.svg";
+import MenuIcon from "./icons/menu.svg";
 import AIcon from "./images/AIcon.png";
 import Policy from "./icons/policy.svg";
 import HeaderBackground from "./images/header-bg.png";
@@ -39,6 +39,7 @@ import SupplyChainMenuIcon from "./icons/menus/supplychain.svg";
 import BlockChainMenuIcon from "./icons/menus/blockchain.svg";
 import DelegatePoolMenuIcon from "./icons/menus/delegate.svg";
 import ToolMenuIcon from "./icons/menus/tool.svg";
+import EmptyIcon from "./images/noData.png";
 
 export {
   LogoMobileIcon,
@@ -76,10 +77,11 @@ export {
   ArrowDropDownIcon,
   Policy,
   HeaderBackground,
-  CollapseIcon,
+  MenuIcon,
   DIDMenuIcon,
   SupplyChainMenuIcon,
   BlockChainMenuIcon,
   DelegatePoolMenuIcon,
   ToolMenuIcon,
+  EmptyIcon,
 };

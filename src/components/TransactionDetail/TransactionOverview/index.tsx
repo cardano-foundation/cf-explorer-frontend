@@ -72,7 +72,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   ];
 
   return (
-    <Card className={styles.wrapper} title={"Transactions Detail"}>
+    <Card title={"Transactions Detail"}>
       <DetailCard
         listDetails={listDetails}
         progress={{

@@ -69,7 +69,6 @@ const LatestStories: React.FC<Props> = () => {
       <StyledSlider
         dots
         arrows={false}
-        dotsClass={`slick-dots ${styles.dots}`}
         autoplay={true}
         infinite={true}
         draggable={true}

@@ -4,13 +4,13 @@ import { stringify } from "qs";
 import { Tooltip } from "@mui/material";
 
 import Card from "../commons/Card";
-import Table, { Column } from "../commons/Table";
+import { Column } from "../commons/Table";
 import { getShortWallet, formatADA } from "../../commons/utils/helper";
 
 import { routers } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 
-import { FWBold, StyledColorBlueDard, StyledIcon, StyledImage, StyledLink } from "./styles";
+import { BlocksTable, StyledColorBlueDard, StyledIcon, StyledImage, StyledLink } from "./styles";
 
 interface BlockListProps {
   blockLists: Block[];
@@ -32,7 +32,7 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
       title: "Block Number",
       key: "blockNo",
       minWidth: "100px",
-      render: r => <FWBold>{r.blockNo}</FWBold>,
+      render: r => <b>{r.blockNo}</b>,
     },
     {
       title: "Block ID",
@@ -59,15 +59,15 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
       title: "Transactions",
       key: "transactions",
       minWidth: "150px",
-      render: r => <FWBold>{r.txCount}</FWBold>,
+      render: r => <b>{r.txCount}</b>,
     },
     {
       title: "Fees",
       key: "fees",
       render: r => (
-        <FWBold>
+        <b>
           <StyledImage src={AIcon} alt="ADA Icon" /> {formatADA(r.totalFees) || 0}
-        </FWBold>
+        </b>
       ),
     },
     {
@@ -75,19 +75,18 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
       key: "output",
       minWidth: "100px",
       render: r => (
-        <FWBold>
+        <b>
           <StyledImage src={AIcon} alt="ADA Icon" /> {formatADA(r.totalFees) || 0}
-        </FWBold>
+        </b>
       ),
     },
   ];
 
   return (
     <Card title={"Blocks"}>
-      <Table
+      <BlocksTable
         loading={loading}
         initialized={initialized}
-        // className={styles.table}
         columns={columns}
         data={blockLists}
         total={{ count: total, title: "Total Transactions" }}

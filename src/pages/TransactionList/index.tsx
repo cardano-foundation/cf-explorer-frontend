@@ -4,7 +4,7 @@ import { parse } from "qs";
 
 import useFetchList from "../../commons/hooks/useFetchList";
 import TransactionList from "../../components/TransactionLists";
-import styles from "./index.module.scss";
+import { Container } from "@mui/material";
 
 interface Props {}
 
@@ -25,7 +25,7 @@ const Transactions: React.FC<Props> = () => {
   });
 
   return (
-    <div className={styles.container}>
+    <Container>
       <TransactionList
         currentPage={currentPage}
         loading={transactionsLoading}
@@ -34,7 +34,7 @@ const Transactions: React.FC<Props> = () => {
         total={total}
         totalPage={totalPage}
       />
-    </div>
+    </Container>
   );
 };
 

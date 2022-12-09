@@ -1,30 +1,37 @@
-import { Tooltip } from "@mui/material";
+import { Tabs, Tooltip } from "@mui/material";
 import moment from "moment";
 import { parse, stringify } from "qs";
 import { useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { routers } from "../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../commons/utils/helper";
-import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
-import styles from "./index.module.scss";
+import { RegistrationContainer, StyledLink, StyledTab, TabLabel } from "./styles";
+
+enum POOL_TYPE {
+  REGISTRATION = "pool-registration",
+  DEREREGISTRATION = "pool-de-registration",
+}
 
 const RegistrationPools = () => {
+  const [poolType, setSelectedPool] = useState<POOL_TYPE>(POOL_TYPE.REGISTRATION);
   const history = useHistory();
   const { search } = useLocation();
-  const [selectedPool, setSelectedPool] = useState<"registration" | "deregistration">("registration");
   const query = parse(search.split("?")[1]);
 
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
   };
 
-  const { data, total, loading, initialized } = useFetchList<Registration>(
-    `/delegation/${selectedPool === "registration" ? "pool-registration" : "pool-de-registration"}?page=${
-      query.page || 1
-    }&size=${query.size || 10}`
+  const { data, total, loading, initialized, error } = useFetchList<Registration>(
+    `/delegation/${poolType}?page=${query.page || 1}&size=${query.size || 10}`
   );
+
+  const onChangeTab = (e: React.SyntheticEvent, poolType: POOL_TYPE) => {
+    setQuery({ page: 1, size: 10 });
+    setSelectedPool(poolType);
+  };
 
   const columns: Column<Registration>[] = [
     {
@@ -33,10 +40,10 @@ const RegistrationPools = () => {
       render: r => {
         return (
           <>
-            <Tooltip title={r.txHash} placement="bottom">
-              <Link to={"#"} className={styles.link}>
+            <Tooltip title={r.txHash} placement="top">
+              <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.txHash}`)}>
                 {getShortHash(r.txHash || "")}
-              </Link>
+              </StyledLink>
             </Tooltip>
             <div>{moment(r.txTime).format("MM/DD/YYYY HH:mm:ss")}</div>
           </>
@@ -48,15 +55,9 @@ const RegistrationPools = () => {
       key: "block",
       render: r => (
         <>
-          <Link className={styles.link} to={routers.BLOCK_DETAIL.replace(":blockId", `${r.block}`)}>
-            {r.block}
-          </Link>
-          <div>
-            <Link className={styles.link} to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epoch}`)}>
-              {r.epoch}
-            </Link>
-            /{r.slotNo}
-          </div>
+          <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${r.block}`)}>{r.block}</StyledLink>
+          <br />
+          <StyledLink to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epoch}`)}>{r.epoch}</StyledLink>/{r.slotNo}
         </>
       ),
     },
@@ -64,78 +65,63 @@ const RegistrationPools = () => {
       title: "Pool",
       key: "pool",
       render: r => (
-        <Link to={"#"} className={styles.link}>
-          {r.poolName}
-        </Link>
+        <StyledLink to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.txId}`)}>{r.poolName}</StyledLink>
       ),
     },
     {
       title: "Pledge(A)",
       key: "pledge",
-      render: r => <div className={styles.text}>{formatADA(r.pledge)}</div>,
+      render: r => <b>{formatADA(r.pledge)}</b>,
     },
     {
       title: "Cost(A)",
       key: "cost",
-      render: r => <div className={styles.text}>{formatADA(r.cost)}</div>,
+      render: r => <b>{formatADA(r.cost)}</b>,
     },
     {
       title: "Margin",
       key: "margin",
-      render: r => <div className={styles.text}>{r.margin ? `${r.margin}%` : ""}</div>,
+      render: r => <b>{r.margin ? `${r.margin}%` : ""}</b>,
     },
     {
       title: "Stake Key",
       key: "stakeKey",
       render: r => (
-        <Tooltip title={r.stakeKey} placement="bottom">
-          <Link className={styles.link} to={"#"}>
+        <Tooltip title={r.stakeKey} placement="top">
+          <StyledLink to={routers.STORY_DETAIL.replace(":poolId", `${r.txId}`)}>
             {r.stakeKey ? getShortWallet(r.stakeKey) : ""}
-          </Link>
+          </StyledLink>
         </Tooltip>
       ),
     },
   ];
 
   return (
-    <div className={styles.container}>
-      <Card>
-        <div className={styles.header}>
-          <button
-            className={`${styles.btn} ${styles.left} ${selectedPool === "registration" ? styles.active : ""}`}
-            onClick={() => {
-              setQuery({ page: 1, size: 10 });
-              setSelectedPool("registration");
-            }}
-          >
-            Registration
-          </button>
-          <button
-            className={`${styles.btn}  ${selectedPool === "deregistration" ? styles.active : ""}`}
-            onClick={() => {
-              setQuery({ page: 1, size: 10 });
-              setSelectedPool("deregistration");
-            }}
-          >
-            Deregistration
-          </button>
-        </div>
-        <Table
-          columns={columns}
-          data={data || []}
-          loading={loading}
-          initialized={initialized}
-          total={{ title: "Total Transactions", count: total }}
-          pagination={{
-            onChange: (page, size) => {
-              setQuery({ page, size });
-            },
-            page: query.page ? +query.page - 1 : 0,
-            total: total,
-          }}
-        />
-      </Card>
-    </div>
+    <RegistrationContainer>
+      <Tabs
+        value={poolType}
+        onChange={onChangeTab}
+        TabIndicatorProps={{ sx: { backgroundColor: props => props.colorGreenLight, height: 4 } }}
+      >
+        <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
+        <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
+      </Tabs>
+      <Table
+        columns={columns}
+        data={data || []}
+        loading={loading}
+        initialized={initialized}
+        error={error}
+        total={{ title: "Total Transactions", count: total }}
+        pagination={{
+          onChange: (page, size) => {
+            setQuery({ page, size });
+          },
+          page: query.page ? +query.page - 1 : 0,
+          total: total,
+        }}
+      />
+    </RegistrationContainer>
   );
 };
 
