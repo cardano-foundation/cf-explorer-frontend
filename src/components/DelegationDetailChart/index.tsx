@@ -17,6 +17,7 @@ interface DelegationDetailChartProps {
 }
 
 const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ data, loading }) => {
+  console.log("🚀 ~ file: index.tsx:20 ~ data", data);
   const [selectAnalytic, setSelectAnalytic] = useState<"epochChart" | "delegatorChart">("epochChart");
   return (
     <Card title="Analytics">
@@ -97,8 +98,8 @@ const Chart = ({ data }: { data: AnalyticsDelegators["epochChart"]["dataByDays"]
 
   useEffect(() => {
     if (data) {
-      setData(data.map(i => i.dataChart));
-      setCategories(data.map(i => moment(i.timeChart).format("MMM DD").toString()));
+      setData(data.map(i => i.ychart));
+      setCategories(data.map(i => i.xchart));
     }
   }, [data]);
 

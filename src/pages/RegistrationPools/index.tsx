@@ -21,7 +21,7 @@ const RegistrationPools = () => {
   };
 
   const { data, total, loading, initialized } = useFetchList<Registration>(
-    `/delegation/${selectedPool === "registration" ? "pool-registration" : "pool-de-registration"}?page=${
+    `/pool/${selectedPool === "registration" ? "registration" : "de-registration"}?page=${
       query.page || 1
     }&size=${query.size || 10}`
   );

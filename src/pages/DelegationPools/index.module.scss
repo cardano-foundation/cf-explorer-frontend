@@ -44,9 +44,10 @@
     }
   }
   .search {
-    padding: 25px;
+    padding: 25px 25px 25px 0;
     display: flex;
     justify-content: flex-end;
+    margin-top: 20px;
     .group {
       display: flex;
       .inputGroup {
