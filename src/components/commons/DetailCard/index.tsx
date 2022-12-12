@@ -18,6 +18,7 @@ import { Token } from "./styles";
 interface DetailCardProps {
   listDetails: { title?: string; value: React.ReactNode }[];
   loading: boolean;
+  joinCard?: boolean;
   progress?: {
     epoch: number;
     block: number;
@@ -36,7 +37,14 @@ interface DetailCardProps {
   };
 }
 
-const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading, tokenDetail, delegationPools }) => {
+const DetailCard: React.FC<DetailCardProps> = ({
+  listDetails,
+  progress,
+  loading,
+  joinCard = false,
+  tokenDetail,
+  delegationPools,
+}) => {
   if (loading) {
     return (
       <Grid container className={styles.wrapper} spacing={2}>
@@ -114,6 +122,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
         </div>
       );
     }
+
     if (tokenDetail) {
       return (
         <Token.TokenWrapper>
@@ -149,30 +158,56 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
 
   return (
     <Grid container className={styles.wrapper} spacing={2}>
-      <Grid item lg={7} md={12}>
-        <Card className={styles.info}>
-          {listDetails.map((item, idx) => (
-            <Box className={styles.detailItem} key={idx}>
-              {item.title ? (
-                <>
-                  <Box>
-                    <img src={infoIcon} alt="info" className={styles.img} />
-                  </Box>
-                  <Box className={styles.row}>
-                    <Box style={{ minWidth: 150 }}>{item.title}:</Box>
-                    <Box className={` ${styles.fwBold} ${styles.value}`}>{item.value}</Box>
-                  </Box>
-                </>
-              ) : (
-                <>{item.value}</>
-              )}
-            </Box>
-          ))}
-        </Card>
-      </Grid>
-      <Grid item lg={5} md={12}>
-        <Card className={styles.progress}>{renderCard()}</Card>
-      </Grid>
+      {joinCard ? (
+        <Grid item lg={12}>
+          <Card className={styles.info}>
+            {listDetails.map((item, idx) => (
+              <Box className={styles.detailItem} key={idx}>
+                {item.title ? (
+                  <>
+                    <Box>
+                      <img src={infoIcon} alt="info" className={styles.img} />
+                    </Box>
+                    <Box className={styles.row}>
+                      <Box style={{ minWidth: 150 }}>{item.title}:</Box>
+                      <Box className={` ${styles.fwBold} ${styles.value}`}>{item.value}</Box>
+                    </Box>
+                  </>
+                ) : (
+                  <>{item.value}</>
+                )}
+              </Box>
+            ))}
+          </Card>
+        </Grid>
+      ) : (
+        <>
+          <Grid item lg={7} md={12}>
+            <Card className={styles.info}>
+              {listDetails.map((item, idx) => (
+                <Box className={styles.detailItem} key={idx}>
+                  {item.title ? (
+                    <>
+                      <Box>
+                        <img src={infoIcon} alt="info" className={styles.img} />
+                      </Box>
+                      <Box className={styles.row}>
+                        <Box style={{ minWidth: 150 }}>{item.title}:</Box>
+                        <Box className={` ${styles.fwBold} ${styles.value}`}>{item.value}</Box>
+                      </Box>
+                    </>
+                  ) : (
+                    <>{item.value}</>
+                  )}
+                </Box>
+              ))}
+            </Card>
+          </Grid>
+          <Grid item lg={5} md={12}>
+            <Card className={styles.progress}>{renderCard()}</Card>
+          </Grid>
+        </>
+      )}
     </Grid>
   );
 };
