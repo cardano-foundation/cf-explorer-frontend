@@ -14,6 +14,8 @@ import DelegationDetail from "./pages/DelegationDetail";
 import RegistrationPools from "./pages/RegistrationPools";
 import Tokens from "./pages/Token";
 import TokenDetail from "./pages/TokenDetail";
+import Stake from "./pages/Stake";
+import StakeDetail from "./pages/StakeDetail";
 
 const Routes: React.FC = () => {
   return (
@@ -30,6 +32,8 @@ const Routes: React.FC = () => {
       <Route path={routers.REGISTRATION_POOLS} exact component={RegistrationPools} />
       <Route path={routers.TOKEN_LIST} exact component={Tokens} />
       <Route path={routers.TOKEN_DETAIL} exact component={TokenDetail} />
+      <Route path={routers.STAKE_LIST} exact component={Stake} />
+      <Route path={routers.STAKE_DETAIL} exact component={StakeDetail} />
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );

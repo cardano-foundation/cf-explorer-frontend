@@ -33,7 +33,6 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
     loading: transactionsLoading,
     initialized,
     total,
-    totalPage,
     currentPage,
   } = useFetchList<Transactions>(active ? "tx/list" : "", {
     page: query.page ? +query.page - 1 : 0,
