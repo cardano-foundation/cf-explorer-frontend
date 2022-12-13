@@ -135,7 +135,6 @@ const Table: React.FC<TableProps> = ({
   error,
   onClickRow,
 }) => {
-  console.log({ initialized, loading, data });
   return (
     <Box className={className || ""} style={style}>
       <Wrapper>
