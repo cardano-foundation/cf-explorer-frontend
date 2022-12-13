@@ -28,7 +28,7 @@ export const menus: Menu[] = [
     icon: DelegatePoolMenuIcon,
     children: [
       { title: "Delegation Pools", href: routers.DELEGATION_POOLS },
-      { title: "Stake key registration", href: "/Stake-key-registration" },
+      { title: "Stake key registration", href: routers.STAKE_LIST },
       { title: "Pool Registration", href: "/registration-pools" },
     ],
   },
