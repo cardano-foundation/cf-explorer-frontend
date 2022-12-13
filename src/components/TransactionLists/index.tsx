@@ -20,6 +20,7 @@ interface TransactionListProps {
   total: number;
   totalPage: number;
   currentPage: number;
+  error?: string | null;
 }
 
 const TransactionList: React.FC<TransactionListProps> = ({
@@ -28,6 +29,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
   initialized,
   total,
   transactions,
+  error,
 }) => {
   const history = useHistory();
   const setQuery = (query: any) => {
@@ -180,6 +182,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
             page: currentPage || 0,
             total: total,
           }}
+          error={error}
         />
       </Card>
     </StyledContainer>

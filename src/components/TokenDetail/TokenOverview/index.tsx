@@ -32,7 +32,6 @@ interface ITokenOverview {
 }
 
 const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataLoading }) => {
-  console.log("🚀 ~ file: index.tsx:26 ~ data", data);
   return (
     <Box>
       <HeaderDetailContainer>
