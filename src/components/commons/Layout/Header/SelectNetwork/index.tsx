@@ -25,9 +25,6 @@ const StyledSelect = styled(Select)`
     color: #344054;
     font-size: 20px;
   }
-  @media screen and (max-width: 1023px) {
-    width: 160px;
-  }
 `;
 
 const SelectNetwork: React.FC = () => {

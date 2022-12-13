@@ -25,4 +25,5 @@ export declare interface UserStoreType {
   openModal: boolean;
   network: keyof typeof NETWORKS;
   sidebar: boolean;
+  onDetailView: boolean;
 }
