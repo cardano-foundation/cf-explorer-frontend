@@ -1,6 +1,6 @@
 import { Link, useHistory } from "react-router-dom";
 import { stringify } from "qs";
-import { Tooltip } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
@@ -142,9 +142,10 @@ const TransactionList: React.FC<TransactionListProps> = ({
       key: "fee",
       minWidth: "120px",
       render: r => (
-        <div className={styles.fwBold}>
-          <img src={AIcon} alt="a icon" /> {formatADA(r.fee) || 0}
-        </div>
+        <Box display={"flex"} alignItems="center" className={styles.fwBold}>
+          <img src={AIcon} alt="a icon" />
+          <Box ml={1}>{formatADA(r.fee) || 0}</Box>
+        </Box>
       ),
     },
     {
@@ -152,9 +153,10 @@ const TransactionList: React.FC<TransactionListProps> = ({
       minWidth: "120px",
       key: "ouput",
       render: r => (
-        <div className={styles.fwBold}>
-          <img src={AIcon} alt="a icon" /> {formatADA(r.totalOutput) || 0}
-        </div>
+        <Box display={"flex"} alignItems="center" className={styles.fwBold}>
+          <img src={AIcon} alt="a icon" />
+          <Box ml={1}>{formatADA(r.totalOutput) || 0}</Box>
+        </Box>
       ),
     },
   ];

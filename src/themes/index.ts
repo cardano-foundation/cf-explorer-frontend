@@ -36,7 +36,7 @@ const lightTheme = {
   colorRed: "#dd4343",
   colorYellow: "#ffa800",
   colorBlack: "#000000",
-  borderColor: "#e3e5e9",
+  borderColor: "#e5e5e5",
   linearGradientGreen: "linear-gradient(263.55deg, #5a9c56 0%, #184c78 100%)",
   menuItemSelectedText: "#353945",
   menuItemText: "#b1b5c3",

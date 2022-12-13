@@ -3,7 +3,6 @@ import { TablePagination, Skeleton, Box } from "@mui/material";
 
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
 
-import styles from "./index.module.scss";
 import { EmptyIcon } from "../../../commons/resources";
 import {
   Empty,
@@ -73,9 +72,9 @@ const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
           <TRow key={i}>
             {columns.map(({ minWidth }, idx) => {
               return (
-                <TCol key={idx} minWidth={minWidth}>
+                <td>
                   <Skeleton variant="rectangular" style={{ height: "75px" }} animation="wave" />
-                </TCol>
+                </td>
               );
             })}
           </TRow>
@@ -149,7 +148,7 @@ const Table: React.FC<TableProps> = ({
           )}
         </TableFullWidth>
         {!loading && ((initialized && data?.length === 0) || (error && error !== true)) && <EmptyRecord />}
-        {error && error !== true && <Error>{error || "Cannot get transaction list"}</Error>}
+        {error && error !== true && <Error>{error || "Something went wrong!"}</Error>}
       </Wrapper>
       <FooterTable total={total} pagination={pagination} />
     </Box>
