@@ -1,16 +1,8 @@
-import { Link, useHistory } from "react-router-dom";
-import moment from "moment";
 import React from "react";
 
-import Card from "../../commons/Card";
 import DetailHeader from "../../commons/DetailHeader";
-import { formatADA, getShortHash } from "../../../commons/utils/helper";
+import { getShortHash } from "../../../commons/utils/helper";
 
-import styles from "./index.module.scss";
-import { Tooltip } from "@mui/material";
-import { AIcon } from "../../../commons/resources";
-import { routers } from "../../../commons/routers";
-import CopyButton from "../../commons/CopyButton";
 import { CONFIRMATION_STATUS } from "../../../commons/utils/constants";
 
 interface Props {

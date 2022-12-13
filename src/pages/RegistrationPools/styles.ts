@@ -2,9 +2,8 @@ import { Container, styled, Tab } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledLink = styled(Link)`
-  font-family: var(--font-family-text);
-  font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.colorBlue};
+  font-family: var(--font-family-text) !important;
+  color: ${props => props.theme.colorBlue} !important;
 `;
 
 export const RegistrationContainer = styled(Container)`

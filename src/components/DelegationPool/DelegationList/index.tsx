@@ -1,13 +1,13 @@
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { parse, stringify } from "qs";
 
-import Table, { Column } from "../commons/Table";
+import Table, { Column } from "../../commons/Table";
 
 import styles from "./index.module.scss";
-import { formatADA } from "../../commons/utils/helper";
+import { formatADA } from "../../../commons/utils/helper";
 
-import sendImg from "../../commons/resources/images//summary-up.png";
-import { routers } from "../../commons/routers";
+import sendImg from "../../../commons/resources/images//summary-up.png";
+import { routers } from "../../../commons/routers";
 import { LinearProgress, styled } from "@mui/material";
 
 interface DelegationListProps {
@@ -55,8 +55,8 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       // To do
       // render: r => <div>{r.reward}</div>,
       render: r => (
-        <div>
-          <img src={sendImg} alt="reward icon" />{" "}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <img src={sendImg} alt="reward icon" />
           <span className={styles.value}>+{Math.round((Math.random() * 4 + 2) * 100) / 100}%</span>
         </div>
       ),
@@ -91,19 +91,9 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       // render: r => <div>{r.saturation} </div>,
       render: r => (
         <div style={{ display: "flex", alignItems: "center" }}>
-          <StyledLinearProgress variant="determinate" value={Math.round(Math.random() * 100)} />
           <span>{Math.round(Math.random() * 100)}%</span>
+          <StyledLinearProgress variant="determinate" value={Math.round(Math.random() * 100)} />
         </div>
-      ),
-    },
-    {
-      title: "",
-      minWidth: "120px",
-      key: "Saturation",
-      render: r => (
-        <Link to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`)} className={styles.button}>
-          Detail
-        </Link>
       ),
     },
   ];
@@ -141,7 +131,7 @@ const StyledLinearProgress = styled(LinearProgress)`
   height: 8px;
   border-radius: 34px;
   background: rgba(0, 0, 0, 0.1);
-  margin-right: 8px;
+  margin-left: 8px;
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
     background: ${props => props.theme.linearGradientGreen};
