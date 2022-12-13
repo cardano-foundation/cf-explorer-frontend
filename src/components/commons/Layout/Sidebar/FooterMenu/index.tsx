@@ -13,7 +13,14 @@ export const Menu = styled(List)<{ open: boolean }>`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  gap: 15px;
   flex-direction: ${props => (props.open ? `row` : `column`)};
+  @media screen and (max-width: 1023px) {
+    position: relative;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 60px;
+  }
   padding: 10px;
   border-top: 1px solid ${props => (props.open ? props.theme.borderColor : "transparent")};
 `;

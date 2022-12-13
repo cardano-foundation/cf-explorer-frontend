@@ -2,7 +2,7 @@ import React from "react";
 import { Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { CheckCircleIcon, CubeIcon, ExchangeIcon, OutputIcon, RocketIcon } from "../../../commons/resources";
 import ProgressCircle from "../ProgressCircle";
 import {
@@ -96,7 +96,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
 
   if (!data) return <NotFound />;
   const { header, blockDetail, confirmation, transactionFees, totalOutput, progress } = data;
-  console.log((blockDetail?.epochSlot || 0) / MAX_SLOT_EPOCH);
+  
   return (
     <HeaderDetailContainer>
       <BackButton to={getRouterList()}>
@@ -183,7 +183,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           <DetailsInfoItem item xs={12} sm>
             <ProgressLiner progress={progress.progress} />
             <ProgressStatus>
-              <ProgressStatusText>{progress.status}</ProgressStatusText>
+              <ProgressStatusText>{EPOCH_STATUS[progress.status]}</ProgressStatusText>
               <ProgressPercent>{progress.progress}%</ProgressPercent>
             </ProgressStatus>
           </DetailsInfoItem>

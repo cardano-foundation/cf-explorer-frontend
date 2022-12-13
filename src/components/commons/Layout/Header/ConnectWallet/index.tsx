@@ -23,12 +23,6 @@ const StyledButton = styled(ButtonBase)`
   font-size: var(--font-size-text);
   line-height: 1;
   height: 40px;
-  
-  @media screen and (max-width: 1023px) {
-    width: 160px;
-    padding: 12px;
-    gap: 8px;
-  }
 `;
 
 const Span = styled("span")`
@@ -47,7 +41,6 @@ const Spin = styled(CircularProgress)`
   color: ${props => props.theme.textColorReverse};
 `;
 
-
 const ConnectWallet: React.FC<Props> = () => {
   const { network } = useSelector(({ user }: RootState) => user);
 
@@ -64,7 +57,7 @@ const ConnectWallet: React.FC<Props> = () => {
     </StyledButton>
   ) : isConnected ? (
     <StyledButton type="button">
-    <Spin size={20} />
+      <Spin size={20} />
       <Span>Re-Connecting</Span>
     </StyledButton>
   ) : (

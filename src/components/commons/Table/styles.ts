@@ -19,8 +19,6 @@ export const Error = styled(Box)`
   text-align: center;
   padding: 0 0 30px;
   background: #e7e8eb;
-  position: relative;
-  top: -15px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   color: ${props => props.theme.textColorPale};
@@ -38,31 +36,21 @@ export const THeader = styled("th")`
   font-size: var(--font-size-text-small);
   border-bottom: 1px solid ${props => props.theme.borderColor};
   padding: 20px 20px 25px;
-  color: ${props => props.theme.textColor};
-  background-color: #98a2b328;
-  &:first-child {
-    border-radius: 10px 0 0 0;
-  }
-  &:last-child {
-    border-radius: 0 10px 0 0;
-  }
+  color: ${props => props.theme.titleColor};
 `;
 
 export const TRow = styled("tr")`
-  background-color: #fff;
   width: 100%;
   padding: 10px 0;
   cursor: pointer;
   &:hover {
-    box-shadow: ${props => props.theme.shadowRaised};
-    padding: 20px;
     border-radius: 10px;
     background-color: #ededed;
   }
 `;
 
 export const TCol = styled("td")<{ width?: number | string; minWidth?: number | string; maxWidth?: number | string }>`
-  background-color: #fff;
+  border-bottom: 1px solid ${props => props.theme.borderColor};
   width: ${({ width }) => (typeof width === "number" ? `${width}px` : width || "max-content%")};
   min-width: ${({ minWidth }) => (typeof minWidth === "number" ? `${minWidth}px` : minWidth || "80px")};
   max-width: ${({ maxWidth }) => (typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth || "unset")};
@@ -70,17 +58,8 @@ export const TCol = styled("td")<{ width?: number | string; minWidth?: number | 
   font-family: var(--font-family-text);
   color: ${props => props.theme.textColor};
   padding: 24px 20px;
-  &:first-child {
-    border-radius: 10px 0 0 10px;
-  }
-  &:last-child {
-    border-radius: 0 10px 10px 0;
-  }
 `;
-export const TBody = styled("tbody")`
-  position: relative;
-  top: -22px;
-`;
+export const TBody = styled("tbody")``;
 
 export const TFooter = styled(Box)`
   display: flex;
@@ -112,7 +91,7 @@ export const Wrapper = styled(Box)`
 
 export const TableFullWidth = styled("table")`
   border-collapse: separate;
-  border-spacing: 0 0.8em;
+  border-spacing: 0;
   min-width: 100%;
   width: max-content;
 `;

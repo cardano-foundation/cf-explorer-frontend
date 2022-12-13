@@ -11,32 +11,20 @@ import { routers } from "../../commons/routers";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 
-import { Blocks, StyledContainer, Output, Status, StyledColorBlueDard } from "./styles";
+import { Blocks, StyledContainer, Output, Status, StyledColorBlueDard, Index } from "./styles";
 
 const columns: Column<IDataEpoch>[] = [
   {
     title: "#",
     key: "#",
-    minWidth: "100px",
-    render: r => <b>{r.no}</b>,
+    minWidth: "50px",
+    render: r => <Index>{r.no}</Index>,
   },
   {
     title: "Status",
     key: "status",
     minWidth: "100px",
     render: r => <Status status={r.status.toLowerCase()}>{EPOCH_STATUS[r.status]}</Status>,
-  },
-  {
-    title: "Start date",
-    key: "startTime",
-    minWidth: "100px",
-    render: r => <StyledColorBlueDard>{r.startTime}</StyledColorBlueDard>,
-  },
-  {
-    title: "End date",
-    key: "endTime",
-    minWidth: "100px",
-    render: r => <StyledColorBlueDard>{r.endTime}</StyledColorBlueDard>,
   },
   {
     title: "Blocks",
@@ -50,10 +38,22 @@ const columns: Column<IDataEpoch>[] = [
     minWidth: "100px",
     render: r => (
       <Output>
-        <img src={AIcon} alt="ADA Icon" />
         {formatADA(r.outSum)}
+        <img src={AIcon} alt="ADA Icon" />
       </Output>
     ),
+  },
+  {
+    title: "Start date",
+    key: "startTime",
+    minWidth: "100px",
+    render: r => <StyledColorBlueDard>{r.startTime}</StyledColorBlueDard>,
+  },
+  {
+    title: "End date",
+    key: "endTime",
+    minWidth: "100px",
+    render: r => <StyledColorBlueDard>{r.endTime}</StyledColorBlueDard>,
   },
 ];
 
@@ -85,7 +85,7 @@ const Epoch: React.FC = () => {
           columns={columns}
           data={data}
           onClickRow={(_, r: IDataEpoch) => history.push(routers.EPOCH_DETAIL.replace(":epochId", `${r.no}`))}
-          total={{ count: total, title: "Total Transactions" }}
+          total={{ count: total, title: "Total Epochs" }}
           pagination={{
             onChange: (page, size) => {
               setQuery({ page, size });

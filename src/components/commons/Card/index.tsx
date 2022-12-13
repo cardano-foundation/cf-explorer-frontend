@@ -4,7 +4,6 @@ import React, { ReactNode } from "react";
 
 const CardContainer = styled(Box)`
   background-color: transparent;
-  padding: 25px 0px;
   border-radius: var(--border-radius);
 `;
 

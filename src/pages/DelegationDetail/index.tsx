@@ -12,11 +12,11 @@ import Card from "../../components/commons/Card";
 import { formatADA, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 
 import styles from "./index.module.scss";
+import { AIcon } from "../../commons/resources";
 
 import "./select.css";
 import useFetchList from "../../commons/hooks/useFetchList";
 import CopyButton from "../../components/commons/CopyButton";
-import { AIcon } from "../../commons/resources";
 
 const DelegationDetail = () => {
   const { poolId } = useParams<{ poolId: string }>();

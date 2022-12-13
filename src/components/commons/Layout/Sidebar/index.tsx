@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { LogoMobileIcon } from "../../../../commons/resources";
 import { RootState } from "../../../../stores/types";
 import { setSidebar } from "../../../../stores/user";
-import FooterMenu from "./FooterMenu";
 import SidebarMenu from "./SidebarMenu";
 import { NavbarContainer, NavBarLogo, LogoLink, NetworkName, HeaderTop, Toggle } from "./styles";
 
@@ -21,7 +20,6 @@ const Sidebar: React.FC = () => {
         <Toggle onClick={handleToggle} />
       </HeaderTop>
       <SidebarMenu />
-      <FooterMenu />
     </NavbarContainer>
   );
 };

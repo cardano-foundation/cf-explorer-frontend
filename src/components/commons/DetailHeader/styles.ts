@@ -36,7 +36,7 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
   height: 1em;
   width: 200px;
   max-width: 100%;
-  borderradius: 4px;
+  border-radius: 4px;
 `;
 
 export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
@@ -70,7 +70,7 @@ export const SlotLeader = styled("p")`
 export const SlotLeaderSkeleton = styled(Skeleton)`
   height: 1em;
   width: 50%;
-  borderradius: 4px;
+  border-radius: 4px;
 `;
 
 export const SlotLeaderValue = styled("span")`
@@ -147,7 +147,7 @@ export const DetailLabelSkeleton = styled(Skeleton)`
   height: 1em;
   width: 50%;
   min-width: 100px;
-  borderradius: 4px;
+  border-radius: 4px;
 `;
 
 export const DetailValue = styled("h3")`
@@ -165,7 +165,7 @@ export const DetailValueSkeleton = styled(Skeleton)`
   height: 1em;
   width: 50%;
   min-width: 100px;
-  borderradius: 4px;
+  border-radius: 4px;
 `;
 
 export const DetailValueSmall = styled(DetailValue)`
