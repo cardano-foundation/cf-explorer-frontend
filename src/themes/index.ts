@@ -47,7 +47,9 @@ const lightTheme = {
   footerColor: "#98a2b3",
   copyrightBackgroundColor: "#1f213a",
   footerColorGreen: "#29744D",
-  shadowRaised: "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)",
+  shadowRaised: "0px 10px 25px rgba(0, 0, 0, 0.03)",
+  shadowRaisedHover:
+    "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)",
   borderRadius: "10px",
 };
 
@@ -79,7 +81,9 @@ export const darkTheme: typeof lightTheme = {
   footerColor: "#29744D",
   copyrightBackgroundColor: "#1f213a",
   footerColorGreen: "#98a2b3",
-  shadowRaised: "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)",
+  shadowRaised: "0px 10px 25px rgba(0, 0, 0, 0.03)",
+  shadowRaisedHover:
+    "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)",
   borderRadius: "10px",
 };
 

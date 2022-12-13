@@ -1,213 +1,196 @@
 import React from "react";
-import { Box, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
-
-import styles from "./index.module.scss";
-import infoIcon from "../../../commons/resources/images/infoIcon.svg";
-import blockImg from "../../../commons/resources/images/block.png";
-import slotImg from "../../../commons/resources/images/slot.png";
-import Card from "../Card";
-import { routers } from "../../../commons/routers";
+import { HiArrowLongLeft } from "react-icons/hi2";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import { Policy } from "../../../commons/resources";
-import { numberWithCommas } from "../../../commons/utils/helper";
+import { CheckCircleIcon, CubeIcon, ExchangeIcon, OutputIcon, RocketIcon } from "../../../commons/resources";
 import ProgressCircle from "../ProgressCircle";
 import {
-  CardInfo,
-  CardInfoItem,
-  CardProgress,
+  BackButton,
+  BackText,
   EpochNumber,
   EpochText,
+  HeaderContainer,
+  HeaderStatus,
+  HeaderTitle,
+  HeaderDetailContainer,
+  DetailsInfo,
+  DetailsInfoItem,
+  DetailLabel,
+  DetailValue,
+  Icon,
+  BlockDefault,
+  ConfirmStatus,
+  ConfirmationValue,
+  SlotLeader,
+  SlotLeaderValue,
+  SlotLeaderCopy,
   InfoIcon,
-  InfoTitle,
-  InfoValue,
-  PolicyBody,
-  PolicyBodyDetail,
-  PolicyBodyTitle,
-  PolicyHeader,
-  TokenDetail,
-  TokenDetailDecimal,
-  TokenDetailDetail,
-  TokenDetailSupply,
-  TokenDetailTitle,
-  TokenWrapper,
-  Wrapper,
+  DetailValueSmall,
+  HeaderTitleSkeleton,
+  DetailLabelSkeleton,
+  DetailValueSkeleton,
+  IconSkeleton,
+  ProgressSkeleton,
+  SlotLeaderSkeleton,
+  ProgressLiner,
+  ProgressStatus,
+  ProgressStatusText,
+  ProgressPercent,
 } from "./styles";
+import { ADAToken } from "../Token";
+import NotFound from "../../../pages/NotFound";
+import { routers } from "../../../commons/routers";
 
-interface DetailCardProps {
-  listDetails: { title?: string; value: React.ReactNode }[];
+interface DetailHeaderProps {
   loading: boolean;
-  progress?: {
-    epoch: number;
-    block: number;
-    currentSlot: number;
-    gradientId?: string;
-  };
-  delegationPools?: {
-    poolSize: React.ReactNode;
-    stakeLimit: React.ReactNode;
-    delegators: number;
-    satulation: number;
-  };
-  tokenDetail?: {
-    decimal?: number;
-    totalSupply?: number;
-  };
+  data: TransactionHeaderDetail | BlockHeaderDetail | EpochHeaderDetail | null;
 }
 
-const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading, tokenDetail, delegationPools }) => {
-  if (loading) {
-    return (
-      <Wrapper container spacing={2}>
-        <Grid item md={7} xs={12}>
-          <Skeleton style={{ height: 250, borderRadius: 10 }} variant="rectangular" />
-        </Grid>
-        <Grid item md={5} xs={12}>
-          <Skeleton style={{ height: 250, borderRadius: 10 }} variant="rectangular" />
-        </Grid>
-      </Wrapper>
-    );
-  }
-  const renderCard = () => {
-    if (progress) {
-      return (
-        <>
-          <ProgressCircle percent={(progress.currentSlot / MAX_SLOT_EPOCH) * 100}>
-            <EpochNumber>{progress.epoch}</EpochNumber>
-            <EpochText>EPOCH</EpochText>
-          </ProgressCircle>
-          <div className={styles.data}>
-            <div className={styles.progessInfo}>
-              <div className={styles.row}>
-                <img className={styles.img} src={blockImg} alt="Block Icon" />
-                <div>
-                  <div className={styles.title}>Block</div>
-                  <Link
-                    className={`${styles.fwBold} ${styles.link}`}
-                    to={routers.BLOCK_DETAIL.replace(":blockId", `${progress.block}`)}
-                  >
-                    {progress.block}
-                  </Link>
-                </div>
-              </div>
-              <div className={styles.row}>
-                <img className={styles.img} src={slotImg} alt="Slot Icon" />
-                <div>
-                  <div className={styles.title}>Slot</div>
-                  <div>
-                    <span className={styles.fwBold}>{progress.currentSlot}</span> / {MAX_SLOT_EPOCH}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      );
-    }
+const DetailHeader: React.FC<DetailHeaderProps> = props => {
+  const { data, loading } = props;
 
-    if (delegationPools) {
-      return (
-        <div className={styles.delegation}>
-          {Object.keys(delegationPools).map((k, i) => {
-            return (
-              <div className={styles.detailItem} key={i}>
-                <div>
-                  <img src={infoIcon} alt="info" className={styles.img} />
-                </div>
-                <div className={styles.row}>
-                  <div style={{ minWidth: 100 }}>
-                    {delegationPoolsTitle[k as keyof Required<DetailCardProps>["delegationPools"]] || 0}:
-                  </div>
-                  <div className={` ${styles.fwBold} ${styles.value}`}>
-                    {delegationPools[k as keyof Required<DetailCardProps>["delegationPools"]] || 0}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-          <div className={styles.fullWidth}>
-            <StyledLinearProgress variant="determinate" value={+delegationPools.satulation} />
-          </div>
-        </div>
-      );
-    }
-    if (tokenDetail) {
-      return (
-        <TokenWrapper>
-          <PolicyHeader>
-            <img src={Policy} alt="Policy Script Icon" />
-            <h3>Policy Script</h3>
-          </PolicyHeader>
-          <PolicyBody>
-            <div>
-              <PolicyBodyTitle>WETH</PolicyBodyTitle>
-              <PolicyBodyDetail>Wrapped ether bridged through Nomda</PolicyBodyDetail>
-            </div>
-            <img src={infoIcon} alt="info" />
-          </PolicyBody>
-          <TokenDetail>
-            <TokenDetailSupply>
-              <TokenDetailTitle>Total Supply</TokenDetailTitle>
-              <TokenDetailDetail>
-                {tokenDetail?.totalSupply && numberWithCommas(tokenDetail.totalSupply)}
-              </TokenDetailDetail>
-            </TokenDetailSupply>
-            <TokenDetailDecimal>
-              <TokenDetailTitle>Decimal</TokenDetailTitle>
-              <TokenDetailDetail>{tokenDetail.decimal}</TokenDetailDetail>
-            </TokenDetailDecimal>
-          </TokenDetail>
-        </TokenWrapper>
-      );
-    }
-
-    return <></>;
+  const getRouterList = () => {
+    if (data?.type === "transaction") return routers.TRANSACTION_LIST;
+    if (data?.type === "block") return routers.BLOCK_LIST;
+    if (data?.type === "epoch") return routers.EPOCH_LIST;
+    else return "/";
   };
 
+  if (loading) {
+    return (
+      <HeaderDetailContainer>
+        <BackButton to="/">
+          <HiArrowLongLeft />
+          <BackText>Back</BackText>
+        </BackButton>
+        <HeaderContainer>
+          <HeaderTitle>
+            <HeaderTitleSkeleton variant="rectangular" />
+          </HeaderTitle>
+        </HeaderContainer>
+        <SlotLeader>
+          <SlotLeaderSkeleton variant="rectangular" />
+        </SlotLeader>
+        <DetailsInfo container>
+          <DetailsInfoItem item xs={12} sm isCenter>
+            <ProgressSkeleton variant="circular" />
+          </DetailsInfoItem>
+          {new Array(4).fill(0).map((_, index) => {
+            return (
+              <DetailsInfoItem key={index} item xs={12} sm>
+                <IconSkeleton variant="circular" />
+                <DetailLabel>
+                  <DetailValueSkeleton variant="rectangular" />
+                </DetailLabel>
+                <DetailValue>
+                  <DetailLabelSkeleton variant="rectangular" />
+                </DetailValue>
+              </DetailsInfoItem>
+            );
+          })}
+        </DetailsInfo>
+      </HeaderDetailContainer>
+    );
+  }
+
+  if (!data) return <NotFound />;
+  const { header, blockDetail, confirmation, transactionFees, totalOutput, progress } = data;
+  console.log((blockDetail?.epochSlot || 0) / MAX_SLOT_EPOCH);
   return (
-    <Wrapper container spacing={2}>
-      <Grid item md={7} sm={12}>
-        <CardInfo>
-          {listDetails.map((item, idx) => (
-            <CardInfoItem key={idx}>
-              {item.title ? (
-                <>
-                  <InfoIcon src={infoIcon} alt="info" />
-                  <InfoTitle>{item.title}:</InfoTitle>
-                  <InfoValue>{item.value}</InfoValue>
-                </>
-              ) : (
-                item.value
-              )}
-            </CardInfoItem>
-          ))}
-        </CardInfo>
-      </Grid>
-      <Grid item md={5} sm={12}>
-        <CardProgress>{renderCard()}</CardProgress>
-      </Grid>
-    </Wrapper>
+    <HeaderDetailContainer>
+      <BackButton to={getRouterList()}>
+        <HiArrowLongLeft />
+        <BackText>Back</BackText>
+      </BackButton>
+      <HeaderContainer>
+        <HeaderTitle>{header.title}</HeaderTitle>
+        {header.status && <HeaderStatus status={header.status}>{header.status}</HeaderStatus>}
+      </HeaderContainer>
+      {header.hash && (
+        <SlotLeader>
+          <Tooltip title={`${header.hash}`} placement="top">
+            <Link to={"/"}>
+              {header.slotLeader && <small>Slot leader:</small>} <SlotLeaderValue>{header.hash}</SlotLeaderValue>
+            </Link>
+          </Tooltip>
+          <SlotLeaderCopy text={header.hash} />
+        </SlotLeader>
+      )}
+      <DetailsInfo container>
+        <DetailsInfoItem item xs={12} sm isCenter>
+          <ProgressCircle
+            size={100}
+            pathLineCap="butt"
+            pathWidth={8}
+            trailWidth={2}
+            percent={((blockDetail?.epochSlot || 0) / MAX_SLOT_EPOCH) * 100}
+          >
+            <EpochNumber>{blockDetail?.epochNo}</EpochNumber>
+            <EpochText>Epoch</EpochText>
+          </ProgressCircle>
+        </DetailsInfoItem>
+        <DetailsInfoItem item xs={12} sm>
+          <Icon src={CubeIcon} alt="block" />
+          <DetailLabel>Block</DetailLabel>
+          <DetailValue>{blockDetail.blockNo}</DetailValue>
+        </DetailsInfoItem>
+        <DetailsInfoItem item xs={12} sm>
+          <Icon src={RocketIcon} alt="socket" />
+          <DetailLabel>Slot</DetailLabel>
+          <DetailValue>
+            {blockDetail.epochSlot}
+            <BlockDefault>/{blockDetail.maxEpochSlot || MAX_SLOT_EPOCH}</BlockDefault>
+          </DetailValue>
+        </DetailsInfoItem>
+        {confirmation && (
+          <DetailsInfoItem item xs={12} sm>
+            <Icon src={CheckCircleIcon} alt="confirmation" />
+            <DetailLabel>
+              Confirmation <InfoIcon />
+            </DetailLabel>
+            <ConfirmationValue>
+              {confirmation.confirmation}
+              <ConfirmStatus status={confirmation.status}>{confirmation.status}</ConfirmStatus>
+            </ConfirmationValue>
+          </DetailsInfoItem>
+        )}
+        {transactionFees && (
+          <DetailsInfoItem item xs={12} sm>
+            <Icon src={ExchangeIcon} alt="transaction fees" />
+            <DetailLabel>
+              Transaction Fees <InfoIcon />
+            </DetailLabel>
+            <DetailValue>
+              {`${transactionFees.fee} ${transactionFees.token}`}
+              <ADAToken color="white" size={"var(--font-size-text-small)"} />
+            </DetailValue>
+          </DetailsInfoItem>
+        )}
+        {totalOutput && (
+          <DetailsInfoItem item xs={12} sm>
+            <Icon src={OutputIcon} alt="output" />
+            <DetailLabel>
+              Total Output <InfoIcon />
+            </DetailLabel>
+            <DetailValueSmall>
+              {`${totalOutput.totalOutput} ${totalOutput.token}`}
+              <ADAToken color="white" size={"var(--font-size-text-small)"} />
+            </DetailValueSmall>
+          </DetailsInfoItem>
+        )}
+        {progress && (
+          <DetailsInfoItem item xs={12} sm>
+            <ProgressLiner progress={progress.progress} />
+            <ProgressStatus>
+              <ProgressStatusText>{progress.status}</ProgressStatusText>
+              <ProgressPercent>{progress.progress}%</ProgressPercent>
+            </ProgressStatus>
+          </DetailsInfoItem>
+        )}
+      </DetailsInfo>
+    </HeaderDetailContainer>
   );
 };
 
-export default DetailCard;
-
-const delegationPoolsTitle = {
-  poolSize: "Pool size",
-  stakeLimit: "Stake limit",
-  delegators: "Delegators",
-  satulation: "Saturation",
-};
-
-const StyledLinearProgress = styled(LinearProgress)`
-  margin-top: 10px;
-  width: 100%;
-  height: 10px;
-  border-radius: 34px;
-  background: rgba(0, 0, 0, 0.1);
-
-  & > .MuiLinearProgress-barColorPrimary {
-    border-radius: 34px;
-    background: ${props => props.theme.linearGradientGreen};
-  }
-`;
+export default DetailHeader;

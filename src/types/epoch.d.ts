@@ -1,11 +1,11 @@
-enum EPOCH_STATUS {
+enum EpochStatus {
   FINISHED = "Finish",
   REWARDING = "Rewarding",
   IN_PROGRESS = "In Progress",
 }
 interface IDataEpoch {
   no: number;
-  status: keyof typeof EPOCH_STATUS;
+  status: keyof typeof EpochStatus;
   blkCount: number;
   endTime: string;
   startTime: string;

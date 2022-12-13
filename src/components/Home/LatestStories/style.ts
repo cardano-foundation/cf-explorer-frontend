@@ -16,10 +16,11 @@ export const Header = styled(Box)`
   margin-bottom: 1.5rem;
   gap: 10px;
 `;
+
 export const Title = styled("h3")`
   position: relative;
   text-align: left;
-  margin-bottom: 0px;
+  margin: 0px;
 
   &::after {
     position: absolute;
@@ -33,9 +34,10 @@ export const Title = styled("h3")`
 `;
 
 export const SeemoreButton = styled(Link)<{ mobile?: boolean }>`
-  display: ${props => (props.mobile ? "none" : "block")};
-  text-align: center;
-  height: auto;
+  display: ${props => (props.mobile ? "none" : "flex")};
+  align-items: center;
+  gap: 5px;
+  color: ${props => props.theme.colorGreenLight}!important;
   @media screen and (max-width: 539px) {
     display: ${props => (props.mobile ? "block" : "none")};
     margin-top: ${props => (props.mobile ? 20 : 0)}px;
@@ -43,12 +45,7 @@ export const SeemoreButton = styled(Link)<{ mobile?: boolean }>`
 `;
 
 export const SeemoreText = styled("small")`
-  display: block;
-  width: max-content;
-  margin: auto;
-  padding: 6.5px 20px;
-  border: 2px solid ${props => props.theme.colorGreenLight};
-  border-radius: 5px;
+  display: inline-block;
   color: ${props => props.theme.colorGreenLight};
   font-weight: var(--font-weight-bold);
 `;
@@ -102,46 +99,73 @@ export const StyledSlider = styled(Slider)`
 `;
 
 export const Item = styled(BoxRaised)`
-  display: block;
+  display: flex;
+  gap: 15px;
   margin-bottom: 15px;
   text-align: left;
+  overflow: hidden;
+  &:hover {
+    box-shadow: ${props => props.theme.shadowRaisedHover};
+  }
 `;
 
 export const Image = styled("img")`
-  aspect-ratio: 280/155;
-  width: 100%;
+  aspect-ratio: 80/80;
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
   border-radius: 5px;
   margin-bottom: 15px;
   background-color: ${props => props.theme.bodyBackground};
 `;
+export const Detail = styled(Box)`
+  overflow: hidden;
+`;
+
 export const Author = styled("h6")`
+  display: -webkit-box;
+  width: max-content;
+  max-width: 100%;
+  line-height: 1.15;
+  max-height: 1em;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
   font-family: var(--font-family-text);
   color: ${props => props.theme.colorGreenLight};
   background-color: ${props => props.theme.colorGreenPale};
   padding: 3px 4.5px;
   letter-spacing: 0.12em;
-  width: max-content;
   text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 5px;
 `;
-export const ItemTitle = styled("h4")`
+export const ItemTitle = styled("h5")`
   display: -webkit-box;
   width: 100%;
-  height: 4.5rem;
+  max-height: 3.6em;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
-  margin-bottom: 1rem;
+  font-size: var(--font-size-text-x-small);
+  line-height: 1.15;
+  margin-top: 0;
+  margin-bottom: 5px;
 `;
 
-export const Time = styled("small")`
+export const Time = styled("h5")`
+  font-size: var(--font-size-text-x-small);
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 6px;
   font-family: var(--font-family-text);
+  font-weight: var(--font-weight-normal);
   color: ${props => props.theme.textColorPale};
+  line-height: 1.15;
+  margin: 0;
 `;
 export const TimeIcon = styled("img")`
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
 `;

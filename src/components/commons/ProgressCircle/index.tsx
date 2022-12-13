@@ -1,19 +1,23 @@
+import React from "react";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-const ProgressCircle = ({
-  percent,
-  children,
-  width = 200,
-}: {
+interface Props {
   percent: number;
   children?: React.ReactNode;
+  size?: number;
   width?: number;
-}) => {
+  pathWidth?: number;
+  pathLineCap?: "butt" | "round" | "square" | "inherit";
+  trailWidth?: number;
+}
+
+const ProgressCircle: React.FC<Props> = props => {
+  const { percent, children, size = 200, width, pathWidth = 8, trailWidth = 8, pathLineCap } = props;
   const gradientTransform = `rotate(90)`;
 
   return (
-    <div style={{ width: width, display: "flex" }}>
+    <div style={{ width: width || size, display: "flex" }}>
       <svg style={{ height: 0, width: 0 }}>
         <defs>
           <linearGradient id={"progress"} gradientTransform={gradientTransform}>
@@ -23,7 +27,13 @@ const ProgressCircle = ({
         </defs>
       </svg>
 
-      <CircularProgressbarWithChildren styles={{ path: { stroke: `url(#progress)` } }} value={percent}>
+      <CircularProgressbarWithChildren
+        styles={{
+          path: { stroke: `url(#progress)`, strokeWidth: pathWidth, strokeLinecap: pathLineCap },
+          trail: { strokeWidth: trailWidth, fill: "#FFFFFF", opacity: 0.15 },
+        }}
+        value={percent}
+      >
         <>{children}</>
       </CircularProgressbarWithChildren>
     </div>

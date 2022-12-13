@@ -40,6 +40,12 @@ import BlockChainMenuIcon from "./icons/menus/blockchain.svg";
 import DelegatePoolMenuIcon from "./icons/menus/delegate.svg";
 import ToolMenuIcon from "./icons/menus/tool.svg";
 import EmptyIcon from "./images/noData.png";
+import RocketIcon from "./icons/rocket.svg";
+import CubeIcon from "./icons/cube.svg";
+import CheckCircleIcon from "./icons/check-circle.svg";
+import ExchangeIcon from "./icons/exchange-alt.svg";
+import ADAIcon from "./icons/ADA.svg";
+import OutputIcon from "./icons/output.svg";
 
 export {
   LogoMobileIcon,
@@ -84,4 +90,10 @@ export {
   DelegatePoolMenuIcon,
   ToolMenuIcon,
   EmptyIcon,
+  RocketIcon,
+  CubeIcon,
+  CheckCircleIcon,
+  ExchangeIcon,
+  ADAIcon,
+  OutputIcon,
 };

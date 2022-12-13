@@ -9,8 +9,10 @@ import { BoxRaised } from "../../../commons/BoxRaised";
 const TransactionContainer = styled(BoxRaised)`
   margin-bottom: 24px;
   padding: 36px;
+  height: calc(100% - 88px);
   @media screen and (max-width: 1023px) {
     padding: 20px;
+    height: calc(100% - 56px);
   }
 `;
 

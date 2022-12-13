@@ -1,4 +1,5 @@
 import React from "react";
+import { FaAngleDoubleRight } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { DownRedIcon, UpGreenIcon } from "../../../commons/resources";
@@ -7,7 +8,6 @@ import { formatPrice } from "../../../commons/utils/helper";
 import { Column } from "../../commons/Table";
 import {
   DelegateTable,
-  DetailButton,
   Header,
   ImageRate,
   PoolName,
@@ -85,22 +85,22 @@ const TopDelegationPools: React.FC<Props> = () => {
         </ProgressContainer>
       ),
     },
-    {
-      title: "",
-      key: "action",
-      render: r => (
-        <DetailButton to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`)}>
-          <small>Detail</small>
-        </DetailButton>
-      ),
-    },
+    // {
+    //   title: "",
+    //   key: "action",
+    //   render: r => (
+    //     <DetailButton to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`)}>
+    //       <small>Detail</small>
+    //     </DetailButton>
+    //   ),
+    // },
   ];
   return (
     <TopDelegateContainer>
       <Header>
         <Title>Top Delegation Pools</Title>
         <SeemoreButton to={routers.DELEGATION_POOLS}>
-          <SeemoreText>See All</SeemoreText>
+          <SeemoreText>View All</SeemoreText> <FaAngleDoubleRight size={12} />
         </SeemoreButton>
       </Header>
       <DelegateTable

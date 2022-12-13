@@ -50,6 +50,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
               {href ? (
                 isExtenalLink(href) ? (
                   <ListItem
+                    key={index}
                     button
                     href={href}
                     target="_blank"
@@ -69,6 +70,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   </ListItem>
                 ) : (
                   <ListItem
+                    key={index}
                     button
                     component={Link}
                     to={href}
@@ -89,6 +91,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 )
               ) : (
                 <ListItem
+                  key={index}
                   button
                   onClick={() => handleOpen(index)}
                   sx={theme => ({
@@ -122,11 +125,12 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
               {children?.length ? (
                 <Collapse in={index === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>
-                    {children.map(subItem => {
+                    {children.map((subItem, subIndex) => {
                       const { href, title, icon } = subItem;
                       return href ? (
                         isExtenalLink(href) ? (
                           <ListItem
+                            key={subIndex}
                             button
                             href={href}
                             target="_blank"
@@ -148,6 +152,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           </ListItem>
                         ) : (
                           <ListItem
+                            key={subIndex}
                             button
                             component={Link}
                             to={href}
