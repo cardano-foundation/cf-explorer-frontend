@@ -31,7 +31,7 @@ import CalenderPaleIcon from "./icons/calender-pale.svg";
 import ArrowDownIcon from "./icons/arrow-down.svg";
 import ArrowDropDownIcon from "./icons/arrow-drop-down.svg";
 import MenuIcon from "./icons/menu.svg";
-import AIcon from "./images/AIcon.png";
+import AIcon from "./icons/AIcon.svg";
 import Policy from "./icons/policy.svg";
 import HeaderBackground from "./images/header-bg.png";
 import DIDMenuIcon from "./icons/menus/did.svg";

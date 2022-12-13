@@ -1,27 +1,21 @@
 import { styled } from "@mui/material";
-import { BiLinkExternal } from "react-icons/bi";
-import Table from "../commons/Table";
-
-export const BlocksTable = styled(Table)`
-  margin-top: 18px;
-`;
+import { Link } from "react-router-dom";
 
 export const StyledColorBlueDard = styled("span")`
   color: ${props => props.theme.colorBlueDark};
 `;
 
-export const StyledLink = styled("div")`
-  color: ${props => props.theme.colorBlue};
-  display: flex;
-  align-items: center;
-  font-weight: var(--font-weight-bold);
-`;
-
-export const StyledIcon = styled(BiLinkExternal)`
-  font-size: 18px;
-  margin-left: 8px;
+export const StyledLink = styled(Link)`
+  font-family: var(--font-family-text) !important;
+  color: ${props => props.theme.colorBlue} !important;
 `;
 
 export const StyledImage = styled("img")`
   margin-right: 8px;
+`;
+
+export const PriceWrapper = styled(StyledColorBlueDard)`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
