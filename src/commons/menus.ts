@@ -1,4 +1,13 @@
-import { BlockChainMenuIcon, DelegatePoolMenuIcon, DIDMenuIcon, SupplyChainMenuIcon, ToolMenuIcon } from "./resources";
+import { FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons/fa";
+import { IconType } from "react-icons/lib";
+import {
+  BlockChainMenuIcon,
+  DelegatePoolMenuIcon,
+  DIDMenuIcon,
+  MediumIcon,
+  SupplyChainMenuIcon,
+  ToolMenuIcon,
+} from "./resources";
 import { routers } from "./routers";
 
 interface Menu {
@@ -7,6 +16,11 @@ interface Menu {
   mega?: boolean;
   children?: Menu[];
   icon?: string;
+}
+interface Social {
+  title: string;
+  href: string;
+  icon: IconType | string;
 }
 export const menus: Menu[] = [
   { title: "DID", href: "/did", icon: DIDMenuIcon },
@@ -38,6 +52,15 @@ export const menus: Menu[] = [
     icon: ToolMenuIcon,
   },
 ];
+
+export const socials: Social[] = [
+  { href: "https://www.linkedin.com/company/cardano-foundation/", title: "LinkedIn", icon: FaLinkedinIn },
+  { href: "https://medium.com/@cardano.foundation", title: "Medium", icon: MediumIcon },
+  { href: "https://t.me/CardanoAnnouncements", title: "Telegram", icon: FaTelegramPlane },
+  { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube", icon: FaYoutube },
+  { href: "https://www.youtube.com/c/cardanofoundation", title: "Twitter", icon: FaTwitter },
+];
+
 export const footerMenus: Menu[] = [
   {
     title: "Browser",

@@ -38,6 +38,9 @@ export const SeemoreButton = styled(Link)<{ mobile?: boolean }>`
   align-items: center;
   gap: 5px;
   color: ${props => props.theme.colorGreenLight}!important;
+  &:hover {
+    text-shadow: 0px 0px 1px ${props => props.theme.colorGreen};
+  }
   @media screen and (max-width: 539px) {
     display: ${props => (props.mobile ? "block" : "none")};
     margin-top: ${props => (props.mobile ? 20 : 0)}px;
