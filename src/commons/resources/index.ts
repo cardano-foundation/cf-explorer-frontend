@@ -46,6 +46,7 @@ import CheckCircleIcon from "./icons/check-circle.svg";
 import ExchangeIcon from "./icons/exchange-alt.svg";
 import ADAIcon from "./icons/ADA.svg";
 import OutputIcon from "./icons/output.svg";
+import MediumIcon from "./icons/medium.svg";
 
 export {
   LogoMobileIcon,
@@ -96,4 +97,5 @@ export {
   ExchangeIcon,
   ADAIcon,
   OutputIcon,
+  MediumIcon,
 };

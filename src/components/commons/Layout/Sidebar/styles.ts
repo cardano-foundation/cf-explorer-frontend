@@ -4,10 +4,11 @@ import { MenuIcon } from "../../../../commons/resources";
 import { NETWORKS } from "../../../../commons/utils/constants";
 
 export const NavbarContainer = styled.nav`
+  position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  padding: 25px 0px 0px;
+  padding: 25px 0px 60px;
   text-align: left;
   @media screen and (max-width: 1023px) {
     height: auto;
