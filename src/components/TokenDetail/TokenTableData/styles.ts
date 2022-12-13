@@ -1,19 +1,28 @@
-import { styled } from "@mui/material";
+import { Select, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const SelectComponent = styled("select")(({ theme }) => ({
-  height: "40px",
-  minWidth: 250,
-  borderRadius: theme.borderRadius,
-  border: "1px solid #0000001a",
-  padding: "0 10px",
-  color: theme.textColor,
-  textAlignLast: "left",
-  ":focus-visible": {
-    outline: "none",
-  },
-}));
-
+export const StyledSelect = styled(Select)`
+  min-width: 250px;
+  text-align: left;
+  font-family: var(--font-family-title);
+  border: 2px solid #c8cdd8;
+  background: transparent;
+  color: #344054;
+  border-radius: 8px;
+  & > div {
+    padding: 6.5px 12px;
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+  }
+  & > fieldset {
+    top: 0;
+    border: none !important;
+  }
+  & > svg {
+    color: #344054;
+    font-size: 20px;
+  }
+`;
 export const OptionSelect = styled("option")(({ theme }) => ({
   padding: "6px 0",
   textAlign: "center",
