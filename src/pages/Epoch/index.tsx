@@ -11,14 +11,14 @@ import { routers } from "../../commons/routers";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 
-import { Blocks, StyledContainer, Output, Status, StyledBold, StyledColorBlueDard } from "./styles";
+import { Blocks, StyledContainer, Output, Status, StyledColorBlueDard } from "./styles";
 
 const columns: Column<IDataEpoch>[] = [
   {
     title: "#",
     key: "#",
     minWidth: "100px",
-    render: r => <StyledBold>{r.no}</StyledBold>,
+    render: r => <b>{r.no}</b>,
   },
   {
     title: "Status",
@@ -80,7 +80,6 @@ const Epoch: React.FC = () => {
     <StyledContainer>
       <Card title={"Epochs"}>
         <Table
-          // className={styles.table}
           loading={loading}
           initialized={initialized}
           columns={columns}

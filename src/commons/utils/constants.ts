@@ -22,3 +22,12 @@ export enum NETWORKS {
   preview = "Preview",
   testnet = "Testnet (legacy)",
 }
+
+export enum TRANSACTION_STATUS {
+  SUCCESS = "SUCCESS",
+  PENDDING = "PENDDING",
+}
+export enum CONFIRMATION_STATUS {
+  MEDIUM = "MEDIUM",
+  SMALL = "SMALL",
+}

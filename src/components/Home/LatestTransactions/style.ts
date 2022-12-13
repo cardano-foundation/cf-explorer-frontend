@@ -15,10 +15,11 @@ export const Header = styled(Box)`
   margin-bottom: 1.5rem;
   gap: 10px;
 `;
+
 export const Title = styled("h3")`
   position: relative;
   text-align: left;
-  margin-bottom: 0px;
+  margin: 0px;
 
   &::after {
     position: absolute;
@@ -32,9 +33,10 @@ export const Title = styled("h3")`
 `;
 
 export const SeemoreButton = styled(Link)<{ mobile?: boolean }>`
-  display: ${props => (props.mobile ? "none" : "block")};
-  text-align: center;
-  height: auto;
+  display: ${props => (props.mobile ? "none" : "flex")};
+  align-items: center;
+  gap: 5px;
+  color: ${props => props.theme.colorGreenLight}!important;
   @media screen and (max-width: 539px) {
     display: ${props => (props.mobile ? "block" : "none")};
     margin-top: ${props => (props.mobile ? 20 : 0)}px;
@@ -42,12 +44,7 @@ export const SeemoreButton = styled(Link)<{ mobile?: boolean }>`
 `;
 
 export const SeemoreText = styled("small")`
-  display: block;
-  width: max-content;
-  margin: auto;
-  padding: 6.5px 20px;
-  border: 2px solid ${props => props.theme.colorGreenLight};
-  border-radius: 5px;
+  display: inline-block;
   color: ${props => props.theme.colorGreenLight};
   font-weight: var(--font-weight-bold);
 `;
@@ -57,10 +54,13 @@ export const Item = styled(BoxRaised)`
   position: relative;
   padding: 20px;
   margin-bottom: 20px;
-  border: 1.5px solid #e3e5e9;
   border-radius: 10px;
   font-family: var(--font-family-text);
   cursor: pointer;
+  height: calc(100% - 56px);
+  &:hover {
+    box-shadow: ${props => props.theme.shadowRaisedHover};
+  }
 `;
 export const ItemHeader = styled(Box)`
   display: flex;
@@ -100,7 +100,7 @@ export const BlockNo = styled("small")`
 export const WalletAddress = styled("small")`
   color: ${props => props.theme.colorBlue};
   font-family: var(--font-family-text);
-  font-style: italic;
+  font-weight: var(--font-weight-bold);
 `;
 
 export const BlankImage = styled("img")`

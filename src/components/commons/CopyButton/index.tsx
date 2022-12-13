@@ -1,13 +1,15 @@
-import { Tooltip, TooltipProps } from "@mui/material";
+import { IconButton, IconButtonProps, styled, Tooltip, TooltipProps } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
 import { BiCheckCircle } from "react-icons/bi";
 import { IoMdCopy } from "react-icons/io";
 import { useCopyToClipboard } from "react-use";
 
-import styles from "./index.module.scss";
+const Button = styled(IconButton)`
+  color: ${props => props.theme.textColor};
+`;
 
-interface CopyButtonProps {
+interface CopyButtonProps extends IconButtonProps {
   text?: string;
   placement?: TooltipProps["placement"];
   className?: string;
@@ -15,7 +17,7 @@ interface CopyButtonProps {
   onClick?: (e: React.MouseEvent) => void;
 }
 
-const CopyButton: React.FC<CopyButtonProps> = ({ text = "", className, onClick, children, placement }) => {
+const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, placement, ...props }) => {
   const [, copyToClipboard] = useCopyToClipboard();
   const [copied, setCopied] = useState<boolean>();
 
@@ -37,14 +39,14 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", className, onClick, 
   };
   return (
     <Tooltip placement={placement || "top"} title={copied ? "Copied" : "Copy"}>
-      <span className={className} onClick={onCopy}>
+      <Button {...props} onClick={onCopy}>
         {children ||
           (copied ? (
-            <BiCheckCircle size={20} className={styles.icon} />
+            <BiCheckCircle size={20} style={{ verticalAlign: "text-bottom" }} />
           ) : (
-            <IoMdCopy size={20} className={styles.icon} />
+            <IoMdCopy size={20} style={{ verticalAlign: "text-bottom" }} />
           ))}
-      </span>
+      </Button>
     </Tooltip>
   );
 };

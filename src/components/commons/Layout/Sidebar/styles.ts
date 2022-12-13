@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import { CollapseIcon } from "../../../../commons/resources";
+import { MenuIcon } from "../../../../commons/resources";
 import { NETWORKS } from "../../../../commons/utils/constants";
 
 export const NavbarContainer = styled.nav`
@@ -32,6 +32,8 @@ export const LogoLink = styled(Link)<{ open?: boolean }>`
   margin-left: ${props => (props.open ? 30 : 15)}px;
   margin-bottom: 30px;
   width: max-content;
+  min-width: 176px;
+  height: 50px;
   @media screen and (max-width: 1023px) {
     margin: 0;
   }
@@ -44,7 +46,7 @@ export const NavBarLogo = styled.img`
 
 export const NetworkName = styled.small<{ network: keyof typeof NETWORKS }>`
   position: absolute;
-  bottom: 0;
+  bottom: 2px;
   right: 0;
   transform: translateY(50%);
   font-weight: var(--font-weight-bold);
@@ -68,10 +70,10 @@ export const NetworkName = styled.small<{ network: keyof typeof NETWORKS }>`
   text-transform: uppercase;
 `;
 
-export const Collapse = styled.i`
+export const Toggle = styled.i`
   width: 30px;
   height: 30px;
-  background-image: url(${CollapseIcon});
+  background-image: url(${MenuIcon});
   display: none;
   @media screen and (max-width: 1023px) {
     display: block;

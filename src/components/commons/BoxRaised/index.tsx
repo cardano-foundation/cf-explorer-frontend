@@ -4,5 +4,5 @@ export const BoxRaised = styled.div`
   background: #ffffff;
   box-shadow: ${props => props.theme.shadowRaised};
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 12px;
 `;

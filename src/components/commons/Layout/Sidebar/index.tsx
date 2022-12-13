@@ -4,7 +4,7 @@ import { LogoMobileIcon } from "../../../../commons/resources";
 import { RootState } from "../../../../stores/types";
 import { setSidebar } from "../../../../stores/user";
 import SidebarMenu from "./SidebarMenu";
-import { NavbarContainer, NavBarLogo, LogoLink, NetworkName, HeaderTop, Collapse } from "./styles";
+import { NavbarContainer, NavBarLogo, LogoLink, NetworkName, HeaderTop, Toggle } from "./styles";
 
 const Sidebar: React.FC = () => {
   const { network, sidebar } = useSelector(({ user }: RootState) => user);
@@ -17,9 +17,9 @@ const Sidebar: React.FC = () => {
           <NavBarLogo src={LogoMobileIcon} alt="logo desktop" />
           <NetworkName network={network}>{network}</NetworkName>
         </LogoLink>
-        <Collapse onClick={handleToggle} />
+        <Toggle onClick={handleToggle} />
       </HeaderTop>
-      <SidebarMenu open={sidebar} handleToggle={handleToggle} />
+      <SidebarMenu />
     </NavbarContainer>
   );
 };

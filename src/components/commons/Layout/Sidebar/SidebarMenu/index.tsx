@@ -12,11 +12,6 @@ import { setSidebar } from "../../../../../stores/user";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../stores/types";
 
-interface Props extends RouteComponentProps {
-  open: boolean;
-  handleToggle: () => void;
-}
-
 const itemStyle: SxProps = {
   minHeight: 48,
   padding: "8px 20px 8px 30px",
@@ -24,7 +19,7 @@ const itemStyle: SxProps = {
   marginBottom: "5px",
 };
 
-const SidebarMenu: React.FC<Props> = ({ history }) => {
+const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { width } = useWindowSize(0);
   const [active, setActive] = useState<number | null>(null);
@@ -32,6 +27,11 @@ const SidebarMenu: React.FC<Props> = ({ history }) => {
   useEffect(() => {
     if (!sidebar) setActive(null);
   }, [sidebar]);
+
+  useEffect(() => {
+    if (!sidebar && width > 1023) setSidebar(true);
+    else if (sidebar && width <= 1023) setSidebar(false);
+  }, [width > 1023]);
 
   const handleOpen = (index: number) => {
     setActive(index !== active ? index : null);
@@ -50,6 +50,7 @@ const SidebarMenu: React.FC<Props> = ({ history }) => {
               {href ? (
                 isExtenalLink(href) ? (
                   <ListItem
+                    key={index}
                     button
                     href={href}
                     target="_blank"
@@ -69,6 +70,7 @@ const SidebarMenu: React.FC<Props> = ({ history }) => {
                   </ListItem>
                 ) : (
                   <ListItem
+                    key={index}
                     button
                     component={Link}
                     to={href}
@@ -89,6 +91,7 @@ const SidebarMenu: React.FC<Props> = ({ history }) => {
                 )
               ) : (
                 <ListItem
+                  key={index}
                   button
                   onClick={() => handleOpen(index)}
                   sx={theme => ({
@@ -122,11 +125,12 @@ const SidebarMenu: React.FC<Props> = ({ history }) => {
               {children?.length ? (
                 <Collapse in={index === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>
-                    {children.map(subItem => {
+                    {children.map((subItem, subIndex) => {
                       const { href, title, icon } = subItem;
                       return href ? (
                         isExtenalLink(href) ? (
                           <ListItem
+                            key={subIndex}
                             button
                             href={href}
                             target="_blank"
@@ -148,6 +152,7 @@ const SidebarMenu: React.FC<Props> = ({ history }) => {
                           </ListItem>
                         ) : (
                           <ListItem
+                            key={subIndex}
                             button
                             component={Link}
                             to={href}

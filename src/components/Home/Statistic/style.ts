@@ -12,6 +12,9 @@ export const Item = styled(BoxRaised)`
   padding-top: 30px;
   margin-bottom: 0px;
   text-align: left;
+  &:hover {
+    box-shadow: ${props => props.theme.shadowRaisedHover};
+  }
 `;
 
 export const ItemSkeleton = styled(Skeleton)`
