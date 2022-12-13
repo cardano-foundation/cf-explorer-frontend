@@ -37,6 +37,7 @@ import {
 interface DetailCardProps {
   listDetails: { title?: string; value: React.ReactNode }[];
   loading: boolean;
+  joinCard?: boolean;
   progress?: {
     epoch: number;
     block: number;
@@ -55,7 +56,14 @@ interface DetailCardProps {
   };
 }
 
-const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading, tokenDetail, delegationPools }) => {
+const DetailCard: React.FC<DetailCardProps> = ({
+  listDetails,
+  progress,
+  loading,
+  joinCard = false,
+  tokenDetail,
+  delegationPools,
+}) => {
   if (loading) {
     return (
       <Wrapper container spacing={2}>
@@ -131,6 +139,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
         </div>
       );
     }
+
     if (tokenDetail) {
       return (
         <TokenWrapper>

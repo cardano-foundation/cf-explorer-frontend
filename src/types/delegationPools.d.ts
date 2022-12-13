@@ -58,8 +58,8 @@ interface AnalyticsDelegators {
     lowest: number;
     dataByDays: [
       {
-        timeChart: string;
-        dataChart: number;
+        xchart: string;
+        ychart: number;
       }
     ];
   };
@@ -68,8 +68,8 @@ interface AnalyticsDelegators {
     lowest: number;
     dataByDays: [
       {
-        timeChart: string;
-        dataChart: number;
+        xchart: string;
+        ychart: number;
       }
     ];
   };

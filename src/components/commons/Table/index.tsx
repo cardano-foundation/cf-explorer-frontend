@@ -142,7 +142,7 @@ const Table: React.FC<TableProps> = ({
       <Wrapper>
         <TableFullWidth>
           <TableHeader columns={columns} />
-          {!initialized && loading ? (
+          {loading ? (
             <TableSekeleton columns={columns} />
           ) : (
             <TableBody columns={columns} data={data} onClickRow={onClickRow} />

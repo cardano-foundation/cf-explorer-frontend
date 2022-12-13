@@ -10,8 +10,8 @@ import Table, { Column } from "../../components/commons/Table";
 import { RegistrationContainer, StyledLink, StyledTab, TabLabel } from "./styles";
 
 enum POOL_TYPE {
-  REGISTRATION = "pool-registration",
-  DEREREGISTRATION = "pool-de-registration",
+  REGISTRATION = "registration",
+  DEREREGISTRATION = "de-registration",
 }
 
 const RegistrationPools = () => {
@@ -25,7 +25,7 @@ const RegistrationPools = () => {
   };
 
   const { data, total, loading, initialized, error } = useFetchList<Registration>(
-    `/delegation/${poolType}?page=${query.page || 1}&size=${query.size || 10}`
+    `/pool/${poolType}?page=${query.page || 1}&size=${query.size || 10}`
   );
 
   const onChangeTab = (e: React.SyntheticEvent, poolType: POOL_TYPE) => {
