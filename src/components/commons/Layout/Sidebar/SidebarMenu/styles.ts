@@ -1,7 +1,7 @@
 import { List, ListItemText, styled } from "@mui/material";
 
 export const Menu = styled(List)`
-  max-height: calc(100vh - 105px);
+  max-height: calc(100vh - 165px);
   overflow-y: auto;
   overflow-x: hidden;
   margin-bottom: 5px;
