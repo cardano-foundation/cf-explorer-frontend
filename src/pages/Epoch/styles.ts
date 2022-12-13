@@ -8,10 +8,6 @@ export const StyledContainer = styled(Container)`
   padding: 30px 0 40px;
 `;
 
-export const StyledBold = styled("span")`
-  font-weight: var(--font-weight-bold);
-`;
-
 export const StyledColorBlueDard = styled("span")`
   color: ${props => props.theme.colorBlueDark};
 `;

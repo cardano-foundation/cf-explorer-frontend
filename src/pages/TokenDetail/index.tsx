@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 import useFetch from "../../commons/hooks/useFetch";
 import TokenOverview from "../../components/TokenDetail/TokenOverview";
+import TokenTableData from "../../components/TokenDetail/TokenTableData";
 
 import { StyledContainer } from "./styles";
 
@@ -53,7 +54,7 @@ const TokenDetail: React.FC<ITokenDetail> = () => {
   return (
     <StyledContainer>
       <TokenOverview data={mergedToken} loading={loading} tokenMetadataLoading={tokenMetadataLoading} />
-      {/* <TokenTableData /> */}
+      <TokenTableData totalSupply={mergedToken.supply}/>
     </StyledContainer>
   );
 };

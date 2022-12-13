@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
-import "react-circular-progressbar/dist/styles.css";
 
 import styles from "./index.module.scss";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
@@ -13,11 +12,32 @@ import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { Policy } from "../../../commons/resources";
 import { numberWithCommas } from "../../../commons/utils/helper";
 import ProgressCircle from "../ProgressCircle";
-import { Token } from "./styles";
+import {
+  CardInfo,
+  CardInfoItem,
+  CardProgress,
+  EpochNumber,
+  EpochText,
+  InfoIcon,
+  InfoTitle,
+  InfoValue,
+  PolicyBody,
+  PolicyBodyDetail,
+  PolicyBodyTitle,
+  PolicyHeader,
+  TokenDetail,
+  TokenDetailDecimal,
+  TokenDetailDetail,
+  TokenDetailSupply,
+  TokenDetailTitle,
+  TokenWrapper,
+  Wrapper,
+} from "./styles";
 
 interface DetailCardProps {
   listDetails: { title?: string; value: React.ReactNode }[];
   loading: boolean;
+  joinCard?: boolean;
   progress?: {
     epoch: number;
     block: number;
@@ -36,17 +56,24 @@ interface DetailCardProps {
   };
 }
 
-const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading, tokenDetail, delegationPools }) => {
+const DetailCard: React.FC<DetailCardProps> = ({
+  listDetails,
+  progress,
+  loading,
+  joinCard = false,
+  tokenDetail,
+  delegationPools,
+}) => {
   if (loading) {
     return (
-      <Grid container className={styles.wrapper} spacing={2}>
+      <Wrapper container spacing={2}>
         <Grid item md={7} xs={12}>
-          <Skeleton className={styles.skeleton} variant="rectangular" />
+          <Skeleton style={{ height: 250, borderRadius: 10 }} variant="rectangular" />
         </Grid>
         <Grid item md={5} xs={12}>
-          <Skeleton className={styles.skeleton} variant="rectangular" />
+          <Skeleton style={{ height: 250, borderRadius: 10 }} variant="rectangular" />
         </Grid>
-      </Grid>
+      </Wrapper>
     );
   }
   const renderCard = () => {
@@ -54,10 +81,8 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
       return (
         <>
           <ProgressCircle percent={(progress.currentSlot / MAX_SLOT_EPOCH) * 100}>
-            <>
-              <div className={styles.epoch}>{progress.epoch}</div>
-              <div className={styles.epochTitle}>EPOCH</div>
-            </>
+            <EpochNumber>{progress.epoch}</EpochNumber>
+            <EpochText>EPOCH</EpochText>
           </ProgressCircle>
           <div className={styles.data}>
             <div className={styles.progessInfo}>
@@ -114,33 +139,34 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
         </div>
       );
     }
+
     if (tokenDetail) {
       return (
-        <Token.TokenWrapper>
-          <Token.PolicyHeader>
+        <TokenWrapper>
+          <PolicyHeader>
             <img src={Policy} alt="Policy Script Icon" />
             <h3>Policy Script</h3>
-          </Token.PolicyHeader>
-          <Token.PolicyBody>
+          </PolicyHeader>
+          <PolicyBody>
             <div>
-              <Token.PolicyBodyTitle>WETH</Token.PolicyBodyTitle>
-              <Token.PolicyBodyDetail>Wrapped ether bridged through Nomda</Token.PolicyBodyDetail>
+              <PolicyBodyTitle>WETH</PolicyBodyTitle>
+              <PolicyBodyDetail>Wrapped ether bridged through Nomda</PolicyBodyDetail>
             </div>
             <img src={infoIcon} alt="info" />
-          </Token.PolicyBody>
-          <Token.TokenDetail>
-            <Token.TokenDetailSupply>
-              <Token.TokenDetailTitle>Total Supply</Token.TokenDetailTitle>
-              <Token.TokenDetailDetail>
+          </PolicyBody>
+          <TokenDetail>
+            <TokenDetailSupply>
+              <TokenDetailTitle>Total Supply</TokenDetailTitle>
+              <TokenDetailDetail>
                 {tokenDetail?.totalSupply && numberWithCommas(tokenDetail.totalSupply)}
-              </Token.TokenDetailDetail>
-            </Token.TokenDetailSupply>
-            <Token.TokenDetailDecimal>
-              <Token.TokenDetailTitle>Decimal</Token.TokenDetailTitle>
-              <Token.TokenDetailDetail>{tokenDetail.decimal}</Token.TokenDetailDetail>
-            </Token.TokenDetailDecimal>
-          </Token.TokenDetail>
-        </Token.TokenWrapper>
+              </TokenDetailDetail>
+            </TokenDetailSupply>
+            <TokenDetailDecimal>
+              <TokenDetailTitle>Decimal</TokenDetailTitle>
+              <TokenDetailDetail>{tokenDetail.decimal}</TokenDetailDetail>
+            </TokenDetailDecimal>
+          </TokenDetail>
+        </TokenWrapper>
       );
     }
 
@@ -148,32 +174,28 @@ const DetailCard: React.FC<DetailCardProps> = ({ listDetails, progress, loading,
   };
 
   return (
-    <Grid container className={styles.wrapper} spacing={2}>
-      <Grid item lg={7} md={12}>
-        <Card className={styles.info}>
+    <Wrapper container spacing={2}>
+      <Grid item md={7} sm={12}>
+        <CardInfo>
           {listDetails.map((item, idx) => (
-            <Box className={styles.detailItem} key={idx}>
+            <CardInfoItem key={idx}>
               {item.title ? (
                 <>
-                  <Box>
-                    <img src={infoIcon} alt="info" className={styles.img} />
-                  </Box>
-                  <Box className={styles.row}>
-                    <Box style={{ minWidth: 150 }}>{item.title}:</Box>
-                    <Box className={` ${styles.fwBold} ${styles.value}`}>{item.value}</Box>
-                  </Box>
+                  <InfoIcon src={infoIcon} alt="info" />
+                  <InfoTitle>{item.title}:</InfoTitle>
+                  <InfoValue>{item.value}</InfoValue>
                 </>
               ) : (
-                <>{item.value}</>
+                item.value
               )}
-            </Box>
+            </CardInfoItem>
           ))}
-        </Card>
+        </CardInfo>
       </Grid>
-      <Grid item lg={5} md={12}>
-        <Card className={styles.progress}>{renderCard()}</Card>
+      <Grid item md={5} sm={12}>
+        <CardProgress>{renderCard()}</CardProgress>
       </Grid>
-    </Grid>
+    </Wrapper>
   );
 };
 

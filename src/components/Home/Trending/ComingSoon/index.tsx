@@ -6,11 +6,12 @@ import { BoxRaised } from "../../../commons/BoxRaised";
 interface Props {}
 
 const ComingSoonContainer = styled(BoxRaised)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 24px;
-  padding: 72px;
-  @media screen and (max-width: 1023px) {
-    padding: 48px;
-  }
+  height: calc(100% - 56px);
 `;
 const Image = styled("img")`
   width: auto;

@@ -1,5 +1,6 @@
 import { Grid, Skeleton, Tooltip } from "@mui/material"; 
 import React from "react";
+import { FaAngleDoubleRight } from "react-icons/fa";
 import { Link, useHistory } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { BlankBlueIcon, AIcon } from "../../../commons/resources";
@@ -30,7 +31,7 @@ const LatestTransactions: React.FC = () => {
       <Header>
         <Title>Latest Transactions</Title>
         <SeemoreButton to={routers.TRANSACTION_LIST}>
-          <SeemoreText>See All</SeemoreText>
+          <SeemoreText>View All</SeemoreText> <FaAngleDoubleRight size={12} />
         </SeemoreButton>
       </Header>
       {

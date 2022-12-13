@@ -1,0 +1,48 @@
+import React from "react";
+export interface ColumnType {
+  [key: string | number | symbol]: any;
+}
+
+export interface Column<T extends ColumnType = any> {
+  key: string;
+  title?: string;
+  width?: number | string;
+  minWidth?: number | string;
+  maxWidth?: number | string;
+  render?: (data: T, index: number) => ReactNode;
+}
+
+export type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns">;
+
+export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
+  row: T;
+  index: number;
+  onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
+};
+
+export interface TableProps<T extends ColumnType = any> {
+  columns: Column<T>[];
+  data?: T[];
+  className?: string;
+  style?: React.CSSProperties;
+  loading?: boolean;
+  initialized?: boolean;
+  error?: React.ReactNode;
+  total?: {
+    count: number;
+    title: string;
+  };
+  pagination?: {
+    onChange?: (page: number, size: number) => void;
+    page?: number;
+    size?: number;
+    total?: number;
+  };
+  allowSelect?: boolean;
+  onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
+}
+
+export interface FooterTableProps {
+  total: TableProps["total"];
+  pagination: TableProps["pagination"];
+}

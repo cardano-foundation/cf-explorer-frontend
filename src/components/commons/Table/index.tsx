@@ -1,135 +1,91 @@
-import React, { ReactNode, useState } from "react";
-import { TablePagination, Skeleton } from "@mui/material";
+import React, { useState } from "react";
+import { TablePagination, Skeleton, Box } from "@mui/material";
 
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
 
-import noData from "../../../commons/resources/images/noData.png";
-
 import styles from "./index.module.scss";
-import { useWindowSize } from "react-use";
+import { EmptyIcon } from "../../../commons/resources";
+import {
+  Empty,
+  EmtyImage,
+  TBody,
+  TCol,
+  TFooter,
+  THead,
+  THeader,
+  TRow,
+  Total,
+  TotalNumber,
+  Wrapper,
+  TableFullWidth,
+  Error,
+} from "./styles";
+import { ColumnType, FooterTableProps, TableHeaderProps, TableProps, TableRowProps } from "../../../types/table";
 
 export const EmptyRecord = () => (
-  <div className={styles.noData}>
-    <img src={noData} alt="no data" />
-  </div>
+  <Empty>
+    <EmtyImage src={EmptyIcon} alt="no data" />
+  </Empty>
 );
-interface ColumnType {
-  [key: string | number | symbol]: any;
-}
-export interface Column<T extends ColumnType = any> {
-  key: string;
-  title?: string;
-  minWidth?: string;
-  render?: (data: T, index: number) => ReactNode;
-}
-
-type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns">;
-
-type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
-  row: T;
-  index: number;
-  onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
-};
-interface TableProps<T extends ColumnType = any> {
-  columns: Column<T>[];
-  data?: T[];
-  className?: string;
-  loading?: boolean;
-  initialized?: boolean;
-  total?: {
-    count: number;
-    title: string;
-  };
-  pagination?: {
-    onChange?: (page: number, size: number) => void;
-    page?: number;
-    size?: number;
-    total?: number;
-  };
-  allowSelect?: boolean;
-  onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
-}
-interface FooterTableProps {
-  total: TableProps["total"];
-  pagination: TableProps["pagination"];
-}
 
 const TableHeader = <T extends ColumnType>({ columns }: TableHeaderProps<T>) => {
   return (
-    <thead className={styles.headerRow}>
+    <THead>
       <tr>
         {columns.map((column, idx) => (
-          <th className={styles.header} key={idx}>
-            {column.title}
-          </th>
+          <THeader key={idx}>{column.title}</THeader>
         ))}
       </tr>
-    </thead>
+    </THead>
   );
 };
 
 const TableRow = <T extends ColumnType>({ row, columns, index, onClickRow }: TableRowProps<T>) => {
   return (
-    <tr className={styles.bodyRow} onClick={e => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))}>
+    <TRow onClick={e => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))}>
       {columns.map((column, idx) => {
         return (
-          <td
-            className={styles.col}
-            key={idx}
-            style={{
-              minWidth: column.minWidth ? column.minWidth : "max-content",
-            }}
-          >
+          <TCol key={idx} minWidth={column.minWidth}>
             {column.render ? column.render(row, index) : row[column.key]}
-          </td>
+          </TCol>
         );
       })}
-    </tr>
+    </TRow>
   );
 };
 
 const TableBody = <T extends ColumnType>({ data, columns, onClickRow }: TableProps<T>) => {
   return (
-    <tbody className={styles.tableBody}>
+    <TBody>
       {data &&
         data.map((row, index) => (
           <TableRow row={row} key={index} columns={columns} index={index} onClickRow={onClickRow} />
         ))}
-    </tbody>
+    </TBody>
   );
 };
 
 const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
   return (
-    <tbody className={styles.tableBody}>
+    <TBody>
       {[...Array(10)].map((_, i) => {
         return (
-          <tr key={i} className={styles.bodyRow}>
-            {columns.map((column, idx) => {
+          <TRow key={i}>
+            {columns.map(({ minWidth }, idx) => {
               return (
-                <td
-                  className={styles.col}
-                  key={idx}
-                  style={{
-                    minWidth: column.minWidth ? column.minWidth : "max-content",
-                    padding: "0",
-                    height: "75px",
-                    overflow: "hidden",
-                  }}
-                >
+                <TCol key={idx} minWidth={minWidth}>
                   <Skeleton variant="rectangular" style={{ height: "75px" }} animation="wave" />
-                </td>
+                </TCol>
               );
             })}
-          </tr>
+          </TRow>
         );
       })}
-    </tbody>
+    </TBody>
   );
 };
 
 const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
-  const { width } = useWindowSize();
   const [page, setPage] = useState(pagination?.page || 0);
   const [rowsPerPage, setRowsPerPage] = useState(pagination?.size || 10);
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
@@ -143,30 +99,28 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
     pagination && pagination.onChange && pagination.onChange(1, parseInt(event.target.value, 10));
   };
   return (
-    <div className={styles.footer} style={{ justifyContent: total && width > 800 ? "space-between" : "center" }}>
-      {total && width > 800 && (
-        <div className={styles.total}>
-          {total.title}: <span className={styles.totalNumber}>{numberWithCommas(total.count)}</span>
-        </div>
+    <TFooter>
+      {total && (
+        <Total>
+          {total.title}: <TotalNumber>{numberWithCommas(total.count)}</TotalNumber>
+        </Total>
       )}
-      <div>
-        {pagination && (
-          <TablePagination
-            component="div"
-            count={pagination.total || 0}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            sx={{
-              ".MuiToolbar-root": {
-                alignItems: "baseline",
-              },
-            }}
-          />
-        )}
-      </div>
-    </div>
+      {pagination && (
+        <TablePagination
+          component="div"
+          count={pagination.total || 0}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          sx={{
+            ".MuiToolbar-root": {
+              alignItems: "baseline",
+            },
+          }}
+        />
+      )}
+    </TFooter>
   );
 };
 
@@ -176,26 +130,32 @@ const Table: React.FC<TableProps> = ({
   total,
   pagination,
   className,
+  style,
   loading,
   initialized = true,
+  error,
   onClickRow,
 }) => {
+  console.log({ initialized, loading, data });
   return (
-    <div className={`${styles.wrapper} ${className}`}>
-      <div className={styles.tableWrapper}>
-        <table className={styles.table}>
+    <Box className={className || ""} style={style}>
+      <Wrapper>
+        <TableFullWidth>
           <TableHeader columns={columns} />
-          {!initialized && loading ? (
+          {loading ? (
             <TableSekeleton columns={columns} />
           ) : (
             <TableBody columns={columns} data={data} onClickRow={onClickRow} />
           )}
-        </table>
-        {!initialized && !loading && data && data.length === 0 && <EmptyRecord />}
-      </div>
+        </TableFullWidth>
+        {!loading && ((initialized && data?.length === 0) || (error && error !== true)) && <EmptyRecord />}
+        {error && error !== true && <Error>{error || "Cannot get transaction list"}</Error>}
+      </Wrapper>
       <FooterTable total={total} pagination={pagination} />
-    </div>
+    </Box>
   );
 };
+
+export * from "../../../types/table.d";
 
 export default Table;

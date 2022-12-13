@@ -5,13 +5,15 @@ import { SUPPORTED_WALLETS } from "../../../commons/utils/constants";
 import styles from "./index.module.scss";
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { RootState } from "../../../stores/types";
-import { CircularProgress, Dialog, DialogTitle, IconButton } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
+import { CloseButton, ConnectDialog, Content, Header, Title, WalletIcon, WalletItem, WalletName } from "./style";
+import { SupportedWallets } from "../../../types/user";
 
 const ConnectWalletModal: React.FC = () => {
   const { connect } = useCardano();
   const { openModal } = useSelector(({ user }: RootState) => user);
-  const [walletConnecting, setWalletConnecting] = useState<string | null>(null);
+  const [walletConnecting, setWalletConnecting] = useState<SupportedWallets | null>(null);
 
   const handleClose = () => {
     setOpenModal(false);
@@ -23,40 +25,43 @@ const ConnectWalletModal: React.FC = () => {
   const onError = (error: Error) => {
     setWalletConnecting(null);
   };
-  const handleConnect = (walletName: string) => {
+  const handleConnect = (walletName: SupportedWallets) => {
     setWalletConnecting(walletName);
     connect(walletName, onSuccess, onError);
   };
 
   return (
-    <Dialog
+    <ConnectDialog
       onClose={walletConnecting ? undefined : handleClose}
       open={openModal}
-      className={`${styles.connectModal} ${walletConnecting ? styles.connecting : ""}`}
+      fullWidth
+      connecting={!!walletConnecting}
       PaperProps={{ style: { borderRadius: 20 } }}
     >
-      <div className={styles.connectContainer}>
-        <DialogTitle className={styles.dialogTitle}>
-          <h3 className={styles.title}>Connect to a Wallet</h3>
-          <IconButton onClick={handleClose} className={styles.closeIcon}>
-            <IoMdClose />
-          </IconButton>
-        </DialogTitle>
+      <Header>
+        <Title>Connect to a Wallet</Title>
+        <CloseButton connecting={!!walletConnecting} onClick={walletConnecting ? undefined : handleClose}>
+          <IoMdClose />
+        </CloseButton>
+      </Header>
+      <Content>
         {SUPPORTED_WALLETS.map(wallet => {
+          const active = walletConnecting === wallet.name;
           return (
-            <div
+            <WalletItem
               key={wallet.name}
-              className={`${styles.wallet} ${walletConnecting === wallet.name ? styles.selected : ""}`}
-              onClick={() => (walletConnecting ? null : handleConnect(wallet.name))}
+              active={active}
+              connecting={!!walletConnecting}
+              onClick={() => !walletConnecting && handleConnect(wallet.name)}
             >
-              <img src={wallet.icon} alt={wallet.name} />
-              {walletConnecting === wallet.name ? <CircularProgress className={styles.loading} /> : ""}
-              <h4>{wallet.name}</h4>
-            </div>
+              <WalletIcon src={wallet.icon} alt={wallet.name} />
+              {active ? <CircularProgress size={30} /> : ""}
+              <WalletName>{wallet.name}</WalletName>
+            </WalletItem>
           );
         })}
-      </div>
-    </Dialog>
+      </Content>
+    </ConnectDialog>
   );
 };
 
