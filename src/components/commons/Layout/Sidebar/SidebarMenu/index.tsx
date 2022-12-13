@@ -11,6 +11,7 @@ import { useWindowSize } from "react-use";
 import { setSidebar } from "../../../../../stores/user";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../stores/types";
+import FooterMenu from "../FooterMenu";
 
 const itemStyle: SxProps = {
   minHeight: 48,
@@ -42,7 +43,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
 
   return (
     <Collapse in={width > 1023 ? true : sidebar} timeout="auto" unmountOnExit>
-      <Menu>
+      <Menu open={sidebar}>
         {menus.map((item, index) => {
           const { href, title, children, icon } = item;
           return (
@@ -190,6 +191,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
         <SelectNetwork />
         <ConnectWallet />
       </NavbarMenuBottom>
+      <FooterMenu/>
     </Collapse>
   );
 };

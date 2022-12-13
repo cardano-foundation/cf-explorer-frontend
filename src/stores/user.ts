@@ -18,6 +18,7 @@ const initialState: UserStoreType = {
   openModal: false,
   network: "testnet",
   sidebar: true,
+  onDetailView: false,
 };
 
 const storeWallet = createSlice({

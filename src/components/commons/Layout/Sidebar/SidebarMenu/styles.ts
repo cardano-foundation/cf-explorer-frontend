@@ -1,10 +1,13 @@
 import { List, ListItemText, styled } from "@mui/material";
 
-export const Menu = styled(List)`
-  max-height: calc(100vh - 165px);
+export const Menu = styled(List)<{ open: boolean }>`
+  max-height: calc(100vh - ${props => (props.open ? 202 : 352)}px);
   overflow-y: auto;
   overflow-x: hidden;
   margin-bottom: 5px;
+  @media screen and (max-width: 1023px) {
+    max-height: unset;
+  }
 `;
 
 export const MenuIcon = styled("img")<{ iconOnly?: boolean; active?: boolean; textOnly?: boolean }>`
@@ -12,6 +15,9 @@ export const MenuIcon = styled("img")<{ iconOnly?: boolean; active?: boolean; te
   height: 24px;
   margin-right: ${props => (props.iconOnly ? 0 : 15)}px;
   filter: ${props => (props.active ? (props.textOnly ? `none` : `brightness(5)`) : `grayscale(1)`)};
+  @media screen and (max-width: 1023px) {
+    margin-right: 15px;
+  }
 `;
 
 export const SubMenu = styled(List)<{ isActive?: boolean }>`
@@ -32,6 +38,9 @@ export const MenuText = styled(ListItemText)<{ open?: boolean; active?: boolean;
         : props.theme.textColorPale};
     white-space: break-spaces;
     width: 165px;
+  }
+  @media screen and (max-width: 1023px) {
+    opacity: 1;
   }
 `;
 
