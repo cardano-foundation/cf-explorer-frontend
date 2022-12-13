@@ -11,6 +11,7 @@ import styles from "./index.module.scss";
 import moment from "moment";
 import { routers } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
+import { StyledContainer } from "./styles";
 
 interface TransactionListProps {
   transactions: Transactions[];
@@ -162,24 +163,26 @@ const TransactionList: React.FC<TransactionListProps> = ({
   ];
 
   return (
-    <Card title={"Transactions"}>
-      <Table
-        className={styles.table}
-        columns={columns}
-        data={transactions}
-        total={{ count: total, title: "Total Transactions" }}
-        loading={loading}
-        initialized={initialized}
-        onClickRow={(_, r: Transactions) => history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`))}
-        pagination={{
-          onChange: (page, size) => {
-            setQuery({ page, size });
-          },
-          page: currentPage || 0,
-          total: total,
-        }}
-      />
-    </Card>
+    <StyledContainer>
+      <Card title={"Transactions"}>
+        <Table
+          className={styles.table}
+          columns={columns}
+          data={transactions}
+          total={{ count: total, title: "Total Transactions" }}
+          loading={loading}
+          initialized={initialized}
+          onClickRow={(_, r: Transactions) => history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`))}
+          pagination={{
+            onChange: (page, size) => {
+              setQuery({ page, size });
+            },
+            page: currentPage || 0,
+            total: total,
+          }}
+        />
+      </Card>
+    </StyledContainer>
   );
 };
 

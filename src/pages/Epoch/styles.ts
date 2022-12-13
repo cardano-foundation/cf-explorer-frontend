@@ -12,10 +12,12 @@ export const StyledColorBlueDard = styled("span")`
   color: ${props => props.theme.colorBlueDark};
 `;
 
+export const Index = styled(StyledColorBlueDard)``;
+
 export const Status = styled("span")<{ status: string }>`
   font-weight: var(--font-weight-bold);
   padding: 7.5px 11.5px;
-  border-radius: 6px;
+  border-radius: 2px;
   text-transform: uppercase;
   color: ${props =>
     props.status === "finished"
@@ -31,12 +33,10 @@ export const Status = styled("span")<{ status: string }>`
       : "rgba(255, 168, 0, 0.2)"};
 `;
 
-export const Blocks = styled(StyledColorBlueDard)`
-  font-weight: var(--font-weight-bold);
-`;
+export const Blocks = styled(StyledColorBlueDard)``;
 
 export const Output = styled(Blocks)`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 `;

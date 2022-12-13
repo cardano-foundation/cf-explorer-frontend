@@ -1,16 +1,15 @@
 import { useHistory } from "react-router-dom";
-import moment from "moment";
 import { stringify } from "qs";
 import { Tooltip } from "@mui/material";
 
 import Card from "../commons/Card";
-import { Column } from "../commons/Table";
+import Table, { Column } from "../commons/Table";
 import { getShortWallet, formatADA } from "../../commons/utils/helper";
 
 import { routers } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 
-import { BlocksTable, StyledColorBlueDard, StyledIcon, StyledImage, StyledLink } from "./styles";
+import { PriceWrapper, StyledColorBlueDard, StyledLink } from "./styles";
 
 interface BlockListProps {
   blockLists: Block[];
@@ -29,10 +28,10 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
 
   const columns: Column<Block>[] = [
     {
-      title: "Block Number",
+      title: "Block No",
       key: "blockNo",
-      minWidth: "100px",
-      render: r => <b>{r.blockNo}</b>,
+      minWidth: "50px",
+      render: r => <StyledColorBlueDard>{r.blockNo}</StyledColorBlueDard>,
     },
     {
       title: "Block ID",
@@ -40,34 +39,24 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
       minWidth: "150px",
       render: r => (
         <Tooltip placement="top" title={r.hash}>
-          <StyledLink>
-            {getShortWallet(`${r.hash}`)}
-            <StyledIcon />
-          </StyledLink>
+          <StyledLink to={"#"}>{getShortWallet(`${r.hash}`)}</StyledLink>
         </Tooltip>
-      ),
-    },
-    {
-      title: "Created at",
-      key: "createdAt",
-      minWidth: "150px",
-      render: r => (
-        <StyledColorBlueDard>{r.time ? moment(r.time).format("MM/DD/YYYY HH:mm:ss") : ""}</StyledColorBlueDard>
       ),
     },
     {
       title: "Transactions",
       key: "transactions",
-      minWidth: "150px",
-      render: r => <b>{r.txCount}</b>,
+      minWidth: "50px",
+      render: r => <StyledColorBlueDard>{r.txCount}</StyledColorBlueDard>,
     },
     {
       title: "Fees",
       key: "fees",
       render: r => (
-        <b>
-          <StyledImage src={AIcon} alt="ADA Icon" /> {formatADA(r.totalFees) || 0}
-        </b>
+        <PriceWrapper>
+          {formatADA(r.totalFees) || 0}
+          <img src={AIcon} alt="ADA Icon" />
+        </PriceWrapper>
       ),
     },
     {
@@ -75,21 +64,22 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
       key: "output",
       minWidth: "100px",
       render: r => (
-        <b>
-          <StyledImage src={AIcon} alt="ADA Icon" /> {formatADA(r.totalFees) || 0}
-        </b>
+        <PriceWrapper>
+          {formatADA(r.totalFees) || 0}
+          <img src={AIcon} alt="ADA Icon" />
+        </PriceWrapper>
       ),
     },
   ];
 
   return (
     <Card title={"Blocks"}>
-      <BlocksTable
+      <Table
         loading={loading}
         initialized={initialized}
         columns={columns}
         data={blockLists}
-        total={{ count: total, title: "Total Transactions" }}
+        total={{ count: total, title: "Total Blocks" }}
         onClickRow={(_, r: Block) => history.push(routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`))}
         pagination={{
           onChange: (page, size) => {
