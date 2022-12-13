@@ -1,5 +1,5 @@
 import { parse, stringify } from "qs";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -12,6 +12,8 @@ import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 
 import { Blocks, StyledContainer, Output, Status, StyledColorBlueDard, Index } from "./styles";
+import { setOnDetailView } from "../../stores/user";
+import DetailView from "../../components/commons/DetailView";
 
 const columns: Column<IDataEpoch>[] = [
   {
@@ -58,6 +60,7 @@ const columns: Column<IDataEpoch>[] = [
 ];
 
 const Epoch: React.FC = () => {
+  const [detailView, setDetailView] = useState<number | null>(null);
   const { search } = useLocation();
   const history = useHistory();
   const ref = useRef<HTMLDivElement>(null);
@@ -76,6 +79,16 @@ const Epoch: React.FC = () => {
 
   if (!data) return null;
 
+  const openDetail = (_: any, r: IDataEpoch) => {
+    setOnDetailView(true);
+    setDetailView(r.no);
+  };
+
+  const handleClose = () => {
+    setOnDetailView(false);
+    setDetailView(null);
+  };
+
   return (
     <StyledContainer>
       <Card title={"Epochs"}>
@@ -84,7 +97,7 @@ const Epoch: React.FC = () => {
           initialized={initialized}
           columns={columns}
           data={data}
-          onClickRow={(_, r: IDataEpoch) => history.push(routers.EPOCH_DETAIL.replace(":epochId", `${r.no}`))}
+          onClickRow={openDetail}
           total={{ count: total, title: "Total Epochs" }}
           pagination={{
             onChange: (page, size) => {
@@ -96,6 +109,7 @@ const Epoch: React.FC = () => {
           }}
         />
       </Card>
+      {detailView && <DetailView type="epoch" id={detailView} handleClose={handleClose} />}
     </StyledContainer>
   );
 };

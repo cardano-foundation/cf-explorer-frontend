@@ -61,6 +61,10 @@ const storeWallet = createSlice({
       ...state,
       sidebar: action.payload,
     }),
+    setOnDetailView: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      onDetailView: action.payload,
+    }),
   },
 });
 
@@ -97,6 +101,10 @@ export const setNetwork = (network: keyof typeof NETWORKS) => {
 
 export const setSidebar = (sidebar: boolean) => {
   userStore?.dispatch(storeWallet.actions.setSidebar(sidebar));
+};
+
+export const setOnDetailView = (onDetailView: boolean) => {
+  userStore?.dispatch(storeWallet.actions.setOnDetailView(onDetailView));
 };
 
 export default storeWallet.reducer;

@@ -11,12 +11,12 @@ export const HeaderContainer = styled("header")<{ isHome: boolean }>`
 `;
 
 export const HeaderBox = styled(Container)<{ isHome: boolean }>`
+  display: flex;
   ${props =>
     props.isHome
-      ? ``
-      : ` 
-        display: flex;
-        flex-direction: row-reverse;
+      ? `flex-direction: column-reverse;`
+      : `
+        flex-direction: row;
         justify-content: space-between;
         align-items:center;
       `}
@@ -38,7 +38,11 @@ export const HeaderBackground = styled("div")<{ isHome: boolean }>`
   }
 `;
 
-export const HeaderTop = styled("div")`
+export const HeaderTop = styled("div")<{ fixed: boolean }>`
+  position: ${props => (props.fixed ? "fixed" : "")};
+  top: ${props => (props.fixed ? "0px" : "unset")};
+  right: ${props => (props.fixed ? "30px" : "unset")};
+  z-index: 1300;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -52,7 +56,7 @@ export const HeaderTop = styled("div")`
 export const HeaderMain = styled("div")<{ isHome: boolean }>`
   position: relative;
   text-align: center;
-  padding: ${props => (props.isHome ? "80px 0px 170px" : "20px 0px")};
+  padding: ${props => (props.isHome ? "80px 0px 170px" : "27px 0px")};
   & > div {
     padding-top: ${props => (props.isHome ? "0px" : "30px")};
     margin-bottom: ${props => (props.isHome ? "0px" : "calc(-25px - 1.5715rem)")};

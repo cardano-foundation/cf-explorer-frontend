@@ -103,7 +103,15 @@ export const ToggleMenu = styled("button")`
   }
 `;
 
-export const Main = styled(Box)`
+export const MainContainer = styled(Box)`
+  width: 100%;
+`;
+
+export const Main = styled(Box)<{ onDetailView: boolean; sidebar: boolean }>`
   flex-grow: 1;
   overflow: hidden;
+  max-width: calc(100vw - ${({ onDetailView, sidebar }) => (onDetailView ? 445 : 0) + (sidebar ? 260 : 85) + 16}px);
+  @media screen and (max-width: 1023px) {
+    max-width: 100vw;
+  }
 `;

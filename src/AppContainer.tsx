@@ -5,6 +5,7 @@ import { RootState } from "./stores/types";
 import { useHistory } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import themes from "./themes";
+import { setOnDetailView } from "./stores/user";
 interface Props {
   children: React.ReactNode;
 }
@@ -14,9 +15,15 @@ const AppContainer: React.FC<Props> = props => {
   const { theme } = useSelector(({ user }: RootState) => user);
 
   const history = useHistory();
+
+  useEffect(() => {
+    setOnDetailView(false);
+  }, []);
+
   useEffect(() => {
     const unlisten = history.listen(() => {
       window.scrollTo(0, 0);
+      setOnDetailView(false);
     });
     return () => {
       unlisten();
