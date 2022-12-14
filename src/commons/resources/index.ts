@@ -49,6 +49,9 @@ import USDIcon from "./icons/usd.svg";
 import NoteEditIcon from "./icons/note-edit.svg";
 import WithdrawlIcon from "./icons/withdrawl.svg";
 import MintingIcon from "./icons/minting.svg";
+import InfoIcon from "./icons/infoIcon.svg";
+import HighestIcon from "./icons/highest-icon.svg";
+import LowestIcon from "./icons/lowest-icon.svg";
 
 import FlintIcon from "./images/flint.jpg";
 import NamiIcon from "./images/nami.png";
@@ -114,4 +117,7 @@ export {
   WithdrawlIcon,
   MintingIcon,
   PolicyWhiteIcon,
+  InfoIcon,
+  HighestIcon,
+  LowestIcon,
 };

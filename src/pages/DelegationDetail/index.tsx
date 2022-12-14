@@ -1,24 +1,24 @@
-import { useState, useRef } from "react";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
-import { Grid, Select, Skeleton, styled, Tooltip } from "@mui/material";
+import { Container } from "@mui/material";
+import React, { useRef, useState } from "react";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { parse, stringify } from "qs";
 
-import { DelegationEpochList, DelegationStakingDelegatorsList } from "../../components/DelegationDetailList";
-import DelegationDetailChart from "../../components/DelegationDetailChart";
-import DetailCard from "../../components/commons/DetailCard";
-
 import useFetch from "../../commons/hooks/useFetch";
-import Card from "../../components/commons/Card";
-import { formatADA, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 
-import styles from "./index.module.scss";
-import { AIcon } from "../../commons/resources";
+import DelegationDetailInfo from "../../components/DelegationDetail/DelegationDetailInfo";
+import DelegationDetailOverview from "../../components/DelegationDetail/DelegationDetailOverview";
+import DelegationDetailChart from "../../components/DelegationDetail/DelegationDetailChart";
 
-import "./select.css";
+import { OptionSelect, SelectComponent, Title } from "./styles";
+import {
+  DelegationEpochList,
+  DelegationStakingDelegatorsList,
+} from "../../components/DelegationDetail/DelegationDetailList";
 import useFetchList from "../../commons/hooks/useFetchList";
-import CopyButton from "../../components/commons/CopyButton";
 
-const DelegationDetail = () => {
+interface IDelegationDetail {}
+
+const DelegationDetail: React.FC<IDelegationDetail> = () => {
   const { poolId } = useParams<{ poolId: string }>();
   const { search } = useLocation();
   const history = useHistory();
@@ -53,48 +53,6 @@ const DelegationDetail = () => {
     `/delegation/pool-detail-${tab}?pool=${poolId}&page=${query.page || 1}&size=${query.size || 10}`
   );
 
-  const listDetails = [
-    {
-      title: "Ticker",
-      value: data?.tickerName || "",
-    },
-
-    {
-      title: "Pool ID",
-      value: poolId,
-    },
-    {
-      title: "Created date",
-      value: data?.createDate || "",
-    },
-    {
-      title: "Reward Account",
-      value: (
-        <>
-          <Tooltip placement="bottom" title={data?.rewardAccount || ""}>
-            <Link to={"#"} className={styles.link}>
-              {getShortWallet(data?.rewardAccount || "")}
-            </Link>
-          </Tooltip>
-          <CopyButton text={data?.rewardAccount || ""} />
-        </>
-      ),
-    },
-    {
-      title: "Owner Account",
-      value: (
-        <>
-          <Tooltip placement="bottom" title={data?.ownerAccount || ""}>
-            <Link to={"#"} className={styles.link}>
-              {getShortWallet(data?.ownerAccount || "")}
-            </Link>
-          </Tooltip>
-          <CopyButton text={data?.ownerAccount || ""} />
-        </>
-      ),
-    },
-  ];
-
   const render = () => {
     if (tab === "epochs") {
       return (
@@ -125,129 +83,35 @@ const DelegationDetail = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <Card
-        title={
-          <>
-            Pool: <span className={styles.title}>{data?.poolName || ""}</span>{" "}
-          </>
-        }
-      >
-        <DetailCard
-          loading={loading}
-          listDetails={listDetails}
-          delegationPools={{
-            poolSize: (
-              <span className={styles.price}>
-                {formatADA(data?.poolSize || 0)}
-                <img className={styles.img} src={AIcon} alt="ada icon" />
-              </span>
-            ),
-            stakeLimit: (
-              <span className={styles.price}>
-                {formatADA(data?.stakeLimit || 0)}
-                <img className={styles.img} src={AIcon} alt="ada icon" />
-              </span>
-            ),
-            delegators: data?.delegators || 0,
-            satulation: 0,
-          }}
-        />
-      </Card>
-      <OverviewCard data={data} loading={loading} />
+    <Container>
+      <DelegationDetailInfo data={data} loading={loading} poolId={poolId} />
+      <DelegationDetailOverview data={data} loading={loading} />
       <DelegationDetailChart data={analyticsData} loading={loadingAnalytics} />
-      <Card
-        title={title[tab]}
-        extra={
-          <div className={styles.filter}>
-            <SelectComponent
-              value={tab || "epochs"}
-              onChange={e => {
-                setTab(e.target.value as typeof tab);
-                setQuery({ page: 1, size: 10 });
-                scrollEffect();
-              }}
-            >
-              <OptionSelect value={"epochs"}>Epochs</OptionSelect>
-              <OptionSelect value={"delegators"}>Staking delegators</OptionSelect>
-            </SelectComponent>
-          </div>
-        }
-      >
+
+      <Container>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <Title>{title[tab]}</Title>
+          <SelectComponent
+            value={tab || "epochs"}
+            onChange={e => {
+              setTab(e.target.value as typeof tab);
+              setQuery({ page: 1, size: 10 });
+              scrollEffect();
+            }}
+          >
+            <OptionSelect value={"epochs"}>Epochs</OptionSelect>
+            <OptionSelect value={"delegators"}>Staking Delegators</OptionSelect>
+          </SelectComponent>
+        </div>
         {render()}
-      </Card>
-    </div>
+      </Container>
+    </Container>
   );
 };
 
 export default DelegationDetail;
 
-const OverviewCard = ({ data, loading }: { data: DelegationOverview | null; loading: boolean }) => {
-  let overviewData = {
-    Reward: data?.reward ? `${data.reward}%` : "0%",
-    Fee: data?.fee ? `${data.fee}%` : "0%",
-    ROS: data?.ros ? `${data.ros}%` : "0%",
-    "Pledge(A)": formatADA(data?.pledge) || 0,
-    "Cost(A)": formatADA(data?.cost) || 0,
-    Margin: data?.margin ? `${data.margin}%` : "0%",
-    "Epoch Block": data?.epochBlock || 0,
-    "Lifetime Block": numberWithCommas(data?.lifetimeBlock || 0),
-  };
-  if (loading) {
-    return (
-      <div className={styles.overview}>
-        <Grid container columns={24} spacing={2}>
-          {Object.keys(overviewData).map((i, ii) => {
-            return (
-              <Grid item xs={12} sm={8} md={6} key={ii} xl={3} className={styles.col}>
-                <Skeleton variant="rectangular" className={styles.itemSkeleton} />
-              </Grid>
-            );
-          })}
-        </Grid>
-      </div>
-    );
-  }
-  return (
-    <div className={styles.overview}>
-      <Grid container columns={24} spacing={2}>
-        {Object.keys(overviewData).map((i, ii) => {
-          return (
-            <Grid item xs={12} sm={8} md={6} key={ii} xl={3} className={styles.col}>
-              <div className={styles.item}>
-                <div>
-                  <div className={styles.title}>{i}</div>
-                  <div className={styles.value}>{overviewData[i as keyof typeof overviewData]}</div>
-                </div>
-              </div>
-            </Grid>
-          );
-        })}
-      </Grid>
-    </div>
-  );
-};
-
 const title = {
-  epochs: "Epoch",
-  delegators: "Staking delegators",
+  epochs: "Epochs",
+  delegators: "Staking Delegators",
 };
-
-const SelectComponent = styled(Select)(({ theme }) => ({
-  height: "40px",
-  minWidth: 250,
-  borderRadius: theme.borderRadius,
-  border: "1px solid #0000001a",
-  padding: "0 10px",
-  color: theme.textColor,
-  textAlignLast: "left",
-  ":focus-visible": {
-    outline: "none",
-  },
-}));
-
-const OptionSelect = styled("option")(({ theme }) => ({
-  padding: "6px 0",
-  textAlign: "center",
-  height: "40px",
-}));
