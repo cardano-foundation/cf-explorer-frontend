@@ -71,17 +71,17 @@ const RegistrationPools = () => {
     {
       title: "Pledge(A)",
       key: "pledge",
-      render: r => <b>{formatADA(r.pledge)}</b>,
+      render: r => <>{formatADA(r.pledge)}</>,
     },
     {
       title: "Cost(A)",
       key: "cost",
-      render: r => <b>{formatADA(r.cost)}</b>,
+      render: r => <>{formatADA(r.cost)}</>,
     },
     {
       title: "Margin",
       key: "margin",
-      render: r => <b>{r.margin ? `${r.margin}%` : ""}</b>,
+      render: r => <>{r.margin ? `${r.margin}%` : ""}</>,
     },
     {
       title: "Stake Key",
