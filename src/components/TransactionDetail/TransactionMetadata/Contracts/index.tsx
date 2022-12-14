@@ -20,7 +20,7 @@ const Contracts: React.FC<ContractsProps> = ({ data }) => {
           data.map((ct, key) => {
             return (
               <div key={key} className={styles.item}>
-                <Link to={routers.ADDRESS_DETAIL.replace(":address", ct.contract)} className={styles.address}>
+                <Link to={"#"} className={styles.address}>
                   <Tooltip title={ct.contract} placement="top">
                     <div>{getShortWallet(ct.contract)}</div>
                   </Tooltip>

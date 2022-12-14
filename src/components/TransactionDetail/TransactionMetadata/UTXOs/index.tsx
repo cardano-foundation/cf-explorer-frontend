@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Tooltip } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 
 import { getShortWallet, formatADA, getShortHash } from "../../../../commons/utils/helper";
 
 import styles from "./index.module.scss";
 import walletImg from "../../../../commons/resources/images/Wallet.png";
-import sendImg from "../../../../commons/resources/images/summary-up.png";
-import receiveImg from "../../../../commons/resources/images/summary-down.png";
-import feeImg from "../../../../commons/resources/images/fee.png";
+import sendImg from "../../../../commons/resources/images/sendImg.svg";
+import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
+import feeImg from "../../../../commons/resources/images/dola.svg";
 import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
 import { routers } from "../../../../commons/routers";
@@ -54,59 +54,68 @@ const Card = ({
       {item &&
         item.map((i, ii) => (
           <div className={styles.item} key={ii}>
-            <div className={styles.transfer}>
-              <div className={styles.wallet}>
-                <img className={styles.img} src={walletImg} alt="wallet icon" />
-                {type === "down" ? "From" : "To"}:
-              </div>
-              <div className={styles.transferInfo}>
-                <div className={styles.transferAddress}>
-                  <Link to={routers.ADDRESS_DETAIL.replace(":address", i.address)} className={styles.address}>
-                    <Tooltip title={i.address} placement="top">
-                      <div> {getShortWallet(i.address)}</div>
-                    </Tooltip>
-                  </Link>{" "}
-                  <CopyButton text={i.address} className={styles.icon} />
-                </div>
-                <div className={styles.transferValue}>
-                  <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
-                    {type === "down" ? `- ${formatADA(i.value)}` : `+ ${formatADA(i.value)}`}
-                  </span>
-                  <img src={AIcon} alt="ADA icon" />
-                </div>
-              </div>
-            </div>
-            <div className={styles.transfer}>
-              {type === "down" && (
-                <div className={styles.transferInfo}>
-                  <div className={styles.transferHash}>
-                    <img src={type === "down" ? receiveImg : sendImg} className={styles.img} alt="send icon" />
-                    <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", i.txHash)} className={styles.txHash}>
-                      <Tooltip title={i.txHash} placement="top">
-                        <div>
-                          <span className={styles.txHashDesktop}>{i.txHash}</span>
-                          <span className={styles.txHashMobile}>{getShortHash(i.txHash)}</span>
-                        </div>
-                      </Tooltip>
-                    </Link>
-                    <CopyButton text={i.txHash} className={styles.icon} />
+            <Box display={"flex"} alignItems="center">
+              <Box width={50}>
+                <img src={type === "down" ? receiveImg : sendImg} className={styles.img} alt="send icon" />
+              </Box>
+              <Box width={"100%"}>
+                <div className={styles.transfer}>
+                  <div className={styles.wallet}>{type === "down" ? "From" : "To"}:</div>
+                  <div className={styles.transferInfo}>
+                    <div className={styles.transferAddress}>
+                      <Link to={routers.ADDRESS_DETAIL.replace(":address", i.address)} className={styles.address}>
+                        <Tooltip title={i.address} placement="top">
+                          <div> {getShortWallet(i.address)}</div>
+                        </Tooltip>
+                      </Link>{" "}
+                      <CopyButton text={i.address} className={styles.icon} />
+                    </div>
+                    <div className={styles.transferValue}>
+                      <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
+                        {type === "down" ? `- ${formatADA(i.value)}` : `+ ${formatADA(i.value)}`}
+                      </span>
+                      <img src={AIcon} alt="ADA icon" />
+                    </div>
                   </div>
                 </div>
-              )}
-            </div>
+                <div className={styles.transfer}>
+                  {type === "down" && (
+                    <div className={styles.transferInfo}>
+                      <div className={styles.transferHash}>
+                        <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", i.txHash)} className={styles.txHash}>
+                          <Tooltip title={i.txHash} placement="top">
+                            <div>
+                              <span className={styles.txHashDesktop}>{i.txHash}</span>
+                              <span className={styles.txHashMobile}>{getShortHash(i.txHash)}</span>
+                            </div>
+                          </Tooltip>
+                        </Link>
+                        <CopyButton text={i.txHash} className={styles.icon} />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </Box>
+            </Box>
           </div>
         ))}
       {type === "up" && (
         <div className={styles.item}>
           <div className={styles.transfer}>
             <div className={styles.transferInfo}>
-              <img className={styles.img} src={feeImg} alt="wallet icon" />
-              <div>Fee</div>
+              <Box display={"flex"} alignItems="center">
+                <img className={styles.img} src={feeImg} alt="wallet icon" />
+                <Box>Fee</Box>
+              </Box>
             </div>
-            <div>
-              <span className={`${styles.address} ${styles.up}`}>{formatADA(fee)}</span>
-              <img src={AIcon} alt="ADA icon" />
-            </div>
+            <Box display={"flex"} alignItems="center">
+              <Box mr="8px" className={`${styles.address} ${styles.up}`}>
+                {formatADA(fee)}
+              </Box>
+              <Box>
+                <img src={AIcon} alt="ADA icon" />
+              </Box>
+            </Box>
           </div>
           <div className={`${styles.paddingTop} ${styles.transfer}`}></div>
         </div>

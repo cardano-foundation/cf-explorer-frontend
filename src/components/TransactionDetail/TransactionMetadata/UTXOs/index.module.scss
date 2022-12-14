@@ -24,7 +24,7 @@
 
   .item {
     // background-color: var(--background);
-    padding: 16px 25px;
+    padding: 10px 25px;
     text-align: left;
     font-size: var(--font-size-text);
     border-bottom: 1px solid #0000001a;
@@ -40,7 +40,6 @@
       .wallet {
         @include flex-start-center;
         padding-right: 10px;
-        margin-bottom: 8px;
         .img {
           padding-right: 10px;
           width: 35px;
@@ -50,7 +49,6 @@
       .transferInfo {
         @include flex-between-center;
         flex: 1;
-        margin-bottom: 8px;
 
         .transferAddress,
         .transferValue,

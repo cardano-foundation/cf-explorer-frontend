@@ -6,9 +6,9 @@ import { routers } from "../../../commons/routers";
 
 import { formatADA, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
-import Eth from "../../../commons/resources/images/Eth.png";
-import rocketToken from "../../../commons/resources/images/rocketToken.png";
-import exchangeToken from "../../../commons/resources/images/exchangeToken.png";
+import ADA from "../../../commons/resources/icons/ADA.svg";
+import rocketToken from "../../../commons/resources/images/rocketToken.svg";
+import exchangeToken from "../../../commons/resources/images/exchangeToken.svg";
 import infoToken from "../../../commons/resources/images/infoToken.png";
 
 import {
@@ -57,7 +57,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataL
       <CardInfo>
         <TokenInfo>
           <Box pr={3}>
-            <img height={"100%"} src={Eth} alt="token icon " />
+            <img height={"100%"} width={50} src={ADA} alt="token icon " />
           </Box>
           <Box>
             <Box textAlign={"left"} fontWeight={"bold"} fontSize={"1.3rem"}>
@@ -102,7 +102,7 @@ const InfoItem = ({
         <Box padding={props => `${props.spacing(1)} 0`}>{title}</Box>
         <Box fontSize={"1.3rem"} fontWeight="bold">
           {title === "Total Supply" && formatADA(data?.supply)}
-          {title === "Decimal" && data?.decimals}
+          {title === "Decimal" && (data?.decimals || 0)}
           {title !== "Total Supply" && title !== "Decimal" && data?.txCount}
         </Box>
       </Box>

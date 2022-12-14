@@ -66,8 +66,8 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       minWidth: "200px",
       render: r => (
         <TopHolder.TopHolderBalance>
-          <TopHolder.StyledImg src={AIcon} alt="a icon" />
           {formatADA(r.quantity) || 0}
+          <TopHolder.StyledImg src={AIcon} alt="a icon" />
         </TopHolder.TopHolderBalance>
       ),
     },

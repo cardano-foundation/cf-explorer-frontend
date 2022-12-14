@@ -163,7 +163,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
               Transaction Fees <InfoIcon />
             </DetailLabel>
             <DetailValue>
-              {`${transactionFees.fee} ${transactionFees.token}`}
+              {`${formatADA(transactionFees.fee)} `}
               <ADAToken color="white" size={"var(--font-size-text-small)"} />
             </DetailValue>
           </DetailsInfoItem>

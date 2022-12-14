@@ -61,7 +61,7 @@ const TransactionAddressTitle = styled("div")`
 `;
 
 const StyledImg = styled("img")`
-  margin-right: 8px;
+  margin-left: 8px;
 `;
 
 const TransactionFee = styled(Bold)``;

@@ -15,7 +15,7 @@
 
   .item {
     text-align: left;
-    padding: 20px 0;
+    padding: 10px 0;
     font-size: var(--font-size-text);
     border-bottom: 1px solid #0000001a;
 
@@ -35,12 +35,15 @@
         font-family: var(--font-size-text);
         color: var(--color-blue);
       }
+      .up {
+        color: var(--color-green-light);
+      }
+      .down {
+        color: var(--color-red);
+      }
     }
     .bottom {
       width: 100%;
-      padding-top: 12px;
-      display: flex;
-      justify-content: space-between;
       .img {
         padding-right: 10px;
         width: 35px;
@@ -57,12 +60,6 @@
         color: var(--text-color-pale);
         background-color: #ced1d8;
         line-height: 2rem;
-      }
-      .up {
-        color: var(--color-green-light);
-      }
-      .down {
-        color: var(--color-red);
       }
     }
   }
