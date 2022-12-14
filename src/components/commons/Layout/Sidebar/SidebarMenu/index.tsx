@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { menus } from "../../../../../commons/menus";
+import { footerMenus, menus } from "../../../../../commons/menus";
 import { Menu, MenuIcon, MenuText, NavbarMenuBottom, SubMenu, SubMenuText } from "./styles";
-import { Collapse, ListItem, SxProps } from "@mui/material";
+import { Collapse, Divider, ListItem, SxProps } from "@mui/material";
 import { isExtenalLink } from "../../../../../commons/utils/helper";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
@@ -52,9 +52,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 isExtenalLink(href) ? (
                   <ListItem
                     button
-                    href={href}
-                    target="_blank"
-                    rel="noreferrer"
+                    onClick={e => window.open(href, "_blank")}
                     title={title}
                     sx={theme => ({
                       ...itemStyle,
@@ -130,9 +128,149 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           <ListItem
                             key={subIndex}
                             button
-                            href={href}
-                            target="_blank"
-                            rel="noreferrer"
+                            onClick={e => window.open(href, "_blank")}
+                            title={title}
+                            sx={theme => ({
+                              ...itemStyle,
+                              justifyContent: sidebar ? "initial" : "center",
+                              paddingLeft: "70px",
+                              [theme.breakpoints.down(1023)]: {
+                                padding: "5px 20px",
+                                paddingLeft: "60px",
+                                marginBottom: 0,
+                              },
+                            })}
+                          >
+                            {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar} /> : null}
+                            <SubMenuText primary={title} open={sidebar} />
+                          </ListItem>
+                        ) : (
+                          <ListItem
+                            key={subIndex}
+                            button
+                            component={Link}
+                            to={href}
+                            selected={pathname === href}
+                            sx={theme => ({
+                              ...itemStyle,
+                              justifyContent: sidebar ? "initial" : "center",
+                              ...(pathname === href
+                                ? { backgroundColor: theme => `${theme.colorGreen} !important` }
+                                : {}),
+                              paddingLeft: "70px",
+                              [theme.breakpoints.down(1023)]: {
+                                padding: "5px 20px",
+                                paddingLeft: "60px",
+                                marginBottom: 0,
+                              },
+                            })}
+                          >
+                            {icon ? (
+                              <MenuIcon src={icon} alt={title} iconOnly={!sidebar} active={pathname === href} />
+                            ) : null}
+                            <SubMenuText primary={title} open={sidebar} active={pathname === href} />
+                          </ListItem>
+                        )
+                      ) : null;
+                    })}
+                  </SubMenu>
+                </Collapse>
+              ) : null}
+            </React.Fragment>
+          );
+        })}
+        <Divider sx={{ margin: "10px 30px" }} />
+        {footerMenus.map((item, index) => {
+          const { href, title, children, icon } = item;
+          return (
+            <React.Fragment key={index}>
+              {href ? (
+                isExtenalLink(href) ? (
+                  <ListItem
+                    button
+                    onClick={e => window.open(href, "_blank")}
+                    title={title}
+                    sx={theme => ({
+                      ...itemStyle,
+                      justifyContent: sidebar ? "initial" : "center",
+                      [theme.breakpoints.down(1023)]: {
+                        padding: "5px 20px",
+                        marginBottom: 0,
+                      },
+                    })}
+                  >
+                    {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar} /> : null}
+                    <MenuText primary={title} open={sidebar} />
+                  </ListItem>
+                ) : (
+                  <ListItem
+                    button
+                    component={Link}
+                    to={href}
+                    selected={pathname === href}
+                    sx={theme => ({
+                      ...itemStyle,
+                      justifyContent: sidebar ? "initial" : "center",
+                      ...(pathname === href ? { backgroundColor: theme => `${theme.colorGreen} !important` } : {}),
+                      [theme.breakpoints.down(1023)]: {
+                        padding: "5px 20px",
+                        marginBottom: 0,
+                      },
+                    })}
+                  >
+                    {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar} active={pathname === href} /> : null}
+                    <MenuText primary={title} open={sidebar} active={pathname === href} />
+                  </ListItem>
+                )
+              ) : (
+                <ListItem
+                  button
+                  onClick={() => handleOpen(-index)}
+                  sx={theme => ({
+                    ...itemStyle,
+                    justifyContent: sidebar ? "initial" : "center",
+                    ...(-index === active
+                      ? {
+                          backgroundColor: theme => `${theme.colorGreenPale} !important`,
+                          color: theme => theme.colorGreen,
+                        }
+                      : { color: theme => theme.textColorPale }),
+                    [theme.breakpoints.down(1023)]: {
+                      padding: "5px 20px",
+                      marginBottom: 0,
+                    },
+                  })}
+                >
+                  {icon ? (
+                    <MenuIcon
+                      src={icon}
+                      alt={title}
+                      iconOnly={!sidebar}
+                      textOnly={!!children?.length}
+                      active={-index === active}
+                    />
+                  ) : null}
+                  <MenuText primary={title} open={sidebar} active={-index === active} textOnly />
+                  {children?.length ? (
+                    -index === active ? (
+                      <BiChevronUp size={24} />
+                    ) : (
+                      <BiChevronDown size={24} />
+                    )
+                  ) : null}
+                </ListItem>
+              )}
+              {children?.length ? (
+                <Collapse in={-index === active} timeout="auto" unmountOnExit>
+                  <SubMenu disablePadding>
+                    {children.map((subItem, subIndex) => {
+                      const { href, title, icon } = subItem;
+                      return href ? (
+                        isExtenalLink(href) ? (
+                          <ListItem
+                            key={subIndex}
+                            button
+                            onClick={e => window.open(href, "_blank")}
                             title={title}
                             sx={theme => ({
                               ...itemStyle,

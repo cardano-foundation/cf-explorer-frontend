@@ -78,6 +78,16 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== "o
     height: "auto",
     boxShadow: theme.shadowRaised,
   },
+  "&>div": {
+    "&>button": {
+      visibility: "hidden",
+    },
+    "&:hover": {
+      "&>button": {
+        visibility: "visible",
+      },
+    },
+  },
 }));
 
 export const ToggleMenu = styled("button")`
