@@ -24,6 +24,7 @@ interface TransactionListProps {
   total: number;
   totalPage: number;
   currentPage: number;
+  error?: string | null;
 }
 
 const TransactionList: React.FC<TransactionListProps> = ({
@@ -32,6 +33,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
   initialized,
   total,
   transactions,
+  error,
 }) => {
   const [detailView, setDetailView] = useState<string | null>(null);
   const { width } = useWindowSize();
@@ -200,6 +202,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
           onClickRow={openDetail}
           selected={selected}
           selectedProps={{ style: { backgroundColor: "#ECECEC" } }}
+          error={error}
         />
       </Card>
       {detailView && <DetailViewTransaction hash={detailView} handleClose={handleClose} />}

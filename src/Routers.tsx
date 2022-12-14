@@ -16,6 +16,7 @@ import Tokens from "./pages/Token";
 import TokenDetail from "./pages/TokenDetail";
 import Stake from "./pages/Stake";
 import StakeDetail from "./pages/StakeDetail";
+import AddressWalletDetail from "./pages/AddressWalletDetail";
 
 const Routes: React.FC = () => {
   return (
@@ -34,6 +35,7 @@ const Routes: React.FC = () => {
       <Route path={routers.TOKEN_DETAIL} exact component={TokenDetail} />
       <Route path={routers.STAKE_LIST} exact component={Stake} />
       <Route path={routers.STAKE_DETAIL} exact component={StakeDetail} />
+      <Route path={routers.ADDRESS_DETAIL} exact component={AddressWalletDetail} />
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );

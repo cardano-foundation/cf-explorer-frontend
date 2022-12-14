@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
-import { Grid, Skeleton, styled, Tooltip } from "@mui/material";
+import { Grid, Select, Skeleton, styled, Tooltip } from "@mui/material";
 import { parse, stringify } from "qs";
 
 import { DelegationEpochList, DelegationStakingDelegatorsList } from "../../components/DelegationDetailList";
@@ -233,7 +233,7 @@ const title = {
   delegators: "Staking delegators",
 };
 
-const SelectComponent = styled("select")(({ theme }) => ({
+const SelectComponent = styled(Select)(({ theme }) => ({
   height: "40px",
   minWidth: 250,
   borderRadius: theme.borderRadius,

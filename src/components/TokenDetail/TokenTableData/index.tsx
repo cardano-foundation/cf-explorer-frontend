@@ -4,9 +4,10 @@ import { useParams } from "react-router-dom";
 import Card from "../../commons/Card";
 import TokenTransaction from "./TokenTransaction";
 
-import { OptionSelect, SelectComponent } from "./styles";
+import { StyledSelect } from "./styles";
 import TokenTopHolder from "./TokenTopHolder";
 import TokenMinting from "./TokenMinting";
+import { MenuItem } from "@mui/material";
 
 interface ITokenTableData {
   totalSupply?: number;
@@ -42,11 +43,11 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
     <Card
       title={mappingValue[type].title}
       extra={
-        <SelectComponent value={type} onChange={(e: any) => setType(e.target.value)}>
+        <StyledSelect value={type} onChange={(e: any) => setType(e.target.value)}>
           {Object.keys(mappingValue).map(key => (
-            <OptionSelect value={key}>{mappingValue[key].title}</OptionSelect>
+            <MenuItem value={key}>{mappingValue[key].title}</MenuItem>
           ))}
-        </SelectComponent>
+        </StyledSelect>
       }
     >
       {mappingValue[type].component}

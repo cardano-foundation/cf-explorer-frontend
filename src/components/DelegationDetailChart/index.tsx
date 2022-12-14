@@ -17,7 +17,6 @@ interface DelegationDetailChartProps {
 }
 
 const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ data, loading }) => {
-  console.log("🚀 ~ file: index.tsx:20 ~ data", data);
   const [selectAnalytic, setSelectAnalytic] = useState<"epochChart" | "delegatorChart">("epochChart");
   return (
     <Card title="Analytics">

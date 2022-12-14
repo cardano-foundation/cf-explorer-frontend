@@ -1,6 +1,7 @@
 import { parse, stringify } from "qs";
 import { useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import moment from "moment";
 
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AIcon } from "../../commons/resources";
@@ -50,13 +51,13 @@ const columns: Column<IDataEpoch>[] = [
     title: "Start date",
     key: "startTime",
     minWidth: "100px",
-    render: r => <StyledColorBlueDard>{r.startTime}</StyledColorBlueDard>,
+    render: r => <StyledColorBlueDard>{moment(r.startTime).format("MM/DD/YYYY HH:mm:ss")}</StyledColorBlueDard>,
   },
   {
     title: "End date",
     key: "endTime",
     minWidth: "100px",
-    render: r => <StyledColorBlueDard>{r.endTime}</StyledColorBlueDard>,
+    render: r => <StyledColorBlueDard>{moment(r.endTime).format("MM/DD/YYYY HH:mm:ss")}</StyledColorBlueDard>,
   },
 ];
 
