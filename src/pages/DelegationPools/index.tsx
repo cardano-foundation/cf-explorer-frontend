@@ -36,9 +36,6 @@ const Delegations: React.FC<DelegationsProps> = () => {
     search: query.searchPools ? (query.searchPools as string) : "",
   });
 
-  console.log(delegationLists);
-  
-
   return (
     <Container>
       <Card title="Delegation Pools Explorer">

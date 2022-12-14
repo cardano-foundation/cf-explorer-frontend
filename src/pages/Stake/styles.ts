@@ -33,5 +33,4 @@ export const ActiveButton = styled(StyledButton)`
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
   color: ${props => props.theme.colorBlue} !important;
-  font-weight: var(--font-weight-bold);
 `;
