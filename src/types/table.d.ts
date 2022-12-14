@@ -18,6 +18,10 @@ export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & 
   row: T;
   index: number;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
+  selectedProps?: {
+    className?: string;
+    style?: React.CSSProperties;
+  };
 };
 
 export interface TableProps<T extends ColumnType = any> {
@@ -40,6 +44,11 @@ export interface TableProps<T extends ColumnType = any> {
   };
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
+  selected?: number;
+  selectedProps?: {
+    className?: string;
+    style?: React.CSSProperties;
+  };
 }
 
 export interface FooterTableProps {
