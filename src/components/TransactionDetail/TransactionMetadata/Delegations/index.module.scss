@@ -1,8 +1,7 @@
 @import "../../../../themes/variable.scss";
 
 .wrapper {
-  background: var(--background);
-  border-radius: var(--border-radius);
+  background: white;
   padding: 25px;
   .header {
     display: flex;
@@ -15,7 +14,7 @@
   }
 
   .item {
-    background-color: var(--background);
+    background-color: white;
     text-align: left;
     padding: 20px 0;
     font-size: var(--font-size-text);

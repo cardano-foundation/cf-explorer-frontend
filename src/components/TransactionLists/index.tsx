@@ -61,7 +61,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
           <Tooltip title={r.hash} placement="top">
             <Link
               to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}
-              className={`${styles.fwBold} ${styles.link}`}
+              className={`${styles.link}`}
               style={{ margin: 0 }}
             >
               {getShortHash(r.hash)}
@@ -77,17 +77,11 @@ const TransactionList: React.FC<TransactionListProps> = ({
       minWidth: "200px",
       render: r => (
         <>
-          <Link
-            to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}
-            className={`${styles.fwBold} ${styles.link}`}
-          >
+          <Link to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)} className={` ${styles.link}`}>
             {r.blockNo}
           </Link>
           <div style={{ display: "flex" }}>
-            <Link
-              to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epochNo}`)}
-              className={`${styles.fwBold} ${styles.link}`}
-            >
+            <Link to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epochNo}`)} className={`  ${styles.link}`}>
               {r.epochNo}
             </Link>
             / {r.slot}
@@ -95,65 +89,65 @@ const TransactionList: React.FC<TransactionListProps> = ({
         </>
       ),
     },
-    {
-      title: "Address",
-      key: "address",
-      minWidth: "200px",
-      render(r, index) {
-        return (
-          <div>
-            <div className={styles.input}>
-              <div className={styles.title}> Input: </div>
-              <div>
-                {r.addressesInput.slice(0, 2).map((tx, key) => {
-                  return (
-                    <Tooltip key={key} title={tx} placement="top">
-                      <Link to={`#`} className={`${styles.fwBold} ${styles.link}`} key={key}>
-                        {getShortWallet(tx)}
-                        <BiLinkExternal style={{ marginLeft: 8 }} />
-                      </Link>
-                    </Tooltip>
-                  );
-                })}
-                {r.addressesInput.length > 2 && (
-                  <Link to={`#`} className={`${styles.fwBold} ${styles.link}`}>
-                    ...
-                  </Link>
-                )}
-              </div>
-            </div>
-            <div className={styles.output}>
-              <div className={styles.title}>Output: </div>
-              <div>
-                {r.addressesOutput.slice(0, 2).map((tx, key) => {
-                  return (
-                    <Tooltip key={key} title={tx} placement="top">
-                      <Link to={`#`} className={`${styles.fwBold} ${styles.link}`} key={key}>
-                        {getShortWallet(tx)}
-                        <BiLinkExternal style={{ marginLeft: 8 }} />
-                      </Link>
-                    </Tooltip>
-                  );
-                })}
-                {r.addressesOutput.length > 2 && (
-                  <Link to={`#`} className={`${styles.fwBold} ${styles.link}`}>
-                    ...
-                  </Link>
-                )}
-              </div>
-            </div>
-          </div>
-        );
-      },
-    },
+    // {
+    //   title: "Address",
+    //   key: "address",
+    //   minWidth: "200px",
+    //   render(r, index) {
+    //     return (
+    //       <div>
+    //         <div className={styles.input}>
+    //           <div className={styles.title}> Input: </div>
+    //           <div>
+    //             {r.addressesInput.slice(0, 2).map((tx, key) => {
+    //               return (
+    //                 <Tooltip key={key} title={tx} placement="top">
+    //                   <Link to={`#`} className={` ${styles.link}`} key={key}>
+    //                     {getShortWallet(tx)}
+    //                     <BiLinkExternal style={{ marginLeft: 8 }} />
+    //                   </Link>
+    //                 </Tooltip>
+    //               );
+    //             })}
+    //             {r.addressesInput.length > 2 && (
+    //               <Link to={`#`} className={` ${styles.link}`}>
+    //                 ...
+    //               </Link>
+    //             )}
+    //           </div>
+    //         </div>
+    //         <div className={styles.output}>
+    //           <div className={styles.title}>Output: </div>
+    //           <div>
+    //             {r.addressesOutput.slice(0, 2).map((tx, key) => {
+    //               return (
+    //                 <Tooltip key={key} title={tx} placement="top">
+    //                   <Link to={`#`} className={` ${styles.link}`} key={key}>
+    //                     {getShortWallet(tx)}
+    //                     <BiLinkExternal style={{ marginLeft: 8 }} />
+    //                   </Link>
+    //                 </Tooltip>
+    //               );
+    //             })}
+    //             {r.addressesOutput.length > 2 && (
+    //               <Link to={`#`} className={` ${styles.link}`}>
+    //                 ...
+    //               </Link>
+    //             )}
+    //           </div>
+    //         </div>
+    //       </div>
+    //     );
+    //   },
+    // },
     {
       title: "Fees",
       key: "fee",
       minWidth: "120px",
       render: r => (
         <Box display={"flex"} alignItems="center" className={styles.fwBold}>
+          <Box mr={1}>{formatADA(r.fee) || 0}</Box>
           <img src={AIcon} alt="a icon" />
-          <Box ml={1}>{formatADA(r.fee) || 0}</Box>
         </Box>
       ),
     },
@@ -163,8 +157,8 @@ const TransactionList: React.FC<TransactionListProps> = ({
       key: "ouput",
       render: r => (
         <Box display={"flex"} alignItems="center" className={styles.fwBold}>
+          <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
           <img src={AIcon} alt="a icon" />
-          <Box ml={1}>{formatADA(r.totalOutput) || 0}</Box>
         </Box>
       ),
     },
@@ -191,7 +185,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
           data={transactions}
           total={{ count: total, title: "Total Transactions" }}
           loading={loading}
-          initialized={initialized} 
+          initialized={initialized}
           pagination={{
             onChange: (page, size) => {
               setQuery({ page, size });

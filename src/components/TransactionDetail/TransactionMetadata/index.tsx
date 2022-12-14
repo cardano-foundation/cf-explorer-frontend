@@ -1,5 +1,5 @@
 import React from "react";
-import { Tab, Box } from "@mui/material";
+import { Tab, Box, styled } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 import styles from "./index.module.scss";
@@ -25,12 +25,24 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
   };
   const tabs: { label: React.ReactNode; key: keyof Transaction; children: React.ReactNode }[] = [
     {
-      label: <h3 className={`${styles.title} ${activeTab === "summary" && styles.active}`}>Summary</h3>,
+      label: (
+        <h3 className={`${styles.title} ${activeTab === "summary" && styles.active}`}>
+          <Box component={"span"} ml={1}>
+            Summary
+          </Box>
+        </h3>
+      ),
       key: "summary",
       children: <Summary data={data?.summary || null} />,
     },
     {
-      label: <h3 className={`${styles.title} ${activeTab === "utxOs" && styles.active}`}>UTXOs</h3>,
+      label: (
+        <h3 className={`${styles.title} ${activeTab === "utxOs" && styles.active}`}>
+          <Box component={"span"} ml={1}>
+            UTXOs
+          </Box>
+        </h3>
+      ),
       key: "utxOs",
       children: <UTXO data={data?.utxOs || null} fee={data?.tx.fee || 0} />,
     },
@@ -64,7 +76,9 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
     {
       label: (
         <h3 className={`${styles.title} ${activeTab === "withdrawals" && styles.active}`}>
-          Withdrawals({data?.withdrawals?.length || 0})
+          <Box component={"span"} ml={1}>
+            Withdrawals({data?.withdrawals?.length || 0})
+          </Box>
         </h3>
       ),
       key: "withdrawals",
@@ -91,11 +105,12 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
   return (
     <>
       <TabContext value={activeTab}>
-        <Box className={styles.tab}>
+        <Box className={styles.tab} paddingX={3}>
           <TabList
             onChange={handleChange}
             aria-label="lab API tabs example"
             TabIndicatorProps={{ style: { background: "#438f68", color: "#438f68" } }}
+            style={{ paddingBottom: 0 }}
           >
             {items?.map(item => (
               <Tab key={item.key} label={item.label} value={item.key} />
