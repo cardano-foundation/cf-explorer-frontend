@@ -36,6 +36,8 @@ import SupplyChainMenuIcon from "./icons/menus/supplychain.svg";
 import BlockChainMenuIcon from "./icons/menus/blockchain.svg";
 import DelegatePoolMenuIcon from "./icons/menus/delegate.svg";
 import ToolMenuIcon from "./icons/menus/tool.svg";
+import BrowserIcon from "./icons/menus/browser.svg";
+import ResourcesIcon from "./icons/menus/resources.svg";
 import RocketIcon from "./icons/rocket.svg";
 import CubeIcon from "./icons/cube.svg";
 import CheckCircleIcon from "./icons/check-circle.svg";
@@ -120,4 +122,6 @@ export {
   InfoIcon,
   HighestIcon,
   LowestIcon,
+  BrowserIcon,
+  ResourcesIcon,
 };
