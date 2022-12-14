@@ -9,7 +9,10 @@ interface EpochOverviewProps {
 }
 
 const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
-  const slot = (data?.endTime && data.startTime && moment(data.endTime).diff(data.startTime) / 1000) || 0;
+  const slot =
+    data?.status === "FINISHED"
+      ? MAX_SLOT_EPOCH
+      : (data?.endTime && data.startTime && moment(data.endTime).diff(data.startTime) / 1000) || 0;
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
 
   return (
@@ -25,11 +28,11 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
 
           blockDetail: {
             epochNo: data.no,
-            epochSlot: data.epochSlotNo,
+            epochSlot: slot,
             blockNo: data.blkCount,
           },
           totalOutput: {
-            totalOutput: 0,
+            totalOutput: data.outSum || 0,
             token: "ADA",
           },
           progress: {
