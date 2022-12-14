@@ -174,10 +174,10 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
             <DetailLabel>
               Total Output <InfoIcon />
             </DetailLabel>
-            <DetailValueSmall>
-              {`${formatADA(totalOutput.totalOutput)} ${totalOutput.token}`}
-              <ADAToken color="white" size={"var(--font-size-text-small)"} />
-            </DetailValueSmall>
+            <DetailValue>
+              {`${formatADA(totalOutput.totalOutput)}`}
+              <ADAToken color="white" size={"var(--font-size-text)"} />
+            </DetailValue>
           </DetailsInfoItem>
         )}
         {progress && (
