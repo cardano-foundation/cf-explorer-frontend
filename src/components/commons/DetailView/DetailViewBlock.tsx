@@ -1,15 +1,7 @@
 import React from "react";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import {
-  CubeIcon,
-  FileEditIcon,
-  MintingIcon,
-  NoteEditIcon,
-  RocketIcon,
-  USDIcon,
-  WithdrawlIcon,
-} from "../../../commons/resources";
+import { CubeIcon, RocketIcon } from "../../../commons/resources";
 import ProgressCircle from "../ProgressCircle";
 import {
   CloseButton,
@@ -38,43 +30,30 @@ import {
   DetailLinkRight,
   StyledLink,
   DetailCopy,
-  TxStatus,
-  ConfirmStatus,
   DetailLinkName,
-  DetailLinkImage,
 } from "./styles";
 import { ADAToken } from "../Token";
 import NotFound from "../../../pages/NotFound";
 import useFetch from "../../../commons/hooks/useFetch";
-import { TbFileCheck } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
 import { routers } from "../../../commons/routers";
 import { getShortHash } from "../../../commons/utils/helper";
 import { Tooltip } from "@mui/material";
 
-type DetailViewTransactionProps = {
-  hash: string;
+type DetailViewBlockProps = {
+  blockNo: number;
   handleClose: () => void;
 };
-const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] = [
-  { key: "summary", label: "Summary", icon: <TbFileCheck /> },
-  { key: "utxOs", label: "UTXOs", icon: <CgArrowsExchange /> },
-  { key: "contracts", label: "Contracts", icon: <DetailLinkImage src={FileEditIcon} alt="contact" /> },
-  { key: "collaterals", label: "Collaterals", icon: <DetailLinkImage src={USDIcon} alt="contact" /> },
-  { key: "notes", label: "Notes", icon: <DetailLinkImage src={NoteEditIcon} alt="contact" /> },
-  { key: "withdrawals", label: "Withdrawals", icon: <DetailLinkImage src={WithdrawlIcon} alt="contact" /> },
-  { key: "mints", label: "Minting", icon: <DetailLinkImage src={MintingIcon} alt="contact" /> },
-];
 
-const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
-  const { hash, handleClose } = props;
-  const { loading, data } = useFetch<Transaction>(hash ? `tx/${hash}` : ``);
+const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
+  const { blockNo, handleClose } = props;
+  const { loading, data } = useFetch<BlockDetail>(blockNo ? `block/${blockNo}` : ``);
 
   if (!loading && !data) return <NotFound />;
 
   if (!data || loading)
     return (
-      <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
+      <ViewDetailDrawer anchor="right" open={!!blockNo} hideBackdrop variant="permanent">
         <ViewDetailContainer>
           <CloseButton onClick={handleClose}>
             <CgClose />
@@ -137,7 +116,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
     );
 
   return (
-    <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
+    <ViewDetailDrawer anchor="right" open={!!blockNo} hideBackdrop variant="permanent">
       <ViewDetailContainer>
         <CloseButton onClick={handleClose}>
           <CgClose />
@@ -148,10 +127,10 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
             pathLineCap="butt"
             pathWidth={4}
             trailWidth={2}
-            percent={((data?.tx.epochSlot || 0) / (data.tx.maxEpochSlot || MAX_SLOT_EPOCH)) * 100}
+            percent={((data.epochSlotNo || 0) / (data.totalSlot || MAX_SLOT_EPOCH)) * 100}
             trailOpacity={1}
           >
-            <EpochNumber>{data.tx.epochNo}</EpochNumber>
+            <EpochNumber>{data.epochNo}</EpochNumber>
             <EpochText>Epoch</EpochText>
           </ProgressCircle>
         </HeaderContainer>
@@ -159,14 +138,14 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
           <Item>
             <Icon src={CubeIcon} alt="socket" />
             <ItemName>Block</ItemName>
-            <ItemValue>{data.tx.epochNo}</ItemValue>
+            <ItemValue>{data.epochNo}</ItemValue>
           </Item>
           <Item>
             <Icon src={RocketIcon} alt="socket" />
             <ItemName>slot</ItemName>
             <ItemValue>
-              {data.tx.epochSlot}
-              <BlockDefault>/{data.tx.maxEpochSlot || MAX_SLOT_EPOCH}</BlockDefault>
+              {data.epochSlotNo}
+              <BlockDefault>/{data.totalSlot || MAX_SLOT_EPOCH}</BlockDefault>
             </ItemValue>
           </Item>
         </ListItem>
@@ -174,42 +153,30 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
           <DetailsInfoItem>
             <DetailLabel>
               <InfoIcon />
-              Transaction hash
+              Block ID
             </DetailLabel>
             <DetailValue>
-              <Tooltip placement="top" title={data.tx.hash}>
-                <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${data.tx.hash}`)}>
-                  {getShortHash(data.tx.hash)}
+              <Tooltip placement="top" title={data.hash}>
+                <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${data.hash}`)}>
+                  {getShortHash(data.hash)}
                 </StyledLink>
               </Tooltip>
-              <DetailCopy text={data.tx.hash} />
+              <DetailCopy text={data.hash} />
             </DetailValue>
           </DetailsInfoItem>
           <DetailsInfoItem>
             <DetailLabel>
               <InfoIcon />
-              Time
+              Created at
             </DetailLabel>
-            <DetailValue>{data.tx.time}</DetailValue>
+            <DetailValue>{data.blockNo}</DetailValue>
           </DetailsInfoItem>
           <DetailsInfoItem>
             <DetailLabel>
               <InfoIcon />
-              Status
+              Transaction
             </DetailLabel>
-            <DetailValue>
-              <TxStatus status={data.tx.status}>{data.tx.status}</TxStatus>
-            </DetailValue>
-          </DetailsInfoItem>
-          <DetailsInfoItem>
-            <DetailLabel>
-              <InfoIcon />
-              Confirmation
-            </DetailLabel>
-            <DetailValue>
-              {data.tx.confirmation}
-              <ConfirmStatus status={"MEDIUM"}>{"MEDIUM"}</ConfirmStatus>
-            </DetailValue>
+            <DetailValue>{data.blockNo}</DetailValue>
           </DetailsInfoItem>
           <DetailsInfoItem>
             <DetailLabel>
@@ -217,7 +184,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               Transaction Fees
             </DetailLabel>
             <DetailValue>
-              {`${data.tx.fee} ${"ADA"}`}
+              {`${data.totalFees} ${"ADA"}`}
               <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
             </DetailValue>
           </DetailsInfoItem>
@@ -227,36 +194,43 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               Total Output
             </DetailLabel>
             <DetailValue>
-              {`${data.tx.totalOutput} ${"ADA"}`}
+              {`${data.totalOutput} ${"ADA"}`}
               <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
             </DetailValue>
           </DetailsInfoItem>
+          <DetailsInfoItem>
+            <DetailLabel>
+              <InfoIcon />
+              Slot leader
+            </DetailLabel>
+            <DetailValue>
+              <Tooltip placement="top" title={data.slotLeader}>
+                <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${data.blockNo}`)}>
+                  {getShortHash(data.slotLeader)}
+                </StyledLink>
+              </Tooltip>
+              <DetailCopy text={data.slotLeader} />
+            </DetailValue>
+          </DetailsInfoItem>
         </Group>
-        {tabs.map(({ key, label, icon }) => {
-          const value = data[key];
-          if (!value) return null;
-          return (
-            <Group key={key}>
-              <DetailLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${data.tx.hash}`)}>
-                <DetailLabel>
-                  <DetailLinkIcon>{icon}</DetailLinkIcon>
-                  <DetailLinkName>
-                    {label}
-                    {Array.isArray(value) ? `(${value.length})` : null}
-                  </DetailLinkName>
-                </DetailLabel>
-                <DetailValue>
-                  <DetailLinkRight>
-                    <BiChevronRight size={24} />
-                  </DetailLinkRight>
-                </DetailValue>
-              </DetailLink>
-            </Group>
-          );
-        })}
+        <Group>
+          <DetailLink to={routers.BLOCK_DETAIL.replace(":blockId", `${data.blockNo}`)}>
+            <DetailLabel>
+              <DetailLinkIcon>
+                <CgArrowsExchange />
+              </DetailLinkIcon>
+              <DetailLinkName>Transactions</DetailLinkName>
+            </DetailLabel>
+            <DetailValue>
+              <DetailLinkRight>
+                <BiChevronRight size={24} />
+              </DetailLinkRight>
+            </DetailValue>
+          </DetailLink>
+        </Group>
       </ViewDetailContainer>
     </ViewDetailDrawer>
   );
 };
 
-export default DetailViewTransaction;
+export default DetailViewBlock;

@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
-import { Tooltip } from "@mui/material";
+import { Container, Tooltip } from "@mui/material";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
@@ -10,6 +10,10 @@ import { routers } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 
 import { PriceWrapper, StyledColorBlueDard, StyledLink } from "./styles";
+import DetailViewBlock from "../commons/DetailView/DetailViewBlock";
+import { useState } from "react";
+import { useWindowSize } from "react-use";
+import { setOnDetailView } from "../../stores/user";
 
 interface BlockListProps {
   blockLists: Block[];
@@ -21,6 +25,8 @@ interface BlockListProps {
 }
 
 const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized, total, currentPage }) => {
+  const [detailView, setDetailView] = useState<number | null>(null);
+  const { width } = useWindowSize();
   const history = useHistory();
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
@@ -71,25 +77,43 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
       ),
     },
   ];
+  const openDetail = (_: any, r: Block) => {
+    if (width > 1023) {
+      setOnDetailView(true);
+      setDetailView(r.blockNo);
+    } else history.push(routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`));
+  };
+
+  const handleClose = () => {
+    setOnDetailView(false);
+    setDetailView(null);
+  };
+
+  const selected = blockLists?.findIndex(item => item.blockNo === detailView);
 
   return (
-    <Card title={"Blocks"}>
-      <Table
-        loading={loading}
-        initialized={initialized}
-        columns={columns}
-        data={blockLists}
-        total={{ count: total, title: "Total Blocks" }}
-        onClickRow={(_, r: Block) => history.push(routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`))}
-        pagination={{
-          onChange: (page, size) => {
-            setQuery({ page, size });
-          },
-          page: currentPage || 0,
-          total: total,
-        }}
-      />
-    </Card>
+    <Container>
+      <Card title={"Blocks"}>
+        <Table
+          loading={loading}
+          initialized={initialized}
+          columns={columns}
+          data={blockLists}
+          total={{ count: total, title: "Total Blocks" }}
+          pagination={{
+            onChange: (page, size) => {
+              setQuery({ page, size });
+            },
+            page: currentPage || 0,
+            total: total,
+          }}
+          onClickRow={openDetail}
+          selected={selected}
+          selectedProps={{ style: { backgroundColor: "#ECECEC" } }}
+        />
+        {detailView && <DetailViewBlock blockNo={detailView} handleClose={handleClose} />}
+      </Card>
+    </Container>
   );
 };
 
