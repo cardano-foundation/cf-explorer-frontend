@@ -34,7 +34,6 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           },
           transactionFees: {
             fee: data.tx.fee,
-            token: "ADA",
           },
         }
       }

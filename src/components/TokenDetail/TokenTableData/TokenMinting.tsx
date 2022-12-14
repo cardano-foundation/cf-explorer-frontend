@@ -67,8 +67,8 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
       minWidth: "200px",
       render: r => (
         <Minting.MintingBalance>
-          <Minting.StyledImg src={AIcon} alt="a icon" />
           {formatADA(r.amount) || 0}
+          <Minting.StyledImg src={AIcon} alt="a icon" />
         </Minting.MintingBalance>
       ),
     },

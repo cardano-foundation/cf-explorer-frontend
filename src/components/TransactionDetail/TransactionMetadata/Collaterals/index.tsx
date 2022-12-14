@@ -1,9 +1,8 @@
-import { Tooltip } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 
 import styles from "./index.module.scss";
-import walletImg from "../../../../commons/resources/images/Wallet.png";
-import sendImg from "../../../../commons/resources/images/summary-up.png";
-import receiveImg from "../../../../commons/resources/images/summary-down.png";
+import sendImg from "../../../../commons/resources/images/sendImg.svg";
+import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import { AIcon } from "../../../../commons/resources";
 import { routers } from "../../../../commons/routers";
@@ -31,35 +30,42 @@ export default Collaterals;
 const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][number]; type?: "up" | "down" }) => {
   return (
     <div className={styles.item}>
-      <div className={styles.top}>
-        <img className={styles.img} src={walletImg} alt="wallet icon" />
-        <div>
-          From:{" "}
-          <Link to={routers.ADDRESS_DETAIL.replace(":address", item?.address || "")} className={styles.address}>
-            <Tooltip title={item?.address} placement="top">
-              <span className={styles.address}> {getShortWallet(item?.address || "")} </span>
-            </Tooltip>
-          </Link>
-          <CopyButton text={item?.address || ""} className={styles.icon} />
-        </div>
-      </div>
-      <div className={styles.bottom}>
-        <div>
+      <Box display={"flex"} alignItems="center">
+        <Box width={50}>
           <img src={type === "down" ? receiveImg : sendImg} className={styles.img} alt="send icon" />
-          <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", item?.txHash || "")} className={styles.address}>
-            <Tooltip title={item?.txHash || ""} placement="top">
-              <div>{getShortHash(item?.txHash || "")}</div>
-            </Tooltip>
-          </Link>
-          <CopyButton text={item?.txHash || ""} className={styles.icon} />
-        </div>
-        <div>
-          <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
-            {type === "down" ? `- ${formatADA(item?.amount)}` : `+ ${formatADA(item?.amount)}`}
-          </span>
-          <img src={AIcon} alt="ADA icon" />
-        </div>
-      </div>
+        </Box>
+        <Box width={"100%"}>
+          <Box display={"flex"} justifyContent="space-between" alignItems={"center"} className={styles.top}>
+            <div>
+              From:{" "}
+              <Link to={routers.ADDRESS_DETAIL.replace(":address", item?.address || "")} className={styles.address}>
+                <Tooltip title={item?.address} placement="top">
+                  <span className={styles.address}> {getShortWallet(item?.address || "")} </span>
+                </Tooltip>
+              </Link>
+              <CopyButton text={item?.address || ""} className={styles.icon} />
+            </div>
+            <Box display={"flex"} alignItems={"center"}>
+              <Box mr={"8px"}>
+                <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
+                  {type === "down" ? `- ${formatADA(item?.amount)}` : `+ ${formatADA(item?.amount)}`}
+                </span>
+              </Box>
+              <Box>
+                <img src={AIcon} alt="ADA icon" />
+              </Box>
+            </Box>
+          </Box>
+          <Box className={styles.bottom} display="flex" alignItems={"center"}>
+            <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", item?.txHash || "")} className={styles.address}>
+              <Tooltip title={item?.txHash || ""} placement="top">
+                <div>{getShortHash(item?.txHash || "")}</div>
+              </Tooltip>
+            </Link>
+            <CopyButton text={item?.txHash || ""} className={styles.icon} />
+          </Box>
+        </Box>
+      </Box>
     </div>
   );
 };

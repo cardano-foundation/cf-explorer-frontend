@@ -27,7 +27,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
     {
       label: (
         <h3 className={`${styles.title} ${activeTab === "summary" && styles.active}`}>
-          <Box component={"span"} ml={1}>
+          <Box component={"span"} ml={1} textAlign="left">
             Summary
           </Box>
         </h3>
