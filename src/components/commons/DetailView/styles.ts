@@ -31,6 +31,98 @@ export const CloseButton = styled(IconButton)`
   color: ${props => props.theme.titleColor};
 `;
 
+export const HeaderContainer = styled(Box)`
+  display: flex;
+  justify-content: center;
+`;
+
+export const TokenContainer = styled(Box)`
+  width: calc(100% - 40px);
+  background: #344054;
+  box-shadow: 0px 10px 25px ${props => props.theme.colorBlack}16;
+  border-radius: 12px;
+  padding: 25px 20px;
+  text-align: left;
+`;
+
+export const TokenHeaderContainer = styled(Box)`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid ${props => props.theme.textColorReverse}16;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+`;
+
+export const TokenTitleIcon = styled("img")`
+  width: auto;
+  height: 33px;
+`;
+export const TokenTitle = styled("h3")`
+  color: ${props => props.theme.textColorReverse};
+  margin: 0px;
+`;
+
+export const TokenMetaData = styled(Box)`
+  border-bottom: 1px solid ${props => props.theme.textColorReverse}16;
+  margin-bottom: 1rem;
+`;
+
+export const TokenInfo = styled(Box)`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+`;
+
+export const TokenName = styled("h4")`
+  font-size: var(--font-size-text-large);
+  color: ${props => props.theme.textColorReverse};
+  margin: 0;
+`;
+
+export const TokenIcon = styled("img")`
+  width: 15px;
+  height: 15px;
+`;
+
+export const MetaData = styled("small")`
+  color: ${props => props.theme.textColorReverse};
+  font-size: var(--font-size-text-x-small);
+`;
+
+export const TokenHeaderInfo = styled(Box)`
+  display: flex;
+  width: calc(100% - 40px);
+  gap: 10px;
+  overflow: hidden;
+`;
+export const TokenTotalSupply = styled(Box)`
+  flex: 1;
+  padding-right: 20px;
+`;
+export const TokenDecimal = styled(Box)`
+  flex: 1;
+  padding-left: 20px;
+  border-left: 1px solid ${props => props.theme.textColorReverse}16;
+`;
+
+export const TokenInfoLabel = styled("small")`
+  display: block;
+  color: ${props => props.theme.textColorReverse};
+  font-size: var(--font-size-text-x-small);
+  margin-bottom: 5px;
+`;
+
+export const TokenInfoValue = styled("span")`
+  display: block;
+  width: 100%;
+  color: ${props => props.theme.textColorReverse};
+  font-weight: var(--font-weight-bold);
+`;
+
 export const EpochNumber = styled("h1")`
   color: ${props => props.theme.colorGreenLight};
   margin: 0;
@@ -250,16 +342,28 @@ export const ConfirmStatus = styled("small")<{ status: keyof typeof Confirmation
   padding: 5px 10px;
   border-radius: 2px;
 `;
+
+export const TokenDetailInfo = styled(Box)`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+`;
+
+export const TokenDetailName = styled("small")`
+  color: ${props => props.theme.colorBlack};
+`;
+
+export const TokenDetailIcon = styled("img")`
+  width: 20px;
+  height: 20px;
+`;
+
 // sawq
 
 export const BackText = styled("small")`
   color: #344054;
   font-weight: var(--font-weight-bold);
-`;
-
-export const HeaderContainer = styled(Box)`
-  display: flex;
-  justify-content: center;
 `;
 
 export const HeaderTitle = styled("h2")`

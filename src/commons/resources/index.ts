@@ -30,6 +30,7 @@ import ArrowDropDownIcon from "./icons/arrow-drop-down.svg";
 import MenuIcon from "./icons/menu.svg";
 import AIcon from "./icons/AIcon.svg";
 import Policy from "./icons/policy.svg";
+import PolicyWhiteIcon from "./icons/policy-white.svg";
 import DIDMenuIcon from "./icons/menus/did.svg";
 import SupplyChainMenuIcon from "./icons/menus/supplychain.svg";
 import BlockChainMenuIcon from "./icons/menus/blockchain.svg";
@@ -112,4 +113,5 @@ export {
   NoteEditIcon,
   WithdrawlIcon,
   MintingIcon,
+  PolicyWhiteIcon,
 };
