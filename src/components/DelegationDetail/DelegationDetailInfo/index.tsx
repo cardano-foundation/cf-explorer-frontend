@@ -62,24 +62,32 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
     },
     {
       title: "Reward Account",
-      value: (
+      value: data?.rewardAccount ? (
         <>
           <Tooltip placement="bottom" title={data?.rewardAccount || ""}>
-            <Link to={"#"}>{getShortWallet(data?.rewardAccount || "")}</Link>
+            <Link to={routers.ADDRESS_DETAIL.replace(":address", `${data?.rewardAccount}`)}>
+              {getShortWallet(data?.rewardAccount || "")}
+            </Link>
           </Tooltip>
           <CopyButton text={data?.rewardAccount || ""} />
         </>
+      ) : (
+        ""
       ),
     },
     {
       title: "Owner Account",
-      value: (
+      value: data?.ownerAccount ? (
         <>
           <Tooltip placement="bottom" title={data?.ownerAccount || ""}>
-            <Link to={"#"}>{getShortWallet(data?.ownerAccount || "")}</Link>
+            <Link to={routers.ADDRESS_DETAIL.replace(":address", `${data?.ownerAccount}`)}>
+              {getShortWallet(data?.ownerAccount || "")}
+            </Link>
           </Tooltip>
           <CopyButton text={data?.ownerAccount || ""} />
         </>
+      ) : (
+        ""
       ),
     },
     {
@@ -126,7 +134,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       </HeaderContainer>
       <PoolId>
         <Tooltip title={poolId} placement="top">
-          <Link to={"#"}>
+          <Link to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${poolId}`)}>
             <small>Pool Id: </small>
             <PoolIdValue>{poolId}</PoolIdValue>
           </Link>

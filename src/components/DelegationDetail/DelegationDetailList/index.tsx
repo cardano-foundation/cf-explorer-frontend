@@ -113,7 +113,9 @@ const DelegationStakingDelegatorsList = ({
     {
       title: "No",
       key: "no",
-      render: (r, idx) => <StyledLink to={"#"}>{idx + 1}</StyledLink>,
+      render: (r, idx) => (
+        <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${r.address}`)}>{idx + 1}</StyledLink>
+      ),
     },
     {
       title: "Delegator",
@@ -123,7 +125,9 @@ const DelegationStakingDelegatorsList = ({
         data.address && (
           <div style={{ display: "flex", alignItems: "center" }}>
             <Tooltip placement="bottom" title={data.address || ""}>
-              <StyledLink to={"#"}>{getShortWallet(data.address || "")}</StyledLink>
+              <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${data.address}`)}>
+                {getShortWallet(data.address || "")}
+              </StyledLink>
             </Tooltip>
             <CopyButton text={data.address || ""} />
           </div>
@@ -163,6 +167,7 @@ const DelegationStakingDelegatorsList = ({
         page: query.page ? +query.page - 1 : 0,
         total: total,
       }}
+      onClickRow={(e, r) => history.push(routers.ADDRESS_DETAIL.replace(":address", `${r.address}`))}
     />
   );
 };

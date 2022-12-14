@@ -92,7 +92,7 @@ export const formatADA = (value?: string | number, abbreviations: string[] = LAR
 
 export const handleClicktWithoutAnchor = (e: React.MouseEvent, fn: (e: React.MouseEvent) => void): void => {
   let parent: Element | null = e.target as Element;
-  while (parent !== null && parent?.tagName !== "A") {
+  while (parent !== null && parent?.tagName !== "A" && parent?.tagName !== "BUTTON") {
     parent = parent?.parentElement;
   }
   if (parent) {

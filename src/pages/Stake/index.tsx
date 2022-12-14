@@ -59,15 +59,19 @@ const colums: Column<IStakeKey>[] = [
       if (r.poolNames.length === 1)
         return (
           <Tooltip title={r.poolNames[0]} placement="top">
-            <StyledLink to={"#"}>{getShortHash(r.poolNames[0])}</StyledLink>
+            <StyledLink to={routers.STAKE_DETAIL.replace(":stakeId", `${r.stakeKey}`)}>
+              {getShortHash(r.poolNames[0])}
+            </StyledLink>
           </Tooltip>
         );
       return (
         <>
           <Tooltip title={r.poolNames[0]} placement="top">
-            <StyledLink to={"#"}>{getShortHash(r.poolNames[0])}</StyledLink>
+            <StyledLink to={routers.STAKE_DETAIL.replace(":stakeId", `${r.stakeKey}`)}>
+              {getShortHash(r.poolNames[0])}
+            </StyledLink>
           </Tooltip>
-          <StyledLink to={"#"}>...</StyledLink>
+          <StyledLink to={routers.STAKE_DETAIL.replace(":stakeId", `${r.stakeKey}`)}>...</StyledLink>
         </>
       );
     },
