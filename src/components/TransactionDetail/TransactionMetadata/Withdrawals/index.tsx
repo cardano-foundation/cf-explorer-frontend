@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { IoMdCopy } from "react-icons/io";
-import { BiCheckCircle } from "react-icons/bi";
-import { useCopyToClipboard } from "react-use";
+import React from "react";
+import { Tooltip } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import styles from "./index.module.scss";
 import walletImg from "../../../../commons/resources/images/Wallet.png";
 import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
 import { AIcon } from "../../../../commons/resources";
-import { Tooltip } from "antd";
-import { Link } from "react-router-dom";
 import CopyButton from "../../../commons/CopyButton";
 import { routers } from "../../../../commons/routers";
 
@@ -42,7 +39,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["withdrawals"][num
             className={styles.address}
           >
             <Tooltip title={item?.stakeAddressFrom || ""} placement="top">
-              {getShortWallet(item?.stakeAddressFrom || "")}
+              <span>{getShortWallet(item?.stakeAddressFrom || "")}</span>
             </Tooltip>
           </Link>
           <CopyButton text={item?.stakeAddressFrom || ""} className={styles.icon} />
@@ -59,7 +56,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["withdrawals"][num
                   <div key={adr}>
                     <Link to={routers.ADDRESS_DETAIL.replace(":address", adr)} className={styles.address}>
                       <Tooltip title={adr} placement="top">
-                        {getShortWallet(adr)}
+                        <span> {getShortWallet(adr)}</span>
                       </Tooltip>
                     </Link>
                     <CopyButton text={adr} className={styles.icon} />

@@ -1,14 +1,25 @@
 import moment from "moment";
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import Slider from "react-slick";
 import { CalenderPaleIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
-import styles from "./index.module.scss";
 import Temp from "../../../commons/resources/temp/Rectangle 31.png";
-import Temp1 from "../../../commons/resources/temp/Rectangle 31 (1).png";
-import Temp2 from "../../../commons/resources/temp/Rectangle 31 (2).png";
-import Temp3 from "../../../commons/resources/temp/Rectangle 31 (3).png";
+import {
+  Author,
+  Detail,
+  Header,
+  Image,
+  Item,
+  ItemTitle,
+  LatestStoriesContainer,
+  SeemoreButton,
+  SeemoreText,
+  StyledSlider,
+  Time,
+  TimeIcon,
+  Title,
+} from "./style";
+import { FaAngleDoubleRight } from "react-icons/fa";
 
 interface Props {}
 
@@ -24,21 +35,21 @@ const data: Story[] = [
     id: "2",
     title: "Cardano Foundation Partners with Georgian National Wine Agency with Georgian National Wine Agency",
     author: "Cardano Academy",
-    image: Temp1,
+    image: Temp,
     createdDate: "10/10/2022",
   },
   {
     id: "3",
     title: "Cardano Foundation Partners",
     author: "Cardano Academy",
-    image: Temp2,
+    image: Temp,
     createdDate: "10/10/2022",
   },
   {
     id: "4",
     title: "Cardano Foundation Partners",
     author: "Cardano Academy",
-    image: Temp3,
+    image: Temp,
     createdDate: "10/10/2022",
   },
 ];
@@ -46,18 +57,16 @@ const data: Story[] = [
 const LatestStories: React.FC<Props> = () => {
   const drag = useRef<boolean>(false);
   return (
-    <div className={styles.latestStories}>
-      <div className={styles.title}>
-        <h3>Latest Stories</h3>
-        <Link to={routers.STORY_LIST} className={styles.seemoreDesktop}>
-          <small>See All</small>
-        </Link>
-      </div>
-      <Slider
-        className={styles.slick}
+    <LatestStoriesContainer>
+      <Header>
+        <Title>Latest Stories</Title>
+        <SeemoreButton to={routers.STORY_LIST}>
+          <SeemoreText>View All</SeemoreText> <FaAngleDoubleRight size={12} />
+        </SeemoreButton>
+      </Header>
+      <StyledSlider
         dots
         arrows={false}
-        dotsClass={`slick-dots ${styles.dots}`}
         autoplay={true}
         infinite={true}
         draggable={true}
@@ -65,7 +74,7 @@ const LatestStories: React.FC<Props> = () => {
         beforeChange={() => (drag.current = true)}
         afterChange={() => (drag.current = false)}
         responsive={[
-          { breakpoint: 1024, settings: { slidesToShow: 2, slidesToScroll: 2, dots: true } },
+          { breakpoint: 1170, settings: { slidesToShow: 2, slidesToScroll: 2, dots: true } },
           { breakpoint: 576, settings: { slidesToShow: 1, slidesToScroll: 1, dots: true } },
         ]}
       >
@@ -73,26 +82,29 @@ const LatestStories: React.FC<Props> = () => {
           return (
             <Link
               key={id}
-              className={styles.box}
               to={routers.STORY_DETAIL.replace(":storyId", `${id}`)}
               title={title}
               onClick={e => drag.current && e.preventDefault()}
             >
-              <img className={styles.image} src={image} alt={title} />
-              <h6>{author}</h6>
-              <h4>{title}</h4>
-              <small>
-                <img src={CalenderPaleIcon} alt="calender pale" />
-                {moment(createdDate).format("MM/DD/YYYY")}
-              </small>
+              <Item>
+                <Image src={image} alt={title} />
+                <Detail>
+                  <Author>{author}</Author>
+                  <ItemTitle>{title}</ItemTitle>
+                  <Time>
+                    <TimeIcon src={CalenderPaleIcon} alt="calender pale" />
+                    {moment(createdDate).format("MM/DD/YYYY")}
+                  </Time>
+                </Detail>
+              </Item>
             </Link>
           );
         })}
-      </Slider>
-      <Link to={routers.STORY_LIST} className={styles.seemoreMobile}>
-        <small>See All</small>
-      </Link>
-    </div>
+      </StyledSlider>
+      <SeemoreButton to={routers.STORY_LIST} mobile>
+        <SeemoreText>See All</SeemoreText>
+      </SeemoreButton>
+    </LatestStoriesContainer>
   );
 };
 

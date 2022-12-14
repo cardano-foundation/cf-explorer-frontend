@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row, Skeleton } from "antd";
+import { Grid, Skeleton, styled } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
@@ -9,7 +9,7 @@ import styles from "./index.module.scss";
 import highestIcon from "../../commons/resources/images/highestIcon.png";
 import lowestIcon from "../../commons/resources/images/lowestIcon.png";
 import moment from "moment";
-import { formatADA, formatNumber, numberWithCommas } from "../../commons/utils/helper";
+import { formatADA } from "../../commons/utils/helper";
 
 interface DelegationDetailChartProps {
   data: AnalyticsDelegators | null;
@@ -20,8 +20,8 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ data, loa
   const [selectAnalytic, setSelectAnalytic] = useState<"epochChart" | "delegatorChart">("epochChart");
   return (
     <Card title="Analytics">
-      <Row className={styles.wrapper}>
-        <Col span={24} xl={18}>
+      <Grid container columns={24} className={styles.wrapper}>
+        <Grid item xs={24} lg={18}>
           <div className={styles.tab}>
             <button
               className={`${styles.button} ${selectAnalytic === "epochChart" ? styles.active : ""}`}
@@ -38,13 +38,13 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ data, loa
             </button>
           </div>
           <div className={styles.chart}>
-            {loading && <Skeleton.Input active block style={{ height: "280px" }} />}
+            {loading && <SkeletonUI variant="rectangular" style={{ height: "280px" }} />}
             {!loading && <Chart data={data ? data[selectAnalytic].dataByDays : []} />}
           </div>
-        </Col>
-        <Col span={24} xl={6}>
-          <Row className={styles.right} gutter={4}>
-            <Col span={24} sm={12} xl={24} className={`${styles.col} ${styles.top}`}>
+        </Grid>
+        <Grid item xs={24} lg={6}>
+          <Grid container columns={24} spacing={2} className={styles.right}>
+            <Grid item xs={24} sm={12} lg={24} className={`${styles.col} ${styles.top}`}>
               <div className={styles.item}>
                 <div>
                   <img src={highestIcon} alt="heighest icon" />
@@ -52,7 +52,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ data, loa
                     {selectAnalytic === "epochChart" ? "Highest stake" : "Highest number of delegators"}
                   </div>
                   <div className={styles.value}>
-                    {loading && <Skeleton.Input active block />}
+                    {loading && <SkeletonUI variant="rectangular" />}
                     {!loading &&
                       (data
                         ? selectAnalytic === "epochChart"
@@ -62,9 +62,8 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ data, loa
                   </div>
                 </div>
               </div>
-            </Col>
-
-            <Col span={24} sm={12} xl={24} className={`${styles.col} ${styles.bottom}`}>
+            </Grid>
+            <Grid item xs={24} sm={12} lg={24} className={`${styles.col} ${styles.bottom}`}>
               <div className={styles.item}>
                 <div>
                   <img src={lowestIcon} alt="lowest icon" />
@@ -72,7 +71,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ data, loa
                     {selectAnalytic === "epochChart" ? "Lowest stake" : "Lowest number of delegators"}
                   </div>
                   <div className={styles.value}>
-                    {loading && <Skeleton.Input active block />}
+                    {loading && <SkeletonUI variant="rectangular" />}
                     {!loading &&
                       (data
                         ? selectAnalytic === "epochChart"
@@ -82,10 +81,10 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ data, loa
                   </div>
                 </div>
               </div>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     </Card>
   );
 };
@@ -98,8 +97,8 @@ const Chart = ({ data }: { data: AnalyticsDelegators["epochChart"]["dataByDays"]
 
   useEffect(() => {
     if (data) {
-      setData(data.map(i => i.dataChart));
-      setCategories(data.map(i => moment(i.timeChart).format("MMM DD").toString()));
+      setData(data.map(i => i.ychart));
+      setCategories(data.map(i => i.xchart));
     }
   }, [data]);
 
@@ -152,3 +151,7 @@ const Chart = ({ data }: { data: AnalyticsDelegators["epochChart"]["dataByDays"]
     />
   );
 };
+
+const SkeletonUI = styled(Skeleton)(({ theme }) => ({
+  borderRadius: theme.borderRadius,
+}));

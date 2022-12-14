@@ -16,6 +16,7 @@ const persistConfig = {
   key: "root",
   storage: storage,
   whitelist: ["user"],
+  backlist: ["user.onDetailView"],
 };
 
 export const getStore = (): Store<RootState> => {
@@ -34,7 +35,6 @@ const rootReducer = (state: any, action: any) => appReducer(state, action);
 const middleWares: any[] = [];
 
 const enhancer = composeWithDevTools(applyMiddleware(...middleWares));
-
 
 const pReducer = persistReducer(persistConfig, rootReducer);
 

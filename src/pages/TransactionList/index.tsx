@@ -1,16 +1,16 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { parse } from 'qs';
+import React from "react";
+import { useLocation } from "react-router-dom";
+import { parse } from "qs";
 
-import useFetchList from '../../commons/hooks/useFetchList';
-import TransactionList from '../../components/TransactionLists';
-import styles from './index.module.scss';
+import useFetchList from "../../commons/hooks/useFetchList";
+import TransactionList from "../../components/TransactionLists";
+import { Container } from "@mui/material";
 
 interface Props {}
 
 const Transactions: React.FC<Props> = () => {
   const { search } = useLocation();
-  const query = parse(search.split('?')[1]);
+  const query = parse(search.split("?")[1]);
 
   const {
     data: transactions,
@@ -19,13 +19,13 @@ const Transactions: React.FC<Props> = () => {
     total,
     totalPage,
     currentPage,
-  } = useFetchList<Transactions>('tx/list', {
+  } = useFetchList<Transactions>("tx/list", {
     page: query.page ? +query.page - 1 : 0,
     size: query.size ? (query.size as string) : 10,
   });
 
   return (
-    <div className={styles.container}>
+    <Container>
       <TransactionList
         currentPage={currentPage}
         loading={transactionsLoading}
@@ -34,7 +34,7 @@ const Transactions: React.FC<Props> = () => {
         total={total}
         totalPage={totalPage}
       />
-    </div>
+    </Container>
   );
 };
 

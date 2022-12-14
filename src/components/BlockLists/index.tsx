@@ -1,16 +1,19 @@
-import { Link, useHistory } from "react-router-dom";
-import { BiLinkExternal } from "react-icons/bi";
-import moment from "moment";
+import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
+import { Container, Tooltip } from "@mui/material";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import { getShortWallet, formatADA } from "../../commons/utils/helper";
 
-import styles from "./index.module.scss";
 import { routers } from "../../commons/routers";
-import { Tooltip } from "antd";
 import { AIcon } from "../../commons/resources";
+
+import { PriceWrapper, StyledColorBlueDard, StyledLink } from "./styles";
+import DetailViewBlock from "../commons/DetailView/DetailViewBlock";
+import { useState } from "react";
+import { useWindowSize } from "react-use";
+import { setOnDetailView } from "../../stores/user";
 
 interface BlockListProps {
   blockLists: Block[];
@@ -22,6 +25,8 @@ interface BlockListProps {
 }
 
 const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized, total, currentPage }) => {
+  const [detailView, setDetailView] = useState<number | null>(null);
+  const { width } = useWindowSize();
   const history = useHistory();
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
@@ -29,84 +34,86 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
 
   const columns: Column<Block>[] = [
     {
-      title: "Block No.",
+      title: "Block No",
       key: "blockNo",
-      minWidth: "100px",
-      render: r => {
-        return <span className={styles.fwBlod}>{r.blockNo}</span>;
-      },
+      minWidth: "50px",
+      render: r => <StyledColorBlueDard>{r.blockNo}</StyledColorBlueDard>,
     },
     {
-      title: "Block Id",
+      title: "Block ID",
       key: "blockId",
       minWidth: "150px",
       render: r => (
         <Tooltip placement="top" title={r.hash}>
-          <Link
-            to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}
-            className={`${styles.fwBlod} ${styles.link}`}
-          >
-            <div>{getShortWallet(`${r.hash}`)}</div>
-            <BiLinkExternal fontSize={18} style={{ marginLeft: 8 }} />
-          </Link>
+          <StyledLink to={"#"}>{getShortWallet(`${r.hash}`)}</StyledLink>
         </Tooltip>
       ),
     },
     {
-      title: "Created at",
-      key: "createdAt",
-      minWidth: "150px",
-      render: r => <>{r.time ? moment(r.time).format("MM/DD/YYYY HH:mm:ss") : ""}</>,
-    },
-    {
       title: "Transactions",
       key: "transactions",
-      minWidth: "150px",
-      render: r => <div className={styles.fwBlod}>{r.txCount}</div>,
+      minWidth: "50px",
+      render: r => <StyledColorBlueDard>{r.txCount}</StyledColorBlueDard>,
     },
     {
       title: "Fees",
       key: "fees",
       render: r => (
-        <div className={styles.fwBlod}>
-          <img src={AIcon} alt="a icon" /> {formatADA(r.totalFees) || 0}
-        </div>
+        <PriceWrapper>
+          {formatADA(r.totalFees) || 0}
+          <img src={AIcon} alt="ADA Icon" />
+        </PriceWrapper>
       ),
     },
     {
       title: "Output",
       key: "output",
-      render: r => (
-        <div className={styles.fwBlod}>
-          <img src={AIcon} alt="a icon" /> {formatADA(r.totalOutput) || 0}
-        </div>
-      ),
       minWidth: "100px",
+      render: r => (
+        <PriceWrapper>
+          {formatADA(r.totalFees) || 0}
+          <img src={AIcon} alt="ADA Icon" />
+        </PriceWrapper>
+      ),
     },
   ];
+  const openDetail = (_: any, r: Block) => {
+    if (width > 1023) {
+      setOnDetailView(true);
+      setDetailView(r.blockNo);
+    } else history.push(routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`));
+  };
+
+  const handleClose = () => {
+    setOnDetailView(false);
+    setDetailView(null);
+  };
+
+  const selected = blockLists?.findIndex(item => item.blockNo === detailView);
 
   return (
-    <Card title={"Blocks"}>
-      <Table
-        loading={loading}
-        initialized={initialized}
-        className={styles.table}
-        columns={columns}
-        data={blockLists}
-        total={{ count: total, title: "Total Transactions" }}
-        onClickRow={(_, r: Block) => history.push(routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`))}
-        pagination={{
-          current: currentPage + 1 || 1,
-          total: total,
-          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
-          size: "small",
-          pageSizeOptions: [10, 20, 50],
-          onChange(page, pageSize) {
-            setQuery({ page, size: pageSize });
-          },
-        }}
-      />
-    </Card>
+    <Container>
+      <Card title={"Blocks"}>
+        <Table
+          loading={loading}
+          initialized={initialized}
+          columns={columns}
+          data={blockLists}
+          total={{ count: total, title: "Total Blocks" }}
+          pagination={{
+            onChange: (page, size) => {
+              setQuery({ page, size });
+            },
+            page: currentPage || 0,
+            total: total,
+          }}
+          onClickRow={openDetail}
+          selected={selected}
+          selectedProps={{ style: { backgroundColor: "#ECECEC" } }}
+        />
+        {detailView && <DetailViewBlock blockNo={detailView} handleClose={handleClose} />}
+      </Card>
+    </Container>
   );
 };
 

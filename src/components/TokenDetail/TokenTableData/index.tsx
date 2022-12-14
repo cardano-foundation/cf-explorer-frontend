@@ -1,60 +1,56 @@
-import { Select } from "antd";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
 import Card from "../../commons/Card";
+import TokenTransaction from "./TokenTransaction";
 
-import styles from "./index.module.scss";
+import { StyledSelect } from "./styles";
+import TokenTopHolder from "./TokenTopHolder";
+import TokenMinting from "./TokenMinting";
+import { MenuItem } from "@mui/material";
 
-interface ITokenTableData {}
+interface ITokenTableData {
+  totalSupply?: number;
+}
 
-const TokenTableData: React.FC<ITokenTableData> = () => {
-  const [selected, setSelect] = useState<string>("transactions");
-
-  const options = [
-    { value: "transactions", label: <span className={styles.selectOption}>Transactions</span> },
-    { value: "topHolders", label: <span className={styles.selectOption}>Top Holders</span> },
-    { value: "minting", label: <span className={styles.selectOption}>Minting</span> },
-  ];
-
-  const getTitle = () => {
-    switch (selected) {
-      case "transactions":
-        return "Transactions";
-      case "topHolders":
-        return "Top Holders";
-      case "minting":
-        return "Minting";
-      default:
-        return "";
-    }
+interface IMappingvalue {
+  [key: string]: {
+    title: string;
+    component: React.ReactNode;
   };
+}
 
-  const renderTable = () => {
-    switch (selected) {
-      case "transactions":
-        return <>Transaction Table</>;
-      case "topHolders":
-        return <>Top Holders Table</>;
-      case "minting":
-        return <>Minting Table</>;
-      default:
-        return null;
-    }
+const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
+  const [type, setType] = useState<string>("transactions");
+  const params = useParams<{ tokenId: string }>();
+
+  const mappingValue: IMappingvalue = {
+    transactions: {
+      title: "Transactions",
+      component: <TokenTransaction tokenId={params.tokenId} active={type === "transactions"} />,
+    },
+    topHolders: {
+      title: "Top Holders",
+      component: <TokenTopHolder tokenId={params.tokenId} active={type === "topHolders"} totalSupply={totalSupply} />,
+    },
+    minting: {
+      title: "Minting",
+      component: <TokenMinting tokenId={params.tokenId} active={type === "minting"} />,
+    },
   };
 
   return (
     <Card
-      title={getTitle()}
+      title={mappingValue[type].title}
       extra={
-        <Select
-          className={styles.select}
-          defaultValue="transactions"
-          onChange={(value: string) => setSelect(value)}
-          options={options}
-        />
+        <StyledSelect value={type} onChange={(e: any) => setType(e.target.value)}>
+          {Object.keys(mappingValue).map(key => (
+            <MenuItem value={key}>{mappingValue[key].title}</MenuItem>
+          ))}
+        </StyledSelect>
       }
     >
-      {renderTable()}
+      {mappingValue[type].component}
     </Card>
   );
 };

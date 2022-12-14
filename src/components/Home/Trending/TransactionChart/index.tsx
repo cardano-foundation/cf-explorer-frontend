@@ -2,9 +2,48 @@ import React from "react";
 import moment from "moment";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import styles from "./index.module.scss";
 import useFetch from "../../../../commons/hooks/useFetch";
+import { styled } from "@mui/material";
+import { BoxRaised } from "../../../commons/BoxRaised";
 
+const TransactionContainer = styled(BoxRaised)`
+  margin-bottom: 24px;
+  padding: 36px;
+  height: calc(100% - 88px);
+  @media screen and (max-width: 1023px) {
+    padding: 20px;
+    height: calc(100% - 56px);
+  }
+`;
+
+const Title = styled("h3")`
+  position: relative;
+  text-align: left;
+  margin-bottom: 1.5rem;
+
+  &::after {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    content: "";
+    width: 50px;
+    height: 4px;
+    background: var(--color-green-light);
+  }
+`;
+
+const Chart = styled(HighchartsReact)`
+  height: 230px;
+  max-height: 300px;
+  width: 100%;
+  [class$*="highcharts-xaxis-labels"] {
+    text {
+      &:last-child {
+        text-anchor: end !important;
+      }
+    }
+  }
+`;
 interface TransactionCount {
   date: string;
   txs: string;
@@ -17,7 +56,7 @@ const TransactionChart: React.FC = () => {
   const categories = (dataOrigin || []).map(item => moment(item.date).format("MMM DD"));
 
   const options: Highcharts.Options = {
-    chart: { type: "areaspline", className: styles.chart, height: 230 },
+    chart: { type: "areaspline", height: 230 },
     title: { text: "" },
     yAxis: {
       title: { text: null },
@@ -32,12 +71,11 @@ const TransactionChart: React.FC = () => {
       plotLines: [],
       angle: 0,
       labels: {
-        overflow: "visible",
+        overflow: "allow",
         rotation: 0,
         align: "left",
         step: 14,
       },
-      className: styles.xAxis,
     },
     legend: { enabled: false },
     tooltip: { shared: true, valueSuffix: " transactions" },
@@ -67,10 +105,10 @@ const TransactionChart: React.FC = () => {
     ],
   };
   return (
-    <div className={styles.transactionChart}>
-      <h3>Transaction in past 15 days</h3>
-      <HighchartsReact highcharts={Highcharts} options={options} />
-    </div>
+    <TransactionContainer>
+      <Title>Transaction in past 15 days</Title>
+      <Chart highcharts={Highcharts} options={options} />
+    </TransactionContainer>
   );
 };
 

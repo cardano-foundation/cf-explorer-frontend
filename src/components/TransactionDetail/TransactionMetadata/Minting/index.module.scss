@@ -29,6 +29,10 @@
       font-weight: var(--font-weight-bold);
     }
   }
+  .title {
+    word-break: break-all;
+    border-bottom: 1px solid rgb(0 0 0 / 10%);
+  }
   .Policy {
     font-size: var(--font-size-text);
     padding: 10px 0 4px;
@@ -37,5 +41,12 @@
     min-height: 200px;
     border-radius: 10px;
     background: rgba(217, 217, 217, 0.3);
+  }
+  .body {
+    padding: 10px 24px 20px;
+  }
+  .footer {
+    text-align: right;
+    padding: 10px 24px;
   }
 }

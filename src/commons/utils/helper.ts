@@ -1,5 +1,4 @@
 import BigNumber from "bignumber.js";
-import _ from "lodash";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const getShortWallet = (address: string) => {
@@ -74,13 +73,18 @@ export const formatADA = (value?: string | number, abbreviations: string[] = LAR
     const length = Ada.toFixed().toString().length;
     const exponential = Math.floor((length - 1) / 3) * 3;
     if (exponential > 5) {
-      const newValue = bigValue.div(10 ** exponential).toFixed(3 - ((length - 1) % 3));
+      const newValue = bigValue
+        .div(10 ** exponential)
+        .toString()
+        .match(/^-?\d+(?:\.\d{0,2})?/);
       const syntax = abbreviations[exponential / 3];
-      return `${newValue}${syntax ?? `x 10^${exponential}`}`;
+
+      return `${newValue && newValue[0]}${syntax ?? `x 10^${exponential}`}`;
     }
   }
 
-  return `${numberWithCommas(numberWithCommas(_.round(+Ada, 5)))}`;
+  const formated = Ada.toString().match(/^-?\d+(?:\.\d{0,2})?/);
+  return numberWithCommas(formated ? formated[0] : "0");
 };
 
 export const handleClicktWithoutAnchor = (e: React.MouseEvent, fn: (e: React.MouseEvent) => void): void => {
@@ -93,3 +97,5 @@ export const handleClicktWithoutAnchor = (e: React.MouseEvent, fn: (e: React.Mou
   }
   fn(e);
 };
+
+export const isExtenalLink = (href?: string) => href && (href.search("http://") >= 0 || href.search("https://") >= 0);

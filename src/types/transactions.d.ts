@@ -1,3 +1,12 @@
+enum TransactionStatus {
+  SUCCESS = "SUCCESS",
+  PENDDING = "PENDDING",
+}
+enum ConfirmationStatus {
+  MEDIUM = "MEDIUM",
+  SMALL = "SMALL",
+}
+
 interface Transactions {
   hash: string;
   blockNo: number;
@@ -17,10 +26,11 @@ interface Transaction {
     blockNo: number;
     epochSlot: number;
     epochNo: number;
-    status: string;
+    status: keyof typeof TransactionStatus;
     confirmation: number;
     fee: number;
     totalOutput: number;
+    maxEpochSlot: number;
   };
   summary: {
     stakeAddressTxInputs: {

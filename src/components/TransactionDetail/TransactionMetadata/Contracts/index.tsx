@@ -1,12 +1,8 @@
-import styles from "./index.module.scss";
-import { BiCheckCircle } from "react-icons/bi";
-import { IoMdCopy } from "react-icons/io";
-import { useCopyToClipboard } from "react-use";
+import { Tooltip } from "@mui/material";
 
+import styles from "./index.module.scss";
 import contractImg from "../../../../commons/resources/images/trx-contract.png";
-import { useEffect, useState } from "react";
 import { getShortWallet } from "../../../../commons/utils/helper";
-import { Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import { routers } from "../../../../commons/routers";
 import CopyButton from "../../../commons/CopyButton";
@@ -26,7 +22,7 @@ const Contracts: React.FC<ContractsProps> = ({ data }) => {
               <div key={key} className={styles.item}>
                 <Link to={routers.ADDRESS_DETAIL.replace(":address", ct.contract)} className={styles.address}>
                   <Tooltip title={ct.contract} placement="top">
-                    {getShortWallet(ct.contract)}
+                    <div>{getShortWallet(ct.contract)}</div>
                   </Tooltip>
                 </Link>
                 <CopyButton text={ct.contract} className={styles.icon} />

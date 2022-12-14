@@ -2,12 +2,11 @@ import { parse } from "qs";
 import { useLocation } from "react-router-dom";
 
 import useFetchList from "../../commons/hooks/useFetchList";
-import BlockListTable from "../../components/BlockLists/index";
+import BlockListTable from "../../components/BlockLists";
 
-import styles from "./index.module.scss";
+import { StyledContainer } from "./styles";
 
 const BlockList = () => {
-  //TO DO
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
 
@@ -17,7 +16,7 @@ const BlockList = () => {
   });
 
   return (
-    <div className={styles.container}>
+    <StyledContainer>
       <BlockListTable
         blockLists={data}
         total={total}
@@ -26,7 +25,7 @@ const BlockList = () => {
         loading={loading}
         initialized={initialized}
       />
-    </div>
+    </StyledContainer>
   );
 };
 

@@ -1,17 +1,54 @@
+import { Container, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 import { NotFoundIcon } from "../../commons/resources";
 import { routers } from "../../commons/routers";
-import styles from "./index.module.scss";
+
+const NotFoundContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 120px 0px;
+`;
+
+const Image = styled("img")`
+  width: 100%;
+  max-width: 250px;
+  margin-bottom: 2rem;
+`;
+
+const Title = styled("h3")`
+  color: ${props => props.theme.textColorPale};
+  margin-bottom: 2rem;
+  font-weight: var(--font-weight-normal);
+`;
+
+const BackToHome = styled(Link)`
+  display: block;
+  width: max-content;
+  margin: auto;
+  padding: 6.5px 20px;
+  border: 2px solid ${props => props.theme.colorGreenLight};
+  border-radius: 5px;
+  color: ${props => props.theme.colorGreenLight};
+  font-weight: var(--font-weight-bold);
+  &:link,
+  &:visited {
+    color: ${props => props.theme.colorGreenLight};
+  }
+  &:hover {
+    border: 2px solid ${props => props.theme.colorGreen};
+    color: ${props => props.theme.colorGreen};
+  }
+`;
 
 const NotFound = () => {
   return (
-    <div className={styles.container}>
-      <img src={NotFoundIcon} alt="404" />
-      <h3>Sorry! The page you’re looking for cannot be found.</h3>
-      <Link className={styles.backToHome} to={routers.HOME}>
-        Back to home
-      </Link>
-    </div>
+    <NotFoundContainer>
+      <Image src={NotFoundIcon} alt="404" />
+      <Title>Sorry! The page you’re looking for cannot be found.</Title>
+      <BackToHome to={routers.HOME}>Back to home</BackToHome>
+    </NotFoundContainer>
   );
 };
 export default NotFound;

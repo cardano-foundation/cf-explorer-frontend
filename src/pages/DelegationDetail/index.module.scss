@@ -24,7 +24,8 @@
 }
 
 .overview {
-  padding: 0 30px;
+  // padding: 0 30px;
+  padding-top: 70px;
   .col {
     width: 100%;
     min-height: 105px;
@@ -54,7 +55,6 @@
       width: 100%;
       height: 100%;
       border-radius: var(--border-radius);
-
     }
   }
 }

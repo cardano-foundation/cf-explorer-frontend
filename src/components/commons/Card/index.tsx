@@ -1,23 +1,48 @@
+import { Box, styled } from "@mui/material";
+import { BoxProps } from "@mui/system";
 import React, { ReactNode } from "react";
 
-import styles from "./index.module.scss";
+const CardContainer = styled(Box)`
+  background-color: transparent;
+  border-radius: var(--border-radius);
+`;
 
-interface CardProps {
-  title?: React.ReactNode | string;
+const Header = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Title = styled("h2")`
+  text-align: left;
+  padding-bottom: 8px;
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 4px;
+    background-color: ${props => props.theme.colorGreenLight};
+    left: 0;
+    bottom: 0;
+  }
+`;
+
+interface CardProps extends Omit<BoxProps, "title"> {
+  title?: React.ReactNode;
   children?: ReactNode;
-  className?: string;
   extra?: React.ReactNode;
 }
 
-const Card: React.FC<CardProps> = ({ title, children, className = "", extra }) => {
+const Card: React.FC<CardProps> = ({ title, children, extra, ...props }) => {
   return (
-    <div className={`${styles.card} ${className}`}>
-      <div className={styles.groupTitle}>
-        {title && <h2 className={styles.title}>{title}</h2>}
-        {extra && <div>{extra}</div>}
-      </div>
+    <CardContainer {...props}>
+      <Header>
+        {title ? <Title>{title}</Title> : null}
+        {extra}
+      </Header>
       {children}
-    </div>
+    </CardContainer>
   );
 };
 

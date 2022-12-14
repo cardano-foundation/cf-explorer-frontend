@@ -1,22 +1,20 @@
+import { Container } from "@mui/material";
+import { parse, stringify } from "qs";
 import { useState } from "react";
-import { Col, Input, Progress, Row, Skeleton } from "antd";
-import Card from "../../components/commons/Card";
+import { useHistory, useLocation } from "react-router-dom";
 
 import useFetchList from "../../commons/hooks/useFetchList";
-import { formatADA, numberWithCommas } from "../../commons/utils/helper";
-import DelegationLists from "../../components/DelegationLists";
-
-import styles from "./index.module.scss";
-import rocketImg from "../../commons/resources/images/rocket.png";
-import moneyImg from "../../commons/resources/images/money.png";
-import searchImg from "../../commons/resources/images/search.png";
 import useFetch from "../../commons/hooks/useFetch";
-import { useHistory, useLocation } from "react-router-dom";
-import { parse, stringify } from "qs";
-import moment from "moment";
-import { MAX_SLOT_EPOCH } from "../../commons/utils/constants";
 
-const Delegations = () => {
+import Card from "../../components/commons/Card";
+import OverViews from "../../components/DelegationPool/DelegationOverview";
+import { Horizon, SearchContainer, StyledInput } from "./styles";
+import { HeaderSearchIcon } from "../../commons/resources";
+import DelegationLists from "../../components/DelegationPool/DelegationList";
+
+interface DelegationsProps {}
+
+const Delegations: React.FC<DelegationsProps> = () => {
   const { search } = useLocation();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
@@ -39,141 +37,32 @@ const Delegations = () => {
   });
 
   return (
-    <div className={styles.container}>
-      <Card title="Delegation Pools Explorer" className={styles.wrapper}>
+    <Container>
+      <Card title="Delegation Pools Explorer">
         <OverViews data={overviews} loading={overviewsLoading} />
       </Card>
-      <div className={styles.search}>
-        <div className={styles.group}>
-          <Input
-            className={styles.input}
-            size="large"
-            placeholder="Search transaction, address, block, epoch, pool..."
-            prefix={<img src={searchImg} alt="search icon" />}
-            onChange={e => setSearchPools(e.target.value)}
-            value={searchPools || ""}
-            onKeyUp={e => {
-              if (e.key === "Enter") {
-                setQuery({ searchPools, page: 1, size: 10 });
-              }
-            }}
-          />
-          <button
-            className={styles.button}
-            onClick={() => {
+      <Horizon />
+      <SearchContainer>
+        <StyledInput
+          placeholder="Search Pools"
+          onChange={e => setSearchPools(e.target.value)}
+          value={searchPools || ""}
+          onKeyUp={e => {
+            if (e.key === "Enter") {
               setQuery({ searchPools, page: 1, size: 10 });
-            }}
-          >
-            Search
-          </button>
-        </div>
-      </div>
+            }
+          }}
+        />
+        <button
+          style={{ background: "transparent", border: "none", cursor: "pointer" }}
+          onClick={() => setQuery({ searchPools, page: 1, size: 10 })}
+        >
+          <img src={HeaderSearchIcon} alt="Search" />
+        </button>
+      </SearchContainer>
       <DelegationLists data={delegationLists} total={total} loading={loading} initialized={initialized} />
-    </div>
+    </Container>
   );
 };
 
 export default Delegations;
-
-interface OverViewProps {
-  data: OverViewDelegation | null;
-  loading: boolean;
-}
-
-const OverViews: React.FC<OverViewProps> = ({ data, loading }) => {
-  var duration = moment.duration(data?.countDownEndTime || 0, "seconds");
-
-  if (loading) {
-    return (
-      <Row gutter={[10, 10]}>
-        <Col span={24} md={12} xl={8}>
-          <Skeleton.Input block active className={styles.sekeletion} />
-        </Col>
-        <Col span={24} md={12} xl={8}>
-          <Skeleton.Input block active className={styles.sekeletion} />
-        </Col>
-        <Col span={24} md={12} xl={8}>
-          <Skeleton.Input block active className={styles.sekeletion} />
-        </Col>
-      </Row>
-    );
-  }
-
-  return (
-    <Row gutter={[10, 10]}>
-      <Col span={24} md={12} xl={8}>
-        <div className={styles.card}>
-          <div>
-            <div className={styles.title}>Epoch</div>
-            <div className={styles.subtitle}>
-              {/* To Do */}
-              End in:{" "}
-              <span className={styles.value}>
-                {duration.days()} day {duration.hours()} hours {duration.minutes()} minutes
-              </span>
-            </div>
-          </div>
-          <Progress
-            type="circle"
-            strokeColor={{
-              "0%": "#184C78",
-              "100%": "#5A9C56",
-            }}
-            status="active"
-            format={() => (
-              <>
-                <div className={styles.epochTitle}>{data?.epochNo || 0} </div>
-              </>
-            )}
-            strokeWidth={6}
-            width={96}
-            percent={((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100}
-          />
-        </div>
-      </Col>
-      <Col span={24} md={12} xl={8}>
-        <div className={styles.card}>
-          <div style={{ width: "80%" }}>
-            <div className={styles.title}>Slot</div>
-            <div className={styles.subtitle}>
-              {" "}
-              <span className={styles.value}>{data?.epochSlotNo || 0} / </span>
-              {MAX_SLOT_EPOCH}
-            </div>
-            <Progress
-              type="line"
-              strokeColor={{
-                "0%": "#184C78",
-                "100%": "#5A9C56",
-              }}
-              strokeWidth={8}
-              width={200}
-              percent={((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100}
-              format={(p, c) => ""}
-              status="active"
-            />
-          </div>
-          <div>
-            <img src={rocketImg} alt="rocket icon" />
-          </div>
-        </div>
-      </Col>
-      <Col span={24} md={12} xl={8}>
-        <div className={styles.card}>
-          {" "}
-          <div>
-            <div className={styles.title}>
-              Live Stake: <span className={styles.value}>{formatADA(data?.liveStake)}</span>
-            </div>
-            <div className={styles.title}>
-              Delegators: <span className={styles.value}> {numberWithCommas(data?.delegators || 0)}</span>
-            </div>
-          </div>
-          <div>
-            <img src={moneyImg} alt="money icon" />
-          </div>
-        </div>
-      </Col>
-    </Row>
-  );
-};

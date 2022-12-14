@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, RouteComponentProps, Switch, withRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { routers } from "./commons/routers";
 import Home from "./pages/Home";
 import BlockList from "./pages/BlockList";
@@ -12,10 +12,13 @@ import EpochDetail from "./pages/EpochDetail";
 import DelegationPools from "./pages/DelegationPools";
 import DelegationDetail from "./pages/DelegationDetail";
 import RegistrationPools from "./pages/RegistrationPools";
-import TokenList from "./pages/TokenList";
+import Tokens from "./pages/Token";
 import TokenDetail from "./pages/TokenDetail";
+import Stake from "./pages/Stake";
+import StakeDetail from "./pages/StakeDetail";
+import AddressWalletDetail from "./pages/AddressWalletDetail";
 
-const Routes: React.FC<RouteComponentProps> = () => {
+const Routes: React.FC = () => {
   return (
     <Switch>
       <Route path={routers.HOME} exact component={Home} />
@@ -28,11 +31,14 @@ const Routes: React.FC<RouteComponentProps> = () => {
       <Route path={routers.DELEGATION_POOLS} exact component={DelegationPools} />
       <Route path={routers.DELEGATION_POOL_DETAIL} exact component={DelegationDetail} />
       <Route path={routers.REGISTRATION_POOLS} exact component={RegistrationPools} />
-      <Route path={routers.TOKEN_LIST} exact component={TokenList} />
+      <Route path={routers.TOKEN_LIST} exact component={Tokens} />
       <Route path={routers.TOKEN_DETAIL} exact component={TokenDetail} />
+      <Route path={routers.STAKE_LIST} exact component={Stake} />
+      <Route path={routers.STAKE_DETAIL} exact component={StakeDetail} />
+      <Route path={routers.ADDRESS_DETAIL} exact component={AddressWalletDetail} />
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );
 };
 
-export default withRouter(Routes);
+export default Routes;
