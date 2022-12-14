@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { styled, Container, Grid, Box, Select, MenuItem, Autocomplete } from "@mui/material";
+import { styled, Container, Grid, Box, Select, MenuItem, Autocomplete, Skeleton } from "@mui/material";
 
 import { formatADA, formatNumber, numberWithCommas } from "../../commons/utils/helper";
 import Card from "../../components/commons/Card";
@@ -46,33 +46,26 @@ const AddressWalletDetail = () => {
     loading: loadingAnalyst,
   } = useFetch<WalletAddressAnalyst>(`/address/analytics/${address}/${analyticTime}`);
 
+  const { data: dataStake, error: errorStake, loading: loadingStake } = useFetch<WalletStake>(`/stakeKey/${address}`);
+
   const itemRight = [
     { title: "Transaction", value: data?.txCount || 0 },
-    { title: "ADA Balance", value: formatADA(data?.balance || 0) },
+    {
+      title: "ADA Balance",
+      value: (
+        <>
+          {formatADA(data?.balance || 0)} ADA <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+        </>
+      ),
+    },
     { title: "ADA Value", value: "NaN" },
     {
       value: (
-        // <StyledSelect
-        //   value={selectedToken}
-        //   IconComponent={BiChevronDown}
-        //   onChange={e => setSelectedToken(e.target.value as string)}
-        //   placeholder="jiji"
-        //   displayEmpty
-        //   renderValue={() =>
-        //     selectedToken !== "" ? selectedToken : <Box className={styles.placeholder}>Search Token</Box>
-        //   }
-        // >
-        //   {data?.tokens.map((t, i) => (
-        //     <MenuItem value={t.displayName || ""} key={i}>
-        //       {t.displayName || ""}
-        //     </MenuItem>
-        //   ))}
-        // </StyledSelect>
         <Autocomplete
-          value={selectedToken}
-          onChange={(event, newValue) => {
-            setSelectedToken(newValue as WalletAddress["tokens"][number]);
-          }}
+          // value={selectedToken}
+          // onChange={(event, newValue) => {
+          //   setSelectedToken(newValue as WalletAddress["tokens"][number]);
+          // }}
           options={data?.tokens || []}
           getOptionLabel={option => option.displayName}
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
@@ -98,16 +91,29 @@ const AddressWalletDetail = () => {
             </li>
           )}
           renderInput={params => <TextField {...params} placeholder="Search Token" />}
-          // IconComponent={}
           popupIcon={<BiChevronDown />}
         />
       ),
     },
   ];
   const itemLeft = [
-    { title: "Total Stake", value: "NaN" },
-    { title: "POOL ID", value: "NaN" },
-    { title: "Reward", value: "NaN" },
+    {
+      title: "Total Stake",
+      value: (
+        <>
+          {formatADA(dataStake?.totalStake || 0)} ADA <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+        </>
+      ),
+    },
+    { title: "POOL ID", value: dataStake?.pool?.poolId || "" },
+    {
+      title: "Reward",
+      value: (
+        <>
+          {formatADA(dataStake?.rewardAvailable || 0)} ADA <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+        </>
+      ),
+    },
   ];
 
   return (
@@ -117,12 +123,24 @@ const AddressWalletDetail = () => {
           <Grid container columnSpacing={2}>
             <Grid item xs={12} md={6}>
               <Box overflow="hidden" borderRadius={props => props.borderRadius} height={"100%"}>
-                <DetailCard title={"Wallet address"} type="left" address={data?.address || ""} item={itemRight} />
+                <DetailCard
+                  title={"Wallet address"}
+                  type="left"
+                  address={data?.address || ""}
+                  item={itemRight}
+                  loading={loading}
+                />
               </Box>
             </Grid>
             <Grid item xs={12} md={6}>
               <Box overflow="hidden" borderRadius={props => props.borderRadius} height={"100%"}>
-                <DetailCard title={"Stake address"} type="right" address={data?.stakeAddress || ""} item={itemLeft} />
+                <DetailCard
+                  title={"Stake address"}
+                  type="right"
+                  address={data?.stakeAddress || ""}
+                  item={itemLeft}
+                  loading={loading || loadingStake}
+                />
               </Box>
             </Grid>
           </Grid>
@@ -179,13 +197,21 @@ interface DetailCardProps {
   address: string;
   item: { title?: string; value: React.ReactNode }[];
   type: "left" | "right";
+  loading: boolean;
 }
-const DetailCard: React.FC<DetailCardProps> = ({ title, address, item, type }) => {
+const DetailCard: React.FC<DetailCardProps> = ({ title, address, item, type, loading }) => {
+  if (loading) {
+    return (
+      <CardItem padding={0}>
+        <Skeleton variant="rectangular" height={"100%"} width="100%" />
+      </CardItem>
+    );
+  }
   if (type === "right" && !address) {
     return <CardItem></CardItem>;
   }
   return (
-    <CardItem>
+    <CardItem padding={props => props.spacing(4)}>
       <Box className={styles.titleDetail}>{title}</Box>
       <Box className={styles.addressGroup}>
         <span className={styles.address}>{address} </span>
@@ -225,7 +251,6 @@ const CardItem = styled(Box)(({ theme }) => ({
   overflow: "hidden",
   textAlign: "left",
   boxShadow: theme.shadowRaised,
-  padding: theme.spacing(4),
 }));
 const StyledSelect = styled(Select)`
   min-width: 250px;

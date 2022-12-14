@@ -17,3 +17,16 @@ interface WalletAddress {
   ];
   stakeAddress: string;
 }
+
+interface WalletStake {
+  status: "ACTIVE" | "INACTIVE ";
+  stakeAddress: string;
+  totalStake: number;
+  rewardAvailable: number;
+  rewardWithdrawn: number;
+  pool: {
+    tickerName: string;
+    poolName: string;
+    poolId: string;
+  };
+}
