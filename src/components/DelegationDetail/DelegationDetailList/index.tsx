@@ -1,11 +1,13 @@
 import { Tooltip } from "@mui/material";
+import moment from "moment";
 import { parse, stringify } from "qs";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
-import { routers } from "../../commons/routers";
-import { formatADA, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
-import Table, { Column } from "../commons/Table";
-import styles from "./index.module.scss";
+import { routers } from "../../../commons/routers";
+import { formatADA, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import CopyButton from "../../commons/CopyButton";
+import Table, { Column } from "../../commons/Table";
+import { StyledLink } from "./styles";
 
 const DelegationEpochList = ({
   data,
@@ -31,45 +33,41 @@ const DelegationEpochList = ({
       title: "Epoch",
       key: "epoch",
       minWidth: "120px",
-      render: r => (
-        <Link className={`${styles.col} ${styles.link}`} to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epoch}`)}>
-          {r.epoch}
-        </Link>
-      ),
+      render: r => <StyledLink to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epoch}`)}>{r.epoch}</StyledLink>,
     },
     {
       title: "Blocks",
       key: "block",
       minWidth: "120px",
       render: data => (
-        <Link to={routers.BLOCK_DETAIL.replace(":blockId", `${data.block}`)} className={`${styles.col} ${styles.link}`}>
+        <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${data.block}`)}>
           {numberWithCommas(data.block || 0)}
-        </Link>
+        </StyledLink>
       ),
     },
     {
       title: "Stake Amount(A)",
       key: "stakeAmount",
       minWidth: "120px",
-      render: data => <div className={styles.col}> {formatADA(data.stakeAmount)}</div>,
+      render: data => <> {formatADA(data.stakeAmount)}</>,
     },
     {
       title: "Delegator Reward(A)",
       key: "delegatorReward",
       minWidth: "120px",
-      render: data => <div className={styles.col}>{formatADA(data.delegatorReward)}</div>,
+      render: data => <>{formatADA(data.delegatorReward)}</>,
     },
     {
       title: "Fees(A)",
       key: "fees",
       minWidth: "120px",
-      render: data => <div className={styles.col}>{formatADA(data.fees)}</div>,
+      render: data => <>{formatADA(data.fees)}</>,
     },
     {
       title: "ROS",
       key: "ros",
       minWidth: "120px",
-      render: data => <div className={styles.col}>{data.ros ? `${data.ros}%` : ""}</div>,
+      render: data => <>{data.ros ? `${data.ros}%` : ""}</>,
     },
   ];
 
@@ -78,7 +76,7 @@ const DelegationEpochList = ({
       columns={columns}
       data={data || []}
       onClickRow={(_, r) => history.push(routers.EPOCH_DETAIL.replace(":epochId", `${r.epoch}`))}
-      total={{ count: total, title: "Total" }}
+      total={{ count: total, title: "Total Token List" }}
       loading={loading}
       initialized={initialized}
       pagination={{
@@ -115,7 +113,7 @@ const DelegationStakingDelegatorsList = ({
     {
       title: "No",
       key: "no",
-      render: (r, idx) => <div className={styles.col}> {idx + 1}</div>,
+      render: (r, idx) => <StyledLink to={"#"}>{idx + 1}</StyledLink>,
     },
     {
       title: "Delegator",
@@ -123,30 +121,31 @@ const DelegationStakingDelegatorsList = ({
       minWidth: "50px",
       render: data =>
         data.address && (
-          <Tooltip placement="bottom" title={data.address || ""}>
-            <Link to={"#"} className={`${styles.col} ${styles.link}`}>
-              {getShortWallet(data.address || "")}
-            </Link>
-          </Tooltip>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Tooltip placement="bottom" title={data.address || ""}>
+              <StyledLink to={"#"}>{getShortWallet(data.address || "")}</StyledLink>
+            </Tooltip>
+            <CopyButton text={data.address || ""} />
+          </div>
         ),
     },
     {
       title: "Total Value(A)",
       key: "value",
       minWidth: "120px",
-      render: data => <div className={styles.col}> {formatADA(data.totalStake || 0)}</div>,
+      render: data => <> {formatADA(data.totalStake || 0)}</>,
     },
     {
       title: "Staked Time",
       key: "stakedTime",
       minWidth: "120px",
-      render: data => <div className={styles.col}>{data.time}</div>,
+      render: data => <>{moment(data.time).format("DD/MM/YYYY HH:mm/ss")}</>,
     },
     {
       title: "Fees(A)",
       key: "fees",
       minWidth: "120px",
-      render: data => <div className={styles.col}>{formatADA(data.fee || 0)}</div>,
+      render: data => <>{formatADA(data.fee || 0)}</>,
     },
   ];
 
@@ -154,7 +153,7 @@ const DelegationStakingDelegatorsList = ({
     <Table
       columns={columns}
       data={data ? data : []}
-      total={{ count: total, title: "Total" }}
+      total={{ count: total, title: "Total Token List" }}
       loading={loading}
       initialized={initialized}
       pagination={{
