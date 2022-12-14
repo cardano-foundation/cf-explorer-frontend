@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Button, Dialog, DialogTitle } from "@mui/material";
+import { Box, Button, Dialog, DialogTitle } from "@mui/material";
 
 import { IoMdCopy } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { formatADA } from "../../../../commons/utils/helper";
 
 import Table, { Column } from "../../../commons/Table";
+import mintingIcon from "../../../../commons/resources/images/mintingIcon.png";
 
 import styles from "./index.module.scss";
 
@@ -25,7 +26,10 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       render: (r, index) => {
         return (
           <Link to="#" className={styles.link}>
-            {r.assetName}
+            <img src={mintingIcon} alt="icon" />
+            <Box component={"span"} ml={1}>
+              {r.assetName}
+            </Box>
           </Link>
         );
       },
@@ -58,10 +62,10 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
   ];
 
   return (
-    <>
+    <Box bgcolor={"white"}>
       <Table columns={columns} data={data || []} />
       <ModalMinting open={open} selectedItem={selectedItem} setOpen={() => setOpen(false)} />
-    </>
+    </Box>
   );
 };
 
@@ -85,7 +89,9 @@ const ModalMinting: React.FC<ModalMintingProps> = ({ open, setOpen, selectedItem
         <div className={styles.Policy}>Policy Script </div> <div className={styles.script}></div>
       </div>
       <div className={styles.footer}>
-        <Button variant="contained" onClick={setOpen}>OK</Button>
+        <Button variant="contained" onClick={setOpen}>
+          OK
+        </Button>
       </div>
     </Dialog>
   );

@@ -4,14 +4,14 @@
   margin-top: 18px;
   .input {
     display: flex;
-    .title{
+    .title {
       min-width: 60px;
     }
   }
   .output {
     display: flex;
     padding-top: 8px;
-    .title{
+    .title {
       min-width: 60px;
     }
   }
@@ -21,9 +21,5 @@
     display: flex;
     align-items: center;
     margin-left: 8px;
-  }
-
-  .fwBold {
-    font-weight: var(--font-weight-bold);
   }
 }
