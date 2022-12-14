@@ -1,5 +1,5 @@
 import { stringify } from "qs";
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
 import { MenuItem, Skeleton } from "@mui/material";
@@ -11,6 +11,9 @@ import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 
 import { AssetName, FontWeightBold, Logo, StyledSelect } from "./styles";
+import { useWindowSize } from "react-use";
+import { setOnDetailView } from "../../stores/user";
+import DetailViewToken from "../commons/DetailView/DetailViewToken";
 
 interface ITokenList {
   tokens: IToken[];
@@ -31,6 +34,8 @@ const TokenList: React.FC<ITokenList> = ({
   totalPage,
   currentPage,
 }) => {
+  const [detailView, setDetailView] = useState<string | null>(null);
+  const { width } = useWindowSize();
   const history = useHistory();
 
   const setQuery = (query: any) => {
@@ -75,6 +80,19 @@ const TokenList: React.FC<ITokenList> = ({
     },
   ];
 
+  const openDetail = (_: any, r: IToken) => {
+    if (width > 1023) {
+      setOnDetailView(true);
+      setDetailView(r?.fingerprint || null);
+    } else history.push(routers.TOKEN_DETAIL.replace(":tokenId", r?.fingerprint ?? ""));
+  };
+
+  const handleClose = () => {
+    setOnDetailView(false);
+    setDetailView(null);
+  };
+  const selected = tokens?.findIndex(item => item.fingerprint === detailView);
+
   return (
     <Card
       title="Token List"
@@ -92,7 +110,6 @@ const TokenList: React.FC<ITokenList> = ({
         loading={tokensLoading}
         initialized={initialized}
         total={{ count: total, title: "Total Transactions" }}
-        onClickRow={(_, r: IToken) => history.push(routers.TOKEN_DETAIL.replace(":tokenId", r?.fingerprint ?? ""))}
         pagination={{
           onChange: (page, size) => {
             setQuery({ page, size });
@@ -100,7 +117,11 @@ const TokenList: React.FC<ITokenList> = ({
           page: currentPage || 0,
           total: total,
         }}
+        onClickRow={openDetail}
+        selected={selected}
+        selectedProps={{ style: { backgroundColor: "#ECECEC" } }}
       />
+      {detailView && <DetailViewToken tokenId={detailView} handleClose={handleClose} />}
     </Card>
   );
 };
