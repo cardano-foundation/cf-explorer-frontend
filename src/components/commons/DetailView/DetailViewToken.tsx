@@ -1,0 +1,274 @@
+import React, { useEffect, useMemo, useState } from "react";
+import { CgArrowsExchange, CgClose } from "react-icons/cg";
+import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { CubeIcon, PolicyWhiteIcon, RocketIcon } from "../../../commons/resources";
+import ProgressCircle from "../ProgressCircle";
+import {
+  CloseButton,
+  EpochNumber,
+  EpochText,
+  HeaderContainer,
+  ViewDetailContainer,
+  DetailsInfoItem,
+  DetailLabel,
+  DetailValue,
+  Icon,
+  BlockDefault,
+  InfoIcon,
+  DetailLabelSkeleton,
+  DetailValueSkeleton,
+  IconSkeleton,
+  ProgressSkeleton,
+  ViewDetailDrawer,
+  Item,
+  ItemName,
+  ItemValue,
+  ListItem,
+  Group,
+  DetailLink,
+  DetailLinkIcon,
+  DetailLinkRight,
+  StyledLink,
+  DetailCopy,
+  DetailLinkName,
+  TokenContainer,
+  TokenTitle,
+  TokenHeaderContainer,
+  TokenTitleIcon,
+  TokenMetaData,
+  TokenInfo,
+  TokenName,
+  TokenIcon,
+  MetaData,
+  TokenHeaderInfo,
+  TokenTotalSupply,
+  TokenInfoLabel,
+  TokenInfoValue,
+  TokenDecimal,
+  TokenDetailInfo,
+  TokenDetailName,
+  TokenDetailIcon,
+} from "./styles";
+import { ADAToken } from "../Token";
+import NotFound from "../../../pages/NotFound";
+import useFetch from "../../../commons/hooks/useFetch";
+import { BiChevronRight } from "react-icons/bi";
+import { routers } from "../../../commons/routers";
+import { formatADA, formatCurrency, formatNumber, getShortHash } from "../../../commons/utils/helper";
+import { Tooltip } from "@mui/material";
+import axios from "axios";
+
+type DetailViewTokenProps = {
+  tokenId: string;
+  handleClose: () => void;
+};
+
+const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
+  const { tokenId, handleClose } = props;
+  const { loading, data } = useFetch<IToken>(tokenId ? `tokens/${tokenId}` : ``);
+  const [tokenMetadataLoading, setTokenMetadataLoading] = useState<boolean>(false);
+  const [tokenMetadata, setTokenMetadata] = useState<ITokenMetadata>({});
+
+  useEffect(() => {
+    async function loadMetadata() {
+      if (data) {
+        setTokenMetadataLoading(true);
+
+        try {
+          const {
+            data: { subjects },
+          } = await axios.post("/metadata/query", {
+            subjects: [`${data.policy}${data.name}`],
+            properties: ["policy", "logo", "decimals"],
+          });
+
+          if (subjects.length !== 0) {
+            setTokenMetadata({
+              policy: subjects[0]?.policy,
+              logo: subjects[0]?.logo.value,
+              decimals: subjects[0]?.decimals.value,
+            });
+          }
+        } catch (err) {}
+
+        setTokenMetadataLoading(false);
+      }
+      return true;
+    }
+    loadMetadata();
+  }, [data]);
+
+  if (!loading && !data) return <NotFound />;
+
+  if (!data || loading)
+    return (
+      <ViewDetailDrawer anchor="right" open={!!tokenId} hideBackdrop variant="permanent">
+        <ViewDetailContainer>
+          <CloseButton onClick={handleClose}>
+            <CgClose />
+          </CloseButton>
+          <TokenContainer>
+            <TokenHeaderContainer>
+              <IconSkeleton variant="circular" />
+              <DetailValueSkeleton variant="rectangular" />
+            </TokenHeaderContainer>
+            <TokenMetaData>
+              <TokenInfo>
+                <DetailValueSkeleton variant="rectangular" />
+                <IconSkeleton variant="circular" />
+              </TokenInfo>
+              <MetaData>{""}</MetaData>
+            </TokenMetaData>
+            <TokenHeaderInfo>
+              <TokenTotalSupply>
+                <DetailValueSkeleton variant="rectangular" />
+                <DetailValueSkeleton variant="rectangular" />
+              </TokenTotalSupply>
+              <TokenDecimal>
+                <DetailValueSkeleton variant="rectangular" />
+                <DetailValueSkeleton variant="rectangular" />
+              </TokenDecimal>
+            </TokenHeaderInfo>
+          </TokenContainer>
+          <Group>
+            {new Array(4).fill(0).map((_, index) => {
+              return (
+                <DetailsInfoItem key={index}>
+                  <DetailLabel>
+                    <InfoIcon />
+                    <DetailValueSkeleton variant="rectangular" />
+                  </DetailLabel>
+                  <DetailValue>
+                    <DetailLabelSkeleton variant="rectangular" />
+                  </DetailValue>
+                </DetailsInfoItem>
+              );
+            })}
+          </Group>
+          {new Array(2).fill(0).map((_, index) => {
+            return (
+              <Group>
+                <DetailsInfoItem key={index}>
+                  <DetailLabel>
+                    <InfoIcon />
+                    <DetailValueSkeleton variant="rectangular" />
+                  </DetailLabel>
+                  <DetailValue>
+                    <DetailLabelSkeleton variant="rectangular" />
+                  </DetailValue>
+                </DetailsInfoItem>
+              </Group>
+            );
+          })}
+        </ViewDetailContainer>
+      </ViewDetailDrawer>
+    );
+
+  return (
+    <ViewDetailDrawer anchor="right" open={!!tokenId} hideBackdrop variant="permanent">
+      <ViewDetailContainer>
+        <CloseButton onClick={handleClose}>
+          <CgClose />
+        </CloseButton>
+        <TokenContainer>
+          <TokenHeaderContainer>
+            <TokenTitleIcon src={PolicyWhiteIcon} alt="policy" />
+            <TokenTitle>Policy Script</TokenTitle>
+          </TokenHeaderContainer>
+          {data.displayName || tokenMetadata.logo ? (
+            <TokenMetaData>
+              <TokenInfo>
+                <TokenName>{data.displayName}</TokenName>
+                {tokenMetadata.logo ? (
+                  <TokenIcon src={tokenMetadata.logo} alt="token logo" />
+                ) : (
+                  <IconSkeleton variant="circular" />
+                )}
+              </TokenInfo>
+              <MetaData>{""}</MetaData>
+            </TokenMetaData>
+          ) : (
+            ""
+          )}
+          <TokenHeaderInfo>
+            <TokenTotalSupply>
+              <TokenInfoLabel>Total Supply</TokenInfoLabel>
+              <TokenInfoValue>{formatCurrency((data.supply || 0) / 10 ** 6)}</TokenInfoValue>
+            </TokenTotalSupply>
+            <TokenDecimal>
+              <TokenInfoLabel>Decimal</TokenInfoLabel>
+              {tokenMetadata.decimals ? (
+                <TokenInfoValue>{tokenMetadata.decimals}</TokenInfoValue>
+              ) : (
+                <DetailValueSkeleton variant="rectangular" />
+              )}
+            </TokenDecimal>
+          </TokenHeaderInfo>
+        </TokenContainer>
+        <Group>
+          <DetailsInfoItem>
+            <DetailLabel>
+              <InfoIcon />
+              Token ID
+            </DetailLabel>
+            <DetailValue>
+              <Tooltip placement="top" title={data.fingerprint}>
+                <StyledLink to={routers.TOKEN_DETAIL.replace(":tokenId", `${data.fingerprint}`)}>
+                  {getShortHash(data.fingerprint || "")}
+                </StyledLink>
+              </Tooltip>
+              <DetailCopy text={data.fingerprint} />
+            </DetailValue>
+          </DetailsInfoItem>
+          <DetailsInfoItem>
+            <DetailLabel>
+              <InfoIcon />
+              Asset name
+            </DetailLabel>
+            <DetailValue>
+              <TokenDetailInfo>
+                <TokenDetailName>{data.displayName}</TokenDetailName>
+                {tokenMetadata.logo ? (
+                  <TokenDetailIcon src={tokenMetadata.logo} alt="token logo" />
+                ) : (
+                  <IconSkeleton variant="circular" />
+                )}
+              </TokenDetailInfo>
+            </DetailValue>
+          </DetailsInfoItem>
+          <DetailsInfoItem>
+            <DetailLabel>
+              <InfoIcon />
+              Transaction
+            </DetailLabel>
+            <DetailValue>{data.txCount}</DetailValue>
+          </DetailsInfoItem>
+          <DetailsInfoItem>
+            <DetailLabel>
+              <InfoIcon />
+              Created
+            </DetailLabel>
+            <DetailValue>{data.createdOn}</DetailValue>
+          </DetailsInfoItem>
+        </Group>
+        <Group>
+          <DetailLink to={routers.TOKEN_DETAIL.replace(":tokenId", `${data.fingerprint}`)}>
+            <DetailLabel>
+              <DetailLinkIcon>
+                <CgArrowsExchange />
+              </DetailLinkIcon>
+              <DetailLinkName>Transactions</DetailLinkName>
+            </DetailLabel>
+            <DetailValue>
+              <DetailLinkRight>
+                <BiChevronRight size={24} />
+              </DetailLinkRight>
+            </DetailValue>
+          </DetailLink>
+        </Group>
+      </ViewDetailContainer>
+    </ViewDetailDrawer>
+  );
+};
+
+export default DetailViewToken;
