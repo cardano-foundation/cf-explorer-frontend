@@ -1,5 +1,5 @@
 import React from "react";
-import { Drawer, Tooltip } from "@mui/material";
+import { Grid, Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
 import { CONFIRMATION_STATUS, EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
@@ -37,6 +37,11 @@ import {
   ProgressStatus,
   ProgressStatusText,
   ProgressPercent,
+  ViewDetailDrawer,
+  Item,
+  ItemName,
+  ItemValue,
+  ListItem
 } from "./styles";
 import { ADAToken } from "../Token";
 import NotFound from "../../../pages/NotFound";
@@ -149,11 +154,31 @@ const DetailView: React.FC<DetailViewProps> = props => {
           <CgClose />
         </CloseButton>
         <HeaderContainer>
-          <ProgressCircle size={150} pathLineCap="butt" pathWidth={8} trailWidth={2} percent={progress?.progress || 0}>
+          <ProgressCircle size={150} pathLineCap="butt" pathWidth={4} trailWidth={2} percent={progress?.progress || 0} trailOpacity={1}>
             <EpochNumber>{blockDetail.epochNo}</EpochNumber>
             <EpochText>Epoch</EpochText>
           </ProgressCircle>
         </HeaderContainer>
+        <ListItem>
+          <Item>
+            <Icon src={RocketIcon} alt="socket" />
+            <ItemName>Block</ItemName>
+            <ItemValue>{blockDetail.blockNo}</ItemValue>
+          </Item>
+          <Item>
+            <Icon src={RocketIcon} alt="socket" />
+            <ItemName>slot</ItemName>
+            <ItemValue>{blockDetail.epochSlot}
+              <BlockDefault>/{blockDetail.maxEpochSlot || MAX_SLOT_EPOCH}</BlockDefault>
+            </ItemValue>
+          </Item>
+        </ListItem>
+        <DetailsInfoItem >
+          <DetailLabel>
+            <InfoIcon />Start time</DetailLabel>
+          <DetailValue>{blockDetail.blockNo}</DetailValue>
+        </DetailsInfoItem>
+
         <HeaderContainer>
           <HeaderTitle>{header.title}</HeaderTitle>
           {header.status && <HeaderStatus status={header.status}>{header.status}</HeaderStatus>}
@@ -169,12 +194,12 @@ const DetailView: React.FC<DetailViewProps> = props => {
           </SlotLeader>
         )}
         <DetailsInfo container>
-          <DetailsInfoItem item xs={12} sm>
+          <DetailsInfoItem >
             <Icon src={CubeIcon} alt="block" />
             <DetailLabel>Block</DetailLabel>
             <DetailValue>{blockDetail.blockNo}</DetailValue>
           </DetailsInfoItem>
-          <DetailsInfoItem item xs={12} sm>
+          <DetailsInfoItem >
             <Icon src={RocketIcon} alt="socket" />
             <DetailLabel>Slot</DetailLabel>
             <DetailValue>
@@ -183,7 +208,7 @@ const DetailView: React.FC<DetailViewProps> = props => {
             </DetailValue>
           </DetailsInfoItem>
           {confirmation && (
-            <DetailsInfoItem item xs={12} sm>
+            <DetailsInfoItem >
               <Icon src={CheckCircleIcon} alt="confirmation" />
               <DetailLabel>
                 Confirmation <InfoIcon />
@@ -195,7 +220,7 @@ const DetailView: React.FC<DetailViewProps> = props => {
             </DetailsInfoItem>
           )}
           {transactionFees && (
-            <DetailsInfoItem item xs={12} sm>
+            <DetailsInfoItem >
               <Icon src={ExchangeIcon} alt="transaction fees" />
               <DetailLabel>
                 Transaction Fees <InfoIcon />
@@ -207,7 +232,7 @@ const DetailView: React.FC<DetailViewProps> = props => {
             </DetailsInfoItem>
           )}
           {totalOutput && (
-            <DetailsInfoItem item xs={12} sm>
+            <DetailsInfoItem >
               <Icon src={OutputIcon} alt="output" />
               <DetailLabel>
                 Total Output <InfoIcon />
@@ -219,7 +244,7 @@ const DetailView: React.FC<DetailViewProps> = props => {
             </DetailsInfoItem>
           )}
           {progress && (
-            <DetailsInfoItem item xs={12} sm>
+            <DetailsInfoItem >
               <ProgressLiner progress={progress.progress} />
               <ProgressStatus>
                 <ProgressStatusText>{EPOCH_STATUS[progress.status]}</ProgressStatusText>
@@ -233,7 +258,7 @@ const DetailView: React.FC<DetailViewProps> = props => {
   };
 
   return (
-    <Drawer anchor="right" open={!!id} hideBackdrop variant="permanent">
+    <ViewDetailDrawer anchor="right" open={!!id} hideBackdrop variant="permanent">
       {data ? (
         renderDetail(data)
       ) : (
@@ -250,12 +275,12 @@ const DetailView: React.FC<DetailViewProps> = props => {
             <SlotLeaderSkeleton variant="rectangular" />
           </SlotLeader>
           <DetailsInfo container>
-            <DetailsInfoItem item xs={12} sm isCenter>
+            <DetailsInfoItem  >
               <ProgressSkeleton variant="circular" />
             </DetailsInfoItem>
             {new Array(4).fill(0).map((_, index) => {
               return (
-                <DetailsInfoItem key={index} item xs={12} sm>
+                <DetailsInfoItem key={index}  >
                   <IconSkeleton variant="circular" />
                   <DetailLabel>
                     <DetailValueSkeleton variant="rectangular" />
@@ -269,7 +294,7 @@ const DetailView: React.FC<DetailViewProps> = props => {
           </DetailsInfo>
         </ViewDetailContainer>
       )}
-    </Drawer>
+    </ViewDetailDrawer>
   );
 };
 

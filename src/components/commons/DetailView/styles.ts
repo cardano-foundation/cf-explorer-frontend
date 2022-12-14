@@ -1,8 +1,13 @@
-import { Box, Grid, IconButton, Skeleton, styled } from "@mui/material";
+import { Box, Drawer, Grid, IconButton, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
-import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import CopyButton from "../CopyButton";
+
+export const ViewDetailDrawer = styled(Drawer)`
+  &>div{
+    background: #ECECEC;
+  }
+`;
 
 export const ViewDetailContainer = styled(Box)`
   position: relative;
@@ -21,15 +26,97 @@ export const CloseButton = styled(IconButton)`
   position: absolute;
   top: 5px;
   right: 0px;
+  color: ${props => props.theme.titleColor};
 `;
 
-export const EpochNumber = styled("h3")`
+export const EpochNumber = styled("h1")`
   color: ${props => props.theme.colorGreenLight};
   margin: 0;
 `;
 
-export const EpochText = styled("small")`
+export const EpochText = styled("span")`
+  color: ${props => props.theme.textColorPale};
+  text-transform: uppercase;
+`;
+
+export const ListItem = styled(Box)`
+  display: flex;  
+  align-items:center; 
+  gap: 15px;
+  width: 100%;
+  margin: 20px 0px;
+`;
+
+export const Item = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+  flex: 1;
+  background: linear-gradient(0deg, #5a9c56 0%, #184c78 100%);
+  color: ${props => props.theme.textColorReverse};
+  border-radius: 20px;
+  padding: 15px;
+`;
+
+export const Icon = styled("img")`
+  width: 24px;
+  height: 24px;
+  margin-bottom: 10px;
+`;
+
+export const ItemName = styled("small")`
+  font-size: var(--font-size-text-x-small);
+  font-weight: var(--font-weight-bold); 
+  color: ${props => props.theme.textColorReverse};
+  text-transform: uppercase;
+  margin-bottom: 5px;
   opacity: 0.8;
+`;
+export const ItemValue = styled("h4")`
+  font-family: var(--font-family-text);
+  font-size: var(--font-size-text-large);
+  color: ${props => props.theme.textColorReverse};
+  text-transform: uppercase;
+  margin-top: 0px;
+  margin-bottom: 5px;
+`;
+
+export const BlockDefault = styled("small")`
+  color: ${props => props.theme.textColorReverse};
+  font-weight: var(--font-weight-normal);
+  opacity: 0.5;
+  margin: 0;
+  margin-top: 0.25rem;
+`;
+export const DetailsInfoItem = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  align-items:  :center ; 
+`;
+
+export const DetailLabel = styled("small")`
+display: flex;
+justify-content: flex-start;
+align-items:  :center ; 
+color: #344054
+`;
+export const InfoIcon = styled(FiInfo)`
+font-size: 1rem; 
+margin-right: 6.5px;
+color: ${props => props.theme.titleColor}
+`;
+
+
+export const DetailValue = styled("small")`
+  color: ${props => props.theme.colorBlack};  
+  font-weight: var(--font-weight-bold);
+`;
+export const DetailLabelSkeleton = styled(Skeleton)`
+  height: 1em;
+  width: 50%;
+  min-width: 100px;
+  border-radius: 4px;
 `;
 
 // sawq
@@ -57,7 +144,7 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
   border-radius: 4px;
 `;
 
-export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
+export const HeaderStatus = styled("small") <{ status?: keyof typeof TransactionStatus }>`
   color: ${props => {
     switch (props.status) {
       case TRANSACTION_STATUS.SUCCESS:
@@ -111,65 +198,17 @@ export const DetailsInfo = styled(Grid)`
   color: ${props => props.theme.textColorReverse};
 `;
 
-export const DetailsInfoItem = styled(Grid)<{ isCenter?: boolean }>`
-  display: flex;
-  justify-content: center;
-  align-items: ${props => (props.isCenter ? `center` : `flex-start`)};
-  flex-direction: column;
-  padding: 22.5px 20px;
-  position: relative;
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 1px;
-    height: 70%;
-    transform: translateY(-50%);
-    background-image: linear-gradient(0deg, #ffffff00 0%, #ffffff40 50%, #ffffff00 100%);
-  }
-  &:first-of-type::after {
-    display: none;
-  }
-`;
+
 
 export const ProgressSkeleton = styled(Skeleton)`
   width: 100px;
   height: 100px;
 `;
 
-export const Icon = styled("img")`
-  width: 24px;
-  height: 24px;
-`;
-
 export const IconSkeleton = styled(Skeleton)`
   width: 24px;
   height: 24px;
 `;
-export const DetailLabel = styled("small")`
-  margin: 10px 10px 5px 0px;
-  opacity: 0.8;
-`;
-
-export const DetailLabelSkeleton = styled(Skeleton)`
-  height: 1em;
-  width: 50%;
-  min-width: 100px;
-  border-radius: 4px;
-`;
-
-export const DetailValue = styled("h3")`
-  color: ${props => props.theme.textColorReverse};
-  font-family: var(--font-family-text);
-  font-size: var(--font-size-text-x-large);
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 10px 10px;
-`;
-
 export const DetailValueSkeleton = styled(Skeleton)`
   height: 1em;
   width: 50%;
@@ -181,21 +220,13 @@ export const DetailValueSmall = styled(DetailValue)`
   font-size: var(--font-size-text-small);
 `;
 
-export const BlockDefault = styled("span")`
-  font-size: var(--font-size-text);
-  color: ${props => props.theme.textColorReverse};
-  font-weight: var(--font-weight-normal);
-  opacity: 0.5;
-  margin: 0;
-  margin-top: 0.25rem;
-`;
 
 export const ConfirmationValue = styled(DetailValue)`
   display: flex;
   align-items: center;
 `;
 
-export const ConfirmStatus = styled("small")<{ status: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small") <{ status: keyof typeof ConfirmationStatus }>`
   color: ${props => {
     switch (props.status) {
       case CONFIRMATION_STATUS.MEDIUM:
@@ -219,12 +250,8 @@ export const ConfirmStatus = styled("small")<{ status: keyof typeof Confirmation
   border-radius: 2px;
 `;
 
-export const InfoIcon = styled(FiInfo)`
-  margin-bottom: -2px;
-  margin-left: 2px;
-`;
 
-export const ProgressLiner = styled("div")<{ progress: number }>`
+export const ProgressLiner = styled("div") <{ progress: number }>`
   position: relative;
   width: 100%;
   background: ${props => props.theme.colorBlack}32;
