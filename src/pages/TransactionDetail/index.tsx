@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Skeleton } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 
 import TransactionOverview from "../../components/TransactionDetail/TransactionOverview";
 import TransactionMetadata from "../../components/TransactionDetail/TransactionMetadata";
@@ -17,8 +17,10 @@ const Transaction: React.FC<Props> = () => {
   return (
     <div className={styles.container}>
       <TransactionOverview data={transactionDetail} loading={loading} />
-      {loading && <TransactionMetadataSekeleton />}
-      {!loading && <TransactionMetadata data={transactionDetail} loading={loading} />}
+      <Box>
+        {loading && <TransactionMetadataSekeleton />}
+        {!loading && <TransactionMetadata data={transactionDetail} loading={loading} />}
+      </Box>
     </div>
   );
 };

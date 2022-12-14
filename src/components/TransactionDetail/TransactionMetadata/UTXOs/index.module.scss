@@ -1,7 +1,6 @@
 @import "../../../../themes/variable.scss";
 .wrapper {
-  background-color: var(--background);
-  border-radius: var(--border-radius);
+  background-color: #fff;
   text-align: left;
 
   font-size: var(--font-size-text);
@@ -24,7 +23,7 @@
   }
 
   .item {
-    background-color: var(--background);
+    // background-color: var(--background);
     padding: 16px 25px;
     text-align: left;
     font-size: var(--font-size-text);
@@ -122,17 +121,9 @@
     justify-content: space-between;
     padding: 12px 25px;
     background-color: #dedede;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
     .address {
       font-weight: var(--font-weight-bold);
       padding: 8px;
-    }
-    .up {
-      color: var(--color-green-light);
-    }
-    .down {
-      color: var(--color-red);
     }
   }
 }
@@ -140,4 +131,3 @@
 .paddingTop {
   padding-top: 8px;
 }
-
