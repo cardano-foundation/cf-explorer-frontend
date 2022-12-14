@@ -139,7 +139,7 @@ const Stake: React.FC<IStake> = () => {
           data={data || []}
           loading={loading}
           initialized={initialized}
-          total={{ title: "Total", count: total }}
+          total={{ title: "Total Token List", count: total }}
           pagination={{
             onChange: (page, size) => {
               setQuery({ page, size });

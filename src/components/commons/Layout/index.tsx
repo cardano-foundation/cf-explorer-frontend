@@ -3,7 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { Drawer, Layout, ToggleMenu, Main, BackDrop } from "./styles";
+import { Drawer, Layout, ToggleMenu, Main, BackDrop, MainContainer } from "./styles";
 import { useSelector } from "react-redux";
 import { setSidebar } from "../../../stores/user";
 import { RootState } from "../../../stores/types";
@@ -12,7 +12,7 @@ interface Props {
   children: React.ReactNode;
 }
 const CustomLayout: React.FC<Props> = ({ children }) => {
-  const { sidebar } = useSelector(({ user }: RootState) => user);
+  const { sidebar, onDetailView } = useSelector(({ user }: RootState) => user);
 
   const handleToggle = () => setSidebar(!sidebar);
 
@@ -25,11 +25,13 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
         </ToggleMenu>
         <Sidebar />
       </Drawer>
-      <Main component="main">
-        <Header />
-        {children}
+      <MainContainer>
+        <Main component="main" onDetailView={onDetailView} sidebar={sidebar}>
+          <Header />
+          {children}
+        </Main>
         <Footer />
-      </Main>
+      </MainContainer>
     </Layout>
   );
 };

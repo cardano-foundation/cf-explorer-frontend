@@ -10,10 +10,14 @@ interface Props {
   pathWidth?: number;
   pathLineCap?: "butt" | "round" | "square" | "inherit";
   trailWidth?: number;
+  trailOpacity?: number;
 }
 
 const ProgressCircle: React.FC<Props> = props => {
-  const { percent, children, size = 200, width, pathWidth = 8, trailWidth = 8, pathLineCap } = props;
+  const {
+    percent, children, pathLineCap, size = 200, width,
+    pathWidth = 8, trailWidth = 8, trailOpacity = 0.15
+  } = props;
   const gradientTransform = `rotate(90)`;
 
   return (
@@ -30,7 +34,7 @@ const ProgressCircle: React.FC<Props> = props => {
       <CircularProgressbarWithChildren
         styles={{
           path: { stroke: `url(#progress)`, strokeWidth: pathWidth, strokeLinecap: pathLineCap },
-          trail: { strokeWidth: trailWidth, fill: "#FFFFFF", opacity: 0.15 },
+          trail: { strokeWidth: trailWidth, fill: "#FFFFFF", stroke: "#FFFFFF", opacity: trailOpacity },
         }}
         value={percent}
       >

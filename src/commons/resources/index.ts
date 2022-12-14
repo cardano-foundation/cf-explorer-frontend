@@ -1,10 +1,7 @@
 import LogoMobileIcon from "./icons/logo-mobile.svg";
 import LogoIcon from "./icons/logo.svg";
 import WalletIcon from "./icons/wallet.svg";
-import FlintIcon from "./images/flint.jpg";
-import NamiIcon from "./images/nami.png";
-import EternlIcon from "./images/eternl.png";
-import YoroiIcon from "./images/yoroi.png";
+
 import HeaderSearchIcon from "./icons/header-search.svg";
 import CopyIcon from "./icons/copy.svg";
 import CloseIcon from "./icons/close.svg";
@@ -33,13 +30,11 @@ import ArrowDropDownIcon from "./icons/arrow-drop-down.svg";
 import MenuIcon from "./icons/menu.svg";
 import AIcon from "./icons/AIcon.svg";
 import Policy from "./icons/policy.svg";
-import HeaderBackground from "./images/header-bg.png";
 import DIDMenuIcon from "./icons/menus/did.svg";
 import SupplyChainMenuIcon from "./icons/menus/supplychain.svg";
 import BlockChainMenuIcon from "./icons/menus/blockchain.svg";
 import DelegatePoolMenuIcon from "./icons/menus/delegate.svg";
 import ToolMenuIcon from "./icons/menus/tool.svg";
-import EmptyIcon from "./images/noData.png";
 import RocketIcon from "./icons/rocket.svg";
 import CubeIcon from "./icons/cube.svg";
 import CheckCircleIcon from "./icons/check-circle.svg";
@@ -47,6 +42,14 @@ import ExchangeIcon from "./icons/exchange-alt.svg";
 import ADAIcon from "./icons/ADA.svg";
 import OutputIcon from "./icons/output.svg";
 import MediumIcon from "./icons/medium.svg";
+import RocketBackground from "./icons/rocket-bg.svg";
+
+import FlintIcon from "./images/flint.jpg";
+import NamiIcon from "./images/nami.png";
+import EternlIcon from "./images/eternl.png";
+import YoroiIcon from "./images/yoroi.png";
+import HeaderBackground from "./images/header-bg.png";
+import EmptyIcon from "./images/noData.png";
 
 export {
   LogoMobileIcon,
@@ -98,4 +101,5 @@ export {
   ADAIcon,
   OutputIcon,
   MediumIcon,
+  RocketBackground,
 };

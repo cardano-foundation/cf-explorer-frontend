@@ -30,7 +30,7 @@ const EpochDetail: React.FC = () => {
 
   return (
     <StyledContainer>
-      <EpochOverview data={EpochDetail} loading={EpochDetailLoading} />
+      <EpochOverview data={EpochDetail} loading={EpochDetailLoading || !initialized} />
       <EpochBlockList
         data={BlockList}
         loading={loading}

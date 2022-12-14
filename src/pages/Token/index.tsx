@@ -27,8 +27,6 @@ const Tokens: React.FC<ITokenList> = () => {
   } = useFetchList<ITokenOverview>("/tokens", {
     page: query.page ? +query.page - 1 : 0,
     size: query.size ? (query.size as string) : 10,
-    // TODO: sort
-    sort: "txCount,DESC",
   });
 
   useEffect(() => {
