@@ -56,9 +56,12 @@ export const formatPrice = (value?: string | number, abbreviations: string[] = L
   const bigValue = new BigNumber(value.toString());
   const length = bigValue.toFixed(0).toString().length;
   const exponential = Math.floor((length - 1) / 3) * 3;
-  const newValue = bigValue.div(10 ** exponential).toFixed(3 - ((length - 1) % 3));
+  const newValue = bigValue
+    .div(10 ** exponential)
+    .toString()
+    .match(/^-?\d+(?:\.\d{0,2})?/);
   const syntax = abbreviations[exponential / 3];
-  return `${newValue}${syntax ?? `x 10^${exponential}`}`;
+  return `${newValue && newValue[0]}${syntax ?? `x 10^${exponential}`}`;
 };
 
 export const numberWithCommas = (x: number | string) => {
