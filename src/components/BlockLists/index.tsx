@@ -65,7 +65,7 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
       minWidth: "100px",
       render: r => (
         <PriceWrapper>
-          {formatADA(r.totalFees) || 0}
+          {formatADA(r.totalOutput) || 0}
           <img src={AIcon} alt="ADA Icon" />
         </PriceWrapper>
       ),

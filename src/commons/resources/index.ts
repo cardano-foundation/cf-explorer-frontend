@@ -43,6 +43,9 @@ import ADAIcon from "./icons/ADA.svg";
 import OutputIcon from "./icons/output.svg";
 import MediumIcon from "./icons/medium.svg";
 import RocketBackground from "./icons/rocket-bg.svg";
+import InfoIcon from "./icons/infoIcon.svg";
+import HighestIcon from "./icons/highest-icon.svg";
+import LowestIcon from "./icons/lowest-icon.svg";
 
 import FlintIcon from "./images/flint.jpg";
 import NamiIcon from "./images/nami.png";
@@ -102,4 +105,7 @@ export {
   OutputIcon,
   MediumIcon,
   RocketBackground,
+  InfoIcon,
+  HighestIcon,
+  LowestIcon,
 };
