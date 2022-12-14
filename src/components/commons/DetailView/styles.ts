@@ -1,11 +1,12 @@
 import { Box, Drawer, Grid, IconButton, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import CopyButton from "../CopyButton";
 
 export const ViewDetailDrawer = styled(Drawer)`
-  &>div{
-    background: #ECECEC;
+  & > div {
+    background: #ececec;
   }
 `;
 
@@ -40,8 +41,8 @@ export const EpochText = styled("span")`
 `;
 
 export const ListItem = styled(Box)`
-  display: flex;  
-  align-items:center; 
+  display: flex;
+  align-items: center;
   gap: 15px;
   width: 100%;
   margin: 20px 0px;
@@ -51,7 +52,7 @@ export const Item = styled(Box)`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items:center;
+  align-items: center;
   flex: 1;
   background: linear-gradient(0deg, #5a9c56 0%, #184c78 100%);
   color: ${props => props.theme.textColorReverse};
@@ -67,7 +68,7 @@ export const Icon = styled("img")`
 
 export const ItemName = styled("small")`
   font-size: var(--font-size-text-x-small);
-  font-weight: var(--font-weight-bold); 
+  font-weight: var(--font-weight-bold);
   color: ${props => props.theme.textColorReverse};
   text-transform: uppercase;
   margin-bottom: 5px;
@@ -92,31 +93,93 @@ export const BlockDefault = styled("small")`
 export const DetailsInfoItem = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items:  :center ; 
+  align-items: center;
+  margin-bottom: 20px;
 `;
 
 export const DetailLabel = styled("small")`
-display: flex;
-justify-content: flex-start;
-align-items:  :center ; 
-color: #344054
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: #344054;
 `;
 export const InfoIcon = styled(FiInfo)`
-font-size: 1rem; 
-margin-right: 6.5px;
-color: ${props => props.theme.titleColor}
+  font-size: 1rem;
+  margin-right: 6.5px;
+  color: ${props => props.theme.titleColor};
 `;
 
-
 export const DetailValue = styled("small")`
-  color: ${props => props.theme.colorBlack};  
+  color: ${props => props.theme.colorBlack};
   font-weight: var(--font-weight-bold);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5px;
 `;
 export const DetailLabelSkeleton = styled(Skeleton)`
   height: 1em;
   width: 50%;
   min-width: 100px;
   border-radius: 4px;
+`;
+
+export const StyledLink = styled(Link)`
+  color: ${props => props.theme.colorBlue};
+  font-text: var(--font-family-text);
+`;
+
+export const Group = styled(Box)`
+  margin-bottom: 10px;
+  padding: 10px 0px 0px;
+  border-bottom: 1px solid ${props => props.theme.colorBlack}16;
+`;
+
+export const ProgressLiner = styled("div")<{ progress: number }>`
+  position: relative;
+  width: 100%;
+  background: ${props => props.theme.colorBlack}32;
+  height: 12px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: ${props => props.progress || 0}%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #e65c00 0%, #f9d423 100%);
+  }
+`;
+
+export const ProgressStatusText = styled("h4")`
+  color: #344054;
+  font-weight: var(--font-weight-normal);
+  margin: 0;
+`;
+
+export const ProgressPercent = styled("h4")`
+  color: ${props => props.theme.colorYellow};
+  font-weight: var(--font-weight-normal);
+  margin: 0;
+`;
+export const DetailLink = styled(Link)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  color: ${props => props.theme.colorBlack};
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-normal);
+`;
+export const DetailLinkIcon = styled("span")`
+  color: ${props => props.theme.colorGreenLight};
+  margin-right: 10px;
+`;
+export const DetailLinkRight = styled("span")`
+  color: ${props => props.theme.textColorPale};
 `;
 
 // sawq
@@ -144,7 +207,7 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
   border-radius: 4px;
 `;
 
-export const HeaderStatus = styled("small") <{ status?: keyof typeof TransactionStatus }>`
+export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
   color: ${props => {
     switch (props.status) {
       case TRANSACTION_STATUS.SUCCESS:
@@ -198,8 +261,6 @@ export const DetailsInfo = styled(Grid)`
   color: ${props => props.theme.textColorReverse};
 `;
 
-
-
 export const ProgressSkeleton = styled(Skeleton)`
   width: 100px;
   height: 100px;
@@ -220,13 +281,12 @@ export const DetailValueSmall = styled(DetailValue)`
   font-size: var(--font-size-text-small);
 `;
 
-
 export const ConfirmationValue = styled(DetailValue)`
   display: flex;
   align-items: center;
 `;
 
-export const ConfirmStatus = styled("small") <{ status: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status: keyof typeof ConfirmationStatus }>`
   color: ${props => {
     switch (props.status) {
       case CONFIRMATION_STATUS.MEDIUM:
@@ -250,41 +310,9 @@ export const ConfirmStatus = styled("small") <{ status: keyof typeof Confirmatio
   border-radius: 2px;
 `;
 
-
-export const ProgressLiner = styled("div") <{ progress: number }>`
-  position: relative;
-  width: 100%;
-  background: ${props => props.theme.colorBlack}32;
-  height: 12px;
-  margin-bottom: 10px;
-  border-radius: 12px;
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: ${props => props.progress || 0}%;
-    height: 100%;
-    border-radius: 12px;
-    background: linear-gradient(90deg, #e65c00 0%, #f9d423 100%);
-  }
-`;
-
 export const ProgressStatus = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-`;
-
-export const ProgressStatusText = styled("h4")`
-  color: ${props => props.theme.textColorReverse};
-  font-weight: var(--font-weight-normal);
-  margin: 0;
-`;
-
-export const ProgressPercent = styled("h4")`
-  color: ${props => props.theme.colorYellow};
-  font-weight: var(--font-weight-normal);
-  margin: 0;
 `;

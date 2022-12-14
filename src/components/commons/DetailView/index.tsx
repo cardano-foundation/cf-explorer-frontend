@@ -1,17 +1,13 @@
 import React from "react";
-import { Grid, Tooltip } from "@mui/material";
-import { Link } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
 import { CONFIRMATION_STATUS, EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import { CheckCircleIcon, CubeIcon, ExchangeIcon, OutputIcon, RocketIcon } from "../../../commons/resources";
+import { RocketIcon } from "../../../commons/resources";
 import ProgressCircle from "../ProgressCircle";
 import {
   CloseButton,
-  BackText,
   EpochNumber,
   EpochText,
   HeaderContainer,
-  HeaderStatus,
   HeaderTitle,
   ViewDetailContainer,
   DetailsInfo,
@@ -20,13 +16,8 @@ import {
   DetailValue,
   Icon,
   BlockDefault,
-  ConfirmStatus,
-  ConfirmationValue,
   SlotLeader,
-  SlotLeaderValue,
-  SlotLeaderCopy,
   InfoIcon,
-  DetailValueSmall,
   HeaderTitleSkeleton,
   DetailLabelSkeleton,
   DetailValueSkeleton,
@@ -34,23 +25,25 @@ import {
   ProgressSkeleton,
   SlotLeaderSkeleton,
   ProgressLiner,
-  ProgressStatus,
   ProgressStatusText,
   ProgressPercent,
   ViewDetailDrawer,
   Item,
   ItemName,
   ItemValue,
-  ListItem
+  ListItem,
+  Group,
+  DetailLink,
+  DetailLinkIcon,
+  DetailLinkRight,
 } from "./styles";
 import { ADAToken } from "../Token";
 import NotFound from "../../../pages/NotFound";
-import { routers } from "../../../commons/routers";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../stores/types";
 import useFetch from "../../../commons/hooks/useFetch";
 import { getShortHash } from "../../../commons/utils/helper";
 import moment from "moment";
+import { HiOutlineCube } from "react-icons/hi2";
+import { BiChevronRight } from "react-icons/bi";
 
 type DetailViewProps = { handleClose: () => void } & (
   | { type: "block" | "epoch"; id: number }
@@ -127,7 +120,10 @@ const DetailView: React.FC<DetailViewProps> = props => {
             title: epoch.no,
             hash: "",
           },
-
+          epochDetail: {
+            startTime: epoch.startTime,
+            endTime: epoch.endTime,
+          },
           blockDetail: {
             epochNo: epoch.no,
             epochSlot: epoch.epochSlotNo,
@@ -147,14 +143,21 @@ const DetailView: React.FC<DetailViewProps> = props => {
   const renderDetail = (data: DataDetail) => {
     const dataDetail = getData(data);
     console.log(dataDetail);
-    const { header, blockDetail, confirmation, transactionFees, totalOutput, progress } = dataDetail;
+    const { header, blockDetail, confirmation, transactionFees, totalOutput, progress, epochDetail } = dataDetail;
     return (
       <ViewDetailContainer>
         <CloseButton onClick={handleClose}>
           <CgClose />
         </CloseButton>
         <HeaderContainer>
-          <ProgressCircle size={150} pathLineCap="butt" pathWidth={4} trailWidth={2} percent={progress?.progress || 0} trailOpacity={1}>
+          <ProgressCircle
+            size={150}
+            pathLineCap="butt"
+            pathWidth={4}
+            trailWidth={2}
+            percent={progress?.progress || 0}
+            trailOpacity={1}
+          >
             <EpochNumber>{blockDetail.epochNo}</EpochNumber>
             <EpochText>Epoch</EpochText>
           </ProgressCircle>
@@ -168,91 +171,83 @@ const DetailView: React.FC<DetailViewProps> = props => {
           <Item>
             <Icon src={RocketIcon} alt="socket" />
             <ItemName>slot</ItemName>
-            <ItemValue>{blockDetail.epochSlot}
+            <ItemValue>
+              {blockDetail.epochSlot}
               <BlockDefault>/{blockDetail.maxEpochSlot || MAX_SLOT_EPOCH}</BlockDefault>
             </ItemValue>
           </Item>
         </ListItem>
-        <DetailsInfoItem >
-          <DetailLabel>
-            <InfoIcon />Start time</DetailLabel>
-          <DetailValue>{blockDetail.blockNo}</DetailValue>
-        </DetailsInfoItem>
-
-        <HeaderContainer>
-          <HeaderTitle>{header.title}</HeaderTitle>
-          {header.status && <HeaderStatus status={header.status}>{header.status}</HeaderStatus>}
-        </HeaderContainer>
-        {header.hash && (
-          <SlotLeader>
-            <Tooltip title={`${header.hash}`} placement="top">
-              <Link to={"/"}>
-                {header.slotLeader && <small>Slot leader:</small>} <SlotLeaderValue>{header.hash}</SlotLeaderValue>
-              </Link>
-            </Tooltip>
-            <SlotLeaderCopy text={header.hash} />
-          </SlotLeader>
-        )}
-        <DetailsInfo container>
-          <DetailsInfoItem >
-            <Icon src={CubeIcon} alt="block" />
-            <DetailLabel>Block</DetailLabel>
-            <DetailValue>{blockDetail.blockNo}</DetailValue>
-          </DetailsInfoItem>
-          <DetailsInfoItem >
-            <Icon src={RocketIcon} alt="socket" />
-            <DetailLabel>Slot</DetailLabel>
-            <DetailValue>
-              {blockDetail.epochSlot}
-              <BlockDefault>/{blockDetail.maxEpochSlot || MAX_SLOT_EPOCH}</BlockDefault>
-            </DetailValue>
-          </DetailsInfoItem>
-          {confirmation && (
-            <DetailsInfoItem >
-              <Icon src={CheckCircleIcon} alt="confirmation" />
+        <Group>
+          {epochDetail && (
+            <DetailsInfoItem>
               <DetailLabel>
-                Confirmation <InfoIcon />
+                <InfoIcon />
+                Start time
               </DetailLabel>
-              <ConfirmationValue>
-                {confirmation.confirmation}
-                <ConfirmStatus status={confirmation.status}>{confirmation.status}</ConfirmStatus>
-              </ConfirmationValue>
+              <DetailValue>{epochDetail.startTime}</DetailValue>
             </DetailsInfoItem>
           )}
-          {transactionFees && (
-            <DetailsInfoItem >
-              <Icon src={ExchangeIcon} alt="transaction fees" />
+          {epochDetail && (
+            <DetailsInfoItem>
               <DetailLabel>
-                Transaction Fees <InfoIcon />
+                <InfoIcon />
+                End time
               </DetailLabel>
-              <DetailValue>
-                {`${transactionFees.fee} ${transactionFees.token}`}
-                <ADAToken color="white" size={"var(--font-size-text-small)"} />
-              </DetailValue>
+              <DetailValue>{epochDetail.endTime}</DetailValue>
+            </DetailsInfoItem>
+          )}
+          {blockDetail && (
+            <DetailsInfoItem>
+              <DetailLabel>
+                <InfoIcon />
+                Blocks
+              </DetailLabel>
+              <DetailValue>{blockDetail.blockNo}</DetailValue>
             </DetailsInfoItem>
           )}
           {totalOutput && (
-            <DetailsInfoItem >
-              <Icon src={OutputIcon} alt="output" />
+            <DetailsInfoItem>
               <DetailLabel>
-                Total Output <InfoIcon />
+                <InfoIcon />
+                Total Output
               </DetailLabel>
-              <DetailValueSmall>
+              <DetailValue>
                 {`${totalOutput.totalOutput} ${totalOutput.token}`}
-                <ADAToken color="white" size={"var(--font-size-text-small)"} />
-              </DetailValueSmall>
+                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+              </DetailValue>
             </DetailsInfoItem>
           )}
+        </Group>
+        <Group>
+          {progress && <ProgressLiner progress={progress.progress} />}
           {progress && (
-            <DetailsInfoItem >
-              <ProgressLiner progress={progress.progress} />
-              <ProgressStatus>
+            <DetailsInfoItem>
+              <DetailLabel>
                 <ProgressStatusText>{EPOCH_STATUS[progress.status]}</ProgressStatusText>
+              </DetailLabel>
+              <DetailValue>
                 <ProgressPercent>{progress.progress}%</ProgressPercent>
-              </ProgressStatus>
+              </DetailValue>
             </DetailsInfoItem>
           )}
-        </DetailsInfo>
+        </Group>
+        {type === "epoch" && (
+          <Group>
+            <DetailLink to={"/"}>
+              <DetailLabel>
+                <DetailLinkIcon>
+                  <HiOutlineCube />
+                </DetailLinkIcon>
+                Block
+              </DetailLabel>
+              <DetailValue>
+              <DetailLinkRight>
+                <BiChevronRight size={24} />
+              </DetailLinkRight>
+              </DetailValue>
+            </DetailLink>
+          </Group>
+        )}
       </ViewDetailContainer>
     );
   };
@@ -275,12 +270,12 @@ const DetailView: React.FC<DetailViewProps> = props => {
             <SlotLeaderSkeleton variant="rectangular" />
           </SlotLeader>
           <DetailsInfo container>
-            <DetailsInfoItem  >
+            <DetailsInfoItem>
               <ProgressSkeleton variant="circular" />
             </DetailsInfoItem>
             {new Array(4).fill(0).map((_, index) => {
               return (
-                <DetailsInfoItem key={index}  >
+                <DetailsInfoItem key={index}>
                   <IconSkeleton variant="circular" />
                   <DetailLabel>
                     <DetailValueSkeleton variant="rectangular" />
