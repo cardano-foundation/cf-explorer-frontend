@@ -115,7 +115,10 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
       </ViewDetailDrawer>
     );
 
-  const slot = (data?.endTime && data.startTime && moment(data.endTime).diff(data.startTime) / 1000) || 0;
+  const slot =
+    data.status === "FINISHED"
+      ? MAX_SLOT_EPOCH
+      : (data?.endTime && data.startTime && moment(data.endTime).diff(data.startTime) / 1000) || 0;
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
   return (
     <ViewDetailDrawer anchor="right" open={!!epochNo} hideBackdrop variant="permanent">
@@ -146,7 +149,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
             <Icon src={RocketIcon} alt="socket" />
             <ItemName>slot</ItemName>
             <ItemValue>
-              {data.epochSlotNo}
+              {slot}
               <BlockDefault>/{MAX_SLOT_EPOCH}</BlockDefault>
             </ItemValue>
           </Item>

@@ -41,6 +41,7 @@ import {
 import { ADAToken } from "../Token";
 import NotFound from "../../../pages/NotFound";
 import { routers } from "../../../commons/routers";
+import { formatADA } from "../../../commons/utils/helper";
 
 interface DetailHeaderProps {
   loading: boolean;
@@ -174,7 +175,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
               Total Output <InfoIcon />
             </DetailLabel>
             <DetailValueSmall>
-              {`${totalOutput.totalOutput} ${totalOutput.token}`}
+              {`${formatADA(totalOutput.totalOutput)} ${totalOutput.token}`}
               <ADAToken color="white" size={"var(--font-size-text-small)"} />
             </DetailValueSmall>
           </DetailsInfoItem>
