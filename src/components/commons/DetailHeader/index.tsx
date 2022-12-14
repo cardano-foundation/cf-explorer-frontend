@@ -44,7 +44,7 @@ import { routers } from "../../../commons/routers";
 
 interface DetailHeaderProps {
   loading: boolean;
-  data: TransactionHeaderDetail | BlockHeaderDetail | EpochHeaderDetail | null;
+  data?: TransactionHeaderDetail | BlockHeaderDetail | EpochHeaderDetail | null;
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = props => {
@@ -96,7 +96,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
 
   if (!data) return <NotFound />;
   const { header, blockDetail, confirmation, transactionFees, totalOutput, progress } = data;
-  
+
   return (
     <HeaderDetailContainer>
       <BackButton to={getRouterList()}>

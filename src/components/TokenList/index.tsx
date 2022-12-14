@@ -2,7 +2,7 @@ import { stringify } from "qs";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
-import { Skeleton } from "@mui/material";
+import { MenuItem, Skeleton } from "@mui/material";
 
 import { routers } from "../../commons/routers";
 import { numberWithCommas } from "../../commons/utils/helper";
@@ -10,7 +10,7 @@ import { numberWithCommas } from "../../commons/utils/helper";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 
-import { AssetName, FontWeightBold, Logo } from "./styles";
+import { AssetName, FontWeightBold, Logo, StyledSelect } from "./styles";
 
 interface ITokenList {
   tokens: IToken[];
@@ -76,7 +76,16 @@ const TokenList: React.FC<ITokenList> = ({
   ];
 
   return (
-    <Card title="Token List">
+    <Card
+      title="Token List"
+      extra={
+        <StyledSelect value={"1"}>
+          <MenuItem value={"1"}>Token</MenuItem>
+          {/* <MenuItem value={"2"}>Token 2</MenuItem>
+          <MenuItem value={"3"}>Token 3</MenuItem> */}
+        </StyledSelect>
+      }
+    >
       <Table
         columns={columns}
         data={tokens}
