@@ -39,9 +39,9 @@ const TableHeader = <T extends ColumnType>({ columns }: TableHeaderProps<T>) => 
   );
 };
 
-const TableRow = <T extends ColumnType>({ row, columns, index, onClickRow }: TableRowProps<T>) => {
+const TableRow = <T extends ColumnType>({ row, columns, index, onClickRow, selectedProps }: TableRowProps<T>) => {
   return (
-    <TRow onClick={e => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))}>
+    <TRow onClick={e => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
       {columns.map((column, idx) => {
         return (
           <TCol key={idx} minWidth={column.minWidth}>
@@ -53,12 +53,19 @@ const TableRow = <T extends ColumnType>({ row, columns, index, onClickRow }: Tab
   );
 };
 
-const TableBody = <T extends ColumnType>({ data, columns, onClickRow }: TableProps<T>) => {
+const TableBody = <T extends ColumnType>({ data, columns, onClickRow, selected, selectedProps }: TableProps<T>) => {
   return (
     <TBody>
       {data &&
         data.map((row, index) => (
-          <TableRow row={row} key={index} columns={columns} index={index} onClickRow={onClickRow} />
+          <TableRow
+            row={row}
+            key={index}
+            columns={columns}
+            index={index}
+            onClickRow={onClickRow}
+            selectedProps={selected === index ? selectedProps : undefined}
+          />
         ))}
     </TBody>
   );
@@ -134,6 +141,8 @@ const Table: React.FC<TableProps> = ({
   initialized = true,
   error,
   onClickRow,
+  selected,
+  selectedProps,
 }) => {
   return (
     <Box className={className || ""} style={style}>
@@ -143,7 +152,13 @@ const Table: React.FC<TableProps> = ({
           {loading ? (
             <TableSekeleton columns={columns} />
           ) : (
-            <TableBody columns={columns} data={data} onClickRow={onClickRow} />
+            <TableBody
+              columns={columns}
+              data={data}
+              onClickRow={onClickRow}
+              selected={selected}
+              selectedProps={selectedProps}
+            />
           )}
         </TableFullWidth>
         {!loading && ((initialized && data?.length === 0) || (error && error !== true)) && <EmptyRecord />}

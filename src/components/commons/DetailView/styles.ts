@@ -7,6 +7,7 @@ import CopyButton from "../CopyButton";
 export const ViewDetailDrawer = styled(Drawer)`
   & > div {
     background: #ececec;
+    border: none;
   }
 `;
 
@@ -94,7 +95,7 @@ export const DetailsInfoItem = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 `;
 
 export const DetailLabel = styled("small")`
@@ -102,6 +103,7 @@ export const DetailLabel = styled("small")`
   justify-content: flex-start;
   align-items: center;
   color: #344054;
+  line-height: 26px;
 `;
 export const InfoIcon = styled(FiInfo)`
   font-size: 1rem;
@@ -125,8 +127,8 @@ export const DetailLabelSkeleton = styled(Skeleton)`
 `;
 
 export const StyledLink = styled(Link)`
-  color: ${props => props.theme.colorBlue};
-  font-text: var(--font-family-text);
+  color: ${props => props.theme.colorBlue} !important;
+  font-family: var(--font-family-text) !important;
 `;
 
 export const Group = styled(Box)`
@@ -173,15 +175,81 @@ export const DetailLink = styled(Link)`
   color: ${props => props.theme.colorBlack};
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-normal);
+  &:hover{
+    bac
+  }
 `;
-export const DetailLinkIcon = styled("span")`
+
+export const DetailLinkIcon = styled("h3")`
   color: ${props => props.theme.colorGreenLight};
+  margin: 0;
+  line-height: 1;
   margin-right: 10px;
+`;
+
+export const DetailLinkImage = styled("img")`
+  width: 1.5rem;
+  height: 1.5rem;
+`;
+
+export const DetailLinkName = styled("h4")`
+  margin: 0;
+  font-size: var(--font-size-text-large);
 `;
 export const DetailLinkRight = styled("span")`
   color: ${props => props.theme.textColorPale};
 `;
 
+export const DetailCopy = styled(CopyButton)`
+  padding: 0px;
+  margin-bottom: 3px;
+`;
+export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
+  color: ${props => {
+    switch (props.status) {
+      case TRANSACTION_STATUS.SUCCESS:
+        return props.theme.colorGreenLight;
+      default:
+        return props.theme.colorGreenLight;
+    }
+  }};
+  background-color: ${props => {
+    switch (props.status) {
+      case TRANSACTION_STATUS.SUCCESS:
+        return `${props.theme.colorGreenLight}32`;
+      default:
+        return `${props.theme.colorGreenLight}32`;
+    }
+  }};
+  margin-left: 15px;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 2px;
+`;
+export const ConfirmStatus = styled("small")<{ status: keyof typeof ConfirmationStatus }>`
+  color: ${props => {
+    switch (props.status) {
+      case CONFIRMATION_STATUS.MEDIUM:
+        return props.theme.colorYellow;
+      default:
+        return props.theme.colorYellow;
+    }
+  }};
+  background-color: ${props => {
+    switch (props.status) {
+      case CONFIRMATION_STATUS.MEDIUM:
+        return `${props.theme.colorYellow}32`;
+      default:
+        return `${props.theme.colorYellow}32`;
+    }
+  }};
+  margin-left: 10px;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 2px;
+`;
 // sawq
 
 export const BackText = styled("small")`
@@ -207,30 +275,6 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
   border-radius: 4px;
 `;
 
-export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
-  color: ${props => {
-    switch (props.status) {
-      case TRANSACTION_STATUS.SUCCESS:
-        return props.theme.colorGreenLight;
-      default:
-        return props.theme.colorGreenLight;
-    }
-  }};
-  background-color: ${props => {
-    switch (props.status) {
-      case TRANSACTION_STATUS.SUCCESS:
-        return `${props.theme.colorGreenLight}32`;
-      default:
-        return `${props.theme.colorGreenLight}32`;
-    }
-  }};
-  margin-left: 15px;
-  font-weight: var(--font-weight-bold);
-  text-transform: uppercase;
-  padding: 5px 10px;
-  border-radius: 2px;
-`;
-
 export const SlotLeader = styled("p")`
   margin-top: 0px;
 `;
@@ -250,10 +294,6 @@ export const SlotLeaderValue = styled("span")`
   line-height: 1.5;
 `;
 
-export const SlotLeaderCopy = styled(CopyButton)`
-  margin-bottom: 3px;
-`;
-
 export const DetailsInfo = styled(Grid)`
   margin-top: 15px;
   background-image: ${props => props.theme.linearGradientGreen};
@@ -262,10 +302,10 @@ export const DetailsInfo = styled(Grid)`
 `;
 
 export const ProgressSkeleton = styled(Skeleton)`
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
+  border-radius: ;
 `;
-
 export const IconSkeleton = styled(Skeleton)`
   width: 24px;
   height: 24px;
@@ -284,30 +324,6 @@ export const DetailValueSmall = styled(DetailValue)`
 export const ConfirmationValue = styled(DetailValue)`
   display: flex;
   align-items: center;
-`;
-
-export const ConfirmStatus = styled("small")<{ status: keyof typeof ConfirmationStatus }>`
-  color: ${props => {
-    switch (props.status) {
-      case CONFIRMATION_STATUS.MEDIUM:
-        return props.theme.colorYellow;
-      default:
-        return props.theme.colorYellow;
-    }
-  }};
-  background-color: ${props => {
-    switch (props.status) {
-      case CONFIRMATION_STATUS.MEDIUM:
-        return `${props.theme.colorYellow}32`;
-      default:
-        return `${props.theme.colorYellow}32`;
-    }
-  }};
-  margin-left: 10px;
-  font-weight: var(--font-weight-bold);
-  text-transform: uppercase;
-  padding: 5px 10px;
-  border-radius: 2px;
 `;
 
 export const ProgressStatus = styled(Box)`
