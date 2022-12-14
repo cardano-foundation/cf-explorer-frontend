@@ -47,11 +47,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
         {menus.map((item, index) => {
           const { href, title, children, icon } = item;
           return (
-            <>
+            <React.Fragment key={index}>
               {href ? (
                 isExtenalLink(href) ? (
                   <ListItem
-                    key={index}
                     button
                     href={href}
                     target="_blank"
@@ -71,7 +70,6 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   </ListItem>
                 ) : (
                   <ListItem
-                    key={index}
                     button
                     component={Link}
                     to={href}
@@ -92,7 +90,6 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 )
               ) : (
                 <ListItem
-                  key={index}
                   button
                   onClick={() => handleOpen(index)}
                   sx={theme => ({
@@ -183,7 +180,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   </SubMenu>
                 </Collapse>
               ) : null}
-            </>
+            </React.Fragment>
           );
         })}
       </Menu>
@@ -191,7 +188,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
         <SelectNetwork />
         <ConnectWallet />
       </NavbarMenuBottom>
-      <FooterMenu/>
+      <FooterMenu />
     </Collapse>
   );
 };
