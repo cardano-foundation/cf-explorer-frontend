@@ -14,7 +14,8 @@ import Table, { Column } from "../../components/commons/Table";
 
 import { Blocks, StyledContainer, Output, Status, StyledColorBlueDard, Index } from "./styles";
 import { setOnDetailView } from "../../stores/user";
-import DetailView from "../../components/commons/DetailView";
+import DetailViewEpoch from "../../components/commons/DetailView/DetailViewEpoch";
+import { useWindowSize } from "react-use";
 
 const columns: Column<IDataEpoch>[] = [
   {
@@ -62,6 +63,7 @@ const columns: Column<IDataEpoch>[] = [
 
 const Epoch: React.FC = () => {
   const [detailView, setDetailView] = useState<number | null>(null);
+  const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
   const ref = useRef<HTMLDivElement>(null);
@@ -81,15 +83,17 @@ const Epoch: React.FC = () => {
   if (!data) return null;
 
   const openDetail = (_: any, r: IDataEpoch) => {
-    setOnDetailView(true);
-    setDetailView(r.no);
+    if (width > 1023) {
+      setOnDetailView(true);
+      setDetailView(r.no);
+    } else history.push(routers.EPOCH_DETAIL.replace(":epochId", `${r.no}`));
   };
 
   const handleClose = () => {
     setOnDetailView(false);
     setDetailView(null);
   };
-
+  const selected = data?.findIndex(item => item.no === detailView);
   return (
     <StyledContainer>
       <Card title={"Epochs"}>
@@ -108,9 +112,11 @@ const Epoch: React.FC = () => {
             page: currentPage || 0,
             total: total,
           }}
+          selected={selected}
+          selectedProps={{ style: { backgroundColor: "#ECECEC" } }}
         />
       </Card>
-      {detailView && <DetailView type="epoch" id={detailView} handleClose={handleClose} />}
+      {detailView && <DetailViewEpoch epochNo={detailView} handleClose={handleClose} />}
     </StyledContainer>
   );
 };

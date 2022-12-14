@@ -43,6 +43,11 @@ import ADAIcon from "./icons/ADA.svg";
 import OutputIcon from "./icons/output.svg";
 import MediumIcon from "./icons/medium.svg";
 import RocketBackground from "./icons/rocket-bg.svg";
+import FileEditIcon from "./icons/file-edit.svg";
+import USDIcon from "./icons/usd.svg";
+import NoteEditIcon from "./icons/note-edit.svg";
+import WithdrawlIcon from "./icons/withdrawl.svg";
+import MintingIcon from "./icons/minting.svg";
 
 import FlintIcon from "./images/flint.jpg";
 import NamiIcon from "./images/nami.png";
@@ -102,4 +107,9 @@ export {
   OutputIcon,
   MediumIcon,
   RocketBackground,
+  FileEditIcon,
+  USDIcon,
+  NoteEditIcon,
+  WithdrawlIcon,
+  MintingIcon,
 };

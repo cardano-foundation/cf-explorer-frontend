@@ -12,6 +12,10 @@ import moment from "moment";
 import { routers } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer } from "./styles";
+import DetailViewTransaction from "../commons/DetailView/DetailViewTransaction";
+import { useState } from "react";
+import { useWindowSize } from "react-use";
+import { setOnDetailView } from "../../stores/user";
 
 interface TransactionListProps {
   transactions: Transactions[];
@@ -31,6 +35,8 @@ const TransactionList: React.FC<TransactionListProps> = ({
   transactions,
   error,
 }) => {
+  const [detailView, setDetailView] = useState<string | null>(null);
+  const { width } = useWindowSize();
   const history = useHistory();
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
@@ -163,7 +169,19 @@ const TransactionList: React.FC<TransactionListProps> = ({
       ),
     },
   ];
+  const openDetail = (_: any, r: Transactions) => {
+    if (width > 1023) {
+      setOnDetailView(true);
+      setDetailView(r.hash);
+    } else history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`));
+  };
 
+  const handleClose = () => {
+    setOnDetailView(false);
+    setDetailView(null);
+  };
+
+  const selected = transactions?.findIndex(item => item.hash === detailView);
   return (
     <StyledContainer>
       <Card title={"Transactions"}>
@@ -173,8 +191,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
           data={transactions}
           total={{ count: total, title: "Total Transactions" }}
           loading={loading}
-          initialized={initialized}
-          onClickRow={(_, r: Transactions) => history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`))}
+          initialized={initialized} 
           pagination={{
             onChange: (page, size) => {
               setQuery({ page, size });
@@ -182,9 +199,13 @@ const TransactionList: React.FC<TransactionListProps> = ({
             page: currentPage || 0,
             total: total,
           }}
+          onClickRow={openDetail}
+          selected={selected}
+          selectedProps={{ style: { backgroundColor: "#ECECEC" } }}
           error={error}
         />
       </Card>
+      {detailView && <DetailViewTransaction hash={detailView} handleClose={handleClose} />}
     </StyledContainer>
   );
 };
