@@ -1,7 +1,7 @@
 import React from "react";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
-import useFetchList from "../../../commons/hooks/useFetchList";
+import useFetch from "../../../commons/hooks/useFetch";
 import { DownRedIcon, UpGreenIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
 import { formatPrice } from "../../../commons/utils/helper";
@@ -27,12 +27,9 @@ interface Props {}
 const ABBREVIATIONS = ["", "k", "m", "b", "t", "q", "Q", "s", "S"];
 
 const TopDelegationPools: React.FC<Props> = () => {
-  const { data, loading, initialized } = useFetchList<DelegationPool>(`delegation/pool-list?search=`, {
-    page: 1,
-    size: 4,
-  });
+  const { data, loading, initialized } = useFetch<DelegationPool[]>(`delegation/top?page=1&size=4`);
   const history = useHistory();
-  data.forEach(item => {
+  data?.forEach(item => {
     if (!item.poolSize) {
       item.poolSize = Math.floor(Math.random() * 10 ** 13);
       item.feePercent = Number((Math.floor(Math.random() * 2 * 10) / 10).toFixed(1)) + 1;
@@ -57,9 +54,9 @@ const TopDelegationPools: React.FC<Props> = () => {
       key: "reward",
       render: r => (
         <PriceRate>
-          <ImageRate up={r.reward > 0} src={r.reward > 0 ? UpGreenIcon : DownRedIcon} alt="price rate" />
-          <PriceValue up={r.reward > 0}>
-            {r.reward > 0 ? "+" : ""}
+          <ImageRate up={r.reward >= 0} src={r.reward >= 0 ? UpGreenIcon : DownRedIcon} alt="price rate" />
+          <PriceValue up={r.reward >= 0}>
+            {r.reward >= 0 ? "+" : ""}
             {r.reward?.toString().replace(".", ",") || 0} %
           </PriceValue>
         </PriceRate>
@@ -80,8 +77,8 @@ const TopDelegationPools: React.FC<Props> = () => {
       key: "output",
       render: r => (
         <ProgressContainer>
-          <ProgressTitle>{r.saturation || 80}%</ProgressTitle>
-          <StyledLinearProgress variant="determinate" value={r.saturation || 80} style={{ width: 150 }} />
+          <ProgressTitle>{r.saturation}%</ProgressTitle>
+          <StyledLinearProgress variant="determinate" value={r.saturation} style={{ width: 150 }} />
         </ProgressContainer>
       ),
     },
@@ -107,7 +104,7 @@ const TopDelegationPools: React.FC<Props> = () => {
         loading={loading}
         initialized={initialized}
         columns={columns}
-        data={data}
+        data={data || []}
         onClickRow={(_, r: DelegationPool) =>
           history.push(routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`))
         }

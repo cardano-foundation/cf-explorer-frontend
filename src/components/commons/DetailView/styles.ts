@@ -46,22 +46,34 @@ export const TokenContainer = styled(Box)`
 `;
 
 export const TokenHeaderContainer = styled(Box)`
+  border-bottom: 1px solid ${props => props.theme.textColorReverse}16;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+`;
+export const TokenHeader = styled(Box)`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
-  border-bottom: 1px solid ${props => props.theme.textColorReverse}16;
-  padding-bottom: 1rem;
   margin-bottom: 1rem;
 `;
 
 export const TokenTitleIcon = styled("img")`
   width: auto;
+  min-width: 28px;
   height: 33px;
 `;
 export const TokenTitle = styled("h3")`
   color: ${props => props.theme.textColorReverse};
   margin: 0px;
+`;
+
+export const ViewMetaData = styled(Link)`
+  display: block;
+  font-family: var(--font-family-text) !important;
+  color: ${props => props.theme.textColorReverse}!important;
+  font-size: var(--font-size-text-small);
+  text-decoration: underline !important;
 `;
 
 export const TokenMetaData = styled(Box)`
@@ -359,50 +371,26 @@ export const TokenDetailIcon = styled("img")`
   height: 20px;
 `;
 
-// sawq
+export const SeemoreBox = styled(Box)`
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0px;
+`;
+export const SeemoreButton = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: ${props => props.theme.colorGreenLight}!important;
+  &:hover {
+    text-shadow: 0px 0px 1px ${props => props.theme.colorGreen};
+  }
+`;
 
-export const BackText = styled("small")`
-  color: #344054;
+export const SeemoreText = styled("span")`
+  color: ${props => props.theme.colorGreenLight};
   font-weight: var(--font-weight-bold);
-`;
-
-export const HeaderTitle = styled("h2")`
-  color: ${props => props.theme.colorBlack};
-  font-size: 2.25rem;
-  margin: 0.5rem 0;
-`;
-
-export const HeaderTitleSkeleton = styled(Skeleton)`
-  height: 1em;
-  width: 200px;
-  max-width: 100%;
-  border-radius: 4px;
-`;
-
-export const SlotLeader = styled("p")`
-  margin-top: 0px;
-`;
-
-export const SlotLeaderSkeleton = styled(Skeleton)`
-  height: 1em;
-  width: 50%;
-  border-radius: 4px;
-`;
-
-export const SlotLeaderValue = styled("span")`
-  font-family: var(--font-family-text);
-  color: ${props => props.theme.colorBlue};
-  white-space: pre-wrap;
-  display: inline-block;
-  word-break: break-word;
-  line-height: 1.5;
-`;
-
-export const DetailsInfo = styled(Grid)`
-  margin-top: 15px;
-  background-image: ${props => props.theme.linearGradientGreen};
-  border-radius: 15px;
-  color: ${props => props.theme.textColorReverse};
 `;
 
 export const ProgressSkeleton = styled(Skeleton)`
@@ -419,20 +407,4 @@ export const DetailValueSkeleton = styled(Skeleton)`
   width: 50%;
   min-width: 100px;
   border-radius: 4px;
-`;
-
-export const DetailValueSmall = styled(DetailValue)`
-  font-size: var(--font-size-text-small);
-`;
-
-export const ConfirmationValue = styled(DetailValue)`
-  display: flex;
-  align-items: center;
-`;
-
-export const ProgressStatus = styled(Box)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
 `;
