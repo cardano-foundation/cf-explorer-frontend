@@ -36,6 +36,11 @@ import {
   TokenDetailInfo,
   TokenDetailName,
   TokenDetailIcon,
+  SeemoreBox,
+  SeemoreButton,
+  SeemoreText,
+  ViewMetaData,
+  TokenHeader,
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
@@ -43,6 +48,7 @@ import { routers } from "../../../commons/routers";
 import { formatCurrency, getShortHash } from "../../../commons/utils/helper";
 import { Tooltip } from "@mui/material";
 import axios from "axios";
+import { FaAngleDoubleRight } from "react-icons/fa";
 
 type DetailViewTokenProps = {
   tokenId: string;
@@ -154,8 +160,13 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
         </CloseButton>
         <TokenContainer>
           <TokenHeaderContainer>
+          <TokenHeader>
             <TokenTitleIcon src={PolicyWhiteIcon} alt="policy" />
-            <TokenTitle>Policy Script</TokenTitle>
+            <TokenTitle>Policy Script</TokenTitle> 
+          </TokenHeader> 
+            <ViewMetaData to={routers.TOKEN_DETAIL.replace(":tokenId", `${data.fingerprint}`)}>
+              See Policy script
+            </ViewMetaData>
           </TokenHeaderContainer>
           {data.displayName || tokenMetadata.logo ? (
             <TokenMetaData>
@@ -248,6 +259,11 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
             </DetailValue>
           </DetailLink>
         </Group>
+        <SeemoreBox>
+          <SeemoreButton to={routers.TOKEN_DETAIL.replace(":tokenId", `${data.fingerprint}`)}>
+            <SeemoreText>View more</SeemoreText> <FaAngleDoubleRight size={12} />
+          </SeemoreButton>
+        </SeemoreBox>
       </ViewDetailContainer>
     </ViewDetailDrawer>
   );

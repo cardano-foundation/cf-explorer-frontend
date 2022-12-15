@@ -42,14 +42,18 @@ import {
   ConfirmStatus,
   DetailLinkName,
   DetailLinkImage,
+  SeemoreBox,
+  SeemoreButton,
+  SeemoreText,
 } from "./styles";
 import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
 import { TbFileCheck } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
 import { routers } from "../../../commons/routers";
-import { getShortHash } from "../../../commons/utils/helper";
+import { formatADA, getShortHash } from "../../../commons/utils/helper";
 import { Tooltip } from "@mui/material";
+import { FaAngleDoubleRight } from "react-icons/fa";
 
 type DetailViewTransactionProps = {
   hash: string;
@@ -212,7 +216,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               Transaction Fees
             </DetailLabel>
             <DetailValue>
-              {`${data.tx.fee} ${"ADA"}`}
+              {formatADA(data.tx.fee) || 0}
               <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
             </DetailValue>
           </DetailsInfoItem>
@@ -222,7 +226,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               Total Output
             </DetailLabel>
             <DetailValue>
-              {`${data.tx.totalOutput} ${"ADA"}`}
+              {formatADA(data.tx.totalOutput) || 0}
               <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
             </DetailValue>
           </DetailsInfoItem>
@@ -249,6 +253,11 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
             </Group>
           );
         })}
+        <SeemoreBox>
+          <SeemoreButton to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${data.tx.hash}`)}>
+            <SeemoreText>View more</SeemoreText> <FaAngleDoubleRight size={12} />
+          </SeemoreButton>
+        </SeemoreBox>
       </ViewDetailContainer>
     </ViewDetailDrawer>
   );
