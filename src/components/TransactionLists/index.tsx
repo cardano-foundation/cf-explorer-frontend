@@ -4,7 +4,7 @@ import { Box, Tooltip } from "@mui/material";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { formatADA, getShortHash } from "../../commons/utils/helper";
+import { formatADA, getShortHash, getShortWallet } from "../../commons/utils/helper";
 import styles from "./index.module.scss";
 
 import moment from "moment";
@@ -15,6 +15,7 @@ import DetailViewTransaction from "../commons/DetailView/DetailViewTransaction";
 import { useState } from "react";
 import { useWindowSize } from "react-use";
 import { setOnDetailView } from "../../stores/user";
+import { BiLinkExternal } from "react-icons/bi";
 
 interface TransactionListProps {
   underline?: boolean;
