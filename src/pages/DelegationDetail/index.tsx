@@ -44,13 +44,13 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
     data: analyticsData,
     loading: loadingAnalytics,
     initialized,
-  } = useFetch<AnalyticsDelegators>(`/delegation/pool-detail-analytics?pool=${poolId}`);
+  } = useFetch<AnalyticsDelegators>(`/delegation/pool-detail-analytics?poolView=${poolId}`);
   const {
     data: dataTable,
     loading: loadingTable,
     total,
   } = useFetchList<DelegationEpoch | StakingDelegators>(
-    `/delegation/pool-detail-${tab}?pool=${poolId}&page=${query.page || 1}&size=${query.size || 10}`
+    `/delegation/pool-detail-${tab}?poolView=${poolId}&page=${query.page || 1}&size=${query.size || 10}`
   );
 
   const render = () => {

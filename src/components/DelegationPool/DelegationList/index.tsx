@@ -33,10 +33,10 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       render: r => {
         return (
           <Link
-            to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`)}
+            to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolView}`)}
             className={`${styles.fwBlod} ${styles.link}`}
           >
-            {r.poolName || r.poolId}
+            {r.poolName || r.poolView}
           </Link>
         );
       },

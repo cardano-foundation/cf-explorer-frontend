@@ -93,7 +93,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
               <div>
                 {r.addressesInput.slice(0, 2).map((tx, key) => (
                   <Tooltip key={key} title={tx} placement="top">
-                    <Transaction.TransactionHash to={`#`} key={key}>
+                    <Transaction.TransactionHash to={routers.ADDRESS_DETAIL.replace(":address", tx)} key={key}>
                       {getShortWallet(tx)}
                       <BiLinkExternal style={{ marginLeft: 8 }} />
                     </Transaction.TransactionHash>
@@ -107,7 +107,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
               <div>
                 {r.addressesOutput.slice(0, 2).map((tx, key) => (
                   <Tooltip key={key} title={tx} placement="top">
-                    <Transaction.TransactionHash to={`#`} key={key}>
+                    <Transaction.TransactionHash to={routers.ADDRESS_DETAIL.replace(":address", tx)} key={key}>
                       {getShortWallet(tx)}
                       <BiLinkExternal style={{ marginLeft: 8 }} />
                     </Transaction.TransactionHash>
