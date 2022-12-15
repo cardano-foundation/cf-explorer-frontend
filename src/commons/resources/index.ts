@@ -1,4 +1,4 @@
-import LogoMobileIcon from "./icons/logo-mobile.svg";
+import LogoFullIcon from "./icons/logo-mobile.svg";
 import LogoIcon from "./icons/logo.svg";
 import WalletIcon from "./icons/wallet.svg";
 
@@ -63,7 +63,7 @@ import HeaderBackground from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
 
 export {
-  LogoMobileIcon,
+  LogoFullIcon,
   LogoIcon,
   WalletIcon,
   FlintIcon,
