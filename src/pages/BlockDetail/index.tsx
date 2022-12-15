@@ -31,6 +31,7 @@ const BlockDetail = () => {
     <StyledContainer>
       <BlockOverview data={blockDetail} loading={blockDetailLoading} />
       <TransactionLists
+        underline={true}
         currentPage={currentPage}
         loading={transactionsLoading}
         initialized={initialized}
