@@ -128,8 +128,8 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       minWidth: "120px",
       render: r => (
         <Transaction.TransactionFee>
-          <Transaction.StyledImg src={AIcon} alt="a icon" />
           {formatADA(r.fee) || 0}
+          <Transaction.StyledImg src={AIcon} alt="a icon" />
         </Transaction.TransactionFee>
       ),
     },
@@ -139,8 +139,8 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       key: "ouput",
       render: r => (
         <Transaction.TransactionOutput>
-          <Transaction.StyledImg src={AIcon} alt="a icon" />
           {formatADA(r.totalOutput) || 0}
+          <Transaction.StyledImg src={AIcon} alt="a icon" />
         </Transaction.TransactionOutput>
       ),
     },

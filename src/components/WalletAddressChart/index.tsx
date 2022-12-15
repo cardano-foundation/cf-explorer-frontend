@@ -12,13 +12,31 @@ import { formatADA } from "../../commons/utils/helper";
 import { BoxInfo, BoxInfoItem, Title, ValueInfo } from "./styles";
 
 interface WalletAddressChartProps {
-  data: AnalyticsDelegators["epochChart"] | null;
+  data:
+    | {
+        date: string;
+        value: number;
+      }[]
+    | null;
   setAnalyticTime: (v: string) => void;
   analyticTime: string;
   loading: boolean;
+  maxBalance: number | null;
+  minBalance: number | null;
+  maxBalanceLoading: boolean;
+  minBalanceLoading: boolean;
 }
 
-const WalletAddressChart: React.FC<WalletAddressChartProps> = ({ data, loading, analyticTime, setAnalyticTime }) => {
+const WalletAddressChart: React.FC<WalletAddressChartProps> = ({
+  data,
+  loading,
+  analyticTime,
+  setAnalyticTime,
+  maxBalance,
+  maxBalanceLoading,
+  minBalance,
+  minBalanceLoading,
+}) => {
   return (
     <Card title="Analytics">
       <Grid container columns={24} className={styles.wrapper}>
@@ -39,13 +57,6 @@ const WalletAddressChart: React.FC<WalletAddressChartProps> = ({ data, loading, 
                 </ButtonTab>
 
                 <ButtonTab
-                  className={`${analyticTime === "THREE_DAY" && styles.activeTab}`}
-                  onClick={e => setAnalyticTime("THREE_DAY")}
-                >
-                  3d
-                </ButtonTab>
-
-                <ButtonTab
                   className={`${analyticTime === "ONE_WEEK" && styles.activeTab}`}
                   onClick={e => setAnalyticTime("ONE_WEEK")}
                 >
@@ -58,12 +69,18 @@ const WalletAddressChart: React.FC<WalletAddressChartProps> = ({ data, loading, 
                 >
                   1m
                 </ButtonTab>
+                <ButtonTab
+                  className={`${analyticTime === "THREE_MONTH" && styles.activeTab}`}
+                  onClick={e => setAnalyticTime("THREE_MONTH")}
+                >
+                  3m
+                </ButtonTab>
               </BoxTab>
             </Grid>
           </Grid>
           <div className={styles.chart}>
             {loading && <SkeletonUI variant="rectangular" style={{ height: "280px" }} />}
-            {!loading && <Chart data={data ? data.dataByDays : []} />}
+            {!loading && <Chart data={data} />}
           </div>
         </Grid>
         <Grid item xs={24} lg={6}>
@@ -72,10 +89,10 @@ const WalletAddressChart: React.FC<WalletAddressChartProps> = ({ data, loading, 
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={highestIcon} width={"20%"} alt="heighest icon" />
-                  <Title>Highest stake</Title>
+                  <Title>Highest Balance</Title>
                   <ValueInfo>
-                    {loading && <SkeletonUI variant="rectangular" />}
-                    {!loading && data && formatADA(data.highest)}
+                    {maxBalanceLoading && <SkeletonUI variant="rectangular" />}
+                    {!maxBalanceLoading && formatADA(maxBalance || 0)}
                   </ValueInfo>
                 </Box>
               </BoxInfoItem>
@@ -84,44 +101,16 @@ const WalletAddressChart: React.FC<WalletAddressChartProps> = ({ data, loading, 
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={lowestIcon} width={"20%"} alt="lowest icon" />
-                  <Title>Lowest stake</Title>
+                  <Title>Lowest Balance</Title>
                   <ValueInfo>
-                    {loading && <SkeletonUI variant="rectangular" />}
-                    {!loading && data && formatADA(data.lowest)}
+                    {minBalanceLoading && <SkeletonUI variant="rectangular" />}
+                    {!minBalanceLoading && formatADA(minBalance || 0)}
                   </ValueInfo>
                 </Box>
               </BoxInfoItem>
             </Box>
           </BoxInfo>
         </Grid>
-        {/* <Grid item xs={24} lg={6}>
-          <Grid container columns={24} spacing={2} className={styles.right}>
-            <Grid item xs={24} sm={12} lg={24} className={`${styles.col} ${styles.top}`}>
-              <div className={styles.item}>
-                <div>
-                  <img src={highestIcon} alt="heighest icon" />
-                  <div className={styles.title}>Highest stake</div>
-                  <div className={styles.value}>
-                    {loading && <SkeletonUI variant="rectangular" />}
-                    {!loading && data && formatADA(data.highest)}
-                  </div>
-                </div>
-              </div>
-            </Grid>
-            <Grid item xs={24} sm={12} lg={24} className={`${styles.col} ${styles.bottom}`}>
-              <div className={styles.item}>
-                <div>
-                  <img src={lowestIcon} alt="lowest icon" />
-                  <div className={styles.title}>Lowest stake</div>
-                  <div className={styles.value}>
-                    {loading && <SkeletonUI variant="rectangular" />}
-                    {!loading && data && formatADA(data.lowest)}
-                  </div>
-                </div>
-              </div>
-            </Grid>
-          </Grid>
-        </Grid> */}
       </Grid>
     </Card>
   );
@@ -129,14 +118,13 @@ const WalletAddressChart: React.FC<WalletAddressChartProps> = ({ data, loading, 
 
 export default WalletAddressChart;
 
-const Chart = ({ data }: { data: AnalyticsDelegators["epochChart"]["dataByDays"] | [] }) => {
+const Chart = ({ data }: { data: WalletAddressChartProps["data"] }) => {
   const [dataChart, setData] = useState<number[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
-
   useEffect(() => {
     if (data) {
-      setData(data.map(i => i.ychart));
-      setCategories(data.map(i => `${i.xchart}`));
+      setData(data.map(i => i.value));
+      setCategories(data.map(i => `${i.date}`));
     }
   }, [data]);
 

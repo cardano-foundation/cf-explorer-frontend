@@ -39,7 +39,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       key: "Amount",
       minWidth: "40px",
       render: (r, index) => {
-        return <div className={styles.link}>{formatADA(r.amount)}</div>;
+        return <div className={styles.link}>{r.assetQuantity}</div>;
       },
     },
     {

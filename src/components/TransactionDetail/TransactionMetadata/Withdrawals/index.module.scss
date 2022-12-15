@@ -16,13 +16,14 @@
   .item {
     background-color: white;
     text-align: left;
-    padding: 20px 0;
+    padding: 10px 0;
     font-size: var(--font-size-text);
     border-bottom: 1px solid #0000001a;
 
     .top {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       .img {
         padding-right: 10px;
         width: 35px;
@@ -34,25 +35,6 @@
       }
       .icon {
         cursor: pointer;
-      }
-    }
-    .bottom {
-      width: 100%;
-      padding-top: 12px;
-      display: flex;
-      justify-content: space-between;
-      .right {
-        display: flex;
-        align-items: center;
-        .img {
-          padding-right: 10px;
-          width: 35px;
-        }
-        .address {
-          font-weight: var(--font-weight-bold);
-          font-family: var(--font-size-text);
-          color: var(--color-blue);
-        }
       }
       .address {
         font-weight: var(--font-weight-bold);
@@ -68,6 +50,23 @@
       .down {
         color: var(--color-red);
         margin-right: 8px;
+      }
+    }
+    .bottom {
+      width: 100%;
+
+      .right {
+        display: flex;
+        align-items: center;
+        .img {
+          padding-right: 10px;
+          width: 35px;
+        }
+        .address {
+          font-weight: var(--font-weight-bold);
+          font-family: var(--font-size-text);
+          color: var(--color-blue);
+        }
       }
     }
   }
