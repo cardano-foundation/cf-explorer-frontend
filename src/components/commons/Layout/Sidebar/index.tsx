@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { LogoMobileIcon } from "../../../../commons/resources";
+import { LogoFullIcon, LogoIcon } from "../../../../commons/resources";
 import { RootState } from "../../../../stores/types";
 import { setSidebar } from "../../../../stores/user";
 import SidebarMenu from "./SidebarMenu";
@@ -14,7 +14,7 @@ const Sidebar: React.FC = () => {
     <NavbarContainer>
       <HeaderTop>
         <LogoLink to="/" open={sidebar}>
-          <NavBarLogo src={LogoMobileIcon} alt="logo desktop" />
+          <NavBarLogo src={sidebar ? LogoFullIcon : LogoIcon} alt="logo desktop" />
           <NetworkName network={network}>{network}</NetworkName>
         </LogoLink>
         <Toggle onClick={handleToggle} />
