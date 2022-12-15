@@ -89,7 +89,7 @@ const WalletAddressChart: React.FC<WalletAddressChartProps> = ({
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={highestIcon} width={"20%"} alt="heighest icon" />
-                  <Title>Highest stake</Title>
+                  <Title>Highest Balance</Title>
                   <ValueInfo>
                     {maxBalanceLoading && <SkeletonUI variant="rectangular" />}
                     {!maxBalanceLoading && formatADA(maxBalance || 0)}
@@ -101,7 +101,7 @@ const WalletAddressChart: React.FC<WalletAddressChartProps> = ({
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={lowestIcon} width={"20%"} alt="lowest icon" />
-                  <Title>Lowest stake</Title>
+                  <Title>Lowest Balance</Title>
                   <ValueInfo>
                     {minBalanceLoading && <SkeletonUI variant="rectangular" />}
                     {!minBalanceLoading && formatADA(minBalance || 0)}

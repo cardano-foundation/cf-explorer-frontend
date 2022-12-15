@@ -51,7 +51,10 @@ const Items = ({ item, type }: { item?: Required<Transaction>["withdrawals"][num
             </div>
             <div>
               <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
-                {type === "down" ? `- ${formatADA(item?.amount)}` : `+ ${formatADA(item?.amount)}`}
+                {item &&
+                  item?.amount > 0 &&
+                  (type === "down" ? `- ${formatADA(item?.amount)}` : `+ ${formatADA(item?.amount)}`)}
+                {type === "down" && item && item?.amount === 0 && `${formatADA(item?.amount)}`}
               </span>
               <img src={AIcon} alt="ADA icon" />
             </div>

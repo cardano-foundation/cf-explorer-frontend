@@ -89,57 +89,57 @@ const TransactionList: React.FC<TransactionListProps> = ({
         </>
       ),
     },
-    // {
-    //   title: "Address",
-    //   key: "address",
-    //   minWidth: "200px",
-    //   render(r, index) {
-    //     return (
-    //       <div>
-    //         <div className={styles.input}>
-    //           <div className={styles.title}> Input: </div>
-    //           <div>
-    //             {r.addressesInput.slice(0, 2).map((tx, key) => {
-    //               return (
-    //                 <Tooltip key={key} title={tx} placement="top">
-    //                   <Link to={`#`} className={` ${styles.link}`} key={key}>
-    //                     {getShortWallet(tx)}
-    //                     <BiLinkExternal style={{ marginLeft: 8 }} />
-    //                   </Link>
-    //                 </Tooltip>
-    //               );
-    //             })}
-    //             {r.addressesInput.length > 2 && (
-    //               <Link to={`#`} className={` ${styles.link}`}>
-    //                 ...
-    //               </Link>
-    //             )}
-    //           </div>
-    //         </div>
-    //         <div className={styles.output}>
-    //           <div className={styles.title}>Output: </div>
-    //           <div>
-    //             {r.addressesOutput.slice(0, 2).map((tx, key) => {
-    //               return (
-    //                 <Tooltip key={key} title={tx} placement="top">
-    //                   <Link to={`#`} className={` ${styles.link}`} key={key}>
-    //                     {getShortWallet(tx)}
-    //                     <BiLinkExternal style={{ marginLeft: 8 }} />
-    //                   </Link>
-    //                 </Tooltip>
-    //               );
-    //             })}
-    //             {r.addressesOutput.length > 2 && (
-    //               <Link to={`#`} className={` ${styles.link}`}>
-    //                 ...
-    //               </Link>
-    //             )}
-    //           </div>
-    //         </div>
-    //       </div>
-    //     );
-    //   },
-    // },
+    {
+      title: "Address",
+      key: "address",
+      minWidth: "200px",
+      render(r, index) {
+        return (
+          <div>
+            <div className={styles.input}>
+              <div className={styles.title}> Input: </div>
+              <div>
+                {r.addressesInput.slice(0, 2).map((tx, key) => {
+                  return (
+                    <Tooltip key={key} title={tx} placement="top">
+                      <Link to={routers.ADDRESS_DETAIL.replace(":address", tx)} className={` ${styles.link}`} key={key}>
+                        {getShortWallet(tx)}
+                        <BiLinkExternal style={{ marginLeft: 8 }} />
+                      </Link>
+                    </Tooltip>
+                  );
+                })}
+                {r.addressesInput.length > 2 && (
+                  <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)} className={` ${styles.link}`}>
+                    ...
+                  </Link>
+                )}
+              </div>
+            </div>
+            <div className={styles.output}>
+              <div className={styles.title}>Output: </div>
+              <div>
+                {r.addressesOutput.slice(0, 2).map((tx, key) => {
+                  return (
+                    <Tooltip key={key} title={tx} placement="top">
+                      <Link to={routers.ADDRESS_DETAIL.replace(":address", tx)} className={` ${styles.link}`} key={key}>
+                        {getShortWallet(tx)}
+                        <BiLinkExternal style={{ marginLeft: 8 }} />
+                      </Link>
+                    </Tooltip>
+                  );
+                })}
+                {r.addressesOutput.length > 2 && (
+                  <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)} className={` ${styles.link}`}>
+                    ...
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      },
+    },
     {
       title: "Fees",
       key: "fee",

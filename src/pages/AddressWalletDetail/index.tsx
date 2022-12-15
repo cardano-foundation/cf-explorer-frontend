@@ -16,6 +16,7 @@ import { AIcon } from "../../commons/resources";
 
 import { parse } from "qs";
 import { TextField } from "@mui/material";
+import { EmptyIcon } from "../../commons/resources";
 
 const AddressWalletDetail = () => {
   const [selectedToken, setSelectedToken] = useState<WalletAddress["tokens"][number]>();
@@ -175,28 +176,7 @@ const AddressWalletDetail = () => {
     </ContainerBox>
   );
 };
-const dataFake: AnalyticsDelegators = {
-  epochChart: {
-    highest: 34142323532,
-    lowest: 472464161,
-    dataByDays: [
-      {
-        xchart: "77",
-        ychart: 472464161,
-      },
-    ],
-  },
-  delegatorChart: {
-    highest: 12,
-    lowest: 1,
-    dataByDays: [
-      {
-        xchart: "77",
-        ychart: 1,
-      },
-    ],
-  },
-};
+
 export default AddressWalletDetail;
 
 interface DetailCardProps {
@@ -214,8 +194,14 @@ const DetailCard: React.FC<DetailCardProps> = ({ title, address, item, type, loa
       </CardItem>
     );
   }
-  if (type === "right" && !address) {
-    return <CardItem></CardItem>;
+  if (type === "right" && address) {
+    return (
+      <CardItem>
+        <Box height={"100%"} display="flex" alignItems="center" justifyContent="center">
+          <img alt="icon" src={EmptyIcon} />
+        </Box>
+      </CardItem>
+    );
   }
   return (
     <CardItem padding={props => props.spacing(4)}>
