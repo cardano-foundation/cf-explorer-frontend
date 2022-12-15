@@ -58,7 +58,8 @@ const AddressWalletDetail = () => {
       title: "ADA Balance",
       value: (
         <>
-          {formatADA(data?.balance || 0)} ADA <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          {formatADA(data?.balance || 0)}
+          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
         </>
       ),
     },
@@ -105,7 +106,8 @@ const AddressWalletDetail = () => {
       title: "Total Stake",
       value: (
         <>
-          {formatADA(dataStake?.totalStake || 0)} ADA <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          {formatADA(dataStake?.totalStake || 0)}
+          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
         </>
       ),
     },
@@ -114,7 +116,8 @@ const AddressWalletDetail = () => {
       title: "Reward",
       value: (
         <>
-          {formatADA(dataStake?.rewardAvailable || 0)} ADA <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          {formatADA(dataStake?.rewardAvailable || 0)}
+          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
         </>
       ),
     },

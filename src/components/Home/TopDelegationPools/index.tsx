@@ -24,8 +24,6 @@ import {
 
 interface Props {}
 
-const ABBREVIATIONS = ["", "k", "m", "b", "t", "q", "Q", "s", "S"];
-
 const TopDelegationPools: React.FC<Props> = () => {
   const { data, loading, initialized } = useFetch<DelegationPool[]>(`delegation/top?page=1&size=4`);
   const history = useHistory();
@@ -47,7 +45,7 @@ const TopDelegationPools: React.FC<Props> = () => {
     {
       title: "Pool size (A)",
       key: "size",
-      render: r => formatPrice(r.poolSize / 10 ** 6, ABBREVIATIONS),
+      render: r => formatPrice(r.poolSize / 10 ** 6),
     },
     {
       title: "Reward",
@@ -65,12 +63,12 @@ const TopDelegationPools: React.FC<Props> = () => {
     {
       title: "Fee (A)",
       key: "fee",
-      render: r => `${r.feePercent || 0}% (${formatPrice(r.feeAmount / 10 ** 6, ABBREVIATIONS)} A)`,
+      render: r => `${r.feePercent || 0}% (${formatPrice(r.feeAmount / 10 ** 6)} A)`,
     },
     {
       title: "Declared Pledge (A)",
       key: "declaredPledge",
-      render: r => formatPrice(r.pledge / 10 ** 6, ABBREVIATIONS),
+      render: r => formatPrice(r.pledge / 10 ** 6),
     },
     {
       title: "Saturation",
