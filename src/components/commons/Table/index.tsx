@@ -79,7 +79,7 @@ const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
           <TRow key={i}>
             {columns.map(({ minWidth }, idx) => {
               return (
-                <td>
+                <td key={idx} style={{ minWidth: minWidth || "unset" }}>
                   <Skeleton variant="rectangular" style={{ height: "75px" }} animation="wave" />
                 </td>
               );
