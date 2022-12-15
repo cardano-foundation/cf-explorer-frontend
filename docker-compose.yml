@@ -5,10 +5,10 @@ networks:
     external: true
 
 services:
-  cardano-explorer-fe-test:
+  cardano-explorer-fe:
     stdin_open: true
-    container_name: cardano-explorer-fe-test
-    image: cardano-explorer-fe-test
+    container_name: cardano-explorer-fe
+    image: cardano-explorer-fe
     build:
       context: .
     environment:
@@ -16,4 +16,4 @@ services:
       - REACT_APP_NETWORK=${REACT_APP_NETWORK}
       - REACT_APP_API_URL=${REACT_APP_API_URL}
     ports:
-      - '7276:1102'
+      - '9296:1102'
