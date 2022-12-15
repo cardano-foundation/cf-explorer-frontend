@@ -14,11 +14,25 @@ const TransactionContainer = styled(BoxRaised)`
     padding: 20px;
     height: calc(100% - 56px);
   }
+  [class*="highcharts-container"] {
+    height: 230px;
+    max-height: 300px;
+    width: 100%;
+    [class*="highcharts-xaxis-labels"] {
+      background: red;
+      text {
+        &:last-child {
+          text-anchor: end !important;
+        }
+      }
+    }
+  }
 `;
 
 const Title = styled("h3")`
   position: relative;
   text-align: left;
+  margin-top: 0px;
   margin-bottom: 1.5rem;
 
   &::after {
@@ -32,18 +46,7 @@ const Title = styled("h3")`
   }
 `;
 
-const Chart = styled(HighchartsReact)`
-  height: 230px;
-  max-height: 300px;
-  width: 100%;
-  [class$*="highcharts-xaxis-labels"] {
-    text {
-      &:last-child {
-        text-anchor: end !important;
-      }
-    }
-  }
-`;
+const Chart = styled(HighchartsReact)``;
 interface TransactionCount {
   date: string;
   txs: string;
@@ -74,7 +77,7 @@ const TransactionChart: React.FC = () => {
         overflow: "allow",
         rotation: 0,
         align: "left",
-        step: 14,
+        step: data.length - 1,
       },
     },
     legend: { enabled: false },

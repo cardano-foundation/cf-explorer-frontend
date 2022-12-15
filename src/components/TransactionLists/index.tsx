@@ -4,8 +4,7 @@ import { Box, Tooltip } from "@mui/material";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { BiLinkExternal } from "react-icons/bi";
-import { formatADA, getShortHash, getShortWallet } from "../../commons/utils/helper";
+import { formatADA, getShortHash } from "../../commons/utils/helper";
 import styles from "./index.module.scss";
 
 import moment from "moment";
@@ -18,6 +17,7 @@ import { useWindowSize } from "react-use";
 import { setOnDetailView } from "../../stores/user";
 
 interface TransactionListProps {
+  underline?: boolean;
   transactions: Transactions[];
   loading: boolean;
   initialized: boolean;
@@ -28,6 +28,7 @@ interface TransactionListProps {
 }
 
 const TransactionList: React.FC<TransactionListProps> = ({
+  underline = false,
   currentPage,
   loading,
   initialized,
@@ -178,7 +179,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
   const selected = transactions?.findIndex(item => item.hash === detailView);
   return (
     <StyledContainer>
-      <Card title={"Transactions"}>
+      <Card title={"Transactions"} underline={underline}>
         <Table
           className={styles.table}
           columns={columns}

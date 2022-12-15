@@ -88,7 +88,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
 
   return (
     <StyledContainer>
-      <Card title={"Blocks"}>
+      <Card title={"Blocks"} underline={true}>
         <Table
           loading={loading}
           initialized={initialized}

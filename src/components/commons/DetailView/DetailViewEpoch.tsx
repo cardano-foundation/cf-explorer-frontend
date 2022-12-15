@@ -33,7 +33,6 @@ import {
   DetailLinkRight,
 } from "./styles";
 import { ADAToken } from "../Token";
-import NotFound from "../../../pages/NotFound";
 import useFetch from "../../../commons/hooks/useFetch";
 import moment from "moment";
 import { HiOutlineCube } from "react-icons/hi2";
@@ -47,11 +46,9 @@ type DetailViewEpochProps = {
 
 const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
   const { epochNo, handleClose } = props;
-  const { loading, data } = useFetch<IDataEpoch>(epochNo ? `epoch/${epochNo}` : ``);
+  const { data } = useFetch<IDataEpoch>(epochNo ? `epoch/${epochNo}` : ``);
 
-  if (!loading && !data) return <NotFound />;
-
-  if (!data || loading)
+  if (!data)
     return (
       <ViewDetailDrawer anchor="right" open={!!epochNo} hideBackdrop variant="permanent">
         <ViewDetailContainer>
@@ -86,7 +83,6 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
               return (
                 <DetailsInfoItem key={index}>
                   <DetailLabel>
-                    <InfoIcon />
                     <DetailValueSkeleton variant="rectangular" />
                   </DetailLabel>
                   <DetailValue>
@@ -101,7 +97,6 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
               <Group>
                 <DetailsInfoItem key={index}>
                   <DetailLabel>
-                    <InfoIcon />
                     <DetailValueSkeleton variant="rectangular" />
                   </DetailLabel>
                   <DetailValue>

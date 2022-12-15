@@ -45,7 +45,7 @@ const TopDelegationPools: React.FC<Props> = () => {
     {
       title: "Pool",
       key: "name",
-      render: r => <PoolName to={`/delegation-pool/${r.poolId}`}>{r.poolName}</PoolName>,
+      render: r => <PoolName to={`/delegation-pool/${r.poolId}`}>{r.poolName || r.poolId}</PoolName>,
     },
     {
       title: "Pool size (A)",
