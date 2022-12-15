@@ -194,7 +194,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ title, address, item, type, loa
       </CardItem>
     );
   }
-  if (type === "right" && address) {
+  if (type === "right" && !address) {
     return (
       <CardItem>
         <Box height={"100%"} display="flex" alignItems="center" justifyContent="center">
