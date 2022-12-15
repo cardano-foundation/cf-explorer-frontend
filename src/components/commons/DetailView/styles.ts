@@ -31,6 +31,110 @@ export const CloseButton = styled(IconButton)`
   color: ${props => props.theme.titleColor};
 `;
 
+export const HeaderContainer = styled(Box)`
+  display: flex;
+  justify-content: center;
+`;
+
+export const TokenContainer = styled(Box)`
+  width: calc(100% - 40px);
+  background: #344054;
+  box-shadow: 0px 10px 25px ${props => props.theme.colorBlack}16;
+  border-radius: 12px;
+  padding: 25px 20px;
+  text-align: left;
+`;
+
+export const TokenHeaderContainer = styled(Box)`
+  border-bottom: 1px solid ${props => props.theme.textColorReverse}16;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+`;
+export const TokenHeader = styled(Box)`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+`;
+
+export const TokenTitleIcon = styled("img")`
+  width: auto;
+  min-width: 28px;
+  height: 33px;
+`;
+export const TokenTitle = styled("h3")`
+  color: ${props => props.theme.textColorReverse};
+  margin: 0px;
+`;
+
+export const ViewMetaData = styled(Link)`
+  display: block;
+  font-family: var(--font-family-text) !important;
+  color: ${props => props.theme.textColorReverse}!important;
+  font-size: var(--font-size-text-small);
+  text-decoration: underline !important;
+`;
+
+export const TokenMetaData = styled(Box)`
+  border-bottom: 1px solid ${props => props.theme.textColorReverse}16;
+  margin-bottom: 1rem;
+`;
+
+export const TokenInfo = styled(Box)`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+`;
+
+export const TokenName = styled("h4")`
+  font-size: var(--font-size-text-large);
+  color: ${props => props.theme.textColorReverse};
+  margin: 0;
+`;
+
+export const TokenIcon = styled("img")`
+  width: 15px;
+  height: 15px;
+`;
+
+export const MetaData = styled("small")`
+  color: ${props => props.theme.textColorReverse};
+  font-size: var(--font-size-text-x-small);
+`;
+
+export const TokenHeaderInfo = styled(Box)`
+  display: flex;
+  width: calc(100% - 40px);
+  gap: 10px;
+  overflow: hidden;
+`;
+export const TokenTotalSupply = styled(Box)`
+  flex: 1;
+  padding-right: 20px;
+`;
+export const TokenDecimal = styled(Box)`
+  flex: 1;
+  padding-left: 20px;
+  border-left: 1px solid ${props => props.theme.textColorReverse}16;
+`;
+
+export const TokenInfoLabel = styled("small")`
+  display: block;
+  color: ${props => props.theme.textColorReverse};
+  font-size: var(--font-size-text-x-small);
+  margin-bottom: 5px;
+`;
+
+export const TokenInfoValue = styled("span")`
+  display: block;
+  width: 100%;
+  color: ${props => props.theme.textColorReverse};
+  font-weight: var(--font-weight-bold);
+`;
+
 export const EpochNumber = styled("h1")`
   color: ${props => props.theme.colorGreenLight};
   margin: 0;
@@ -250,55 +354,43 @@ export const ConfirmStatus = styled("small")<{ status: keyof typeof Confirmation
   padding: 5px 10px;
   border-radius: 2px;
 `;
-// sawq
 
-export const BackText = styled("small")`
-  color: #344054;
-  font-weight: var(--font-weight-bold);
+export const TokenDetailInfo = styled(Box)`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
 `;
 
-export const HeaderContainer = styled(Box)`
+export const TokenDetailName = styled("small")`
+  color: ${props => props.theme.colorBlack};
+`;
+
+export const TokenDetailIcon = styled("img")`
+  width: 20px;
+  height: 20px;
+`;
+
+export const SeemoreBox = styled(Box)`
+  position: absolute;
+  width: 100%;
   display: flex;
   justify-content: center;
+  padding: 20px 0px;
+`;
+export const SeemoreButton = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: ${props => props.theme.colorGreenLight}!important;
+  &:hover {
+    text-shadow: 0px 0px 1px ${props => props.theme.colorGreen};
+  }
 `;
 
-export const HeaderTitle = styled("h2")`
-  color: ${props => props.theme.colorBlack};
-  font-size: 2.25rem;
-  margin: 0.5rem 0;
-`;
-
-export const HeaderTitleSkeleton = styled(Skeleton)`
-  height: 1em;
-  width: 200px;
-  max-width: 100%;
-  border-radius: 4px;
-`;
-
-export const SlotLeader = styled("p")`
-  margin-top: 0px;
-`;
-
-export const SlotLeaderSkeleton = styled(Skeleton)`
-  height: 1em;
-  width: 50%;
-  border-radius: 4px;
-`;
-
-export const SlotLeaderValue = styled("span")`
-  font-family: var(--font-family-text);
-  color: ${props => props.theme.colorBlue};
-  white-space: pre-wrap;
-  display: inline-block;
-  word-break: break-word;
-  line-height: 1.5;
-`;
-
-export const DetailsInfo = styled(Grid)`
-  margin-top: 15px;
-  background-image: ${props => props.theme.linearGradientGreen};
-  border-radius: 15px;
-  color: ${props => props.theme.textColorReverse};
+export const SeemoreText = styled("span")`
+  color: ${props => props.theme.colorGreenLight};
+  font-weight: var(--font-weight-bold);
 `;
 
 export const ProgressSkeleton = styled(Skeleton)`
@@ -315,20 +407,4 @@ export const DetailValueSkeleton = styled(Skeleton)`
   width: 50%;
   min-width: 100px;
   border-radius: 4px;
-`;
-
-export const DetailValueSmall = styled(DetailValue)`
-  font-size: var(--font-size-text-small);
-`;
-
-export const ConfirmationValue = styled(DetailValue)`
-  display: flex;
-  align-items: center;
-`;
-
-export const ProgressStatus = styled(Box)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
 `;

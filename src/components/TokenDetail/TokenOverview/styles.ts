@@ -38,7 +38,13 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
   border-radius: 4px;
 `;
 
-export const SlotLeader = styled("p")`
+export const SlotLeaderContainer = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+export const SlotLeader = styled(Box)`
   margin-top: 0px;
   font-weight: bold;
   color: ${props => props.theme.colorBlue};
@@ -185,3 +191,10 @@ export const CardItem = styled(Box)(({ theme }) => ({
     },
   },
 }));
+
+export const ViewMetaData = styled(Link)`
+  display: block;
+  font-family: var(--font-family-text)!important;
+  color: ${props => props.theme.textColor}!important;
+  text-decoration: underline !important;
+`;

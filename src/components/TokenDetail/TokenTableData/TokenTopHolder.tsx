@@ -6,6 +6,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { AIcon } from "../../../commons/resources";
+import { routers } from "../../../commons/routers";
 import { formatADA, getShortHash } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
 
@@ -52,7 +53,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       minWidth: "200px",
       render: r => (
         <Tooltip title={r.address} placement="top">
-          <TopHolder.TopHolderHash to={"#"}>
+          <TopHolder.TopHolderHash to={routers.ADDRESS_DETAIL.replace(":address", `${r.address}`)}>
             {getShortHash(r.address)}
             <BiLinkExternal style={{ marginLeft: 8 }} />
           </TopHolder.TopHolderHash>

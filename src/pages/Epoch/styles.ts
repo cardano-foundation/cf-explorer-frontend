@@ -1,5 +1,4 @@
-import { styled } from "@mui/material";
-import Container from "../../components/commons/Container";
+import { styled, Container } from "@mui/material";
 
 export const StyledContainer = styled(Container)`
   width: 100%;
@@ -15,6 +14,7 @@ export const StyledColorBlueDard = styled("span")`
 export const Index = styled(StyledColorBlueDard)``;
 
 export const Status = styled("span")<{ status: string }>`
+  font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
   padding: 7.5px 11.5px;
   border-radius: 2px;

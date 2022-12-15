@@ -2,9 +2,11 @@ import { FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons
 import { IconType } from "react-icons/lib";
 import {
   BlockChainMenuIcon,
+  BrowserIcon,
   DelegatePoolMenuIcon,
   DIDMenuIcon,
   MediumIcon,
+  ResourcesIcon,
   SupplyChainMenuIcon,
   ToolMenuIcon,
 } from "./resources";
@@ -64,6 +66,7 @@ export const socials: Social[] = [
 export const footerMenus: Menu[] = [
   {
     title: "Browser",
+    icon: BrowserIcon,
     children: [
       { href: "https://cardanofoundation.org/en/about-us/", title: "About Us" },
       { href: "https://cardanofoundation.org/en/contact-us/", title: "Contact Us" },
@@ -73,20 +76,8 @@ export const footerMenus: Menu[] = [
     ],
   },
   {
-    title: "Community",
-    children: [
-      { href: "https://lin.ee/fN1r7Lf", title: "Line" },
-      { href: "https://www.linkedin.com/company/cardano-foundation/", title: "LinkedIn" },
-      { href: "https://www.meetup.com/pro/cardano/", title: "Meet up" },
-      { href: "https://medium.com/@cardano.foundation", title: "Medium" },
-      { href: "https://www.reddit.com/r/cardano/", title: "Reddit" },
-      { href: "https://t.me/CardanoAnnouncements", title: "Telegram" },
-      { href: "http://weibo.com/cardanofoundation", title: "Weibo" },
-      { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube" },
-    ],
-  },
-  {
     title: "Resources",
+    icon: ResourcesIcon,
     children: [
       { href: "https://tutorials.cardanoacademy.io/", title: "Academy" },
       { href: "https://developers.cardano.org/tools/", title: "Builder tools" },

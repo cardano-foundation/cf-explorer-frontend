@@ -62,7 +62,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
         <>
           Address:
           <Tooltip placement="top" title={r.slotLeader}>
-            <StyledAddress to={"#"}>{getShortWallet(r.slotLeader)}</StyledAddress>
+            <StyledAddress to={routers.ADDRESS_DETAIL.replace(":address", `${r.slotLeader}`)}>{getShortWallet(r.slotLeader)}</StyledAddress>
           </Tooltip>
         </>
       ),
@@ -88,7 +88,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
 
   return (
     <StyledContainer>
-      <Card title={"Blocks"}>
+      <Card title={"Blocks"} underline={true}>
         <Table
           loading={loading}
           initialized={initialized}

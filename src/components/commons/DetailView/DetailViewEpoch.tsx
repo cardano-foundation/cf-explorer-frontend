@@ -31,14 +31,18 @@ import {
   DetailLink,
   DetailLinkIcon,
   DetailLinkRight,
+  SeemoreButton,
+  SeemoreText,
+  SeemoreBox,
 } from "./styles";
 import { ADAToken } from "../Token";
-import NotFound from "../../../pages/NotFound";
 import useFetch from "../../../commons/hooks/useFetch";
 import moment from "moment";
 import { HiOutlineCube } from "react-icons/hi2";
 import { BiChevronRight } from "react-icons/bi";
 import { routers } from "../../../commons/routers";
+import { FaAngleDoubleRight } from "react-icons/fa";
+import { formatADA } from "../../../commons/utils/helper";
 
 type DetailViewEpochProps = {
   epochNo: number;
@@ -47,11 +51,9 @@ type DetailViewEpochProps = {
 
 const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
   const { epochNo, handleClose } = props;
-  const { loading, data } = useFetch<IDataEpoch>(epochNo ? `epoch/${epochNo}` : ``);
+  const { data } = useFetch<IDataEpoch>(epochNo ? `epoch/${epochNo}` : ``);
 
-  if (!loading && !data) return <NotFound />;
-
-  if (!data || loading)
+  if (!data)
     return (
       <ViewDetailDrawer anchor="right" open={!!epochNo} hideBackdrop variant="permanent">
         <ViewDetailContainer>
@@ -86,7 +88,6 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
               return (
                 <DetailsInfoItem key={index}>
                   <DetailLabel>
-                    <InfoIcon />
                     <DetailValueSkeleton variant="rectangular" />
                   </DetailLabel>
                   <DetailValue>
@@ -101,7 +102,6 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
               <Group>
                 <DetailsInfoItem key={index}>
                   <DetailLabel>
-                    <InfoIcon />
                     <DetailValueSkeleton variant="rectangular" />
                   </DetailLabel>
                   <DetailValue>
@@ -182,7 +182,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
               Total Output
             </DetailLabel>
             <DetailValue>
-              {`${0} ${"ADA"}`}
+              {formatADA(data.outSum) || 0}
               <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
             </DetailValue>
           </DetailsInfoItem>
@@ -213,6 +213,11 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
             </DetailValue>
           </DetailLink>
         </Group>
+        <SeemoreBox>
+          <SeemoreButton to={routers.EPOCH_DETAIL.replace(":epochId", `${data.no}`)}>
+            <SeemoreText>View more</SeemoreText> <FaAngleDoubleRight size={12} />
+          </SeemoreButton>
+        </SeemoreBox>
       </ViewDetailContainer>
     </ViewDetailDrawer>
   );

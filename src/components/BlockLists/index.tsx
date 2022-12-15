@@ -45,7 +45,7 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
       minWidth: "150px",
       render: r => (
         <Tooltip placement="top" title={r.hash}>
-          <StyledLink to={"#"}>{getShortWallet(`${r.hash}`)}</StyledLink>
+          <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>{getShortWallet(`${r.hash}`)}</StyledLink>
         </Tooltip>
       ),
     },
@@ -71,7 +71,7 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
       minWidth: "100px",
       render: r => (
         <PriceWrapper>
-          {formatADA(r.totalFees) || 0}
+          {formatADA(r.totalOutput) || 0}
           <img src={AIcon} alt="ADA Icon" />
         </PriceWrapper>
       ),

@@ -3,13 +3,10 @@ import { Grid, Skeleton, styled } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
-import Card from "../commons/Card";
-
 import styles from "./index.module.scss";
-import highestIcon from "../../commons/resources/images/highestIcon.png";
-import lowestIcon from "../../commons/resources/images/lowestIcon.png";
-import moment from "moment";
-import { formatADA } from "../../commons/utils/helper";
+import { formatADA } from "../../../commons/utils/helper";
+import { Button, ChartContainer, GridRight, GridWrapper, Item, StyledContainer, Title, Value } from "./styles";
+import { HighestIcon, LowestIcon } from "../../../commons/resources";
 
 interface DelegationDetailChartProps {
   data: AnalyticsDelegators | null;
@@ -19,73 +16,63 @@ interface DelegationDetailChartProps {
 const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ data, loading }) => {
   const [selectAnalytic, setSelectAnalytic] = useState<"epochChart" | "delegatorChart">("epochChart");
   return (
-    <Card title="Analytics">
-      <Grid container columns={24} className={styles.wrapper}>
+    <StyledContainer>
+      <h2 style={{ margin: "50px 0  15px" }}>Analytics</h2>
+      <GridWrapper container columns={24}>
         <Grid item xs={24} lg={18}>
-          <div className={styles.tab}>
-            <button
-              className={`${styles.button} ${selectAnalytic === "epochChart" ? styles.active : ""}`}
+          <div style={{ marginBottom: 10 }}>
+            <Button
+              active={selectAnalytic === "epochChart"}
               style={{ marginRight: 5 }}
               onClick={() => setSelectAnalytic("epochChart")}
             >
-              Epoch
-            </button>
-            <button
-              className={`${styles.button}  ${selectAnalytic === "delegatorChart" ? styles.active : ""}`}
-              onClick={() => setSelectAnalytic("delegatorChart")}
-            >
+              Stake
+            </Button>
+            <Button active={selectAnalytic === "delegatorChart"} onClick={() => setSelectAnalytic("delegatorChart")}>
               Delegator
-            </button>
+            </Button>
           </div>
-          <div className={styles.chart}>
+          <ChartContainer>
             {loading && <SkeletonUI variant="rectangular" style={{ height: "280px" }} />}
             {!loading && <Chart data={data ? data[selectAnalytic].dataByDays : []} />}
-          </div>
+          </ChartContainer>
         </Grid>
         <Grid item xs={24} lg={6}>
-          <Grid container columns={24} spacing={2} className={styles.right}>
-            <Grid item xs={24} sm={12} lg={24} className={`${styles.col} ${styles.top}`}>
-              <div className={styles.item}>
-                <div>
-                  <img src={highestIcon} alt="heighest icon" />
-                  <div className={styles.title}>
-                    {selectAnalytic === "epochChart" ? "Highest stake" : "Highest number of delegators"}
-                  </div>
-                  <div className={styles.value}>
-                    {loading && <SkeletonUI variant="rectangular" />}
-                    {!loading &&
-                      (data
-                        ? selectAnalytic === "epochChart"
-                          ? formatADA(data[selectAnalytic].highest)
-                          : data[selectAnalytic].highest
-                        : 0)}
-                  </div>
-                </div>
-              </div>
+          <GridRight container columns={24}>
+            <Grid item xs={24} sm={12} lg={24}>
+              <Item style={{ borderRadius: "12px 12px 0 0" }}>
+                <img src={HighestIcon} alt="heighest icon" />
+                <Title>{selectAnalytic === "epochChart" ? "Highest stake" : "Highest number of delegators"}</Title>
+                <Value>
+                  {loading && <SkeletonUI variant="rectangular" />}
+                  {!loading &&
+                    (data
+                      ? selectAnalytic === "epochChart"
+                        ? formatADA(data[selectAnalytic].highest)
+                        : data[selectAnalytic].highest
+                      : 0)}
+                </Value>
+              </Item>
             </Grid>
             <Grid item xs={24} sm={12} lg={24} className={`${styles.col} ${styles.bottom}`}>
-              <div className={styles.item}>
-                <div>
-                  <img src={lowestIcon} alt="lowest icon" />
-                  <div className={styles.title}>
-                    {selectAnalytic === "epochChart" ? "Lowest stake" : "Lowest number of delegators"}
-                  </div>
-                  <div className={styles.value}>
-                    {loading && <SkeletonUI variant="rectangular" />}
-                    {!loading &&
-                      (data
-                        ? selectAnalytic === "epochChart"
-                          ? formatADA(data[selectAnalytic].lowest)
-                          : data[selectAnalytic].lowest
-                        : 0)}
-                  </div>
-                </div>
-              </div>
+              <Item style={{ borderRadius: "0 0 12px 12px" }}>
+                <img src={LowestIcon} alt="lowest icon" />
+                <Title>{selectAnalytic === "epochChart" ? "Lowest stake" : "Lowest number of delegators"}</Title>
+                <Value>
+                  {loading && <SkeletonUI variant="rectangular" />}
+                  {!loading &&
+                    (data
+                      ? selectAnalytic === "epochChart"
+                        ? formatADA(data[selectAnalytic].lowest)
+                        : data[selectAnalytic].lowest
+                      : 0)}
+                </Value>
+              </Item>
             </Grid>
-          </Grid>
+          </GridRight>
         </Grid>
-      </Grid>
-    </Card>
+      </GridWrapper>
+    </StyledContainer>
   );
 };
 
@@ -106,7 +93,7 @@ const Chart = ({ data }: { data: AnalyticsDelegators["epochChart"]["dataByDays"]
     <HighchartsReact
       highcharts={Highcharts}
       options={{
-        chart: { type: "areaspline" },
+        chart: { type: "areaspline", backgroundColor: "transparent" },
         title: { text: "" },
         yAxis: {
           title: { text: null },

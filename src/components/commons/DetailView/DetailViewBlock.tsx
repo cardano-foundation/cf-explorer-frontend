@@ -31,14 +31,17 @@ import {
   StyledLink,
   DetailCopy,
   DetailLinkName,
+  SeemoreBox,
+  SeemoreButton,
+  SeemoreText,
 } from "./styles";
 import { ADAToken } from "../Token";
-import NotFound from "../../../pages/NotFound";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { routers } from "../../../commons/routers";
-import { getShortHash } from "../../../commons/utils/helper";
+import { formatADA, getShortHash } from "../../../commons/utils/helper";
 import { Tooltip } from "@mui/material";
+import { FaAngleDoubleRight } from "react-icons/fa";
 
 type DetailViewBlockProps = {
   blockNo: number;
@@ -47,11 +50,9 @@ type DetailViewBlockProps = {
 
 const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
   const { blockNo, handleClose } = props;
-  const { loading, data } = useFetch<BlockDetail>(blockNo ? `block/${blockNo}` : ``);
+  const { data } = useFetch<BlockDetail>(blockNo ? `block/${blockNo}` : ``);
 
-  if (!loading && !data) return <NotFound />;
-
-  if (!data || loading)
+  if (!data)
     return (
       <ViewDetailDrawer anchor="right" open={!!blockNo} hideBackdrop variant="permanent">
         <ViewDetailContainer>
@@ -86,7 +87,6 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               return (
                 <DetailsInfoItem key={index}>
                   <DetailLabel>
-                    <InfoIcon />
                     <DetailValueSkeleton variant="rectangular" />
                   </DetailLabel>
                   <DetailValue>
@@ -101,7 +101,6 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               <Group>
                 <DetailsInfoItem key={index}>
                   <DetailLabel>
-                    <InfoIcon />
                     <DetailValueSkeleton variant="rectangular" />
                   </DetailLabel>
                   <DetailValue>
@@ -184,7 +183,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               Transaction Fees
             </DetailLabel>
             <DetailValue>
-              {`${data.totalFees} ${"ADA"}`}
+              {formatADA(data.totalFees) || 0}
               <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
             </DetailValue>
           </DetailsInfoItem>
@@ -194,7 +193,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               Total Output
             </DetailLabel>
             <DetailValue>
-              {`${data.totalOutput} ${"ADA"}`}
+              {formatADA(data.totalOutput) || 0}
               <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
             </DetailValue>
           </DetailsInfoItem>
@@ -228,6 +227,11 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
             </DetailValue>
           </DetailLink>
         </Group>
+        <SeemoreBox>
+          <SeemoreButton to={routers.BLOCK_DETAIL.replace(":blockId", `${data.blockNo}`)}>
+            <SeemoreText>View more</SeemoreText> <FaAngleDoubleRight size={12} />
+          </SeemoreButton>
+        </SeemoreBox>
       </ViewDetailContainer>
     </ViewDetailDrawer>
   );

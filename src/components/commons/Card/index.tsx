@@ -13,16 +13,16 @@ const Header = styled(Box)`
   align-items: center;
 `;
 
-const Title = styled("h2")`
+const Title = styled("h2")<{ underline: boolean }>`
   text-align: left;
   padding-bottom: 8px;
   position: relative;
   &::after {
     content: "";
     position: absolute;
-    width: 100px;
+    width: 100%;
     height: 4px;
-    background-color: ${props => props.theme.colorGreenLight};
+    background-color: ${props => (props.underline ? props.theme.colorGreenLight : "unset")};
     left: 0;
     bottom: 0;
   }
@@ -31,14 +31,15 @@ const Title = styled("h2")`
 interface CardProps extends Omit<BoxProps, "title"> {
   title?: React.ReactNode;
   children?: ReactNode;
+  underline?: boolean;
   extra?: React.ReactNode;
 }
 
-const Card: React.FC<CardProps> = ({ title, children, extra, ...props }) => {
+const Card: React.FC<CardProps> = ({ title, children, underline = false, extra, ...props }) => {
   return (
     <CardContainer {...props}>
       <Header>
-        {title ? <Title>{title}</Title> : null}
+        {title ? <Title underline={underline}>{title}</Title> : null}
         {extra}
       </Header>
       {children}

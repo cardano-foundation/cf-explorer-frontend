@@ -30,11 +30,14 @@ import ArrowDropDownIcon from "./icons/arrow-drop-down.svg";
 import MenuIcon from "./icons/menu.svg";
 import AIcon from "./icons/AIcon.svg";
 import Policy from "./icons/policy.svg";
+import PolicyWhiteIcon from "./icons/policy-white.svg";
 import DIDMenuIcon from "./icons/menus/did.svg";
 import SupplyChainMenuIcon from "./icons/menus/supplychain.svg";
 import BlockChainMenuIcon from "./icons/menus/blockchain.svg";
 import DelegatePoolMenuIcon from "./icons/menus/delegate.svg";
 import ToolMenuIcon from "./icons/menus/tool.svg";
+import BrowserIcon from "./icons/menus/browser.svg";
+import ResourcesIcon from "./icons/menus/resources.svg";
 import RocketIcon from "./icons/rocket.svg";
 import CubeIcon from "./icons/cube.svg";
 import CheckCircleIcon from "./icons/check-circle.svg";
@@ -48,6 +51,9 @@ import USDIcon from "./icons/usd.svg";
 import NoteEditIcon from "./icons/note-edit.svg";
 import WithdrawlIcon from "./icons/withdrawl.svg";
 import MintingIcon from "./icons/minting.svg";
+import InfoIcon from "./icons/infoIcon.svg";
+import HighestIcon from "./icons/highest-icon.svg";
+import LowestIcon from "./icons/lowest-icon.svg";
 
 import FlintIcon from "./images/flint.jpg";
 import NamiIcon from "./images/nami.png";
@@ -112,4 +118,10 @@ export {
   NoteEditIcon,
   WithdrawlIcon,
   MintingIcon,
+  PolicyWhiteIcon,
+  InfoIcon,
+  HighestIcon,
+  LowestIcon,
+  BrowserIcon,
+  ResourcesIcon,
 };
