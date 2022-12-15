@@ -68,7 +68,7 @@ interface Transaction {
   };
   mints?: {
     assetName: string;
-    amount: number;
+    assetQuantity: number;
     policy: {
       policyId: string;
       totalToken: number;
