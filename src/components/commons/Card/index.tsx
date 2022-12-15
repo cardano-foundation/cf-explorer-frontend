@@ -22,7 +22,7 @@ const Title = styled("h2")<{ underline: boolean }>`
     position: absolute;
     width: 100%;
     height: 4px;
-    background-color: ${props => (props.underline ? props.theme.colorGreenLight : "")};
+    background-color: ${props => (props.underline ? props.theme.colorGreenLight : "unset")};
     left: 0;
     bottom: 0;
   }
