@@ -33,7 +33,6 @@ import {
   DetailLinkName,
 } from "./styles";
 import { ADAToken } from "../Token";
-import NotFound from "../../../pages/NotFound";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { routers } from "../../../commons/routers";
@@ -47,11 +46,9 @@ type DetailViewBlockProps = {
 
 const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
   const { blockNo, handleClose } = props;
-  const { loading, data } = useFetch<BlockDetail>(blockNo ? `block/${blockNo}` : ``);
+  const { data } = useFetch<BlockDetail>(blockNo ? `block/${blockNo}` : ``);
 
-  if (!loading && !data) return <NotFound />;
-
-  if (!data || loading)
+  if (!data)
     return (
       <ViewDetailDrawer anchor="right" open={!!blockNo} hideBackdrop variant="permanent">
         <ViewDetailContainer>
@@ -86,7 +83,6 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               return (
                 <DetailsInfoItem key={index}>
                   <DetailLabel>
-                    <InfoIcon />
                     <DetailValueSkeleton variant="rectangular" />
                   </DetailLabel>
                   <DetailValue>
@@ -101,7 +97,6 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               <Group>
                 <DetailsInfoItem key={index}>
                   <DetailLabel>
-                    <InfoIcon />
                     <DetailValueSkeleton variant="rectangular" />
                   </DetailLabel>
                   <DetailValue>

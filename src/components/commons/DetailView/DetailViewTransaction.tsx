@@ -44,7 +44,6 @@ import {
   DetailLinkImage,
 } from "./styles";
 import { ADAToken } from "../Token";
-import NotFound from "../../../pages/NotFound";
 import useFetch from "../../../commons/hooks/useFetch";
 import { TbFileCheck } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
@@ -68,11 +67,9 @@ const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] 
 
 const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
   const { hash, handleClose } = props;
-  const { loading, data } = useFetch<Transaction>(hash ? `tx/${hash}` : ``);
+  const { data } = useFetch<Transaction>(hash ? `tx/${hash}` : ``);
 
-  if (!loading && !data) return <NotFound />;
-
-  if (!data || loading)
+  if (!data)
     return (
       <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
         <ViewDetailContainer>
@@ -107,7 +104,6 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               return (
                 <DetailsInfoItem key={index}>
                   <DetailLabel>
-                    <InfoIcon />
                     <DetailValueSkeleton variant="rectangular" />
                   </DetailLabel>
                   <DetailValue>
@@ -122,7 +118,6 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               <Group>
                 <DetailsInfoItem key={index}>
                   <DetailLabel>
-                    <InfoIcon />
                     <DetailValueSkeleton variant="rectangular" />
                   </DetailLabel>
                   <DetailValue>

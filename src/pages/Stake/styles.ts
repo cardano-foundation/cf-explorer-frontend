@@ -1,6 +1,5 @@
-import { styled } from "@mui/material";
+import { styled, Container } from "@mui/material";
 import { Link } from "react-router-dom";
-import Container from "../../components/commons/Container";
 
 export const StyledContainer = styled(Container)`
   padding: 30px 0 40px;

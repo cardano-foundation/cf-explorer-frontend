@@ -1,29 +1,17 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
-import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import { CubeIcon, PolicyWhiteIcon, RocketIcon } from "../../../commons/resources";
-import ProgressCircle from "../ProgressCircle";
+import { PolicyWhiteIcon } from "../../../commons/resources";
 import {
   CloseButton,
-  EpochNumber,
-  EpochText,
-  HeaderContainer,
   ViewDetailContainer,
   DetailsInfoItem,
   DetailLabel,
   DetailValue,
-  Icon,
-  BlockDefault,
   InfoIcon,
   DetailLabelSkeleton,
   DetailValueSkeleton,
   IconSkeleton,
-  ProgressSkeleton,
   ViewDetailDrawer,
-  Item,
-  ItemName,
-  ItemValue,
-  ListItem,
   Group,
   DetailLink,
   DetailLinkIcon,
@@ -49,12 +37,10 @@ import {
   TokenDetailName,
   TokenDetailIcon,
 } from "./styles";
-import { ADAToken } from "../Token";
-import NotFound from "../../../pages/NotFound";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { routers } from "../../../commons/routers";
-import { formatADA, formatCurrency, formatNumber, getShortHash } from "../../../commons/utils/helper";
+import { formatCurrency, getShortHash } from "../../../commons/utils/helper";
 import { Tooltip } from "@mui/material";
 import axios from "axios";
 
@@ -65,7 +51,7 @@ type DetailViewTokenProps = {
 
 const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
   const { tokenId, handleClose } = props;
-  const { loading, data } = useFetch<IToken>(tokenId ? `tokens/${tokenId}` : ``);
+  const { data } = useFetch<IToken>(tokenId ? `tokens/${tokenId}` : ``);
   const [tokenMetadataLoading, setTokenMetadataLoading] = useState<boolean>(false);
   const [tokenMetadata, setTokenMetadata] = useState<ITokenMetadata>({});
 
@@ -98,9 +84,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
     loadMetadata();
   }, [data]);
 
-  if (!loading && !data) return <NotFound />;
-
-  if (!data || loading)
+  if (!data)
     return (
       <ViewDetailDrawer anchor="right" open={!!tokenId} hideBackdrop variant="permanent">
         <ViewDetailContainer>
@@ -117,7 +101,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                 <DetailValueSkeleton variant="rectangular" />
                 <IconSkeleton variant="circular" />
               </TokenInfo>
-              <MetaData>{""}</MetaData>
+              <MetaData />
             </TokenMetaData>
             <TokenHeaderInfo>
               <TokenTotalSupply>
@@ -135,7 +119,6 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
               return (
                 <DetailsInfoItem key={index}>
                   <DetailLabel>
-                    <InfoIcon />
                     <DetailValueSkeleton variant="rectangular" />
                   </DetailLabel>
                   <DetailValue>
@@ -150,7 +133,6 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
               <Group>
                 <DetailsInfoItem key={index}>
                   <DetailLabel>
-                    <InfoIcon />
                     <DetailValueSkeleton variant="rectangular" />
                   </DetailLabel>
                   <DetailValue>

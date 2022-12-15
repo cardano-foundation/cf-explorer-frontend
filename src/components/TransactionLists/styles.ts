@@ -1,5 +1,3 @@
-import { styled } from "@mui/material";
-
-import Container from "../commons/Container";
+import { styled, Container } from "@mui/material";
 
 export const StyledContainer = styled(Container)``;
