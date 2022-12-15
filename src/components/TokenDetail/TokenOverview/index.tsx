@@ -1,10 +1,9 @@
-import { Box, Skeleton, Tooltip } from "@mui/material";
-import moment from "moment";
+import { Box } from "@mui/material";
 import React from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { routers } from "../../../commons/routers";
 
-import { formatADA, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADA } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import Eth from "../../../commons/resources/images/Eth.png";
 import rocketToken from "../../../commons/resources/images/rocketToken.png";
@@ -21,8 +20,10 @@ import {
   HeaderTitle,
   HeaderTitleSkeleton,
   SlotLeader,
+  SlotLeaderContainer,
   SlotLeaderSkeleton,
   TokenInfo,
+  ViewMetaData,
 } from "./styles";
 
 interface ITokenOverview {
@@ -34,26 +35,28 @@ interface ITokenOverview {
 const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataLoading }) => {
   return (
     <Box>
-      <HeaderDetailContainer>
-        <BackButton to={routers.TOKEN_LIST}>
-          <HiArrowLongLeft />
-          <BackText>Back</BackText>
-        </BackButton>
-        <HeaderContainer>
-          <HeaderTitle>
-            {loading && <HeaderTitleSkeleton variant="rectangular" />}
-            {!loading && <>{data?.displayName}</>}
-          </HeaderTitle>
-        </HeaderContainer>
-        <SlotLeader>
-          {loading && <SlotLeaderSkeleton variant="rectangular" />}
-          {!loading && (
-            <>
-              <Box>{data?.name}</Box> <CopyButton text={data?.name} />
-            </>
-          )}
-        </SlotLeader>
-      </HeaderDetailContainer>
+      <BackButton to={routers.TOKEN_LIST}>
+        <HiArrowLongLeft />
+        <BackText>Back</BackText>
+      </BackButton>
+      <HeaderContainer>
+        <HeaderTitle>
+          {loading && <HeaderTitleSkeleton variant="rectangular" />}
+          {!loading && <>{data?.displayName}</>}
+        </HeaderTitle>
+      </HeaderContainer>
+      <SlotLeaderContainer>
+        {loading ? (
+          <SlotLeaderSkeleton variant="rectangular" />
+        ) : (
+          <>
+            <SlotLeader>
+              <Box>{data?.fingerprint}</Box> <CopyButton text={data?.fingerprint} />
+            </SlotLeader>
+            <ViewMetaData to={"/"}>See Policy script</ViewMetaData>
+          </>
+        )}
+      </SlotLeaderContainer>
       <CardInfo>
         <TokenInfo>
           <Box pr={3}>
@@ -64,8 +67,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataL
               {data?.displayName}
             </Box>
             <Box textAlign={"left"} fontSize={"0.8rem"} pt={1} lineHeight={1.3}>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Distinctio, ducimus itaque cumque hic explicabo
-              consectetur,
+              {""}
             </Box>
           </Box>
         </TokenInfo>
