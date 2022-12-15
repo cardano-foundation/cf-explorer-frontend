@@ -15,6 +15,7 @@ export const StyledColorBlueDard = styled("span")`
 export const Index = styled(StyledColorBlueDard)``;
 
 export const Status = styled("span")<{ status: string }>`
+  font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
   padding: 7.5px 11.5px;
   border-radius: 2px;
