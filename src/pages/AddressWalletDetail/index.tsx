@@ -16,6 +16,7 @@ import { AIcon } from "../../commons/resources";
 
 import { parse } from "qs";
 import { TextField } from "@mui/material";
+import { EmptyIcon } from "../../commons/resources";
 
 const AddressWalletDetail = () => {
   const [selectedToken, setSelectedToken] = useState<WalletAddress["tokens"][number]>();
@@ -38,13 +39,16 @@ const AddressWalletDetail = () => {
     size: query.size ? (query.size as string) : 10,
     address,
   });
-  const { data, error, initialized, loading } = useFetch<WalletAddress>(`/address/${address}`);
+  const { data, loading } = useFetch<WalletAddress>(`/address/${address}`);
 
-  const {
-    data: dataAnalyst,
-    error: errorAnalyst,
-    loading: loadingAnalyst,
-  } = useFetch<WalletAddressAnalyst>(`/address/analytics/${address}/${analyticTime}`);
+  const { data: dataAnalyst, loading: loadingAnalyst } = useFetch<
+    {
+      date: string;
+      value: number;
+    }[]
+  >(`/address/analytics/${address}/${analyticTime}`);
+  const { data: maxBalance, loading: maxBalanceLoading } = useFetch<number>(`/address/max-balance/${address}`);
+  const { data: minBalance, loading: minBalanceLoading } = useFetch<number>(`/address/min-balance/${address}`);
 
   const { data: dataStake, error: errorStake, loading: loadingStake } = useFetch<WalletStake>(`/stakeKey/${address}`);
 
@@ -151,7 +155,11 @@ const AddressWalletDetail = () => {
           setAnalyticTime={setAnalyticTime}
           analyticTime={analyticTime}
           loading={loadingAnalyst}
-          data={dataFake["epochChart"] || null}
+          data={dataAnalyst}
+          maxBalance={maxBalance}
+          maxBalanceLoading={maxBalanceLoading}
+          minBalance={minBalance}
+          minBalanceLoading={minBalanceLoading}
         />
       </Box>
       <Box>
@@ -168,28 +176,7 @@ const AddressWalletDetail = () => {
     </ContainerBox>
   );
 };
-const dataFake: AnalyticsDelegators = {
-  epochChart: {
-    highest: 34142323532,
-    lowest: 472464161,
-    dataByDays: [
-      {
-        xchart: "77",
-        ychart: 472464161,
-      },
-    ],
-  },
-  delegatorChart: {
-    highest: 12,
-    lowest: 1,
-    dataByDays: [
-      {
-        xchart: "77",
-        ychart: 1,
-      },
-    ],
-  },
-};
+
 export default AddressWalletDetail;
 
 interface DetailCardProps {
@@ -208,7 +195,13 @@ const DetailCard: React.FC<DetailCardProps> = ({ title, address, item, type, loa
     );
   }
   if (type === "right" && !address) {
-    return <CardItem></CardItem>;
+    return (
+      <CardItem>
+        <Box height={"100%"} display="flex" alignItems="center" justifyContent="center">
+          <img alt="icon" src={EmptyIcon} />
+        </Box>
+      </CardItem>
+    );
   }
   return (
     <CardItem padding={props => props.spacing(4)}>

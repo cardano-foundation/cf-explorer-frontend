@@ -16,7 +16,7 @@ import Tokens from "./pages/Token";
 import TokenDetail from "./pages/TokenDetail";
 import Stake from "./pages/Stake";
 import StakeDetail from "./pages/StakeDetail";
-import AddressWalletDetail from "./pages/AddressWalletDetail";
+import AddressWalletDetail from "./pages/AddressWalletDetail"; 
 
 const Routes: React.FC = () => {
   return (

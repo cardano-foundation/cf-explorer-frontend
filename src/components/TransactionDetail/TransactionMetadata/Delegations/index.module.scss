@@ -16,7 +16,7 @@
   .item {
     background-color: white;
     text-align: left;
-    padding: 20px 0;
+    padding: 10px 0;
     font-size: var(--font-size-text);
     border-bottom: 1px solid #0000001a;
 
@@ -38,7 +38,6 @@
     }
     .bottom {
       width: 100%;
-      padding-top: 12px;
       display: flex;
       justify-content: space-between;
       .right {
