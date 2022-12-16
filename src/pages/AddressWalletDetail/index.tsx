@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { styled, Container, Grid, Box, Select, MenuItem, Autocomplete, Skeleton } from "@mui/material";
 
 import { formatADA, formatNumber, numberWithCommas } from "../../commons/utils/helper";
@@ -17,6 +17,7 @@ import { AIcon } from "../../commons/resources";
 import { parse } from "qs";
 import { TextField } from "@mui/material";
 import { EmptyIcon } from "../../commons/resources";
+import { routers } from "../../commons/routers";
 
 const AddressWalletDetail = () => {
   const [selectedToken, setSelectedToken] = useState<WalletAddress["tokens"][number]>();
@@ -58,7 +59,8 @@ const AddressWalletDetail = () => {
       title: "ADA Balance",
       value: (
         <>
-          {formatADA(data?.balance || 0)} ADA <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          {formatADA(data?.balance || 0)}
+          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
         </>
       ),
     },
@@ -105,16 +107,30 @@ const AddressWalletDetail = () => {
       title: "Total Stake",
       value: (
         <>
-          {formatADA(dataStake?.totalStake || 0)} ADA <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          {formatADA(dataStake?.totalStake || 0)}
+          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
         </>
       ),
     },
-    { title: "POOL ID", value: dataStake?.pool?.poolId || "" },
+    {
+      title: "POOL NAME",
+      value: (
+        <Link
+          to={
+            dataStake?.pool?.poolName ? routers.DELEGATION_POOL_DETAIL.replace(":poolId", dataStake.pool.poolId) : "#"
+          }
+          style={{ fontFamily: "var(--font-family-text)", color: "var(--color-blue)" }}
+        >
+          {dataStake?.pool?.poolName || ""}
+        </Link>
+      ),
+    },
     {
       title: "Reward",
       value: (
         <>
-          {formatADA(dataStake?.rewardAvailable || 0)} ADA <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          {formatADA(dataStake?.rewardAvailable || 0)}
+          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
         </>
       ),
     },
@@ -207,7 +223,9 @@ const DetailCard: React.FC<DetailCardProps> = ({ title, address, item, type, loa
     <CardItem padding={props => props.spacing(4)}>
       <Box className={styles.titleDetail}>{title}</Box>
       <Box className={styles.addressGroup}>
-        <span className={styles.address}>{address} </span>
+        <Link className={styles.address} to={routers.ADDRESS_DETAIL.replace(":address", address)}>
+          {address}{" "}
+        </Link>
         <CopyButton />
       </Box>
       <Box>

@@ -110,11 +110,11 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
       </HeaderContainer>
       {header.hash && (
         <SlotLeader>
-          <Tooltip title={`${header.hash}`} placement="top">
-            <Link to={"/"}>
-              {header.slotLeader && <small>Slot leader:</small>} <SlotLeaderValue>{header.hash}</SlotLeaderValue>
-            </Link>
-          </Tooltip>
+          {/* <Tooltip title={`${header.hash}`} placement="top"> */}
+          <Link to={"/"}>
+            {header.slotLeader && <small>Slot leader:</small>} <SlotLeaderValue>{header.hash}</SlotLeaderValue>
+          </Link>
+          {/* </Tooltip> */}
           <SlotLeaderCopy text={header.hash} />
         </SlotLeader>
       )}

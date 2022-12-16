@@ -49,7 +49,7 @@ export const getNumberFromCurrency = (value?: string | number, groupSeparator: s
   return str.replace(new RegExp(groupSeparator, "g"), "");
 };
 
-export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "t", "q", "Q", "s", "S"];
+export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "T", "q", "Q", "s", "S"];
 
 export const formatPrice = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
   if (!value) return `0${abbreviations[0]}`;
@@ -75,6 +75,7 @@ export const formatADA = (value?: string | number, abbreviations: string[] = LAR
     const bigValue = new BigNumber(Ada.toString());
     const length = Ada.toFixed().toString().length;
     const exponential = Math.floor((length - 1) / 3) * 3;
+
     if (exponential > 5) {
       const newValue = bigValue
         .div(10 ** exponential)
@@ -86,7 +87,7 @@ export const formatADA = (value?: string | number, abbreviations: string[] = LAR
     }
   }
 
-  const formated = Ada.toString().match(/^-?\d+(?:\.\d{0,2})?/);
+  const formated = Ada.toString().match(/^-?\d+(?:\.\d{0,5})?/);
   return numberWithCommas(formated ? formated[0] : "0");
 };
 
