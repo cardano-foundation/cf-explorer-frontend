@@ -152,7 +152,7 @@ const HeaderSearch: React.FC<Props> = ({ isHome }) => {
         required
         type="search"
         spellCheck={false}
-        placeholder="Search transaction, address, block, epoch, pool..."
+        placeholder="Search ..."
         onChange={handleChangeSearch}
         onKeyDown={handleKeydown}
         disableUnderline

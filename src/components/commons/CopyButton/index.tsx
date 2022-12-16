@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { BiCheckCircle } from "react-icons/bi";
 import { IoMdCopy } from "react-icons/io";
 import { useCopyToClipboard } from "react-use";
+import copy from "../../../commons/resources/images/copy.svg";
 
 const Button = styled(IconButton)`
   color: ${props => props.theme.textColor};
@@ -42,9 +43,9 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, p
       <Button {...props} onClick={onCopy}>
         {children ||
           (copied ? (
-            <BiCheckCircle size={20} style={{ verticalAlign: "text-bottom" }} />
+            <BiCheckCircle size={18} style={{ verticalAlign: "text-bottom" }} />
           ) : (
-            <IoMdCopy size={20} style={{ verticalAlign: "text-bottom" }} />
+            <img src={copy} height={18} alt="icon copy" />
           ))}
       </Button>
     </Tooltip>
