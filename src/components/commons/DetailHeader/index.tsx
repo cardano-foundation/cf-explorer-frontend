@@ -37,6 +37,7 @@ import {
   ProgressStatus,
   ProgressStatusText,
   ProgressPercent,
+  SlotLeaderTitle,
 } from "./styles";
 import { ADAToken } from "../Token";
 import NotFound from "../../../pages/NotFound";
@@ -112,7 +113,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
         <SlotLeader>
           {/* <Tooltip title={`${header.hash}`} placement="top"> */}
           <Link to={"/"}>
-            {header.slotLeader && <small>Slot leader:</small>} <SlotLeaderValue>{header.hash}</SlotLeaderValue>
+            {header.slotLeader && <SlotLeaderTitle>Slot leader:</SlotLeaderTitle>} <SlotLeaderValue>{header.hash}</SlotLeaderValue>
           </Link>
           {/* </Tooltip> */}
           <SlotLeaderCopy text={header.hash} />

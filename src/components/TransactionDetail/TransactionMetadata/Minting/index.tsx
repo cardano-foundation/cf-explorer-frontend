@@ -3,10 +3,9 @@ import { Box, Button, Dialog, DialogTitle } from "@mui/material";
 
 import { IoMdCopy } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { formatADA } from "../../../../commons/utils/helper";
 
 import Table, { Column } from "../../../commons/Table";
-import mintingIcon from "../../../../commons/resources/images/mintingIcon.png";
+import mintingIcon from "../../../../commons/resources/images/copy.svg";
 
 import styles from "./index.module.scss";
 
@@ -54,7 +53,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
               setSelectedItem(r);
             }}
           >
-            <IoMdCopy className={styles.icon} />
+            <img src={mintingIcon} alt="icon" className={styles.icon} />
           </div>
         );
       },
