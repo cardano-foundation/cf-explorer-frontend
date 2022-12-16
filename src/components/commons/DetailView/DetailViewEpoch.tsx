@@ -200,11 +200,11 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
         </Group>
         <Group>
           <DetailLink to={routers.EPOCH_DETAIL.replace(":epochId", `${data.no}`)}>
-            <DetailLabel>
+            <DetailLabel style={{ fontSize: 18 }}>
               <DetailLinkIcon>
                 <HiOutlineCube />
               </DetailLinkIcon>
-              Block
+              Blocks
             </DetailLabel>
             <DetailValue>
               <DetailLinkRight>
