@@ -39,7 +39,7 @@ import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { routers } from "../../../commons/routers";
-import { formatADA, getShortHash } from "../../../commons/utils/helper";
+import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import { Tooltip } from "@mui/material";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import moment from "moment";
@@ -176,7 +176,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               <InfoIcon />
               Transaction
             </DetailLabel>
-            <DetailValue>{data.blockNo}</DetailValue>
+            <DetailValue>{data.txCount}</DetailValue>
           </DetailsInfoItem>
           <DetailsInfoItem>
             <DetailLabel>
@@ -206,7 +206,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
             <DetailValue>
               <Tooltip placement="top" title={data.slotLeader}>
                 <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${data.blockNo}`)}>
-                  {getShortHash(data.slotLeader)}
+                  {getShortWallet(data.slotLeader)}
                 </StyledLink>
               </Tooltip>
               <DetailCopy text={data.slotLeader} />
