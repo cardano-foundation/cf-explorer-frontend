@@ -205,7 +205,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
             </DetailLabel>
             <DetailValue>
               <Tooltip placement="top" title={data.slotLeader}>
-                <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${data.blockNo}`)}>
+                <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${data.slotLeader}`)}>
                   {getShortWallet(data.slotLeader)}
                 </StyledLink>
               </Tooltip>
