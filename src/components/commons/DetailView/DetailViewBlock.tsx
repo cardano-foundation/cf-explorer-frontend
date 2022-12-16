@@ -42,6 +42,7 @@ import { routers } from "../../../commons/routers";
 import { formatADA, getShortHash } from "../../../commons/utils/helper";
 import { Tooltip } from "@mui/material";
 import { FaAngleDoubleRight } from "react-icons/fa";
+import moment from "moment";
 
 type DetailViewBlockProps = {
   blockNo: number;
@@ -168,7 +169,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               <InfoIcon />
               Created at
             </DetailLabel>
-            <DetailValue>{data.blockNo}</DetailValue>
+            <DetailValue>{moment(data.time).format("MM/DD/yyyy hh:mm:ss")}</DetailValue>
           </DetailsInfoItem>
           <DetailsInfoItem>
             <DetailLabel>
