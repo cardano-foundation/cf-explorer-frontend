@@ -168,7 +168,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               <InfoIcon />
               Created at
             </DetailLabel>
-            <DetailValue>{data.blockNo}</DetailValue>
+            <DetailValue>{data.time}</DetailValue>
           </DetailsInfoItem>
           <DetailsInfoItem>
             <DetailLabel>

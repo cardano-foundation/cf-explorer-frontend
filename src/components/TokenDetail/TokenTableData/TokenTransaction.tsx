@@ -3,7 +3,6 @@ import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { parse, stringify } from "qs";
 import moment from "moment";
-import { BiLinkExternal } from "react-icons/bi";
 
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { routers } from "../../../commons/routers";
@@ -12,7 +11,7 @@ import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/
 
 import Table, { Column } from "../../commons/Table";
 
-import { Transaction } from "./styles";
+import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
 
 interface ITokenTransaction {
   active: boolean;
@@ -45,7 +44,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       title: "#",
       key: "id",
       minWidth: "40px",
-      render: (data, index) => <Transaction.TransactionIndex>{index + 1}</Transaction.TransactionIndex>,
+      render: (data, index) => <SmallText>{index + 1}</SmallText>,
     },
     {
       title: "Trx Hash",
@@ -55,11 +54,10 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       render: r => (
         <>
           <Tooltip title={r.hash} placement="top">
-            <Transaction.TransactionHash to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.hash)}>
-              {getShortHash(r.hash)}
-            </Transaction.TransactionHash>
+            <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </Tooltip>
-          <div>{moment(r.time).format("MM/DD/YYYY HH:mm:ss")}</div>
+          <br />
+          <SmallText>{moment(r.time).format("MM/DD/YYYY HH:mm:ss")}</SmallText>
         </>
       ),
     },
@@ -69,15 +67,10 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       minWidth: "200px",
       render: r => (
         <>
-          <Transaction.TransactionHash to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>
-            {r.blockNo}
-          </Transaction.TransactionHash>
-          <div style={{ display: "flex" }}>
-            <Transaction.TransactionHash to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epochNo}`)}>
-              {r.epochNo}
-            </Transaction.TransactionHash>
-            / {r.slot}
-          </div>
+          <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>{r.blockNo}</StyledLink>
+          <br />
+          <StyledLink to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epochNo}`)}>{r.epochNo}</StyledLink>/
+          <SmallText>{r.slot} </SmallText>
         </>
       ),
     },
@@ -88,36 +81,42 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       render(r, index) {
         return (
           <>
-            <Transaction.TransactionAddressInput>
-              <Transaction.TransactionAddressTitle>Input: </Transaction.TransactionAddressTitle>
+            <Flex>
+              <Label>Input: </Label>
               <div>
-                {r.addressesInput.slice(0, 2).map((tx, key) => (
-                  <Tooltip key={key} title={tx} placement="top">
-                    <Transaction.TransactionHash to={`#`} key={key}>
-                      {getShortWallet(tx)}
-                      <BiLinkExternal style={{ marginLeft: 8 }} />
-                    </Transaction.TransactionHash>
-                  </Tooltip>
+                {r.addressesInput.slice(0, 2).map((address, key) => (
+                  <>
+                    <Tooltip key={key} title={address} placement="top">
+                      <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${address}`)} key={key}>
+                        {getShortWallet(address)}
+                      </StyledLink>
+                    </Tooltip>
+                    <br />
+                  </>
                 ))}
-                {r.addressesInput.length > 2 && <Transaction.TransactionHash to={`#`}>...</Transaction.TransactionHash>}
-              </div>
-            </Transaction.TransactionAddressInput>
-            <Transaction.TransactionAddressOutput>
-              <Transaction.TransactionAddressTitle>Output: </Transaction.TransactionAddressTitle>
-              <div>
-                {r.addressesOutput.slice(0, 2).map((tx, key) => (
-                  <Tooltip key={key} title={tx} placement="top">
-                    <Transaction.TransactionHash to={`#`} key={key}>
-                      {getShortWallet(tx)}
-                      <BiLinkExternal style={{ marginLeft: 8 }} />
-                    </Transaction.TransactionHash>
-                  </Tooltip>
-                ))}
-                {r.addressesOutput.length > 2 && (
-                  <Transaction.TransactionHash to={`#`}>...</Transaction.TransactionHash>
+                {r.addressesInput.length > 2 && (
+                  <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>...</StyledLink>
                 )}
               </div>
-            </Transaction.TransactionAddressOutput>
+            </Flex>
+            <Flex>
+              <Label>Output: </Label>
+              <div>
+                {r.addressesOutput.slice(0, 2).map((address, key) => (
+                  <>
+                    <Tooltip key={key} title={address} placement="top">
+                      <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${address}`)} key={key}>
+                        {getShortWallet(address)}
+                      </StyledLink>
+                    </Tooltip>
+                    <br />
+                  </>
+                ))}
+                {r.addressesOutput.length > 2 && (
+                  <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>...</StyledLink>
+                )}
+              </div>
+            </Flex>
           </>
         );
       },
@@ -127,10 +126,10 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       key: "fee",
       minWidth: "120px",
       render: r => (
-        <Transaction.TransactionFee>
-          {formatADA(r.fee) || 0}
-          <Transaction.StyledImg src={AIcon} alt="a icon" />
-        </Transaction.TransactionFee>
+        <PriceValue>
+          <SmallText>{formatADA(r.fee) || 0}</SmallText>
+          <PriceIcon src={AIcon} alt="a icon" />
+        </PriceValue>
       ),
     },
     {
@@ -138,10 +137,10 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       minWidth: "120px",
       key: "ouput",
       render: r => (
-        <Transaction.TransactionOutput>
-          {formatADA(r.totalOutput) || 0}
-          <Transaction.StyledImg src={AIcon} alt="a icon" />
-        </Transaction.TransactionOutput>
+        <PriceValue>
+          <SmallText>{formatADA(r.totalOutput) || 0}</SmallText>
+          <PriceIcon src={AIcon} alt="a icon" />
+        </PriceValue>
       ),
     },
   ];

@@ -1,4 +1,4 @@
-import { Grid, Skeleton, Tooltip } from "@mui/material"; 
+import { Grid, Skeleton } from "@mui/material";
 import React from "react";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { Link, useHistory } from "react-router-dom";
@@ -6,6 +6,7 @@ import useFetchList from "../../../commons/hooks/useFetchList";
 import { BlankBlueIcon, AIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
+import CustomTooltip from "../../commons/CustomTooltip";
 import {
   Hash,
   Header,
@@ -72,11 +73,11 @@ const LatestTransactions: React.FC = () => {
                       <ItemDetail>
                         <p>
                           <small>Transaction hash: </small>
-                          <Tooltip placement="top" title={hash}>
+                          <CustomTooltip placement="top" title={hash}>
                             <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
                               <Hash>{getShortHash(hash)}</Hash>
                             </Link>
-                          </Tooltip>
+                          </CustomTooltip>
                         </p>
                         <p>
                           <small>Block: </small>
@@ -88,12 +89,12 @@ const LatestTransactions: React.FC = () => {
                           return (
                             <p key={add}>
                               <small>From: </small>
-                              <Tooltip placement="top" title={add}>
+                              <CustomTooltip placement="top" title={add}>
                                 <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
                                   <BlankImage src={BlankBlueIcon} alt="blank blue" />
                                 </Link>
-                              </Tooltip>
+                              </CustomTooltip>
                             </p>
                           );
                         })}
@@ -101,12 +102,12 @@ const LatestTransactions: React.FC = () => {
                           return (
                             <p key={add}>
                               <small>To: </small>
-                              <Tooltip placement="top" title={add}>
+                              <CustomTooltip placement="top" title={add}>
                                 <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
                                   <BlankImage src={BlankBlueIcon} alt="blank blue" />
                                 </Link>
-                              </Tooltip>
+                              </CustomTooltip>
                             </p>
                           );
                         })}

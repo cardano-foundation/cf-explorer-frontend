@@ -37,6 +37,7 @@ export const Content = styled(Box)`
 export const Name = styled("h4")`
   width: calc(100% - 70px);
   margin-bottom: 0.75rem;
+  color: #344054;
 `;
 
 export const Title = styled("h3")`

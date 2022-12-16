@@ -49,6 +49,7 @@ import { formatCurrency, getShortHash } from "../../../commons/utils/helper";
 import { Tooltip } from "@mui/material";
 import axios from "axios";
 import { FaAngleDoubleRight } from "react-icons/fa";
+import moment from "moment";
 
 type DetailViewTokenProps = {
   tokenId: string;
@@ -232,7 +233,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
           <DetailsInfoItem>
             <DetailLabel>
               <InfoIcon />
-              Transaction
+              Transactions
             </DetailLabel>
             <DetailValue>{data.txCount}</DetailValue>
           </DetailsInfoItem>
@@ -241,7 +242,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
               <InfoIcon />
               Created
             </DetailLabel>
-            <DetailValue>{data.createdOn}</DetailValue>
+            <DetailValue>{moment(data.createdOn).format("MM/DD/YYYY HH:mm:ss")}</DetailValue>
           </DetailsInfoItem>
         </Group>
         <Group>
