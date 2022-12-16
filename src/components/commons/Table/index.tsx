@@ -116,12 +116,19 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
           component="div"
           count={pagination.total || 0}
           page={page}
+          rowsPerPageOptions={[10, 20, 50]}
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={handleChangeRowsPerPage}
           sx={{
             ".MuiToolbar-root": {
               alignItems: "baseline",
+            },
+            ".MuiSelect-select": {
+              fontWeight: "bold",
+            },
+            ".MuiTablePagination-displayedRows": {
+              fontWeight: "bold",
             },
           }}
         />
