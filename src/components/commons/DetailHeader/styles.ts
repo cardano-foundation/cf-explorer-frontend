@@ -81,6 +81,9 @@ export const SlotLeaderValue = styled("span")`
   word-break: break-word;
   line-height: 1.5;
 `;
+export const SlotLeaderTitle = styled("small")`
+  font-family: var(--font-family-text);
+`;
 
 export const SlotLeaderCopy = styled(CopyButton)`
   margin-bottom: 3px;
@@ -130,8 +133,8 @@ export const EpochText = styled("small")`
 `;
 
 export const Icon = styled("img")`
-  width: 24px;
-  height: 24px;
+  width: 25px;
+  height: 25px;
 `;
 
 export const IconSkeleton = styled(Skeleton)`
