@@ -15,7 +15,6 @@ import DetailViewTransaction from "../commons/DetailView/DetailViewTransaction";
 import { useState } from "react";
 import { useWindowSize } from "react-use";
 import { setOnDetailView } from "../../stores/user";
-import { BiLinkExternal } from "react-icons/bi";
 
 interface TransactionListProps {
   underline?: boolean;
@@ -92,8 +91,8 @@ const TransactionList: React.FC<TransactionListProps> = ({
       ),
     },
     {
-      title: "Address",
-      key: "address",
+      title: "Addresses",
+      key: "addresses",
       minWidth: "200px",
       render(r, index) {
         return (
@@ -106,7 +105,6 @@ const TransactionList: React.FC<TransactionListProps> = ({
                     <Tooltip key={key} title={tx} placement="top">
                       <Link to={routers.ADDRESS_DETAIL.replace(":address", tx)} className={` ${styles.link}`} key={key}>
                         {getShortWallet(tx)}
-                        <BiLinkExternal style={{ marginLeft: 8 }} />
                       </Link>
                     </Tooltip>
                   );
@@ -126,7 +124,6 @@ const TransactionList: React.FC<TransactionListProps> = ({
                     <Tooltip key={key} title={tx} placement="top">
                       <Link to={routers.ADDRESS_DETAIL.replace(":address", tx)} className={` ${styles.link}`} key={key}>
                         {getShortWallet(tx)}
-                        <BiLinkExternal style={{ marginLeft: 8 }} />
                       </Link>
                     </Tooltip>
                   );
