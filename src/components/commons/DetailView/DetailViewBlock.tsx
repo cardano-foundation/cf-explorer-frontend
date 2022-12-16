@@ -137,7 +137,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
           <Item>
             <Icon src={CubeIcon} alt="socket" />
             <ItemName>Block</ItemName>
-            <ItemValue>{data.epochNo}</ItemValue>
+            <ItemValue>{data.blockNo}</ItemValue>
           </Item>
           <Item>
             <Icon src={RocketIcon} alt="socket" />
