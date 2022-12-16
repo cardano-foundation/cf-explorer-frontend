@@ -157,7 +157,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
             </DetailLabel>
             <DetailValue>
               <Tooltip placement="top" title={data.hash}>
-                <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${data.hash}`)}>
+                <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${data.blockNo}`)}>
                   {getShortHash(data.hash)}
                 </StyledLink>
               </Tooltip>
