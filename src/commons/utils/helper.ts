@@ -49,7 +49,7 @@ export const getNumberFromCurrency = (value?: string | number, groupSeparator: s
   return str.replace(new RegExp(groupSeparator, "g"), "");
 };
 
-export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "t", "q", "Q", "s", "S"];
+export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "T", "q", "Q", "s", "S"];
 
 export const formatPrice = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
   if (!value) return `0${abbreviations[0]}`;
