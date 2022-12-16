@@ -39,9 +39,10 @@ import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { routers } from "../../../commons/routers";
-import { formatADA, getShortHash } from "../../../commons/utils/helper";
+import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import { Tooltip } from "@mui/material";
 import { FaAngleDoubleRight } from "react-icons/fa";
+import moment from "moment";
 
 type DetailViewBlockProps = {
   blockNo: number;
@@ -137,7 +138,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
           <Item>
             <Icon src={CubeIcon} alt="socket" />
             <ItemName>Block</ItemName>
-            <ItemValue>{data.epochNo}</ItemValue>
+            <ItemValue>{data.blockNo}</ItemValue>
           </Item>
           <Item>
             <Icon src={RocketIcon} alt="socket" />
@@ -156,7 +157,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
             </DetailLabel>
             <DetailValue>
               <Tooltip placement="top" title={data.hash}>
-                <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${data.hash}`)}>
+                <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${data.blockNo}`)}>
                   {getShortHash(data.hash)}
                 </StyledLink>
               </Tooltip>
@@ -168,14 +169,14 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               <InfoIcon />
               Created at
             </DetailLabel>
-            <DetailValue>{data.blockNo}</DetailValue>
+            <DetailValue>{moment(data.time).format("MM/DD/yyyy hh:mm:ss")}</DetailValue>
           </DetailsInfoItem>
           <DetailsInfoItem>
             <DetailLabel>
               <InfoIcon />
               Transaction
             </DetailLabel>
-            <DetailValue>{data.blockNo}</DetailValue>
+            <DetailValue>{data.txCount}</DetailValue>
           </DetailsInfoItem>
           <DetailsInfoItem>
             <DetailLabel>
@@ -204,8 +205,8 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
             </DetailLabel>
             <DetailValue>
               <Tooltip placement="top" title={data.slotLeader}>
-                <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${data.blockNo}`)}>
-                  {getShortHash(data.slotLeader)}
+                <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${data.slotLeader}`)}>
+                  {getShortWallet(data.slotLeader)}
                 </StyledLink>
               </Tooltip>
               <DetailCopy text={data.slotLeader} />

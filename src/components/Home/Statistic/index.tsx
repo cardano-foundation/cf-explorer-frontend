@@ -84,7 +84,7 @@ const HomeStatistic: React.FC<Props> = () => {
                 <Value up>
                   <b>{formatCurrency((currentEpoch?.slot || 0) % MAX_SLOT_EPOCH)}</b>
                 </Value>
-                <Small>/{formatCurrency(MAX_SLOT_EPOCH)}</Small>
+                <Small> / {formatCurrency(MAX_SLOT_EPOCH)}</Small>
               </Content>
             </Item>
           </Link>

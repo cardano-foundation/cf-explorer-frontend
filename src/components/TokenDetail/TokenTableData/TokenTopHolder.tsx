@@ -10,7 +10,7 @@ import { routers } from "../../../commons/routers";
 import { formatADA, getShortHash } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
 
-import { TopHolder } from "./styles";
+import { PriceIcon, PriceValue, SmallText, StyledLink, TopHolder } from "./styles";
 
 interface ITokenTopHolder {
   active: boolean;
@@ -45,7 +45,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       title: "#",
       key: "id",
       minWidth: "40px",
-      render: (data, index) => <TopHolder.TopHolderIndex>{index + 1}</TopHolder.TopHolderIndex>,
+      render: (data, index) => <SmallText>{index + 1}</SmallText>,
     },
     {
       title: "Address",
@@ -53,10 +53,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       minWidth: "200px",
       render: r => (
         <Tooltip title={r.address} placement="top">
-          <TopHolder.TopHolderHash to={routers.ADDRESS_DETAIL.replace(":address", `${r.address}`)}>
-            {getShortHash(r.address)}
-            <BiLinkExternal style={{ marginLeft: 8 }} />
-          </TopHolder.TopHolderHash>
+          <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", r.address)}>{getShortHash(r.address)}</StyledLink>
         </Tooltip>
       ),
     },
@@ -65,10 +62,10 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       key: "balance",
       minWidth: "200px",
       render: r => (
-        <TopHolder.TopHolderBalance>
-          {formatADA(r.quantity) || 0}
-          <TopHolder.StyledImg src={AIcon} alt="a icon" />
-        </TopHolder.TopHolderBalance>
+        <PriceValue>
+          <SmallText>{formatADA(r.quantity) || 0}</SmallText>
+          <PriceIcon src={AIcon} alt="a icon" />
+        </PriceValue>
       ),
     },
     {
@@ -76,9 +73,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       key: "share",
       minWidth: "200px",
       render: r => (
-        <TopHolder.TopHolderShare>
-          {r.quantity && totalSupply ? ((r.quantity / totalSupply) * 100).toFixed(2) : 0}%
-        </TopHolder.TopHolderShare>
+        <SmallText>{r.quantity && totalSupply ? ((r.quantity / totalSupply) * 100).toFixed(2) : 0}%</SmallText>
       ),
     },
   ];
@@ -87,10 +82,12 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
     <Table
       columns={columns}
       data={transactions}
-      total={{ count: total, title: "Total" }}
+      total={{ count: total, title: "Total Top Holders" }}
       loading={transactionsLoading}
       initialized={initialized}
-      //   onClickRow={(_, r: Transactions) => history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`))}
+      onClickRow={(_, r: ITokenTopHolderTable) =>
+        history.push(routers.ADDRESS_DETAIL.replace(":address", `${r.address}`))
+      }
       pagination={{
         onChange: (page, size) => {
           setQuery({ page, size });

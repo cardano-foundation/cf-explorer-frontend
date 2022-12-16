@@ -12,6 +12,7 @@ const Form = styled("form")<{ isHome: boolean }>`
   align-items: center;
   width: 100%;
   max-width: ${props => (props.isHome ? 785 : 400)}px;
+  min-width: 400px;
   height: ${props => (props.isHome ? 60 : 44)}px;
   margin: auto;
   border-radius: ${props => (props.isHome ? 30 : 8)}px;
@@ -19,6 +20,7 @@ const Form = styled("form")<{ isHome: boolean }>`
   color: ${props => props.theme.textColor};
   padding: 0px 0px 0px ${props => (props.isHome ? 15 : 0)}px;
   border: 1px solid ${props => props.theme.borderColor};
+  box-sizing: border-box;
   margin-top: ${props => (props.isHome ? 30 : 0)}px;
 `;
 
@@ -109,8 +111,24 @@ const options: Option[] = [
     label: "All Filters",
   },
   {
-    value: "other",
-    label: "Other Filter",
+    value: "block",
+    label: "Block",
+  },
+  {
+    value: "transaction",
+    label: "Transaction",
+  },
+  {
+    value: "token",
+    label: "Tokens",
+  },
+  {
+    value: "stake",
+    label: "Stake key",
+  },
+  {
+    value: "address",
+    label: "Addresses",
   },
 ];
 const HeaderSearch: React.FC<Props> = ({ isHome }) => {
@@ -130,7 +148,9 @@ const HeaderSearch: React.FC<Props> = ({ isHome }) => {
     setValues({ search, filter: e.target.value as Option["value"] });
   };
   const handleChangeSearch = (e?: React.ChangeEvent) => {
-    setValues({ filter, search: (e?.target as HTMLInputElement)?.value as Option["value"] });
+    const search = (e?.target as HTMLInputElement)?.value as string;
+    if (!/^[a-zA-Z0-9_]*$/.test(search)) return;
+    setValues({ filter, search });
   };
   const handleKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" || e.code === "Enter" || e.keyCode === 13 || e.which === 13) {
@@ -151,13 +171,14 @@ const HeaderSearch: React.FC<Props> = ({ isHome }) => {
         isHome={isHome}
         required
         type="search"
+        value={search}
         spellCheck={false}
-        placeholder="Search transaction, address, block, epoch, pool..."
+        placeholder={isHome ? "Search transaction, address, block, epoch, pool..." : "Search ..."}
         onChange={handleChangeSearch}
         onKeyDown={handleKeydown}
         disableUnderline
       />
-      <SubmitButton type="submit" isHome={isHome}>
+      <SubmitButton type="submit" isHome={isHome} disabled={!search}>
         <Image src={HeaderSearchIcon} alt="search" isHome={isHome} />
       </SubmitButton>
     </Form>

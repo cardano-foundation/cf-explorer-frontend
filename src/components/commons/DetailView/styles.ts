@@ -126,6 +126,7 @@ export const TokenInfoLabel = styled("small")`
   color: ${props => props.theme.textColorReverse};
   font-size: var(--font-size-text-x-small);
   margin-bottom: 5px;
+  opacity: 0.5;
 `;
 
 export const TokenInfoValue = styled("span")`
@@ -280,7 +281,7 @@ export const DetailLink = styled(Link)`
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-normal);
   &:hover{
-    bac
+    /* background: ; */
   }
 `;
 
@@ -396,7 +397,7 @@ export const SeemoreText = styled("span")`
 export const ProgressSkeleton = styled(Skeleton)`
   width: 150px;
   height: 150px;
-  border-radius: ;
+  border-radius: ${props => props.theme.borderRadius};
 `;
 export const IconSkeleton = styled(Skeleton)`
   width: 24px;

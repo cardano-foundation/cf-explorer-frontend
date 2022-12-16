@@ -12,7 +12,7 @@ import { formatADA, getShortHash } from "../../../commons/utils/helper";
 
 import Table, { Column } from "../../commons/Table";
 
-import { Minting } from "./styles";
+import { Minting, PriceValue, SmallText, StyledLink, PriceIcon } from "./styles";
 
 interface ITokenMinting {
   active: boolean;
@@ -33,7 +33,6 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
     loading: transactionsLoading,
     initialized,
     total,
-    totalPage,
     currentPage,
   } = useFetchList<ITokenTopHolderTable>(active ? `tokens/${tokenId}/mints` : "", {
     page: query.page ? +query.page - 1 : 0,
@@ -46,7 +45,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
       title: "#",
       key: "id",
       minWidth: "40px",
-      render: (data, index) => <Minting.MintingIndex>{index + 1}</Minting.MintingIndex>,
+      render: (data, index) => <SmallText>{index + 1}</SmallText>,
     },
     {
       title: "Trx Hash",
@@ -54,10 +53,9 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
       minWidth: "200px",
       render: r => (
         <Tooltip title={r.txHash} placement="top">
-          <Minting.MintingHash to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.txHash)}>
+          <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.txHash)}>
             {getShortHash(r.txHash)}
-            <BiLinkExternal style={{ marginLeft: 8 }} />
-          </Minting.MintingHash>
+          </StyledLink>
         </Tooltip>
       ),
     },
@@ -66,17 +64,17 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
       key: "amountMinted",
       minWidth: "200px",
       render: r => (
-        <Minting.MintingBalance>
-          {formatADA(r.amount) || 0}
-          <Minting.StyledImg src={AIcon} alt="a icon" />
-        </Minting.MintingBalance>
+        <PriceValue>
+          <SmallText>{formatADA(r.amount) || 0}</SmallText>
+          <PriceIcon src={AIcon} alt="a icon" />
+        </PriceValue>
       ),
     },
     {
       title: "Time",
       key: "time",
       minWidth: "200px",
-      render: r => <>{moment(r.time).format("MM/DD/YYYY HH:mm:ss")}</>,
+      render: r => <SmallText>{moment(r.time).format("MM/DD/YYYY HH:mm:ss")}</SmallText>,
     },
   ];
 
@@ -84,10 +82,10 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
     <Table
       columns={columns}
       data={transactions}
-      total={{ count: total, title: "Total" }}
+      total={{ count: total, title: "Total Minting" }}
       loading={transactionsLoading}
       initialized={initialized}
-      //   onClickRow={(_, r: Transactions) => history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`))}
+      onClickRow={(_, r: ITokenMintingTable) => history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.txHash}`))}
       pagination={{
         onChange: (page, size) => {
           setQuery({ page, size });

@@ -1,9 +1,11 @@
 @import "../../../themes/variable.scss";
+
 .tab {
-  padding: 25px 0px;
   .title {
     margin-bottom: 0px;
     color: var(--title-color);
+    text-align: left;
+    text-transform: capitalize !important;
   }
   .active {
     color: var(--color-black);

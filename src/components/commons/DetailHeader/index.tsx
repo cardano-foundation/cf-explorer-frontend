@@ -37,6 +37,7 @@ import {
   ProgressStatus,
   ProgressStatusText,
   ProgressPercent,
+  SlotLeaderTitle,
 } from "./styles";
 import { ADAToken } from "../Token";
 import NotFound from "../../../pages/NotFound";
@@ -61,7 +62,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
   if (loading) {
     return (
       <HeaderDetailContainer>
-        <BackButton to="/">
+        <BackButton to={getRouterList()}>
           <HiArrowLongLeft />
           <BackText>Back</BackText>
         </BackButton>
@@ -110,11 +111,11 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
       </HeaderContainer>
       {header.hash && (
         <SlotLeader>
-          <Tooltip title={`${header.hash}`} placement="top">
-            <Link to={"/"}>
-              {header.slotLeader && <small>Slot leader:</small>} <SlotLeaderValue>{header.hash}</SlotLeaderValue>
-            </Link>
-          </Tooltip>
+          {/* <Tooltip title={`${header.hash}`} placement="top"> */}
+          <Link to={"/"}>
+            {header.slotLeader && <SlotLeaderTitle>Slot leader:</SlotLeaderTitle>} <SlotLeaderValue>{header.hash}</SlotLeaderValue>
+          </Link>
+          {/* </Tooltip> */}
           <SlotLeaderCopy text={header.hash} />
         </SlotLeader>
       )}
