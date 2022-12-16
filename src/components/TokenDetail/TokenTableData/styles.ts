@@ -2,17 +2,16 @@ import { Select, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledSelect = styled(Select)`
-  min-width: 250px;
-  text-align: left;
-  font-family: var(--font-family-title);
-  border: 2px solid #c8cdd8;
-  background: transparent;
+  font-family: var(--font-family-text);
+  background: #fff;
   color: #344054;
   border-radius: 8px;
+  min-width: 250px;
   & > div {
-    padding: 6.5px 12px;
-    font-weight: var(--font-weight-bold);
+    padding: 6.5px 14px;
     cursor: pointer;
+    font-weight: 400;
+    text-align: left;
   }
   & > fieldset {
     top: 0;
@@ -23,61 +22,50 @@ export const StyledSelect = styled(Select)`
     font-size: 20px;
   }
 `;
+
 export const OptionSelect = styled("option")(({ theme }) => ({
   padding: "6px 0",
   textAlign: "center",
   height: "40px",
 }));
 
-const Bold = styled("span")`
+export const Bold = styled("span")`
   font-weight: var(--font-weight-bold);
 `;
 
-const Flex = styled("div")`
+export const Flex = styled("div")`
   display: flex;
 `;
 
-const StyledLink = styled(Link)`
+export const StyledLink = styled(Link)`
+  display: inline-block;
   font-family: var(--font-family-text) !important;
+  font-size: var(--font-size-text-small);
   color: ${props => props.theme.colorBlue} !important;
-  display: flex;
+  margin-bottom: 5px;
+`;
+
+export const SmallText = styled("small")`
+  display: inline-block;
+  color: #344054;
+  margin-bottom: 5px;
+`;
+
+export const PriceValue = styled(Flex)`
   align-items: center;
-  font-weight: var(--font-weight-bold);
+`;
+ 
+
+export const Label = styled(SmallText)`
+  min-width: 50px;
 `;
 
-/* Transactions */
-const TransactionIndex = styled(Bold)``;
-
-const TransactionHash = styled(StyledLink)``;
-
-const TransactionAddressInput = styled(Flex)``;
-
-const TransactionAddressOutput = styled(TransactionAddressInput)`
-  padding-top: 8px;
-`;
-
-const TransactionAddressTitle = styled("div")`
-  min-width: 60px;
-`;
-
-const StyledImg = styled("img")`
+export const PriceIcon = styled("img")`
+  height: var(--font-size-text-small);
+  width: auto;
   margin-left: 8px;
+  margin-bottom: 5px;
 `;
-
-const TransactionFee = styled(Bold)``;
-
-const TransactionOutput = styled(Bold)``;
-
-export const Transaction = {
-  TransactionIndex,
-  TransactionHash,
-  TransactionAddressInput,
-  TransactionAddressOutput,
-  TransactionAddressTitle,
-  TransactionFee,
-  TransactionOutput,
-  StyledImg,
-};
 
 /* Top Holders */
 const TopHolderIndex = styled(Bold)``;
@@ -90,7 +78,7 @@ export const TopHolder = {
   TopHolderHash,
   TopHolderBalance,
   TopHolderShare,
-  StyledImg,
+  StyledImg: PriceIcon,
 };
 
 /* Minting */
@@ -102,5 +90,5 @@ export const Minting = {
   MintingIndex,
   MintingHash,
   MintingBalance,
-  StyledImg,
+  StyledImg: PriceIcon,
 };

@@ -126,6 +126,7 @@ export const TokenInfoLabel = styled("small")`
   color: ${props => props.theme.textColorReverse};
   font-size: var(--font-size-text-x-small);
   margin-bottom: 5px;
+  opacity: 0.5;
 `;
 
 export const TokenInfoValue = styled("span")`

@@ -44,14 +44,14 @@ const TokenList: React.FC<ITokenList> = ({
 
   const columns: Column<IToken>[] = [
     {
-      title: "Logo",
-      key: "logo",
+      title: "Icon",
+      key: "icon",
       minWidth: "100px",
       render: r =>
         tokensMetadataLoading ? (
           <Skeleton style={{ width: 30, height: 30 }} />
         ) : r.logo ? (
-          <Logo src={`data:/image/png;base64,${r.logo}`} alt="Logo" />
+          <Logo src={`data:/image/png;base64,${r.logo}`} alt="icon" />
         ) : null,
     },
     {

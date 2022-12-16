@@ -62,7 +62,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
   if (loading) {
     return (
       <HeaderDetailContainer>
-        <BackButton to="/">
+        <BackButton to={getRouterList()}>
           <HiArrowLongLeft />
           <BackText>Back</BackText>
         </BackButton>

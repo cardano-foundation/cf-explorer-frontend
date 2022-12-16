@@ -21,7 +21,7 @@ export const StyledSelect = styled(Select)`
   border-radius: 8px;
   min-width: 250px;
   & > div {
-    padding: 6.5px 12px;
+    padding: 6.5px 14px;
     cursor: pointer;
     font-weight: 400;
     text-align: left;

@@ -12,6 +12,7 @@ export const HeaderContainer = styled("header")<{ isHome: boolean }>`
 
 export const HeaderBox = styled(Container)<{ isHome: boolean }>`
   display: flex;
+  gap: 10px;
   ${props =>
     props.isHome
       ? `flex-direction: column-reverse;`
@@ -20,6 +21,9 @@ export const HeaderBox = styled(Container)<{ isHome: boolean }>`
         justify-content: space-between;
         align-items:center;
       `}
+  @media (max-width: 1023px) {
+    ${props => (props.isHome ? `` : `justify-content: flex-end;`)}
+  }
 `;
 export const HeaderBackground = styled("div")<{ isHome: boolean }>`
   position: absolute;
