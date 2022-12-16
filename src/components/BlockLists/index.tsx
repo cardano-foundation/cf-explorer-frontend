@@ -4,7 +4,7 @@ import { Container, Tooltip } from "@mui/material";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { getShortWallet, formatADA } from "../../commons/utils/helper";
+import { formatADA, getShortHash } from "../../commons/utils/helper";
 
 import { routers } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
@@ -45,7 +45,9 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
       minWidth: "150px",
       render: r => (
         <Tooltip placement="top" title={r.hash}>
-          <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>{getShortWallet(`${r.hash}`)}</StyledLink>
+          <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>
+            {getShortHash(`${r.hash}`)}
+          </StyledLink>
         </Tooltip>
       ),
     },
