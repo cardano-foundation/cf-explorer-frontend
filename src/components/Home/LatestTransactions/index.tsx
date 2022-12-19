@@ -90,7 +90,7 @@ const LatestTransactions: React.FC = () => {
                             <p key={add}>
                               <small>From: </small>
                               <CustomTooltip placement="top" title={add}>
-                                <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
+                                <Link to={routers.ADDRESS_DETAIL.replace(":address", `${add}`)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
                                   <BlankImage src={BlankBlueIcon} alt="blank blue" />
                                 </Link>
@@ -103,7 +103,7 @@ const LatestTransactions: React.FC = () => {
                             <p key={add}>
                               <small>To: </small>
                               <CustomTooltip placement="top" title={add}>
-                                <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
+                                <Link to={routers.ADDRESS_DETAIL.replace(":address", `${add}`)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
                                   <BlankImage src={BlankBlueIcon} alt="blank blue" />
                                 </Link>
