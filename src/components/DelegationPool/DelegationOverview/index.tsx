@@ -3,6 +3,7 @@ import moment from "moment";
 import React from "react";
 
 import { CurentEpochIcon, LiveStakeIcon, RocketBackground } from "../../../commons/resources";
+import { routers } from "../../../commons/routers";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
 
@@ -38,7 +39,9 @@ const OverViews: React.FC<OverViewProps> = ({ data, loading }) => {
         <StyledCard.Container>
           <StyledCard.Content>
             <StyledCard.Title>Epoch</StyledCard.Title>
-            <StyledCard.Value>{data?.epochNo}</StyledCard.Value>
+            <StyledCard.Link to={routers.EPOCH_DETAIL.replace(":epochId", "" + data?.epochNo || "")}>
+              {data?.epochNo}
+            </StyledCard.Link>
             <span style={{ color: "#667085" }}>
               End in:{" "}
               <StyledCard.Comment>
