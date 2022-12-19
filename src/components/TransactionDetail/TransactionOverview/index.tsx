@@ -11,6 +11,18 @@ interface Props {
 }
 
 const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
+  const renderConfirmationTag = () => {
+    if (data && data.tx && data.tx.confirmation) {
+      if (data.tx.confirmation <= 2) {
+        return CONFIRMATION_STATUS.LOW;
+      }
+      if (data.tx.confirmation <= 8) {
+        return CONFIRMATION_STATUS.MEDIUM;
+      }
+      return CONFIRMATION_STATUS.HIGH;
+    }
+  };
+
   return (
     <DetailHeader
       data={
@@ -30,7 +42,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           },
           confirmation: {
             confirmation: data.tx.confirmation,
-            status: CONFIRMATION_STATUS.MEDIUM,
+            status: renderConfirmationTag(),
           },
           transactionFees: {
             fee: data.tx.fee,

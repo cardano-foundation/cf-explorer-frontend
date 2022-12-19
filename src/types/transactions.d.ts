@@ -4,7 +4,8 @@ enum TransactionStatus {
 }
 enum ConfirmationStatus {
   MEDIUM = "MEDIUM",
-  SMALL = "SMALL",
+  LOW = "LOW",
+  HIGH = "HIGH",
 }
 
 interface Transactions {
