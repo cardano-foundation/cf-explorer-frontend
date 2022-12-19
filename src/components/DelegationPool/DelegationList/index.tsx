@@ -33,12 +33,9 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       maxWidth: "350px",
       render: r => {
         return (
-          <Link
-            to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolView}`)}
-            className={`${styles.link}`}
-          >
+          <PoolName to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolView}`)}>
             {r.poolName || r.poolView}
-          </Link>
+          </PoolName>
         );
       },
     },
@@ -137,4 +134,9 @@ const StyledLinearProgress = styled(LinearProgress)`
     border-radius: 34px;
     background: ${props => props.theme.linearGradientGreen};
   }
+`;
+
+const PoolName = styled(Link)`
+  font-family: var(--font-family-text) !important;
+  color: var(--color-blue) !important;;
 `;

@@ -42,6 +42,7 @@ export const THeader = styled("th")`
 export const TRow = styled("tr")`
   width: 100%;
   padding: 10px 0;
+  font-size: 14px;
   cursor: pointer;
   &:hover {
     border-radius: 10px;
