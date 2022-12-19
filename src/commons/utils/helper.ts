@@ -71,7 +71,7 @@ export const numberWithCommas = (x: number | string) => {
 export const formatADA = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
   if (!value) return `0${abbreviations[0]}`;
   const Ada = +value / 1000000;
-  if (Ada > 1000000000) {
+  if (Ada > 1000000) {
     const bigValue = new BigNumber(Ada.toString());
     const length = Ada.toFixed().toString().length;
     const exponential = Math.floor((length - 1) / 3) * 3;

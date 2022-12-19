@@ -81,6 +81,7 @@ const AddressWalletDetail = () => {
                 alignItems={"center"}
                 justifyContent="space-between"
                 width={"100%"}
+                fontSize={"14px"}
                 padding={1}
                 paddingLeft={0}
               >
@@ -92,11 +93,11 @@ const AddressWalletDetail = () => {
                     {option.displayName} #{option.name}
                   </Box>
                 </Box>
-                <Box fontWeight={"bold"}>{numberWithCommas(option.quantity || 0)}</Box>
+                <Box fontWeight={"bold"}>{formatADA(+option.quantity * 1000000 || 0)}</Box>
               </Box>
             </li>
           )}
-          renderInput={params => <TextField {...params} placeholder="Search Token" />}
+          renderInput={params => <StyledTextField {...params} placeholder="Search Token" />}
           popupIcon={<BiChevronDown />}
         />
       ),
@@ -224,7 +225,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ title, address, item, type, loa
       <Box className={styles.titleDetail}>{title}</Box>
       <Box className={styles.addressGroup}>
         <Link className={styles.address} to={routers.ADDRESS_DETAIL.replace(":address", address)}>
-          {address}{" "}
+          {address}
         </Link>
         <CopyButton />
       </Box>
@@ -284,5 +285,11 @@ const StyledSelect = styled(Select)`
   & > svg {
     color: #344054;
     font-size: 20px;
+  }
+`;
+
+const StyledTextField = styled(TextField)`
+  .MuiInputBase-input {
+    font-size: 14px;
   }
 `;
