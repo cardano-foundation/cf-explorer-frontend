@@ -18,6 +18,7 @@ interface Menu {
   mega?: boolean;
   children?: Menu[];
   icon?: string;
+  tooltip?: string;
 }
 interface Social {
   title: string;
@@ -25,8 +26,8 @@ interface Social {
   icon: IconType | string;
 }
 export const menus: Menu[] = [
-  { title: "DID", href: "/did", icon: DIDMenuIcon },
-  { title: "Supply Chain", href: "/chains", icon: SupplyChainMenuIcon },
+  { title: "DID", icon: DIDMenuIcon, tooltip: "Coming soon" },
+  { title: "Supply Chain", icon: SupplyChainMenuIcon, tooltip: "Coming soon" },
   {
     title: "Blockchain",
     icon: BlockChainMenuIcon,
@@ -50,7 +51,7 @@ export const menus: Menu[] = [
   },
   {
     title: "Tool",
-    href: "/tools",
+    href: "https://cardano-tools.io/latest",
     icon: ToolMenuIcon,
   },
 ];
@@ -60,7 +61,7 @@ export const socials: Social[] = [
   { href: "https://medium.com/@cardano.foundation", title: "Medium", icon: MediumIcon },
   { href: "https://t.me/CardanoAnnouncements", title: "Telegram", icon: FaTelegramPlane },
   { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube", icon: FaYoutube },
-  { href: "https://www.youtube.com/c/cardanofoundation", title: "Twitter", icon: FaTwitter },
+  { href: "https://twitter.com/Cardano_CF", title: "Twitter", icon: FaTwitter },
 ];
 
 export const footerMenus: Menu[] = [

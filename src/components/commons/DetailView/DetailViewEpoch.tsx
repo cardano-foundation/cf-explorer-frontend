@@ -31,9 +31,8 @@ import {
   DetailLink,
   DetailLinkIcon,
   DetailLinkRight,
-  SeemoreButton,
-  SeemoreText,
-  SeemoreBox,
+  ViewDetailScroll,
+  StyledViewMore,
 } from "./styles";
 import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
@@ -41,8 +40,9 @@ import moment from "moment";
 import { HiOutlineCube } from "react-icons/hi2";
 import { BiChevronRight } from "react-icons/bi";
 import { routers } from "../../../commons/routers";
-import { FaAngleDoubleRight } from "react-icons/fa";
 import { formatADA } from "../../../commons/utils/helper";
+import ViewMoreButton from "../ViewMoreButton";
+import CustomTooltip from "../CustomTooltip";
 
 type DetailViewEpochProps = {
   epochNo: number;
@@ -57,61 +57,67 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
     return (
       <ViewDetailDrawer anchor="right" open={!!epochNo} hideBackdrop variant="permanent">
         <ViewDetailContainer>
-          <CloseButton onClick={handleClose}>
-            <CgClose />
-          </CloseButton>
-          <HeaderContainer>
-            <ProgressSkeleton variant="circular" />
-          </HeaderContainer>
-          <ListItem>
-            <Item>
-              <IconSkeleton variant="circular" />
-              <ItemName>
-                <DetailValueSkeleton variant="rectangular" />
-              </ItemName>
-              <ItemValue>
-                <DetailLabelSkeleton variant="rectangular" />
-              </ItemValue>
-            </Item>
-            <Item>
-              <IconSkeleton variant="circular" />
-              <ItemName>
-                <DetailValueSkeleton variant="rectangular" />
-              </ItemName>
-              <ItemValue>
-                <DetailLabelSkeleton variant="rectangular" />
-              </ItemValue>
-            </Item>
-          </ListItem>
-          <Group>
-            {new Array(4).fill(0).map((_, index) => {
+          <ViewDetailScroll>
+            <StyledViewMore tooltipTitle="View Detail" to={routers.EPOCH_DETAIL.replace(":epochId", `${epochNo}`)} />
+            <CustomTooltip placement="top" title="Close">
+              <CloseButton onClick={handleClose}>
+                <CgClose />
+              </CloseButton>
+            </CustomTooltip>
+            <HeaderContainer>
+              <ProgressSkeleton variant="circular" />
+            </HeaderContainer>
+            <ListItem>
+              <Item>
+                <IconSkeleton variant="circular" />
+                <ItemName>
+                  <DetailValueSkeleton variant="rectangular" />
+                </ItemName>
+                <ItemValue>
+                  <DetailLabelSkeleton variant="rectangular" />
+                </ItemValue>
+              </Item>
+              <Item>
+                <IconSkeleton variant="circular" />
+                <ItemName>
+                  <DetailValueSkeleton variant="rectangular" />
+                </ItemName>
+                <ItemValue>
+                  <DetailLabelSkeleton variant="rectangular" />
+                </ItemValue>
+              </Item>
+            </ListItem>
+            <Group>
+              {new Array(4).fill(0).map((_, index) => {
+                return (
+                  <DetailsInfoItem key={index}>
+                    <DetailLabel>
+                      <DetailValueSkeleton variant="rectangular" />
+                    </DetailLabel>
+                    <DetailValue>
+                      <DetailLabelSkeleton variant="rectangular" />
+                    </DetailValue>
+                  </DetailsInfoItem>
+                );
+              })}
+            </Group>
+            {new Array(2).fill(0).map((_, index) => {
               return (
-                <DetailsInfoItem key={index}>
-                  <DetailLabel>
-                    <DetailValueSkeleton variant="rectangular" />
-                  </DetailLabel>
-                  <DetailValue>
-                    <DetailLabelSkeleton variant="rectangular" />
-                  </DetailValue>
-                </DetailsInfoItem>
+                <Group>
+                  <DetailsInfoItem key={index}>
+                    <DetailLabel>
+                      <DetailValueSkeleton variant="rectangular" />
+                    </DetailLabel>
+                    <DetailValue>
+                      <DetailLabelSkeleton variant="rectangular" />
+                    </DetailValue>
+                  </DetailsInfoItem>
+                </Group>
               );
             })}
-          </Group>
-          {new Array(2).fill(0).map((_, index) => {
-            return (
-              <Group>
-                <DetailsInfoItem key={index}>
-                  <DetailLabel>
-                    <DetailValueSkeleton variant="rectangular" />
-                  </DetailLabel>
-                  <DetailValue>
-                    <DetailLabelSkeleton variant="rectangular" />
-                  </DetailValue>
-                </DetailsInfoItem>
-              </Group>
-            );
-          })}
+          </ViewDetailScroll>
         </ViewDetailContainer>
+        <ViewMoreButton to={routers.EPOCH_DETAIL.replace(":epochId", `${epochNo}`)} />
       </ViewDetailDrawer>
     );
 
@@ -123,102 +129,103 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
   return (
     <ViewDetailDrawer anchor="right" open={!!epochNo} hideBackdrop variant="permanent">
       <ViewDetailContainer>
-        <CloseButton onClick={handleClose}>
-          <CgClose />
-        </CloseButton>
-        <HeaderContainer>
-          <ProgressCircle
-            size={150}
-            pathLineCap="butt"
-            pathWidth={4}
-            trailWidth={2}
-            percent={progress}
-            trailOpacity={1}
-          >
-            <EpochNumber>{data.no}</EpochNumber>
-            <EpochText>Epoch</EpochText>
-          </ProgressCircle>
-        </HeaderContainer>
-        <ListItem>
-          <Item>
-            <Icon src={CubeIcon} alt="socket" />
-            <ItemName>Block</ItemName>
-            <ItemValue>{data.blkCount}</ItemValue>
-          </Item>
-          <Item>
-            <Icon src={RocketIcon} alt="socket" />
-            <ItemName>slot</ItemName>
-            <ItemValue>
-              {slot}
-              <BlockDefault>/{MAX_SLOT_EPOCH}</BlockDefault>
-            </ItemValue>
-          </Item>
-        </ListItem>
-        <Group>
-          <DetailsInfoItem>
-            <DetailLabel>
-              <InfoIcon />
-              Start time
-            </DetailLabel>
-            <DetailValue>{data.startTime}</DetailValue>
-          </DetailsInfoItem>
-          <DetailsInfoItem>
-            <DetailLabel>
-              <InfoIcon />
-              End time
-            </DetailLabel>
-            <DetailValue>{data.endTime}</DetailValue>
-          </DetailsInfoItem>
-          <DetailsInfoItem>
-            <DetailLabel>
-              <InfoIcon />
-              Blocks
-            </DetailLabel>
-            <DetailValue>{data.blkCount}</DetailValue>
-          </DetailsInfoItem>
-          <DetailsInfoItem>
-            <DetailLabel>
-              <InfoIcon />
-              Total Output
-            </DetailLabel>
-            <DetailValue>
-              {formatADA(data.outSum) || 0}
-              <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
-            </DetailValue>
-          </DetailsInfoItem>
-        </Group>
-        <Group>
-          <ProgressLiner progress={progress} />
-          <DetailsInfoItem>
-            <DetailLabel>
-              <ProgressStatusText>{EPOCH_STATUS[data.status]}</ProgressStatusText>
-            </DetailLabel>
-            <DetailValue>
-              <ProgressPercent>{progress}%</ProgressPercent>
-            </DetailValue>
-          </DetailsInfoItem>
-        </Group>
-        <Group>
-          <DetailLink to={routers.EPOCH_DETAIL.replace(":epochId", `${data.no}`)}>
-            <DetailLabel style={{ fontSize: 18 }}>
-              <DetailLinkIcon>
-                <HiOutlineCube />
-              </DetailLinkIcon>
-              Blocks
-            </DetailLabel>
-            <DetailValue>
-              <DetailLinkRight>
-                <BiChevronRight size={24} />
-              </DetailLinkRight>
-            </DetailValue>
-          </DetailLink>
-        </Group>
-        <SeemoreBox>
-          <SeemoreButton to={routers.EPOCH_DETAIL.replace(":epochId", `${data.no}`)}>
-            <SeemoreText>View more</SeemoreText> <FaAngleDoubleRight size={12} />
-          </SeemoreButton>
-        </SeemoreBox>
+        <ViewDetailScroll>
+          <StyledViewMore tooltipTitle="View Detail" to={routers.EPOCH_DETAIL.replace(":epochId", `${epochNo}`)} />
+          <CustomTooltip placement="top" title="Close">
+            <CloseButton onClick={handleClose}>
+              <CgClose />
+            </CloseButton>
+          </CustomTooltip>
+          <HeaderContainer>
+            <ProgressCircle
+              size={150}
+              pathLineCap="butt"
+              pathWidth={4}
+              trailWidth={2}
+              percent={progress}
+              trailOpacity={1}
+            >
+              <EpochNumber>{epochNo}</EpochNumber>
+              <EpochText>Epoch</EpochText>
+            </ProgressCircle>
+          </HeaderContainer>
+          <ListItem>
+            <Item>
+              <Icon src={CubeIcon} alt="socket" />
+              <ItemName>Block</ItemName>
+              <ItemValue>{data.blkCount}</ItemValue>
+            </Item>
+            <Item>
+              <Icon src={RocketIcon} alt="socket" />
+              <ItemName>slot</ItemName>
+              <ItemValue>
+                {slot}
+                <BlockDefault>/{MAX_SLOT_EPOCH}</BlockDefault>
+              </ItemValue>
+            </Item>
+          </ListItem>
+          <Group>
+            <DetailsInfoItem>
+              <DetailLabel>
+                <InfoIcon />
+                Start time
+              </DetailLabel>
+              <DetailValue>{data.startTime}</DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>
+                <InfoIcon />
+                End time
+              </DetailLabel>
+              <DetailValue>{data.endTime}</DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>
+                <InfoIcon />
+                Blocks
+              </DetailLabel>
+              <DetailValue>{data.blkCount}</DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>
+                <InfoIcon />
+                Total Output
+              </DetailLabel>
+              <DetailValue>
+                {formatADA(data.outSum) || 0}
+                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+              </DetailValue>
+            </DetailsInfoItem>
+          </Group>
+          <Group>
+            <ProgressLiner progress={progress} />
+            <DetailsInfoItem>
+              <DetailLabel>
+                <ProgressStatusText>{EPOCH_STATUS[data.status]}</ProgressStatusText>
+              </DetailLabel>
+              <DetailValue>
+                <ProgressPercent>{progress}%</ProgressPercent>
+              </DetailValue>
+            </DetailsInfoItem>
+          </Group>
+          <Group>
+            <DetailLink to={routers.EPOCH_DETAIL.replace(":epochId", `${epochNo}`)}>
+              <DetailLabel style={{ fontSize: 18 }}>
+                <DetailLinkIcon>
+                  <HiOutlineCube />
+                </DetailLinkIcon>
+                Blocks
+              </DetailLabel>
+              <DetailValue>
+                <DetailLinkRight>
+                  <BiChevronRight size={24} />
+                </DetailLinkRight>
+              </DetailValue>
+            </DetailLink>
+          </Group>
+        </ViewDetailScroll>
       </ViewDetailContainer>
+      <ViewMoreButton to={routers.EPOCH_DETAIL.replace(":epochId", `${epochNo}`)} />
     </ViewDetailDrawer>
   );
 };

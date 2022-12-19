@@ -7,6 +7,7 @@ import { Drawer, Layout, ToggleMenu, Main, BackDrop, MainContainer } from "./sty
 import { useSelector } from "react-redux";
 import { setSidebar } from "../../../stores/user";
 import { RootState } from "../../../stores/types";
+import CustomTooltip from "../CustomTooltip";
 
 interface Props {
   children: React.ReactNode;
@@ -18,15 +19,17 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
 
   return (
     <Layout>
-      <BackDrop isShow={sidebar} onClick={handleToggle} />
+      <BackDrop isShow={sidebar ? 1 : 0} onClick={handleToggle} />
       <Drawer variant="permanent" open={sidebar}>
-        <ToggleMenu onClick={handleToggle} type="button">
-          {sidebar ? <FaArrowLeft /> : <FaArrowRight />}
-        </ToggleMenu>
+        <CustomTooltip placement="right" title={sidebar ? `Collapse` : `Expand`}>
+          <ToggleMenu onClick={handleToggle} type="button">
+            {sidebar ? <FaArrowLeft /> : <FaArrowRight />}
+          </ToggleMenu>
+        </CustomTooltip>
         <Sidebar />
       </Drawer>
       <MainContainer>
-        <Main component="main" onDetailView={onDetailView} sidebar={sidebar}>
+        <Main component="main" open={onDetailView ? 1 : 0} sidebar={sidebar ? 1 : 0}>
           <Header />
           {children}
         </Main>

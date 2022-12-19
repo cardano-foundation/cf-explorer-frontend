@@ -11,17 +11,17 @@ import { HeaderBackground, HeaderBox, HeaderContainer, HeaderMain, HeaderTop, Ti
 const Header: React.FC<RouteComponentProps> = props => {
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const { history } = props;
-  const isHome = history.location.pathname === "/";
+  const home = history.location.pathname === "/";
 
   return (
-    <HeaderContainer isHome={isHome}>
-      <HeaderBackground isHome={isHome} />
-      <HeaderBox isHome={isHome}>
-        <HeaderMain isHome={isHome}>
-          <Title isHome={isHome}>Cardano Blockchain Explorer</Title>
-          <HeaderSearch isHome={isHome} />
+    <HeaderContainer home={home ? 1 : 0}>
+      <HeaderBackground home={home ? 1 : 0} />
+      <HeaderBox home={home ? 1 : 0}>
+        <HeaderMain home={home ? 1 : 0}>
+          <Title home={home ? 1 : 0}>Cardano Blockchain Explorer</Title>
+          <HeaderSearch home={home} />
         </HeaderMain>
-        <HeaderTop fixed={onDetailView}>
+        <HeaderTop fixed={onDetailView ? 1 : 0}>
           <SelectNetwork />
           <ConnectWallet />
         </HeaderTop>

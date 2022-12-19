@@ -1,5 +1,4 @@
 import React from "react";
-import { Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
@@ -26,7 +25,6 @@ import {
   SlotLeaderValue,
   SlotLeaderCopy,
   InfoIcon,
-  DetailValueSmall,
   HeaderTitleSkeleton,
   DetailLabelSkeleton,
   DetailValueSkeleton,
@@ -75,7 +73,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           <SlotLeaderSkeleton variant="rectangular" />
         </SlotLeader>
         <DetailsInfo container>
-          <DetailsInfoItem item xs={12} sm isCenter>
+          <DetailsInfoItem item xs={12} sm isCenter={1}>
             <ProgressSkeleton variant="circular" />
           </DetailsInfoItem>
           {new Array(4).fill(0).map((_, index) => {
@@ -113,14 +111,15 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
         <SlotLeader>
           {/* <Tooltip title={`${header.hash}`} placement="top"> */}
           <Link to={"/"}>
-            {header.slotLeader && <SlotLeaderTitle>Slot leader:</SlotLeaderTitle>} <SlotLeaderValue>{header.hash}</SlotLeaderValue>
+            {header.slotLeader && <SlotLeaderTitle>Slot leader:</SlotLeaderTitle>}{" "}
+            <SlotLeaderValue>{header.hash}</SlotLeaderValue>
           </Link>
           {/* </Tooltip> */}
           <SlotLeaderCopy text={header.hash} />
         </SlotLeader>
       )}
       <DetailsInfo container>
-        <DetailsInfoItem item xs={12} sm isCenter>
+        <DetailsInfoItem item xs={12} sm isCenter={1}>
           <ProgressCircle
             size={100}
             pathLineCap="butt"

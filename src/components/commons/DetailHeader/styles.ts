@@ -96,7 +96,7 @@ export const DetailsInfo = styled(Grid)`
   color: ${props => props.theme.textColorReverse};
 `;
 
-export const DetailsInfoItem = styled(Grid)<{ isCenter?: boolean }>`
+export const DetailsInfoItem = styled(Grid)<{ isCenter?: number }>`
   display: flex;
   justify-content: center;
   align-items: ${props => (props.isCenter ? `center` : `flex-start`)};
@@ -169,10 +169,6 @@ export const DetailValueSkeleton = styled(Skeleton)`
   width: 50%;
   min-width: 100px;
   border-radius: 4px;
-`;
-
-export const DetailValueSmall = styled(DetailValue)`
-  font-size: var(--font-size-text-small);
 `;
 
 export const BlockDefault = styled("span")`

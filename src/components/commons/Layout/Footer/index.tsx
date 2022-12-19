@@ -5,6 +5,10 @@ const StyledFooter = styled("footer")`
   height: 60px;
   padding: 0px 10px;
   border-top: 1px solid ${props => props.theme.borderColor};
+  @media screen and (max-width: 1023px) {
+    height: unset;
+    padding: 10px;
+  }
 `;
 
 const FooterContainer = styled(Container)`
@@ -13,15 +17,26 @@ const FooterContainer = styled(Container)`
   align-items: center;
   flex-wrap: wrap;
   height: 60px;
+  @media screen and (max-width: 1023px) {
+    height: unset;
+  }
 `;
 
 const Copyright = styled("small")`
   color: ${props => props.theme.textColorPale};
   font-family: var(--font-family-title);
+  @media screen and (max-width: 1023px) {
+    width: 100%;
+    text-align: center;
+  }
 `;
 
 const Hyperlink = styled(Box)`
   text-align: right;
+  @media screen and (max-width: 1023px) {
+    width: 100%;
+    text-align: center;
+  }
 `;
 
 const ExternalLink = styled("a")`

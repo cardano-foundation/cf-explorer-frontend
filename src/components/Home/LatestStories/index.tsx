@@ -11,15 +11,13 @@ import {
   Image,
   Item,
   ItemTitle,
-  LatestStoriesContainer,
-  SeemoreButton,
-  SeemoreText,
+  LatestStoriesContainer, 
   StyledSlider,
   Time,
   TimeIcon,
   Title,
 } from "./style";
-import { FaAngleDoubleRight } from "react-icons/fa";
+import ViewAllButton from "../../commons/ViewAllButton";
 
 interface Props {}
 
@@ -59,10 +57,8 @@ const LatestStories: React.FC<Props> = () => {
   return (
     <LatestStoriesContainer>
       <Header>
-        <Title>Latest Stories</Title>
-        <SeemoreButton to={routers.STORY_LIST}>
-          <SeemoreText>View All</SeemoreText> <FaAngleDoubleRight size={12} />
-        </SeemoreButton>
+        <Title>Latest Stories</Title> 
+        <ViewAllButton to={routers.STORY_LIST} />
       </Header>
       <StyledSlider
         dots
@@ -100,10 +96,7 @@ const LatestStories: React.FC<Props> = () => {
             </Link>
           );
         })}
-      </StyledSlider>
-      <SeemoreButton to={routers.STORY_LIST} mobile>
-        <SeemoreText>See All</SeemoreText>
-      </SeemoreButton>
+      </StyledSlider> 
     </LatestStoriesContainer>
   );
 };

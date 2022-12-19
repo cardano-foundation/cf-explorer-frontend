@@ -54,6 +54,7 @@ import MintingIcon from "./icons/minting.svg";
 import InfoIcon from "./icons/infoIcon.svg";
 import HighestIcon from "./icons/highest-icon.svg";
 import LowestIcon from "./icons/lowest-icon.svg";
+import SeeMoreIcon from "./icons/seemore.svg";
 
 import FlintIcon from "./images/flint.jpg";
 import NamiIcon from "./images/nami.png";
@@ -124,4 +125,5 @@ export {
   LowestIcon,
   BrowserIcon,
   ResourcesIcon,
+  SeeMoreIcon,
 };

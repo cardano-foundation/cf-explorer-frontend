@@ -50,7 +50,7 @@ export const Small = styled("small")`
   white-space: nowrap;
 `;
 
-export const Value = styled("small")<{ up: boolean }>`
+export const Value = styled("small")<{ up: number }>`
   color: ${props => (props.up ? props.theme.colorGreen : props.theme.colorRed)};
   white-space: nowrap;
 `;

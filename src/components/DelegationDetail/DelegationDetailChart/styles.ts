@@ -14,7 +14,7 @@ export const Tab = styled("div")`
   display: inline-block;
 `;
 
-export const Button = styled("button")<{ active: boolean }>`
+export const Button = styled("button")<{ active: number }>`
   border: none;
   border-radius: 5px;
   padding: 6px 30px;
