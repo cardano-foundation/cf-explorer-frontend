@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { styled, Container, Grid, Box, Select, MenuItem, Autocomplete, Skeleton } from "@mui/material";
+import { styled, Container, Grid, Box, Select, Autocomplete, Skeleton } from "@mui/material";
 
-import { formatADA, formatNumber, numberWithCommas } from "../../commons/utils/helper";
+import { formatADA, formatPrice, numberWithCommas } from "../../commons/utils/helper";
 import Card from "../../components/commons/Card";
 import CopyButton from "../../components/commons/CopyButton";
 import styles from "./index.module.scss";
@@ -74,6 +74,7 @@ const AddressWalletDetail = () => {
           // }}
           options={data?.tokens || []}
           getOptionLabel={option => option.displayName}
+          noOptionsText="No Records"
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
             <li {...props}>
               <Box
@@ -81,6 +82,7 @@ const AddressWalletDetail = () => {
                 alignItems={"center"}
                 justifyContent="space-between"
                 width={"100%"}
+                fontSize={"14px"}
                 padding={1}
                 paddingLeft={0}
               >
@@ -89,14 +91,14 @@ const AddressWalletDetail = () => {
                     <img src={AIcon} alt="a icon" />
                   </Box>
                   <Box>
-                    {option.displayName} #{option.name}
+                    {option.displayName} #{option.name || option.fingerprint}
                   </Box>
                 </Box>
-                <Box fontWeight={"bold"}>{numberWithCommas(option.quantity || 0)}</Box>
+                <Box fontWeight={"bold"}>{formatPrice(option.quantity || 0)}</Box>
               </Box>
             </li>
           )}
-          renderInput={params => <TextField {...params} placeholder="Search Token" />}
+          renderInput={params => <StyledTextField {...params} placeholder="Search Token" />}
           popupIcon={<BiChevronDown />}
         />
       ),
@@ -224,9 +226,9 @@ const DetailCard: React.FC<DetailCardProps> = ({ title, address, item, type, loa
       <Box className={styles.titleDetail}>{title}</Box>
       <Box className={styles.addressGroup}>
         <Link className={styles.address} to={routers.ADDRESS_DETAIL.replace(":address", address)}>
-          {address}{" "}
+          {address}
         </Link>
-        <CopyButton />
+        <CopyButton text={address} />
       </Box>
       <Box>
         {item.map((i, ii) => {
@@ -284,5 +286,11 @@ const StyledSelect = styled(Select)`
   & > svg {
     color: #344054;
     font-size: 20px;
+  }
+`;
+
+const StyledTextField = styled(TextField)`
+  .MuiInputBase-input {
+    font-size: 14px;
   }
 `;

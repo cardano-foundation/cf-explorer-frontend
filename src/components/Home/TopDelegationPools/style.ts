@@ -5,7 +5,7 @@ import Table from "../../commons/Table";
 
 export const TopDelegateContainer = styled(BoxRaised)`
   margin-bottom: 24px;
-  padding: 24px 30px;
+  padding: 30px 30px;
   text-align: left;
   @media screen and (max-width: 539px) {
     padding: 20px 15px;
@@ -34,26 +34,6 @@ export const Title = styled("h3")`
     height: 4px;
     background: var(--color-green-light);
   }
-`;
-
-export const SeemoreButton = styled(Link)<{ mobile?: boolean }>`
-  display: ${props => (props.mobile ? "none" : "flex")};
-  align-items: center;
-  gap: 5px;
-  color: ${props => props.theme.colorGreenLight}!important;
-  &:hover {
-    text-shadow: 0px 0px 1px ${props => props.theme.colorGreen};
-  }
-  @media screen and (max-width: 539px) {
-    display: ${props => (props.mobile ? "block" : "none")};
-    margin-top: ${props => (props.mobile ? 20 : 0)}px;
-  }
-`;
-
-export const SeemoreText = styled("small")`
-  display: inline-block;
-  color: ${props => props.theme.colorGreenLight};
-  font-weight: var(--font-weight-bold);
 `;
 
 export const DelegateTable = styled(Table)`
@@ -103,11 +83,11 @@ export const PriceRate = styled("div")`
   font-weight: var(--font-weight-bold);
   color: ${props => props.theme.colorRed};
 `;
-export const ImageRate = styled("img")<{ up: boolean }>`
+export const ImageRate = styled("img")<{ up: number }>`
   width: 1.5rem;
   height: 1.5rem;
 `;
-export const PriceValue = styled("span")<{ up: boolean }>`
+export const PriceValue = styled("span")<{ up: number }>`
   color: ${props => (props.up ? props.theme.colorGreen : props.theme.colorRed)};
 `;
 export const ProgressContainer = styled("div")`
@@ -149,13 +129,4 @@ export const StyledLinearProgress = styled(LinearProgress)`
     border-radius: 8px;
     background: ${props => props.theme.linearGradientGreen};
   }
-`;
-
-export const DetailButton = styled(Link)`
-  display: inline-block;
-  padding: 6.5px 20px;
-  background: ${props => props.theme.textColor};
-  color: ${props => props.theme.textColorReverse}!important;
-  border-radius: 6px;
-  font-weight: var(--font-weight-bold);
 `;

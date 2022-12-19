@@ -1,4 +1,5 @@
 import { LinearProgress, Skeleton, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const StyledSkeleton = styled(Skeleton)`
   border-radius: var(--border-radius);
@@ -50,6 +51,12 @@ export const StyledCard = {
     font-weight: var(--font-weight-bold);
     font-size: var(--font-size-title);
     margin-bottom: 8px;
+  `,
+  Link: styled(Link)`
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-title);
+    margin-bottom: 8px;
+    font-family: var(--font-family-text) !important;
   `,
   Comment: styled("span")`
     font-weight: var(--font-weight-bold);

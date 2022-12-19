@@ -96,7 +96,7 @@ export const DetailsInfo = styled(Grid)`
   color: ${props => props.theme.textColorReverse};
 `;
 
-export const DetailsInfoItem = styled(Grid)<{ isCenter?: boolean }>`
+export const DetailsInfoItem = styled(Grid)<{ isCenter?: number }>`
   display: flex;
   justify-content: center;
   align-items: ${props => (props.isCenter ? `center` : `flex-start`)};
@@ -171,10 +171,6 @@ export const DetailValueSkeleton = styled(Skeleton)`
   border-radius: 4px;
 `;
 
-export const DetailValueSmall = styled(DetailValue)`
-  font-size: var(--font-size-text-small);
-`;
-
 export const BlockDefault = styled("span")`
   font-size: var(--font-size-text);
   color: ${props => props.theme.textColorReverse};
@@ -189,7 +185,7 @@ export const ConfirmationValue = styled(DetailValue)`
   align-items: center;
 `;
 
-export const ConfirmStatus = styled("small")<{ status: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
   color: ${props => {
     switch (props.status) {
       case CONFIRMATION_STATUS.MEDIUM:

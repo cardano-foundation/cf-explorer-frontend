@@ -1,12 +1,12 @@
 import { Grid, Skeleton } from "@mui/material";
 import React from "react";
-import { FaAngleDoubleRight } from "react-icons/fa";
 import { Link, useHistory } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { BlankBlueIcon, AIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
+import ViewAllButton from "../../commons/ViewAllButton";
 import {
   Hash,
   Header,
@@ -14,9 +14,7 @@ import {
   ItemDetail,
   ItemHeader,
   PriceImage,
-  PriveValue,
-  SeemoreButton,
-  SeemoreText,
+  PriveValue, 
   Title,
   TransactionContainer,
   BlockNo,
@@ -30,10 +28,8 @@ const LatestTransactions: React.FC = () => {
   return (
     <TransactionContainer>
       <Header>
-        <Title>Latest Transactions</Title>
-        <SeemoreButton to={routers.TRANSACTION_LIST}>
-          <SeemoreText>View All</SeemoreText> <FaAngleDoubleRight size={12} />
-        </SeemoreButton>
+        <Title>Latest Transactions</Title> 
+        <ViewAllButton to={routers.TRANSACTION_LIST} />
       </Header>
       {
         <Grid container spacing={2}>
@@ -85,12 +81,12 @@ const LatestTransactions: React.FC = () => {
                             <BlockNo>{blockNo}</BlockNo>
                           </Link>
                         </p>
-                        {addressesOutput?.slice(0, 1).map(add => {
+                        {addressesInput?.slice(0, 1).map(add => {
                           return (
                             <p key={add}>
                               <small>From: </small>
                               <CustomTooltip placement="top" title={add}>
-                                <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
+                                <Link to={routers.ADDRESS_DETAIL.replace(":address", `${add}`)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
                                   <BlankImage src={BlankBlueIcon} alt="blank blue" />
                                 </Link>
@@ -98,12 +94,12 @@ const LatestTransactions: React.FC = () => {
                             </p>
                           );
                         })}
-                        {addressesInput?.slice(0, 1).map(add => {
+                        {addressesOutput?.slice(0, 1).map(add => {
                           return (
                             <p key={add}>
                               <small>To: </small>
                               <CustomTooltip placement="top" title={add}>
-                                <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
+                                <Link to={routers.ADDRESS_DETAIL.replace(":address", `${add}`)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
                                   <BlankImage src={BlankBlueIcon} alt="blank blue" />
                                 </Link>
@@ -117,10 +113,7 @@ const LatestTransactions: React.FC = () => {
                 );
               })}
         </Grid>
-      }
-      <SeemoreButton to={routers.BLOCK_LIST} mobile>
-        <SeemoreText>See All</SeemoreText>
-      </SeemoreButton>
+      } 
     </TransactionContainer>
   );
 };

@@ -49,13 +49,13 @@ const Delegations: React.FC<DelegationsProps> = () => {
           value={searchPools || ""}
           onKeyUp={e => {
             if (e.key === "Enter") {
-              setQuery({ searchPools, page: 1, size: 10 });
+              setQuery({ searchPools, page: 0, size: 10 });
             }
           }}
         />
         <button
           style={{ background: "transparent", border: "none", cursor: "pointer" }}
-          onClick={() => setQuery({ searchPools, page: 1, size: 10 })}
+          onClick={() => setQuery({ searchPools, page: 0, size: 10 })}
         >
           <img src={HeaderSearchIcon} alt="Search" />
         </button>

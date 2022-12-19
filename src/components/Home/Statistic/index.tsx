@@ -76,12 +76,12 @@ const HomeStatistic: React.FC<Props> = () => {
                 <ItemIcon src={CurentEpochIcon} alt="Curent Epoch" />
                 <Name>Curent Epoch</Name>
                 <Small>Epoch: </Small>
-                <Value up>
+                <Value up={1}>
                   <b>{formatCurrency(currentEpoch?.no || 0)}</b>
                 </Value>
                 <br />
                 <Small>Slot: </Small>
-                <Value up>
+                <Value up={1}>
                   <b>{formatCurrency((currentEpoch?.slot || 0) % MAX_SLOT_EPOCH)}</b>
                 </Value>
                 <Small> / {formatCurrency(MAX_SLOT_EPOCH)}</Small>

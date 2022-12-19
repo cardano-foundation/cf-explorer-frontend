@@ -31,9 +31,8 @@ import {
   StyledLink,
   DetailCopy,
   DetailLinkName,
-  SeemoreBox,
-  SeemoreButton,
-  SeemoreText,
+  ViewDetailScroll,
+  StyledViewMore,
 } from "./styles";
 import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
@@ -41,8 +40,9 @@ import { BiChevronRight } from "react-icons/bi";
 import { routers } from "../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import { Tooltip } from "@mui/material";
-import { FaAngleDoubleRight } from "react-icons/fa";
 import moment from "moment";
+import ViewMoreButton from "../ViewMoreButton";
+import CustomTooltip from "../CustomTooltip";
 
 type DetailViewBlockProps = {
   blockNo: number;
@@ -57,183 +57,190 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
     return (
       <ViewDetailDrawer anchor="right" open={!!blockNo} hideBackdrop variant="permanent">
         <ViewDetailContainer>
-          <CloseButton onClick={handleClose}>
-            <CgClose />
-          </CloseButton>
-          <HeaderContainer>
-            <ProgressSkeleton variant="circular" />
-          </HeaderContainer>
-          <ListItem>
-            <Item>
-              <IconSkeleton variant="circular" />
-              <ItemName>
-                <DetailValueSkeleton variant="rectangular" />
-              </ItemName>
-              <ItemValue>
-                <DetailLabelSkeleton variant="rectangular" />
-              </ItemValue>
-            </Item>
-            <Item>
-              <IconSkeleton variant="circular" />
-              <ItemName>
-                <DetailValueSkeleton variant="rectangular" />
-              </ItemName>
-              <ItemValue>
-                <DetailLabelSkeleton variant="rectangular" />
-              </ItemValue>
-            </Item>
-          </ListItem>
-          <Group>
-            {new Array(4).fill(0).map((_, index) => {
+          <ViewDetailScroll>
+            <StyledViewMore tooltipTitle="View Detail" to={routers.BLOCK_DETAIL.replace(":blockId", `${blockNo}`)} />
+            <CustomTooltip placement="top" title="Close">
+              <CloseButton onClick={handleClose}>
+                <CgClose />
+              </CloseButton>
+            </CustomTooltip>
+            <HeaderContainer>
+              <ProgressSkeleton variant="circular" />
+            </HeaderContainer>
+            <ListItem>
+              <Item>
+                <IconSkeleton variant="circular" />
+                <ItemName>
+                  <DetailValueSkeleton variant="rectangular" />
+                </ItemName>
+                <ItemValue>
+                  <DetailLabelSkeleton variant="rectangular" />
+                </ItemValue>
+              </Item>
+              <Item>
+                <IconSkeleton variant="circular" />
+                <ItemName>
+                  <DetailValueSkeleton variant="rectangular" />
+                </ItemName>
+                <ItemValue>
+                  <DetailLabelSkeleton variant="rectangular" />
+                </ItemValue>
+              </Item>
+            </ListItem>
+            <Group>
+              {new Array(4).fill(0).map((_, index) => {
+                return (
+                  <DetailsInfoItem key={index}>
+                    <DetailLabel>
+                      <DetailValueSkeleton variant="rectangular" />
+                    </DetailLabel>
+                    <DetailValue>
+                      <DetailLabelSkeleton variant="rectangular" />
+                    </DetailValue>
+                  </DetailsInfoItem>
+                );
+              })}
+            </Group>
+            {new Array(2).fill(0).map((_, index) => {
               return (
-                <DetailsInfoItem key={index}>
-                  <DetailLabel>
-                    <DetailValueSkeleton variant="rectangular" />
-                  </DetailLabel>
-                  <DetailValue>
-                    <DetailLabelSkeleton variant="rectangular" />
-                  </DetailValue>
-                </DetailsInfoItem>
+                <Group key={index}>
+                  <DetailsInfoItem>
+                    <DetailLabel>
+                      <DetailValueSkeleton variant="rectangular" />
+                    </DetailLabel>
+                    <DetailValue>
+                      <DetailLabelSkeleton variant="rectangular" />
+                    </DetailValue>
+                  </DetailsInfoItem>
+                </Group>
               );
             })}
-          </Group>
-          {new Array(2).fill(0).map((_, index) => {
-            return (
-              <Group key={index}>
-                <DetailsInfoItem>
-                  <DetailLabel>
-                    <DetailValueSkeleton variant="rectangular" />
-                  </DetailLabel>
-                  <DetailValue>
-                    <DetailLabelSkeleton variant="rectangular" />
-                  </DetailValue>
-                </DetailsInfoItem>
-              </Group>
-            );
-          })}
+          </ViewDetailScroll>
         </ViewDetailContainer>
+        <ViewMoreButton to={routers.BLOCK_DETAIL.replace(":blockId", `${blockNo}`)} />
       </ViewDetailDrawer>
     );
 
   return (
     <ViewDetailDrawer anchor="right" open={!!blockNo} hideBackdrop variant="permanent">
       <ViewDetailContainer>
-        <CloseButton onClick={handleClose}>
-          <CgClose />
-        </CloseButton>
-        <HeaderContainer>
-          <ProgressCircle
-            size={150}
-            pathLineCap="butt"
-            pathWidth={4}
-            trailWidth={2}
-            percent={((data.epochSlotNo || 0) / (data.totalSlot || MAX_SLOT_EPOCH)) * 100}
-            trailOpacity={1}
-          >
-            <EpochNumber>{data.epochNo}</EpochNumber>
-            <EpochText>Epoch</EpochText>
-          </ProgressCircle>
-        </HeaderContainer>
-        <ListItem>
-          <Item>
-            <Icon src={CubeIcon} alt="socket" />
-            <ItemName>Block</ItemName>
-            <ItemValue>{data.blockNo}</ItemValue>
-          </Item>
-          <Item>
-            <Icon src={RocketIcon} alt="socket" />
-            <ItemName>slot</ItemName>
-            <ItemValue>
-              {data.epochSlotNo}
-              <BlockDefault>/{data.totalSlot || MAX_SLOT_EPOCH}</BlockDefault>
-            </ItemValue>
-          </Item>
-        </ListItem>
-        <Group>
-          <DetailsInfoItem>
-            <DetailLabel>
-              <InfoIcon />
-              Block ID
-            </DetailLabel>
-            <DetailValue>
-              <Tooltip placement="top" title={data.hash}>
-                <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${data.blockNo}`)}>
-                  {getShortHash(data.hash)}
-                </StyledLink>
-              </Tooltip>
-              <DetailCopy text={data.hash} />
-            </DetailValue>
-          </DetailsInfoItem>
-          <DetailsInfoItem>
-            <DetailLabel>
-              <InfoIcon />
-              Created at
-            </DetailLabel>
-            <DetailValue>{moment(data.time).format("MM/DD/yyyy hh:mm:ss")}</DetailValue>
-          </DetailsInfoItem>
-          <DetailsInfoItem>
-            <DetailLabel>
-              <InfoIcon />
-              Transaction
-            </DetailLabel>
-            <DetailValue>{data.txCount}</DetailValue>
-          </DetailsInfoItem>
-          <DetailsInfoItem>
-            <DetailLabel>
-              <InfoIcon />
-              Transaction Fees
-            </DetailLabel>
-            <DetailValue>
-              {formatADA(data.totalFees) || 0}
-              <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
-            </DetailValue>
-          </DetailsInfoItem>
-          <DetailsInfoItem>
-            <DetailLabel>
-              <InfoIcon />
-              Total Output
-            </DetailLabel>
-            <DetailValue>
-              {formatADA(data.totalOutput) || 0}
-              <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
-            </DetailValue>
-          </DetailsInfoItem>
-          <DetailsInfoItem>
-            <DetailLabel>
-              <InfoIcon />
-              Slot leader
-            </DetailLabel>
-            <DetailValue>
-              <Tooltip placement="top" title={data.slotLeader}>
-                <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${data.slotLeader}`)}>
-                  {getShortWallet(data.slotLeader)}
-                </StyledLink>
-              </Tooltip>
-              <DetailCopy text={data.slotLeader} />
-            </DetailValue>
-          </DetailsInfoItem>
-        </Group>
-        <Group>
-          <DetailLink to={routers.BLOCK_DETAIL.replace(":blockId", `${data.blockNo}`)}>
-            <DetailLabel>
-              <DetailLinkIcon>
-                <CgArrowsExchange />
-              </DetailLinkIcon>
-              <DetailLinkName>Transactions</DetailLinkName>
-            </DetailLabel>
-            <DetailValue>
-              <DetailLinkRight>
-                <BiChevronRight size={24} />
-              </DetailLinkRight>
-            </DetailValue>
-          </DetailLink>
-        </Group>
-        <SeemoreBox>
-          <SeemoreButton to={routers.BLOCK_DETAIL.replace(":blockId", `${data.blockNo}`)}>
-            <SeemoreText>View more</SeemoreText> <FaAngleDoubleRight size={12} />
-          </SeemoreButton>
-        </SeemoreBox>
+        <ViewDetailScroll>
+          <StyledViewMore tooltipTitle="View Detail" to={routers.BLOCK_DETAIL.replace(":blockId", `${blockNo}`)} />
+          <CustomTooltip placement="top" title="Close">
+            <CloseButton onClick={handleClose}>
+              <CgClose />
+            </CloseButton>
+          </CustomTooltip>
+          <HeaderContainer>
+            <ProgressCircle
+              size={150}
+              pathLineCap="butt"
+              pathWidth={4}
+              trailWidth={2}
+              percent={((data.epochSlotNo || 0) / (data.totalSlot || MAX_SLOT_EPOCH)) * 100}
+              trailOpacity={1}
+            >
+              <EpochNumber>{data.epochNo}</EpochNumber>
+              <EpochText>Epoch</EpochText>
+            </ProgressCircle>
+          </HeaderContainer>
+          <ListItem>
+            <Item>
+              <Icon src={CubeIcon} alt="socket" />
+              <ItemName>Block</ItemName>
+              <ItemValue>{blockNo}</ItemValue>
+            </Item>
+            <Item>
+              <Icon src={RocketIcon} alt="socket" />
+              <ItemName>slot</ItemName>
+              <ItemValue>
+                {data.epochSlotNo}
+                <BlockDefault>/{data.totalSlot || MAX_SLOT_EPOCH}</BlockDefault>
+              </ItemValue>
+            </Item>
+          </ListItem>
+          <Group>
+            <DetailsInfoItem>
+              <DetailLabel>
+                <InfoIcon />
+                Block ID
+              </DetailLabel>
+              <DetailValue>
+                <Tooltip placement="top" title={data.hash}>
+                  <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${blockNo}`)}>
+                    {getShortHash(data.hash)}
+                  </StyledLink>
+                </Tooltip>
+                <DetailCopy text={data.hash} />
+              </DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>
+                <InfoIcon />
+                Created at
+              </DetailLabel>
+              <DetailValue>{moment(data.time).format("MM/DD/yyyy hh:mm:ss")}</DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>
+                <InfoIcon />
+                Transaction
+              </DetailLabel>
+              <DetailValue>{data.txCount}</DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>
+                <InfoIcon />
+                Transaction Fees
+              </DetailLabel>
+              <DetailValue>
+                {formatADA(data.totalFees) || 0}
+                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+              </DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>
+                <InfoIcon />
+                Total Output
+              </DetailLabel>
+              <DetailValue>
+                {formatADA(data.totalOutput) || 0}
+                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+              </DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>
+                <InfoIcon />
+                Slot leader
+              </DetailLabel>
+              <DetailValue>
+                <Tooltip placement="top" title={data.slotLeader}>
+                  <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${data.slotLeader}`)}>
+                    {getShortWallet(data.slotLeader)}
+                  </StyledLink>
+                </Tooltip>
+                <DetailCopy text={data.slotLeader} />
+              </DetailValue>
+            </DetailsInfoItem>
+          </Group>
+          <Group>
+            <DetailLink to={routers.BLOCK_DETAIL.replace(":blockId", `${blockNo}`)}>
+              <DetailLabel>
+                <DetailLinkIcon>
+                  <CgArrowsExchange />
+                </DetailLinkIcon>
+                <DetailLinkName>Transactions</DetailLinkName>
+              </DetailLabel>
+              <DetailValue>
+                <DetailLinkRight>
+                  <BiChevronRight size={24} />
+                </DetailLinkRight>
+              </DetailValue>
+            </DetailLink>
+          </Group>
+        </ViewDetailScroll>
       </ViewDetailContainer>
+      <ViewMoreButton to={routers.BLOCK_DETAIL.replace(":blockId", `${blockNo}`)} />
     </ViewDetailDrawer>
   );
 };

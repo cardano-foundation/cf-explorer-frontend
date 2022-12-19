@@ -1,6 +1,6 @@
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, styled } from "@mui/material";
 
-export const ConnectDialog = styled(Dialog)<{ connecting: boolean }>`
+export const ConnectDialog = styled(Dialog)<{ connecting: number }>`
   * {
     ${props => (props.connecting ? `cursor: wait;` : ``)}
   }
@@ -19,7 +19,7 @@ export const Title = styled("h3")`
   margin: 0;
 `;
 
-export const CloseButton = styled(IconButton)<{ connecting: boolean }>`
+export const CloseButton = styled(IconButton)<{ connecting: number }>`
   cursor: ${props => (props.connecting ? `wait` : `pointer`)};
   &:hover {
     ${props => (props.connecting ? `background: none;` : ``)}
@@ -32,7 +32,7 @@ export const Content = styled(DialogContent)`
   padding: 0px 30px 30px;
 `;
 
-export const WalletItem = styled(Box)<{ active: boolean; connecting: boolean }>`
+export const WalletItem = styled(Box)<{ active: number; connecting: number }>`
   display: flex;
   justify-content: space-between;
   align-items: center;

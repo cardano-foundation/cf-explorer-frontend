@@ -68,7 +68,6 @@ const TransactionList: React.FC<TransactionListProps> = ({
               {getShortHash(r.hash)}
             </Link>
           </Tooltip>
-          <div>{moment(r.time).format("MM/DD/YYYY HH:mm:ss")}</div>
         </div>
       ),
     },
@@ -81,12 +80,12 @@ const TransactionList: React.FC<TransactionListProps> = ({
           <Link to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)} className={` ${styles.link}`}>
             {r.blockNo}
           </Link>
-          <div style={{ display: "flex" }}>
+          {/* <div style={{ display: "flex" }}>
             <Link to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epochNo}`)} className={`  ${styles.link}`}>
               {r.epochNo}
             </Link>
-            / {r.slot}
-          </div>
+            /{r.slot}
+          </div> */}
         </>
       ),
     },
