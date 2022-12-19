@@ -9,7 +9,7 @@ import styles from "./index.module.scss";
 import highestIcon from "../../commons/resources/images/highestIcon.png";
 import lowestIcon from "../../commons/resources/images/lowestIcon.png";
 import { formatADA } from "../../commons/utils/helper";
-import { BoxInfo, BoxInfoItem, Title, ValueInfo } from "./styles";
+import { BoxInfo, BoxInfoItem, BoxInfoItemRight, Title, ValueInfo } from "./styles";
 
 interface WalletAddressChartProps {
   data:
@@ -86,7 +86,7 @@ const WalletAddressChart: React.FC<WalletAddressChartProps> = ({
         <Grid item xs={24} lg={6}>
           <BoxInfo>
             <Box flex={1}>
-              <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
+              <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={highestIcon} width={"20%"} alt="heighest icon" />
                   <Title>Highest Balance</Title>
@@ -95,7 +95,7 @@ const WalletAddressChart: React.FC<WalletAddressChartProps> = ({
                     {!maxBalanceLoading && formatADA(maxBalance || 0)}
                   </ValueInfo>
                 </Box>
-              </BoxInfoItem>
+              </BoxInfoItemRight>
             </Box>
             <Box flex={1}>
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>

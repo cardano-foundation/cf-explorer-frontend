@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { styled, Container, Grid, Box, Select, MenuItem, Autocomplete, Skeleton } from "@mui/material";
 
-import { formatADA, formatNumber, numberWithCommas } from "../../commons/utils/helper";
+import { formatADA, formatPrice, numberWithCommas } from "../../commons/utils/helper";
 import Card from "../../components/commons/Card";
 import CopyButton from "../../components/commons/CopyButton";
 import styles from "./index.module.scss";
@@ -74,6 +74,7 @@ const AddressWalletDetail = () => {
           // }}
           options={data?.tokens || []}
           getOptionLabel={option => option.displayName}
+          noOptionsText="No Records"
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
             <li {...props}>
               <Box
@@ -89,11 +90,11 @@ const AddressWalletDetail = () => {
                   <Box width={50}>
                     <img src={AIcon} alt="a icon" />
                   </Box>
-                  <Box textAlign={"left"}>
-                    {option.displayName} #{option.name}
+                  <Box>
+                    {option.displayName} #{option.name || option.fingerprint}
                   </Box>
                 </Box>
-                <Box fontWeight={"bold"}>{formatADA(+option.quantity * 1000000 || 0)}</Box>
+                <Box fontWeight={"bold"}>{formatPrice(option.quantity || 0)}</Box>
               </Box>
             </li>
           )}
