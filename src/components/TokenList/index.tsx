@@ -58,7 +58,9 @@ const TokenList: React.FC<ITokenList> = ({
       title: "Asset Name",
       key: "assetName",
       minWidth: "100px",
-      render: r => <AssetName>{r.displayName}</AssetName>,
+      render: r => (
+        <AssetName to={routers.TOKEN_DETAIL.replace(":tokenId", r.fingerprint || "")}>{r.displayName}</AssetName>
+      ),
     },
     {
       title: "Total Transactions",

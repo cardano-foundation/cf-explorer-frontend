@@ -1,8 +1,9 @@
-import { Select } from "@mui/material";
-import { styled } from "@mui/material";
+import { Select, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
-export const AssetName = styled("span")`
-  color: ${props => props.theme.colorBlue};
+export const AssetName = styled(Link)`
+  color: ${props => props.theme.colorBlue} !important;
+  font-family: var(--font-family-text) !important;
 `;
 
 export const Logo = styled("img")`
