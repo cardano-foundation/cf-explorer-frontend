@@ -29,5 +29,6 @@ export enum TRANSACTION_STATUS {
 }
 export enum CONFIRMATION_STATUS {
   MEDIUM = "MEDIUM",
-  SMALL = "SMALL",
+  LOW = "LOW",
+  HIGH = "HIGH",
 }

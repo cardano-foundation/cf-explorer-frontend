@@ -44,7 +44,7 @@ const TableRow = <T extends ColumnType>({ row, columns, index, onClickRow, selec
     <TRow onClick={e => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
       {columns.map((column, idx) => {
         return (
-          <TCol key={idx} minWidth={column.minWidth}>
+          <TCol key={idx} minWidth={column.minWidth} maxWidth={column.maxWidth}>
             {column.render ? column.render(row, index) : row[column.key]}
           </TCol>
         );

@@ -30,14 +30,12 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       title: "Pool",
       key: "Pool",
       minWidth: "40px",
+      maxWidth: "350px",
       render: r => {
         return (
-          <Link
-            to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`)}
-            className={`${styles.fwBlod} ${styles.link}`}
-          >
-            {r.poolName || r.poolId}
-          </Link>
+          <PoolName to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolView}`)}>
+            {r.poolName || r.poolView}
+          </PoolName>
         );
       },
     },
@@ -111,7 +109,7 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       total={{ count: total, title: "Total" }}
       loading={loading}
       initialized={initialized}
-      onClickRow={(_, r) => history.push(routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`))}
+      onClickRow={(_, r) => history.push(routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolView}`))}
       pagination={{
         onChange: (page, size) => {
           setQuery({ page, size });
@@ -136,4 +134,9 @@ const StyledLinearProgress = styled(LinearProgress)`
     border-radius: 34px;
     background: ${props => props.theme.linearGradientGreen};
   }
+`;
+
+const PoolName = styled(Link)`
+  font-family: var(--font-family-text) !important;
+  color: var(--color-blue) !important;;
 `;

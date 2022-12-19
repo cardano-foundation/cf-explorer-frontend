@@ -20,6 +20,7 @@
     font-weight: var(--font-weight-bold);
     font-family: var(--font-family-text);
     color: var(--color-blue);
+    font-size: 14px;
   }
 }
 
@@ -35,12 +36,14 @@
     .title {
       margin-left: 10px;
       color: #344054;
+      font-size: 14px;
     }
   }
 
   .value {
     color: black;
     font-weight: var(--font-weight-bold);
+    font-size: 14px;
   }
 }
 
