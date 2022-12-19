@@ -111,7 +111,7 @@ const TokenList: React.FC<ITokenList> = ({
         data={tokens}
         loading={tokensLoading}
         initialized={initialized}
-        total={{ count: total, title: "Total Transactions" }}
+        total={{ count: total, title: "Total Token List" }}
         pagination={{
           onChange: (page, size) => {
             setQuery({ page, size });
