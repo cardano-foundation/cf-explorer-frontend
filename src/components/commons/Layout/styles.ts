@@ -7,12 +7,15 @@ const drawerCollaspWidth = 85;
 
 export const Layout = styled(Box)`
   display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
   @media screen and (max-width: 1023px) {
     flex-direction: column;
   }
 `;
 
-export const BackDrop = styled("div")<{ isShow: boolean }>`
+export const BackDrop = styled("div")<{ isShow: number }>`
   position: fixed;
   z-index: 997;
   top: 0;
@@ -117,10 +120,12 @@ export const MainContainer = styled(Box)`
   width: 100%;
 `;
 
-export const Main = styled(Box)<{ onDetailView: boolean; sidebar: boolean }>`
+export const Main = styled(Box)<{ open: number; sidebar: number }>`
   flex-grow: 1;
-  overflow: hidden;
-  max-width: calc(100vw - ${({ onDetailView, sidebar }) => (onDetailView ? 445 : 0) + (sidebar ? 260 : 85) + 16}px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-width: calc(100vw - ${({ open, sidebar }) => (open ? 445 : 0) + (sidebar ? 260 : 85)}px);
+  max-height: calc(100vh - 61px);
   @media screen and (max-width: 1023px) {
     max-width: 100vw;
   }

@@ -13,7 +13,7 @@ const Header = styled(Box)`
   align-items: center;
 `;
 
-const Title = styled("h2")<{ underline: boolean }>`
+const Title = styled("h2")<{ underline: number }>`
   text-align: left;
   padding-bottom: 8px;
   position: relative;
@@ -39,7 +39,7 @@ const Card: React.FC<CardProps> = ({ title, children, underline = false, extra, 
   return (
     <CardContainer {...props}>
       <Header>
-        {title ? <Title underline={underline}>{title}</Title> : null}
+        {title ? <Title underline={underline ? 1 : 0}>{title}</Title> : null}
         {extra}
       </Header>
       {children}

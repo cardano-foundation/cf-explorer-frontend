@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { styled, Container, Grid, Box, Select, MenuItem, Autocomplete, Skeleton } from "@mui/material";
+import { styled, Container, Grid, Box, Select, Autocomplete, Skeleton } from "@mui/material";
 
 import { formatADA, formatPrice, numberWithCommas } from "../../commons/utils/helper";
 import Card from "../../components/commons/Card";

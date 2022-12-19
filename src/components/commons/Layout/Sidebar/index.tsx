@@ -15,7 +15,7 @@ const Sidebar: React.FC = () => {
   return (
     <NavbarContainer>
       <HeaderTop>
-        <LogoLink to="/" open={sidebar}>
+        <LogoLink to="/" open={sidebar ? 1 : 0}>
           <NavBarLogo src={sidebar || width <= 1023 ? LogoFullIcon : LogoIcon} alt="logo desktop" />
           <NetworkName network={network}>{network}</NetworkName>
         </LogoLink>

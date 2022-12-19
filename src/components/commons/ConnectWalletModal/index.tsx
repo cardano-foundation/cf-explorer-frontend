@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { setOpenModal } from "../../../stores/user";
 import { SUPPORTED_WALLETS } from "../../../commons/utils/constants";
-import styles from "./index.module.scss";
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { RootState } from "../../../stores/types";
 import { CircularProgress } from "@mui/material";
@@ -35,12 +34,12 @@ const ConnectWalletModal: React.FC = () => {
       onClose={walletConnecting ? undefined : handleClose}
       open={openModal}
       fullWidth
-      connecting={!!walletConnecting}
+      connecting={walletConnecting ? 1 : 0}
       PaperProps={{ style: { borderRadius: 20 } }}
     >
       <Header>
         <Title>Connect to a Wallet</Title>
-        <CloseButton connecting={!!walletConnecting} onClick={walletConnecting ? undefined : handleClose}>
+        <CloseButton connecting={walletConnecting ? 1 : 0} onClick={walletConnecting ? undefined : handleClose}>
           <IoMdClose />
         </CloseButton>
       </Header>
@@ -50,8 +49,8 @@ const ConnectWalletModal: React.FC = () => {
           return (
             <WalletItem
               key={wallet.name}
-              active={active}
-              connecting={!!walletConnecting}
+              active={active ? 1 : 0}
+              connecting={walletConnecting ? 1 : 0}
               onClick={() => !walletConnecting && handleConnect(wallet.name)}
             >
               <WalletIcon src={wallet.icon} alt={wallet.name} />

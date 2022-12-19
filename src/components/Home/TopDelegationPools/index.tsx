@@ -1,10 +1,10 @@
 import React from "react";
-import { FaAngleDoubleRight } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import { DownRedIcon, UpGreenIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
 import { formatPrice } from "../../../commons/utils/helper";
+import ViewAllButton from "../../commons/ViewAllButton";
 import { Column } from "../../commons/Table";
 import {
   DelegateTable,
@@ -15,8 +15,6 @@ import {
   PriceValue,
   ProgressContainer,
   ProgressTitle,
-  SeemoreButton,
-  SeemoreText,
   StyledLinearProgress,
   Title,
   TopDelegateContainer,
@@ -52,8 +50,8 @@ const TopDelegationPools: React.FC<Props> = () => {
       key: "reward",
       render: r => (
         <PriceRate>
-          <ImageRate up={r.reward >= 0} src={r.reward >= 0 ? UpGreenIcon : DownRedIcon} alt="price rate" />
-          <PriceValue up={r.reward >= 0}>
+          <ImageRate up={r.reward >= 0 ? 1 : 0} src={r.reward >= 0 ? UpGreenIcon : DownRedIcon} alt="price rate" />
+          <PriceValue up={r.reward >= 0 ? 1 : 0}>
             {r.reward >= 0 ? "+" : ""}
             {r.reward?.toString().replace(".", ",") || 0} %
           </PriceValue>
@@ -80,23 +78,12 @@ const TopDelegationPools: React.FC<Props> = () => {
         </ProgressContainer>
       ),
     },
-    // {
-    //   title: "",
-    //   key: "action",
-    //   render: r => (
-    //     <DetailButton to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`)}>
-    //       <small>Detail</small>
-    //     </DetailButton>
-    //   ),
-    // },
   ];
   return (
     <TopDelegateContainer>
       <Header>
         <Title>Top Delegation Pools</Title>
-        <SeemoreButton to={routers.DELEGATION_POOLS}>
-          <SeemoreText>View All</SeemoreText> <FaAngleDoubleRight size={12} />
-        </SeemoreButton>
+        <ViewAllButton to={routers.DELEGATION_POOLS} />
       </Header>
       <DelegateTable
         loading={loading}
@@ -107,9 +94,6 @@ const TopDelegationPools: React.FC<Props> = () => {
           history.push(routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`))
         }
       />
-      <SeemoreButton to={routers.DELEGATION_POOLS} mobile>
-        <SeemoreText>See All</SeemoreText>
-      </SeemoreButton>
     </TopDelegateContainer>
   );
 };

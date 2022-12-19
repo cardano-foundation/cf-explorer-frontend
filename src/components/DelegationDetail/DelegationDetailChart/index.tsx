@@ -22,13 +22,16 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ data, loa
         <Grid item xs={24} lg={18}>
           <div style={{ marginBottom: 10 }}>
             <Button
-              active={selectAnalytic === "epochChart"}
+              active={selectAnalytic === "epochChart" ? 1 : 0}
               style={{ marginRight: 5 }}
               onClick={() => setSelectAnalytic("epochChart")}
             >
               Stake
             </Button>
-            <Button active={selectAnalytic === "delegatorChart"} onClick={() => setSelectAnalytic("delegatorChart")}>
+            <Button
+              active={selectAnalytic === "delegatorChart" ? 1 : 0}
+              onClick={() => setSelectAnalytic("delegatorChart")}
+            >
               Delegator
             </Button>
           </div>

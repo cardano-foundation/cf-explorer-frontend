@@ -3,11 +3,11 @@ import { socials } from "../../../../../commons/menus";
 import { List, styled, ListItem, SxProps, Theme } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../stores/types";
-import { HiOutlineShare } from "react-icons/hi2";
 import { RiShareLine } from "react-icons/ri";
 import { setSidebar } from "../../../../../stores/user";
+import CustomTooltip from "../../../CustomTooltip";
 
-export const Menu = styled(List)<{ open: boolean }>`
+export const Menu = styled(List)<{ open: number }>`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -29,7 +29,7 @@ export const Menu = styled(List)<{ open: boolean }>`
   }
 `;
 
-export const MenuIcon = styled("img")<{ iconOnly?: boolean; active?: boolean; textOnly?: boolean }>`
+export const MenuIcon = styled("img")`
   width: 16px;
   height: auto;
 `;
@@ -70,7 +70,7 @@ const expandStyle: SxProps<Theme> = theme => ({
 const FooterMenu: React.FC = () => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   return (
-    <Menu open={sidebar}>
+    <Menu open={sidebar ? 1 : 0}>
       {sidebar ? (
         socials.map((item, index) => {
           const { href, title, icon: Icon } = item;
@@ -90,16 +90,18 @@ const FooterMenu: React.FC = () => {
           );
         })
       ) : (
-        <ListItem
-          button
-          component="a"
-          target="_blank"
-          rel="noreferrer"
-          sx={expandStyle}
-          onClick={() => setSidebar(true)}
-        >
-          <RiShareLine />
-        </ListItem>
+        <CustomTooltip placement="right" title="Expand">
+          <ListItem
+            button
+            component="a"
+            target="_blank"
+            rel="noreferrer"
+            sx={expandStyle}
+            onClick={() => setSidebar(true)}
+          >
+            <RiShareLine />
+          </ListItem>
+        </CustomTooltip>
       )}
     </Menu>
   );

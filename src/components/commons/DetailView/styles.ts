@@ -1,33 +1,45 @@
-import { Box, Drawer, Grid, IconButton, Skeleton, styled } from "@mui/material";
+import { Box, Drawer, IconButton, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import CopyButton from "../CopyButton";
+import ViewAllButton from "../ViewAllButton";
 
 export const ViewDetailDrawer = styled(Drawer)`
   & > div {
     background: #ececec;
     border: none;
+    height: calc(100vh - 61px);
   }
 `;
 
 export const ViewDetailContainer = styled(Box)`
   position: relative;
-  width: 400px;
-  max-width: 400px;
-  margin: 100px 14px 0px 30px;
-  height: calc(100vh - 160px);
+  width: 430px;
+  height: calc(100vh - 244px);
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 40px 0px 20px;
+  margin: 100px 0 0 30px;
+  padding: 40px 0px 0px;
   border-top: 1px solid ${props => props.theme.colorBlack}11;
   text-align: center;
 `;
+export const ViewDetailScroll = styled(Box)`
+  width: 400px;
+  max-width: 400px;
+  margin-right: 16px;
+  overflow-x: hidden;
+`;
 
+export const StyledViewMore = styled(ViewAllButton)`
+  position: absolute;
+  top: 10px;
+  left: 0px;
+`;
 export const CloseButton = styled(IconButton)`
   position: absolute;
-  top: 5px;
-  right: 0px;
+  top: 10px;
+  left: 365px;
   color: ${props => props.theme.titleColor};
 `;
 
@@ -42,6 +54,7 @@ export const TokenContainer = styled(Box)`
   box-shadow: 0px 10px 25px ${props => props.theme.colorBlack}16;
   border-radius: 12px;
   padding: 25px 20px;
+  margin-top: 10px;
   text-align: left;
 `;
 
@@ -280,7 +293,7 @@ export const DetailLink = styled(Link)`
   color: ${props => props.theme.colorBlack};
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-normal);
-  &:hover{
+  &:hover {
     /* background: ; */
   }
 `;

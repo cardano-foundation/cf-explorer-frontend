@@ -27,7 +27,7 @@ export const HeaderTop = styled("div")`
   }
 `;
 
-export const LogoLink = styled(Link)<{ open?: boolean }>`
+export const LogoLink = styled(Link)<{ open?: number }>`
   position: relative;
   display: block;
   margin-left: ${props => (props.open ? 30 : 15)}px;
@@ -81,44 +81,3 @@ export const Toggle = styled.i`
   }
 `;
 
-export const HeaderBar = styled.div<{ active: boolean }>`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: var(--menu-item-gap);
-  @media screen and (max-width: 1023px) {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
-    position: absolute;
-    z-index: 999;
-    top: 100%;
-    right: ${props => (props.active ? "0%" : "100%")};
-    width: 100%;
-    background-color: #ffffff;
-    color: ${props => props.theme.textColor};
-    gap: 15px;
-    box-shadow: ${props => props.theme.shadowRaised};  
-`;
-
-export const HeaderMain = styled.div<{ isHome: boolean }>`
-  position: relative;
-  text-align: center;
-  padding: ${props => (props.isHome ? "80px 0px 170px" : "20px 0px")};
-  & > div {
-    padding-top: ${props => (props.isHome ? "0px" : "30px")};
-    margin-bottom: ${props => (props.isHome ? "0px" : "calc(-25px - 1.5715rem)")};
-  }
-  @media screen and (max-width: 767px) {
-    padding: 62px 0px 48px;
-    padding: ${props => (props.isHome ? "62px 0px 48px" : "20px 0px")};
-  }
-`;
-
-export const Title = styled.h1<{ isHome: boolean }>`
-  color: ${props => props.theme.textColorReverse};
-  display: ${props => (props.isHome ? "block" : "none")};
-  @media screen and (max-width: 767px) {
-    font-size: 30px;
-  }
-`;
