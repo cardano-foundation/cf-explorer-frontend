@@ -88,7 +88,7 @@ const AddressWalletDetail = () => {
                   <Box width={50}>
                     <img src={AIcon} alt="a icon" />
                   </Box>
-                  <Box>
+                  <Box textAlign={"left"}>
                     {option.displayName} #{option.name}
                   </Box>
                 </Box>
@@ -224,9 +224,9 @@ const DetailCard: React.FC<DetailCardProps> = ({ title, address, item, type, loa
       <Box className={styles.titleDetail}>{title}</Box>
       <Box className={styles.addressGroup}>
         <Link className={styles.address} to={routers.ADDRESS_DETAIL.replace(":address", address)}>
-          {address}{" "}
+          {address}
         </Link>
-        <CopyButton />
+        <CopyButton text={address} />
       </Box>
       <Box>
         {item.map((i, ii) => {
