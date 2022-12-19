@@ -14,7 +14,7 @@ type DetailHeaderBlock = {
 
 type DetailHeaderConfirm = {
   confirmation: number;
-  status: keyof typeof ConfirmationStatus;
+  status?: keyof typeof ConfirmationStatus;
 };
 
 type DetailHeaderFees = {

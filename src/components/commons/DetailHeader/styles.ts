@@ -189,7 +189,7 @@ export const ConfirmationValue = styled(DetailValue)`
   align-items: center;
 `;
 
-export const ConfirmStatus = styled("small")<{ status: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
   color: ${props => {
     switch (props.status) {
       case CONFIRMATION_STATUS.MEDIUM:
