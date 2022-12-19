@@ -10,7 +10,7 @@ import { numberWithCommas } from "../../commons/utils/helper";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 
-import { AssetName, FontWeightBold, Logo, StyledSelect } from "./styles";
+import { AssetName, Logo, StyledSelect } from "./styles";
 import { useWindowSize } from "react-use";
 import { setOnDetailView } from "../../stores/user";
 import DetailViewToken from "../commons/DetailView/DetailViewToken";
@@ -46,7 +46,7 @@ const TokenList: React.FC<ITokenList> = ({
     {
       title: "Icon",
       key: "icon",
-      minWidth: "100px",
+      minWidth: "50px",
       render: r =>
         tokensMetadataLoading ? (
           <Skeleton style={{ width: 30, height: 30 }} />
@@ -57,20 +57,22 @@ const TokenList: React.FC<ITokenList> = ({
     {
       title: "Asset Name",
       key: "assetName",
-      minWidth: "150px",
-      render: r => <AssetName>{r.displayName}</AssetName>,
+      minWidth: "100px",
+      render: r => (
+        <AssetName to={routers.TOKEN_DETAIL.replace(":tokenId", r.fingerprint || "")}>{r.displayName}</AssetName>
+      ),
     },
     {
       title: "Total Transactions",
       key: "totalTransactions",
       minWidth: "150px",
-      render: r => <FontWeightBold>{numberWithCommas(r?.txCount ?? "")}</FontWeightBold>,
+      render: r => <>{numberWithCommas(r?.txCount ?? "")}</>,
     },
     {
       title: "Total Supply",
       key: "totalSupply",
       minWidth: "150px",
-      render: r => <FontWeightBold>{numberWithCommas(r?.supply ?? "")}</FontWeightBold>,
+      render: r => <>{numberWithCommas(r?.supply ?? "")}</>,
     },
     {
       title: "Created",
@@ -109,7 +111,7 @@ const TokenList: React.FC<ITokenList> = ({
         data={tokens}
         loading={tokensLoading}
         initialized={initialized}
-        total={{ count: total, title: "Total Transactions" }}
+        total={{ count: total, title: "Total Token List" }}
         pagination={{
           onChange: (page, size) => {
             setQuery({ page, size });
