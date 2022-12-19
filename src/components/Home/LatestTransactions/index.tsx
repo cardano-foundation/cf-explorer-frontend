@@ -85,7 +85,7 @@ const LatestTransactions: React.FC = () => {
                             <BlockNo>{blockNo}</BlockNo>
                           </Link>
                         </p>
-                        {addressesOutput?.slice(0, 1).map(add => {
+                        {addressesInput?.slice(0, 1).map(add => {
                           return (
                             <p key={add}>
                               <small>From: </small>
@@ -98,7 +98,7 @@ const LatestTransactions: React.FC = () => {
                             </p>
                           );
                         })}
-                        {addressesInput?.slice(0, 1).map(add => {
+                        {addressesOutput?.slice(0, 1).map(add => {
                           return (
                             <p key={add}>
                               <small>To: </small>
