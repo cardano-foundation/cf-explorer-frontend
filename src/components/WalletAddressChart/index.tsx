@@ -8,8 +8,9 @@ import Card from "../commons/Card";
 import styles from "./index.module.scss";
 import highestIcon from "../../commons/resources/images/highestIcon.png";
 import lowestIcon from "../../commons/resources/images/lowestIcon.png";
-import { formatADA } from "../../commons/utils/helper";
+import { formatADA, formatPrice } from "../../commons/utils/helper";
 import { BoxInfo, BoxInfoItem, BoxInfoItemRight, Title, ValueInfo } from "./styles";
+import moment from "moment";
 
 interface WalletAddressChartProps {
   data:
@@ -43,7 +44,7 @@ const WalletAddressChart: React.FC<WalletAddressChartProps> = ({
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container className={styles.tab} alignItems="center" justifyContent={"space-between"}>
             <Grid item xs={12} sm={6}>
-              <button className={`${styles.button} ${styles.active}`} style={{ marginRight: 5 }}>
+              <button className={`${styles.button} ${styles.active}`} style={{ marginRight: 5, fontSize: 14 }}>
                 Balance
               </button>
             </Grid>
@@ -124,7 +125,7 @@ const Chart = ({ data }: { data: WalletAddressChartProps["data"] }) => {
   useEffect(() => {
     if (data) {
       setData(data.map(i => i.value));
-      setCategories(data.map(i => `${i.date}`));
+      setCategories(data.map(i => moment(i.date).format("DD MMM")));
     }
   }, [data]);
 
@@ -132,13 +133,26 @@ const Chart = ({ data }: { data: WalletAddressChartProps["data"] }) => {
     <HighchartsReact
       highcharts={Highcharts}
       options={{
-        chart: { type: "areaspline" },
+        chart: {
+          type: "areaspline",
+          style: {
+            fontFamily: "Helvetica, monospace",
+          },
+        },
         title: { text: "" },
         yAxis: {
           title: { text: null },
           lineWidth: 1,
           lineColor: "#E3E5E9",
           gridLineWidth: 0,
+          labels: {
+            style: {
+              fontSize: 12,
+            },
+            formatter: (e: { value: string }) => {
+              return formatPrice(e.value || 0);
+            },
+          },
         },
         xAxis: {
           categories,
@@ -146,6 +160,11 @@ const Chart = ({ data }: { data: WalletAddressChartProps["data"] }) => {
           lineColor: "#E3E5E9",
           plotLines: [],
           angle: 0,
+          labels: {
+            style: {
+              fontSize: 12,
+            },
+          },
         },
         legend: { enabled: false },
         tooltip: { shared: true },
