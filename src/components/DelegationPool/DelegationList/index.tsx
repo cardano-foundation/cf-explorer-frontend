@@ -53,29 +53,29 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       key: "Reward",
       minWidth: "120px",
       // To do
-      // render: r => <div>{r.reward}</div>,
-      render: r => (
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <img src={sendImg} alt="reward icon" />
-          <span className={styles.value}>+{Math.round((Math.random() * 4 + 2) * 100) / 100}%</span>
-        </div>
-      ),
+      render: r => <div>{r.reward}</div>,
+      // render: r => (
+      //   <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+      //     <img src={sendImg} alt="reward icon" />
+      //     <span className={styles.value}>+{Math.round((Math.random() * 4 + 2) * 100) / 100}%</span>
+      //   </div>
+      // ),
     },
     {
       title: "Fee (A) ",
       key: "fee",
       minWidth: "120px",
-      // To do
-      // render: r => (
-      //   <div>
-      //     {r.feePercent}-{r.feeAmount}{" "}
-      //   </div>
-      // ),
+      //TO DO
       render: r => (
         <div>
-          {r.feeFake}% ({formatADA((r.adaFake * 100000000 * r.feeFake) / 100)} A)
+          {r.feePercent} {`(${formatADA(r.feeAmount)} A)`}
         </div>
       ),
+      // render: r => (
+      //   <div>
+      //     {r.feeFake}% ({formatADA((r.adaFake * 100000000 * r.feeFake) / 100)} A)
+      //   </div>
+      // ),
     },
     {
       title: "Declared Pledge (A)",
@@ -87,12 +87,10 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       title: "Saturation",
       minWidth: "200px",
       key: "Saturation",
-      // To do
-      // render: r => <div>{r.saturation} </div>,
       render: r => (
         <div style={{ display: "flex", alignItems: "center" }}>
-          <span>{Math.round(Math.random() * 100)}%</span>
-          <StyledLinearProgress variant="determinate" value={Math.round(Math.random() * 100)} />
+          <span>{r.saturation || 0}%</span>
+          <StyledLinearProgress variant="determinate" value={r.saturation * 100} />
         </div>
       ),
     },
