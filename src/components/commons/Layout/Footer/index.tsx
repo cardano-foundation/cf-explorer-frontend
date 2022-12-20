@@ -17,6 +17,7 @@ const FooterContainer = styled(Container)`
   align-items: center;
   flex-wrap: wrap;
   height: 60px;
+  max-width: unset !important;
   @media screen and (max-width: 1023px) {
     height: unset;
   }

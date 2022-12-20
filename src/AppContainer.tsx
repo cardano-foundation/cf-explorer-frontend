@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import CustomLayout from "./components/commons/Layout";
 import { RootState } from "./stores/types";
@@ -11,10 +11,10 @@ interface Props {
 }
 
 const AppContainer: React.FC<Props> = props => {
+  const history = useHistory();
+  const lastPath = useRef(history.location.pathname);
   const { children } = props;
   const { theme } = useSelector(({ user }: RootState) => user);
-
-  const history = useHistory();
 
   useEffect(() => {
     setOnDetailView(false);
@@ -23,7 +23,10 @@ const AppContainer: React.FC<Props> = props => {
   useEffect(() => {
     const unlisten = history.listen(() => {
       window.scrollTo(0, 0);
-      setOnDetailView(false);
+      if (lastPath.current !== history.location.pathname) {
+        setOnDetailView(false);
+        lastPath.current = history.location.pathname;
+      }
     });
     return () => {
       unlisten();

@@ -20,7 +20,7 @@ export const CustomTooltip = (props: TooltipProps) => {
           style: {
             maxWidth: 400,
             fontSize: "var(--font-size-text-small)",
-            padding: "15px 20px",
+            padding: "10px 15px",
             lineHeight: 1.5,
             backgroundColor: "#222222",
             opacity: 0.94,
