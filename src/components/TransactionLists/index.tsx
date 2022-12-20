@@ -99,16 +99,16 @@ const TransactionList: React.FC<TransactionListProps> = ({
             <div className={styles.input}>
               <div className={styles.title}> Input: </div>
               <div>
-                {r.addressesInput.slice(0, 2).map((tx, key) => {
-                  return (
-                    <Tooltip key={key} title={tx} placement="top">
-                      <Link to={routers.ADDRESS_DETAIL.replace(":address", tx)} className={` ${styles.link}`} key={key}>
-                        {getShortWallet(tx)}
-                      </Link>
-                    </Tooltip>
-                  );
-                })}
-                {r.addressesInput.length > 2 && (
+                <Tooltip title={r.addressesInput[0]} placement="top">
+                  <Link
+                    to={routers.ADDRESS_DETAIL.replace(":address", `${r.addressesInput[0]}`)}
+                    className={` ${styles.link}`}
+                  >
+                    {getShortWallet(r.addressesInput[0])}
+                  </Link>
+                </Tooltip>
+                <br />
+                {r.addressesInput.length > 1 && (
                   <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)} className={` ${styles.link}`}>
                     ...
                   </Link>
@@ -118,16 +118,16 @@ const TransactionList: React.FC<TransactionListProps> = ({
             <div className={styles.output}>
               <div className={styles.title}>Output: </div>
               <div>
-                {r.addressesOutput.slice(0, 2).map((tx, key) => {
-                  return (
-                    <Tooltip key={key} title={tx} placement="top">
-                      <Link to={routers.ADDRESS_DETAIL.replace(":address", tx)} className={` ${styles.link}`} key={key}>
-                        {getShortWallet(tx)}
-                      </Link>
-                    </Tooltip>
-                  );
-                })}
-                {r.addressesOutput.length > 2 && (
+                <Tooltip title={r.addressesOutput[0]} placement="top">
+                  <Link
+                    to={routers.ADDRESS_DETAIL.replace(":address", `${r.addressesOutput[0]}`)}
+                    className={` ${styles.link}`}
+                  >
+                    {getShortWallet(r.addressesOutput[0])}
+                  </Link>
+                </Tooltip>
+                <br />
+                {r.addressesOutput.length > 1 && (
                   <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)} className={` ${styles.link}`}>
                     ...
                   </Link>
