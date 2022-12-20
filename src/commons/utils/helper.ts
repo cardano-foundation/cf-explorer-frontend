@@ -103,3 +103,4 @@ export const handleClicktWithoutAnchor = (e: React.MouseEvent, fn: (e: React.Mou
 };
 
 export const isExtenalLink = (href?: string) => href && (href.search("http://") >= 0 || href.search("https://") >= 0);
+export const formatPercent = (percent: number) => `${(percent * 100).toFixed(2)}%`;
