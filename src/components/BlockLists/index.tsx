@@ -1,6 +1,7 @@
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
-import { Container, Tooltip } from "@mui/material";
+import { Box, Container, Tooltip } from "@mui/material";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
@@ -75,6 +76,11 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
         <PriceWrapper>
           {formatADA(r.totalOutput) || 0}
           <img src={AIcon} alt="ADA Icon" />
+          {detailView === r.blockNo && (
+            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
+              <MdOutlineKeyboardArrowRight fontSize={30} />
+            </Box>
+          )}
         </PriceWrapper>
       ),
     },
