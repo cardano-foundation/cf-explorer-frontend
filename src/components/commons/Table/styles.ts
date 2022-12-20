@@ -44,6 +44,7 @@ export const TRow = styled("tr")`
   padding: 10px 0;
   font-size: 14px;
   cursor: pointer;
+  position: relative;
   &:hover {
     border-radius: 10px;
     background-color: #ededed;
