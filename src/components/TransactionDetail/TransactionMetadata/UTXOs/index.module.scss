@@ -35,7 +35,7 @@
     }
     .transfer {
       @include flex-between-center;
-      flex-wrap: wrap;
+
       width: 100%;
       .wallet {
         @include flex-start-center;
@@ -46,10 +46,28 @@
         }
       }
 
-      .transferInfo {
+      .transferInfoTop {
         @include flex-between-center;
         flex: 1;
 
+        .transferAddress,
+        .transferValue,
+        .transferHash {
+          @include flex-start-center;
+          flex-wrap: nowrap;
+          width: auto;
+        }
+        .img {
+          padding-right: 10px;
+          width: 35px;
+        }
+        .address {
+          font-weight: var(--font-weight-bold);
+          margin-right: 8px;
+        }
+      }
+      .transferInfo {
+        @include flex-between-center;
         .transferAddress,
         .transferValue,
         .transferHash {

@@ -17,7 +17,7 @@
     margin: 0 auto;
     font-family: var(--font-family-title);
     word-break: break-all;
-    color: var(--color-blue) !important;
+    // color: var(--color-blue) !important;
     display: flex;
     align-items: center;
   }
@@ -28,5 +28,8 @@
       width: 1em;
       height: 1em;
     }
+  }
+  .btn {
+    font-family: var(--font-family-title);
   }
 }
