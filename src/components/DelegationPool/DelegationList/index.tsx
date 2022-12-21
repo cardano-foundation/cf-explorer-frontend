@@ -4,9 +4,8 @@ import { parse, stringify } from "qs";
 import Table, { Column } from "../../commons/Table";
 
 import styles from "./index.module.scss";
-import { formatADA } from "../../../commons/utils/helper";
+import { formatADA, formatPercent } from "../../../commons/utils/helper";
 
-import sendImg from "../../../commons/resources/images//summary-up.png";
 import { routers } from "../../../commons/routers";
 import { LinearProgress, styled } from "@mui/material";
 
@@ -43,35 +42,21 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       title: "Pool size (A)",
       key: "PoolsizeA",
       minWidth: "120px",
-      // To do
       render: r => <div>{formatADA(r.poolSize)}</div>,
     },
     {
       title: "Reward",
       key: "Reward",
       minWidth: "120px",
-      // To do
-      // render: r => <div>{r.reward}</div>,
-      render: r => (
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <img src={sendImg} alt="reward icon" />
-          <span className={styles.value}>+{Math.round((Math.random() * 4 + 2) * 100) / 100}%</span>
-        </div>
-      ),
+      render: r => <div>{r.reward}</div>,
     },
     {
       title: "Fee (A) ",
       key: "fee",
       minWidth: "120px",
-      // To do
-      // render: r => (
-      //   <div>
-      //     {r.feePercent}-{r.feeAmount}{" "}
-      //   </div>
-      // ),
       render: r => (
         <div>
-          {r.feeFake}% ({formatADA((r.adaFake * 100000000 * r.feeFake) / 100)} A)
+          {formatPercent(r.feePercent)} {`(${formatADA(r.feeAmount)} A)`}
         </div>
       ),
     },
@@ -85,12 +70,10 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       title: "Saturation",
       minWidth: "200px",
       key: "Saturation",
-      // To do
-      // render: r => <div>{r.saturation} </div>,
       render: r => (
         <div style={{ display: "flex", alignItems: "center" }}>
-          <span>{Math.round(Math.random() * 100)}%</span>
-          <StyledLinearProgress variant="determinate" value={Math.round(Math.random() * 100)} />
+          <span>{formatPercent(r.saturation) || `0%`}</span>
+          <StyledLinearProgress variant="determinate" value={r.saturation * 100 > 100 ? 100 : r.saturation * 100} />
         </div>
       ),
     },
@@ -98,7 +81,6 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
   return (
     <Table
       columns={columns}
-      // To do
       data={data.map(item => {
         return {
           ...item,

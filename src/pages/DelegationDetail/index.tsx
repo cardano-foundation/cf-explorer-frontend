@@ -50,7 +50,7 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
     loading: loadingTable,
     total,
   } = useFetchList<DelegationEpoch | StakingDelegators>(
-    `/delegation/pool-detail-${tab}?poolView=${poolId}&page=${query.page || 1}&size=${query.size || 10}`
+    `/delegation/pool-detail-${tab}?poolView=${poolId}&page=${query.page || 0}&size=${query.size || 10}`
   );
 
   const render = () => {

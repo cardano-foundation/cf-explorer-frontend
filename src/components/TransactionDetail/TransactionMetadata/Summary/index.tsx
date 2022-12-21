@@ -49,11 +49,24 @@ const SummaryItems = ({
                 </span>
                 <img src={AIcon} alt="ADA icon" />
               </div>
-              {/* <div className={styles.transferValue}>
-                <h4 className={`${styles.status} ${styles.yellow} ${styles.ml10}`}>Native Token</h4>
-              </div> */}
             </div>
           </div>
+          {item.tokens && (
+            <Box className={`${styles.transfer} ${styles.nowrap}`}>
+              <Box>
+                <div className={styles.wallet}>Token received: </div>
+              </Box>
+              <div className={styles.transferInfo}>
+                <Box overflow={"hidden"} display="flex" ml={3} flexWrap={"wrap"}>
+                  {item.tokens.map((token, idx) => (
+                    <div key={idx} className={styles.transferValue}>
+                      <h4 className={`${styles.status} ${styles.yellow} ${styles.ml10}`}>{token.assetName}</h4>
+                    </div>
+                  ))}
+                </Box>
+              </div>
+            </Box>
+          )}
         </Box>
       </Box>
     </div>

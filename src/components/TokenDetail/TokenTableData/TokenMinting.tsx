@@ -8,7 +8,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { AIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
-import { formatADA, getShortHash } from "../../../commons/utils/helper";
+import { formatADA, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 
 import Table, { Column } from "../../commons/Table";
 
@@ -65,7 +65,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
       minWidth: "200px",
       render: r => (
         <PriceValue>
-          <SmallText>{formatADA(r.amount) || 0}</SmallText>
+          <SmallText>{numberWithCommas(r.amount) || 0}</SmallText>
           <PriceIcon src={AIcon} alt="a icon" />
         </PriceValue>
       ),

@@ -38,11 +38,13 @@ const Card = ({
   item?: Required<Transaction>["utxOs"]["inputs"];
   fee?: number;
 }) => {
+  console.log("🚀 ~ file: index.tsx:41 ~ item", item);
   const totalADA =
     item &&
     item.reduce((prv, i) => {
       return prv + i.value;
     }, fee || 0);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -61,7 +63,7 @@ const Card = ({
               <Box width={"100%"}>
                 <div className={styles.transfer}>
                   <div className={styles.wallet}>{type === "down" ? "From" : "To"}:</div>
-                  <div className={styles.transferInfo}>
+                  <div className={styles.transferInfoTop}>
                     <div className={styles.transferAddress}>
                       <Link to={routers.ADDRESS_DETAIL.replace(":address", i.address)} className={styles.address}>
                         <Tooltip title={i.address} placement="top">
@@ -78,23 +80,33 @@ const Card = ({
                     </div>
                   </div>
                 </div>
-                <div className={styles.transfer}>
+                <Box className={styles.transfer} display="flex">
                   {type === "down" && (
-                    <div className={styles.transferInfo}>
+                    <Box mr={3} className={styles.transferInfo}>
                       <div className={styles.transferHash}>
                         <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", i.txHash)} className={styles.txHash}>
                           <Tooltip title={i.txHash} placement="top">
                             <div>
-                              <span className={styles.txHashDesktop}>{i.txHash}</span>
-                              <span className={styles.txHashMobile}>{getShortHash(i.txHash)}</span>
+                              <Box component={"span"} fontWeight="bold">
+                                {getShortHash(i.txHash)}
+                              </Box>
                             </div>
                           </Tooltip>
                         </Link>
                         <CopyButton text={i.txHash} className={styles.icon} />
                       </div>
-                    </div>
+                    </Box>
                   )}
-                </div>
+                  <div className={styles.transferInfo}>
+                    <Box overflow={"hidden"} display="flex" gap={1} flexWrap={"wrap"}>
+                      {i.tokens.map((token, idx) => (
+                        <div key={idx} className={styles.transferValue}>
+                          <h4 className={`${styles.status} ${styles.yellow} `}>{token.assetName}</h4>
+                        </div>
+                      ))}
+                    </Box>
+                  </div>
+                </Box>
               </Box>
             </Box>
           </div>

@@ -50,7 +50,7 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { TbFileCheck } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
 import { routers } from "../../../commons/routers";
-import { formatADA, getShortHash } from "../../../commons/utils/helper";
+import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import { Tooltip } from "@mui/material";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
@@ -140,7 +140,8 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
         <ViewMoreButton to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)} />
       </ViewDetailDrawer>
     );
-
+  const input = data.utxOs?.inputs[0]?.address || "";
+  const output = data.utxOs?.outputs[0]?.address || "";
   return (
     <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
       <ViewDetailContainer>
@@ -157,7 +158,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               pathLineCap="butt"
               pathWidth={4}
               trailWidth={2}
-              percent={((data?.tx.epochSlot || 0) / (data.tx.maxEpochSlot || MAX_SLOT_EPOCH)) * 100}
+              percent={((data.tx.epochSlot || 0) / (data.tx.maxEpochSlot || MAX_SLOT_EPOCH)) * 100}
               trailOpacity={1}
             >
               <EpochNumber>{data.tx.epochNo}</EpochNumber>
@@ -194,6 +195,38 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                 <DetailCopy text={hash} />
               </DetailValue>
             </DetailsInfoItem>
+            {input && (
+              <DetailsInfoItem>
+                <DetailLabel>
+                  <InfoIcon />
+                  Input
+                </DetailLabel>
+                <DetailValue>
+                  <Tooltip placement="top" title={input}>
+                    <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${input}`)}>
+                      {getShortWallet(input)}
+                    </StyledLink>
+                  </Tooltip>
+                  <DetailCopy text={input} />
+                </DetailValue>
+              </DetailsInfoItem>
+            )}
+            {output && (
+              <DetailsInfoItem>
+                <DetailLabel>
+                  <InfoIcon />
+                  Output
+                </DetailLabel>
+                <DetailValue>
+                  <Tooltip placement="top" title={output}>
+                    <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${output}`)}>
+                      {getShortWallet(output)}
+                    </StyledLink>
+                  </Tooltip>
+                  <DetailCopy text={output} />
+                </DetailValue>
+              </DetailsInfoItem>
+            )}
             <DetailsInfoItem>
               <DetailLabel>
                 <InfoIcon />

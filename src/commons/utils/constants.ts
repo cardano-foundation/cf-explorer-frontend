@@ -32,3 +32,8 @@ export enum CONFIRMATION_STATUS {
   LOW = "LOW",
   HIGH = "HIGH",
 }
+
+export enum STAKE_KEY_STATUS {
+  ACTIVE = "ACTIVE",
+  DEACTIVATED = "DEACTIVATED",
+}

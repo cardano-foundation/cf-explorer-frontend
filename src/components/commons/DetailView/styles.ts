@@ -1,7 +1,8 @@
 import { Box, Drawer, IconButton, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
+import { CONFIRMATION_STATUS, STAKE_KEY_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
+import { BoxRaised } from "../BoxRaised";
 import CopyButton from "../CopyButton";
 import ViewAllButton from "../ViewAllButton";
 
@@ -10,6 +11,9 @@ export const ViewDetailDrawer = styled(Drawer)`
     background: #ececec;
     border: none;
     height: calc(100vh - 61px);
+    @media screen and (max-width: 1023px) {
+      display: none;
+    }
   }
 `;
 
@@ -23,12 +27,25 @@ export const ViewDetailContainer = styled(Box)`
   padding: 40px 0px 0px;
   border-top: 1px solid ${props => props.theme.colorBlack}11;
   text-align: center;
+  &::-webkit-scrollbar-thumb {
+    background: ${props => props.theme.titleColor};
+    border-radius: ${props => props.theme.borderRadius};
+    height: 20px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: ${props => props.theme.borderRadius};
+  }
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
 `;
 export const ViewDetailScroll = styled(Box)`
   width: 400px;
   max-width: 400px;
   margin-right: 16px;
   overflow-x: hidden;
+  overflow: hidden;
 `;
 
 export const StyledViewMore = styled(ViewAllButton)`
@@ -250,8 +267,8 @@ export const StyledLink = styled(Link)`
 `;
 
 export const Group = styled(Box)`
-  margin-bottom: 10px;
-  padding: 10px 0px 0px;
+  margin-bottom: 0px;
+  padding: 15px 0px;
   border-bottom: 1px solid ${props => props.theme.colorBlack}16;
 `;
 
@@ -289,13 +306,9 @@ export const DetailLink = styled(Link)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
   color: ${props => props.theme.colorBlack};
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-normal);
-  &:hover {
-    /* background: ; */
-  }
 `;
 
 export const DetailLinkIcon = styled("h3")`
@@ -421,4 +434,47 @@ export const DetailValueSkeleton = styled(Skeleton)`
   width: 50%;
   min-width: 100px;
   border-radius: 4px;
+`;
+
+export const StakeKeyHeader = styled(BoxRaised)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 17px 20px;
+  gap: 20px;
+  margin: 10px 0px;
+`;
+
+export const StakeKeyLink = styled(StyledLink)`
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 210px;
+  text-align: left;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-text-small);
+  line-height: 1.575;
+`;
+
+export const StakeKeyCopyButton = styled(CopyButton)`
+  font-size: 1.5rem;
+`;
+
+export const StakeKeyStatus = styled("small")<{ status: StakeStaus }>`
+  color: ${props => {
+    switch (props.status) {
+      case STAKE_KEY_STATUS.ACTIVE:
+        return props.theme.colorGreen;
+      default:
+        return props.theme.colorYellow;
+    }
+  }};
+  background-color: ${props => {
+    switch (props.status) {
+      case STAKE_KEY_STATUS.ACTIVE:
+        return `${props.theme.colorGreen}32`;
+      default:
+        return `${props.theme.colorYellow}32`;
+    }
+  }};
 `;

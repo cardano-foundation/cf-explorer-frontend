@@ -1,13 +1,21 @@
-import { IconButton, IconButtonProps, styled, Tooltip, TooltipProps } from "@mui/material";
+import { IconButton, IconButtonProps, styled, TooltipProps } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
 import { BiCheckCircle } from "react-icons/bi";
-import { IoMdCopy } from "react-icons/io";
 import { useCopyToClipboard } from "react-use";
 import copy from "../../../commons/resources/images/copy.svg";
+import CustomTooltip from "../CustomTooltip";
 
 const Button = styled(IconButton)`
   color: ${props => props.theme.textColor};
+  width: 23px;
+  height: 23px;
+  font-size: var(--font-size-text-large);
+`;
+
+const CopyIcon = styled("img")`
+  width: auto;
+  height: 0.9em;
 `;
 
 interface CopyButtonProps extends IconButtonProps {
@@ -39,16 +47,16 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, p
     }
   };
   return (
-    <Tooltip placement={placement || "top"} title={copied ? "Copied" : "Copy"}>
+    <CustomTooltip placement={placement || "top"} title={copied ? "Copied" : "Copy"}>
       <Button {...props} onClick={onCopy}>
         {children ||
           (copied ? (
-            <BiCheckCircle size={18} style={{ verticalAlign: "text-bottom" }} />
+            <BiCheckCircle style={{ verticalAlign: "text-bottom" }} />
           ) : (
-            <img src={copy} height={18} alt="icon copy" />
+            <CopyIcon src={copy} alt="icon copy" />
           ))}
       </Button>
-    </Tooltip>
+    </CustomTooltip>
   );
 };
 

@@ -37,11 +37,31 @@ interface Transaction {
     stakeAddressTxInputs: {
       address: string;
       value: number;
+      tokens: {
+        assetName: string;
+        assetQuantity: number;
+        assetId: string;
+        policy: {
+          policyId: string;
+          totalToken: number;
+          policyScript: string;
+        };
+      }[];
     }[];
 
     stakeAddressTxOutputs: {
       address: string;
       value: number;
+      tokens: {
+        assetName: string;
+        assetQuantity: number;
+        assetId: string;
+        policy: {
+          policyId: string;
+          totalToken: number;
+          policyScript: string;
+        };
+      }[];
     }[];
   };
   contracts?: {
@@ -60,11 +80,35 @@ interface Transaction {
       address: string;
       value: number;
       txHash: string;
+      tokens: [
+        {
+          assetName: string;
+          assetQuantity: number;
+          assetId: string;
+          policy: {
+            policyId: string;
+            totalToken: number;
+            policyScript: string;
+          };
+        }
+      ];
     }[];
     outputs: {
       address: string;
       value: number;
       txHash: string;
+      tokens: [
+        {
+          assetName: string;
+          assetQuantity: number;
+          assetId: string;
+          policy: {
+            policyId: string;
+            totalToken: number;
+            policyScript: string;
+          };
+        }
+      ];
     }[];
   };
   mints?: {
