@@ -12,6 +12,7 @@ import feeImg from "../../../../commons/resources/images/dola.svg";
 import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
 import { routers } from "../../../../commons/routers";
+import { Header, Img, LabelStatus } from "./conmponent";
 
 interface Props {
   data: Transaction["utxOs"] | null;
@@ -38,7 +39,6 @@ const Card = ({
   item?: Required<Transaction>["utxOs"]["inputs"];
   fee?: number;
 }) => {
-  console.log("🚀 ~ file: index.tsx:41 ~ item", item);
   const totalADA =
     item &&
     item.reduce((prv, i) => {
@@ -46,101 +46,130 @@ const Card = ({
     }, fee || 0);
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.header}>
+    <Box textAlign={"left"} mb={1} style={{ background: "#fff" }}>
+      <Header>
         <div>
-          <div className={styles.type}>{type === "down" ? "Input" : "Output"}</div>Wallet Addresses
+          <Box color={"black"} fontWeight="bold" fontSize={"1rem"}>
+            {type === "down" ? "Input" : "Output"}
+          </Box>
+          Wallet Addresses
         </div>
         <div>Amount</div>
-      </div>
+      </Header>
       {item &&
         item.map((i, ii) => (
-          <div className={styles.item} key={ii}>
+          <Box textAlign={"left"} padding="10px 25px" borderBottom={"1px solid #0000001a"} key={ii}>
             <Box display={"flex"} alignItems="center">
               <Box width={50}>
-                <img src={type === "down" ? receiveImg : sendImg} className={styles.img} alt="send icon" />
+                <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />
               </Box>
               <Box width={"100%"}>
-                <div className={styles.transfer}>
-                  <div className={styles.wallet}>{type === "down" ? "From" : "To"}:</div>
-                  <div className={styles.transferInfoTop}>
-                    <div className={styles.transferAddress}>
-                      <Link to={routers.ADDRESS_DETAIL.replace(":address", i.address)} className={styles.address}>
+                <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
+                  <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1}>
+                    {type === "down" ? "From" : "To"}:
+                  </Box>
+                  <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"}>
+                    <Box
+                      display={"flex"}
+                      justifyContent="flex-start"
+                      alignItems={"center"}
+                      flexWrap="nowrap"
+                      width={"auto"}
+                    >
+                      <Link to={routers.ADDRESS_DETAIL.replace(":address", i.address)}>
                         <Tooltip title={i.address} placement="top">
-                          <div> {getShortWallet(i.address)}</div>
+                          <Box color={"blue"} fontWeight="bold" className={styles.ffText}>
+                            {getShortWallet(i.address)}
+                          </Box>
                         </Tooltip>
                       </Link>{" "}
                       <CopyButton text={i.address} className={styles.icon} />
-                    </div>
-                    <div className={styles.transferValue}>
-                      <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
+                    </Box>
+                    <Box
+                      display={"flex"}
+                      justifyContent="flex-start"
+                      alignItems={"center"}
+                      flexWrap="nowrap"
+                      width={"auto"}
+                    >
+                      <Box
+                        component={"span"}
+                        whiteSpace="nowrap"
+                        color={props => (type === "up" ? props.colorGreenLight : props.colorRed)}
+                        fontWeight="bold"
+                        mr={1}
+                      >
                         {type === "down" ? `- ${formatADA(i.value)}` : `+ ${formatADA(i.value)}`}
-                      </span>
+                      </Box>
                       <img src={AIcon} alt="ADA icon" />
-                    </div>
-                  </div>
-                </div>
-                <Box className={styles.transfer} display="flex">
+                    </Box>
+                  </Box>
+                </Box>
+                <Box justifyContent={"space-between"} alignItems="center" width={"100%"} display="flex">
                   {type === "down" && (
-                    <Box mr={3} className={styles.transferInfo}>
-                      <div className={styles.transferHash}>
-                        <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", i.txHash)} className={styles.txHash}>
+                    <Box mr={3}>
+                      <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
+                        <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", i.txHash)}>
                           <Tooltip title={i.txHash} placement="top">
-                            <div>
-                              <Box component={"span"} fontWeight="bold">
-                                {getShortHash(i.txHash)}
-                              </Box>
-                            </div>
+                            <Box component={"span"} fontWeight="bold" className={styles.ffText} color="blue" mr={1}>
+                              {getShortHash(i.txHash)}
+                            </Box>
                           </Tooltip>
                         </Link>
-                        <CopyButton text={i.txHash} className={styles.icon} />
-                      </div>
+                        <CopyButton text={i.txHash} />
+                      </Box>
                     </Box>
                   )}
-                  <div className={styles.transferInfo}>
-                    <Box overflow={"hidden"} display="flex" gap={1} flexWrap={"wrap"}>
+                  <Box display={"flex"} alignItems="center" justifyContent={"space-between"}>
+                    <Box overflow={"hidden"} display="flex" flexWrap={"wrap"} gap={1}>
                       {i.tokens.map((token, idx) => (
-                        <div key={idx} className={styles.transferValue}>
-                          <h4 className={`${styles.status} ${styles.yellow} `}>{token.assetName}</h4>
-                        </div>
+                        <Box
+                          key={idx}
+                          display="flex"
+                          justifyContent={"flex-start"}
+                          alignItems="center"
+                          flexWrap={"nowrap"}
+                          width="auto"
+                        >
+                          <LabelStatus>{token.assetName}</LabelStatus>
+                        </Box>
                       ))}
                     </Box>
-                  </div>
+                  </Box>
                 </Box>
               </Box>
             </Box>
-          </div>
+          </Box>
         ))}
       {type === "up" && (
-        <div className={styles.item}>
-          <div className={styles.transfer}>
-            <div className={styles.transferInfo}>
+        <Box textAlign={"left"} padding="10px 25px" borderBottom={"1px solid #0000001a"}>
+          <Box width={"100%"} display="flex" justifyContent={"space-between"} alignItems="center">
+            <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
               <Box display={"flex"} alignItems="center">
-                <img className={styles.img} src={feeImg} alt="wallet icon" />
+                <Img src={feeImg} alt="wallet icon" />
                 <Box>Fee</Box>
               </Box>
-            </div>
+            </Box>
             <Box display={"flex"} alignItems="center">
-              <Box mr="8px" className={`${styles.address} ${styles.up}`}>
+              <Box mr="8px" fontWeight={"bold"} className={`${styles.ffText}`} color="red">
                 {formatADA(fee)}
               </Box>
               <Box>
                 <img src={AIcon} alt="ADA icon" />
               </Box>
             </Box>
-          </div>
-          <div className={`${styles.paddingTop} ${styles.transfer}`}></div>
-        </div>
+          </Box>
+        </Box>
       )}
-      <div className={styles.footer}>
+      <Box display={"flex"} justifyContent="space-between" padding={"12px 25px"} style={{ background: "#dedede" }}>
         <div>Total {type === "down" ? "Input" : "Output"}</div>
         <div>
-          <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
+          <Box fontWeight={"bold"} component="span" pr={1}>
             {type === "down" ? `- ${formatADA(totalADA)}` : `+ ${formatADA(totalADA)}`}
-          </span>
+          </Box>
           <img src={AIcon} alt="ADA icon" />
         </div>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
