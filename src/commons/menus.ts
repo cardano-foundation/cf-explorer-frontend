@@ -60,8 +60,8 @@ export const socials: Social[] = [
   { href: "https://www.linkedin.com/company/cardano-foundation/", title: "LinkedIn", icon: FaLinkedinIn },
   { href: "https://medium.com/@cardano.foundation", title: "Medium", icon: MediumIcon },
   { href: "https://t.me/CardanoAnnouncements", title: "Telegram", icon: FaTelegramPlane },
-  { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube", icon: FaYoutube },
   { href: "https://twitter.com/Cardano_CF", title: "Twitter", icon: FaTwitter },
+  { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube", icon: FaYoutube },
 ];
 
 export const footerMenus: Menu[] = [

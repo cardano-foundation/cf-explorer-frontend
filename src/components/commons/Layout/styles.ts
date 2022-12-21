@@ -12,6 +12,7 @@ export const Layout = styled(Box)`
   overflow: hidden;
   @media screen and (max-width: 1023px) {
     flex-direction: column;
+    height: auto;
   }
 `;
 
@@ -124,9 +125,10 @@ export const Main = styled(Box)<{ open: number; sidebar: number }>`
   flex-grow: 1;
   overflow-x: hidden;
   overflow-y: auto;
-  max-width: calc(100vw - ${({ open, sidebar }) => (open ? 445 : 0) + (sidebar ? 260 : 85)}px);
-  max-height: calc(100vh - 61px);
+  width: calc(100vw - ${({ open, sidebar }) => (open ? 445 : 0) + (sidebar ? 260 : 85) + 16}px);
+  height: calc(100vh - 61px);
   @media screen and (max-width: 1023px) {
-    max-width: 100vw;
+    width: 100vw;
+    height: auto;
   }
 `;

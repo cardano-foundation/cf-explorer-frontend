@@ -10,6 +10,9 @@ export const ViewDetailDrawer = styled(Drawer)`
     background: #ececec;
     border: none;
     height: calc(100vh - 61px);
+    @media screen and (max-width: 1023px) {
+      display: none;
+    }
   }
 `;
 
@@ -306,9 +309,6 @@ export const DetailLink = styled(Link)`
   color: ${props => props.theme.colorBlack};
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-normal);
-  &:hover {
-    /* background: ; */
-  }
 `;
 
 export const DetailLinkIcon = styled("h3")`
