@@ -111,40 +111,35 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
   const renderLabelDisplayedRows = () => {
     return (
       <Box component={"span"} fontWeight="bold">
-        {isEditPage && (
-          <Box
-            component={"input"}
-            type="number"
-            min={0}
-            autoFocus
-            placeholder="Page"
-            value={isChangePage ? page : page + 1}
-            onChange={e => {
-              if (+e.target.value <= Math.ceil(((pagination && pagination.total) || 0) / rowsPerPage)) {
-                setIsChangePage(true);
-                setPage(+e.target.value || 0);
-              }
-            }}
-            width={60}
-            onKeyDown={e => {
-              if (e.key === "Enter") {
-                console.log("eee", e);
-                setIsEditPage(false);
-                setIsChangePage(false);
-                handleChangePage(null, page);
-              }
-            }}
-            onBlur={() => {
+        <Box
+          component={"input"}
+          min={0}
+          placeholder="Page"
+          border={isEditPage ? "1px solid #000" : "none"}
+          fontWeight="bold"
+          value={isChangePage ? page : page + 1}
+          onChange={e => {
+            if (+e.target.value <= Math.ceil(((pagination && pagination.total) || 0) / rowsPerPage)) {
+              setIsChangePage(true);
+              setPage(+e.target.value || 0);
+            }
+          }}
+          width={(page.toString().length || 1) + "ch"}
+          onKeyDown={e => {
+            if (e.key === "Enter") {
               setIsEditPage(false);
               setIsChangePage(false);
-            }}
-          />
-        )}
-        {!isEditPage && (
-          <Box style={{ cursor: "pointer" }} onClick={() => setIsEditPage(true)} component={"span"}>
-            {page + 1}
-          </Box>
-        )}{" "}
+              handleChangePage(null, page);
+            }
+          }}
+          onFocus={() => {
+            setIsEditPage(true);
+          }}
+          onBlur={() => {
+            setIsEditPage(false);
+            setIsChangePage(false);
+          }}
+        />{" "}
         of {numberWithCommas(Math.ceil(((pagination && pagination.total) || 0) / rowsPerPage))}
       </Box>
     );
