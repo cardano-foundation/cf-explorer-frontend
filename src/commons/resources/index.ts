@@ -55,6 +55,7 @@ import InfoIcon from "./icons/infoIcon.svg";
 import HighestIcon from "./icons/highest-icon.svg";
 import LowestIcon from "./icons/lowest-icon.svg";
 import SeeMoreIcon from "./icons/seemore.svg";
+import LightningIcon from "./icons/lightning.svg";
 
 import FlintIcon from "./images/flint.jpg";
 import NamiIcon from "./images/nami.png";
@@ -126,4 +127,5 @@ export {
   BrowserIcon,
   ResourcesIcon,
   SeeMoreIcon,
+  LightningIcon,
 };
