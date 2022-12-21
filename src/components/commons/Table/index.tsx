@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TablePagination, Skeleton, Box } from "@mui/material";
 
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
@@ -20,6 +20,7 @@ import {
   Error,
 } from "./styles";
 import { ColumnType, FooterTableProps, TableHeaderProps, TableProps, TableRowProps } from "../../../types/table";
+import { useUpdateEffect } from "react-use";
 
 export const EmptyRecord = () => (
   <Empty>
@@ -93,7 +94,12 @@ const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
 
 const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
   const [page, setPage] = useState(pagination?.page || 0);
+  const [inputPage, setInputPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(pagination?.size || 10);
+  useUpdateEffect(() => {
+    setInputPage(0);
+  }, [window.location]);
+
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
     pagination && pagination.onChange && pagination.onChange(page + 1, rowsPerPage);
     setPage(page);
@@ -104,6 +110,37 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
     setPage(0);
     pagination && pagination.onChange && pagination.onChange(1, parseInt(event.target.value, 10));
   };
+
+  const renderLabelDisplayedRows = () => {
+    return (
+      <Box component={"span"} fontWeight="bold">
+        <Box
+          component={"input"}
+          min={0}
+          placeholder="Page"
+          fontWeight="bold"
+          border={"none"}
+          value={inputPage || page + 1}
+          onChange={e => {
+            if (+e.target.value <= Math.ceil(((pagination && pagination.total) || 0) / rowsPerPage)) {
+              setInputPage(+e.target.value);
+            }
+          }}
+          width={(Math.max(inputPage.toString().length, page.toString().length) || 1) + "ch"}
+          onKeyDown={e => {
+            if (e.key === "Enter") {
+              handleChangePage(null, inputPage - 1);
+            }
+          }}
+          onBlur={() => {
+            setInputPage(0);
+          }}
+        />{" "}
+        of {numberWithCommas(Math.ceil(((pagination && pagination.total) || 0) / rowsPerPage))}
+      </Box>
+    );
+  };
+
   return (
     <TFooter>
       {total && (
@@ -111,7 +148,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
           {total.title}: <TotalNumber>{numberWithCommas(total.count)}</TotalNumber>
         </Total>
       )}
-      {pagination && (
+      {total && total.count > 10 && pagination && (
         <TablePagination
           component="div"
           count={pagination.total || 0}
@@ -120,6 +157,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          labelDisplayedRows={props => renderLabelDisplayedRows()}
           sx={{
             ".MuiToolbar-root": {
               alignItems: "baseline",
