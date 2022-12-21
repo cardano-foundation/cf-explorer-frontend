@@ -1,4 +1,4 @@
-import { Box, Container, LinearProgress, Skeleton, styled } from "@mui/material";
+import { Box, Container, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const HeaderDetailContainer = styled(Container)`
@@ -62,65 +62,27 @@ export const DataContainer = styled("div")`
   flex-direction: column;
   box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.05);
   border-radius: 12px;
+  padding: 30px 25px;
 `;
 
-export const Item = styled(Box)<{ isTop?: boolean }>`
-  display: flex;
-  flex-direction: column;
-  width: calc((100% - 132px) / 4);
-
-  border-bottom: ${({ isTop }) => (isTop ? "1px solid rgba(0, 0, 0, 0.1)" : "none")};
+export const Item = styled(Grid)<{ isTop?: number }>`
+  padding: ${({ isTop }) => (isTop ? 0 : 20)}px 25px ${({ isTop }) => (isTop ? 20 : 0)}px;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: ${({ isTop }) => (isTop ? "1px solid rgba(0, 0, 0, 0.1)" : "none")};
 
-  &:nth-child(1) {
-    border-left: none;
-
-    margin: ${props => (props.isTop ? "35px 0 0 25px" : "0 0 25px 25px")};
-    padding: ${props => (props.isTop ? "0 0 25px 0" : "25px 0 0 0")};
+  &:first-child {
+    border-left: 0;
+    padding-left: 0;
   }
 
-  &:nth-child(2) {
-    margin: ${props => (props.isTop ? "35px 0 0 0" : "0 0 25px 0")};
-    padding: ${props => (props.isTop ? "0 0 0 25px" : "25px 0 0 25px")};
-  }
-
-  &:nth-child(3) {
-    margin: ${props => (props.isTop ? "35px 0 0 0" : "0 0 25px 0")};
-    padding: ${props => (props.isTop ? "0 0 0 25px" : "23px 0 0 25px")};
-  }
-
-  &:nth-child(4) {
-    margin: ${props => (props.isTop ? "35px 0 0 0" : "0 0 25px 0")};
-    padding: ${props => (props.isTop ? "0 0 0 25px" : "23px 0 0 25px")};
+  &:last-child {
+    border-right: 0;
+    padding-right: 0;
   }
 
   @media (max-width: 1023px) {
-    width: calc((100% - 80px) / 2);
-
-    &:nth-child(1) {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-
-      margin: ${props => (props.isTop ? "35px 0 0 25px" : "0 0 0 25px")};
-      padding: ${props => (props.isTop ? "0 0 25px 0" : "25px 0 25px 0")};
-    }
-
-    &:nth-child(2) {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-
-      margin: ${props => (props.isTop ? "35px 0 0 0" : "0 0 0 0")};
-      padding: ${props => (props.isTop ? "0 0 25px 25px" : "25px 0 25px 25px")};
-    }
-
-    &:nth-child(3) {
-      border-left: none;
-      margin: ${props => (props.isTop ? "0 0 0 25px" : "0 0 35px 25px")};
-      padding: ${props => (props.isTop ? "25px 0 25px 0" : "25px 0 0 0")};
-    }
-
-    &:nth-child(4) {
-      margin: ${props => (props.isTop ? "0 0 0 0" : "0 0 35px 0")};
-      padding: ${props => (props.isTop ? "25px 0 25px 25px" : "25px 0 25px 25px")};
-    }
+    padding: 20px 25px !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
   }
 `;
 
@@ -159,10 +121,10 @@ export const StyledLinearProgress = styled(LinearProgress)`
   }
 `;
 
-export const StyledGrid = styled("div")`
-  width: 100%;
+export const StyledGrid = styled(Grid)`
+  /* width: 100%;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
 `;
 
 export const FlexGap10 = styled("div")`
