@@ -55,6 +55,12 @@ import InfoIcon from "./icons/infoIcon.svg";
 import HighestIcon from "./icons/highest-icon.svg";
 import LowestIcon from "./icons/lowest-icon.svg";
 import SeeMoreIcon from "./icons/seemore.svg";
+import TickerIcon from "./icons/ticker.svg";
+import CalendarIcon from "./icons/calendar.svg";
+import RewardIcon from "./icons/reward.svg";
+import UserIcon from "./icons/user.svg";
+import DropIcon from "./icons/drop.svg";
+import DelegatorIcon from "./icons/delegator.svg";
 
 import FlintIcon from "./images/flint.jpg";
 import NamiIcon from "./images/nami.png";
@@ -126,4 +132,10 @@ export {
   BrowserIcon,
   ResourcesIcon,
   SeeMoreIcon,
+  TickerIcon,
+  CalendarIcon,
+  RewardIcon,
+  UserIcon,
+  DropIcon,
+  DelegatorIcon,
 };

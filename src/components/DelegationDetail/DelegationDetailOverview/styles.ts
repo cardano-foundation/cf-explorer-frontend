@@ -10,7 +10,7 @@ export const Item = styled("div")`
   align-items: center;
   gap: 10px;
   justify-content: center;
-  background: #ffffff;
+  background: #ECECEC;
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.03);
   border-radius: 12px;
   padding: 24px;

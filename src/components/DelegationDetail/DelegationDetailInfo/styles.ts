@@ -59,16 +59,76 @@ export const PoolIdValue = styled("span")`
 export const DataContainer = styled("div")`
   background: #ffffff;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.05);
   border-radius: 12px;
-  padding: 24px 70px 24px 24px;
 `;
 
-export const Item = styled(Box)`
-  font-size: var(--font-size-text);
+export const Item = styled(Box)<{ row: "top" | "bottom" }>`
   display: flex;
-  align-items: center;
-  line-height: 30px;
+  flex-direction: column;
+  width: calc((100% - 132px) / 4);
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+
+  &:nth-child(1) {
+    border-left: none;
+    border-bottom: ${props => props.row === "bottom" && "none"};
+
+    margin: ${props => (props.row === "top" ? "34px 0 0 27px" : "0 0 22px 27px")};
+    padding: ${props => (props.row === "top" ? "0 0 22px 0" : "23px 0 0 0")};
+  }
+
+  &:nth-child(2) {
+    border-bottom: ${props => props.row === "bottom" && "none"};
+
+    margin: ${props => (props.row === "top" ? "34px 0 0 0" : "0 0 27px 0")};
+    padding: ${props => (props.row === "top" ? "0 0 0 22px" : "23px 0 0 22px")};
+  }
+
+  &:nth-child(3) {
+    border-bottom: ${props => props.row === "bottom" && "none"};
+
+    margin: ${props => (props.row === "top" ? "34px 0 0 0" : "0 0 27px 0")};
+    padding: ${props => (props.row === "top" ? "0 0 0 22px" : "23px 0 0 22px")};
+  }
+
+  &:nth-child(4) {
+    border-bottom: ${props => props.row === "bottom" && "none"};
+
+    margin: ${props => (props.row === "top" ? "34px 0 0 0" : "0 0 27px 0")};
+    padding: ${props => (props.row === "top" ? "0 0 0 22px" : "23px 0 0 22px")};
+  }
+
+  @media (max-width: 1023px) {
+    width: calc((100% - 80px) / 2);
+
+    &:nth-child(1) {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+      margin: ${props => (props.row === "top" ? "34px 0 0 27px" : "0 0 0 27px")};
+      padding: ${props => (props.row === "top" ? "0 0 22px 0" : "23px 0 22px 0")};
+    }
+
+    &:nth-child(2) {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+      margin: ${props => (props.row === "top" ? "34px 0 0 0" : "0 0 0 0")};
+      padding: ${props => (props.row === "top" ? "0 0 22px 23px" : "23px 0 22px 23px")};
+    }
+
+    &:nth-child(3) {
+      border-left: none;
+      margin: ${props => (props.row === "top" ? "0 0 0 27px" : "0 0 33px 27px")};
+      padding: ${props => (props.row === "top" ? "23px 0 22px 0" : "23px 0 0 0")};
+    }
+
+    &:nth-child(4) {
+      margin: ${props => (props.row === "top" ? "0 0 0 0" : "0 0 33px 0")};
+      padding: ${props => (props.row === "top" ? "23px 0 22px 23px" : "23px 0 22px 23px")};
+    }
+  }
 `;
 
 export const StyledImg = styled("img")`
@@ -79,12 +139,18 @@ export const StyledImg = styled("img")`
 `;
 
 export const InfoTitle = styled(Box)`
-  min-width: 250px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  opacity: 0.5;
+  margin-top: 14px;
+  margin-bottom: 5px;
 `;
 
 export const InfoValue = styled(Box)`
-  margin-left: 0.5rem;
   font-weight: var(--font-weight-bold);
+  font-size: 18x;
 `;
 
 export const StyledLinearProgress = styled(LinearProgress)`
@@ -98,4 +164,10 @@ export const StyledLinearProgress = styled(LinearProgress)`
     border-radius: 34px;
     background: ${props => props.theme.linearGradientGreen};
   }
+`;
+
+export const StyledGrid = styled("div")`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 `;
