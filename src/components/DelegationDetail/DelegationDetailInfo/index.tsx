@@ -21,6 +21,7 @@ import {
   BackButton,
   BackText,
   DataContainer,
+  FlexGap10,
   HeaderContainer,
   HeaderDetailContainer,
   HeaderTitle,
@@ -82,21 +83,21 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       </PoolId>
       <DataContainer>
         <StyledGrid>
-          <Item row="top">
+          <Item isTop>
             <StyledImg src={TickerIcon} alt="Ticker Icon" />
             <InfoTitle>
               Ticker <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
             </InfoTitle>
             <InfoValue>{data?.tickerName || ""}</InfoValue>
           </Item>
-          <Item row="top">
+          <Item isTop>
             <StyledImg src={CalendarIcon} alt="Calendar Icon" />
             <InfoTitle>
               Created date <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
             </InfoTitle>
             <InfoValue>{data?.createDate || ""}</InfoValue>
           </Item>
-          <Item row="top">
+          <Item isTop>
             <StyledImg src={RewardIcon} alt="Reward Icon" />
             <InfoTitle>
               Reward Account <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
@@ -116,7 +117,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               )}
             </InfoValue>
           </Item>
-          <Item row="top">
+          <Item isTop>
             <StyledImg src={UserIcon} alt="User Icon" />
             <InfoTitle>
               Owner Account <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
@@ -138,38 +139,38 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           </Item>
         </StyledGrid>
         <StyledGrid>
-          <Item row="bottom">
+          <Item>
             <StyledImg src={DropIcon} alt="Drop Icon" />
             <InfoTitle>
               Pool size <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
             </InfoTitle>
             <InfoValue>
-              <div style={{ display: "flex", alignItems: "center", gap: "10px " }}>
+              <FlexGap10>
                 {formatADA(data?.poolSize)}
                 <img src={AIcon} alt={"ADA Icon"} />
-              </div>
+              </FlexGap10>
             </InfoValue>
           </Item>
-          <Item row="bottom">
+          <Item>
             <StyledImg src={HighestIcon} alt="Highest Icon" />
             <InfoTitle>
               Stake limit <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
             </InfoTitle>
             <InfoValue>
-              <div style={{ display: "flex", alignItems: "center", gap: "10px " }}>
+              <FlexGap10>
                 {formatADA(data?.stakeLimit)}
                 <img src={AIcon} alt={"ADA Icon"} />
-              </div>
+              </FlexGap10>
             </InfoValue>
           </Item>
-          <Item row="bottom">
+          <Item>
             <StyledImg src={DelegatorIcon} alt="Delegator Icon" />
             <InfoTitle>
               Delegators <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
             </InfoTitle>
             <InfoValue>{data?.delegators || ""}</InfoValue>
           </Item>
-          <Item row="bottom">
+          <Item>
             <InfoValue>
               <StyledLinearProgress variant="determinate" value={data?.saturation} />
               <div style={{ display: "flex", justifyContent: "space-between", marginTop: "9px" }}>

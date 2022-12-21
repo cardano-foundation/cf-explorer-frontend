@@ -64,41 +64,34 @@ export const DataContainer = styled("div")`
   border-radius: 12px;
 `;
 
-export const Item = styled(Box)<{ row: "top" | "bottom" }>`
+export const Item = styled(Box)<{ isTop?: boolean }>`
   display: flex;
   flex-direction: column;
   width: calc((100% - 132px) / 4);
 
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: ${({ isTop }) => (isTop ? "1px solid rgba(0, 0, 0, 0.1)" : "none")};
   border-left: 1px solid rgba(0, 0, 0, 0.1);
 
   &:nth-child(1) {
     border-left: none;
-    border-bottom: ${props => props.row === "bottom" && "none"};
 
-    margin: ${props => (props.row === "top" ? "34px 0 0 27px" : "0 0 22px 27px")};
-    padding: ${props => (props.row === "top" ? "0 0 22px 0" : "23px 0 0 0")};
+    margin: ${props => (props.isTop ? "35px 0 0 25px" : "0 0 25px 25px")};
+    padding: ${props => (props.isTop ? "0 0 25px 0" : "25px 0 0 0")};
   }
 
   &:nth-child(2) {
-    border-bottom: ${props => props.row === "bottom" && "none"};
-
-    margin: ${props => (props.row === "top" ? "34px 0 0 0" : "0 0 27px 0")};
-    padding: ${props => (props.row === "top" ? "0 0 0 22px" : "23px 0 0 22px")};
+    margin: ${props => (props.isTop ? "35px 0 0 0" : "0 0 25px 0")};
+    padding: ${props => (props.isTop ? "0 0 0 25px" : "25px 0 0 25px")};
   }
 
   &:nth-child(3) {
-    border-bottom: ${props => props.row === "bottom" && "none"};
-
-    margin: ${props => (props.row === "top" ? "34px 0 0 0" : "0 0 27px 0")};
-    padding: ${props => (props.row === "top" ? "0 0 0 22px" : "23px 0 0 22px")};
+    margin: ${props => (props.isTop ? "35px 0 0 0" : "0 0 25px 0")};
+    padding: ${props => (props.isTop ? "0 0 0 25px" : "23px 0 0 25px")};
   }
 
   &:nth-child(4) {
-    border-bottom: ${props => props.row === "bottom" && "none"};
-
-    margin: ${props => (props.row === "top" ? "34px 0 0 0" : "0 0 27px 0")};
-    padding: ${props => (props.row === "top" ? "0 0 0 22px" : "23px 0 0 22px")};
+    margin: ${props => (props.isTop ? "35px 0 0 0" : "0 0 25px 0")};
+    padding: ${props => (props.isTop ? "0 0 0 25px" : "23px 0 0 25px")};
   }
 
   @media (max-width: 1023px) {
@@ -107,26 +100,26 @@ export const Item = styled(Box)<{ row: "top" | "bottom" }>`
     &:nth-child(1) {
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
-      margin: ${props => (props.row === "top" ? "34px 0 0 27px" : "0 0 0 27px")};
-      padding: ${props => (props.row === "top" ? "0 0 22px 0" : "23px 0 22px 0")};
+      margin: ${props => (props.isTop ? "35px 0 0 25px" : "0 0 0 25px")};
+      padding: ${props => (props.isTop ? "0 0 25px 0" : "25px 0 25px 0")};
     }
 
     &:nth-child(2) {
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
-      margin: ${props => (props.row === "top" ? "34px 0 0 0" : "0 0 0 0")};
-      padding: ${props => (props.row === "top" ? "0 0 22px 23px" : "23px 0 22px 23px")};
+      margin: ${props => (props.isTop ? "35px 0 0 0" : "0 0 0 0")};
+      padding: ${props => (props.isTop ? "0 0 25px 25px" : "25px 0 25px 25px")};
     }
 
     &:nth-child(3) {
       border-left: none;
-      margin: ${props => (props.row === "top" ? "0 0 0 27px" : "0 0 33px 27px")};
-      padding: ${props => (props.row === "top" ? "23px 0 22px 0" : "23px 0 0 0")};
+      margin: ${props => (props.isTop ? "0 0 0 25px" : "0 0 35px 25px")};
+      padding: ${props => (props.isTop ? "25px 0 25px 0" : "25px 0 0 0")};
     }
 
     &:nth-child(4) {
-      margin: ${props => (props.row === "top" ? "0 0 0 0" : "0 0 33px 0")};
-      padding: ${props => (props.row === "top" ? "23px 0 22px 23px" : "23px 0 22px 23px")};
+      margin: ${props => (props.isTop ? "0 0 0 0" : "0 0 35px 0")};
+      padding: ${props => (props.isTop ? "25px 0 25px 25px" : "25px 0 25px 25px")};
     }
   }
 `;
@@ -170,4 +163,10 @@ export const StyledGrid = styled("div")`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+`;
+
+export const FlexGap10 = styled("div")`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
