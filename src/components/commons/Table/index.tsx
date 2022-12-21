@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TablePagination, Skeleton, Box } from "@mui/material";
 
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
@@ -20,6 +20,7 @@ import {
   Error,
 } from "./styles";
 import { ColumnType, FooterTableProps, TableHeaderProps, TableProps, TableRowProps } from "../../../types/table";
+import { useUpdateEffect } from "react-use";
 
 export const EmptyRecord = () => (
   <Empty>
@@ -93,9 +94,11 @@ const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
 
 const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
   const [page, setPage] = useState(pagination?.page || 0);
+  const [inputPage, setInputPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(pagination?.size || 10);
-  const [isEditPage, setIsEditPage] = useState(false);
-  const [isChangePage, setIsChangePage] = useState(false);
+  useUpdateEffect(() => {
+    setInputPage(0);
+  }, [window.location]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
     pagination && pagination.onChange && pagination.onChange(page + 1, rowsPerPage);
@@ -115,29 +118,22 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
           component={"input"}
           min={0}
           placeholder="Page"
-          border={isEditPage ? "1px solid #000" : "none"}
           fontWeight="bold"
-          value={isChangePage ? page : page + 1}
+          border={"none"}
+          value={inputPage || page + 1}
           onChange={e => {
             if (+e.target.value <= Math.ceil(((pagination && pagination.total) || 0) / rowsPerPage)) {
-              setIsChangePage(true);
-              setPage(+e.target.value || 0);
+              setInputPage(+e.target.value);
             }
           }}
-          width={(page.toString().length || 1) + "ch"}
+          width={(Math.max(inputPage.toString().length, page.toString().length) || 1) + "ch"}
           onKeyDown={e => {
             if (e.key === "Enter") {
-              setIsEditPage(false);
-              setIsChangePage(false);
-              handleChangePage(null, page);
+              handleChangePage(null, inputPage - 1);
             }
           }}
-          onFocus={() => {
-            setIsEditPage(true);
-          }}
           onBlur={() => {
-            setIsEditPage(false);
-            setIsChangePage(false);
+            setInputPage(0);
           }}
         />{" "}
         of {numberWithCommas(Math.ceil(((pagination && pagination.total) || 0) / rowsPerPage))}
