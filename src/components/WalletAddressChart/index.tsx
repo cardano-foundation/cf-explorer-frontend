@@ -9,7 +9,20 @@ import styles from "./index.module.scss";
 import highestIcon from "../../commons/resources/images/highestIcon.png";
 import lowestIcon from "../../commons/resources/images/lowestIcon.png";
 import { formatADA, formatPrice } from "../../commons/utils/helper";
-import { BoxInfo, BoxInfoItem, BoxInfoItemRight, Title, ValueInfo } from "./styles";
+import {
+  BoxInfo,
+  BoxInfoItem,
+  BoxInfoItemRight,
+  BoxTab,
+  ButtonTab,
+  ButtonTabActive,
+  ButtonTitle,
+  ChartBox,
+  SkeletonUI,
+  Title,
+  ValueInfo,
+  Wrapper,
+} from "./styles";
 import moment from "moment";
 
 interface WalletAddressChartProps {
@@ -40,49 +53,51 @@ const WalletAddressChart: React.FC<WalletAddressChartProps> = ({
 }) => {
   return (
     <Card title="Analytics">
-      <Grid container columns={24} className={styles.wrapper}>
+      <Wrapper container columns={24}>
         <Grid item xs={24} lg={18}>
-          <Grid spacing={2} container className={styles.tab} alignItems="center" justifyContent={"space-between"}>
+          <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
             <Grid item xs={12} sm={6}>
-              <button className={`${styles.button} ${styles.active}`} style={{ marginRight: 5, fontSize: 14 }}>
-                Balance
-              </button>
+              <ButtonTitle className={styles.ffTitle}>Balance</ButtonTitle>
             </Grid>
             <Grid item xs={12} sm={6}>
               <BoxTab>
                 <ButtonTab
-                  className={`${analyticTime === "ONE_DAY" && styles.activeTab}`}
-                  onClick={e => setAnalyticTime("ONE_DAY")}
+                  className={`${styles.ffText} `}
+                  as={analyticTime === "ONE_DAY" ? ButtonTabActive : ButtonTab}
+                  onClick={() => setAnalyticTime("ONE_DAY")}
                 >
                   1d
                 </ButtonTab>
 
                 <ButtonTab
-                  className={`${analyticTime === "ONE_WEEK" && styles.activeTab}`}
-                  onClick={e => setAnalyticTime("ONE_WEEK")}
+                  as={analyticTime === "ONE_WEEK" ? ButtonTabActive : ButtonTab}
+                  className={`${styles.ffText}`}
+                  onClick={() => setAnalyticTime("ONE_WEEK")}
                 >
                   1w
                 </ButtonTab>
 
                 <ButtonTab
-                  className={`${analyticTime === "ONE_MONTH" && styles.activeTab}`}
-                  onClick={e => setAnalyticTime("ONE_MONTH")}
+                  className={`${styles.ffText}`}
+                  as={analyticTime === "ONE_MONTH" ? ButtonTabActive : ButtonTab}
+                  onClick={() => setAnalyticTime("ONE_MONTH")}
                 >
                   1m
                 </ButtonTab>
                 <ButtonTab
-                  className={`${analyticTime === "THREE_MONTH" && styles.activeTab}`}
-                  onClick={e => setAnalyticTime("THREE_MONTH")}
+                  as={analyticTime === "THREE_MONTH" ? ButtonTabActive : ButtonTab}
+                  className={`${styles.ffText}`}
+                  onClick={() => setAnalyticTime("THREE_MONTH")}
                 >
                   3m
                 </ButtonTab>
               </BoxTab>
             </Grid>
           </Grid>
-          <div className={styles.chart}>
-            {loading && <SkeletonUI variant="rectangular" style={{ height: "280px" }} />}
+          <ChartBox>
+            {loading && <SkeletonUI variant="rectangular" style={{ height: "400px" }} />}
             {!loading && <Chart data={data} />}
-          </div>
+          </ChartBox>
         </Grid>
         <Grid item xs={24} lg={6}>
           <BoxInfo>
@@ -112,7 +127,7 @@ const WalletAddressChart: React.FC<WalletAddressChartProps> = ({
             </Box>
           </BoxInfo>
         </Grid>
-      </Grid>
+      </Wrapper>
     </Card>
   );
 };
@@ -196,27 +211,3 @@ const Chart = ({ data }: { data: WalletAddressChartProps["data"] }) => {
     />
   );
 };
-
-const SkeletonUI = styled(Skeleton)(({ theme }) => ({
-  borderRadius: theme.borderRadius,
-}));
-
-const ButtonTab = styled(Button)(({ theme }) => ({
-  textTransform: "lowercase",
-  borderRadius: theme.borderRadius,
-  border: "2px solid rgba(24, 76, 120, 0.2)",
-  marginRight: theme.spacing(1),
-  color: theme.textColorPale,
-  fontWeight: "bold",
-}));
-
-const BoxTab = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.up("md")]: {
-    textAlign: "end",
-    paddingRight: theme.spacing(3),
-  },
-  [theme.breakpoints.down("md")]: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
-}));
