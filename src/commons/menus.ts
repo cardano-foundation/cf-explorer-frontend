@@ -2,7 +2,7 @@ import { FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons
 import { IconType } from "react-icons/lib";
 import {
   BlockChainMenuIcon,
-  BrowserIcon,
+  BrowseIcon,
   DelegatePoolMenuIcon,
   DIDMenuIcon,
   MediumIcon,
@@ -66,8 +66,8 @@ export const socials: Social[] = [
 
 export const footerMenus: Menu[] = [
   {
-    title: "Browser",
-    icon: BrowserIcon,
+    title: "Browse",
+    icon: BrowseIcon,
     children: [
       { href: "https://cardanofoundation.org/en/about-us/", title: "About Us" },
       { href: "https://cardanofoundation.org/en/contact-us/", title: "Contact Us" },
