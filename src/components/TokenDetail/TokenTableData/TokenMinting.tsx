@@ -1,18 +1,16 @@
-import { Tooltip } from "@mui/material";
 import moment from "moment";
 import { parse, stringify } from "qs";
 import React from "react";
-import { BiLinkExternal } from "react-icons/bi";
 import { useHistory, useLocation } from "react-router-dom";
-
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { AIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
-import { formatADA, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
+import { getShortHash, numberWithCommas } from "../../../commons/utils/helper";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 import Table, { Column } from "../../commons/Table";
 
-import { Minting, PriceValue, SmallText, StyledLink, PriceIcon } from "./styles";
+import { PriceValue, SmallText, StyledLink, PriceIcon } from "./styles";
 
 interface ITokenMinting {
   active: boolean;
@@ -52,11 +50,11 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
       key: "trxHash",
       minWidth: "200px",
       render: r => (
-        <Tooltip title={r.txHash} placement="top">
+        <CustomTooltip title={r.txHash} placement="top">
           <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.txHash)}>
             {getShortHash(r.txHash)}
           </StyledLink>
-        </Tooltip>
+        </CustomTooltip>
       ),
     },
     {

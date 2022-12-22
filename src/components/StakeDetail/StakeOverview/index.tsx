@@ -1,11 +1,8 @@
-import { Box, Skeleton, Tooltip } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import React from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { useParams } from "react-router-dom";
 
 import { routers } from "../../../commons/routers";
-import useFetch from "../../../commons/hooks/useFetch";
-import useFetchList from "../../../commons/hooks/useFetchList";
 import delegatedIcon from "../../../commons/resources/icons/delegated.svg";
 import totalStakeIcon from "../../../commons/resources/icons/totalStake.svg";
 import rewardIcon from "../../../commons/resources/icons/reward.svg";
@@ -15,7 +12,6 @@ import infoIcon from "../../../commons/resources/icons/info.svg";
 import { getShortHash } from "../../../commons/utils/helper";
 
 import CopyButton from "../../commons/CopyButton";
-import { CardInfo } from "../../commons/DetailCard/styles";
 import ProgressCircle from "../../commons/ProgressCircle";
 
 import {

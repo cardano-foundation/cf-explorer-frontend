@@ -39,10 +39,10 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
   }
   return (
     <StyledContainer>
-      <Grid container columns={24} spacing={2}>
+      <Grid container columns={60} spacing={2}>
         {Object.keys(overviewData).map((i, ii) => {
           return (
-            <Grid item xs={24} sm={12} md={8} key={ii} xl={6}>
+            <Grid item xs={30} sm={20} md={15} xl={12} key={ii}>
               <Item>
                 <Title>{i}</Title>
                 <Value style={{ color: `${i === "Reward" && "#438F68"}` }}>

@@ -1,4 +1,4 @@
-import { Box, Container, LinearProgress, Skeleton, styled } from "@mui/material";
+import { Box, Container, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const HeaderDetailContainer = styled(Container)`
@@ -59,16 +59,31 @@ export const PoolIdValue = styled("span")`
 export const DataContainer = styled("div")`
   background: #ffffff;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.05);
   border-radius: 12px;
-  padding: 24px 70px 24px 24px;
+  padding: 30px 25px;
 `;
 
-export const Item = styled(Box)`
-  font-size: var(--font-size-text);
-  display: flex;
-  align-items: center;
-  line-height: 30px;
+export const Item = styled(Grid)<{ isTop?: number }>`
+  padding: ${({ isTop }) => (isTop ? 0 : 20)}px 25px ${({ isTop }) => (isTop ? 20 : 0)}px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: ${({ isTop }) => (isTop ? "1px solid rgba(0, 0, 0, 0.1)" : "none")};
+
+  &:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  &:last-child {
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  @media (max-width: 1023px) {
+    padding: 20px 25px !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  }
 `;
 
 export const StyledImg = styled("img")`
@@ -79,12 +94,18 @@ export const StyledImg = styled("img")`
 `;
 
 export const InfoTitle = styled(Box)`
-  min-width: 250px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  opacity: 0.5;
+  margin-top: 14px;
+  margin-bottom: 5px;
 `;
 
 export const InfoValue = styled(Box)`
-  margin-left: 0.5rem;
   font-weight: var(--font-weight-bold);
+  font-size: 18x;
 `;
 
 export const StyledLinearProgress = styled(LinearProgress)`
@@ -98,4 +119,16 @@ export const StyledLinearProgress = styled(LinearProgress)`
     border-radius: 34px;
     background: ${props => props.theme.linearGradientGreen};
   }
+`;
+
+export const StyledGrid = styled(Grid)`
+  /* width: 100%;
+  display: flex;
+  flex-wrap: wrap; */
+`;
+
+export const FlexGap10 = styled("div")`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;

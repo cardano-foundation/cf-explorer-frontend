@@ -1,4 +1,3 @@
-import { Tooltip } from "@mui/material";
 import moment from "moment";
 import { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
@@ -6,6 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { routers } from "../../../commons/routers";
 import { formatADA, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
+import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { StyledLink } from "./styles";
 
@@ -124,11 +124,11 @@ const DelegationStakingDelegatorsList = ({
       render: data =>
         data.address && (
           <div style={{ display: "flex", alignItems: "center" }}>
-            <Tooltip placement="bottom" title={data.address || ""}>
+            <CustomTooltip placement="bottom" title={data.address || ""}>
               <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${data.address}`)}>
                 {getShortWallet(data.address || "")}
               </StyledLink>
-            </Tooltip>
+            </CustomTooltip>
             <CopyButton text={data.address || ""} />
           </div>
         ),
