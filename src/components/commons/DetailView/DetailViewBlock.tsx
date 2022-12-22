@@ -39,7 +39,6 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { routers } from "../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
-import { Tooltip } from "@mui/material";
 import moment from "moment";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
@@ -166,11 +165,11 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 Block ID
               </DetailLabel>
               <DetailValue>
-                <Tooltip placement="top" title={data.hash}>
+                <CustomTooltip placement="top" title={data.hash}>
                   <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${blockNo}`)}>
                     {getShortHash(data.hash)}
                   </StyledLink>
-                </Tooltip>
+                </CustomTooltip>
                 <DetailCopy text={data.hash} />
               </DetailValue>
             </DetailsInfoItem>
@@ -214,11 +213,11 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 Slot leader
               </DetailLabel>
               <DetailValue>
-                <Tooltip placement="top" title={data.slotLeader}>
+                <CustomTooltip placement="top" title={data.slotLeader}>
                   <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${data.slotLeader}`)}>
                     {getShortWallet(data.slotLeader)}
                   </StyledLink>
-                </Tooltip>
+                </CustomTooltip>
                 <DetailCopy text={data.slotLeader} />
               </DetailValue>
             </DetailsInfoItem>

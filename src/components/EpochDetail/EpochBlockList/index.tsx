@@ -1,7 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
-import { Tooltip } from "@mui/material";
 
 import Card from "../../commons/Card";
 import Table, { Column } from "../../commons/Table";
@@ -10,6 +9,7 @@ import { routers } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
 
 import { StyledAddress, StyledLink, StyledOutput, StyledColorBlueDard, StyledContainer } from "./styles";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 interface IEpochBlockList {
   data: Block[];
@@ -61,9 +61,9 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
       render: r => (
         <>
           Address:
-          <Tooltip placement="top" title={r.slotLeader}>
+          <CustomTooltip placement="top" title={r.slotLeader}>
             <StyledAddress to={routers.ADDRESS_DETAIL.replace(":address", `${r.slotLeader}`)}>{getShortWallet(r.slotLeader)}</StyledAddress>
-          </Tooltip>
+          </CustomTooltip>
         </>
       ),
     },

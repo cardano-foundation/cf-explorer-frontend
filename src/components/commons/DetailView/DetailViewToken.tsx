@@ -45,7 +45,6 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { routers } from "../../../commons/routers";
 import { formatCurrency, getShortHash } from "../../../commons/utils/helper";
-import { Tooltip } from "@mui/material";
 import axios from "axios";
 import moment from "moment";
 import ViewMoreButton from "../ViewMoreButton";
@@ -209,11 +208,11 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                 Token ID
               </DetailLabel>
               <DetailValue>
-                <Tooltip placement="top" title={tokenId}>
+                <CustomTooltip placement="top" title={tokenId}>
                   <StyledLink to={routers.TOKEN_DETAIL.replace(":tokenId", `${tokenId}`)}>
                     {getShortHash(tokenId || "")}
                   </StyledLink>
-                </Tooltip>
+                </CustomTooltip>
                 <DetailCopy text={tokenId} />
               </DetailValue>
             </DetailsInfoItem>

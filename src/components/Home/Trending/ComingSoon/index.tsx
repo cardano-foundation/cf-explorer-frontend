@@ -1,4 +1,4 @@
-import { styled, Tooltip } from "@mui/material";
+import { styled } from "@mui/material";
 import React from "react";
 import { ComingSoonIcon } from "../../../../commons/resources";
 import { BoxRaised } from "../../../commons/BoxRaised";
@@ -25,12 +25,13 @@ const Title = styled("h3")`
   color: ${props => props.theme.titleColor};
   font-size: var(--font-size-text-x-large);
 `;
+
 const ComingSoon: React.FC<Props> = () => {
   return (
     <CustomTooltip title="Exciting things incoming" placement="top">
       <ComingSoonContainer>
         <Image src={ComingSoonIcon} alt="Coming soon" />
-        <Title>Coming Soon</Title>
+        <Title>Coming soon</Title>
       </ComingSoonContainer>
     </CustomTooltip>
   );

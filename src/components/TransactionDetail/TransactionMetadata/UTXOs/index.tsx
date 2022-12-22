@@ -1,17 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Tooltip } from "@mui/material";
-
+import { Box  } from "@mui/material";
 import { getShortWallet, formatADA, getShortHash } from "../../../../commons/utils/helper";
-
 import styles from "./index.module.scss";
-import walletImg from "../../../../commons/resources/images/Wallet.png";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import feeImg from "../../../../commons/resources/images/dola.svg";
 import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
 import { routers } from "../../../../commons/routers";
+import CustomTooltip from "../../../commons/CustomTooltip";
 import { Header, Img, LabelStatus } from "./conmponent";
 
 interface Props {
@@ -77,11 +75,11 @@ const Card = ({
                       width={"auto"}
                     >
                       <Link to={routers.ADDRESS_DETAIL.replace(":address", i.address)}>
-                        <Tooltip title={i.address} placement="top">
+                        <CustomTooltip title={i.address} placement="top">
                           <Box color={"blue"} fontWeight="bold" className={styles.ffText}>
                             {getShortWallet(i.address)}
                           </Box>
-                        </Tooltip>
+                        </CustomTooltip>
                       </Link>{" "}
                       <CopyButton text={i.address} className={styles.icon} />
                     </Box>
@@ -110,11 +108,11 @@ const Card = ({
                     <Box mr={3}>
                       <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
                         <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", i.txHash)}>
-                          <Tooltip title={i.txHash} placement="top">
+                          <CustomTooltip title={i.txHash} placement="top">
                             <Box component={"span"} fontWeight="bold" className={styles.ffText} color="blue" mr={1}>
                               {getShortHash(i.txHash)}
                             </Box>
-                          </Tooltip>
+                          </CustomTooltip>
                         </Link>
                         <CopyButton text={i.txHash} />
                       </Box>

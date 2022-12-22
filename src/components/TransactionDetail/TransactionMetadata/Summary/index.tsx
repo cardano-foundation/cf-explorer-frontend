@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Tooltip } from "@mui/material";
-
+import { Box  } from "@mui/material";
 import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
@@ -10,6 +9,7 @@ import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
 import { routers } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
+import CustomTooltip from "../../../commons/CustomTooltip";
 import { Icon, Img, LabelStatus } from "./component";
 
 const SummaryItems = ({
@@ -34,11 +34,11 @@ const SummaryItems = ({
               <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} flex={1} mb={1}>
                 <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} flexWrap={"nowrap"}>
                   <Link to={routers.ADDRESS_DETAIL.replace(":address", item.address)}>
-                    <Tooltip title={item.address} placement="top">
+                    <CustomTooltip title={item.address} placement="top">
                       <Box color={"blue"} fontWeight="bold" className={styles.ffText}>
                         {getShortWallet(item.address)}
                       </Box>
-                    </Tooltip>
+                    </CustomTooltip>
                   </Link>
                   <CopyButton text={item.address} style={{ cursor: "pointer", verticalAlign: "text-bottom" }} />
                 </Box>
