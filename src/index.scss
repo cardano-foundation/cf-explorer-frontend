@@ -153,7 +153,7 @@ html {
     box-sizing: border-box;
     height: 100vh;
     overflow-x: hidden;
-    overflow-y: hidden;
+    overflow-y: auto;
     scroll-behavior: smooth;
     font-family: var(--font-family-text);
     font-weight: var(--font-weight-normal);

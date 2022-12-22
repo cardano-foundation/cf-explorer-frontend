@@ -48,8 +48,7 @@ const AddressWalletDetail = () => {
       value: number;
     }[]
   >(`/address/analytics/${address}/${analyticTime}`);
-  const { data: maxBalance, loading: maxBalanceLoading } = useFetch<number>(`/address/max-balance/${address}`);
-  const { data: minBalance, loading: minBalanceLoading } = useFetch<number>(`/address/min-balance/${address}`);
+  const { data: balance, loading: balanceLoading } = useFetch<number[]>(`/address/min-max-balance/${address}`);
 
   const { data: dataStake, error: errorStake, loading: loadingStake } = useFetch<WalletStake>(`/stakeKey/${address}`);
 
@@ -174,10 +173,10 @@ const AddressWalletDetail = () => {
           analyticTime={analyticTime}
           loading={loadingAnalyst}
           data={dataAnalyst}
-          maxBalance={maxBalance}
-          maxBalanceLoading={maxBalanceLoading}
-          minBalance={minBalance}
-          minBalanceLoading={minBalanceLoading}
+          maxBalance={balance ? Math.max(...balance) : 0}
+          maxBalanceLoading={balanceLoading}
+          minBalance={balance ? Math.min(...balance) : 0}
+          minBalanceLoading={balanceLoading}
         />
       </Box>
       <Box>

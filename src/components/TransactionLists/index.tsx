@@ -1,16 +1,12 @@
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 import { Box, Tooltip } from "@mui/material";
-
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { formatADA, getShortHash, getShortWallet } from "../../commons/utils/helper";
-import styles from "./index.module.scss";
-
-import moment from "moment";
+import { formatADA, getShortHash } from "../../commons/utils/helper";
 import { routers } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
-import { StyledContainer } from "./styles";
+import { StyledContainer, StyledLink } from "./styles";
 import DetailViewTransaction from "../commons/DetailView/DetailViewTransaction";
 import { useState } from "react";
 import { useWindowSize } from "react-use";
@@ -47,26 +43,20 @@ const TransactionList: React.FC<TransactionListProps> = ({
     {
       title: "#",
       key: "id",
-      minWidth: "40px",
-      render: (data, index) => {
-        return <div className={styles.fwBold}>{index + 1}</div>;
-      },
+      minWidth: 30,
+      render: (data, index) => index + 1,
     },
     {
       title: "Trx Hash",
       key: "trxhash",
-      minWidth: "200px",
+      minWidth: 120,
 
       render: r => (
         <div>
           <Tooltip title={r.hash} placement="top">
-            <Link
-              to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}
-              className={`${styles.link}`}
-              style={{ margin: 0 }}
-            >
+            <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>
               {getShortHash(r.hash)}
-            </Link>
+            </StyledLink>
           </Tooltip>
         </div>
       ),
@@ -74,76 +64,15 @@ const TransactionList: React.FC<TransactionListProps> = ({
     {
       title: "Block",
       key: "block",
-      minWidth: "200px",
-      render: r => (
-        <>
-          <Link to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)} className={` ${styles.link}`}>
-            {r.blockNo}
-          </Link>
-          {/* <div style={{ display: "flex" }}>
-            <Link to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epochNo}`)} className={`  ${styles.link}`}>
-              {r.epochNo}
-            </Link>
-            /{r.slot}
-          </div> */}
-        </>
-      ),
-    },
-    {
-      title: "Addresses",
-      key: "addresses",
-      minWidth: "200px",
-      render(r, index) {
-        return (
-          <div>
-            <div className={styles.input}>
-              <div className={styles.title}> Input: </div>
-              <div>
-                {r.addressesInput.slice(0, 2).map((tx, key) => {
-                  return (
-                    <Tooltip key={key} title={tx} placement="top">
-                      <Link to={routers.ADDRESS_DETAIL.replace(":address", tx)} className={` ${styles.link}`} key={key}>
-                        {getShortWallet(tx)}
-                      </Link>
-                    </Tooltip>
-                  );
-                })}
-                {r.addressesInput.length > 2 && (
-                  <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)} className={` ${styles.link}`}>
-                    ...
-                  </Link>
-                )}
-              </div>
-            </div>
-            <div className={styles.output}>
-              <div className={styles.title}>Output: </div>
-              <div>
-                {r.addressesOutput.slice(0, 2).map((tx, key) => {
-                  return (
-                    <Tooltip key={key} title={tx} placement="top">
-                      <Link to={routers.ADDRESS_DETAIL.replace(":address", tx)} className={` ${styles.link}`} key={key}>
-                        {getShortWallet(tx)}
-                      </Link>
-                    </Tooltip>
-                  );
-                })}
-                {r.addressesOutput.length > 2 && (
-                  <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)} className={` ${styles.link}`}>
-                    ...
-                  </Link>
-                )}
-              </div>
-            </div>
-          </div>
-        );
-      },
+      minWidth: 60,
+      render: r => <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>{r.blockNo}</StyledLink>,
     },
     {
       title: "Fees",
       key: "fee",
-      minWidth: "120px",
+      minWidth: 120,
       render: r => (
-        <Box display={"flex"} alignItems="center" className={styles.fwBold}>
+        <Box display="flex" alignItems="center">
           <Box mr={1}>{formatADA(r.fee) || 0}</Box>
           <img src={AIcon} alt="a icon" />
         </Box>
@@ -151,10 +80,10 @@ const TransactionList: React.FC<TransactionListProps> = ({
     },
     {
       title: "Output",
-      minWidth: "120px",
+      minWidth: 120,
       key: "ouput",
       render: r => (
-        <Box display={"flex"} alignItems="center" className={styles.fwBold}>
+        <Box display="flex" alignItems="center">
           <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
           <img src={AIcon} alt="a icon" />
         </Box>
@@ -178,7 +107,6 @@ const TransactionList: React.FC<TransactionListProps> = ({
     <StyledContainer>
       <Card title={"Transactions"} underline={underline}>
         <Table
-          className={styles.table}
           columns={columns}
           data={transactions}
           total={{ count: total, title: "Total Transactions" }}

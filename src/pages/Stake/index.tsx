@@ -3,13 +3,16 @@ import moment from "moment";
 import { parse, stringify } from "qs";
 import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { useWindowSize } from "react-use";
 
 import useFetchList from "../../commons/hooks/useFetchList";
 import { routers } from "../../commons/routers";
 import { getShortHash } from "../../commons/utils/helper";
 
 import Card from "../../components/commons/Card";
+import DetailViewStakeKey from "../../components/commons/DetailView/DetailViewStakeKey";
 import Table, { Column } from "../../components/commons/Table";
+import { setOnDetailView } from "../../stores/user";
 
 import { ActiveButton, Header, StyledButton, StyledContainer, StyledLink } from "./styles";
 
@@ -80,15 +83,17 @@ const colums: Column<IStakeKey>[] = [
 
 const Stake: React.FC<IStake> = () => {
   const [stakeKey, setStakeKey] = useState<string>("registration");
+  const [detailView, setDetailView] = useState<string | null>(null);
   const history = useHistory();
   const { search } = useLocation();
+  const { width } = useWindowSize();
   const query = parse(search.split("?")[1]);
 
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
   };
 
-  const { data, total, loading, initialized, currentPage } = useFetchList<IStakeKey>(
+  const { data, total, loading, initialized, currentPage, error } = useFetchList<IStakeKey>(
     `/stake/${stakeKey === "registration" ? "" : "de-"}registration`,
     {
       page: query.page ? +query.page - 1 : 0,
@@ -96,6 +101,19 @@ const Stake: React.FC<IStake> = () => {
     }
   );
 
+  const openDetail = (_: any, r: IStakeKey) => {
+    if (width > 1023) {
+      setOnDetailView(true);
+      setDetailView(r.stakeKey);
+    } else history.push(routers.STAKE_DETAIL.replace(":stakeId", r.stakeKey));
+  };
+
+  const handleClose = () => {
+    setOnDetailView(false);
+    setDetailView(null);
+  };
+
+  const selected = data?.findIndex(item => item.stakeKey === detailView);
   return (
     <StyledContainer>
       <Card>
@@ -151,9 +169,13 @@ const Stake: React.FC<IStake> = () => {
             page: currentPage || 0,
             total: total,
           }}
-          onClickRow={(_, r) => history.push(routers.STAKE_DETAIL.replace(":stakeId", r.stakeKey))}
+          onClickRow={openDetail}
+          selected={selected}
+          selectedProps={{ style: { backgroundColor: "#ECECEC" } }}
+          error={error}
         />
       </Card>
+      {detailView && <DetailViewStakeKey stakeId={detailView} handleClose={handleClose} />}
     </StyledContainer>
   );
 };

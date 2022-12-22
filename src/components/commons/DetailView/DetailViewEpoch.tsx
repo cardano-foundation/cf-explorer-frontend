@@ -1,6 +1,6 @@
 import React from "react";
 import { CgClose } from "react-icons/cg";
-import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { CubeIcon, RocketIcon } from "../../../commons/resources";
 import ProgressCircle from "../ProgressCircle";
 import {
@@ -19,9 +19,6 @@ import {
   DetailValueSkeleton,
   IconSkeleton,
   ProgressSkeleton,
-  ProgressLiner,
-  ProgressStatusText,
-  ProgressPercent,
   ViewDetailDrawer,
   Item,
   ItemName,
@@ -103,8 +100,8 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
             </Group>
             {new Array(2).fill(0).map((_, index) => {
               return (
-                <Group>
-                  <DetailsInfoItem key={index}>
+                <Group key={index}>
+                  <DetailsInfoItem>
                     <DetailLabel>
                       <DetailValueSkeleton variant="rectangular" />
                     </DetailLabel>
@@ -194,17 +191,6 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
               <DetailValue>
                 {formatADA(data.outSum) || 0}
                 <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
-              </DetailValue>
-            </DetailsInfoItem>
-          </Group>
-          <Group>
-            <ProgressLiner progress={progress} />
-            <DetailsInfoItem>
-              <DetailLabel>
-                <ProgressStatusText>{EPOCH_STATUS[data.status]}</ProgressStatusText>
-              </DetailLabel>
-              <DetailValue>
-                <ProgressPercent>{progress}%</ProgressPercent>
               </DetailValue>
             </DetailsInfoItem>
           </Group>

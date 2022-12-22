@@ -61,6 +61,7 @@ import RewardIcon from "./icons/reward.svg";
 import UserIcon from "./icons/user.svg";
 import DropIcon from "./icons/drop.svg";
 import DelegatorIcon from "./icons/delegator.svg";
+import LightningIcon from "./icons/lightning.svg";
 
 import FlintIcon from "./images/flint.jpg";
 import NamiIcon from "./images/nami.png";
@@ -138,4 +139,5 @@ export {
   UserIcon,
   DropIcon,
   DelegatorIcon,
+  LightningIcon,
 };
