@@ -4,7 +4,8 @@ import { useHistory } from "react-router-dom";
 import moment from "moment";
 import { Skeleton } from "@mui/material";
 import { routers } from "../../commons/routers";
-import { numberWithCommas } from "../../commons/utils/helper";
+import { formatADA, numberWithCommas } from "../../commons/utils/helper";
+
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import { AssetName, Logo } from "./styles";
@@ -69,7 +70,7 @@ const TokenList: React.FC<ITokenList> = ({
       title: "Total Supply",
       key: "totalSupply",
       minWidth: "150px",
-      render: r => <>{numberWithCommas(r?.supply ?? "")}</>,
+      render: r => <>{formatADA(r?.supply ?? "")}</>,
     },
     {
       title: "Created",

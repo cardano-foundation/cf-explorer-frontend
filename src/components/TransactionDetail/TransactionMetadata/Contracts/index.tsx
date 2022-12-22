@@ -7,6 +7,7 @@ import { getShortWallet } from "../../../../commons/utils/helper";
 import CopyButton from "../../../commons/CopyButton";
 import { useCopyToClipboard } from "react-use";
 import CustomTooltip from "../../../commons/CustomTooltip";
+import { Img, Wrapper } from "./component";
 
 interface ContractsProps {
   data: Transaction["contracts"] | null;
@@ -24,15 +25,21 @@ const Contracts: React.FC<ContractsProps> = ({ data }) => {
   }, [textCopy]);
   if (data && data?.length === 1) {
     return (
-      <div className={styles.wrapper}>
+      <Wrapper>
         <div>
-          <img className={styles.img} src={contractImg} alt="contract icon" />
-          <Box className={styles.item} flexDirection="column">
-            <Box color={props => props.textColor} className={styles.address}>
+          <Img src={contractImg} alt="contract icon" />
+          <Box display={"flex"} alignItems="center" padding={"15px 0 0"} flexDirection="column">
+            <Box
+              color={props => props.textColor}
+              mx={"auto"}
+              display="flex"
+              alignItems={"center"}
+              className={styles.ffTitle}
+            >
               {data[0].contract}
             </Box>
             <CopyButtonMui
-              className={styles.btn}
+              className={styles.ffTitle}
               onClick={() => {
                 copyToClipboard(data[0].contract);
                 setTextCopy(data[0].contract);
@@ -42,28 +49,28 @@ const Contracts: React.FC<ContractsProps> = ({ data }) => {
             </CopyButtonMui>
           </Box>
         </div>
-      </div>
+      </Wrapper>
     );
   }
   return (
-    <div className={styles.wrapper}>
+    <Wrapper>
       <div>
-        <img className={styles.img} src={contractImg} alt="contract icon" />
+        <Img src={contractImg} alt="contract icon" />
         {data &&
           data.map((ct, key) => {
             return (
-              <div key={key} className={styles.item}>
-                <Box className={styles.address}>
+              <Box display={"flex"} alignItems="center" padding={"15px 0 0"} key={key}>
+                <Box mx={"auto"} display="flex" alignItems={"center"} className={styles.ffTitle}>
                   <CustomTooltip title={ct.contract} placement="top">
                     <div>{getShortWallet(ct.contract)}</div>
                   </CustomTooltip>
                 </Box>
                 <CopyButton text={ct.contract} className={styles.icon} />
-              </div>
+              </Box>
             );
           })}
       </div>
-    </div>
+    </Wrapper>
   );
 };
 
