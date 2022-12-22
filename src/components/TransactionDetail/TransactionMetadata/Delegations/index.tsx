@@ -1,15 +1,12 @@
 import React from "react";
-import { Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
-
 import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
-
 import { getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import upIcon from "../../../../commons/resources/images/summary-up.png";
 import { routers } from "../../../../commons/routers";
 import CopyButton from "../../../commons/CopyButton";
 import { Box } from "@mui/material";
+import CustomTooltip from "../../../commons/CustomTooltip";
 
 interface DelegationProps {
   data: Transaction["delegations"] | null;
@@ -39,9 +36,9 @@ const Items = ({ item, type }: { item?: Required<Transaction>["delegations"][num
           <div>
             From:{" "}
             <Link to={routers.ADDRESS_DETAIL.replace(":address", item?.address || "")} className={styles.address}>
-              <Tooltip title={item?.address} placement="top">
+              <CustomTooltip title={item?.address} placement="top">
                 <span className={styles.address}> {getShortWallet(item?.address || "")} </span>
-              </Tooltip>
+              </CustomTooltip>
             </Link>
             <CopyButton text={item?.poolId || ""} className={styles.icon} />
           </div>
@@ -53,9 +50,9 @@ const Items = ({ item, type }: { item?: Required<Transaction>["delegations"][num
                   to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", item?.poolId || "")}
                   className={styles.address}
                 >
-                  <Tooltip title={item?.poolId || ""} placement="top">
+                  <CustomTooltip title={item?.poolId || ""} placement="top">
                     <div>{getShortHash(item?.poolId || "")}</div>
-                  </Tooltip>
+                  </CustomTooltip>
                 </Link>
                 <CopyButton text={item?.poolId || ""} className={styles.icon} />
               </div>

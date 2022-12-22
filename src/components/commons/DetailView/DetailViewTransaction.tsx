@@ -51,7 +51,6 @@ import { TbFileCheck } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
 import { routers } from "../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
-import { Tooltip } from "@mui/material";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 
@@ -187,11 +186,11 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                 Transaction hash
               </DetailLabel>
               <DetailValue>
-                <Tooltip placement="top" title={hash}>
+                <CustomTooltip placement="top" title={hash}>
                   <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
                     {getShortHash(hash)}
                   </StyledLink>
-                </Tooltip>
+                </CustomTooltip>
                 <DetailCopy text={hash} />
               </DetailValue>
             </DetailsInfoItem>
@@ -202,11 +201,11 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                   Input
                 </DetailLabel>
                 <DetailValue>
-                  <Tooltip placement="top" title={input}>
+                  <CustomTooltip placement="top" title={input}>
                     <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${input}`)}>
                       {getShortWallet(input)}
                     </StyledLink>
-                  </Tooltip>
+                  </CustomTooltip>
                   <DetailCopy text={input} />
                 </DetailValue>
               </DetailsInfoItem>
@@ -218,11 +217,11 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                   Output
                 </DetailLabel>
                 <DetailValue>
-                  <Tooltip placement="top" title={output}>
+                  <CustomTooltip placement="top" title={output}>
                     <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${output}`)}>
                       {getShortWallet(output)}
                     </StyledLink>
-                  </Tooltip>
+                  </CustomTooltip>
                   <DetailCopy text={output} />
                 </DetailValue>
               </DetailsInfoItem>

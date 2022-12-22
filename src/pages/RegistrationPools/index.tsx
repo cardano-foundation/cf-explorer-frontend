@@ -1,4 +1,4 @@
-import { Tabs, Tooltip } from "@mui/material";
+import { Tabs  } from "@mui/material";
 import moment from "moment";
 import { parse, stringify } from "qs";
 import { useState } from "react";
@@ -6,6 +6,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { routers } from "../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../commons/utils/helper";
+import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table, { Column } from "../../components/commons/Table";
 import { RegistrationContainer, StyledLink, StyledTab, TabLabel } from "./styles";
 
@@ -40,11 +41,11 @@ const RegistrationPools = () => {
       render: r => {
         return (
           <>
-            <Tooltip title={r.txHash} placement="top">
+            <CustomTooltip title={r.txHash} placement="top">
               <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.txHash}`)}>
                 {getShortHash(r.txHash || "")}
               </StyledLink>
-            </Tooltip>
+            </CustomTooltip>
             <div>{moment(r.txTime).format("MM/DD/YYYY HH:mm:ss")}</div>
           </>
         );
@@ -87,11 +88,11 @@ const RegistrationPools = () => {
       title: "Stake Key",
       key: "stakeKey",
       render: r => (
-        <Tooltip title={r.stakeKey} placement="top">
+        <CustomTooltip title={r.stakeKey} placement="top">
           <StyledLink to={routers.STORY_DETAIL.replace(":poolId", `${r.txId}`)}>
             {r.stakeKey ? getShortWallet(r.stakeKey) : ""}
           </StyledLink>
-        </Tooltip>
+        </CustomTooltip>
       ),
     },
   ];

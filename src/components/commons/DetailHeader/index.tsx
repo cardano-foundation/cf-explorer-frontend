@@ -109,12 +109,10 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
       </HeaderContainer>
       {header.hash && (
         <SlotLeader>
-          {/* <Tooltip title={`${header.hash}`} placement="top"> */}
-          <Link to={"/"}>
+          <Link to={routers.ADDRESS_DETAIL.replace(":address", `${header.slotLeader}`)}>
             {header.slotLeader && <SlotLeaderTitle>Slot leader:</SlotLeaderTitle>}{" "}
             <SlotLeaderValue>{header.hash}</SlotLeaderValue>
           </Link>
-          {/* </Tooltip> */}
           <SlotLeaderCopy text={header.hash} />
         </SlotLeader>
       )}

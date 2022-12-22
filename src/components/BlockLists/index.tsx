@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
-import { Box, Container, Tooltip } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 import Card from "../commons/Card";
@@ -15,6 +15,7 @@ import DetailViewBlock from "../commons/DetailView/DetailViewBlock";
 import { useState } from "react";
 import { useWindowSize } from "react-use";
 import { setOnDetailView } from "../../stores/user";
+import CustomTooltip from "../commons/CustomTooltip";
 
 interface BlockListProps {
   blockLists: Block[];
@@ -45,11 +46,11 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
       key: "blockId",
       minWidth: "150px",
       render: r => (
-        <Tooltip placement="top" title={r.hash}>
+        <CustomTooltip placement="top" title={r.hash}>
           <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>
             {getShortHash(`${r.hash}`)}
           </StyledLink>
-        </Tooltip>
+        </CustomTooltip>
       ),
     },
     {

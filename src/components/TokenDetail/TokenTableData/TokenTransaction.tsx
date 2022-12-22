@@ -1,17 +1,14 @@
-import { Tooltip } from "@mui/material";
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { parse, stringify } from "qs";
 import moment from "moment";
-
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { routers } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
 import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
-
 import Table, { Column } from "../../commons/Table";
-
 import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 interface ITokenTransaction {
   active: boolean;
@@ -53,9 +50,9 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
 
       render: r => (
         <>
-          <Tooltip title={r.hash} placement="top">
+          <CustomTooltip title={r.hash} placement="top">
             <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.hash)}>{getShortHash(r.hash)}</StyledLink>
-          </Tooltip>
+          </CustomTooltip>
           <br />
           <SmallText>{moment(r.time).format("MM/DD/YYYY HH:mm:ss")}</SmallText>
         </>
@@ -84,11 +81,11 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
             <Flex>
               <Label>Input: </Label>
               <div>
-                <Tooltip title={r.addressesInput[0]} placement="top">
+                <CustomTooltip title={r.addressesInput[0]} placement="top">
                   <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${r.addressesInput[0]}`)}>
                     {getShortWallet(r.addressesInput[0])}
                   </StyledLink>
-                </Tooltip>
+                </CustomTooltip>
                 <br />
                 {r.addressesInput.length > 1 && (
                   <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>...</StyledLink>
@@ -98,11 +95,11 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
             <Flex>
               <Label>Output: </Label>
               <div>
-                <Tooltip title={r.addressesOutput[0]} placement="top">
+                <CustomTooltip title={r.addressesOutput[0]} placement="top">
                   <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${r.addressesOutput[0]}`)}>
                     {getShortWallet(r.addressesOutput[0])}
                   </StyledLink>
-                </Tooltip>
+                </CustomTooltip>
                 <br />
                 {r.addressesOutput.length > 1 && (
                   <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>...</StyledLink>

@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
-import { Box, Tooltip } from "@mui/material";
+import { Box } from "@mui/material";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import { formatADA, getShortHash } from "../../commons/utils/helper";
@@ -11,6 +11,7 @@ import DetailViewTransaction from "../commons/DetailView/DetailViewTransaction";
 import { useState } from "react";
 import { useWindowSize } from "react-use";
 import { setOnDetailView } from "../../stores/user";
+import CustomTooltip from "../commons/CustomTooltip";
 
 interface TransactionListProps {
   underline?: boolean;
@@ -53,11 +54,11 @@ const TransactionList: React.FC<TransactionListProps> = ({
 
       render: r => (
         <div>
-          <Tooltip title={r.hash} placement="top">
+          <CustomTooltip title={r.hash} placement="top">
             <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>
               {getShortHash(r.hash)}
             </StyledLink>
-          </Tooltip>
+          </CustomTooltip>
         </div>
       ),
     },

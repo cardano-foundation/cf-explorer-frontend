@@ -1,16 +1,13 @@
-import { Tooltip } from "@mui/material";
 import { parse, stringify } from "qs";
-import React from "react";
-import { BiLinkExternal } from "react-icons/bi";
+import React from "react"; 
 import { useHistory, useLocation } from "react-router-dom";
-
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { AIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
 import { formatADA, getShortHash } from "../../../commons/utils/helper";
+import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
-
-import { PriceIcon, PriceValue, SmallText, StyledLink, TopHolder } from "./styles";
+import { PriceIcon, PriceValue, SmallText, StyledLink  } from "./styles";
 
 interface ITokenTopHolder {
   active: boolean;
@@ -31,8 +28,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
     data: transactions,
     loading: transactionsLoading,
     initialized,
-    total,
-    totalPage,
+    total, 
     currentPage,
   } = useFetchList<ITokenTopHolderTable>(active ? `tokens/${tokenId}/top_holders` : "", {
     page: query.page ? +query.page - 1 : 0,
@@ -52,9 +48,9 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       key: "address",
       minWidth: "200px",
       render: r => (
-        <Tooltip title={r.address} placement="top">
+        <CustomTooltip title={r.address} placement="top">
           <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", r.address)}>{getShortHash(r.address)}</StyledLink>
-        </Tooltip>
+        </CustomTooltip>
       ),
     },
     {
