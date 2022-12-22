@@ -3,7 +3,6 @@ import { parse, stringify } from "qs";
 
 import Table, { Column } from "../../commons/Table";
 
-import styles from "./index.module.scss";
 import { formatADA, formatPercent } from "../../../commons/utils/helper";
 
 import { routers } from "../../../commons/routers";
@@ -32,8 +31,8 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       maxWidth: "350px",
       render: r => {
         return (
-          <PoolName to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolView}`)}>
-            {r.poolName || r.poolView}
+          <PoolName to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`)}>
+            {r.poolName || r.poolId}
           </PoolName>
         );
       },
@@ -91,7 +90,7 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       total={{ count: total, title: "Total" }}
       loading={loading}
       initialized={initialized}
-      onClickRow={(_, r) => history.push(routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolView}`))}
+      onClickRow={(_, r) => history.push(routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`))}
       pagination={{
         onChange: (page, size) => {
           setQuery({ page, size });

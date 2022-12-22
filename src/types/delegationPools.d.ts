@@ -7,7 +7,7 @@ interface OverViewDelegation {
 }
 
 interface Delegators {
-  poolView: string;
+  poolId: string;
   poolName: string;
   poolSize: number;
   reward: number;
