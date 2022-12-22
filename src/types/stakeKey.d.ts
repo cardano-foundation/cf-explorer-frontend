@@ -23,3 +23,5 @@ interface IStakeKeyDetail {
     poolId: string;
   };
 }
+
+type TabStakeDetail = "delegation" | "stakeKey" | "withdrawal" | "instantaneous";

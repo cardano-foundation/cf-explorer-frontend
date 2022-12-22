@@ -30,3 +30,4 @@ interface WalletStake {
     poolId: string;
   };
 }
+
