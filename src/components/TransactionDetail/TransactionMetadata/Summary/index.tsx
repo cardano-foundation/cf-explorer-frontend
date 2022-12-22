@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Tooltip } from "@mui/material";
-
+import { Box  } from "@mui/material";
 import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
@@ -10,6 +9,7 @@ import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
 import { routers } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
+import CustomTooltip from "../../../commons/CustomTooltip";
 
 const SummaryItems = ({
   item,
@@ -31,9 +31,9 @@ const SummaryItems = ({
               <div className={styles.transferInfo}>
                 <div className={styles.transferAddress}>
                   <Link to={routers.ADDRESS_DETAIL.replace(":address", item.address)} className={styles.address}>
-                    <Tooltip title={item.address} placement="top">
+                    <CustomTooltip title={item.address} placement="top">
                       <div> {getShortWallet(item.address)}</div>
-                    </Tooltip>
+                    </CustomTooltip>
                   </Link>
                   <CopyButton text={item.address} className={styles.icon} />
                 </div>

@@ -1,4 +1,4 @@
-import { Box, Tooltip } from "@mui/material";
+import { Box  } from "@mui/material";
 
 import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
@@ -8,6 +8,7 @@ import { AIcon } from "../../../../commons/resources";
 import { routers } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
 import CopyButton from "../../../commons/CopyButton";
+import CustomTooltip from "../../../commons/CustomTooltip";
 
 interface CollateralProps {
   data: Transaction["collaterals"] | null;
@@ -39,9 +40,9 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
             <div>
               From:{" "}
               <Link to={routers.ADDRESS_DETAIL.replace(":address", item?.address || "")} className={styles.address}>
-                <Tooltip title={item?.address} placement="top">
+                <CustomTooltip title={item?.address} placement="top">
                   <span className={styles.address}> {getShortWallet(item?.address || "")} </span>
-                </Tooltip>
+                </CustomTooltip>
               </Link>
               <CopyButton text={item?.address || ""} className={styles.icon} />
             </div>
@@ -58,9 +59,9 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
           </Box>
           <Box className={styles.bottom} display="flex" alignItems={"center"}>
             <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", item?.txHash || "")} className={styles.address}>
-              <Tooltip title={item?.txHash || ""} placement="top">
+              <CustomTooltip title={item?.txHash || ""} placement="top">
                 <div>{getShortHash(item?.txHash || "")}</div>
-              </Tooltip>
+              </CustomTooltip>
             </Link>
             <CopyButton text={item?.txHash || ""} className={styles.icon} />
           </Box>

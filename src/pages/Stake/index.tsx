@@ -1,19 +1,16 @@
-import { Tooltip } from "@mui/material";
 import moment from "moment";
 import { parse, stringify } from "qs";
 import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useWindowSize } from "react-use";
-
 import useFetchList from "../../commons/hooks/useFetchList";
 import { routers } from "../../commons/routers";
 import { getShortHash } from "../../commons/utils/helper";
-
 import Card from "../../components/commons/Card";
+import CustomTooltip from "../../components/commons/CustomTooltip";
 import DetailViewStakeKey from "../../components/commons/DetailView/DetailViewStakeKey";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
-
 import { ActiveButton, Header, StyledButton, StyledContainer, StyledLink } from "./styles";
 
 interface IStake {}
@@ -23,9 +20,9 @@ const colums: Column<IStakeKey>[] = [
     title: "Trx Hash",
     key: "trxHash",
     render: r => (
-      <Tooltip title={r.txHash} placement="top">
+      <CustomTooltip title={r.txHash} placement="top">
         <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
-      </Tooltip>
+      </CustomTooltip>
     ),
   },
   {
@@ -49,9 +46,9 @@ const colums: Column<IStakeKey>[] = [
     title: "Stake Key",
     key: "stakeKey",
     render: r => (
-      <Tooltip title={r.stakeKey} placement="top">
+      <CustomTooltip title={r.stakeKey} placement="top">
         <StyledLink to={routers.STAKE_DETAIL.replace(":stakeId", r.stakeKey)}>{getShortHash(r.stakeKey)}</StyledLink>
-      </Tooltip>
+      </CustomTooltip>
     ),
   },
   {
@@ -61,19 +58,19 @@ const colums: Column<IStakeKey>[] = [
       if (r.poolNames === null) return null;
       if (r.poolNames.length === 1)
         return (
-          <Tooltip title={r.poolNames[0]} placement="top">
+          <CustomTooltip title={r.poolNames[0]} placement="top">
             <StyledLink to={routers.STAKE_DETAIL.replace(":stakeId", `${r.stakeKey}`)}>
               {getShortHash(r.poolNames[0])}
             </StyledLink>
-          </Tooltip>
+          </CustomTooltip>
         );
       return (
         <>
-          <Tooltip title={r.poolNames[0]} placement="top">
+          <CustomTooltip title={r.poolNames[0]} placement="top">
             <StyledLink to={routers.STAKE_DETAIL.replace(":stakeId", `${r.stakeKey}`)}>
               {getShortHash(r.poolNames[0])}
             </StyledLink>
-          </Tooltip>
+          </CustomTooltip>
           <StyledLink to={routers.STAKE_DETAIL.replace(":stakeId", `${r.stakeKey}`)}>...</StyledLink>
         </>
       );

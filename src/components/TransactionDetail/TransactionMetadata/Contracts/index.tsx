@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { Box, Button, styled, Tooltip } from "@mui/material";
+import { Box, Button, styled  } from "@mui/material";
 
 import styles from "./index.module.scss";
 import contractImg from "../../../../commons/resources/images/trx-contract.png";
 import { getShortWallet } from "../../../../commons/utils/helper";
 import CopyButton from "../../../commons/CopyButton";
 import { useCopyToClipboard } from "react-use";
+import CustomTooltip from "../../../commons/CustomTooltip";
 
 interface ContractsProps {
   data: Transaction["contracts"] | null;
@@ -53,9 +54,9 @@ const Contracts: React.FC<ContractsProps> = ({ data }) => {
             return (
               <div key={key} className={styles.item}>
                 <Box className={styles.address}>
-                  <Tooltip title={ct.contract} placement="top">
+                  <CustomTooltip title={ct.contract} placement="top">
                     <div>{getShortWallet(ct.contract)}</div>
-                  </Tooltip>
+                  </CustomTooltip>
                 </Box>
                 <CopyButton text={ct.contract} className={styles.icon} />
               </div>

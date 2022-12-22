@@ -1,10 +1,8 @@
-import { Tooltip } from "@mui/material";
 import React from "react";
-
 import { getShortHash } from "../../../commons/utils/helper";
-
 import Card from "../../commons/Card";
 import CopyButton from "../../commons/CopyButton";
+import CustomTooltip from "../../commons/CustomTooltip";
 import DetailCard from "../../commons/DetailCard";
 
 import { Active, Deactive, Flex, StyledLink, Title } from "./styles";
@@ -20,9 +18,9 @@ const StakeOverview: React.FC<IStakeOverview> = ({ data, loading }) => {
       title: "Hash",
       value: (
         <Flex>
-          <Tooltip title={`${data?.stakeAddress || ""}`} placement="top">
+          <CustomTooltip title={`${data?.stakeAddress || ""}`} placement="top">
             <StyledLink style={{marginRight: "12.25px"}}>{getShortHash(data?.stakeAddress || "")}</StyledLink>
-          </Tooltip>
+          </CustomTooltip>
           <CopyButton text={`${data?.stakeAddress || ""}`} />
         </Flex>
       ),

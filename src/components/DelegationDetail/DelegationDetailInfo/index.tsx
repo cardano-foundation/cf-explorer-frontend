@@ -1,4 +1,3 @@
-import { Tooltip } from "@mui/material";
 import React from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link } from "react-router-dom";
@@ -6,6 +5,7 @@ import { AIcon, InfoIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
 import { formatADA, getShortWallet } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 import {
   BackButton,
@@ -64,11 +64,11 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       title: "Reward Account",
       value: data?.rewardAccount ? (
         <>
-          <Tooltip placement="bottom" title={data?.rewardAccount || ""}>
+          <CustomTooltip placement="bottom" title={data?.rewardAccount || ""}>
             <Link to={routers.ADDRESS_DETAIL.replace(":address", `${data?.rewardAccount}`)}>
               {getShortWallet(data?.rewardAccount || "")}
             </Link>
-          </Tooltip>
+          </CustomTooltip>
           <CopyButton text={data?.rewardAccount || ""} />
         </>
       ) : (
@@ -79,11 +79,11 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       title: "Owner Account",
       value: data?.ownerAccount ? (
         <>
-          <Tooltip placement="bottom" title={data?.ownerAccount || ""}>
+          <CustomTooltip placement="bottom" title={data?.ownerAccount || ""}>
             <Link to={routers.ADDRESS_DETAIL.replace(":address", `${data?.ownerAccount}`)}>
               {getShortWallet(data?.ownerAccount || "")}
             </Link>
-          </Tooltip>
+          </CustomTooltip>
           <CopyButton text={data?.ownerAccount || ""} />
         </>
       ) : (
@@ -133,12 +133,12 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
       </HeaderContainer>
       <PoolId>
-        <Tooltip title={poolId} placement="top">
+        <CustomTooltip title={poolId} placement="top">
           <Link to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${poolId}`)}>
             <small>Pool Id: </small>
             <PoolIdValue>{poolId}</PoolIdValue>
           </Link>
-        </Tooltip>
+        </CustomTooltip>
         <CopyButton text={poolId} />
       </PoolId>
       <DataContainer>
