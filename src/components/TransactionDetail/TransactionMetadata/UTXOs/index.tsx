@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box  } from "@mui/material";
+import { Box } from "@mui/material";
 import { getShortWallet, formatADA, getShortHash } from "../../../../commons/utils/helper";
 import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
@@ -76,7 +76,7 @@ const Card = ({
                     >
                       <Link to={routers.ADDRESS_DETAIL.replace(":address", i.address)}>
                         <CustomTooltip title={i.address} placement="top">
-                          <Box color={"blue"} fontWeight="bold" className={styles.ffText}>
+                          <Box color={props => props.colorBlue} fontWeight="bold" className={styles.ffText}>
                             {getShortWallet(i.address)}
                           </Box>
                         </CustomTooltip>
@@ -109,7 +109,13 @@ const Card = ({
                       <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
                         <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", i.txHash)}>
                           <CustomTooltip title={i.txHash} placement="top">
-                            <Box component={"span"} fontWeight="bold" className={styles.ffText} color="blue" mr={1}>
+                            <Box
+                              component={"span"}
+                              fontWeight="bold"
+                              className={styles.ffText}
+                              color={props => props.colorBlue}
+                              mr={1}
+                            >
                               {getShortHash(i.txHash)}
                             </Box>
                           </CustomTooltip>

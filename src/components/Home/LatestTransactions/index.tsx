@@ -2,7 +2,8 @@ import { Grid, Skeleton } from "@mui/material";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
-import { BlankBlueIcon, AIcon } from "../../../commons/resources";
+import { BlankBlueIcon } from "../../../commons/resources";
+import AIcon from "../../../commons/resources/icons/adaBlack.svg";
 import { routers } from "../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -14,7 +15,7 @@ import {
   ItemDetail,
   ItemHeader,
   PriceImage,
-  PriveValue, 
+  PriveValue,
   Title,
   TransactionContainer,
   BlockNo,
@@ -28,7 +29,7 @@ const LatestTransactions: React.FC = () => {
   return (
     <TransactionContainer>
       <Header>
-        <Title>Latest Transactions</Title> 
+        <Title>Latest Transactions</Title>
         <ViewAllButton to={routers.TRANSACTION_LIST} />
       </Header>
       {
@@ -113,7 +114,7 @@ const LatestTransactions: React.FC = () => {
                 );
               })}
         </Grid>
-      } 
+      }
     </TransactionContainer>
   );
 };

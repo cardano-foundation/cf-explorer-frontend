@@ -1,5 +1,5 @@
 import React from "react";
-import { Box  } from "@mui/material";
+import { Box } from "@mui/material";
 import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
@@ -35,7 +35,7 @@ const SummaryItems = ({
                 <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} flexWrap={"nowrap"}>
                   <Link to={routers.ADDRESS_DETAIL.replace(":address", item.address)}>
                     <CustomTooltip title={item.address} placement="top">
-                      <Box color={"blue"} fontWeight="bold" className={styles.ffText}>
+                      <Box color={props => props.colorBlue} fontWeight="bold" className={styles.ffText}>
                         {getShortWallet(item.address)}
                       </Box>
                     </CustomTooltip>
@@ -70,7 +70,7 @@ const SummaryItems = ({
                 <Box>Token received: </Box>
               </Box>
               <Box display={"flex"} alignItems="center" justifyContent={"space-between"} flex={1}>
-                <Box overflow={"hidden"} display="flex" ml={3} flexWrap={"wrap"}>
+                <Box overflow={"hidden"} display="flex" ml={3} flexWrap={"wrap"} gap={1}>
                   {item.tokens.map((token, idx) => (
                     <Box
                       key={idx}
