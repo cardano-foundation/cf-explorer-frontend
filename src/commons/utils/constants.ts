@@ -20,7 +20,7 @@ export enum NETWORKS {
   mainnet = "Mainnet",
   preprod = "Preprod",
   preview = "Preview",
-  testnet = "Testnet (legacy)",
+  testnet = "Testnet",
 }
 
 export enum TRANSACTION_STATUS {
