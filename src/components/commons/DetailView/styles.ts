@@ -358,7 +358,7 @@ export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatu
   padding: 5px 10px;
   border-radius: 2px;
 `;
-export const ConfirmStatus = styled("small")<{ status: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
   color: ${props => {
     switch (props.status) {
       case CONFIRMATION_STATUS.MEDIUM:
