@@ -1,10 +1,10 @@
-import { Tabs  } from "@mui/material";
+import { Tabs } from "@mui/material";
 import moment from "moment";
 import { parse, stringify } from "qs";
 import { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { routers } from "../../commons/routers";
+import { details, routers } from "../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../commons/utils/helper";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table, { Column } from "../../components/commons/Table";
@@ -42,7 +42,7 @@ const RegistrationPools = () => {
         return (
           <>
             <CustomTooltip title={r.txHash} placement="top">
-              <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.txHash}`)}>
+              <StyledLink to={details.transaction(r.txHash)}>
                 {getShortHash(r.txHash || "")}
               </StyledLink>
             </CustomTooltip>
@@ -56,9 +56,9 @@ const RegistrationPools = () => {
       key: "block",
       render: r => (
         <>
-          <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${r.block}`)}>{r.block}</StyledLink>
+          <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
           <br />
-          <StyledLink to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epoch}`)}>{r.epoch}</StyledLink>/{r.slotNo}
+          <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/{r.slotNo}
         </>
       ),
     },

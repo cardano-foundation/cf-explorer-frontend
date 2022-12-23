@@ -1,6 +1,6 @@
 import React from "react";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
-import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import {
   CubeIcon,
   FileEditIcon,
@@ -49,7 +49,7 @@ import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
 import { TbFileCheck } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
-import { routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
@@ -77,7 +77,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
       <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
         <ViewDetailContainer>
           <ViewDetailScroll>
-            <StyledViewMore tooltipTitle="View Detail" to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)} />
+            <StyledViewMore tooltipTitle="View Detail" to={details.transaction(hash)} />
             <CustomTooltip placement="top" title="Close">
               <CloseButton onClick={handleClose}>
                 <CgClose />
@@ -136,16 +136,29 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
             })}
           </ViewDetailScroll>
         </ViewDetailContainer>
-        <ViewMoreButton to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)} />
+        <ViewMoreButton to={details.transaction(hash)} />
       </ViewDetailDrawer>
     );
   const input = data.utxOs?.inputs[0]?.address || "";
   const output = data.utxOs?.outputs[0]?.address || "";
+  const renderConfirmationTag = () => {
+    if (data?.tx?.confirmation) {
+      if (data.tx.confirmation > 9) {
+        return CONFIRMATION_STATUS.HIGH;
+      }
+      if (data.tx.confirmation <= 8) {
+        return CONFIRMATION_STATUS.MEDIUM;
+      }
+      return CONFIRMATION_STATUS.LOW;
+    }
+    return CONFIRMATION_STATUS.LOW;
+  };
+
   return (
     <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
       <ViewDetailContainer>
         <ViewDetailScroll>
-          <StyledViewMore tooltipTitle="View Detail" to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)} />
+          <StyledViewMore tooltipTitle="View Detail" to={details.transaction(hash)} />
           <CustomTooltip placement="top" title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
@@ -187,9 +200,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               </DetailLabel>
               <DetailValue>
                 <CustomTooltip placement="top" title={hash}>
-                  <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
-                    {getShortHash(hash)}
-                  </StyledLink>
+                  <StyledLink to={details.transaction(hash)}>{getShortHash(hash)}</StyledLink>
                 </CustomTooltip>
                 <DetailCopy text={hash} />
               </DetailValue>
@@ -202,9 +213,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                 </DetailLabel>
                 <DetailValue>
                   <CustomTooltip placement="top" title={input}>
-                    <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${input}`)}>
-                      {getShortWallet(input)}
-                    </StyledLink>
+                    <StyledLink to={details.address(input)}>{getShortWallet(input)}</StyledLink>
                   </CustomTooltip>
                   <DetailCopy text={input} />
                 </DetailValue>
@@ -218,9 +227,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                 </DetailLabel>
                 <DetailValue>
                   <CustomTooltip placement="top" title={output}>
-                    <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${output}`)}>
-                      {getShortWallet(output)}
-                    </StyledLink>
+                    <StyledLink to={details.address(output)}>{getShortWallet(output)}</StyledLink>
                   </CustomTooltip>
                   <DetailCopy text={output} />
                 </DetailValue>
@@ -249,7 +256,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {data.tx.confirmation}
-                <ConfirmStatus status={"MEDIUM"}>{"MEDIUM"}</ConfirmStatus>
+                <ConfirmStatus status={renderConfirmationTag()}>{renderConfirmationTag() || "LOW"}</ConfirmStatus>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -278,7 +285,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
             if (!value) return null;
             return (
               <Group key={key}>
-                <DetailLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
+                <DetailLink to={details.transaction(hash)}>
                   <DetailLabel>
                     <DetailLinkIcon>{icon}</DetailLinkIcon>
                     <DetailLinkName>
@@ -297,7 +304,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
           })}
         </ViewDetailScroll>
       </ViewDetailContainer>
-      <ViewMoreButton to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)} />
+      <ViewMoreButton to={details.transaction(hash)} />
     </ViewDetailDrawer>
   );
 };

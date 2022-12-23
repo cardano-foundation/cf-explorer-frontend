@@ -4,7 +4,7 @@ import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { AIcon } from "../../../commons/resources";
-import { routers } from "../../../commons/routers";
+import { details, routers } from "../../../commons/routers";
 import { getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 
@@ -83,7 +83,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
       total={{ count: total, title: "Total Minting" }}
       loading={transactionsLoading}
       initialized={initialized}
-      onClickRow={(_, r: ITokenMintingTable) => history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.txHash}`))}
+      onClickRow={(_, r: ITokenMintingTable) => history.push(details.transaction(r.txHash))}
       pagination={{
         onChange: (page, size) => {
           setQuery({ page, size });

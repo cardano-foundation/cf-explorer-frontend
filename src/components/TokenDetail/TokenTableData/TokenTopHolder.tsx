@@ -1,13 +1,13 @@
 import { parse, stringify } from "qs";
-import React from "react"; 
+import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { AIcon } from "../../../commons/resources";
-import { routers } from "../../../commons/routers";
-import { formatADA, getShortHash } from "../../../commons/utils/helper";
+import { details, routers } from "../../../commons/routers";
+import { formatADA, getShortWallet } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
-import { PriceIcon, PriceValue, SmallText, StyledLink  } from "./styles";
+import { PriceIcon, PriceValue, SmallText, StyledLink } from "./styles";
 
 interface ITokenTopHolder {
   active: boolean;
@@ -28,7 +28,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
     data: transactions,
     loading: transactionsLoading,
     initialized,
-    total, 
+    total,
     currentPage,
   } = useFetchList<ITokenTopHolderTable>(active ? `tokens/${tokenId}/top_holders` : "", {
     page: query.page ? +query.page - 1 : 0,
@@ -49,7 +49,9 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       minWidth: "200px",
       render: r => (
         <CustomTooltip title={r.address} placement="top">
-          <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", r.address)}>{getShortHash(r.address)}</StyledLink>
+          <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", r.address)}>
+            {getShortWallet(r.address)}
+          </StyledLink>
         </CustomTooltip>
       ),
     },
@@ -82,7 +84,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       loading={transactionsLoading}
       initialized={initialized}
       onClickRow={(_, r: ITokenTopHolderTable) =>
-        history.push(routers.ADDRESS_DETAIL.replace(":address", `${r.address}`))
+        history.push(details.address(r.address))
       }
       pagination={{
         onChange: (page, size) => {
