@@ -55,7 +55,7 @@ const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
 
 const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
   const { stakeId, handleClose } = props;
-  const { data } = useFetch<IStakeKeyDetail>(stakeId ? `stakeKey/${stakeId}` : ``);
+  const { data } = useFetch<IStakeKeyDetail>(stakeId ? `stake/address/${stakeId}` : ``);
 
   if (!data)
     return (
