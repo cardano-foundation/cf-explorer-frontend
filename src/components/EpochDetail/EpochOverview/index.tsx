@@ -4,8 +4,6 @@ import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import DetailHeader from "../../commons/DetailHeader";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
-import exchageIcon from "../../../commons/resources/icons/Union.svg";
-import exchageAltIcon from "../../../commons/resources/icons/exchangeArrow.svg";
 import outputIcon from "../../../commons/resources/icons/outputIcon.svg";
 import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
@@ -82,7 +80,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
         <>
           {slot}/
           <Box component={"span"} fontWeight="400">
-            432000
+            {MAX_SLOT_EPOCH}
           </Box>
         </>
       ),

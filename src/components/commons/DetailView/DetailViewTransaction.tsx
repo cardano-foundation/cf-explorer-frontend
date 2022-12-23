@@ -142,15 +142,16 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
   const input = data.utxOs?.inputs[0]?.address || "";
   const output = data.utxOs?.outputs[0]?.address || "";
   const renderConfirmationTag = () => {
-    if (data && data.tx && data.tx.confirmation) {
-      if (data.tx.confirmation <= 2) {
-        return CONFIRMATION_STATUS.LOW;
+    if (data?.tx?.confirmation) {
+      if (data.tx.confirmation > 9) {
+        return CONFIRMATION_STATUS.HIGH;
       }
       if (data.tx.confirmation <= 8) {
         return CONFIRMATION_STATUS.MEDIUM;
       }
-      return CONFIRMATION_STATUS.HIGH;
+      return CONFIRMATION_STATUS.LOW;
     }
+    return CONFIRMATION_STATUS.LOW;
   };
 
   return (
@@ -199,9 +200,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               </DetailLabel>
               <DetailValue>
                 <CustomTooltip placement="top" title={hash}>
-                  <StyledLink to={details.transaction(hash)}>
-                    {getShortHash(hash)}
-                  </StyledLink>
+                  <StyledLink to={details.transaction(hash)}>{getShortHash(hash)}</StyledLink>
                 </CustomTooltip>
                 <DetailCopy text={hash} />
               </DetailValue>
@@ -257,9 +256,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {data.tx.confirmation}
-                <ConfirmStatus status={renderConfirmationTag() || "LOW"}>
-                  {renderConfirmationTag() || "LOW"}
-                </ConfirmStatus>
+                <ConfirmStatus status={renderConfirmationTag()}>{renderConfirmationTag() || "LOW"}</ConfirmStatus>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
