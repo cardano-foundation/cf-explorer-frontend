@@ -2,14 +2,11 @@ import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 import { Box, Container } from "@mui/material";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import { formatADA, getShortHash } from "../../commons/utils/helper";
-
-import { routers } from "../../commons/routers";
+import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
-
 import { PriceWrapper, StyledColorBlueDard, StyledLink } from "./styles";
 import DetailViewBlock from "../commons/DetailView/DetailViewBlock";
 import { useState } from "react";
@@ -47,9 +44,7 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
       minWidth: "150px",
       render: r => (
         <CustomTooltip placement="top" title={r.hash}>
-          <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>
-            {getShortHash(`${r.hash}`)}
-          </StyledLink>
+          <StyledLink to={details.block(r.blockNo)}>{getShortHash(`${r.hash}`)}</StyledLink>
         </CustomTooltip>
       ),
     },
@@ -90,7 +85,7 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
     if (width > 1023) {
       setOnDetailView(true);
       setDetailView(r.blockNo);
-    } else history.push(routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`));
+    } else history.push(details.block(r.blockNo));
   };
 
   const handleClose = () => {

@@ -39,7 +39,7 @@ import {
 } from "./styles";
 import { ADAToken } from "../Token";
 import NotFound from "../../../pages/NotFound";
-import { routers } from "../../../commons/routers";
+import { details, routers } from "../../../commons/routers";
 import { formatADA } from "../../../commons/utils/helper";
 
 interface DetailHeaderProps {
@@ -109,7 +109,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
       </HeaderContainer>
       {header.hash && (
         <SlotLeader>
-          <Link to={routers.ADDRESS_DETAIL.replace(":address", `${header.slotLeader}`)}>
+          <Link to={details.address(header.hash)}>
             {header.slotLeader && <SlotLeaderTitle>Slot leader:</SlotLeaderTitle>}{" "}
             <SlotLeaderValue>{header.hash}</SlotLeaderValue>
           </Link>

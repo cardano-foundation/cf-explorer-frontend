@@ -3,7 +3,7 @@ import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { AIcon } from "../../../commons/resources";
-import { routers } from "../../../commons/routers";
+import { details, routers } from "../../../commons/routers";
 import { formatADA, getShortWallet } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
@@ -84,7 +84,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       loading={transactionsLoading}
       initialized={initialized}
       onClickRow={(_, r: ITokenTopHolderTable) =>
-        history.push(routers.ADDRESS_DETAIL.replace(":address", `${r.address}`))
+        history.push(details.address(r.address))
       }
       pagination={{
         onChange: (page, size) => {
