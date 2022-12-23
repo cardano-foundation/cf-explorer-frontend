@@ -148,7 +148,8 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
           {total.title}: <TotalNumber>{numberWithCommas(total.count)}</TotalNumber>
         </Total>
       )}
-      {total && total.count > 10 && pagination && (
+      <Box></Box>
+      {pagination && pagination.total && pagination.total > 10 && (
         <TablePagination
           component="div"
           count={pagination.total || 0}

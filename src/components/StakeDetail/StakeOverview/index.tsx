@@ -9,7 +9,7 @@ import rewardIcon from "../../../commons/resources/icons/reward.svg";
 import rewardWithdrawIcon from "../../../commons/resources/icons/rewardWithdraw.svg";
 import infoIcon from "../../../commons/resources/icons/info.svg";
 
-import { getShortHash } from "../../../commons/utils/helper";
+import { formatADA, getShortHash } from "../../../commons/utils/helper";
 
 import CopyButton from "../../commons/CopyButton";
 import ProgressCircle from "../../commons/ProgressCircle";
@@ -28,6 +28,7 @@ import {
   TitleCard,
   ValueCard,
 } from "./styles";
+import { ADAToken } from "../../commons/Token";
 
 interface IStakeOverview {
   data: IStakeKeyDetail | null;
@@ -44,6 +45,7 @@ const StakeOverview: React.FC<IStakeOverview> = ({ data, loading }) => {
           <img src={infoIcon} alt="info icon" />
         </Box>
       ),
+      value: data?.pool?.poolName || "",
     },
     {
       icon: totalStakeIcon,
@@ -52,6 +54,11 @@ const StakeOverview: React.FC<IStakeOverview> = ({ data, loading }) => {
           <TitleCard mr={1}>Total Stake</TitleCard>
           <img src={infoIcon} alt="info icon" />
         </Box>
+      ),
+      value: (
+        <>
+          {formatADA(data?.totalStake || 0)} <ADAToken />
+        </>
       ),
     },
     {
@@ -62,6 +69,11 @@ const StakeOverview: React.FC<IStakeOverview> = ({ data, loading }) => {
           <img src={infoIcon} alt="info icon" />
         </Box>
       ),
+      value: (
+        <>
+          {formatADA(data?.rewardAvailable || 0)} <ADAToken />
+        </>
+      ),
     },
     {
       icon: rewardWithdrawIcon,
@@ -70,6 +82,11 @@ const StakeOverview: React.FC<IStakeOverview> = ({ data, loading }) => {
           <TitleCard mr={1}> Reward withdrawn </TitleCard>
           <img src={infoIcon} alt="info icon" />
         </Box>
+      ),
+      value: (
+        <>
+          {formatADA(data?.rewardWithdrawn || 0)} <ADAToken />
+        </>
       ),
     },
   ];
@@ -92,7 +109,7 @@ const StakeOverview: React.FC<IStakeOverview> = ({ data, loading }) => {
                   background: data?.status === "ACTIVE" ? "rgba(67, 143, 104, 0.2)" : "rgba(102, 112, 133, 0.2)",
                 }}
               >
-                Inactive
+                {data?.status}
               </LabelStatus>
             )}
           </HeaderContainer>
@@ -108,12 +125,12 @@ const StakeOverview: React.FC<IStakeOverview> = ({ data, loading }) => {
             )}
           </SlotLeaderContainer>
         </Box>
-        <Box>
+        {/* <Box>
           <ProgressCircle percent={80} size={140}>
             <Box>362</Box>
             <Box>Epoch</Box>
           </ProgressCircle>
-        </Box>
+        </Box> */}
       </Box>
 
       <CardInfoOverview>
@@ -127,7 +144,7 @@ const StakeOverview: React.FC<IStakeOverview> = ({ data, loading }) => {
                 {item.title}
               </Box>
               <ValueCard mt={2} mb={1}>
-                CROWN - CROWN Stake Pool
+                {item.value}
               </ValueCard>
             </CardItem>
           );

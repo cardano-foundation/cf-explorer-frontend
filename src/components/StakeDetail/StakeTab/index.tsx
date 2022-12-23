@@ -8,12 +8,39 @@ import { ReactComponent as WithdrawHistoryIcon } from "../../../commons/resource
 import { ReactComponent as InstantaneousHistoryIcon } from "../../../commons/resources/icons/instantaneousHistory.svg";
 import { TitleTab } from "./component";
 import TableTab from "./TableTab";
+import { useHistory } from "react-router-dom";
+import { stringify } from "qs";
 
-const StakeTab = () => {
-  const [activeTab, setActiveTab] = React.useState<TabStakeDetail>("delegation");
+interface StakeTabProps {
+  setActiveTab: (v: TabStakeDetail) => void;
+  activeTab: TabStakeDetail;
+  data: (DelegationHistory | Instantaneous | StakeHistory | WithdrawalHistory)[];
+  loading: boolean;
+  error: string | null;
+  initialized: boolean;
+  currentPage: number;
+  total: number;
+}
+
+const StakeTab: React.FC<StakeTabProps> = ({
+  activeTab,
+  setActiveTab,
+  data,
+  error,
+  initialized,
+  loading,
+  currentPage,
+  total,
+}) => {
+  const history = useHistory();
+
+  const setQuery = (query: any) => {
+    history.push({ search: stringify(query) });
+  };
 
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
     setActiveTab(tab);
+    setQuery({ page: 1, size: 10 });
   };
   const tabs: { label: React.ReactNode; key: string; children: React.ReactNode }[] = [
     {
@@ -26,7 +53,17 @@ const StakeTab = () => {
         </Box>
       ),
       key: "delegation",
-      children: <TableTab type={activeTab} />,
+      children: (
+        <TableTab
+          total={total}
+          currentPage={currentPage}
+          loading={loading}
+          error={error}
+          initialized={initialized}
+          type={activeTab}
+          data={data}
+        />
+      ),
     },
     {
       label: (
@@ -38,7 +75,17 @@ const StakeTab = () => {
         </Box>
       ),
       key: "stakeKey",
-      children: <TableTab type={activeTab} />,
+      children: (
+        <TableTab
+          total={total}
+          currentPage={currentPage}
+          loading={loading}
+          error={error}
+          initialized={initialized}
+          type={activeTab}
+          data={data}
+        />
+      ),
     },
     {
       label: (
@@ -50,7 +97,17 @@ const StakeTab = () => {
         </Box>
       ),
       key: "withdrawal",
-      children: <TableTab type={activeTab} />,
+      children: (
+        <TableTab
+          total={total}
+          currentPage={currentPage}
+          loading={loading}
+          error={error}
+          initialized={initialized}
+          type={activeTab}
+          data={data}
+        />
+      ),
     },
     {
       label: (
@@ -62,7 +119,17 @@ const StakeTab = () => {
         </Box>
       ),
       key: "instantaneous",
-      children: <TableTab type={activeTab} />,
+      children: (
+        <TableTab
+          total={total}
+          currentPage={currentPage}
+          loading={loading}
+          error={error}
+          initialized={initialized}
+          type={activeTab}
+          data={data}
+        />
+      ),
     },
   ];
 
