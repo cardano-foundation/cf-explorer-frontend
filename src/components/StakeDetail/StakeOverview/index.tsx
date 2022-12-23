@@ -1,5 +1,4 @@
 import { Box, Skeleton } from "@mui/material";
-import React from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 
 import { routers } from "../../../commons/routers";
@@ -29,13 +28,14 @@ import {
   ValueCard,
 } from "./styles";
 import { ADAToken } from "../../commons/Token";
+import useFetch from "../../../commons/hooks/useFetch";
+import { useParams } from "react-router-dom";
 
-interface IStakeOverview {
-  data: IStakeKeyDetail | null;
-  loading: boolean;
-}
+const StakeOverview = () => {
+  const { stakeId } = useParams<{ stakeId: string }>();
 
-const StakeOverview: React.FC<IStakeOverview> = ({ data, loading }) => {
+  const { data, loading } = useFetch<IStakeKeyDetail>(`/stake/address/${stakeId}`);
+
   const listOverview = [
     {
       icon: delegatedIcon,

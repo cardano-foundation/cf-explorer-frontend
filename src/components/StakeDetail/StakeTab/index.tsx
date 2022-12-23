@@ -8,31 +8,16 @@ import { ReactComponent as WithdrawHistoryIcon } from "../../../commons/resource
 import { ReactComponent as InstantaneousHistoryIcon } from "../../../commons/resources/icons/instantaneousHistory.svg";
 import { TitleTab } from "./component";
 import TableTab from "./TableTab";
-import { useHistory } from "react-router-dom";
-import { stringify } from "qs";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import { parse, stringify } from "qs";
+import useFetchList from "../../../commons/hooks/useFetchList";
 
-interface StakeTabProps {
-  setActiveTab: (v: TabStakeDetail) => void;
-  activeTab: TabStakeDetail;
-  data: (DelegationHistory | Instantaneous | StakeHistory | WithdrawalHistory)[];
-  loading: boolean;
-  error: string | null;
-  initialized: boolean;
-  currentPage: number;
-  total: number;
-}
-
-const StakeTab: React.FC<StakeTabProps> = ({
-  activeTab,
-  setActiveTab,
-  data,
-  error,
-  initialized,
-  loading,
-  currentPage,
-  total,
-}) => {
+const StakeTab = () => {
+  const [activeTab, setActiveTab] = React.useState<TabStakeDetail>("delegation");
   const history = useHistory();
+  const { search } = useLocation();
+  const { stakeId } = useParams<{ stakeId: string }>();
+  const query = parse(search.split("?")[1]);
 
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
@@ -42,6 +27,14 @@ const StakeTab: React.FC<StakeTabProps> = ({
     setActiveTab(tab);
     setQuery({ page: 1, size: 10 });
   };
+
+  const { data, loading, error, initialized, total, currentPage } = useFetchList<
+    DelegationHistory | Instantaneous | StakeHistory | WithdrawalHistory
+  >(`/stake/${stakeId}/${apiPath[activeTab]}`, {
+    page: query.page ? +query.page - 1 : 0,
+    size: query.size ? (query.size as string) : 10,
+  });
+
   const tabs: { label: React.ReactNode; key: string; children: React.ReactNode }[] = [
     {
       label: (
@@ -154,3 +147,9 @@ const StakeTab: React.FC<StakeTabProps> = ({
 };
 
 export default StakeTab;
+const apiPath = {
+  delegation: "delegation-history",
+  stakeKey: "stake-history",
+  withdrawal: "withdrawal-history",
+  instantaneous: "instantaneous-rewards",
+};
