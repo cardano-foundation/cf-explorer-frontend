@@ -43,7 +43,7 @@ import {
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
-import { routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import { formatCurrency, getShortHash } from "../../../commons/utils/helper";
 import axios from "axios";
 import moment from "moment";
@@ -90,7 +90,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
       <ViewDetailDrawer anchor="right" open={!!tokenId} hideBackdrop variant="permanent">
         <ViewDetailContainer>
           <ViewDetailScroll>
-            <StyledViewMore tooltipTitle="View Detail" to={routers.TOKEN_DETAIL.replace(":tokenId", `${tokenId}`)} />
+            <StyledViewMore tooltipTitle="View Detail" to={details.token(tokenId)} />
             <CustomTooltip placement="top" title="Close">
               <CloseButton onClick={handleClose}>
                 <CgClose />
@@ -149,7 +149,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
             })}
           </ViewDetailScroll>
         </ViewDetailContainer>
-        <ViewMoreButton to={routers.TOKEN_DETAIL.replace(":tokenId", `${tokenId}`)} />
+        <ViewMoreButton to={details.token(tokenId)} />
       </ViewDetailDrawer>
     );
 
@@ -157,7 +157,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
     <ViewDetailDrawer anchor="right" open={!!tokenId} hideBackdrop variant="permanent">
       <ViewDetailContainer>
         <ViewDetailScroll>
-          <StyledViewMore tooltipTitle="View Detail" to={routers.TOKEN_DETAIL.replace(":tokenId", `${tokenId}`)} />
+          <StyledViewMore tooltipTitle="View Detail" to={details.token(tokenId)} />
           <CustomTooltip placement="top" title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
@@ -169,7 +169,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                 <TokenTitleIcon src={PolicyWhiteIcon} alt="policy" />
                 <TokenTitle>Policy Script</TokenTitle>
               </TokenHeader>
-              <ViewMetaData to={routers.TOKEN_DETAIL.replace(":tokenId", `${tokenId}`)}>See Policy script</ViewMetaData>
+              <ViewMetaData to={details.token(tokenId)}>See Policy script</ViewMetaData>
             </TokenHeaderContainer>
             {data.displayName || tokenMetadata.logo ? (
               <TokenMetaData>
@@ -209,9 +209,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
               </DetailLabel>
               <DetailValue>
                 <CustomTooltip placement="top" title={tokenId}>
-                  <StyledLink to={routers.TOKEN_DETAIL.replace(":tokenId", `${tokenId}`)}>
-                    {getShortHash(tokenId || "")}
-                  </StyledLink>
+                  <StyledLink to={details.token(tokenId)}>{getShortHash(tokenId || "")}</StyledLink>
                 </CustomTooltip>
                 <DetailCopy text={tokenId} />
               </DetailValue>
@@ -248,7 +246,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
             </DetailsInfoItem>
           </Group>
           <Group>
-            <DetailLink to={routers.TOKEN_DETAIL.replace(":tokenId", `${tokenId}`)}>
+            <DetailLink to={details.token(tokenId)}>
               <DetailLabel>
                 <DetailLinkIcon>
                   <CgArrowsExchange />
@@ -264,7 +262,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
           </Group>
         </ViewDetailScroll>
       </ViewDetailContainer>
-      <ViewMoreButton to={routers.TOKEN_DETAIL.replace(":tokenId", `${tokenId}`)} />
+      <ViewMoreButton to={details.token(tokenId)} />
     </ViewDetailDrawer>
   );
 };

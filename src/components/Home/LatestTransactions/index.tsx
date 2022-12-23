@@ -3,7 +3,7 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { BlankBlueIcon, AIcon } from "../../../commons/resources";
-import { routers } from "../../../commons/routers";
+import { details, routers } from "../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import ViewAllButton from "../../commons/ViewAllButton";
@@ -14,7 +14,7 @@ import {
   ItemDetail,
   ItemHeader,
   PriceImage,
-  PriveValue, 
+  PriveValue,
   Title,
   TransactionContainer,
   BlockNo,
@@ -28,7 +28,7 @@ const LatestTransactions: React.FC = () => {
   return (
     <TransactionContainer>
       <Header>
-        <Title>Latest Transactions</Title> 
+        <Title>Latest Transactions</Title>
         <ViewAllButton to={routers.TRANSACTION_LIST} />
       </Header>
       {
@@ -58,7 +58,7 @@ const LatestTransactions: React.FC = () => {
                     <Item
                       onClick={e =>
                         handleClicktWithoutAnchor(e, () =>
-                          history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`))
+                          history.push(details.transaction(hash))
                         )
                       }
                     >
@@ -70,14 +70,14 @@ const LatestTransactions: React.FC = () => {
                         <p>
                           <small>Transaction hash: </small>
                           <CustomTooltip placement="top" title={hash}>
-                            <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${hash}`)}>
+                            <Link to={details.transaction(hash)}>
                               <Hash>{getShortHash(hash)}</Hash>
                             </Link>
                           </CustomTooltip>
                         </p>
                         <p>
                           <small>Block: </small>
-                          <Link to={routers.BLOCK_DETAIL.replace(":blockId", `${blockNo}`)}>
+                          <Link to={details.block(blockNo)}>
                             <BlockNo>{blockNo}</BlockNo>
                           </Link>
                         </p>
@@ -86,7 +86,7 @@ const LatestTransactions: React.FC = () => {
                             <p key={add}>
                               <small>From: </small>
                               <CustomTooltip placement="top" title={add}>
-                                <Link to={routers.ADDRESS_DETAIL.replace(":address", `${add}`)}>
+                                <Link to={details.address(add)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
                                   <BlankImage src={BlankBlueIcon} alt="blank blue" />
                                 </Link>
@@ -99,7 +99,7 @@ const LatestTransactions: React.FC = () => {
                             <p key={add}>
                               <small>To: </small>
                               <CustomTooltip placement="top" title={add}>
-                                <Link to={routers.ADDRESS_DETAIL.replace(":address", `${add}`)}>
+                                <Link to={details.address(add)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
                                   <BlankImage src={BlankBlueIcon} alt="blank blue" />
                                 </Link>
@@ -113,7 +113,7 @@ const LatestTransactions: React.FC = () => {
                 );
               })}
         </Grid>
-      } 
+      }
     </TransactionContainer>
   );
 };

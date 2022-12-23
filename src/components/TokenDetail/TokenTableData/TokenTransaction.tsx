@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { parse, stringify } from "qs";
 import moment from "moment";
 import useFetchList from "../../../commons/hooks/useFetchList";
-import { routers } from "../../../commons/routers";
+import { details, routers } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
 import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
@@ -64,9 +64,9 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       minWidth: "200px",
       render: r => (
         <>
-          <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>{r.blockNo}</StyledLink>
+          <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
           <br />
-          <StyledLink to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epochNo}`)}>{r.epochNo}</StyledLink>/
+          <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
           <SmallText>{r.slot} </SmallText>
         </>
       ),
@@ -82,13 +82,13 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
               <Label>Input: </Label>
               <div>
                 <CustomTooltip title={r.addressesInput[0]} placement="top">
-                  <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${r.addressesInput[0]}`)}>
+                  <StyledLink to={details.address(r.addressesInput[0])}>
                     {getShortWallet(r.addressesInput[0])}
                   </StyledLink>
                 </CustomTooltip>
                 <br />
                 {r.addressesInput.length > 1 && (
-                  <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>...</StyledLink>
+                  <StyledLink to={details.transaction(r.hash)}>...</StyledLink>
                 )}
               </div>
             </Flex>
@@ -96,13 +96,13 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
               <Label>Output: </Label>
               <div>
                 <CustomTooltip title={r.addressesOutput[0]} placement="top">
-                  <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${r.addressesOutput[0]}`)}>
+                  <StyledLink to={details.address(r.addressesOutput[0])}>
                     {getShortWallet(r.addressesOutput[0])}
                   </StyledLink>
                 </CustomTooltip>
                 <br />
                 {r.addressesOutput.length > 1 && (
-                  <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>...</StyledLink>
+                  <StyledLink to={details.transaction(r.hash)}>...</StyledLink>
                 )}
               </div>
             </Flex>
@@ -141,7 +141,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       total={{ count: total, title: "Total Transactions" }}
       loading={transactionsLoading}
       initialized={initialized}
-      onClickRow={(_, r: Transactions) => history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`))}
+      onClickRow={(_, r: Transactions) => history.push(details.transaction(r.hash))}
       pagination={{
         onChange: (page, size) => {
           setQuery({ page, size });

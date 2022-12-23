@@ -5,7 +5,7 @@ import { stringify } from "qs";
 import Card from "../../commons/Card";
 import Table, { Column } from "../../commons/Table";
 import { formatADA, getShortWallet } from "../../../commons/utils/helper";
-import { routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
 
 import { StyledAddress, StyledLink, StyledOutput, StyledColorBlueDard, StyledContainer } from "./styles";
@@ -62,7 +62,9 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
         <>
           Address:
           <CustomTooltip placement="top" title={r.slotLeader}>
-            <StyledAddress to={routers.ADDRESS_DETAIL.replace(":address", `${r.slotLeader}`)}>{getShortWallet(r.slotLeader)}</StyledAddress>
+            <StyledAddress to={details.address(r.slotLeader)}>
+              {getShortWallet(r.slotLeader)}
+            </StyledAddress>
           </CustomTooltip>
         </>
       ),
@@ -95,7 +97,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
           columns={columns}
           data={data}
           total={{ count: total, title: "Total Blocks" }}
-          onClickRow={(_, r) => history.push(routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`))}
+          onClickRow={(_, r) => history.push(details.block(r.blockNo))}
           pagination={{
             onChange: (page, size) => {
               setQuery({ page, size });

@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import { formatADA, getShortHash } from "../../commons/utils/helper";
-import { routers } from "../../commons/routers";
+import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
 import DetailViewTransaction from "../commons/DetailView/DetailViewTransaction";
@@ -55,7 +55,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       render: r => (
         <div>
           <CustomTooltip title={r.hash} placement="top">
-            <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>
+            <StyledLink to={details.transaction(r.hash)}>
               {getShortHash(r.hash)}
             </StyledLink>
           </CustomTooltip>
@@ -66,7 +66,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       title: "Block",
       key: "block",
       minWidth: 60,
-      render: r => <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>{r.blockNo}</StyledLink>,
+      render: r => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>,
     },
     {
       title: "Fees",
@@ -95,7 +95,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
     if (width > 1023) {
       setOnDetailView(true);
       setDetailView(r.hash);
-    } else history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`));
+    } else history.push(details.transaction(r.hash));
   };
 
   const handleClose = () => {

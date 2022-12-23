@@ -23,9 +23,9 @@ export const routers = {
 };
 
 export const details = {
-  block: (blockId?: string) => routers.BLOCK_DETAIL.replace(":blockId", blockId ?? ""),
+  block: (blockId?: number) => routers.BLOCK_DETAIL.replace(":blockId", `${blockId ?? ""}`),
   transaction: (trxHash?: string) => routers.TRANSACTION_DETAIL.replace(":trxHash", trxHash ?? ""),
-  epoch: (epochId?: string) => routers.EPOCH_DETAIL.replace(":epochId", epochId ?? ""),
+  epoch: (epochId?: number) => routers.EPOCH_DETAIL.replace(":epochId", `${epochId ?? ""}`),
   delegation: (poolId?: string) => routers.DELEGATION_POOL_DETAIL.replace(":poolId", poolId ?? ""),
   story: (storyId?: string) => routers.STORY_DETAIL.replace(":storyId", storyId ?? ""),
   address: (address?: string) => routers.ADDRESS_DETAIL.replace(":address", address ?? ""),
