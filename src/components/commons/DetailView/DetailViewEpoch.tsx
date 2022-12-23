@@ -36,7 +36,7 @@ import useFetch from "../../../commons/hooks/useFetch";
 import moment from "moment";
 import { HiOutlineCube } from "react-icons/hi2";
 import { BiChevronRight } from "react-icons/bi";
-import { routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import { formatADA } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
@@ -55,7 +55,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
       <ViewDetailDrawer anchor="right" open={!!epochNo} hideBackdrop variant="permanent">
         <ViewDetailContainer>
           <ViewDetailScroll>
-            <StyledViewMore tooltipTitle="View Detail" to={routers.EPOCH_DETAIL.replace(":epochId", `${epochNo}`)} />
+            <StyledViewMore tooltipTitle="View Detail" to={details.epoch(epochNo)} />
             <CustomTooltip placement="top" title="Close">
               <CloseButton onClick={handleClose}>
                 <CgClose />
@@ -114,7 +114,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
             })}
           </ViewDetailScroll>
         </ViewDetailContainer>
-        <ViewMoreButton to={routers.EPOCH_DETAIL.replace(":epochId", `${epochNo}`)} />
+        <ViewMoreButton to={details.epoch(epochNo)} />
       </ViewDetailDrawer>
     );
 
@@ -127,7 +127,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
     <ViewDetailDrawer anchor="right" open={!!epochNo} hideBackdrop variant="permanent">
       <ViewDetailContainer>
         <ViewDetailScroll>
-          <StyledViewMore tooltipTitle="View Detail" to={routers.EPOCH_DETAIL.replace(":epochId", `${epochNo}`)} />
+          <StyledViewMore tooltipTitle="View Detail" to={details.epoch(epochNo)} />
           <CustomTooltip placement="top" title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
@@ -195,7 +195,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
             </DetailsInfoItem>
           </Group>
           <Group>
-            <DetailLink to={routers.EPOCH_DETAIL.replace(":epochId", `${epochNo}`)}>
+            <DetailLink to={details.epoch(epochNo)}>
               <DetailLabel style={{ fontSize: 18 }}>
                 <DetailLinkIcon>
                   <HiOutlineCube />
@@ -211,7 +211,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
           </Group>
         </ViewDetailScroll>
       </ViewDetailContainer>
-      <ViewMoreButton to={routers.EPOCH_DETAIL.replace(":epochId", `${epochNo}`)} />
+      <ViewMoreButton to={details.epoch(epochNo)} />
     </ViewDetailDrawer>
   );
 };

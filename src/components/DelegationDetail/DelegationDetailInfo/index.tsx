@@ -12,7 +12,7 @@ import {
   TickerIcon,
   UserIcon,
 } from "../../../commons/resources";
-import { routers } from "../../../commons/routers";
+import { details, routers } from "../../../commons/routers";
 import { formatADA, getShortWallet } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -106,7 +106,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               {data?.rewardAccount ? (
                 <>
                   <CustomTooltip placement="bottom" title={data?.rewardAccount || ""}>
-                    <Link to={routers.ADDRESS_DETAIL.replace(":address", `${data?.rewardAccount}`)}>
+                    <Link to={details.address(data?.rewardAccount )}>
                       {getShortWallet(data?.rewardAccount || "")}
                     </Link>
                   </CustomTooltip>
@@ -126,7 +126,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               {data?.ownerAccount ? (
                 <>
                   <CustomTooltip placement="bottom" title={data?.ownerAccount || ""}>
-                    <Link to={routers.ADDRESS_DETAIL.replace(":address", `${data?.ownerAccount}`)}>
+                    <Link to={details.address(data?.ownerAccount )}>
                       {getShortWallet(data?.ownerAccount || "")}
                     </Link>
                   </CustomTooltip>

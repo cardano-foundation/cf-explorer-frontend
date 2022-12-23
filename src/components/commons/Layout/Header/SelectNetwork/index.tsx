@@ -6,11 +6,11 @@ import { NETWORKS } from "../../../../../commons/utils/constants";
 import { RootState } from "../../../../../stores/types";
 import { setNetwork } from "../../../../../stores/user";
 
-const StyledSelect = styled(Select)`
+const StyledSelect = styled(Select)<{ home: number }>`
   font-family: var(--font-family-title);
-  border: 2px solid #c8cdd8;
+  border: 2px solid ${props => (props.home ? "#FFFFFF48" : "#c8cdd8")};
   background: transparent;
-  color: #344054;
+  color: ${props => (props.home ? props.theme.textColorReverse : "#344054")};
   border-radius: 8px;
   & > div {
     padding: 6.5px 12px;
@@ -22,12 +22,16 @@ const StyledSelect = styled(Select)`
     border: none !important;
   }
   & > svg {
-    color: #344054;
+    color: ${props => (props.home ? props.theme.textColorReverse : "#344054")};
     font-size: 20px;
   }
 `;
 
-const SelectNetwork: React.FC = () => {
+interface Props {
+  home?: boolean;
+}
+
+const SelectNetwork: React.FC<Props> = props => {
   const { network } = useSelector(({ user }: RootState) => user);
 
   const handleChange = (e: SelectChangeEvent<unknown>) => {
@@ -35,10 +39,10 @@ const SelectNetwork: React.FC = () => {
   };
 
   return (
-    <StyledSelect onChange={handleChange} value={network} IconComponent={BiChevronDown}>
+    <StyledSelect onChange={handleChange} value={network} IconComponent={BiChevronDown} home={props.home ? 1 : 0}>
       {Object.entries(NETWORKS).map(([value, name]) => (
         <MenuItem key={value} value={value}>
-          {value === "testnet" ? "Testnet" : name}
+          {name}
         </MenuItem>
       ))}
     </StyledSelect>

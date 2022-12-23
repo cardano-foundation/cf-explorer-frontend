@@ -22,7 +22,7 @@ const Header: React.FC<RouteComponentProps> = props => {
           <HeaderSearch home={home} />
         </HeaderMain>
         <HeaderTop fixed={onDetailView ? 1 : 0}>
-          <SelectNetwork />
+          <SelectNetwork home={home}/>
           <ConnectWallet />
         </HeaderTop>
       </HeaderBox>

@@ -87,7 +87,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
   }
 
   if (!data) return <NotFound />;
-  const { header, blockDetail, confirmation, transactionFees, totalOutput, progress } = data;
+  const { header, blockDetail } = data;
 
   return (
     <HeaderDetailContainer>

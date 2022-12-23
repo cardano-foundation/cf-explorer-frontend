@@ -7,7 +7,7 @@ import useFetchList from "../../commons/hooks/useFetchList";
 import { AIcon } from "../../commons/resources";
 import { EPOCH_STATUS } from "../../commons/utils/constants";
 import { formatADA } from "../../commons/utils/helper";
-import { routers } from "../../commons/routers";
+import { details } from "../../commons/routers";
 
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
@@ -86,7 +86,7 @@ const Epoch: React.FC = () => {
     if (width > 1023) {
       setOnDetailView(true);
       setDetailView(r.no);
-    } else history.push(routers.EPOCH_DETAIL.replace(":epochId", `${r.no}`));
+    } else history.push(details.epoch(r.no));
   };
 
   const handleClose = () => {

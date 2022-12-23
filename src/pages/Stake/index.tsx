@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useWindowSize } from "react-use";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { routers } from "../../commons/routers";
+import { details, routers } from "../../commons/routers";
 import { getShortHash } from "../../commons/utils/helper";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
@@ -35,9 +35,9 @@ const colums: Column<IStakeKey>[] = [
     key: "block",
     render: r => (
       <>
-        <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${r.block}`)}>{r.block}</StyledLink>
+        <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
         <div style={{ display: "flex", marginTop: "6px" }}>
-          <StyledLink to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epoch}`)}>{r.epoch}</StyledLink>/{r.slotNo}
+          <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/{r.slotNo}
         </div>
       </>
     ),
@@ -59,7 +59,7 @@ const colums: Column<IStakeKey>[] = [
       if (r.poolNames.length === 1)
         return (
           <CustomTooltip title={r.poolNames[0]} placement="top">
-            <StyledLink to={routers.STAKE_DETAIL.replace(":stakeId", `${r.stakeKey}`)}>
+            <StyledLink to={details.stake(r.stakeKey)}>
               {getShortHash(r.poolNames[0])}
             </StyledLink>
           </CustomTooltip>
@@ -67,11 +67,11 @@ const colums: Column<IStakeKey>[] = [
       return (
         <>
           <CustomTooltip title={r.poolNames[0]} placement="top">
-            <StyledLink to={routers.STAKE_DETAIL.replace(":stakeId", `${r.stakeKey}`)}>
+            <StyledLink to={details.stake(r.stakeKey)}>
               {getShortHash(r.poolNames[0])}
             </StyledLink>
           </CustomTooltip>
-          <StyledLink to={routers.STAKE_DETAIL.replace(":stakeId", `${r.stakeKey}`)}>...</StyledLink>
+          <StyledLink to={details.stake(r.stakeKey)}>...</StyledLink>
         </>
       );
     },
