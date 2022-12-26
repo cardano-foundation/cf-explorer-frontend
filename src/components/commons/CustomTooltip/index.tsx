@@ -10,8 +10,8 @@ export const CustomTooltip = (props: TooltipProps) => {
         arrow: {
           ...(componentsProps?.arrow || {}),
           style: {
-            fontSize: "var(--font-size-text-large)",
-            color: "#222222",
+            fontSize: "var(--font-size-text-small)",
+            color: "rgba(0, 0, 0)",
             ...(componentsProps?.arrow?.style || {}),
           },
         },
@@ -20,10 +20,11 @@ export const CustomTooltip = (props: TooltipProps) => {
           style: {
             maxWidth: 400,
             fontSize: "var(--font-size-text-small)",
-            padding: "10px 15px",
+            padding: "6px 8px",
             lineHeight: 1.5,
-            backgroundColor: "#222222",
-            opacity: 0.94,
+            backgroundColor: "rgba(0, 0, 0 )",
+            opacity: 0.78,
+            borderRadius: 2,
             ...(componentsProps?.transition?.style || {}),
           },
         },
