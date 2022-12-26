@@ -1,8 +1,7 @@
 import moment from "moment";
 import { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
-
-import { routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import { formatADA, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -13,8 +12,7 @@ const DelegationEpochList = ({
   data,
   loading,
   total,
-  initialized,
-  scrollEffect,
+  initialized, 
 }: {
   data: DelegationEpoch[] | null;
   loading: boolean;
@@ -33,14 +31,14 @@ const DelegationEpochList = ({
       title: "Epoch",
       key: "epoch",
       minWidth: "120px",
-      render: r => <StyledLink to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epoch}`)}>{r.epoch}</StyledLink>,
+      render: r => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>,
     },
     {
       title: "Blocks",
       key: "block",
       minWidth: "120px",
       render: data => (
-        <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${data.block}`)}>
+        <StyledLink to={details.block(data.block)}>
           {numberWithCommas(data.block || 0)}
         </StyledLink>
       ),
@@ -75,7 +73,7 @@ const DelegationEpochList = ({
     <Table
       columns={columns}
       data={data || []}
-      onClickRow={(_, r) => history.push(routers.EPOCH_DETAIL.replace(":epochId", `${r.epoch}`))}
+      onClickRow={(_, r) => history.push(details.epoch(r.epoch))}
       total={{ count: total, title: "Total Token List" }}
       loading={loading}
       initialized={initialized}
@@ -114,7 +112,7 @@ const DelegationStakingDelegatorsList = ({
       title: "No",
       key: "no",
       render: (r, idx) => (
-        <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${r.address}`)}>{idx + 1}</StyledLink>
+        <StyledLink to={details.address(r.address)}>{idx + 1}</StyledLink>
       ),
     },
     {
@@ -125,7 +123,7 @@ const DelegationStakingDelegatorsList = ({
         data.address && (
           <div style={{ display: "flex", alignItems: "center" }}>
             <CustomTooltip placement="bottom" title={data.address || ""}>
-              <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${data.address}`)}>
+              <StyledLink to={details.address(data.address)}>
                 {getShortWallet(data.address || "")}
               </StyledLink>
             </CustomTooltip>
@@ -167,7 +165,7 @@ const DelegationStakingDelegatorsList = ({
         page: query.page ? +query.page - 1 : 0,
         total: total,
       }}
-      onClickRow={(e, r) => history.push(routers.ADDRESS_DETAIL.replace(":address", `${r.address}`))}
+      onClickRow={(e, r) => history.push(details.address(r.address))}
     />
   );
 };

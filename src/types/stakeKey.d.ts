@@ -23,3 +23,42 @@ interface IStakeKeyDetail {
     poolId: string;
   };
 }
+
+type TabStakeDetail = "delegation" | "stakeKey" | "withdrawal" | "instantaneous";
+
+interface DelegationHistory {
+  time: string;
+  epochNo: number;
+  blockNo: number;
+  epochSlotNo: number;
+  txHash: string;
+  poolId: string;
+  poolData: string;
+}
+
+interface Instantaneous {
+  time: string;
+  epochNo: number;
+  blockNo: number;
+  amount: string;
+  epochSlotNo: number;
+  txHash: string;
+}
+
+interface StakeHistory {
+  time: string;
+  epochNo: number;
+  blockNo: number;
+  epochSlotNo: number;
+  txHash: string;
+  action: "Registered" | "De Registered";
+}
+
+interface WithdrawalHistory {
+  time: string;
+  epochNo: number;
+  blockNo: number;
+  amount: string;
+  epochSlotNo: number;
+  txHash: string;
+}

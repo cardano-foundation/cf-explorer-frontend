@@ -9,7 +9,7 @@ import {
   MarketCapIcon,
   TotalADAStakeIcon,
 } from "../../../commons/resources";
-import { routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { formatCurrency } from "../../../commons/utils/helper";
 import { Content, Item, ItemIcon, ItemSkeleton, Name, Small, StatisticContainer, Title, Value } from "./style";
@@ -70,7 +70,7 @@ const HomeStatistic: React.FC<Props> = () => {
         {loadingEpoch ? (
           <SkeletonBox />
         ) : (
-          <Link to={routers.EPOCH_DETAIL.replace(":epochId", `${currentEpoch?.no}`)}>
+          <Link to={details.epoch(currentEpoch?.no)}>
             <Item>
               <Content>
                 <ItemIcon src={CurentEpochIcon} alt="Curent Epoch" />

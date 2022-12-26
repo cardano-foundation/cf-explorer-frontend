@@ -9,7 +9,7 @@ import DelegationDetailInfo from "../../components/DelegationDetail/DelegationDe
 import DelegationDetailOverview from "../../components/DelegationDetail/DelegationDetailOverview";
 import DelegationDetailChart from "../../components/DelegationDetail/DelegationDetailChart";
 
-import { OptionSelect, SelectComponent, Title } from "./styles";
+import { OptionSelect, StyledSelect, Title } from "./styles";
 import {
   DelegationEpochList,
   DelegationStakingDelegatorsList,
@@ -18,6 +18,10 @@ import useFetchList from "../../commons/hooks/useFetchList";
 
 interface IDelegationDetail {}
 
+const titles = {
+  epochs: "Epoch",
+  delegators: "Staking Delegators",
+};
 const DelegationDetail: React.FC<IDelegationDetail> = () => {
   const { poolId } = useParams<{ poolId: string }>();
   const { search } = useLocation();
@@ -41,14 +45,10 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
 
   const { data, loading } = useFetch<DelegationOverview>(`/delegation/pool-detail-header/${poolId}`);
   const {
-    data: analyticsData,
-    loading: loadingAnalytics,
-    initialized,
-  } = useFetch<AnalyticsDelegators>(`/delegation/pool-detail-analytics?poolView=${poolId}`);
-  const {
     data: dataTable,
     loading: loadingTable,
     total,
+    initialized,
   } = useFetchList<DelegationEpoch | StakingDelegators>(
     `/delegation/pool-detail-${tab}?poolView=${poolId}&page=${query.page || 0}&size=${query.size || 10}`
   );
@@ -86,32 +86,25 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
     <Container>
       <DelegationDetailInfo data={data} loading={loading} poolId={poolId} />
       <DelegationDetailOverview data={data} loading={loading} />
-      <DelegationDetailChart data={analyticsData} loading={loadingAnalytics} />
+      <DelegationDetailChart poolId={poolId} />
 
-      <Container>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <Title>{title[tab]}</Title>
-          <SelectComponent
-            value={tab || "epochs"}
-            onChange={e => {
-              setTab(e.target.value as typeof tab);
-              setQuery({ page: 1, size: 10 });
-              scrollEffect();
-            }}
-          >
-            <OptionSelect value={"epochs"}>Epochs</OptionSelect>
-            <OptionSelect value={"delegators"}>Staking Delegators</OptionSelect>
-          </SelectComponent>
-        </div>
-        {render()}
-      </Container>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <Title>{titles[tab]}</Title>
+        <StyledSelect
+          value={tab}
+          onChange={e => {
+            setTab(e.target.value as typeof tab);
+            setQuery({ page: 1, size: 10 });
+            scrollEffect();
+          }}
+        >
+          <OptionSelect value="epochs">Epoch</OptionSelect>
+          <OptionSelect value="delegators">Staking Delegators</OptionSelect>
+        </StyledSelect>
+      </div>
+      {render()}
     </Container>
   );
 };
 
 export default DelegationDetail;
-
-const title = {
-  epochs: "Epochs",
-  delegators: "Staking Delegators",
-};

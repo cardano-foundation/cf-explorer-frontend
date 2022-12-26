@@ -1,13 +1,11 @@
 import React from "react";
-import { Box, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
+import { Grid, LinearProgress, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
-
 import styles from "./index.module.scss";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import blockImg from "../../../commons/resources/images/block.png";
 import slotImg from "../../../commons/resources/images/slot.png";
-import Card from "../Card";
-import { routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { Policy } from "../../../commons/resources";
 import { numberWithCommas } from "../../../commons/utils/helper";
@@ -90,10 +88,7 @@ const DetailCard: React.FC<DetailCardProps> = ({
                 <img className={styles.img} src={blockImg} alt="Block Icon" />
                 <div>
                   <div className={styles.title}>Block</div>
-                  <Link
-                    className={`${styles.fwBold} ${styles.link}`}
-                    to={routers.BLOCK_DETAIL.replace(":blockId", `${progress.block}`)}
-                  >
+                  <Link className={`${styles.fwBold} ${styles.link}`} to={details.block(progress.block)}>
                     {progress.block}
                   </Link>
                 </div>
@@ -134,7 +129,7 @@ const DetailCard: React.FC<DetailCardProps> = ({
             );
           })}
           <div className={styles.fullWidth}>
-            <StyledLinearProgress variant="determinate" value={+delegationPools.satulation} />
+            <StyledLinearProgress variant="determinate" value={+delegationPools.satulation || 0} />
           </div>
         </div>
       );

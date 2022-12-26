@@ -35,7 +35,7 @@ import {
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
-import { routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import { formatADA } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
@@ -55,14 +55,14 @@ const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
 
 const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
   const { stakeId, handleClose } = props;
-  const { data } = useFetch<IStakeKeyDetail>(stakeId ? `stakeKey/${stakeId}` : ``);
+  const { data } = useFetch<IStakeKeyDetail>(stakeId ? `stake/address/${stakeId}` : ``);
 
   if (!data)
     return (
       <ViewDetailDrawer anchor="right" open={!!stakeId} hideBackdrop variant="permanent">
         <ViewDetailContainer>
           <ViewDetailScroll>
-            <StyledViewMore tooltipTitle="View Detail" to={routers.STAKE_DETAIL.replace(":stakeId", `${stakeId}`)} />
+            <StyledViewMore tooltipTitle="View Detail" to={details.stake(stakeId)} />
             <CustomTooltip placement="top" title="Close">
               <CloseButton onClick={handleClose}>
                 <CgClose />
@@ -121,7 +121,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
             })}
           </ViewDetailScroll>
         </ViewDetailContainer>
-        <ViewMoreButton to={routers.STAKE_DETAIL.replace(":stakeId", `${stakeId}`)} />
+        <ViewMoreButton to={details.stake(stakeId)} />
       </ViewDetailDrawer>
     );
 
@@ -129,14 +129,14 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
     <ViewDetailDrawer anchor="right" open={!!stakeId} hideBackdrop variant="permanent">
       <ViewDetailContainer>
         <ViewDetailScroll>
-          <StyledViewMore tooltipTitle="View Detail" to={routers.STAKE_DETAIL.replace(":stakeId", `${stakeId}`)} />
+          <StyledViewMore tooltipTitle="View Detail" to={details.stake(stakeId)} />
           <CustomTooltip placement="top" title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
           </CustomTooltip>
           <StakeKeyHeader>
-            <StakeKeyLink to={routers.STAKE_DETAIL.replace(":stakeId", `${stakeId}`)}>{stakeId}</StakeKeyLink>
+            <StakeKeyLink to={details.stake(stakeId)}>{stakeId}</StakeKeyLink>
             <StakeKeyCopyButton text={stakeId} />
           </StakeKeyHeader>
           <Group>
@@ -190,7 +190,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
           {tabs.map(({ key, label, icon }) => {
             return (
               <Group key={key}>
-                <DetailLink to={routers.STAKE_DETAIL.replace(":stakeId", `${stakeId}`)}>
+                <DetailLink to={details.stake(stakeId)}>
                   <DetailLabel>
                     <DetailLinkIcon>{icon}</DetailLinkIcon>
                     <DetailLinkName>{label}</DetailLinkName>
@@ -206,7 +206,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
           })}
         </ViewDetailScroll>
       </ViewDetailContainer>
-      <ViewMoreButton to={routers.STAKE_DETAIL.replace(":stakeId", `${stakeId}`)} />
+      <ViewMoreButton to={details.stake(stakeId)} />
     </ViewDetailDrawer>
   );
 };

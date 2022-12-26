@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TablePagination, Skeleton, Box } from "@mui/material";
 
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
@@ -143,12 +143,15 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
 
   return (
     <TFooter>
-      {total && (
+      {total ? (
         <Total>
           {total.title}: <TotalNumber>{numberWithCommas(total.count)}</TotalNumber>
         </Total>
+      ) : (
+        ""
       )}
-      {total && total.count > 10 && pagination && (
+      <Box />
+      {pagination?.total && pagination.total > 10 ? (
         <TablePagination
           component="div"
           count={pagination.total || 0}
@@ -157,7 +160,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          labelDisplayedRows={props => renderLabelDisplayedRows()}
+          labelDisplayedRows={renderLabelDisplayedRows}
           sx={{
             ".MuiToolbar-root": {
               alignItems: "baseline",
@@ -170,6 +173,8 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
             },
           }}
         />
+      ) : (
+        ""
       )}
     </TFooter>
   );

@@ -37,7 +37,7 @@ import {
 import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
-import { routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import moment from "moment";
 import ViewMoreButton from "../ViewMoreButton";
@@ -57,7 +57,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
       <ViewDetailDrawer anchor="right" open={!!blockNo} hideBackdrop variant="permanent">
         <ViewDetailContainer>
           <ViewDetailScroll>
-            <StyledViewMore tooltipTitle="View Detail" to={routers.BLOCK_DETAIL.replace(":blockId", `${blockNo}`)} />
+            <StyledViewMore tooltipTitle="View Detail" to={details.block(blockNo)} />
             <CustomTooltip placement="top" title="Close">
               <CloseButton onClick={handleClose}>
                 <CgClose />
@@ -116,7 +116,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
             })}
           </ViewDetailScroll>
         </ViewDetailContainer>
-        <ViewMoreButton to={routers.BLOCK_DETAIL.replace(":blockId", `${blockNo}`)} />
+        <ViewMoreButton to={details.block(blockNo)} />
       </ViewDetailDrawer>
     );
 
@@ -124,7 +124,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
     <ViewDetailDrawer anchor="right" open={!!blockNo} hideBackdrop variant="permanent">
       <ViewDetailContainer>
         <ViewDetailScroll>
-          <StyledViewMore tooltipTitle="View Detail" to={routers.BLOCK_DETAIL.replace(":blockId", `${blockNo}`)} />
+          <StyledViewMore tooltipTitle="View Detail" to={details.block(blockNo)} />
           <CustomTooltip placement="top" title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
@@ -166,7 +166,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               </DetailLabel>
               <DetailValue>
                 <CustomTooltip placement="top" title={data.hash}>
-                  <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${blockNo}`)}>
+                  <StyledLink to={details.block(blockNo)}>
                     {getShortHash(data.hash)}
                   </StyledLink>
                 </CustomTooltip>
@@ -214,7 +214,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               </DetailLabel>
               <DetailValue>
                 <CustomTooltip placement="top" title={data.slotLeader}>
-                  <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${data.slotLeader}`)}>
+                  <StyledLink to={details.address(data.slotLeader)}>
                     {getShortWallet(data.slotLeader)}
                   </StyledLink>
                 </CustomTooltip>
@@ -223,7 +223,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
             </DetailsInfoItem>
           </Group>
           <Group>
-            <DetailLink to={routers.BLOCK_DETAIL.replace(":blockId", `${blockNo}`)}>
+            <DetailLink to={details.block(blockNo)}>
               <DetailLabel>
                 <DetailLinkIcon>
                   <CgArrowsExchange />
@@ -239,7 +239,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
           </Group>
         </ViewDetailScroll>
       </ViewDetailContainer>
-      <ViewMoreButton to={routers.BLOCK_DETAIL.replace(":blockId", `${blockNo}`)} />
+      <ViewMoreButton to={details.block(blockNo)} />
     </ViewDetailDrawer>
   );
 };

@@ -1,4 +1,4 @@
-import { Container, styled, Tab } from "@mui/material";
+import { Container, styled, Tab, Tabs } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledLink = styled(Link)`
@@ -11,15 +11,24 @@ export const RegistrationContainer = styled(Container)`
   text-align: left;
 `;
 
+export const StyledTabs = styled(Tabs)`
+  .MuiTabs-flexContainer {
+    gap: 50px;
+    @media screen and (max-width: 1023px) {
+      gap: 30px;
+    }
+  }
+`;
+
 export const StyledTab = styled(Tab)`
   color: ${props => props.theme.textColorPale};
+  padding: 0;
   &.Mui-selected {
     color: ${props => props.theme.textColor};
   }
 `;
 
 export const TabLabel = styled("h3")`
-  margin: 0;
   text-transform: none;
   color: inherit;
 `;

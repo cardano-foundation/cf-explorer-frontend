@@ -19,5 +19,19 @@ export const routers = {
   STAKE_DETAIL: "/stake/:stakeId",
   CONTRACT_LIST: "/contracts",
   CONTRACT_DETAIL: "/contracts/:address",
+  NFT_LIST: "/nfts",
+  NFT_DETAIL: "/nft/:nftId",
   NOT_FOUND: "/*",
+};
+
+export const details = {
+  block: (blockId?: number) => routers.BLOCK_DETAIL.replace(":blockId", `${blockId ?? ""}`),
+  transaction: (trxHash?: string) => routers.TRANSACTION_DETAIL.replace(":trxHash", trxHash ?? ""),
+  epoch: (epochId?: number) => routers.EPOCH_DETAIL.replace(":epochId", `${epochId ?? ""}`),
+  delegation: (poolId?: string) => routers.DELEGATION_POOL_DETAIL.replace(":poolId", poolId ?? ""),
+  story: (storyId?: string) => routers.STORY_DETAIL.replace(":storyId", storyId ?? ""),
+  address: (address?: string) => routers.ADDRESS_DETAIL.replace(":address", address ?? ""),
+  token: (tokenId?: string) => routers.TOKEN_DETAIL.replace(":tokenId", tokenId ?? ""),
+  stake: (stakeId?: string) => routers.STAKE_DETAIL.replace(":stakeId", stakeId ?? ""),
+  nft: (nftId?: string) => routers.NFT_DETAIL.replace(":nftId", nftId ?? ""),
 };

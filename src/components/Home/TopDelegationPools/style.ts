@@ -54,7 +54,7 @@ export const DelegateTable = styled(Table)`
       }
       td {
         cursor: pointer;
-        font-size: var(--font-size-text);
+        font-size: var(--font-size-text-small);
         border-bottom: 1px solid ${props => props.theme.borderColor};
         border-radius: 0 !important;
       }

@@ -1,4 +1,4 @@
-import { Box  } from "@mui/material";
+import { Box } from "@mui/material";
 
 import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
@@ -33,7 +33,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
     <div className={styles.item}>
       <Box display={"flex"} alignItems="center">
         <Box width={50}>
-          <img src={type === "down" ? receiveImg : sendImg} className={styles.img} alt="send icon" />
+          <img src={type === "up" ? receiveImg : sendImg} className={styles.img} alt="send icon" />
         </Box>
         <Box width={"100%"}>
           <Box display={"flex"} justifyContent="space-between" alignItems={"center"} className={styles.top}>
@@ -49,7 +49,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
             <Box display={"flex"} alignItems={"center"}>
               <Box mr={"8px"}>
                 <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
-                  {type === "down" ? `- ${formatADA(item?.amount)}` : `+ ${formatADA(item?.amount)}`}
+                  {type === "up" ? `- ${formatADA(item?.amount)}` : `+ ${formatADA(item?.amount)}`}
                 </span>
               </Box>
               <Box>

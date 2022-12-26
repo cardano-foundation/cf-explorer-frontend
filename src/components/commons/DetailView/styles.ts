@@ -27,18 +27,6 @@ export const ViewDetailContainer = styled(Box)`
   padding: 40px 0px 0px;
   border-top: 1px solid ${props => props.theme.colorBlack}11;
   text-align: center;
-  &::-webkit-scrollbar-thumb {
-    background: ${props => props.theme.titleColor};
-    border-radius: ${props => props.theme.borderRadius};
-    height: 20px;
-  }
-  &::-webkit-scrollbar-track {
-    border-radius: ${props => props.theme.borderRadius};
-  }
-
-  &::-webkit-scrollbar {
-    width: 10px;
-  }
 `;
 export const ViewDetailScroll = styled(Box)`
   width: 400px;
@@ -358,7 +346,7 @@ export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatu
   padding: 5px 10px;
   border-radius: 2px;
 `;
-export const ConfirmStatus = styled("small")<{ status: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
   color: ${props => {
     switch (props.status) {
       case CONFIRMATION_STATUS.MEDIUM:
