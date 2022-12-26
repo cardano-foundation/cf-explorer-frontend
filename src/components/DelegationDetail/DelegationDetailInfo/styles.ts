@@ -1,7 +1,7 @@
-import { Box, Container, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
+import { Box, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const HeaderDetailContainer = styled(Container)`
+export const HeaderDetailContainer = styled(Box)`
   text-align: left;
 `;
 
@@ -39,6 +39,7 @@ export const PoolId = styled("p")`
   margin-top: 0px;
   display: flex;
   align-items: center;
+  margin-bottom: 20px;
 `;
 
 export const PoolIdSkeleton = styled(Skeleton)`
@@ -47,13 +48,20 @@ export const PoolIdSkeleton = styled(Skeleton)`
   border-radius: 4px;
 `;
 
-export const PoolIdValue = styled("span")`
+export const PoolIdLabel = styled("small")`
   font-family: var(--font-family-text);
+  color: #344054;
+`;
+
+export const PoolIdValue = styled("small")`
+  font-family: var(--font-family-text);
+  font-weight: var(--font-weight-bold);
   color: ${props => props.theme.colorBlue};
   white-space: pre-wrap;
   display: inline-block;
   word-break: break-word;
   line-height: 1.5;
+  margin-right: 5px;
 `;
 
 export const DataContainer = styled("div")`
@@ -65,12 +73,12 @@ export const DataContainer = styled("div")`
   padding: 30px 25px;
 `;
 
-export const Item = styled(Grid)<{ isTop?: number }>`
-  padding: ${({ isTop }) => (isTop ? 0 : 20)}px 25px ${({ isTop }) => (isTop ? 20 : 0)}px;
+export const Item = styled(Grid)<{ top?: number }>`
+  padding: ${({ top }) => (top ? 0 : 20)}px 25px ${({ top }) => (top ? 20 : 0)}px;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: ${({ isTop }) => (isTop ? "1px solid rgba(0, 0, 0, 0.1)" : "none")};
+  border-bottom: ${({ top }) => (top ? "1px solid rgba(0, 0, 0, 0.1)" : "none")};
 
-  &:first-child {
+  &:first-of-type {
     border-left: 0;
     padding-left: 0;
   }
