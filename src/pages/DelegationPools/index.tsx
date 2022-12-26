@@ -1,4 +1,3 @@
-import { Container } from "@mui/material";
 import { parse, stringify } from "qs";
 import { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
@@ -8,7 +7,7 @@ import useFetch from "../../commons/hooks/useFetch";
 
 import Card from "../../components/commons/Card";
 import OverViews from "../../components/DelegationPool/DelegationOverview";
-import { Horizon, SearchContainer, StyledInput } from "./styles";
+import { Horizon, SearchContainer, StyledContainer, StyledInput } from "./styles";
 import { HeaderSearchIcon } from "../../commons/resources";
 import DelegationLists from "../../components/DelegationPool/DelegationList";
 
@@ -37,7 +36,7 @@ const Delegations: React.FC<DelegationsProps> = () => {
   });
 
   return (
-    <Container>
+    <StyledContainer>
       <Card title="Delegation Pools Explorer">
         <OverViews data={overviews} loading={overviewsLoading} />
       </Card>
@@ -61,7 +60,7 @@ const Delegations: React.FC<DelegationsProps> = () => {
         </button>
       </SearchContainer>
       <DelegationLists data={delegationLists} total={total} loading={loading} initialized={initialized} />
-    </Container>
+    </StyledContainer>
   );
 };
 
