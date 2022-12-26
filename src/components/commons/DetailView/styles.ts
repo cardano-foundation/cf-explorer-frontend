@@ -27,18 +27,6 @@ export const ViewDetailContainer = styled(Box)`
   padding: 40px 0px 0px;
   border-top: 1px solid ${props => props.theme.colorBlack}11;
   text-align: center;
-  &::-webkit-scrollbar-thumb {
-    background: ${props => props.theme.titleColor};
-    border-radius: ${props => props.theme.borderRadius};
-    height: 20px;
-  }
-  &::-webkit-scrollbar-track {
-    border-radius: ${props => props.theme.borderRadius};
-  }
-
-  &::-webkit-scrollbar {
-    width: 10px;
-  }
 `;
 export const ViewDetailScroll = styled(Box)`
   width: 400px;

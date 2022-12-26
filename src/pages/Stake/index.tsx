@@ -4,24 +4,28 @@ import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useWindowSize } from "react-use";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { details, routers } from "../../commons/routers";
+import { details } from "../../commons/routers";
 import { getShortHash } from "../../commons/utils/helper";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import DetailViewStakeKey from "../../components/commons/DetailView/DetailViewStakeKey";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
-import { ActiveButton, Header, StyledButton, StyledContainer, StyledLink } from "./styles";
+import { StyledContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
 
 interface IStake {}
 
+enum POOL_TYPE {
+  REGISTRATION = "registration",
+  DEREREGISTRATION = "de-registration",
+}
 const colums: Column<IStakeKey>[] = [
   {
     title: "Trx Hash",
     key: "trxHash",
     render: r => (
       <CustomTooltip title={r.txHash} placement="top">
-        <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
+        <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
       </CustomTooltip>
     ),
   },
@@ -47,7 +51,7 @@ const colums: Column<IStakeKey>[] = [
     key: "stakeKey",
     render: r => (
       <CustomTooltip title={r.stakeKey} placement="top">
-        <StyledLink to={routers.STAKE_DETAIL.replace(":stakeId", r.stakeKey)}>{getShortHash(r.stakeKey)}</StyledLink>
+        <StyledLink to={details.stake(r.stakeKey)}>{getShortHash(r.stakeKey)}</StyledLink>
       </CustomTooltip>
     ),
   },
@@ -59,17 +63,13 @@ const colums: Column<IStakeKey>[] = [
       if (r.poolNames.length === 1)
         return (
           <CustomTooltip title={r.poolNames[0]} placement="top">
-            <StyledLink to={details.stake(r.stakeKey)}>
-              {getShortHash(r.poolNames[0])}
-            </StyledLink>
+            <StyledLink to={details.stake(r.stakeKey)}>{getShortHash(r.poolNames[0])}</StyledLink>
           </CustomTooltip>
         );
       return (
         <>
           <CustomTooltip title={r.poolNames[0]} placement="top">
-            <StyledLink to={details.stake(r.stakeKey)}>
-              {getShortHash(r.poolNames[0])}
-            </StyledLink>
+            <StyledLink to={details.stake(r.stakeKey)}>{getShortHash(r.poolNames[0])}</StyledLink>
           </CustomTooltip>
           <StyledLink to={details.stake(r.stakeKey)}>...</StyledLink>
         </>
@@ -79,7 +79,7 @@ const colums: Column<IStakeKey>[] = [
 ];
 
 const Stake: React.FC<IStake> = () => {
-  const [stakeKey, setStakeKey] = useState<string>("registration");
+  const [poolType, setPoolType] = useState<POOL_TYPE>(POOL_TYPE.REGISTRATION);
   const [detailView, setDetailView] = useState<string | null>(null);
   const history = useHistory();
   const { search } = useLocation();
@@ -90,19 +90,21 @@ const Stake: React.FC<IStake> = () => {
     history.push({ search: stringify(query) });
   };
 
-  const { data, total, loading, initialized, currentPage, error } = useFetchList<IStakeKey>(
-    `/stake/${stakeKey === "registration" ? "" : "de-"}registration`,
-    {
-      page: query.page ? +query.page - 1 : 0,
-      size: query.size ? (query.size as string) : 10,
-    }
-  );
+  const { data, total, loading, initialized, currentPage, error } = useFetchList<IStakeKey>(`/stake/${poolType}`, {
+    page: query.page ? +query.page - 1 : 0,
+    size: query.size ? (query.size as string) : 10,
+  });
+
+  const onChangeTab = (e: React.SyntheticEvent, poolType: POOL_TYPE) => {
+    setQuery({ page: 1, size: 10 });
+    setPoolType(poolType);
+  };
 
   const openDetail = (_: any, r: IStakeKey) => {
     if (width > 1023) {
       setOnDetailView(true);
       setDetailView(r.stakeKey);
-    } else history.push(routers.STAKE_DETAIL.replace(":stakeId", r.stakeKey));
+    } else history.push(details.stake(r.stakeKey));
   };
 
   const handleClose = () => {
@@ -114,45 +116,14 @@ const Stake: React.FC<IStake> = () => {
   return (
     <StyledContainer>
       <Card>
-        <Header>
-          {stakeKey === "registration" ? (
-            <>
-              <ActiveButton
-                style={{ marginRight: 40 }}
-                onClick={() => {
-                  setStakeKey("registration");
-                }}
-              >
-                Registration
-              </ActiveButton>
-              <StyledButton
-                onClick={() => {
-                  setStakeKey("deregistration");
-                }}
-              >
-                Deregistration
-              </StyledButton>
-            </>
-          ) : (
-            <>
-              <StyledButton
-                style={{ marginRight: 40 }}
-                onClick={() => {
-                  setStakeKey("registration");
-                }}
-              >
-                Registration
-              </StyledButton>
-              <ActiveButton
-                onClick={() => {
-                  setStakeKey("deregistration");
-                }}
-              >
-                Deregistration
-              </ActiveButton>
-            </>
-          )}
-        </Header>
+        <StyledTabs
+          value={poolType}
+          onChange={onChangeTab}
+          TabIndicatorProps={{ sx: { backgroundColor: props => props.colorGreenLight, height: 4 } }}
+        >
+          <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
+          <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
+        </StyledTabs>
         <Table
           columns={colums}
           data={data || []}
