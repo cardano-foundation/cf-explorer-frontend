@@ -1,11 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import CopyButton from "../../commons/CopyButton";
-import styles from "./index.module.scss";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import { styled, Box, Skeleton } from "@mui/material";
 import { EmptyIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
+import { AddressGroup, ItemDetail, LabelItem, RowItem, TitleDetail, TokenAddress, ValueItem } from "./styles";
 
 interface DetailCardProps {
   title: string;
@@ -33,27 +32,23 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
   }
   return (
     <CardItem padding={props => props.spacing(4)}>
-      <Box className={styles.titleDetail}>{title}</Box>
-      <Box className={styles.addressGroup}>
-        <Link className={styles.address} to={routers.ADDRESS_DETAIL.replace(":address", address)}>
-          {address}
-        </Link>
+      <TitleDetail>{title}</TitleDetail>
+      <AddressGroup>
+        <TokenAddress to={routers.ADDRESS_DETAIL.replace(":address", address)}>{address}</TokenAddress>
         <CopyButton text={address} />
-      </Box>
+      </AddressGroup>
       <Box>
         {item.map((i, ii) => {
           return (
-            <Box key={ii} className={styles.itemDetail}>
+            <ItemDetail key={ii}>
               {i.title && (
-                <Box className={styles.left}>
+                <RowItem>
                   <img src={infoIcon} alt="info icon" />
-                  <Box className={styles.title}>{i.title}</Box>
-                </Box>
+                  <LabelItem>{i.title}</LabelItem>
+                </RowItem>
               )}
-              <Box className={styles.value} style={{ width: `${i.title ? "auto" : "100%"}` }}>
-                {i.value}
-              </Box>
-            </Box>
+              <ValueItem style={{ width: `${i.title ? "auto" : "100%"}` }}>{i.value}</ValueItem>
+            </ItemDetail>
           );
         })}
       </Box>
@@ -61,7 +56,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
   );
 };
 
-export default CardAddress
+export default CardAddress;
 
 const CardItem = styled(Box)(({ theme }) => ({
   background: "#fff",
