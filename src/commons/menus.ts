@@ -38,6 +38,7 @@ export const menus: Menu[] = [
       { title: "Tokens", href: "/tokens" },
       { title: "Top Delegators", href: routers.DELEGATION_POOLS },
       { title: "Top Addresses", href: "/addresses" },
+      { title: "Contracts", href: routers.CONTRACT_LIST },
     ],
   },
   {
