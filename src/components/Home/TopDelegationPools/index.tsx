@@ -89,7 +89,7 @@ const TopDelegationPools: React.FC<Props> = () => {
         loading={loading}
         initialized={initialized}
         columns={columns}
-        data={data || []}
+        data={data?.slice(0, 3) || []}
         onClickRow={(_, r: DelegationPool) =>
           history.push(routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`))
         }

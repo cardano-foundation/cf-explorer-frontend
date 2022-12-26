@@ -129,7 +129,7 @@ export const ItemTitle = styled("h5")`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
-  font-size: var(--font-size-text-x-small);
+  font-size: var(--font-size-text-small);
   line-height: 1.15;
   margin-top: 0;
   margin-bottom: 5px;
