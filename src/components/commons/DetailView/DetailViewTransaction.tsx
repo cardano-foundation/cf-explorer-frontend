@@ -1,6 +1,6 @@
 import React from "react";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
-import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import {
   CubeIcon,
   FileEditIcon,
@@ -141,6 +141,19 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
     );
   const input = data.utxOs?.inputs[0]?.address || "";
   const output = data.utxOs?.outputs[0]?.address || "";
+  const renderConfirmationTag = () => {
+    if (data?.tx?.confirmation) {
+      if (data.tx.confirmation > 9) {
+        return CONFIRMATION_STATUS.HIGH;
+      }
+      if (data.tx.confirmation <= 8) {
+        return CONFIRMATION_STATUS.MEDIUM;
+      }
+      return CONFIRMATION_STATUS.LOW;
+    }
+    return CONFIRMATION_STATUS.LOW;
+  };
+
   return (
     <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
       <ViewDetailContainer>
@@ -187,9 +200,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               </DetailLabel>
               <DetailValue>
                 <CustomTooltip placement="top" title={hash}>
-                  <StyledLink to={details.transaction(hash)}>
-                    {getShortHash(hash)}
-                  </StyledLink>
+                  <StyledLink to={details.transaction(hash)}>{getShortHash(hash)}</StyledLink>
                 </CustomTooltip>
                 <DetailCopy text={hash} />
               </DetailValue>
@@ -245,7 +256,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {data.tx.confirmation}
-                <ConfirmStatus status={"MEDIUM"}>{"MEDIUM"}</ConfirmStatus>
+                <ConfirmStatus status={renderConfirmationTag()}>{renderConfirmationTag() || "LOW"}</ConfirmStatus>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>

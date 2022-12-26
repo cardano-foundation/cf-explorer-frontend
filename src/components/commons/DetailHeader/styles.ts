@@ -90,10 +90,11 @@ export const SlotLeaderCopy = styled(CopyButton)`
 `;
 
 export const DetailsInfo = styled(Grid)`
+  padding: ${props => props.theme.spacing(3)} ${props => props.theme.spacing(2)};
   margin-top: 15px;
-  background-image: ${props => props.theme.linearGradientGreen};
+  background: #ffffff;
   border-radius: 15px;
-  color: ${props => props.theme.textColorReverse};
+  // color: ${props => props.theme.textColorReverse};
 `;
 
 export const DetailsInfoItem = styled(Grid)<{ isCenter?: number }>`
@@ -124,7 +125,7 @@ export const ProgressSkeleton = styled(Skeleton)`
 `;
 
 export const EpochNumber = styled("h3")`
-  color: ${props => props.theme.textColorReverse};
+  color: ${props => props.theme.colorBlack};
   margin: 0;
 `;
 
@@ -251,3 +252,30 @@ export const ProgressPercent = styled("h4")`
   font-weight: var(--font-weight-normal);
   margin: 0;
 `;
+
+export const CardInfoOverview = styled(Box)(({ theme }) => ({
+  padding: `${theme.spacing(3)} ${theme.spacing(5)}`,
+  backgroundColor: "#fff",
+  display: "flex",
+  textAlign: "left",
+  boxShadow: theme.shadowRaised,
+  borderRadius: theme.borderRadius,
+  marginTop: theme.spacing(5),
+  flexWrap: "wrap",
+}));
+
+export const CardItem = styled(Grid)(({ theme }) => ({
+  width: "max-content",
+  borderLeft: "1px solid rgba(0,0,0,0.1)",
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(2),
+  ":first-child": {
+    borderLeft: "none",
+  },
+}));
+
+export const ValueCard = styled(Box)(({ theme }) => ({
+  color: theme.colorBlack,
+  fontSize: "1rem",
+  fontWeight: "bold",
+}));

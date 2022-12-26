@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box, Container } from "@mui/material";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
@@ -9,7 +9,7 @@ import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { PriceWrapper, StyledColorBlueDard, StyledLink } from "./styles";
 import DetailViewBlock from "../commons/DetailView/DetailViewBlock";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useWindowSize } from "react-use";
 import { setOnDetailView } from "../../stores/user";
 import CustomTooltip from "../commons/CustomTooltip";
@@ -27,6 +27,14 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
   const [detailView, setDetailView] = useState<number | null>(null);
   const { width } = useWindowSize();
   const history = useHistory();
+  const location = useLocation();
+  const handleClose = () => {
+    setOnDetailView(false);
+    setDetailView(null);
+  };
+  useEffect(() => {
+    handleClose();
+  }, [location.pathname, location.search]);
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
   };
@@ -86,11 +94,6 @@ const BlockList: React.FC<BlockListProps> = ({ blockLists, loading, initialized,
       setOnDetailView(true);
       setDetailView(r.blockNo);
     } else history.push(details.block(r.blockNo));
-  };
-
-  const handleClose = () => {
-    setOnDetailView(false);
-    setDetailView(null);
   };
 
   const selected = blockLists?.findIndex(item => item.blockNo === detailView);
