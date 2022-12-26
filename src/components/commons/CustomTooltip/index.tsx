@@ -16,7 +16,7 @@ export const CustomTooltip = (props: TooltipProps) => {
           },
         },
         transition: {
-          ...(componentsProps?.arrow || {}),
+          ...(componentsProps?.transition || {}),
           style: {
             maxWidth: 400,
             fontSize: "var(--font-size-text-small)",
@@ -24,7 +24,7 @@ export const CustomTooltip = (props: TooltipProps) => {
             lineHeight: 1.5,
             backgroundColor: "#222222",
             opacity: 0.94,
-            ...(componentsProps?.arrow?.style || {}),
+            ...(componentsProps?.transition?.style || {}),
           },
         },
       }}

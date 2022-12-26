@@ -1,6 +1,6 @@
-import { Container, Grid, styled } from "@mui/material";
+import { Box, Grid, styled } from "@mui/material";
 
-export const StyledContainer = styled(Container)`
+export const StyledContainer = styled(Box)`
   text-align: left;
 `;
 
@@ -32,20 +32,42 @@ export const ChartContainer = styled("div")`
 `;
 
 export const GridRight = styled(Grid)`
-  height: 100%;
+  flex: 1;
+  max-height: calc(100% - 50px);
+  background: #344054;
+  border-radius: 12px;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.03);
+  padding: 0px 20px;
+  @media screen and (min-width: 540px) and (max-width: 1370px) {
+    padding: 25px 0px;
+  }
+  @media screen and (max-width: 1370px) {
+    max-height: unset;
+  }
 `;
 
-export const Item = styled("div")`
-  min-height: 120px;
-  height: 100%;
+export const Item = styled(Grid)`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: #344054;
   text-align: center;
-`;
+  padding: 25px 0px;
 
+  &:first-of-type {
+    border-bottom: 1px solid #ffffff10;
+  }
+  @media screen and (min-width: 540px) and (max-width: 1370px) {
+    padding: 0px 20px;
+    &:first-of-type {
+      border-bottom: none;
+      border-right: 1px solid #ffffff10;
+    }
+  }
+`;
+export const AnalyticsTitle = styled("h2")`
+  margin: 50px 0 15px;
+`;
 export const Title = styled("div")`
   color: var(--text-color-pale);
   font-weight: var(--font-weight-bold);

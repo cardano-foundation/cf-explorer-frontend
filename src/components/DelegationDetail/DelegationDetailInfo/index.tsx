@@ -30,6 +30,7 @@ import {
   InfoValue,
   Item,
   PoolId,
+  PoolIdLabel,
   PoolIdSkeleton,
   PoolIdValue,
   StyledGrid,
@@ -75,7 +76,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       <PoolId>
         <CustomTooltip title={poolId} placement="top">
           <Link to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${poolId}`)}>
-            <small>Pool Id: </small>
+            <PoolIdLabel>Pool Id: </PoolIdLabel>
             <PoolIdValue>{poolId}</PoolIdValue>
           </Link>
         </CustomTooltip>
@@ -83,21 +84,21 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       </PoolId>
       <DataContainer>
         <StyledGrid container>
-          <Item item xs={6} md={3} isTop={1}>
+          <Item item xs={6} md={3} top={1}>
             <StyledImg src={TickerIcon} alt="Ticker Icon" />
             <InfoTitle>
               Ticker <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
             </InfoTitle>
             <InfoValue>{data?.tickerName || ""}</InfoValue>
           </Item>
-          <Item item xs={6} md={3} isTop={1}>
+          <Item item xs={6} md={3} top={1}>
             <StyledImg src={CalendarIcon} alt="Calendar Icon" />
             <InfoTitle>
               Created date <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
             </InfoTitle>
             <InfoValue>{data?.createDate || ""}</InfoValue>
           </Item>
-          <Item item xs={6} md={3} isTop={1}>
+          <Item item xs={6} md={3} top={1}>
             <StyledImg src={RewardIcon} alt="Reward Icon" />
             <InfoTitle>
               Reward Account <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
@@ -117,7 +118,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               )}
             </InfoValue>
           </Item>
-          <Item item xs={6} md={3} isTop={1}>
+          <Item item xs={6} md={3} top={1}>
             <StyledImg src={UserIcon} alt="User Icon" />
             <InfoTitle>
               Owner Account <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
@@ -172,7 +173,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           </Item>
           <Item item xs={6} md={3}>
             <InfoValue>
-              <StyledLinearProgress variant="determinate" value={data?.saturation} />
+              <StyledLinearProgress variant="determinate" value={data?.saturation || 0} />
               <div style={{ display: "flex", justifyContent: "space-between", marginTop: "9px" }}>
                 <span style={{ fontSize: "14px", fontWeight: "400", opacity: "0.5" }}>Saturation</span>
                 <span style={{ fontSize: "16px" }}>{data?.saturation || 0}%</span>
