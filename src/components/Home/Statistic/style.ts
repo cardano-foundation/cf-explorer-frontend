@@ -26,8 +26,8 @@ export const ItemIcon = styled("img")`
   position: absolute;
   top: 15px;
   right: 20px;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 `;
 
 export const Content = styled(Box)`
@@ -35,7 +35,7 @@ export const Content = styled(Box)`
 `;
 
 export const Name = styled("h4")`
-  width: calc(100% - 70px);
+  width: calc(100% - 60px);
   margin-bottom: 0.75rem;
   color: #344054;
 `;

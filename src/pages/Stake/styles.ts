@@ -1,32 +1,31 @@
-import { styled, Container } from "@mui/material";
+import { styled, Container, Tabs, Tab } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
   padding: 30px 0 40px;
-`;
-
-export const Header = styled("div")`
   text-align: left;
 `;
 
-export const StyledButton = styled("button")`
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-family: var(--font-family-title);
-  font-size: var(--font-size-title);
-  font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.titleColor};
-  /* transition: all 3ms ease; */
-
-  &:hover {
-    color: ${props => props.theme.colorBlack};
+export const StyledTabs = styled(Tabs)`
+  .MuiTabs-flexContainer {
+    gap: 50px;
+    @media screen and (max-width: 1023px) {
+      gap: 30px;
+    }
   }
 `;
 
-export const ActiveButton = styled(StyledButton)`
-  border-bottom: 4px solid var(--color-green-light);
-  color: var(--color-black);
+export const StyledTab = styled(Tab)`
+  color: ${props => props.theme.textColorPale};
+  padding: 0;
+  &.Mui-selected {
+    color: ${props => props.theme.textColor};
+  }
+`;
+
+export const TabLabel = styled("h3")`
+  text-transform: none;
+  color: inherit;
 `;
 
 export const StyledLink = styled(Link)`
