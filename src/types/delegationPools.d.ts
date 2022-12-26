@@ -59,8 +59,8 @@ interface AnalyticsDelegators {
     lowest: number;
     dataByDays: [
       {
-        xchart: string;
-        ychart: number;
+        epochNo: number;
+        totalStake: number;
       }
     ];
   };
@@ -69,8 +69,8 @@ interface AnalyticsDelegators {
     lowest: number;
     dataByDays: [
       {
-        xchart: string;
-        ychart: number;
+        epochNo: number;
+        numberDelegator: number;
       }
     ];
   };
