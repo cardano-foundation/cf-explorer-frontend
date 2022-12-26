@@ -73,7 +73,7 @@ const AddressWalletDetail = () => {
           // }}
           options={data?.tokens || []}
           getOptionLabel={option => option.displayName}
-          noOptionsText="No Records"
+          noOptionsText="No data found"
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
             <li {...props}>
               <Box
