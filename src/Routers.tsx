@@ -16,7 +16,9 @@ import Tokens from "./pages/Token";
 import TokenDetail from "./pages/TokenDetail";
 import Stake from "./pages/Stake";
 import StakeDetail from "./pages/StakeDetail";
-import AddressWalletDetail from "./pages/AddressWalletDetail"; 
+import AddressWalletDetail from "./pages/AddressWalletDetail";
+import ContractList from "./pages/ContractList";
+import ContractDetail from "./pages/ContractDetail";
 
 const Routes: React.FC = () => {
   return (
@@ -35,6 +37,8 @@ const Routes: React.FC = () => {
       <Route path={routers.TOKEN_DETAIL} exact component={TokenDetail} />
       <Route path={routers.STAKE_LIST} exact component={Stake} />
       <Route path={routers.STAKE_DETAIL} exact component={StakeDetail} />
+      <Route path={routers.CONTRACT_LIST} exact component={ContractList} />
+      <Route path={routers.CONTRACT_DETAIL} exact component={ContractDetail} />
       <Route path={routers.ADDRESS_DETAIL} exact component={AddressWalletDetail} />
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
