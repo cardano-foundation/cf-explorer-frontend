@@ -6,7 +6,6 @@ export const HeaderContainer = styled("header")<{ home: number }>`
   position: relative;
   @media (max-width: 1023px) {
     padding-top: 78px;
-    background-image: ${props => props.theme.linearGradientGreen};
   }
 `;
 
@@ -37,9 +36,6 @@ export const HeaderBackground = styled("div")<{ home: number }>`
   background-size: cover;
   mix-blend-mode: luminosity;
   display: ${props => (props.home ? "block" : "none")};
-  @media screen and (max-width: 1023px) {
-    display: block;
-  }
 `;
 
 export const HeaderTop = styled("div")<{ fixed: number }>`

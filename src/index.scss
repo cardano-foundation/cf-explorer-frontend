@@ -94,8 +94,8 @@
   --linear-gradient-green: linear-gradient(263.55deg, #5a9c56 0%, #184c78 100%);
   --menu-item-selected-text: #353945;
   --menu-item-text: #b1b5c3;
-  --modal-background: #f5f5f5;
-  --body-background: #f5f5f5;
+  --modal-background: #f7f7f7;
+  --body-background: #f7f7f7;
   --header-background-image: url(./commons/resources/images/header-bg.png);
   --footer-background-color: #13152f;
   --footer-color: #98a2b3;
@@ -159,7 +159,7 @@ html {
     font-weight: var(--font-weight-normal);
     font-size: var(--font-size-text);
     text-align: center;
-    background-color: #f5f5f5;
+    background-color: #f7f7f7;
     color: var(--text-color);
 
     & > iframe {

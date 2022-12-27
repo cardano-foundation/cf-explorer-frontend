@@ -1,6 +1,6 @@
-import { Container, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 
-export const StyledContainer = styled(Container)`
+export const StyledContainer = styled(Box)`
   margin-top: 28px;
 `;
 

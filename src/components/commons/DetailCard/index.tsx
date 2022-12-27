@@ -129,7 +129,7 @@ const DetailCard: React.FC<DetailCardProps> = ({
             );
           })}
           <div className={styles.fullWidth}>
-            <StyledLinearProgress variant="determinate" value={+delegationPools.satulation} />
+            <StyledLinearProgress variant="determinate" value={+delegationPools.satulation || 0} />
           </div>
         </div>
       );

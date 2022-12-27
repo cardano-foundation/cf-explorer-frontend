@@ -14,6 +14,26 @@ export const Layout = styled(Box)`
     flex-direction: column;
     height: auto;
   }
+  * {
+    &::-webkit-scrollbar {
+      width: 16px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #b7b7b7;
+      border-radius: 8px;
+      border: 4px solid transparent;
+      background-clip: padding-box;
+      &:hover {
+        background: #a2a3a3; 
+        background-clip: padding-box;
+      }
+      &:active {
+        background: #667085; 
+        background-clip: padding-box;
+      }
+    }
+  }
 `;
 
 export const BackDrop = styled("div")<{ isShow: number }>`

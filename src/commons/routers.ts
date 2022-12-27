@@ -17,6 +17,8 @@ export const routers = {
   TOKEN_DETAIL: "/token/:tokenId",
   STAKE_LIST: "/stakes",
   STAKE_DETAIL: "/stake/:stakeId",
+  CONTRACT_LIST: "/contracts",
+  CONTRACT_DETAIL: "/contracts/:address",
   NFT_LIST: "/nfts",
   POLICY_DETAIL: "/policy/:policyId",
   POLICY_ASSET_HOLDER: "/policy-asset-holder/:policyId",
