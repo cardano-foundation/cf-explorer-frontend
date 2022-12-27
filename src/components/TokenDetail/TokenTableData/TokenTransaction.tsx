@@ -138,7 +138,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
     <Table
       columns={columns}
       data={transactions}
-      total={{ count: total, title: "Total Transactions" }}
+      total={{ count: total, title: "Total" }}
       loading={transactionsLoading}
       initialized={initialized}
       onClickRow={(_, r: Transactions) => history.push(details.transaction(r.hash))}
