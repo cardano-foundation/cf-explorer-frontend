@@ -80,7 +80,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
     <Table
       columns={columns}
       data={transactions}
-      total={{ count: total, title: "Total Minting" }}
+      total={{ count: total, title: "Total" }}
       loading={transactionsLoading}
       initialized={initialized}
       onClickRow={(_, r: ITokenMintingTable) => history.push(details.transaction(r.txHash))}

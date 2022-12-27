@@ -80,7 +80,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
     <Table
       columns={columns}
       data={transactions}
-      total={{ count: total, title: "Total Top Holders" }}
+      total={{ count: total, title: "Total" }}
       loading={transactionsLoading}
       initialized={initialized}
       onClickRow={(_, r: ITokenTopHolderTable) =>

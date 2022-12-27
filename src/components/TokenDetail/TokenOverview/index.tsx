@@ -3,7 +3,7 @@ import React from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { routers } from "../../../commons/routers";
 
-import { formatADA } from "../../../commons/utils/helper";
+import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import ADA from "../../../commons/resources/icons/ADA.svg";
 import rocketToken from "../../../commons/resources/images/rocketToken.svg";
@@ -24,6 +24,7 @@ import {
   TokenInfo,
   ViewMetaData,
 } from "./styles";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 interface ITokenOverview {
   data: IToken | null;
@@ -102,7 +103,11 @@ const InfoItem = ({
         </Box>
         <Box padding={props => `${props.spacing(1)} 0`}>{title}</Box>
         <Box fontSize={"1.3rem"} fontWeight="bold">
-          {title === "Total Supply" && formatADA(data?.supply)}
+          {title === "Total Supply" && (
+            <CustomTooltip title={numberWithCommas(data?.supply || 0)} placement="top">
+              <Box>{formatADA(data?.supply)}</Box>
+            </CustomTooltip>
+          )}
           {title === "Decimal" && (data?.decimals || 0)}
           {title !== "Total Supply" && title !== "Decimal" && data?.txCount}
         </Box>
