@@ -135,12 +135,6 @@ const StakeOverview = () => {
             )}
           </SlotLeaderContainer>
         </Box>
-        {/* <Box>
-          <ProgressCircle percent={80} size={140}>
-            <Box>362</Box>
-            <Box>Epoch</Box>
-          </ProgressCircle>
-        </Box> */}
       </Box>
 
       <CardInfoOverview>

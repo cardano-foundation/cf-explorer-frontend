@@ -1,19 +1,21 @@
-import { Box } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import { Box, Skeleton } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { routers } from "../../../commons/routers";
 
-import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
+import { numberWithCommas } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
-import ADA from "../../../commons/resources/icons/ADA.svg";
-import rocketToken from "../../../commons/resources/images/rocketToken.svg";
-import exchangeToken from "../../../commons/resources/images/exchangeToken.svg";
-import infoToken from "../../../commons/resources/images/infoToken.png";
+import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
+import timeIcon from "../../../commons/resources/icons/time.svg";
+import infoIcon from "../../../commons/resources/icons/info.svg";
+import slotIcon from "../../../commons/resources/icons/slot.svg";
+import exchageIcon from "../../../commons/resources/icons/Union.svg";
+import decimalIcon from "../../../commons/resources/icons/decimal.svg";
 
 import {
   BackButton,
   BackText,
-  CardInfo,
+  CardInfoOverview,
   CardItem,
   HeaderContainer,
   HeaderTitle,
@@ -21,10 +23,11 @@ import {
   SlotLeader,
   SlotLeaderContainer,
   SlotLeaderSkeleton,
-  TokenInfo,
-  ViewMetaData,
+  TitleCard,
+  ValueCard,
 } from "./styles";
-import CustomTooltip from "../../commons/CustomTooltip";
+import moment from "moment";
+import ScriptModal from "../../ScriptModal";
 
 interface ITokenOverview {
   data: IToken | null;
@@ -33,6 +36,16 @@ interface ITokenOverview {
 }
 
 const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataLoading }) => {
+  const [openModal, setOpenModal] = useState(false);
+  const [policyId, setPolicyId] = useState("");
+
+  const listItem = [
+    { title: "Total Supoly", value: numberWithCommas(data?.supply || 0), icon: slotIcon },
+    { title: "Decimal", icon: decimalIcon, value: data?.decimals || 0 },
+    { title: "Transactions", icon: exchageIcon, value: numberWithCommas(data?.txCount || 0) },
+    { title: "Created at", icon: timeIcon, value: moment(data?.createdOn).format("MM/DD/YYYY HH:mm:ss") },
+  ];
+
   return (
     <Box>
       <BackButton to={routers.TOKEN_LIST}>
@@ -53,78 +66,78 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataL
             <SlotLeader>
               <Box>{data?.fingerprint}</Box> <CopyButton text={data?.fingerprint} />
             </SlotLeader>
-            <ViewMetaData to={"/"}>See Policy script</ViewMetaData>
           </>
         )}
       </SlotLeaderContainer>
-      <CardInfo>
-        <TokenInfo>
-          <Box pr={3}>
-            <img height={"100%"} width={50} src={ADA} alt="token icon " />
-          </Box>
-          <Box>
-            <Box textAlign={"left"} fontWeight={"bold"} fontSize={"1.3rem"}>
-              {data?.displayName}
+      {loading && (
+        <Box height={150} width="100%" borderRadius={props => props.borderRadius} overflow="hidden">
+          <Skeleton height={"100%"} width="100%" variant="rectangular" />
+        </Box>
+      )}
+      {!loading && (
+        <CardInfoOverview>
+          <CardItem display={"flex"} gap={2} flex={3}>
+            <Box>
+              <img src={policyIcon} alt="" />
             </Box>
-            <Box textAlign={"left"} fontSize={"0.8rem"} pt={1} lineHeight={1.3}>
-              {""}
+            <Box display={"flex"} flexDirection="column" height={"80%"} justifyContent="space-between">
+              <Box
+                color={props => props.colorGreenLight}
+                fontWeight="bold"
+                fontFamily={'"Space Mono", monospace, sans-serif'}
+                fontSize={"1.125rem"}
+                component="button"
+                border={"none"}
+                bgcolor="transparent"
+                padding={0}
+                textAlign="left"
+                onClick={() => {
+                  setOpenModal(true);
+                  setPolicyId(data?.policy || "");
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                Policy Script
+              </Box>
+              <Box>
+                <Box display={"flex"} alignItems="center" fontWeight={"bold"}>
+                  {data?.displayName || ""}
+                  {data?.metadata && data?.metadata?.logo && (
+                    <Box
+                      component={"img"}
+                      width={30}
+                      height={30}
+                      src={`data:image/png;base64,${data.metadata.logo}`}
+                      alt="logo icon"
+                      ml={1}
+                    />
+                  )}
+                </Box>
+                <Box display={"flex"} alignItems="center" fontSize={"0.75rem"} color="rgba(0,0,0,0.5)">
+                  {data?.metadata?.description || ""}
+                </Box>
+              </Box>
             </Box>
-          </Box>
-        </TokenInfo>
-        {infoItem.map((item, idx) => (
-          <InfoItem
-            key={idx}
-            image={item.image}
-            title={item.title}
-            data={{ decimals: data?.decimals, txCount: data?.txCount, supply: data?.supply }}
-          />
-        ))}
-      </CardInfo>
+          </CardItem>
+          {listItem.map((item, idx) => (
+            <CardItem key={idx} flex={1}>
+              <Box>
+                <img src={item.icon} alt="" />
+              </Box>
+              <Box display={"flex"} alignItems="center">
+                <TitleCard my={1} mr={1}>
+                  {item.title}
+                </TitleCard>
+                <img src={infoIcon} alt="info icon" />
+              </Box>
+              <ValueCard>{item.value}</ValueCard>
+            </CardItem>
+          ))}
+        </CardInfoOverview>
+      )}
+      <ScriptModal open={openModal} onClose={() => setOpenModal(false)} policy={policyId} />
     </Box>
   );
 };
 
 export default TokenOverview;
-
-const InfoItem = ({
-  image,
-  title,
-  data,
-}: {
-  image: string;
-  title: React.ReactNode;
-  data: Pick<IToken, "decimals" | "supply" | "txCount"> | null;
-}) => {
-  return (
-    <CardItem>
-      <Box>
-        <Box>
-          <img src={image} alt="icon" />
-        </Box>
-        <Box padding={props => `${props.spacing(1)} 0`}>{title}</Box>
-        <Box fontSize={"1.3rem"} fontWeight="bold">
-          {title === "Total Supply" && (
-            <CustomTooltip title={numberWithCommas(data?.supply || 0)} placement="top">
-              <Box>{formatADA(data?.supply)}</Box>
-            </CustomTooltip>
-          )}
-          {title === "Decimal" && (data?.decimals || 0)}
-          {title !== "Total Supply" && title !== "Decimal" && data?.txCount}
-        </Box>
-      </Box>
-    </CardItem>
-  );
-};
-
-const infoItem = [
-  { image: rocketToken, title: "Total Supply" },
-  { image: rocketToken, title: "Decimal" },
-  {
-    image: exchangeToken,
-    title: (
-      <Box display={"flex"} alignItems="center">
-        <Box pr={1}>Transaction</Box> <img src={infoToken} alt="icon" />
-      </Box>
-    ),
-  },
-];

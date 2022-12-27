@@ -11,7 +11,7 @@ import WalletAddressChart from "../../components/WalletAddressChart";
 import useFetch from "../../commons/hooks/useFetch";
 import { BiChevronDown } from "react-icons/bi";
 import useFetchList from "../../commons/hooks/useFetchList";
-import TransactionList from "../../components/TransactionLists";
+import TransactionList from "../../components/TransactionListsFull";
 import { AIcon } from "../../commons/resources";
 
 import { parse } from "qs";

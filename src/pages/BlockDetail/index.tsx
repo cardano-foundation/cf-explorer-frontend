@@ -1,7 +1,7 @@
 import { useLocation, useParams } from "react-router-dom";
 import { parse } from "qs";
 
-import TransactionLists from "../../components/TransactionLists";
+import TransactionLists from "../../components/TransactionListsFull";
 import BlockOverview from "../../components/BlockDetail/BlockOverview";
 import useFetch from "../../commons/hooks/useFetch";
 import useFetchList from "../../commons/hooks/useFetchList";

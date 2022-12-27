@@ -20,6 +20,8 @@ export const routers = {
   CONTRACT_LIST: "/contracts",
   CONTRACT_DETAIL: "/contracts/:address",
   NFT_LIST: "/nfts",
+  POLICY_DETAIL: "/policy/:policyId",
+  POLICY_ASSET_HOLDER: "/policy-asset-holder/:policyId",
   NFT_DETAIL: "/nft/:nftId",
   NOT_FOUND: "/*",
 };
@@ -34,4 +36,6 @@ export const details = {
   token: (tokenId?: string) => routers.TOKEN_DETAIL.replace(":tokenId", tokenId ?? ""),
   stake: (stakeId?: string) => routers.STAKE_DETAIL.replace(":stakeId", stakeId ?? ""),
   nft: (nftId?: string) => routers.NFT_DETAIL.replace(":nftId", nftId ?? ""),
+  policyDetail: (policyId?: string) => routers.POLICY_DETAIL.replace(":policyId", policyId ?? ""),
+  policyAssetHolder: (policyId?: string) => routers.POLICY_ASSET_HOLDER.replace(":policyId", policyId ?? ""),
 };
