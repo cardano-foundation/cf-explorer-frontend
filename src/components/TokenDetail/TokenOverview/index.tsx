@@ -9,11 +9,15 @@ import ADA from "../../../commons/resources/icons/ADA.svg";
 import rocketToken from "../../../commons/resources/images/rocketToken.svg";
 import exchangeToken from "../../../commons/resources/images/exchangeToken.svg";
 import infoToken from "../../../commons/resources/images/infoToken.png";
+import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
+import timeIcon from "../../../commons/resources/icons/time.svg";
+import infoIcon from "../../../commons/resources/icons/info.svg";
 
 import {
   BackButton,
   BackText,
   CardInfo,
+  CardInfoOverview,
   CardItem,
   HeaderContainer,
   HeaderDetailContainer,
@@ -22,7 +26,9 @@ import {
   SlotLeader,
   SlotLeaderContainer,
   SlotLeaderSkeleton,
+  TitleCard,
   TokenInfo,
+  ValueCard,
   ViewMetaData,
 } from "./styles";
 
@@ -53,74 +59,61 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataL
             <SlotLeader>
               <Box>{data?.fingerprint}</Box> <CopyButton text={data?.fingerprint} />
             </SlotLeader>
-            <ViewMetaData to={"/"}>See Policy script</ViewMetaData>
           </>
         )}
       </SlotLeaderContainer>
-      <CardInfo>
-        <TokenInfo>
-          <Box pr={3}>
-            <img height={"100%"} width={50} src={ADA} alt="token icon " />
-          </Box>
+      <CardInfoOverview>
+        <CardItem display={"flex"} gap={2}>
           <Box>
-            <Box textAlign={"left"} fontWeight={"bold"} fontSize={"1.3rem"}>
-              {data?.displayName}
+            <img src={policyIcon} alt="" />
+          </Box>
+          <Box display={"flex"} flexDirection="column" height={"100%"} justifyContent="space-between">
+            <Box
+              color={props => props.colorGreenLight}
+              fontWeight="bold"
+              fontFamily={'"Space Mono", monospace, sans-serif'}
+              fontSize={"1.125rem"}
+              component="button"
+              border={"none"}
+              bgcolor="transparent"
+              padding={0}
+              textAlign="left"
+              // onClick={() => setOpenModal(true)}
+              style={{ cursor: "pointer" }}
+            >
+              Policy Script
             </Box>
-            <Box textAlign={"left"} fontSize={"0.8rem"} pt={1} lineHeight={1.3}>
-              {""}
+            <Box>
+              <Box display={"flex"} alignItems="center">
+                {data?.displayName || ""}
+                <img
+                  width={30}
+                  height={30}
+                  src={data?.metadata ? `data:image/png;base64,${data.metadata.logo}` : ""}
+                  alt="logo icon"
+                />
+              </Box>
+              <Box display={"flex"} alignItems="center">
+                {data?.metadata?.description || ""}
+              </Box>
             </Box>
           </Box>
-        </TokenInfo>
-        {infoItem.map((item, idx) => (
-          <InfoItem
-            key={idx}
-            image={item.image}
-            title={item.title}
-            data={{ decimals: data?.decimals, txCount: data?.txCount, supply: data?.supply }}
-          />
-        ))}
-      </CardInfo>
+        </CardItem>
+        <CardItem>
+          <Box>
+            <img src={timeIcon} alt="" />
+          </Box>
+          <Box display={"flex"} alignItems="center">
+            <TitleCard my={2} mr={1}>
+              Policy Asset Holders{" "}
+            </TitleCard>
+            <img src={infoIcon} alt="info icon" />
+          </Box>
+          <ValueCard>{/* <ButtonView to={details.policyAssetHolder(policyId)}>View</ButtonView> */}</ValueCard>
+        </CardItem>
+      </CardInfoOverview>
     </Box>
   );
 };
 
 export default TokenOverview;
-
-const InfoItem = ({
-  image,
-  title,
-  data,
-}: {
-  image: string;
-  title: React.ReactNode;
-  data: Pick<IToken, "decimals" | "supply" | "txCount"> | null;
-}) => {
-  return (
-    <CardItem>
-      <Box>
-        <Box>
-          <img src={image} alt="icon" />
-        </Box>
-        <Box padding={props => `${props.spacing(1)} 0`}>{title}</Box>
-        <Box fontSize={"1.3rem"} fontWeight="bold">
-          {title === "Total Supply" && formatADA(data?.supply)}
-          {title === "Decimal" && (data?.decimals || 0)}
-          {title !== "Total Supply" && title !== "Decimal" && data?.txCount}
-        </Box>
-      </Box>
-    </CardItem>
-  );
-};
-
-const infoItem = [
-  { image: rocketToken, title: "Total Supply" },
-  { image: rocketToken, title: "Decimal" },
-  {
-    image: exchangeToken,
-    title: (
-      <Box display={"flex"} alignItems="center">
-        <Box pr={1}>Transaction</Box> <img src={infoToken} alt="icon" />
-      </Box>
-    ),
-  },
-];
