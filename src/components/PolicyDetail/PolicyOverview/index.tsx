@@ -116,7 +116,7 @@ const PolicyOverview = () => {
           </ValueCard>
         </CardItem>
       </CardInfoOverview>
-      <ScriptModal open={openModal} onClose={() => setOpenModal(false)} />
+      <ScriptModal open={openModal} onClose={() => setOpenModal(false)} script={data?.policyScript} />
     </Box>
   );
 };
@@ -126,8 +126,9 @@ export default PolicyOverview;
 interface ScriptModalProps {
   open: boolean;
   onClose: () => void;
+  script?: string;
 }
-const ScriptModal: React.FC<ScriptModalProps> = ({ ...props }) => {
+const ScriptModal: React.FC<ScriptModalProps> = ({ script, ...props }) => {
   return (
     <Modal {...props}>
       <ModalContainer>
@@ -140,7 +141,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ ...props }) => {
         <ViewJson>
           <ReactJson
             name={false}
-            src={JSON.parse('{"type": "sig", "keyHash": "45d70e54f3b5e9c5a2b0cd417028197bd6f5fa5378c2f5eba896678d"}')}
+            src={JSON.parse(script || "")}
             enableClipboard={false}
             displayDataTypes={false}
             style={{ padding: 0, background: "none", color: "#344054" }}
