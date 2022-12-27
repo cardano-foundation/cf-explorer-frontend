@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Box, Modal, Skeleton } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Skeleton } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { routers, details } from "../../../commons/routers";
+import { routers } from "../../../commons/routers";
 
 import { numberWithCommas } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
@@ -11,7 +11,6 @@ import infoIcon from "../../../commons/resources/icons/info.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
 import exchageIcon from "../../../commons/resources/icons/Union.svg";
 import decimalIcon from "../../../commons/resources/icons/decimal.svg";
-import AIcon from "../../../commons/resources/icons/AIcon.svg";
 
 import {
   BackButton,

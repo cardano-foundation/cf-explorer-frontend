@@ -4,9 +4,10 @@ import { parse, stringify } from "qs";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { routers } from "../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
+import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { ADAToken } from "../../commons/Token";
-import { LabelStatus } from "./component";
+import { LabelStatus, StyledLink } from "./component";
 
 interface TableTabProps {
   type: TabStakeDetail;
@@ -38,11 +39,11 @@ const TableTab: React.FC<TableTabProps> = ({ type, data, error, initialized, loa
         key: "hash",
         minWidth: "120px",
         render: r => (
-          <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.txHash)}>
+          <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.txHash)}>
             <Box fontFamily={"Helvetica, monospace"} color={props => props.colorBlue}>
               {getShortHash(r.txHash || "")}
             </Box>
-          </Link>
+          </StyledLink>
         ),
       },
       {
@@ -80,7 +81,7 @@ const TableTab: React.FC<TableTabProps> = ({ type, data, error, initialized, loa
         render: r => (
           <Link to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`)}>
             <Box fontFamily={"Helvetica, monospace"} color={props => props.colorBlue}>
-              {getShortWallet(r.poolId || "")}
+              {getShortHash(r.poolId || "")}
             </Box>
           </Link>
         ),
@@ -89,11 +90,19 @@ const TableTab: React.FC<TableTabProps> = ({ type, data, error, initialized, loa
         title: "Pool Name",
         key: "poolName",
         minWidth: "120px",
+        maxWidth: "250px",
         render: r => (
           <Link to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`)}>
-            <Box fontFamily={"Helvetica, monospace"} color={props => props.colorBlue}>
-              {r.poolData ? `${JSON.parse(r.poolData).ticker} - ${JSON.parse(r.poolData).name}` : ""}
-            </Box>
+            <CustomTooltip title={r.poolData ? `${JSON.parse(r.poolData).ticker} - ${JSON.parse(r.poolData).name}` : ""}>
+              <Box
+                fontFamily={"Helvetica, monospace"}
+                color={props => props.colorBlue}
+                overflow={"hidden"}
+                textOverflow={"clip"}
+              >
+                {r.poolData ? `${JSON.parse(r.poolData).ticker} - ${JSON.parse(r.poolData).name}` : ""}
+              </Box>
+            </CustomTooltip>
           </Link>
         ),
       },
@@ -104,11 +113,11 @@ const TableTab: React.FC<TableTabProps> = ({ type, data, error, initialized, loa
         key: "hash",
         minWidth: "120px",
         render: r => (
-          <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.txHash)}>
+          <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.txHash)}>
             <Box fontFamily={"Helvetica, monospace"} color={props => props.colorBlue}>
               {getShortHash(r.txHash || "")}
             </Box>
-          </Link>
+          </StyledLink>
         ),
       },
       {
@@ -159,11 +168,11 @@ const TableTab: React.FC<TableTabProps> = ({ type, data, error, initialized, loa
         key: "hash",
         minWidth: "120px",
         render: r => (
-          <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.txHash)}>
+          <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.txHash)}>
             <Box fontFamily={"Helvetica, monospace"} color={props => props.colorBlue}>
               {getShortHash(r.txHash || "")}
             </Box>
-          </Link>
+          </StyledLink>
         ),
       },
       {
@@ -211,11 +220,11 @@ const TableTab: React.FC<TableTabProps> = ({ type, data, error, initialized, loa
         key: "hash",
         minWidth: "120px",
         render: r => (
-          <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.txHash)}>
+          <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.txHash)}>
             <Box fontFamily={"Helvetica, monospace"} color={props => props.colorBlue}>
               {getShortHash(r.txHash || "")}
             </Box>
-          </Link>
+          </StyledLink>
         ),
       },
       {

@@ -30,9 +30,8 @@ export const Flex = styled("div")`
   justify-content: center;
 `;
 
-export const StyledLink = styled("span")`
+export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.colorBlue} !important;
 `;
 
 export const BackButton = styled(Link)`
@@ -91,10 +90,10 @@ export const ViewMetaData = styled(Link)`
 export const LabelStatus = styled(Box)(({ theme }) => ({
   marginLeft: theme.spacing(2),
   textTransform: "uppercase",
-  padding: `${theme.spacing(1)} ${theme.spacing(3)}`,
+  padding: "1.5px 10px",
   fontFamily: '"Space Mono", monospace, sans-serif',
   fontWeight: "bold",
-  fontSize: "0.875rem",
+  fontSize: "var(--font-size-text-small)",
   borderRadius: 4,
   height: "60%",
 }));
@@ -126,6 +125,13 @@ export const TitleCard = styled(Box)(({ theme }) => ({
 }));
 export const ValueCard = styled(Box)(({ theme }) => ({
   color: theme.colorBlack,
-  fontSize: "1rem",
+  fontSize: "var(--font-size-text-small)",
   fontWeight: "bold",
+}));
+
+export const StyledFlexValue = styled(Box)(({ theme }) => ({
+  display: "flex",
+  fontSize: "var(--font-size-text-large)",
+  alignItems: "center",
+  gap: "10px",
 }));
