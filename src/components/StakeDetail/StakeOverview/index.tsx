@@ -64,7 +64,7 @@ const StakeOverview = () => {
       ),
       value: (
         <StyledFlexValue>
-          {formatADA(data?.totalStake || 0)} ADA
+          {formatADA(data?.totalStake || 0)}
           <ADAToken />
         </StyledFlexValue>
       ),
@@ -79,7 +79,7 @@ const StakeOverview = () => {
       ),
       value: (
         <StyledFlexValue>
-          {formatADA(data?.rewardAvailable || 0)} ADA
+          {formatADA(data?.rewardAvailable || 0)}
           <ADAToken />
         </StyledFlexValue>
       ),
@@ -94,7 +94,7 @@ const StakeOverview = () => {
       ),
       value: (
         <StyledFlexValue>
-          {formatADA(data?.rewardWithdrawn || 0)} ADA
+          {formatADA(data?.rewardWithdrawn || 0)}
           <ADAToken />
         </StyledFlexValue>
       ),
