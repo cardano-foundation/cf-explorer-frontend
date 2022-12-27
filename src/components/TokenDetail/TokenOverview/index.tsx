@@ -16,7 +16,6 @@ import {
   CardInfo,
   CardItem,
   HeaderContainer,
-  HeaderDetailContainer,
   HeaderTitle,
   HeaderTitleSkeleton,
   SlotLeader,
