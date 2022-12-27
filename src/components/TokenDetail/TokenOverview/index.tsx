@@ -42,8 +42,30 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataL
   const listItem = [
     { title: "Total Supoly", value: numberWithCommas(data?.supply || 0), icon: slotIcon },
     { title: "Decimal", icon: decimalIcon, value: data?.decimals || 0 },
-    { title: "Transactions", icon: exchageIcon, value: numberWithCommas(data?.txCount || 0) },
-    { title: "Created at", icon: timeIcon, value: moment(data?.createdOn).format("MM/DD/YYYY HH:mm:ss") },
+    {
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <Box component={"span"} mr={1}>
+            Transactions
+          </Box>
+          <img src={infoIcon} alt="info icon" />
+        </Box>
+      ),
+      icon: exchageIcon,
+      value: numberWithCommas(data?.txCount || 0),
+    },
+    {
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <Box component={"span"} mr={1}>
+            Created at
+          </Box>
+          <img src={infoIcon} alt="info icon" />
+        </Box>
+      ),
+      icon: timeIcon,
+      value: moment(data?.createdOn).format("MM/DD/YYYY HH:mm:ss"),
+    },
   ];
 
   return (
@@ -128,7 +150,6 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataL
                 <TitleCard my={1} mr={1}>
                   {item.title}
                 </TitleCard>
-                <img src={infoIcon} alt="info icon" />
               </Box>
               <ValueCard>{item.value}</ValueCard>
             </CardItem>
