@@ -114,11 +114,7 @@ interface Transaction {
   mints?: {
     assetName: string;
     assetQuantity: number;
-    policy: {
-      policyId: string;
-      totalToken: number;
-      policyScript: string;
-    };
+    policy: string;
   }[];
   delegations?: {
     address: string;

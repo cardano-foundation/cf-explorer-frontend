@@ -41,7 +41,7 @@ const StakeTab = () => {
         <Box>
           <Box display={"flex"} alignItems="center">
             <DelegationHistoryIcon fill={activeTab === "delegation" ? "#438F68" : "#98A2B3"} />
-            <TitleTab pl={1}>Delegation History</TitleTab>
+            <TitleTab pl={1} active={activeTab === "delegation"}>Delegation History</TitleTab>
           </Box>
         </Box>
       ),
@@ -63,7 +63,7 @@ const StakeTab = () => {
         <Box>
           <Box display={"flex"} alignItems="center">
             <StateKeyHistoryIcon fill={activeTab === "stakeKey" ? "#438F68" : "#98A2B3"} />
-            <TitleTab pl={1}>Stake Key History</TitleTab>
+            <TitleTab pl={1} active={activeTab === "stakeKey"}>Stake Key History</TitleTab>
           </Box>
         </Box>
       ),
@@ -85,7 +85,7 @@ const StakeTab = () => {
         <Box>
           <Box display={"flex"} alignItems="center">
             <WithdrawHistoryIcon fill={activeTab === "withdrawal" ? "#438F68" : "#98A2B3"} />
-            <TitleTab pl={1}>Withdrawal History</TitleTab>
+            <TitleTab pl={1} active={activeTab === "withdrawal"}>Withdrawal History</TitleTab>
           </Box>
         </Box>
       ),
@@ -107,7 +107,7 @@ const StakeTab = () => {
         <Box>
           <Box display={"flex"} alignItems="center">
             <InstantaneousHistoryIcon fill={activeTab === "instantaneous" ? "#438F68" : "#98A2B3"} />
-            <TitleTab pl={1}>Instantaneous Rewards</TitleTab>
+            <TitleTab pl={1} active={activeTab === "instantaneous"}>Instantaneous Rewards</TitleTab>
           </Box>
         </Box>
       ),
@@ -129,10 +129,10 @@ const StakeTab = () => {
   return (
     <Box mt={4}>
       <TabContext value={activeTab}>
-        <Box>
-          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: "#438f68", color: "#438f68" } }}>
+        <Box style={{ borderBottom: "1px solid rgba(24, 76, 120, 0.1)"}}>
+          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: "#438f68" } }}>
             {tabs?.map(item => (
-              <Tab key={item.key} label={item.label} value={item.key} />
+              <Tab key={item.key} label={item.label} value={item.key}/>
             ))}
           </TabList>
         </Box>

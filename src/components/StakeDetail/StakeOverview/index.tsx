@@ -24,8 +24,11 @@ import {
   SlotLeader,
   SlotLeaderContainer,
   SlotLeaderSkeleton,
+  StyledFlexValue,
+  StyledLink,
   TitleCard,
   ValueCard,
+  ViewMetaData,
 } from "./styles";
 import { ADAToken } from "../../commons/Token";
 import useFetch from "../../../commons/hooks/useFetch";
@@ -45,7 +48,11 @@ const StakeOverview = () => {
           <img src={infoIcon} alt="info icon" />
         </Box>
       ),
-      value: data?.pool?.poolName || "",
+      value: (
+        <StyledLink to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", data?.pool?.poolId || "")}>
+          {data?.pool?.poolName || ""}
+        </StyledLink>
+      ),
     },
     {
       icon: totalStakeIcon,
@@ -56,9 +63,10 @@ const StakeOverview = () => {
         </Box>
       ),
       value: (
-        <>
-          {formatADA(data?.totalStake || 0)} <ADAToken />
-        </>
+        <StyledFlexValue>
+          {formatADA(data?.totalStake || 0)} ADA
+          <ADAToken />
+        </StyledFlexValue>
       ),
     },
     {
@@ -70,9 +78,10 @@ const StakeOverview = () => {
         </Box>
       ),
       value: (
-        <>
-          {formatADA(data?.rewardAvailable || 0)} <ADAToken />
-        </>
+        <StyledFlexValue>
+          {formatADA(data?.rewardAvailable || 0)} ADA
+          <ADAToken />
+        </StyledFlexValue>
       ),
     },
     {
@@ -84,9 +93,10 @@ const StakeOverview = () => {
         </Box>
       ),
       value: (
-        <>
-          {formatADA(data?.rewardWithdrawn || 0)} <ADAToken />
-        </>
+        <StyledFlexValue>
+          {formatADA(data?.rewardWithdrawn || 0)} ADA
+          <ADAToken />
+        </StyledFlexValue>
       ),
     },
   ];
@@ -95,7 +105,7 @@ const StakeOverview = () => {
     <Box>
       <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
         <Box>
-          <BackButton to={routers.TOKEN_LIST}>
+          <BackButton to={routers.STAKE_LIST}>
             <HiArrowLongLeft />
             <BackText>Back</BackText>
           </BackButton>
@@ -125,12 +135,6 @@ const StakeOverview = () => {
             )}
           </SlotLeaderContainer>
         </Box>
-        {/* <Box>
-          <ProgressCircle percent={80} size={140}>
-            <Box>362</Box>
-            <Box>Epoch</Box>
-          </ProgressCircle>
-        </Box> */}
       </Box>
 
       <CardInfoOverview>

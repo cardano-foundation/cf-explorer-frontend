@@ -11,6 +11,7 @@ import { TitleCard } from "./styles";
 import moment from "moment";
 import { formatADA } from "../../../commons/utils/helper";
 import { ADAToken } from "../../commons/Token";
+import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
@@ -85,7 +86,14 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
           <img src={infoIcon} alt="info icon" />
         </Box>
       ),
-      value: data?.slotNo || 0,
+      value: (
+        <>
+          {data?.slotNo || 0}
+          <Box component={"span"} fontWeight="400">
+            /{MAX_SLOT_EPOCH}
+          </Box>
+        </>
+      ),
     },
   ];
   return (

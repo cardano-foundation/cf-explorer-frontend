@@ -6,12 +6,16 @@ interface ITokenOverview {
   txCount?: number;
   supply?: number;
   createdOn?: string;
+  metadata?: ITokenMetadata;
 }
 
 interface ITokenMetadata {
   policy?: string;
   logo?: string;
   decimals?: number;
+  description?: string;
+  ticker?: string;
+  url?: string;
 }
 
 interface IToken extends ITokenOverview, ITokenMetadata {}
