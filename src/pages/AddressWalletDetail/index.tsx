@@ -89,7 +89,7 @@ const AddressWalletDetail = () => {
                   <Box width={50}>
                     <img src={AIcon} alt="a icon" />
                   </Box>
-                  <Box>
+                  <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"}>
                     {option.displayName} #{option.name || option.fingerprint}
                   </Box>
                 </Box>
@@ -224,7 +224,14 @@ const DetailCard: React.FC<DetailCardProps> = ({ title, address, item, type, loa
     <CardItem padding={props => props.spacing(4)}>
       <Box className={styles.titleDetail}>{title}</Box>
       <Box className={styles.addressGroup}>
-        <Link className={styles.address} to={routers.ADDRESS_DETAIL.replace(":address", address)}>
+        <Link
+          className={styles.address}
+          to={
+            type === "left"
+              ? routers.ADDRESS_DETAIL.replace(":address", address)
+              : routers.STAKE_DETAIL.replace(":stakeId", address)
+          }
+        >
           {address}
         </Link>
         <CopyButton text={address} />

@@ -94,7 +94,7 @@ const Tokens: React.FC<ITokenList> = () => {
       title: "Total Supply",
       key: "totalSupply",
       minWidth: "150px",
-      render: r => formatADA(r?.supply ?? ""),
+      render: r => numberWithCommas(r?.supply ?? ""),
     },
     {
       title: "Created",
@@ -125,7 +125,7 @@ const Tokens: React.FC<ITokenList> = () => {
           data={tokens}
           loading={loading}
           initialized={initialized}
-          total={{ count: total, title: "Total Token List" }}
+          total={{ count: total, title: "Total" }}
           pagination={{
             onChange: (page, size) => {
               setQuery({ page, size });
