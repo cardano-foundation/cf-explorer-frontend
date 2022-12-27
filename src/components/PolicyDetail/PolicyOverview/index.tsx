@@ -138,18 +138,20 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ script, ...props }) => {
         <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Space Mono", monospace, sans-serif'}>
           Policy script
         </Box>
-        <ViewJson>
-          <ReactJson
-            name={false}
-            src={JSON.parse(script || "")}
-            enableClipboard={false}
-            displayDataTypes={false}
-            style={{ padding: 0, background: "none", color: "#344054" }}
-            displayObjectSize={false}
-            collapsed={false}
-            shouldCollapse={() => false}
-          />
-        </ViewJson>
+        {script && (
+          <ViewJson>
+            <ReactJson
+              name={false}
+              src={JSON.parse(script || "")}
+              enableClipboard={false}
+              displayDataTypes={false}
+              style={{ padding: 0, background: "none", color: "#344054" }}
+              displayObjectSize={false}
+              collapsed={false}
+              shouldCollapse={() => false}
+            />
+          </ViewJson>
+        )}
       </ModalContainer>
     </Modal>
   );
