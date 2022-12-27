@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Box, Button, Dialog, DialogTitle } from "@mui/material";
+import { Box } from "@mui/material";
 
-import { IoMdCopy } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 import Table, { Column } from "../../../commons/Table";
 import mintingIcon from "../../../../commons/resources/images/copy.svg";
 
 import styles from "./index.module.scss";
+import ScriptModal from "../../../ScriptModal";
 
 interface MintingProps {
   data: Transaction["mints"] | null;
@@ -15,7 +15,7 @@ interface MintingProps {
 
 const Minting: React.FC<MintingProps> = ({ data }) => {
   const [open, setOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<Required<Transaction>["mints"][number]>();
+  const [selectedItem, setSelectedItem] = useState<string>("");
 
   const columns: Column<Required<Transaction>["mints"][number]>[] = [
     {
@@ -50,7 +50,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
           <div
             onClick={() => {
               setOpen(true);
-              setSelectedItem(r);
+              setSelectedItem(r.policy || "");
             }}
           >
             <img src={mintingIcon} alt="icon" className={styles.icon} />
@@ -63,35 +63,9 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
   return (
     <Box bgcolor={"white"}>
       <Table columns={columns} data={data || []} />
-      <ModalMinting open={open} selectedItem={selectedItem} setOpen={() => setOpen(false)} />
+      <ScriptModal open={open} policy={selectedItem || ""} onClose={() => setOpen(false)} />
     </Box>
   );
 };
 
 export default Minting;
-
-interface ModalMintingProps {
-  open: boolean;
-  setOpen: () => void;
-  selectedItem?: Required<Transaction>["mints"][number];
-}
-const ModalMinting: React.FC<ModalMintingProps> = ({ open, setOpen, selectedItem }) => {
-  return (
-    <Dialog maxWidth={"xl"} onClose={setOpen} open={open} className={styles.modal}>
-      <DialogTitle className={styles.title}>
-        Poilcy Id: <span className={styles.bold}>{selectedItem?.policy.policyId || ""}</span>
-      </DialogTitle>
-      <div className={styles.body}>
-        <div className={styles.totalToken}>
-          Total Token: <span className={styles.value}>1</span>
-        </div>
-        <div className={styles.Policy}>Policy Script </div> <div className={styles.script}></div>
-      </div>
-      <div className={styles.footer}>
-        <Button variant="contained" onClick={setOpen}>
-          OK
-        </Button>
-      </div>
-    </Dialog>
-  );
-};

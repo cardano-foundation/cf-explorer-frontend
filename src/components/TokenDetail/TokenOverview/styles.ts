@@ -185,9 +185,9 @@ export const CardInfoOverview = styled(Box)(({ theme }) => ({
 
 export const CardItem = styled(Box)(({ theme }) => ({
   width: "max-content",
-  flex: 1,
   borderLeft: "1px solid rgba(0,0,0,0.1)",
   paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(2),
   ":first-child": {
     borderLeft: "none",
   },
@@ -218,10 +218,11 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "min(80vw, 600px)",
+  width: "min(80vw, 350px)",
   backgroundColor: "#fff",
   padding: theme.spacing(4),
   borderRadius: theme.borderRadius,
+  textAlign: "left",
 }));
 
 export const ButtonClose = styled(Button)(({ theme }) => ({
@@ -240,7 +241,6 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   backgroundColor: "rgba(152, 162, 179, 0.1)",
   borderRadius: theme.borderRadius,
   padding: theme.spacing(2),
-  marginTop: theme.spacing(2),
   "& .object-contentw": {
     pointerEvents: "none",
   },
@@ -266,4 +266,14 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   "& .icon-container": {
     display: "none !important",
   },
+}));
+
+export const ButtonLink = styled(Link)(({ theme }) => ({
+  fontWeight: "bold",
+  color: `${theme.colorBlue} !important`,
+  fontFamily: "Helvetica, monospace !important",
+  textAlign: "left",
+  wordBreak: "break-all",
+  marginTop: theme.spacing(2),
+  display: "inline-block",
 }));

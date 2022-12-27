@@ -1,36 +1,34 @@
-import { Box } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Box, Modal, Skeleton } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { routers } from "../../../commons/routers";
+import { routers, details } from "../../../commons/routers";
 
-import { formatADA } from "../../../commons/utils/helper";
+import { numberWithCommas } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
-import ADA from "../../../commons/resources/icons/ADA.svg";
-import rocketToken from "../../../commons/resources/images/rocketToken.svg";
-import exchangeToken from "../../../commons/resources/images/exchangeToken.svg";
-import infoToken from "../../../commons/resources/images/infoToken.png";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
 import infoIcon from "../../../commons/resources/icons/info.svg";
+import slotIcon from "../../../commons/resources/icons/slot.svg";
+import exchageIcon from "../../../commons/resources/icons/Union.svg";
+import decimalIcon from "../../../commons/resources/icons/decimal.svg";
+import AIcon from "../../../commons/resources/icons/AIcon.svg";
 
 import {
   BackButton,
   BackText,
-  CardInfo,
   CardInfoOverview,
   CardItem,
   HeaderContainer,
-  HeaderDetailContainer,
   HeaderTitle,
   HeaderTitleSkeleton,
   SlotLeader,
   SlotLeaderContainer,
   SlotLeaderSkeleton,
   TitleCard,
-  TokenInfo,
   ValueCard,
-  ViewMetaData,
 } from "./styles";
+import moment from "moment";
+import ScriptModal from "../../ScriptModal";
 
 interface ITokenOverview {
   data: IToken | null;
@@ -39,6 +37,16 @@ interface ITokenOverview {
 }
 
 const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataLoading }) => {
+  const [openModal, setOpenModal] = useState(false);
+  const [policyId, setPolicyId] = useState("");
+
+  const listItem = [
+    { title: "Total Supoly", value: numberWithCommas(data?.supply || 0), icon: slotIcon },
+    { title: "Decimal", icon: decimalIcon, value: data?.decimals || 0 },
+    { title: "Transactions", icon: exchageIcon, value: numberWithCommas(data?.txCount || 0) },
+    { title: "Created at", icon: timeIcon, value: moment(data?.createdOn).format("MM/DD/YYYY HH:mm:ss") },
+  ];
+
   return (
     <Box>
       <BackButton to={routers.TOKEN_LIST}>
@@ -62,56 +70,73 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataL
           </>
         )}
       </SlotLeaderContainer>
-      <CardInfoOverview>
-        <CardItem display={"flex"} gap={2}>
-          <Box>
-            <img src={policyIcon} alt="" />
-          </Box>
-          <Box display={"flex"} flexDirection="column" height={"100%"} justifyContent="space-between">
-            <Box
-              color={props => props.colorGreenLight}
-              fontWeight="bold"
-              fontFamily={'"Space Mono", monospace, sans-serif'}
-              fontSize={"1.125rem"}
-              component="button"
-              border={"none"}
-              bgcolor="transparent"
-              padding={0}
-              textAlign="left"
-              // onClick={() => setOpenModal(true)}
-              style={{ cursor: "pointer" }}
-            >
-              Policy Script
-            </Box>
+      {loading && (
+        <Box height={150} width="100%" borderRadius={props => props.borderRadius} overflow="hidden">
+          <Skeleton height={"100%"} width="100%" variant="rectangular" />
+        </Box>
+      )}
+      {!loading && (
+        <CardInfoOverview>
+          <CardItem display={"flex"} gap={2} flex={3}>
             <Box>
-              <Box display={"flex"} alignItems="center">
-                {data?.displayName || ""}
-                <img
-                  width={30}
-                  height={30}
-                  src={data?.metadata ? `data:image/png;base64,${data.metadata.logo}` : ""}
-                  alt="logo icon"
-                />
+              <img src={policyIcon} alt="" />
+            </Box>
+            <Box display={"flex"} flexDirection="column" height={"80%"} justifyContent="space-between">
+              <Box
+                color={props => props.colorGreenLight}
+                fontWeight="bold"
+                fontFamily={'"Space Mono", monospace, sans-serif'}
+                fontSize={"1.125rem"}
+                component="button"
+                border={"none"}
+                bgcolor="transparent"
+                padding={0}
+                textAlign="left"
+                onClick={() => {
+                  setOpenModal(true);
+                  setPolicyId(data?.policy || "");
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                Policy Script
               </Box>
-              <Box display={"flex"} alignItems="center">
-                {data?.metadata?.description || ""}
+              <Box>
+                <Box display={"flex"} alignItems="center" fontWeight={"bold"}>
+                  {data?.displayName || ""}
+                  {data?.metadata && data?.metadata?.logo && (
+                    <Box
+                      component={"img"}
+                      width={30}
+                      height={30}
+                      src={`data:image/png;base64,${data.metadata.logo}`}
+                      alt="logo icon"
+                      ml={1}
+                    />
+                  )}
+                </Box>
+                <Box display={"flex"} alignItems="center" fontSize={"0.75rem"} color="rgba(0,0,0,0.5)">
+                  {data?.metadata?.description || ""}
+                </Box>
               </Box>
             </Box>
-          </Box>
-        </CardItem>
-        <CardItem>
-          <Box>
-            <img src={timeIcon} alt="" />
-          </Box>
-          <Box display={"flex"} alignItems="center">
-            <TitleCard my={2} mr={1}>
-              Policy Asset Holders{" "}
-            </TitleCard>
-            <img src={infoIcon} alt="info icon" />
-          </Box>
-          <ValueCard>{/* <ButtonView to={details.policyAssetHolder(policyId)}>View</ButtonView> */}</ValueCard>
-        </CardItem>
-      </CardInfoOverview>
+          </CardItem>
+          {listItem.map((item, idx) => (
+            <CardItem key={idx} flex={1}>
+              <Box>
+                <img src={item.icon} alt="" />
+              </Box>
+              <Box display={"flex"} alignItems="center">
+                <TitleCard my={1} mr={1}>
+                  {item.title}
+                </TitleCard>
+                <img src={infoIcon} alt="info icon" />
+              </Box>
+              <ValueCard>{item.value}</ValueCard>
+            </CardItem>
+          ))}
+        </CardInfoOverview>
+      )}
+      <ScriptModal open={openModal} onClose={() => setOpenModal(false)} policy={policyId} />
     </Box>
   );
 };

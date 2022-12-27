@@ -34,5 +34,6 @@ export const details = {
   token: (tokenId?: string) => routers.TOKEN_DETAIL.replace(":tokenId", tokenId ?? ""),
   stake: (stakeId?: string) => routers.STAKE_DETAIL.replace(":stakeId", stakeId ?? ""),
   nft: (nftId?: string) => routers.NFT_DETAIL.replace(":nftId", nftId ?? ""),
+  policyDetail: (policyId?: string) => routers.POLICY_DETAIL.replace(":policyId", policyId ?? ""),
   policyAssetHolder: (policyId?: string) => routers.POLICY_ASSET_HOLDER.replace(":policyId", policyId ?? ""),
 };

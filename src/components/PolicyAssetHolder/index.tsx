@@ -99,7 +99,7 @@ const PolicyOverview = () => {
                 <Box fontWeight={400} color={"#344054"}>
                   Policy Id:{" "}
                 </Box>{" "}
-                <Box mr={2}>{policyId}</Box> <CopyButton text={policyId} />
+                <Box ml={2}>{policyId}</Box> <CopyButton text={policyId} />
               </SlotLeader>
             </Box>
           </SlotLeaderContainer>
