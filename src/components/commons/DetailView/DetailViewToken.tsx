@@ -44,7 +44,7 @@ import {
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatCurrency, getShortHash } from "../../../commons/utils/helper";
+import { formatCurrency, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import axios from "axios";
 import moment from "moment";
 import ViewMoreButton from "../ViewMoreButton";
@@ -174,7 +174,11 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
             {data.displayName || tokenMetadata.logo ? (
               <TokenMetaData>
                 <TokenInfo>
-                  <TokenName>{data.displayName}</TokenName>
+                  <TokenName>
+                    {data.displayName && data.displayName.length > 30
+                      ? getShortWallet(data.displayName)
+                      : data.displayName}
+                  </TokenName>
                   {tokenMetadata.logo ? (
                     <TokenIcon src={tokenMetadata.logo} alt="token logo" />
                   ) : (
@@ -221,7 +225,11 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
               </DetailLabel>
               <DetailValue>
                 <TokenDetailInfo>
-                  <TokenDetailName>{data.displayName}</TokenDetailName>
+                  <TokenDetailName>
+                    {data.displayName && data.displayName?.length > 25
+                      ? getShortWallet(data.displayName)
+                      : data.displayName}
+                  </TokenDetailName>
                   {tokenMetadata.logo ? (
                     <TokenDetailIcon src={tokenMetadata.logo} alt="token logo" />
                   ) : (
