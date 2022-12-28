@@ -101,20 +101,7 @@ const PolicyOverview = () => {
             </Box>
           </Box>
         </CardItem>
-        <CardItem>
-          <Box>
-            <img src={timeIcon} alt="" />
-          </Box>
-          <Box display={"flex"} alignItems="center">
-            <TitleCard my={2} mr={1}>
-              Policy Asset Holders{" "}
-            </TitleCard>
-            <img src={infoIcon} alt="info icon" />
-          </Box>
-          <ValueCard>
-            <ButtonView to={details.policyAssetHolder(policyId)}>View</ButtonView>
-          </ValueCard>
-        </CardItem>
+        <CardItem />
       </CardInfoOverview>
       <ScriptModal open={openModal} onClose={() => setOpenModal(false)} script={data?.policyScript} />
     </Box>

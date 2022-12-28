@@ -18,7 +18,6 @@ import Stake from "./pages/Stake";
 import StakeDetail from "./pages/StakeDetail";
 import AddressWalletDetail from "./pages/AddressWalletDetail";
 import PolicyDetail from "./pages/PolicyDetail";
-import PolicyAssetHolder from "./pages/PolicyAssetHolder";
 import ContractList from "./pages/ContractList";
 import ContractDetail from "./pages/ContractDetail";
 
@@ -43,7 +42,6 @@ const Routes: React.FC = () => {
       <Route path={routers.CONTRACT_DETAIL} exact component={ContractDetail} />
       <Route path={routers.ADDRESS_DETAIL} exact component={AddressWalletDetail} />
       <Route path={routers.POLICY_DETAIL} exact component={PolicyDetail} />
-      <Route path={routers.POLICY_ASSET_HOLDER} exact component={PolicyAssetHolder} />
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );
