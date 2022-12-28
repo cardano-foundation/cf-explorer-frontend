@@ -3,7 +3,7 @@ import { Box, Skeleton } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { routers } from "../../../commons/routers";
 
-import { numberWithCommas } from "../../../commons/utils/helper";
+import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
@@ -28,6 +28,7 @@ import {
 } from "./styles";
 import moment from "moment";
 import ScriptModal from "../../ScriptModal";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 interface ITokenOverview {
   data: IToken | null;
@@ -40,7 +41,15 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataL
   const [policyId, setPolicyId] = useState("");
 
   const listItem = [
-    { title: "Total Supoly", value: numberWithCommas(data?.supply || 0), icon: slotIcon },
+    {
+      title: "Total Supoly",
+      value: (
+        <CustomTooltip title={numberWithCommas(data?.supply || 0)}>
+          <Box>{formatADA(data?.supply || 0)}</Box>
+        </CustomTooltip>
+      ),
+      icon: slotIcon,
+    },
     { title: "Decimal", icon: decimalIcon, value: data?.decimals || 0 },
     {
       title: (
