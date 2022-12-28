@@ -14,21 +14,25 @@ import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 interface Props {}
 
-const Transactions: React.FC<Props> = () => {
+const TopAddresses: React.FC<Props> = () => {
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
   const history = useHistory();
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
   };
-  const { data, loading, initialized, total, currentPage } = useFetchList<Contracts>("contracts", {
+  const {
+    data: transactions,
+    loading: transactionsLoading,
+    initialized,
+    total,
+    currentPage,
+  } = useFetchList<Transactions>("tx/list", {
     page: query.page ? +query.page - 1 : 0,
     size: query.size ? (query.size as string) : 10,
   });
 
-  console.log(data);
-
-  const columns: Column<Contracts>[] = [
+  const columns: Column<Transactions>[] = [
     {
       title: "#",
       key: "id",
@@ -36,15 +40,15 @@ const Transactions: React.FC<Props> = () => {
       render: (_, index) => index + 1,
     },
     {
-      title: "Contract Addresses",
-      key: "trxhash",
+      title: "Addresses",
+      key: "address",
       minWidth: 120,
 
       render: r => (
         <div>
-          <CustomTooltip title={r.address} placement="top">
-            <StyledLink to={routers.CONTRACT_DETAIL.replace(":address", `${r.address}`)}>
-              {getShortHash(r.address)}
+          <CustomTooltip title={r.hash} placement="top">
+            <StyledLink to={routers.CONTRACT_DETAIL.replace(":address", `${r.hash}`)}>
+              {getShortHash(r.hash)}
             </StyledLink>
           </CustomTooltip>
         </div>
@@ -56,28 +60,8 @@ const Transactions: React.FC<Props> = () => {
       minWidth: 60,
       render: r => (
         <Box display="flex" alignItems="center">
-          <Box mr={1}>{formatADA(r.balance) || 0}</Box>
+          <Box mr={1}>{formatADA(r.fee) || 0}</Box>
           <img src={AIcon} alt="a icon" />
-        </Box>
-      ),
-    },
-    {
-      title: "Value",
-      key: "value",
-      minWidth: 120,
-      render: r => (
-        <Box display="flex" alignItems="center">
-          "NaN"
-        </Box>
-      ),
-    },
-    {
-      title: "Transaction Count",
-      minWidth: 120,
-      key: "transaction_count",
-      render: r => (
-        <Box display="flex" alignItems="center">
-          {r.txCount}
         </Box>
       ),
     },
@@ -85,12 +69,12 @@ const Transactions: React.FC<Props> = () => {
 
   return (
     <StyledContainer>
-      <Card title={"Contracts"} underline={false}>
+      <Card title={"Top 50 addresses"} underline={false}>
         <Table
           columns={columns}
-          data={data}
+          data={transactions}
           total={{ count: total, title: "Total Contracts" }}
-          loading={loading}
+          loading={transactionsLoading}
           initialized={initialized}
           pagination={{
             onChange: (page, size) => {
@@ -106,4 +90,4 @@ const Transactions: React.FC<Props> = () => {
   );
 };
 
-export default Transactions;
+export default TopAddresses;

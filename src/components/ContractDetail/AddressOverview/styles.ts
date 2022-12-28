@@ -1,5 +1,6 @@
 import { Paper, TextField } from "@mui/material";
 import { styled, Box } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const StyledAAmount = styled(Box)`
   display: flex;
@@ -24,4 +25,15 @@ export const WrapPaperDropdown = styled(Paper)`
   border-radius: 8px;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
   padding: 8px 0;
+`
+
+export const Pool = styled(Link)`
+  max-width: 200px;
+  text-overflow: hidden; 
+  color: ${props => props.theme.colorBlue} !important;
+  font-weight: bold;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `

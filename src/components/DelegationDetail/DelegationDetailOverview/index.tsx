@@ -17,7 +17,6 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
     ROS: data?.ros ? `${data.ros}%` : "0%",
     "Pledge(A)": formatADA(data?.pledge) || 0,
     "Cost(A)": formatADA(data?.cost) || 0,
-    Margin: data?.margin ? `${data.margin}%` : "0%",
     "Epoch Block": data?.epochBlock || 0,
     "Lifetime Block": numberWithCommas(data?.lifetimeBlock || 0),
   };

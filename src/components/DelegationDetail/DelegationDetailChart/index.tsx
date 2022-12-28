@@ -36,12 +36,15 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
           <Box marginBottom={10}>
             <Button
               active={selected === "epochChart" ? 1 : 0}
-              style={{ marginRight: 5 }}
+              style={{ marginRight: "2px" }}
               onClick={() => setSelected("epochChart")}
             >
               Stake
             </Button>
-            <Button active={selected === "delegatorChart" ? 1 : 0} onClick={() => setSelected("delegatorChart")}>
+            <Button
+              active={selected === "delegatorChart" ? 1 : 0}
+              onClick={() => setSelected("delegatorChart")}
+            >
               Delegator
             </Button>
           </Box>
@@ -98,7 +101,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
             )}
           </ChartContainer>
         </Grid>
-        <Grid item xs={12} lg={3}  display="flex" flexDirection="column">
+        <Grid item xs={12} lg={3} display="flex" flexDirection="column">
           <GridRight container columns={12}>
             <Item item xs={12} sm={6} lg={12}>
               <img src={HighestIcon} alt="heighest icon" />
