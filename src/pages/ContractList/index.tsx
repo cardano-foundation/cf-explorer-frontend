@@ -5,7 +5,7 @@ import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { formatADA, getShortHash, numberWithCommas } from "../../commons/utils/helper";
+import { formatADA, getShortHash } from "../../commons/utils/helper";
 import { routers } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
@@ -21,18 +21,14 @@ const Transactions: React.FC<Props> = () => {
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
   };
-  const {
-    data: transactions,
-    loading: transactionsLoading,
-    initialized,
-    total,
-    currentPage,
-  } = useFetchList<Transactions>("tx/list", {
+  const { data, loading, initialized, total, currentPage } = useFetchList<Contracts>("contracts", {
     page: query.page ? +query.page - 1 : 0,
     size: query.size ? (query.size as string) : 10,
   });
 
-  const columns: Column<Transactions>[] = [
+  console.log(data);
+
+  const columns: Column<Contracts>[] = [
     {
       title: "#",
       key: "id",
@@ -46,9 +42,9 @@ const Transactions: React.FC<Props> = () => {
 
       render: r => (
         <div>
-          <CustomTooltip title={r.hash} placement="top">
-            <StyledLink to={routers.CONTRACT_DETAIL.replace(":address", `${r.hash}`)}>
-              {getShortHash(r.hash)}
+          <CustomTooltip title={r.address} placement="top">
+            <StyledLink to={routers.CONTRACT_DETAIL.replace(":address", `${r.address}`)}>
+              {getShortHash(r.address)}
             </StyledLink>
           </CustomTooltip>
         </div>
@@ -60,7 +56,7 @@ const Transactions: React.FC<Props> = () => {
       minWidth: 60,
       render: r => (
         <Box display="flex" alignItems="center">
-          <Box mr={1}>{formatADA(r.fee) || 0}</Box>
+          <Box mr={1}>{formatADA(r.balance) || 0}</Box>
           <img src={AIcon} alt="a icon" />
         </Box>
       ),
@@ -71,7 +67,7 @@ const Transactions: React.FC<Props> = () => {
       minWidth: 120,
       render: r => (
         <Box display="flex" alignItems="center">
-          {numberWithCommas(999999999113)}
+          "NaN"
         </Box>
       ),
     },
@@ -81,7 +77,7 @@ const Transactions: React.FC<Props> = () => {
       key: "transaction_count",
       render: r => (
         <Box display="flex" alignItems="center">
-          123444
+          {r.txCount}
         </Box>
       ),
     },
@@ -92,9 +88,9 @@ const Transactions: React.FC<Props> = () => {
       <Card title={"Contracts"} underline={false}>
         <Table
           columns={columns}
-          data={transactions}
+          data={data}
           total={{ count: total, title: "Total Contracts" }}
-          loading={transactionsLoading}
+          loading={loading}
           initialized={initialized}
           pagination={{
             onChange: (page, size) => {
