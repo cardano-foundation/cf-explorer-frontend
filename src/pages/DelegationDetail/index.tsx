@@ -28,6 +28,7 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
   const history = useHistory();
   const query = parse(search.split("?")[1]);
   const [tab, setTab] = useState<"epochs" | "delegators">("epochs");
+  const [saving, setSaving] = useState<boolean>(false);
   const tableRef = useRef(null);
 
   const scrollEffect = () => {
@@ -84,7 +85,7 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
 
   return (
     <Container>
-      <DelegationDetailInfo data={data} loading={loading} poolId={poolId} />
+      <DelegationDetailInfo data={data} loading={loading} poolId={poolId} saving={saving} setSaving={setSaving} />
       <DelegationDetailOverview data={data} loading={loading} />
       <DelegationDetailChart poolId={poolId} />
 

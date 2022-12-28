@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 export const HeaderDetailContainer = styled(Box)`
   text-align: left;
+  position: relative;
 `;
 
 export const BackButton = styled(Link)`
@@ -113,7 +114,7 @@ export const InfoTitle = styled(Box)`
 
 export const InfoValue = styled(Box)`
   font-weight: var(--font-weight-bold);
-  font-size: 18x;
+  font-size: 18px;
 `;
 
 export const StyledLinearProgress = styled(LinearProgress)`
@@ -139,4 +140,10 @@ export const FlexGap10 = styled("div")`
   display: flex;
   align-items: center;
   gap: 10px;
+`;
+
+export const SavingImg = styled("img")`
+  position: absolute;
+  top: 0;
+  right: 0;
 `;

@@ -15,9 +15,10 @@ export const Tab = styled("div")`
 `;
 
 export const Button = styled("button")<{ active: number }>`
+  width: 115px;
   border: none;
   border-radius: 5px;
-  padding: 6px 30px;
+  padding: 6px 0;
   font-weight: var(--font-weight-bold);
   color: ${props => (props.active ? "white" : "var(--text-color-pale)")};
   background-color: ${props => (props.active ? "#438F68" : "#e7e8ea")};

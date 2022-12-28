@@ -5,12 +5,15 @@ import { ReactComponent as UtxoIcon } from "../../../commons/resources/images/ut
 import { ReactComponent as Script } from "../../../commons/resources/images/script.svg";
 import { TabTitle } from "./styles";
 import TokenTransaction from "./TokenTransaction";
+import { stringify } from "qs";
+import { useHistory } from "react-router-dom";
 
 const ContractDetailContent: React.FC = data => {
   const [activeTab, setActiveTab] = useState("transaction");
+  const history = useHistory();
 
   const handleChange = (event: React.SyntheticEvent, tabs: string) => {
-    setActiveTab(tabs);
+    history.push({ search: stringify({ page: 1, size: 10 }) });
   };
 
   const tabs: { label: React.ReactNode; key: string; children: React.ReactNode }[] = [
@@ -24,7 +27,7 @@ const ContractDetailContent: React.FC = data => {
         </TabTitle>
       ),
       key: "transaction",
-      children: <TokenTransaction active={true} tokenId="asset1c6t4elexwkpuzq08ssylhhmc78ahlz0sgw5a7y" />,
+      children: <TokenTransaction />,
     },
     {
       label: (
@@ -36,7 +39,7 @@ const ContractDetailContent: React.FC = data => {
         </TabTitle>
       ),
       key: "transcript",
-      children: <TokenTransaction active={true} tokenId="asset1c6t4elexwkpuzq08ssylhhmc78ahlz0sgw5a7y" />,
+      children: <TokenTransaction />,
     },
   ];
 
@@ -53,11 +56,7 @@ const ContractDetailContent: React.FC = data => {
         </TabList>
       </Box>
       {tabs.map(item => (
-        <TabPanel
-          sx={{ padding: 0, borderTop: "1px solid rgba(24, 76, 120, 0.1)" }}
-          key={item.key}
-          value={item.key}
-        >
+        <TabPanel sx={{ padding: 0, borderTop: "1px solid rgba(24, 76, 120, 0.1)" }} key={item.key} value={item.key}>
           {item.children}
         </TabPanel>
       ))}

@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { parse, stringify } from "qs";
 import moment from "moment";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
@@ -10,15 +10,11 @@ import useFetchList from "../../../../commons/hooks/useFetchList";
 import { routers } from "../../../../commons/routers";
 import { AIcon } from "../../../../commons/resources";
 
-interface ITokenTransaction {
-  active: boolean;
-  tokenId: string;
-}
-
-const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
+const TokenTransaction: React.FC = () => {
   const { search } = useLocation();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
+  const params = useParams<{ address: string }>();
 
   const setQuery = (query: any) => {
     history.push({ search: stringify(query) });
@@ -30,10 +26,9 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
     initialized,
     total,
     currentPage,
-  } = useFetchList<Transactions>(active ? "tx/list" : "", {
+  } = useFetchList<Transactions>(`address/${params.address}/txs`, {
     page: query.page ? +query.page - 1 : 0,
     size: query.size ? (query.size as string) : 10,
-    tokenId: tokenId,
   });
 
   const columns: Column<Transactions>[] = [
