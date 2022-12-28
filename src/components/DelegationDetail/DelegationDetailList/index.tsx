@@ -122,7 +122,7 @@ const DelegationStakingDelegatorsList = ({
       render: data =>
         data.address && (
           <div style={{ display: "flex", alignItems: "center" }}>
-            <CustomTooltip placement="bottom" title={data.address || ""}>
+            <CustomTooltip placement="top" title={data.address || ""}>
               <StyledLink to={details.address(data.address)}>
                 {getShortWallet(data.address || "")}
               </StyledLink>
