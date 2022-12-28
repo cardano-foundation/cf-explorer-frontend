@@ -79,7 +79,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       ),
     },
     {
-      title: "Address",
+      title: "Addresses",
       key: "address",
       minWidth: "200px",
       render(r, index) {
