@@ -9,6 +9,8 @@ import {
   HighestIcon,
   InfoIcon,
   RewardIcon,
+  SaveOffIcon,
+  SaveOnIcon,
   TickerIcon,
   UserIcon,
 } from "../../../commons/resources";
@@ -33,6 +35,7 @@ import {
   PoolIdLabel,
   PoolIdSkeleton,
   PoolIdValue,
+  SavingImg,
   StyledGrid,
   StyledImg,
   StyledLinearProgress,
@@ -42,9 +45,11 @@ interface IDelegationDetailInfo {
   data: DelegationOverview | null;
   loading: boolean;
   poolId: string;
+  saving: boolean;
+  setSaving: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId }) => {
+const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId, saving, setSaving }) => {
   if (loading) {
     return (
       <HeaderDetailContainer>
@@ -60,6 +65,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <PoolId>
           <PoolIdSkeleton variant="rectangular" />
         </PoolId>
+        <SavingImg src={saving ? SaveOnIcon : SaveOffIcon} alt="Save Icon" onClick={() => setSaving(!saving)} />
       </HeaderDetailContainer>
     );
   }
@@ -104,14 +110,17 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               Reward Account <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
             </InfoTitle>
             <InfoValue>
-              {data?.rewardAccount ? (
+              {data?.rewardAccounts ? (
                 <>
-                  <CustomTooltip placement="bottom" title={data?.rewardAccount || ""}>
-                    <Link to={details.address(data?.rewardAccount )}>
-                      {getShortWallet(data?.rewardAccount || "")}
+                  <CustomTooltip placement="bottom" title={data?.rewardAccounts[0] || ""}>
+                    <Link
+                      to={details.address(data?.rewardAccounts[0] || "")}
+                      style={{ fontFamily: "var(--font-family-text)" }}
+                    >
+                      {getShortWallet(data?.rewardAccounts[0] || "")}
                     </Link>
                   </CustomTooltip>
-                  <CopyButton text={data?.rewardAccount || ""} />
+                  <CopyButton text={data?.rewardAccounts[0] || ""} />
                 </>
               ) : (
                 ""
@@ -124,14 +133,17 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               Owner Account <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
             </InfoTitle>
             <InfoValue>
-              {data?.ownerAccount ? (
+              {data?.ownerAccounts ? (
                 <>
-                  <CustomTooltip placement="bottom" title={data?.ownerAccount || ""}>
-                    <Link to={details.address(data?.ownerAccount )}>
-                      {getShortWallet(data?.ownerAccount || "")}
+                  <CustomTooltip placement="bottom" title={data?.ownerAccounts[0] || ""}>
+                    <Link
+                      to={details.address(data?.ownerAccounts[0] || "")}
+                      style={{ fontFamily: "var(--font-family-text)" }}
+                    >
+                      {getShortWallet(data?.ownerAccounts[0] || "")}
                     </Link>
                   </CustomTooltip>
-                  <CopyButton text={data?.ownerAccount || ""} />
+                  <CopyButton text={data?.ownerAccounts[0] || ""} />
                 </>
               ) : (
                 ""
@@ -182,6 +194,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           </Item>
         </StyledGrid>
       </DataContainer>
+      <SavingImg src={saving ? SaveOnIcon : SaveOffIcon} alt="Save Icon" onClick={() => setSaving(!saving)} />
     </HeaderDetailContainer>
   );
 };

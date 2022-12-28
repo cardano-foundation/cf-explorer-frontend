@@ -23,8 +23,8 @@ interface DelegationOverview {
   tickerName: string;
   poolView: string;
   createDate: string;
-  rewardAccount: string;
-  ownerAccount: string;
+  rewardAccounts: string[];
+  ownerAccounts: string[];
   poolSize: number;
   stakeLimit: number;
   delegators: number;

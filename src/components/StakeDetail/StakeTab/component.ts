@@ -1,5 +1,4 @@
 import { Box, styled } from "@mui/material";
-import { Link } from "react-router-dom";
 
 export const TitleTab = styled(Box)<{ active: boolean }>(({ active }) => ({
   fontWeight: "bold",
@@ -19,8 +18,3 @@ export const LabelStatus = styled(Box)(({ theme }) => ({
   width: "max-content",
 }));
 
-export const StyledLink = styled(Link)(({ theme }) => ({
-  ":hover": {
-    textDecoration: "underline",
-  },
-}));
