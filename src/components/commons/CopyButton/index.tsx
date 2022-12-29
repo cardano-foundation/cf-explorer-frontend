@@ -51,7 +51,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, p
       <Button {...props} onClick={onCopy}>
         {children ||
           (copied ? (
-            <BiCheckCircle style={{ verticalAlign: "text-bottom" }} />
+            <BiCheckCircle style={{ verticalAlign: "text-bottom", scale: "2" }} />
           ) : (
             <CopyIcon src={copy} alt="icon copy" />
           ))}
