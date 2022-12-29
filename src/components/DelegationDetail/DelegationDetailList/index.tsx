@@ -112,7 +112,7 @@ const DelegationStakingDelegatorsList = ({
       title: "No",
       key: "no",
       render: (r, idx) => (
-        <StyledLink to={details.address(r.address)}>{idx + 1}</StyledLink>
+        <>{idx + 1}</>
       ),
     },
     {
