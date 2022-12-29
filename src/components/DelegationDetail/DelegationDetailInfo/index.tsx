@@ -112,7 +112,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoValue>
               {data?.rewardAccounts ? (
                 <>
-                  <CustomTooltip placement="bottom" title={data?.rewardAccounts[0] || ""}>
+                  <CustomTooltip placement="top" title={data?.rewardAccounts[0] || ""}>
                     <Link
                       to={details.address(data?.rewardAccounts[0] || "")}
                       style={{ fontFamily: "var(--font-family-text)" }}
@@ -135,7 +135,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoValue>
               {data?.ownerAccounts ? (
                 <>
-                  <CustomTooltip placement="bottom" title={data?.ownerAccounts[0] || ""}>
+                  <CustomTooltip placement="top" title={data?.ownerAccounts[0] || ""}>
                     <Link
                       to={details.address(data?.ownerAccounts[0] || "")}
                       style={{ fontFamily: "var(--font-family-text)" }}
