@@ -62,3 +62,11 @@ interface WithdrawalHistory {
   epochSlotNo: number;
   txHash: string;
 }
+
+interface TopDelegator {
+  stakeKey: string;
+  balance: number;
+  poolId: string;
+  tickerName: string;
+  poolName: string;
+}
