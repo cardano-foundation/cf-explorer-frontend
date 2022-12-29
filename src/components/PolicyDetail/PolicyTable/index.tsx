@@ -13,6 +13,7 @@ import { ReactComponent as AssetHolderIcon } from "../../../commons/resources/ic
 import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
 import { LinkComponent, TitleTab } from "./styles";
+import { Tooltip } from "@mui/material";
 
 const PolicyTable = () => {
   const [activeTab, setActiveTab] = React.useState<"token" | "assetHolder">("token");
@@ -52,19 +53,23 @@ const PolicyTable = () => {
 
   const columnsToken: Column<TokenPolicys>[] = [
     {
-      title: "Token name",
+      title: "Token Name",
       key: "tokenname",
       minWidth: "50px",
       render: r => <LinkComponent to={details.token(r.fingerprint)}>{r.displayName || r.name}</LinkComponent>,
     },
     {
-      title: "Token id",
+      title: "Token ID",
       key: "id",
       minWidth: "100px",
-      render: r => <LinkComponent to={details.token(r.fingerprint)}>{getShortHash(r.fingerprint)}</LinkComponent>,
+      render: r => (
+        <Tooltip placement="top" title={r.fingerprint}>
+          <LinkComponent to={details.token(r.fingerprint)}>{getShortHash(r.fingerprint)}</LinkComponent>
+        </Tooltip>
+      ),
     },
     {
-      title: "Create Date",
+      title: "Created Date",
       key: "date",
       minWidth: "150px",
       render: r => moment(r.createdOn).format("MM/DD/YYYY hh:mm:ss"),
@@ -73,7 +78,7 @@ const PolicyTable = () => {
       title: "Total Supply",
       key: "totalSupply",
       minWidth: "150px",
-      render: r => <>{formatADA(r?.supply ?? "")}</>,
+      render: r => <>{formatADA(r?.supply ? +r.supply * 10 ** 6 : "")}</>,
     },
     {
       title: "Total Transactions",
@@ -88,7 +93,11 @@ const PolicyTable = () => {
       title: "Address",
       key: "address",
       minWidth: "50px",
-      render: r => <LinkComponent to={details.address(r.address)}>{getShortWallet(r.address || "")}</LinkComponent>,
+      render: r => (
+        <Tooltip placement="top" title={r.address}>
+          <LinkComponent to={details.address(r.address)}>{getShortWallet(r.address || "")}</LinkComponent>
+        </Tooltip>
+      ),
     },
     {
       title: "Token name",
@@ -100,7 +109,11 @@ const PolicyTable = () => {
       title: "Token id",
       key: "id",
       minWidth: "100px",
-      render: r => <LinkComponent to={details.token(r.fingerprint)}>{getShortHash(r.fingerprint || "")}</LinkComponent>,
+      render: r => (
+        <Tooltip placement="top" title={r.fingerprint}>
+          <LinkComponent to={details.token(r.fingerprint)}>{getShortHash(r.fingerprint || "")}</LinkComponent>
+        </Tooltip>
+      ),
     },
     {
       title: "Balance",

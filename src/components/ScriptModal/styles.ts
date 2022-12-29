@@ -64,5 +64,5 @@ export const ButtonLink = styled(Link)(({ theme }) => ({
   textAlign: "left",
   wordBreak: "break-all",
   marginTop: theme.spacing(2),
-  display: "inline-block",
+  display: "inline",
 }));

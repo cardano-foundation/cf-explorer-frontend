@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 
 import DetailHeader from "../../commons/DetailHeader";
 import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 
 import { CONFIRMATION_STATUS } from "../../../commons/utils/constants";
-import { Box } from "@mui/material";
-import { ConfirmStatus, TitleCard } from "./component";
+import { Box, Button, IconButton } from "@mui/material";
+import { ConfirmStatus, StyledLink, TitleCard } from "./component";
 import { ADAToken } from "../../commons/Token";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
@@ -18,6 +18,9 @@ import slotIcon from "../../../commons/resources/icons/slot.svg";
 import txInputIcon from "../../../commons/resources/icons/txInput.svg";
 import txOutputIcon from "../../../commons/resources/icons/txOutput.svg";
 import CopyButton from "../../commons/CopyButton";
+import { details } from "../../../commons/routers";
+import DropdownDetail from "../../commons/DropdownDetail";
+import { BiShowAlt } from "react-icons/bi";
 
 interface Props {
   data: Transaction | null;
@@ -25,6 +28,8 @@ interface Props {
 }
 
 const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
+  const [openListInput, setOpenListInput] = useState(false);
+  const [openListOutput, setOpenListOutput] = useState(false);
   const renderConfirmationTag = () => {
     if (data && data.tx && data.tx.confirmation) {
       if (data.tx.confirmation <= 2) {
@@ -41,14 +46,36 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       icon: txInputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Input </TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <TitleCard mr={1} height={24}>
+            Input{" "}
+            {data?.utxOs && data?.utxOs?.inputs?.length > 1 && (
+              <IconButton
+                style={{ padding: 0 }}
+                onClick={() => {
+                  setOpenListOutput(false);
+                  setOpenListInput(!openListInput);
+                }}
+              >
+                <BiShowAlt color={openListInput ? "#000" : "#98a2b3"} />
+              </IconButton>
+            )}
+          </TitleCard>
         </Box>
       ),
-      value: data?.summary && data?.summary?.stakeAddressTxInputs.length > 0 && (
-        <Box color={props => props.colorBlue}>
-          {getShortWallet(data?.summary?.stakeAddressTxInputs[0]?.address || "")}
-          <CopyButton text={data?.summary?.stakeAddressTxInputs[0]?.address || ""} />
+      value: data?.utxOs && data?.utxOs?.inputs?.length > 0 && (
+        <Box position={"relative"}>
+          <StyledLink to={details.address(data?.utxOs?.inputs[0]?.address || "")}>
+            {getShortWallet(data?.utxOs?.inputs[0]?.address || "")}
+          </StyledLink>
+          <CopyButton text={data?.utxOs?.inputs[0]?.address || ""} />
+          {openListInput && (
+            <DropdownDetail
+              minWidth={200}
+              title="Address list"
+              value={data?.utxOs?.inputs.map(i => i.address) || []}
+              close={() => setOpenListInput(false)}
+            />
+          )}
         </Box>
       ),
     },
@@ -56,14 +83,36 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       icon: txOutputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Output </TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <TitleCard mr={1} height={24}>
+            Output{" "}
+            {data?.utxOs && data?.utxOs?.outputs?.length > 1 && (
+              <IconButton
+                style={{ padding: 0 }}
+                onClick={() => {
+                  setOpenListOutput(!openListOutput);
+                  setOpenListInput(false);
+                }}
+              >
+                <BiShowAlt color={openListOutput ? "#000" : "#98a2b3"} />
+              </IconButton>
+            )}
+          </TitleCard>
         </Box>
       ),
-      value: data?.summary && data?.summary?.stakeAddressTxOutputs.length > 0 && (
-        <Box color={props => props.colorBlue}>
-          {getShortWallet(data?.summary?.stakeAddressTxOutputs[0]?.address || "")}
-          <CopyButton text={data?.summary?.stakeAddressTxOutputs[0]?.address || ""} />
+      value: data?.utxOs && data?.utxOs?.outputs?.length > 0 && (
+        <Box position={"relative"}>
+          <StyledLink to={details.address(data?.utxOs?.outputs[0]?.address || "")}>
+            {getShortWallet(data?.utxOs?.outputs[0]?.address || "")}
+          </StyledLink>
+          <CopyButton text={data?.utxOs?.outputs[0]?.address || ""} />
+          {openListOutput && (
+            <DropdownDetail
+              minWidth={200}
+              title="Address list"
+              value={data?.utxOs?.outputs.map(i => i.address) || []}
+              close={() => setOpenListOutput(false)}
+            />
+          )}
         </Box>
       ),
     },
@@ -111,8 +160,10 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       icon: cubeIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Block</TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <TitleCard height={24} mr={1}>
+            {" "}
+            Block
+          </TitleCard>
         </Box>
       ),
       value: data?.tx?.blockNo || 0,
@@ -121,13 +172,15 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       icon: slotIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Slot</TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <TitleCard height={24} mr={1}>
+            {" "}
+            Slot
+          </TitleCard>
         </Box>
       ),
       value: (
         <>
-          ${data?.tx?.epochSlot || 0}/
+          {data?.tx?.epochSlot || 0}/
           <Box component={"span"} fontWeight="400">
             432000
           </Box>

@@ -66,7 +66,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
     {
       title: "Block",
       key: "block",
-      minWidth: 60,
+      minWidth: 120,
       render: r => (
         <Box>
           <Box>
@@ -81,7 +81,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
     {
       title: "Addresses",
       key: "address",
-      minWidth: "200px",
+      minWidth: 120,
       render(r, index) {
         return (
           <div>

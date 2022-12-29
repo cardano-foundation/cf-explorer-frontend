@@ -14,11 +14,12 @@ interface IDropdownDetailProps {
   title: string;
   value: string[];
   close?: () => void;
+  minWidth?: number | string;
 }
 
-const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close }) => {
+const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, minWidth}) => {
   return (
-    <ListDropdownContainer>
+    <ListDropdownContainer minWidth={minWidth}>
       <ButtonClose onClick={close}>
         <img src={CloseIcon} alt="icon close" />
       </ButtonClose>
