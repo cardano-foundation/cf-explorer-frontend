@@ -21,6 +21,7 @@ import PolicyDetail from "./pages/PolicyDetail";
 import ContractList from "./pages/ContractList";
 import ContractDetail from "./pages/ContractDetail";
 import TopAddresses from "./pages/TopAddresses";
+import TopDelegators from "./pages/TopDelegators";
 
 const Routes: React.FC = () => {
   return (
@@ -44,6 +45,7 @@ const Routes: React.FC = () => {
       <Route path={routers.ADDRESS_DETAIL} exact component={AddressWalletDetail} />
       <Route path={routers.POLICY_DETAIL} exact component={PolicyDetail} />
       <Route path={routers.ADDRESS_LIST} exact component={TopAddresses} />
+      <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );

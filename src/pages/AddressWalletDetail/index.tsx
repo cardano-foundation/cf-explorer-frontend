@@ -50,7 +50,7 @@ const AddressWalletDetail = () => {
   >(`/address/analytics/${address}/${analyticTime}`);
   const { data: balance, loading: balanceLoading } = useFetch<number[]>(`/address/min-max-balance/${address}`);
 
-  const { data: dataStake, error: errorStake, loading: loadingStake } = useFetch<WalletStake>(`/stakeKey/${address}`);
+  const { data: dataStake, error: errorStake, loading: loadingStake } = useFetch<WalletStake>(`/stake/address/${address}`);
 
   const itemRight = [
     { title: "Transaction", value: data?.txCount || 0 },
