@@ -30,7 +30,6 @@ interface DelegationOverview {
   delegators: number;
   saturation: number;
   reward: number;
-  fee: number;
   ros: number;
   pledge: number;
   cost: number;

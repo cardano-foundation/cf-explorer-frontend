@@ -75,6 +75,7 @@ export const DataContainer = styled("div")`
 `;
 
 export const Item = styled(Grid)<{ top?: number }>`
+  position: relative;
   padding: ${({ top }) => (top ? 0 : 20)}px 25px ${({ top }) => (top ? 20 : 0)}px;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: ${({ top }) => (top ? "1px solid rgba(0, 0, 0, 0.1)" : "none")};
@@ -102,14 +103,24 @@ export const StyledImg = styled("img")`
   height: 24px;
 `;
 
+export const InfoImg = styled("img")`
+  width: 14px;
+`;
+
 export const InfoTitle = styled(Box)`
   display: flex;
-  align-items: center;
-  gap: 7px;
+  justify-content: space-between;
   font-size: 14px;
   opacity: 0.5;
   margin-top: 14px;
   margin-bottom: 5px;
+  cursor: pointer;
+`;
+
+export const StyledTitle = styled("span")`
+  display: flex;
+  align-items: center;
+  gap: 7px;
 `;
 
 export const InfoValue = styled(Box)`
@@ -130,11 +141,7 @@ export const StyledLinearProgress = styled(LinearProgress)`
   }
 `;
 
-export const StyledGrid = styled(Grid)`
-  /* width: 100%;
-  display: flex;
-  flex-wrap: wrap; */
-`;
+export const StyledGrid = styled(Grid)``;
 
 export const FlexGap10 = styled("div")`
   display: flex;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import {
@@ -18,6 +18,7 @@ import { details, routers } from "../../../commons/routers";
 import { formatADA, getShortWallet } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import CustomTooltip from "../../commons/CustomTooltip";
+import DropdownDetail from "../../commons/DropdownDetail";
 
 import {
   BackButton,
@@ -28,6 +29,7 @@ import {
   HeaderDetailContainer,
   HeaderTitle,
   HeaderTitleSkeleton,
+  InfoImg,
   InfoTitle,
   InfoValue,
   Item,
@@ -39,6 +41,7 @@ import {
   StyledGrid,
   StyledImg,
   StyledLinearProgress,
+  StyledTitle,
 } from "./styles";
 
 interface IDelegationDetailInfo {
@@ -50,6 +53,9 @@ interface IDelegationDetailInfo {
 }
 
 const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId, saving, setSaving }) => {
+  const [isOpenReward, setOpenReward] = useState<boolean>(false);
+  const [isOpenOwner, setOpenOwner] = useState<boolean>(false);
+
   if (loading) {
     return (
       <HeaderDetailContainer>
@@ -93,21 +99,35 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={TickerIcon} alt="Ticker Icon" />
             <InfoTitle>
-              Ticker <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
+              <StyledTitle>
+                Ticker <InfoImg src={InfoIcon} alt="Info Icon" />
+              </StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.tickerName || ""}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={CalendarIcon} alt="Calendar Icon" />
             <InfoTitle>
-              Created date <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
+              <StyledTitle>
+                Created date <InfoImg src={InfoIcon} alt="Info Icon" />
+              </StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.createDate || ""}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={RewardIcon} alt="Reward Icon" />
             <InfoTitle>
-              Reward Account <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
+              <StyledTitle>
+                Reward Account <InfoImg src={InfoIcon} alt="Info Icon" />
+              </StyledTitle>
+              <button
+                onClick={() => {
+                  setOpenReward(!isOpenReward);
+                  setOpenOwner(false);
+                }}
+              >
+                View all
+              </button>
             </InfoTitle>
             <InfoValue>
               {data?.rewardAccounts ? (
@@ -126,11 +146,33 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 ""
               )}
             </InfoValue>
+            {isOpenReward && (
+              <DropdownDetail
+                title="Reward account list"
+                value={data?.rewardAccounts || []}
+                close={() => setOpenReward(false)}
+              />
+            )}
           </Item>
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={UserIcon} alt="User Icon" />
-            <InfoTitle>
-              Owner Account <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
+            <InfoTitle
+              onClick={() => {
+                setOpenOwner(!isOpenOwner);
+                setOpenReward(false);
+              }}
+            >
+              <StyledTitle>
+                Owner Account <InfoImg src={InfoIcon} alt="Info Icon" />
+              </StyledTitle>
+              <button
+                onClick={() => {
+                  setOpenOwner(!isOpenOwner);
+                  setOpenReward(false);
+                }}
+              >
+                View all
+              </button>
             </InfoTitle>
             <InfoValue>
               {data?.ownerAccounts ? (
@@ -149,13 +191,22 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 ""
               )}
             </InfoValue>
+            {isOpenOwner && (
+              <DropdownDetail
+                title="Owner address list"
+                value={data?.ownerAccounts || []}
+                close={() => setOpenOwner(false)}
+              />
+            )}
           </Item>
         </StyledGrid>
         <StyledGrid container>
           <Item item xs={6} md={3}>
             <StyledImg src={DropIcon} alt="Drop Icon" />
             <InfoTitle>
-              Pool size <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
+              <StyledTitle>
+                Pool size <InfoImg src={InfoIcon} alt="Info Icon" />
+              </StyledTitle>
             </InfoTitle>
             <InfoValue>
               <FlexGap10>
@@ -167,7 +218,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3}>
             <StyledImg src={HighestIcon} alt="Highest Icon" />
             <InfoTitle>
-              Stake limit <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
+              <StyledTitle>
+                Stake limit <InfoImg src={InfoIcon} alt="Info Icon" />
+              </StyledTitle>
             </InfoTitle>
             <InfoValue>
               <FlexGap10>
@@ -179,7 +232,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3}>
             <StyledImg src={DelegatorIcon} alt="Delegator Icon" />
             <InfoTitle>
-              Delegators <img src={InfoIcon} alt="Info Icon" style={{ width: 14 }} />
+              <StyledTitle>
+                Delegators <InfoImg src={InfoIcon} alt="Info Icon" />
+              </StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.delegators || ""}</InfoValue>
           </Item>

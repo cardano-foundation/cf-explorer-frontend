@@ -1,7 +1,7 @@
 import { Grid, Skeleton } from "@mui/material";
 import React from "react";
 
-import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADA, formatPercent, numberWithCommas } from "../../../commons/utils/helper";
 
 import { Item, StyledContainer, Title, Value } from "./styles";
 
@@ -13,8 +13,8 @@ interface IDelegationDetailOverview {
 const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, loading }) => {
   const overviewData = {
     Reward: data?.reward ? `${data.reward}%` : "0%",
-    Fee: data?.fee ? `${data.fee}%` : "0%",
-    ROS: data?.ros ? `${data.ros}%` : "0%",
+    Fee: data?.margin ? formatPercent(data.margin) : "0%",
+    ROS: data?.ros ? formatPercent(data.ros) : "0%",
     "Pledge(A)": formatADA(data?.pledge) || 0,
     "Cost(A)": formatADA(data?.cost) || 0,
     "Epoch Block": data?.epochBlock || 0,

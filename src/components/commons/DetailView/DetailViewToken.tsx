@@ -193,7 +193,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
             <TokenHeaderInfo>
               <TokenTotalSupply>
                 <TokenInfoLabel>Total Supply</TokenInfoLabel>
-                <TokenInfoValue>{formatCurrency((data.supply || 0) / 10 ** 6)}</TokenInfoValue>
+                <TokenInfoValue>{formatCurrency(data.supply || 0)}</TokenInfoValue>
               </TokenTotalSupply>
               <TokenDecimal>
                 <TokenInfoLabel>Decimal</TokenInfoLabel>
