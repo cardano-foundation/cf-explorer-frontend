@@ -42,13 +42,6 @@ const HomeStatistic: React.FC<Props> = () => {
             <Content>
               <Name>Ada Price</Name>
               <Title>TBA</Title>
-              {/* <Small>
-                <b>TBA</b>
-              </Small>
-              <RateIcon src={adaPrice > 0 ? UpGreenIcon : DownRedIcon} alt="price rate" />
-              <Value up={adaPrice > 0}>
-                <b>TBA</b>
-              </Value> */}
             </Content>
           </Item>
         )}

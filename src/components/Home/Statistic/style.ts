@@ -38,11 +38,14 @@ export const Name = styled("h4")`
   width: calc(100% - 60px);
   margin-bottom: 0.75rem;
   color: #344054;
+  font-family: var(--font-family-text);
+  font-size: 14px;
 `;
 
 export const Title = styled("h3")`
   font-family: var(--font-family-text);
   margin-bottom: 0.25rem;
+  font-size: 20px;
 `;
 
 export const Small = styled("small")`
