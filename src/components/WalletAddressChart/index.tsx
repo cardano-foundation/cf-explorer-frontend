@@ -139,7 +139,7 @@ const Chart = ({ data }: { data: WalletAddressChartProps["data"] }) => {
   const [categories, setCategories] = useState<string[]>([]);
   useEffect(() => {
     if (data) {
-      setData(data.map(i => +formatADA(+i.value || 0)));
+      setData(data.map(i => +formatADA(i.value || 0).replace(",", "")));
       setCategories(data.map(i => moment(i.date).format("DD MMM")));
     }
   }, [data]);

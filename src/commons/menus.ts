@@ -36,7 +36,7 @@ export const menus: Menu[] = [
       { title: "Blocks", href: routers.BLOCK_LIST },
       { title: "Transactions", href: routers.TRANSACTION_LIST },
       { title: "Tokens", href: "/tokens" },
-      { title: "Top Delegators", href: routers.DELEGATION_POOLS },
+      { title: "Top Delegators", href: routers.TOP_DELEGATOR },
       { title: "Top Addresses", href: "/addresses" },
       { title: "Contracts", href: routers.CONTRACT_LIST },
     ],

@@ -22,6 +22,7 @@ export const routers = {
   NFT_LIST: "/nfts",
   POLICY_DETAIL: "/policy/:policyId",
   NFT_DETAIL: "/nft/:nftId",
+  TOP_DELEGATOR: "/top-delegator",
   NOT_FOUND: "/*",
 };
 
