@@ -2,7 +2,7 @@ import { Grid, Skeleton } from "@mui/material";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
-import { BlankBlueIcon, AIcon } from "../../../commons/resources";
+import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -55,15 +55,9 @@ const LatestTransactions: React.FC = () => {
                 const { hash, addressesInput, addressesOutput, blockNo, totalOutput } = item;
                 return (
                   <Grid item xl lg={3} xs={6} key={hash}>
-                    <Item
-                      onClick={e =>
-                        handleClicktWithoutAnchor(e, () =>
-                          history.push(details.transaction(hash))
-                        )
-                      }
-                    >
+                    <Item onClick={e => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
                       <ItemHeader>
-                        <PriceImage src={AIcon} alt="check green" />
+                        <PriceImage src={ADAIcon} alt="check green" />
                         <PriveValue>{formatADA(totalOutput)}</PriveValue>
                       </ItemHeader>
                       <ItemDetail>
