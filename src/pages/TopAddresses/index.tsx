@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
 import { formatADA, getShortHash } from "../../commons/utils/helper";
-import { routers } from "../../commons/routers";
+import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
 import Table, { Column } from "../../components/commons/Table";
@@ -27,12 +27,12 @@ const TopAddresses: React.FC<Props> = () => {
     initialized,
     total,
     currentPage,
-  } = useFetchList<Transactions>("tx/list", {
+  } = useFetchList<Address>("address/top-addresses", {
     page: query.page ? +query.page - 1 : 0,
     size: query.size ? (query.size as string) : 10,
   });
 
-  const columns: Column<Transactions>[] = [
+  const columns: Column<Address>[] = [
     {
       title: "#",
       key: "id",
@@ -46,10 +46,8 @@ const TopAddresses: React.FC<Props> = () => {
 
       render: r => (
         <div>
-          <CustomTooltip title={r.hash} placement="top">
-            <StyledLink to={routers.CONTRACT_DETAIL.replace(":address", `${r.hash}`)}>
-              {getShortHash(r.hash)}
-            </StyledLink>
+          <CustomTooltip title={r.address} placement="top">
+            <StyledLink to={details.address(r.address)}>{getShortHash(r.address)}</StyledLink>
           </CustomTooltip>
         </div>
       ),
@@ -60,7 +58,7 @@ const TopAddresses: React.FC<Props> = () => {
       minWidth: 60,
       render: r => (
         <Box display="flex" alignItems="center">
-          <Box mr={1}>{formatADA(r.fee) || 0}</Box>
+          <Box mr={1}>{formatADA(r.balance) || 0}</Box>
           <img src={AIcon} alt="a icon" />
         </Box>
       ),
