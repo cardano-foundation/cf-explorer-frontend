@@ -4,7 +4,7 @@ import WalletIcon from "./icons/wallet.svg";
 
 import HeaderSearchIcon from "./icons/header-search.svg";
 import CopyIcon from "./icons/copy.svg";
-import CloseIcon from "./icons/close.svg";
+import CloseIcon from "./icons/closeIcon.svg";
 import FooterBackgroundIcon from "./icons/footer-bg.svg";
 import FacebookIcon from "./icons/facebook.svg";
 import GithubIcon from "./icons/github.svg";
