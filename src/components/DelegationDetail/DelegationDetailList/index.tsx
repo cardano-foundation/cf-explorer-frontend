@@ -44,19 +44,19 @@ const DelegationEpochList = ({
       ),
     },
     {
-      title: "Stake Amount(A)",
+      title: "Stake Amount (A)",
       key: "stakeAmount",
       minWidth: "120px",
       render: data => <> {formatADA(data.stakeAmount)}</>,
     },
     {
-      title: "Delegator Reward(A)",
+      title: "Delegator Reward (A)",
       key: "delegatorReward",
       minWidth: "120px",
       render: data => <>{formatADA(data.delegatorReward)}</>,
     },
     {
-      title: "Fees(A)",
+      title: "Fees (A)",
       key: "fees",
       minWidth: "120px",
       render: data => <>{formatADA(data.fees)}</>,
@@ -132,7 +132,7 @@ const DelegationStakingDelegatorsList = ({
         ),
     },
     {
-      title: "Total Value(A)",
+      title: "Total Value (A)",
       key: "value",
       minWidth: "120px",
       render: data => <> {formatADA(data.totalStake || 0)}</>,
@@ -144,7 +144,7 @@ const DelegationStakingDelegatorsList = ({
       render: data => <>{moment(data.time).format("DD/MM/YYYY HH:mm/ss")}</>,
     },
     {
-      title: "Fees(A)",
+      title: "Fees (A)",
       key: "fees",
       minWidth: "120px",
       render: data => <>{formatADA(data.fee || 0)}</>,
