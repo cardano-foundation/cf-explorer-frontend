@@ -13,7 +13,7 @@ interface ScriptModalProps {
   policy: string;
 }
 const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
-  console.log("policy",policy);
+  console.log("policy", policy);
   const { data, loading } = useFetch<PolicyDetail>(`/policy/${policy && policy}`);
 
   return (
@@ -32,10 +32,8 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
         )}
         {!loading && (
           <Box>
-            <ButtonLink to={details.policyDetail(data?.policyId || "")}>
-              {data?.policyId || ""}
-              <CopyButton text={data?.policyId || ""} />
-            </ButtonLink>
+            <ButtonLink to={details.policyDetail(data?.policyId || "")}>{data?.policyId || ""}</ButtonLink>
+            <CopyButton text={data?.policyId || ""} />
           </Box>
         )}
         {loading && (

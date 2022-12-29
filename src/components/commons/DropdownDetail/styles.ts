@@ -10,7 +10,8 @@ export const InfoValue = styled(Box)`
 export const ListDropdownContainer = styled(Box)`
   position: absolute;
   top: calc(100% + 1px);
-  left: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
   width: 100%;
   max-height: 300px;
   background: #ffffff;

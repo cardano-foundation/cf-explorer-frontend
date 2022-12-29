@@ -48,7 +48,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
             </div>
             <Box display={"flex"} alignItems={"center"}>
               <Box mr={"8px"}>
-                <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
+                <span className={`${styles.address} ${type === "down" ? styles.up : styles.down}`}>
                   {type === "up" ? `- ${formatADA(item?.amount)}` : `+ ${formatADA(item?.amount)}`}
                 </span>
               </Box>
