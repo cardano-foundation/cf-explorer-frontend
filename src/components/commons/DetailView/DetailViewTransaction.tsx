@@ -146,7 +146,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
       if (data.tx.confirmation > 9) {
         return CONFIRMATION_STATUS.HIGH;
       }
-      if (data.tx.confirmation <= 8) {
+      if (2 < data.tx.confirmation && data.tx.confirmation <= 8) {
         return CONFIRMATION_STATUS.MEDIUM;
       }
       return CONFIRMATION_STATUS.LOW;
