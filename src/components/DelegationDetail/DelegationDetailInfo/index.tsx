@@ -1,3 +1,4 @@
+import { Box, Skeleton } from "@mui/material";
 import React, { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link } from "react-router-dom";
@@ -71,7 +72,10 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <PoolId>
           <PoolIdSkeleton variant="rectangular" />
         </PoolId>
-        <SavingImg src={saving ? SaveOnIcon : SaveOffIcon} alt="Save Icon" onClick={() => setSaving(!saving)} />
+        <Box borderRadius={props => props.borderRadius} overflow="hidden">
+          <Skeleton variant="rectangular" height={250} width="100%" />
+        </Box>
+        {/* <SavingImg src={saving ? SaveOnIcon : SaveOffIcon} alt="Save Icon" onClick={() => setSaving(!saving)} /> */}
       </HeaderDetailContainer>
     );
   }
@@ -133,12 +137,14 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               {data?.rewardAccounts ? (
                 <>
                   <CustomTooltip placement="top" title={data?.rewardAccounts[0] || ""}>
-                    <Link
+                    <Box
+                      component={Link}
                       to={details.address(data?.rewardAccounts[0] || "")}
                       style={{ fontFamily: "var(--font-family-text)" }}
+                      color={props => `${props.colorBlue} !important`}
                     >
                       {getShortWallet(data?.rewardAccounts[0] || "")}
-                    </Link>
+                    </Box>
                   </CustomTooltip>
                   <CopyButton text={data?.rewardAccounts[0] || ""} />
                 </>
@@ -178,12 +184,14 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               {data?.ownerAccounts ? (
                 <>
                   <CustomTooltip placement="top" title={data?.ownerAccounts[0] || ""}>
-                    <Link
+                    <Box
+                      component={Link}
+                      color={props => `${props.colorBlue} !important`}
                       to={details.address(data?.ownerAccounts[0] || "")}
                       style={{ fontFamily: "var(--font-family-text)" }}
                     >
                       {getShortWallet(data?.ownerAccounts[0] || "")}
-                    </Link>
+                    </Box>
                   </CustomTooltip>
                   <CopyButton text={data?.ownerAccounts[0] || ""} />
                 </>

@@ -1,4 +1,4 @@
-import { Grid, Skeleton } from "@mui/material";
+import { Box, Grid, Skeleton } from "@mui/material";
 import React from "react";
 
 import { formatADA, formatPercent, numberWithCommas } from "../../../commons/utils/helper";
@@ -28,7 +28,9 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
           {Object.keys(overviewData).map((i, ii) => {
             return (
               <Grid item xs={24} sm={12} md={8} key={ii} xl={6}>
-                <Skeleton variant="rectangular" />
+                <Box borderRadius={props => props.borderRadius} overflow="hidden">
+                  <Skeleton variant="rectangular" height={115} />
+                </Box>
               </Grid>
             );
           })}
