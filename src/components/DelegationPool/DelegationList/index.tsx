@@ -6,7 +6,8 @@ import Table, { Column } from "../../commons/Table";
 import { formatADA, formatPercent } from "../../../commons/utils/helper";
 
 import { routers } from "../../../commons/routers";
-import { LinearProgress, styled } from "@mui/material";
+import { Box, LinearProgress, styled } from "@mui/material";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 interface DelegationListProps {
   data: Delegators[];
@@ -32,7 +33,9 @@ const DelegationLists: React.FC<DelegationListProps> = ({ data, total, loading, 
       render: r => {
         return (
           <PoolName to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`)}>
-            {r.poolName || r.poolId}
+            <CustomTooltip title={r.poolName || r.poolId} placement="top">
+              <Box>{r.poolName || r.poolId}</Box>
+            </CustomTooltip>
           </PoolName>
         );
       },
@@ -119,5 +122,5 @@ const StyledLinearProgress = styled(LinearProgress)`
 
 const PoolName = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: var(--color-blue) !important;;
+  color: var(--color-blue) !important;
 `;
