@@ -125,14 +125,16 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               <StyledTitle>
                 Reward Account <InfoImg src={InfoIcon} alt="Info Icon" />
               </StyledTitle>
-              <button
-                onClick={() => {
-                  setOpenReward(!isOpenReward);
-                  setOpenOwner(false);
-                }}
-              >
-                View all
-              </button>
+              {data?.rewardAccounts && data.rewardAccounts.length > 1 && (
+                <button
+                  onClick={() => {
+                    setOpenReward(!isOpenReward);
+                    setOpenOwner(false);
+                  }}
+                >
+                  View all
+                </button>
+              )}
             </InfoTitle>
             <InfoValue>
               {data?.rewardAccounts ? (
@@ -172,14 +174,16 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               <StyledTitle>
                 Owner Account <InfoImg src={InfoIcon} alt="Info Icon" />
               </StyledTitle>
-              <button
-                onClick={() => {
-                  setOpenOwner(!isOpenOwner);
-                  setOpenReward(false);
-                }}
-              >
-                View all
-              </button>
+              {data?.ownerAccounts && data.ownerAccounts.length > 1 && (
+                <button
+                  onClick={() => {
+                    setOpenOwner(!isOpenOwner);
+                    setOpenReward(false);
+                  }}
+                >
+                  View all
+                </button>
+              )}
             </InfoTitle>
             <InfoValue>
               {data?.ownerAccounts ? (
