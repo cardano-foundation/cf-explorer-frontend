@@ -65,26 +65,15 @@ const SummaryItems = ({
             </Box>
           </Box>
           {item.tokens && (
-            <Box width={"100%"} display="flex" justifyContent={"space-between"} alignItems="center" flexWrap={"wrap"}>
-              <Box>
-                <Box>Token received: </Box>
-              </Box>
-              <Box display={"flex"} alignItems="center" justifyContent={"space-between"} flex={1}>
-                <Box overflow={"hidden"} display="flex" ml={3} flexWrap={"wrap"} gap={1}>
-                  {item.tokens.map((token, idx) => (
-                    <Box
-                      key={idx}
-                      display="flex"
-                      justifyContent={"flex-start"}
-                      alignItems="center"
-                      flexWrap={"nowrap"}
-                      width="auto"
-                    >
-                      <LabelStatus>{token.assetName}</LabelStatus>
-                    </Box>
-                  ))}
+            <Box display={"flex"} alignItems="center" flexWrap={"wrap"}>
+              <Box component={"span"}>Token received: </Box>
+
+              {item.tokens.map((token, idx) => (
+                <Box key={idx} width="auto" component={"span"}>
+                  <LabelStatus>{token.assetName}</LabelStatus>
                 </Box>
-              </Box>
+              ))}
+              {/* </Box> */}
             </Box>
           )}
         </Box>
