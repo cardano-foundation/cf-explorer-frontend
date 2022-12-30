@@ -73,7 +73,6 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Block</TitleCard>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       value: data?.blockNo || 0,
@@ -83,7 +82,6 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Slot</TitleCard>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       value: (

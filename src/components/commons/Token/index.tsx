@@ -13,11 +13,12 @@ const StyledADA = styled("img")<TokenProps>`
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
+  left: 0;
 `;
 
 export const ADAToken: React.FC<StyledComponentProps & TokenProps> = props => {
   return (
-    <Box position={"relative"} component="span">
+    <Box position={"relative"} component="span" minHeight={"1.5em"} minWidth="1.5em">
       <StyledADA src={TokenADA} {...props} />
     </Box>
   );
