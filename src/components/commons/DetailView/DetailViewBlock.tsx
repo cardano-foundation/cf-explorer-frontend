@@ -166,9 +166,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               </DetailLabel>
               <DetailValue>
                 <CustomTooltip placement="top" title={data.hash}>
-                  <StyledLink to={details.block(blockNo)}>
-                    {getShortHash(data.hash)}
-                  </StyledLink>
+                  <StyledLink to={details.block(blockNo)}>{getShortHash(data.hash)}</StyledLink>
                 </CustomTooltip>
                 <DetailCopy text={data.hash} />
               </DetailValue>
@@ -194,7 +192,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADA(data.totalFees) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -204,7 +202,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADA(data.totalOutput) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -214,9 +212,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               </DetailLabel>
               <DetailValue>
                 <CustomTooltip placement="top" title={data.slotLeader}>
-                  <StyledLink to={details.address(data.slotLeader)}>
-                    {getShortWallet(data.slotLeader)}
-                  </StyledLink>
+                  <StyledLink to={details.address(data.slotLeader)}>{getShortWallet(data.slotLeader)}</StyledLink>
                 </CustomTooltip>
                 <DetailCopy text={data.slotLeader} />
               </DetailValue>
