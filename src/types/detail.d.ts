@@ -3,6 +3,7 @@ type DetailHeaderTitle = {
   hash: string;
   slotLeader?: boolean;
   status?: keyof typeof TransactionStatus;
+  epochStatus?: IDataEpoch["status"];
 };
 
 type DetailHeaderBlock = {

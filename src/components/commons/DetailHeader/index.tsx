@@ -100,6 +100,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           <HeaderContainer>
             <HeaderTitle>{header.title}</HeaderTitle>
             {header.status && <HeaderStatus status={header.status}>{header.status}</HeaderStatus>}
+            {header.epochStatus && <HeaderStatus status={header.epochStatus}>{header.epochStatus}</HeaderStatus>}
           </HeaderContainer>
           {header.hash && (
             <SlotLeader>

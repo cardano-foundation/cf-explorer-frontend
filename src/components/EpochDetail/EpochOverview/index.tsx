@@ -22,13 +22,14 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       ? MAX_SLOT_EPOCH
       : (data?.endTime && data.startTime && moment(data.endTime).diff(data.startTime) / 1000) || 0;
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
+
   const listOverview = [
     {
       icon: timeIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Start time </TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: moment(data?.startTime).format("MM/DD/YYYY hh:mm:ss"),
@@ -38,7 +39,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>End time </TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <img src={infoIcon} alt="info icon"  width={18} />
         </Box>
       ),
       value: moment(data?.endTime).format("MM/DD/YYYY hh:mm:ss"),
@@ -48,7 +49,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Total Output</TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <img src={infoIcon} alt="info icon"  width={18} />
         </Box>
       ),
       value: (
@@ -63,7 +64,6 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Block</TitleCard>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       value: data?.blkCount || 0,
@@ -73,7 +73,6 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Slot</TitleCard>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       value: (
@@ -94,8 +93,9 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
         data && {
           type: "epoch",
           header: {
-            title: data.no,
+            title: "Epoch Detail",
             hash: "",
+            epochStatus: data.status || "",
           },
 
           blockDetail: {
