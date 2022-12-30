@@ -9,7 +9,7 @@ import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
 import { details } from "../../commons/routers";
-import { numberWithCommas } from "../../commons/utils/helper";
+import { getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AssetName, Logo, StyledContainer } from "./styles";
@@ -82,7 +82,11 @@ const Tokens: React.FC<ITokenList> = () => {
       title: "Asset Name",
       key: "assetName",
       minWidth: "100px",
-      render: r => <AssetName to={details.token(r?.fingerprint ?? "")}>{r.displayName}</AssetName>,
+      render: r => (
+        <AssetName to={details.token(r?.fingerprint ?? "")}>
+          {r.displayName && r.displayName.length > 20 ? getShortWallet(r.displayName || "") : r.displayName}
+        </AssetName> 
+      ),
     },
     {
       title: "Total Transactions",
