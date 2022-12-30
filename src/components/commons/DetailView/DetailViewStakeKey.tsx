@@ -28,7 +28,6 @@ import {
   ViewDetailScroll,
   StyledViewMore,
   StakeKeyHeader,
-  StakeKeyCopyButton,
   StakeKeyStatus,
   DetailLinkImage,
   StakeKeyLink,
@@ -41,6 +40,7 @@ import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import { ADAToken } from "../Token";
 import { TbFileCheck } from "react-icons/tb";
+import CopyButton from "../CopyButton";
 
 type DetailViewStakeKeyProps = {
   stakeId: string;
@@ -137,7 +137,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
           </CustomTooltip>
           <StakeKeyHeader>
             <StakeKeyLink to={details.stake(stakeId)}>{stakeId}</StakeKeyLink>
-            <StakeKeyCopyButton text={stakeId} />
+            <CopyButton text={stakeId} />
           </StakeKeyHeader>
           <Group>
             <DetailsInfoItem>

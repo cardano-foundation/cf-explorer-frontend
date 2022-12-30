@@ -37,7 +37,6 @@ import {
   DetailLinkIcon,
   DetailLinkRight,
   StyledLink,
-  DetailCopy,
   TxStatus,
   ConfirmStatus,
   DetailLinkName,
@@ -53,6 +52,7 @@ import { details } from "../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
+import CopyButton from "../CopyButton";
 
 type DetailViewTransactionProps = {
   hash: string;
@@ -202,7 +202,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                 <CustomTooltip placement="top" title={hash}>
                   <StyledLink to={details.transaction(hash)}>{getShortHash(hash)}</StyledLink>
                 </CustomTooltip>
-                <DetailCopy text={hash} />
+                <CopyButton text={hash} />
               </DetailValue>
             </DetailsInfoItem>
             {input && (
@@ -215,7 +215,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                   <CustomTooltip placement="top" title={input}>
                     <StyledLink to={details.address(input)}>{getShortWallet(input)}</StyledLink>
                   </CustomTooltip>
-                  <DetailCopy text={input} />
+                  <CopyButton text={input} />
                 </DetailValue>
               </DetailsInfoItem>
             )}
@@ -229,7 +229,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                   <CustomTooltip placement="top" title={output}>
                     <StyledLink to={details.address(output)}>{getShortWallet(output)}</StyledLink>
                   </CustomTooltip>
-                  <DetailCopy text={output} />
+                  <CopyButton text={output} />
                 </DetailValue>
               </DetailsInfoItem>
             )}

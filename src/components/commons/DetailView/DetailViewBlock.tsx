@@ -29,7 +29,6 @@ import {
   DetailLinkIcon,
   DetailLinkRight,
   StyledLink,
-  DetailCopy,
   DetailLinkName,
   ViewDetailScroll,
   StyledViewMore,
@@ -42,6 +41,7 @@ import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/
 import moment from "moment";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
+import CopyButton from "../CopyButton";
 
 type DetailViewBlockProps = {
   blockNo: number;
@@ -168,7 +168,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 <CustomTooltip placement="top" title={data.hash}>
                   <StyledLink to={details.block(blockNo)}>{getShortHash(data.hash)}</StyledLink>
                 </CustomTooltip>
-                <DetailCopy text={data.hash} />
+                <CopyButton text={data.hash} />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -214,7 +214,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 <CustomTooltip placement="top" title={data.slotLeader}>
                   <StyledLink to={details.address(data.slotLeader)}>{getShortWallet(data.slotLeader)}</StyledLink>
                 </CustomTooltip>
-                <DetailCopy text={data.slotLeader} />
+                <CopyButton text={data.slotLeader} />
               </DetailValue>
             </DetailsInfoItem>
           </Group>
