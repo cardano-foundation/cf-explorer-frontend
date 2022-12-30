@@ -175,9 +175,13 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
               <TokenMetaData>
                 <TokenInfo>
                   <TokenName>
-                    {data.displayName && data.displayName.length > 30
-                      ? getShortWallet(data.displayName)
-                      : data.displayName}
+                    {data.displayName && data.displayName.length > 25 ? (
+                      <CustomTooltip title={data.displayName} placement="top">
+                        <div>{getShortWallet(data.displayName)}</div>
+                      </CustomTooltip>
+                    ) : (
+                      data.displayName
+                    )}
                   </TokenName>
                   {tokenMetadata.logo ? (
                     <TokenIcon src={tokenMetadata.logo} alt="token logo" />
@@ -226,9 +230,13 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
               <DetailValue>
                 <TokenDetailInfo>
                   <TokenDetailName>
-                    {data.displayName && data.displayName?.length > 25
-                      ? getShortWallet(data.displayName)
-                      : data.displayName}
+                    {data.displayName && data.displayName.length > 20 ? (
+                      <CustomTooltip title={data.displayName} placement="top">
+                        <div>{getShortWallet(data.displayName)}</div>
+                      </CustomTooltip>
+                    ) : (
+                      data.displayName
+                    )}
                   </TokenDetailName>
                   {tokenMetadata.logo ? (
                     <TokenDetailIcon src={tokenMetadata.logo} alt="token logo" />
