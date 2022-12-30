@@ -43,6 +43,7 @@ import CubeIcon from "./icons/cube.svg";
 import CheckCircleIcon from "./icons/check-circle.svg";
 import ExchangeIcon from "./icons/exchange-alt.svg";
 import ADAIcon from "./icons/ADA.svg";
+import TokenADA from "./icons/tokenADA.svg";
 import OutputIcon from "./icons/output.svg";
 import MediumIcon from "./icons/medium.svg";
 import RocketBackground from "./icons/rocket-bg.svg";
@@ -120,6 +121,7 @@ export {
   CheckCircleIcon,
   ExchangeIcon,
   ADAIcon,
+  TokenADA,
   OutputIcon,
   MediumIcon,
   RocketBackground,

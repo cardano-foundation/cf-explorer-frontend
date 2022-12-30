@@ -119,7 +119,7 @@ const PolicyTable = () => {
       title: "Balance",
       key: "Balance",
       minWidth: "150px",
-      render: r => <>{formatADA(r?.quantity ?? "")}</>,
+      render: r => <>{formatADA(r.quantity ? r.quantity * 10 ** 6 : "")}</>,
     },
   ];
 
