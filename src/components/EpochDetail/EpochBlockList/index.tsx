@@ -60,7 +60,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ data, loading, initialized,
       minWidth: "100px",
       render: r => (
         <>
-          Address:
+          Input:
           <CustomTooltip placement="top" title={r.slotLeader}>
             <StyledAddress to={details.address(r.slotLeader)}>
               {getShortWallet(r.slotLeader)}

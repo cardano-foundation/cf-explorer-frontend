@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
+import { CONFIRMATION_STATUS, EPOCH_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import CopyButton from "../CopyButton";
 
 export const HeaderDetailContainer = styled(Container)`
@@ -39,11 +39,15 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
   border-radius: 4px;
 `;
 
-export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
+export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
   color: ${props => {
     switch (props.status) {
       case TRANSACTION_STATUS.SUCCESS:
         return props.theme.colorGreenLight;
+      case "IN_PROGRESS":
+        return props.theme.colorYellow;
+      case "FINISHED":
+        return props.theme.colorBlue;
       default:
         return props.theme.colorGreenLight;
     }
@@ -52,6 +56,10 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
     switch (props.status) {
       case TRANSACTION_STATUS.SUCCESS:
         return `${props.theme.colorGreenLight}32`;
+      case "IN_PROGRESS":
+        return `${props.theme.colorYellow}32`;
+      case "FINISHED":
+        return `${props.theme.colorBlue}32`;
       default:
         return `${props.theme.colorGreenLight}32`;
     }

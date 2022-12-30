@@ -17,11 +17,13 @@ interface EpochOverviewProps {
 }
 
 const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
+
   const slot =
     data?.status === "FINISHED"
       ? MAX_SLOT_EPOCH
       : (data?.endTime && data.startTime && moment(data.endTime).diff(data.startTime) / 1000) || 0;
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
+
   const listOverview = [
     {
       icon: timeIcon,
@@ -63,7 +65,6 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Block</TitleCard>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       value: data?.blkCount || 0,
@@ -73,7 +74,6 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Slot</TitleCard>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       value: (
@@ -94,8 +94,9 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
         data && {
           type: "epoch",
           header: {
-            title: data.no,
+            title: "Epoch Detail",
             hash: "",
+            epochStatus: data.status || "",
           },
 
           blockDetail: {
