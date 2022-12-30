@@ -1,4 +1,5 @@
 import { Box, Skeleton } from "@mui/material";
+import moment from "moment";
 import React, { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link } from "react-router-dom";
@@ -116,7 +117,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 Created date <InfoImg src={InfoIcon} alt="Info Icon" />
               </StyledTitle>
             </InfoTitle>
-            <InfoValue>{data?.createDate || ""}</InfoValue>
+            <InfoValue>{data?.createDate && moment(data.createDate).format("MM/DD/YYYY hh:mm:ss")}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={RewardIcon} alt="Reward Icon" />
