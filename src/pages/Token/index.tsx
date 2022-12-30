@@ -9,7 +9,7 @@ import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
 import { details } from "../../commons/routers";
-import { formatADA, numberWithCommas } from "../../commons/utils/helper";
+import { numberWithCommas } from "../../commons/utils/helper";
 import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AssetName, Logo, StyledContainer } from "./styles";
