@@ -100,13 +100,12 @@ const TableTab: React.FC<TableTabProps> = ({ type, data, error, initialized, loa
             <CustomTooltip
               title={r.poolData ? `${JSON.parse(r.poolData).ticker} - ${JSON.parse(r.poolData).name}` : ""}
             >
-              <Box
-                fontFamily={"Helvetica, monospace"}
-                color={props => props.colorBlue}
-                overflow={"hidden"}
-                textOverflow={"ellipsis"}
-              >
-                {r.poolData ? `${JSON.parse(r.poolData).ticker} - ${JSON.parse(r.poolData).name}` : ""}
+              <Box fontFamily={"Helvetica, monospace"} color={props => props.colorBlue}>
+                {r.poolData
+                  ? r.poolData.length > 30
+                    ? getShortHash(`${JSON.parse(r.poolData).ticker} - ${JSON.parse(r.poolData).name}`)
+                    : `${JSON.parse(r.poolData).ticker} - ${JSON.parse(r.poolData).name}`
+                  : ""}
               </Box>
             </CustomTooltip>
           </Link>
