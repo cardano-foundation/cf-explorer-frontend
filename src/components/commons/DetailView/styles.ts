@@ -3,7 +3,6 @@ import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS, STAKE_KEY_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import { BoxRaised } from "../BoxRaised";
-import CopyButton from "../CopyButton";
 import ViewAllButton from "../ViewAllButton";
 
 export const ViewDetailDrawer = styled(Drawer)`
@@ -319,10 +318,6 @@ export const DetailLinkRight = styled("span")`
   color: ${props => props.theme.textColorPale};
 `;
 
-export const DetailCopy = styled(CopyButton)`
-  padding: 0px;
-  margin-bottom: 3px;
-`;
 export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
   color: ${props => {
     switch (props.status) {
@@ -442,10 +437,6 @@ export const StakeKeyLink = styled(StyledLink)`
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-text-small);
   line-height: 1.575;
-`;
-
-export const StakeKeyCopyButton = styled(CopyButton)`
-  font-size: 1.5rem;
 `;
 
 export const StakeKeyStatus = styled("small")<{ status: StakeStaus }>`

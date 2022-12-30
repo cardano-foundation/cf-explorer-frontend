@@ -17,7 +17,6 @@ import {
   DetailLinkIcon,
   DetailLinkRight,
   StyledLink,
-  DetailCopy,
   DetailLinkName,
   TokenContainer,
   TokenTitle,
@@ -49,6 +48,7 @@ import axios from "axios";
 import moment from "moment";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
+import CopyButton from "../CopyButton";
 
 type DetailViewTokenProps = {
   tokenId: string;
@@ -215,7 +215,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                 <CustomTooltip placement="top" title={tokenId}>
                   <StyledLink to={details.token(tokenId)}>{getShortWallet(tokenId || "")}</StyledLink>
                 </CustomTooltip>
-                <DetailCopy text={tokenId} />
+                <CopyButton text={tokenId} />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
