@@ -21,6 +21,7 @@ import CopyButton from "../../commons/CopyButton";
 import { details } from "../../../commons/routers";
 import DropdownDetail from "../../commons/DropdownDetail";
 import { BiShowAlt } from "react-icons/bi";
+import { Tooltip } from "@mui/material";
 
 interface Props {
   data: Transaction | null;
@@ -64,9 +65,11 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
       value: data?.utxOs && data?.utxOs?.inputs?.length > 0 && (
         <Box position={"relative"}>
-          <StyledLink to={details.address(data?.utxOs?.inputs[0]?.address || "")}>
-            {getShortWallet(data?.utxOs?.inputs[0]?.address || "")}
-          </StyledLink>
+          <Tooltip title={data?.utxOs?.inputs[0]?.address || ""} placement="top">
+            <StyledLink to={details.address(data?.utxOs?.inputs[0]?.address || "")}>
+              {getShortWallet(data?.utxOs?.inputs[0]?.address || "")}
+            </StyledLink>
+          </Tooltip>
           <CopyButton text={data?.utxOs?.inputs[0]?.address || ""} />
           {openListInput && (
             <DropdownDetail
@@ -101,9 +104,11 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
       value: data?.utxOs && data?.utxOs?.outputs?.length > 0 && (
         <Box position={"relative"}>
-          <StyledLink to={details.address(data?.utxOs?.outputs[0]?.address || "")}>
-            {getShortWallet(data?.utxOs?.outputs[0]?.address || "")}
-          </StyledLink>
+          <Tooltip title={data?.utxOs?.outputs[0]?.address || ""} placement="top">
+            <StyledLink to={details.address(data?.utxOs?.outputs[0]?.address || "")}>
+              {getShortWallet(data?.utxOs?.outputs[0]?.address || "")}
+            </StyledLink>
+          </Tooltip>
           <CopyButton text={data?.utxOs?.outputs[0]?.address || ""} />
           {openListOutput && (
             <DropdownDetail
@@ -121,7 +126,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Time </TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: moment(data?.tx?.time).format("MM/DD/YYYY hh:mm:ss"),
@@ -131,7 +136,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Confirmation</TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: (
@@ -146,7 +151,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction Fees </TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: (

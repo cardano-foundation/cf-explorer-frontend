@@ -17,7 +17,6 @@ interface EpochOverviewProps {
 }
 
 const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
-
   const slot =
     data?.status === "FINISHED"
       ? MAX_SLOT_EPOCH
@@ -30,7 +29,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Start time </TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: moment(data?.startTime).format("MM/DD/YYYY hh:mm:ss"),
@@ -40,7 +39,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>End time </TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <img src={infoIcon} alt="info icon"  width={18} />
         </Box>
       ),
       value: moment(data?.endTime).format("MM/DD/YYYY hh:mm:ss"),
@@ -50,7 +49,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Total Output</TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <img src={infoIcon} alt="info icon"  width={18} />
         </Box>
       ),
       value: (

@@ -25,7 +25,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Created at </TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: moment(data?.time).format("MM/DD/YYYY hh:mm:ss"),
@@ -35,7 +35,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction</TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: data?.txCount || 0,
@@ -45,7 +45,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction Fees </TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: (
@@ -59,7 +59,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Total Output</TitleCard>
-          <img src={infoIcon} alt="info icon" />
+          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: (
