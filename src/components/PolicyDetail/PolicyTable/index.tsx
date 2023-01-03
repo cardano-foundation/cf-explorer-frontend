@@ -1,27 +1,21 @@
-import { Box } from "@mui/material";
 import moment from "moment";
-import { parse, stringify } from "qs";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { stringify } from "qs";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
-import { formatADA, getShortHash } from "../../../commons/utils/helper";
+import { formatADA, getPageInfo, getShortHash } from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
 import Table, { Column } from "../../commons/Table";
 import { LinkComponent } from "./styles";
 
 const PolicyTable = () => {
   const { policyId } = useParams<{ policyId: string }>();
-  const history = useHistory();
   const { search } = useLocation();
-  const query = parse(search.split("?")[1]);
-  const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
-  };
-  const { data, initialized, loading, total, currentPage } = useFetchList<TokenPolicys>(`/policy/${policyId}/tokens`, {
-    page: query.page ? +query.page - 1 : 0,
-    size: query.size ? (query.size as string) : 10,
-  });
+  const history = useHistory();
+  const pageInfo = getPageInfo(search);
+
+  const fetchData = useFetchList<TokenPolicys>(`/policy/${policyId}/tokens`, pageInfo);
 
   const columns: Column<TokenPolicys>[] = [
     {
@@ -59,18 +53,15 @@ const PolicyTable = () => {
   return (
     <Card title="Tokens">
       <Table
+        {...fetchData}
         columns={columns}
-        data={data || []}
-        loading={loading}
-        initialized={initialized}
-        total={{ count: total, title: "Total" }}
+        total={{ title: "Total", count: fetchData.total }}
         pagination={{
-          onChange: (page, size) => {
-            setQuery({ page, size });
-          },
-          page: currentPage || 0,
-          total: total,
+          ...pageInfo,
+          total: fetchData.total,
+          onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
         }}
+        onClickRow={(_, r: TokenPolicys) => history.push(details.token(r.fingerprint))}
       />
     </Card>
   );

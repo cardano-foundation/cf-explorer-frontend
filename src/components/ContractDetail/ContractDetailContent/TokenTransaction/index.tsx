@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { parse, stringify } from "qs";
 import moment from "moment";
-import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADA, getPageInfo, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import Table, { Column } from "../../../commons/Table";
 import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../../commons/CustomTooltip";
@@ -18,22 +18,10 @@ interface ITokenTransaction {
 const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
   const { search } = useLocation();
   const history = useHistory();
-  const query = parse(search.split("?")[1]);
-
-  const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
-  };
-
-  const {
-    data: transactions,
-    loading: transactionsLoading,
-    initialized,
-    total,
-    currentPage,
-  } = useFetchList<Transactions>(active ? "tx/list" : "", {
-    page: query.page ? +query.page - 1 : 0,
-    size: query.size ? (query.size as string) : 10,
-    tokenId: tokenId,
+  const pageInfo = getPageInfo(search);
+  const fetchData = useFetchList<Transactions>(active ? "tx/list" : "", {
+    ...pageInfo,
+    tokenId,
   });
 
   const columns: Column<Transactions>[] = [
@@ -143,18 +131,14 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
 
   return (
     <Table
+      {...fetchData}
       columns={columns}
-      data={transactions}
-      total={{ count: total, title: "Total Transactions" }}
-      loading={transactionsLoading}
-      initialized={initialized}
+      total={{ count: fetchData.total, title: "Total Transactions" }}
       onClickRow={(_, r: Transactions) => history.push(routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`))}
       pagination={{
-        onChange: (page, size) => {
-          setQuery({ page, size });
-        },
-        page: currentPage || 0,
-        total: total,
+        ...pageInfo,
+        total: fetchData.total,
+        onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
       }}
     />
   );

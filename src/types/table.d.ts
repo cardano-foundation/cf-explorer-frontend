@@ -44,7 +44,7 @@ export interface TableProps<T extends ColumnType = any> {
   };
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
-  selected?: number;
+  selected?: number | null;
   selectedProps?: {
     className?: string;
     style?: React.CSSProperties;

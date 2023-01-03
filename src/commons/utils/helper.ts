@@ -1,4 +1,5 @@
 import BigNumber from "bignumber.js";
+import { parse } from "qs";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const getShortWallet = (address: string) => {
@@ -104,3 +105,10 @@ export const handleClicktWithoutAnchor = (e: React.MouseEvent, fn: (e: React.Mou
 
 export const isExtenalLink = (href?: string) => href && (href.search("http://") >= 0 || href.search("https://") >= 0);
 export const formatPercent = (percent: number) => `${(percent * 100).toFixed(2)}%`;
+
+export const getPageInfo = (search: string): { page: number; size: number } => {
+  const query = parse(search.split("?")[1]);
+  const page = Number(query.page) > 0 ? Number(query.page) : 0;
+  const size = Number(query.size) > 0 ? Number(query.size) : 10;
+  return { page, size };
+};

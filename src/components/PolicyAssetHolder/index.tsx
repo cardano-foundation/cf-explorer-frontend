@@ -1,59 +1,33 @@
-import { Box, Modal, Skeleton } from "@mui/material";
+import { Box } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 
-import { details, routers } from "../../commons/routers";
-import delegatedIcon from "../../../commons/resources/icons/delegated.svg";
-import totalStakeIcon from "../../../commons/resources/icons/totalStake.svg";
-import rewardIcon from "../../../commons/resources/icons/reward.svg";
-import rewardWithdrawIcon from "../../../commons/resources/icons/rewardWithdraw.svg";
-import infoIcon from "../../../commons/resources/icons/info.svg";
-import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
-import timeIcon from "../../../commons/resources/icons/time.svg";
-import closeIcon from "../../../commons/resources/icons/closeIcon.svg";
+import { details } from "../../commons/routers";
 
-import { formatADA, getShortHash, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
+import { formatADA, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
 
 import CopyButton from "../commons/CopyButton";
 
 import {
   BackButton,
   BackText,
-  ButtonClose,
-  ButtonView,
-  CardInfoOverview,
-  CardItem,
   HeaderContainer,
   HeaderTitle,
-  LabelStatus,
   LinkComponent,
-  ModalContainer,
   SlotLeader,
   SlotLeaderContainer,
-  SlotLeaderSkeleton,
-  TitleCard,
-  ValueCard,
-  ViewJson,
 } from "./styles";
-import useFetch from "../../commons/hooks/useFetch";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { parse, stringify } from "qs";
+import { stringify } from "qs";
 import useFetchList from "../../commons/hooks/useFetchList";
 import Table, { Column } from "../commons/Table";
-import moment from "moment";
-import Card from "../commons/Card";
 
 const PolicyOverview = () => {
   const { policyId } = useParams<{ policyId: string }>();
-  const history = useHistory();
   const { search } = useLocation();
-  const query = parse(search.split("?")[1]);
-  const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
-  };
-  const { data, initialized, loading, total, currentPage } = useFetchList<PolicyHolder>(`/policy/${policyId}/holders`, {
-    page: query.page ? +query.page - 1 : 0,
-    size: query.size ? (query.size as string) : 10,
-  });
+  const history = useHistory();
+  const pageInfo = getPageInfo(search);
+
+  const fetchData = useFetchList<PolicyHolder>(`/policy/${policyId}/holders`, pageInfo);
 
   const columns: Column<PolicyHolder>[] = [
     {
@@ -107,18 +81,15 @@ const PolicyOverview = () => {
       </Box>
 
       <Table
+        {...fetchData}
         columns={columns}
-        data={data || []}
-        loading={loading}
-        initialized={initialized}
-        total={{ count: total, title: "Total" }}
+        total={{ title: "Total", count: fetchData.total }}
         pagination={{
-          onChange: (page, size) => {
-            setQuery({ page, size });
-          },
-          page: currentPage || 0,
-          total: total,
+          ...pageInfo,
+          total: fetchData.total,
+          onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
         }}
+        onClickRow={(_, r: PolicyHolder) => history.push(details.address(r.address))}
       />
     </Box>
   );

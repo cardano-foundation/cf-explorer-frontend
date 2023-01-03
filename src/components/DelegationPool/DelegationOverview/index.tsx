@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import moment from "moment";
 import React from "react";
+import useFetch from "../../../commons/hooks/useFetch";
 
 import { CurentEpochIcon, LiveStakeIcon, RocketBackground } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
@@ -9,12 +10,9 @@ import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
 
 import { StyledCard, StyledImg, StyledLinearProgress, StyledSkeleton } from "./styles";
 
-interface OverViewProps {
-  data: OverViewDelegation | null;
-  loading: boolean;
-}
+const OverViews: React.FC = () => {
+  const { data, loading } = useFetch<OverViewDelegation>("/delegation/header");
 
-const OverViews: React.FC<OverViewProps> = ({ data, loading }) => {
   if (loading) {
     return (
       <Grid container spacing={2}>

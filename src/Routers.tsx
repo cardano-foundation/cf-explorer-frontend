@@ -16,7 +16,7 @@ import Tokens from "./pages/Token";
 import TokenDetail from "./pages/TokenDetail";
 import Stake from "./pages/Stake";
 import StakeDetail from "./pages/StakeDetail";
-import AddressWalletDetail from "./pages/AddressWalletDetail";
+import AddressWalletDetail from "./components/AddressDetail/AddressAnalytics";
 import PolicyDetail from "./pages/PolicyDetail";
 import PolicyAssetHolder from "./pages/PolicyAssetHolder";
 import ContractList from "./pages/ContractList";

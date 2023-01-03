@@ -4,7 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { AIcon } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
-import { formatADA, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { PriceIcon, PriceValue, SmallText, StyledLink } from "./styles";
@@ -18,23 +18,9 @@ interface ITokenTopHolder {
 const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSupply }) => {
   const { search } = useLocation();
   const history = useHistory();
-  const query = parse(search.split("?")[1]);
+  const pageInfo = getPageInfo(search);
 
-  const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
-  };
-
-  const {
-    data: transactions,
-    loading: transactionsLoading,
-    initialized,
-    total,
-    currentPage,
-  } = useFetchList<ITokenTopHolderTable>(active ? `tokens/${tokenId}/top_holders` : "", {
-    page: query.page ? +query.page - 1 : 0,
-    size: query.size ? (query.size as string) : 10,
-    tokenId: tokenId,
-  });
+  const fetchData = useFetchList<IStakeKey>(`tokens/${tokenId}/top_holders`, { ...pageInfo, tokenId });
 
   const columns: Column<ITokenTopHolderTable>[] = [
     {
@@ -78,21 +64,15 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
 
   return (
     <Table
+      {...fetchData}
       columns={columns}
-      data={transactions}
-      total={{ count: total, title: "Total" }}
-      loading={transactionsLoading}
-      initialized={initialized}
-      onClickRow={(_, r: ITokenTopHolderTable) =>
-        history.push(details.address(r.address))
-      }
+      total={{ title: "Total", count: fetchData.total }}
       pagination={{
-        onChange: (page, size) => {
-          setQuery({ page, size });
-        },
-        page: currentPage || 0,
-        total: total,
+        ...pageInfo,
+        total: fetchData.total,
+        onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
       }}
+      onClickRow={(_, r: ITokenTopHolderTable) => history.push(details.address(r.address))}
     />
   );
 };

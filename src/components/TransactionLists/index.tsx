@@ -1,46 +1,30 @@
-import { useHistory } from "react-router-dom";
-import { stringify } from "qs";
+import { useHistory, useLocation } from "react-router-dom";
+import { parse, stringify } from "qs";
 import { Box } from "@mui/material";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { formatADA, getShortHash } from "../../commons/utils/helper";
+import { formatADA, getPageInfo, getShortHash } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
 import DetailViewTransaction from "../commons/DetailView/DetailViewTransaction";
 import { useState } from "react";
 import { useWindowSize } from "react-use";
-import { setOnDetailView } from "../../stores/user";
 import CustomTooltip from "../commons/CustomTooltip";
+import useFetchList from "../../commons/hooks/useFetchList";
 
 interface TransactionListProps {
   underline?: boolean;
-  transactions: Transactions[];
-  loading: boolean;
-  initialized: boolean;
-  total: number;
-  totalPage: number;
-  currentPage: number;
-  error?: string | null;
-  openDetail?: (_: any, r: Transactions) => void;
-  selected?: number;
+  url: string;
+  openDetail?: (_: any, r: Transactions, index: number) => void;
+  selected?: number | null;
 }
 
-const TransactionList: React.FC<TransactionListProps> = ({
-  underline = false,
-  currentPage,
-  loading,
-  initialized,
-  total,
-  transactions,
-  error,
-  openDetail,
-  selected,
-}) => {
+const TransactionList: React.FC<TransactionListProps> = ({ underline = false, url, openDetail, selected }) => {
+  const { search } = useLocation();
   const history = useHistory();
-  const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
-  };
+  const pageInfo = getPageInfo(search);
+  const fetchData = useFetchList<Transactions>(url, pageInfo);
 
   const columns: Column<Transactions>[] = [
     {
@@ -92,25 +76,24 @@ const TransactionList: React.FC<TransactionListProps> = ({
     },
   ];
 
+  const onClickRow = (_: any, r: Transactions, index: number) => {
+    if (openDetail) return openDetail(_, r, index);
+    history.push(details.transaction(r.hash));
+  };
+
   return (
     <Card title={"Transactions"} underline={underline}>
       <Table
+        {...fetchData}
         columns={columns}
-        data={transactions}
-        total={{ count: total, title: "Total Transactions" }}
-        loading={loading}
-        initialized={initialized}
+        total={{ count: fetchData.total, title: "Total Transactions" }}
         pagination={{
-          onChange: (page, size) => {
-            setQuery({ page, size });
-          },
-          page: currentPage || 0,
-          total: total,
+          ...pageInfo,
+          total: fetchData.total,
+          onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
         }}
-        onClickRow={openDetail}
+        onClickRow={onClickRow}
         selected={selected}
-        selectedProps={{ style: { backgroundColor: "#ECECEC" } }}
-        error={error}
       />
     </Card>
   );

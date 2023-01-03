@@ -5,7 +5,7 @@ import defaultAxios from "../utils/axios";
 
 interface Params {
     page?: number;
-    pageSize?: number;
+    size?: number;
     [key: string]: string | number | undefined;
 }
 
