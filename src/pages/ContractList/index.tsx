@@ -5,13 +5,15 @@ import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { formatADA, getShortHash } from "../../commons/utils/helper";
+import { exchangeADAToUSD, formatADA, getShortHash } from "../../commons/utils/helper";
 import { routers } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
 import Table, { Column } from "../../components/commons/Table";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
+import { useSelector } from "react-redux";
+import { RootState } from "../../stores/types";
 interface Props {}
 
 const Transactions: React.FC<Props> = () => {
@@ -25,8 +27,7 @@ const Transactions: React.FC<Props> = () => {
     page: query.page ? +query.page - 1 : 0,
     size: query.size ? (query.size as string) : 10,
   });
-
-  console.log(data);
+  const { adaRate } = useSelector(({ system }: RootState) => system);
 
   const columns: Column<Contracts>[] = [
     {
@@ -67,7 +68,7 @@ const Transactions: React.FC<Props> = () => {
       minWidth: 120,
       render: r => (
         <Box display="flex" alignItems="center">
-          "NaN"
+          {exchangeADAToUSD(r.balance, adaRate)}
         </Box>
       ),
     },

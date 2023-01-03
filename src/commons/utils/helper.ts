@@ -104,3 +104,11 @@ export const handleClicktWithoutAnchor = (e: React.MouseEvent, fn: (e: React.Mou
 
 export const isExtenalLink = (href?: string) => href && (href.search("http://") >= 0 || href.search("https://") >= 0);
 export const formatPercent = (percent: number) => `${(percent * 100).toFixed(2)}%`;
+
+export const exchangeADAToUSD = (value: number | string, rate: number) => {
+  if (!value) return 0;
+  const Ada = +value / 1000000;
+  const bigValue = new BigNumber(Ada.toString());
+  const exchangedValue = bigValue.multipliedBy(rate).toString();
+  return formatPrice(exchangedValue);
+};

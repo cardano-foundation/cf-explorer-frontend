@@ -1,11 +1,13 @@
 import { Autocomplete, Box, Grid } from "@mui/material";
 import React from "react";
 import { BiChevronDown } from "react-icons/bi";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import { AIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
-import { formatADA, formatPrice } from "../../../commons/utils/helper";
+import { exchangeADAToUSD, formatADA, formatPrice } from "../../../commons/utils/helper";
+import { RootState } from "../../../stores/types";
 import Card from "../../commons/Card";
 import CardAddress from "../../share/CardAddress";
 import { Pool, StyledAAmount, StyledTextField, WrapPaperDropdown } from "./styles";
@@ -14,6 +16,7 @@ const AddressOverview: React.FC = () => {
   const params = useParams<{ address: string }>();
   const { data, loading } = useFetch<WalletAddress>(`/address/${params.address}`);
   const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(`/stakeKey/${params.address}`);
+  const { adaRate } = useSelector(({ system }: RootState) => system);
 
   const itemLeft = [
     { title: "Transaction", value: data?.txCount },
@@ -26,7 +29,7 @@ const AddressOverview: React.FC = () => {
         </StyledAAmount>
       ),
     },
-    { title: "ADA Value", value: "NaN" },
+    { title: "ADA Value", value: exchangeADAToUSD(data?.balance || 0, adaRate) },
     {
       value: (
         <Autocomplete
@@ -94,9 +97,7 @@ const AddressOverview: React.FC = () => {
     },
     {
       title: "Delegated To",
-      value: (
-        <Pool to={details.delegation(dataStake?.pool.poolId)}>{dataStake?.pool.poolName}</Pool>
-      ),
+      value: <Pool to={details.delegation(dataStake?.pool.poolId)}>{dataStake?.pool.poolName}</Pool>,
     },
   ];
   return (
