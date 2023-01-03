@@ -79,11 +79,11 @@ export const formatADA = (value?: string | number, abbreviations: string[] = LAR
     if (exponential > 5) {
       const newValue = bigValue
         .div(10 ** exponential)
-        .toString()
-        .match(/^-?\d+(?:\.\d{0,2})?/);
+        .toFixed(2, 3)
+        .toString();
       const syntax = abbreviations[exponential / 3];
 
-      return `${newValue && newValue[0]}${syntax ?? `x 10^${exponential}`}`;
+      return `${newValue}${syntax ?? `x 10^${exponential}`}`;
     }
   }
 
