@@ -142,7 +142,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                   <CustomTooltip placement="top" title={data?.rewardAccounts[0] || ""}>
                     <Box
                       component={Link}
-                      to={details.address(data?.rewardAccounts[0] || "")}
+                      to={details.stake(data?.rewardAccounts[0] || "")}
                       style={{ fontFamily: "var(--font-family-text)" }}
                       color={props => `${props.colorBlue} !important`}
                     >
@@ -192,7 +192,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                     <Box
                       component={Link}
                       color={props => `${props.colorBlue} !important`}
-                      to={details.address(data?.ownerAccounts[0] || "")}
+                      to={details.stake(data?.ownerAccounts[0] || "")}
                       style={{ fontFamily: "var(--font-family-text)" }}
                     >
                       {getShortWallet(data?.ownerAccounts[0] || "")}
