@@ -55,27 +55,27 @@ const colums: Column<IStakeKey>[] = [
       </CustomTooltip>
     ),
   },
-  {
-    title: "Pool",
-    key: "pool",
-    render: r => {
-      if (r.poolNames === null) return null;
-      if (r.poolNames.length === 1)
-        return (
-          <CustomTooltip title={r.poolNames[0]} placement="top">
-            <StyledLink to={details.stake(r.stakeKey)}>{getShortHash(r.poolNames[0])}</StyledLink>
-          </CustomTooltip>
-        );
-      return (
-        <>
-          <CustomTooltip title={r.poolNames[0]} placement="top">
-            <StyledLink to={details.stake(r.stakeKey)}>{getShortHash(r.poolNames[0])}</StyledLink>
-          </CustomTooltip>
-          <StyledLink to={details.stake(r.stakeKey)}>...</StyledLink>
-        </>
-      );
-    },
-  },
+  // {
+  //   title: "Pool",
+  //   key: "pool",
+  //   render: r => {
+  //     if (r.poolNames === null) return null;
+  //     if (r.poolNames.length === 1)
+  //       return (
+  //         <CustomTooltip title={r.poolNames[0]} placement="top">
+  //           <StyledLink to={details.stake(r.stakeKey)}>{getShortHash(r.poolNames[0])}</StyledLink>
+  //         </CustomTooltip>
+  //       );
+  //     return (
+  //       <>
+  //         <CustomTooltip title={r.poolNames[0]} placement="top">
+  //           <StyledLink to={details.stake(r.stakeKey)}>{getShortHash(r.poolNames[0])}</StyledLink>
+  //         </CustomTooltip>
+  //         <StyledLink to={details.stake(r.stakeKey)}>...</StyledLink>
+  //       </>
+  //     );
+  //   },
+  // },
 ];
 
 const Stake: React.FC<IStake> = () => {
