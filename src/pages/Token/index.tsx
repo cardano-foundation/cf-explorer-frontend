@@ -12,7 +12,7 @@ import { details } from "../../commons/routers";
 import { getPageInfo, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { AssetName, Logo, StyledContainer } from "./styles";
+import { AssetName, Logo, StyledContainer, LogoEmpty } from "./styles";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 
 interface ITokenList {}
@@ -69,10 +69,12 @@ const Tokens: React.FC<ITokenList> = () => {
       minWidth: "50px",
       render: r =>
         metaLoading ? (
-          <Skeleton style={{ width: 30, height: 30 }} />
+          <Skeleton style={{ width: 30, height: 50 }} />
         ) : r.logo ? (
           <Logo src={`data:/image/png;base64,${r.logo}`} alt="icon" />
-        ) : null,
+        ) : (
+          <LogoEmpty />
+        ),
     },
     {
       title: "Asset Name",
@@ -135,7 +137,7 @@ const Tokens: React.FC<ITokenList> = () => {
             onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
           }}
           onClickRow={openDetail}
-          selected={selected} 
+          selected={selected}
         />
         {token && <DetailViewToken tokenId={token} handleClose={handleClose} />}
       </Card>

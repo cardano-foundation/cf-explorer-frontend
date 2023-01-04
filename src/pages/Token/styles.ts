@@ -1,4 +1,4 @@
-import { styled, Container, Select } from "@mui/material";
+import { styled, Container, Select, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
@@ -13,6 +13,12 @@ export const AssetName = styled(Link)`
 export const Logo = styled("img")`
   width: 30px;
   height: 30px;
+`;
+export const LogoEmpty = styled(Box)`
+  width: 30px;
+  height: 30px;
+  background: #ececec;
+  border-radius: 4px;
 `;
 
 export const StyledSelect = styled(Select)`

@@ -169,7 +169,6 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                 <TokenTitleIcon src={PolicyWhiteIcon} alt="policy" />
                 <TokenTitle>Policy Script</TokenTitle>
               </TokenHeader>
-              <ViewMetaData to={details.token(tokenId)}>See Policy script</ViewMetaData>
             </TokenHeaderContainer>
             {data.displayName || tokenMetadata.logo ? (
               <TokenMetaData>
