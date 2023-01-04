@@ -97,11 +97,11 @@ interface Props {
   home: boolean;
 }
 interface FormValues {
-  filter: string;
+  filter: FilterParams;
   search: string;
 }
 interface Option {
-  value: string;
+  value: FilterParams;
   label: React.ReactNode;
 }
 const intitalValue: FormValues = {
@@ -115,15 +115,19 @@ const options: Option[] = [
     label: "All Filters",
   },
   {
+    value: "epoch",
+    label: "Epoch",
+  },
+  {
     value: "block",
     label: "Block",
   },
   {
-    value: "transaction",
+    value: "tx",
     label: "Transaction",
   },
   {
-    value: "token",
+    value: "tokens",
     label: "Tokens",
   },
   {
