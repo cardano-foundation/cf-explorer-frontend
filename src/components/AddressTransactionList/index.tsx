@@ -8,9 +8,10 @@ import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
+import moment from "moment";
 import useFetchList from "../../commons/hooks/useFetchList";
 
-interface TransactionListProps {
+interface AddressTransactionListProps {
   underline?: boolean;
   url: string;
   openDetail?: (_: any, r: Transactions, index: number) => void;
@@ -34,13 +35,14 @@ const columns: Column<Transactions>[] = [
         <CustomTooltip title={r.hash} placement="top">
           <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
         </CustomTooltip>
+        <Box mt={1}>{moment(r.time).format("MM/DD/YYYY hh:mm:ss")}</Box>
       </div>
     ),
   },
   {
     title: "Block",
     key: "block",
-    minWidth: 60,
+    minWidth: 120,
     render: r => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>,
   },
   {
@@ -66,7 +68,12 @@ const columns: Column<Transactions>[] = [
     ),
   },
 ];
-const TransactionList: React.FC<TransactionListProps> = ({ underline = false, url, openDetail, selected }) => {
+const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
+  underline = false,
+  url,
+  openDetail,
+  selected,
+}) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -95,4 +102,4 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, ur
   );
 };
 
-export default TransactionList;
+export default AddressTransactionList;

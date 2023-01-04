@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { CONFIRMATION_STATUS, EPOCH_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
+import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import CopyButton from "../CopyButton";
 
 export const HeaderDetailContainer = styled(Container)`
@@ -39,7 +39,7 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
   border-radius: 4px;
 `;
 
-export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
+export const HeaderStatus = styled("small") <{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
   color: ${props => {
     switch (props.status) {
       case TRANSACTION_STATUS.SUCCESS:
@@ -105,10 +105,10 @@ export const DetailsInfo = styled(Grid)`
   // color: ${props => props.theme.textColorReverse};
 `;
 
-export const DetailsInfoItem = styled(Grid)<{ isCenter?: number }>`
+export const DetailsInfoItem = styled(Grid) <{ center?: number }>`
   display: flex;
   justify-content: center;
-  align-items: ${props => (props.isCenter ? `center` : `flex-start`)};
+  align-items: ${props => (props.center ? `center` : `flex-start`)};
   flex-direction: column;
   padding: 22.5px 20px;
   position: relative;
@@ -194,7 +194,7 @@ export const ConfirmationValue = styled(DetailValue)`
   align-items: center;
 `;
 
-export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small") <{ status?: keyof typeof ConfirmationStatus }>`
   color: ${props => {
     switch (props.status) {
       case CONFIRMATION_STATUS.MEDIUM:
@@ -223,7 +223,7 @@ export const InfoIcon = styled(FiInfo)`
   margin-left: 2px;
 `;
 
-export const ProgressLiner = styled("div")<{ progress: number }>`
+export const ProgressLiner = styled("div") <{ progress: number }>`
   position: relative;
   width: 100%;
   background: ${props => props.theme.colorBlack}32;
@@ -277,7 +277,7 @@ export const CardItem = styled(Grid)(({ theme }) => ({
   borderLeft: "1px solid rgba(0,0,0,0.1)",
   paddingLeft: theme.spacing(2),
   paddingRight: theme.spacing(2),
-  ":first-child": {
+  ":first-of-type": {
     borderLeft: "none",
   },
 }));

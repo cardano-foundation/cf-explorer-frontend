@@ -120,7 +120,7 @@ export const CardItem = styled(Box)(({ theme }) => ({
   flex: 1,
   borderLeft: "1px solid rgba(0,0,0,0.1)",
   paddingLeft: theme.spacing(2),
-  ":first-child": {
+  ":first-of-type": {
     borderLeft: "none",
   },
 }));
@@ -183,7 +183,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
     color: "#344054 !important",
     opacity: "1 !important",
     "& span": {
-      "&:first-child ": {
+      "&:first-of-type ": {
         display: "none",
       },
       "&:last-child ": {

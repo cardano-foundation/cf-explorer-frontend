@@ -1,9 +1,8 @@
-import { Box } from "@mui/material";
-import { parse, stringify } from "qs";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { stringify } from "qs";
+import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details } from "../../commons/routers";
-import { formatADA, getShortWallet } from "../../commons/utils/helper";
+import { formatADA, getPageInfo, getShortWallet } from "../../commons/utils/helper";
 
 import Card from "../../components/commons/Card";
 import Table from "../../components/commons/Table";
@@ -13,24 +12,17 @@ import { StyledContainer, StyledLink } from "./styles";
 
 const TopDelegators = () => {
   const { search } = useLocation();
-  const query = parse(search.split("?")[1]);
   const history = useHistory();
-  const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
-  };
-  const page = query.page ? +query.page - 1 : 0;
-  const size = query.size ? (query.size as string) : 10;
-  const { data, loading, currentPage, error, initialized, total } = useFetchList("/stake/top-delegators", {
-    page: page,
-    size: +size * (page + 1) > 50 ? 50 - +size * page : size,
-  });
+  const pageInfo = getPageInfo(search);
+
+  const fetchData = useFetchList<Contracts>("/stake/top-delegators", pageInfo);
 
   const columns: Column<TopDelegator>[] = [
     {
       title: "#",
       minWidth: 30,
       key: "index",
-      render: (r, idx) => idx + 1 + (query.page ? +query.page - 1 : 0) * +(query.size ? query.size : 10),
+      render: (r, idx) => idx + 1 + pageInfo.page * pageInfo.size,
     },
     {
       title: "Addresses",
@@ -57,24 +49,18 @@ const TopDelegators = () => {
       ),
     },
   ];
-
   return (
     <StyledContainer>
       <Card title="Top 50 delegators">
         <Table
+          {...fetchData}
           columns={columns}
-          data={data}
-          loading={loading}
-          total={{ count: Math.min(total, 50), title: "Results" }}
-          initialized={initialized}
+          total={{ title: "Results", count: fetchData.total }}
           pagination={{
-            onChange: (page, size) => {
-              setQuery({ page, size });
-            },
-            page: currentPage || 0,
-            total: Math.min(total, 50),
+            ...pageInfo,
+            total: fetchData.total,
+            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
           }}
-          error={error}
         />
       </Card>
     </StyledContainer>

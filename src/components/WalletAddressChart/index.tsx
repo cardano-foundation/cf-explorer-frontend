@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Grid, Skeleton, styled } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-
 import Card from "../commons/Card";
-
 import styles from "./index.module.scss";
 import highestIcon from "../../commons/resources/images/highestIcon.png";
 import lowestIcon from "../../commons/resources/images/lowestIcon.png";

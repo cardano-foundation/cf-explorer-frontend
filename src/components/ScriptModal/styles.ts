@@ -40,7 +40,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
     color: "#344054 !important",
     opacity: "1 !important",
     "& span": {
-      "&:first-child ": {
+      "&:first-of-type ": {
         display: "none",
       },
       "&:last-child ": {

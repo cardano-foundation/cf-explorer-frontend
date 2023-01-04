@@ -1,11 +1,10 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { parse } from "qs";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { formatADA, getShortHash } from "../../commons/utils/helper";
+import { formatADA, getPageInfo, getShortHash } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
@@ -16,21 +15,10 @@ interface Props {}
 
 const TopAddresses: React.FC<Props> = () => {
   const { search } = useLocation();
-  const query = parse(search.split("?")[1]);
   const history = useHistory();
-  const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
-  };
-  const {
-    data: transactions,
-    loading: transactionsLoading,
-    initialized,
-    total,
-    currentPage,
-  } = useFetchList<Address>("address/top-addresses", {
-    page: query.page ? +query.page - 1 : 0,
-    size: query.size ? (query.size as string) : 10,
-  });
+  const pageInfo = getPageInfo(search);
+
+  const fetchData = useFetchList<Contracts>("address/top-addresses", pageInfo);
 
   const columns: Column<Address>[] = [
     {
@@ -69,19 +57,14 @@ const TopAddresses: React.FC<Props> = () => {
     <StyledContainer>
       <Card title={"Top 50 addresses"} underline={false}>
         <Table
+          {...fetchData}
           columns={columns}
-          data={transactions}
-          total={{ count: total, title: "Total Contracts" }}
-          loading={transactionsLoading}
-          initialized={initialized}
+          total={{ title: "Total Addresses", count: fetchData.total }}
           pagination={{
-            onChange: (page, size) => {
-              setQuery({ page, size });
-            },
-            page: currentPage || 0,
-            total: total,
+            ...pageInfo,
+            total: fetchData.total,
+            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
           }}
-          selectedProps={{ style: { backgroundColor: "#ECECEC" } }}
         />
       </Card>
     </StyledContainer>
