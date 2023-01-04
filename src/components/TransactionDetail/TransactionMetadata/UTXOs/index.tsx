@@ -97,7 +97,7 @@ const Card = ({
                         fontWeight="bold"
                         mr={1}
                       >
-                        {type === "down" ? `- ${formatADA(i.value)}` : `+ ${formatADA(i.value)}`}
+                        {type === "down" ? `${formatADA(i.value)}` : `${formatADA(i.value)}`}
                       </Box>
                       <img src={AIcon} alt="ADA icon" />
                     </Box>
@@ -169,7 +169,7 @@ const Card = ({
         <div>Total {type === "down" ? "Input" : "Output"}</div>
         <div>
           <Box fontWeight={"bold"} component="span" pr={1}>
-            {type === "down" ? `- ${formatADA(totalADA)}` : `+ ${formatADA(totalADA)}`}
+            {type === "down" ? `${formatADA(totalADA)}` : `${formatADA(totalADA)}`}
           </Box>
           <img src={AIcon} alt="ADA icon" />
         </div>
