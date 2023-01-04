@@ -135,6 +135,7 @@ const options: Option[] = [
     label: "Addresses",
   },
 ];
+
 const HeaderSearch: React.FC<Props> = ({ home }) => {
   const history = useHistory();
   const [{ search, filter }, setValues] = useState<FormValues>({ ...intitalValue });
@@ -142,9 +143,7 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
   const handleSearch = (e?: FormEvent) => {
     e?.preventDefault();
     if (search) {
-      history.push(
-        `${routers.TRANSACTION_LIST}?${stringify({ search, filter: filter !== "all" ? filter : undefined })}`
-      );
+      history.push(`${routers.SEARCH}?${stringify({ search, filter: filter !== "all" ? filter : undefined })}`);
       setValues({ ...intitalValue });
     }
   };

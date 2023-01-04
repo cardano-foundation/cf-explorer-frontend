@@ -117,7 +117,6 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
                       const { href, title, icon } = subItem;
-                      console.log("🚀 ~ file: index.tsx:120 ~ {children.map ~ href", pathname.split("/"));
                       return href ? (
                         isExtenalLink(href) ? (
                           <ListItem
