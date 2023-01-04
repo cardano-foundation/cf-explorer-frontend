@@ -200,7 +200,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         data && {
           type: "transaction",
           header: {
-            title: getShortHash(data.tx.hash),
+            title: "Transaction detail",
             hash: data.tx.hash,
             status: data.tx.status,
           },
