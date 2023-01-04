@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, Skeleton, styled } from "@mui/material";
+import { Box, Button, Container, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import CopyButton from "../../commons/CopyButton";
@@ -188,7 +188,7 @@ export const CardItem = styled(Box)(({ theme }) => ({
   borderLeft: "1px solid rgba(0,0,0,0.1)",
   paddingLeft: theme.spacing(2),
   paddingRight: theme.spacing(2),
-  ":first-child": {
+  ":first-of-type": {
     borderLeft: "none",
   },
 }));
@@ -251,7 +251,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
     color: "#344054 !important",
     opacity: "1 !important",
     "& span": {
-      "&:first-child ": {
+      "&:first-of-type ": {
         display: "none",
       },
       "&:last-child ": {

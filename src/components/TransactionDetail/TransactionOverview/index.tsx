@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import moment from "moment";
-
 import DetailHeader from "../../commons/DetailHeader";
-import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
-
+import { formatADA, getShortWallet } from "../../../commons/utils/helper";
 import { CONFIRMATION_STATUS } from "../../../commons/utils/constants";
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { ConfirmStatus, StyledLink, TitleCard } from "./component";
 import { ADAToken } from "../../commons/Token";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
-import exchageIcon from "../../../commons/resources/icons/Union.svg";
 import exchageAltIcon from "../../../commons/resources/icons/exchangeArrow.svg";
 import txConfirm from "../../../commons/resources/icons/txConfirm.svg";
 import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";

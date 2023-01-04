@@ -1,17 +1,14 @@
-import { parse, stringify } from "qs";
-import { useRef, useState } from "react";
+import { stringify } from "qs";
+import { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import moment from "moment";
-
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AIcon } from "../../commons/resources";
 import { EPOCH_STATUS } from "../../commons/utils/constants";
-import { formatADA } from "../../commons/utils/helper";
+import { formatADA, getPageInfo } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
-
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
-
 import { Blocks, StyledContainer, Output, Status, StyledColorBlueDard, Index } from "./styles";
 import { setOnDetailView } from "../../stores/user";
 import DetailViewEpoch from "../../components/commons/DetailView/DetailViewEpoch";
@@ -62,61 +59,44 @@ const columns: Column<IDataEpoch>[] = [
 ];
 
 const Epoch: React.FC = () => {
-  const [detailView, setDetailView] = useState<number | null>(null);
+  const [epoch, setEpoch] = useState<number | null>(null);
+  const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
-  const ref = useRef<HTMLDivElement>(null);
-  const query = parse(search.split("?")[1]);
+  const pageInfo = getPageInfo(search);
+  const fetchData = useFetchList<IDataEpoch>(`epoch/list`, pageInfo);
 
-  const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
-  };
-
-  const excuteScroll = () => ref.current?.scrollIntoView();
-
-  const { data, total, currentPage, loading, initialized } = useFetchList<IDataEpoch>(`epoch/list`, {
-    page: query.page ? +query.page - 1 : 0,
-    size: query.size ? (query.size as string) : 10,
-  });
-
-  if (!data) return null;
-
-  const openDetail = (_: any, r: IDataEpoch) => {
+  const openDetail = (_: any, r: IDataEpoch, index: number) => {
     if (width > 1023) {
       setOnDetailView(true);
-      setDetailView(r.no);
+      setEpoch(r.no);
+      setSelected(index);
     } else history.push(details.epoch(r.no));
   };
 
   const handleClose = () => {
     setOnDetailView(false);
-    setDetailView(null);
+    setEpoch(null);
+    setSelected(null);
   };
-  const selected = data?.findIndex(item => item.no === detailView);
   return (
     <StyledContainer>
       <Card title={"Epochs"}>
         <Table
-          loading={loading}
-          initialized={initialized}
+          {...fetchData}
           columns={columns}
-          data={data}
-          onClickRow={openDetail}
-          total={{ count: total, title: "Total Epochs" }}
+          total={{ title: "Total Epochs", count: fetchData.total }}
           pagination={{
-            onChange: (page, size) => {
-              setQuery({ page, size });
-              excuteScroll();
-            },
-            page: currentPage || 0,
-            total: total,
+            ...pageInfo,
+            total: fetchData.total,
+            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
           }}
+          onClickRow={openDetail}
           selected={selected}
-          selectedProps={{ style: { backgroundColor: "#ECECEC" } }}
         />
       </Card>
-      {detailView && <DetailViewEpoch epochNo={detailView} handleClose={handleClose} />}
+      {epoch && <DetailViewEpoch epochNo={epoch} handleClose={handleClose} />}
     </StyledContainer>
   );
 };
