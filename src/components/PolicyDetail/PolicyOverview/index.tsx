@@ -1,30 +1,18 @@
-import { Box, Modal, Skeleton } from "@mui/material";
+import { Box, Modal } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
-
-import { details, routers } from "../../../commons/routers";
-import delegatedIcon from "../../../commons/resources/icons/delegated.svg";
-import totalStakeIcon from "../../../commons/resources/icons/totalStake.svg";
-import rewardIcon from "../../../commons/resources/icons/reward.svg";
-import rewardWithdrawIcon from "../../../commons/resources/icons/rewardWithdraw.svg";
 import infoIcon from "../../../commons/resources/icons/info.svg";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
-import timeIcon from "../../../commons/resources/icons/time.svg";
 import closeIcon from "../../../commons/resources/icons/closeIcon.svg";
-
 import { numberWithCommas } from "../../../commons/utils/helper";
-
 import CopyButton from "../../commons/CopyButton";
-
 import {
   BackButton,
   BackText,
   ButtonClose,
-  ButtonView,
   CardInfoOverview,
   CardItem,
   HeaderContainer,
   HeaderTitle,
-  LabelStatus,
   ModalContainer,
   SlotLeader,
   SlotLeaderContainer,

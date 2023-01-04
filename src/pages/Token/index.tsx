@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { parse, stringify } from "qs";
+import { stringify } from "qs";
 import axios from "axios";
 import moment from "moment";
 import { useWindowSize } from "react-use";
@@ -9,29 +9,25 @@ import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
 import { details } from "../../commons/routers";
-import { getShortWallet, numberWithCommas } from "../../commons/utils/helper";
+import { getPageInfo, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AssetName, Logo, StyledContainer } from "./styles";
+import CustomTooltip from "../../components/commons/CustomTooltip";
 
 interface ITokenList {}
 
 const Tokens: React.FC<ITokenList> = () => {
-  const { search } = useLocation();
-  const query = parse(search.split("?")[1]);
-  const [detailView, setDetailView] = useState<string | null>(null);
-  const { width } = useWindowSize();
-  const history = useHistory();
+  const [token, setToken] = useState<string | null>(null);
+  const [selected, setSelected] = useState<number | null>(null);
   const [metaLoading, setMetaLoading] = useState<boolean>(false);
   const [metaData, setMetaData] = useState<ITokenMetadata[]>([]);
-  const { data, loading, initialized, total, currentPage } = useFetchList<ITokenOverview>("/tokens", {
-    page: query.page ? +query.page - 1 : 0,
-    size: query.size ? (query.size as string) : 10,
-  });
+  const { width } = useWindowSize();
+  const { search } = useLocation();
+  const history = useHistory();
+  const pageInfo = getPageInfo(search);
 
-  const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
-  };
+  const { data, ...fetchData } = useFetchList<ITokenOverview>(`/tokens`, pageInfo);
 
   useEffect(() => {
     async function loadMetadata() {
@@ -82,11 +78,14 @@ const Tokens: React.FC<ITokenList> = () => {
       title: "Asset Name",
       key: "assetName",
       minWidth: "100px",
-      render: r => (
-        <AssetName to={details.token(r?.fingerprint ?? "")}>
-          {r.displayName && r.displayName.length > 20 ? getShortWallet(r.displayName || "") : r.displayName}
-        </AssetName> 
-      ),
+      render: r =>
+        r.displayName && r.displayName.length > 20 ? (
+          <CustomTooltip placement={"top"} title={r.displayName}>
+            <AssetName to={details.token(r?.fingerprint ?? "")}>{getShortWallet(r.displayName || "")}</AssetName>
+          </CustomTooltip>
+        ) : (
+          <AssetName to={details.token(r?.fingerprint ?? "")}>{r.displayName}</AssetName>
+        ),
     },
     {
       title: "Total Transactions",
@@ -108,40 +107,37 @@ const Tokens: React.FC<ITokenList> = () => {
     },
   ];
 
-  const openDetail = (_: any, r: IToken) => {
+  const openDetail = (_: any, r: IToken, index: number) => {
     if (width > 1023) {
       setOnDetailView(true);
-      setDetailView(r?.fingerprint || null);
+      setToken(r?.fingerprint || null);
+      setSelected(index);
     } else history.push(details.token(r?.fingerprint ?? ""));
   };
 
   const handleClose = () => {
     setOnDetailView(false);
-    setDetailView(null);
+    setToken(null);
+    setSelected(null);
   };
-  const selected = tokens?.findIndex(item => item.fingerprint === detailView);
 
   return (
     <StyledContainer>
       <Card title="Token List">
         <Table
-          columns={columns}
+          {...fetchData}
           data={tokens}
-          loading={loading}
-          initialized={initialized}
-          total={{ count: total, title: "Total" }}
+          columns={columns}
+          total={{ title: "Total", count: fetchData.total }}
           pagination={{
-            onChange: (page, size) => {
-              setQuery({ page, size });
-            },
-            page: currentPage || 0,
-            total: total,
+            ...pageInfo,
+            total: fetchData.total,
+            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
           }}
           onClickRow={openDetail}
-          selected={selected}
-          selectedProps={{ style: { backgroundColor: "#ECECEC" } }}
+          selected={selected} 
         />
-        {detailView && <DetailViewToken tokenId={detailView} handleClose={handleClose} />}
+        {token && <DetailViewToken tokenId={token} handleClose={handleClose} />}
       </Card>
     </StyledContainer>
   );

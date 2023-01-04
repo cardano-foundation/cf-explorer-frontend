@@ -1,15 +1,13 @@
 import { useState } from "react";
-import { parse, stringify } from "qs";
+import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
-
 import useFetchList from "../../commons/hooks/useFetchList";
-
 import { PriceWrapper, StyledColorBlueDard, StyledContainer, StyledLink } from "./styles";
 import { useWindowSize } from "react-use";
 import { Column } from "../../types/table";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { details } from "../../commons/routers";
-import { formatADA, getShortHash } from "../../commons/utils/helper";
+import { formatADA, getPageInfo, getShortHash } from "../../commons/utils/helper";
 import { Box } from "@mui/material";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { AIcon } from "../../commons/resources";
@@ -19,19 +17,13 @@ import Card from "../../components/commons/Card";
 import Table from "../../components/commons/Table";
 
 const BlockList = () => {
-  const { search } = useLocation();
-  const query = parse(search.split("?")[1]);
-  const { data, loading, initialized, total, currentPage } = useFetchList<Block>("block/list", {
-    page: query.page ? +query.page - 1 : 0,
-    size: query.size ? (query.size as string) : 10,
-  });
-  const [detailView, setDetailView] = useState<number | null>(null);
+  const [block, setBlock] = useState<number | null>(null);
+  const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();
+  const { search } = useLocation();
   const history = useHistory();
-  const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
-  };
-
+  const pageInfo = getPageInfo(search);
+  const fetchData = useFetchList<IStakeKey>(`block/list`, pageInfo);
   const columns: Column<Block>[] = [
     {
       title: "Block No",
@@ -73,7 +65,7 @@ const BlockList = () => {
         <PriceWrapper>
           {formatADA(r.totalOutput) || 0}
           <img src={AIcon} alt="ADA Icon" />
-          {detailView === r.blockNo && (
+          {block === r.blockNo && (
             <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
               <MdOutlineKeyboardArrowRight fontSize={30} />
             </Box>
@@ -82,41 +74,37 @@ const BlockList = () => {
       ),
     },
   ];
-  const openDetail = (_: any, r: Block) => {
+
+  const openDetail = (_: any, r: Block, index: number) => {
     if (width > 1023) {
       setOnDetailView(true);
-      setDetailView(r.blockNo);
+      setBlock(r.blockNo);
+      setSelected(index);
     } else history.push(details.block(r.blockNo));
   };
 
   const handleClose = () => {
     setOnDetailView(false);
-    setDetailView(null);
+    setBlock(null);
+    setSelected(null);
   };
-
-  const selected = data?.findIndex(item => item.blockNo === detailView);
 
   return (
     <StyledContainer>
       <Card title={"Blocks"}>
         <Table
-          loading={loading}
-          initialized={initialized}
+          {...fetchData}
           columns={columns}
-          data={data || []}
-          total={{ count: total, title: "Total Blocks" }}
+          total={{ title: "Total Blocks", count: fetchData.total }}
           pagination={{
-            onChange: (page, size) => {
-              setQuery({ page, size });
-            },
-            page: currentPage || 0,
-            total: total,
+            ...pageInfo,
+            total: fetchData.total,
+            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
           }}
           onClickRow={openDetail}
           selected={selected}
-          selectedProps={{ style: { backgroundColor: "#ECECEC" } }}
         />
-        {detailView && <DetailViewBlock blockNo={detailView} handleClose={handleClose} />}
+        {block && <DetailViewBlock blockNo={block} handleClose={handleClose} />}
       </Card>
     </StyledContainer>
   );

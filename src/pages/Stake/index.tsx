@@ -5,7 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useWindowSize } from "react-use";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details } from "../../commons/routers";
-import { getShortHash } from "../../commons/utils/helper";
+import { getPageInfo, getShortHash } from "../../commons/utils/helper";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import DetailViewStakeKey from "../../components/commons/DetailView/DetailViewStakeKey";
@@ -19,7 +19,8 @@ enum POOL_TYPE {
   REGISTRATION = "registration",
   DEREREGISTRATION = "de-registration",
 }
-const colums: Column<IStakeKey>[] = [
+
+const columns: Column<IStakeKey>[] = [
   {
     title: "Trx Hash",
     key: "trxHash",
@@ -55,64 +56,40 @@ const colums: Column<IStakeKey>[] = [
       </CustomTooltip>
     ),
   },
-  {
-    title: "Pool",
-    key: "pool",
-    render: r => {
-      if (r.poolNames === null) return null;
-      if (r.poolNames.length === 1)
-        return (
-          <CustomTooltip title={r.poolNames[0]} placement="top">
-            <StyledLink to={details.stake(r.stakeKey)}>{getShortHash(r.poolNames[0])}</StyledLink>
-          </CustomTooltip>
-        );
-      return (
-        <>
-          <CustomTooltip title={r.poolNames[0]} placement="top">
-            <StyledLink to={details.stake(r.stakeKey)}>{getShortHash(r.poolNames[0])}</StyledLink>
-          </CustomTooltip>
-          <StyledLink to={details.stake(r.stakeKey)}>...</StyledLink>
-        </>
-      );
-    },
-  },
 ];
 
 const Stake: React.FC<IStake> = () => {
-  const [poolType, setPoolType] = useState<POOL_TYPE>(POOL_TYPE.REGISTRATION);
-  const [detailView, setDetailView] = useState<string | null>(null);
-  const history = useHistory();
-  const { search } = useLocation();
+  const [stake, setStake] = useState<string | null>(null);
+  const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();
-  const query = parse(search.split("?")[1]);
+  const { search } = useLocation();
+  const history = useHistory();
+  const pageInfo = getPageInfo(search);
+  const poolType =
+    parse(search.split("?")[1]).poolType === POOL_TYPE.DEREREGISTRATION
+      ? POOL_TYPE.DEREREGISTRATION
+      : POOL_TYPE.REGISTRATION;
 
-  const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
-  };
-
-  const { data, total, loading, initialized, currentPage, error } = useFetchList<IStakeKey>(`/stake/${poolType}`, {
-    page: query.page ? +query.page - 1 : 0,
-    size: query.size ? (query.size as string) : 10,
-  });
+  const fetchData = useFetchList<IStakeKey>(`/stake/${poolType}`, pageInfo);
 
   const onChangeTab = (e: React.SyntheticEvent, poolType: POOL_TYPE) => {
-    setQuery({ page: 1, size: 10 });
-    setPoolType(poolType);
+    history.push({ search: stringify({ ...pageInfo, page: 1, poolType }) });
   };
 
-  const openDetail = (_: any, r: IStakeKey) => {
+  const openDetail = (_: any, r: IStakeKey, index: number) => {
     if (width > 1023) {
       setOnDetailView(true);
-      setDetailView(r.stakeKey);
+      setStake(r.stakeKey);
+      setSelected(index);
     } else history.push(details.stake(r.stakeKey));
   };
 
   const handleClose = () => {
     setOnDetailView(false);
-    setDetailView(null);
+    setStake(null);
+    setSelected(null);
   };
 
-  const selected = data?.findIndex(item => item.stakeKey === detailView);
   return (
     <StyledContainer>
       <Card>
@@ -125,25 +102,19 @@ const Stake: React.FC<IStake> = () => {
           <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
         </StyledTabs>
         <Table
-          columns={colums}
-          data={data || []}
-          loading={loading}
-          initialized={initialized}
-          total={{ title: "Total Token List", count: total }}
+          {...fetchData}
+          columns={columns}
+          total={{ title: "Total Token List", count: fetchData.total }}
           pagination={{
-            onChange: (page, size) => {
-              setQuery({ page, size });
-            },
-            page: currentPage || 0,
-            total: total,
+            ...pageInfo,
+            total: fetchData.total,
+            onChange: (page, size) => history.push({ search: stringify({ page, size, poolType }) }),
           }}
           onClickRow={openDetail}
           selected={selected}
-          selectedProps={{ style: { backgroundColor: "#ECECEC" } }}
-          error={error}
         />
       </Card>
-      {detailView && <DetailViewStakeKey stakeId={detailView} handleClose={handleClose} />}
+      {stake && <DetailViewStakeKey stakeId={stake} handleClose={handleClose} />}
     </StyledContainer>
   );
 };

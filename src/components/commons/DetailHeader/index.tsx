@@ -65,7 +65,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           <SlotLeaderSkeleton variant="rectangular" />
         </SlotLeader>
         <DetailsInfo container>
-          <DetailsInfoItem item xs={12} sm isCenter={1}>
+          <DetailsInfoItem item xs={12} sm center={1}>
             <ProgressSkeleton variant="circular" />
           </DetailsInfoItem>
           {new Array(4).fill(0).map((_, index) => {

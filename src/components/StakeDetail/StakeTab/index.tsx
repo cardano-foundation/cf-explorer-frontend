@@ -9,136 +9,86 @@ import { ReactComponent as InstantaneousHistoryIcon } from "../../../commons/res
 import { TitleTab } from "./component";
 import TableTab from "./TableTab";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { parse, stringify } from "qs";
+import { stringify } from "qs";
 import useFetchList from "../../../commons/hooks/useFetchList";
+import { getPageInfo } from "../../../commons/utils/helper";
+
+enum TABS {
+  delegation = "delegation-history",
+  stakeKey = "stake-history",
+  withdrawal = "withdrawal-history",
+  instantaneous = "instantaneous-rewards",
+}
+
+type DataTable = DelegationHistory | Instantaneous | StakeHistory | WithdrawalHistory;
 
 const StakeTab = () => {
   const [activeTab, setActiveTab] = React.useState<TabStakeDetail>("delegation");
-  const history = useHistory();
-  const { search } = useLocation();
   const { stakeId } = useParams<{ stakeId: string }>();
-  const query = parse(search.split("?")[1]);
+  const { search } = useLocation();
+  const history = useHistory();
+  const pageInfo = getPageInfo(search);
 
-  const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
-  };
+  const fetchData = useFetchList<DataTable>(`/stake/${stakeId}/${TABS[activeTab]}`, pageInfo);
 
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
     setActiveTab(tab);
-    setQuery({ page: 1, size: 10 });
+    history.push({ search: stringify({ page: 1, size: 10 }) });
   };
 
-  const { data, loading, error, initialized, total, currentPage } = useFetchList<
-    DelegationHistory | Instantaneous | StakeHistory | WithdrawalHistory
-  >(`/stake/${stakeId}/${apiPath[activeTab]}`, {
-    page: query.page ? +query.page - 1 : 0,
-    size: query.size ? (query.size as string) : 10,
-  });
-
-  const tabs: { label: React.ReactNode; key: string; children: React.ReactNode }[] = [
+  const tabs: {
+    icon: React.FC<React.SVGProps<SVGSVGElement>>;
+    label: React.ReactNode;
+    key: keyof typeof TABS;
+  }[] = [
     {
-      label: (
-        <Box>
-          <Box display={"flex"} alignItems="center">
-            <DelegationHistoryIcon fill={activeTab === "delegation" ? "#438F68" : "#98A2B3"} />
-            <TitleTab pl={1} active={activeTab === "delegation"}>Delegation History</TitleTab>
-          </Box>
-        </Box>
-      ),
+      icon: DelegationHistoryIcon,
+      label: "Delegation History",
       key: "delegation",
-      children: (
-        <TableTab
-          total={total}
-          currentPage={currentPage}
-          loading={loading}
-          error={error}
-          initialized={initialized}
-          type={activeTab}
-          data={data}
-        />
-      ),
     },
     {
-      label: (
-        <Box>
-          <Box display={"flex"} alignItems="center">
-            <StateKeyHistoryIcon fill={activeTab === "stakeKey" ? "#438F68" : "#98A2B3"} />
-            <TitleTab pl={1} active={activeTab === "stakeKey"}>Stake Key History</TitleTab>
-          </Box>
-        </Box>
-      ),
+      icon: StateKeyHistoryIcon,
+      label: "Stake Key History",
       key: "stakeKey",
-      children: (
-        <TableTab
-          total={total}
-          currentPage={currentPage}
-          loading={loading}
-          error={error}
-          initialized={initialized}
-          type={activeTab}
-          data={data}
-        />
-      ),
     },
     {
-      label: (
-        <Box>
-          <Box display={"flex"} alignItems="center">
-            <WithdrawHistoryIcon fill={activeTab === "withdrawal" ? "#438F68" : "#98A2B3"} />
-            <TitleTab pl={1} active={activeTab === "withdrawal"}>Withdrawal History</TitleTab>
-          </Box>
-        </Box>
-      ),
+      icon: WithdrawHistoryIcon,
+      label: "Withdrawal History",
       key: "withdrawal",
-      children: (
-        <TableTab
-          total={total}
-          currentPage={currentPage}
-          loading={loading}
-          error={error}
-          initialized={initialized}
-          type={activeTab}
-          data={data}
-        />
-      ),
     },
     {
-      label: (
-        <Box>
-          <Box display={"flex"} alignItems="center">
-            <InstantaneousHistoryIcon fill={activeTab === "instantaneous" ? "#438F68" : "#98A2B3"} />
-            <TitleTab pl={1} active={activeTab === "instantaneous"}>Instantaneous Rewards</TitleTab>
-          </Box>
-        </Box>
-      ),
+      icon: InstantaneousHistoryIcon,
+      label: "Instantaneous Rewards",
       key: "instantaneous",
-      children: (
-        <TableTab
-          total={total}
-          currentPage={currentPage}
-          loading={loading}
-          error={error}
-          initialized={initialized}
-          type={activeTab}
-          data={data}
-        />
-      ),
     },
   ];
 
   return (
     <Box mt={4}>
       <TabContext value={activeTab}>
-        <Box style={{ borderBottom: "1px solid rgba(24, 76, 120, 0.1)"}}>
+        <Box style={{ borderBottom: "1px solid rgba(24, 76, 120, 0.1)" }}>
           <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: "#438f68" } }}>
-            {tabs?.map(item => (
-              <Tab key={item.key} label={item.label} value={item.key}/>
+            {tabs?.map(({ icon: Icon, key, label }) => (
+              <Tab
+                key={key}
+                value={key}
+                label={
+                  <Box>
+                    <Box display={"flex"} alignItems="center">
+                      <Icon fill={key === activeTab ? "#438F68" : "#98A2B3"} />
+                      <TitleTab pl={1} active={key === activeTab}>
+                        {label}
+                      </TitleTab>
+                    </Box>
+                  </Box>
+                }
+              />
             ))}
           </TabList>
         </Box>
         {tabs.map(item => (
           <TabPanel key={item.key} value={item.key}>
-            {item.children}
+            <TableTab {...fetchData} type={activeTab} />
           </TabPanel>
         ))}
       </TabContext>
@@ -147,9 +97,3 @@ const StakeTab = () => {
 };
 
 export default StakeTab;
-const apiPath = {
-  delegation: "delegation-history",
-  stakeKey: "stake-history",
-  withdrawal: "withdrawal-history",
-  instantaneous: "instantaneous-rewards",
-};

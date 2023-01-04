@@ -39,15 +39,16 @@ export const THeader = styled("th")`
   color: ${props => props.theme.titleColor};
 `;
 
-export const TRow = styled("tr")`
+export const TRow = styled("tr")<{ selected?: number }>`
   width: 100%;
   padding: 10px 0;
   font-size: 14px;
   cursor: pointer;
   position: relative;
+  background-color: ${props => (props.selected ? "#ECECEC " : "transparent")};
   &:hover {
     border-radius: 10px;
-    background-color: #ededed;
+    background-color: ${props => (props.selected ? "#ECECEC " : "#ededed")};
   }
 `;
 
