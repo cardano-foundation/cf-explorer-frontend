@@ -7,7 +7,7 @@ import messageImg from "../../../../commons/resources/images/messageImg.svg";
 import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
 import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
-import { routers } from "../../../../commons/routers";
+import { details, routers } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { Icon, Img, LabelStatus } from "./component";
@@ -33,7 +33,9 @@ const SummaryItems = ({
               </Box>
               <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} flex={1} mb={1}>
                 <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} flexWrap={"nowrap"}>
-                  <Link to={routers.ADDRESS_DETAIL.replace(":address", item.address)}>
+                  <Link
+                    to={item.address.startsWith("stake") ? details.stake(item.address) : details.address(item.address)}
+                  >
                     <CustomTooltip title={item.address} placement="top">
                       <Box color={props => props.colorBlue} fontWeight="bold" className={styles.ffText}>
                         {getShortWallet(item.address)}

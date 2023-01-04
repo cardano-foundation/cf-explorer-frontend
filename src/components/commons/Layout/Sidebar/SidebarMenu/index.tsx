@@ -117,6 +117,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
                       const { href, title, icon } = subItem;
+                      console.log("🚀 ~ file: index.tsx:120 ~ {children.map ~ href", pathname.split("/"));
                       return href ? (
                         isExtenalLink(href) ? (
                           <ListItem
@@ -143,7 +144,8 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             selected={pathname === href}
                             sx={theme => ({
                               ...itemStyle(theme, sidebar),
-                              ...(pathname === href
+                              ...(pathname === href ||
+                              (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1]))
                                 ? { backgroundColor: theme => `${theme.colorGreen} !important` }
                                 : {}),
                               paddingLeft: "70px",
@@ -160,7 +162,16 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                                 active={pathname === href ? 1 : 0}
                               />
                             ) : null}
-                            <SubMenuText primary={title} open={sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
+                            <SubMenuText
+                              primary={title}
+                              open={sidebar ? 1 : 0}
+                              active={
+                                pathname === href ||
+                                (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1]))
+                                  ? 1
+                                  : 0
+                              }
+                            />
                           </ListItem>
                         )
                       ) : null;
