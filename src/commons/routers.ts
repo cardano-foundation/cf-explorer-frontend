@@ -23,6 +23,7 @@ export const routers = {
   POLICY_DETAIL: "/policy/:policyId",
   NFT_DETAIL: "/nft/:nftId",
   TOP_DELEGATOR: "/top-delegator",
+  SEARCH: "/search",
   NOT_FOUND: "/*",
 };
 
