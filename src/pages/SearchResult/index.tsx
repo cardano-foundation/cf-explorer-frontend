@@ -46,11 +46,7 @@ const BackToHome = styled(Link)`
   }
 `;
 
-interface SearchParams {
-  filter?: "all" | "block" | "transaction" | "token" | "stake" | "address";
-  search?: string;
-}
-const urls = ["block", "transaction", "token", "stake", "address"];
+const urls: FilterParams[] = ["epoch", "block", "tx", "tokens", "stake", "address"];
 
 const SearchResult = () => {
   const [loading, setLoading] = useState(false);
@@ -63,13 +59,16 @@ const SearchResult = () => {
       if (!value) return;
 
       switch (filter) {
+        case "epoch": {
+          return history.push(details.epoch(Number(value)));
+        }
         case "block": {
           return history.push(details.block(Number(value)));
         }
-        case "transaction": {
+        case "tx": {
           return history.push(details.transaction(value));
         }
-        case "token": {
+        case "tokens": {
           return history.push(details.token(value));
         }
         case "stake": {
@@ -80,36 +79,41 @@ const SearchResult = () => {
         }
         default: {
           setLoading(true);
-          const results = await Promise.all(
-            urls.map(async url => {
-              try {
-                const res = await defaultAxios.get(`${url}/${value}`);
-                return res.data;
-              } catch {
-                return null;
+          try {
+            const url = await Promise.any(
+              urls.map(async url => {
+                try {
+                  const res = await defaultAxios.get(`${url}/${value}`);
+                  if (res.data) return Promise.resolve(url);
+                } catch {}
+                return Promise.reject();
+              })
+            );
+            if (!url) setLoading(false);
+            switch (url) {
+              case "epoch": {
+                return history.push(details.epoch(Number(value)));
               }
-            })
-          );
-          const index = results.findIndex(item => !!item);
-          if (index + 1) setLoading(false);
-          switch (urls[index]) {
-            case "block": {
-              return history.push(details.block(Number(value)));
+              case "block": {
+                return history.push(details.block(Number(value)));
+              }
+              case "tx": {
+                return history.push(details.transaction(value));
+              }
+              case "tokens": {
+                return history.push(details.token(value));
+              }
+              case "stake": {
+                return history.push(details.stake(value));
+              }
+              case "address": {
+                return history.push(details.address(value));
+              }
+              default:
+                return setLoading(false);
             }
-            case "transaction": {
-              return history.push(details.transaction(value));
-            }
-            case "token": {
-              return history.push(details.token(value));
-            }
-            case "stake": {
-              return history.push(details.stake(value));
-            }
-            case "address": {
-              return history.push(details.address(value));
-            }
-            default:
-              return;
+          } catch {
+            setLoading(false);
           }
         }
       }
