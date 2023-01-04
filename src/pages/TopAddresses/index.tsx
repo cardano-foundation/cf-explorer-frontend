@@ -4,7 +4,7 @@ import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { formatADA, getPageInfo, getShortHash } from "../../commons/utils/helper";
+import { formatADA, getPageInfo, getShortWallet } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
@@ -35,7 +35,7 @@ const TopAddresses: React.FC<Props> = () => {
       render: r => (
         <div>
           <CustomTooltip title={r.address} placement="top">
-            <StyledLink to={details.address(r.address)}>{getShortHash(r.address)}</StyledLink>
+            <StyledLink to={details.address(r.address)}>{getShortWallet(r.address)}</StyledLink>
           </CustomTooltip>
         </div>
       ),

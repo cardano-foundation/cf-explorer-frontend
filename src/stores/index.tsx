@@ -5,6 +5,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { RootState } from "./types";
 import userReducer, { setStoreUser } from "./user";
+import systemReducer, { setStoreSystem } from "./system";
 
 let customStore: Store | undefined;
 
@@ -28,6 +29,7 @@ export const getStore = (): Store<RootState> => {
 
 const appReducer = combineReducers({
   user: userReducer,
+  system: systemReducer,
 });
 
 const rootReducer = (state: any, action: any) => appReducer(state, action);
@@ -44,5 +46,6 @@ export const persistor = persistStore(store, {});
 
 setStore(store);
 setStoreUser(store);
+setStoreSystem(store);
 
 export default store;

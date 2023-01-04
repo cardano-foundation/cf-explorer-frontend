@@ -80,11 +80,11 @@ export const formatADA = (value?: string | number, abbreviations: string[] = LAR
     if (exponential > 5) {
       const newValue = bigValue
         .div(10 ** exponential)
-        .toString()
-        .match(/^-?\d+(?:\.\d{0,2})?/);
+        .toFixed(2, 3)
+        .toString();
       const syntax = abbreviations[exponential / 3];
 
-      return `${newValue && newValue[0]}${syntax ?? `x 10^${exponential}`}`;
+      return `${newValue}${syntax ?? `x 10^${exponential}`}`;
     }
   }
 
@@ -111,4 +111,12 @@ export const getPageInfo = (search: string): { page: number; size: number } => {
   const page = Number(query.page) > 0 ? Number(query.page) - 1 : 0;
   const size = Number(query.size) > 0 ? Number(query.size) : 10;
   return { page, size };
+};
+
+export const exchangeADAToUSD = (value: number | string, rate: number) => {
+  if (!value) return 0;
+  const Ada = +value / 1000000;
+  const bigValue = new BigNumber(Ada.toString());
+  const exchangedValue = bigValue.multipliedBy(rate).toString();
+  return formatPrice(exchangedValue);
 };

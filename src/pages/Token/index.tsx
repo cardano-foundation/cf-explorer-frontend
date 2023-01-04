@@ -13,6 +13,7 @@ import { getPageInfo, getShortWallet, numberWithCommas } from "../../commons/uti
 import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AssetName, Logo, StyledContainer } from "./styles";
+import CustomTooltip from "../../components/commons/CustomTooltip";
 
 interface ITokenList {}
 
@@ -77,11 +78,14 @@ const Tokens: React.FC<ITokenList> = () => {
       title: "Asset Name",
       key: "assetName",
       minWidth: "100px",
-      render: r => (
-        <AssetName to={details.token(r?.fingerprint ?? "")}>
-          {r.displayName && r.displayName.length > 20 ? getShortWallet(r.displayName || "") : r.displayName}
-        </AssetName> 
-      ),
+      render: r =>
+        r.displayName && r.displayName.length > 20 ? (
+          <CustomTooltip placement={"top"} title={r.displayName}>
+            <AssetName to={details.token(r?.fingerprint ?? "")}>{getShortWallet(r.displayName || "")}</AssetName>
+          </CustomTooltip>
+        ) : (
+          <AssetName to={details.token(r?.fingerprint ?? "")}>{r.displayName}</AssetName>
+        ),
     },
     {
       title: "Total Transactions",

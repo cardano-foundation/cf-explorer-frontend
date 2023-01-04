@@ -88,6 +88,7 @@ export const SlotLeaderValue = styled("span")`
   display: inline-block;
   word-break: break-word;
   line-height: 1.5;
+  font-weight: bold;
 `;
 export const SlotLeaderTitle = styled("small")`
   font-family: var(--font-family-text);
