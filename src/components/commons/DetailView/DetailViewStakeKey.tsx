@@ -31,6 +31,7 @@ import {
   StakeKeyStatus,
   DetailLinkImage,
   StakeKeyLink,
+  DelegatedDetail,
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
@@ -41,6 +42,7 @@ import CustomTooltip from "../CustomTooltip";
 import { ADAToken } from "../Token";
 import { TbFileCheck } from "react-icons/tb";
 import CopyButton from "../CopyButton";
+import { Tooltip } from "@mui/material";
 
 type DetailViewStakeKeyProps = {
   stakeId: string;
@@ -174,7 +176,9 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
                 <InfoIcon />
                 Delegated to
               </DetailLabel>
-              <DetailValue>{data.pool?.poolName}</DetailValue>
+              <Tooltip placement="top" title={data.pool?.poolName || ""}>
+                <DelegatedDetail>{data.pool?.poolName}</DelegatedDetail>
+              </Tooltip>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
