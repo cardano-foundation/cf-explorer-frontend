@@ -26,6 +26,24 @@ import SearchResult from "./pages/SearchResult";
 import MyProfile from "./pages/MyProfile";
 import AccountLayout from "./components/commons/Layout/AccountLayout";
 
+interface RouteProps {
+  path: string;
+  exact?: boolean;
+  component: React.ComponentType<any>;
+}
+
+const AccountRoute = ({ path, exact, component: Component }: RouteProps) => (
+  <Route
+    path={path}
+    exact={exact}
+    component={(props: JSX.IntrinsicAttributes) => (
+      <AccountLayout>
+        <Component {...props} />
+      </AccountLayout>
+    )}
+  />
+);
+
 const Routes: React.FC = () => {
   return (
     <Switch>
@@ -49,14 +67,15 @@ const Routes: React.FC = () => {
       <Route path={routers.POLICY_DETAIL} exact component={PolicyDetail} />
       <Route path={routers.ADDRESS_LIST} exact component={TopAddresses} />
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
-      <Route path={routers.SEARCH} component={SearchResult} />
+      <Route path={routers.SEARCH} exact component={SearchResult} />
       <Route path={routers.ACCOUNT}>
-        <AccountLayout>
-          <Route path={routers.HOME} component={MyProfile} />
-          <Route path={routers.MY_PROFILE} component={MyProfile} />
-          <Route path={routers.BOOKMARK} component={MyProfile} />
-          <Route path={routers.PRIVATE_NOTES} component={MyProfile} />
-        </AccountLayout>
+        <Switch>
+          <AccountRoute path={routers.ACCOUNT} exact component={MyProfile} />
+          <AccountRoute path={routers.MY_PROFILE} exact component={MyProfile} />
+          <AccountRoute path={routers.BOOKMARK} exact component={MyProfile} />
+          <AccountRoute path={routers.PRIVATE_NOTES} exact component={MyProfile} />
+          <Route path={routers.NOT_FOUND} component={NotFound} />
+        </Switch>
       </Route>
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
