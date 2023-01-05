@@ -33,10 +33,6 @@ const AddressOverview: React.FC = () => {
     {
       value: (
         <Autocomplete
-          // value={selectedToken}
-          // onChange={(event, newValue) => {
-          //   setSelectedToken(newValue as WalletAddress["tokens"][number]);
-          // }}
           PaperComponent={({ children }) => <WrapPaperDropdown>{children}</WrapPaperDropdown>}
           options={data?.tokens || []}
           getOptionLabel={option => option.displayName}

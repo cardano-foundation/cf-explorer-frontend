@@ -1,10 +1,10 @@
 import React from "react";
 import CopyButton from "../../commons/CopyButton";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
-import { styled, Box, Skeleton } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { EmptyIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
-import { AddressGroup, ItemDetail, LabelItem, RowItem, TitleDetail, TokenAddress, ValueItem } from "./styles";
+import { AddressGroup, CardItem, ItemDetail, LabelItem, RowItem, TitleDetail, TokenAddress, ValueItem } from "./styles";
 
 interface DetailCardProps {
   title: string;
@@ -57,13 +57,3 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
 };
 
 export default CardAddress;
-
-const CardItem = styled(Box)(({ theme }) => ({
-  background: "#fff",
-  minHeight: 200,
-  height: "100%",
-  borderRadius: theme.borderRadius,
-  overflow: "hidden",
-  textAlign: "left",
-  boxShadow: theme.shadowRaised,
-}));

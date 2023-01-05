@@ -1,21 +1,21 @@
-import React from "react";
 import { Link, useParams } from "react-router-dom";
-import { styled, Grid, Box, Autocomplete, Skeleton } from "@mui/material";
-import { formatADA, formatPrice } from "../../../commons/utils/helper";
+import { Grid, Box, Autocomplete } from "@mui/material";
+import { exchangeADAToUSD, formatADA, formatPrice } from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
-import CopyButton from "../../commons/CopyButton"; 
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronDown } from "react-icons/bi";
-import { AIcon, InfoIcon } from "../../../commons/resources";
-import { TextField } from "@mui/material";
-import { EmptyIcon } from "../../../commons/resources";
-import { details, routers } from "../../../commons/routers";
-import { AddressGroup, AddressLink, ItemDetail, ItemLeft, ItemLeftTitle, TitleDetail, Value } from "./styles";
+import { AIcon } from "../../../commons/resources";
+import CardAddress from "../../share/CardAddress";
+import { routers } from "../../../commons/routers";
+import { StyledTextField, WrapPaperDropdown } from "./styles";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../stores/types";
 
 const AddressHeader = () => {
   const { address } = useParams<{ address: string }>();
   const { data, loading } = useFetch<WalletAddress>(`/address/${address}`);
   const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(`/stakeKey/${address}`);
+  const { adaRate } = useSelector(({ system }: RootState) => system);
 
   const itemRight = [
     { title: "Transaction", value: data?.txCount || 0 },
@@ -28,15 +28,16 @@ const AddressHeader = () => {
         </>
       ),
     },
-    { title: "ADA Value", value: "NaN" },
+    { title: "ADA Value", value: exchangeADAToUSD(data?.balance || 0, adaRate) },
     {
       value: (
         <Autocomplete
+          PaperComponent={({ children }) => <WrapPaperDropdown>{children}</WrapPaperDropdown>}
           options={data?.tokens || []}
           getOptionLabel={option => option.displayName}
           noOptionsText="No data found"
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
-            <li {...props}>
+            <li {...props} key={option.fingerprint}>
               <Box
                 display="flex"
                 alignItems={"center"}
@@ -103,7 +104,7 @@ const AddressHeader = () => {
       <Grid container columnSpacing={2}>
         <Grid item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={props => props.borderRadius} height={"100%"}>
-            <DetailCard
+            <CardAddress
               title={"Wallet address"}
               type="left"
               address={data?.address || ""}
@@ -114,7 +115,7 @@ const AddressHeader = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={props => props.borderRadius} height={"100%"}>
-            <DetailCard
+            <CardAddress
               title={"Stake address"}
               type="right"
               address={data?.stakeAddress || ""}
@@ -129,69 +130,3 @@ const AddressHeader = () => {
 };
 
 export default AddressHeader;
-
-interface DetailCardProps {
-  title: string;
-  address: string;
-  item: { title?: string; value: React.ReactNode }[];
-  type: "left" | "right";
-  loading: boolean;
-}
-const DetailCard: React.FC<DetailCardProps> = ({ title, address, item, type, loading }) => {
-  if (loading) {
-    return (
-      <CardItem padding={0}>
-        <Skeleton variant="rectangular" height="100%" width="100%" />
-      </CardItem>
-    );
-  }
-  if (type === "right" && !address) {
-    return (
-      <CardItem>
-        <Box height={"100%"} display="flex" alignItems="center" justifyContent="center">
-          <img alt="icon" src={EmptyIcon} />
-        </Box>
-      </CardItem>
-    );
-  }
-  return (
-    <CardItem padding={props => props.spacing(4)}>
-      <TitleDetail>{title}</TitleDetail>
-      <AddressGroup>
-        <AddressLink to={type === "left" ? details.address(address) : details.stake(address)}>{address}</AddressLink>
-        <CopyButton text={address} />
-      </AddressGroup>
-      <Box>
-        {item.map((item, index) => {
-          return (
-            <ItemDetail key={index}>
-              {item.title && (
-                <ItemLeft>
-                  <img src={InfoIcon} alt="info icon" />
-                  <ItemLeftTitle>{item.title}:</ItemLeftTitle>
-                </ItemLeft>
-              )}
-              <Value style={{ width: `${item.title ? "auto" : "100%"}` }}>{item.value}</Value>
-            </ItemDetail>
-          );
-        })}
-      </Box>
-    </CardItem>
-  );
-};
-
-const CardItem = styled(Box)(({ theme }) => ({
-  background: "#fff",
-  minHeight: 200,
-  height: "100%",
-  borderRadius: theme.borderRadius,
-  overflow: "hidden",
-  textAlign: "left",
-  boxShadow: theme.shadowRaised,
-}));
-
-const StyledTextField = styled(TextField)`
-  .MuiInputBase-input {
-    font-size: 14px;
-  }
-`;
