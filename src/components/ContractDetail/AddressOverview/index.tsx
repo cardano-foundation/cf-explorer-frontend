@@ -1,5 +1,5 @@
 import { Autocomplete, Box, Grid } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -15,8 +15,13 @@ import { Pool, StyledAAmount, StyledTextField, WrapPaperDropdown } from "./style
 const AddressOverview: React.FC = () => {
   const params = useParams<{ address: string }>();
   const { data, loading } = useFetch<WalletAddress>(`/address/${params.address}`);
-  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(`/stakeKey/${params.address}`);
+  const [stakeKey, setStakeKey] = useState("");
+  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(stakeKey ? `/stake/${stakeKey}` : "");
   const { adaRate } = useSelector(({ system }: RootState) => system);
+
+  useEffect(() => {
+    setStakeKey(data?.stakeAddress || "");
+  }, [data]);
 
   const itemLeft = [
     { title: "Transaction", value: data?.txCount },
@@ -33,10 +38,6 @@ const AddressOverview: React.FC = () => {
     {
       value: (
         <Autocomplete
-          // value={selectedToken}
-          // onChange={(event, newValue) => {
-          //   setSelectedToken(newValue as WalletAddress["tokens"][number]);
-          // }}
           PaperComponent={({ children }) => <WrapPaperDropdown>{children}</WrapPaperDropdown>}
           options={data?.tokens || []}
           getOptionLabel={option => option.displayName}
@@ -122,6 +123,7 @@ const AddressOverview: React.FC = () => {
               address={dataStake?.stakeAddress || ""}
               item={itemRight}
               loading={loadingStake}
+              addressDestination={details.stake(dataStake?.stakeAddress)}
             />
           </Box>
         </Grid>

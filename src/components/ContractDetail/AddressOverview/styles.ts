@@ -25,6 +25,9 @@ export const WrapPaperDropdown = styled(Paper)`
   border-radius: 8px;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
   padding: 8px 0;
+  & > .MuiAutocomplete-listbox {
+    padding: 0px;
+  }
 `
 
 export const Pool = styled(Link)`
