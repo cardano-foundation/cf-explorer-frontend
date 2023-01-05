@@ -51,3 +51,13 @@ export const RowItem = styled(Box)`
   display: flex;
   align-items: center;
 `;
+
+export const CardItem = styled(Box)`
+  background-color: #fff;
+  min-height: 200px;
+  height: 100%;
+  border-radius: ${props => props.theme.borderRadius};
+  overflow: hidden;
+  text-align: left;
+  box-shadow: ${props => props.theme.shadowRaised};
+`;

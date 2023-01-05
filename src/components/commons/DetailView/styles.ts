@@ -241,6 +241,13 @@ export const DetailValue = styled("small")`
   align-items: center;
   gap: 5px;
 `;
+export const DelegatedDetail = styled("small")`
+  color: ${props => props.theme.colorBlack};
+  font-weight: var(--font-weight-bold);
+  width: 250px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
 export const DetailLabelSkeleton = styled(Skeleton)`
   height: 1em;
   width: 50%;

@@ -24,6 +24,10 @@ export const routers = {
   NFT_DETAIL: "/nft/:nftId",
   TOP_DELEGATOR: "/top-delegator",
   SEARCH: "/search",
+  ACCOUNT: "/account",
+  MY_PROFILE: "/account/profile",
+  BOOKMARK: "/account/bookmark",
+  PRIVATE_NOTES: "/account/notes",
   NOT_FOUND: "/*",
 };
 
