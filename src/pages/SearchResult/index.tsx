@@ -46,7 +46,42 @@ const BackToHome = styled(Link)`
   }
 `;
 
-const urls: FilterParams[] = ["epoch", "block", "tx", "tokens", "stake", "address"];
+const createNavigator = (filter?: FilterParams | string, value?: string) => {
+  switch (filter) {
+    case "epoch": {
+      return (value?: string) => details.epoch(Number(value));
+    }
+    case "block": {
+      return (value?: string) => details.block(Number(value));
+    }
+    case "tx": {
+      return details.transaction;
+    }
+    case "tokens": {
+      return details.token;
+    }
+    case "stake": {
+      return details.stake;
+    }
+    case "address": {
+      return details.address;
+    }
+    default: {
+      if (value) {
+        if (value.search("addr_") === 0) return details.address;
+        if (value.search("stake_") === 0) return details.stake;
+        if (value.search("pool") === 0) return details.delegation;
+        if (value.search("asset") === 0) return details.token;
+      }
+      return null;
+    }
+  }
+};
+
+const filterURLS = (value: string): FilterParams[] => {
+  if (!Number.isNaN(Number(value))) return ["epoch", "block"];
+  else return ["block", "tx", "tokens", "stake", "address"];
+};
 
 const SearchResult = () => {
   const [loading, setLoading] = useState(false);
@@ -58,66 +93,32 @@ const SearchResult = () => {
     const checkFilter = async () => {
       if (!value) return;
 
-      switch (filter) {
-        case "epoch": {
-          return history.push(details.epoch(Number(value)));
-        }
-        case "block": {
-          return history.push(details.block(Number(value)));
-        }
-        case "tx": {
-          return history.push(details.transaction(value));
-        }
-        case "tokens": {
-          return history.push(details.token(value));
-        }
-        case "stake": {
-          return history.push(details.stake(value));
-        }
-        case "address": {
-          return history.push(details.address(value));
-        }
-        default: {
-          setLoading(true);
-          try {
-            const url = await Promise.any(
-              urls.map(async url => {
-                try {
-                  const res = await defaultAxios.get(`${url}/${value}`);
-                  if (res.data) return Promise.resolve(url);
-                } catch {}
-                return Promise.reject();
-              })
-            );
-            if (!url) setLoading(false);
-            switch (url) {
-              case "epoch": {
-                return history.push(details.epoch(Number(value)));
-              }
-              case "block": {
-                return history.push(details.block(Number(value)));
-              }
-              case "tx": {
-                return history.push(details.transaction(value));
-              }
-              case "tokens": {
-                return history.push(details.token(value));
-              }
-              case "stake": {
-                return history.push(details.stake(value));
-              }
-              case "address": {
-                return history.push(details.address(value));
-              }
-              default:
-                return setLoading(false);
-            }
-          } catch {
-            setLoading(false);
-          }
-        }
-      }
+      const navigate = createNavigator(filter, value);
+
+      if (navigate) return history.push(navigate(value));
+
+      setLoading(true);
+      try {
+        const urls = filterURLS(value);
+        const url = await Promise.any(
+          urls.map(async url => {
+            try {
+              const res = await defaultAxios.get(`${url}/${value}`);
+              if (res.data) return Promise.resolve(url);
+            } catch {}
+            return Promise.reject();
+          })
+        );
+        if (!url) setLoading(false);
+
+        const navigate = createNavigator(url);
+
+        if (navigate) return history.push(navigate(value));
+      } catch {}
+
+      setLoading(false);
     };
+
     checkFilter();
   }, [filter, value]);
 
