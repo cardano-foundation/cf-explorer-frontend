@@ -71,6 +71,7 @@ const createNavigator = (filter?: FilterParams | string, value?: string) => {
         if (value.search("addr_") === 0) return details.address;
         if (value.search("stake_") === 0) return details.stake;
         if (value.search("pool") === 0) return details.delegation;
+        if (value.search("asset") === 0) return details.token;
       }
       return null;
     }
@@ -119,7 +120,6 @@ const SearchResult = () => {
     };
 
     checkFilter();
-
   }, [filter, value]);
 
   if (loading)
