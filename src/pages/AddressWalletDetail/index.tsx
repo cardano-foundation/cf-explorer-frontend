@@ -10,7 +10,7 @@ const AddressWalletDetail = () => {
     <ContainerBox>
       <AddressHeader />
       <AddressAnalytics />
-      <AddressTransactionList url={`tx/list?address=${address}`} />
+      <AddressTransactionList url={`/address/${address}/txs`} />
     </ContainerBox>
   );
 };
