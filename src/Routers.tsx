@@ -23,6 +23,8 @@ import ContractDetail from "./pages/ContractDetail";
 import TopAddresses from "./pages/TopAddresses";
 import TopDelegators from "./pages/TopDelegators";
 import SearchResult from "./pages/SearchResult";
+import MyProfile from "./pages/MyProfile";
+import AccountLayout from "./components/commons/Layout/AccountLayout";
 
 const Routes: React.FC = () => {
   return (
@@ -48,6 +50,14 @@ const Routes: React.FC = () => {
       <Route path={routers.ADDRESS_LIST} exact component={TopAddresses} />
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
       <Route path={routers.SEARCH} component={SearchResult} />
+      <Route path={routers.ACCOUNT}>
+        <AccountLayout>
+          <Route path={routers.HOME} component={MyProfile} />
+          <Route path={routers.MY_PROFILE} component={MyProfile} />
+          <Route path={routers.BOOKMARK} component={MyProfile} />
+          <Route path={routers.PRIVATE_NOTES} component={MyProfile} />
+        </AccountLayout>
+      </Route>
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );

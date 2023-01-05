@@ -6,16 +6,22 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronDown } from "react-icons/bi";
 import { AIcon } from "../../../commons/resources";
 import CardAddress from "../../share/CardAddress";
-import { routers } from "../../../commons/routers";
+import { details, routers } from "../../../commons/routers";
 import { StyledTextField, WrapPaperDropdown } from "./styles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
+import { useEffect, useState } from "react";
 
 const AddressHeader = () => {
   const { address } = useParams<{ address: string }>();
   const { data, loading } = useFetch<WalletAddress>(`/address/${address}`);
-  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(`/stakeKey/${address}`);
+  const [stakeKey, setStakeKey] = useState("");
+  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(stakeKey ? `/stake/${stakeKey}` : "");
   const { adaRate } = useSelector(({ system }: RootState) => system);
+
+  useEffect(() => {
+    setStakeKey(data?.stakeAddress || "");
+  }, [data]);
 
   const itemRight = [
     { title: "Transaction", value: data?.txCount || 0 },
@@ -121,6 +127,7 @@ const AddressHeader = () => {
               address={data?.stakeAddress || ""}
               item={itemLeft}
               loading={loading || loadingStake}
+              addressDestination={details.stake(data?.stakeAddress)}
             />
           </Box>
         </Grid>

@@ -3,7 +3,7 @@ import CopyButton from "../../commons/CopyButton";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import { Box, Skeleton } from "@mui/material";
 import { EmptyIcon } from "../../../commons/resources";
-import { routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import { AddressGroup, CardItem, ItemDetail, LabelItem, RowItem, TitleDetail, TokenAddress, ValueItem } from "./styles";
 
 interface DetailCardProps {
@@ -12,8 +12,10 @@ interface DetailCardProps {
   item: { title?: string; value: React.ReactNode }[];
   type: "left" | "right";
   loading: boolean;
+  addressDestination?: string;
 }
-const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, loading }) => {
+const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, loading, addressDestination }) => {
+ console.log(addressDestination)
   if (loading) {
     return (
       <CardItem padding={0}>
@@ -34,7 +36,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
     <CardItem padding={props => props.spacing(4)}>
       <TitleDetail>{title}</TitleDetail>
       <AddressGroup>
-        <TokenAddress to={routers.ADDRESS_DETAIL.replace(":address", address)}>{address}</TokenAddress>
+        <TokenAddress to={addressDestination ? addressDestination : details.address(address)}>{address}</TokenAddress>
         <CopyButton text={address} />
       </AddressGroup>
       <Box>
