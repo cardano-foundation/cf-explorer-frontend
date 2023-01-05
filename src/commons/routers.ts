@@ -25,9 +25,9 @@ export const routers = {
   TOP_DELEGATOR: "/top-delegator",
   SEARCH: "/search",
   ACCOUNT: "/account",
-  MY_PROFILE: "/profile",
-  BOOKMARK: "/bookmark",
-  PRIVATE_NOTES: "/notes",
+  MY_PROFILE: "/account/profile",
+  BOOKMARK: "/account/bookmark",
+  PRIVATE_NOTES: "/account/notes",
   NOT_FOUND: "/*",
 };
 
