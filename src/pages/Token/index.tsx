@@ -18,7 +18,7 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 interface ITokenList {}
 
 const Tokens: React.FC<ITokenList> = () => {
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState<IToken | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();
   const { search } = useLocation();
@@ -75,7 +75,7 @@ const Tokens: React.FC<ITokenList> = () => {
   const openDetail = (_: any, r: IToken, index: number) => {
     if (width > 1023) {
       setOnDetailView(true);
-      setToken(r?.fingerprint || null);
+      setToken(r || null);
       setSelected(index);
     } else history.push(details.token(r?.fingerprint ?? ""));
   };
@@ -102,7 +102,7 @@ const Tokens: React.FC<ITokenList> = () => {
           onClickRow={openDetail}
           selected={selected}
         />
-        {token && <DetailViewToken tokenId={token} handleClose={handleClose} />}
+        {token && <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />}
       </Card>
     </StyledContainer>
   );
