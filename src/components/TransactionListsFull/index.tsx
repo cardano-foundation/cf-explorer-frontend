@@ -64,7 +64,7 @@ const columns: Column<Transactions>[] = [
           <Box display={"flex"}>
             <div> Input: </div>
             <div>
-              {r.addressesInput.slice(0, 2).map((tx, key) => {
+              {r.addressesInput.slice(0, 1).map((tx, key) => {
                 return (
                   <Tooltip key={key} title={tx} placement="top">
                     <Link to={routers.ADDRESS_DETAIL.replace(":address", tx)} key={key}>
@@ -75,7 +75,7 @@ const columns: Column<Transactions>[] = [
                   </Tooltip>
                 );
               })}
-              {r.addressesInput.length > 2 && (
+              {r.addressesInput.length > 1 && (
                 <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>...</Link>
               )}
             </div>
@@ -83,7 +83,7 @@ const columns: Column<Transactions>[] = [
           <Box display={"flex"} mt={1}>
             <div>Output: </div>
             <div>
-              {r.addressesOutput.slice(0, 2).map((tx, key) => {
+              {r.addressesOutput.slice(0, 1).map((tx, key) => {
                 return (
                   <Tooltip key={key} title={tx} placement="top">
                     <Link to={routers.ADDRESS_DETAIL.replace(":address", tx)} key={key}>
@@ -94,8 +94,12 @@ const columns: Column<Transactions>[] = [
                   </Tooltip>
                 );
               })}
-              {r.addressesOutput.length > 2 && (
-                <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>...</Link>
+              {r.addressesOutput.length > 1 && (
+                <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>
+                  <Box ml={1} color={props => props.colorBlue} fontFamily={"Helvetica, monospace"}>
+                    ...
+                  </Box>
+                </Link>
               )}
             </div>
           </Box>
