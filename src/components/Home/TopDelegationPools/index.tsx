@@ -1,24 +1,21 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
-import { DownRedIcon, UpGreenIcon } from "../../../commons/resources";
 import { routers } from "../../../commons/routers";
-import { formatPrice } from "../../../commons/utils/helper";
+import { formatPercent, formatPrice } from "../../../commons/utils/helper";
 import ViewAllButton from "../../commons/ViewAllButton";
 import { Column } from "../../commons/Table";
 import {
   DelegateTable,
   Header,
-  ImageRate,
   PoolName,
-  PriceRate,
-  PriceValue,
   ProgressContainer,
   ProgressTitle,
   StyledLinearProgress,
   Title,
   TopDelegateContainer,
 } from "./style";
+import RateWithIcon from "../../commons/RateWithIcon";
 
 interface Props {}
 
@@ -48,20 +45,12 @@ const TopDelegationPools: React.FC<Props> = () => {
     {
       title: "Reward",
       key: "reward",
-      render: r => (
-        <PriceRate>
-          <ImageRate up={r.reward >= 0 ? 1 : 0} src={r.reward >= 0 ? UpGreenIcon : DownRedIcon} alt="price rate" />
-          <PriceValue up={r.reward >= 0 ? 1 : 0}>
-            {r.reward >= 0 ? "+" : ""}
-            {r.reward?.toString().replace(".", ",") || 0} %
-          </PriceValue>
-        </PriceRate>
-      ),
+      render: r => <RateWithIcon value={r.reward} />,
     },
     {
       title: "Fee (A)",
       key: "fee",
-      render: r => `${r.feePercent || 0}% (${formatPrice(r.feeAmount / 10 ** 6)} A)`,
+      render: r => `${formatPercent(r.feePercent || 0)} (${formatPrice(r.feeAmount / 10 ** 6)} A)`,
     },
     {
       title: "Declared Pledge (A)",

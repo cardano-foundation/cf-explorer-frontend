@@ -9,6 +9,7 @@ import useFetchList from "../../../commons/hooks/useFetchList";
 import { useState } from "react";
 import { Box } from "@mui/material";
 import CustomTooltip from "../../commons/CustomTooltip";
+import RateWithIcon from "../../commons/RateWithIcon";
 
 const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
   {
@@ -34,7 +35,7 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     title: "Reward",
     key: "Reward",
     minWidth: "120px",
-    render: r => r.reward,
+    render: r => <RateWithIcon value={r.reward} />,
   },
   {
     title: "Fee (A) ",

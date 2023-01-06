@@ -12,7 +12,7 @@ const DelegationEpochList = ({
   data,
   loading,
   total,
-  initialized, 
+  initialized,
 }: {
   data: DelegationEpoch[] | null;
   loading: boolean;
@@ -37,35 +37,31 @@ const DelegationEpochList = ({
       title: "Blocks",
       key: "block",
       minWidth: "120px",
-      render: data => (
-        <StyledLink to={details.block(data.block)}>
-          {numberWithCommas(data.block || 0)}
-        </StyledLink>
-      ),
+      render: data => <StyledLink to={details.block(data.block)}>{numberWithCommas(data.block || 0)}</StyledLink>,
     },
     {
       title: "Stake Amount (A)",
       key: "stakeAmount",
       minWidth: "120px",
-      render: data => <> {formatADA(data.stakeAmount)}</>,
+      render: data => formatADA(data.stakeAmount),
     },
     {
       title: "Delegator Reward (A)",
       key: "delegatorReward",
       minWidth: "120px",
-      render: data => <>{formatADA(data.delegatorReward)}</>,
+      render: data => formatADA(data.delegatorReward),
     },
     {
       title: "Fees (A)",
       key: "fees",
       minWidth: "120px",
-      render: data => <>{formatADA(data.fees)}</>,
+      render: data => formatADA(data.fees),
     },
     {
       title: "ROS",
       key: "ros",
       minWidth: "120px",
-      render: data => <>{data.ros ? `${data.ros}%` : ""}</>,
+      render: data => (data.ros ? `${data.ros}%` : ""),
     },
   ];
 
@@ -111,9 +107,7 @@ const DelegationStakingDelegatorsList = ({
     {
       title: "No",
       key: "no",
-      render: (r, idx) => (
-        <>{idx + 1}</>
-      ),
+      render: (r, idx) => idx + 1,
     },
     {
       title: "Delegator",
@@ -123,9 +117,7 @@ const DelegationStakingDelegatorsList = ({
         data.address && (
           <div style={{ display: "flex", alignItems: "center" }}>
             <CustomTooltip placement="top" title={data.address || ""}>
-              <StyledLink to={details.address(data.address)}>
-                {getShortWallet(data.address || "")}
-              </StyledLink>
+              <StyledLink to={details.address(data.address)}>{getShortWallet(data.address || "")}</StyledLink>
             </CustomTooltip>
             <CopyButton text={data.address || ""} />
           </div>
@@ -135,19 +127,19 @@ const DelegationStakingDelegatorsList = ({
       title: "Total Value (A)",
       key: "value",
       minWidth: "120px",
-      render: data => <> {formatADA(data.totalStake || 0)}</>,
+      render: data => formatADA(data.totalStake || 0),
     },
     {
       title: "Staked Time",
       key: "stakedTime",
       minWidth: "120px",
-      render: data => <>{moment(data.time).format("DD/MM/YYYY HH:mm/ss")}</>,
+      render: data => moment(data.time).format("MM/DD/YYYY HH:mm/ss"),
     },
     {
       title: "Fees (A)",
       key: "fees",
       minWidth: "120px",
-      render: data => <>{formatADA(data.fee || 0)}</>,
+      render: data => formatADA(data.fee || 0),
     },
   ];
 
