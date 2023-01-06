@@ -95,7 +95,7 @@ const SearchResult = () => {
 
       const navigate = createNavigator(filter, value);
 
-      if (navigate) return history.push(navigate(value));
+      if (navigate) return history.replace(navigate(value));
 
       setLoading(true);
       try {
@@ -113,14 +113,14 @@ const SearchResult = () => {
 
         const navigate = createNavigator(url);
 
-        if (navigate) return history.push(navigate(value));
+        if (navigate) return history.replace(navigate(value));
       } catch {}
 
       setLoading(false);
     };
 
     checkFilter();
-  }, [filter, value]);
+  }, [history, filter, value]);
 
   if (loading)
     return (

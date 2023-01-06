@@ -75,21 +75,6 @@ export const PoolName = styled(Link)`
   color: ${props => props.theme.colorBlue} !important;
 `;
 
-export const PriceRate = styled("div")`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 5px;
-  font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.colorRed};
-`;
-export const ImageRate = styled("img")<{ up: number }>`
-  width: 1.5rem;
-  height: 1.5rem;
-`;
-export const PriceValue = styled("span")<{ up: number }>`
-  color: ${props => (props.up ? props.theme.colorGreen : props.theme.colorRed)};
-`;
 export const ProgressContainer = styled("div")`
   display: flex;
   justify-content: flex-start;

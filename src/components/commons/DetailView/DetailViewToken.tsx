@@ -35,7 +35,6 @@ import {
   TokenDetailInfo,
   TokenDetailName,
   TokenDetailIcon,
-  ViewMetaData,
   TokenHeader,
   ViewDetailScroll,
   StyledViewMore,
