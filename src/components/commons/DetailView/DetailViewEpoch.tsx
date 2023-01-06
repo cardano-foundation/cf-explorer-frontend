@@ -167,14 +167,14 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
                 <InfoIcon />
                 Start time
               </DetailLabel>
-              <DetailValue>{data.startTime}</DetailValue>
+              <DetailValue>{moment(data.startTime).format("MM/DD/YYYY HH:mm:ss")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
                 <InfoIcon />
                 End time
               </DetailLabel>
-              <DetailValue>{data.endTime}</DetailValue>
+              <DetailValue>{moment(data.endTime).format("MM/DD/YYYY HH:mm:ss")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>

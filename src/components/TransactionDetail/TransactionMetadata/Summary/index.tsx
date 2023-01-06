@@ -49,7 +49,7 @@ const SummaryItems = ({
           </Box>
           <Box display={"flex"} alignItems="center" justifyContent={"space-between"} width="100%" mb={1}>
             <Box display="flex" justifyContent={"space-between"} alignItems="center" pr={1}>
-              ADA sent:{" "}
+              {type === "down" ? "ADA sent:" : "ADA received:"}{" "}
             </Box>
             <Box flex={1} display="flex" justifyContent={"space-between"} alignItems="center">
               <Box>
@@ -66,9 +66,9 @@ const SummaryItems = ({
               </Box>
             </Box>
           </Box>
-          {item.tokens && (
+          {item.tokens && item.tokens.length > 0 && (
             <Box display={"flex"} alignItems="center" flexWrap={"wrap"}>
-              <Box component={"span"}>Token received: </Box>
+              <Box component={"span"}> {type === "down" ? "Token sent:" : "Token received:"} </Box>
 
               {item.tokens.map((token, idx) => (
                 <Box key={idx} width="auto" component={"span"}>
