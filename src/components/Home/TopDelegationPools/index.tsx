@@ -62,7 +62,7 @@ const TopDelegationPools: React.FC<Props> = () => {
       key: "output",
       render: r => (
         <ProgressContainer>
-          <ProgressTitle>{r.saturation}%</ProgressTitle>
+          <ProgressTitle>{formatPercent(r.saturation / 100)}</ProgressTitle>
           <StyledLinearProgress variant="determinate" value={r.saturation} style={{ width: 150 }} />
         </ProgressContainer>
       ),
