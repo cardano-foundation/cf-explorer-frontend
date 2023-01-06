@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { setOpenModal } from "../../../stores/user";
 import { SUPPORTED_WALLETS } from "../../../commons/utils/constants";
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
-import { RootState } from "../../../stores/types";
 import { CircularProgress } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
-import { CloseButton, ConnectDialog, Content, Header, Title, WalletIcon, WalletItem, WalletName } from "./style";
+import { CloseButton, ConnectOption, Title, WalletIcon, WalletItem, WalletName, WrapContent } from "./style";
 import { SupportedWallets } from "../../../types/user";
 
 const ConnectWalletModal: React.FC = () => {
   const { connect } = useCardano();
-  const { openModal } = useSelector(({ user }: RootState) => user);
   const [walletConnecting, setWalletConnecting] = useState<SupportedWallets | null>(null);
 
   const handleClose = () => {
@@ -30,20 +27,12 @@ const ConnectWalletModal: React.FC = () => {
   };
 
   return (
-    <ConnectDialog
-      onClose={walletConnecting ? undefined : handleClose}
-      open={openModal}
-      fullWidth
-      connecting={walletConnecting ? 1 : 0}
-      PaperProps={{ style: { borderRadius: 20 } }}
-    >
-      <Header>
+    <ConnectOption>
+      <WrapContent>
         <Title>Connect to a Wallet</Title>
         <CloseButton connecting={walletConnecting ? 1 : 0} onClick={walletConnecting ? undefined : handleClose}>
           <IoMdClose />
         </CloseButton>
-      </Header>
-      <Content>
         {SUPPORTED_WALLETS.map(wallet => {
           const active = walletConnecting === wallet.name;
           return (
@@ -59,8 +48,8 @@ const ConnectWalletModal: React.FC = () => {
             </WalletItem>
           );
         })}
-      </Content>
-    </ConnectDialog>
+      </WrapContent>
+    </ConnectOption>
   );
 };
 

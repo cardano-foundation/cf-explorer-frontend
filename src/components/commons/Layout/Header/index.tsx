@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { RootState } from "../../../../stores/types";
-import ConnectWalletModal from "../../ConnectWalletModal";
 import ConnectWallet from "./ConnectWallet";
 import HeaderSearch from "./HeaderSearch";
 import SelectNetwork from "./SelectNetwork";
@@ -22,11 +21,10 @@ const Header: React.FC<RouteComponentProps> = props => {
           <HeaderSearch home={home} />
         </HeaderMain>
         <HeaderTop fixed={onDetailView ? 1 : 0}>
-          <SelectNetwork home={home}/>
+          <SelectNetwork home={home} />
           <ConnectWallet />
         </HeaderTop>
       </HeaderBox>
-      <ConnectWalletModal />
     </HeaderContainer>
   );
 };

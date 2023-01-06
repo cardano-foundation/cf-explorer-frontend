@@ -1,11 +1,12 @@
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
-import { ButtonBase, CircularProgress, styled } from "@mui/material";
+import { Box, ButtonBase, CircularProgress, styled } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import { WalletIcon } from "../../../../../commons/resources";
-import { getShortWallet } from "../../../../../commons/utils/helper";
 import { RootState } from "../../../../../stores/types";
 import { setOpenModal } from "../../../../../stores/user";
+import ConnectedProfileOption from "../../../ConnectedProfileOption";
+import ConnectWalletModal from "../../../ConnectWalletModal";
 
 interface Props {}
 
@@ -42,29 +43,31 @@ const Spin = styled(CircularProgress)`
 `;
 
 const ConnectWallet: React.FC<Props> = () => {
-  const { network } = useSelector(({ user }: RootState) => user);
+  const { network, openModal } = useSelector(({ user }: RootState) => user);
 
   const { isEnabled, stakeAddress, isConnected } = useCardano({
     limitNetwork: network === "mainnet" ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
+
   const handleClick = () => {
-    setOpenModal(true);
+    setOpenModal(!openModal);
   };
 
   return isEnabled && stakeAddress ? (
-    <StyledButton type="button">
-      <Span>{getShortWallet(stakeAddress)}</Span>
-    </StyledButton>
+    <ConnectedProfileOption />
   ) : isConnected ? (
     <StyledButton type="button">
       <Spin size={20} />
       <Span>Re-Connecting</Span>
     </StyledButton>
   ) : (
-    <StyledButton type="button" onClick={handleClick}>
-      <Image src={WalletIcon} alt="wallet" />
-      <Span>Connect Wallet</Span>
-    </StyledButton>
+    <Box position="relative">
+      <StyledButton type="button" onClick={handleClick}>
+        <Image src={WalletIcon} alt="wallet" />
+        <Span>Connect Wallet</Span>
+      </StyledButton>
+      {openModal && <ConnectWalletModal />}
+    </Box>
   );
 };
 
