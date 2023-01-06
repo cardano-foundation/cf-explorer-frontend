@@ -71,6 +71,7 @@ const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] 
 const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
   const { hash, handleClose } = props;
   const { data } = useFetch<Transaction>(hash ? `tx/${hash}` : ``);
+  const { data: epochCurrent } = useFetch<EpochCurrentType>("/epoch/current");
 
   if (!data)
     return (
@@ -146,7 +147,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
       if (data.tx.confirmation > 9) {
         return CONFIRMATION_STATUS.HIGH;
       }
-      if (2 < data.tx.confirmation && data.tx.confirmation  <= 8) {
+      if (2 < data.tx.confirmation && data.tx.confirmation <= 8) {
         return CONFIRMATION_STATUS.MEDIUM;
       }
       return CONFIRMATION_STATUS.LOW;
@@ -170,7 +171,11 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               pathLineCap="butt"
               pathWidth={4}
               trailWidth={2}
-              percent={((data.tx.epochSlot || 0) / (data.tx.maxEpochSlot || MAX_SLOT_EPOCH)) * 100}
+              percent={
+                data.tx.epochNo === epochCurrent?.no
+                  ? ((data.tx.epochSlot || 0) / (data.tx.maxEpochSlot || MAX_SLOT_EPOCH)) * 100
+                  : 100
+              }
               trailOpacity={1}
             >
               <EpochNumber>{data.tx.epochNo}</EpochNumber>
