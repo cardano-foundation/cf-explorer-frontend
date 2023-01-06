@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { stringify } from "qs";
+import { parse, stringify } from "qs";
 import axios from "axios";
 import moment from "moment";
 import { useWindowSize } from "react-use";
@@ -18,49 +18,18 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 interface ITokenList {}
 
 const Tokens: React.FC<ITokenList> = () => {
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState<IToken | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
-  const [metaLoading, setMetaLoading] = useState<boolean>(false);
-  const [metaData, setMetaData] = useState<ITokenMetadata[]>([]);
   const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
+  const query = parse(search);
 
-  const { data, ...fetchData } = useFetchList<ITokenOverview>(`/tokens`, pageInfo);
-
-  useEffect(() => {
-    async function loadMetadata() {
-      if (data?.length) {
-        setMetaLoading(true);
-        const query: string[] = data.map(token => `${token?.policy}${token?.name}`);
-        try {
-          const {
-            data: { subjects },
-          } = await axios.post("/metadata/query", {
-            subjects: query,
-            properties: ["policy", "logo"],
-          });
-
-          setMetaData(
-            subjects.map((item: any) => ({
-              policy: item.policy,
-              logo: item.logo.value,
-            }))
-          );
-        } catch (err) {}
-        setMetaLoading(false);
-      }
-    }
-    loadMetadata();
-  }, [data]);
-
-  const tokens: IToken[] = useMemo(() => {
-    return data.map(token => {
-      const meta = metaData.find(_ => token.policy === _.policy);
-      return { ...token, logo: meta?.logo, decimals: meta?.decimals };
-    });
-  }, [data, metaData]);
+  const { data, ...fetchData } = useFetchList<ITokenOverview>(`/tokens`, {
+    ...pageInfo,
+    sort: query.sort ? `${query.sort}` : "supply,DESC",
+  });
 
   const columns: Column<IToken>[] = [
     {
@@ -68,13 +37,7 @@ const Tokens: React.FC<ITokenList> = () => {
       key: "icon",
       minWidth: "50px",
       render: r =>
-        metaLoading ? (
-          <Skeleton style={{ width: 30, height: 50 }} />
-        ) : r.logo ? (
-          <Logo src={`data:/image/png;base64,${r.logo}`} alt="icon" />
-        ) : (
-          <LogoEmpty />
-        ),
+        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />,
     },
     {
       title: "Asset Name",
@@ -112,7 +75,7 @@ const Tokens: React.FC<ITokenList> = () => {
   const openDetail = (_: any, r: IToken, index: number) => {
     if (width > 1023) {
       setOnDetailView(true);
-      setToken(r?.fingerprint || null);
+      setToken(r || null);
       setSelected(index);
     } else history.push(details.token(r?.fingerprint ?? ""));
   };
@@ -128,7 +91,7 @@ const Tokens: React.FC<ITokenList> = () => {
       <Card title="Token List">
         <Table
           {...fetchData}
-          data={tokens}
+          data={data}
           columns={columns}
           total={{ title: "Total", count: fetchData.total }}
           pagination={{
@@ -139,7 +102,7 @@ const Tokens: React.FC<ITokenList> = () => {
           onClickRow={openDetail}
           selected={selected}
         />
-        {token && <DetailViewToken tokenId={token} handleClose={handleClose} />}
+        {token && <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />}
       </Card>
     </StyledContainer>
   );
