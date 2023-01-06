@@ -33,10 +33,9 @@ import CustomTooltip from "../../commons/CustomTooltip";
 interface ITokenOverview {
   data: IToken | null;
   loading: boolean;
-  tokenMetadataLoading: boolean;
 }
 
-const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataLoading }) => {
+const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
 
@@ -50,7 +49,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataL
       ),
       icon: slotIcon,
     },
-    { title: "Decimal", icon: decimalIcon, value: data?.decimals || 0 },
+    { title: "Decimal", icon: decimalIcon, value: data?.metadata?.decimals || 0 },
     {
       title: (
         <Box display={"flex"} alignItems="center">

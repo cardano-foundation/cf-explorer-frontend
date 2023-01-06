@@ -38,7 +38,6 @@ const columns: Column<ITokenMintingTable>[] = [
     render: r => (
       <PriceValue>
         <SmallText>{numberWithCommas(r.amount) || 0}</SmallText>
-        <PriceIcon src={AIcon} alt="a icon" />
       </PriceValue>
     ),
   },

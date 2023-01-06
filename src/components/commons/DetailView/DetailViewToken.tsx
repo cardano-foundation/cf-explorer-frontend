@@ -59,31 +59,6 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
   const { data } = useFetch<IToken>(tokenId ? `tokens/${tokenId}` : ``);
   const [tokenMetadata, setTokenMetadata] = useState<ITokenMetadata>({});
 
-  useEffect(() => {
-    async function loadMetadata() {
-      if (data) {
-        try {
-          const {
-            data: { subjects },
-          } = await axios.post("/metadata/query", {
-            subjects: [`${data.policy}${data.name}`],
-            properties: ["policy", "logo", "decimals"],
-          });
-
-          if (subjects.length !== 0) {
-            setTokenMetadata({
-              policy: subjects[0]?.policy,
-              logo: subjects[0]?.logo.value,
-              decimals: subjects[0]?.decimals.value,
-            });
-          }
-        } catch (err) {}
-      }
-      return true;
-    }
-    loadMetadata();
-  }, [data]);
-
   if (!data)
     return (
       <ViewDetailDrawer anchor="right" open={!!tokenId} hideBackdrop variant="permanent">
@@ -199,11 +174,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
               </TokenTotalSupply>
               <TokenDecimal>
                 <TokenInfoLabel>Decimal</TokenInfoLabel>
-                {tokenMetadata.decimals ? (
-                  <TokenInfoValue>{tokenMetadata.decimals}</TokenInfoValue>
-                ) : (
-                  <DetailValueSkeleton variant="rectangular" />
-                )}
+                {data?.metadata?.decimals && <TokenInfoValue>{data?.metadata?.decimals}</TokenInfoValue>}
               </TokenDecimal>
             </TokenHeaderInfo>
           </TokenContainer>
@@ -236,8 +207,8 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                       data.displayName
                     )}
                   </TokenDetailName>
-                  {tokenMetadata.logo ? (
-                    <TokenDetailIcon src={tokenMetadata.logo} alt="token logo" />
+                  {data.metadata?.logo ? (
+                    <TokenDetailIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt="token logo" />
                   ) : (
                     <IconSkeleton variant="circular" />
                   )}
