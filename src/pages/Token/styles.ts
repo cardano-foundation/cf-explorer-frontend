@@ -17,8 +17,9 @@ export const Logo = styled("img")`
 export const LogoEmpty = styled(Box)`
   width: 30px;
   height: 30px;
-  background: #ececec;
-  border-radius: 4px;
+  background: #ffffff99;
+  border-radius: 50%;
+  border: 1px solid #e5e5e5;
 `;
 
 export const StyledSelect = styled(Select)`

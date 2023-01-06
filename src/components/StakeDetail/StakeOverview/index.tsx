@@ -45,7 +45,7 @@ const StakeOverview = () => {
       ),
       value: (
         <StyledLink to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", data?.pool?.poolId || "")}>
-          {data?.pool?.poolName || ""}
+          {data?.pool?.tickerName || ""} - {data?.pool?.poolName || ""}
         </StyledLink>
       ),
     },

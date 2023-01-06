@@ -43,6 +43,7 @@ import { ADAToken } from "../Token";
 import { TbFileCheck } from "react-icons/tb";
 import CopyButton from "../CopyButton";
 import { Tooltip } from "@mui/material";
+import { Link } from "react-router-dom";
 
 type DetailViewStakeKeyProps = {
   stakeId: string;
@@ -177,7 +178,11 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
                 Delegated to
               </DetailLabel>
               <Tooltip placement="top" title={data.pool?.poolName || ""}>
-                <DelegatedDetail>{data.pool?.poolName}</DelegatedDetail>
+                <Link to={details.delegation(data.pool?.poolId)}>
+                  <DelegatedDetail>
+                    {data.pool?.tickerName} - {data.pool?.poolName}
+                  </DelegatedDetail>
+                </Link>
               </Tooltip>
             </DetailsInfoItem>
             <DetailsInfoItem>

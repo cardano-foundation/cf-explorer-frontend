@@ -8,6 +8,7 @@ import mintingIcon from "../../../../commons/resources/images/copy.svg";
 
 import styles from "./index.module.scss";
 import ScriptModal from "../../../ScriptModal";
+import { BigNumber } from "bignumber.js";
 
 interface MintingProps {
   data: Transaction["mints"] | null;
@@ -38,7 +39,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       key: "Amount",
       minWidth: "40px",
       render: (r, index) => {
-        return <div className={styles.link}>{r.assetQuantity}</div>;
+        return <div className={styles.link}>{BigNumber(r.assetQuantity).toString()}</div>;
       },
     },
     {

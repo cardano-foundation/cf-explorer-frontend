@@ -17,7 +17,7 @@ import {
   UserIcon,
 } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
-import { formatADA, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatPercent, getShortWallet } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import CustomTooltip from "../../commons/CustomTooltip";
 import DropdownDetail from "../../commons/DropdownDetail";
@@ -256,7 +256,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               <StyledLinearProgress variant="determinate" value={data?.saturation || 0} />
               <div style={{ display: "flex", justifyContent: "space-between", marginTop: "9px" }}>
                 <span style={{ fontSize: "14px", fontWeight: "400", opacity: "0.5" }}>Saturation</span>
-                <span style={{ fontSize: "16px" }}>{data?.saturation || 0}%</span>
+                <span style={{ fontSize: "16px" }}>{formatPercent(data?.saturation || 0)}</span>
               </div>
             </InfoValue>
           </Item>

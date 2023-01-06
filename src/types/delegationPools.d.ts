@@ -42,8 +42,8 @@ interface DelegationEpoch {
   epoch: number;
   block: number;
   stakeAmount: number;
-  delegatorReward: number;
-  fees: number;
+  delegators: number;
+  fee: number;
   ros: number;
 }
 interface StakingDelegators {

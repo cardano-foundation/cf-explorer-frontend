@@ -10,6 +10,7 @@ import { AIcon } from "../../../commons/resources";
 import { StyledAddress, StyledLink, StyledOutput, StyledColorBlueDard, StyledContainer } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import useFetchList from "../../../commons/hooks/useFetchList";
+import { Box } from "@mui/material";
 
 interface IEpochBlockList {
   epochId: string;
@@ -36,9 +37,9 @@ const columns: Column<BlockDetail>[] = [
     minWidth: "100px",
     render: r => (
       <>
-        <StyledLink>{r.slotNo}</StyledLink>
+        <Box>{r.slotNo}</Box>
         <div>
-          <StyledLink>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+          {r.epochNo}/{r.epochSlotNo}
         </div>
       </>
     ),

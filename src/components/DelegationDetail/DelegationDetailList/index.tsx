@@ -2,7 +2,7 @@ import moment from "moment";
 import { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { details } from "../../../commons/routers";
-import { formatADA, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADA, formatPercent, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
@@ -49,19 +49,19 @@ const DelegationEpochList = ({
       title: "Delegator Reward (A)",
       key: "delegatorReward",
       minWidth: "120px",
-      render: data => formatADA(data.delegatorReward),
+      render: data => formatADA(data.delegators),
     },
     {
       title: "Fees (A)",
       key: "fees",
       minWidth: "120px",
-      render: data => formatADA(data.fees),
+      render: data => formatADA(data.fee),
     },
     {
       title: "ROS",
       key: "ros",
       minWidth: "120px",
-      render: data => (data.ros ? `${data.ros}%` : ""),
+      render: data => formatPercent(data.ros || 0),
     },
   ];
 

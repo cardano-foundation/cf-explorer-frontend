@@ -65,11 +65,13 @@ import DelegatorIcon from "./icons/delegator.svg";
 import LightningIcon from "./icons/lightning.svg";
 import SaveOnIcon from "./icons/save-on.svg";
 import SaveOffIcon from "./icons/save-off.svg";
+import LinkOff from "./icons/link-off.svg";
+import User2 from "./icons/user2.svg";
 
-import FlintIcon from "./images/flint.jpg";
-import NamiIcon from "./images/nami.png";
-import EternlIcon from "./images/eternl.png";
-import YoroiIcon from "./images/yoroi.png";
+import FlintIcon from "./icons/flint.svg";
+import NamiIcon from "./icons/nami.svg";
+import EternlIcon from "./icons/eternl.svg";
+import YoroiIcon from "./icons/yoroi.svg";
 import HeaderBackground from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
 
@@ -146,4 +148,6 @@ export {
   LightningIcon,
   SaveOnIcon,
   SaveOffIcon,
+  LinkOff,
+  User2,
 };

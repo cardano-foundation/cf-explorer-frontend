@@ -85,7 +85,6 @@ export const TokenTitle = styled("h3")`
   margin: 0px;
 `;
 
-
 export const TokenMetaData = styled(Box)`
   border-bottom: 1px solid ${props => props.theme.textColorReverse}16;
   margin-bottom: 1rem;
@@ -235,11 +234,13 @@ export const DetailValue = styled("small")`
   gap: 5px;
 `;
 export const DelegatedDetail = styled("small")`
-  color: ${props => props.theme.colorBlack};
+  color: ${props => props.theme.colorBlue};
   font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-text) !important;
   width: 250px;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: right;
 `;
 export const DetailLabelSkeleton = styled(Skeleton)`
   height: 1em;
@@ -432,7 +433,7 @@ export const StakeKeyLink = styled(StyledLink)`
   display: block;
   white-space: pre-wrap;
   word-break: break-word;
-  max-width: 210px;
+  max-width: 90%;
   text-align: left;
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-text-small);
@@ -456,4 +457,12 @@ export const StakeKeyStatus = styled("small")<{ status: StakeStaus }>`
         return `${props.theme.colorYellow}32`;
     }
   }};
+`;
+
+export const LogoEmpty = styled(Box)`
+  width: 30px;
+  height: 30px;
+  background: #ffffff99;
+  border-radius: 50%;
+  border: 1px solid #e5e5e5;
 `;
