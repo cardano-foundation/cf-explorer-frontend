@@ -38,6 +38,7 @@ import {
   TokenHeader,
   ViewDetailScroll,
   StyledViewMore,
+  LogoEmpty,
 } from "./styles";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
@@ -156,7 +157,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                   {data?.metadata?.logo ? (
                     <TokenIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt="token logo" />
                   ) : (
-                    <IconSkeleton variant="circular" />
+                    <LogoEmpty />
                   )}
                 </TokenInfo>
                 <MetaData>{""}</MetaData>
@@ -207,7 +208,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                   {data.metadata?.logo ? (
                     <TokenDetailIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt="token logo" />
                   ) : (
-                    <IconSkeleton variant="circular" />
+                    <LogoEmpty />
                   )}
                 </TokenDetailInfo>
               </DetailValue>

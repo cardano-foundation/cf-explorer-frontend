@@ -177,7 +177,9 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
                 Delegated to
               </DetailLabel>
               <Tooltip placement="top" title={data.pool?.poolName || ""}>
-                <DelegatedDetail>{data.pool?.poolName}</DelegatedDetail>
+                <DelegatedDetail>
+                  {data.pool?.tickerName} - {data.pool?.poolName}
+                </DelegatedDetail>
               </Tooltip>
             </DetailsInfoItem>
             <DetailsInfoItem>
