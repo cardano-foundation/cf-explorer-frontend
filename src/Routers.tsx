@@ -25,6 +25,8 @@ import TopDelegators from "./pages/TopDelegators";
 import SearchResult from "./pages/SearchResult";
 import MyProfile from "./pages/MyProfile";
 import AccountLayout from "./components/commons/Layout/AccountLayout";
+import Bookmark from "./pages/Bookmark";
+import PrivateNotes from "./pages/PrivateNotes";
 
 interface RouteProps {
   path: string;
@@ -72,8 +74,8 @@ const Routes: React.FC = () => {
         <Switch>
           <AccountRoute path={routers.ACCOUNT} exact component={MyProfile} />
           <AccountRoute path={routers.MY_PROFILE} exact component={MyProfile} />
-          <AccountRoute path={routers.BOOKMARK} exact component={MyProfile} />
-          <AccountRoute path={routers.PRIVATE_NOTES} exact component={MyProfile} />
+          <AccountRoute path={routers.BOOKMARK} exact component={Bookmark} />
+          <AccountRoute path={routers.PRIVATE_NOTES} exact component={PrivateNotes} />
           <Route path={routers.NOT_FOUND} component={NotFound} />
         </Switch>
       </Route>
