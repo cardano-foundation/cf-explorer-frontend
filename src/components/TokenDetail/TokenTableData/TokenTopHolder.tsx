@@ -47,8 +47,8 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       minWidth: "200px",
       render: r => (
         <PriceValue>
-          <SmallText>{formatADA(r.quantity) || 0}</SmallText>
-          <PriceIcon src={AIcon} alt="a icon" />
+          <SmallText>{formatADA(r?.quantity ? r.quantity * 1000000 : 0) || 0}</SmallText>
+          {/* <PriceIcon src={AIcon} alt="a icon" /> */}
         </PriceValue>
       ),
     },
