@@ -21,6 +21,6 @@ export const LabelStatus = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledLink = styled(Link)`
-  font-family: var(--font-family-text);
-  color: ${props => props.theme.colorBlue};
+  font-family: var(--font-family-text) !important;
+  color: ${props => props.theme.colorBlue}!important;
 `;
