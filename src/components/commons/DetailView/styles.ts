@@ -85,13 +85,6 @@ export const TokenTitle = styled("h3")`
   margin: 0px;
 `;
 
-export const ViewMetaData = styled(Link)`
-  display: block;
-  font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.textColorReverse}!important;
-  font-size: var(--font-size-text-small);
-  text-decoration: underline !important;
-`;
 
 export const TokenMetaData = styled(Box)`
   border-bottom: 1px solid ${props => props.theme.textColorReverse}16;
