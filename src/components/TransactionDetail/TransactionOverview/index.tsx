@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import moment from "moment";
 import DetailHeader from "../../commons/DetailHeader";
 import { formatADA, getShortWallet } from "../../../commons/utils/helper";
-import { CONFIRMATION_STATUS } from "../../../commons/utils/constants";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { Box, IconButton } from "@mui/material";
 import { ConfirmStatus, StyledLink, TitleCard } from "./component";
 import { ADAToken } from "../../commons/Token";
@@ -19,6 +19,7 @@ import { details } from "../../../commons/routers";
 import DropdownDetail from "../../commons/DropdownDetail";
 import { BiShowAlt } from "react-icons/bi";
 import { Tooltip } from "@mui/material";
+import useFetch from "../../../commons/hooks/useFetch";
 
 interface Props {
   data: Transaction | null;
@@ -26,8 +27,10 @@ interface Props {
 }
 
 const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
+  const { data: epochCurrent } = useFetch<EpochCurrentType>("/epoch/current");
   const [openListInput, setOpenListInput] = useState(false);
   const [openListOutput, setOpenListOutput] = useState(false);
+
   const renderConfirmationTag = () => {
     if (data && data.tx && data.tx.confirmation) {
       if (data.tx.confirmation <= 2) {
@@ -204,7 +207,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
 
           blockDetail: {
             epochNo: data.tx.epochNo,
-            epochSlot: data.tx.epochSlot,
+            epochSlot: epochCurrent?.no === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH,
             maxEpochSlot: data.tx.maxEpochSlot,
             blockNo: data.tx.blockNo,
           },
