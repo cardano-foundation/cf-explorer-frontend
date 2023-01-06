@@ -38,7 +38,7 @@ const columns: Column<BlockDetail>[] = [
       <>
         <StyledLink>{r.slotNo}</StyledLink>
         <div>
-          <StyledLink>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+          {r.epochNo}/{r.epochSlotNo}
         </div>
       </>
     ),

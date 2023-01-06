@@ -2,6 +2,7 @@ import { Container } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { parse, stringify } from "qs";
+import { BiChevronDown } from "react-icons/bi";
 
 import useFetch from "../../commons/hooks/useFetch";
 
@@ -98,6 +99,7 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
             setQuery({ page: 1, size: 10 });
             scrollEffect();
           }}
+          IconComponent={() => <BiChevronDown size={30} style={{ paddingRight: 10 }} />}
         >
           <OptionSelect value="epochs">Epoch</OptionSelect>
           <OptionSelect value="delegators">Staking Delegators</OptionSelect>

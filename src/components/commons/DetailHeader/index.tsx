@@ -105,12 +105,12 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           {header.hash && (
             <SlotLeader>
               {/* <Link to={routers.ADDRESS_DETAIL.replace(":address", `${header.slotLeader}`)}> */}
-              <Link to={"#"}>
-                {header.slotLeader && (
-                  <SlotLeaderTitle>{data.type === "block" ? "Block ID:" : "Slot leader:"}</SlotLeaderTitle>
-                )}{" "}
-                <SlotLeaderValue>{header.hash}</SlotLeaderValue>
-              </Link>
+              {/* <Link to={"#"}> */}
+              {header.slotLeader && (
+                <SlotLeaderTitle>{data.type === "block" ? "Block ID:" : "Slot leader:"}</SlotLeaderTitle>
+              )}{" "}
+              <SlotLeaderValue>{header.hash}</SlotLeaderValue>
+              {/* </Link> */}
               <SlotLeaderCopy text={header.hash} />
             </SlotLeader>
           )}
