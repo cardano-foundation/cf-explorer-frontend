@@ -20,6 +20,7 @@ import {
   HeaderContainer,
   HeaderTitle,
   HeaderTitleSkeleton,
+  LogoEmpty,
   SlotLeader,
   SlotLeaderContainer,
   SlotLeaderSkeleton,
@@ -132,7 +133,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
               <Box>
                 <Box display={"flex"} alignItems="center" fontWeight={"bold"}>
                   {data?.displayName || ""}
-                  {data?.metadata && data?.metadata?.logo && (
+                  {data?.metadata && data?.metadata?.logo ? (
                     <Box
                       component={"img"}
                       width={30}
@@ -141,6 +142,8 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
                       alt="logo icon"
                       ml={1}
                     />
+                  ) : (
+                    <LogoEmpty ml={1} />
                   )}
                 </Box>
                 <Box display={"flex"} alignItems="center" fontSize={"0.75rem"} color="rgba(0,0,0,0.5)">
