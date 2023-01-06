@@ -432,7 +432,7 @@ export const StakeKeyLink = styled(StyledLink)`
   display: block;
   white-space: pre-wrap;
   word-break: break-word;
-  max-width: 210px;
+  max-width: 90%;
   text-align: left;
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-text-small);

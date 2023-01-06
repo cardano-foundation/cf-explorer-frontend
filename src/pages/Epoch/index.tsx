@@ -24,7 +24,7 @@ const columns: Column<IDataEpoch>[] = [
   {
     title: "Status",
     key: "status",
-    minWidth: "100px",
+    minWidth: "150px",
     render: r => <Status status={r.status.toLowerCase()}>{EPOCH_STATUS[r.status]}</Status>,
   },
   {
