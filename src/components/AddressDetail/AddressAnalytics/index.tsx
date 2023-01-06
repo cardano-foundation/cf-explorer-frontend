@@ -22,7 +22,7 @@ import useFetch from "../../../commons/hooks/useFetch";
 import Card from "../../commons/Card";
 import { formatADA, formatPrice } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
-
+import { BigNumber } from "bignumber.js";
 type AnalyticsData = { date: string; value: number };
 
 const options = [
@@ -36,8 +36,10 @@ const AddressAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { address } = useParams<{ address: string }>();
   const { data, loading } = useFetch<AnalyticsData[]>(`/address/analytics/${address}/${rangeTime}`);
+
   const { data: balance, loading: balanceLoading } = useFetch<number[]>(`/address/min-max-balance/${address}`);
-  const dataChart = data?.map(i => +formatADA(+i.value || 0) || []);
+  const dataChart = data?.map(i => BigNumber(i.value).toNumber() / 1000000 || []);
+
   const categories = data?.map(i => moment(i.date).format("DD MMM")) || [];
   const minBalance = Math.min(...(balance || []), 0);
   const maxBalance = Math.max(...(balance || []), 0);
