@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, Select, styled, Theme } from "@mui/material";
 
 export const Empty = styled(Box)`
   text-align: center;
@@ -87,7 +87,7 @@ export const Total = styled(Box)`
 
 export const TotalNumber = styled("span")`
   color: ${props => props.theme.textColor};
-  font-weight: var(--font-weight-bold);
+  font-weight: 500;
 `;
 
 export const Wrapper = styled(Box)`
@@ -100,3 +100,40 @@ export const TableFullWidth = styled("table")`
   min-width: 100%;
   width: max-content;
 `;
+
+export const InputNumber = styled("input")(({ theme, length }: { length: number; theme?: Theme }) => ({
+  width: length + "ch !important",
+  padding: theme?.spacing(1),
+  marginRight: theme?.spacing(1),
+  borderRadius: 4,
+  textAlign: "center",
+  fontWeight: "bold",
+  border: "1px solid rgba(227, 229, 233, 1)",
+  "-moz-appearance": "textfield",
+  "::-webkit-outer-spin-button": {
+    "-webkit-appearance": "none",
+    margin: 0,
+  },
+  "::-webkit-inner-spin-button": {
+    "-webkit-appearance": "none",
+    margin: 0,
+  },
+}));
+
+export const SelectMui = styled(Select)(({ theme }) => ({
+  fontWeight: "bold",
+  width: 60,
+  ".MuiOutlinedInput-notchedOutline": {
+    borderColor: "rgba(227, 229, 233, 1)",
+  },
+  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: "rgba(227, 229, 233, 1)",
+  },
+  "&:hover .MuiOutlinedInput-notchedOutline": {
+    borderColor: "rgba(227, 229, 233, 1)",
+  },
+  ".MuiSelect-select": {
+    paddingRight: "0px !important",
+    paddingLeft: "0px !important",
+  },
+}));
