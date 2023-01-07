@@ -53,6 +53,8 @@ import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../stores/types";
 
 type DetailViewTransactionProps = {
   hash: string;
@@ -71,7 +73,7 @@ const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] 
 const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
   const { hash, handleClose } = props;
   const { data } = useFetch<Transaction>(hash ? `tx/${hash}` : ``);
-  const { data: epochCurrent } = useFetch<EpochCurrentType>("/epoch/current");
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
 
   if (!data)
     return (
@@ -172,7 +174,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               pathWidth={4}
               trailWidth={2}
               percent={
-                data.tx.epochNo === epochCurrent?.no
+                data.tx.epochNo === currentEpoch?.no
                   ? ((data.tx.epochSlot || 0) / (data.tx.maxEpochSlot || MAX_SLOT_EPOCH)) * 100
                   : 100
               }

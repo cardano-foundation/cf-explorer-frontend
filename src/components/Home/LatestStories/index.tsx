@@ -89,7 +89,7 @@ const LatestStories: React.FC<Props> = () => {
                   <ItemTitle>{title}</ItemTitle>
                   <Time>
                     <TimeIcon src={CalenderPaleIcon} alt="calender pale" />
-                    {moment(createdDate).format("MM/DD/YYYY")}
+                    {moment(createdDate).format("MM/DD/YYYY HH:mm:ss")}
                   </Time>
                 </Detail>
               </Item>

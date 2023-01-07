@@ -1,7 +1,7 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { parse, stringify } from "qs";
 import Table, { Column } from "../../commons/Table";
-import { formatADA, formatPercent, getPageInfo } from "../../../commons/utils/helper";
+import { formatADA, formatPercent, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 import { HeaderSearchIcon } from "../../../commons/resources";
@@ -20,7 +20,7 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     render: r => (
       <PoolName to={details.delegation(r.poolId)}>
         <CustomTooltip title={r.poolName || r.poolId} placement="top">
-          <Box>{r.poolName || r.poolId}</Box>
+          <Box>{r.poolName || `Pool [${getShortWallet(r.poolId)}]`}</Box>
         </CustomTooltip>
       </PoolName>
     ),
@@ -35,7 +35,7 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     title: "Reward",
     key: "Reward",
     minWidth: "120px",
-    render: r => <RateWithIcon value={r.reward} />,
+    render: r => <RateWithIcon value={r.reward} multiple={100} />,
   },
   {
     title: "Fee (A) ",
@@ -56,10 +56,7 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     render: r => (
       <Box display="flex" alignItems="center">
         <span>{formatPercent(r.saturation) || `0%`}</span>
-        <StyledLinearProgress
-          variant="determinate"
-          value={Math.max(0, Math.min(100, Number(r.saturation * 100) || 0))}
-        />
+        <StyledLinearProgress variant="determinate" value={r.saturation * 100 || 0} />
       </Box>
     ),
   },

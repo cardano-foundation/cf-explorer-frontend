@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import moment from "moment";
 import DetailHeader from "../../commons/DetailHeader";
 import { formatADA, getShortWallet } from "../../../commons/utils/helper";
@@ -19,7 +20,7 @@ import { details } from "../../../commons/routers";
 import DropdownDetail from "../../commons/DropdownDetail";
 import { BiShowAlt } from "react-icons/bi";
 import { Tooltip } from "@mui/material";
-import useFetch from "../../../commons/hooks/useFetch";
+import { RootState } from "../../../stores/types";
 
 interface Props {
   data: Transaction | null;
@@ -27,7 +28,7 @@ interface Props {
 }
 
 const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
-  const { data: epochCurrent } = useFetch<EpochCurrentType>("/epoch/current");
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const [openListInput, setOpenListInput] = useState(false);
   const [openListOutput, setOpenListOutput] = useState(false);
 
@@ -207,7 +208,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
 
           blockDetail: {
             epochNo: data.tx.epochNo,
-            epochSlot: epochCurrent?.no === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH,
+            epochSlot: currentEpoch?.no === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH,
             maxEpochSlot: data.tx.maxEpochSlot,
             blockNo: data.tx.blockNo,
           },

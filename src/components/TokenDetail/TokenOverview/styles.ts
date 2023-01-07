@@ -278,8 +278,8 @@ export const ButtonLink = styled(Link)(({ theme }) => ({
   display: "inline-block",
 }));
 export const LogoEmpty = styled(Box)`
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   background: #ffffff99;
   border-radius: 50%;
   border: 1px solid #e5e5e5;

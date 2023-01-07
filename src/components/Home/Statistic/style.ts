@@ -44,6 +44,7 @@ export const Name = styled("h4")`
 
 export const Title = styled("h3")`
   font-family: var(--font-family-text);
+  margin-top: 0;
   margin-bottom: 0.25rem;
   font-size: 20px;
 `;
@@ -52,16 +53,17 @@ export const Small = styled("small")`
   color: ${props => props.theme.textColorPale};
   white-space: nowrap;
 `;
-
-export const Value = styled("small")<{ up: number }>`
-  color: ${props => (props.up ? props.theme.colorGreen : props.theme.colorRed)};
+export const XSmall = styled("span")`
+  font-size: var(--font-size-text-x-small);
+  color: ${props => props.theme.textColorPale};
   white-space: nowrap;
 `;
 
-export const RateIcon = styled("img")`
-  width: 1.5rem;
-  height: 1.5rem;
-  margin: 0px 5px;
+export const Value = styled(Small)<{ down?: number }>`
+  color: ${props => (props.down ? props.theme.colorRed : props.theme.colorGreen)};
+`;
+export const XValue = styled(XSmall)<{ down?: number }>`
+  color: ${props => (props.down ? props.theme.colorRed : props.theme.colorGreen)};
 `;
 
 export const Progress = styled("div")`
