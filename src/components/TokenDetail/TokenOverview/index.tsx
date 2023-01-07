@@ -131,13 +131,13 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
                 Policy Script
               </Box>
               <Box>
-                <Box display={"flex"} alignItems="center" fontWeight={"bold"}>
+                <Box display={"flex"} alignItems="center" fontWeight={"bold"} mb={1}>
                   {data?.displayName || ""}
                   {data?.metadata && data?.metadata?.logo ? (
                     <Box
                       component={"img"}
-                      width={30}
-                      height={30}
+                      width={"auto"}
+                      height={20}
                       src={`data:image/png;base64,${data.metadata.logo}`}
                       alt="logo icon"
                       ml={1}

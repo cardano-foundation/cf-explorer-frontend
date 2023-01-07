@@ -1,5 +1,6 @@
 import { Grid } from "@mui/material";
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import {
@@ -10,9 +11,27 @@ import {
   TotalADAStakeIcon,
 } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
+import { COINGECKO_URL } from "../../../commons/utils/axios";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import { formatCurrency } from "../../../commons/utils/helper";
-import { Content, Item, ItemIcon, ItemSkeleton, Name, Small, StatisticContainer, Title, Value } from "./style";
+import { formatCurrency, formatPrice } from "../../../commons/utils/helper";
+import { RootState } from "../../../stores/types";
+import RateWithIcon from "../../commons/RateWithIcon";
+import {
+  Content,
+  Item,
+  ItemIcon,
+  ItemSkeleton,
+  Name,
+  ProcessActive,
+  Progress,
+  ProgressPending,
+  Small,
+  StatisticContainer,
+  Title,
+  Value,
+  XSmall,
+  XValue,
+} from "./style";
 
 interface Props {}
 
@@ -29,38 +48,42 @@ const SkeletonBox = () => (
 );
 
 const HomeStatistic: React.FC<Props> = () => {
-  const { data: currentEpoch, loading: loadingEpoch } = useFetch<EpochCurrentType>(`epoch/current`);
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const usdMarket = useFetch<CardanoMarket[]>(`${COINGECKO_URL}coins/markets?vs_currency=usd&ids=cardano`);
+  const btcMarket = useFetch<CardanoMarket[]>(`${COINGECKO_URL}coins/markets?vs_currency=btc&ids=cardano`);
 
   return (
     <StatisticContainer container spacing={2}>
       <Grid item xl lg={3} md={4} xs={6}>
-        {loadingEpoch ? (
+        {!usdMarket.data?.[0] || !btcMarket.data?.[0] ? (
           <SkeletonBox />
         ) : (
           <Item>
             <ItemIcon src={AdaPriceIcon} alt="Ada Price" />
             <Content>
               <Name>Ada Price</Name>
-              <Title>TBA</Title>
+              <Title>${usdMarket.data[0]?.current_price || 0}</Title>
+              <RateWithIcon value={usdMarket.data[0]?.price_change_percentage_24h || 0} />
+              <Small style={{ marginLeft: 15 }}>{btcMarket.data[0]?.current_price || 0} BTC</Small>
             </Content>
           </Item>
         )}
       </Grid>
       <Grid item xl lg={3} md={4} xs={6}>
-        {loadingEpoch ? (
+        {!usdMarket.data?.[0] ? (
           <SkeletonBox />
         ) : (
           <Item>
             <ItemIcon src={MarketCapIcon} alt="Market cap" />
             <Content>
               <Name>Market cap</Name>
-              <Title>TBA</Title>
+              <Title>${formatCurrency(usdMarket.data[0].market_cap)}</Title>
             </Content>
           </Item>
         )}
       </Grid>
       <Grid item xl lg={3} md={4} xs={6}>
-        {loadingEpoch ? (
+        {!currentEpoch ? (
           <SkeletonBox />
         ) : (
           <Link to={details.epoch(currentEpoch?.no)}>
@@ -68,23 +91,23 @@ const HomeStatistic: React.FC<Props> = () => {
               <Content>
                 <ItemIcon src={CurentEpochIcon} alt="Curent Epoch" />
                 <Name>Curent Epoch</Name>
-                <Small>Epoch: </Small>
-                <Value up={1}>
+                <XSmall>Epoch: </XSmall>
+                <XValue>
                   <b>{formatCurrency(currentEpoch?.no || 0)}</b>
-                </Value>
+                </XValue>
                 <br />
-                <Small>Slot: </Small>
-                <Value up={1}>
+                <XSmall>Slot: </XSmall>
+                <XValue>
                   <b>{formatCurrency((currentEpoch?.slot || 0) % MAX_SLOT_EPOCH)}</b>
-                </Value>
-                <Small> / {formatCurrency(MAX_SLOT_EPOCH)}</Small>
+                </XValue>
+                <XSmall> / {formatCurrency(MAX_SLOT_EPOCH)}</XSmall>
               </Content>
             </Item>
           </Link>
         )}
       </Grid>
       <Grid item xl lg={3} md={4} xs={6}>
-        {loadingEpoch ? (
+        {!currentEpoch ? (
           <SkeletonBox />
         ) : (
           <Item>
@@ -92,27 +115,27 @@ const HomeStatistic: React.FC<Props> = () => {
               <ItemIcon src={LiveStakeIcon} alt="Total ADA Stake" />
               <Name>Live Stake</Name>
               <Title>TBA</Title>
-              {/* <Progress>
+              <Progress>
                 <ProcessActive rate={70}>{70}%</ProcessActive>
                 <ProgressPending rate={30}>{30}%</ProgressPending>
               </Progress>
               <Small>Active Stake: </Small>
-              <Value up>
+              <Value>
                 <b>{formatPrice(25.09 * 10 ** 9)} </b>
               </Value>
               <Small>(0.7%)</Small>
               <br />
               <Small>Circulating supply: </Small>
-              <Value up>
+              <Value>
                 <b>{formatPrice(35.12 * 10 ** 9)} </b>
               </Value>
-              <Small>(78%)</Small> */}
+              <Small>(78%)</Small>
             </Content>
           </Item>
         )}
       </Grid>
       <Grid item xl lg={3} md={4} xs={6}>
-        {loadingEpoch ? (
+        {!currentEpoch ? (
           <SkeletonBox />
         ) : (
           <Item>

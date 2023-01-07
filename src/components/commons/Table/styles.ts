@@ -12,7 +12,7 @@ export const Empty = styled(Box)`
 
 export const EmtyImage = styled("img")`
   width: auto;
-  height: 200px;
+  height: 214px;
 `;
 
 export const Error = styled(Box)`

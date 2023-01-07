@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import { routers } from "../../../commons/routers";
-import { formatPercent, formatPrice } from "../../../commons/utils/helper";
+import { formatADA, formatPercent } from "../../../commons/utils/helper";
 import ViewAllButton from "../../commons/ViewAllButton";
 import { Column } from "../../commons/Table";
 import {
@@ -40,22 +40,22 @@ const TopDelegationPools: React.FC<Props> = () => {
     {
       title: "Pool size (A)",
       key: "size",
-      render: r => formatPrice(r.poolSize / 10 ** 6),
+      render: r => formatADA(r.poolSize / 10 ** 6),
     },
     {
       title: "Reward",
       key: "reward",
-      render: r => <RateWithIcon value={r.reward} />,
+      render: r => <RateWithIcon value={r.reward} multiple={100} />,
     },
     {
       title: "Fee (A)",
       key: "fee",
-      render: r => `${formatPercent(r.feePercent || 0)} (${formatPrice(r.feeAmount / 10 ** 6)} A)`,
+      render: r => `${formatPercent(r.feePercent || 0)} (${formatADA(r.feeAmount / 10 ** 6)} A)`,
     },
     {
       title: "Declared Pledge (A)",
       key: "declaredPledge",
-      render: r => formatPrice(r.pledge / 10 ** 6),
+      render: r => formatADA(r.pledge / 10 ** 6),
     },
     {
       title: "Saturation",

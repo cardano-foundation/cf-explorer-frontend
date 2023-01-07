@@ -32,10 +32,10 @@ export const routers = {
 };
 
 export const details = {
-  block: (blockId?: number) => routers.BLOCK_DETAIL.replace(":blockId", `${blockId ?? ""}`),
+  block: (blockId?: number | string) => routers.BLOCK_DETAIL.replace(":blockId", `${blockId ?? ""}`),
   transaction: (trxHash?: string, tab = "summary") =>
     routers.TRANSACTION_DETAIL.replace(":trxHash", trxHash ?? "").replace(":tabActive", tab),
-  epoch: (epochId?: number) => routers.EPOCH_DETAIL.replace(":epochId", `${epochId ?? ""}`),
+  epoch: (epochId?: number | string) => routers.EPOCH_DETAIL.replace(":epochId", `${epochId ?? ""}`),
   delegation: (poolId?: string) => routers.DELEGATION_POOL_DETAIL.replace(":poolId", poolId ?? ""),
   story: (storyId?: string) => routers.STORY_DETAIL.replace(":storyId", storyId ?? ""),
   address: (address?: string) => routers.ADDRESS_DETAIL.replace(":address", address ?? ""),

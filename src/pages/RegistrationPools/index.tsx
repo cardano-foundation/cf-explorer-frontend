@@ -4,7 +4,7 @@ import { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details, routers } from "../../commons/routers";
-import { formatADA, getShortHash, getShortWallet } from "../../commons/utils/helper";
+import { formatADA, formatPercent, getShortHash, getShortWallet } from "../../commons/utils/helper";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table, { Column } from "../../components/commons/Table";
 import { RegistrationContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
@@ -48,30 +48,31 @@ const columns: Column<Registration>[] = [
     ),
   },
   {
-    title: "Pledge(A)",
+    title: "Pledge (A)",
     key: "pledge",
     render: r => <>{formatADA(r.pledge)}</>,
   },
   {
-    title: "Cost(A)",
+    title: "Cost (A)",
     key: "cost",
     render: r => <>{formatADA(r.cost)}</>,
   },
   {
-    title: "Margin",
+    title: "Fee",
     key: "margin",
-    render: r => <>{r.margin ? `${r.margin}%` : ""}</>,
+    render: r => formatPercent(r.margin || 0),
   },
   {
     title: "Stake Key",
     key: "stakeKey",
-    render: r => (
-      <CustomTooltip title={r.stakeKey} placement="top">
-        <StyledLink to={routers.STORY_DETAIL.replace(":poolId", `${r.txId}`)}>
-          {r.stakeKey ? getShortWallet(r.stakeKey) : ""}
-        </StyledLink>
-      </CustomTooltip>
-    ),
+    render: r =>
+      r.stakeKey?.[0] ? (
+        <CustomTooltip title={r.stakeKey[0]} placement="top">
+          <StyledLink to={details.stake(r.stakeKey[0])}>{getShortWallet(r.stakeKey[0])}</StyledLink>
+        </CustomTooltip>
+      ) : (
+        ""
+      ),
   },
 ];
 
