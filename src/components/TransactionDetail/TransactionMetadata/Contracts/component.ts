@@ -14,4 +14,5 @@ export const Img = styled("img")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   padding: "15px 0 0",
+  margin: "0 auto",
 }));
