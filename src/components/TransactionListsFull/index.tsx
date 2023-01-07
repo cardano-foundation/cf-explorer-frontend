@@ -76,7 +76,11 @@ const columns: Column<Transactions>[] = [
                 );
               })}
               {r.addressesInput.length > 1 && (
-                <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>...</Link>
+                <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>
+                  <Box ml={1} color={props => props.colorBlue} fontFamily={"Helvetica, monospace"}>
+                    ...
+                  </Box>
+                </Link>
               )}
             </div>
           </Box>
