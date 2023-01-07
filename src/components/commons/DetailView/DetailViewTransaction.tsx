@@ -292,7 +292,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
             if (!value) return null;
             return (
               <Group key={key}>
-                <DetailLink to={details.transaction(hash)}>
+                <DetailLink to={details.transaction(hash, key)}>
                   <DetailLabel>
                     <DetailLinkIcon>{icon}</DetailLinkIcon>
                     <DetailLinkName>

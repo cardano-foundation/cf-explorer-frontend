@@ -51,9 +51,9 @@ type DetailViewStakeKeyProps = {
 };
 const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
   { key: "delegation", label: "Delegation History", icon: <TbFileCheck /> },
-  { key: "stake-key", label: "Stake Key History", icon: <CgArrowsExchange /> },
-  { key: "withdrawl", label: "Withdrawal History", icon: <DetailLinkImage src={FileEditIcon} alt="withdrawal" /> },
-  { key: "rewards", label: "Instantaneous Rewards", icon: <DetailLinkImage src={LightningIcon} alt="rewards" /> },
+  { key: "stakeKey", label: "Stake Key History", icon: <CgArrowsExchange /> },
+  { key: "withdrawal", label: "Withdrawal History", icon: <DetailLinkImage src={FileEditIcon} alt="withdrawal" /> },
+  { key: "instantaneous", label: "Instantaneous Rewards", icon: <DetailLinkImage src={LightningIcon} alt="rewards" /> },
 ];
 
 const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
@@ -199,7 +199,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
           {tabs.map(({ key, label, icon }) => {
             return (
               <Group key={key}>
-                <DetailLink to={details.stake(stakeId)}>
+                <DetailLink to={details.stake(stakeId, key)}>
                   <DetailLabel>
                     <DetailLinkIcon>{icon}</DetailLinkIcon>
                     <DetailLinkName>{label}</DetailLinkName>
