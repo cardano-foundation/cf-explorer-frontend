@@ -63,7 +63,7 @@ const columns: Column<DelegationHistory>[] = [
       const name = poolData.name?.length > 30 ? getShortWallet(poolData.name) : poolData.name;
       return (
         <CustomTooltip title={poolData.name || r.poolId} placement="top">
-          <StyledLink to={details.delegation(r.poolId)}>{name || `Pool (${getShortWallet(r.poolId)})`}</StyledLink>
+          <StyledLink to={details.delegation(r.poolId)}>{name || `Pool [${getShortWallet(r.poolId)}]`}</StyledLink>
         </CustomTooltip>
       );
     },

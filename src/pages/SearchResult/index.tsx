@@ -2,7 +2,7 @@ import { Container, styled } from "@mui/material";
 import { parse } from "qs";
 import { useEffect, useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { NotFoundIcon } from "../../commons/resources";
+import { EmptyIcon, NotFoundIcon } from "../../commons/resources";
 import { details, routers } from "../../commons/routers";
 import CircularProgress from "@mui/material/CircularProgress";
 import defaultAxios from "../../commons/utils/axios";
@@ -16,9 +16,8 @@ const SearchResultContainer = styled(Container)`
 `;
 
 const Image = styled("img")`
-  width: 100%;
-  max-width: 250px;
-  margin-bottom: 2rem;
+  width: auto;
+  height: 214px;
 `;
 
 const Title = styled("h3")`
@@ -49,10 +48,10 @@ const BackToHome = styled(Link)`
 const createNavigator = (filter?: FilterParams | string, value?: string) => {
   switch (filter) {
     case "epoch": {
-      return (value?: string) => details.epoch(Number(value));
+      return details.epoch;
     }
     case "block": {
-      return (value?: string) => details.block(Number(value));
+      return details.block;
     }
     case "tx": {
       return details.transaction;
@@ -95,7 +94,7 @@ const SearchResult = () => {
 
       const navigate = createNavigator(filter, value);
 
-      if (navigate) return history.replace(navigate(value));
+      if (navigate) return history.replace(navigate(value), { search: value });
 
       setLoading(true);
       try {
@@ -113,7 +112,7 @@ const SearchResult = () => {
 
         const navigate = createNavigator(url);
 
-        if (navigate) return history.replace(navigate(value));
+        if (navigate) return history.replace(navigate(value), { search: value });
       } catch {}
 
       setLoading(false);
@@ -132,9 +131,7 @@ const SearchResult = () => {
 
   return (
     <SearchResultContainer>
-      <Image src={NotFoundIcon} alt="404" />
-      <Title>No matching results found.</Title>
-      <BackToHome to={routers.HOME}>Back to home</BackToHome>
+      <Image src={EmptyIcon} alt="empty icon" />
     </SearchResultContainer>
   );
 };

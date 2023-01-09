@@ -1,9 +1,24 @@
 import React, { useState } from "react";
-import { TablePagination, Skeleton, Box } from "@mui/material";
+import {
+  TablePagination,
+  Skeleton,
+  Box,
+  Pagination,
+  PaginationRenderItemParams,
+  IconButton,
+  Select,
+  MenuItem,
+} from "@mui/material";
 
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
 
 import { EmptyIcon } from "../../../commons/resources";
+import { ReactComponent as StartPage } from "../../../commons/resources/icons/startPagePagination.svg";
+import { ReactComponent as EndPage } from "../../../commons/resources/icons/endPagePagination.svg";
+import { ReactComponent as PrevPage } from "../../../commons/resources/icons/prevPagePagination.svg";
+import { ReactComponent as NextPage } from "../../../commons/resources/icons/nextPagePagination.svg";
+import { ReactComponent as DownIcon } from "../../../commons/resources/icons/down.svg";
+
 import {
   Empty,
   EmtyImage,
@@ -18,6 +33,8 @@ import {
   Wrapper,
   TableFullWidth,
   Error,
+  InputNumber,
+  SelectMui,
 } from "./styles";
 import { ColumnType, FooterTableProps, TableHeaderProps, TableProps, TableRowProps } from "../../../types/table";
 import { useUpdateEffect } from "react-use";
@@ -93,85 +110,52 @@ const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
 };
 
 const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
-  const [page, setPage] = useState(pagination?.page || 0);
-  const [inputPage, setInputPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(pagination?.size || 10);
-  useUpdateEffect(() => {
-    setInputPage(0);
-  }, [window.location]);
+  const [page, setPage] = useState(pagination?.page || 1);
+  const [size, setSize] = useState(pagination?.size || 10);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
-    pagination && pagination.onChange && pagination.onChange(page + 1, rowsPerPage);
+    pagination && pagination.onChange && pagination.onChange(page, size);
     setPage(page);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-    pagination && pagination.onChange && pagination.onChange(1, parseInt(event.target.value, 10));
-  };
-
-  const renderLabelDisplayedRows = () => {
-    return (
-      <Box component={"span"} fontWeight="bold">
-        <Box
-          component={"input"}
-          min={0}
-          placeholder="Page"
-          fontWeight="bold"
-          border={"none"}
-          value={inputPage || page + 1}
-          onChange={e => {
-            if (+e.target.value <= Math.ceil(((pagination && pagination.total) || 0) / rowsPerPage)) {
-              setInputPage(+e.target.value);
-            }
-          }}
-          width={(Math.max(inputPage.toString().length, page.toString().length) || 1) + "ch"}
-          onKeyDown={e => {
-            if (e.key === "Enter") {
-              handleChangePage(null, inputPage - 1);
-            }
-          }}
-          onBlur={() => {
-            setInputPage(0);
-          }}
-        />{" "}
-        of {numberWithCommas(Math.ceil(((pagination && pagination.total) || 0) / rowsPerPage))}
-      </Box>
-    );
   };
 
   return (
     <TFooter>
       {total ? (
-        <Total>
-          {total.title}: <TotalNumber>{numberWithCommas(total.count)}</TotalNumber>
-        </Total>
+        <Box display={"flex"} alignItems="center">
+          <Box>
+            <SelectMui
+              size="small"
+              onChange={(e: any) => {
+                setSize(+e.target.value);
+                setPage(1);
+                pagination?.onChange && pagination.onChange(1, +e.target.value);
+              }}
+              value={size}
+              IconComponent={() => <DownIcon width={30} />}
+            >
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={20}>20</MenuItem>
+              <MenuItem value={50}>50</MenuItem>
+            </SelectMui>
+            <Box component={"span"} ml={1}>
+              Per page
+            </Box>
+          </Box>
+          <Total ml={2}>
+            <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> Results
+          </Total>
+        </Box>
       ) : (
         ""
       )}
       <Box />
       {pagination?.total && pagination.total > 10 ? (
-        <TablePagination
-          component="div"
-          count={pagination.total || 0}
+        <PaginationCustom
+          pagination={pagination}
+          total={pagination.total || 0}
           page={page}
-          rowsPerPageOptions={[10, 20, 50]}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          labelDisplayedRows={renderLabelDisplayedRows}
-          sx={{
-            ".MuiToolbar-root": {
-              alignItems: "baseline",
-            },
-            ".MuiSelect-select": {
-              fontWeight: "bold",
-            },
-            ".MuiTablePagination-displayedRows": {
-              fontWeight: "bold",
-            },
-          }}
+          size={size}
+          handleChangePage={handleChangePage}
         />
       ) : (
         ""
@@ -222,3 +206,110 @@ const Table: React.FC<TableProps> = ({
 export * from "../../../types/table.d";
 
 export default Table;
+
+const PaginationCustom = ({
+  pagination,
+  total,
+  page,
+  size,
+  handleChangePage,
+}: {
+  pagination: TableProps["pagination"];
+  total: number;
+  page: number;
+  size: number;
+  handleChangePage: (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => void;
+}) => {
+  const [inputPage, setInputPage] = useState(page);
+
+  useUpdateEffect(() => {
+    setInputPage(1);
+  }, [size]);
+  const totalPage = Math.ceil((pagination?.total || 0) / size);
+  const renderItem = (item: PaginationRenderItemParams) => {
+    if (item.type === "first") {
+      return (
+        <IconButton
+          disabled={page === 1}
+          onClick={() => {
+            handleChangePage(null, 1);
+            setInputPage(1);
+          }}
+        >
+          <StartPage />
+        </IconButton>
+      );
+    }
+    if (item.type === "last") {
+      return (
+        <IconButton
+          disabled={page === totalPage}
+          onClick={() => {
+            handleChangePage(null, totalPage || 1);
+            setInputPage(totalPage || 1);
+          }}
+        >
+          <EndPage />
+        </IconButton>
+      );
+    }
+    if (item.type === "next") {
+      return (
+        <IconButton
+          disabled={page === totalPage}
+          onClick={() => {
+            setInputPage(page + 1);
+            handleChangePage(null, page + 1);
+          }}
+        >
+          <NextPage />
+        </IconButton>
+      );
+    }
+    if (item.type === "previous") {
+      return (
+        <IconButton
+          disabled={page === 1}
+          onClick={() => {
+            setInputPage(page - 1);
+            handleChangePage(null, page - 1);
+          }}
+        >
+          <PrevPage />
+        </IconButton>
+      );
+    }
+    if (item.type === "page") {
+      if (item.page === 1) {
+        return (
+          <Box>
+            <InputNumber
+              type={"number"}
+              value={inputPage}
+              length={inputPage.toString().length || 1}
+              onChange={e => {
+                if (+e.target.value < totalPage) {
+                  setInputPage(+e.target.value);
+                }
+              }}
+              onKeyDown={e => {
+                if (e.key === "Enter") {
+                  if (inputPage < 1) {
+                    setInputPage(1);
+                  }
+                  handleChangePage(null, inputPage);
+                }
+              }}
+            />
+            <Box component={"span"} color={props => props.textColorPale}>
+              {(page - 1) * size + 1} - {page * size > total ? total : page * size} of {pagination?.total || 0}
+            </Box>
+          </Box>
+        );
+      }
+    }
+  };
+  return (
+    <Pagination count={total || 0} page={page} showFirstButton={true} showLastButton={true} renderItem={renderItem} />
+  );
+};

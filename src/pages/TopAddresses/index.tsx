@@ -4,7 +4,7 @@ import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { formatADA, getPageInfo, getShortWallet } from "../../commons/utils/helper";
+import { formatBalanceWithDecimal, getPageInfo, getShortWallet } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
@@ -46,7 +46,7 @@ const TopAddresses: React.FC<Props> = () => {
       minWidth: 60,
       render: r => (
         <Box display="flex" alignItems="center">
-          <Box mr={1}>{formatADA(r.balance) || 0}</Box>
+          <Box mr={1}>{formatBalanceWithDecimal(r.balance || 0, 5)}</Box>
           <img src={AIcon} alt="a icon" />
         </Box>
       ),

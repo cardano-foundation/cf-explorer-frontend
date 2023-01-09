@@ -6,12 +6,13 @@ import { ReactComponent as StakeKeyHistoryIcon } from "../../../commons/resource
 import { ReactComponent as WithdrawHistoryIcon } from "../../../commons/resources/icons/withdrawHistory.svg";
 import { ReactComponent as InstantaneousHistoryIcon } from "../../../commons/resources/icons/instantaneousHistory.svg";
 import { TitleTab } from "./styles";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { parse, stringify } from "qs";
 import DelegationHistoryTab from "./Tabs/DelegationHistoryTab";
 import StakeHistoryTab from "./Tabs/StakeHistoryTab";
 import WithdrawalHistoryTab from "./Tabs/WithdrawalHistoryTab";
 import InstantaneousTab from "./Tabs/InstantaneousTab";
+import { details } from "../../../commons/routers";
 
 const tabs: {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -46,18 +47,16 @@ const tabs: {
 ];
 
 const StakeTab = () => {
-  const { search } = useLocation();
-  const { tab } = parse(search.split("?")[1]);
-  const activeTab: TabStakeDetail = (tabs.find(item => item.key === tab) || tabs[0]).key;
+  const { tabActive, stakeId } = useParams<{ tabActive: TabStakeDetail; stakeId: string }>();
   const history = useHistory();
-  
+
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
-    history.push({ search: stringify({ tab, page: 1, size: 10 }) });
+    history.push({ pathname: details.stake(stakeId || "", tab) });
   };
 
   return (
     <Box mt={4}>
-      <TabContext value={activeTab}>
+      <TabContext value={tabActive}>
         <Box style={{ borderBottom: "1px solid rgba(24, 76, 120, 0.1)" }}>
           <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: "#438f68" } }}>
             {tabs?.map(({ icon: Icon, key, label }) => (
@@ -67,8 +66,8 @@ const StakeTab = () => {
                 label={
                   <Box>
                     <Box display={"flex"} alignItems="center">
-                      <Icon fill={key === activeTab ? "#438F68" : "#98A2B3"} />
-                      <TitleTab pl={1} active={key === activeTab}>
+                      <Icon fill={key === tabActive ? "#438F68" : "#98A2B3"} />
+                      <TitleTab pl={1} active={key === tabActive}>
                         {label}
                       </TitleTab>
                     </Box>

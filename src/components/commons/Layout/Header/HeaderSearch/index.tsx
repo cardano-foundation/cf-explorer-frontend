@@ -151,18 +151,13 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
       setValues({ ...intitalValue });
     }
   };
+
   const handleChangeFilter = (e: SelectChangeEvent<unknown>) => {
     setValues({ search, filter: e.target.value as Option["value"] });
   };
+
   const handleChangeSearch = (e?: React.ChangeEvent) => {
-    const search = (e?.target as HTMLInputElement)?.value as string;
-    if (!/^[a-zA-Z0-9_]*$/.test(search)) return;
-    setValues({ filter, search });
-  };
-  const handleKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" || e.code === "Enter" || e.keyCode === 13 || e.which === 13) {
-      handleSearch();
-    }
+    setValues({ filter, search: (e?.target as HTMLInputElement)?.value });
   };
 
   return (
@@ -182,7 +177,6 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
         spellCheck={false}
         placeholder={home ? "Search transaction, address, block, epoch, pool..." : "Search ..."}
         onChange={handleChangeSearch}
-        onKeyDown={handleKeydown}
         disableUnderline
       />
       <SubmitButton type="submit" home={home ? 1 : 0} disabled={!search}>

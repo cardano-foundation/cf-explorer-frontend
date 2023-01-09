@@ -1,9 +1,9 @@
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
-import { Box } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { formatADA, getPageInfo, getShortHash } from "../../commons/utils/helper";
+import { formatADA, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
@@ -44,6 +44,63 @@ const columns: Column<Transactions>[] = [
     key: "block",
     minWidth: 120,
     render: r => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>,
+  },
+  {
+    title: "Addresses",
+    key: "address",
+    minWidth: 120,
+    render(r, index) {
+      return (
+        <div>
+          <Box display={"flex"}>
+            <div> Input: </div>
+            <div>
+              {r.addressesInput.slice(0, 1).map((tx, key) => {
+                return (
+                  <Tooltip key={key} title={tx} placement="top">
+                    <Link to={details.address(tx)} key={key}>
+                      <Box ml={1} color={props => props.colorBlue} fontFamily={"Helvetica, monospace"}>
+                        <Box>{getShortWallet(tx)}</Box>
+                      </Box>
+                    </Link>
+                  </Tooltip>
+                );
+              })}
+              {r.addressesInput.length > 1 && (
+                <Link to={details.transaction(r.hash)}>
+                  <Box ml={1} color={props => props.colorBlue} fontFamily={"Helvetica, monospace"}>
+                    ...
+                  </Box>
+                </Link>
+              )}
+            </div>
+          </Box>
+          <Box display={"flex"} mt={1}>
+            <div>Output: </div>
+            <div>
+              {r.addressesOutput.slice(0, 1).map((tx, key) => {
+                return (
+                  <Tooltip key={key} title={tx} placement="top">
+                    <Link to={details.address(tx)} key={key}>
+                      <Box ml={1} color={props => props.colorBlue} fontFamily={"Helvetica, monospace"}>
+                        <Box>{getShortWallet(tx)}</Box>
+                      </Box>
+                    </Link>
+                  </Tooltip>
+                );
+              })}
+              {r.addressesOutput.length > 1 && (
+                <Link to={details.transaction(r.hash)}>
+                  <Box ml={1} color={props => props.colorBlue} fontFamily={"Helvetica, monospace"}>
+                    ...
+                  </Box>
+                </Link>
+              )}
+            </div>
+          </Box>
+        </div>
+      );
+    },
   },
   {
     title: "Fees",

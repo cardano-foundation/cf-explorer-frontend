@@ -1,36 +1,58 @@
 import { Box, styled } from "@mui/material";
 import { DownRedIcon, UpGreenIcon } from "../../../commons/resources";
+import CustomTooltip from "../CustomTooltip";
+import { BigNumber } from "bignumber.js";
 
 const PriceRate = styled(Box)<{ size?: string | number }>`
-  display: flex;
+  display: inline-flex;
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
-  font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.colorRed};
   font-size: ${({ size }) => {
     if (typeof size === "number") return `${size}px`;
     if (typeof size === "string") return size;
     return "var(--font-size-text-small)";
-  }}};
+  }};
 `;
 
-const ImageRate = styled("img")<{ up: number }>`
-  width: 0.7143em;
-  height: 0.7143em;
+const ImageRate = styled("img")<{ sign: number }>`
+  width: 10px;
+  height: 10px;
 `;
 
-const PriceValue = styled("span")<{ up: number }>`
-  color: ${props => (props.up ? props.theme.colorGreenLight : props.theme.colorRed)};
+const PriceValue = styled("span")<{ sign: number }>`
+  color: ${({ theme, sign }) => (sign ? theme.colorGreenLight : theme.colorRed)};
+  font-weight: var(--font-weight-bold);
 `;
 
-const RateWithIcon = ({ value, size }: { value: number; size?: string | number }) => (
-  <PriceRate size={size}>
-    {!value ? "" : <ImageRate up={value >= 0 ? 1 : 0} src={value >= 0 ? UpGreenIcon : DownRedIcon} alt="price rate" />}
-    <PriceValue up={value >= 0 ? 1 : 0}>
-      {!value ? "" : value > 0 ? "+" : "-"}
-      {value?.toString().replace(".", ",") || 0} %
-    </PriceValue>
-  </PriceRate>
-);
+const PriceNoValue = styled("span")`
+  color: ${props => props.theme.textColor};
+  margin-left: 28px;
+  font-weight: var(--font-weight-bold);
+`;
+
+interface Props {
+  value: number;
+  size?: string | number;
+  multiple?: number;
+}
+const RateWithIcon = ({ value, size, multiple = 1 }: Props) => {
+  if (!value) return <PriceNoValue>0</PriceNoValue>;
+
+  const multiplied = BigNumber(value).multipliedBy(multiple).toNumber();
+
+  const sign = Math.sign(multiplied);
+
+  return (
+    <CustomTooltip title={`${sign > 0 ? "+" : "-"}${multiplied}`}>
+      <PriceRate size={size}>
+        <ImageRate sign={sign} src={sign > 0 ? UpGreenIcon : DownRedIcon} alt="rate" />
+        <PriceValue sign={sign}>
+          {sign > 0 ? "+" : "-"}
+          {multiplied.toFixed(2).toString().replace(".", ",")} %
+        </PriceValue>
+      </PriceRate>
+    </CustomTooltip>
+  );
+};
 export default RateWithIcon;

@@ -42,6 +42,8 @@ import moment from "moment";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../stores/types";
 
 type DetailViewBlockProps = {
   blockNo: number;
@@ -51,6 +53,7 @@ type DetailViewBlockProps = {
 const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
   const { blockNo, handleClose } = props;
   const { data } = useFetch<BlockDetail>(blockNo ? `block/${blockNo}` : ``);
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
 
   if (!data)
     return (
@@ -136,7 +139,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               pathLineCap="butt"
               pathWidth={4}
               trailWidth={2}
-              percent={((data.epochSlotNo || 0) / (data.totalSlot || MAX_SLOT_EPOCH)) * 100}
+              percent={data.epochNo === currentEpoch?.no ? ((data.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100 : 100}
               trailOpacity={1}
             >
               <EpochNumber>{data.epochNo}</EpochNumber>

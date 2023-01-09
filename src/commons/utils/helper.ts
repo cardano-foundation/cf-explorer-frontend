@@ -27,6 +27,13 @@ export const formatNumber = (value: number | string, decimal: number = 0, decima
   return arr[0] + decimalSeparator + arr[1].slice(0, decimal) + "0".repeat(decimal - arr[1].slice(0, decimal).length);
 };
 
+export const formatBalanceWithDecimal = (value: number | string, decimal: number = 0) => {
+  const realAda = +value / 1000000;
+  const bigValue = new BigNumber(realAda.toString());
+  const newValue = bigValue.toFixed(decimal, 3).toString();
+  return numberWithCommas(newValue);
+};
+
 export const formatCurrency = (
   value?: string | number,
   decimal: number = 0,

@@ -19,6 +19,8 @@ import { ReactComponent as NoteIcon } from "../../../commons/resources/images/no
 import { ReactComponent as WithdrawalIcon } from "../../../commons/resources/images/WithdrawalIcon.svg";
 import { ReactComponent as MintingIcon } from "../../../commons/resources/images/mintingIcon.svg";
 import { ReactComponent as DelegationIcon } from "../../../commons/resources/images/DelegationIcon.svg";
+import { useHistory, useParams } from "react-router-dom";
+import { details } from "../../../commons/routers";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
@@ -26,17 +28,18 @@ interface TransactionMetadataProps {
 }
 
 const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading }) => {
-  const [activeTab, setActiveTab] = React.useState("summary");
+  const { tabActive } = useParams<{ tabActive: keyof Transaction }>();
+  const history = useHistory();
 
   const handleChange = (event: React.SyntheticEvent, tabs: keyof Transaction) => {
-    setActiveTab(tabs);
+    history.push({ pathname: details.transaction(data?.tx?.hash || "", tabs) });
   };
   const tabs: { label: React.ReactNode; key: keyof Transaction; children: React.ReactNode }[] = [
     {
       label: (
-        <h3 className={`${styles.title} ${activeTab === "summary" && styles.active}`}>
+        <h3 className={`${styles.title} ${tabActive === "summary" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <SummaryIcon fill={activeTab === "summary" ? "#438F68" : "#98A2B3"} />
+            <SummaryIcon fill={tabActive === "summary" ? "#438F68" : "#98A2B3"} />
             <Box pl={1}>Summary</Box>
           </Box>
         </h3>
@@ -46,9 +49,9 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
     },
     {
       label: (
-        <h3 className={`${styles.title} ${activeTab === "utxOs" && styles.active}`}>
+        <h3 className={`${styles.title} ${tabActive === "utxOs" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <UtxoIcon fill={activeTab === "utxOs" ? "#438F68" : "#98A2B3"} />
+            <UtxoIcon fill={tabActive === "utxOs" ? "#438F68" : "#98A2B3"} />
             <Box pl={1}> UTXOs</Box>
           </Box>
         </h3>
@@ -58,9 +61,9 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
     },
     {
       label: (
-        <h3 className={`${styles.title} ${activeTab === "contracts" && styles.active}`}>
+        <h3 className={`${styles.title} ${tabActive === "contracts" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <ContractIcon fill={activeTab === "contracts" ? "#438F68" : "#98A2B3"} />
+            <ContractIcon fill={tabActive === "contracts" ? "#438F68" : "#98A2B3"} />
             <Box pl={1}> Contracts({data?.contracts?.length || 0})</Box>
           </Box>
         </h3>
@@ -70,9 +73,9 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
     },
     {
       label: (
-        <h3 className={`${styles.title} ${activeTab === "collaterals" && styles.active}`}>
+        <h3 className={`${styles.title} ${tabActive === "collaterals" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <CollateralIcon fill={activeTab === "collaterals" ? "#438F68" : "#98A2B3"} />
+            <CollateralIcon fill={tabActive === "collaterals" ? "#438F68" : "#98A2B3"} />
             <Box pl={1}> Collaterals({data?.collaterals?.length || 0})</Box>
           </Box>
         </h3>
@@ -82,9 +85,9 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
     },
     {
       label: (
-        <h3 className={`${styles.title} ${activeTab === "notes" && styles.active}`}>
+        <h3 className={`${styles.title} ${tabActive === "notes" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <NoteIcon fill={activeTab === "notes" ? "#438F68" : "#98A2B3"} />
+            <NoteIcon fill={tabActive === "notes" ? "#438F68" : "#98A2B3"} />
             <Box pl={1}> Notes({data?.notes?.length || 0})</Box>
           </Box>
         </h3>
@@ -94,9 +97,9 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
     },
     {
       label: (
-        <h3 className={`${styles.title} ${activeTab === "withdrawals" && styles.active}`}>
+        <h3 className={`${styles.title} ${tabActive === "withdrawals" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <WithdrawalIcon fill={activeTab === "withdrawals" ? "#438F68" : "#98A2B3"} />
+            <WithdrawalIcon fill={tabActive === "withdrawals" ? "#438F68" : "#98A2B3"} />
             <Box pl={1}>Withdrawals({data?.withdrawals?.length || 0})</Box>
           </Box>
         </h3>
@@ -106,9 +109,9 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
     },
     {
       label: (
-        <h3 className={`${styles.title} ${activeTab === "delegations" && styles.active}`}>
+        <h3 className={`${styles.title} ${tabActive === "delegations" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <DelegationIcon fill={activeTab === "delegations" ? "#438F68" : "#98A2B3"} />
+            <DelegationIcon fill={tabActive === "delegations" ? "#438F68" : "#98A2B3"} />
             <Box pl={1}> Delegations({data?.delegations?.length || 0})</Box>
           </Box>
         </h3>
@@ -118,9 +121,9 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
     },
     {
       label: (
-        <h3 className={`${styles.title} ${activeTab === "mints" && styles.active}`}>
+        <h3 className={`${styles.title} ${tabActive === "mints" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <MintingIcon fill={activeTab === "mints" ? "#438F68" : "#98A2B3"} />
+            <MintingIcon fill={tabActive === "mints" ? "#438F68" : "#98A2B3"} />
             <Box pl={1}>Minting</Box>
           </Box>
         </h3>
@@ -134,12 +137,9 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
 
   return (
     <>
-      <TabContext value={activeTab}>
+      <TabContext value={tabActive}>
         <Box className={styles.tab} paddingX={3}>
-          <TabList
-            onChange={handleChange}
-            TabIndicatorProps={{ style: { background: "#438f68", color: "#438f68" } }}
-          >
+          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: "#438f68", color: "#438f68" } }}>
             {items?.map(item => (
               <Tab key={item.key} label={item.label} value={item.key} />
             ))}
