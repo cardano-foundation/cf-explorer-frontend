@@ -1,10 +1,8 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
-import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { formatBalanceWithDecimal, getPageInfo, getShortWallet } from "../../commons/utils/helper";
+import { formatBalanceWithDecimal, getShortWallet } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
@@ -14,11 +12,8 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 interface Props {}
 
 const TopAddresses: React.FC<Props> = () => {
-  const { search } = useLocation();
   const history = useHistory();
-  const pageInfo = getPageInfo(search);
-
-  const fetchData = useFetchList<Contracts>("address/top-addresses", pageInfo);
+  const { error, data, initialized, loading } = useFetchList<Contracts>("address/top-addresses", { page: 0, size: 50 });
 
   const columns: Column<Address>[] = [
     {
@@ -57,14 +52,12 @@ const TopAddresses: React.FC<Props> = () => {
     <StyledContainer>
       <Card title={"Top 50 addresses"} underline={false}>
         <Table
-          {...fetchData}
+          onClickRow={(_, r) => history.push(details.stake(r.address))}
+          data={data}
+          error={error}
+          loading={loading}
+          initialized={initialized}
           columns={columns}
-          total={{ title: "Total Addresses", count: fetchData.total }}
-          pagination={{
-            ...pageInfo,
-            total: fetchData.total,
-            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
-          }}
         />
       </Card>
     </StyledContainer>
