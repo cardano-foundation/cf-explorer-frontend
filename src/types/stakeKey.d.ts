@@ -24,7 +24,7 @@ interface IStakeKeyDetail {
   };
 }
 
-type TabStakeDetail = "delegation" | "stakeKey" | "withdrawal" | "instantaneous";
+type TabStakeDetail = "delegation" | "stake-key" | "withdrawal" | "instantaneous";
 
 interface DelegationHistory {
   time: string;

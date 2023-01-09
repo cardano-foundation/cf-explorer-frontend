@@ -2,7 +2,6 @@ import { Avatar, Box, IconButton } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import { routers } from "../../../../commons/routers";
-import NotFound from "../../../../pages/NotFound";
 import { RootState } from "../../../../stores/types";
 import { ContentBox, NavItem, SideBar, Wrapper } from "./styled";
 

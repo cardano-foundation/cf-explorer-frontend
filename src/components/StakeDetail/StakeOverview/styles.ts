@@ -1,4 +1,4 @@
-import { Box, Skeleton, styled } from "@mui/material";
+import { Box, Button, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Status = styled("span")`
@@ -134,4 +134,13 @@ export const StyledFlexValue = styled(Box)(({ theme }) => ({
   fontSize: "var(--font-size-text-large)",
   alignItems: "center",
   gap: "10px",
+}));
+
+export const ButtonModal = styled(Button)(({ theme }) => ({
+  textTransform: "capitalize",
+  padding: 0,
+  textDecoration: "underline",
+  ":hover": {
+    textDecoration: "underline",
+  },
 }));

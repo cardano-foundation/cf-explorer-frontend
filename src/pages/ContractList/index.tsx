@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
 import { exchangeADAToUSD, formatADA, getPageInfo, getShortHash } from "../../commons/utils/helper";
-import { routers } from "../../commons/routers";
+import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
 import Table, { Column } from "../../components/commons/Table";
@@ -37,9 +37,7 @@ const Transactions: React.FC = () => {
       render: r => (
         <div>
           <CustomTooltip title={r.address} placement="top">
-            <StyledLink to={routers.CONTRACT_DETAIL.replace(":address", `${r.address}`)}>
-              {getShortHash(r.address)}
-            </StyledLink>
+            <StyledLink to={details.contract(r.address)}>{getShortHash(r.address)}</StyledLink>
           </CustomTooltip>
         </div>
       ),

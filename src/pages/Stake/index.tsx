@@ -1,10 +1,10 @@
 import moment from "moment";
 import { parse, stringify } from "qs";
 import React, { useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useWindowSize } from "react-use";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { details } from "../../commons/routers";
+import { details, routers } from "../../commons/routers";
 import { getPageInfo, getShortHash } from "../../commons/utils/helper";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
@@ -61,19 +61,17 @@ const columns: Column<IStakeKey>[] = [
 const Stake: React.FC<IStake> = () => {
   const [stake, setStake] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
+  const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
   const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const poolType =
-    parse(search.split("?")[1]).poolType === POOL_TYPE.DEREREGISTRATION
-      ? POOL_TYPE.DEREREGISTRATION
-      : POOL_TYPE.REGISTRATION;
 
   const fetchData = useFetchList<IStakeKey>(`/stake/${poolType}`, pageInfo);
 
   const onChangeTab = (e: React.SyntheticEvent, poolType: POOL_TYPE) => {
-    history.push({ search: stringify({ ...pageInfo, page: 1, poolType }) });
+    history.push(routers.STAKE_LIST.replace(":poolType", poolType));
+    handleClose();
   };
 
   const openDetail = (_: any, r: IStakeKey, index: number) => {

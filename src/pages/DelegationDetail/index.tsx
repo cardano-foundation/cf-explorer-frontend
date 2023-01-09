@@ -16,6 +16,7 @@ import {
   DelegationStakingDelegatorsList,
 } from "../../components/DelegationDetail/DelegationDetailList";
 import useFetchList from "../../commons/hooks/useFetchList";
+import NoRecord from "../../components/commons/NoRecord";
 
 interface IDelegationDetail {}
 
@@ -28,7 +29,7 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
   const { search } = useLocation();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
-  const [tab, setTab] = useState<"epochs" | "delegators">("epochs");
+  const tab = (query.tab as "epochs" | "delegators") || "epochs";
   const [saving, setSaving] = useState<boolean>(false);
   const tableRef = useRef(null);
 
@@ -45,17 +46,21 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
     history.push({ search: stringify(query) });
   };
 
-  const { data, loading } = useFetch<DelegationOverview>(`/delegation/pool-detail-header/${poolId}`);
+  const { data, loading, initialized, error } = useFetch<DelegationOverview>(
+    `/delegation/pool-detail-header/${poolId}`
+  );
   const {
     data: dataTable,
     loading: loadingTable,
     total,
-    initialized,
+    initialized: initalTable,
   } = useFetchList<DelegationEpoch | StakingDelegators>(
     `/delegation/pool-detail-${tab}?poolView=${poolId}&page=${query.page ? +query.page - 1 : 0}&size=${
       query.size || 10
     }`
   );
+
+  if ((initialized && !data) || error) return <NoRecord />;
 
   const render = () => {
     if (tab === "epochs") {
@@ -64,7 +69,7 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
           <DelegationEpochList
             data={dataTable as DelegationEpoch[]}
             loading={loadingTable}
-            initialized={initialized}
+            initialized={initalTable}
             total={total}
             scrollEffect={scrollEffect}
           />
@@ -77,7 +82,7 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
           <DelegationStakingDelegatorsList
             data={dataTable as StakingDelegators[]}
             loading={loadingTable}
-            initialized={initialized}
+            initialized={initalTable}
             total={total}
             scrollEffect={scrollEffect}
           />
@@ -97,8 +102,7 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
         <StyledSelect
           value={tab}
           onChange={e => {
-            setTab(e.target.value as typeof tab);
-            setQuery({ page: 1, size: 10 });
+            setQuery({ tab: e.target.value, page: 1, size: 10 });
             scrollEffect();
           }}
           IconComponent={() => <BiChevronDown size={30} style={{ paddingRight: 10 }} />}

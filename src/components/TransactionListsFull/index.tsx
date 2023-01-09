@@ -3,8 +3,8 @@ import { stringify } from "qs";
 import { Box, Tooltip } from "@mui/material";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { formatADA, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
-import { details, routers } from "../../commons/routers";
+import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
+import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
@@ -67,7 +67,7 @@ const columns: Column<Transactions>[] = [
               {r.addressesInput.slice(0, 1).map((tx, key) => {
                 return (
                   <Tooltip key={key} title={tx} placement="top">
-                    <Link to={routers.ADDRESS_DETAIL.replace(":address", tx)} key={key}>
+                    <Link to={details.address(tx)} key={key}>
                       <Box ml={1} color={props => props.colorBlue} fontFamily={"Helvetica, monospace"}>
                         <Box>{getShortWallet(tx)}</Box>
                       </Box>
@@ -76,7 +76,7 @@ const columns: Column<Transactions>[] = [
                 );
               })}
               {r.addressesInput.length > 1 && (
-                <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>
+                <Link to={details.transaction(r.hash)}>
                   <Box ml={1} color={props => props.colorBlue} fontFamily={"Helvetica, monospace"}>
                     ...
                   </Box>
@@ -90,7 +90,7 @@ const columns: Column<Transactions>[] = [
               {r.addressesOutput.slice(0, 1).map((tx, key) => {
                 return (
                   <Tooltip key={key} title={tx} placement="top">
-                    <Link to={routers.ADDRESS_DETAIL.replace(":address", tx)} key={key}>
+                    <Link to={details.address(tx)} key={key}>
                       <Box ml={1} color={props => props.colorBlue} fontFamily={"Helvetica, monospace"}>
                         <Box>{getShortWallet(tx)}</Box>
                       </Box>
@@ -99,7 +99,7 @@ const columns: Column<Transactions>[] = [
                 );
               })}
               {r.addressesOutput.length > 1 && (
-                <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>
+                <Link to={details.transaction(r.hash)}>
                   <Box ml={1} color={props => props.colorBlue} fontFamily={"Helvetica, monospace"}>
                     ...
                   </Box>
@@ -116,10 +116,12 @@ const columns: Column<Transactions>[] = [
     key: "fee",
     minWidth: 120,
     render: r => (
-      <Box display="flex" alignItems="center">
-        <Box mr={1}>{formatADA(r.fee) || 0}</Box>
-        <img src={AIcon} alt="a icon" />
-      </Box>
+      <CustomTooltip title={formatADAFull(r.fee)}>
+        <Box display="flex" alignItems="center">
+          <Box mr={1}>{formatADA(r.fee) || 0}</Box>
+          <img src={AIcon} alt="a icon" />
+        </Box>
+      </CustomTooltip>
     ),
   },
   {
@@ -127,10 +129,12 @@ const columns: Column<Transactions>[] = [
     minWidth: 120,
     key: "ouput",
     render: r => (
-      <Box display="flex" alignItems="center">
-        <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
-        <img src={AIcon} alt="a icon" />
-      </Box>
+      <CustomTooltip title={formatADAFull(r.totalOutput)}>
+        <Box display="flex" alignItems="center">
+          <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
+          <img src={AIcon} alt="a icon" />
+        </Box>
+      </CustomTooltip>
     ),
   },
 ];

@@ -86,7 +86,7 @@ const DelegationHistoryTab = () => {
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.push({ search: stringify({ tab: "delegation", page, size }) }),
+        onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
       }}
       onClickRow={(e, r: DelegationHistory) => history.push(details.delegation(r.poolId))}
     />

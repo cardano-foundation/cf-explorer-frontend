@@ -8,7 +8,7 @@ import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import feeImg from "../../../../commons/resources/images/dola.svg";
 import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
-import { routers } from "../../../../commons/routers";
+import { details } from "../../../../commons/routers";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { Header, Img, LabelStatus } from "./conmponent";
 
@@ -74,7 +74,7 @@ const Card = ({
                       flexWrap="nowrap"
                       width={"auto"}
                     >
-                      <Link to={routers.ADDRESS_DETAIL.replace(":address", i.address)}>
+                      <Link to={details.address(i.address)}>
                         <CustomTooltip title={i.address} placement="top">
                           <Box color={props => props.colorBlue} fontWeight="bold" className={styles.ffText}>
                             {getShortWallet(i.address)}
@@ -107,7 +107,7 @@ const Card = ({
                   {type === "down" && (
                     <Box mr={3}>
                       <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
-                        <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", i.txHash)}>
+                        <Link to={details.transaction(i.txHash)}>
                           <CustomTooltip title={i.txHash} placement="top">
                             <Box
                               component={"span"}

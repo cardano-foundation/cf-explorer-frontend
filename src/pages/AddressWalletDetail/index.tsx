@@ -1,14 +1,24 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { styled, Container } from "@mui/material";
 import AddressTransactionList from "../../components/AddressTransactionList";
 import AddressHeader from "../../components/AddressDetail/AddressHeader";
 import AddressAnalytics from "../../components/AddressDetail/AddressAnalytics";
+import useFetch from "../../commons/hooks/useFetch";
+import NoRecord from "../../components/commons/NoRecord";
 
 const AddressWalletDetail = () => {
   const { address } = useParams<{ address: string }>();
+  const { state } = useLocation<{ data?: WalletAddress }>();
+  const { data, loading, initialized, error } = useFetch<WalletAddress>(
+    state?.data ? "" : `/address/${address}`,
+    state?.data
+  );
+
+  if ((initialized && !data) || error) return <NoRecord />;
+
   return (
     <ContainerBox>
-      <AddressHeader />
+      <AddressHeader data={data} loading={loading} />
       <AddressAnalytics />
       <AddressTransactionList url={`/address/${address}/txs`} />
     </ContainerBox>
