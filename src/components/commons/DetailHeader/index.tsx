@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import ProgressCircle from "../ProgressCircle";
@@ -29,7 +28,6 @@ import {
   CardItem,
   ValueCard,
 } from "./styles";
-import NotFound from "../../../pages/NotFound";
 import { routers } from "../../../commons/routers";
 import { Box } from "@mui/material";
 
@@ -49,7 +47,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
     else return "/";
   };
 
-  if (loading) {
+  if (loading || !data) {
     return (
       <HeaderDetailContainer>
         <BackButton to={getRouterList()}>
@@ -86,7 +84,6 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
     );
   }
 
-  if (!data) return <NotFound />;
   const { header, blockDetail } = data;
 
   return (
@@ -103,14 +100,11 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
             {header.epochStatus && <HeaderStatus status={header.epochStatus}>{header.epochStatus}</HeaderStatus>}
           </HeaderContainer>
           {header.hash && (
-            <SlotLeader>
-              {/* <Link to={routers.ADDRESS_DETAIL.replace(":address", `${header.slotLeader}`)}> */}
-              {/* <Link to={"#"}> */}
+            <SlotLeader> 
               {header.slotLeader && (
                 <SlotLeaderTitle>{data.type === "block" ? "Block ID:" : "Slot leader:"}</SlotLeaderTitle>
               )}{" "}
-              <SlotLeaderValue>{header.hash}</SlotLeaderValue>
-              {/* </Link> */}
+              <SlotLeaderValue>{header.hash}</SlotLeaderValue> 
               <SlotLeaderCopy text={header.hash} />
             </SlotLeader>
           )}

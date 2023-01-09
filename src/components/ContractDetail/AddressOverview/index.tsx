@@ -1,8 +1,7 @@
 import { Autocomplete, Box, Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import { AIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
@@ -12,17 +11,17 @@ import Card from "../../commons/Card";
 import CardAddress from "../../share/CardAddress";
 import { Pool, StyledAAmount, StyledTextField, WrapPaperDropdown } from "./styles";
 
-const AddressOverview: React.FC = () => {
-  const params = useParams<{ address: string }>();
-  const { data, loading } = useFetch<WalletAddress>(`/address/${params.address}`);
-  const [stakeKey, setStakeKey] = useState("");
-  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(stakeKey ? `/stake/${stakeKey}` : "");
+interface Props {
+  data: WalletAddress | null;
+  loading: boolean;
+}
+
+const AddressOverview: React.FC<Props> = ({ data, loading }) => {
+  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
+    data?.stakeAddress ? `/stake/${data?.stakeAddress}` : ""
+  );
   const { adaRate } = useSelector(({ system }: RootState) => system);
-
-  useEffect(() => {
-    setStakeKey(data?.stakeAddress || "");
-  }, [data]);
-
+console.log(details.stake(dataStake?.stakeAddress))
   const itemLeft = [
     { title: "Transaction", value: data?.txCount },
     {

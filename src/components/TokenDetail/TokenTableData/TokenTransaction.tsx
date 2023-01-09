@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import moment from "moment";
 import useFetchList from "../../../commons/hooks/useFetchList";
-import { details, routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
 import { formatADA, getPageInfo, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
@@ -30,7 +30,7 @@ const columns: Column<Transactions>[] = [
     render: r => (
       <>
         <CustomTooltip title={r.hash} placement="top">
-          <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.hash)}>{getShortHash(r.hash)}</StyledLink>
+          <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
         </CustomTooltip>
         <br />
         <SmallText>{moment(r.time).format("MM/DD/YYYY HH:mm:ss")}</SmallText>

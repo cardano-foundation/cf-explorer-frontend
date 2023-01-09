@@ -21,16 +21,18 @@ import {
   ValueCard,
   ViewJson,
 } from "./styles";
-import useFetch from "../../../commons/hooks/useFetch";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 import ReactJson from "react-json-view";
 
-const PolicyOverview = () => {
-  const { policyId } = useParams<{ policyId: string }>();
+interface Props {
+  data: PolicyDetail | null;
+  loading: boolean;
+}
+
+const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
-  const { data, loading } = useFetch<PolicyDetail>(`/policy/${policyId}`);
 
   return (
     <Box>

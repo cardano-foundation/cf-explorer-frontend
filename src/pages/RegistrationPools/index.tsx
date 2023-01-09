@@ -1,7 +1,7 @@
 import { useState } from "react";
 import moment from "moment";
 import { parse, stringify } from "qs";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details, routers } from "../../commons/routers";
 import { formatADA, formatPercent, getShortHash, getShortWallet } from "../../commons/utils/helper";
@@ -43,9 +43,7 @@ const columns: Column<Registration>[] = [
   {
     title: "Pool",
     key: "pool",
-    render: r => (
-      <StyledLink to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.txId}`)}>{r.poolName}</StyledLink>
-    ),
+    render: r => <StyledLink to={details.delegation(r.txId)}>{r.poolName}</StyledLink>,
   },
   {
     title: "Pledge (A)",
@@ -77,22 +75,17 @@ const columns: Column<Registration>[] = [
 ];
 
 const RegistrationPools = () => {
-  const [poolType, setPoolType] = useState<POOL_TYPE>(POOL_TYPE.REGISTRATION);
   const history = useHistory();
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
-
-  const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
-  };
-
+  const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
+ 
   const { data, total, loading, initialized, error } = useFetchList<Registration>(
     `/pool/${poolType}?page=${query.page || 1}&size=${query.size || 10}`
   );
 
   const onChangeTab = (e: React.SyntheticEvent, poolType: POOL_TYPE) => {
-    setQuery({ page: 1, size: 10 });
-    setPoolType(poolType);
+    history.push(routers.REGISTRATION_POOLS.replace(":poolType", poolType));
   };
 
   return (
@@ -113,9 +106,7 @@ const RegistrationPools = () => {
         error={error}
         total={{ title: "Total Transactions", count: total }}
         pagination={{
-          onChange: (page, size) => {
-            setQuery({ page, size });
-          },
+          onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
           page: query.page ? +query.page - 1 : 0,
           total: total,
         }}

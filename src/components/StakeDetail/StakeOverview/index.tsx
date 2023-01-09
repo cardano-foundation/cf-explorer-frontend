@@ -1,6 +1,6 @@
 import { Box, Skeleton } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { routers } from "../../../commons/routers";
+import { details, routers } from "../../../commons/routers";
 import delegatedIcon from "../../../commons/resources/icons/delegated.svg";
 import totalStakeIcon from "../../../commons/resources/icons/totalStake.svg";
 import rewardIcon from "../../../commons/resources/icons/reward.svg";
@@ -8,7 +8,6 @@ import rewardWithdrawIcon from "../../../commons/resources/icons/rewardWithdraw.
 import infoIcon from "../../../commons/resources/icons/info.svg";
 import { formatADA } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
-
 import {
   BackButton,
   BackText,
@@ -26,14 +25,12 @@ import {
   ValueCard,
 } from "./styles";
 import { ADAToken } from "../../commons/Token";
-import useFetch from "../../../commons/hooks/useFetch";
-import { useParams } from "react-router-dom";
 
-const StakeOverview = () => {
-  const { stakeId } = useParams<{ stakeId: string }>();
-
-  const { data, loading } = useFetch<IStakeKeyDetail>(`/stake/address/${stakeId}`);
-
+interface Props {
+  data: IStakeKeyDetail | null;
+  loading: boolean;
+}
+const StakeOverview: React.FC<Props> = ({ data, loading }) => {
   const listOverview = [
     {
       icon: delegatedIcon,
@@ -44,7 +41,7 @@ const StakeOverview = () => {
         </Box>
       ),
       value: (
-        <StyledLink to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", data?.pool?.poolId || "")}>
+        <StyledLink to={details.delegation(data?.pool?.poolId)}>
           {data?.pool?.tickerName || ""} - {data?.pool?.poolName || ""}
         </StyledLink>
       ),

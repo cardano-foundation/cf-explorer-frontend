@@ -6,8 +6,7 @@ import { ReactComponent as StakeKeyHistoryIcon } from "../../../commons/resource
 import { ReactComponent as WithdrawHistoryIcon } from "../../../commons/resources/icons/withdrawHistory.svg";
 import { ReactComponent as InstantaneousHistoryIcon } from "../../../commons/resources/icons/instantaneousHistory.svg";
 import { TitleTab } from "./styles";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import { parse, stringify } from "qs";
+import { useHistory, useParams } from "react-router-dom";
 import DelegationHistoryTab from "./Tabs/DelegationHistoryTab";
 import StakeHistoryTab from "./Tabs/StakeHistoryTab";
 import WithdrawalHistoryTab from "./Tabs/WithdrawalHistoryTab";
@@ -29,7 +28,7 @@ const tabs: {
   {
     icon: StakeKeyHistoryIcon,
     label: "Stake Key History",
-    key: "stakeKey",
+    key: "stake-key",
     component: <StakeHistoryTab />,
   },
   {
@@ -47,7 +46,7 @@ const tabs: {
 ];
 
 const StakeTab = () => {
-  const { tabActive, stakeId } = useParams<{ tabActive: TabStakeDetail; stakeId: string }>();
+  const { stakeId, tabActive = "delegation" } = useParams<{ stakeId?: string; tabActive: TabStakeDetail }>();
   const history = useHistory();
 
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
@@ -59,7 +58,7 @@ const StakeTab = () => {
       <TabContext value={tabActive}>
         <Box style={{ borderBottom: "1px solid rgba(24, 76, 120, 0.1)" }}>
           <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: "#438f68" } }}>
-            {tabs?.map(({ icon: Icon, key, label }) => (
+            {tabs.map(({ icon: Icon, key, label }) => (
               <Tab
                 key={key}
                 value={key}

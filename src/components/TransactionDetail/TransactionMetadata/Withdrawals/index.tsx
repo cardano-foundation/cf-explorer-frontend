@@ -1,5 +1,5 @@
 import React from "react";
-import { Box  } from "@mui/material";
+import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import styles from "./index.module.scss";
@@ -8,7 +8,7 @@ import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
 import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
-import { routers } from "../../../../commons/routers";
+import { details } from "../../../../commons/routers";
 import CustomTooltip from "../../../commons/CustomTooltip";
 
 interface WithdrawalsProps {
@@ -40,10 +40,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["withdrawals"][num
           <div className={styles.top}>
             <div>
               From:{" "}
-              <Link
-                to={routers.ADDRESS_DETAIL.replace(":address", item?.stakeAddressFrom || "")}
-                className={styles.address}
-              >
+              <Link to={details.address(item?.stakeAddressFrom || "")} className={styles.address}>
                 <CustomTooltip title={item?.stakeAddressFrom || ""} placement="top">
                   <span>{getShortWallet(item?.stakeAddressFrom || "")}</span>
                 </CustomTooltip>
@@ -68,7 +65,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["withdrawals"][num
                   {item?.addressTo.map((adr, idx) => {
                     return (
                       <div key={adr}>
-                        <Link to={routers.ADDRESS_DETAIL.replace(":address", adr)} className={styles.address}>
+                        <Link to={details.address(adr)} className={styles.address}>
                           <CustomTooltip title={adr} placement="top">
                             <span> {getShortWallet(adr)}</span>
                           </CustomTooltip>

@@ -3,12 +3,11 @@ import { stringify } from "qs";
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
-import { AIcon } from "../../../commons/resources";
-import { details, routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import { getPageInfo, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
-import { PriceValue, SmallText, StyledLink, PriceIcon } from "./styles";
+import { PriceValue, SmallText, StyledLink } from "./styles";
 
 interface ITokenMinting {
   active: boolean;
@@ -27,7 +26,7 @@ const columns: Column<ITokenMintingTable>[] = [
     minWidth: "200px",
     render: r => (
       <CustomTooltip title={r.txHash} placement="top">
-        <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
+        <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
       </CustomTooltip>
     ),
   },

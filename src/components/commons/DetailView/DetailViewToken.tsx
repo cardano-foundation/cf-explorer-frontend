@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { PolicyWhiteIcon } from "../../../commons/resources";
 import {

@@ -7,7 +7,7 @@ import Table, { Column } from "../../commons/Table";
 import { formatADA, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
-import { StyledAddress, StyledLink, StyledOutput, StyledColorBlueDard, StyledContainer } from "./styles";
+import { StyledAddress, StyledOutput, StyledColorBlueDard, StyledContainer } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { Box } from "@mui/material";

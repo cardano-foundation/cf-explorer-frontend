@@ -28,12 +28,13 @@ interface TransactionMetadataProps {
 }
 
 const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading }) => {
-  const { tabActive } = useParams<{ tabActive: keyof Transaction }>();
+  const { tabActive = "summary" } = useParams<{ tabActive: keyof Transaction }>();
   const history = useHistory();
 
-  const handleChange = (event: React.SyntheticEvent, tabs: keyof Transaction) => {
-    history.push({ pathname: details.transaction(data?.tx?.hash || "", tabs) });
+  const handleChange = (event: React.SyntheticEvent, tab: keyof Transaction) => {
+    history.push({ pathname: details.transaction(data?.tx?.hash || "", tab) });
   };
+
   const tabs: { label: React.ReactNode; key: keyof Transaction; children: React.ReactNode }[] = [
     {
       label: (

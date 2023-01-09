@@ -70,8 +70,8 @@ const StakeHistoryTab = () => {
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.push({ search: stringify({ tab: "stakeKey", page, size }) }),
-      }} 
+        onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+      }}
     />
   );
 };
