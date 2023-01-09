@@ -108,8 +108,8 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
 
   return (
     <TFooter>
-      {total ? (
-        <Box display={"flex"} alignItems="center">
+      <Box display={"flex"} alignItems="center">
+        {pagination?.total && pagination.total > 10 ? (
           <Box>
             <SelectMui
               size="small"
@@ -129,13 +129,18 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
               Per page
             </Box>
           </Box>
+        ) : (
+          ""
+        )}
+        {total ? (
           <Total ml={2}>
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> Results
           </Total>
-        </Box>
-      ) : (
-        ""
-      )}
+        ) : (
+          ""
+        )}
+      </Box>
+
       <Box />
       {pagination?.total && pagination.total > 10 ? (
         <PaginationCustom

@@ -20,7 +20,9 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     render: r => (
       <PoolName to={details.delegation(r.poolId)}>
         <CustomTooltip title={r.poolName || r.poolId} placement="top">
-          <Box>{r.poolName || `Pool [${getShortWallet(r.poolId)}]`}</Box>
+          <Box textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={'hidden'}>
+            {r.poolName || `Pool [${r.poolId}]`}
+          </Box>
         </CustomTooltip>
       </PoolName>
     ),

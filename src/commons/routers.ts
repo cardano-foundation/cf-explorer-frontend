@@ -15,7 +15,7 @@ export const routers = {
   ADDRESS_DETAIL: "/address/:address",
   TOKEN_LIST: "/tokens",
   TOKEN_DETAIL: "/token/:tokenId",
-  STAKE_LIST: "/stakes",
+  STAKE_LIST: "/stakes/:poolType?",
   STAKE_DETAIL: "/stake/:stakeId/:tabActive?",
   CONTRACT_LIST: "/contracts",
   CONTRACT_DETAIL: "/contracts/:address/:tabActive?",

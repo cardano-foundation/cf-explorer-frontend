@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box, Skeleton } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { details, routers } from "../../../commons/routers";
@@ -11,6 +12,7 @@ import CopyButton from "../../commons/CopyButton";
 import {
   BackButton,
   BackText,
+  ButtonModal,
   CardInfoOverview,
   CardItem,
   HeaderContainer,
@@ -25,12 +27,16 @@ import {
   ValueCard,
 } from "./styles";
 import { ADAToken } from "../../commons/Token";
+import { useParams } from "react-router-dom";
+import ModalAllAddress from "../ModalAllAddress";
 
 interface Props {
   data: IStakeKeyDetail | null;
   loading: boolean;
 }
 const StakeOverview: React.FC<Props> = ({ data, loading }) => {
+  const [open, setOpen] = useState(false);
+  const { stakeId } = useParams<{ stakeId: string }>();
   const listOverview = [
     {
       icon: delegatedIcon,
@@ -55,10 +61,13 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <StyledFlexValue>
-          {formatADA(data?.totalStake || 0)}
-          <ADAToken />
-        </StyledFlexValue>
+        <Box display="flex" alignItems="center" justifyContent="space-between" pr={2}>
+          <StyledFlexValue>
+            {formatADA(data?.totalStake || 0)}
+            <ADAToken />
+          </StyledFlexValue>
+          <ButtonModal onClick={() => setOpen(true)}>View all address</ButtonModal>
+        </Box>
       ),
     },
     {
@@ -146,6 +155,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
           );
         })}
       </CardInfoOverview>
+      <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={stakeId} />
     </Box>
   );
 };

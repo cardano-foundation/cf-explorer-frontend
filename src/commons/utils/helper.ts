@@ -127,3 +127,14 @@ export const exchangeADAToUSD = (value: number | string, rate: number) => {
   const exchangedValue = bigValue.multipliedBy(rate).toString();
   return formatPrice(exchangedValue);
 };
+
+export const formatADAFull = (
+  value?: string | number,
+  abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS
+): string => {
+  if (!value) return `0${abbreviations[0]}`;
+  const Ada = +value / 1000000;
+
+  const formated = Ada.toString().match(/^-?\d+(?:\.\d{0,5})?/);
+  return numberWithCommas(formated ? formated[0] : "0");
+};
