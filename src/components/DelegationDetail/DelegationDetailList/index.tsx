@@ -75,7 +75,7 @@ const DelegationEpochList = ({
       initialized={initialized}
       pagination={{
         onChange: (page, size) => {
-          setQuery({ page, size });
+          setQuery({ tab: query.tab, page, size });
         },
         page: query.page ? +query.page - 1 : 0,
         total: total,
@@ -152,7 +152,7 @@ const DelegationStakingDelegatorsList = ({
       initialized={initialized}
       pagination={{
         onChange: (page, size) => {
-          setQuery({ page, size });
+          setQuery({ tab: query.tab, page, size });
         },
         page: query.page ? +query.page - 1 : 0,
         total: total,

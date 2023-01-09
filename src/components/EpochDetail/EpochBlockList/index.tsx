@@ -1,7 +1,6 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
-
 import Card from "../../commons/Card";
 import Table, { Column } from "../../commons/Table";
 import { formatADA, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
@@ -10,7 +9,6 @@ import { AIcon } from "../../../commons/resources";
 import { StyledLink, StyledOutput, StyledColorBlueDard, StyledContainer, StyledAddress } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import useFetchList from "../../../commons/hooks/useFetchList";
-import { Box } from "@mui/material";
 
 interface IEpochBlockList {
   epochId: string;

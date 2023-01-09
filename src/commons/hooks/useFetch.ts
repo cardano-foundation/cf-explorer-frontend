@@ -10,8 +10,8 @@ interface FetchReturnType<T> {
   refesh: () => void;
 }
 
-const useFetch = <T>(url: string): FetchReturnType<T> => {
-  const [data, setData] = useState<T | null>(null);
+const useFetch = <T>(url: string, initial?: T): FetchReturnType<T> => {
+  const [data, setData] = useState<T | null>(initial || null);
   const [initialized, setInitialized] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);

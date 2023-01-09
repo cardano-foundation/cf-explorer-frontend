@@ -1,16 +1,24 @@
 import React from "react";
-
+import { useLocation, useParams } from "react-router-dom";
+import useFetch from "../../commons/hooks/useFetch";
+import NoRecord from "../../components/commons/NoRecord";
 import StakeKeyOverview from "../../components/StakeDetail/StakeOverview";
 import StakeTab from "../../components/StakeDetail/StakeTab";
-
 import { StyledContainer } from "./styles";
 
-interface IStakeDetail {}
+const StakeDetail: React.FC = () => {
+  const { stakeId } = useParams<{ stakeId: string }>();
+  const { state } = useLocation<{ data?: IStakeKeyDetail }>();
+  const { data, loading, initialized, error } = useFetch<IStakeKeyDetail>(
+    state?.data ? "" : `/stake/address/${stakeId}`,
+    state?.data
+  );
 
-const StakeDetail: React.FC<IStakeDetail> = () => {
+  if ((initialized && !data) || error) return <NoRecord />;
+
   return (
     <StyledContainer>
-      <StakeKeyOverview />
+      <StakeKeyOverview data={data} loading={loading} />
       <StakeTab />
     </StyledContainer>
   );

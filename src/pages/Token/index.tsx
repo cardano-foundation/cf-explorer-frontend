@@ -1,10 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { parse, stringify } from "qs";
-import axios from "axios";
 import moment from "moment";
 import { useWindowSize } from "react-use";
-import { Skeleton } from "@mui/material";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";

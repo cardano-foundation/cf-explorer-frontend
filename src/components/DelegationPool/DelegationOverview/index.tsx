@@ -2,12 +2,10 @@ import { Grid } from "@mui/material";
 import moment from "moment";
 import React from "react";
 import useFetch from "../../../commons/hooks/useFetch";
-
 import { CurentEpochIcon, LiveStakeIcon, RocketBackground } from "../../../commons/resources";
-import { routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
-
 import { StyledCard, StyledImg, StyledLinearProgress, StyledSkeleton } from "./styles";
 
 const OverViews: React.FC = () => {
@@ -37,9 +35,7 @@ const OverViews: React.FC = () => {
         <StyledCard.Container>
           <StyledCard.Content>
             <StyledCard.Title>Epoch</StyledCard.Title>
-            <StyledCard.Link to={routers.EPOCH_DETAIL.replace(":epochId", "" + data?.epochNo || "")}>
-              {data?.epochNo}
-            </StyledCard.Link>
+            <StyledCard.Link to={details.epoch(data?.epochNo)}>{data?.epochNo}</StyledCard.Link>
             <span style={{ color: "#667085" }}>
               End in:{" "}
               <StyledCard.Comment>

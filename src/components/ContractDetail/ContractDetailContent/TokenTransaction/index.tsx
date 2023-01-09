@@ -7,7 +7,7 @@ import Table, { Column } from "../../../commons/Table";
 import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import useFetchList from "../../../../commons/hooks/useFetchList";
-import { details, routers } from "../../../../commons/routers";
+import { details } from "../../../../commons/routers";
 import { AIcon } from "../../../../commons/resources";
 
 const columns: Column<Transactions>[] = [
@@ -25,7 +25,7 @@ const columns: Column<Transactions>[] = [
     render: r => (
       <>
         <CustomTooltip title={r.hash} placement="top">
-          <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", r.hash)}>{getShortHash(r.hash)}</StyledLink>
+          <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
         </CustomTooltip>
         <br />
         <SmallText>{moment(r.time).format("MM/DD/YYYY HH:mm:ss")}</SmallText>
@@ -45,10 +45,9 @@ const columns: Column<Transactions>[] = [
     minWidth: "200px",
     render: r => (
       <>
-        <StyledLink to={routers.BLOCK_DETAIL.replace(":blockId", `${r.blockNo}`)}>{r.blockNo}</StyledLink>
+        <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
         <br />
-        <StyledLink to={routers.EPOCH_DETAIL.replace(":epochId", `${r.epochNo}`)}>{r.epochNo}</StyledLink>/
-        <SmallText>{r.slot} </SmallText>
+        <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/<SmallText>{r.slot} </SmallText>
       </>
     ),
   },
@@ -63,28 +62,22 @@ const columns: Column<Transactions>[] = [
             <Label>Input: </Label>
             <div>
               <CustomTooltip title={r.addressesInput[0]} placement="top">
-                <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${r.addressesInput[0]}`)}>
-                  {getShortWallet(r.addressesInput[0])}
-                </StyledLink>
+                <StyledLink to={details.address(r.addressesInput[0])}>{getShortWallet(r.addressesInput[0])}</StyledLink>
               </CustomTooltip>
               <br />
-              {r.addressesInput.length > 1 && (
-                <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>...</StyledLink>
-              )}
+              {r.addressesInput.length > 1 && <StyledLink to={details.transaction(r.hash)}>...</StyledLink>}
             </div>
           </Flex>
           <Flex>
             <Label>Output: </Label>
             <div>
               <CustomTooltip title={r.addressesOutput[0]} placement="top">
-                <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", `${r.addressesOutput[0]}`)}>
+                <StyledLink to={details.address(r.addressesOutput[0])}>
                   {getShortWallet(r.addressesOutput[0])}
                 </StyledLink>
               </CustomTooltip>
               <br />
-              {r.addressesOutput.length > 1 && (
-                <StyledLink to={routers.TRANSACTION_DETAIL.replace(":trxHash", `${r.hash}`)}>...</StyledLink>
-              )}
+              {r.addressesOutput.length > 1 && <StyledLink to={details.transaction(r.hash)}>...</StyledLink>}
             </div>
           </Flex>
         </>

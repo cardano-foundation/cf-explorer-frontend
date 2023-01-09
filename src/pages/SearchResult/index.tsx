@@ -1,11 +1,11 @@
 import { Container, styled } from "@mui/material";
 import { parse } from "qs";
 import { useEffect, useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
-import { EmptyIcon, NotFoundIcon } from "../../commons/resources";
-import { details, routers } from "../../commons/routers";
+import { useHistory, useLocation } from "react-router-dom";
+import { details } from "../../commons/routers";
 import CircularProgress from "@mui/material/CircularProgress";
 import defaultAxios from "../../commons/utils/axios";
+import NoRecord from "../../components/commons/NoRecord";
 
 const SearchResultContainer = styled(Container)`
   display: flex;
@@ -15,34 +15,10 @@ const SearchResultContainer = styled(Container)`
   padding: 120px 0px;
 `;
 
-const Image = styled("img")`
-  width: auto;
-  height: 214px;
-`;
-
 const Title = styled("h3")`
   color: ${props => props.theme.textColorPale};
   margin-bottom: 2rem;
   font-weight: var(--font-weight-normal);
-`;
-
-const BackToHome = styled(Link)`
-  display: block;
-  width: max-content;
-  margin: auto;
-  padding: 6.5px 20px;
-  border: 2px solid ${props => props.theme.colorGreenLight};
-  border-radius: 5px;
-  color: ${props => props.theme.colorGreenLight};
-  font-weight: var(--font-weight-bold);
-  &:link,
-  &:visited {
-    color: ${props => props.theme.colorGreenLight};
-  }
-  &:hover {
-    border: 2px solid ${props => props.theme.colorGreen};
-    color: ${props => props.theme.colorGreen};
-  }
 `;
 
 const createNavigator = (filter?: FilterParams | string, value?: string) => {
@@ -99,20 +75,20 @@ const SearchResult = () => {
       setLoading(true);
       try {
         const urls = filterURLS(value);
-        const url = await Promise.any(
+        const result = await Promise.any(
           urls.map(async url => {
             try {
               const res = await defaultAxios.get(`${url}/${value}`);
-              if (res.data) return Promise.resolve(url);
+              if (res.data) return Promise.resolve({ url, data: res.data });
             } catch {}
             return Promise.reject();
           })
         );
-        if (!url) setLoading(false);
-
+        if (!result?.url) setLoading(false);
+        const { url, data } = result;
         const navigate = createNavigator(url);
 
-        if (navigate) return history.replace(navigate(value), { search: value });
+        if (navigate) return history.replace(navigate(value), { data });
       } catch {}
 
       setLoading(false);
@@ -129,10 +105,6 @@ const SearchResult = () => {
       </SearchResultContainer>
     );
 
-  return (
-    <SearchResultContainer>
-      <Image src={EmptyIcon} alt="empty icon" />
-    </SearchResultContainer>
-  );
+  return <NoRecord />;
 };
 export default SearchResult;

@@ -123,8 +123,12 @@ export const InputNumber = styled("input")(({ theme, length }: { length: number;
 export const SelectMui = styled(Select)(({ theme }) => ({
   fontWeight: "bold",
   width: 60,
+  height: 42,
+  padding: 0,
+  textAlign: "center",
   ".MuiOutlinedInput-notchedOutline": {
     borderColor: "rgba(227, 229, 233, 1)",
+    height: 40,
   },
   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
     borderColor: "rgba(227, 229, 233, 1)",
@@ -133,7 +137,7 @@ export const SelectMui = styled(Select)(({ theme }) => ({
     borderColor: "rgba(227, 229, 233, 1)",
   },
   ".MuiSelect-select": {
-    paddingRight: "0px !important",
+    paddingRight: "10px !important",
     paddingLeft: "0px !important",
   },
 }));

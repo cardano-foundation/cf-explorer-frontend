@@ -4,7 +4,7 @@ import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import { AIcon } from "../../../../commons/resources";
-import { routers } from "../../../../commons/routers";
+import { details } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
@@ -38,7 +38,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
           <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
             <div>
               From:{" "}
-              <Link to={routers.ADDRESS_DETAIL.replace(":address", item?.address || "")}>
+              <Link to={details.address(item?.address)}>
                 <CustomTooltip title={item?.address} placement="top">
                   <Box
                     component={"span"}
@@ -64,7 +64,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
             </Box>
           </Box>
           <Box display="flex" alignItems={"center"}>
-            <Link to={routers.TRANSACTION_DETAIL.replace(":trxHash", item?.txHash || "")}>
+            <Link to={details.transaction(item?.txHash)}>
               <CustomTooltip title={item?.txHash || ""} placement="top">
                 <Box component={"span"} color={props => props.colorBlue} fontFamily="Helvetica, monospace">
                   {getShortHash(item?.txHash || "")}

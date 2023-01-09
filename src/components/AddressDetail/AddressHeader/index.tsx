@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Grid, Box, Autocomplete } from "@mui/material";
 import { exchangeADAToUSD, formatADA, formatPrice } from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
@@ -6,15 +6,17 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronDown } from "react-icons/bi";
 import { AIcon } from "../../../commons/resources";
 import CardAddress from "../../share/CardAddress";
-import { details, routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import { StyledTextField, WrapPaperDropdown } from "./styles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { useEffect, useState } from "react";
 
-const AddressHeader = () => {
-  const { address } = useParams<{ address: string }>();
-  const { data, loading } = useFetch<WalletAddress>(`/address/${address}`);
+interface Props {
+  data: WalletAddress | null;
+  loading: boolean;
+}
+const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   const [stakeKey, setStakeKey] = useState("");
   const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(stakeKey ? `/stake/${stakeKey}` : "");
   const { adaRate } = useSelector(({ system }: RootState) => system);
@@ -85,9 +87,7 @@ const AddressHeader = () => {
       title: "POOL NAME",
       value: (
         <Link
-          to={
-            dataStake?.pool?.poolName ? routers.DELEGATION_POOL_DETAIL.replace(":poolId", dataStake.pool.poolId) : "#"
-          }
+          to={dataStake?.pool?.poolName ? details.delegation(dataStake.pool.poolId) : "#"}
           style={{ fontFamily: "var(--font-family-text)", color: "var(--color-blue)" }}
         >
           {dataStake?.pool?.poolName || ""}

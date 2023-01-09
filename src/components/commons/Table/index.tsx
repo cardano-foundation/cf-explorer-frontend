@@ -1,24 +1,12 @@
 import React, { useState } from "react";
-import {
-  TablePagination,
-  Skeleton,
-  Box,
-  Pagination,
-  PaginationRenderItemParams,
-  IconButton,
-  Select,
-  MenuItem,
-} from "@mui/material";
-
+import { Skeleton, Box, Pagination, PaginationRenderItemParams, IconButton, MenuItem } from "@mui/material";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
-
 import { EmptyIcon } from "../../../commons/resources";
 import { ReactComponent as StartPage } from "../../../commons/resources/icons/startPagePagination.svg";
 import { ReactComponent as EndPage } from "../../../commons/resources/icons/endPagePagination.svg";
 import { ReactComponent as PrevPage } from "../../../commons/resources/icons/prevPagePagination.svg";
 import { ReactComponent as NextPage } from "../../../commons/resources/icons/nextPagePagination.svg";
 import { ReactComponent as DownIcon } from "../../../commons/resources/icons/down.svg";
-
 import {
   Empty,
   EmtyImage,
@@ -131,7 +119,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
                 pagination?.onChange && pagination.onChange(1, +e.target.value);
               }}
               value={size}
-              IconComponent={() => <DownIcon width={30} />}
+              IconComponent={DownIcon}
             >
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>
