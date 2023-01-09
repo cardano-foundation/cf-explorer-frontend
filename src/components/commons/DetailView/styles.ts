@@ -234,7 +234,9 @@ export const DetailValue = styled("small")`
   gap: 5px;
 `;
 export const DelegatedDetail = styled("small")`
+  display: block;
   color: ${props => props.theme.colorBlue};
+  overflow: hidden;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text) !important;
   width: 250px;

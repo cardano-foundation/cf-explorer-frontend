@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box, Skeleton } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { routers } from "../../../commons/routers";
@@ -12,6 +13,7 @@ import CopyButton from "../../commons/CopyButton";
 import {
   BackButton,
   BackText,
+  ButtonModal,
   CardInfoOverview,
   CardItem,
   HeaderContainer,
@@ -28,10 +30,11 @@ import {
 import { ADAToken } from "../../commons/Token";
 import useFetch from "../../../commons/hooks/useFetch";
 import { useParams } from "react-router-dom";
+import ModalAllAddress from "../ModalAllAddress";
 
 const StakeOverview = () => {
   const { stakeId } = useParams<{ stakeId: string }>();
-
+  const [open, setOpen] = useState(false);
   const { data, loading } = useFetch<IStakeKeyDetail>(`/stake/address/${stakeId}`);
 
   const listOverview = [
@@ -58,10 +61,13 @@ const StakeOverview = () => {
         </Box>
       ),
       value: (
-        <StyledFlexValue>
-          {formatADA(data?.totalStake || 0)}
-          <ADAToken />
-        </StyledFlexValue>
+        <Box display="flex" alignItems="center" justifyContent="space-between" pr={2}>
+          <StyledFlexValue>
+            {formatADA(data?.totalStake || 0)}
+            <ADAToken />
+          </StyledFlexValue>
+          <ButtonModal onClick={() => setOpen(true)}>View all address</ButtonModal>
+        </Box>
       ),
     },
     {
@@ -149,6 +155,7 @@ const StakeOverview = () => {
           );
         })}
       </CardInfoOverview>
+      <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={stakeId} />
     </Box>
   );
 };
