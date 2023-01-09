@@ -40,7 +40,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["withdrawals"][num
           <div className={styles.top}>
             <div>
               From:{" "}
-              <Link to={details.address(item?.stakeAddressFrom || "")} className={styles.address}>
+              <Link to={details.address(item?.stakeAddressFrom)} className={styles.address}>
                 <CustomTooltip title={item?.stakeAddressFrom || ""} placement="top">
                   <span>{getShortWallet(item?.stakeAddressFrom || "")}</span>
                 </CustomTooltip>

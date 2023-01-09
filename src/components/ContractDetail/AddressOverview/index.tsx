@@ -21,7 +21,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
     data?.stakeAddress ? `/stake/${data?.stakeAddress}` : ""
   );
   const { adaRate } = useSelector(({ system }: RootState) => system);
-console.log(details.stake(dataStake?.stakeAddress))
+
   const itemLeft = [
     { title: "Transaction", value: data?.txCount },
     {

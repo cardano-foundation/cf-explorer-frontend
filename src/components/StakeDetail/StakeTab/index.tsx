@@ -46,7 +46,7 @@ const tabs: {
 ];
 
 const StakeTab = () => {
-  const { stakeId, tabActive = "delegation" } = useParams<{ stakeId?: string; tabActive: TabStakeDetail }>();
+  const { stakeId, tabActive = "delegation" } = useParams<{ stakeId: string; tabActive?: TabStakeDetail }>();
   const history = useHistory();
 
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
