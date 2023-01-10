@@ -19,13 +19,13 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
   const history = useHistory();
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
-  const { data, loading, total } = useFetchList<Addresses>(`/stake/${stake}/list-address`, { page: page - 1, size });
+  const fetchData = useFetchList<Addresses>(`/stake/${stake}/list-address`, { page: page - 1, size });
 
   const columns: Column<Addresses>[] = [
     {
       title: "#",
       minWidth: 20,
-      render: (r, idx) => idx + 1,
+      render: (r, index) => page * size + index + 1,
       key: "no",
     },
     {
@@ -64,18 +64,18 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
         </Box>
         <Box>
           <Table
-            onClickRow={(_, r) => history.push(details.address(r.address || ""))}
+            {...fetchData}
             columns={columns}
-            data={data || []}
-            loading={loading}
+            total={{ title: "Total Epochs", count: fetchData.total }}
             pagination={{
               onChange(page, size) {
                 setPage(page);
                 setSize(size);
               },
               page,
-              total,
+              total: fetchData.total,
             }}
+            onClickRow={(_, r) => history.push(details.address(r.address || ""))}
           />
         </Box>
       </ModalContainer>

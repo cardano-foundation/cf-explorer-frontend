@@ -14,72 +14,72 @@ interface IEpochBlockList {
   epochId: string;
 }
 
-const columns: Column<BlockDetail>[] = [
-  {
-    title: "#",
-    key: "#",
-    minWidth: "50px",
-    render: (_, index) => {
-      return <StyledColorBlueDard>{index + 1}</StyledColorBlueDard>;
-    },
-  },
-  {
-    title: "Block",
-    key: "block",
-    minWidth: "100px",
-    render: r => <StyledColorBlueDard>{r.blockNo}</StyledColorBlueDard>,
-  },
-  {
-    title: "Slot",
-    key: "slot",
-    minWidth: "100px",
-    render: r => (
-      <>
-        <StyledLink>{r.slotNo}</StyledLink>
-        <div>
-          {r.epochNo}/{r.epochSlotNo}
-        </div>
-      </>
-    ),
-  },
-  {
-    title: "Created by",
-    key: "createdBy",
-    minWidth: "100px",
-    render: r => (
-      <>
-        Input:
-        <CustomTooltip placement="top" title={r.slotLeader}>
-          <StyledAddress to={details.address(r.slotLeader)}>{getShortWallet(r.slotLeader)}</StyledAddress>
-        </CustomTooltip>
-      </>
-    ),
-  },
-  {
-    title: "Transactions",
-    key: "blkCount",
-    minWidth: "100px",
-    render: r => <StyledColorBlueDard>{r.txCount}</StyledColorBlueDard>,
-  },
-  {
-    title: "Output",
-    key: "outSum",
-    minWidth: "100px",
-    render: r => (
-      <StyledOutput>
-        <StyledColorBlueDard>{formatADA(r.totalFees) || 0}</StyledColorBlueDard>
-        <img src={AIcon} alt="ADA Icon" />
-      </StyledOutput>
-    ),
-  },
-];
-
 const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
   const fetchData = useFetchList<BlockDetail>(`block/list?epochNo=${epochId}`, pageInfo);
+
+  const columns: Column<BlockDetail>[] = [
+    {
+      title: "#",
+      key: "#",
+      minWidth: "50px",
+      render: (_, index) => {
+        return <StyledColorBlueDard>{pageInfo.page * pageInfo.size + index + 1}</StyledColorBlueDard>;
+      },
+    },
+    {
+      title: "Block",
+      key: "block",
+      minWidth: "100px",
+      render: r => <StyledColorBlueDard>{r.blockNo}</StyledColorBlueDard>,
+    },
+    {
+      title: "Slot",
+      key: "slot",
+      minWidth: "100px",
+      render: r => (
+        <>
+          <StyledLink>{r.slotNo}</StyledLink>
+          <div>
+            {r.epochNo}/{r.epochSlotNo}
+          </div>
+        </>
+      ),
+    },
+    {
+      title: "Created by",
+      key: "createdBy",
+      minWidth: "100px",
+      render: r => (
+        <>
+          Input:
+          <CustomTooltip placement="top" title={r.slotLeader}>
+            <StyledAddress to={details.address(r.slotLeader)}>{getShortWallet(r.slotLeader)}</StyledAddress>
+          </CustomTooltip>
+        </>
+      ),
+    },
+    {
+      title: "Transactions",
+      key: "blkCount",
+      minWidth: "100px",
+      render: r => <StyledColorBlueDard>{r.txCount}</StyledColorBlueDard>,
+    },
+    {
+      title: "Output",
+      key: "outSum",
+      minWidth: "100px",
+      render: r => (
+        <StyledOutput>
+          <StyledColorBlueDard>{formatADA(r.totalFees) || 0}</StyledColorBlueDard>
+          <img src={AIcon} alt="ADA Icon" />
+        </StyledOutput>
+      ),
+    },
+  ];
 
   return (
     <StyledContainer>

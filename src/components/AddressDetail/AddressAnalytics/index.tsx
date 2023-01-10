@@ -40,10 +40,11 @@ const AddressAnalytics: React.FC = () => {
 
   const { data: balance, loading: balanceLoading } = useFetch<number[]>(`/address/min-max-balance/${address}`);
   const dataChart = data?.map(i => +formatADAFull(BigNumber(i.value).toNumber() || 0).replaceAll(",", ""));
-  console.log("dataChart,dataChart", dataChart);
+
   const categories = data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
   const minBalance = Math.min(...(balance || []), 0);
   const maxBalance = Math.max(...(balance || []), 0);
+  
   return (
     <Card title="Analytics" pt={5}>
       <Wrapper container columns={24}>

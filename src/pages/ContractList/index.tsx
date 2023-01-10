@@ -27,7 +27,7 @@ const Transactions: React.FC = () => {
       title: "#",
       key: "id",
       minWidth: 30,
-      render: (_, index) => index + 1,
+      render: (_, index) => pageInfo.page * pageInfo.size + index + 1,
     },
     {
       title: "Contract Addresses",

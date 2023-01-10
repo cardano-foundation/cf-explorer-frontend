@@ -16,7 +16,7 @@ const getToken = () => {
 const defaultAxios = axios.create({
   baseURL: API_URL,
   transformResponse: function (response) {
-    return jsonBig().parse(response);
+    return jsonBig({ storeAsString: true }).parse(response);
   },
 });
 

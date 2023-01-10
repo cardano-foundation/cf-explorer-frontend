@@ -48,36 +48,35 @@ const SkeletonBox = () => (
 );
 
 const HomeStatistic: React.FC<Props> = () => {
-  const { currentEpoch } = useSelector(({ system }: RootState) => system);
-  const usdMarket = useFetch<CardanoMarket[]>(`${COINGECKO_URL}coins/markets?vs_currency=usd&ids=cardano`);
+  const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
   const btcMarket = useFetch<CardanoMarket[]>(`${COINGECKO_URL}coins/markets?vs_currency=btc&ids=cardano`);
 
   return (
     <StatisticContainer container spacing={2}>
       <Grid item xl lg={3} md={4} xs={6}>
-        {!usdMarket.data?.[0] || !btcMarket.data?.[0] ? (
+        {!usdMarket || !btcMarket.data?.[0] ? (
           <SkeletonBox />
         ) : (
           <Item>
             <ItemIcon src={AdaPriceIcon} alt="Ada Price" />
             <Content>
               <Name>Ada Price</Name>
-              <Title>${usdMarket.data[0]?.current_price || 0}</Title>
-              <RateWithIcon value={usdMarket.data[0]?.price_change_percentage_24h || 0} />
+              <Title>${usdMarket.current_price || 0}</Title>
+              <RateWithIcon value={usdMarket.price_change_percentage_24h || 0} />
               <Small style={{ marginLeft: 15 }}>{btcMarket.data[0]?.current_price || 0} BTC</Small>
             </Content>
           </Item>
         )}
       </Grid>
       <Grid item xl lg={3} md={4} xs={6}>
-        {!usdMarket.data?.[0] ? (
+        {!usdMarket ? (
           <SkeletonBox />
         ) : (
           <Item>
             <ItemIcon src={MarketCapIcon} alt="Market cap" />
             <Content>
               <Name>Market cap</Name>
-              <Title>${formatCurrency(usdMarket.data[0].market_cap)}</Title>
+              <Title>${formatCurrency(usdMarket.market_cap)}</Title>
             </Content>
           </Item>
         )}

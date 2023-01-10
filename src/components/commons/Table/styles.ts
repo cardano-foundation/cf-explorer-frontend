@@ -109,13 +109,8 @@ export const InputNumber = styled("input")(({ theme, length }: { length: number;
   textAlign: "center",
   fontWeight: "bold",
   border: "1px solid rgba(227, 229, 233, 1)",
-  "-moz-appearance": "textfield",
-  "::-webkit-outer-spin-button": {
-    "-webkit-appearance": "none",
-    margin: 0,
-  },
   "::-webkit-inner-spin-button": {
-    "-webkit-appearance": "none",
+    appearance: "none",
     margin: 0,
   },
 }));

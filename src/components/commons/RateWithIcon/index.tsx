@@ -21,7 +21,7 @@ const ImageRate = styled("img")<{ sign: number }>`
 `;
 
 const PriceValue = styled("span")<{ sign: number }>`
-  color: ${({ theme, sign }) => (sign ? theme.colorGreenLight : theme.colorRed)};
+  color: ${({ theme, sign }) => (sign > 0 ? theme.colorGreenLight : theme.colorRed)};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -40,7 +40,6 @@ const RateWithIcon = ({ value, size, multiple = 1 }: Props) => {
   if (!value) return <PriceNoValue>0</PriceNoValue>;
 
   const multiplied = BigNumber(value).multipliedBy(multiple).toNumber();
-
   const sign = Math.sign(multiplied);
 
   return (
@@ -48,7 +47,7 @@ const RateWithIcon = ({ value, size, multiple = 1 }: Props) => {
       <PriceRate size={size}>
         <ImageRate sign={sign} src={sign > 0 ? UpGreenIcon : DownRedIcon} alt="rate" />
         <PriceValue sign={sign}>
-          {sign > 0 ? "+" : "-"}
+          {sign > 0 ? "+" : ""}
           {multiplied.toFixed(2).toString().replace(".", ",")} %
         </PriceValue>
       </PriceRate>

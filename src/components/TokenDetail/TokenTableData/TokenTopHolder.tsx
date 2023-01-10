@@ -26,7 +26,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       title: "#",
       key: "id",
       minWidth: "40px",
-      render: (data, index) => <SmallText>{index + 1}</SmallText>,
+      render: (data, index) => <SmallText>{pageInfo.page * pageInfo.size + index + 1}</SmallText>,
     },
     {
       title: "Address",
