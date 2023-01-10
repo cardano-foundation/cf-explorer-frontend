@@ -135,6 +135,7 @@ export const formatADAFull = (
   if (!value) return `0${abbreviations[0]}`;
   const Ada = +value / 1000000;
 
-  const formated = Ada.toString().match(/^-?\d+(?:\.\d{0,5})?/);
-  return numberWithCommas(formated ? formated[0] : "0");
+  // const formated = Ada.toString().match(/^-?\d+(?:\.\d{0,5})?/);
+  // return numberWithCommas(formated ? formated[0] : "0");
+  return numberWithCommas(Ada || "0");
 };

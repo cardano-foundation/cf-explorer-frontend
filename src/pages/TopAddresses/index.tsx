@@ -2,7 +2,7 @@ import React from "react";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
-import { formatBalanceWithDecimal, getShortWallet } from "../../commons/utils/helper";
+import { formatADAFull, formatBalanceWithDecimal, getShortWallet } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
@@ -40,10 +40,12 @@ const TopAddresses: React.FC<Props> = () => {
       key: "balance",
       minWidth: 60,
       render: r => (
-        <Box display="flex" alignItems="center">
-          <Box mr={1}>{formatBalanceWithDecimal(r.balance || 0, 5)}</Box>
-          <img src={AIcon} alt="a icon" />
-        </Box>
+        <CustomTooltip placement="top" width="min-content" title={formatADAFull(r.balance)}>
+          <Box display="flex" alignItems="center">
+            <Box mr={1}>{formatBalanceWithDecimal(r.balance || 0, 5)}</Box>
+            <img src={AIcon} alt="a icon" />
+          </Box>
+        </CustomTooltip>
       ),
     },
   ];

@@ -33,7 +33,9 @@ const columns: Column<Transactions>[] = [
     render: r => (
       <div>
         <CustomTooltip title={r.hash} placement="top">
-          <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
+          <StyledLink to={details.transaction(r.hash)}>
+            <>{getShortHash(r.hash)}</>
+          </StyledLink>
         </CustomTooltip>
         <Box mt={1}>{moment(r.time).format("MM/DD/YYYY hh:mm:ss")}</Box>
       </div>
@@ -107,7 +109,7 @@ const columns: Column<Transactions>[] = [
     key: "fee",
     minWidth: 120,
     render: r => (
-      <CustomTooltip title={formatADAFull(r.fee)}>
+      <CustomTooltip title={r.fee} width="min-content">
         <Box display="flex" alignItems="center">
           <Box mr={1}>{formatADA(r.fee) || 0}</Box>
           <img src={AIcon} alt="a icon" />
@@ -120,7 +122,7 @@ const columns: Column<Transactions>[] = [
     minWidth: 120,
     key: "ouput",
     render: r => (
-      <CustomTooltip title={formatADAFull(r.totalOutput)}>
+      <CustomTooltip title={r.totalOutput} width="min-content">
         <Box display="flex" alignItems="center">
           <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
           <img src={AIcon} alt="a icon" />

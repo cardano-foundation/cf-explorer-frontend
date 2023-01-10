@@ -1,8 +1,15 @@
+import { Box } from "@mui/material";
 import moment from "moment";
 import { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { details } from "../../../commons/routers";
-import { formatADA, formatPercent, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import {
+  formatADA,
+  formatADAFull,
+  formatPercent,
+  getShortWallet,
+  numberWithCommas,
+} from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
@@ -43,19 +50,33 @@ const DelegationEpochList = ({
       title: "Stake Amount (A)",
       key: "stakeAmount",
       minWidth: "120px",
-      render: data => formatADA(data.stakeAmount),
+
+      render: data => (
+        <CustomTooltip placement="top" width="min-content" title={formatADAFull(data.stakeAmount)}>
+          <Box component={"span"}>{formatADA(data.stakeAmount)}</Box>
+        </CustomTooltip>
+      ),
     },
     {
-      title: "Delegator Reward (A)",
+      title: "Delegator Rewards (A)",
       key: "delegatorReward",
       minWidth: "120px",
-      render: data => formatADA(data.delegators),
+      render: data => (
+        <CustomTooltip placement="top" width="min-content" title={formatADAFull(data.delegators)}>
+          <Box component={"span"}>{formatADA(data.delegators)}</Box>
+        </CustomTooltip>
+      ),
     },
     {
       title: "Fees (A)",
       key: "fees",
       minWidth: "120px",
-      render: data => formatADA(data.fee),
+
+      render: data => (
+        <CustomTooltip placement="top" width="min-content" title={formatADAFull(data.fee)}>
+          <Box component={"span"}>{formatADA(data.fee)}</Box>
+        </CustomTooltip>
+      ),
     },
     {
       title: "ROS",
@@ -127,7 +148,11 @@ const DelegationStakingDelegatorsList = ({
       title: "Total Value (A)",
       key: "value",
       minWidth: "120px",
-      render: data => formatADA(data.totalStake || 0),
+      render: data => (
+        <CustomTooltip placement="top" width="min-content" title={formatADAFull(data.totalStake)}>
+          <Box component={"span"}>{formatADA(data.totalStake || 0)}</Box>
+        </CustomTooltip>
+      ),
     },
     {
       title: "Staked Time",
@@ -139,7 +164,11 @@ const DelegationStakingDelegatorsList = ({
       title: "Fees (A)",
       key: "fees",
       minWidth: "120px",
-      render: data => formatADA(data.fee || 0),
+      render: data => (
+        <CustomTooltip placement="top" width="min-content" title={formatADAFull(data.fee)}>
+          <Box component={"span"}>{formatADA(data.fee || 0)}</Box>
+        </CustomTooltip>
+      ),
     },
   ];
 
