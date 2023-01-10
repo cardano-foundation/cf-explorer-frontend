@@ -1,7 +1,11 @@
+import { NetworkType } from "@cardano-foundation/cardano-connect-with-wallet";
 import BigNumber from "bignumber.js";
 import { parse } from "qs";
+import { SupportedWallets } from "../../types/user";
+import { NETWORKS } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
+export const alphaNumeric = /[^0-9a-zA-Z]/;
 export const getShortWallet = (address: string) => {
   return `${address.slice(0, 5)}...${address.slice(-5)}`;
 };
@@ -119,4 +123,13 @@ export const exchangeADAToUSD = (value: number | string, rate: number) => {
   const bigValue = new BigNumber(Ada.toString());
   const exchangedValue = bigValue.multipliedBy(rate).toString();
   return formatPrice(exchangedValue);
+};
+
+export const getConvertedNetwork = (value: keyof typeof NETWORKS) => {
+  switch (value) {
+    case NetworkType.MAINNET:
+      return "MAIN_NET";
+    default:
+      return "TEST_NET";
+  }
 };

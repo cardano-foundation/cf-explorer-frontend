@@ -19,6 +19,7 @@ const initialState: UserStoreType = {
   network: "testnet",
   sidebar: true,
   onDetailView: false,
+  modalRegister: false,
 };
 
 const storeWallet = createSlice({
@@ -65,6 +66,10 @@ const storeWallet = createSlice({
       ...state,
       onDetailView: action.payload,
     }),
+    setModalRegister: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      modalRegister: action.payload,
+    }),
   },
 });
 
@@ -105,6 +110,10 @@ export const setSidebar = (sidebar: boolean) => {
 
 export const setOnDetailView = (onDetailView: boolean) => {
   userStore?.dispatch(storeWallet.actions.setOnDetailView(onDetailView));
+};
+
+export const setModalRegister = (state: boolean) => {
+  userStore?.dispatch(storeWallet.actions.setModalRegister(state));
 };
 
 export default storeWallet.reducer;
