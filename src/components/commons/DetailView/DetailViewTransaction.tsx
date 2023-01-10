@@ -274,7 +274,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADA(data.tx.fee) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -284,7 +284,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADA(data.tx.totalOutput) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
           </Group>
