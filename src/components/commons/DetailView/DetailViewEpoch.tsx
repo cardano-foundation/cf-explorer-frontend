@@ -190,7 +190,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADA(data.outSum) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
           </Group>

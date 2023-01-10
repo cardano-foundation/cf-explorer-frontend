@@ -61,7 +61,7 @@ const columns: Column<IStakeKey>[] = [
 const Stake: React.FC<IStake> = () => {
   const [stake, setStake] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
-  const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
+  let { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
   const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
