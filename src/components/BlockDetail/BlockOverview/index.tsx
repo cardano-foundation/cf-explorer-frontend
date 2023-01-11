@@ -102,7 +102,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
         data && {
           type: "block",
           header: {
-            title: data.blockNo,
+            title: "Block detail",
             hash: data.slotLeader,
             slotLeader: true,
           },

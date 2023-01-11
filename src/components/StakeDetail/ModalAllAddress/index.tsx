@@ -60,7 +60,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
           <img src={closeIcon} alt="icon close" />
         </ButtonClose>
         <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Space Mono", monospace, sans-serif '}>
-          Address
+          Addresses list
         </Box>
         <Box>
           <Table
