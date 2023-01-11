@@ -39,16 +39,16 @@ interface Props {
 const RateWithIcon = ({ value, size, multiple = 1 }: Props) => {
   if (!value) return <PriceNoValue>0</PriceNoValue>;
 
-  const multiplied = BigNumber(value).multipliedBy(multiple).toNumber();
-  const sign = Math.sign(multiplied);
+  const multiplied = BigNumber(value).multipliedBy(multiple);
+  const sign = Math.sign(multiplied.toNumber());
 
   return (
-    <CustomTooltip title={`${sign > 0 ? "+" : "-"}${multiplied}`}>
+    <CustomTooltip title={`${sign > 0 ? "+" : "-"}${multiplied.toNumber()}`}>
       <PriceRate size={size}>
         <ImageRate sign={sign} src={sign > 0 ? UpGreenIcon : DownRedIcon} alt="rate" />
         <PriceValue sign={sign}>
           {sign > 0 ? "+" : ""}
-          {multiplied.toFixed(2).toString().replace(".", ",")} %
+          {multiplied.toFixed(2, BigNumber.ROUND_DOWN).toString().replace(".", ",")} %
         </PriceValue>
       </PriceRate>
     </CustomTooltip>

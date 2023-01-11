@@ -50,12 +50,12 @@ const TopDelegationPools: React.FC<Props> = () => {
     {
       title: "Fee (A)",
       key: "fee",
-      render: r => `${formatPercent(r.feePercent || 0)} (${formatADA(r.feeAmount / 10 ** 6)} A)`,
+      render: r => `${formatPercent(r.feePercent || 0)} (${formatADA(r.feeAmount)} A)`,
     },
     {
       title: "Declared Pledge (A)",
       key: "declaredPledge",
-      render: r => formatADA(r.pledge / 10 ** 6),
+      render: r => formatADA(r.pledge),
     },
     {
       title: "Saturation",

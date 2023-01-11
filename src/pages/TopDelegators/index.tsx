@@ -1,8 +1,9 @@
 import { Tooltip } from "@mui/material";
+import BigNumber from "bignumber.js";
 import { useHistory } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details } from "../../commons/routers";
-import { formatADA, getShortWallet } from "../../commons/utils/helper";
+import { formatCurrency, getShortWallet } from "../../commons/utils/helper";
 
 import Card from "../../components/commons/Card";
 import Table from "../../components/commons/Table";
@@ -47,7 +48,13 @@ const TopDelegators = () => {
       key: "Stakeamount",
       render: (r, idx) => (
         <>
-          {formatADA(r.balance || 0)} <ADAToken />
+          {formatCurrency(
+            BigNumber(r.balance || 0)
+              .div(10 ** 6)
+              .toNumber(),
+            5
+          )}{" "}
+          <ADAToken />
         </>
       ),
     },

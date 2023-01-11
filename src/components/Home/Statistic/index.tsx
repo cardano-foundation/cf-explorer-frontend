@@ -1,20 +1,16 @@
 import { Grid } from "@mui/material";
+import BigNumber from "bignumber.js";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
-import {
-  AdaPriceIcon,
-  CurentEpochIcon,
-  LiveStakeIcon,
-  MarketCapIcon,
-  TotalADAStakeIcon,
-} from "../../../commons/resources";
+import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import { COINGECKO_URL } from "../../../commons/utils/axios";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import { formatCurrency, formatPrice } from "../../../commons/utils/helper";
+import { formatADA, formatCurrency, numberWithCommas } from "../../../commons/utils/helper";
 import { RootState } from "../../../stores/types";
+import CustomTooltip from "../../commons/CustomTooltip";
 import RateWithIcon from "../../commons/RateWithIcon";
 import {
   Content,
@@ -47,9 +43,21 @@ const SkeletonBox = () => (
   </Item>
 );
 
+const MILION = 10 ** 6;
+
 const HomeStatistic: React.FC<Props> = () => {
   const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
+  const { data } = useFetch<StakeAnalytics>(`/stake/analytics`);
   const btcMarket = useFetch<CardanoMarket[]>(`${COINGECKO_URL}coins/markets?vs_currency=btc&ids=cardano`);
+
+  const { circulating_supply: supply = 1, total_supply: total = 1 } = usdMarket || {};
+  const { liveStake = 0, activeStake = 1 } = data || {};
+
+  const liveRate = new BigNumber(liveStake).div(MILION).div(supply).multipliedBy(100);
+  const activeRate = new BigNumber(liveStake).div(activeStake).minus(1).multipliedBy(100);
+  const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
+  const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
+  console.log({ data });
 
   return (
     <StatisticContainer container spacing={2}>
@@ -62,6 +70,7 @@ const HomeStatistic: React.FC<Props> = () => {
             <Content>
               <Name>Ada Price</Name>
               <Title>${usdMarket.current_price || 0}</Title>
+              <br />
               <RateWithIcon value={usdMarket.price_change_percentage_24h || 0} />
               <Small style={{ marginLeft: 15 }}>{btcMarket.data[0]?.current_price || 0} BTC</Small>
             </Content>
@@ -106,42 +115,45 @@ const HomeStatistic: React.FC<Props> = () => {
         )}
       </Grid>
       <Grid item xl lg={3} md={4} xs={6}>
-        {!currentEpoch ? (
+        {!data || !usdMarket ? (
           <SkeletonBox />
         ) : (
           <Item>
             <Content>
               <ItemIcon src={LiveStakeIcon} alt="Total ADA Stake" />
               <Name>Live Stake</Name>
-              <Title>TBA</Title>
+              <CustomTooltip title={new BigNumber(data.liveStake).div(MILION).toString()}>
+                <Title>{formatADA(data.liveStake)}</Title>
+              </CustomTooltip>
               <Progress>
-                <ProcessActive rate={70}>{70}%</ProcessActive>
-                <ProgressPending rate={30}>{30}%</ProgressPending>
+                <CustomTooltip title={liveRate.toFixed(5)}>
+                  <ProcessActive rate={liveRate.toNumber()}>{liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%</ProcessActive>
+                </CustomTooltip>
+                <CustomTooltip title={liveRate.div(-1).plus(100).toFixed(5)}>
+                  <ProgressPending rate={liveRate.div(-1).plus(100).toNumber()}>
+                    {liveRate.div(-1).plus(100).toFixed(0)}%
+                  </ProgressPending>
+                </CustomTooltip>
               </Progress>
               <Small>Active Stake: </Small>
-              <Value>
-                <b>{formatPrice(25.09 * 10 ** 9)} </b>
-              </Value>
-              <Small>(0.7%)</Small>
+              <CustomTooltip title={numberWithCommas(new BigNumber(data.activeStake).div(MILION).toString())}>
+                <Value>
+                  <b>{formatADA(data.activeStake)} </b>
+                </Value>
+              </CustomTooltip>
+              <CustomTooltip title={`${activeRate.toFixed(5)}%`}>
+                <Small>({activeRate.toFixed(1)}%)</Small>
+              </CustomTooltip>
               <br />
               <Small>Circulating supply: </Small>
               <Value>
-                <b>{formatPrice(35.12 * 10 ** 9)} </b>
+                <CustomTooltip title={numberWithCommas(supply)}>
+                  <b>{formatADA(circulatingSupply.toString())} </b>
+                </CustomTooltip>
               </Value>
-              <Small>(78%)</Small>
-            </Content>
-          </Item>
-        )}
-      </Grid>
-      <Grid item xl lg={3} md={4} xs={6}>
-        {!currentEpoch ? (
-          <SkeletonBox />
-        ) : (
-          <Item>
-            <Content>
-              <ItemIcon src={TotalADAStakeIcon} alt="Total ADA Stake" />
-              <Name>Total ADA Stake</Name>
-              <Title>TBA</Title>
+              <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
+                <Small>({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)</Small>
+              </CustomTooltip>
             </Content>
           </Item>
         )}
