@@ -2,12 +2,11 @@ import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import useFetchList from "../../../commons/hooks/useFetchList";
-import { AIcon } from "../../../commons/resources";
-import { details, routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import { formatADA, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
-import { PriceIcon, PriceValue, SmallText, StyledLink } from "./styles";
+import { PriceValue, SmallText, StyledLink } from "./styles";
 
 interface ITokenTopHolder {
   active: boolean;
@@ -35,9 +34,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       minWidth: "200px",
       render: r => (
         <CustomTooltip title={r.address} placement="top">
-          <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", r.address)}>
-            {getShortWallet(r.address)}
-          </StyledLink>
+          <StyledLink to={details.address(r.address)}>{getShortWallet(r.address)}</StyledLink>
         </CustomTooltip>
       ),
     },

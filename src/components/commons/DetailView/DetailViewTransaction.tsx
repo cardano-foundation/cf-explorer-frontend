@@ -55,6 +55,7 @@ import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
+import moment from "moment";
 
 type DetailViewTransactionProps = {
   hash: string;
@@ -245,7 +246,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                 <InfoIcon />
                 Time
               </DetailLabel>
-              <DetailValue>{data.tx.time}</DetailValue>
+              <DetailValue>{moment(data.tx.time).format("MM/DD/YYYY hh:mm:ss")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
@@ -273,7 +274,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADA(data.tx.fee) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -283,7 +284,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADA(data.tx.totalOutput) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
           </Group>

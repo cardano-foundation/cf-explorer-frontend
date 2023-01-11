@@ -92,7 +92,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       </HeaderContainer>
       <PoolId>
         <CustomTooltip title={poolId} placement="top">
-          <Link to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${poolId}`)}>
+          <Link to={details.delegation(poolId)}>
             <PoolIdLabel>Pool Id: </PoolIdLabel>
             <PoolIdValue>{poolId}</PoolIdValue>
           </Link>

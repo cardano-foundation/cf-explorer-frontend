@@ -68,7 +68,7 @@ const WithdrawalHistoryTab = () => {
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.push({ search: stringify({ tab: "withdrawal", page, size }) }),
+        onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
       }}
     />
   );

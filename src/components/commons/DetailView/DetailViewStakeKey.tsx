@@ -159,7 +159,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADA(data.rewardAvailable) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -169,7 +169,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADA(data.rewardWithdrawn) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -192,7 +192,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADA(data.totalStake) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
           </Group>

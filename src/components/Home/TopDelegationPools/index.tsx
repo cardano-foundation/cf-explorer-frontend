@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
-import { routers } from "../../../commons/routers";
+import { details, routers } from "../../../commons/routers";
 import { formatADA, formatPercent } from "../../../commons/utils/helper";
 import ViewAllButton from "../../commons/ViewAllButton";
 import { Column } from "../../commons/Table";
@@ -79,9 +79,7 @@ const TopDelegationPools: React.FC<Props> = () => {
         initialized={initialized}
         columns={columns}
         data={data?.slice(0, 3) || []}
-        onClickRow={(_, r: DelegationPool) =>
-          history.push(routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`))
-        }
+        onClickRow={(_, r: DelegationPool) => history.push(details.delegation(r.poolId))}
       />
     </TopDelegateContainer>
   );
