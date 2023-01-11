@@ -43,14 +43,9 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       key: "balance",
       minWidth: "200px",
       render: r => (
-        <CustomTooltip
-          placement="top"
-          width="min-content"
-          title={formatADAFull(r?.quantity ? r.quantity * 1000000 : 0)}
-        >
+        <CustomTooltip placement="top" title={formatADAFull(r?.quantity ? r.quantity * 1000000 : 0)}>
           <PriceValue>
             <SmallText>{formatADA(r?.quantity ? r.quantity * 1000000 : 0) || 0}</SmallText>
-            {/* <PriceIcon src={AIcon} alt="a icon" /> */}
           </PriceValue>
         </CustomTooltip>
       ),

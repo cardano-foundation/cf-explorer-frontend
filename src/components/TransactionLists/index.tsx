@@ -48,8 +48,8 @@ const columns: Column<Transactions>[] = [
     key: "fee",
     minWidth: 120,
     render: r => (
-      <CustomTooltip placement="top" width="min-content" title={formatADAFull(r.fee)}>
-        <Box display="flex" alignItems="center">
+      <CustomTooltip placement="top" title={formatADAFull(r.fee)}>
+        <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADA(r.fee) || 0}</Box>
           <img src={AIcon} alt="a icon" />
         </Box>
@@ -61,8 +61,8 @@ const columns: Column<Transactions>[] = [
     minWidth: 120,
     key: "ouput",
     render: r => (
-      <CustomTooltip placement="top" width="min-content" title={formatADAFull(r.totalOutput)}>
-        <Box display="flex" alignItems="center">
+      <CustomTooltip placement="top" title={formatADAFull(r.totalOutput)}>
+        <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
           <img src={AIcon} alt="a icon" />
         </Box>

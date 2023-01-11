@@ -66,7 +66,7 @@ const columns: Column<BlockDetail>[] = [
     key: "outSum",
     minWidth: "100px",
     render: r => (
-      <CustomTooltip placement="top" width="min-content" title={formatADAFull(r.totalFees)}>
+      <CustomTooltip placement="top" title={formatADAFull(r.totalFees)}>
         <StyledOutput>
           <StyledColorBlueDard>{formatADA(r.totalFees) || 0}</StyledColorBlueDard>
           <img src={AIcon} alt="ADA Icon" />

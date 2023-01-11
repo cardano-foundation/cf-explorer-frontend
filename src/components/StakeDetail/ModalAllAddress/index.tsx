@@ -46,7 +46,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
       title: "Balance",
       minWidth: 80,
       render: (r, idx) => (
-        <CustomTooltip placement="top" width="min-content" title={formatADAFull(r.balance)}>
+        <CustomTooltip placement="top" title={formatADAFull(r.balance)}>
           <Box component={"span"}>{formatADA(r.balance || 0)}</Box>
         </CustomTooltip>
       ),

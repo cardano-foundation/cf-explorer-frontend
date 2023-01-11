@@ -48,7 +48,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     key: "totalSupply",
     minWidth: "150px",
     render: r => (
-      <CustomTooltip placement="top" width="min-content" title={formatADAFull(r?.supply ? +r.supply * 10 ** 6 : "")}>
+      <CustomTooltip placement="top" title={formatADAFull(r?.supply ? +r.supply * 10 ** 6 : "")}>
         <Box component={"span"}>{formatADA(r?.supply ? +r.supply * 10 ** 6 : "")}</Box>
       </CustomTooltip>
     ),
@@ -93,11 +93,7 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     key: "Balance",
     minWidth: "150px",
     render: r => (
-      <CustomTooltip
-        placement="top"
-        width="min-content"
-        title={formatADAFull(r?.quantity ? +r.quantity * 10 ** 6 : "")}
-      >
+      <CustomTooltip placement="top" title={formatADAFull(r?.quantity)}>
         <Box component={"span"}>{formatADA(r.quantity ? r.quantity * 10 ** 6 : "")}</Box>
       </CustomTooltip>
     ),

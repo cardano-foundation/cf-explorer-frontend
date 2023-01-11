@@ -1,4 +1,4 @@
-import { Select, styled } from "@mui/material";
+import { Box, Select, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledSelect = styled(Select)`
@@ -51,10 +51,10 @@ export const SmallText = styled("small")`
   margin-bottom: 5px;
 `;
 
-export const PriceValue = styled(Flex)`
+export const PriceValue = styled(Box)`
+  display: inline-flex;
   align-items: center;
 `;
- 
 
 export const Label = styled(SmallText)`
   min-width: 50px;

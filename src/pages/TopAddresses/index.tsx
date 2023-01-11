@@ -40,8 +40,8 @@ const TopAddresses: React.FC<Props> = () => {
       key: "balance",
       minWidth: 60,
       render: r => (
-        <CustomTooltip placement="top" width="min-content" title={formatADAFull(r.balance)}>
-          <Box display="flex" alignItems="center">
+        <CustomTooltip placement="top" title={formatADAFull(r.balance)}>
+          <Box display="inline-flex" alignItems="center">
             <Box mr={1}>{formatBalanceWithDecimal(r.balance || 0, 5)}</Box>
             <img src={AIcon} alt="a icon" />
           </Box>

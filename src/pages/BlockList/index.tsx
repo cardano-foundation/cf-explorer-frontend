@@ -51,7 +51,7 @@ const BlockList = () => {
       title: "Fees",
       key: "fees",
       render: r => (
-        <CustomTooltip placement="top" width="min-content" title={formatADAFull(r.totalFees)}>
+        <CustomTooltip placement="top" title={formatADAFull(r.totalFees)}>
           <PriceWrapper>
             {formatADA(r.totalFees) || 0}
             <img src={AIcon} alt="ADA Icon" />
@@ -64,7 +64,7 @@ const BlockList = () => {
       key: "output",
       minWidth: "100px",
       render: r => (
-        <CustomTooltip placement="top" width="min-content" title={formatADAFull(r.totalOutput)}>
+        <CustomTooltip placement="top" title={formatADAFull(r.totalOutput)}>
           <PriceWrapper>
             {formatADA(r.totalOutput) || 0}
             <img src={AIcon} alt="ADA Icon" />

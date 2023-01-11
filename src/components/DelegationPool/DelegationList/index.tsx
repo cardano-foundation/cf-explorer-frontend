@@ -32,7 +32,7 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     key: "PoolsizeA",
     minWidth: "120px",
     render: r => (
-      <CustomTooltip placement="top" width="min-content" title={formatADAFull(r.poolSize)}>
+      <CustomTooltip placement="top" title={formatADAFull(r.poolSize)}>
         <Box component={"span"}>{formatADA(r.poolSize)}</Box>
       </CustomTooltip>
     ),
@@ -54,7 +54,7 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     key: "Declared",
     minWidth: "120px",
     render: r => (
-      <CustomTooltip placement="top" width="min-content" title={formatADAFull(r.pledge)}>
+      <CustomTooltip placement="top" title={formatADAFull(r.pledge)}>
         <Box component={"span"}>{formatADA(r.pledge)}</Box>
       </CustomTooltip>
     ),

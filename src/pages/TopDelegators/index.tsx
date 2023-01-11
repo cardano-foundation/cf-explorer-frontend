@@ -47,7 +47,7 @@ const TopDelegators = () => {
       title: "Stake amount",
       key: "Stakeamount",
       render: (r, idx) => (
-        <CustomTooltip placement="top" width="min-content" title={formatADAFull(r.balance)}>
+        <CustomTooltip placement="top" title={formatADAFull(r.balance)}>
           <Box component={"span"}>
             {formatADA(r.balance || 0)} <ADAToken />
           </Box>

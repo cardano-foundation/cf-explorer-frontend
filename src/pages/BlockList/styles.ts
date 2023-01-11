@@ -15,7 +15,7 @@ export const StyledImage = styled("img")`
 `;
 
 export const PriceWrapper = styled(StyledColorBlueDard)`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
 `;

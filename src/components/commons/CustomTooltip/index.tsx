@@ -1,7 +1,7 @@
 import { Tooltip, TooltipProps } from "@mui/material";
 
-export const CustomTooltip = (props: TooltipProps & { width?: string }) => {
-  const { width, componentsProps, placement, ...otherProps } = props;
+export const CustomTooltip = (props: TooltipProps) => {
+  const { componentsProps, placement, ...otherProps } = props;
   return (
     <Tooltip
       arrow
@@ -30,7 +30,6 @@ export const CustomTooltip = (props: TooltipProps & { width?: string }) => {
           },
         },
       }}
-      style={{ width: width ? width : "" }}
       {...otherProps}
     />
   );
