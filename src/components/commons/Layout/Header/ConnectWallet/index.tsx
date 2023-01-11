@@ -1,9 +1,8 @@
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { Box } from "@mui/material";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { WalletIcon } from "../../../../../commons/resources";
-import authAxios from "../../../../../commons/utils/authAxios";
 import { RootState } from "../../../../../stores/types";
 import { setModalRegister, setOpenModal } from "../../../../../stores/user";
 import ConnectedProfileOption from "../../../ConnectedProfileOption";
@@ -11,6 +10,8 @@ import ConnectWalletModal from "../../../ConnectWalletModal";
 import RegisterUsernameModal from "../RegisterUsernameModal";
 import { Image, Span, Spin, StyledButton } from "./styles";
 import BigNumber from "bignumber.js";
+import { removeAuthInfo } from "../../../../../commons/utils/helper";
+import { defaultAxios } from "../../../../../commons/utils/axios";
 interface Props {}
 
 const ConnectWallet: React.FC<Props> = () => {
@@ -24,9 +25,14 @@ const ConnectWallet: React.FC<Props> = () => {
     setOpenModal(!openModal);
   };
 
+  useEffect(() => {
+    disconnect();
+    removeAuthInfo();
+  }, [network, disconnect]);
+
   const getNonceValue = useCallback(async () => {
     try {
-      const response = await authAxios.get("user/get-nonce", { params: { address: stakeAddress } });
+      const response = await defaultAxios.get("user/get-nonce", { params: { address: stakeAddress } });
       const converted = new BigNumber(response.data.toString());
       return converted.toString();
     } catch (error: any) {
@@ -44,7 +50,7 @@ const ConnectWallet: React.FC<Props> = () => {
         signature,
         ipAddress: "testip",
       };
-      const response = await authAxios.post("auth/sign-in", payload);
+      const response = await defaultAxios.post("auth/sign-in", payload);
       const data = response.data;
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);

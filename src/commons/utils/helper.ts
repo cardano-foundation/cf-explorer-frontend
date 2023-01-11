@@ -1,7 +1,5 @@
-import { NetworkType } from "@cardano-foundation/cardano-connect-with-wallet";
 import BigNumber from "bignumber.js";
 import { parse } from "qs";
-import { SupportedWallets } from "../../types/user";
 import { NETWORKS } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
@@ -154,4 +152,12 @@ export const formatADAFull = (
 
   const formated = Ada.toString().match(/^-?\d+(?:\.\d{0,5})?/);
   return numberWithCommas(formated ? formated[0] : "0");
+};
+
+export const removeAuthInfo = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("username");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("walletId");
+  localStorage.removeItem("email");
 };
