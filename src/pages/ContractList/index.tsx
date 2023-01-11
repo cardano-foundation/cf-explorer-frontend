@@ -4,7 +4,7 @@ import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { exchangeADAToUSD, formatADA, formatADAFull, getPageInfo, getShortHash } from "../../commons/utils/helper";
+import { exchangeADAToUSD, formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
@@ -21,7 +21,6 @@ const Transactions: React.FC = () => {
 
   const fetchData = useFetchList<Contracts>("contracts", pageInfo);
   const { adaRate } = useSelector(({ system }: RootState) => system);
-
   const columns: Column<Contracts>[] = [
     {
       title: "#",
@@ -37,7 +36,7 @@ const Transactions: React.FC = () => {
       render: r => (
         <div>
           <CustomTooltip title={r.address} placement="top">
-            <StyledLink to={details.contract(r.address)}>{getShortHash(r.address)}</StyledLink>
+            <StyledLink to={details.contract(r.address)}>{getShortWallet(r.address)}</StyledLink>
           </CustomTooltip>
         </div>
       ),

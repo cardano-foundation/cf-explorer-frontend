@@ -123,6 +123,7 @@ export const getPageInfo = (search: string): { page: number; size: number } => {
 };
 
 export const exchangeADAToUSD = (value: number | string, rate: number) => {
+  console.log("🚀 ~ file: helper.ts:124 ~ exchangeADAToUSD ~ rate", rate)
   if (!value) return 0;
   const Ada = +value / 1000000;
   const bigValue = new BigNumber(Ada.toString());

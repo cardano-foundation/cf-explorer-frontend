@@ -44,6 +44,7 @@ import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
+import { Box } from "@mui/material";
 
 type DetailViewBlockProps = {
   blockNo: number;
@@ -215,7 +216,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               </DetailLabel>
               <DetailValue>
                 <CustomTooltip placement="top" title={data.slotLeader}>
-                  <StyledLink to={details.address(data.slotLeader)}>{getShortWallet(data.slotLeader)}</StyledLink>
+                  <Box component={"span"}>{getShortWallet(data.slotLeader)}</Box>
                 </CustomTooltip>
                 <CopyButton text={data.slotLeader} />
               </DetailValue>
