@@ -106,7 +106,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
     <Box>
       <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
         <Box>
-          <BackButton to={routers.STAKE_LIST}>
+          <BackButton to={routers.STAKE_LIST.replace(":poolType?", "registration")}>
             <HiArrowLongLeft />
             <BackText>Back</BackText>
           </BackButton>
