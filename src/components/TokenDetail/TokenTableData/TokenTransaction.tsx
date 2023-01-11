@@ -5,7 +5,7 @@ import moment from "moment";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
-import { formatADA, getPageInfo, getShortHash, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
 import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -87,10 +87,12 @@ const columns: Column<Transactions>[] = [
     key: "fee",
     minWidth: "120px",
     render: r => (
-      <PriceValue>
-        <SmallText>{formatADA(r.fee) || 0}</SmallText>
-        <PriceIcon src={AIcon} alt="a icon" />
-      </PriceValue>
+      <CustomTooltip placement="top" title={formatADAFull(r.fee)}>
+        <PriceValue>
+          <SmallText>{formatADA(r.fee) || 0}</SmallText>
+          <PriceIcon src={AIcon} alt="a icon" />
+        </PriceValue>
+      </CustomTooltip>
     ),
   },
   {
@@ -98,10 +100,12 @@ const columns: Column<Transactions>[] = [
     minWidth: "120px",
     key: "ouput",
     render: r => (
-      <PriceValue>
-        <SmallText>{formatADA(r.totalOutput) || 0}</SmallText>
-        <PriceIcon src={AIcon} alt="a icon" />
-      </PriceValue>
+      <CustomTooltip placement="top" title={formatADAFull(r.totalOutput)}>
+        <PriceValue>
+          <SmallText>{formatADA(r.totalOutput) || 0}</SmallText>
+          <PriceIcon src={AIcon} alt="a icon" />
+        </PriceValue>
+      </CustomTooltip>
     ),
   },
 ];

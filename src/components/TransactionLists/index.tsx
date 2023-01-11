@@ -3,7 +3,7 @@ import { stringify } from "qs";
 import { Box } from "@mui/material";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { formatADA, getPageInfo, getShortHash } from "../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, getShortHash } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
@@ -48,10 +48,12 @@ const columns: Column<Transactions>[] = [
     key: "fee",
     minWidth: 120,
     render: r => (
-      <Box display="flex" alignItems="center">
-        <Box mr={1}>{formatADA(r.fee) || 0}</Box>
-        <img src={AIcon} alt="a icon" />
-      </Box>
+      <CustomTooltip placement="top" title={formatADAFull(r.fee)}>
+        <Box display="inline-flex" alignItems="center">
+          <Box mr={1}>{formatADA(r.fee) || 0}</Box>
+          <img src={AIcon} alt="a icon" />
+        </Box>
+      </CustomTooltip>
     ),
   },
   {
@@ -59,10 +61,12 @@ const columns: Column<Transactions>[] = [
     minWidth: 120,
     key: "ouput",
     render: r => (
-      <Box display="flex" alignItems="center">
-        <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
-        <img src={AIcon} alt="a icon" />
-      </Box>
+      <CustomTooltip placement="top" title={formatADAFull(r.totalOutput)}>
+        <Box display="inline-flex" alignItems="center">
+          <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
+          <img src={AIcon} alt="a icon" />
+        </Box>
+      </CustomTooltip>
     ),
   },
 ];
