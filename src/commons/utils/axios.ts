@@ -2,6 +2,7 @@ import axios from "axios";
 import jsonBig from "json-bigint";
 
 export const API_URL = process.env.REACT_APP_API_URL;
+export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL;
 export const COINGECKO_URL = "https://api.coingecko.com/api/v3/";
 
 const getToken = () => {
@@ -18,9 +19,19 @@ const defaultAxios = axios.create({
   transformResponse: function (response) {
     return jsonBig().parse(response);
   },
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-defaultAxios.interceptors.request.use(
+const authAxios = axios.create({
+  baseURL: AUTH_API_URL,
+  transformResponse: function (response) {
+    return jsonBig().parse(response);
+  },
+});
+
+authAxios.interceptors.request.use(
   config => {
     const token = getToken();
     if (!config.headers) config.headers = {};
@@ -34,7 +45,7 @@ defaultAxios.interceptors.request.use(
 );
 
 const uploadAxios = axios.create({
-  baseURL: API_URL,
+  baseURL: AUTH_API_URL,
 });
 
 uploadAxios.interceptors.request.use(
@@ -49,6 +60,6 @@ uploadAxios.interceptors.request.use(
     Promise.reject(error);
   }
 );
-export { defaultAxios, uploadAxios };
+export { authAxios, uploadAxios, defaultAxios };
 
-export default defaultAxios;
+export default authAxios;

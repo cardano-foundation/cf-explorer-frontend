@@ -1,10 +1,11 @@
-import { Tooltip } from "@mui/material";
+import { Tooltip, Box } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details } from "../../commons/routers";
-import { formatADA, getShortWallet } from "../../commons/utils/helper";
+import { formatADA, formatADAFull, getShortWallet } from "../../commons/utils/helper";
 
 import Card from "../../components/commons/Card";
+import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table from "../../components/commons/Table";
 import { ADAToken } from "../../components/commons/Token";
 import { Column } from "../../types/table";
@@ -46,9 +47,11 @@ const TopDelegators = () => {
       title: "Stake amount",
       key: "Stakeamount",
       render: (r, idx) => (
-        <>
-          {formatADA(r.balance || 0)} <ADAToken />
-        </>
+        <CustomTooltip placement="top" title={formatADAFull(r.balance)}>
+          <Box component={"span"}>
+            {formatADA(r.balance || 0)} <ADAToken />
+          </Box>
+        </CustomTooltip>
       ),
     },
   ];
@@ -56,7 +59,7 @@ const TopDelegators = () => {
     <StyledContainer>
       <Card title="Top 50 delegators">
         <Table
-          onClickRow={(_, r) => history.push(details.stake(r.stakeKey))}
+          onClickRow={(_, r) => history.push(details.address(r.stakeKey))}
           data={data}
           error={error}
           loading={loading}

@@ -7,7 +7,7 @@ import { useWindowSize } from "react-use";
 import { Column } from "../../types/table";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { details } from "../../commons/routers";
-import { formatADA, getPageInfo, getShortHash } from "../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, getShortHash } from "../../commons/utils/helper";
 import { Box } from "@mui/material";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { AIcon } from "../../commons/resources";
@@ -51,10 +51,12 @@ const BlockList = () => {
       title: "Fees",
       key: "fees",
       render: r => (
-        <PriceWrapper>
-          {formatADA(r.totalFees) || 0}
-          <img src={AIcon} alt="ADA Icon" />
-        </PriceWrapper>
+        <CustomTooltip placement="top" title={formatADAFull(r.totalFees)}>
+          <PriceWrapper>
+            {formatADA(r.totalFees) || 0}
+            <img src={AIcon} alt="ADA Icon" />
+          </PriceWrapper>
+        </CustomTooltip>
       ),
     },
     {
@@ -62,15 +64,17 @@ const BlockList = () => {
       key: "output",
       minWidth: "100px",
       render: r => (
-        <PriceWrapper>
-          {formatADA(r.totalOutput) || 0}
-          <img src={AIcon} alt="ADA Icon" />
-          {block === r.blockNo && (
-            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
-              <MdOutlineKeyboardArrowRight fontSize={30} />
-            </Box>
-          )}
-        </PriceWrapper>
+        <CustomTooltip placement="top" title={formatADAFull(r.totalOutput)}>
+          <PriceWrapper>
+            {formatADA(r.totalOutput) || 0}
+            <img src={AIcon} alt="ADA Icon" />
+            {block === r.blockNo && (
+              <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
+                <MdOutlineKeyboardArrowRight fontSize={30} />
+              </Box>
+            )}
+          </PriceWrapper>
+        </CustomTooltip>
       ),
     },
   ];

@@ -19,7 +19,7 @@ export const StyledAddress = styled(Link)`
 `;
 
 export const StyledOutput = styled("div")`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
 `;

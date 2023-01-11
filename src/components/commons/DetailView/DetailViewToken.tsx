@@ -172,7 +172,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
               </TokenTotalSupply>
               <TokenDecimal>
                 <TokenInfoLabel>Decimal</TokenInfoLabel>
-                {data?.metadata?.decimals && <TokenInfoValue>{data?.metadata?.decimals}</TokenInfoValue>}
+                <TokenInfoValue>{data?.metadata?.decimals || 0}</TokenInfoValue>
               </TokenDecimal>
             </TokenHeaderInfo>
           </TokenContainer>

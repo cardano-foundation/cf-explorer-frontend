@@ -1,7 +1,9 @@
 import BigNumber from "bignumber.js";
 import { parse } from "qs";
+import { NETWORKS } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
+export const alphaNumeric = /[^0-9a-zA-Z]/;
 export const getShortWallet = (address: string) => {
   return `${address.slice(0, 5)}...${address.slice(-5)}`;
 };
@@ -121,11 +123,25 @@ export const getPageInfo = (search: string): { page: number; size: number } => {
 };
 
 export const exchangeADAToUSD = (value: number | string, rate: number) => {
+  console.log("🚀 ~ file: helper.ts:124 ~ exchangeADAToUSD ~ rate", rate)
   if (!value) return 0;
   const Ada = +value / 1000000;
   const bigValue = new BigNumber(Ada.toString());
   const exchangedValue = bigValue.multipliedBy(rate).toString();
   return formatPrice(exchangedValue);
+};
+
+export const getConvertedNetwork = (value: keyof typeof NETWORKS) => {
+  switch (value) {
+    case "mainnet":
+      return "MAIN_NET";
+    case "preprod":
+      return "PRE_PROD";
+    case "preview":
+      return "PREVIEW";
+    default:
+      return "TEST_NET";
+  }
 };
 
 export const formatADAFull = (
@@ -135,6 +151,15 @@ export const formatADAFull = (
   if (!value) return `0${abbreviations[0]}`;
   const Ada = +value / 1000000;
 
-  const formated = Ada.toString().match(/^-?\d+(?:\.\d{0,5})?/);
-  return numberWithCommas(formated ? formated[0] : "0");
+  // const formated = Ada.toString().match(/^-?\d+(?:\.\d{0,5})?/);
+  // return numberWithCommas(formated ? formated[0] : "0");
+  return numberWithCommas(Ada || "0");
+};
+
+export const removeAuthInfo = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("username");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("walletId");
+  localStorage.removeItem("email");
 };

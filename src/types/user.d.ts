@@ -26,4 +26,5 @@ export declare interface UserStoreType {
   network: keyof typeof NETWORKS;
   sidebar: boolean;
   onDetailView: boolean;
+  modalRegister: boolean;
 }
