@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Skeleton, Box, Pagination, PaginationRenderItemParams, IconButton, MenuItem } from "@mui/material";
+import { Skeleton, Box, Pagination, PaginationRenderItemParams, IconButton, MenuItem, styled } from "@mui/material";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
 import { EmptyIcon } from "../../../commons/resources";
 import { ReactComponent as StartPage } from "../../../commons/resources/icons/startPagePagination.svg";
@@ -125,7 +125,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
               <MenuItem value={20}>20</MenuItem>
               <MenuItem value={50}>50</MenuItem>
             </SelectMui>
-            <Box component={"span"} ml={1}>
+            <Box component={"span"} ml={1} fontSize="0.875rem">
               Per page
             </Box>
           </Box>
@@ -133,7 +133,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
           ""
         )}
         {total ? (
-          <Total ml={2}>
+          <Total ml={2} fontSize="0.875rem" lineHeight={"1 !important"}>
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> Results
           </Total>
         ) : (
@@ -229,7 +229,7 @@ const PaginationCustom = ({
             setInputPage(1);
           }}
         >
-          <StartPage />
+          <StartPageIcon disabled={page === 1} />
         </IconButton>
       );
     }
@@ -242,7 +242,7 @@ const PaginationCustom = ({
             setInputPage(totalPage || 1);
           }}
         >
-          <EndPage />
+          <EndPageIcon disabled={page === totalPage} />
         </IconButton>
       );
     }
@@ -255,7 +255,7 @@ const PaginationCustom = ({
             handleChangePage(null, page + 1);
           }}
         >
-          <NextPage />
+          <NextPageIcon disabled={page === totalPage} />
         </IconButton>
       );
     }
@@ -268,7 +268,7 @@ const PaginationCustom = ({
             handleChangePage(null, page - 1);
           }}
         >
-          <PrevPage />
+          <PrevPageIcon disabled={page === 1} />
         </IconButton>
       );
     }
@@ -294,8 +294,9 @@ const PaginationCustom = ({
                 }
               }}
             />
-            <Box component={"span"} color={props => props.textColorPale}>
-              {(page - 1) * size + 1} - {page * size > total ? total : page * size} of {pagination?.total || 0}
+            <Box component={"span"} color={props => props.textColorPale} fontSize="0.875rem">
+              {(page - 1 >= 0 ? page - 1 : -0) * size + 1} -{" "}
+              {(page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size} of {pagination?.total || 0}
             </Box>
           </Box>
         );
@@ -306,3 +307,16 @@ const PaginationCustom = ({
     <Pagination count={total || 0} page={page} showFirstButton={true} showLastButton={true} renderItem={renderItem} />
   );
 };
+
+const StartPageIcon = styled(StartPage)(({ disabled }: { disabled: boolean }) => ({
+  stroke: disabled ? "#66708566" : "#667085",
+}));
+const EndPageIcon = styled(EndPage)(({ disabled }: { disabled: boolean }) => ({
+  stroke: disabled ? "#66708566" : "#667085",
+}));
+const NextPageIcon = styled(NextPage)(({ disabled }: { disabled: boolean }) => ({
+  stroke: disabled ? "#66708566" : "#667085",
+}));
+const PrevPageIcon = styled(PrevPage)(({ disabled }: { disabled: boolean }) => ({
+  stroke: disabled ? "#66708566" : "#667085",
+}));

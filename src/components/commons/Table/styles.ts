@@ -103,7 +103,7 @@ export const TableFullWidth = styled("table")`
 
 export const InputNumber = styled("input")(({ theme, length }: { length: number; theme?: Theme }) => ({
   width: length + "ch !important",
-  padding: theme?.spacing(1),
+  padding: `4px ${theme?.spacing(1)}`,
   marginRight: theme?.spacing(1),
   borderRadius: 4,
   textAlign: "center",
