@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import Card from "../../commons/Card";
 import Table, { Column } from "../../commons/Table";
-import { formatADA, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
 import { StyledLink, StyledOutput, StyledColorBlueDard, StyledContainer, StyledAddress } from "./styles";
@@ -66,10 +66,12 @@ const columns: Column<BlockDetail>[] = [
     key: "outSum",
     minWidth: "100px",
     render: r => (
-      <StyledOutput>
-        <StyledColorBlueDard>{formatADA(r.totalFees) || 0}</StyledColorBlueDard>
-        <img src={AIcon} alt="ADA Icon" />
-      </StyledOutput>
+      <CustomTooltip placement="top" title={formatADAFull(r.totalFees)}>
+        <StyledOutput>
+          <StyledColorBlueDard>{formatADA(r.totalFees) || 0}</StyledColorBlueDard>
+          <img src={AIcon} alt="ADA Icon" />
+        </StyledOutput>
+      </CustomTooltip>
     ),
   },
 ];

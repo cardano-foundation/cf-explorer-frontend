@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
-import { formatADA, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { PriceValue, SmallText, StyledLink } from "./styles";
@@ -43,10 +43,11 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       key: "balance",
       minWidth: "200px",
       render: r => (
-        <PriceValue>
-          <SmallText>{formatADA(r?.quantity ? r.quantity * 1000000 : 0) || 0}</SmallText>
-          {/* <PriceIcon src={AIcon} alt="a icon" /> */}
-        </PriceValue>
+        <CustomTooltip placement="top" title={formatADAFull(r?.quantity ? r.quantity * 1000000 : 0)}>
+          <PriceValue>
+            <SmallText>{formatADA(r?.quantity ? r.quantity * 1000000 : 0) || 0}</SmallText>
+          </PriceValue>
+        </CustomTooltip>
       ),
     },
     {

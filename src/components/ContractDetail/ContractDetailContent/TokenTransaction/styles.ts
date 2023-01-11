@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Bold = styled("span")`
@@ -23,10 +23,10 @@ export const SmallText = styled("small")`
   margin-bottom: 5px;
 `;
 
-export const PriceValue = styled(Flex)`
+export const PriceValue = styled(Box)`
+  display: inline-flex;
   align-items: center;
 `;
- 
 
 export const Label = styled(SmallText)`
   min-width: 50px;
@@ -38,4 +38,3 @@ export const PriceIcon = styled("img")`
   margin-left: 8px;
   margin-bottom: 5px;
 `;
-
