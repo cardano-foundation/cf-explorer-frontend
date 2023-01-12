@@ -74,9 +74,9 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
               <div>
                 {r.addressesInput.slice(0, 1).map((tx, key) => {
                   return (
-                    <Tooltip key={key} title={tx} placement="top">
+                    <CustomTooltip key={key} title={tx} placement="top">
                       <StyledLink to={details.address(tx)}>{getShortWallet(tx)}</StyledLink>
-                    </Tooltip>
+                    </CustomTooltip>
                   );
                 })}
                 {r.addressesInput.length > 1 && <StyledLink to={details.transaction(r.hash)}> ...</StyledLink>}
@@ -87,9 +87,9 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
               <div>
                 {r.addressesOutput.slice(0, 1).map((tx, key) => {
                   return (
-                    <Tooltip key={key} title={tx}>
+                    <CustomTooltip key={key} title={tx}>
                       <StyledLink to={details.address(tx)}>{getShortWallet(tx)}</StyledLink>
-                    </Tooltip>
+                    </CustomTooltip>
                   );
                 })}
                 {r.addressesOutput.length > 1 && <StyledLink to={details.transaction(r.hash)}> ...</StyledLink>}
@@ -105,7 +105,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       minWidth: 120,
       render: r => (
         <CustomTooltip title={numberWithCommas(new BigNumber(r.fee).div(10 ** 6).toString())}>
-          <Box display="flex" alignItems="center">
+          <Box display="inline-flex" alignItems="center">
             <Box mr={1}>{formatADA(r.fee) || 0}</Box>
             <img src={AIcon} alt="a icon" />
           </Box>
@@ -118,7 +118,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       key: "ouput",
       render: r => (
         <CustomTooltip title={numberWithCommas(new BigNumber(r.totalOutput).div(10 ** 6).toString())}>
-          <Box display="flex" alignItems="center">
+          <Box display="inline-flex" alignItems="center">
             <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
             <img src={AIcon} alt="a icon" />
           </Box>

@@ -1,4 +1,5 @@
 import { Container, styled } from "@mui/material";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { NotFoundIcon } from "../../commons/resources";
 import { routers } from "../../commons/routers";
@@ -43,6 +44,11 @@ const BackToHome = styled(Link)`
 `;
 
 const NotFound = () => {
+
+  useEffect(() => { 
+    document.title = `Page Not Found | Cardano Explorer`;
+  }, []);
+  
   return (
     <NotFoundContainer>
       <Image src={NotFoundIcon} alt="404" />

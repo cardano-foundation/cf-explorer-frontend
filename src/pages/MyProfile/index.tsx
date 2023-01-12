@@ -1,15 +1,17 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ReactComponent as SettingIcon } from "../../commons/resources/icons/setting.svg";
 import { ReactComponent as FileSearch } from "../../commons/resources/icons/file-search.svg";
 import { TabTitle, WrapTab } from "./styles";
 import OverviewTab from "../../components/Account/OverviewTab";
 import AccountSettingTab from "../../components/Account/AccountSettingTab";
 
-const ContractDetailContent: React.FC = () => {
+const MyProfile: React.FC = () => {
   const [tabActive, setTabActive] = useState<"overview" | "setting">("overview");
-
+  useEffect(() => {
+    document.title = `My Profile | Cardano Explorer`;
+  }, []);
   const handleChange = (event: React.SyntheticEvent, tab: "overview" | "setting") => {
     setTabActive(tab);
   };
@@ -54,7 +56,11 @@ const ContractDetailContent: React.FC = () => {
         </TabList>
       </Box>
       {tabs.map(item => (
-        <TabPanel sx={{ padding: "25px 0", borderTop: "1px solid rgba(24, 76, 120, 0.1)" }} key={item.key} value={item.key}>
+        <TabPanel
+          sx={{ padding: "25px 0", borderTop: "1px solid rgba(24, 76, 120, 0.1)" }}
+          key={item.key}
+          value={item.key}
+        >
           {item.children}
         </TabPanel>
       ))}
@@ -62,4 +68,4 @@ const ContractDetailContent: React.FC = () => {
   );
 };
 
-export default ContractDetailContent;
+export default MyProfile;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
@@ -14,6 +14,10 @@ interface Props {}
 const TopAddresses: React.FC<Props> = () => {
   const history = useHistory();
   const { error, data, initialized, loading } = useFetchList<Contracts>("address/top-addresses", { page: 0, size: 50 });
+
+  useEffect(() => {
+    document.title = `Top Addresses | Cardano Explorer`;
+  }, []);
 
   const columns: Column<Address>[] = [
     {

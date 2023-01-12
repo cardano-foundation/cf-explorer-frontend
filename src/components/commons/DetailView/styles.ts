@@ -239,7 +239,7 @@ export const DelegatedDetail = styled("small")`
   overflow: hidden;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text) !important;
-  width: 250px;
+  max-width: 250px;
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: right;

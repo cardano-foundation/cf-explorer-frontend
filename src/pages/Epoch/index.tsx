@@ -1,5 +1,5 @@
 import { stringify } from "qs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import moment from "moment";
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -70,6 +70,11 @@ const Epoch: React.FC = () => {
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<IDataEpoch>(`epoch/list`, pageInfo);
 
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Epochs List | Cardano Explorer`;
+  }, []);
+  
   const openDetail = (_: any, r: IDataEpoch, index: number) => {
     if (width > 1023) {
       setOnDetailView(true);

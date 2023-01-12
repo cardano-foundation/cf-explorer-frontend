@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
@@ -21,6 +21,11 @@ const Transactions: React.FC = () => {
 
   const fetchData = useFetchList<Contracts>("contracts", pageInfo);
   const { adaRate } = useSelector(({ system }: RootState) => system);
+
+  useEffect(() => { 
+    document.title = `Contracts List | Cardano Explorer`;
+  }, []);
+  
   const columns: Column<Contracts>[] = [
     {
       title: "#",

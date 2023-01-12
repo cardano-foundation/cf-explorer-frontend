@@ -16,9 +16,7 @@ const RowItem: React.FC<TRowItem> = ({ label, value, errorMsg, onChangeValue, ac
       <StyledLabel>{label}</StyledLabel>
       <StyledRowItem>
         <StyledInput value={value} onChange={onChangeValue} placeholder={label} />
-        <IconButton>
-          <StyledButton onClick={action}>Change</StyledButton>
-        </IconButton>
+        <StyledButton onClick={action}>Change</StyledButton>
       </StyledRowItem>
       <StyledHelper>{errorMsg}</StyledHelper>
     </WrapRowItem>

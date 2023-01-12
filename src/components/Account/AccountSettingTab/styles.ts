@@ -34,7 +34,7 @@ export const StyledInput = styled(InputBase)`
 
 export const StyledButton = styled(Button)`
   height: 40px;
-  margin: 0;
+  margin-left: 10px;
   padding: 0 20px;
   font-size: 14px;
   font-weight: bold;

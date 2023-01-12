@@ -4,6 +4,7 @@ import BlockOverview from "../../components/BlockDetail/BlockOverview";
 import useFetch from "../../commons/hooks/useFetch";
 import { StyledContainer } from "./styles";
 import NoRecord from "../../components/commons/NoRecord";
+import { useEffect } from "react";
 
 const BlockDetail = () => {
   const { blockId } = useParams<{ blockId: string }>();
@@ -13,6 +14,11 @@ const BlockDetail = () => {
     state?.data
   );
 
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Block ${blockId} | Cardano Explorer`;
+  }, []);
+  
   if ((initialized && !data) || error) return <NoRecord />;
 
   return (
