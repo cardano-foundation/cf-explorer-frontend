@@ -4,7 +4,17 @@ import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import { Box, Skeleton } from "@mui/material";
 import { EmptyIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
-import { AddressGroup, CardItem, ItemDetail, LabelItem, RowItem, TitleDetail, TokenAddress, ValueItem } from "./styles";
+import {
+  AddressGroup,
+  AddressLink,
+  CardItem,
+  ItemDetail,
+  LabelItem,
+  RowItem,
+  TitleDetail,
+  TokenAddress,
+  ValueItem,
+} from "./styles";
 
 interface DetailCardProps {
   title: string;
@@ -35,7 +45,11 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
     <CardItem padding={props => props.spacing(4)}>
       <TitleDetail>{title}</TitleDetail>
       <AddressGroup>
-        <TokenAddress to={addressDestination ? addressDestination : details.address(address)}>{address}</TokenAddress>
+        {type === "left" ? (
+          <TokenAddress>{address}</TokenAddress>
+        ) : (
+          <AddressLink to={addressDestination || details.address(address)}>{address}</AddressLink>
+        )}
         <CopyButton text={address} />
       </AddressGroup>
       <Box>
