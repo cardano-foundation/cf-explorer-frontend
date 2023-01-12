@@ -57,11 +57,10 @@ const HomeStatistic: React.FC<Props> = () => {
   const activeRate = new BigNumber(liveStake).div(activeStake).minus(1).multipliedBy(100);
   const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
   const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
-  console.log({ data });
 
   return (
     <StatisticContainer container spacing={2}>
-      <Grid item xl lg={3} md={4} xs={6}>
+      <Grid item xl lg={3} sm={6} xs={12}>
         {!usdMarket || !btcMarket.data?.[0] ? (
           <SkeletonBox />
         ) : (
@@ -77,7 +76,7 @@ const HomeStatistic: React.FC<Props> = () => {
           </Item>
         )}
       </Grid>
-      <Grid item xl lg={3} md={4} xs={6}>
+      <Grid item xl lg={3} sm={6} xs={12}>
         {!usdMarket ? (
           <SkeletonBox />
         ) : (
@@ -90,7 +89,7 @@ const HomeStatistic: React.FC<Props> = () => {
           </Item>
         )}
       </Grid>
-      <Grid item xl lg={3} md={4} xs={6}>
+      <Grid item xl lg={3} sm={6} xs={12}>
         {!currentEpoch ? (
           <SkeletonBox />
         ) : (
@@ -114,7 +113,7 @@ const HomeStatistic: React.FC<Props> = () => {
           </Link>
         )}
       </Grid>
-      <Grid item xl lg={3} md={4} xs={6}>
+      <Grid item xl lg={3} sm={6} xs={12}>
         {!data || !usdMarket ? (
           <SkeletonBox />
         ) : (

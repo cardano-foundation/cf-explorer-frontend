@@ -18,7 +18,7 @@ const EpochDetail: React.FC = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Epoch ${epochId} | Cardano Explorer`;
-  }, []);
+  }, [epochId]);
 
   if ((initialized && !data) || error) return <NoRecord />;
 

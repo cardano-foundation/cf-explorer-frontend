@@ -14,7 +14,7 @@ const TokenDetail: React.FC = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Token ${tokenId} | Cardano Explorer`;
-  }, []);
+  }, [tokenId]);
 
   if ((initialized && !data) || error) return <NoRecord />;
 

@@ -15,7 +15,7 @@ const columns: Column<DelegationHistory>[] = [
     key: "hash",
     minWidth: "120px",
     render: r => (
-      <CustomTooltip title={r.txHash || ""} placement="top">
+      <CustomTooltip title={r.txHash || ""}>
         <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash || "")}</StyledLink>
       </CustomTooltip>
     ),
@@ -44,7 +44,7 @@ const columns: Column<DelegationHistory>[] = [
     key: "poolId",
     minWidth: "120px",
     render: r => (
-      <CustomTooltip title={r.poolId || ""} placement="top">
+      <CustomTooltip title={r.poolId || ""}>
         <StyledLink to={details.delegation(r.poolId)}>{getShortHash(r.poolId || "")}</StyledLink>
       </CustomTooltip>
     ),
@@ -58,11 +58,10 @@ const columns: Column<DelegationHistory>[] = [
       let poolData: { name: string } = { name: "" };
       try {
         if (r.poolData) poolData = JSON.parse(r.poolData);
-        console.log(poolData);
       } catch {}
       const name = poolData.name?.length > 30 ? getShortWallet(poolData.name) : poolData.name;
       return (
-        <CustomTooltip title={poolData.name || r.poolId} placement="top">
+        <CustomTooltip title={poolData.name || r.poolId}>
           <StyledLink to={details.delegation(r.poolId)}>{name || `Pool [${getShortWallet(r.poolId)}]`}</StyledLink>
         </CustomTooltip>
       );

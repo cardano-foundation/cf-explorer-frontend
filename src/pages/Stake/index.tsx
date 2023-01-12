@@ -62,7 +62,7 @@ const Stake: React.FC<IStake> = () => {
       title: "Trx Hash",
       key: "trxHash",
       render: r => (
-        <CustomTooltip title={r.txHash} placement="top">
+        <CustomTooltip title={r.txHash}>
           <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
         </CustomTooltip>
       ),
@@ -70,7 +70,7 @@ const Stake: React.FC<IStake> = () => {
     {
       title: "Time",
       key: "time",
-      render: r => <>{moment(r.txTime).format("MM/DD/YYYY HH:mm:ss")}</>,
+      render: r => moment(r.txTime).format("MM/DD/YYYY HH:mm:ss"),
     },
     {
       title: "Block",
@@ -89,7 +89,7 @@ const Stake: React.FC<IStake> = () => {
       key: "stakeKey",
       render: (r, idx) => (
         <>
-          <CustomTooltip title={r.stakeKey} placement="top">
+          <CustomTooltip title={r.stakeKey}>
             <StyledLink to={details.stake(r.stakeKey)}>{getShortWallet(r.stakeKey)}</StyledLink>
           </CustomTooltip>
 

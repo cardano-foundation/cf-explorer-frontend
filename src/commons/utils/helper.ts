@@ -121,7 +121,6 @@ export const getPageInfo = (search: string): { page: number; size: number } => {
 };
 
 export const exchangeADAToUSD = (value: number | string, rate: number) => {
-  console.log("🚀 ~ file: helper.ts:124 ~ exchangeADAToUSD ~ rate", rate);
   if (!value) return 0;
   const realAda = new BigNumber(value).div(10 ** 6);
   const exchangedValue = realAda.multipliedBy(rate).toString();

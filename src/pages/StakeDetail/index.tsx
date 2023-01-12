@@ -17,7 +17,7 @@ const StakeDetail: React.FC = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Stake address ${stakeId} | Cardano Explorer`;
-  }, []);
+  }, [stakeId]);
   
   if ((initialized && !data) || error) return <NoRecord />;
 

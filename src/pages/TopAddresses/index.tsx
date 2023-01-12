@@ -33,7 +33,7 @@ const TopAddresses: React.FC<Props> = () => {
 
       render: r => (
         <div>
-          <CustomTooltip title={r.address} placement="top">
+          <CustomTooltip title={r.address}>
             <StyledLink to={details.address(r.address)}>{getShortWallet(r.address)}</StyledLink>
           </CustomTooltip>
         </div>

@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { CircularProgress, ButtonBase, styled } from "@mui/material";
 
 export const StyledButton = styled(ButtonBase)`

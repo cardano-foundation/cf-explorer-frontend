@@ -40,7 +40,7 @@ const Transactions: React.FC = () => {
 
       render: r => (
         <div>
-          <CustomTooltip title={r.address} placement="top">
+          <CustomTooltip title={r.address}>
             <StyledLink to={details.contract(r.address)}>{getShortWallet(r.address)}</StyledLink>
           </CustomTooltip>
         </div>

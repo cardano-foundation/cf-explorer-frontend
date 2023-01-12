@@ -1,4 +1,4 @@
-import { Box, Tooltip } from "@mui/material";
+import { Box } from "@mui/material";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -31,31 +31,29 @@ const TopDelegators = () => {
       minWidth: 120,
       key: "addresses",
       render: (r, idx) => (
-        <Tooltip title={r.stakeKey}>
+        <CustomTooltip title={r.stakeKey}>
           <StyledLink to={details.stake(r.stakeKey)}>{getShortWallet(r.stakeKey)}</StyledLink>
-        </Tooltip>
+        </CustomTooltip>
       ),
     },
     {
       title: "Pool",
       key: "pool",
       render: (r, idx) => (
-        <Tooltip title={`${r.poolName} #${r.poolId}`}>
+        <CustomTooltip title={r.poolName || r.poolId}>
           <StyledLink to={details.delegation(r.poolId)}>
-            {r.poolName} #{r.poolId}
+            {r.poolName || `Pool [${getShortWallet(r.poolId)}]`}
           </StyledLink>
-        </Tooltip>
+        </CustomTooltip>
       ),
     },
     {
       title: "Stake amount",
       key: "Stakeamount",
       render: (r, idx) => (
-        <CustomTooltip title={formatADAFull(r.balance)}>
-          <Box component={"span"}>
-            {formatADA(r.balance || 0)} <ADAToken />
-          </Box>
-        </CustomTooltip>
+        <Box component={"span"}>
+          {formatADAFull(r.balance || 0)} <ADAToken />
+        </Box>
       ),
     },
   ];
