@@ -11,7 +11,7 @@ import RegisterUsernameModal from "../RegisterUsernameModal";
 import { Image, Span, Spin, StyledButton } from "./styles";
 import BigNumber from "bignumber.js";
 import { removeAuthInfo } from "../../../../../commons/utils/helper";
-import { defaultAxios } from "../../../../../commons/utils/axios";
+import { authAxios } from "../../../../../commons/utils/axios";
 interface Props {}
 
 const ConnectWallet: React.FC<Props> = () => {
@@ -32,7 +32,7 @@ const ConnectWallet: React.FC<Props> = () => {
 
   const getNonceValue = useCallback(async () => {
     try {
-      const response = await defaultAxios.get("user/get-nonce", { params: { address: stakeAddress } });
+      const response = await authAxios.get("user/get-nonce", { params: { address: stakeAddress } });
       const converted = new BigNumber(response.data.toString());
       return converted.toString();
     } catch (error: any) {
@@ -50,7 +50,7 @@ const ConnectWallet: React.FC<Props> = () => {
         signature,
         ipAddress: "testip",
       };
-      const response = await defaultAxios.post("auth/sign-in", payload);
+      const response = await authAxios.post("auth/sign-in", payload);
       const data = response.data;
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);

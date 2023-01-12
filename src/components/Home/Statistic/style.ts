@@ -43,6 +43,7 @@ export const Name = styled("h4")`
 `;
 
 export const Title = styled("h3")`
+  display: inline-block;
   font-family: var(--font-family-text);
   margin-top: 0;
   margin-bottom: 0.25rem;

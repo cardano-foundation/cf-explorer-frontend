@@ -27,7 +27,7 @@ const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, m
       <DropdownList>
         {value.map((item, index) => (
           <InfoValue key={index}>
-            <CustomTooltip placement="top" title={item}>
+            <CustomTooltip title={item}>
               <Link
                 to={details.address(item)}
                 style={{ fontFamily: "var(--font-family-text)", color: "var(--color-blue)" }}

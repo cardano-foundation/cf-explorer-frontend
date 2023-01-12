@@ -70,7 +70,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
         <ViewDetailContainer>
           <ViewDetailScroll>
             <StyledViewMore tooltipTitle="View Detail" to={details.stake(stakeId)} />
-            <CustomTooltip placement="top" title="Close">
+            <CustomTooltip title="Close">
               <CloseButton onClick={handleClose}>
                 <CgClose />
               </CloseButton>
@@ -137,7 +137,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
       <ViewDetailContainer>
         <ViewDetailScroll>
           <StyledViewMore tooltipTitle="View Detail" to={details.stake(stakeId)} />
-          <CustomTooltip placement="top" title="Close">
+          <CustomTooltip title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -181,7 +181,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
                 <InfoIcon />
                 Delegated to
               </DetailLabel>
-              <Tooltip placement="top" title={data.pool?.poolName || ""}>
+              <Tooltip title={data.pool?.poolName || ""}>
                 <Link to={details.delegation(data.pool?.poolId)}>
                   <DelegatedDetail>
                     {data.pool?.tickerName} - {data.pool?.poolName}

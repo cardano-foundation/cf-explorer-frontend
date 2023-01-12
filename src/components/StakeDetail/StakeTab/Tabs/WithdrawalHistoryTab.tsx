@@ -46,7 +46,7 @@ const columns: Column<WithdrawalHistory>[] = [
     minWidth: "120px",
     render: r => (
       <>
-        <CustomTooltip placement="top" title={formatADAFull(r.amount)}>
+        <CustomTooltip title={formatADAFull(r.amount)}>
           <Box component={"span"}> {formatADA(r.amount)}</Box>
         </CustomTooltip>
         <ADAToken />

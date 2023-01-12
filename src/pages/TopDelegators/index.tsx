@@ -1,9 +1,8 @@
-import { Tooltip, Box } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details } from "../../commons/routers";
 import { formatADA, formatADAFull, getShortWallet } from "../../commons/utils/helper";
-
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table from "../../components/commons/Table";
@@ -27,7 +26,7 @@ const TopDelegators = () => {
       minWidth: 120,
       key: "addresses",
       render: (r, idx) => (
-        <Tooltip placement="top" title={r.stakeKey}>
+        <Tooltip title={r.stakeKey}>
           <StyledLink to={details.stake(r.stakeKey)}>{getShortWallet(r.stakeKey)}</StyledLink>
         </Tooltip>
       ),
@@ -36,7 +35,7 @@ const TopDelegators = () => {
       title: "Pool",
       key: "pool",
       render: (r, idx) => (
-        <Tooltip placement="top" title={`${r.poolName} #${r.poolId}`}>
+        <Tooltip title={`${r.poolName} #${r.poolId}`}>
           <StyledLink to={details.delegation(r.poolId)}>
             {r.poolName} #{r.poolId}
           </StyledLink>
@@ -47,7 +46,7 @@ const TopDelegators = () => {
       title: "Stake amount",
       key: "Stakeamount",
       render: (r, idx) => (
-        <CustomTooltip placement="top" title={formatADAFull(r.balance)}>
+        <CustomTooltip title={formatADAFull(r.balance)}>
           <Box component={"span"}>
             {formatADA(r.balance || 0)} <ADAToken />
           </Box>
@@ -55,6 +54,7 @@ const TopDelegators = () => {
       ),
     },
   ];
+
   return (
     <StyledContainer>
       <Card title="Top 50 delegators">

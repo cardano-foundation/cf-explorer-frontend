@@ -18,7 +18,7 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean): FetchReturnTyp
 
   const fetch = useCallback(async () => {
     if (!url) return;
-    let service: AxiosInstance = isAuth ? defaultAxios : authAxios;
+    let service: AxiosInstance = isAuth ? authAxios : defaultAxios;
     if (url.search("http://") === 0 || url.search("https://") === 0) {
       service = axios;
     }

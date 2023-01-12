@@ -36,7 +36,7 @@ const BlockList = () => {
       key: "blockId",
       minWidth: "150px",
       render: r => (
-        <CustomTooltip placement="top" title={r.hash}>
+        <CustomTooltip title={r.hash}>
           <StyledLink to={details.block(r.blockNo)}>{getShortHash(`${r.hash}`)}</StyledLink>
         </CustomTooltip>
       ),
@@ -51,7 +51,7 @@ const BlockList = () => {
       title: "Fees",
       key: "fees",
       render: r => (
-        <CustomTooltip placement="top" title={formatADAFull(r.totalFees)}>
+        <CustomTooltip title={formatADAFull(r.totalFees)}>
           <PriceWrapper>
             {formatADA(r.totalFees) || 0}
             <img src={AIcon} alt="ADA Icon" />
@@ -64,7 +64,7 @@ const BlockList = () => {
       key: "output",
       minWidth: "100px",
       render: r => (
-        <CustomTooltip placement="top" title={formatADAFull(r.totalOutput)}>
+        <CustomTooltip title={formatADAFull(r.totalOutput)}>
           <PriceWrapper>
             {formatADA(r.totalOutput) || 0}
             <img src={AIcon} alt="ADA Icon" />

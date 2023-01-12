@@ -63,7 +63,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
         <ViewDetailContainer>
           <ViewDetailScroll>
             <StyledViewMore tooltipTitle="View Detail" to={details.token(tokenId)} />
-            <CustomTooltip placement="top" title="Close">
+            <CustomTooltip title="Close">
               <CloseButton onClick={handleClose}>
                 <CgClose />
               </CloseButton>
@@ -130,7 +130,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
       <ViewDetailContainer>
         <ViewDetailScroll>
           <StyledViewMore tooltipTitle="View Detail" to={details.token(tokenId)} />
-          <CustomTooltip placement="top" title="Close">
+          <CustomTooltip title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -183,7 +183,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                 Token ID
               </DetailLabel>
               <DetailValue>
-                <CustomTooltip placement="top" title={tokenId}>
+                <CustomTooltip title={tokenId}>
                   <StyledLink to={details.token(tokenId)}>{getShortWallet(tokenId || "")}</StyledLink>
                 </CustomTooltip>
                 <CopyButton text={tokenId} />

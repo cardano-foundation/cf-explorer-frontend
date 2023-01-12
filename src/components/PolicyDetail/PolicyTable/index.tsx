@@ -32,7 +32,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     key: "id",
     minWidth: "100px",
     render: r => (
-      <Tooltip placement="top" title={r.fingerprint}>
+      <Tooltip title={r.fingerprint}>
         <LinkComponent to={details.token(r.fingerprint)}>{getShortHash(r.fingerprint)}</LinkComponent>
       </Tooltip>
     ),
@@ -48,7 +48,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     key: "totalSupply",
     minWidth: "150px",
     render: r => (
-      <CustomTooltip placement="top" title={formatADAFull(r?.supply ? +r.supply * 10 ** 6 : "")}>
+      <CustomTooltip title={formatADAFull(r?.supply ? +r.supply * 10 ** 6 : "")}>
         <Box component={"span"}>{formatADA(r?.supply ? +r.supply * 10 ** 6 : "")}</Box>
       </CustomTooltip>
     ),
@@ -67,7 +67,7 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     key: "address",
     minWidth: "50px",
     render: r => (
-      <Tooltip placement="top" title={r.address}>
+      <Tooltip title={r.address}>
         <LinkComponent to={details.address(r.address)}>{getShortWallet(r.address || "")}</LinkComponent>
       </Tooltip>
     ),
@@ -83,7 +83,7 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     key: "id",
     minWidth: "100px",
     render: r => (
-      <Tooltip placement="top" title={r.fingerprint}>
+      <Tooltip title={r.fingerprint}>
         <LinkComponent to={details.token(r.fingerprint)}>{getShortHash(r.fingerprint || "")}</LinkComponent>
       </Tooltip>
     ),
@@ -93,7 +93,7 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     key: "Balance",
     minWidth: "150px",
     render: r => (
-      <CustomTooltip placement="top" title={formatADAFull(r?.quantity)}>
+      <CustomTooltip title={formatADAFull(r?.quantity)}>
         <Box component={"span"}>{formatADA(r.quantity ? r.quantity * 10 ** 6 : "")}</Box>
       </CustomTooltip>
     ),

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Grid, Box, Autocomplete } from "@mui/material";
-import { exchangeADAToUSD, formatADA, formatPrice } from "../../../commons/utils/helper";
+import { exchangeADAToUSD, formatADA, formatPrice, numberWithCommas } from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronDown } from "react-icons/bi";
@@ -11,6 +11,7 @@ import { StyledTextField, WrapPaperDropdown } from "./styles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { useEffect, useState } from "react";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 interface Props {
   data: WalletAddress | null;
@@ -25,18 +26,27 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     setStakeKey(data?.stakeAddress || "");
   }, [data]);
 
-  const itemRight = [
+  const itemLeft = [
     { title: "Transaction", value: data?.txCount || 0 },
     {
       title: "ADA Balance",
       value: (
-        <>
-          {formatADA(data?.balance || 0)}
-          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
-        </>
+        <CustomTooltip title={numberWithCommas((data?.balance || 0) / 10 ** 6)}>
+          <Box>
+            {formatADA(data?.balance)}
+            <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          </Box>
+        </CustomTooltip>
       ),
     },
-    { title: "ADA Value", value: exchangeADAToUSD(data?.balance || 0, adaRate) },
+    {
+      title: "ADA Value",
+      value: (
+        <CustomTooltip title={numberWithCommas((data?.balance || 0) * adaRate)}>
+          <Box>{exchangeADAToUSD(data?.balance || 0, adaRate)}</Box>
+        </CustomTooltip>
+      ),
+    },
     {
       value: (
         <Autocomplete
@@ -73,14 +83,16 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       ),
     },
   ];
-  const itemLeft = [
+  const itemRight = [
     {
       title: "Total Stake",
       value: (
-        <>
-          {formatADA(dataStake?.totalStake || 0)}
-          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
-        </>
+        <CustomTooltip title={numberWithCommas((dataStake?.totalStake || 0) / 10 ** 6)}>
+          <Box>
+            {formatADA(dataStake?.totalStake || 0)}
+            <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          </Box>
+        </CustomTooltip>
       ),
     },
     {
@@ -97,10 +109,12 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: "Reward",
       value: (
-        <>
-          {formatADA(dataStake?.rewardAvailable || 0)}
-          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
-        </>
+        <CustomTooltip title={numberWithCommas((dataStake?.rewardAvailable || 0) / 10 ** 6)}>
+          <Box>
+            {formatADA(dataStake?.rewardAvailable || 0)}
+            <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          </Box>
+        </CustomTooltip>
       ),
     },
   ];
@@ -114,7 +128,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
               title={"Wallet address"}
               type="left"
               address={data?.address || ""}
-              item={itemRight}
+              item={itemLeft}
               loading={loading}
             />
           </Box>
@@ -125,7 +139,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
               title={"Stake address"}
               type="right"
               address={data?.stakeAddress || ""}
-              item={itemLeft}
+              item={itemRight}
               loading={loading || loadingStake}
               addressDestination={details.stake(data?.stakeAddress)}
             />
