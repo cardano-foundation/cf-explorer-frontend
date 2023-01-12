@@ -7,12 +7,20 @@ export const TitleDetail = styled(Box)`
   font-family: var(--font-family-title);
 `;
 
-export const TokenAddress = styled(Link)`
+export const TokenAddress = styled("small")`
   max-width: 90%;
   word-wrap: break-word;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
-  color: var(--color-blue) !important;
+  color: ${props => props.theme.colorBlue} !important;
+  line-height: 1.5;
+`;
+export const AddressLink = styled(Link)`
+  max-width: 90%;
+  word-wrap: break-word;
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-text);
+  color: ${props => props.theme.colorBlue} !important;
   font-size: 14px;
 `;
 
