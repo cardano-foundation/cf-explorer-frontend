@@ -19,10 +19,20 @@ const defaultAxios = axios.create({
   transformResponse: function (response) {
     return jsonBig().parse(response);
   },
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
+
+defaultAxios.interceptors.request.use(
+  config => {
+    const token = getToken();
+    if (!config.headers) config.headers = {};
+    if (token) config.headers["Authorization"] = "Bearer " + token;
+    config.headers["Content-Type"] = "application/json";
+    return config;
+  },
+  error => {
+    Promise.reject(error);
+  }
+);
 
 const authAxios = axios.create({
   baseURL: AUTH_API_URL,

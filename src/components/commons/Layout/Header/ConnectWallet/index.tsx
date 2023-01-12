@@ -1,6 +1,6 @@
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { Box } from "@mui/material";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { useSelector } from "react-redux";
 import { WalletIcon } from "../../../../../commons/resources";
 import { RootState } from "../../../../../stores/types";
@@ -10,8 +10,8 @@ import ConnectWalletModal from "../../../ConnectWalletModal";
 import RegisterUsernameModal from "../RegisterUsernameModal";
 import { Image, Span, Spin, StyledButton } from "./styles";
 import BigNumber from "bignumber.js";
-import { removeAuthInfo } from "../../../../../commons/utils/helper";
 import { defaultAxios } from "../../../../../commons/utils/axios";
+import { signIn } from "../../../../../commons/utils/userRequest";
 interface Props {}
 
 const ConnectWallet: React.FC<Props> = () => {
@@ -24,11 +24,6 @@ const ConnectWallet: React.FC<Props> = () => {
   const handleClick = () => {
     setOpenModal(!openModal);
   };
-
-  useEffect(() => {
-    disconnect();
-    removeAuthInfo();
-  }, [network, disconnect]);
 
   const getNonceValue = useCallback(async () => {
     try {
@@ -50,7 +45,7 @@ const ConnectWallet: React.FC<Props> = () => {
         signature,
         ipAddress: "testip",
       };
-      const response = await defaultAxios.post("auth/sign-in", payload);
+      const response = await signIn(payload);
       const data = response.data;
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);
