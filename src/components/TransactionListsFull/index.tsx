@@ -1,6 +1,6 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
-import { Box, Tooltip } from "@mui/material";
+import { Box } from "@mui/material";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
@@ -77,11 +77,11 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
               <div>
                 {r.addressesInput.slice(0, 1).map((tx, key) => {
                   return (
-                    <Tooltip key={key} title={tx}>
+                    <CustomTooltip key={key} title={tx}>
                       <StyledLink to={details.address(tx)} key={key}>
                         <Box ml={1}>{getShortWallet(tx)}</Box>
                       </StyledLink>
-                    </Tooltip>
+                    </CustomTooltip>
                   );
                 })}
                 {r.addressesInput.length > 1 && (
@@ -96,11 +96,11 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
               <div>
                 {r.addressesOutput.slice(0, 1).map((tx, key) => {
                   return (
-                    <Tooltip key={key} title={tx}>
+                    <CustomTooltip key={key} title={tx}>
                       <StyledLink to={details.address(tx)} key={key}>
                         <Box ml={1}>{getShortWallet(tx)}</Box>
                       </StyledLink>
-                    </Tooltip>
+                    </CustomTooltip>
                   );
                 })}
                 {r.addressesOutput.length > 1 && (

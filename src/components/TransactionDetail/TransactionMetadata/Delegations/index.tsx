@@ -36,7 +36,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["delegations"][num
           <div>
             From:{" "}
             <Link to={details.address(item?.address)} className={styles.address}>
-              <CustomTooltip title={item?.address} placement="top">
+              <CustomTooltip title={item?.address}>
                 <span className={styles.address}> {getShortWallet(item?.address || "")} </span>
               </CustomTooltip>
             </Link>
@@ -47,7 +47,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["delegations"][num
               <div style={{ display: "flex", alignItems: "center" }}>
                 <div style={{ minWidth: "4rem" }}>Pool ID:</div>
                 <Link to={details.delegation(item?.poolId)} className={styles.address}>
-                  <CustomTooltip title={item?.poolId || ""} placement="top">
+                  <CustomTooltip title={item?.poolId || ""}>
                     <div>{getShortHash(item?.poolId || "")}</div>
                   </CustomTooltip>
                 </Link>

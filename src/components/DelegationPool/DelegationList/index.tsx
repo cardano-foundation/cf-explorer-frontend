@@ -1,7 +1,7 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { parse, stringify } from "qs";
 import Table, { Column } from "../../commons/Table";
-import { formatADA, formatADAFull, formatPercent, getPageInfo } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, formatPercent, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 import { HeaderSearchIcon } from "../../../commons/resources";
@@ -18,13 +18,13 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     minWidth: "40px",
     maxWidth: "350px",
     render: r => (
-      <PoolName to={details.delegation(r.poolId)}>
-        <CustomTooltip title={r.poolName || r.poolId} placement="top">
+      <CustomTooltip title={r.poolName || r.poolId}>
+        <PoolName to={details.delegation(r.poolId)}>
           <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
-            {r.poolName || `Pool [${r.poolId}]`}
+            {r.poolName || `Pool [${getShortWallet(r.poolId)}]`}
           </Box>
-        </CustomTooltip>
-      </PoolName>
+        </PoolName>
+      </CustomTooltip>
     ),
   },
   {
@@ -64,7 +64,7 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     minWidth: "200px",
     key: "Saturation",
     render: r => (
-      <CustomTooltip title={r.saturation ? r.saturation * 100 : 0} placement="top">
+      <CustomTooltip title={r.saturation ? r.saturation * 100 : 0}>
         <Box display="flex" alignItems="center">
           <span>{formatPercent(r.saturation) || `0%`}</span>
           <StyledLinearProgress variant="determinate" value={r.saturation * 100 || 0} />

@@ -36,7 +36,7 @@ const SummaryItems = ({
                   <Link
                     to={item.address.startsWith("stake") ? details.stake(item.address) : details.address(item.address)}
                   >
-                    <CustomTooltip title={item.address} placement="top">
+                    <CustomTooltip title={item.address}>
                       <Box color={props => props.colorBlue} fontWeight="bold" className={styles.ffText}>
                         {getShortWallet(item.address)}
                       </Box>

@@ -33,7 +33,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
       key: "trxHash",
       minWidth: "200px",
       render: r => (
-        <CustomTooltip title={r.txHash} placement="top">
+        <CustomTooltip title={r.txHash}>
           <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
         </CustomTooltip>
       ),

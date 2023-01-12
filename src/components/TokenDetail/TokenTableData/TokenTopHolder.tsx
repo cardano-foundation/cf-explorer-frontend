@@ -33,7 +33,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       key: "address",
       minWidth: "200px",
       render: r => (
-        <CustomTooltip title={r.address} placement="top">
+        <CustomTooltip title={r.address}>
           <StyledLink to={details.address(r.address)}>{getShortWallet(r.address)}</StyledLink>
         </CustomTooltip>
       ),

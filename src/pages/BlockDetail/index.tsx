@@ -17,7 +17,7 @@ const BlockDetail = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Block ${blockId} | Cardano Explorer`;
-  }, []);
+  }, [blockId]);
   
   if ((initialized && !data) || error) return <NoRecord />;
 

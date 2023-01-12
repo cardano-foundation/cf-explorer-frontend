@@ -147,7 +147,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                 <TokenInfo>
                   <TokenName>
                     {data.displayName && data.displayName.length > 25 ? (
-                      <CustomTooltip title={data.displayName} placement="top">
+                      <CustomTooltip title={data.displayName}>
                         <div>{getShortWallet(data.displayName)}</div>
                       </CustomTooltip>
                     ) : (
@@ -198,7 +198,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                 <TokenDetailInfo>
                   <TokenDetailName>
                     {data.displayName && data.displayName.length > 20 ? (
-                      <CustomTooltip title={data.displayName} placement="top">
+                      <CustomTooltip title={data.displayName}>
                         <div>{getShortWallet(data.displayName)}</div>
                       </CustomTooltip>
                     ) : (

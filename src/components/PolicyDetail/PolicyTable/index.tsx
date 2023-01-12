@@ -12,7 +12,6 @@ import { ReactComponent as AssetHolderIcon } from "../../../commons/resources/ic
 import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
 import { LinkComponent, TitleTab } from "./styles";
-import { Tooltip } from "@mui/material";
 import CustomTooltip from "../../commons/CustomTooltip";
 
 enum TABS {
@@ -32,9 +31,9 @@ const columnsToken: Column<TokenPolicys>[] = [
     key: "id",
     minWidth: "100px",
     render: r => (
-      <Tooltip title={r.fingerprint}>
+      <CustomTooltip title={r.fingerprint}>
         <LinkComponent to={details.token(r.fingerprint)}>{getShortHash(r.fingerprint)}</LinkComponent>
-      </Tooltip>
+      </CustomTooltip>
     ),
   },
   {
@@ -67,9 +66,9 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     key: "address",
     minWidth: "50px",
     render: r => (
-      <Tooltip title={r.address}>
+      <CustomTooltip title={r.address}>
         <LinkComponent to={details.address(r.address)}>{getShortWallet(r.address || "")}</LinkComponent>
-      </Tooltip>
+      </CustomTooltip>
     ),
   },
   {
@@ -83,9 +82,9 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     key: "id",
     minWidth: "100px",
     render: r => (
-      <Tooltip title={r.fingerprint}>
+      <CustomTooltip title={r.fingerprint}>
         <LinkComponent to={details.token(r.fingerprint)}>{getShortHash(r.fingerprint || "")}</LinkComponent>
-      </Tooltip>
+      </CustomTooltip>
     ),
   },
   {

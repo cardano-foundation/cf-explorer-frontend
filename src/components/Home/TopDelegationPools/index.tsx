@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import { details, routers } from "../../../commons/routers";
-import { formatADA, formatPercent } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, formatPercent } from "../../../commons/utils/helper";
 import ViewAllButton from "../../commons/ViewAllButton";
 import { Column } from "../../commons/Table";
 import {
@@ -16,6 +16,8 @@ import {
   TopDelegateContainer,
 } from "./style";
 import RateWithIcon from "../../commons/RateWithIcon";
+import CustomTooltip from "../../commons/CustomTooltip";
+import { Box } from "@mui/system";
 
 interface Props {}
 
@@ -50,20 +52,34 @@ const TopDelegationPools: React.FC<Props> = () => {
     {
       title: "Fee (A)",
       key: "fee",
-      render: r => `${formatPercent(r.feePercent || 0)} (${formatADA(r.feeAmount)} A)`,
+      render: r => (
+        <CustomTooltip title={`${r.feePercent * 100 || 0}% (${formatADAFull(r.feeAmount)} A)`}>
+          <Box display="inline-block">
+            {formatPercent(r.feePercent || 0)} ({formatADA(r.feeAmount)} A)
+          </Box>
+        </CustomTooltip>
+      ),
     },
     {
       title: "Declared Pledge (A)",
       key: "declaredPledge",
-      render: r => formatADA(r.pledge),
+      render: r => (
+        <CustomTooltip title={formatADAFull(r.pledge)}>
+          <Box display="inline-block">{formatADA(r.pledge)}</Box>
+        </CustomTooltip>
+      ),
     },
     {
       title: "Saturation",
       key: "output",
       render: r => (
         <ProgressContainer>
-          <ProgressTitle>{formatPercent(r.saturation / 100)}</ProgressTitle>
-          <StyledLinearProgress variant="determinate" value={r.saturation} style={{ width: 150 }} />
+          <CustomTooltip title={`${r.saturation}%`}>
+            <ProgressTitle>{formatPercent(r.saturation / 100)}</ProgressTitle>
+          </CustomTooltip>
+          <CustomTooltip title={`${r.saturation}%`}>
+            <StyledLinearProgress variant="determinate" value={r.saturation} style={{ width: 150 }} />
+          </CustomTooltip>
         </ProgressContainer>
       ),
     },

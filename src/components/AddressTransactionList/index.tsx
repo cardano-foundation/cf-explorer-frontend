@@ -1,6 +1,6 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
-import { Box, Tooltip } from "@mui/material";
+import { Box } from "@mui/material";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import { formatADA, getPageInfo, getShortHash, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
@@ -74,7 +74,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
               <div>
                 {r.addressesInput.slice(0, 1).map((tx, key) => {
                   return (
-                    <CustomTooltip key={key} title={tx} placement="top">
+                    <CustomTooltip key={key} title={tx}>
                       <StyledLink to={details.address(tx)}>{getShortWallet(tx)}</StyledLink>
                     </CustomTooltip>
                   );

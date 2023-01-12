@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import moment from "moment";
-import { parse, stringify } from "qs";
+import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details, routers } from "../../commons/routers";
@@ -21,7 +21,7 @@ const columns: Column<Registration>[] = [
     render: r => {
       return (
         <>
-          <CustomTooltip title={r.txHash} placement="top">
+          <CustomTooltip title={r.txHash}>
             <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash || "")}</StyledLink>
           </CustomTooltip>
           <div>{moment(r.txTime).format("MM/DD/YYYY HH:mm:ss")}</div>
@@ -65,7 +65,7 @@ const columns: Column<Registration>[] = [
     key: "stakeKey",
     render: r =>
       r.stakeKey?.[0] ? (
-        <CustomTooltip title={r.stakeKey[0]} placement="top">
+        <CustomTooltip title={r.stakeKey[0]}>
           <StyledLink to={details.stake(r.stakeKey[0])}>{getShortWallet(r.stakeKey[0])}</StyledLink>
         </CustomTooltip>
       ) : (

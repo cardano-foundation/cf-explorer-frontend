@@ -66,7 +66,7 @@ const SearchResult = () => {
 
   useEffect(() => {
     document.title = loading ? `Search For ${value}...` : `No Record Found: ${value} | Cardano Explorer`;
-  }, [loading]);
+  }, [loading, value]);
 
   useEffect(() => {
     const checkFilter = async () => {

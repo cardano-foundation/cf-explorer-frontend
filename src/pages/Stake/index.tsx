@@ -25,7 +25,7 @@ const columns: Column<IStakeKey>[] = [
     title: "Trx Hash",
     key: "trxHash",
     render: r => (
-      <CustomTooltip title={r.txHash} placement="top">
+      <CustomTooltip title={r.txHash}>
         <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
       </CustomTooltip>
     ),
@@ -51,7 +51,7 @@ const columns: Column<IStakeKey>[] = [
     title: "Stake Key",
     key: "stakeKey",
     render: r => (
-      <CustomTooltip title={r.stakeKey} placement="top">
+      <CustomTooltip title={r.stakeKey}>
         <StyledLink to={details.stake(r.stakeKey)}>{getShortWallet(r.stakeKey)}</StyledLink>
       </CustomTooltip>
     ),
