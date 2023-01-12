@@ -21,58 +21,69 @@ const Title = styled("h3")`
   font-weight: var(--font-weight-normal);
 `;
 
-const createNavigator = (filter?: FilterParams | string, value?: string) => {
+const getUrl = (filter?: FilterParams | "all", value?: string): FilterParams | null => {
+  if (filter && filter !== "all") return filter;
+  if (value) {
+    if (value.search("addr_") === 0) return "address";
+    if (value.search("stake_") === 0) return "stake";
+    if (value.search("pool") === 0) return "delegation/pool-detail-header";
+    if (value.search("asset") === 0) return "tokens";
+  }
+  return null;
+};
+
+const createNavigator = (filter?: FilterParams | string) => {
   switch (filter) {
-    case "epoch": {
+    case "epoch":
       return details.epoch;
-    }
-    case "block": {
+    case "block":
       return details.block;
-    }
-    case "tx": {
+    case "tx":
       return details.transaction;
-    }
-    case "tokens": {
+    case "tokens":
       return details.token;
-    }
-    case "stake": {
+    case "stake":
       return details.stake;
-    }
-    case "address": {
+    case "address":
       return details.address;
-    }
-    default: {
-      if (value) {
-        if (value.search("addr_") === 0) return details.address;
-        if (value.search("stake_") === 0) return details.stake;
-        if (value.search("pool") === 0) return details.delegation;
-        if (value.search("asset") === 0) return details.token;
-      }
+    case "delegation/pool-detail-header":
+      return details.delegation;
+    default:
       return null;
-    }
   }
 };
 
 const filterURLS = (value: string): FilterParams[] => {
   if (!Number.isNaN(Number(value))) return ["epoch", "block"];
-  else return ["block", "tx", "tokens", "stake", "address"];
+  else return ["block", "tx", "tokens", "stake", "address", "delegation/pool-detail-header"];
 };
 
 const SearchResult = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { search } = useLocation();
   const history = useHistory();
   const { filter, search: value }: SearchParams = parse(search.split("?")[1]);
 
   useEffect(() => {
+    document.title = loading ? `Search For ${value}...` : `No Record Found: ${value} | Cardano Explorer`;
+  }, [loading]);
+
+  useEffect(() => {
     const checkFilter = async () => {
       if (!value) return;
 
-      const navigate = createNavigator(filter, value);
+      const urlDetect = getUrl(filter, value);
 
-      if (navigate) return history.replace(navigate(value), { search: value });
+      if (urlDetect) {
+        try {
+          const res = await defaultAxios.get(`${urlDetect}/${value}`);
+          const navigate = createNavigator(urlDetect);
+          if (navigate) return history.replace(navigate(value), { data: res.data });
+        } catch {
+          return setLoading(false);
+        }
+      }
 
-      setLoading(true);
       try {
         const urls = filterURLS(value);
         const result = await Promise.any(

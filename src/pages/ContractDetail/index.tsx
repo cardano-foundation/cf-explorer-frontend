@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import useFetch from "../../commons/hooks/useFetch";
 import NoRecord from "../../components/commons/NoRecord";
@@ -14,6 +14,11 @@ const ContractDetail: React.FC = () => {
     state?.data
   );
 
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Contract ${address} | Cardano Explorer`;
+  }, []);
+  
   if ((initialized && !data) || error) return <NoRecord />;
 
   return (

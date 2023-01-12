@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from "react";
 
 const MyProfile = () => {
-  return (
-    <div>MyProfile</div>
-  )
-}
+  useEffect(() => {
+    document.title = `My Profile | Cardano Explorer`;
+  }, []);
 
-export default MyProfile
+  return <div>MyProfile</div>;
+};
+
+export default MyProfile;

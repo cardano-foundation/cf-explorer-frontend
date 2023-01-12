@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -24,6 +24,11 @@ const BlockList = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<IStakeKey>(`block/list`, pageInfo);
+
+  useEffect(() => { 
+    document.title = `Blocks List | Cardano Explorer`;
+  }, []);
+
   const columns: Column<Block>[] = [
     {
       title: "Block No",
