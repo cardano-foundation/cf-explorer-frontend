@@ -61,6 +61,7 @@ export const Title = styled(Box)(({ theme }) => ({
 export const ValueInfo = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "2rem",
+  margin: "0 auto",
 }));
 
 export const Wrapper = styled(Grid)(({ theme }) => ({
@@ -114,4 +115,3 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   fontWeight: "bold",
   backgroundColor: active ? theme.colorGreenLight : "none",
 }));
-

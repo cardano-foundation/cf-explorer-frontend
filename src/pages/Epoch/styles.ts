@@ -33,7 +33,7 @@ export const Status = styled("span")<{ status: string }>`
 export const Blocks = styled(StyledColorBlueDard)``;
 
 export const Output = styled(Blocks)`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
 `;

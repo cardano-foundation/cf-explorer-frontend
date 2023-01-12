@@ -1,29 +1,32 @@
 import React, { useState } from "react";
-import { setOpenModal } from "../../../stores/user";
+import { setOpenModal, setWallet } from "../../../stores/user";
 import { SUPPORTED_WALLETS } from "../../../commons/utils/constants";
-import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { CircularProgress } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
 import { CloseButton, ConnectOption, Title, WalletIcon, WalletItem, WalletName, WrapContent } from "./style";
 import { SupportedWallets } from "../../../types/user";
 
-const ConnectWalletModal: React.FC = () => {
-  const { connect } = useCardano();
+interface IProps {
+  connect: (name: string, onSuccess: () => void, onError: (error: Error) => void) => Promise<any>;
+  onTriggerSignMessage: () => void;
+}
+const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage }) => {
   const [walletConnecting, setWalletConnecting] = useState<SupportedWallets | null>(null);
-
   const handleClose = () => {
     setOpenModal(false);
   };
   const onSuccess = () => {
     setWalletConnecting(null);
     setOpenModal(false);
+    onTriggerSignMessage();
   };
   const onError = (error: Error) => {
     setWalletConnecting(null);
   };
   const handleConnect = (walletName: SupportedWallets) => {
     setWalletConnecting(walletName);
-    connect(walletName, onSuccess, onError);
+    setWallet(walletName);
+    connect(walletName, () => onSuccess(), onError);
   };
 
   return (

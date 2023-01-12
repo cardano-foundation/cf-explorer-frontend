@@ -3,10 +3,10 @@ import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import Card from "../../commons/Card";
 import Table, { Column } from "../../commons/Table";
-import { formatADA, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
-import { StyledLink, StyledOutput, StyledColorBlueDard, StyledContainer, StyledAddress } from "./styles";
+import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer, StyledLink } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import useFetchList from "../../../commons/hooks/useFetchList";
 
@@ -42,7 +42,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       minWidth: "100px",
       render: r => (
         <>
-          <StyledLink>{r.slotNo}</StyledLink>
+          <FakedLink>{r.slotNo}</FakedLink>
           <div>
             {r.epochNo}/{r.epochSlotNo}
           </div>
@@ -56,8 +56,8 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       render: r => (
         <>
           Input:
-          <CustomTooltip placement="top" title={r.slotLeader}>
-            <StyledAddress to={details.address(r.slotLeader)}>{getShortWallet(r.slotLeader)}</StyledAddress>
+          <CustomTooltip title={r.slotLeader}>
+            <StyledLink to={details.address(r.slotLeader)}>{getShortWallet(r.slotLeader)}</StyledLink>
           </CustomTooltip>
         </>
       ),
@@ -73,10 +73,12 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       key: "outSum",
       minWidth: "100px",
       render: r => (
-        <StyledOutput>
-          <StyledColorBlueDard>{formatADA(r.totalFees) || 0}</StyledColorBlueDard>
-          <img src={AIcon} alt="ADA Icon" />
-        </StyledOutput>
+        <CustomTooltip title={formatADAFull(r.totalFees)}>
+          <StyledOutput>
+            <StyledColorBlueDard>{formatADA(r.totalFees) || 0}</StyledColorBlueDard>
+            <img src={AIcon} alt="ADA Icon" />
+          </StyledOutput>
+        </CustomTooltip>
       ),
     },
   ];

@@ -1,4 +1,4 @@
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box, Tooltip } from "@mui/material";
 import Card from "../commons/Card";
@@ -43,7 +43,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
 
       render: r => (
         <div>
-          <CustomTooltip title={r.hash} placement="top">
+          <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
           <Box mt={1}>{moment(r.time).format("MM/DD/YYYY hh:mm:ss")}</Box>
@@ -77,21 +77,17 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
               <div>
                 {r.addressesInput.slice(0, 1).map((tx, key) => {
                   return (
-                    <Tooltip key={key} title={tx} placement="top">
-                      <Link to={details.address(tx)} key={key}>
-                        <Box ml={1} color={props => props.colorBlue} fontFamily={"Helvetica, monospace"}>
-                          <Box>{getShortWallet(tx)}</Box>
-                        </Box>
-                      </Link>
+                    <Tooltip key={key} title={tx}>
+                      <StyledLink to={details.address(tx)} key={key}>
+                        <Box ml={1}>{getShortWallet(tx)}</Box>
+                      </StyledLink>
                     </Tooltip>
                   );
                 })}
                 {r.addressesInput.length > 1 && (
-                  <Link to={details.transaction(r.hash)}>
-                    <Box ml={1} color={props => props.colorBlue} fontFamily={"Helvetica, monospace"}>
-                      ...
-                    </Box>
-                  </Link>
+                  <StyledLink to={details.transaction(r.hash)}>
+                    <Box ml={1}>...</Box>
+                  </StyledLink>
                 )}
               </div>
             </Box>
@@ -100,21 +96,17 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
               <div>
                 {r.addressesOutput.slice(0, 1).map((tx, key) => {
                   return (
-                    <Tooltip key={key} title={tx} placement="top">
-                      <Link to={details.address(tx)} key={key}>
-                        <Box ml={1} color={props => props.colorBlue} fontFamily={"Helvetica, monospace"}>
-                          <Box>{getShortWallet(tx)}</Box>
-                        </Box>
-                      </Link>
+                    <Tooltip key={key} title={tx}>
+                      <StyledLink to={details.address(tx)} key={key}>
+                        <Box ml={1}>{getShortWallet(tx)}</Box>
+                      </StyledLink>
                     </Tooltip>
                   );
                 })}
                 {r.addressesOutput.length > 1 && (
-                  <Link to={details.transaction(r.hash)}>
-                    <Box ml={1} color={props => props.colorBlue} fontFamily={"Helvetica, monospace"}>
-                      ...
-                    </Box>
-                  </Link>
+                  <StyledLink to={details.transaction(r.hash)}>
+                    <Box ml={1}>...</Box>
+                  </StyledLink>
                 )}
               </div>
             </Box>

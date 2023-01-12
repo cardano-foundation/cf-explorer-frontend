@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { FileEditIcon, LightningIcon } from "../../../commons/resources";
 import {
@@ -32,6 +32,7 @@ import {
   DetailLinkImage,
   StakeKeyLink,
   DelegatedDetail,
+  ButtonModal,
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
@@ -44,6 +45,8 @@ import { TbFileCheck } from "react-icons/tb";
 import CopyButton from "../CopyButton";
 import { Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
+import ModalAllAddress from "../../StakeDetail/ModalAllAddress";
 
 type DetailViewStakeKeyProps = {
   stakeId: string;
@@ -51,7 +54,7 @@ type DetailViewStakeKeyProps = {
 };
 const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
   { key: "delegation", label: "Delegation History", icon: <TbFileCheck /> },
-  { key: "stakeKey", label: "Stake Key History", icon: <CgArrowsExchange /> },
+  { key: "stake-key", label: "Stake Key History", icon: <CgArrowsExchange /> },
   { key: "withdrawal", label: "Withdrawal History", icon: <DetailLinkImage src={FileEditIcon} alt="withdrawal" /> },
   { key: "instantaneous", label: "Instantaneous Rewards", icon: <DetailLinkImage src={LightningIcon} alt="rewards" /> },
 ];
@@ -59,6 +62,7 @@ const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
 const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
   const { stakeId, handleClose } = props;
   const { data } = useFetch<IStakeKeyDetail>(stakeId ? `stake/address/${stakeId}` : ``);
+  const [open, setOpen] = useState(false);
 
   if (!data)
     return (
@@ -66,7 +70,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
         <ViewDetailContainer>
           <ViewDetailScroll>
             <StyledViewMore tooltipTitle="View Detail" to={details.stake(stakeId)} />
-            <CustomTooltip placement="top" title="Close">
+            <CustomTooltip title="Close">
               <CloseButton onClick={handleClose}>
                 <CgClose />
               </CloseButton>
@@ -133,7 +137,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
       <ViewDetailContainer>
         <ViewDetailScroll>
           <StyledViewMore tooltipTitle="View Detail" to={details.stake(stakeId)} />
-          <CustomTooltip placement="top" title="Close">
+          <CustomTooltip title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -159,7 +163,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADA(data.rewardAvailable) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -169,7 +173,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADA(data.rewardWithdrawn) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -177,7 +181,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
                 <InfoIcon />
                 Delegated to
               </DetailLabel>
-              <Tooltip placement="top" title={data.pool?.poolName || ""}>
+              <Tooltip title={data.pool?.poolName || ""}>
                 <Link to={details.delegation(data.pool?.poolId)}>
                   <DelegatedDetail>
                     {data.pool?.tickerName} - {data.pool?.poolName}
@@ -192,9 +196,13 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADA(data.totalStake) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
+            <Box textAlign={"right"}>
+              <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>
+            </Box>
+            <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={stakeId} />
           </Group>
           {tabs.map(({ key, label, icon }) => {
             return (

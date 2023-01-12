@@ -9,10 +9,11 @@ import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
 import { ReactComponent as TokenIcon } from "../../../commons/resources/icons/tokenIcon.svg";
 import { ReactComponent as AssetHolderIcon } from "../../../commons/resources/icons/assetHolder.svg";
-import { formatADA, getPageInfo, getShortHash, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
 import { LinkComponent, TitleTab } from "./styles";
 import { Tooltip } from "@mui/material";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 enum TABS {
   TOKENS = "tokens",
@@ -31,7 +32,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     key: "id",
     minWidth: "100px",
     render: r => (
-      <Tooltip placement="top" title={r.fingerprint}>
+      <Tooltip title={r.fingerprint}>
         <LinkComponent to={details.token(r.fingerprint)}>{getShortHash(r.fingerprint)}</LinkComponent>
       </Tooltip>
     ),
@@ -46,7 +47,11 @@ const columnsToken: Column<TokenPolicys>[] = [
     title: "Total Supply",
     key: "totalSupply",
     minWidth: "150px",
-    render: r => <>{formatADA(r?.supply ? +r.supply * 10 ** 6 : "")}</>,
+    render: r => (
+      <CustomTooltip title={formatADAFull(r?.supply ? +r.supply * 10 ** 6 : "")}>
+        <Box component={"span"}>{formatADA(r?.supply ? +r.supply * 10 ** 6 : "")}</Box>
+      </CustomTooltip>
+    ),
   },
   {
     title: "Total Transactions",
@@ -62,7 +67,7 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     key: "address",
     minWidth: "50px",
     render: r => (
-      <Tooltip placement="top" title={r.address}>
+      <Tooltip title={r.address}>
         <LinkComponent to={details.address(r.address)}>{getShortWallet(r.address || "")}</LinkComponent>
       </Tooltip>
     ),
@@ -78,7 +83,7 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     key: "id",
     minWidth: "100px",
     render: r => (
-      <Tooltip placement="top" title={r.fingerprint}>
+      <Tooltip title={r.fingerprint}>
         <LinkComponent to={details.token(r.fingerprint)}>{getShortHash(r.fingerprint || "")}</LinkComponent>
       </Tooltip>
     ),
@@ -87,13 +92,17 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     title: "Balance",
     key: "Balance",
     minWidth: "150px",
-    render: r => <>{formatADA(r.quantity ? r.quantity * 10 ** 6 : "")}</>,
+    render: r => (
+      <CustomTooltip title={formatADAFull(r?.quantity)}>
+        <Box component={"span"}>{formatADA(r.quantity ? r.quantity * 10 ** 6 : "")}</Box>
+      </CustomTooltip>
+    ),
   },
 ];
 
 const tabs: {
   label: React.ReactNode;
-  key: TABS
+  key: TABS;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   columns: Column<PolicyHolder>[] | Column<TokenPolicys>[];
 }[] = [

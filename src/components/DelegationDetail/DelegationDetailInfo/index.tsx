@@ -139,7 +139,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoValue>
               {data?.rewardAccounts ? (
                 <>
-                  <CustomTooltip placement="top" title={data?.rewardAccounts[0] || ""}>
+                  <CustomTooltip title={data?.rewardAccounts[0] || ""}>
                     <Box
                       component={Link}
                       to={details.stake(data?.rewardAccounts[0] || "")}
@@ -188,7 +188,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoValue>
               {data?.ownerAccounts ? (
                 <>
-                  <CustomTooltip placement="top" title={data?.ownerAccounts[0] || ""}>
+                  <CustomTooltip title={data?.ownerAccounts[0] || ""}>
                     <Box
                       component={Link}
                       color={props => `${props.colorBlue} !important`}

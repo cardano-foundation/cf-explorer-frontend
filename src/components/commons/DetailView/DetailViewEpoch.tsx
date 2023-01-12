@@ -56,7 +56,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
         <ViewDetailContainer>
           <ViewDetailScroll>
             <StyledViewMore tooltipTitle="View Detail" to={details.epoch(epochNo)} />
-            <CustomTooltip placement="top" title="Close">
+            <CustomTooltip title="Close">
               <CloseButton onClick={handleClose}>
                 <CgClose />
               </CloseButton>
@@ -128,7 +128,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
       <ViewDetailContainer>
         <ViewDetailScroll>
           <StyledViewMore tooltipTitle="View Detail" to={details.epoch(epochNo)} />
-          <CustomTooltip placement="top" title="Close">
+          <CustomTooltip title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -190,7 +190,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADA(data.outSum) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
           </Group>

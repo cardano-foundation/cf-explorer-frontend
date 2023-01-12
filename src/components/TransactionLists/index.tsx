@@ -3,7 +3,7 @@ import { stringify } from "qs";
 import { Box } from "@mui/material";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { formatADA, getPageInfo, getShortHash } from "../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, getShortHash } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
@@ -42,7 +42,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, ur
 
       render: r => (
         <div>
-          <CustomTooltip title={r.hash} placement="top">
+          <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
         </div>
@@ -59,10 +59,12 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, ur
       key: "fee",
       minWidth: 120,
       render: r => (
-        <Box display="flex" alignItems="center">
-          <Box mr={1}>{formatADA(r.fee) || 0}</Box>
-          <img src={AIcon} alt="a icon" />
-        </Box>
+        <CustomTooltip title={formatADAFull(r.fee)}>
+          <Box display="inline-flex" alignItems="center">
+            <Box mr={1}>{formatADA(r.fee) || 0}</Box>
+            <img src={AIcon} alt="a icon" />
+          </Box>
+        </CustomTooltip>
       ),
     },
     {
@@ -70,10 +72,12 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, ur
       minWidth: 120,
       key: "ouput",
       render: r => (
-        <Box display="flex" alignItems="center">
-          <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
-          <img src={AIcon} alt="a icon" />
-        </Box>
+        <CustomTooltip title={formatADAFull(r.totalOutput)}>
+          <Box display="inline-flex" alignItems="center">
+            <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
+            <img src={AIcon} alt="a icon" />
+          </Box>
+        </CustomTooltip>
       ),
     },
   ];

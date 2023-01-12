@@ -66,7 +66,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
             {formatADA(data?.totalStake || 0)}
             <ADAToken />
           </StyledFlexValue>
-          <ButtonModal onClick={() => setOpen(true)}>View all address</ButtonModal>
+          <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>
         </Box>
       ),
     },
@@ -106,7 +106,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
     <Box>
       <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
         <Box>
-          <BackButton to={routers.STAKE_LIST}>
+          <BackButton to={routers.STAKE_LIST.replace(":poolType?", "registration")}>
             <HiArrowLongLeft />
             <BackText>Back</BackText>
           </BackButton>

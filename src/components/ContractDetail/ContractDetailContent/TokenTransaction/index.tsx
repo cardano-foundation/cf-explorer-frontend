@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
 import moment from "moment";
-import { formatADA, getPageInfo, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import Table, { Column } from "../../../commons/Table";
 import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../../commons/CustomTooltip";
@@ -35,7 +35,7 @@ const columns: Column<Transactions>[] = [
   {
     title: "Time",
     key: "time",
-    minWidth: "200px",
+    minWidth: "180px",
 
     render: r => <SmallText>{moment(r.time).format("MM/DD/YYYY HH:mm:ss")}</SmallText>,
   },
@@ -89,10 +89,12 @@ const columns: Column<Transactions>[] = [
     key: "fee",
     minWidth: "120px",
     render: r => (
-      <PriceValue>
-        <SmallText>{formatADA(r.fee) || 0}</SmallText>
-        <PriceIcon src={AIcon} alt="a icon" />
-      </PriceValue>
+      <CustomTooltip title={formatADAFull(r.fee)}>
+        <PriceValue>
+          <SmallText>{formatADA(r.fee) || 0}</SmallText>
+          <PriceIcon src={AIcon} alt="a icon" />
+        </PriceValue>
+      </CustomTooltip>
     ),
   },
   {
@@ -100,10 +102,12 @@ const columns: Column<Transactions>[] = [
     minWidth: "120px",
     key: "ouput",
     render: r => (
-      <PriceValue>
-        <SmallText>{formatADA(r.totalOutput) || 0}</SmallText>
-        <PriceIcon src={AIcon} alt="a icon" />
-      </PriceValue>
+      <CustomTooltip title={formatADAFull(r.totalOutput)}>
+        <PriceValue>
+          <SmallText>{formatADA(r.totalOutput) || 0}</SmallText>
+          <PriceIcon src={AIcon} alt="a icon" />
+        </PriceValue>
+      </CustomTooltip>
     ),
   },
 ];

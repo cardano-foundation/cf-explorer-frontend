@@ -5,7 +5,7 @@ import moment from "moment";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
-import { formatADA, getPageInfo, getShortHash, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
 import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -36,7 +36,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
 
       render: r => (
         <>
-          <CustomTooltip title={r.hash} placement="top">
+          <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
           <br />
@@ -66,7 +66,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
             <Flex>
               <Label>Input: </Label>
               <div>
-                <CustomTooltip title={r.addressesInput[0]} placement="top">
+                <CustomTooltip title={r.addressesInput[0]}>
                   <StyledLink to={details.address(r.addressesInput[0])}>
                     {getShortWallet(r.addressesInput[0])}
                   </StyledLink>
@@ -78,7 +78,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
             <Flex>
               <Label>Output: </Label>
               <div>
-                <CustomTooltip title={r.addressesOutput[0]} placement="top">
+                <CustomTooltip title={r.addressesOutput[0]}>
                   <StyledLink to={details.address(r.addressesOutput[0])}>
                     {getShortWallet(r.addressesOutput[0])}
                   </StyledLink>
@@ -96,10 +96,12 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       key: "fee",
       minWidth: "120px",
       render: r => (
-        <PriceValue>
-          <SmallText>{formatADA(r.fee) || 0}</SmallText>
-          <PriceIcon src={AIcon} alt="a icon" />
-        </PriceValue>
+        <CustomTooltip title={formatADAFull(r.fee)}>
+          <PriceValue>
+            <SmallText>{formatADA(r.fee) || 0}</SmallText>
+            <PriceIcon src={AIcon} alt="a icon" />
+          </PriceValue>
+        </CustomTooltip>
       ),
     },
     {
@@ -107,10 +109,12 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       minWidth: "120px",
       key: "ouput",
       render: r => (
-        <PriceValue>
-          <SmallText>{formatADA(r.totalOutput) || 0}</SmallText>
-          <PriceIcon src={AIcon} alt="a icon" />
-        </PriceValue>
+        <CustomTooltip title={formatADAFull(r.totalOutput)}>
+          <PriceValue>
+            <SmallText>{formatADA(r.totalOutput) || 0}</SmallText>
+            <PriceIcon src={AIcon} alt="a icon" />
+          </PriceValue>
+        </CustomTooltip>
       ),
     },
   ];

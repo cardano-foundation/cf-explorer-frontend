@@ -4,10 +4,10 @@ import { ButtonClose, ModalContainer } from "./styles";
 import closeIcon from "../../../commons/resources/icons/closeIcon.svg";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import Table, { Column } from "../../commons/Table";
-import { formatADA, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, getShortWallet } from "../../../commons/utils/helper";
 import { Link, useHistory } from "react-router-dom";
 import { details } from "../../../commons/routers";
-import { ADAToken } from "../../commons/Token";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 interface ModalAllAddressProps {
   open: boolean;
@@ -45,9 +45,9 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
       title: "Balance",
       minWidth: 80,
       render: (r, idx) => (
-        <>
-          {formatADA(r.balance || 0)} <ADAToken />
-        </>
+        <CustomTooltip title={formatADAFull(r.balance)}>
+          <Box component={"span"}>{formatADA(r.balance || 0)}</Box>
+        </CustomTooltip>
       ),
       key: "Balance",
     },
@@ -60,7 +60,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
           <img src={closeIcon} alt="icon close" />
         </ButtonClose>
         <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Space Mono", monospace, sans-serif '}>
-          Address
+          Addresses list
         </Box>
         <Box>
           <Table
