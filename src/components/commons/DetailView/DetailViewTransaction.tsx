@@ -207,7 +207,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                 Transaction hash
               </DetailLabel>
               <DetailValue>
-                <CustomTooltip title={hash}>
+                <CustomTooltip title={hash} placement="top-start">
                   <StyledLink to={details.transaction(hash)}>{getShortHash(hash)}</StyledLink>
                 </CustomTooltip>
                 <CopyButton text={hash} />
@@ -220,7 +220,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                   Input
                 </DetailLabel>
                 <DetailValue>
-                  <CustomTooltip title={input}>
+                  <CustomTooltip title={input} placement="top-start">
                     <StyledLink to={details.address(input)}>{getShortWallet(input)}</StyledLink>
                   </CustomTooltip>
                   <CopyButton text={input} />
@@ -234,7 +234,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                   Output
                 </DetailLabel>
                 <DetailValue>
-                  <CustomTooltip title={output}>
+                  <CustomTooltip title={output} placement="top-start">
                     <StyledLink to={details.address(output)}>{getShortWallet(output)}</StyledLink>
                   </CustomTooltip>
                   <CopyButton text={output} />
