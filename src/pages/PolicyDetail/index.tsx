@@ -13,7 +13,7 @@ const PolicyDetail = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Policy ${policyId} | Cardano Explorer`;
-  }, []);
+  }, [policyId]);
   
   if ((initialized && !data) || error) return <NoRecord />;
 

@@ -75,7 +75,7 @@ const Card = ({
                       width={"auto"}
                     >
                       <Link to={details.address(i.address)}>
-                        <CustomTooltip title={i.address} placement="top">
+                        <CustomTooltip title={i.address}>
                           <Box color={props => props.colorBlue} fontWeight="bold" className={styles.ffText}>
                             {getShortWallet(i.address)}
                           </Box>
@@ -108,7 +108,7 @@ const Card = ({
                     <Box mr={3}>
                       <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
                         <Link to={details.transaction(i.txHash)}>
-                          <CustomTooltip title={i.txHash} placement="top">
+                          <CustomTooltip title={i.txHash}>
                             <Box
                               component={"span"}
                               fontWeight="bold"

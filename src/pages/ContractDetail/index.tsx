@@ -17,7 +17,7 @@ const ContractDetail: React.FC = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Contract ${address} | Cardano Explorer`;
-  }, []);
+  }, [address]);
   
   if ((initialized && !data) || error) return <NoRecord />;
 

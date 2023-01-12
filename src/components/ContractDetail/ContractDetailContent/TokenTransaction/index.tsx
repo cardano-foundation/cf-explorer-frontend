@@ -31,7 +31,7 @@ const columns: Column<Transactions>[] = [
 
     render: r => (
       <>
-        <CustomTooltip title={r.hash} placement="top">
+        <CustomTooltip title={r.hash}>
           <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
         </CustomTooltip>
         <br />
@@ -68,7 +68,7 @@ const columns: Column<Transactions>[] = [
           <Flex>
             <Label>Input: </Label>
             <div>
-              <CustomTooltip title={r.addressesInput[0]} placement="top">
+              <CustomTooltip title={r.addressesInput[0]}>
                 <StyledLink to={details.address(r.addressesInput[0])}>{getShortWallet(r.addressesInput[0])}</StyledLink>
               </CustomTooltip>
               <br />
@@ -78,7 +78,7 @@ const columns: Column<Transactions>[] = [
           <Flex>
             <Label>Output: </Label>
             <div>
-              <CustomTooltip title={r.addressesOutput[0]} placement="top">
+              <CustomTooltip title={r.addressesOutput[0]}>
                 <StyledLink to={details.address(r.addressesOutput[0])}>
                   {getShortWallet(r.addressesOutput[0])}
                 </StyledLink>

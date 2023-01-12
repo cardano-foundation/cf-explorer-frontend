@@ -91,7 +91,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
       </HeaderContainer>
       <PoolId>
-        <CustomTooltip title={poolId} placement="top">
+        <CustomTooltip title={poolId}>
           <Link to={details.delegation(poolId)}>
             <PoolIdLabel>Pool Id: </PoolIdLabel>
             <PoolIdValue>{poolId}</PoolIdValue>

@@ -19,8 +19,8 @@ import CopyButton from "../../commons/CopyButton";
 import { details } from "../../../commons/routers";
 import DropdownDetail from "../../commons/DropdownDetail";
 import { BiShowAlt } from "react-icons/bi";
-import { Tooltip } from "@mui/material";
 import { RootState } from "../../../stores/types";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 interface Props {
   data: Transaction | null;
@@ -66,11 +66,11 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
       value: data?.utxOs && data?.utxOs?.inputs?.length > 0 && (
         <Box position={"relative"}>
-          <Tooltip title={data?.utxOs?.inputs[0]?.address || ""} placement="top">
+          <CustomTooltip title={data?.utxOs?.inputs[0]?.address || ""}>
             <StyledLink to={details.address(data?.utxOs?.inputs[0]?.address || "")}>
               {getShortWallet(data?.utxOs?.inputs[0]?.address || "")}
             </StyledLink>
-          </Tooltip>
+          </CustomTooltip>
           <CopyButton text={data?.utxOs?.inputs[0]?.address || ""} />
           {openListInput && (
             <DropdownDetail
@@ -105,11 +105,11 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
       value: data?.utxOs && data?.utxOs?.outputs?.length > 0 && (
         <Box position={"relative"}>
-          <Tooltip title={data?.utxOs?.outputs[0]?.address || ""} placement="top">
+          <CustomTooltip title={data?.utxOs?.outputs[0]?.address || ""}>
             <StyledLink to={details.address(data?.utxOs?.outputs[0]?.address || "")}>
               {getShortWallet(data?.utxOs?.outputs[0]?.address || "")}
             </StyledLink>
-          </Tooltip>
+          </CustomTooltip>
           <CopyButton text={data?.utxOs?.outputs[0]?.address || ""} />
           {openListOutput && (
             <DropdownDetail

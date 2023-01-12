@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Box, Grid } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-
 import {
   BoxInfo,
   BoxInfoItem,
@@ -20,10 +19,11 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import Card from "../../commons/Card";
-import { formatADA, formatADAFull, formatPrice, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, formatPrice } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { BigNumber } from "bignumber.js";
 import CustomTooltip from "../../commons/CustomTooltip";
+
 type AnalyticsData = { date: string; value: number };
 
 const options = [
@@ -44,7 +44,7 @@ const AddressAnalytics: React.FC = () => {
   const categories = data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
   const minBalance = Math.min(...(balance || []), 0);
   const maxBalance = Math.max(...(balance || []), 0);
-  
+
   return (
     <Card title="Analytics" pt={5}>
       <Wrapper container columns={24}>

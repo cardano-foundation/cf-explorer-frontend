@@ -43,7 +43,6 @@ import CustomTooltip from "../CustomTooltip";
 import { ADAToken } from "../Token";
 import { TbFileCheck } from "react-icons/tb";
 import CopyButton from "../CopyButton";
-import { Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import ModalAllAddress from "../../StakeDetail/ModalAllAddress";

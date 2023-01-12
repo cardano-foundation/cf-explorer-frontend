@@ -61,7 +61,7 @@ const Contracts: React.FC<ContractsProps> = ({ data }) => {
             return (
               <Box display={"flex"} alignItems="center" padding={"15px 0 0"} key={key}>
                 <Box mx={"auto"} display="flex" alignItems={"center"} className={styles.ffTitle}>
-                  <CustomTooltip title={ct.contract} placement="top">
+                  <CustomTooltip title={ct.contract}>
                     <div>{getShortWallet(ct.contract)}</div>
                   </CustomTooltip>
                 </Box>

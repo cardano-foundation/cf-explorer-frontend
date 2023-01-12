@@ -59,7 +59,7 @@ const DelegationDetail: React.FC = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Delegation Pool ${poolId} | Cardano Explorer`;
-  }, []);
+  }, [poolId]);
   
   if ((initialized && !data) || error) return <NoRecord />;
 

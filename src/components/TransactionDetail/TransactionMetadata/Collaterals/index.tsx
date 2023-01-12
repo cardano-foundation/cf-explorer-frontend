@@ -39,7 +39,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
             <div>
               From:{" "}
               <Link to={details.address(item?.address)}>
-                <CustomTooltip title={item?.address} placement="top">
+                <CustomTooltip title={item?.address}>
                   <Box
                     component={"span"}
                     color={props => props.colorBlue}
@@ -65,7 +65,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
           </Box>
           <Box display="flex" alignItems={"center"}>
             <Link to={details.transaction(item?.txHash)}>
-              <CustomTooltip title={item?.txHash || ""} placement="top">
+              <CustomTooltip title={item?.txHash || ""}>
                 <Box component={"span"} color={props => props.colorBlue} fontFamily="Helvetica, monospace">
                   {getShortHash(item?.txHash || "")}
                 </Box>

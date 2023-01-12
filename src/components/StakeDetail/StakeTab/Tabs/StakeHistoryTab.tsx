@@ -15,7 +15,7 @@ const columns: Column<StakeHistory>[] = [
     key: "hash",
     minWidth: "120px",
     render: r => (
-      <CustomTooltip title={r.txHash || ""} placement="top">
+      <CustomTooltip title={r.txHash || ""}>
         <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash || "")}</StyledLink>
       </CustomTooltip>
     ),
