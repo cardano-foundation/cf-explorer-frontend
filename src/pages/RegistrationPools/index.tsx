@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 import { parse, stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
@@ -81,6 +81,11 @@ const RegistrationPools = () => {
   const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
 
   const fetchData = useFetchList<Registration>(`/pool/${poolType}`, pageInfo);
+
+  useEffect(() => {
+    const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";
+    document.title = `${title} Pools | Cardano Explorer`;
+  }, [poolType]);
 
   const onChangeTab = (e: React.SyntheticEvent, poolType: POOL_TYPE) => {
     history.push(routers.REGISTRATION_POOLS.replace(":poolType", poolType));

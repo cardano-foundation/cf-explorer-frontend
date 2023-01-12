@@ -1,6 +1,6 @@
 import moment from "moment";
 import { stringify } from "qs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useWindowSize } from "react-use";
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -68,6 +68,11 @@ const Stake: React.FC<IStake> = () => {
   const pageInfo = getPageInfo(search);
 
   const fetchData = useFetchList<IStakeKey>(`/stake/${poolType}`, pageInfo);
+
+  useEffect(() => {
+    const title = poolType === POOL_TYPE.REGISTRATION ? "Registrations" : "Deregistrations";
+    document.title = `${title} Stake Keys | Cardano Explorer`;
+  }, [poolType]);
 
   const onChangeTab = (e: React.SyntheticEvent, poolType: POOL_TYPE) => {
     history.push(routers.STAKE_LIST.replace(":poolType", poolType));

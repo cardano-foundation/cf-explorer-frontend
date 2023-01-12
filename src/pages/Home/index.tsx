@@ -1,5 +1,5 @@
 import { Container, styled } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import LatestStories from "../../components/Home/LatestStories";
 import LatestTransactions from "../../components/Home/LatestTransactions";
 import HomeStatistic from "../../components/Home/Statistic";
@@ -14,6 +14,11 @@ const HomeContainer = styled(Container)`
 interface Props {}
 
 const Home: React.FC<Props> = () => {
+
+  useEffect(() => { 
+    document.title = `Cardano Explorer`;
+  }, []);
+  
   return (
     <HomeContainer>
       <HomeStatistic />

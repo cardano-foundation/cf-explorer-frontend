@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { parse, stringify } from "qs";
 import moment from "moment";
@@ -29,6 +29,11 @@ const Tokens: React.FC<ITokenList> = () => {
     sort: query.sort ? `${query.sort}` : "supply,DESC",
   });
 
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Tokens List | Cardano Explorer`;
+  }, []);
+  
   const columns: Column<IToken>[] = [
     {
       title: "Icon",
