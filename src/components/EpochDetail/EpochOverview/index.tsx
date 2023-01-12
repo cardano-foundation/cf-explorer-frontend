@@ -10,7 +10,8 @@ import slotIcon from "../../../commons/resources/icons/slot.svg";
 import { TitleCard } from "../../BlockDetail/BlockOverview/styles";
 import { Box } from "@mui/material";
 import { ADAToken } from "../../commons/Token";
-import { formatADA } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull } from "../../../commons/utils/helper";
+import CustomTooltip from "../../commons/CustomTooltip";
 interface EpochOverviewProps {
   data: IDataEpoch | null;
   loading: boolean;
@@ -39,7 +40,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>End time </TitleCard>
-          <img src={infoIcon} alt="info icon"  width={18} />
+          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: moment(data?.endTime).format("MM/DD/YYYY hh:mm:ss"),
@@ -49,14 +50,15 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Total Output</TitleCard>
-          <img src={infoIcon} alt="info icon"  width={18} />
+          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: (
-        <>
-          {" "}
-          {formatADA(data?.outSum || 0)} <ADAToken />{" "}
-        </>
+        <CustomTooltip title={formatADAFull(data?.outSum || 0)}>
+          <Box component={"span"}>
+            {formatADA(data?.outSum || 0)} <ADAToken />
+          </Box>
+        </CustomTooltip>
       ),
     },
     {
