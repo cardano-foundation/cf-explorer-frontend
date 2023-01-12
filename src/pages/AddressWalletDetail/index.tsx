@@ -5,6 +5,7 @@ import AddressHeader from "../../components/AddressDetail/AddressHeader";
 import AddressAnalytics from "../../components/AddressDetail/AddressAnalytics";
 import useFetch from "../../commons/hooks/useFetch";
 import NoRecord from "../../components/commons/NoRecord";
+import { useEffect } from "react";
 
 const AddressWalletDetail = () => {
   const { address } = useParams<{ address: string }>();
@@ -14,6 +15,11 @@ const AddressWalletDetail = () => {
     state?.data
   );
 
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Address ${address} | Cardano Explorer`;
+  }, []);
+  
   if ((initialized && !data) || error) return <NoRecord />;
 
   return (

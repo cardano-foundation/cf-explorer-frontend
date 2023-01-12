@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { Box, Container, Skeleton, styled } from "@mui/material";
 import TransactionOverview from "../../components/TransactionDetail/TransactionOverview";
@@ -15,6 +15,11 @@ const Transaction: React.FC = () => {
   const { trxHash } = useParams<{ trxHash: string }>();
   const { state } = useLocation<{ data?: Transaction }>();
   const { data, loading, initialized, error } = useFetch<Transaction>(state?.data ? "" : `tx/${trxHash}`, state?.data);
+
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Transaction ${trxHash} | Cardano Explorer`;
+  }, []);
 
   if ((initialized && !data) || error) return <NoRecord />;
 
