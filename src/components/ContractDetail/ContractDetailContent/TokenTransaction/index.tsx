@@ -2,7 +2,14 @@ import React from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
 import moment from "moment";
-import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import {
+  formatADA,
+  formatADAFull,
+  getPageInfo,
+  getShortHash,
+  getShortWallet,
+  numberWithCommas,
+} from "../../../../commons/utils/helper";
 import Table, { Column } from "../../../commons/Table";
 import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../../commons/CustomTooltip";
@@ -15,7 +22,7 @@ const columns: Column<Transactions>[] = [
     title: "#",
     key: "id",
     minWidth: "40px",
-    render: (data, index) => <SmallText>{index + 1}</SmallText>,
+    render: (data, index) => <SmallText>{numberWithCommas(index + 1 || 0)}</SmallText>,
   },
   {
     title: "Trx Hash",

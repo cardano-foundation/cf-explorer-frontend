@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details } from "../../commons/routers";
-import { formatADA, formatADAFull, getShortWallet } from "../../commons/utils/helper";
+import { formatADA, formatADAFull, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table from "../../components/commons/Table";
@@ -15,7 +15,7 @@ const TopDelegators = () => {
   const history = useHistory();
   const { error, data, initialized, loading } = useFetchList<Contracts>("/stake/top-delegators", { page: 0, size: 50 });
 
-  useEffect(() => { 
+  useEffect(() => {
     document.title = `Top Delegators | Cardano Explorer`;
   }, []);
 
@@ -24,7 +24,7 @@ const TopDelegators = () => {
       title: "#",
       minWidth: 30,
       key: "index",
-      render: (r, idx) => idx + 1,
+      render: (r, idx) => numberWithCommas(idx + 1 || 0),
     },
     {
       title: "Addresses",
