@@ -181,13 +181,13 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
                 <InfoIcon />
                 Delegated to
               </DetailLabel>
-              <Tooltip title={data.pool?.poolName || ""}>
-                <Link to={details.delegation(data.pool?.poolId)}>
+              <CustomTooltip title={data.pool?.poolName || ""}>
+                <Box component={Link} display='inline-block' to={details.delegation(data.pool?.poolId)}>
                   <DelegatedDetail>
                     {data.pool?.tickerName} - {data.pool?.poolName}
                   </DelegatedDetail>
-                </Link>
-              </Tooltip>
+                </Box>
+              </CustomTooltip>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>

@@ -20,7 +20,7 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     render: r => (
       <PoolName to={details.delegation(r.poolId)}>
         <CustomTooltip title={r.poolName || r.poolId} placement="top">
-          <Box textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
+          <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
             {r.poolName || `Pool [${r.poolId}]`}
           </Box>
         </CustomTooltip>
@@ -64,10 +64,12 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     minWidth: "200px",
     key: "Saturation",
     render: r => (
-      <Box display="flex" alignItems="center">
-        <span>{formatPercent(r.saturation) || `0%`}</span>
-        <StyledLinearProgress variant="determinate" value={r.saturation * 100 || 0} />
-      </Box>
+      <CustomTooltip title={r.saturation ? r.saturation * 100 : 0} placement="top">
+        <Box display="flex" alignItems="center">
+          <span>{formatPercent(r.saturation) || `0%`}</span>
+          <StyledLinearProgress variant="determinate" value={r.saturation * 100 || 0} />
+        </Box>
+      </CustomTooltip>
     ),
   },
 ];
