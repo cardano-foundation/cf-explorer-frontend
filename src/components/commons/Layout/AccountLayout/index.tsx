@@ -60,7 +60,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
             ))}
           </Box>
         </SideBar>
-        <Box p={2}>{children}</Box>
+        <Box px={3} py={2} flex={1}>{children}</Box>
       </ContentBox>
     </Wrapper>
   );

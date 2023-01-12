@@ -295,8 +295,9 @@ const PaginationCustom = ({
               }}
             />
             <Box component={"span"} color={props => props.textColorPale} fontSize="0.875rem">
-              {(page - 1 >= 0 ? page - 1 : -0) * size + 1} -{" "}
-              {(page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size} of {pagination?.total || 0}
+              {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
+              {numberWithCommas((page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size)} of{" "}
+              {numberWithCommas(pagination?.total || 0)}
             </Box>
           </Box>
         );

@@ -12,6 +12,8 @@ import DetailViewToken from "../../components/commons/DetailView/DetailViewToken
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AssetName, Logo, StyledContainer, LogoEmpty } from "./styles";
 import CustomTooltip from "../../components/commons/CustomTooltip";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { Box } from "@mui/material";
 
 interface ITokenList {}
 
@@ -33,7 +35,7 @@ const Tokens: React.FC<ITokenList> = () => {
     window.history.replaceState({}, document.title);
     document.title = `Tokens List | Cardano Explorer`;
   }, []);
-  
+
   const columns: Column<IToken>[] = [
     {
       title: "Icon",
@@ -71,7 +73,16 @@ const Tokens: React.FC<ITokenList> = () => {
       title: "Created",
       key: "created",
       minWidth: "150px",
-      render: r => moment(r.createdOn).format("MM/DD/YYYY HH:mm:ss"),
+      render: r => (
+        <>
+          {moment(r.createdOn).format("MM/DD/YYYY HH:mm:ss")}{" "}
+          {JSON.stringify(token) === JSON.stringify(r) && (
+            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
+              <MdOutlineKeyboardArrowRight fontSize={30} />
+            </Box>
+          )}
+        </>
+      ),
     },
   ];
 

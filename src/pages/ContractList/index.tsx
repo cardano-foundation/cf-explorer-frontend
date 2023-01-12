@@ -4,7 +4,7 @@ import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { exchangeADAToUSD, formatADA, formatADAFull, getPageInfo, getShortWallet } from "../../commons/utils/helper";
+import { exchangeADAToUSD, formatADA, formatADAFull, getPageInfo, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
@@ -22,16 +22,16 @@ const Transactions: React.FC = () => {
   const fetchData = useFetchList<Contracts>("contracts", pageInfo);
   const { adaRate } = useSelector(({ system }: RootState) => system);
 
-  useEffect(() => { 
+  useEffect(() => {
     document.title = `Contracts List | Cardano Explorer`;
   }, []);
-  
+
   const columns: Column<Contracts>[] = [
     {
       title: "#",
       key: "id",
       minWidth: 30,
-      render: (_, index) => pageInfo.page * pageInfo.size + index + 1,
+      render: (_, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1||0),
     },
     {
       title: "Contract Addresses",

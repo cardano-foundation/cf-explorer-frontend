@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
-import { formatADAFull, formatBalanceWithDecimal, getShortWallet } from "../../commons/utils/helper";
+import { formatADAFull, formatBalanceWithDecimal, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
@@ -24,7 +24,7 @@ const TopAddresses: React.FC<Props> = () => {
       title: "#",
       key: "id",
       minWidth: 30,
-      render: (_, index) => index + 1,
+      render: (_, index) => numberWithCommas(index + 1 || 0),
     },
     {
       title: "Addresses",
