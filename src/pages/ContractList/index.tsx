@@ -4,7 +4,7 @@ import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { exchangeADAToUSD, formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
+import { exchangeADAToUSD, formatADA, formatADAFull, getPageInfo, getShortWallet } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
@@ -26,7 +26,7 @@ const Transactions: React.FC = () => {
       title: "#",
       key: "id",
       minWidth: 30,
-      render: (_, index) => index + 1,
+      render: (_, index) => pageInfo.page * pageInfo.size + index + 1,
     },
     {
       title: "Contract Addresses",
@@ -46,7 +46,7 @@ const Transactions: React.FC = () => {
       key: "balance",
       minWidth: 60,
       render: r => (
-        <CustomTooltip placement="top" title={formatADAFull(r.balance)}>
+        <CustomTooltip title={formatADAFull(r.balance)}>
           <Box display="inline-flex" alignItems="center">
             <Box mr={1}>{formatADA(r.balance) || 0}</Box>
             <img src={AIcon} alt="a icon" />

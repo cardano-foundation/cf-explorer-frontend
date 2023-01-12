@@ -52,7 +52,7 @@ const DelegationEpochList = ({
       minWidth: "120px",
 
       render: data => (
-        <CustomTooltip placement="top" title={formatADAFull(data.stakeAmount)}>
+        <CustomTooltip title={formatADAFull(data.stakeAmount)}>
           <Box component={"span"}>{formatADA(data.stakeAmount)}</Box>
         </CustomTooltip>
       ),
@@ -62,7 +62,7 @@ const DelegationEpochList = ({
       key: "delegatorReward",
       minWidth: "120px",
       render: data => (
-        <CustomTooltip placement="top" title={formatADAFull(data.delegators)}>
+        <CustomTooltip title={formatADAFull(data.delegators)}>
           <Box component={"span"}>{formatADA(data.delegators)}</Box>
         </CustomTooltip>
       ),
@@ -73,7 +73,7 @@ const DelegationEpochList = ({
       minWidth: "120px",
 
       render: data => (
-        <CustomTooltip placement="top" title={formatADAFull(data.fee)}>
+        <CustomTooltip title={formatADAFull(data.fee)}>
           <Box component={"span"}>{formatADA(data.fee)}</Box>
         </CustomTooltip>
       ),
@@ -137,7 +137,7 @@ const DelegationStakingDelegatorsList = ({
       render: data =>
         data.address && (
           <div style={{ display: "flex", alignItems: "center" }}>
-            <CustomTooltip placement="top" title={data.address || ""}>
+            <CustomTooltip title={data.address || ""}>
               <StyledLink to={details.address(data.address)}>{getShortWallet(data.address || "")}</StyledLink>
             </CustomTooltip>
             <CopyButton text={data.address || ""} />
@@ -149,7 +149,7 @@ const DelegationStakingDelegatorsList = ({
       key: "value",
       minWidth: "120px",
       render: data => (
-        <CustomTooltip placement="top" title={formatADAFull(data.totalStake)}>
+        <CustomTooltip title={formatADAFull(data.totalStake)}>
           <Box component={"span"}>{formatADA(data.totalStake || 0)}</Box>
         </CustomTooltip>
       ),
@@ -165,7 +165,7 @@ const DelegationStakingDelegatorsList = ({
       key: "fees",
       minWidth: "120px",
       render: data => (
-        <CustomTooltip placement="top" title={formatADAFull(data.fee)}>
+        <CustomTooltip title={formatADAFull(data.fee)}>
           <Box component={"span"}>{formatADA(data.fee || 0)}</Box>
         </CustomTooltip>
       ),

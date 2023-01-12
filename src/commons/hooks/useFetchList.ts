@@ -31,7 +31,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean): Fe
 
   const getList = useCallback(async () => {
     if (!url) return;
-    let service: AxiosInstance = isAuth ? defaultAxios : authAxios;
+    let service: AxiosInstance = isAuth ? authAxios : defaultAxios;
     if (url.search("http://") === 0 || url.search("https://") === 0) {
       service = axios;
     }

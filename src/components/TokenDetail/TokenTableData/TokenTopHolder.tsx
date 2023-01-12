@@ -26,7 +26,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       title: "#",
       key: "id",
       minWidth: "40px",
-      render: (data, index) => <SmallText>{index + 1}</SmallText>,
+      render: (data, index) => <SmallText>{pageInfo.page * pageInfo.size + index + 1}</SmallText>,
     },
     {
       title: "Address",
@@ -43,7 +43,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       key: "balance",
       minWidth: "200px",
       render: r => (
-        <CustomTooltip placement="top" title={formatADAFull(r?.quantity ? r.quantity * 1000000 : 0)}>
+        <CustomTooltip title={formatADAFull(r?.quantity ? r.quantity * 1000000 : 0)}>
           <PriceValue>
             <SmallText>{formatADA(r?.quantity ? r.quantity * 1000000 : 0) || 0}</SmallText>
           </PriceValue>

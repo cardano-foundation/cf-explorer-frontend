@@ -82,7 +82,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
         <ViewDetailContainer>
           <ViewDetailScroll>
             <StyledViewMore tooltipTitle="View Detail" to={details.transaction(hash)} />
-            <CustomTooltip placement="top" title="Close">
+            <CustomTooltip title="Close">
               <CloseButton onClick={handleClose}>
                 <CgClose />
               </CloseButton>
@@ -163,7 +163,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
       <ViewDetailContainer>
         <ViewDetailScroll>
           <StyledViewMore tooltipTitle="View Detail" to={details.transaction(hash)} />
-          <CustomTooltip placement="top" title="Close">
+          <CustomTooltip title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -207,7 +207,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                 Transaction hash
               </DetailLabel>
               <DetailValue>
-                <CustomTooltip placement="top" title={hash}>
+                <CustomTooltip title={hash}>
                   <StyledLink to={details.transaction(hash)}>{getShortHash(hash)}</StyledLink>
                 </CustomTooltip>
                 <CopyButton text={hash} />
@@ -220,7 +220,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                   Input
                 </DetailLabel>
                 <DetailValue>
-                  <CustomTooltip placement="top" title={input}>
+                  <CustomTooltip title={input}>
                     <StyledLink to={details.address(input)}>{getShortWallet(input)}</StyledLink>
                   </CustomTooltip>
                   <CopyButton text={input} />
@@ -234,7 +234,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                   Output
                 </DetailLabel>
                 <DetailValue>
-                  <CustomTooltip placement="top" title={output}>
+                  <CustomTooltip title={output}>
                     <StyledLink to={details.address(output)}>{getShortWallet(output)}</StyledLink>
                   </CustomTooltip>
                   <CopyButton text={output} />

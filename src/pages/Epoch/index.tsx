@@ -39,7 +39,7 @@ const columns: Column<IDataEpoch>[] = [
     key: "outSum",
     minWidth: "100px",
     render: r => (
-      <CustomTooltip placement="top" title={formatADAFull(r.outSum)}>
+      <CustomTooltip title={formatADAFull(r.outSum)}>
         <Output>
           {formatADA(r.outSum)}
           <img src={AIcon} alt="ADA Icon" />

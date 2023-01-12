@@ -15,7 +15,6 @@ interface DetailCardProps {
   addressDestination?: string;
 }
 const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, loading, addressDestination }) => {
- console.log(addressDestination)
   if (loading) {
     return (
       <CardItem padding={0}>

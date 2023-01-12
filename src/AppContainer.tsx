@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import themes from "./themes";
 import { setOnDetailView } from "./stores/user";
-import { setAdaRate, setCurrentEpoch } from "./stores/system";
+import { setUsdMarket, setCurrentEpoch } from "./stores/system";
 import useFetch from "./commons/hooks/useFetch";
 import { COINGECKO_URL } from "./commons/utils/axios";
 interface Props {
@@ -19,11 +19,11 @@ const AppContainer: React.FC<Props> = props => {
   const { children } = props;
   const { theme } = useSelector(({ user }: RootState) => user);
   const currentEpoch = useFetch<EpochCurrentType>(`epoch/current`);
-  const currentPrice = useFetch<{ usd: number }>(`${COINGECKO_URL}simple/price?ids=cardano&vs_currencies=usd`);
+  const usdMarket = useFetch<CardanoMarket[]>(`${COINGECKO_URL}coins/markets?vs_currency=usd&ids=cardano`);
 
   useEffect(() => {
-    if (currentPrice.data) setAdaRate(currentPrice.data.usd);
-  }, [currentPrice.data]);
+    if (usdMarket.data?.[0]) setUsdMarket(usdMarket.data[0]);
+  }, [usdMarket.data]);
 
   useEffect(() => {
     if (currentEpoch.data) setCurrentEpoch(currentEpoch.data);

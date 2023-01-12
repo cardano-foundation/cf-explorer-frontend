@@ -17,59 +17,6 @@ interface TransactionListProps {
   selected?: number | null;
 }
 
-const columns: Column<Transactions>[] = [
-  {
-    title: "#",
-    key: "id",
-    minWidth: 30,
-    render: (data, index) => index + 1,
-  },
-  {
-    title: "Trx Hash",
-    key: "trxhash",
-    minWidth: 120,
-
-    render: r => (
-      <div>
-        <CustomTooltip title={r.hash} placement="top">
-          <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
-        </CustomTooltip>
-      </div>
-    ),
-  },
-  {
-    title: "Block",
-    key: "block",
-    minWidth: 60,
-    render: r => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>,
-  },
-  {
-    title: "Fees",
-    key: "fee",
-    minWidth: 120,
-    render: r => (
-      <CustomTooltip placement="top" title={formatADAFull(r.fee)}>
-        <Box display="inline-flex" alignItems="center">
-          <Box mr={1}>{formatADA(r.fee) || 0}</Box>
-          <img src={AIcon} alt="a icon" />
-        </Box>
-      </CustomTooltip>
-    ),
-  },
-  {
-    title: "Output",
-    minWidth: 120,
-    key: "ouput",
-    render: r => (
-      <CustomTooltip placement="top" title={formatADAFull(r.totalOutput)}>
-        <Box display="inline-flex" alignItems="center">
-          <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
-          <img src={AIcon} alt="a icon" />
-        </Box>
-      </CustomTooltip>
-    ),
-  },
-];
 const TransactionList: React.FC<TransactionListProps> = ({ underline = false, url, openDetail, selected }) => {
   const { search } = useLocation();
   const history = useHistory();
@@ -80,6 +27,60 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, ur
     if (openDetail) return openDetail(_, r, index);
     history.push(details.transaction(r.hash));
   };
+
+  const columns: Column<Transactions>[] = [
+    {
+      title: "#",
+      key: "id",
+      minWidth: 30,
+      render: (data, index) => pageInfo.page * pageInfo.size + index + 1,
+    },
+    {
+      title: "Trx Hash",
+      key: "trxhash",
+      minWidth: 120,
+
+      render: r => (
+        <div>
+          <CustomTooltip title={r.hash}>
+            <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
+          </CustomTooltip>
+        </div>
+      ),
+    },
+    {
+      title: "Block",
+      key: "block",
+      minWidth: 60,
+      render: r => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>,
+    },
+    {
+      title: "Fees",
+      key: "fee",
+      minWidth: 120,
+      render: r => (
+        <CustomTooltip title={formatADAFull(r.fee)}>
+          <Box display="inline-flex" alignItems="center">
+            <Box mr={1}>{formatADA(r.fee) || 0}</Box>
+            <img src={AIcon} alt="a icon" />
+          </Box>
+        </CustomTooltip>
+      ),
+    },
+    {
+      title: "Output",
+      minWidth: 120,
+      key: "ouput",
+      render: r => (
+        <CustomTooltip title={formatADAFull(r.totalOutput)}>
+          <Box display="inline-flex" alignItems="center">
+            <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
+            <img src={AIcon} alt="a icon" />
+          </Box>
+        </CustomTooltip>
+      ),
+    },
+  ];
 
   return (
     <Card title={"Transactions"} underline={underline}>
