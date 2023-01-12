@@ -3,7 +3,7 @@ import { stringify } from "qs";
 import { Box } from "@mui/material";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
@@ -34,7 +34,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
       title: "#",
       key: "id",
       minWidth: 30,
-      render: (data, index) => pageInfo.page * pageInfo.size + index + 1,
+      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0),
     },
     {
       title: "Trx Hash",

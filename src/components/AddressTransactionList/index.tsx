@@ -40,7 +40,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       title: "#",
       key: "id",
       minWidth: 30,
-      render: (data, index) => pageInfo.page * pageInfo.size + index + 1,
+      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0),
     },
     {
       title: "Trx Hash",

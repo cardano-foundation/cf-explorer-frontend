@@ -26,7 +26,9 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
       title: "#",
       key: "id",
       minWidth: "40px",
-      render: (data, index) => <SmallText>{pageInfo.page * pageInfo.size + index + 1}</SmallText>,
+      render: (data, index) => (
+        <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
+      ),
     },
     {
       title: "Trx Hash",

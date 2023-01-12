@@ -4,7 +4,7 @@ import { ButtonClose, ModalContainer } from "./styles";
 import closeIcon from "../../../commons/resources/icons/closeIcon.svg";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import Table, { Column } from "../../commons/Table";
-import { formatADA, formatADAFull, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import { Link, useHistory } from "react-router-dom";
 import { details } from "../../../commons/routers";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -25,7 +25,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
     {
       title: "#",
       minWidth: 20,
-      render: (r, index) => page * size + index + 1,
+      render: (r, index) => numberWithCommas((page - 1) * size + index + 1 || 0),
       key: "no",
     },
     {

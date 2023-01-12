@@ -5,7 +5,7 @@ import moment from "moment";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
-import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
 import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -27,7 +27,9 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       title: "#",
       key: "id",
       minWidth: "40px",
-      render: (data, index) => <SmallText>{pageInfo.page * pageInfo.size + index + 1}</SmallText>,
+      render: (data, index) => (
+        <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
+      ),
     },
     {
       title: "Trx Hash",
