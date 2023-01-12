@@ -7,7 +7,7 @@ import totalStakeIcon from "../../../commons/resources/icons/totalStake.svg";
 import rewardIcon from "../../../commons/resources/icons/reward.svg";
 import rewardWithdrawIcon from "../../../commons/resources/icons/rewardWithdraw.svg";
 import infoIcon from "../../../commons/resources/icons/info.svg";
-import { formatADA } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import {
   BackButton,
@@ -29,6 +29,7 @@ import {
 import { ADAToken } from "../../commons/Token";
 import { useParams } from "react-router-dom";
 import ModalAllAddress from "../ModalAllAddress";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 interface Props {
   data: IStakeKeyDetail | null;
@@ -94,10 +95,12 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <StyledFlexValue>
-          {formatADA(data?.rewardWithdrawn || 0)}
-          <ADAToken />
-        </StyledFlexValue>
+        <CustomTooltip title={formatADAFull(data?.rewardWithdrawn || 0)}>
+          <StyledFlexValue>
+            {formatADA(data?.rewardWithdrawn || 0)}
+            <ADAToken />
+          </StyledFlexValue>
+        </CustomTooltip>
       ),
     },
   ];
