@@ -1,8 +1,10 @@
 import moment from "moment";
 import { stringify } from "qs";
 import React, { useEffect, useState } from "react";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useWindowSize } from "react-use";
+import { Box } from "@mui/material";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details, routers } from "../../commons/routers";
 import { getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
@@ -19,44 +21,6 @@ enum POOL_TYPE {
   REGISTRATION = "registration",
   DEREREGISTRATION = "de-registration",
 }
-
-const columns: Column<IStakeKey>[] = [
-  {
-    title: "Trx Hash",
-    key: "trxHash",
-    render: r => (
-      <CustomTooltip title={r.txHash} placement="top">
-        <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
-      </CustomTooltip>
-    ),
-  },
-  {
-    title: "Time",
-    key: "time",
-    render: r => <>{moment(r.txTime).format("MM/DD/YYYY HH:mm:ss")}</>,
-  },
-  {
-    title: "Block",
-    key: "block",
-    render: r => (
-      <>
-        <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
-        <div style={{ display: "flex", marginTop: "6px" }}>
-          <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/{r.slotNo}
-        </div>
-      </>
-    ),
-  },
-  {
-    title: "Stake Key",
-    key: "stakeKey",
-    render: r => (
-      <CustomTooltip title={r.stakeKey} placement="top">
-        <StyledLink to={details.stake(r.stakeKey)}>{getShortWallet(r.stakeKey)}</StyledLink>
-      </CustomTooltip>
-    ),
-  },
-];
 
 const Stake: React.FC<IStake> = () => {
   const [stake, setStake] = useState<string | null>(null);
@@ -93,6 +57,51 @@ const Stake: React.FC<IStake> = () => {
     setSelected(null);
   };
 
+  const columns: Column<IStakeKey>[] = [
+    {
+      title: "Trx Hash",
+      key: "trxHash",
+      render: r => (
+        <CustomTooltip title={r.txHash} placement="top">
+          <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
+        </CustomTooltip>
+      ),
+    },
+    {
+      title: "Time",
+      key: "time",
+      render: r => <>{moment(r.txTime).format("MM/DD/YYYY HH:mm:ss")}</>,
+    },
+    {
+      title: "Block",
+      key: "block",
+      render: r => (
+        <>
+          <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
+          <div style={{ display: "flex", marginTop: "6px" }}>
+            <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/{r.slotNo}
+          </div>
+        </>
+      ),
+    },
+    {
+      title: "Stake Key",
+      key: "stakeKey",
+      render: (r, idx) => (
+        <>
+          <CustomTooltip title={r.stakeKey} placement="top">
+            <StyledLink to={details.stake(r.stakeKey)}>{getShortWallet(r.stakeKey)}</StyledLink>
+          </CustomTooltip>
+
+          {selected === idx && (
+            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
+              <MdOutlineKeyboardArrowRight fontSize={30} />
+            </Box>
+          )}
+        </>
+      ),
+    },
+  ];
   return (
     <StyledContainer>
       <Card>

@@ -3,21 +3,23 @@ import { stringify } from "qs";
 import { Box } from "@mui/material";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { formatADA, formatADAFull, getPageInfo, getShortHash } from "../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 interface TransactionListProps {
   underline?: boolean;
   url: string;
   openDetail?: (_: any, r: Transactions, index: number) => void;
   selected?: number | null;
+  hash?: string | null;
 }
 
-const TransactionList: React.FC<TransactionListProps> = ({ underline = false, url, openDetail, selected }) => {
+const TransactionList: React.FC<TransactionListProps> = ({ underline = false, url, openDetail, selected, hash }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -33,7 +35,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, ur
       title: "#",
       key: "id",
       minWidth: 30,
-      render: (data, index) => pageInfo.page * pageInfo.size + index + 1,
+      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0),
     },
     {
       title: "Trx Hash",
@@ -76,6 +78,11 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, ur
           <Box display="inline-flex" alignItems="center">
             <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
             <img src={AIcon} alt="a icon" />
+            {hash === r.hash && (
+              <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
+                <MdOutlineKeyboardArrowRight fontSize={30} />
+              </Box>
+            )}
           </Box>
         </CustomTooltip>
       ),

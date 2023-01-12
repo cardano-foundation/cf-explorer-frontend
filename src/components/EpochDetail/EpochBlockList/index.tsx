@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import Card from "../../commons/Card";
 import Table, { Column } from "../../commons/Table";
-import { formatADA, formatADAFull, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
 import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer, StyledLink } from "./styles";
@@ -27,7 +27,9 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       key: "#",
       minWidth: "50px",
       render: (_, index) => {
-        return <StyledColorBlueDard>{pageInfo.page * pageInfo.size + index + 1}</StyledColorBlueDard>;
+        return (
+          <StyledColorBlueDard>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</StyledColorBlueDard>
+        );
       },
     },
     {
