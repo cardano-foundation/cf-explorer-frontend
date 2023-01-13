@@ -180,7 +180,16 @@ const Chart = ({ data }: { data: WalletAddressChartProps["data"] }) => {
           },
         },
         legend: { enabled: false },
-        tooltip: { shared: true },
+        // tooltip: { shared: true },
+        tooltip: {
+          // formatter: function (tooltip: any, x: any, points: any) {
+          //   let s = `<b>${x}</b>`;
+          //   points.forEach(point => (s += `<br/>${point.series.name}: ${point.y}m`));
+
+          //   return s;
+          // },
+          borderColor: "#0598DC",
+        },
         credits: { enabled: false },
         series: [
           {
