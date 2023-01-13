@@ -1,8 +1,6 @@
 import { Avatar, Box, IconButton } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
 import { routers } from "../../../../commons/routers";
-import { RootState } from "../../../../stores/types";
 import { ContentBox, NavItem, SideBar, Wrapper } from "./styled";
 
 import editAva from "../../../../commons/resources/icons/editAva.svg";
@@ -15,7 +13,6 @@ interface Props {
 
 const AccountLayout: React.FC<Props> = ({ children }) => {
   const { pathname } = useLocation();
-  const { userData } = useSelector(({ user }: RootState) => user);
 
   // if (!userData) return <NotFound />;
   return (
@@ -60,7 +57,9 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
             ))}
           </Box>
         </SideBar>
-        <Box px={3} py={2} flex={1}>{children}</Box>
+        <Box px={3} py={2} flex={1}>
+          {children}
+        </Box>
       </ContentBox>
     </Wrapper>
   );

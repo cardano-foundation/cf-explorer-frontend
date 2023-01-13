@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details } from "../../commons/routers";
-import { formatADA, formatADAFull, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
+import { formatADAFull, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table from "../../components/commons/Table";
