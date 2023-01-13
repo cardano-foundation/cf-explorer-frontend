@@ -54,7 +54,9 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, ur
       title: "Block",
       key: "block",
       minWidth: 60,
-      render: r => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>,
+      render: r => (
+        <StyledLink to={details.block(r.blockNo || r.blockHash)}>{r.blockNo || getShortHash(r.blockHash)}</StyledLink>
+      ),
     },
     {
       title: "Fees",
