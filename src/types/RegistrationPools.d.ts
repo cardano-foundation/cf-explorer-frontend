@@ -10,4 +10,6 @@ interface Registration {
   cost: number;
   margin: number;
   stakeKey: string;
+  poolId: string;
+  poolView: string;
 }
