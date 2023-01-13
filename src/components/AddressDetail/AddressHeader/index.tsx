@@ -10,7 +10,7 @@ import { details } from "../../../commons/routers";
 import { StyledTextField, WrapPaperDropdown } from "./styles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CustomTooltip from "../../commons/CustomTooltip";
 
 interface Props {

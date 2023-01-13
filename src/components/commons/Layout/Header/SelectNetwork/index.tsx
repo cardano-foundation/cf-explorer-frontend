@@ -1,8 +1,11 @@
+import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
 import React from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { NETWORKS } from "../../../../../commons/utils/constants";
+import { removeAuthInfo } from "../../../../../commons/utils/helper";
+import { signOut } from "../../../../../commons/utils/userRequest";
 import { RootState } from "../../../../../stores/types";
 import { setNetwork } from "../../../../../stores/user";
 
@@ -33,9 +36,17 @@ interface Props {
 
 const SelectNetwork: React.FC<Props> = props => {
   const { network } = useSelector(({ user }: RootState) => user);
+  const { disconnect } = useCardano({
+    limitNetwork: network === "mainnet" ? NetworkType.MAINNET : NetworkType.TESTNET,
+  });
 
-  const handleChange = (e: SelectChangeEvent<unknown>) => {
-    setNetwork(e.target.value as keyof typeof NETWORKS);
+  const handleChange = async (e: SelectChangeEvent<unknown>) => {
+    try {
+      await signOut();
+      setNetwork(e.target.value as keyof typeof NETWORKS);
+      removeAuthInfo();
+      disconnect();
+    } catch (error) {}
   };
 
   return (

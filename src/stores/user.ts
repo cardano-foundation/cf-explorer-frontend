@@ -30,7 +30,7 @@ const storeWallet = createSlice({
       ...state,
       theme: action.payload,
     }),
-    setUserData: (state, action: PayloadAction<UserDataType>) => ({
+    setUserData: (state, action: PayloadAction<UserDataType | null>) => ({
       ...state,
       userData: action.payload,
     }),
@@ -77,7 +77,7 @@ export const setTheme = (theme: ThemeType) => {
   userStore?.dispatch(storeWallet.actions.setTheme(theme));
 };
 
-export const setUserData = (userData: UserDataType) => {
+export const setUserData = (userData: UserDataType | null) => {
   userStore?.dispatch(storeWallet.actions.setUserData(userData));
 };
 

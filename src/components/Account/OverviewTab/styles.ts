@@ -43,3 +43,9 @@ export const ActivityButton = styled(Button)`
   border: 2px solid ${props => props.theme.titleColor};
   border-radius: 6px;
 `
+
+export const WalletAddress = styled(Box)`
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`

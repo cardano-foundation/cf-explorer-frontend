@@ -11,6 +11,7 @@ enum ConfirmationStatus {
 interface Transactions {
   hash: string;
   blockNo: number;
+  blockHash: string;
   epochNo: number;
   slot: number;
   addressesInput: string[];
