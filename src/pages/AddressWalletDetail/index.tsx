@@ -1,5 +1,5 @@
 import { useLocation, useParams } from "react-router-dom";
-import { styled, Container, Button } from "@mui/material";
+import { styled, Container } from "@mui/material";
 import AddressTransactionList from "../../components/AddressTransactionList";
 import AddressHeader from "../../components/AddressDetail/AddressHeader";
 import AddressAnalytics from "../../components/AddressDetail/AddressAnalytics";
@@ -29,11 +29,6 @@ const AddressWalletDetail = () => {
     <ContainerBox ref={refBox}>
       <AddressHeader data={data} loading={loading} />
       <AddressAnalytics />
-      <Button
-      // onClick={scrollToTop}
-      >
-        scroll
-      </Button>
       <AddressTransactionList url={`/address/${address}/txs`} />
     </ContainerBox>
   );
