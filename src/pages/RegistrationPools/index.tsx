@@ -43,7 +43,7 @@ const columns: Column<Registration>[] = [
   {
     title: "Pool",
     key: "pool",
-    render: r => <StyledLink to={details.delegation(r.txId)}>{r.poolName}</StyledLink>,
+    render: r => <StyledLink to={details.delegation(r.poolView || "")}>{r.poolName || `Pool[${r.poolId}]`}</StyledLink>,
   },
   {
     title: "Pledge (A)",
