@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { useCallback, useEffect, useState } from "react";
-import authAxios, { defaultAxios } from "../utils/axios";
+import { defaultAxios, authAxios } from "../utils/axios";
 
 interface FetchReturnType<T> {
   data: T | null;

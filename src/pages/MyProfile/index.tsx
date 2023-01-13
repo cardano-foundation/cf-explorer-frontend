@@ -27,7 +27,7 @@ const MyProfile: React.FC = () => {
         </TabTitle>
       ),
       key: "overview",
-      children: <OverviewTab />,
+      children: <OverviewTab handleChangeTab={setTabActive} />,
     },
     {
       label: (

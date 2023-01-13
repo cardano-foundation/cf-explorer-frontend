@@ -1,3 +1,6 @@
+import moment from "moment";
+import useFetch from "../../../commons/hooks/useFetch";
+import { getShortHash } from "../../../commons/utils/helper";
 import StyledModal from "../../commons/StyledModal";
 import { Column } from "../../commons/Table";
 import { Container, SmallText, StyledLink, StyledTable, Title } from "./styles";
@@ -7,23 +10,20 @@ interface IProps {
   handleCloseModal: () => void;
 }
 
-type activityItem = {
-  time: string;
-  transaction: string;
+type TActivityLog = {
+  actionTime: string;
+  description: string;
+  ipAddress: string;
+  strAction: string;
+  userAction: string;
 };
-
-const data = [
-  {
-    time: "10/24/2022 14:09:02",
-    transaction: "addw28hch.....ks905plm",
-  },
-];
 const ActivityLogModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
-  const columns: Column<activityItem>[] = [
+  const { data: activitiesLog } = useFetch<TActivityLog[]>("user/activities-log", undefined, true);
+  const columns: Column<TActivityLog>[] = [
     {
       title: "Time",
       key: "time",
-      render: r => r.time,
+      render: r => moment(r.actionTime).format("MM/DD/YYYY HH:mm:ss"),
     },
     {
       title: "Action",
@@ -33,7 +33,7 @@ const ActivityLogModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
           <>
             <SmallText>Transaction hash</SmallText>
             <br />
-            <StyledLink>{r.transaction}</StyledLink>
+            <StyledLink>{getShortHash(r.description)}</StyledLink>
           </>
         );
       },
@@ -43,7 +43,7 @@ const ActivityLogModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
     <StyledModal open={open} handleCloseModal={handleCloseModal}>
       <Container>
         <Title>Activity Log</Title>
-        <StyledTable columns={columns} data={data}></StyledTable>
+        <StyledTable columns={columns} data={activitiesLog || []}></StyledTable>
       </Container>
     </StyledModal>
   );

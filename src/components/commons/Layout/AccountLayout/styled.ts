@@ -20,3 +20,9 @@ export const NavItem = styled(Link)(({ theme, active }: { active: boolean; theme
   color: `${active ? theme?.colorGreenLight : theme?.textColorPale} !important`,
   fontWeight: "bold",
 }));
+
+export const StyledUsername = styled(Box)`
+  max-width: 200px;
+  over-flow: hidden;
+  text-overflow: ellipsis;
+`

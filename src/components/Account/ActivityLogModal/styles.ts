@@ -14,9 +14,15 @@ export const StyledLink = styled(Link)`
   font-family: var(--font-family-text);
   color: ${props => props.theme.colorBlue};
   font-weight: 400;
+  &:hover {
+    font-family: var(--font-family-text);
+    color: ${props => props.theme.colorBlue};
+  }
 `;
 
 export const StyledTable = styled(Table)`
+  max-height: 300px;
+  overflow: scroll;
   thead th {
     font-size: 12px;
   }
