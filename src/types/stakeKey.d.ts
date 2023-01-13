@@ -70,3 +70,8 @@ interface TopDelegator {
   tickerName: string;
   poolName: string;
 }
+
+interface StakeAnalytics {
+  activeStake: number;
+  liveStake: number;
+}

@@ -1,7 +1,7 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { parse, stringify } from "qs";
 import Table, { Column } from "../../commons/Table";
-import { formatADA, formatPercent, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, formatPercent, getPageInfo } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 import { HeaderSearchIcon } from "../../../commons/resources";
@@ -20,7 +20,7 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     render: r => (
       <PoolName to={details.delegation(r.poolId)}>
         <CustomTooltip title={r.poolName || r.poolId} placement="top">
-          <Box textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={'hidden'}>
+          <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
             {r.poolName || `Pool [${r.poolId}]`}
           </Box>
         </CustomTooltip>
@@ -31,7 +31,11 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     title: "Pool size (A)",
     key: "PoolsizeA",
     minWidth: "120px",
-    render: r => formatADA(r.poolSize),
+    render: r => (
+      <CustomTooltip title={formatADAFull(r.poolSize)}>
+        <Box component={"span"}>{formatADA(r.poolSize)}</Box>
+      </CustomTooltip>
+    ),
   },
   {
     title: "Reward",
@@ -49,17 +53,23 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     title: "Declared Pledge (A)",
     key: "Declared",
     minWidth: "120px",
-    render: r => formatADA(r.pledge),
+    render: r => (
+      <CustomTooltip title={formatADAFull(r.pledge)}>
+        <Box component={"span"}>{formatADA(r.pledge)}</Box>
+      </CustomTooltip>
+    ),
   },
   {
     title: "Saturation",
     minWidth: "200px",
     key: "Saturation",
     render: r => (
-      <Box display="flex" alignItems="center">
-        <span>{formatPercent(r.saturation) || `0%`}</span>
-        <StyledLinearProgress variant="determinate" value={r.saturation * 100 || 0} />
-      </Box>
+      <CustomTooltip title={r.saturation ? r.saturation * 100 : 0} placement="top">
+        <Box display="flex" alignItems="center">
+          <span>{formatPercent(r.saturation) || `0%`}</span>
+          <StyledLinearProgress variant="determinate" value={r.saturation * 100 || 0} />
+        </Box>
+      </CustomTooltip>
     ),
   },
 ];

@@ -4,6 +4,7 @@ import { NETWORKS } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const alphaNumeric = /[^0-9a-zA-Z]/;
+export const regexEmail = /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$/;
 export const getShortWallet = (address: string) => {
   return `${address.slice(0, 5)}...${address.slice(-5)}`;
 };
@@ -30,9 +31,8 @@ export const formatNumber = (value: number | string, decimal: number = 0, decima
 };
 
 export const formatBalanceWithDecimal = (value: number | string, decimal: number = 0) => {
-  const realAda = +value / 1000000;
-  const bigValue = new BigNumber(realAda.toString());
-  const newValue = bigValue.toFixed(decimal, 3).toString();
+  const realAda = new BigNumber(value).div(10 ** 6);
+  const newValue = realAda.toFixed(decimal, 3).toString();
   return numberWithCommas(newValue);
 };
 
@@ -63,8 +63,8 @@ export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "T", "q", "Q", "s"
 
 export const formatPrice = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
   if (!value) return `0${abbreviations[0]}`;
-  const bigValue = new BigNumber(value.toString());
-  const length = bigValue.toFixed(0).toString().length;
+  const bigValue = new BigNumber(value);
+  const length = bigValue.toFixed(0).length;
   const exponential = Math.floor((length - 1) / 3) * 3;
   const newValue = bigValue
     .div(10 ** exponential)
@@ -80,14 +80,13 @@ export const numberWithCommas = (x: number | string) => {
 
 export const formatADA = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
   if (!value) return `0${abbreviations[0]}`;
-  const Ada = +value / 1000000;
-  if (Ada >= 1000000) {
-    const bigValue = new BigNumber(Ada.toString());
-    const length = Ada.toFixed().toString().length;
+  const realAda = new BigNumber(value).div(10 ** 6);
+  if (realAda.gte(10 ** 6)) {
+    const length = realAda.toFixed(0).length;
     const exponential = Math.floor((length - 1) / 3) * 3;
 
     if (exponential > 5) {
-      const newValue = bigValue
+      const newValue = realAda
         .div(10 ** exponential)
         .toFixed(2, 3)
         .toString();
@@ -97,7 +96,7 @@ export const formatADA = (value?: string | number, abbreviations: string[] = LAR
     }
   }
 
-  const formated = Ada.toString().match(/^-?\d+(?:\.\d{0,5})?/);
+  const formated = realAda.toString().match(/^-?\d+(?:\.\d{0,5})?/);
   return numberWithCommas(formated ? formated[0] : "0");
 };
 
@@ -123,10 +122,10 @@ export const getPageInfo = (search: string): { page: number; size: number } => {
 };
 
 export const exchangeADAToUSD = (value: number | string, rate: number) => {
+  console.log("🚀 ~ file: helper.ts:124 ~ exchangeADAToUSD ~ rate", rate);
   if (!value) return 0;
-  const Ada = +value / 1000000;
-  const bigValue = new BigNumber(Ada.toString());
-  const exchangedValue = bigValue.multipliedBy(rate).toString();
+  const realAda = new BigNumber(value).div(10 ** 6);
+  const exchangedValue = realAda.multipliedBy(rate).toString();
   return formatPrice(exchangedValue);
 };
 
@@ -148,10 +147,8 @@ export const formatADAFull = (
   abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS
 ): string => {
   if (!value) return `0${abbreviations[0]}`;
-  const Ada = +value / 1000000;
-
-  const formated = Ada.toString().match(/^-?\d+(?:\.\d{0,5})?/);
-  return numberWithCommas(formated ? formated[0] : "0");
+  const realAda = new BigNumber(value).div(10 ** 6);
+  return numberWithCommas(realAda.toString() || "0");
 };
 
 export const removeAuthInfo = () => {

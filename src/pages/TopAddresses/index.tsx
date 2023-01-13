@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
-import { formatBalanceWithDecimal, getShortWallet } from "../../commons/utils/helper";
+import { formatADAFull, formatBalanceWithDecimal, getShortWallet } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
@@ -14,6 +14,10 @@ interface Props {}
 const TopAddresses: React.FC<Props> = () => {
   const history = useHistory();
   const { error, data, initialized, loading } = useFetchList<Contracts>("address/top-addresses", { page: 0, size: 50 });
+
+  useEffect(() => {
+    document.title = `Top Addresses | Cardano Explorer`;
+  }, []);
 
   const columns: Column<Address>[] = [
     {
@@ -40,10 +44,12 @@ const TopAddresses: React.FC<Props> = () => {
       key: "balance",
       minWidth: 60,
       render: r => (
-        <Box display="flex" alignItems="center">
-          <Box mr={1}>{formatBalanceWithDecimal(r.balance || 0, 5)}</Box>
-          <img src={AIcon} alt="a icon" />
-        </Box>
+        <CustomTooltip title={formatADAFull(r.balance)}>
+          <Box display="inline-flex" alignItems="center">
+            <Box mr={1}>{formatBalanceWithDecimal(r.balance || 0, 5)}</Box>
+            <img src={AIcon} alt="a icon" />
+          </Box>
+        </CustomTooltip>
       ),
     },
   ];

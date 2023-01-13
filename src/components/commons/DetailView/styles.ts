@@ -1,4 +1,4 @@
-import { Box, Drawer, IconButton, Skeleton, styled } from "@mui/material";
+import { Box, Button, Drawer, IconButton, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS, STAKE_KEY_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
@@ -239,7 +239,7 @@ export const DelegatedDetail = styled("small")`
   overflow: hidden;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text) !important;
-  width: 250px;
+  max-width: 250px;
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: right;
@@ -468,3 +468,11 @@ export const LogoEmpty = styled(Box)`
   border-radius: 50%;
   border: 1px solid #e5e5e5;
 `;
+export const ButtonModal = styled(Button)(({ theme }) => ({
+  textTransform: "capitalize",
+  padding: 0,
+  textDecoration: "underline",
+  ":hover": {
+    textDecoration: "underline",
+  },
+}));

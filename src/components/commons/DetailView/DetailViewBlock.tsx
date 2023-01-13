@@ -44,6 +44,7 @@ import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
+import { Box } from "@mui/material";
 
 type DetailViewBlockProps = {
   blockNo: number;
@@ -61,7 +62,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
         <ViewDetailContainer>
           <ViewDetailScroll>
             <StyledViewMore tooltipTitle="View Detail" to={details.block(blockNo)} />
-            <CustomTooltip placement="top" title="Close">
+            <CustomTooltip title="Close">
               <CloseButton onClick={handleClose}>
                 <CgClose />
               </CloseButton>
@@ -128,7 +129,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
       <ViewDetailContainer>
         <ViewDetailScroll>
           <StyledViewMore tooltipTitle="View Detail" to={details.block(blockNo)} />
-          <CustomTooltip placement="top" title="Close">
+          <CustomTooltip title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -168,7 +169,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 Block ID
               </DetailLabel>
               <DetailValue>
-                <CustomTooltip placement="top" title={data.hash}>
+                <CustomTooltip title={data.hash}>
                   <StyledLink to={details.block(blockNo)}>{getShortHash(data.hash)}</StyledLink>
                 </CustomTooltip>
                 <CopyButton text={data.hash} />
@@ -214,8 +215,8 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 Slot leader
               </DetailLabel>
               <DetailValue>
-                <CustomTooltip placement="top" title={data.slotLeader}>
-                  <StyledLink to={details.address(data.slotLeader)}>{getShortWallet(data.slotLeader)}</StyledLink>
+                <CustomTooltip title={data.slotLeader}>
+                  <Box component={"span"}>{getShortWallet(data.slotLeader)}</Box>
                 </CustomTooltip>
                 <CopyButton text={data.slotLeader} />
               </DetailValue>

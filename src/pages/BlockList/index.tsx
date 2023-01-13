@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -7,7 +7,7 @@ import { useWindowSize } from "react-use";
 import { Column } from "../../types/table";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { details } from "../../commons/routers";
-import { formatADA, getPageInfo, getShortHash } from "../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, getShortHash } from "../../commons/utils/helper";
 import { Box } from "@mui/material";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { AIcon } from "../../commons/resources";
@@ -24,6 +24,11 @@ const BlockList = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<IStakeKey>(`block/list`, pageInfo);
+
+  useEffect(() => { 
+    document.title = `Blocks List | Cardano Explorer`;
+  }, []);
+
   const columns: Column<Block>[] = [
     {
       title: "Block No",
@@ -36,7 +41,7 @@ const BlockList = () => {
       key: "blockId",
       minWidth: "150px",
       render: r => (
-        <CustomTooltip placement="top" title={r.hash}>
+        <CustomTooltip title={r.hash}>
           <StyledLink to={details.block(r.blockNo)}>{getShortHash(`${r.hash}`)}</StyledLink>
         </CustomTooltip>
       ),
@@ -51,10 +56,12 @@ const BlockList = () => {
       title: "Fees",
       key: "fees",
       render: r => (
-        <PriceWrapper>
-          {formatADA(r.totalFees) || 0}
-          <img src={AIcon} alt="ADA Icon" />
-        </PriceWrapper>
+        <CustomTooltip title={formatADAFull(r.totalFees)}>
+          <PriceWrapper>
+            {formatADA(r.totalFees) || 0}
+            <img src={AIcon} alt="ADA Icon" />
+          </PriceWrapper>
+        </CustomTooltip>
       ),
     },
     {
@@ -62,15 +69,17 @@ const BlockList = () => {
       key: "output",
       minWidth: "100px",
       render: r => (
-        <PriceWrapper>
-          {formatADA(r.totalOutput) || 0}
-          <img src={AIcon} alt="ADA Icon" />
-          {block === r.blockNo && (
-            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
-              <MdOutlineKeyboardArrowRight fontSize={30} />
-            </Box>
-          )}
-        </PriceWrapper>
+        <CustomTooltip title={formatADAFull(r.totalOutput)}>
+          <PriceWrapper>
+            {formatADA(r.totalOutput) || 0}
+            <img src={AIcon} alt="ADA Icon" />
+            {block === r.blockNo && (
+              <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
+                <MdOutlineKeyboardArrowRight fontSize={30} />
+              </Box>
+            )}
+          </PriceWrapper>
+        </CustomTooltip>
       ),
     },
   ];

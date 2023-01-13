@@ -1,11 +1,11 @@
 import moment from "moment";
-import { parse, stringify } from "qs";
-import React, { useState } from "react";
+import { stringify } from "qs";
+import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useWindowSize } from "react-use";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details, routers } from "../../commons/routers";
-import { getPageInfo, getShortHash } from "../../commons/utils/helper";
+import { getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import DetailViewStakeKey from "../../components/commons/DetailView/DetailViewStakeKey";
@@ -52,7 +52,7 @@ const columns: Column<IStakeKey>[] = [
     key: "stakeKey",
     render: r => (
       <CustomTooltip title={r.stakeKey} placement="top">
-        <StyledLink to={details.stake(r.stakeKey)}>{getShortHash(r.stakeKey)}</StyledLink>
+        <StyledLink to={details.stake(r.stakeKey)}>{getShortWallet(r.stakeKey)}</StyledLink>
       </CustomTooltip>
     ),
   },
@@ -68,6 +68,11 @@ const Stake: React.FC<IStake> = () => {
   const pageInfo = getPageInfo(search);
 
   const fetchData = useFetchList<IStakeKey>(`/stake/${poolType}`, pageInfo);
+
+  useEffect(() => {
+    const title = poolType === POOL_TYPE.REGISTRATION ? "Registrations" : "Deregistrations";
+    document.title = `${title} Stake Keys | Cardano Explorer`;
+  }, [poolType]);
 
   const onChangeTab = (e: React.SyntheticEvent, poolType: POOL_TYPE) => {
     history.push(routers.STAKE_LIST.replace(":poolType", poolType));

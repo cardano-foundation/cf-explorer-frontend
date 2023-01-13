@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 import { parse, stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details, routers } from "../../commons/routers";
-import { formatADA, formatPercent, getShortHash, getShortWallet } from "../../commons/utils/helper";
+import { formatADA, formatPercent, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table, { Column } from "../../components/commons/Table";
 import { RegistrationContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
@@ -77,12 +77,15 @@ const columns: Column<Registration>[] = [
 const RegistrationPools = () => {
   const history = useHistory();
   const { search } = useLocation();
-  const query = parse(search.split("?")[1]);
+  const pageInfo = getPageInfo(search);
   const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
- 
-  const { data, total, loading, initialized, error } = useFetchList<Registration>(
-    `/pool/${poolType}?page=${query.page || 1}&size=${query.size || 10}`
-  );
+
+  const fetchData = useFetchList<Registration>(`/pool/${poolType}`, pageInfo);
+
+  useEffect(() => {
+    const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";
+    document.title = `${title} Pools | Cardano Explorer`;
+  }, [poolType]);
 
   const onChangeTab = (e: React.SyntheticEvent, poolType: POOL_TYPE) => {
     history.push(routers.REGISTRATION_POOLS.replace(":poolType", poolType));
@@ -99,16 +102,13 @@ const RegistrationPools = () => {
         <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
       </StyledTabs>
       <Table
+        {...fetchData}
         columns={columns}
-        data={data || []}
-        loading={loading}
-        initialized={initialized}
-        error={error}
-        total={{ title: "Total Transactions", count: total }}
+        total={{ title: "Total Transactions", count: fetchData.total }}
         pagination={{
+          ...pageInfo,
           onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
-          page: query.page ? +query.page - 1 : 0,
-          total: total,
+          total: fetchData.total,
         }}
       />
     </RegistrationContainer>

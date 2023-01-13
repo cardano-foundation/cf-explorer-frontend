@@ -10,7 +10,7 @@ import ConnectWalletModal from "../../../ConnectWalletModal";
 import RegisterUsernameModal from "../RegisterUsernameModal";
 import { Image, Span, Spin, StyledButton } from "./styles";
 import BigNumber from "bignumber.js";
-import { defaultAxios } from "../../../../../commons/utils/axios";
+import { authAxios } from "../../../../../commons/utils/axios";
 import { signIn } from "../../../../../commons/utils/userRequest";
 interface Props {}
 
@@ -27,7 +27,7 @@ const ConnectWallet: React.FC<Props> = () => {
 
   const getNonceValue = useCallback(async () => {
     try {
-      const response = await defaultAxios.get("user/get-nonce", { params: { address: stakeAddress } });
+      const response = await authAxios.get("user/get-nonce", { params: { address: stakeAddress } });
       const converted = new BigNumber(response.data.toString());
       return converted.toString();
     } catch (error: any) {

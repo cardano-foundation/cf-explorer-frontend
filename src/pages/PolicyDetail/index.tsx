@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../../commons/hooks/useFetch";
 import NoRecord from "../../components/commons/NoRecord";
@@ -9,6 +10,11 @@ const PolicyDetail = () => {
   const { policyId } = useParams<{ policyId: string }>();
   const { data, loading, initialized, error } = useFetch<PolicyDetail>(`/policy/${policyId}`);
 
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Policy ${policyId} | Cardano Explorer`;
+  }, []);
+  
   if ((initialized && !data) || error) return <NoRecord />;
 
   return (

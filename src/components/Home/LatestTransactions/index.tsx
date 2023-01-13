@@ -63,7 +63,7 @@ const LatestTransactions: React.FC = () => {
                       <ItemDetail>
                         <p>
                           <small>Transaction hash: </small>
-                          <CustomTooltip placement="top" title={hash}>
+                          <CustomTooltip title={hash}>
                             <Link to={details.transaction(hash)}>
                               <Hash>{getShortHash(hash)}</Hash>
                             </Link>
@@ -79,7 +79,7 @@ const LatestTransactions: React.FC = () => {
                           return (
                             <p key={add}>
                               <small>From: </small>
-                              <CustomTooltip placement="top" title={add}>
+                              <CustomTooltip title={add}>
                                 <Link to={details.address(add)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
                                   <BlankImage src={BlankBlueIcon} alt="blank blue" />
@@ -92,7 +92,7 @@ const LatestTransactions: React.FC = () => {
                           return (
                             <p key={add}>
                               <small>To: </small>
-                              <CustomTooltip placement="top" title={add}>
+                              <CustomTooltip title={add}>
                                 <Link to={details.address(add)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
                                   <BlankImage src={BlankBlueIcon} alt="blank blue" />

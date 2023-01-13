@@ -1,15 +1,12 @@
 import { Container } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { parse, stringify } from "qs";
 import { BiChevronDown } from "react-icons/bi";
-
 import useFetch from "../../commons/hooks/useFetch";
-
 import DelegationDetailInfo from "../../components/DelegationDetail/DelegationDetailInfo";
 import DelegationDetailOverview from "../../components/DelegationDetail/DelegationDetailOverview";
 import DelegationDetailChart from "../../components/DelegationDetail/DelegationDetailChart";
-
 import { OptionSelect, StyledSelect, Title } from "./styles";
 import {
   DelegationEpochList,
@@ -18,15 +15,13 @@ import {
 import useFetchList from "../../commons/hooks/useFetchList";
 import NoRecord from "../../components/commons/NoRecord";
 
-interface IDelegationDetail {}
-
 const titles = {
   epochs: "Epoch",
   delegators: "Staking Delegators",
 };
-const DelegationDetail: React.FC<IDelegationDetail> = () => {
+const DelegationDetail: React.FC = () => {
   const { poolId } = useParams<{ poolId: string }>();
-  const { search } = useLocation();
+  const { search, state } = useLocation<{ data?: DelegationOverview }>();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
   const tab = (query.tab as "epochs" | "delegators") || "epochs";
@@ -47,7 +42,8 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
   };
 
   const { data, loading, initialized, error } = useFetch<DelegationOverview>(
-    `/delegation/pool-detail-header/${poolId}`
+    state?.data ? "" : `/delegation/pool-detail-header/${poolId}`,
+    state?.data
   );
   const {
     data: dataTable,
@@ -60,6 +56,11 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
     }`
   );
 
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Delegation Pool ${poolId} | Cardano Explorer`;
+  }, []);
+  
   if ((initialized && !data) || error) return <NoRecord />;
 
   const render = () => {

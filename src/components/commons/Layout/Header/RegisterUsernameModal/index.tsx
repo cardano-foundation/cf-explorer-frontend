@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { defaultAxios } from "../../../../../commons/utils/axios";
+import { authAxios } from "../../../../../commons/utils/axios";
 import { alphaNumeric, getConvertedNetwork } from "../../../../../commons/utils/helper";
 import { RootState } from "../../../../../stores/types";
 import { setModalRegister } from "../../../../../stores/user";
@@ -29,7 +29,7 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, address, onTriggerSignM
           walletName: wallet?.toUpperCase(),
         },
       };
-      await defaultAxios.post("auth/sign-up", payload);
+      await authAxios.post("auth/sign-up", payload);
       onTriggerSignMessage();
     } catch (error) {}
   };

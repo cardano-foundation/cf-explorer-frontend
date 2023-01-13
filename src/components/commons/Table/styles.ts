@@ -103,19 +103,14 @@ export const TableFullWidth = styled("table")`
 
 export const InputNumber = styled("input")(({ theme, length }: { length: number; theme?: Theme }) => ({
   width: length + "ch !important",
-  padding: theme?.spacing(1),
+  padding: `4px ${theme?.spacing(1)}`,
   marginRight: theme?.spacing(1),
   borderRadius: 4,
   textAlign: "center",
   fontWeight: "bold",
   border: "1px solid rgba(227, 229, 233, 1)",
-  "-moz-appearance": "textfield",
-  "::-webkit-outer-spin-button": {
-    "-webkit-appearance": "none",
-    margin: 0,
-  },
   "::-webkit-inner-spin-button": {
-    "-webkit-appearance": "none",
+    appearance: "none",
     margin: 0,
   },
 }));

@@ -1,11 +1,11 @@
 import { stringify } from "qs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import moment from "moment";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AIcon } from "../../commons/resources";
 import { EPOCH_STATUS } from "../../commons/utils/constants";
-import { formatADA, getPageInfo } from "../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
@@ -13,6 +13,7 @@ import { Blocks, StyledContainer, Output, Status, StyledColorBlueDard, Index } f
 import { setOnDetailView } from "../../stores/user";
 import DetailViewEpoch from "../../components/commons/DetailView/DetailViewEpoch";
 import { useWindowSize } from "react-use";
+import CustomTooltip from "../../components/commons/CustomTooltip";
 
 const columns: Column<IDataEpoch>[] = [
   {
@@ -38,10 +39,12 @@ const columns: Column<IDataEpoch>[] = [
     key: "outSum",
     minWidth: "100px",
     render: r => (
-      <Output>
-        {formatADA(r.outSum)}
-        <img src={AIcon} alt="ADA Icon" />
-      </Output>
+      <CustomTooltip title={formatADAFull(r.outSum)}>
+        <Output>
+          {formatADA(r.outSum)}
+          <img src={AIcon} alt="ADA Icon" />
+        </Output>
+      </CustomTooltip>
     ),
   },
   {
@@ -67,6 +70,11 @@ const Epoch: React.FC = () => {
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<IDataEpoch>(`epoch/list`, pageInfo);
 
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Epochs List | Cardano Explorer`;
+  }, []);
+  
   const openDetail = (_: any, r: IDataEpoch, index: number) => {
     if (width > 1023) {
       setOnDetailView(true);
