@@ -76,7 +76,7 @@ const AddressAnalytics: React.FC = () => {
                     title: { text: null },
                     lineWidth: 1,
                     lineColor: "#E3E5E9",
-                    gridLineWidth: 0,
+                    gridLineWidth: 1,
                     labels: {
                       style: { fontSize: 12 },
                       formatter: (e: { value: string }) => formatPrice(e.value || 0),
