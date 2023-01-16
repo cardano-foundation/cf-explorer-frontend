@@ -27,7 +27,7 @@ const TopDelegators = () => {
       render: (r, idx) => numberWithCommas(idx + 1 || 0),
     },
     {
-      title: "Addresses",
+      title: "Stake key Addresses",
       minWidth: 120,
       key: "addresses",
       render: (r, idx) => (
