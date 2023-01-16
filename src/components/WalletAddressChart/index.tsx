@@ -157,7 +157,7 @@ const Chart = ({ data }: { data: WalletAddressChartProps["data"] }) => {
           title: { text: null },
           lineWidth: 1,
           lineColor: "#E3E5E9",
-          gridLineWidth: 0,
+          gridLineWidth: 1,
           labels: {
             style: {
               fontSize: 12,
