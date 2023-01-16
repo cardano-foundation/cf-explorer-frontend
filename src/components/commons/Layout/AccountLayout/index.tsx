@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { routers } from "../../../../commons/routers";
 import { RootState } from "../../../../stores/types";
 import { ContentBox, NavItem, SideBar, StyledUsername, Wrapper } from "./styled";
-
 import editAva from "../../../../commons/resources/icons/editAva.svg";
 import { useLocation } from "react-router-dom";
 import { MdChevronRight } from "react-icons/md";
@@ -68,7 +67,9 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
             ))}
           </Box>
         </SideBar>
-        <Box px={3} py={2} flex={1}>{children}</Box>
+        <Box px={3} py={2} flex={1}>
+          {children}
+        </Box>
       </ContentBox>
     </Wrapper>
   );
