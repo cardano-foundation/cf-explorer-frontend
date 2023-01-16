@@ -48,9 +48,11 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <StyledLink to={details.delegation(data?.pool?.poolId)}>
-          {data?.pool?.tickerName || ""} - {data?.pool?.poolName || ""}
-        </StyledLink>
+        <CustomTooltip title={`${data?.pool?.tickerName || ""} - ${data?.pool?.poolName || ""}`}>
+          <StyledLink to={details.delegation(data?.pool?.poolId)}>
+            {data?.pool?.tickerName || ""} - {data?.pool?.poolName || ""}
+          </StyledLink>
+        </CustomTooltip>
       ),
     },
     {
