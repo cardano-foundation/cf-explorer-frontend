@@ -51,19 +51,19 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
         </>
       ),
     },
-    {
-      title: "Created by",
-      key: "createdBy",
-      minWidth: "100px",
-      render: r => (
-        <>
-          Input:
-          <CustomTooltip title={r.slotLeader}>
-            <StyledLink to={details.address(r.slotLeader)}>{getShortWallet(r.slotLeader)}</StyledLink>
-          </CustomTooltip>
-        </>
-      ),
-    },
+    // {
+    //   title: "Created by",
+    //   key: "createdBy",
+    //   minWidth: "100px",
+    //   render: r => (
+    //     <>
+    //       Input:
+    //       <CustomTooltip title={r.slotLeader}>
+    //         <StyledLink to={details.address(r.slotLeader)}>{getShortWallet(r.slotLeader)}</StyledLink>
+    //       </CustomTooltip>
+    //     </>
+    //   ),
+    // },
     {
       title: "Transactions",
       key: "blkCount",

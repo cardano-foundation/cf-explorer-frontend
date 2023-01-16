@@ -4,7 +4,14 @@ import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { exchangeADAToUSD, formatADA, formatADAFull, getPageInfo, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
+import {
+  exchangeADAToUSD,
+  formatADA,
+  formatADAFull,
+  getPageInfo,
+  getShortWallet,
+  numberWithCommas,
+} from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
@@ -31,7 +38,7 @@ const Transactions: React.FC = () => {
       title: "#",
       key: "id",
       minWidth: 30,
-      render: (_, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1||0),
+      render: (_, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0),
     },
     {
       title: "Contract Addresses",
@@ -64,9 +71,11 @@ const Transactions: React.FC = () => {
       key: "value",
       minWidth: 120,
       render: r => (
-        <Box display="flex" alignItems="center">
-          {exchangeADAToUSD(r.balance, adaRate)}
-        </Box>
+        <CustomTooltip title={numberWithCommas(r.balance * adaRate || 0)}>
+          <Box display="inline-flex" alignItems="center">
+            {exchangeADAToUSD(r.balance, adaRate)}
+          </Box>
+        </CustomTooltip>
       ),
     },
     {

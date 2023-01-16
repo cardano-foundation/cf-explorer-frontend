@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { LinkOff, User2 } from "../../../commons/resources/index";
 import { getShortWallet, removeAuthInfo } from "../../../commons/utils/helper";
+import { signOut } from "../../../commons/utils/userRequest";
 import { Content, Disconnect, Icon, Name, Profile, Span, StyledButton, WrapContent } from "./style";
 
 interface IProps {
@@ -26,9 +27,12 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
     setAnchorEl(null);
   }, [isConnected]);
 
-  const handleDisconnect = () => {
-    disconnect();
-    removeAuthInfo();
+  const handleDisconnect = async () => {
+    try {
+      await signOut();
+      disconnect();
+      removeAuthInfo();
+    } catch (error) {}
   };
 
   return (

@@ -1,11 +1,15 @@
 import { Avatar, Box, IconButton } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { routers } from "../../../../commons/routers";
-import { ContentBox, NavItem, SideBar, Wrapper } from "./styled";
-
+import { RootState } from "../../../../stores/types";
+import { ContentBox, NavItem, SideBar, StyledUsername, Wrapper } from "./styled";
 import editAva from "../../../../commons/resources/icons/editAva.svg";
 import { useLocation } from "react-router-dom";
 import { MdChevronRight } from "react-icons/md";
+import useFetch from "../../../../commons/hooks/useFetch";
+import { setUserData } from "../../../../stores/user";
+import { UserDataType } from "../../../../types/user";
 
 interface Props {
   children: React.ReactNode;
@@ -13,6 +17,12 @@ interface Props {
 
 const AccountLayout: React.FC<Props> = ({ children }) => {
   const { pathname } = useLocation();
+  const { userData } = useSelector(({ user }: RootState) => user);
+  const { data } = useFetch<UserDataType>("user/info", undefined, true);
+
+  useEffect(() => {
+    setUserData(data);
+  }, [data]);
 
   // if (!userData) return <NotFound />;
   return (
@@ -35,9 +45,9 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                 </Box>
               </Box>
             </Box>
-            <Box component={"h4"} pt={1} m={0}>
-              Son.pham
-            </Box>
+            <StyledUsername component={"h4"} pt={1} m="auto">
+              {userData?.username}
+            </StyledUsername>
           </Box>
           <Box mt={4}>
             {router.map((i, ii) => (

@@ -18,13 +18,13 @@ const BlockDetail = () => {
     window.history.replaceState({}, document.title);
     document.title = `Block ${blockId} | Cardano Explorer`;
   }, [blockId]);
-  
+
   if ((initialized && !data) || error) return <NoRecord />;
 
   return (
     <StyledContainer>
       <BlockOverview data={data} loading={loading} />
-      <TransactionListsFull underline={true} url={`tx/list?blockNo=${blockId}`} />
+      <TransactionListsFull underline={true} url={`tx/list?${isNaN(+blockId) ? "blockHash=" : "blockNo="}${blockId}`} />
     </StyledContainer>
   );
 };
