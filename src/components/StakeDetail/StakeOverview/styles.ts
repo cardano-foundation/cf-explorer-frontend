@@ -31,7 +31,12 @@ export const Flex = styled("div")`
 `;
 
 export const StyledLink = styled(Link)`
+  max-width: 250px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   font-family: var(--font-family-text) !important;
+  display: inline-block;
 `;
 
 export const BackButton = styled(Link)`

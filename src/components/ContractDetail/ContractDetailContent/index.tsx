@@ -32,18 +32,18 @@ const ContractDetailContent: React.FC = () => {
       key: "transaction",
       children: <TokenTransaction />,
     },
-    {
-      label: (
-        <TabTitle className={tabActive === "transcript" ? "active" : ""}>
-          <Box display={"flex"} alignItems="center">
-            <Script fill={tabActive === "transcript" ? "#438F68" : "#98A2B3"} />
-            <Box pl={1}>Transcript</Box>
-          </Box>
-        </TabTitle>
-      ),
-      key: "transcript",
-      children: <TokenTransaction />,
-    },
+    // {
+    //   label: (
+    //     <TabTitle className={tabActive === "transcript" ? "active" : ""}>
+    //       <Box display={"flex"} alignItems="center">
+    //         <Script fill={tabActive === "transcript" ? "#438F68" : "#98A2B3"} />
+    //         <Box pl={1}>Transcript</Box>
+    //       </Box>
+    //     </TabTitle>
+    //   ),
+    //   key: "transcript",
+    //   children: <TokenTransaction />,
+    // },
   ];
 
   return (
