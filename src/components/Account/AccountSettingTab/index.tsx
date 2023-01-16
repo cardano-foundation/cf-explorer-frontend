@@ -3,8 +3,11 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { RootState } from "../../../stores/types";
 import { StyledButton, StyledHelper, StyledInput, StyledLabel, StyledRowItem, WrapRowItem } from "./styles";
-import { editInfo, transferWallet } from "../../../commons/utils/userRequest";
-import { getConvertedNetwork, regexEmail } from "../../../commons/utils/helper";
+import { editInfo, existEmail, existUserName, transferWallet } from "../../../commons/utils/userRequest";
+import { getConvertedNetwork, regexEmail, removeAuthInfo } from "../../../commons/utils/helper";
+import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { useHistory } from "react-router-dom";
+import { routers } from "../../../commons/routers";
 
 type TRowItem = {
   label: string;
@@ -35,20 +38,41 @@ type TFieldInput = {
 
 const AccountSettingTab: React.FC = () => {
   const { userData, wallet: walletAddress, network } = useSelector(({ user }: RootState) => user);
+  const { disconnect } = useCardano();
+  const history = useHistory();
   const [username, setUsername] = useState<TFieldInput>({ value: userData?.username });
   const [email, setEmail] = useState<TFieldInput>({ value: userData?.email });
   const [wallet, setWallet] = useState<TFieldInput>({ value: userData?.wallet });
 
-  const onEditInfo = async () => {
+  const onEditInfo = async (field: "email" | "username") => {
     try {
-      const checkEmail = (email?.value && regexEmail.test(email.value)) || !email.value;
-      if (!checkEmail) {
-        setEmail(prev => ({ ...prev, errorMsg: "Please enter a valid email Address e.g: abcxyz@gmail.com" }));
-        return;
+      let payload = {};
+      if (field === "email") {
+        const checkEmail = (email?.value && regexEmail.test(email.value)) || !email.value;
+        if (!checkEmail) {
+          setEmail(prev => ({ ...prev, errorMsg: "Please enter a valid email Address e.g: abcxyz@gmail.com" }));
+          return;
+        }
+        const checkExistEmail = await existEmail({ email: email.value });
+        if (checkExistEmail.data) {
+          setEmail(prev => ({ ...prev, errorMsg: "Email exist. Try other email!" }));
+          return;
+        }
+        payload = { email: email.value };
+      } else {
+        const checkExistUsername = await existUserName({ username: username.value });
+        if (checkExistUsername.data) {
+          setUsername(prev => ({ ...prev, errorMsg: "Username exist. Try other!" }));
+          return;
+        }
+        payload = { username: username.value };
       }
-      const formData = new FormData();
-      formData.append("email", email.value || "");
-      editInfo(formData);
+      await editInfo(payload);
+      if (field === "username") {
+        disconnect();
+        removeAuthInfo();
+        history.push(routers.HOME);
+      }
     } catch (error) {}
   };
 
@@ -75,17 +99,16 @@ const AccountSettingTab: React.FC = () => {
       <RowItem
         label="Your username"
         value={username.value}
-        disabled={true}
         errorMsg={username.errorMsg}
         onChangeValue={event => setUsername({ value: event.target.value, errorMsg: "" })}
-        action={onEditInfo}
+        action={() => onEditInfo("username")}
       />
       <RowItem
         label="Your email address "
         value={email.value}
         errorMsg={email.errorMsg}
         onChangeValue={event => setEmail({ value: event.target.value, errorMsg: "" })}
-        action={onEditInfo}
+        action={() => onEditInfo("email")}
       />
       <RowItem
         label="Connected Wallet "
