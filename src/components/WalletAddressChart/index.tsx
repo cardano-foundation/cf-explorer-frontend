@@ -155,7 +155,7 @@ const Chart = ({ data }: { data: WalletAddressChartProps["data"] }) => {
         title: { text: "" },
         yAxis: {
           title: { text: null },
-          lineWidth: 1,
+          lineWidth: 2,
           lineColor: "#E3E5E9",
           gridLineWidth: 1,
           labels: {
@@ -169,7 +169,7 @@ const Chart = ({ data }: { data: WalletAddressChartProps["data"] }) => {
         },
         xAxis: {
           categories,
-          lineWidth: 1,
+          lineWidth: 2,
           lineColor: "#E3E5E9",
           plotLines: [],
           angle: 0,
