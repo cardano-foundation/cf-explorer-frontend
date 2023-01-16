@@ -13,16 +13,8 @@ pipeline {
 			agent { docker 'node:16' }
             steps {
 				sh "yarn install"
-//				sh "yarn add global sonarqube-scanner"
             }
         }
-//        stage('Sonarube Analysis') {
-//			agent { docker 'node:16' }
-//           steps {
-//				echo 'Sonar scanning...'
-//				sh "yarn run sonar-scanner -Dsonar.projectKey=cardano-explorer-fe -Dsonar.analysisCache.enabled=false -Dsonar.host.url=http://172.16.1.230:9111 -Dsonar.login=sqp_87a09cd54f541fb5f4b519541f20c5b167db814c -Dsonar.sources=. "
-//            }
-//        }
         stage('Deliver') {
             steps {
 				script {
@@ -31,12 +23,6 @@ pipeline {
                     }
                     if (env.BRANCH_NAME == 'test') {
                         envFileDeploy = '/tmp/test-fe.env'
-                    }
-                    if (env.BRANCH_NAME == 'prod') {
-                        envFileDeploy = '/tmp/prod-fe.env'
-                    }
-                    if (env.BRANCH_NAME == 'demo') {
-                        envFileDeploy = '/tmp/dev-fe.env'
                     }
                 }
                 sh "docker-compose --env-file ${envFileDeploy} up -d --build"
