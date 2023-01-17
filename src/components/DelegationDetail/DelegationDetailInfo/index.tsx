@@ -1,4 +1,4 @@
-import { Box, Skeleton } from "@mui/material";
+import { Box, IconButton, Skeleton } from "@mui/material";
 import moment from "moment";
 import React, { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
@@ -21,6 +21,7 @@ import { formatADA, formatPercent, getShortWallet } from "../../../commons/utils
 import CopyButton from "../../commons/CopyButton";
 import CustomTooltip from "../../commons/CustomTooltip";
 import DropdownDetail from "../../commons/DropdownDetail";
+import { ReactComponent as Bookmark } from "../../../commons/resources/icons/Bookmark.svg";
 
 import {
   BackButton,
@@ -88,7 +89,12 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <BackText>Back</BackText>
       </BackButton>
       <HeaderContainer>
-        <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
+        <CustomTooltip title={data?.poolName || poolId}>
+          <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
+        </CustomTooltip>
+        <Box mx={1} component={IconButton} style={{ width: 45, height: 45 }}>
+          <Bookmark />
+        </Box>
       </HeaderContainer>
       <PoolId>
         <CustomTooltip title={poolId}>
@@ -262,7 +268,6 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           </Item>
         </StyledGrid>
       </DataContainer>
-      <SavingImg src={saving ? SaveOnIcon : SaveOffIcon} alt="Save Icon" onClick={() => setSaving(!saving)} />
     </HeaderDetailContainer>
   );
 };

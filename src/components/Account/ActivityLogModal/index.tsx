@@ -3,7 +3,8 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { getShortHash } from "../../../commons/utils/helper";
 import StyledModal from "../../commons/StyledModal";
 import { Column } from "../../commons/Table";
-import { Container, SmallText, StyledLink, StyledTable, Title } from "./styles";
+import { SmallText, StyledLink } from "../../share/styled";
+import { Container, StyledTable, Title } from "./styles";
 
 interface IProps {
   open: boolean;

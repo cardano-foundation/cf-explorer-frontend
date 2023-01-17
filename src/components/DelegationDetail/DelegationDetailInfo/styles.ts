@@ -27,6 +27,10 @@ export const HeaderTitle = styled("h2")`
   color: ${props => props.theme.colorBlack};
   font-size: 2.25rem;
   margin: 0.5rem 0;
+  max-width: 75%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const HeaderTitleSkeleton = styled(Skeleton)`

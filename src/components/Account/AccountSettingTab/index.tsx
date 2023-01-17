@@ -4,10 +4,11 @@ import { useState } from "react";
 import { RootState } from "../../../stores/types";
 import { StyledButton, StyledHelper, StyledInput, StyledLabel, StyledRowItem, WrapRowItem } from "./styles";
 import { editInfo, existEmail, existUserName, transferWallet } from "../../../commons/utils/userRequest";
-import { getConvertedNetwork, regexEmail, removeAuthInfo } from "../../../commons/utils/helper";
+import { regexEmail, removeAuthInfo } from "../../../commons/utils/helper";
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { useHistory } from "react-router-dom";
 import { routers } from "../../../commons/routers";
+import { NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
 
 type TRowItem = {
   label: string;
@@ -37,7 +38,7 @@ type TFieldInput = {
 };
 
 const AccountSettingTab: React.FC = () => {
-  const { userData, wallet: walletAddress, network } = useSelector(({ user }: RootState) => user);
+  const { userData, wallet: walletAddress } = useSelector(({ user }: RootState) => user);
   const { disconnect } = useCardano();
   const history = useHistory();
   const [username, setUsername] = useState<TFieldInput>({ value: userData?.username });
@@ -53,14 +54,14 @@ const AccountSettingTab: React.FC = () => {
           setEmail(prev => ({ ...prev, errorMsg: "Please enter a valid email Address e.g: abcxyz@gmail.com" }));
           return;
         }
-        const checkExistEmail = await existEmail({ email: email.value });
+        const checkExistEmail = await existEmail({ email: email.value || "" });
         if (checkExistEmail.data) {
           setEmail(prev => ({ ...prev, errorMsg: "Email exist. Try other email!" }));
           return;
         }
         payload = { email: email.value };
       } else {
-        const checkExistUsername = await existUserName({ username: username.value });
+        const checkExistUsername = await existUserName({ username: username.value || "" });
         if (checkExistUsername.data) {
           setUsername(prev => ({ ...prev, errorMsg: "Username exist. Try other!" }));
           return;
@@ -83,10 +84,10 @@ const AccountSettingTab: React.FC = () => {
         wallet: {
           address: wallet.value,
           walletName: walletAddress?.toUpperCase(),
-          networkType: getConvertedNetwork(network),
-          networkId: getConvertedNetwork(network),
+          networkType: NETWORK_TYPES[NETWORK],
+          networkId: NETWORK_TYPES[NETWORK],
         },
-        refreshToken: localStorage.getItem("refreshToken"),
+        refreshToken: localStorage.getItem("refreshToken") || "",
       };
       const { data } = await transferWallet(payload);
       localStorage.setItem("token", data?.token);

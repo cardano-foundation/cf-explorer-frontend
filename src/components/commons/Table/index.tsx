@@ -27,8 +27,11 @@ import {
 import { ColumnType, FooterTableProps, TableHeaderProps, TableProps, TableRowProps } from "../../../types/table";
 import { useUpdateEffect } from "react-use";
 
-export const EmptyRecord = () => (
-  <Empty>
+type TEmptyRecord = {
+  className?: string;
+};
+export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
+  <Empty className={className}>
     <EmtyImage src={EmptyIcon} alt="no data" />
   </Empty>
 );
@@ -163,6 +166,7 @@ const Table: React.FC<TableProps> = ({
   total,
   pagination,
   className,
+  emptyClassName,
   style,
   loading,
   initialized = true,
@@ -188,7 +192,9 @@ const Table: React.FC<TableProps> = ({
             />
           )}
         </TableFullWidth>
-        {!loading && ((initialized && data?.length === 0) || (error && error !== true)) && <EmptyRecord />}
+        {!loading && ((initialized && data?.length === 0) || (error && error !== true)) && (
+          <EmptyRecord className={emptyClassName} />
+        )}
         {error && error !== true && <Error>{error || "Something went wrong!"}</Error>}
       </Wrapper>
       <FooterTable total={total} pagination={pagination} />

@@ -74,9 +74,9 @@ const AddressAnalytics: React.FC = () => {
                   title: { text: "" },
                   yAxis: {
                     title: { text: null },
-                    lineWidth: 1,
+                    lineWidth: 2,
                     lineColor: "#E3E5E9",
-                    gridLineWidth: 0,
+                    gridLineWidth: 1,
                     labels: {
                       style: { fontSize: 12 },
                       formatter: (e: { value: string }) => formatPrice(e.value || 0),
@@ -84,7 +84,7 @@ const AddressAnalytics: React.FC = () => {
                   },
                   xAxis: {
                     categories,
-                    lineWidth: 1,
+                    lineWidth: 2,
                     lineColor: "#E3E5E9",
                     plotLines: [],
                     angle: 0,
@@ -103,18 +103,13 @@ const AddressAnalytics: React.FC = () => {
                       pointPlacement: "on",
                       type: "areaspline",
                       marker: { enabled: false },
-                      color: {
-                        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-                        stops: [
-                          [0, "#184C78"],
-                          [1, "#5A9C56"],
-                        ],
-                      },
+                      lineWidth: 4,
+                      color: "#438f68",
                       fillColor: {
                         linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                         stops: [
-                          [0, "rgba(24, 76, 120, 0.3)"],
-                          [1, "rgba(90, 156, 86, 0)"],
+                          [0, "#438f6833"],
+                          [1, "rgba(67, 143, 104, 0)"],
                         ],
                       },
                       data: dataChart,

@@ -48,6 +48,7 @@ interface DelegationEpoch {
 }
 interface StakingDelegators {
   address: string;
+  view: string;
   totalStake: number;
   time: string;
   fee: number;

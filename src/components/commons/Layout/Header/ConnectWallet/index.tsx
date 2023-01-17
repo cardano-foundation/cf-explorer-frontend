@@ -11,16 +11,17 @@ import RegisterUsernameModal from "../RegisterUsernameModal";
 import { Image, Span, Spin, StyledButton } from "./styles";
 import BigNumber from "bignumber.js";
 import { getNonce, signIn } from "../../../../../commons/utils/userRequest";
-import { routers } from "../../../../../commons/routers";
+import { NETWORK, NETWORKS } from "../../../../../commons/utils/constants";
 import { useHistory } from "react-router-dom";
+import { routers } from "../../../../../commons/routers";
 interface Props {}
 
 const ConnectWallet: React.FC<Props> = () => {
-  const { network, openModal, modalRegister } = useSelector(({ user }: RootState) => user);
-  const history = useHistory();
+  const { openModal, modalRegister } = useSelector(({ user }: RootState) => user);
   const buttonRef = useRef(null);
+  const history = useHistory();
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect } = useCardano({
-    limitNetwork: network === "mainnet" ? NetworkType.MAINNET : NetworkType.TESTNET,
+    limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
 
   const handleClick = () => {
@@ -29,7 +30,7 @@ const ConnectWallet: React.FC<Props> = () => {
 
   const getNonceValue = useCallback(async () => {
     try {
-      const response = await getNonce({ address: stakeAddress });
+      const response = await getNonce({ address: stakeAddress || "" });
       const converted = new BigNumber(response.data.toString());
       return converted.toString();
     } catch (error: any) {
@@ -43,7 +44,7 @@ const ConnectWallet: React.FC<Props> = () => {
   const handleSignIn = async (signature: string) => {
     try {
       const payload = {
-        address: stakeAddress,
+        address: stakeAddress || "",
         signature,
         ipAddress: "testip",
       };

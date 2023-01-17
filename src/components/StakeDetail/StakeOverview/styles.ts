@@ -31,7 +31,12 @@ export const Flex = styled("div")`
 `;
 
 export const StyledLink = styled(Link)`
+  max-width: 250px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   font-family: var(--font-family-text) !important;
+  display: inline-block;
 `;
 
 export const BackButton = styled(Link)`
@@ -88,7 +93,6 @@ export const ViewMetaData = styled(Link)`
   text-decoration: underline !important;
 `;
 export const LabelStatus = styled(Box)(({ theme }) => ({
-  marginLeft: theme.spacing(2),
   textTransform: "uppercase",
   padding: "1.5px 10px",
   fontFamily: '"Space Mono", monospace, sans-serif',

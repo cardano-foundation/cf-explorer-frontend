@@ -1,10 +1,7 @@
 import axios from "axios";
 import jsonBig from "json-bigint";
 import { refreshToken } from "./userRequest";
-
-export const API_URL = process.env.REACT_APP_API_URL;
-export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL;
-export const COINGECKO_URL = "https://api.coingecko.com/api/v3/";
+import { API_URL, AUTH_API_URL } from "./constants";
 
 const defaultAxios = axios.create({
   baseURL: API_URL,
@@ -49,7 +46,7 @@ authAxios.interceptors.response.use(
     const originRequest = error.config;
     if (error.response?.data?.errorCode === "CC_3" && !originRequest._retry) {
       originRequest._retry = true;
-      const response = await refreshToken({ refreshJwt: localStorage.getItem("refreshToken") });
+      const response = await refreshToken({ refreshJwt: localStorage.getItem("refreshToken") || "" });
       localStorage.setItem("token", response.data?.accessToken);
       localStorage.setItem("refreshToken", response.data?.refreshToken);
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;
@@ -82,7 +79,7 @@ uploadAxios.interceptors.response.use(
     const originRequest = error.config;
     if (error.response?.data?.errorCode === "CC_3" && !originRequest._retry) {
       originRequest._retry = true;
-      const response = await refreshToken({ refreshJwt: localStorage.getItem("refreshToken") });
+      const response = await refreshToken({ refreshJwt: localStorage.getItem("refreshToken") || "" });
       localStorage.setItem("token", response.data?.accessToken);
       localStorage.setItem("refreshToken", response.data?.refreshToken);
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;

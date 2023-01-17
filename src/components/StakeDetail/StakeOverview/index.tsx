@@ -30,6 +30,8 @@ import { ADAToken } from "../../commons/Token";
 import { useParams } from "react-router-dom";
 import ModalAllAddress from "../ModalAllAddress";
 import CustomTooltip from "../../commons/CustomTooltip";
+import { IconButton } from "@mui/material";
+import { ReactComponent as Bookmark } from "../../../commons/resources/icons/Bookmark.svg";
 
 interface Props {
   data: IStakeKeyDetail | null;
@@ -48,9 +50,11 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <StyledLink to={details.delegation(data?.pool?.poolId)}>
-          {data?.pool?.tickerName || ""} - {data?.pool?.poolName || ""}
-        </StyledLink>
+        <CustomTooltip title={`${data?.pool?.tickerName || ""} - ${data?.pool?.poolName || ""}`}>
+          <StyledLink to={details.delegation(data?.pool?.poolId)}>
+            {data?.pool?.tickerName || ""} - {data?.pool?.poolName || ""}
+          </StyledLink>
+        </CustomTooltip>
       ),
     },
     {
@@ -115,6 +119,9 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
           </BackButton>
           <HeaderContainer>
             <HeaderTitle>Stake Key Details</HeaderTitle>
+            <Box mx={1} component={IconButton} style={{ width: 45, height: 45 }}>
+              <Bookmark />
+            </Box>
             {!loading && <Skeleton variant="rectangular" width={"100"} />}
             {!loading && (
               <LabelStatus
