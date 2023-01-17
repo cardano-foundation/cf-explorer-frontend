@@ -25,9 +25,9 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   const [selected, setSelected] = useState<"epochChart" | "delegatorChart">("epochChart");
   const { data, loading } = useFetch<AnalyticsDelegators>(`/delegation/pool-detail-analytics?poolView=${poolId}`);
 
-  const categories = data?.[selected]?.dataByDays.map(item => item.epochNo) || [];
-  const epochs = data?.epochChart?.dataByDays.map(item => item.totalStake / 10 ** 6) || [];
-  const delegators = data?.delegatorChart?.dataByDays.map(item => item.numberDelegator) || [];
+  const categories = data?.[selected]?.dataByDays?.map(item => item.epochNo) || null;
+  const epochs = data?.epochChart?.dataByDays?.map(item => item.totalStake / 10 ** 6) || null;
+  const delegators = data?.delegatorChart?.dataByDays?.map(item => item.numberDelegator) || null;
   return (
     <StyledContainer>
       <AnalyticsTitle>Analytics</AnalyticsTitle>
@@ -41,10 +41,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
             >
               Stake
             </Button>
-            <Button
-              active={selected === "delegatorChart" ? 1 : 0}
-              onClick={() => setSelected("delegatorChart")}
-            >
+            <Button active={selected === "delegatorChart" ? 1 : 0} onClick={() => setSelected("delegatorChart")}>
               Delegator
             </Button>
           </Box>
