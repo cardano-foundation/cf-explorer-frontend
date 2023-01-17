@@ -24,6 +24,8 @@ import {
 import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 import ReactJson from "react-json-view";
+import { IconButton } from "@mui/material";
+import { ReactComponent as Bookmark } from "../../../commons/resources/icons/Bookmark.svg";
 
 interface Props {
   data: PolicyDetail | null;
@@ -44,6 +46,9 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
           </BackButton>
           <HeaderContainer>
             <HeaderTitle>Policy Details</HeaderTitle>
+            <Box mx={1} component={IconButton} style={{ width: 45, height: 45 }}>
+              <Bookmark />
+            </Box>
           </HeaderContainer>
           <SlotLeaderContainer>
             {loading ? (
