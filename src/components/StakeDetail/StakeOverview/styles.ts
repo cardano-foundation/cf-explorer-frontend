@@ -93,7 +93,6 @@ export const ViewMetaData = styled(Link)`
   text-decoration: underline !important;
 `;
 export const LabelStatus = styled(Box)(({ theme }) => ({
-  marginLeft: theme.spacing(2),
   textTransform: "uppercase",
   padding: "1.5px 10px",
   fontFamily: '"Space Mono", monospace, sans-serif',

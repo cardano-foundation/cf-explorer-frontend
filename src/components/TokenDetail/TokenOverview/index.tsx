@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Skeleton } from "@mui/material";
+import { Box, IconButton, Skeleton } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { routers } from "../../../commons/routers";
 
@@ -11,6 +11,7 @@ import infoIcon from "../../../commons/resources/icons/info.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
 import exchageIcon from "../../../commons/resources/icons/Union.svg";
 import decimalIcon from "../../../commons/resources/icons/decimal.svg";
+import { ReactComponent as Bookmark } from "../../../commons/resources/icons/Bookmark.svg";
 
 import {
   BackButton,
@@ -87,6 +88,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
         <HeaderTitle>
           {loading && <HeaderTitleSkeleton variant="rectangular" />}
           {!loading && <>{data?.displayName}</>}
+          <Box mx={1} component={IconButton} style={{ width: 45, height: 45 }}>
+            <Bookmark />
+          </Box>
         </HeaderTitle>
       </HeaderContainer>
       <SlotLeaderContainer>

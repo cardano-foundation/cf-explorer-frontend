@@ -64,7 +64,6 @@ export const HeaderStatus = styled("small") <{ status?: keyof typeof Transaction
         return `${props.theme.colorGreenLight}32`;
     }
   }};
-  margin-left: 15px;
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   padding: 5px 10px;
