@@ -10,14 +10,16 @@ import ConnectWalletModal from "../../../ConnectWalletModal";
 import RegisterUsernameModal from "../RegisterUsernameModal";
 import { Image, Span, Spin, StyledButton } from "./styles";
 import BigNumber from "bignumber.js";
-import { authAxios } from "../../../../../commons/utils/axios";
-import { signIn } from "../../../../../commons/utils/userRequest";
+import { getNonce, signIn } from "../../../../../commons/utils/userRequest";
 import { NETWORK, NETWORKS } from "../../../../../commons/utils/constants";
+import { useHistory } from "react-router-dom";
+import { routers } from "../../../../../commons/routers";
 interface Props {}
 
 const ConnectWallet: React.FC<Props> = () => {
   const { openModal, modalRegister } = useSelector(({ user }: RootState) => user);
   const buttonRef = useRef(null);
+  const history = useHistory();
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
@@ -28,7 +30,7 @@ const ConnectWallet: React.FC<Props> = () => {
 
   const getNonceValue = useCallback(async () => {
     try {
-      const response = await authAxios.get("user/get-nonce", { params: { address: stakeAddress } });
+      const response = await getNonce({ address: stakeAddress || "" });
       const converted = new BigNumber(response.data.toString());
       return converted.toString();
     } catch (error: any) {
@@ -42,7 +44,7 @@ const ConnectWallet: React.FC<Props> = () => {
   const handleSignIn = async (signature: string) => {
     try {
       const payload = {
-        address: stakeAddress,
+        address: stakeAddress || "",
         signature,
         ipAddress: "testip",
       };
@@ -72,6 +74,7 @@ const ConnectWallet: React.FC<Props> = () => {
         },
         () => {
           disconnect();
+          history.push(routers.HOME);
         }
       );
     }
