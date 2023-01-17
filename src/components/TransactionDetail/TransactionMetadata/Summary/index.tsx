@@ -96,7 +96,7 @@ const Summary: React.FC<SummaryProps> = ({ data }) => {
       {data?.stakeAddressTxOutputs.map((tx, key) => (
         <SummaryItems key={key} item={tx} type="up" />
       ))}
-
+      {/*
       <Box textAlign={"left"} px={3} py={2} style={{ background: "#fff" }} mb={2}>
         <Box display={"flex"} alignItems="center" py={2}>
           <Box width={50}>
@@ -107,7 +107,7 @@ const Summary: React.FC<SummaryProps> = ({ data }) => {
             quis deserunt et nihil itaque quisquam in mollitia.
           </Box>
         </Box>
-      </Box>
+      </Box> */}
     </Box>
   );
 };
