@@ -1,4 +1,5 @@
 import BigNumber from "bignumber.js";
+import moment from "moment";
 import { parse } from "qs";
 import { NETWORKS } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
@@ -128,19 +129,6 @@ export const exchangeADAToUSD = (value: number | string, rate: number) => {
   return formatPrice(exchangedValue);
 };
 
-export const getConvertedNetwork = (value: keyof typeof NETWORKS) => {
-  switch (value) {
-    case "mainnet":
-      return "MAIN_NET";
-    case "preprod":
-      return "PRE_PROD";
-    case "preview":
-      return "PREVIEW";
-    default:
-      return "TEST_NET";
-  }
-};
-
 export const formatADAFull = (
   value?: string | number,
   abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS
@@ -156,4 +144,8 @@ export const removeAuthInfo = () => {
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("walletId");
   localStorage.removeItem("email");
+};
+
+export const formatDateTime = (date: string) => {
+  return moment(date).format("MM/DD/YYYY HH:mm:ss");
 };

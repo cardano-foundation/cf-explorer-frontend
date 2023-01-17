@@ -54,13 +54,13 @@ export const NetworkName = styled.small<{ network: keyof typeof NETWORKS }>`
   font-family: var(--font-family-title);
   color: ${props => {
     switch (props.network) {
-      case "mainnet": {
+      case NETWORKS.mainnet: {
         return props.theme.colorGreenLight;
       }
-      case "preprod": {
+      case NETWORKS.preprod: {
         return props.theme.colorBlue;
       }
-      case "preview": {
+      case NETWORKS.preview: {
         return props.theme.colorBlue;
       }
       default: {
@@ -80,4 +80,3 @@ export const Toggle = styled.i`
     display: block;
   }
 `;
-

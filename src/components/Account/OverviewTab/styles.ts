@@ -24,7 +24,7 @@ export const StyledRowItem = styled(Box)`
   border-bottom: 1px solid var(--border-color);
   height: 50px;
   align-items: center;
-  font-size: 14px;
+  font-size: var(--font-size-text-small);
 `
 
 export const StyledAction = styled(Box)`
@@ -35,7 +35,7 @@ export const ActivityButton = styled(Button)`
   height: 34px;
   padding: 20px;
   margin-top: 30px;
-  font-size: 14px;
+  font-size: var(--font-size-text-small);
   font-weight: bold;
   color: ${props => props.theme.textColor};
   font-family: var(--font-family-title);

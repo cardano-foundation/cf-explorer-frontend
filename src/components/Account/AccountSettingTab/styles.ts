@@ -12,13 +12,13 @@ export const StyledRowItem = styled(Box)`
 `;
 
 export const StyledLabel = styled(FormLabel)`
-  font-size: 14px;
+  font-size: var(--font-size-text-small);
 `;
 
 export const StyledHelper = styled(FormHelperText)`
   position: absolute;
   top: 60px;
-  font-size: 14px;
+  font-size: var(--font-size-text-small);
   color: #FF0000;
 `;
 
@@ -27,7 +27,7 @@ export const StyledInput = styled(InputBase)`
   border-radius: 8px;
   height: 40px;
   padding: 12px 14px;
-  font-size: 16px;
+  font-size: var(--font-size-text);
   flex: 1;
   max-width: 500px;
 `;
@@ -36,8 +36,8 @@ export const StyledButton = styled(Button)`
   height: 40px;
   margin-left: 10px;
   padding: 0 20px;
-  font-size: 14px;
-  font-weight: bold;
+  font-size: var(--font-size-text-small);
+  font-weight: var(--font-weight-bold);
   color: ${props => props.theme.colorGreenLight};
   font-family: var(--font-family-title);
   text-transform: unset;

@@ -13,8 +13,9 @@ services:
       context: .
     environment:
       - PORT=${PORT}
-      - REACT_APP_NETWORK=${REACT_APP_NETWORK}
       - REACT_APP_API_URL=${REACT_APP_API_URL}
+      - REACT_APP_TESTNET_API_URL=${REACT_APP_TESTNET_API_URL}
+      - REACT_APP_PREPROD_API_URL=${REACT_APP_PREPROD_API_URL}
       - REACT_APP_AUTH_API_URL=${REACT_APP_AUTH_API_URL}
     ports:
       - '7276:1102'

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction, Store } from "@reduxjs/toolkit";
-import { NETWORKS } from "../commons/utils/constants";
 import { SupportedWallets, ThemeType, UserDataType, UserStoreType } from "../types/user";
 
 let userStore: Store | undefined;
@@ -15,8 +14,7 @@ const initialState: UserStoreType = {
   address: null,
   wallet: null,
   provider: null,
-  openModal: false,
-  network: "testnet",
+  openModal: false, 
   sidebar: true,
   onDetailView: false,
   modalRegister: false,
@@ -53,11 +51,7 @@ const storeWallet = createSlice({
     setOpenModal: (state, action: PayloadAction<boolean>) => ({
       ...state,
       openModal: action.payload,
-    }),
-    setNetwork: (state, action: PayloadAction<keyof typeof NETWORKS>) => ({
-      ...state,
-      network: action.payload,
-    }),
+    }), 
     setSidebar: (state, action: PayloadAction<boolean>) => ({
       ...state,
       sidebar: action.payload,
@@ -99,10 +93,7 @@ export const setProvider = (provider: any) => {
 
 export const setOpenModal = (openModal: boolean) => {
   userStore?.dispatch(storeWallet.actions.setOpenModal(openModal));
-};
-export const setNetwork = (network: keyof typeof NETWORKS) => {
-  userStore?.dispatch(storeWallet.actions.setNetwork(network));
-};
+}; 
 
 export const setSidebar = (sidebar: boolean) => {
   userStore?.dispatch(storeWallet.actions.setSidebar(sidebar));
