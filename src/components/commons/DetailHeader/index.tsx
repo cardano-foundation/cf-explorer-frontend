@@ -1,4 +1,6 @@
 import React from "react";
+import { Box, IconButton } from "@mui/material";
+
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import ProgressCircle from "../ProgressCircle";
@@ -29,8 +31,8 @@ import {
   ValueCard,
 } from "./styles";
 import { routers } from "../../../commons/routers";
-import { Box } from "@mui/material";
 
+import { ReactComponent as Bookmark } from "../../../commons/resources/icons/Bookmark.svg";
 interface DetailHeaderProps {
   loading: boolean;
   data?: TransactionHeaderDetail | BlockHeaderDetail | EpochHeaderDetail | null;
@@ -96,15 +98,18 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           </BackButton>
           <HeaderContainer>
             <HeaderTitle>{header.title}</HeaderTitle>
+            <Box mx={1} component={IconButton} style={{ width: 45, height: 45 }}>
+              <Bookmark />
+            </Box>
             {header.status && <HeaderStatus status={header.status}>{header.status}</HeaderStatus>}
             {header.epochStatus && <HeaderStatus status={header.epochStatus}>{header.epochStatus}</HeaderStatus>}
           </HeaderContainer>
           {header.hash && (
-            <SlotLeader> 
+            <SlotLeader>
               {header.slotLeader && (
                 <SlotLeaderTitle>{data.type === "block" ? "Block ID:" : "Slot leader:"}</SlotLeaderTitle>
               )}{" "}
-              <SlotLeaderValue>{header.hash}</SlotLeaderValue> 
+              <SlotLeaderValue>{header.hash}</SlotLeaderValue>
               <SlotLeaderCopy text={header.hash} />
             </SlotLeader>
           )}
