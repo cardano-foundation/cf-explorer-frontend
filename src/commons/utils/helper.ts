@@ -128,19 +128,6 @@ export const exchangeADAToUSD = (value: number | string, rate: number) => {
   return formatPrice(exchangedValue);
 };
 
-export const getConvertedNetwork = (value: keyof typeof NETWORKS) => {
-  switch (value) {
-    case "mainnet":
-      return "MAIN_NET";
-    case "preprod":
-      return "PRE_PROD";
-    case "preview":
-      return "PREVIEW";
-    default:
-      return "TEST_NET";
-  }
-};
-
 export const formatADAFull = (
   value?: string | number,
   abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS

@@ -12,13 +12,14 @@ import { Image, Span, Spin, StyledButton } from "./styles";
 import BigNumber from "bignumber.js";
 import { authAxios } from "../../../../../commons/utils/axios";
 import { signIn } from "../../../../../commons/utils/userRequest";
+import { NETWORK, NETWORKS } from "../../../../../commons/utils/constants";
 interface Props {}
 
 const ConnectWallet: React.FC<Props> = () => {
-  const { network, openModal, modalRegister } = useSelector(({ user }: RootState) => user);
+  const { openModal, modalRegister } = useSelector(({ user }: RootState) => user);
   const buttonRef = useRef(null);
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect } = useCardano({
-    limitNetwork: network === "mainnet" ? NetworkType.MAINNET : NetworkType.TESTNET,
+    limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
 
   const handleClick = () => {

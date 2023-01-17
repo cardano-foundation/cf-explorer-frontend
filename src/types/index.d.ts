@@ -4,3 +4,5 @@ interface SearchParams {
   filter?: FilterParams;
   search?: string;
 }
+
+type NETWORKS = import("../commons/utils/constants").NETWORKS;

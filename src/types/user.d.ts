@@ -26,7 +26,6 @@ export declare interface UserStoreType {
   chainID: string | null;
   provider: any;
   openModal: boolean;
-  network: keyof typeof NETWORKS;
   sidebar: boolean;
   onDetailView: boolean;
   modalRegister: boolean;
