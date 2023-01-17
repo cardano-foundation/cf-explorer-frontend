@@ -28,6 +28,7 @@ export interface TableProps<T extends ColumnType = any> {
   columns: Column<T>[];
   data?: T[];
   className?: string;
+  emptyClassName?: string;
   style?: React.CSSProperties;
   loading?: boolean;
   initialized?: boolean;

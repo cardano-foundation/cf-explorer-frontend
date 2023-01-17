@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import qs from "qs";
 import { useCallback, useEffect, useState } from "react";
-import authAxios, { defaultAxios } from "../utils/axios";
+import { authAxios, defaultAxios } from "../utils/axios";
 
 interface Params {
   page?: number;
