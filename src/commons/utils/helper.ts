@@ -1,4 +1,5 @@
 import BigNumber from "bignumber.js";
+import moment from "moment";
 import { parse } from "qs";
 import { NETWORKS } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
@@ -143,4 +144,8 @@ export const removeAuthInfo = () => {
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("walletId");
   localStorage.removeItem("email");
+};
+
+export const formatDateTime = (date: string) => {
+  return moment(date).format("MM/DD/YYYY HH:mm:ss");
 };
