@@ -4,7 +4,8 @@ import { useState } from "react";
 import { RootState } from "../../../stores/types";
 import { StyledButton, StyledHelper, StyledInput, StyledLabel, StyledRowItem, WrapRowItem } from "./styles";
 import { editInfo, transferWallet } from "../../../commons/utils/userRequest";
-import { getConvertedNetwork, regexEmail } from "../../../commons/utils/helper";
+import { regexEmail } from "../../../commons/utils/helper";
+import { NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
 
 type TRowItem = {
   label: string;
@@ -34,7 +35,7 @@ type TFieldInput = {
 };
 
 const AccountSettingTab: React.FC = () => {
-  const { userData, wallet: walletAddress, network } = useSelector(({ user }: RootState) => user);
+  const { userData, wallet: walletAddress } = useSelector(({ user }: RootState) => user);
   const [username, setUsername] = useState<TFieldInput>({ value: userData?.username });
   const [email, setEmail] = useState<TFieldInput>({ value: userData?.email });
   const [wallet, setWallet] = useState<TFieldInput>({ value: userData?.wallet });
@@ -59,8 +60,8 @@ const AccountSettingTab: React.FC = () => {
         wallet: {
           address: wallet.value,
           walletName: walletAddress?.toUpperCase(),
-          networkType: getConvertedNetwork(network),
-          networkId: getConvertedNetwork(network),
+          networkType: NETWORK_TYPES[NETWORK],
+          networkId: NETWORK_TYPES[NETWORK],
         },
         refreshToken: localStorage.getItem("refreshToken"),
       };

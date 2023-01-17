@@ -2,12 +2,10 @@ import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-wit
 import { MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
 import React from "react";
 import { BiChevronDown } from "react-icons/bi";
-import { useSelector } from "react-redux";
-import { NETWORKS } from "../../../../../commons/utils/constants";
+import { NETWORK, NETWORKS, NETWORK_NAMES } from "../../../../../commons/utils/constants";
 import { removeAuthInfo } from "../../../../../commons/utils/helper";
+import StorageUtils from "../../../../../commons/utils/storage";
 import { signOut } from "../../../../../commons/utils/userRequest";
-import { RootState } from "../../../../../stores/types";
-import { setNetwork } from "../../../../../stores/user";
 
 const StyledSelect = styled(Select)<{ home: number }>`
   font-family: var(--font-family-title);
@@ -35,23 +33,25 @@ interface Props {
 }
 
 const SelectNetwork: React.FC<Props> = props => {
-  const { network } = useSelector(({ user }: RootState) => user);
   const { disconnect } = useCardano({
-    limitNetwork: network === "mainnet" ? NetworkType.MAINNET : NetworkType.TESTNET,
+    limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
 
   const handleChange = async (e: SelectChangeEvent<unknown>) => {
     try {
-      await signOut();
-      setNetwork(e.target.value as keyof typeof NETWORKS);
+      try {
+        await signOut();
+      } catch {}
       removeAuthInfo();
       disconnect();
+      StorageUtils.setNetwork(e.target.value as NETWORKS);
+      window.location.reload();
     } catch (error) {}
   };
 
   return (
-    <StyledSelect onChange={handleChange} value={network} IconComponent={BiChevronDown} home={props.home ? 1 : 0}>
-      {Object.entries(NETWORKS).map(([value, name]) => (
+    <StyledSelect onChange={handleChange} value={NETWORK} IconComponent={BiChevronDown} home={props.home ? 1 : 0}>
+      {Object.entries(NETWORK_NAMES).map(([value, name]) => (
         <MenuItem key={value} value={value}>
           {name}
         </MenuItem>

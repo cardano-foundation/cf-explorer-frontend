@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { authAxios } from "../../../../../commons/utils/axios";
-import { alphaNumeric, getConvertedNetwork } from "../../../../../commons/utils/helper";
+import { NETWORK, NETWORK_TYPES } from "../../../../../commons/utils/constants";
+import { alphaNumeric } from "../../../../../commons/utils/helper";
 import { RootState } from "../../../../../stores/types";
 import { setModalRegister } from "../../../../../stores/user";
 import StyledModal from "../../../StyledModal";
@@ -13,7 +14,7 @@ interface IProps {
   onTriggerSignMessage: () => void;
 }
 const RegisterUsernameModal: React.FC<IProps> = ({ open, address, onTriggerSignMessage }) => {
-  const { wallet, network } = useSelector(({ user }: RootState) => user);
+  const { wallet } = useSelector(({ user }: RootState) => user);
   const [errorMessage, setErrorMessage] = useState("");
   const [value, setValue] = useState("");
 
@@ -24,8 +25,8 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, address, onTriggerSignM
         username: value,
         wallet: {
           address,
-          networkType: getConvertedNetwork(network),
-          networkId: getConvertedNetwork(network),
+          networkType: NETWORK_TYPES[NETWORK],
+          networkId: NETWORK_TYPES[NETWORK],
           walletName: wallet?.toUpperCase(),
         },
       };

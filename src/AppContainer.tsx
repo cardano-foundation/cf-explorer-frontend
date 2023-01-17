@@ -7,8 +7,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import themes from "./themes";
 import { setOnDetailView } from "./stores/user";
 import { setUsdMarket, setCurrentEpoch } from "./stores/system";
-import useFetch from "./commons/hooks/useFetch";
-import { COINGECKO_URL } from "./commons/utils/axios";
+import useFetch from "./commons/hooks/useFetch"; 
+import { COINGECKO_URL } from "./commons/utils/constants";
 interface Props {
   children: React.ReactNode;
 }

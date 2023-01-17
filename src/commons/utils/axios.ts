@@ -1,9 +1,6 @@
 import axios from "axios";
 import jsonBig from "json-bigint";
-
-export const API_URL = process.env.REACT_APP_API_URL;
-export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL;
-export const COINGECKO_URL = "https://api.coingecko.com/api/v3/";
+import { API_URL, AUTH_API_URL } from "./constants";
 
 const defaultAxios = axios.create({
   baseURL: API_URL,
