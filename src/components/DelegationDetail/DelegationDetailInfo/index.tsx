@@ -17,7 +17,7 @@ import {
   UserIcon,
 } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
-import { formatADA, formatPercent, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatDateTimeLocal, formatPercent, getShortWallet } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import CustomTooltip from "../../commons/CustomTooltip";
 import DropdownDetail from "../../commons/DropdownDetail";
@@ -123,7 +123,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 Created date <InfoImg src={InfoIcon} alt="Info Icon" />
               </StyledTitle>
             </InfoTitle>
-            <InfoValue>{data?.createDate && moment(data.createDate).format("MM/DD/YYYY hh:mm:ss")}</InfoValue>
+            <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={RewardIcon} alt="Reward Icon" />

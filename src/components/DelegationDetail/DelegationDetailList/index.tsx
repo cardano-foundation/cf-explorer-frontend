@@ -6,6 +6,7 @@ import { details } from "../../../commons/routers";
 import {
   formatADA,
   formatADAFull,
+  formatDateTimeLocal,
   formatPercent,
   getShortWallet,
   numberWithCommas,
@@ -158,7 +159,7 @@ const DelegationStakingDelegatorsList = ({
       title: "Staked Time",
       key: "stakedTime",
       minWidth: "120px",
-      render: data => moment(data.time).format("MM/DD/YYYY HH:mm/ss"),
+      render: data => formatDateTimeLocal(data.time || ""),
     },
     {
       title: "Fees (A)",

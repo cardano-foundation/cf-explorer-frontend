@@ -4,7 +4,14 @@ import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details, routers } from "../../commons/routers";
-import { formatADA, formatPercent, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
+import {
+  formatADA,
+  formatDateTimeLocal,
+  formatPercent,
+  getPageInfo,
+  getShortHash,
+  getShortWallet,
+} from "../../commons/utils/helper";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table, { Column } from "../../components/commons/Table";
 import { RegistrationContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
@@ -24,7 +31,7 @@ const columns: Column<Registration>[] = [
           <CustomTooltip title={r.txHash}>
             <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash || "")}</StyledLink>
           </CustomTooltip>
-          <div>{moment(r.txTime).format("MM/DD/YYYY HH:mm:ss")}</div>
+          <div>{formatDateTimeLocal(r.txTime || "")}</div>
         </>
       );
     },

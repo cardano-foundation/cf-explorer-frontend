@@ -4,7 +4,7 @@ import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
-import { getPageInfo, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { PriceValue, SmallText, StyledLink } from "./styles";
@@ -54,7 +54,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
       title: "Time",
       key: "time",
       minWidth: "200px",
-      render: r => <SmallText>{moment(r.time).format("MM/DD/YYYY HH:mm:ss")}</SmallText>,
+      render: r => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>,
     },
   ];
 

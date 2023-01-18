@@ -72,7 +72,10 @@ const SummaryItems = ({
 
               {item.tokens.map((token, idx) => (
                 <Box key={idx} width="auto" component={"span"}>
-                  <LabelStatus>{token.assetName}</LabelStatus>
+                  <LabelStatus>
+                    {token.assetName}
+                    {`(${type === "down" ? "-" : "+"}${token.assetQuantity || ""})`}
+                  </LabelStatus>
                 </Box>
               ))}
               {/* </Box> */}

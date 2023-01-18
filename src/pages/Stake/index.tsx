@@ -7,7 +7,7 @@ import { useWindowSize } from "react-use";
 import { Box } from "@mui/material";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details, routers } from "../../commons/routers";
-import { getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import DetailViewStakeKey from "../../components/commons/DetailView/DetailViewStakeKey";
@@ -70,7 +70,7 @@ const Stake: React.FC<IStake> = () => {
     {
       title: "Time",
       key: "time",
-      render: r => moment(r.txTime).format("MM/DD/YYYY HH:mm:ss"),
+      render: r => formatDateTimeLocal(r.txTime || ""),
     },
     {
       title: "Block",

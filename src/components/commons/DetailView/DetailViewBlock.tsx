@@ -37,7 +37,7 @@ import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import moment from "moment";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
@@ -180,7 +180,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 <InfoIcon />
                 Created at
               </DetailLabel>
-              <DetailValue>{moment(data.time).format("MM/DD/yyyy hh:mm:ss")}</DetailValue>
+              <DetailValue>{formatDateTimeLocal(data.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>

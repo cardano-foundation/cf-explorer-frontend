@@ -9,7 +9,7 @@ import slotIcon from "../../../commons/resources/icons/slot.svg";
 import { Box } from "@mui/material";
 import { TitleCard } from "./styles";
 import moment from "moment";
-import { formatADA } from "../../../commons/utils/helper";
+import { formatADA, formatDateTimeLocal } from "../../../commons/utils/helper";
 import { ADAToken } from "../../commons/Token";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 
@@ -28,7 +28,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
           <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
-      value: moment(data?.time).format("MM/DD/YYYY hh:mm:ss"),
+      value: formatDateTimeLocal(data?.time || ""),
     },
     {
       icon: exchageIcon,
