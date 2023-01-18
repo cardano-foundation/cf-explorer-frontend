@@ -8,6 +8,7 @@ import { setOnDetailView } from "../../stores/user";
 import { details } from "../../commons/routers";
 import DetailViewTransaction from "../../components/commons/DetailView/DetailViewTransaction";
 import styled from "@emotion/styled";
+import { API } from "../../commons/utils/api";
 
 const StyledContainer = styled(Container)`
   padding: 20px 0 40px;
@@ -41,7 +42,7 @@ const Transactions: React.FC<Props> = () => {
   };
   return (
     <StyledContainer>
-      <TransactionList url="tx/list" openDetail={openDetail} selected={selected} hash={hash} />
+      <TransactionList url={API.TRANSACTION.LIST} openDetail={openDetail} selected={selected} hash={hash} />
       {hash && <DetailViewTransaction hash={hash} handleClose={handleClose} />}
     </StyledContainer>
   );

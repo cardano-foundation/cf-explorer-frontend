@@ -2,7 +2,6 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Tab } from "@mui/material";
 import React from "react";
 import { ReactComponent as UtxoIcon } from "../../../commons/resources/images/utxoIcon.svg";
-import { ReactComponent as Script } from "../../../commons/resources/images/script.svg";
 import { TabTitle } from "./styles";
 import TokenTransaction from "./TokenTransaction";
 import { useHistory, useParams } from "react-router-dom";

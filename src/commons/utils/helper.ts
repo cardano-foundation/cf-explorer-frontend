@@ -1,7 +1,6 @@
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { parse } from "qs";
-import { NETWORKS } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const alphaNumeric = /[^0-9a-zA-Z]/;
@@ -124,9 +123,9 @@ export const getPageInfo = (search: string): { page: number; size: number } => {
 
 export const exchangeADAToUSD = (value: number | string, rate: number) => {
   if (!value) return 0;
-  const realAda = new BigNumber(value).div(10 ** 6);
+  const realAda = new BigNumber(value);
   const exchangedValue = realAda.multipliedBy(rate).toString();
-  return formatPrice(exchangedValue);
+  return formatADA(exchangedValue);
 };
 
 export const formatADAFull = (

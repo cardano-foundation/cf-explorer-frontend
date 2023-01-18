@@ -6,12 +6,13 @@ import AddressAnalytics from "../../components/AddressDetail/AddressAnalytics";
 import useFetch from "../../commons/hooks/useFetch";
 import NoRecord from "../../components/commons/NoRecord";
 import { useEffect, useRef } from "react";
+import { API } from "../../commons/utils/api";
 
 const AddressWalletDetail = () => {
   const { address } = useParams<{ address: string }>();
   const { state } = useLocation<{ data?: WalletAddress }>();
   const { data, loading, initialized, error } = useFetch<WalletAddress>(
-    state?.data ? "" : `/address/${address}`,
+    state?.data ? "" : `${API.ADDRESS.DETAIL}/${address}`,
     state?.data
   );
 
@@ -29,7 +30,7 @@ const AddressWalletDetail = () => {
     <ContainerBox ref={refBox}>
       <AddressHeader data={data} loading={loading} />
       <AddressAnalytics />
-      <AddressTransactionList url={`/address/${address}/txs`} />
+      <AddressTransactionList url={`${API.ADDRESS.DETAIL}/${address}/txs`} />
     </ContainerBox>
   );
 };

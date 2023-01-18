@@ -6,8 +6,8 @@ import useFetchList from "../../../../commons/hooks/useFetchList";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
 import Table, { Column } from "../../../commons/Table";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import moment from "moment";
 import { details } from "../../../../commons/routers";
+import { API } from "../../../../commons/utils/api";
 
 const columns: Column<StakeHistory>[] = [
   {
@@ -60,7 +60,7 @@ const StakeHistoryTab = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<StakeHistory>(`/stake/${stakeId}/stake-history`, pageInfo);
+  const fetchData = useFetchList<StakeHistory>(`${API.STAKE.DETAIL}/${stakeId}/stake-history`, pageInfo);
 
   return (
     <Table

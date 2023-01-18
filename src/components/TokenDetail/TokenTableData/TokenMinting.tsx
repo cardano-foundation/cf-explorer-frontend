@@ -1,10 +1,10 @@
-import moment from "moment";
 import { stringify } from "qs";
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
 import { formatDateTimeLocal, getPageInfo, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
+import { API } from "../../../commons/utils/api";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { PriceValue, SmallText, StyledLink } from "./styles";
@@ -19,7 +19,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<ITokenTopHolderTable>(`tokens/${tokenId}/mints`, { ...pageInfo, tokenId });
+  const fetchData = useFetchList<ITokenTopHolderTable>(`${API.TOKEN}/${tokenId}/mints`, { ...pageInfo, tokenId });
 
   const columns: Column<ITokenMintingTable>[] = [
     {

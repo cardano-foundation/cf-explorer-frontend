@@ -15,7 +15,6 @@ import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
-import moment from "moment";
 import useFetchList from "../../commons/hooks/useFetchList";
 import BigNumber from "bignumber.js";
 

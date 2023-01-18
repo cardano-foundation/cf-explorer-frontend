@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Box, IconButton, Skeleton } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { routers } from "../../../commons/routers";
-
 import { formatADA, formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
@@ -12,7 +11,6 @@ import slotIcon from "../../../commons/resources/icons/slot.svg";
 import exchageIcon from "../../../commons/resources/icons/Union.svg";
 import decimalIcon from "../../../commons/resources/icons/decimal.svg";
 import { ReactComponent as Bookmark } from "../../../commons/resources/icons/Bookmark.svg";
-
 import {
   BackButton,
   BackText,
@@ -28,7 +26,6 @@ import {
   TitleCard,
   ValueCard,
 } from "./styles";
-import moment from "moment";
 import ScriptModal from "../../ScriptModal";
 import CustomTooltip from "../../commons/CustomTooltip";
 

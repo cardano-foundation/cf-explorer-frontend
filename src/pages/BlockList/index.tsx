@@ -15,6 +15,7 @@ import { setOnDetailView } from "../../stores/user";
 import DetailViewBlock from "../../components/commons/DetailView/DetailViewBlock";
 import Card from "../../components/commons/Card";
 import Table from "../../components/commons/Table";
+import { API } from "../../commons/utils/api";
 
 const BlockList = () => {
   const [block, setBlock] = useState<number | null>(null);
@@ -23,9 +24,9 @@ const BlockList = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<IStakeKey>(`block/list`, pageInfo);
+  const fetchData = useFetchList<IStakeKey>(API.BLOCK.LIST, pageInfo);
 
-  useEffect(() => { 
+  useEffect(() => {
     document.title = `Blocks List | Cardano Explorer`;
   }, []);
 

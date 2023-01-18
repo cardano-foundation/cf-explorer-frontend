@@ -10,6 +10,7 @@ import { MdChevronRight } from "react-icons/md";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { setUserData } from "../../../../stores/user";
 import { UserDataType } from "../../../../types/user";
+import { USER_API } from "../../../../commons/utils/api";
 
 interface Props {
   children: React.ReactNode;
@@ -18,7 +19,7 @@ interface Props {
 const AccountLayout: React.FC<Props> = ({ children }) => {
   const { pathname } = useLocation();
   const { userData } = useSelector(({ user }: RootState) => user);
-  const { data } = useFetch<UserDataType>("user/info", undefined, true);
+  const { data } = useFetch<UserDataType>(USER_API.INFO, undefined, true);
 
   useEffect(() => {
     setUserData(data);

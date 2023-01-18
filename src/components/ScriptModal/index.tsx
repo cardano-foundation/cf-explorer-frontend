@@ -6,6 +6,7 @@ import closeIcon from "../../commons/resources/icons/closeIcon.svg";
 import CopyButton from "../commons/CopyButton";
 import useFetch from "../../commons/hooks/useFetch";
 import { details } from "../../commons/routers";
+import { API } from "../../commons/utils/api";
 
 interface ScriptModalProps {
   open: boolean;
@@ -13,7 +14,7 @@ interface ScriptModalProps {
   policy: string;
 }
 const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
-  const { data, loading } = useFetch<PolicyDetail>(`/policy/${policy && policy}`);
+  const { data, loading } = useFetch<PolicyDetail>(`${API.POLICY}/${policy && policy}`);
 
   return (
     <Modal {...props}>

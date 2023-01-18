@@ -3,12 +3,13 @@ import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import Card from "../../commons/Card";
 import Table, { Column } from "../../commons/Table";
-import { formatADA, formatADAFull, getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, getPageInfo, numberWithCommas } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
-import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer, StyledLink } from "./styles";
+import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import useFetchList from "../../../commons/hooks/useFetchList";
+import { API } from "../../../commons/utils/api";
 
 interface IEpochBlockList {
   epochId: string;
@@ -19,7 +20,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<BlockDetail>(`block/list?epochNo=${epochId}`, pageInfo);
+  const fetchData = useFetchList<BlockDetail>(`${API.BLOCK.LIST}?epochNo=${epochId}`, pageInfo);
 
   const columns: Column<BlockDetail>[] = [
     {

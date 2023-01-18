@@ -55,7 +55,7 @@ import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
-import moment from "moment";
+import { API } from "../../../commons/utils/api";
 
 type DetailViewTransactionProps = {
   hash: string;
@@ -73,7 +73,7 @@ const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] 
 
 const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
   const { hash, handleClose } = props;
-  const { data } = useFetch<Transaction>(hash ? `tx/${hash}` : ``);
+  const { data } = useFetch<Transaction>(hash ? `${API.TRANSACTION.DETAIL}/${hash}` : ``);
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
 
   if (!data)

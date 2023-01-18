@@ -2,7 +2,6 @@ import React from "react";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Tab } from "@mui/material";
 import { Box } from "@mui/material";
-import moment from "moment";
 import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
@@ -13,6 +12,7 @@ import { formatADA, formatADAFull, formatDateTimeLocal, getPageInfo, getShortHas
 import Table, { Column } from "../../commons/Table";
 import { LinkComponent, TitleTab } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
+import { API } from "../../../commons/utils/api";
 
 enum TABS {
   TOKENS = "tokens",
@@ -131,7 +131,7 @@ const PolicyTable = () => {
     history.push({ search: stringify({ page: 1, size: 10 }) });
   };
 
-  const fetchData = useFetchList<PolicyHolder | TokenPolicys>(`/policy/${policyId}/${activeTab}`, pageInfo);
+  const fetchData = useFetchList<PolicyHolder | TokenPolicys>(`${API.POLICY}/${policyId}/${activeTab}`, pageInfo);
 
   return (
     <Box mt={4}>

@@ -5,6 +5,7 @@ import HighchartsReact from "highcharts-react-official";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { styled } from "@mui/material";
 import { BoxRaised } from "../../../commons/BoxRaised";
+import { API } from "../../../../commons/utils/api";
 
 const TransactionContainer = styled(BoxRaised)`
   margin-bottom: 24px;
@@ -53,7 +54,7 @@ interface TransactionCount {
 }
 
 const TransactionChart: React.FC = () => {
-  const { data: dataOrigin } = useFetch<TransactionCount[]>(`tx/graph`);
+  const { data: dataOrigin } = useFetch<TransactionCount[]>(API.TRANSACTION.GRAPH);
   const data = (dataOrigin || []).map(item => item.txs);
 
   const categories = (dataOrigin || []).map(item => moment(item.date).format("MMM DD"));

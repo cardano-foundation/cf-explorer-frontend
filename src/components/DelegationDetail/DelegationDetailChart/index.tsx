@@ -16,6 +16,7 @@ import {
   Title,
   Value,
 } from "./styles";
+import { API } from "../../../commons/utils/api";
 
 interface DelegationDetailChartProps {
   poolId: string;
@@ -23,7 +24,7 @@ interface DelegationDetailChartProps {
 
 const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId }) => {
   const [selected, setSelected] = useState<"epochChart" | "delegatorChart">("epochChart");
-  const { data, loading } = useFetch<AnalyticsDelegators>(`/delegation/pool-detail-analytics?poolView=${poolId}`);
+  const { data, loading } = useFetch<AnalyticsDelegators>(`${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`);
 
   const categories = data?.[selected]?.dataByDays?.map(item => item.epochNo) || null;
   const epochs = data?.epochChart?.dataByDays?.map(item => item.totalStake / 10 ** 6) || null;
