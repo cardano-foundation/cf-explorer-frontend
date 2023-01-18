@@ -28,8 +28,10 @@ interface TransactionMetadataProps {
 }
 
 const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading }) => {
-  const { tabActive = "summary" } = useParams<{ tabActive: keyof Transaction }>();
+  let { tabActive = "summary" } = useParams<{ tabActive: keyof Transaction }>();
   const history = useHistory();
+
+  if (!data?.[tabActive]) tabActive = "summary";
 
   const handleChange = (event: React.SyntheticEvent, tab: keyof Transaction) => {
     history.push(details.transaction(data?.tx?.hash, tab));
