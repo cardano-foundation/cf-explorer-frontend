@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import moment from "moment";
 import { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { details } from "../../../commons/routers";

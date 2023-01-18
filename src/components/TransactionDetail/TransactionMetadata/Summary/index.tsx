@@ -3,14 +3,13 @@ import { Box } from "@mui/material";
 import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
-import messageImg from "../../../../commons/resources/images/messageImg.svg";
 import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
 import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { Icon, Img, LabelStatus } from "./component";
+import { Icon, LabelStatus } from "./component";
 
 const SummaryItems = ({
   item,

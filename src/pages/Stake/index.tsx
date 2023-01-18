@@ -1,4 +1,3 @@
-import moment from "moment";
 import { stringify } from "qs";
 import React, { useEffect, useState } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
@@ -14,6 +13,7 @@ import DetailViewStakeKey from "../../components/commons/DetailView/DetailViewSt
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
 import { StyledContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
+import { API } from "../../commons/utils/api";
 
 interface IStake {}
 
@@ -31,7 +31,7 @@ const Stake: React.FC<IStake> = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<IStakeKey>(`/stake/${poolType}`, pageInfo);
+  const fetchData = useFetchList<IStakeKey>(`${API.STAKE.DETAIL}/${poolType}`, pageInfo);
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registrations" : "Deregistrations";

@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
+import { API } from "../../../commons/utils/api";
 import { formatADA, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import ViewAllButton from "../../commons/ViewAllButton";
@@ -23,7 +24,7 @@ import {
 } from "./style";
 
 const LatestTransactions: React.FC = () => {
-  const { data, loading } = useFetchList<Transactions>(`tx/list`, { page: 0, size: 4 });
+  const { data, loading } = useFetchList<Transactions>(API.TRANSACTION.LIST, { page: 0, size: 4 });
   const history = useHistory();
   return (
     <TransactionContainer>

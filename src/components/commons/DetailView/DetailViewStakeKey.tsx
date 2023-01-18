@@ -46,6 +46,7 @@ import CopyButton from "../CopyButton";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import ModalAllAddress from "../../StakeDetail/ModalAllAddress";
+import { API } from "../../../commons/utils/api";
 
 type DetailViewStakeKeyProps = {
   stakeId: string;
@@ -60,7 +61,7 @@ const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
 
 const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
   const { stakeId, handleClose } = props;
-  const { data } = useFetch<IStakeKeyDetail>(stakeId ? `stake/address/${stakeId}` : ``);
+  const { data } = useFetch<IStakeKeyDetail>(stakeId ? `${API.STAKE.ADDRESS_DETAIL}/${stakeId}` : ``);
   const [open, setOpen] = useState(false);
 
   if (!data)

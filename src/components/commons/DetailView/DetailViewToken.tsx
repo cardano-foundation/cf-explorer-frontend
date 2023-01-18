@@ -43,7 +43,6 @@ import {
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
 import { formatCurrency, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
-import moment from "moment";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";

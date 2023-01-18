@@ -7,8 +7,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import themes from "./themes";
 import { setOnDetailView } from "./stores/user";
 import { setUsdMarket, setCurrentEpoch } from "./stores/system";
-import useFetch from "./commons/hooks/useFetch"; 
-import { COINGECKO_URL } from "./commons/utils/constants";
+import useFetch from "./commons/hooks/useFetch";
+import { API, EXTEN_API } from "./commons/utils/api";
 interface Props {
   children: React.ReactNode;
 }
@@ -18,8 +18,8 @@ const AppContainer: React.FC<Props> = props => {
   const lastPath = useRef(history.location.pathname);
   const { children } = props;
   const { theme } = useSelector(({ user }: RootState) => user);
-  const currentEpoch = useFetch<EpochCurrentType>(`epoch/current`);
-  const usdMarket = useFetch<CardanoMarket[]>(`${COINGECKO_URL}coins/markets?vs_currency=usd&ids=cardano`);
+  const currentEpoch = useFetch<EpochCurrentType>(API.EPOCH.CURRENT_EPOCH);
+  const usdMarket = useFetch<CardanoMarket[]>(`${EXTEN_API.COINGECKO.PRICE}?vs_currency=usd&ids=cardano`);
 
   useEffect(() => {
     if (usdMarket.data?.[0]) setUsdMarket(usdMarket.data[0]);
