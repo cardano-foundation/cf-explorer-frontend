@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { useEffect, useRef, useState } from "react";
 import CustomTooltip from "../../commons/CustomTooltip";
+import BigNumber from "bignumber.js";
 
 interface Props {
   data: WalletAddress | null;
@@ -42,7 +43,14 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: "ADA Value",
       value: (
-        <CustomTooltip title={numberWithCommas((data?.balance || 0) * adaRate)}>
+        <CustomTooltip
+          title={numberWithCommas(
+            new BigNumber(data?.balance || 0)
+              .div(10 ** 6)
+              .multipliedBy(adaRate)
+              .toString()
+          )}
+        >
           <Box>{exchangeADAToUSD(data?.balance || 0, adaRate)}</Box>
         </CustomTooltip>
       ),
