@@ -9,6 +9,7 @@ import moment from "moment";
 import { details } from "../../../../commons/routers";
 import { ADAToken } from "../../../commons/Token";
 import { StyledLink } from "../styles";
+import { API } from "../../../../commons/utils/api";
 
 const columns: Column<Instantaneous>[] = [
   {
@@ -61,7 +62,7 @@ const InstantaneousTab = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<Instantaneous>(`/stake/${stakeId}/instantaneous-rewards`, pageInfo);
+  const fetchData = useFetchList<Instantaneous>(`${API.STAKE.DETAIL}/${stakeId}/instantaneous-rewards`, pageInfo);
 
   return (
     <Table

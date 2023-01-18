@@ -45,6 +45,7 @@ import CopyButton from "../CopyButton";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { Box } from "@mui/material";
+import { API } from "../../../commons/utils/api";
 
 type DetailViewBlockProps = {
   blockNo: number;
@@ -53,7 +54,7 @@ type DetailViewBlockProps = {
 
 const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
   const { blockNo, handleClose } = props;
-  const { data } = useFetch<BlockDetail>(blockNo ? `block/${blockNo}` : ``);
+  const { data } = useFetch<BlockDetail>(blockNo ? `${API.BLOCK.DETAIL}/${blockNo}` : ``);
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
 
   if (!data)

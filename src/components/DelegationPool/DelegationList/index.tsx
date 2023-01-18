@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Box } from "@mui/material";
 import CustomTooltip from "../../commons/CustomTooltip";
 import RateWithIcon from "../../commons/RateWithIcon";
+import { API } from "../../../commons/utils/api";
 
 const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
   {
@@ -80,7 +81,7 @@ const DelegationLists: React.FC = () => {
   const [value, setValue] = useState("");
   const { name } = parse(search.split("?")[1]);
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<Delegators>("/delegation/pool-list", {
+  const fetchData = useFetchList<Delegators>(API.DELEGATION.POOL_LIST, {
     ...pageInfo,
     search: (name as string) || "",
   });

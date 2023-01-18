@@ -6,6 +6,7 @@ import TransactionMetadata from "../../components/TransactionDetail/TransactionM
 import useFetch from "../../commons/hooks/useFetch";
 import Card from "../../components/commons/Card";
 import NoRecord from "../../components/commons/NoRecord";
+import { API } from "../../commons/utils/api";
 
 const StyledContainer = styled(Container)`
   padding: 30px 0px 40px;
@@ -14,7 +15,10 @@ const StyledContainer = styled(Container)`
 const Transaction: React.FC = () => {
   const { trxHash } = useParams<{ trxHash: string }>();
   const { state } = useLocation<{ data?: Transaction }>();
-  const { data, loading, initialized, error } = useFetch<Transaction>(state?.data ? "" : `tx/${trxHash}`, state?.data);
+  const { data, loading, initialized, error } = useFetch<Transaction>(
+    state?.data ? "" : `${API.TRANSACTION.DETAIL}/${trxHash}`,
+    state?.data
+  );
 
   useEffect(() => {
     window.history.replaceState({}, document.title);

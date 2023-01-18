@@ -20,13 +20,14 @@ import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useSelector } from "react-redux";
 import { RootState } from "../../stores/types";
+import { API } from "../../commons/utils/api";
 
 const Transactions: React.FC = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<Contracts>("contracts", pageInfo);
+  const fetchData = useFetchList<Contracts>(API.CONTRACT, pageInfo);
   const { adaRate } = useSelector(({ system }: RootState) => system);
 
   useEffect(() => {

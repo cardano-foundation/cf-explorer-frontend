@@ -10,8 +10,9 @@ import { details } from "../../../commons/routers";
 import { StyledTextField, WrapPaperDropdown } from "./styles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import CustomTooltip from "../../commons/CustomTooltip";
+import { API } from "../../../commons/utils/api";
 
 interface Props {
   data: WalletAddress | null;
@@ -19,7 +20,9 @@ interface Props {
 }
 const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   const [stakeKey, setStakeKey] = useState("");
-  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(stakeKey ? `/stake/${stakeKey}` : "");
+  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
+    stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : ""
+  );
   const { adaRate } = useSelector(({ system }: RootState) => system);
 
   useEffect(() => {

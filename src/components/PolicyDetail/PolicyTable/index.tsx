@@ -13,6 +13,7 @@ import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet } f
 import Table, { Column } from "../../commons/Table";
 import { LinkComponent, TitleTab } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
+import { API } from "../../../commons/utils/api";
 
 enum TABS {
   TOKENS = "tokens",
@@ -131,7 +132,7 @@ const PolicyTable = () => {
     history.push({ search: stringify({ page: 1, size: 10 }) });
   };
 
-  const fetchData = useFetchList<PolicyHolder | TokenPolicys>(`/policy/${policyId}/${activeTab}`, pageInfo);
+  const fetchData = useFetchList<PolicyHolder | TokenPolicys>(`${API.POLICY}/${policyId}/${activeTab}`, pageInfo);
 
   return (
     <Box mt={4}>

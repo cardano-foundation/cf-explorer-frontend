@@ -4,12 +4,13 @@ import React from "react";
 import useFetch from "../../../commons/hooks/useFetch";
 import { CurentEpochIcon, LiveStakeIcon, RocketBackground } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
+import { API } from "../../../commons/utils/api";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
 import { StyledCard, StyledImg, StyledLinearProgress, StyledSkeleton } from "./styles";
 
 const OverViews: React.FC = () => {
-  const { data, loading } = useFetch<OverViewDelegation>("/delegation/header");
+  const { data, loading } = useFetch<OverViewDelegation>(API.DELEGATION.HEADER);
 
   if (loading) {
     return (

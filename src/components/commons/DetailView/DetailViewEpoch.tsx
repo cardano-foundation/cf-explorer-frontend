@@ -40,6 +40,7 @@ import { details } from "../../../commons/routers";
 import { formatADA } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
+import { API } from "../../../commons/utils/api";
 
 type DetailViewEpochProps = {
   epochNo: number;
@@ -48,7 +49,7 @@ type DetailViewEpochProps = {
 
 const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
   const { epochNo, handleClose } = props;
-  const { data } = useFetch<IDataEpoch>(epochNo ? `epoch/${epochNo}` : ``);
+  const { data } = useFetch<IDataEpoch>(epochNo ? `${API.EPOCH.DETAIL}/${epochNo}` : ``);
 
   if (!data)
     return (

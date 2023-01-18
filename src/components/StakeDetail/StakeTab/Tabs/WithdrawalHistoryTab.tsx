@@ -9,6 +9,7 @@ import moment from "moment";
 import { details } from "../../../../commons/routers";
 import { ADAToken } from "../../../commons/Token";
 import { StyledLink } from "../styles";
+import { API } from "../../../../commons/utils/api";
 
 const columns: Column<WithdrawalHistory>[] = [
   {
@@ -61,7 +62,7 @@ const WithdrawalHistoryTab = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<WithdrawalHistory>(`/stake/${stakeId}/withdrawal-history`, pageInfo);
+  const fetchData = useFetchList<WithdrawalHistory>(`${API.STAKE.DETAIL}/${stakeId}/withdrawal-history`, pageInfo);
 
   return (
     <Table

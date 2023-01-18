@@ -16,6 +16,7 @@ import { useWindowSize } from "react-use";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { Box } from "@mui/material";
+import { API } from "../../commons/utils/api";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -24,7 +25,7 @@ const Epoch: React.FC = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<IDataEpoch>(`epoch/list`, pageInfo);
+  const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, pageInfo);
 
   const columns: Column<IDataEpoch>[] = [
     {

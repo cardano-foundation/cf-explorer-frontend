@@ -8,6 +8,7 @@ import { formatADA, formatPercent, getPageInfo, getShortHash, getShortWallet } f
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table, { Column } from "../../components/commons/Table";
 import { RegistrationContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
+import { API } from "../../commons/utils/api";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",
@@ -80,7 +81,7 @@ const RegistrationPools = () => {
   const pageInfo = getPageInfo(search);
   const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
 
-  const fetchData = useFetchList<Registration>(`/pool/${poolType}`, pageInfo);
+  const fetchData = useFetchList<Registration>(`${API.POOL}/${poolType}`, pageInfo);
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";

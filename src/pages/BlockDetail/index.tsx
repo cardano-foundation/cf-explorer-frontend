@@ -5,12 +5,13 @@ import useFetch from "../../commons/hooks/useFetch";
 import { StyledContainer } from "./styles";
 import NoRecord from "../../components/commons/NoRecord";
 import { useEffect } from "react";
+import { API } from "../../commons/utils/api";
 
 const BlockDetail = () => {
   const { blockId } = useParams<{ blockId: string }>();
   const { state } = useLocation<{ data?: BlockDetail }>();
   const { data, loading, initialized, error } = useFetch<BlockDetail>(
-    state?.data ? "" : `block/${blockId}`,
+    state?.data ? "" : `${API.BLOCK.DETAIL}/${blockId}`,
     state?.data
   );
 
@@ -24,7 +25,10 @@ const BlockDetail = () => {
   return (
     <StyledContainer>
       <BlockOverview data={data} loading={loading} />
-      <TransactionListsFull underline={true} url={`tx/list?${isNaN(+blockId) ? "blockHash=" : "blockNo="}${blockId}`} />
+      <TransactionListsFull
+        underline={true}
+        url={`${API.TRANSACTION.LIST}?${isNaN(+blockId) ? "blockHash=" : "blockNo="}${blockId}`}
+      />
     </StyledContainer>
   );
 };

@@ -8,6 +8,7 @@ import { formatADA, formatADAFull, getShortWallet, numberWithCommas } from "../.
 import { Link, useHistory } from "react-router-dom";
 import { details } from "../../../commons/routers";
 import CustomTooltip from "../../commons/CustomTooltip";
+import { API } from "../../../commons/utils/api";
 
 interface ModalAllAddressProps {
   open: boolean;
@@ -19,7 +20,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
   const history = useHistory();
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
-  const fetchData = useFetchList<Addresses>(`/stake/${stake}/list-address`, { page: page - 1, size });
+  const fetchData = useFetchList<Addresses>(`${API.STAKE.DETAIL}/${stake}/list-address`, { page: page - 1, size });
 
   const columns: Column<Addresses>[] = [
     {

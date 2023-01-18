@@ -18,11 +18,12 @@ import {
 import RateWithIcon from "../../commons/RateWithIcon";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { Box } from "@mui/system";
+import { API } from "../../../commons/utils/api";
 
 interface Props {}
 
 const TopDelegationPools: React.FC<Props> = () => {
-  const { data, loading, initialized } = useFetch<DelegationPool[]>(`delegation/top?page=1&size=4`);
+  const { data, loading, initialized } = useFetch<DelegationPool[]>(`${API.DELEGATION.TOP}?page=1&size=4`);
   const history = useHistory();
   data?.forEach(item => {
     if (!item.poolSize) {

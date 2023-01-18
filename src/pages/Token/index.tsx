@@ -14,6 +14,7 @@ import { AssetName, Logo, StyledContainer, LogoEmpty } from "./styles";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { Box } from "@mui/material";
+import { API } from "../../commons/utils/api";
 
 interface ITokenList {}
 
@@ -26,7 +27,7 @@ const Tokens: React.FC<ITokenList> = () => {
   const pageInfo = getPageInfo(search);
   const query = parse(search);
 
-  const { data, ...fetchData } = useFetchList<ITokenOverview>(`/tokens`, {
+  const { data, ...fetchData } = useFetchList<ITokenOverview>(API.TOKEN, {
     ...pageInfo,
     sort: query.sort ? `${query.sort}` : "supply,DESC",
   });

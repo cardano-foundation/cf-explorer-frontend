@@ -4,6 +4,7 @@ import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
+import { API } from "../../../commons/utils/api";
 import { getPageInfo, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
@@ -19,7 +20,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<ITokenTopHolderTable>(`tokens/${tokenId}/mints`, { ...pageInfo, tokenId });
+  const fetchData = useFetchList<ITokenTopHolderTable>(`${API.TOKEN}/${tokenId}/mints`, { ...pageInfo, tokenId });
 
   const columns: Column<ITokenMintingTable>[] = [
     {
