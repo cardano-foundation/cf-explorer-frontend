@@ -11,7 +11,7 @@ const StakeDetail: React.FC = () => {
   const { stakeId } = useParams<{ stakeId: string }>();
   const { state } = useLocation<{ data?: IStakeKeyDetail }>();
   const { data, loading, initialized, error } = useFetch<IStakeKeyDetail>(
-    state?.data ? "" : `${API.STAKE.ADDRESS_DETAIL}/${stakeId}`,
+    state?.data ? "" : `${API.STAKE.DETAIL}/${stakeId}`,
     state?.data
   );
 
