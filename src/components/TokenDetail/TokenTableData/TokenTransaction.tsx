@@ -62,7 +62,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
         <>
           <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
           <br />
-          <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/<SmallText>{r.slot} </SmallText>
+          <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/<SmallText>{r.epochSlotNo} </SmallText>
         </>
       ),
     },
