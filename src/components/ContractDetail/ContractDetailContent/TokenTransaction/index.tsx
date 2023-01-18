@@ -1,7 +1,6 @@
 import React from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
-import moment from "moment";
 import {
   formatADA,
   formatADAFull,

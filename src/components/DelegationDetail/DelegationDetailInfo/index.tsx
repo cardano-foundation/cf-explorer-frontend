@@ -1,5 +1,4 @@
 import { Box, IconButton, Skeleton } from "@mui/material";
-import moment from "moment";
 import React, { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link } from "react-router-dom";
@@ -11,8 +10,6 @@ import {
   HighestIcon,
   InfoIcon,
   RewardIcon,
-  SaveOffIcon,
-  SaveOnIcon,
   TickerIcon,
   UserIcon,
 } from "../../../commons/resources";
@@ -40,7 +37,6 @@ import {
   PoolIdLabel,
   PoolIdSkeleton,
   PoolIdValue,
-  SavingImg,
   StyledGrid,
   StyledImg,
   StyledLinearProgress,

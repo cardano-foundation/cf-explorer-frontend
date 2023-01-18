@@ -1,14 +1,22 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
-import moment from "moment";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
-import { formatADA, formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import {
+  formatADA,
+  formatADAFull,
+  formatDateTimeLocal,
+  getPageInfo,
+  getShortHash,
+  getShortWallet,
+  numberWithCommas,
+} from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
 import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
+import { API } from "../../../commons/utils/api";
 
 interface ITokenTransaction {
   active: boolean;
@@ -20,7 +28,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<Transactions>(`tx/list`, { ...pageInfo, tokenId });
+  const fetchData = useFetchList<Transactions>(API.TRANSACTION.LIST, { ...pageInfo, tokenId });
 
   const columns: Column<Transactions>[] = [
     {

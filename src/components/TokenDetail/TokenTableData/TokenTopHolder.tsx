@@ -7,6 +7,7 @@ import { formatADA, formatADAFull, getPageInfo, getShortWallet, numberWithCommas
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { PriceValue, SmallText, StyledLink } from "./styles";
+import { API } from "../../../commons/utils/api";
 
 interface ITokenTopHolder {
   active: boolean;
@@ -19,7 +20,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<ITokenTopHolderTable>(`tokens/${tokenId}/top_holders`, { ...pageInfo, tokenId });
+  const fetchData = useFetchList<ITokenTopHolderTable>(`${API.TOKEN}/${tokenId}/top_holders`, { ...pageInfo, tokenId });
 
   const columns: Column<ITokenTopHolderTable>[] = [
     {

@@ -23,6 +23,7 @@ import { formatADA, formatADAFull, formatPrice } from "../../../commons/utils/he
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { BigNumber } from "bignumber.js";
 import CustomTooltip from "../../commons/CustomTooltip";
+import { API } from "../../../commons/utils/api";
 
 type AnalyticsData = { date: string; value: number };
 
@@ -36,9 +37,9 @@ const options = [
 const AddressAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { address } = useParams<{ address: string }>();
-  const { data, loading } = useFetch<AnalyticsData[]>(`/address/analytics/${address}/${rangeTime}`);
+  const { data, loading } = useFetch<AnalyticsData[]>(`${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`);
 
-  const { data: balance, loading: balanceLoading } = useFetch<number[]>(`/address/min-max-balance/${address}`);
+  const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${address}`);
   const dataChart = data?.map(i => +formatADAFull(BigNumber(i.value).toNumber() || 0).replaceAll(",", ""));
 
   const categories = data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import useFetch from "../../../commons/hooks/useFetch";
 import { AIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
+import { API } from "../../../commons/utils/api";
 import { exchangeADAToUSD, formatADA, formatPrice } from "../../../commons/utils/helper";
 import { RootState } from "../../../stores/types";
 import Card from "../../commons/Card";
@@ -18,7 +19,7 @@ interface Props {
 
 const AddressOverview: React.FC<Props> = ({ data, loading }) => {
   const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
-    data?.stakeAddress ? `/stake/${data?.stakeAddress}` : ""
+    data?.stakeAddress ? `${API.STAKE.DETAIL}/${data?.stakeAddress}` : ""
   );
   const { adaRate } = useSelector(({ system }: RootState) => system);
 

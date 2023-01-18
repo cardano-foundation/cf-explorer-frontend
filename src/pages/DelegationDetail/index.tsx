@@ -14,6 +14,7 @@ import {
 } from "../../components/DelegationDetail/DelegationDetailList";
 import useFetchList from "../../commons/hooks/useFetchList";
 import NoRecord from "../../components/commons/NoRecord";
+import { API } from "../../commons/utils/api";
 
 const titles = {
   epochs: "Epoch",
@@ -42,7 +43,7 @@ const DelegationDetail: React.FC = () => {
   };
 
   const { data, loading, initialized, error } = useFetch<DelegationOverview>(
-    state?.data ? "" : `/delegation/pool-detail-header/${poolId}`,
+    state?.data ? "" : `${API.DELEGATION.POOL_DETAIL_HEADER}/${poolId}`,
     state?.data
   );
   const {
@@ -51,7 +52,7 @@ const DelegationDetail: React.FC = () => {
     total,
     initialized: initalTable,
   } = useFetchList<DelegationEpoch | StakingDelegators>(
-    `/delegation/pool-detail-${tab}?poolView=${poolId}&page=${query.page ? +query.page - 1 : 0}&size=${
+    `${API.DELEGATION.POOL_DETAIL}-${tab}?poolView=${poolId}&page=${query.page ? +query.page - 1 : 0}&size=${
       query.size || 10
     }`
   );
@@ -60,7 +61,7 @@ const DelegationDetail: React.FC = () => {
     window.history.replaceState({}, document.title);
     document.title = `Delegation Pool ${poolId} | Cardano Explorer`;
   }, [poolId]);
-  
+
   if ((initialized && !data) || error) return <NoRecord />;
 
   const render = () => {

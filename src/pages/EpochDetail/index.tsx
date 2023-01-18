@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import useFetch from "../../commons/hooks/useFetch";
+import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import EpochBlockList from "../../components/EpochDetail/EpochBlockList";
 import EpochOverview from "../../components/EpochDetail/EpochOverview";
@@ -11,7 +12,7 @@ const EpochDetail: React.FC = () => {
   const { state } = useLocation<{ data?: IDataEpoch }>();
 
   const { data, loading, initialized, error } = useFetch<IDataEpoch>(
-    state?.data ? "" : `epoch/${epochId}`,
+    state?.data ? "" : `${API.EPOCH.DETAIL}/${epochId}`,
     state?.data
   );
 
