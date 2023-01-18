@@ -3,7 +3,7 @@ import { LabelStatus, StyledLink } from "../styles";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
 import useFetchList from "../../../../commons/hooks/useFetchList";
-import { getPageInfo, getShortHash } from "../../../../commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
 import Table, { Column } from "../../../commons/Table";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import moment from "moment";
@@ -24,7 +24,7 @@ const columns: Column<StakeHistory>[] = [
     title: "Time",
     key: "time",
     minWidth: "120px",
-    render: r => moment(r.time).format("MM/DD/YYYY hh:mm:ss"),
+    render: r => formatDateTimeLocal(r.time || ""),
   },
   {
     title: "Block",

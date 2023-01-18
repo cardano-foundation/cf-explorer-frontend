@@ -9,7 +9,7 @@ import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
 import { ReactComponent as TokenIcon } from "../../../commons/resources/icons/tokenIcon.svg";
 import { ReactComponent as AssetHolderIcon } from "../../../commons/resources/icons/assetHolder.svg";
-import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
 import { LinkComponent, TitleTab } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -40,7 +40,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     title: "Created Date",
     key: "date",
     minWidth: "150px",
-    render: r => moment(r.createdOn).format("MM/DD/YYYY hh:mm:ss"),
+    render: r => formatDateTimeLocal(r.createdOn || ""),
   },
   {
     title: "Total Supply",

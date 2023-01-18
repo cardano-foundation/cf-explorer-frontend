@@ -3,7 +3,7 @@ import { stringify } from "qs";
 import { Box } from "@mui/material";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
+import { formatADA, formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
@@ -46,7 +46,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
           <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
-          <Box mt={1}>{moment(r.time).format("MM/DD/YYYY hh:mm:ss")}</Box>
+          <Box mt={1}>{formatDateTimeLocal(r.time || "")}</Box>
         </div>
       ),
     },

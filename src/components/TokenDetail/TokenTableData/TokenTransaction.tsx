@@ -5,7 +5,7 @@ import moment from "moment";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
-import { formatADA, formatADAFull, getPageInfo, getShortHash, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
 import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -42,7 +42,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
           <br />
-          <SmallText>{moment(r.time).format("MM/DD/YYYY HH:mm:ss")}</SmallText>
+          <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
         </>
       ),
     },

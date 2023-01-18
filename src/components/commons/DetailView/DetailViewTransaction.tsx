@@ -49,7 +49,7 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { TbFileCheck } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
@@ -246,7 +246,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                 <InfoIcon />
                 Time
               </DetailLabel>
-              <DetailValue>{moment(data.tx.time).format("MM/DD/YYYY hh:mm:ss")}</DetailValue>
+              <DetailValue>{formatDateTimeLocal(data.tx.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import DetailHeader from "../../commons/DetailHeader";
-import { formatADA, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
 import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { Box, IconButton } from "@mui/material";
 import { ConfirmStatus, StyledLink, TitleCard } from "./component";
@@ -130,7 +130,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
-      value: moment(data?.tx?.time).format("MM/DD/YYYY hh:mm:ss"),
+      value: formatDateTimeLocal(data?.tx?.time || ""),
     },
     {
       icon: txConfirm,
