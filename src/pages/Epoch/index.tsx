@@ -5,7 +5,13 @@ import moment from "moment";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AIcon } from "../../commons/resources";
 import { EPOCH_STATUS } from "../../commons/utils/constants";
-import { formatADA, formatADAFull, getPageInfo, numberWithCommas } from "../../commons/utils/helper";
+import {
+  formatADA,
+  formatADAFull,
+  formatDateTimeLocal,
+  getPageInfo,
+  numberWithCommas,
+} from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
@@ -62,7 +68,7 @@ const Epoch: React.FC = () => {
       title: "Start date",
       key: "startTime",
       minWidth: "100px",
-      render: r => <StyledColorBlueDard>{moment(r.startTime).format("MM/DD/YYYY HH:mm:ss")}</StyledColorBlueDard>,
+      render: r => <StyledColorBlueDard>{formatDateTimeLocal(r.startTime || "")}</StyledColorBlueDard>,
     },
     {
       title: "End date",
@@ -70,8 +76,7 @@ const Epoch: React.FC = () => {
       minWidth: "100px",
       render: r => (
         <StyledColorBlueDard>
-          {moment(r.endTime).format("MM/DD/YYYY HH:mm:ss")}
-
+          {formatDateTimeLocal(r.endTime || "")}
           {epoch === r.no && (
             <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
               <MdOutlineKeyboardArrowRight fontSize={30} />

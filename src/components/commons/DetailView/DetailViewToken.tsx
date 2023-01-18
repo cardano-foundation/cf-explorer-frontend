@@ -42,7 +42,7 @@ import {
 } from "./styles";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatCurrency, getShortWallet } from "../../../commons/utils/helper";
+import { formatCurrency, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
 import moment from "moment";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
@@ -225,7 +225,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                 <InfoIcon />
                 Created
               </DetailLabel>
-              <DetailValue>{moment(data.createdOn).format("MM/DD/YYYY HH:mm:ss")}</DetailValue>
+              <DetailValue>
+                {formatDateTimeLocal(data.createdOn || "")}
+              </DetailValue>
             </DetailsInfoItem>
           </Group>
           <Group>

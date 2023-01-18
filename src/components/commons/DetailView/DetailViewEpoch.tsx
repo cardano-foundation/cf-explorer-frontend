@@ -37,7 +37,7 @@ import moment from "moment";
 import { HiOutlineCube } from "react-icons/hi2";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatADA } from "../../../commons/utils/helper";
+import { formatADA, formatDateTimeLocal } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 
@@ -167,14 +167,18 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
                 <InfoIcon />
                 Start time
               </DetailLabel>
-              <DetailValue>{moment(data.startTime).format("MM/DD/YYYY HH:mm:ss")}</DetailValue>
+              <DetailValue>
+                {formatDateTimeLocal(data.startTime || "")}
+              </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
                 <InfoIcon />
                 End time
               </DetailLabel>
-              <DetailValue>{moment(data.endTime).format("MM/DD/YYYY HH:mm:ss")}</DetailValue>
+              <DetailValue>
+                {formatDateTimeLocal(data.endTime || "")}
+              </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>

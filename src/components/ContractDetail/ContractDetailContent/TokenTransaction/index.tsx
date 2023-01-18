@@ -5,6 +5,7 @@ import moment from "moment";
 import {
   formatADA,
   formatADAFull,
+  formatDateTimeLocal,
   getPageInfo,
   getShortHash,
   getShortWallet,
@@ -35,7 +36,7 @@ const columns: Column<Transactions>[] = [
           <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
         </CustomTooltip>
         <br />
-        <SmallText>{moment(r.time).format("MM/DD/YYYY HH:mm:ss")}</SmallText>
+        <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
       </>
     ),
   },
@@ -44,7 +45,7 @@ const columns: Column<Transactions>[] = [
     key: "time",
     minWidth: "180px",
 
-    render: r => <SmallText>{moment(r.time).format("MM/DD/YYYY HH:mm:ss")}</SmallText>,
+    render: r => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>,
   },
   {
     title: "Block",

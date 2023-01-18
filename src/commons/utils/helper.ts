@@ -149,3 +149,6 @@ export const removeAuthInfo = () => {
 export const formatDateTime = (date: string) => {
   return moment(date).format("MM/DD/YYYY HH:mm:ss");
 };
+export const formatDateTimeLocal = (date: string) => {
+  return moment(moment(`${date} GMT+0000`).local(true)).format("MM/DD/YYYY HH:mm:ss");
+};

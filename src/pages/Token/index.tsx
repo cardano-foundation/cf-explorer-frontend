@@ -7,7 +7,7 @@ import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
 import { details } from "../../commons/routers";
-import { getPageInfo, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AssetName, Logo, StyledContainer, LogoEmpty } from "./styles";
@@ -75,7 +75,7 @@ const Tokens: React.FC<ITokenList> = () => {
       minWidth: "150px",
       render: r => (
         <>
-          {moment(r.createdOn).format("MM/DD/YYYY HH:mm:ss")}{" "}
+          {formatDateTimeLocal(r.createdOn || "")}{" "}
           {JSON.stringify(token) === JSON.stringify(r) && (
             <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
               <MdOutlineKeyboardArrowRight fontSize={30} />

@@ -10,7 +10,7 @@ import slotIcon from "../../../commons/resources/icons/slot.svg";
 import { TitleCard } from "../../BlockDetail/BlockOverview/styles";
 import { Box } from "@mui/material";
 import { ADAToken } from "../../commons/Token";
-import { formatADA, formatADAFull } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 interface EpochOverviewProps {
   data: IDataEpoch | null;
@@ -33,7 +33,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
           <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
-      value: moment(data?.startTime).format("MM/DD/YYYY hh:mm:ss"),
+      value: formatDateTimeLocal(data?.startTime || ""),
     },
     {
       icon: timeIcon,
@@ -43,7 +43,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
           <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
-      value: moment(data?.endTime).format("MM/DD/YYYY hh:mm:ss"),
+      value: formatDateTimeLocal(data?.endTime || ""),
     },
     {
       icon: outputIcon,

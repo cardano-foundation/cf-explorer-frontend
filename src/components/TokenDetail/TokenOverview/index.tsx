@@ -3,7 +3,7 @@ import { Box, IconButton, Skeleton } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { routers } from "../../../commons/routers";
 
-import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADA, formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
@@ -74,7 +74,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
         </Box>
       ),
       icon: timeIcon,
-      value: moment(data?.createdOn).format("MM/DD/YYYY HH:mm:ss"),
+      value: formatDateTimeLocal(data?.createdOn || ""),
     },
   ];
 
