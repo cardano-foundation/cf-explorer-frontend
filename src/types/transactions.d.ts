@@ -13,6 +13,7 @@ interface Transactions {
   blockNo: number;
   blockHash: string;
   epochNo: number;
+  epochSlotNo: number;
   slot: number;
   addressesInput: string[];
   addressesOutput: string[];

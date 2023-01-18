@@ -49,12 +49,12 @@ const columns: Column<Transactions>[] = [
   {
     title: "Block",
     key: "block",
-    minWidth: "200px",
+    minWidth: "120px",
     render: r => (
       <>
         <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
         <br />
-        <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/<SmallText>{r.slot} </SmallText>
+        <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/<SmallText>{r.epochSlotNo} </SmallText>
       </>
     ),
   },
