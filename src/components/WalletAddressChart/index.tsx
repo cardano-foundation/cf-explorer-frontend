@@ -6,7 +6,7 @@ import Card from "../commons/Card";
 import styles from "./index.module.scss";
 import highestIcon from "../../commons/resources/images/highestIcon.png";
 import lowestIcon from "../../commons/resources/images/lowestIcon.png";
-import { formatADA, formatPrice } from "../../commons/utils/helper";
+import { formatADA, formatPrice, numberWithCommas } from "../../commons/utils/helper";
 import {
   BoxInfo,
   BoxInfoItem,
@@ -159,12 +159,8 @@ const Chart = ({ data }: { data: WalletAddressChartProps["data"] }) => {
           lineColor: "#E3E5E9",
           gridLineWidth: 1,
           labels: {
-            style: {
-              fontSize: 12,
-            },
-            formatter: (e: { value: string }) => {
-              return formatPrice(e.value || 0);
-            },
+            style: { fontSize: 12 },
+            formatter: (e: { value: string }) => formatPrice(e.value || 0),
           },
         },
         xAxis: {
@@ -180,7 +176,14 @@ const Chart = ({ data }: { data: WalletAddressChartProps["data"] }) => {
           },
         },
         legend: { enabled: false },
-        tooltip: { shared: true },
+        tooltip: {
+          shared: true,
+          pointFormatter: function (x: any) {
+            const color = (this as any).color;
+            const value = numberWithCommas((this as any).y);
+            return `<span style="color:${color}">●</span> Blance: <b>${value}</b><br/>`;
+          },
+        },
         credits: { enabled: false },
         series: [
           {

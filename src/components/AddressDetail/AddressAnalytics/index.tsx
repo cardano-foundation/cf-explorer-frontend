@@ -19,7 +19,7 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import Card from "../../commons/Card";
-import { formatADA, formatADAFull, formatPrice } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, formatPrice, numberWithCommas } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { BigNumber } from "bignumber.js";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -96,7 +96,14 @@ const AddressAnalytics: React.FC = () => {
                     },
                   },
                   legend: { enabled: false },
-                  tooltip: { shared: true },
+                  tooltip: {
+                    shared: true,
+                    pointFormatter: function (x: any) {
+                      const color = (this as any).color;
+                      const value = numberWithCommas((this as any).y);
+                      return `<span style="color:${color}">●</span> Blance: <b>${value}</b><br/>`;
+                    },
+                  },
                   credits: { enabled: false },
                   series: [
                     {
