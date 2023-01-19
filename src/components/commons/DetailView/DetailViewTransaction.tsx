@@ -126,8 +126,8 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
             </Group>
             {new Array(2).fill(0).map((_, index) => {
               return (
-                <Group>
-                  <DetailsInfoItem key={index}>
+                <Group key={index}>
+                  <DetailsInfoItem>
                     <DetailLabel>
                       <DetailValueSkeleton variant="rectangular" />
                     </DetailLabel>
