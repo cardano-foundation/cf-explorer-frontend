@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Grid, Skeleton, styled, Box } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADA, formatPrice } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import useFetch from "../../../commons/hooks/useFetch";
 import {
@@ -13,6 +13,7 @@ import {
   GridWrapper,
   Item,
   StyledContainer,
+  StyledLine,
   Title,
   Value,
 } from "./styles";
@@ -25,6 +26,7 @@ interface DelegationDetailChartProps {
 const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId }) => {
   const [selected, setSelected] = useState<"epochChart" | "delegatorChart">("epochChart");
   const { data, loading } = useFetch<AnalyticsDelegators>(`${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`);
+  const el = document.getElementsByClassName("y-axis-lable");
 
   const categories = data?.[selected]?.dataByDays?.map(item => item.epochNo) || null;
   const epochs = data?.epochChart?.dataByDays?.map(item => item.totalStake / 10 ** 6) || null;
@@ -50,54 +52,57 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
             {loading ? (
               <SkeletonUI variant="rectangular" height={280} />
             ) : (
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={{
-                  chart: { type: "areaspline", backgroundColor: "transparent" },
-                  title: { text: "" },
-                  yAxis: {
-                    title: { text: null },
-                    lineWidth: 2,
-                    lineColor: "#E3E5E9",
-                    gridLineWidth: 1,
-                  },
-                  xAxis: {
-                    categories,
-                    lineWidth: 2,
-                    lineColor: "#E3E5E9",
-                    plotLines: [],
-                    angle: 0,
-                  },
-                  legend: { enabled: false },
-                  tooltip: {
-                    shared: true,
-                    pointFormatter: function (x: any) {
-                      const color = (this as any).color;
-                      const value = numberWithCommas((this as any).y);
-                      return `<span style="color:${color}">●</span> Blance: <b>${value}</b><br/>`;
-                    },
-                  },
-                  credits: { enabled: false },
-                  series: [
-                    {
-                      name: "",
-                      pointPlacement: "on",
-                      type: "areaspline",
-                      marker: { enabled: false },
-                      lineWidth: 4,
-                      color: "#438f68",
-                      fillColor: {
-                        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-                        stops: [
-                          [0, "#438f6833"],
-                          [1, "rgba(67, 143, 104, 0)"],
-                        ],
+              <Box position={"relative"}>
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={{
+                    chart: { type: "areaspline", backgroundColor: "transparent" },
+                    title: { text: "" },
+                    yAxis: {
+                      title: { text: null },
+                      lineWidth: 2,
+                      lineColor: "#E3E5E9",
+                      className: "y-axis-lable",
+                      gridLineWidth: 1,
+                      labels: {
+                        style: { fontSize: 12 },
+                        formatter: (e: { value: string }) => {
+                          return formatPrice(e.value || 0);
+                        },
                       },
-                      data: selected === "epochChart" ? epochs : delegators,
                     },
-                  ],
-                }}
-              />
+                    xAxis: {
+                      categories,
+                      lineWidth: 2,
+                      lineColor: "#E3E5E9",
+                      plotLines: [],
+                      angle: 0,
+                    },
+                    legend: { enabled: false },
+                    tooltip: { shared: true },
+                    credits: { enabled: false },
+                    series: [
+                      {
+                        name: "",
+                        pointPlacement: "on",
+                        type: "areaspline",
+                        marker: { enabled: false },
+                        lineWidth: 4,
+                        color: "#438f68",
+                        fillColor: {
+                          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+                          stops: [
+                            [0, "#438f6833"],
+                            [1, "rgba(67, 143, 104, 0)"],
+                          ],
+                        },
+                        data: selected === "epochChart" ? epochs : delegators,
+                      },
+                    ],
+                  }}
+                />{" "}
+                <StyledLine left={el.length && el.length > 2 ? el[2].getBoundingClientRect().width + 24.5 : 0} />
+              </Box>
             )}
           </ChartContainer>
         </Grid>

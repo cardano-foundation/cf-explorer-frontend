@@ -14,6 +14,7 @@ import {
   Title,
   ValueInfo,
   Wrapper,
+  StyledLine,
 } from "./styles";
 import moment from "moment";
 import { useParams } from "react-router-dom";
@@ -38,13 +39,13 @@ const AddressAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { address } = useParams<{ address: string }>();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`);
-
   const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${address}`);
   const dataChart = data?.map(i => +formatADAFull(BigNumber(i.value).toNumber() || 0).replaceAll(",", ""));
 
   const categories = data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
   const minBalance = Math.min(...(balance || []), 0);
   const maxBalance = Math.max(...(balance || []), 0);
+  const el = document.getElementsByClassName("y-axis-lable");
 
   return (
     <Card title="Analytics" pt={5}>
@@ -68,63 +69,63 @@ const AddressAnalytics: React.FC = () => {
             {loading ? (
               <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={{
-                  chart: { type: "areaspline", style: { fontFamily: "Helvetica, monospace" } },
-                  title: { text: "" },
-                  yAxis: {
-                    title: { text: null },
-                    lineWidth: 2,
-                    lineColor: "#E3E5E9",
-                    gridLineWidth: 1,
-                    labels: {
-                      style: { fontSize: 12 },
-                      formatter: (e: { value: string }) => formatPrice(e.value || 0),
-                    },
-                  },
-                  xAxis: {
-                    categories,
-                    lineWidth: 2,
-                    lineColor: "#E3E5E9",
-                    plotLines: [],
-                    angle: 0,
-                    labels: {
-                      style: {
-                        fontSize: 12,
+              <Box position={"relative"}>
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={{
+                    chart: { type: "areaspline", style: { fontFamily: "Helvetica, monospace" } },
+                    title: { text: "" },
+                    yAxis: {
+                      title: { text: null },
+                      lineWidth: 2,
+                      lineColor: "#E3E5E9",
+                      className: "y-axis-lable",
+                      gridLineWidth: 1,
+                      minorGridLineWidth: 1,
+                      labels: {
+                        style: { fontSize: 12 },
+                        formatter: (e: { value: string }) => {
+                          return formatPrice(e.value || 0);
+                        },
                       },
                     },
-                  },
-                  legend: { enabled: false },
-                  tooltip: {
-                    shared: true,
-                    pointFormatter: function (x: any) {
-                      const color = (this as any).color;
-                      const value = numberWithCommas((this as any).y);
-                      return `<span style="color:${color}">●</span> Blance: <b>${value}</b><br/>`;
-                    },
-                  },
-                  credits: { enabled: false },
-                  series: [
-                    {
-                      name: "",
-                      pointPlacement: "on",
-                      type: "areaspline",
-                      marker: { enabled: false },
-                      lineWidth: 4,
-                      color: "#438f68",
-                      fillColor: {
-                        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-                        stops: [
-                          [0, "#438f6833"],
-                          [1, "rgba(67, 143, 104, 0)"],
-                        ],
+                    xAxis: {
+                      categories,
+                      lineWidth: 2,
+                      lineColor: "#E3E5E9",
+                      plotLines: [],
+                      angle: 0,
+                      labels: {
+                        style: {
+                          fontSize: 12,
+                        },
                       },
-                      data: dataChart,
                     },
-                  ],
-                }}
-              />
+                    legend: { enabled: false },
+                    tooltip: { shared: true },
+                    credits: { enabled: false },
+                    series: [
+                      {
+                        name: "",
+                        pointPlacement: "on",
+                        type: "areaspline",
+                        marker: { enabled: false },
+                        lineWidth: 4,
+                        color: "#438f68",
+                        fillColor: {
+                          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+                          stops: [
+                            [0, "#438f6833"],
+                            [1, "rgba(67, 143, 104, 0)"],
+                          ],
+                        },
+                        data: dataChart,
+                      },
+                    ],
+                  }}
+                />
+                <StyledLine left={el.length && el.length > 2 ? el[2].getBoundingClientRect().width + 24 : 0} />
+              </Box>
             )}
           </ChartBox>
         </Grid>

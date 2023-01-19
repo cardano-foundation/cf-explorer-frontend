@@ -115,3 +115,11 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   fontWeight: "bold",
   backgroundColor: active ? theme.colorGreenLight : "none",
 }));
+export const StyledLine = styled(Box)<{ left?: number }>(({ theme, left }) => ({
+  position: "absolute",
+  height: 10,
+  width: 1.5,
+  top: 0,
+  left: left,
+  background: "#E3E5E9",
+}));
