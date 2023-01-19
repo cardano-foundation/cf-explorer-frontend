@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-
-import { Link } from "react-router-dom";
-
 import Table, { Column } from "../../../commons/Table";
-import mintingIcon from "../../../../commons/resources/images/copy.svg";
-
-import styles from "./index.module.scss";
 import ScriptModal from "../../../ScriptModal";
-import { BigNumber } from "bignumber.js";
+import { Amount, AssetName, LogoEmpty } from "./styles";
+import { PolicyScriptIcon } from "../../../../commons/resources";
 
 interface MintingProps {
   data: Transaction["mints"] | null;
@@ -25,12 +20,10 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       minWidth: "40px",
       render: (r, index) => {
         return (
-          <Link to="#" className={styles.link}>
-            <img src={mintingIcon} alt="icon" />
-            <Box component={"span"} ml={1}>
-              {r.assetName}
-            </Box>
-          </Link>
+          <AssetName>
+            <LogoEmpty />
+            {r.assetName}
+          </AssetName>
         );
       },
     },
@@ -39,7 +32,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       key: "Amount",
       minWidth: "40px",
       render: (r, index) => {
-        return <div className={styles.link}>{BigNumber(r.assetQuantity).toString()}</div>;
+        return <Amount>{r.assetQuantity}</Amount>;
       },
     },
     {
@@ -54,7 +47,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
               setSelectedItem(r.policy || "");
             }}
           >
-            <img src={mintingIcon} alt="icon" className={styles.icon} />
+            <PolicyScriptIcon />
           </div>
         );
       },
