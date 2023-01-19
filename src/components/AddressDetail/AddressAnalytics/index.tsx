@@ -20,7 +20,7 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import Card from "../../commons/Card";
-import { formatADA, formatADAFull, formatPrice } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, formatPrice, numberWithCommas } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { BigNumber } from "bignumber.js";
 import CustomTooltip from "../../commons/CustomTooltip";

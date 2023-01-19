@@ -6,7 +6,7 @@ import Card from "../commons/Card";
 import styles from "./index.module.scss";
 import highestIcon from "../../commons/resources/images/highestIcon.png";
 import lowestIcon from "../../commons/resources/images/lowestIcon.png";
-import { formatADA, formatPrice } from "../../commons/utils/helper";
+import { formatADA, formatPrice, numberWithCommas } from "../../commons/utils/helper";
 import {
   BoxInfo,
   BoxInfoItem,

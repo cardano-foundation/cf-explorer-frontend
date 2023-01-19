@@ -45,7 +45,7 @@ const SelectNetwork: React.FC<Props> = props => {
       removeAuthInfo();
       disconnect();
       StorageUtils.setNetwork(e.target.value as NETWORKS);
-      window.location.reload();
+      window.location.href = "/";
     } catch (error) {}
   };
 
