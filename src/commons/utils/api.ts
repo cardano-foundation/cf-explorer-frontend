@@ -35,7 +35,6 @@ export const API = {
     GRAPH: "tx/graph",
   },
   STAKE: {
-    ADDRESS_DETAIL: "stake/address",
     ANALYTICS: "stake/analytics",
     DETAIL: "stake",
     DE_REGISTRATION: "stake/de-registration",

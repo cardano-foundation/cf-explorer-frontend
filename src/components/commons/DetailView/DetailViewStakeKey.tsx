@@ -61,7 +61,7 @@ const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
 
 const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
   const { stakeId, handleClose } = props;
-  const { data } = useFetch<IStakeKeyDetail>(stakeId ? `${API.STAKE.ADDRESS_DETAIL}/${stakeId}` : ``);
+  const { data } = useFetch<IStakeKeyDetail>(stakeId ? `${API.STAKE.DETAIL}/${stakeId}` : ``);
   const [open, setOpen] = useState(false);
 
   if (!data)
@@ -114,8 +114,8 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
             </Group>
             {new Array(2).fill(0).map((_, index) => {
               return (
-                <Group>
-                  <DetailsInfoItem key={index}>
+                <Group key={index}>
+                  <DetailsInfoItem>
                     <DetailLabel>
                       <DetailValueSkeleton variant="rectangular" />
                     </DetailLabel>
