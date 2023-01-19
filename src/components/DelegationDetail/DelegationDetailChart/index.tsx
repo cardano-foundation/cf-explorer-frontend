@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Grid, Skeleton, styled, Box } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-import { formatADA } from "../../../commons/utils/helper";
+import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import useFetch from "../../../commons/hooks/useFetch";
 import {
@@ -69,7 +69,14 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                     angle: 0,
                   },
                   legend: { enabled: false },
-                  tooltip: { shared: true },
+                  tooltip: {
+                    shared: true,
+                    pointFormatter: function (x: any) {
+                      const color = (this as any).color;
+                      const value = numberWithCommas((this as any).y);
+                      return `<span style="color:${color}">●</span> Blance: <b>${value}</b><br/>`;
+                    },
+                  },
                   credits: { enabled: false },
                   series: [
                     {

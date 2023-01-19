@@ -3,7 +3,15 @@ import { stringify } from "qs";
 import { Box } from "@mui/material";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { formatADA, formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
+import {
+  formatADA,
+  formatADAFull,
+  formatDateTimeLocal,
+  getPageInfo,
+  getShortHash,
+  getShortWallet,
+  numberWithCommas,
+} from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
@@ -59,7 +67,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
             <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
           </Box>
           <Box mt={1}>
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.slot}
+            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
           </Box>
         </Box>
       ),

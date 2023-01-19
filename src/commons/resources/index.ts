@@ -1,7 +1,6 @@
 import LogoFullIcon from "./icons/logo-mobile.svg";
 import LogoIcon from "./icons/logo.svg";
 import WalletIcon from "./icons/wallet.svg";
-
 import HeaderSearchIcon from "./icons/header-search.svg";
 import CopyIcon from "./icons/copy.svg";
 import CloseIcon from "./icons/closeIcon.svg";
@@ -74,6 +73,8 @@ import EternlIcon from "./icons/eternl.svg";
 import YoroiIcon from "./icons/yoroi.svg";
 import HeaderBackground from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
+
+import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
 
 export {
   LogoFullIcon,
@@ -150,4 +151,5 @@ export {
   SaveOffIcon,
   LinkOff,
   User2,
+  PolicyScriptIcon,
 };

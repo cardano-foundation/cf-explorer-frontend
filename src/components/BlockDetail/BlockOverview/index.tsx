@@ -85,7 +85,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       ),
       value: (
         <>
-          {data?.slotNo || 0}
+          {data?.epochSlotNo || 0}
           <Box component={"span"} fontWeight="400">
             /{MAX_SLOT_EPOCH}
           </Box>
