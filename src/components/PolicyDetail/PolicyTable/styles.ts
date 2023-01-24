@@ -8,7 +8,7 @@ export const LinkComponent = styled(Link)(({ theme }) => ({
 export const TitleTab = styled(Box)<{ active: boolean }>(({ active }) => ({
   fontWeight: "bold",
   textTransform: "capitalize",
-  fontFamily: '"Space Mono", monospace, sans-serif',
+  fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
   color: active ? "#000000" : "unset",
 }));
