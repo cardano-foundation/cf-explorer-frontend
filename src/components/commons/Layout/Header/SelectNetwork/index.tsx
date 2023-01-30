@@ -40,12 +40,15 @@ const SelectNetwork: React.FC<Props> = props => {
   const handleChange = async (e: SelectChangeEvent<unknown>) => {
     try {
       try {
-        await signOut();
+        await signOut({
+          refreshJwt: localStorage.getItem("refreshToken") || "",
+          username: localStorage.getItem("username") || "",
+        });
+        removeAuthInfo();
+        disconnect();
+        StorageUtils.setNetwork(e.target.value as NETWORKS);
+        window.location.href = "/";
       } catch {}
-      removeAuthInfo();
-      disconnect();
-      StorageUtils.setNetwork(e.target.value as NETWORKS);
-      window.location.href = "/";
     } catch (error) {}
   };
 

@@ -55,7 +55,10 @@ const ConnectWallet: React.FC<Props> = () => {
       localStorage.setItem("refreshToken", data.refreshToken);
       localStorage.setItem("walletId", data.walletId);
       localStorage.setItem("email", data.email);
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setModalRegister(false);
+    }
   };
 
   const onTriggerSignMessage = () => {
@@ -67,16 +70,10 @@ const ConnectWallet: React.FC<Props> = () => {
   const onSignMessage = async () => {
     const nonceValue = await getNonceValue();
     if (nonceValue) {
-      signMessage(
-        nonceValue,
-        (signature: string) => {
-          handleSignIn(signature);
-        },
-        () => {
-          disconnect();
-          history.push(routers.HOME);
-        }
-      );
+      signMessage(nonceValue, handleSignIn, () => {
+        disconnect();
+        history.push(routers.HOME);
+      });
     }
   };
 
