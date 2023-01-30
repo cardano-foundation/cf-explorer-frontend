@@ -14,6 +14,7 @@ import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
 import { StyledContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
 import { API } from "../../commons/utils/api";
+import NoRecord from "../../components/commons/NoRecord";
 
 interface IStake {}
 
@@ -25,7 +26,7 @@ enum POOL_TYPE {
 const Stake: React.FC<IStake> = () => {
   const [stake, setStake] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
-  let { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
+  const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
   const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
@@ -102,6 +103,9 @@ const Stake: React.FC<IStake> = () => {
       ),
     },
   ];
+
+  if (!Object.values(POOL_TYPE).includes(poolType)) return <NoRecord />;
+
   return (
     <StyledContainer>
       <Card>
