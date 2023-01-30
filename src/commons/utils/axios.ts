@@ -31,7 +31,7 @@ const authAxios = axios.create({
 authAxios.interceptors.request.use(
   config => {
     const token = getToken();
-    if (!config.headers) config.headers = {};
+    config.headers = config.headers ?? {};
     if (token) config.headers["Authorization"] = "Bearer " + token;
     return config;
   },
@@ -64,7 +64,7 @@ const uploadAxios = axios.create({
 uploadAxios.interceptors.request.use(
   config => {
     const token = getToken();
-    if (!config.headers) config.headers = {};
+    config.headers = config.headers ?? {};
     if (token) config.headers["Authorization"] = "Bearer " + token;
     return config;
   },

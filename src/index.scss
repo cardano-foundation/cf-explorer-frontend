@@ -1,4 +1,18 @@
 @font-face {
+  font-family: "Roboto Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url(./commons/resources/fonts/Roboto-Bold.ttf) format("ttf");;
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  src: url(./commons/resources/fonts/Roboto-Light.ttf) format("ttf");;
+}
+
+@font-face {
   font-family: "Space Mono";
   font-style: normal;
   font-weight: 400;
@@ -61,9 +75,9 @@
 }
 
 :root {
-  --font-family-title: "Space Mono", monospace, sans-serif;
-  --font-family-text: Helvetica, monospace;
-  --font-weight-normal: 400;
+  --font-family-title: "Roboto Bold", sans-serif;
+  --font-family-text: "Roboto", sans-serif;
+  --font-weight-normal: 300;
   --font-weight-bold: 700;
   --font-size-text: 16px;
   --font-size-text-large: 18px;

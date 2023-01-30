@@ -76,7 +76,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
             <Box
               color={props => props.colorGreenLight}
               fontWeight="bold"
-              fontFamily={'"Space Mono", monospace, sans-serif'}
+              fontFamily={'"Roboto", sans-serif'}
               fontSize={"1.125rem"}
               component="button"
               border={"none"}
@@ -117,7 +117,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ script, ...props }) => {
         <ButtonClose onClick={props.onClose}>
           <img src={closeIcon} alt="icon close" />
         </ButtonClose>
-        <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Space Mono", monospace, sans-serif'}>
+        <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Roboto", sans-serif'}>
           Policy script
         </Box>
         {script && (
