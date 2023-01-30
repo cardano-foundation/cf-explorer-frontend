@@ -6,7 +6,7 @@ import Card from "../commons/Card";
 import styles from "./index.module.scss";
 import highestIcon from "../../commons/resources/images/highestIcon.png";
 import lowestIcon from "../../commons/resources/images/lowestIcon.png";
-import { formatADA, formatPrice } from "../../commons/utils/helper";
+import { formatADA, formatPrice, numberWithCommas } from "../../commons/utils/helper";
 import {
   BoxInfo,
   BoxInfoItem,
@@ -17,6 +17,7 @@ import {
   ButtonTitle,
   ChartBox,
   SkeletonUI,
+  StyledLine,
   Title,
   ValueInfo,
   Wrapper,
@@ -135,6 +136,8 @@ export default WalletAddressChart;
 const Chart = ({ data }: { data: WalletAddressChartProps["data"] }) => {
   const [dataChart, setData] = useState<number[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
+  const el = document.getElementsByClassName("y-axis-lable");
+
   useEffect(() => {
     if (data) {
       setData(data.map(i => +formatADA(i.value || 0).replace(",", "")));
@@ -143,64 +146,68 @@ const Chart = ({ data }: { data: WalletAddressChartProps["data"] }) => {
   }, [data]);
 
   return (
-    <HighchartsReact
-      highcharts={Highcharts}
-      options={{
-        chart: {
-          type: "areaspline",
-          style: {
-            fontFamily: "Helvetica, monospace",
-          },
-        },
-        title: { text: "" },
-        yAxis: {
-          title: { text: null },
-          lineWidth: 2,
-          lineColor: "#E3E5E9",
-          gridLineWidth: 1,
-          labels: {
-            style: {
-              fontSize: 12,
-            },
-            formatter: (e: { value: string }) => {
-              return formatPrice(e.value || 0);
-            },
-          },
-        },
-        xAxis: {
-          categories,
-          lineWidth: 2,
-          lineColor: "#E3E5E9",
-          plotLines: [],
-          angle: 0,
-          labels: {
-            style: {
-              fontSize: 12,
-            },
-          },
-        },
-        legend: { enabled: false },
-        tooltip: { shared: true },
-        credits: { enabled: false },
-        series: [
-          {
-            name: "",
-            pointPlacement: "on",
+    <Box position={"relative"}>
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={{
+          chart: {
             type: "areaspline",
-            marker: { enabled: false },
-            lineWidth: 4,
-            color: "#438f68",
-            fillColor: {
-              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-              stops: [
-                [0, "#438f6833"],
-                [1, "rgba(67, 143, 104, 0)"],
-              ],
+            style: {
+              fontFamily: "Helvetica, monospace",
             },
-            data: dataChart,
           },
-        ],
-      }}
-    />
+          title: { text: "" },
+          yAxis: {
+            title: { text: null },
+            lineWidth: 2,
+            lineColor: "#E3E5E9",
+            gridLineWidth: 1,
+            className: "y-axis-lable",
+            labels: {
+              style: {
+                fontSize: 12,
+              },
+              formatter: (e: { value: string }) => {
+                return formatPrice(e.value || 0);
+              },
+            },
+          },
+          xAxis: {
+            categories,
+            lineWidth: 2,
+            lineColor: "#E3E5E9",
+            plotLines: [],
+            angle: 0,
+            labels: {
+              style: {
+                fontSize: 12,
+              },
+            },
+          },
+          legend: { enabled: false },
+          tooltip: { shared: true },
+          credits: { enabled: false },
+          series: [
+            {
+              name: "",
+              pointPlacement: "on",
+              type: "areaspline",
+              marker: { enabled: false },
+              lineWidth: 4,
+              color: "#438f68",
+              fillColor: {
+                linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+                stops: [
+                  [0, "#438f6833"],
+                  [1, "rgba(67, 143, 104, 0)"],
+                ],
+              },
+              data: dataChart,
+            },
+          ],
+        }}
+      />
+      <StyledLine left={el.length && el.length > 2 ? el[2].getBoundingClientRect().width + 24.5 : 0} />
+    </Box>
   );
 };
