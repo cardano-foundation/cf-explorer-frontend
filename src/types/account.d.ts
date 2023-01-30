@@ -58,3 +58,8 @@ type TSignIn = {
   signature: string;
   ipAddress: string;
 };
+
+type TSignOut = {
+  refreshJwt: string;
+  username: string;
+};

@@ -6,8 +6,9 @@ import { alphaNumeric } from "../../../../../commons/utils/helper";
 import { RootState } from "../../../../../stores/types";
 import { setModalRegister } from "../../../../../stores/user";
 import StyledModal from "../../../StyledModal";
-import { Label, Span, StyledButton, StyledInput, StyledTitle, TextError, TextNote } from "./styles";
-
+import { Label, StyledTitle, TextError, TextNote, WrapButton } from "./styles";
+import { StyledInput, StyledDarkLoadingButton } from "../../../../share/styled";
+import { FormHelperText } from "@mui/material";
 interface IProps {
   address: string;
   open: boolean;
@@ -17,9 +18,11 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, address, onTriggerSignM
   const { wallet } = useSelector(({ user }: RootState) => user);
   const [errorMessage, setErrorMessage] = useState("");
   const [value, setValue] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
     try {
+      setLoading(true);
       if (errorMessage) return;
       const payload = {
         username: value,
@@ -32,7 +35,11 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, address, onTriggerSignM
       };
       await authAxios.post("auth/sign-up", payload);
       onTriggerSignMessage();
-    } catch (error) {}
+    } catch (error: any) {
+      setErrorMessage(error.response?.data.errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -41,11 +48,11 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, address, onTriggerSignM
         <StyledTitle>Enter your Username </StyledTitle>
         <TextNote>Please enter your Username to create a new unique one</TextNote>
         <Label required={true}>Username</Label>
+        <br />
         <StyledInput
-          variant="outlined"
-          helperText="Username has to be from 5 to 30 characters in length, only alphanumeric characters allowed"
           placeholder="Username"
           value={value}
+          style={{ width: "100%" }}
           onChange={e => {
             let val = e.target.value;
             if (alphaNumeric.test(val) || val.length < 5 || val.length > 30) {
@@ -56,10 +63,15 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, address, onTriggerSignM
             setValue(val);
           }}
         />
+        <FormHelperText>
+          Username has to be from 5 to 30 characters in length, only alphanumeric characters allowed
+        </FormHelperText>
         <TextError>{errorMessage}</TextError>
-        <StyledButton onClick={onSubmit}>
-          <Span>Confirm</Span>
-        </StyledButton>
+        <WrapButton>
+          <StyledDarkLoadingButton loading={loading} onClick={onSubmit}>
+            Confirm
+          </StyledDarkLoadingButton>
+        </WrapButton>
       </>
     </StyledModal>
   );
