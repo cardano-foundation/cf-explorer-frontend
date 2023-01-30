@@ -29,9 +29,13 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
 
   const handleDisconnect = async () => {
     try {
-      await signOut();
+      await signOut({
+        refreshJwt: localStorage.getItem("refreshToken") || "",
+        username: localStorage.getItem("username") || "",
+      });
       disconnect();
       removeAuthInfo();
+      window.location.href = "/";
     } catch (error) {}
   };
 

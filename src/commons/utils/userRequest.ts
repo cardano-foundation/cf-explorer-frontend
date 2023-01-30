@@ -1,7 +1,7 @@
 import { authAxios } from "./axios";
 
 //user
-export const signOut = () => authAxios.post("auth/sign-out");
+export const signOut = (payload: TSignOut) => authAxios.post("auth/sign-out", payload);
 export const signIn = (payload: TSignIn) => authAxios.post("auth/sign-in", payload);
 export const transferWallet = (payload: TTransferWallet) => authAxios.post("auth/transfers-wallet", payload);
 export const refreshToken = (payload: TRefreshToken) => authAxios.get("auth/refresh-token", { params: payload });
