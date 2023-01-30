@@ -15,6 +15,7 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table, { Column } from "../../components/commons/Table";
 import { RegistrationContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
 import { API } from "../../commons/utils/api";
+import NoRecord from "../../components/commons/NoRecord";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",
@@ -98,6 +99,8 @@ const RegistrationPools = () => {
     history.push(routers.REGISTRATION_POOLS.replace(":poolType", poolType));
   };
 
+  if (!Object.values(POOL_TYPE).includes(poolType))  return <NoRecord />;
+  
   return (
     <RegistrationContainer>
       <StyledTabs
