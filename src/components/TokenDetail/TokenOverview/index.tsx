@@ -116,7 +116,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
               <Box
                 color={props => props.colorGreenLight}
                 fontWeight="bold"
-                fontFamily={'"Space Mono", monospace, sans-serif'}
+                fontFamily={'"Roboto", sans-serif'}
                 fontSize={"1.125rem"}
                 component="button"
                 border={"none"}

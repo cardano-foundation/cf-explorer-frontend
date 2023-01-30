@@ -44,7 +44,7 @@ export const BackButton = styled("button")`
   background: transparent;
   cursor: pointer;
   padding: 0;
-  font-family: "Space Mono", monospace, sans-serif;
+  font-family: "Roboto", sans-serif;
 `;
 export const BackText = styled("small")`
   color: #344054;
@@ -97,7 +97,7 @@ export const LabelStatus = styled(Box)(({ theme }) => ({
   marginLeft: theme.spacing(2),
   textTransform: "uppercase",
   padding: `${theme.spacing(1)} ${theme.spacing(3)}`,
-  fontFamily: '"Space Mono", monospace, sans-serif',
+  fontFamily: '"Roboto", sans-serif',
   fontWeight: "bold",
   fontSize: "0.875rem",
   borderRadius: 4,
