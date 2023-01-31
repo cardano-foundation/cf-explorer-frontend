@@ -33,10 +33,12 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
         refreshJwt: localStorage.getItem("refreshToken") || "",
         username: localStorage.getItem("username") || "",
       });
+    } catch (error) {
+    } finally {
       disconnect();
       removeAuthInfo();
       window.location.href = "/";
-    } catch (error) {}
+    }
   };
 
   return (
