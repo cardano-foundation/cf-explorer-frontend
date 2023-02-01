@@ -1,6 +1,8 @@
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { LinkOff, User2 } from "../../../commons/resources/index";
+import { routers } from "../../../commons/routers";
 import { getShortWallet, removeAuthInfo } from "../../../commons/utils/helper";
 import { signOut } from "../../../commons/utils/userRequest";
 import { Content, Disconnect, Icon, Name, Profile, Span, StyledButton, WrapContent } from "./style";
@@ -12,6 +14,7 @@ interface IProps {
 }
 const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, stakeAddress }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const history = useHistory();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -61,7 +64,12 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
         }}
       >
         <Content>
-          <Profile>
+          <Profile
+            onClick={() => {
+              setAnchorEl(null);
+              history.push(routers.ACCOUNT);
+            }}
+          >
             <Icon src={User2} />
             <Name>User Profile</Name>
           </Profile>
