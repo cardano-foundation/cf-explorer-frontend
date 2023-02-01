@@ -85,9 +85,6 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
         <HeaderTitle>
           {loading && <HeaderTitleSkeleton variant="rectangular" />}
           {!loading && <>{data?.displayName}</>}
-          <Box mx={1} component={IconButton} style={{ width: 45, height: 45 }}>
-            <Bookmark />
-          </Box>
         </HeaderTitle>
       </HeaderContainer>
       <SlotLeaderContainer>
