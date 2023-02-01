@@ -249,10 +249,10 @@ const Bookmark = () => {
       </TabContext>
 
       <Dialog open={!!selected}>
-        <DialogTitle textAlign={"left"}>Are you sure?</DialogTitle>
+        <DialogTitle textAlign={"left"}>Confirmation Required</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Delete {colDynamic[activeTab].title} {selected} ?
+            Are you sure to remove {colDynamic[activeTab].title} {selected} ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

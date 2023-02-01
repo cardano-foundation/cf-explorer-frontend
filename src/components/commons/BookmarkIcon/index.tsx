@@ -7,6 +7,8 @@ import { ReactComponent as BookmarkIcon } from "../../../commons/resources/icons
 
 import { authAxios } from "../../../commons/utils/axios";
 import Toast from "../Toast";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../stores/types";
 
 interface BookmarkButtonProps {
   keyword: string | number;
@@ -14,8 +16,9 @@ interface BookmarkButtonProps {
 }
 
 const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
+  const { userData } = useSelector(({ user }: RootState) => user);
+  const isLogin = !!userData?.username;
   const [bookmarks, setBookmarks] = useLocalStorage<BookMark[]>("bookmark", []);
-  const [token] = useLocalStorage<string>("cf-wallet-connected", "");
   const [message, setMessage] = React.useState("");
 
   const bookmark = (bookmarks || []).find(r => r.keyword === `${keyword}`);
@@ -24,32 +27,36 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
       return;
     }
 
-    setMessage('');
+    setMessage("");
   };
   const updateBookmark = async () => {
-    if (!token) {
+    if (!isLogin) {
       if (!bookmark) {
         setBookmarks([...(bookmarks || []), { keyword: `${keyword}`, type }]);
       } else {
         setBookmarks((bookmarks || []).filter(b => b.keyword !== `${keyword}`));
       }
       setMessage("Successfully!");
-
     }
 
-    if (token)
+    if (isLogin)
       try {
         if (!bookmark) {
-          const { data } = await authAxios.post<any, AxiosResponse<BookMark, any>>("/bookmark/add", {
-            keyword,
-            type,
-          });
-          setBookmarks([...(bookmarks || []), data]);
+          if ((bookmarks || [])?.length < 2000) {
+            const { data } = await authAxios.post<any, AxiosResponse<BookMark, any>>("/bookmark/add", {
+              keyword,
+              type,
+            });
+            setBookmarks([...(bookmarks || []), data]);
+            setMessage("Successfully!");
+          } else {
+            setMessage("Maximum bookmarks is 2000!");
+          }
         } else {
           await authAxios.delete("/bookmark/delete/" + bookmark?.id);
           setBookmarks((bookmarks || []).filter(b => b.keyword !== `${keyword}`));
+          setMessage("Successfully!");
         }
-        setMessage("Successfully!");
       } catch (error) {
         setMessage("Something went wrong!");
       }

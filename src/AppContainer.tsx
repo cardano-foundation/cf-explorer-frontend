@@ -15,14 +15,15 @@ interface Props {
 }
 
 const AppContainer: React.FC<Props> = props => {
+  const { userData, theme } = useSelector(({ user }: RootState) => user);
+  const isLogin = !!userData?.username;
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
   const history = useHistory();
   const lastPath = useRef(history.location.pathname);
   const { children } = props;
-  const { theme } = useSelector(({ user }: RootState) => user);
   const currentEpoch = useFetch<EpochCurrentType>(API.EPOCH.CURRENT_EPOCH);
   const usdMarket = useFetch<CardanoMarket[]>(`${EXTEN_API.COINGECKO.PRICE}?vs_currency=usd&ids=cardano`);
-  const { data: dataBookmark } = useFetch<string[]>(`/bookmark/find-all-key`, undefined, true);
+  const { data: dataBookmark } = useFetch<string[]>(isLogin ? `/bookmark/find-all-key` : "", undefined, true);
 
   useEffect(() => {
     if (usdMarket.data?.[0]) setUsdMarket(usdMarket.data[0]);
