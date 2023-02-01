@@ -87,7 +87,7 @@ const AccountSettingTab: React.FC = () => {
           networkType: NETWORK_TYPES[NETWORK],
           networkId: NETWORK_TYPES[NETWORK],
         },
-        refreshToken: localStorage.getItem("refreshToken") || "",
+        refreshJwt: localStorage.getItem("refreshToken") || "",
       };
       const { data } = await transferWallet(payload);
       localStorage.setItem("token", data?.token);

@@ -143,6 +143,8 @@ export const removeAuthInfo = () => {
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("walletId");
   localStorage.removeItem("email");
+  localStorage.setItem("cf-wallet-connected", "false");
+  localStorage.removeItem("cf-last-connected-wallet");
 };
 
 export const formatDateTime = (date: string) => {

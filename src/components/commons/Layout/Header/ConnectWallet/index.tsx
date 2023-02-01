@@ -46,7 +46,6 @@ const ConnectWallet: React.FC<Props> = () => {
       const payload = {
         address: stakeAddress || "",
         signature,
-        ipAddress: "testip",
       };
       const response = await signIn(payload);
       const data = response.data;

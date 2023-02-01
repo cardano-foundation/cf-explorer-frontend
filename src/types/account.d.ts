@@ -50,13 +50,12 @@ type TTransferWallet = {
     networkType: NETWORK_TYPES;
     networkId: NETWORK_TYPES;
   };
-  refreshToken: string;
+  refreshJwt: string;
 };
 
 type TSignIn = {
   address: string;
   signature: string;
-  ipAddress: string;
 };
 
 type TSignOut = {
