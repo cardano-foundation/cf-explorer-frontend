@@ -36,6 +36,14 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
 
   const pathname = history.location.pathname;
 
+  useEffect(() => {
+    menus.map((menu, idx) => {
+      const itemActive = menu?.children?.find(r => r.href === pathname);
+      if (itemActive) setActive(`menu-${idx}`);
+      return 0;
+    });
+  }, []);
+
   return (
     <StyledCollapse in={width > 1023 ? true : sidebar} timeout="auto" unmountOnExit>
       <Menu open={sidebar ? 1 : 0}>
