@@ -18,7 +18,7 @@ import Table from "../../components/commons/Table";
 import { API } from "../../commons/utils/api";
 
 const BlockList = () => {
-  const [block, setBlock] = useState<number | null>(null);
+  const [block, setBlock] = useState<number | string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();
   const { search } = useLocation();
@@ -35,7 +35,7 @@ const BlockList = () => {
       title: "Block No",
       key: "blockNo",
       minWidth: "50px",
-      render: r => <StyledColorBlueDard>{r.blockNo}</StyledColorBlueDard>,
+      render: r => <StyledColorBlueDard>{r.blockNo !== null ? r.blockNo : "_"}</StyledColorBlueDard>,
     },
     {
       title: "Block ID",
@@ -43,7 +43,7 @@ const BlockList = () => {
       minWidth: "150px",
       render: r => (
         <CustomTooltip title={r.hash}>
-          <StyledLink to={details.block(r.blockNo)}>{getShortHash(`${r.hash}`)}</StyledLink>
+          <StyledLink to={details.block(r.blockNo || r.hash)}>{getShortHash(`${r.hash}`)}</StyledLink>
         </CustomTooltip>
       ),
     },
@@ -74,7 +74,7 @@ const BlockList = () => {
           <PriceWrapper>
             {formatADA(r.totalOutput) || 0}
             <img src={AIcon} alt="ADA Icon" />
-            {block === r.blockNo && (
+            {block === (r.blockNo || r.hash) && (
               <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
                 <MdOutlineKeyboardArrowRight fontSize={30} />
               </Box>
@@ -88,9 +88,9 @@ const BlockList = () => {
   const openDetail = (_: any, r: Block, index: number) => {
     if (width > 1023) {
       setOnDetailView(true);
-      setBlock(r.blockNo);
+      setBlock(r.blockNo || r.hash);
       setSelected(index);
-    } else history.push(details.block(r.blockNo));
+    } else history.push(details.block(r.blockNo || r.hash));
   };
 
   const handleClose = () => {
