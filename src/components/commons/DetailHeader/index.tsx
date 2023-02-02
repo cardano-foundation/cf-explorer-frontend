@@ -32,7 +32,8 @@ import {
 } from "./styles";
 import { routers } from "../../../commons/routers";
 
-import { ReactComponent as Bookmark } from "../../../commons/resources/icons/Bookmark.svg";
+import { authAxios } from "../../../commons/utils/axios";
+import Bookmark from "../BookmarkIcon";
 interface DetailHeaderProps {
   loading: boolean;
   data?: TransactionHeaderDetail | BlockHeaderDetail | EpochHeaderDetail | null;
@@ -41,7 +42,6 @@ interface DetailHeaderProps {
 
 const DetailHeader: React.FC<DetailHeaderProps> = props => {
   const { data, loading, listItem } = props;
-
   const getRouterList = () => {
     if (data?.type === "transaction") return routers.TRANSACTION_LIST;
     if (data?.type === "block") return routers.BLOCK_LIST;
@@ -87,6 +87,20 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
   }
 
   const { header, blockDetail } = data;
+  const bookmarkData: { [key: string]: { keyword: string | number; type: "EPOCH" | "BLOCK" | "TRANSACTION" } } = {
+    epoch: {
+      keyword: blockDetail?.epochNo,
+      type: "EPOCH",
+    },
+    block: {
+      keyword: blockDetail?.blockNo,
+      type: "BLOCK",
+    },
+    transaction: {
+      keyword: header?.hash,
+      type: "TRANSACTION",
+    },
+  };
 
   return (
     <HeaderDetailContainer>
@@ -98,9 +112,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           </BackButton>
           <HeaderContainer>
             <HeaderTitle>{header.title}</HeaderTitle>
-            <Box mx={1} component={IconButton} style={{ width: 45, height: 45 }}>
-              <Bookmark />
-            </Box>
+            <Bookmark {...bookmarkData[data?.type]} />
             {header.status && <HeaderStatus status={header.status}>{header.status}</HeaderStatus>}
             {header.epochStatus && <HeaderStatus status={header.epochStatus}>{header.epochStatus}</HeaderStatus>}
           </HeaderContainer>

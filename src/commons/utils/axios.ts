@@ -1,3 +1,4 @@
+import { removeAuthInfo } from "./helper";
 import axios from "axios";
 import jsonBig from "json-bigint";
 import { refreshToken } from "./userRequest";
@@ -52,6 +53,12 @@ authAxios.interceptors.response.use(
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;
       return authAxios(originRequest);
     }
+    if (error.response?.data?.errorCode === "CC_4") {
+      removeAuthInfo();
+      if (window.location.href.includes("/account")) {
+        window.location.href = "/";
+      }
+    }
     return Promise.reject(error);
   }
 );
@@ -84,6 +91,12 @@ uploadAxios.interceptors.response.use(
       localStorage.setItem("refreshToken", response.data?.refreshToken);
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;
       return authAxios(originRequest);
+    }
+    if (error.response?.data?.errorCode === "CC_4") {
+      removeAuthInfo();
+      if (window.location.href.includes("/account")) {
+        window.location.href = "/";
+      }
     }
     return Promise.reject(error);
   }

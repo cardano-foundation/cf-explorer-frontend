@@ -15,10 +15,10 @@ import {
 } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
 import { formatADA, formatDateTimeLocal, formatPercent, getShortWallet } from "../../../commons/utils/helper";
+import BookmarkButton from "../../commons/BookmarkIcon";
 import CopyButton from "../../commons/CopyButton";
 import CustomTooltip from "../../commons/CustomTooltip";
 import DropdownDetail from "../../commons/DropdownDetail";
-import { ReactComponent as Bookmark } from "../../../commons/resources/icons/Bookmark.svg";
 
 import {
   BackButton,
@@ -88,9 +88,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <CustomTooltip title={data?.poolName || poolId}>
           <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
         </CustomTooltip>
-        <Box mx={1} component={IconButton} style={{ width: 45, height: 45 }}>
-          <Bookmark />
-        </Box>
+        <BookmarkButton keyword={poolId} type="POOL" />
       </HeaderContainer>
       <PoolId>
         <CustomTooltip title={poolId}>

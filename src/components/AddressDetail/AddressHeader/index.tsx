@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import CustomTooltip from "../../commons/CustomTooltip";
 import BigNumber from "bignumber.js";
 import { API } from "../../../commons/utils/api";
+import BookmarkButton from "../../commons/BookmarkIcon";
 
 interface Props {
   data: WalletAddress | null;
@@ -131,7 +132,14 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   ];
 
   return (
-    <Card title="Address Detail">
+    <Card
+      title={
+        <Box>
+          Address Detail
+          <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
+        </Box>
+      }
+    >
       <Grid container columnSpacing={2}>
         <Grid item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={props => props.borderRadius} height={"100%"}>
