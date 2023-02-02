@@ -114,7 +114,7 @@ const BlockList = () => {
           onClickRow={openDetail}
           selected={selected}
         />
-        {block && <DetailViewBlock blockNo={block} handleClose={handleClose} />}
+        {block !== null && <DetailViewBlock blockNo={block} handleClose={handleClose} />}
       </Card>
     </StyledContainer>
   );

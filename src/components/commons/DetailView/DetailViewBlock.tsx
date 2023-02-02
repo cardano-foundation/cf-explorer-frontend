@@ -53,12 +53,12 @@ type DetailViewBlockProps = {
 
 const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
   const { blockNo, handleClose } = props;
-  const { data } = useFetch<BlockDetail>(blockNo ? `${API.BLOCK.DETAIL}/${blockNo}` : ``);
+  const { data } = useFetch<BlockDetail>(`${API.BLOCK.DETAIL}/${blockNo}`);
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
 
   if (!data)
     return (
-      <ViewDetailDrawer anchor="right" open={!!blockNo} hideBackdrop variant="permanent">
+      <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
         <ViewDetailContainer>
           <ViewDetailScroll>
             <StyledViewMore tooltipTitle="View Detail" to={details.block(blockNo)} />
@@ -125,7 +125,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
     );
 
   return (
-    <ViewDetailDrawer anchor="right" open={!!blockNo} hideBackdrop variant="permanent">
+    <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
       <ViewDetailContainer>
         <ViewDetailScroll>
           <StyledViewMore tooltipTitle="View Detail" to={details.block(blockNo)} />
