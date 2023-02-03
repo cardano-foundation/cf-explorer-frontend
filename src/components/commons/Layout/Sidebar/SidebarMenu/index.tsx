@@ -15,10 +15,25 @@ import FooterMenu from "../FooterMenu";
 import CustomTooltip from "../../../CustomTooltip";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
+  const pathname = history.location.pathname;
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { width } = useWindowSize(0);
-  const [active, setActive] = useState<string | null>(null);
 
+  const getActive = () => {
+    const active = menus.findIndex(menu => {
+      return menu?.children?.find(r => {
+        return pathname.split("/").length > 2 ? r.href?.includes(pathname.split("/")[1]) : r.href === pathname;
+      });
+    });
+
+    if (active) {
+      return `menu-${active}`;
+    }
+
+    return "";
+  };
+
+  const [active, setActive] = useState<string | null>(getActive());
   useEffect(() => {
     if (!sidebar) setActive(null);
   }, [sidebar]);
@@ -34,15 +49,15 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     if (!sidebar) setSidebar(true);
   };
 
-  const pathname = history.location.pathname;
-
-  useEffect(() => {
-    menus.map((menu, idx) => {
-      const itemActive = menu?.children?.find(r => r.href === pathname);
-      if (itemActive) setActive(`menu-${idx}`);
-      return 0;
-    });
-  }, []);
+  // useEffect(() => {
+  //   menus.map((menu, idx) => {
+  //     const itemActive = menu?.children?.find(r => {
+  //       return pathname.split("/").length > 2 ? r.href?.includes(pathname.split("/")[1]) : r.href === pathname;
+  //     });
+  //     if (itemActive) setActive(`menu-${idx}`);
+  //     return 0;
+  //   });
+  // }, []);
 
   return (
     <StyledCollapse in={width > 1023 ? true : sidebar} timeout="auto" unmountOnExit>
