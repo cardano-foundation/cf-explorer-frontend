@@ -49,11 +49,11 @@ type DetailViewEpochProps = {
 
 const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
   const { epochNo, handleClose } = props;
-  const { data } = useFetch<IDataEpoch>(epochNo ? `${API.EPOCH.DETAIL}/${epochNo}` : ``);
+  const { data } = useFetch<IDataEpoch>(`${API.EPOCH.DETAIL}/${epochNo}`);
 
   if (!data)
     return (
-      <ViewDetailDrawer anchor="right" open={!!epochNo} hideBackdrop variant="permanent">
+      <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
         <ViewDetailContainer>
           <ViewDetailScroll>
             <StyledViewMore tooltipTitle="View Detail" to={details.epoch(epochNo)} />
@@ -125,7 +125,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
       : (data?.endTime && data.startTime && moment(data.endTime).diff(data.startTime) / 1000) || 0;
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
   return (
-    <ViewDetailDrawer anchor="right" open={!!epochNo} hideBackdrop variant="permanent">
+    <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
       <ViewDetailContainer>
         <ViewDetailScroll>
           <StyledViewMore tooltipTitle="View Detail" to={details.epoch(epochNo)} />
@@ -168,18 +168,14 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
                 <InfoIcon />
                 Start time
               </DetailLabel>
-              <DetailValue>
-                {formatDateTimeLocal(data.startTime || "")}
-              </DetailValue>
+              <DetailValue>{formatDateTimeLocal(data.startTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
                 <InfoIcon />
                 End time
               </DetailLabel>
-              <DetailValue>
-                {formatDateTimeLocal(data.endTime || "")}
-              </DetailValue>
+              <DetailValue>{formatDateTimeLocal(data.endTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>

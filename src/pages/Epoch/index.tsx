@@ -121,7 +121,7 @@ const Epoch: React.FC = () => {
           selected={selected}
         />
       </Card>
-      {epoch && <DetailViewEpoch epochNo={epoch} handleClose={handleClose} />}
+      {epoch !== null && <DetailViewEpoch epochNo={epoch} handleClose={handleClose} />}
     </StyledContainer>
   );
 };

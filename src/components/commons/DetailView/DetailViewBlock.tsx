@@ -47,18 +47,18 @@ import { Box } from "@mui/material";
 import { API } from "../../../commons/utils/api";
 
 type DetailViewBlockProps = {
-  blockNo: number;
+  blockNo: number | string;
   handleClose: () => void;
 };
 
 const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
   const { blockNo, handleClose } = props;
-  const { data } = useFetch<BlockDetail>(blockNo ? `${API.BLOCK.DETAIL}/${blockNo}` : ``);
+  const { data } = useFetch<BlockDetail>(`${API.BLOCK.DETAIL}/${blockNo}`);
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
 
   if (!data)
     return (
-      <ViewDetailDrawer anchor="right" open={!!blockNo} hideBackdrop variant="permanent">
+      <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
         <ViewDetailContainer>
           <ViewDetailScroll>
             <StyledViewMore tooltipTitle="View Detail" to={details.block(blockNo)} />
@@ -125,7 +125,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
     );
 
   return (
-    <ViewDetailDrawer anchor="right" open={!!blockNo} hideBackdrop variant="permanent">
+    <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
       <ViewDetailContainer>
         <ViewDetailScroll>
           <StyledViewMore tooltipTitle="View Detail" to={details.block(blockNo)} />
@@ -143,7 +143,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               percent={data.epochNo === currentEpoch?.no ? ((data.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100 : 100}
               trailOpacity={1}
             >
-              <EpochNumber>{data.epochNo}</EpochNumber>
+              <EpochNumber>{data.epochNo !== null ? data.epochNo : "_"}</EpochNumber>
               <EpochText>Epoch</EpochText>
             </ProgressCircle>
           </HeaderContainer>
@@ -151,13 +151,13 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
             <Item>
               <Icon src={CubeIcon} alt="socket" />
               <ItemName>Block</ItemName>
-              <ItemValue>{blockNo}</ItemValue>
+              <ItemValue>{data.blockNo !== null ? data.blockNo : "_"}</ItemValue>
             </Item>
             <Item>
               <Icon src={RocketIcon} alt="socket" />
               <ItemName>slot</ItemName>
               <ItemValue>
-                {data.epochSlotNo}
+                {data.epochSlotNo || 0}
                 <BlockDefault>/{data.totalSlot || MAX_SLOT_EPOCH}</BlockDefault>
               </ItemValue>
             </Item>
