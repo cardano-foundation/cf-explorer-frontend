@@ -76,9 +76,9 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       key: "outSum",
       minWidth: "100px",
       render: r => (
-        <CustomTooltip title={formatADAFull(r.totalFees)}>
+        <CustomTooltip title={formatADAFull(r.totalOutput)}>
           <StyledOutput>
-            <StyledColorBlueDard>{formatADA(r.totalFees) || 0}</StyledColorBlueDard>
+            <StyledColorBlueDard>{formatADA(r.totalOutput) || 0}</StyledColorBlueDard>
             <img src={AIcon} alt="ADA Icon" />
           </StyledOutput>
         </CustomTooltip>
