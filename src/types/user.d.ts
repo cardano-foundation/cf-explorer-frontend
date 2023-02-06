@@ -30,4 +30,5 @@ export declare interface UserStoreType {
   sidebar: boolean;
   onDetailView: boolean;
   modalRegister: boolean;
+  modalSignMessage: boolean;
 }
