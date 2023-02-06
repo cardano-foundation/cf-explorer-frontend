@@ -142,8 +142,8 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   return (
     <Card
       title={
-        <Box>
-          Address Detail
+        <Box display={"flex"}>
+          <Box>Address Detail</Box>
           <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
         </Box>
       }

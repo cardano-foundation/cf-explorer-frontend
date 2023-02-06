@@ -42,7 +42,13 @@ const Transactions: React.FC<Props> = () => {
   };
   return (
     <StyledContainer>
-      <TransactionList url={API.TRANSACTION.LIST} openDetail={openDetail} selected={selected} hash={hash} />
+      <TransactionList
+        url={API.TRANSACTION.LIST}
+        openDetail={openDetail}
+        selected={selected}
+        hash={hash}
+        handleClose={handleClose}
+      />
       {hash && <DetailViewTransaction hash={hash} handleClose={handleClose} />}
     </StyledContainer>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import { useUpdateEffect } from "react-use";
 import { Link } from "react-router-dom";
 
 import { CloseIcon } from "../../../commons/resources";
@@ -17,9 +18,10 @@ interface IDropdownDetailProps {
   minWidth?: number | string;
 }
 
-const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, minWidth}) => {
+const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, minWidth }) => {
+  const ref = useOutsideClick(close);
   return (
-    <ListDropdownContainer minWidth={minWidth}>
+    <ListDropdownContainer minWidth={minWidth} ref={ref}>
       <ButtonClose onClick={close}>
         <img src={CloseIcon} alt="icon close" />
       </ButtonClose>
@@ -44,3 +46,23 @@ const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, m
 };
 
 export default DropdownDetail;
+
+const useOutsideClick = (callback?: () => void) => {
+  const ref = React.useRef();
+
+  React.useEffect(() => {
+    const handleClick = (event: any) => {
+      if (ref.current && !(ref.current as any).contains(event.target)) {
+        callback && callback();
+      }
+    };
+
+    document.addEventListener("click", handleClick, true);
+
+    return () => {
+      document.removeEventListener("click", handleClick, true);
+    };
+  }, [ref]);
+
+  return ref;
+};

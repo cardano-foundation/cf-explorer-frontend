@@ -80,7 +80,7 @@ const Stake: React.FC<IStake> = () => {
         <>
           <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
           <div style={{ display: "flex", marginTop: "6px" }}>
-            <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/{r.slotNo}
+            <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/{r.epochSlotNo}
           </div>
         </>
       ),
@@ -125,6 +125,7 @@ const Stake: React.FC<IStake> = () => {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => history.push({ search: stringify({ page, size, poolType }) }),
+            handleCloseDetailView: handleClose,
           }}
           onClickRow={openDetail}
           selected={selected}

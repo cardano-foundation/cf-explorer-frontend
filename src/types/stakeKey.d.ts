@@ -5,6 +5,7 @@ interface IStakeKey {
   block: number;
   epoch: number;
   slotNo: number;
+  epochSlotNo: number;
   stakeKey: string;
   poolNames: string[];
 }

@@ -17,9 +17,17 @@ interface TransactionListProps {
   openDetail?: (_: any, r: Transactions, index: number) => void;
   selected?: number | null;
   hash?: string | null;
+  handleClose: () => void;
 }
 
-const TransactionList: React.FC<TransactionListProps> = ({ underline = false, url, openDetail, selected, hash }) => {
+const TransactionList: React.FC<TransactionListProps> = ({
+  underline = false,
+  url,
+  openDetail,
+  selected,
+  hash,
+  handleClose,
+}) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -101,6 +109,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, ur
           ...pageInfo,
           total: fetchData.total,
           onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+          handleCloseDetailView: handleClose,
         }}
         onClickRow={onClickRow}
         selected={selected}

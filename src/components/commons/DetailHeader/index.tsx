@@ -2,7 +2,7 @@ import React from "react";
 import { Box, IconButton } from "@mui/material";
 
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import ProgressCircle from "../ProgressCircle";
 import {
   BackButton,
@@ -114,7 +114,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
             <HeaderTitle>{header.title}</HeaderTitle>
             <Bookmark {...bookmarkData[data?.type]} />
             {header.status && <HeaderStatus status={header.status}>{header.status}</HeaderStatus>}
-            {header.epochStatus && <HeaderStatus status={header.epochStatus}>{header.epochStatus}</HeaderStatus>}
+            {header.epochStatus && (
+              <HeaderStatus status={header.epochStatus}>{EPOCH_STATUS[header.epochStatus]}</HeaderStatus>
+            )}
           </HeaderContainer>
           {header.hash && (
             <SlotLeader>

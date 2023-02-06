@@ -40,6 +40,7 @@ export enum EPOCH_STATUS {
   FINISHED = "Finished",
   REWARDING = "Rewarding",
   IN_PROGRESS = "In Progress",
+  SYNCING = "Syncing",
 }
 
 export const MAX_SLOT_EPOCH = 432000;

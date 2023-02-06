@@ -112,6 +112,7 @@ const Tokens: React.FC<ITokenList> = () => {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+            handleCloseDetailView: handleClose,
           }}
           onClickRow={openDetail}
           selected={selected}
