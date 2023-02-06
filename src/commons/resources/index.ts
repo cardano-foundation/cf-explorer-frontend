@@ -71,6 +71,7 @@ import FlintIcon from "./icons/flint.svg";
 import NamiIcon from "./icons/nami.svg";
 import EternlIcon from "./icons/eternl.svg";
 import YoroiIcon from "./icons/yoroi.svg";
+import TyphonIcon from "./icons/typhon.svg";
 import HeaderBackground from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
 
@@ -84,6 +85,7 @@ export {
   NamiIcon,
   EternlIcon,
   YoroiIcon,
+  TyphonIcon,
   HeaderSearchIcon,
   CopyIcon,
   CloseIcon,

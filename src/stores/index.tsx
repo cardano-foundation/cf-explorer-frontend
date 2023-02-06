@@ -16,8 +16,13 @@ const setStore = (store: Store) => {
 const persistConfig = {
   key: "root",
   storage: storage,
-  whitelist: ["user"],
-  backlist: ["user.onDetailView", "user.modalSignMessage", "user.openModal", "user.modalRegister"],
+  whitelist: [],
+};
+
+const userPersistConfig = {
+  key: "user",
+  storage: storage,
+  blacklist: ["onDetailView", "openModal", "modalSignMessage", "modalRegister"],
 };
 
 export const getStore = (): Store<RootState> => {
@@ -28,7 +33,7 @@ export const getStore = (): Store<RootState> => {
 };
 
 const appReducer = combineReducers({
-  user: userReducer,
+  user: persistReducer(userPersistConfig, userReducer),
   system: systemReducer,
 });
 

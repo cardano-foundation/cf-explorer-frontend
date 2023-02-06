@@ -38,10 +38,6 @@ const AppContainer: React.FC<Props> = props => {
   }, [currentEpoch.data]);
 
   useEffect(() => {
-    setOnDetailView(false);
-  }, []);
-
-  useEffect(() => {
     const unlisten = history.listen(() => {
       window.scrollTo(0, 0);
       if (lastPath.current !== history.location.pathname) {
