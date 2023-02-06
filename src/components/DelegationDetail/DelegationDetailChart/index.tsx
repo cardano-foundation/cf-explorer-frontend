@@ -13,7 +13,6 @@ import {
   GridWrapper,
   Item,
   StyledContainer,
-  StyledLine,
   Title,
   Value,
 } from "./styles";
@@ -54,6 +53,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
             ) : (
               <Box position={"relative"}>
                 <HighchartsReact
+                  key={selected}
                   highcharts={Highcharts}
                   options={{
                     chart: { type: "areaspline", backgroundColor: "transparent" },
@@ -101,7 +101,6 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                     ],
                   }}
                 />{" "}
-                <StyledLine left={el.length && el.length > 2 ? el[2].getBoundingClientRect().width + 24.5 : 0} />
               </Box>
             )}
           </ChartContainer>
