@@ -26,8 +26,8 @@ interface Social {
   icon: IconType | string;
 }
 export const menus: Menu[] = [
-  { title: "DID", icon: DIDMenuIcon, tooltip: "Coming soon" },
-  { title: "Supply Chain", icon: SupplyChainMenuIcon, tooltip: "Coming soon" },
+  // { title: "DID", icon: DIDMenuIcon, tooltip: "Coming soon" },
+  // { title: "Supply Chain", icon: SupplyChainMenuIcon, tooltip: "Coming soon" },
   {
     title: "Blockchain",
     icon: BlockChainMenuIcon,
