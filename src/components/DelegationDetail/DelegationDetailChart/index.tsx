@@ -28,9 +28,9 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   const { data, loading } = useFetch<AnalyticsDelegators>(`${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`);
   const el = document.getElementsByClassName("y-axis-lable");
 
-  const categories = data?.[selected]?.dataByDays?.map(item => item.epochNo) || null;
-  const epochs = data?.epochChart?.dataByDays?.map(item => item.totalStake / 10 ** 6) || null;
-  const delegators = data?.delegatorChart?.dataByDays?.map(item => item.numberDelegator) || null;
+  const categories = data?.[selected]?.dataByDays?.map(item => item.epochNo) || [];
+  const epochs = data?.epochChart?.dataByDays?.map(item => item.totalStake / 10 ** 6) || [];
+  const delegators = data?.delegatorChart?.dataByDays?.map(item => item.numberDelegator) || [];
   return (
     <StyledContainer>
       <AnalyticsTitle>Analytics</AnalyticsTitle>

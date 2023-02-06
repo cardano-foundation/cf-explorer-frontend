@@ -42,6 +42,7 @@ export interface TableProps<T extends ColumnType = any> {
     page?: number;
     size?: number;
     total?: number;
+    handleCloseDetailView?: () => void;
   };
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
