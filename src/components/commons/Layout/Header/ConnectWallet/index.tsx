@@ -1,10 +1,10 @@
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { Box } from "@mui/material";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { WalletIcon } from "../../../../../commons/resources";
 import { RootState } from "../../../../../stores/types";
-import { setModalRegister, setOpenModal } from "../../../../../stores/user";
+import { setModalRegister, setModalSignMessage, setOpenModal } from "../../../../../stores/user";
 import ConnectedProfileOption from "../../../ConnectedProfileOption";
 import ConnectWalletModal from "../../../ConnectWalletModal";
 import RegisterUsernameModal from "../RegisterUsernameModal";
@@ -14,15 +14,16 @@ import { getNonce, signIn } from "../../../../../commons/utils/userRequest";
 import { NETWORK, NETWORKS } from "../../../../../commons/utils/constants";
 import { useHistory } from "react-router-dom";
 import { routers } from "../../../../../commons/routers";
+import SignMessageModal from "../SignMessageModal";
 interface Props {}
 
 const ConnectWallet: React.FC<Props> = () => {
-  const { openModal, modalRegister } = useSelector(({ user }: RootState) => user);
-  const buttonRef = useRef(null);
+  const { openModal, modalRegister, modalSignMessage } = useSelector(({ user }: RootState) => user);
   const history = useHistory();
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
+  const [submitting, setSubmitting] = useState(false);
 
   const handleClick = () => {
     setOpenModal(!openModal);
@@ -37,6 +38,7 @@ const ConnectWallet: React.FC<Props> = () => {
       const errorStatus = error.response?.status;
       if (errorStatus === 400) {
         setModalRegister(true);
+        setModalSignMessage(false);
       }
     }
   }, [stakeAddress]);
@@ -57,30 +59,39 @@ const ConnectWallet: React.FC<Props> = () => {
     } catch (error) {
     } finally {
       setModalRegister(false);
+      setModalSignMessage(false);
     }
   };
 
-  const onTriggerSignMessage = () => {
-    setTimeout(() => {
-      (buttonRef.current as any).click();
-    }, 100);
-  };
-
   const onSignMessage = async () => {
+    setSubmitting(true);
     const nonceValue = await getNonceValue();
     if (nonceValue) {
-      signMessage(nonceValue, handleSignIn, () => {
+      await signMessage(nonceValue, handleSignIn, () => {
         disconnect();
         history.push(routers.HOME);
       });
     }
+    setSubmitting(false);
   };
 
   return isEnabled && stakeAddress ? (
     <>
       <ConnectedProfileOption isConnected={isConnected} disconnect={disconnect} stakeAddress={stakeAddress} />
-      <button onClick={onSignMessage} ref={buttonRef} hidden={true} />
-      <RegisterUsernameModal open={modalRegister} address={stakeAddress} onTriggerSignMessage={onTriggerSignMessage} />
+      <SignMessageModal
+        open={modalSignMessage}
+        handleCloseModal={() => {
+          setModalSignMessage(false);
+          disconnect();
+        }}
+        onSignMessage={onSignMessage}
+        loadingSubmit={submitting}
+      />
+      <RegisterUsernameModal
+        open={modalRegister}
+        address={stakeAddress}
+        onTriggerSignMessage={() => setModalSignMessage(true)}
+      />
     </>
   ) : isConnected ? (
     <StyledButton type="button">
@@ -93,7 +104,7 @@ const ConnectWallet: React.FC<Props> = () => {
         <Image src={WalletIcon} alt="wallet" />
         <Span>Connect Wallet</Span>
       </StyledButton>
-      {openModal && <ConnectWalletModal connect={connect} onTriggerSignMessage={onTriggerSignMessage} />}
+      {openModal && <ConnectWalletModal connect={connect} onTriggerSignMessage={() => setModalSignMessage(true)} />}
     </Box>
   );
 };

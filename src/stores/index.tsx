@@ -17,7 +17,7 @@ const persistConfig = {
   key: "root",
   storage: storage,
   whitelist: ["user"],
-  backlist: ["user.onDetailView"],
+  backlist: ["user.onDetailView", "user.modalSignMessage", "user.openModal", "user.modalRegister"],
 };
 
 export const getStore = (): Store<RootState> => {
