@@ -3,8 +3,20 @@ import { setOpenModal, setWallet } from "../../../stores/user";
 import { SUPPORTED_WALLETS } from "../../../commons/utils/constants";
 import { CircularProgress } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
-import { CloseButton, ConnectOption, Title, WalletIcon, WalletItem, WalletName, WrapContent } from "./style";
-import { SupportedWallets } from "../../../types/user";
+import {
+  CloseButton,
+  ConnectOption,
+  GroupFlex,
+  InstallButton,
+  Title,
+  WalletIcon,
+  WalletItem,
+  WalletName,
+  WrapContent,
+} from "./style";
+import { SupportedWallets, Wallet } from "../../../types/user";
+import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet";
+import { MdOutlineFileDownload } from "react-icons/md";
 
 interface IProps {
   connect: (name: string, onSuccess: () => void, onError: (error: Error) => void) => Promise<any>;
@@ -29,6 +41,10 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage })
     connect(walletName, () => onSuccess(), onError);
   };
 
+  const handleOpenLink = (wallet: Wallet) => {
+    window.open(wallet.link, "_blank");
+  };
+
   return (
     <ConnectOption>
       <WrapContent>
@@ -45,9 +61,20 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage })
               connecting={walletConnecting ? 1 : 0}
               onClick={() => !walletConnecting && handleConnect(wallet.name)}
             >
-              <WalletIcon src={wallet.icon} alt={wallet.name} />
-              {active ? <CircularProgress size={30} /> : ""}
-              <WalletName>{wallet.name}</WalletName>
+              <GroupFlex>
+                <WalletName>{wallet.name}</WalletName>
+                {active ? <CircularProgress size={30} /> : ""}
+              </GroupFlex>
+              <GroupFlex>
+                {!isWalletInstalled(wallet.name.toLocaleLowerCase()) ? (
+                  <InstallButton onClick={() => handleOpenLink(wallet)}>
+                    Not Installed <MdOutlineFileDownload size={18} />
+                  </InstallButton>
+                ) : (
+                  <i />
+                )}
+                <WalletIcon src={wallet.icon} alt={wallet.name} />
+              </GroupFlex>
             </WalletItem>
           );
         })}
