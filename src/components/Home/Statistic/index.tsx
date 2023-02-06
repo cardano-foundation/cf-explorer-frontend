@@ -54,7 +54,7 @@ const HomeStatistic: React.FC<Props> = () => {
   const { liveStake = 0, activeStake = 1 } = data || {};
 
   const liveRate = new BigNumber(liveStake).div(MILION).div(supply).multipliedBy(100);
-  const activeRate = new BigNumber(liveStake).div(activeStake).minus(1).multipliedBy(100);
+  const activeRate = (activeStake && new BigNumber(liveStake).div(activeStake).minus(1).multipliedBy(100)) || 0;
   const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
   const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
 
@@ -121,8 +121,8 @@ const HomeStatistic: React.FC<Props> = () => {
             <Content>
               <ItemIcon src={LiveStakeIcon} alt="Total ADA Stake" />
               <Name>Live Stake</Name>
-              <CustomTooltip title={new BigNumber(data.liveStake).div(MILION).toString()}>
-                <Title>{formatADA(data.liveStake)}</Title>
+              <CustomTooltip title={new BigNumber(liveStake).div(MILION).toString()}>
+                <Title>{formatADA(liveStake)}</Title>
               </CustomTooltip>
               <Progress>
                 <CustomTooltip title={liveRate.toFixed(5)}>
@@ -135,9 +135,9 @@ const HomeStatistic: React.FC<Props> = () => {
                 </CustomTooltip>
               </Progress>
               <Small>Active Stake: </Small>
-              <CustomTooltip title={numberWithCommas(new BigNumber(data.activeStake).div(MILION).toString())}>
+              <CustomTooltip title={numberWithCommas(new BigNumber(activeStake).div(MILION).toString())}>
                 <Value>
-                  <b>{formatADA(data.activeStake)} </b>
+                  <b>{formatADA(activeStake)} </b>
                 </Value>
               </CustomTooltip>
               <CustomTooltip title={`${activeRate.toFixed(5)}%`}>
