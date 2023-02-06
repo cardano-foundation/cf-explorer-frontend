@@ -89,12 +89,3 @@ export const Horizon = styled("div")`
   opacity: 0.07;
   border: 1px solid #ffffff;
 `;
-
-export const StyledLine = styled(Box)<{ left?: number }>(({ theme, left }) => ({
-  position: "absolute",
-  height: 10,
-  width: 2,
-  top: 0,
-  left: left,
-  background: "#E3E5E9",
-}));

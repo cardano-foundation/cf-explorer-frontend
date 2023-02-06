@@ -22,7 +22,7 @@ const persistConfig = {
 const userPersistConfig = {
   key: "user",
   storage: storage,
-  blacklist: ["onDetailView", "openModal"],
+  blacklist: ["onDetailView", "openModal", "modalSignMessage", "modalRegister"],
 };
 
 export const getStore = (): Store<RootState> => {
