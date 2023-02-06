@@ -1,4 +1,4 @@
-import { Box, Dialog, IconButton, Paper, styled } from "@mui/material";
+import { Box, Button, Dialog, IconButton, Paper, styled } from "@mui/material";
 
 export const ConnectDialog = styled(Dialog)<{ connecting: number }>`
   * {
@@ -8,10 +8,10 @@ export const ConnectDialog = styled(Dialog)<{ connecting: number }>`
 
 export const ConnectOption = styled(Paper)`
   position: absolute;
+  top: calc(100% + 10px);
   right: 0px;
   border-radius: 20px;
-  width: 400px;
-  height: 400px;
+  width: 480px;
 `;
 
 export const WrapContent = styled(Box)`
@@ -42,6 +42,7 @@ export const WalletItem = styled(Box)<{ active: number; connecting: number }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
   width: 100%;
   height: 60px;
   padding: 20px;
@@ -56,12 +57,36 @@ export const WalletItem = styled(Box)<{ active: number; connecting: number }>`
   }
 `;
 
-export const WalletIcon = styled("img")`
-  width: 36px;
-  height: 36px;
+export const GroupFlex = styled(Box)`
+  flex: 1;
+  min-width: max-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
 `;
 
 export const WalletName = styled("h4")`
   margin: 0px;
   color: #667085;
+`;
+
+export const InstallButton = styled(Button)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  background: #e3e2fc;
+  border-radius: 5px;
+  padding: 4px 10px;
+  height: 29px;
+  color: #6866d4;
+  text-transform: none;
+  font-size: var(--font-size-text-x-small);
+  font-weight: var(--font-weight-bold);
+`;
+
+export const WalletIcon = styled("img")`
+  width: 29px;
+  height: 29px;
 `;

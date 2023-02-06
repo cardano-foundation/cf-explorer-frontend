@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import { Grid, Box, Autocomplete } from "@mui/material";
-import { exchangeADAToUSD, formatADA, formatPrice, numberWithCommas } from "../../../commons/utils/helper";
+import {
+  exchangeADAToUSD,
+  formatADA,
+  formatPrice,
+  getShortWallet,
+  numberWithCommas,
+} from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronDown } from "react-icons/bi";
@@ -114,7 +120,9 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           to={dataStake?.pool?.poolName ? details.delegation(dataStake.pool.poolId) : "#"}
           style={{ fontFamily: "var(--font-family-text)", color: "var(--color-blue)" }}
         >
-          {dataStake?.pool?.poolName || ""}
+          {dataStake?.pool?.poolName ||
+            (dataStake?.pool?.poolId && `Pool [${getShortWallet(dataStake.pool.poolId)}]`) ||
+            ""}
         </Link>
       ),
     },

@@ -1,5 +1,5 @@
 import { Wallet } from "../../types/user";
-import { EternlIcon, FlintIcon, NamiIcon, YoroiIcon } from "../resources";
+import { EternlIcon, FlintIcon, NamiIcon, TyphonIcon, YoroiIcon } from "../resources";
 import StorageUtils from "./storage";
 
 export const STORAGE_KEYS = {
@@ -9,10 +9,31 @@ export const STORAGE_KEYS = {
 };
 
 export const SUPPORTED_WALLETS: Wallet[] = [
-  { name: "Flint", icon: FlintIcon },
-  { name: "Nami", icon: NamiIcon },
-  { name: "Eternl", icon: EternlIcon },
-  { name: "Yoroi", icon: YoroiIcon },
+  {
+    name: "Flint",
+    icon: FlintIcon,
+    link: "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj",
+  },
+  {
+    name: "Nami",
+    icon: NamiIcon,
+    link: "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
+  },
+  {
+    name: "Eternl",
+    icon: EternlIcon,
+    link: "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka",
+  },
+  {
+    name: "Yoroi",
+    icon: YoroiIcon,
+    link: "https://chrome.google.com/webstore/detail/yoroi/ffnbelfdoeiohenkjibnmadjiehjhajb",
+  },
+  {
+    name: "Typhon",
+    icon: TyphonIcon,
+    link: "https://chrome.google.com/webstore/detail/typhon-wallet/kfdniefadaanbjodldohaedphafoffoh",
+  },
 ];
 
 export enum EPOCH_STATUS {

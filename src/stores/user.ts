@@ -14,10 +14,11 @@ const initialState: UserStoreType = {
   address: null,
   wallet: null,
   provider: null,
-  openModal: false, 
+  openModal: false,
   sidebar: true,
   onDetailView: false,
   modalRegister: false,
+  modalSignMessage: false,
 };
 
 const storeWallet = createSlice({
@@ -51,7 +52,7 @@ const storeWallet = createSlice({
     setOpenModal: (state, action: PayloadAction<boolean>) => ({
       ...state,
       openModal: action.payload,
-    }), 
+    }),
     setSidebar: (state, action: PayloadAction<boolean>) => ({
       ...state,
       sidebar: action.payload,
@@ -63,6 +64,10 @@ const storeWallet = createSlice({
     setModalRegister: (state, action: PayloadAction<boolean>) => ({
       ...state,
       modalRegister: action.payload,
+    }),
+    setModalSignMessage: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      modalSignMessage: action.payload,
     }),
   },
 });
@@ -93,7 +98,7 @@ export const setProvider = (provider: any) => {
 
 export const setOpenModal = (openModal: boolean) => {
   userStore?.dispatch(storeWallet.actions.setOpenModal(openModal));
-}; 
+};
 
 export const setSidebar = (sidebar: boolean) => {
   userStore?.dispatch(storeWallet.actions.setSidebar(sidebar));
@@ -105,6 +110,10 @@ export const setOnDetailView = (onDetailView: boolean) => {
 
 export const setModalRegister = (state: boolean) => {
   userStore?.dispatch(storeWallet.actions.setModalRegister(state));
+};
+
+export const setModalSignMessage = (state: boolean) => {
+  userStore?.dispatch(storeWallet.actions.setModalSignMessage(state));
 };
 
 export default storeWallet.reducer;

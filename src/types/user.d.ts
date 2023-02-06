@@ -1,10 +1,11 @@
 import { NETWORKS } from "../commons/utils/constants";
 
-export declare type SupportedWallets = "Flint" | "Nami" | "Eternl" | "Yoroi";
+export declare type SupportedWallets = "Flint" | "Nami" | "Eternl" | "Yoroi" | "Typhon";
 
 export type Wallet = {
   name: SupportedWallets;
   icon: string;
+  link: string;
 };
 export declare type ThemeType = "dark" | "light";
 
@@ -29,4 +30,5 @@ export declare interface UserStoreType {
   sidebar: boolean;
   onDetailView: boolean;
   modalRegister: boolean;
+  modalSignMessage: boolean;
 }
