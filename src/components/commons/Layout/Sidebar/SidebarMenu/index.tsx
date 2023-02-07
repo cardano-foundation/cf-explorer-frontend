@@ -26,7 +26,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
       });
     });
 
-    if (active) {
+    if (active !== -1) {
       return `menu-${active}`;
     }
 

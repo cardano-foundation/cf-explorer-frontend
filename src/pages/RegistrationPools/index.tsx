@@ -51,7 +51,11 @@ const columns: Column<Registration>[] = [
   {
     title: "Pool",
     key: "pool",
-    render: r => <StyledLink to={details.delegation(r.poolView || "")}>{r.poolName || `Pool[${r.poolView}]`}</StyledLink>,
+    render: r => (
+      <StyledLink to={details.delegation(r.poolView || "")}>
+        {r.poolName || `Pool[${getShortHash(r.poolView)}]`}
+      </StyledLink>
+    ),
   },
   {
     title: "Pledge (A)",
@@ -99,7 +103,7 @@ const RegistrationPools = () => {
     history.push(routers.REGISTRATION_POOLS.replace(":poolType", poolType));
   };
 
-  if (!Object.values(POOL_TYPE).includes(poolType))  return <NoRecord />;
+  if (!Object.values(POOL_TYPE).includes(poolType)) return <NoRecord />;
 
   return (
     <RegistrationContainer>
