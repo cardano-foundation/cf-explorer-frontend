@@ -39,7 +39,7 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
   border-radius: 4px;
 `;
 
-export const HeaderStatus = styled("small") <{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
+export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
   color: ${props => {
     switch (props.status) {
       case TRANSACTION_STATUS.SUCCESS:
@@ -105,7 +105,7 @@ export const DetailsInfo = styled(Grid)`
   // color: ${props => props.theme.textColorReverse};
 `;
 
-export const DetailsInfoItem = styled(Grid) <{ center?: number }>`
+export const DetailsInfoItem = styled(Grid)<{ center?: number }>`
   display: flex;
   justify-content: center;
   align-items: ${props => (props.center ? `center` : `flex-start`)};
@@ -194,7 +194,7 @@ export const ConfirmationValue = styled(DetailValue)`
   align-items: center;
 `;
 
-export const ConfirmStatus = styled("small") <{ status?: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
   color: ${props => {
     switch (props.status) {
       case CONFIRMATION_STATUS.MEDIUM:
@@ -223,7 +223,7 @@ export const InfoIcon = styled(FiInfo)`
   margin-left: 2px;
 `;
 
-export const ProgressLiner = styled("div") <{ progress: number }>`
+export const ProgressLiner = styled("div")<{ progress: number }>`
   position: relative;
   width: 100%;
   background: ${props => props.theme.colorBlack}32;
@@ -273,12 +273,64 @@ export const CardInfoOverview = styled(Box)(({ theme }) => ({
 }));
 
 export const CardItem = styled(Grid)(({ theme }) => ({
+  position: "relative",
   width: "max-content",
   borderLeft: "1px solid rgba(0,0,0,0.1)",
   paddingLeft: theme.spacing(2),
   paddingRight: theme.spacing(2),
   ":first-of-type": {
     borderLeft: "none",
+  },
+  "::after": {
+    content: '""',
+    position: "absolute",
+    bottom: -15,
+    width: "calc(100% - 30px)",
+    left: "50%",
+    transform: "translateX(-50%)",
+    borderBottom: "0px solid rgba(0,0,0,0.1)",
+  },
+  [theme.breakpoints.down(theme.breakpoints.values.lg)]: {
+    marginBottom: 30,
+    "&::after": {
+      borderBottomWidth: 1,
+    },
+  },
+  [theme.breakpoints.between(theme.breakpoints.values.md, theme.breakpoints.values.lg)]: {
+    ":nth-child(3n+1)": {
+      borderLeftWidth: 0,
+    },
+    ":nth-last-child(-n + 3)": {
+      ":nth-child(3n + 1)": {
+        "::after": {
+          borderBottomWidth: 0,
+        },
+        "&~div::after": {
+          borderBottomWidth: 0,
+        },
+      },
+    },
+  },
+  [theme.breakpoints.between(theme.breakpoints.values.sm, theme.breakpoints.values.md)]: {
+    ":nth-child(2n+1)": {
+      borderLeftWidth: 0,
+    },
+    ":nth-last-child(-n + 2)": {
+      ":nth-child(2n + 1)": {
+        "::after": {
+          borderBottomWidth: 0,
+        },
+        "&~div::after": {
+          borderBottomWidth: 0,
+        },
+      },
+    },
+  },
+  [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
+    borderLeftWidth: 0,
+    ":last-of-type::after": {
+      borderBottomWidth: 0,
+    },
   },
 }));
 
