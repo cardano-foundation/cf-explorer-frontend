@@ -15,11 +15,14 @@ import { NETWORK, NETWORKS } from "../../../../../commons/utils/constants";
 import { useHistory } from "react-router-dom";
 import { routers } from "../../../../../commons/routers";
 import SignMessageModal from "../SignMessageModal";
+import SyncBookmarkModal from "../SyncBookmarkModal";
+import { useLocalStorage } from "react-use";
 interface Props {}
 
 const ConnectWallet: React.FC<Props> = () => {
   const { openModal, modalRegister, modalSignMessage } = useSelector(({ user }: RootState) => user);
   const history = useHistory();
+  const [openSyncBookmark, setOpenSyncBookmark] = useState(false);
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
@@ -56,6 +59,9 @@ const ConnectWallet: React.FC<Props> = () => {
       localStorage.setItem("refreshToken", data.refreshToken);
       localStorage.setItem("walletId", data.walletId);
       localStorage.setItem("email", data.email);
+      if ((((JSON.parse(localStorage?.bookmark) as BookMark[]) || [])?.filter(r => !r.id) || []).length > 0) {
+        setOpenSyncBookmark(true);
+      }
     } catch (error) {
     } finally {
       setModalRegister(false);
@@ -85,6 +91,13 @@ const ConnectWallet: React.FC<Props> = () => {
           disconnect();
         }}
         onSignMessage={onSignMessage}
+        loadingSubmit={submitting}
+      />
+      <SyncBookmarkModal
+        open={openSyncBookmark}
+        handleCloseModal={() => {
+          setOpenSyncBookmark(false);
+        }}
         loadingSubmit={submitting}
       />
       <RegisterUsernameModal

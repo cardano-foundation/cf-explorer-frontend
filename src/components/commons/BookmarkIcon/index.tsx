@@ -5,13 +5,13 @@ import { useLocalStorage } from "react-use";
 
 import { ReactComponent as BookmarkIcon } from "../../../commons/resources/icons/Bookmark.svg";
 
-import { authAxios } from "../../../commons/utils/axios";
 import Toast from "../Toast";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
+import { addBookmark, deleteBookmark } from "../../../commons/utils/userRequest";
 
 interface BookmarkButtonProps {
-  keyword: string | number;
+  keyword: string;
   type: "BLOCK" | "EPOCH" | "TRANSACTION" | "ADDRESS" | "POOL" | "STAKE_KEY";
 }
 
@@ -43,7 +43,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
       try {
         if (!bookmark) {
           if ((bookmarks || [])?.length < 2000) {
-            const { data } = await authAxios.post<any, AxiosResponse<BookMark, any>>("/bookmark/add", {
+            const { data } = await addBookmark({
               keyword,
               type,
             });
@@ -53,7 +53,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
             setMessage("Maximum bookmarks is 2000!");
           }
         } else {
-          await authAxios.delete("/bookmark/delete/" + bookmark?.id);
+          deleteBookmark(bookmark?.id || 0);
           setBookmarks((bookmarks || []).filter(b => b.keyword !== `${keyword}`));
           setMessage("Successfully!");
         }
