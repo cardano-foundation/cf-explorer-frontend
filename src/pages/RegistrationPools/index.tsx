@@ -51,7 +51,7 @@ const columns: Column<Registration>[] = [
   {
     title: "Pool",
     key: "pool",
-    render: r => <StyledLink to={details.delegation(r.poolView || "")}>{r.poolName || `Pool[${r.poolId}]`}</StyledLink>,
+    render: r => <StyledLink to={details.delegation(r.poolView || "")}>{r.poolName || `Pool[${r.poolView}]`}</StyledLink>,
   },
   {
     title: "Pledge (A)",
@@ -100,7 +100,7 @@ const RegistrationPools = () => {
   };
 
   if (!Object.values(POOL_TYPE).includes(poolType))  return <NoRecord />;
-  
+
   return (
     <RegistrationContainer>
       <StyledTabs

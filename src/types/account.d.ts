@@ -62,3 +62,10 @@ type TSignOut = {
   refreshJwt: string;
   username: string;
 };
+
+interface Bookmark {
+  createdDate?: string;
+  id?: number;
+  keyword: string;
+  type: "BLOCK" | "EPOCH" | "TRANSACTION" | "ADDRESS" | "POOL" | "STAKE_KEY";
+}

@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useLocalStorage } from "react-use";
 import { LinkOff, User2 } from "../../../commons/resources/index";
 import { routers } from "../../../commons/routers";
 import { getShortWallet, removeAuthInfo } from "../../../commons/utils/helper";
@@ -14,6 +15,10 @@ interface IProps {
 }
 const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, stakeAddress }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
+  const [, setUsername] = useLocalStorage<string>("username", "");
+  const [user, setUser] = useLocalStorage("persist:user", {});
+
   const history = useHistory();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -40,6 +45,9 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
     } finally {
       disconnect();
       removeAuthInfo();
+      setBookmark([]);
+      setUsername("");
+      setUser({ ...user, userData: {} });
       window.location.href = "/";
     }
   };

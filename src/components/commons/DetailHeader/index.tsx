@@ -87,13 +87,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
   }
 
   const { header, blockDetail } = data;
-  const bookmarkData: { [key: string]: { keyword: string | number; type: "EPOCH" | "BLOCK" | "TRANSACTION" } } = {
+  const bookmarkData: { [key: string]: { keyword: string; type: "EPOCH" | "BLOCK" | "TRANSACTION" } } = {
     epoch: {
-      keyword: blockDetail?.epochNo,
+      keyword: `${blockDetail?.epochNo}`,
       type: "EPOCH",
     },
     block: {
-      keyword: blockDetail?.blockNo,
+      keyword: `${blockDetail?.blockNo}`,
       type: "BLOCK",
     },
     transaction: {
@@ -139,7 +139,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
       <DetailsInfo container>
         {listItem?.map((item, idx) => {
           return (
-            <CardItem item sm={12} md={6} xl key={idx}>
+            <CardItem item xs={12} sm={6} md={4} lg key={idx}>
               <Box>
                 <img src={item.icon} alt="" height={20} />
               </Box>
