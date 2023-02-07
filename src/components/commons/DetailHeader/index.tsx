@@ -139,7 +139,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
       <DetailsInfo container>
         {listItem?.map((item, idx) => {
           return (
-            <CardItem item sm={12} md={6} xl key={idx}>
+            <CardItem item xs={12} sm={6} md={4} lg key={idx}>
               <Box>
                 <img src={item.icon} alt="" height={20} />
               </Box>
