@@ -31,7 +31,7 @@ export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<The
   },
 });
 
-export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; text?: number }>`
+export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; text?: number; disable?: boolean }>`
   width: 24px;
   height: 24px;
   min-width: 24px;
@@ -46,7 +46,7 @@ export const SubMenu = styled(List)<{ isActive?: number }>`
   margin-left: 0px;
 `;
 
-export const MenuText = styled(ListItemText)<{ open?: number; active?: number; text?: number }>`
+export const MenuText = styled(ListItemText)<{ open?: number; active?: number; text?: number; disable?: boolean }>`
   opacity: ${props => (props.open ? 1 : 0)};
   width: ${props => (props.open ? "unset" : 0)};
   * {
@@ -58,6 +58,8 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
         ? props.text
           ? props.theme.textColor
           : props.theme.textColorReverse
+        : props.disable
+        ? "#66708580"
         : props.theme.textColorPale};
     white-space: break-spaces;
     width: 165px;
