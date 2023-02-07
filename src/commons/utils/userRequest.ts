@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { authAxios } from "./axios";
 
 //user
@@ -15,3 +16,9 @@ export const existUserName = (payload: TCheckExistUsername) =>
 export const addPrivateNote = (payload: TAddPrivateNote) => authAxios.post("note/add", payload);
 export const editPrivateNote = (payload: TEditPrivateNote) => authAxios.put("note/edit", {}, { params: payload });
 export const removePrivateNote = (noteId: number) => authAxios.delete(`note/delete/${noteId}`);
+//bookmark
+export const addBookmark = (payload: BookMark) =>
+  authAxios.post<any, AxiosResponse<BookMark, any>>("/bookmark/add", payload);
+export const addListBookmark = (payload: BookMark[]) =>
+  authAxios.post<any, AxiosResponse<BookMark[], any>>("/bookmark/add-list", { bookMarks: payload });
+export const deleteBookmark = (id: number) => authAxios.delete("/bookmark/delete/" + id);

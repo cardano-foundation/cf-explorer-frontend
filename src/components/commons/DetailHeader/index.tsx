@@ -87,13 +87,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
   }
 
   const { header, blockDetail } = data;
-  const bookmarkData: { [key: string]: { keyword: string | number; type: "EPOCH" | "BLOCK" | "TRANSACTION" } } = {
+  const bookmarkData: { [key: string]: { keyword: string; type: "EPOCH" | "BLOCK" | "TRANSACTION" } } = {
     epoch: {
-      keyword: blockDetail?.epochNo,
+      keyword: `${blockDetail?.epochNo}`,
       type: "EPOCH",
     },
     block: {
-      keyword: blockDetail?.blockNo,
+      keyword: `${blockDetail?.blockNo}`,
       type: "BLOCK",
     },
     transaction: {

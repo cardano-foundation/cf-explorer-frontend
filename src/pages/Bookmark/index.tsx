@@ -16,19 +16,12 @@ import useFetchList from "../../commons/hooks/useFetchList";
 import { Column } from "../../types/table";
 import { StyledTable, TitleTab } from "./Styles";
 import { ReactComponent as DeleteBookmark } from "../../commons/resources/icons/deleteBookmark.svg";
-import { authAxios } from "../../commons/utils/axios";
 import { Link } from "react-router-dom";
 import { details } from "../../commons/routers";
 import Toast from "../../components/commons/Toast";
 import { getShortHash, getShortWallet } from "../../commons/utils/helper";
 import { useLocalStorage } from "react-use";
-
-interface BookmarkIF {
-  createdDate: string;
-  id: number;
-  keyword: string;
-  type: "EPOCH";
-}
+import { deleteBookmark } from "../../commons/utils/userRequest";
 
 const Bookmark = () => {
   const [bookmarks, setBookmarks] = useLocalStorage<BookMark[]>("bookmark", []);
@@ -46,7 +39,7 @@ const Bookmark = () => {
 
     setMessage("");
   };
-  const { data, loading, refesh, currentPage, error, total } = useFetchList<BookmarkIF>(
+  const { data, loading, refesh, currentPage, error, total } = useFetchList<Bookmark>(
     "/bookmark/find-all",
     { type: activeTab, page: page - 1, size },
     true
@@ -59,7 +52,7 @@ const Bookmark = () => {
   const deleteBookMark = async (id: number) => {
     try {
       setLoadingDelete(true);
-      await authAxios.delete("/bookmark/delete/" + id);
+      await deleteBookmark(id);
       setSelected(null);
       setLoadingDelete(false);
       setBookmarks(bookmarks?.filter(r => r.id !== id));
@@ -79,7 +72,7 @@ const Bookmark = () => {
     document.title = `Bookmarks | Cardano Explorer`;
   }, []);
 
-  const colDynamic: Record<string, Column<BookmarkIF>> = {
+  const colDynamic: Record<string, Column<Bookmark>> = {
     ADDRESS: {
       title: "Address",
       key: "Address",
@@ -141,7 +134,7 @@ const Bookmark = () => {
       ),
     },
   };
-  const columns: Column<BookmarkIF>[] = [
+  const columns: Column<Bookmark>[] = [
     {
       ...colDynamic[activeTab as any],
     },
