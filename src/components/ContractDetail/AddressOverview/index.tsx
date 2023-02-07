@@ -98,7 +98,9 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
     },
     {
       title: "Delegated To",
-      value: <Pool to={details.delegation(dataStake?.pool.poolId)}>{dataStake?.pool.poolName}</Pool>,
+      value: (
+        <Pool to={details.delegation(dataStake?.pool ? dataStake?.pool?.poolId : "")}>{dataStake?.pool?.poolName}</Pool>
+      ),
     },
   ];
   return (
