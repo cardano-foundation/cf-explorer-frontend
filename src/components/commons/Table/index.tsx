@@ -137,7 +137,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
         )}
         {total ? (
           <Total ml={2} fontSize="0.875rem" lineHeight={"1 !important"}>
-            <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> Results
+            <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> {`Result${total.count > 1 ? "s" : ""}`}
           </Total>
         ) : (
           ""

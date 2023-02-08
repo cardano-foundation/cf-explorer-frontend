@@ -75,10 +75,10 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     title: "Token name",
     key: "id",
     minWidth: "100px",
-    render: r => <LinkComponent to={details.token(r.fingerprint)}>{r.tokenName || ""}</LinkComponent>,
+    render: r => <LinkComponent to={details.token(r.fingerprint)}>{r.displayName || ""}</LinkComponent>,
   },
   {
-    title: "Token id",
+    title: "Token ID",
     key: "id",
     minWidth: "100px",
     render: r => (
