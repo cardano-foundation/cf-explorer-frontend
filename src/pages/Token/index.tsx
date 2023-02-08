@@ -54,7 +54,9 @@ const Tokens: React.FC<ITokenList> = () => {
             <AssetName to={details.token(r?.fingerprint ?? "")}>{getShortWallet(r.displayName || "")}</AssetName>
           </CustomTooltip>
         ) : (
-          <AssetName to={details.token(r?.fingerprint ?? "")}>{r.displayName}</AssetName>
+          <AssetName to={details.token(r?.fingerprint ?? "")}>
+            {r.displayName || getShortWallet(r.fingerprint || "")}
+          </AssetName>
         ),
     },
     {
