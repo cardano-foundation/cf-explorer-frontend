@@ -46,9 +46,6 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
           </BackButton>
           <HeaderContainer>
             <HeaderTitle>Policy Details</HeaderTitle>
-            <Box mx={1} component={IconButton} style={{ width: 45, height: 45 }}>
-              <Bookmark />
-            </Box>
           </HeaderContainer>
           <SlotLeaderContainer>
             {loading ? (
@@ -65,39 +62,27 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
             )}
           </SlotLeaderContainer>
         </Box>
-      </Box>
-
-      <CardInfoOverview>
-        <CardItem display={"flex"} gap={2}>
+        <CardItem
+          color={props => props.colorGreenLight}
+          fontWeight="bold"
+          fontFamily={'"Roboto", sans-serif'}
+          fontSize={"1.125rem"}
+          component="button"
+          border={"none"}
+          bgcolor="transparent"
+          padding={0}
+          onClick={() => setOpenModal(true)}
+          style={{ cursor: "pointer" }}
+        >
           <Box>
-            <img src={policyIcon} alt="" />
+            <img src={policyIcon} alt="" width={"40%"} />
           </Box>
           <Box display={"flex"} flexDirection="column" height={"100%"} justifyContent="space-between">
-            <Box
-              color={props => props.colorGreenLight}
-              fontWeight="bold"
-              fontFamily={'"Roboto", sans-serif'}
-              fontSize={"1.125rem"}
-              component="button"
-              border={"none"}
-              bgcolor="transparent"
-              padding={0}
-              onClick={() => setOpenModal(true)}
-              style={{ cursor: "pointer" }}
-            >
-              Policy Script
-            </Box>
-            <Box>
-              <Box display={"flex"} alignItems="center">
-                <TitleCard mr={1}> Total Tokens </TitleCard>
-                <img src={infoIcon} alt="info icon" />
-              </Box>
-              <ValueCard mt={1}>{numberWithCommas(data?.totalToken || 0)}</ValueCard>
-            </Box>
+            <Box>Policy Script</Box>
           </Box>
         </CardItem>
-        <CardItem />
-      </CardInfoOverview>
+      </Box>
+
       <ScriptModal open={openModal} onClose={() => setOpenModal(false)} script={data?.policyScript} />
     </Box>
   );

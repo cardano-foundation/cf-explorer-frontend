@@ -116,13 +116,9 @@ export const CardInfoOverview = styled(Box)(({ theme }) => ({
 }));
 
 export const CardItem = styled(Box)(({ theme }) => ({
-  width: "max-content",
-  flex: 1,
-  borderLeft: "1px solid rgba(0,0,0,0.1)",
-  paddingLeft: theme.spacing(2),
-  ":first-of-type": {
-    borderLeft: "none",
-  },
+  padding: `${theme.spacing(2)} ${theme.spacing(5)}`,
+  background: "#fff",
+  borderRadius: theme.borderRadius,
 }));
 
 export const TitleCard = styled(Box)(({ theme }) => ({
