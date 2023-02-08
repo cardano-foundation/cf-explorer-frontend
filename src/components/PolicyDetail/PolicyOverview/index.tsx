@@ -57,7 +57,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
               <Box>
                 <SlotLeader>
                   <Box fontWeight={400} color={"#344054"}>
-                    Policy Id:{" "}
+                    Policy ID:{" "}
                   </Box>{" "}
                   <Box ml={2}>{data?.policyId}</Box> <CopyButton text={data?.policyId} />
                 </SlotLeader>
