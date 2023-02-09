@@ -43,11 +43,6 @@ export const API = {
   },
 };
 
-export const USER_API = {
-  ACTIVITY_LOG: "user/activities-log",
-  INFO: "user/info",
-};
-
 export const EXTEN_API = {
   COINGECKO: {
     PRICE: `${COINGECKO_URL}coins/markets`,

@@ -1,5 +1,5 @@
 import { Avatar, Box, IconButton } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { routers } from "../../../../commons/routers";
 import { RootState } from "../../../../stores/types";
@@ -7,11 +7,9 @@ import { ContentBox, NavItem, SideBar, StyledUsername, Wrapper } from "./styled"
 import editAva from "../../../../commons/resources/icons/editAva.svg";
 import { useLocation } from "react-router-dom";
 import { MdChevronRight } from "react-icons/md";
-import useFetch from "../../../../commons/hooks/useFetch";
 import { setUserData } from "../../../../stores/user";
-import { UserDataType } from "../../../../types/user";
-import { USER_API } from "../../../../commons/utils/api";
-
+import { getInfo } from "../../../../commons/utils/userRequest";
+import { NETWORK_TYPES, NETWORK } from "../../../../commons/utils/constants";
 interface Props {
   children: React.ReactNode;
 }
@@ -19,11 +17,17 @@ interface Props {
 const AccountLayout: React.FC<Props> = ({ children }) => {
   const { pathname } = useLocation();
   const { userData } = useSelector(({ user }: RootState) => user);
-  const { data } = useFetch<UserDataType>(USER_API.INFO, undefined, true);
+
+  const fetchUserInfo = useCallback(async () => {
+    try {
+      const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
+      setUserData(response.data);
+    } catch (error) {}
+  }, []);
 
   useEffect(() => {
-    setUserData(data);
-  }, [data]);
+    fetchUserInfo();
+  }, [fetchUserInfo]);
 
   // if (!userData) return <NotFound />;
   return (
