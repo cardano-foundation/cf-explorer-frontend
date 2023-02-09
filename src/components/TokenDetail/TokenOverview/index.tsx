@@ -43,7 +43,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: "Total Supply",
       value: (
         <CustomTooltip title={numberWithCommas(data?.supply || 0)}>
-          <Box>{formatADA(data?.supply ? data.supply * 1000000 : 0)}</Box>
+          <Box component={"span"}>{formatADA(data?.supply ? data.supply * 1000000 : 0)}</Box>
         </CustomTooltip>
       ),
       icon: slotIcon,
