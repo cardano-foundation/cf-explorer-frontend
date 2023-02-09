@@ -69,7 +69,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       title: "Transactions",
       key: "blkCount",
       minWidth: "100px",
-      render: r => <StyledColorBlueDard>{r.txCount}</StyledColorBlueDard>,
+      render: r => <StyledColorBlueDard>{r.txCount || 0}</StyledColorBlueDard>,
     },
     {
       title: "Output",
