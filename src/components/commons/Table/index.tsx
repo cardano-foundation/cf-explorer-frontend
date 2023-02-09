@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Skeleton, Box, Pagination, PaginationRenderItemParams, IconButton, MenuItem, styled } from "@mui/material";
+import {
+  Skeleton,
+  Box,
+  Pagination,
+  PaginationRenderItemParams,
+  IconButton,
+  MenuItem,
+  styled,
+  CircularProgress,
+} from "@mui/material";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
 import { EmptyIcon } from "../../../commons/resources";
 import { ReactComponent as StartPage } from "../../../commons/resources/icons/startPagePagination.svg";
@@ -23,6 +32,8 @@ import {
   Error,
   InputNumber,
   SelectMui,
+  TBodyLoading,
+  LoadingWrapper,
 } from "./styles";
 import { ColumnType, FooterTableProps, TableHeaderProps, TableProps, TableRowProps } from "../../../types/table";
 import { useUpdateEffect } from "react-use";
@@ -82,21 +93,11 @@ const TableBody = <T extends ColumnType>({ data, columns, onClickRow, selected, 
 
 const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
   return (
-    <TBody>
-      {[...Array(10)].map((_, i) => {
-        return (
-          <TRow key={i}>
-            {columns.map(({ minWidth }, idx) => {
-              return (
-                <td key={idx} style={{ minWidth: minWidth || "unset" }}>
-                  <Skeleton variant="rectangular" style={{ height: "75px" }} animation="wave" />
-                </td>
-              );
-            })}
-          </TRow>
-        );
-      })}
-    </TBody>
+    <TBodyLoading style={{ height: 150, position: "relative" }}>
+      <LoadingWrapper py={5} textAlign="center" position={"absolute"} left={"50%"}>
+        <CircularProgress />
+      </LoadingWrapper>
+    </TBodyLoading>
   );
 };
 

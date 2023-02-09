@@ -64,6 +64,13 @@ export const TCol = styled("td")<{ width?: number | string; minWidth?: number | 
   padding: 24px 20px;
 `;
 export const TBody = styled("tbody")``;
+export const TBodyLoading = styled("tbody")`
+  position: relative;
+  height: 150;
+`;
+export const LoadingWrapper = styled(Box)`
+  transform: translateX(-50%);
+`;
 
 export const TFooter = styled(Box)`
   display: flex;
