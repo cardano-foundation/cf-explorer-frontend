@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import DetailHeader from "../../commons/DetailHeader";
-import { formatADA, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
+import { formatADA, formatADAFull, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
 import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { Box, IconButton } from "@mui/material";
 import { ConfirmStatus, StyledLink, TitleCard } from "./component";
@@ -155,10 +155,11 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <>
-          {" "}
-          {formatADA(data?.tx?.fee || 0)} <ADAToken />{" "}
-        </>
+        <CustomTooltip title={formatADAFull(data?.tx?.fee || 0)}>
+          <Box component={"span"}>
+            {formatADA(data?.tx?.fee || 0)} <ADAToken />{" "}
+          </Box>
+        </CustomTooltip>
       ),
     },
     {
