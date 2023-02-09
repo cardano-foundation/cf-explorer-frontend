@@ -1,10 +1,8 @@
 import { Box } from "@mui/material";
-import { ReactElement, useState } from "react";
-import { ActivityButton, Label, StyledAction, StyledRowItem, TextNote, Value, WalletAddress } from "./styles";
+import { ReactElement } from "react";
+import { Label, StyledAction, StyledRowItem, TextNote, Value, WalletAddress } from "./styles";
 import { ReactComponent as Edit } from "../../../commons/resources/icons/pen.svg";
 import { ReactComponent as Search } from "../../../commons/resources/icons/search.svg";
-import { ReactComponent as File } from "../../../commons/resources/icons/file.svg";
-import ActivityLogModal from "../ActivityLogModal";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import moment from "moment";
@@ -34,7 +32,6 @@ interface IProps {
 
 const OverviewTab: React.FC<IProps> = ({ handleChangeTab }) => {
   const history = useHistory();
-  const [openModal, setOpenModal] = useState(false);
   const { userData } = useSelector(({ user }: RootState) => user);
 
   return (
@@ -67,10 +64,6 @@ const OverviewTab: React.FC<IProps> = ({ handleChangeTab }) => {
         action={<Edit onClick={() => handleChangeTab("setting")} />}
       />
       <RowItem label="Last Login" value={moment(userData?.lastLogin).format("MM/DD/YYYY hh:mm:ss")} />
-      <ActivityButton endIcon={<File />} onClick={() => setOpenModal(true)}>
-        Activity History
-      </ActivityButton>
-      <ActivityLogModal open={openModal} handleCloseModal={() => setOpenModal(false)} />
     </Box>
   );
 };

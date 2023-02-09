@@ -1,6 +1,7 @@
 type TAddPrivateNote = {
   txHash: string;
   note: string;
+  network: NETWORK_TYPES;
 };
 
 type TCurrentNote = {
@@ -24,6 +25,10 @@ type TEditPrivateNote = {
 type TEditUser = {
   email?: string;
   username?: string;
+};
+
+type TGetInfo = {
+  network: NETWORK_TYPES;
 };
 
 type TGetNonce = {

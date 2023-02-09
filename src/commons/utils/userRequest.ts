@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios";
+import { UserDataType } from "../../types/user";
 import { authAxios } from "./axios";
 
 //user
@@ -7,6 +8,8 @@ export const signIn = (payload: TSignIn) => authAxios.post("auth/sign-in", paylo
 export const transferWallet = (payload: TTransferWallet) => authAxios.post("auth/transfers-wallet", payload);
 export const refreshToken = (payload: TRefreshToken) => authAxios.get("auth/refresh-token", { params: payload });
 //auth
+export const getInfo = (payload: TGetInfo) =>
+  authAxios.get<any, AxiosResponse<UserDataType, any>>("user/info", { params: payload });
 export const editInfo = (payload: TEditUser) => authAxios.put("user/edit", payload);
 export const getNonce = (payload: TGetNonce) => authAxios.get("user/get-nonce", { params: payload });
 export const existEmail = (payload: TCheckExistEmail) => authAxios.get("user/exist-email", { params: payload });
