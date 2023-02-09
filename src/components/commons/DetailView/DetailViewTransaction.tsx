@@ -49,7 +49,13 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { TbFileCheck } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatADA, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../commons/utils/helper";
+import {
+  formatADA,
+  formatADAFull,
+  formatDateTimeLocal,
+  getShortHash,
+  getShortWallet,
+} from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
@@ -272,20 +278,24 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                 <InfoIcon />
                 Transaction Fees
               </DetailLabel>
-              <DetailValue>
-                {formatADA(data.tx.fee) || 0}
-                <ADAToken color="black" />
-              </DetailValue>
+              <CustomTooltip title={formatADAFull(data.tx.fee || 0)}>
+                <DetailValue>
+                  {formatADA(data.tx.fee) || 0}
+                  <ADAToken color="black" />
+                </DetailValue>
+              </CustomTooltip>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
                 <InfoIcon />
                 Total Output
               </DetailLabel>
-              <DetailValue>
-                {formatADA(data.tx.totalOutput) || 0}
-                <ADAToken color="black" />
-              </DetailValue>
+              <CustomTooltip title={formatADAFull(data.tx.totalOutput || 0)}>
+                <DetailValue>
+                  {formatADA(data.tx.totalOutput) || 0}
+                  <ADAToken color="black" />
+                </DetailValue>
+              </CustomTooltip>
             </DetailsInfoItem>
           </Group>
           {tabs.map(({ key, label, icon }) => {
