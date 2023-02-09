@@ -68,7 +68,9 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       value: (
         <Box display="flex" alignItems="center" justifyContent="space-between" pr={2}>
           <StyledFlexValue>
-            {formatADA(data?.totalStake || 0)}
+            <CustomTooltip title={formatADAFull(data?.totalStake || 0)}>
+              <Box component={"span"}>{formatADA(data?.totalStake || 0)}</Box>
+            </CustomTooltip>
             <ADAToken />
           </StyledFlexValue>
           <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>
@@ -85,7 +87,9 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       ),
       value: (
         <StyledFlexValue>
-          {formatADA(data?.rewardAvailable || 0)}
+          <CustomTooltip title={formatADAFull(data?.rewardAvailable || 0)}>
+            <Box component={"span"}>{formatADA(data?.rewardAvailable || 0)}</Box>
+          </CustomTooltip>
           <ADAToken />
         </StyledFlexValue>
       ),
