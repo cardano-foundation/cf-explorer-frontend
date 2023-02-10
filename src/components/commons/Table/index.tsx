@@ -32,7 +32,6 @@ import {
   Error,
   InputNumber,
   SelectMui,
-  TBodyLoading,
   LoadingWrapper,
 } from "./styles";
 import { ColumnType, FooterTableProps, TableHeaderProps, TableProps, TableRowProps } from "../../../types/table";
@@ -73,9 +72,30 @@ const TableRow = <T extends ColumnType>({ row, columns, index, onClickRow, selec
   );
 };
 
-const TableBody = <T extends ColumnType>({ data, columns, onClickRow, selected, selectedProps }: TableProps<T>) => {
+const TableBody = <T extends ColumnType>({
+  data,
+  columns,
+  onClickRow,
+  selected,
+  selectedProps,
+  loading,
+  initialized,
+}: TableProps<T>) => {
   return (
     <TBody>
+      {loading && initialized && (
+        <LoadingWrapper
+          bgcolor={"#0000000d"}
+          width={"100%"}
+          height={"100%"}
+          zIndex={1000}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <CircularProgress />
+        </LoadingWrapper>
+      )}
       {data &&
         data.map((row, index) => (
           <TableRow
@@ -91,13 +111,13 @@ const TableBody = <T extends ColumnType>({ data, columns, onClickRow, selected, 
   );
 };
 
-const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
+const TableSekeleton = () => {
   return (
-    <TBodyLoading style={{ height: 150, position: "relative" }}>
-      <LoadingWrapper py={5} textAlign="center" position={"absolute"} left={"50%"}>
+    <Empty height={218}>
+      <LoadingWrapper>
         <CircularProgress />
       </LoadingWrapper>
-    </TBodyLoading>
+    </Empty>
   );
 };
 
@@ -181,18 +201,17 @@ const Table: React.FC<TableProps> = ({
       <Wrapper>
         <TableFullWidth>
           <TableHeader columns={columns} />
-          {loading ? (
-            <TableSekeleton columns={columns} />
-          ) : (
-            <TableBody
-              columns={columns}
-              data={data}
-              onClickRow={onClickRow}
-              selected={selected}
-              selectedProps={selectedProps}
-            />
-          )}
+          <TableBody
+            columns={columns}
+            data={data}
+            onClickRow={onClickRow}
+            selected={selected}
+            selectedProps={selectedProps}
+            initialized={initialized}
+            loading={loading}
+          />
         </TableFullWidth>
+        {loading && !initialized && <TableSekeleton />}
         {!loading && ((initialized && data?.length === 0) || (error && error !== true)) && (
           <EmptyRecord className={emptyClassName} />
         )}

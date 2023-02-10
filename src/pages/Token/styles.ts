@@ -11,7 +11,7 @@ export const AssetName = styled(Link)`
 `;
 
 export const Logo = styled("img")`
-  width: 'auto';
+  width: auto;
   height: 36px;
 `;
 export const LogoEmpty = styled(Box)`
