@@ -63,7 +63,15 @@ export const TCol = styled("td")<{ width?: number | string; minWidth?: number | 
   color: ${props => props.theme.textColor};
   padding: 24px 20px;
 `;
-export const TBody = styled("tbody")``;
+export const TBody = styled("tbody")`
+  position: relative;
+`;
+export const LoadingWrapper = styled(Box)`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+`;
 
 export const TFooter = styled(Box)`
   display: flex;

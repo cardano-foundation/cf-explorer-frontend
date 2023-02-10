@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Skeleton, Box, Pagination, PaginationRenderItemParams, IconButton, MenuItem, styled } from "@mui/material";
+import {
+  Skeleton,
+  Box,
+  Pagination,
+  PaginationRenderItemParams,
+  IconButton,
+  MenuItem,
+  styled,
+  CircularProgress,
+} from "@mui/material";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
 import { EmptyIcon } from "../../../commons/resources";
 import { ReactComponent as StartPage } from "../../../commons/resources/icons/startPagePagination.svg";
@@ -23,6 +32,7 @@ import {
   Error,
   InputNumber,
   SelectMui,
+  LoadingWrapper,
 } from "./styles";
 import { ColumnType, FooterTableProps, TableHeaderProps, TableProps, TableRowProps } from "../../../types/table";
 import { useUpdateEffect } from "react-use";
@@ -62,9 +72,30 @@ const TableRow = <T extends ColumnType>({ row, columns, index, onClickRow, selec
   );
 };
 
-const TableBody = <T extends ColumnType>({ data, columns, onClickRow, selected, selectedProps }: TableProps<T>) => {
+const TableBody = <T extends ColumnType>({
+  data,
+  columns,
+  onClickRow,
+  selected,
+  selectedProps,
+  loading,
+  initialized,
+}: TableProps<T>) => {
   return (
     <TBody>
+      {loading && initialized && (
+        <LoadingWrapper
+          bgcolor={"#0000000d"}
+          width={"100%"}
+          height={"100%"}
+          zIndex={1000}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <CircularProgress />
+        </LoadingWrapper>
+      )}
       {data &&
         data.map((row, index) => (
           <TableRow
@@ -80,23 +111,13 @@ const TableBody = <T extends ColumnType>({ data, columns, onClickRow, selected, 
   );
 };
 
-const TableSekeleton = <T extends ColumnType>({ columns }: TableProps<T>) => {
+const TableSekeleton = () => {
   return (
-    <TBody>
-      {[...Array(10)].map((_, i) => {
-        return (
-          <TRow key={i}>
-            {columns.map(({ minWidth }, idx) => {
-              return (
-                <td key={idx} style={{ minWidth: minWidth || "unset" }}>
-                  <Skeleton variant="rectangular" style={{ height: "75px" }} animation="wave" />
-                </td>
-              );
-            })}
-          </TRow>
-        );
-      })}
-    </TBody>
+    <Empty height={218}>
+      <LoadingWrapper>
+        <CircularProgress />
+      </LoadingWrapper>
+    </Empty>
   );
 };
 
@@ -180,18 +201,17 @@ const Table: React.FC<TableProps> = ({
       <Wrapper>
         <TableFullWidth>
           <TableHeader columns={columns} />
-          {loading ? (
-            <TableSekeleton columns={columns} />
-          ) : (
-            <TableBody
-              columns={columns}
-              data={data}
-              onClickRow={onClickRow}
-              selected={selected}
-              selectedProps={selectedProps}
-            />
-          )}
+          <TableBody
+            columns={columns}
+            data={data}
+            onClickRow={onClickRow}
+            selected={selected}
+            selectedProps={selectedProps}
+            initialized={initialized}
+            loading={loading}
+          />
         </TableFullWidth>
+        {loading && !initialized && <TableSekeleton />}
         {!loading && ((initialized && data?.length === 0) || (error && error !== true)) && (
           <EmptyRecord className={emptyClassName} />
         )}

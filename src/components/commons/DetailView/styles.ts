@@ -106,7 +106,7 @@ export const TokenName = styled("h4")`
 
 export const TokenIcon = styled("img")`
   width: auto;
-  height: 45px;
+  height: 36px;
 `;
 
 export const MetaData = styled("small")`
