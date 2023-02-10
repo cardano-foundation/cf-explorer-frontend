@@ -10,13 +10,15 @@ import ConnectWalletModal from "../../../ConnectWalletModal";
 import RegisterUsernameModal from "../RegisterUsernameModal";
 import { Image, Span, Spin, StyledButton } from "./styles";
 import BigNumber from "bignumber.js";
-import { getNonce, signIn } from "../../../../../commons/utils/userRequest";
-import { NETWORK, NETWORKS } from "../../../../../commons/utils/constants";
+import { getAllBookmarks, getNonce, signIn } from "../../../../../commons/utils/userRequest";
+import { NETWORK, NETWORKS, NETWORK_TYPES } from "../../../../../commons/utils/constants";
 import { useHistory } from "react-router-dom";
 import { routers } from "../../../../../commons/routers";
 import SignMessageModal from "../SignMessageModal";
 import SyncBookmarkModal from "../SyncBookmarkModal";
 import { useLocalStorage } from "react-use";
+import useFetch from "../../../../../commons/hooks/useFetch";
+import { BookMark } from "../../../../../types/bookmark";
 interface Props {}
 
 const ConnectWallet: React.FC<Props> = () => {
@@ -26,6 +28,8 @@ const ConnectWallet: React.FC<Props> = () => {
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
+  const [, setBookmark] = useLocalStorage<BookMark[]>("bookmark", []);
+
   const [submitting, setSubmitting] = useState(false);
 
   const handleClick = () => {
@@ -61,6 +65,11 @@ const ConnectWallet: React.FC<Props> = () => {
       localStorage.setItem("email", data.email);
       if ((((JSON.parse(localStorage?.bookmark) as BookMark[]) || [])?.filter(r => !r.id) || []).length > 0) {
         setOpenSyncBookmark(true);
+      } else {
+        const { data } = await getAllBookmarks(NETWORK_TYPES[NETWORK]);
+        if (data) {
+          setBookmark(data);
+        }
       }
     } catch (error) {
     } finally {

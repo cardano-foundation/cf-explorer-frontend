@@ -22,6 +22,8 @@ import Toast from "../../components/commons/Toast";
 import { getShortHash, getShortWallet } from "../../commons/utils/helper";
 import { useLocalStorage } from "react-use";
 import { deleteBookmark } from "../../commons/utils/userRequest";
+import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
+import { BookMark } from "../../types/bookmark";
 
 const Bookmark = () => {
   const [bookmarks, setBookmarks] = useLocalStorage<BookMark[]>("bookmark", []);
@@ -39,9 +41,15 @@ const Bookmark = () => {
 
     setMessage("");
   };
+
   const { data, loading, refesh, currentPage, error, total } = useFetchList<Bookmark>(
     "/bookmark/find-all",
-    { type: activeTab, page: page - 1, size },
+    {
+      type: activeTab,
+      page: page - 1,
+      size,
+      network: NETWORK_TYPES[NETWORK],
+    },
     true
   );
 
