@@ -135,7 +135,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
                     <Box
                       component={"img"}
                       width={"auto"}
-                      height={40}
+                      height={36}
                       src={`data:image/png;base64,${data.metadata.logo}`}
                       alt="logo icon"
                       ml={1}
