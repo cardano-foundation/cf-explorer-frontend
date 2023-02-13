@@ -195,7 +195,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
             <Item>
               <Icon src={CubeIcon} alt="socket" />
               <ItemName>Block</ItemName>
-              <ItemValue>{data.tx.epochNo}</ItemValue>
+              <ItemValue>{data.tx.blockNo}</ItemValue>
             </Item>
             <Item>
               <Icon src={RocketIcon} alt="socket" />

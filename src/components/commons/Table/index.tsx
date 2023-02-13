@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Skeleton,
   Box,
   Pagination,
   PaginationRenderItemParams,
@@ -36,6 +35,7 @@ import {
 } from "./styles";
 import { ColumnType, FooterTableProps, TableHeaderProps, TableProps, TableRowProps } from "../../../types/table";
 import { useUpdateEffect } from "react-use";
+import { useParams } from "react-router-dom";
 
 type TEmptyRecord = {
   className?: string;
@@ -121,9 +121,14 @@ const TableSekeleton = () => {
   );
 };
 
-const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
+const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading }) => {
   const [page, setPage] = useState(pagination?.page || 1);
   const [size, setSize] = useState(pagination?.size || 10);
+  const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
+
+  useUpdateEffect(() => {
+    setPage(1);
+  }, [poolType]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
     pagination && pagination.onChange && pagination.onChange(page, size);
@@ -173,6 +178,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination }) => {
           page={page}
           size={size}
           handleChangePage={handleChangePage}
+          loading={loading}
         />
       ) : (
         ""
@@ -217,7 +223,7 @@ const Table: React.FC<TableProps> = ({
         )}
         {error && error !== true && <Error>{error || "Something went wrong!"}</Error>}
       </Wrapper>
-      <FooterTable total={total} pagination={pagination} />
+      <FooterTable total={total} pagination={pagination} loading={loading || false} />
     </Box>
   );
 };
@@ -232,73 +238,81 @@ const PaginationCustom = ({
   page,
   size,
   handleChangePage,
+  loading,
 }: {
   pagination: TableProps["pagination"];
   total: number;
   page: number;
   size: number;
+  loading: boolean;
   handleChangePage: (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => void;
 }) => {
   const [inputPage, setInputPage] = useState(page);
+  const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
+
+  useUpdateEffect(() => {
+    setInputPage(1);
+  }, [poolType]);
 
   useUpdateEffect(() => {
     setInputPage(1);
   }, [size]);
+
   const totalPage = Math.ceil((pagination?.total || 0) / size);
   const renderItem = (item: PaginationRenderItemParams) => {
     if (item.type === "first") {
       return (
         <IconButton
-          disabled={page === 1}
+          disabled={page === 1 || loading}
           onClick={() => {
             handleChangePage(null, 1);
             setInputPage(1);
             pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
           }}
         >
-          <StartPageIcon disabled={page === 1} />
+          <StartPageIcon disabled={page === 1 || loading} />
         </IconButton>
       );
     }
     if (item.type === "last") {
       return (
         <IconButton
-          disabled={page === totalPage}
+          disabled={page === totalPage || loading}
           onClick={() => {
             handleChangePage(null, totalPage || 1);
             setInputPage(totalPage || 1);
             pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
           }}
         >
-          <EndPageIcon disabled={page === totalPage} />
+          <EndPageIcon disabled={page === totalPage || loading} />
         </IconButton>
       );
     }
     if (item.type === "next") {
       return (
         <IconButton
-          disabled={page === totalPage}
+          disabled={page === totalPage || loading}
           onClick={() => {
             setInputPage(page + 1);
             handleChangePage(null, page + 1);
             pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
           }}
         >
-          <NextPageIcon disabled={page === totalPage} />
+          <NextPageIcon disabled={page === totalPage || loading} />
         </IconButton>
       );
     }
     if (item.type === "previous") {
       return (
         <IconButton
-          disabled={page === 1}
+          disabled={page === 1 || loading}
           onClick={() => {
             setInputPage(page - 1);
             handleChangePage(null, page - 1);
             pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
           }}
         >
-          <PrevPageIcon disabled={page === 1} />
+          <PrevPageIcon disabled={page === 1 || loading} />
         </IconButton>
       );
     }
@@ -315,6 +329,7 @@ const PaginationCustom = ({
                   setInputPage(+e.target.value);
                 }
               }}
+              disabled={loading}
               onKeyDown={e => {
                 if (e.key === "Enter") {
                   if (inputPage < 1) {
