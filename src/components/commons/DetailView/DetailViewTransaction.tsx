@@ -49,13 +49,7 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { TbFileCheck } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import {
-  formatADA,
-  formatADAFull,
-  formatDateTimeLocal,
-  getShortHash,
-  getShortWallet,
-} from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
@@ -280,7 +274,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               </DetailLabel>
               <CustomTooltip title={formatADAFull(data.tx.fee || 0)}>
                 <DetailValue>
-                  {formatADA(data.tx.fee) || 0}
+                  {formatADAFull(data.tx.fee) || 0}
                   <ADAToken color="black" />
                 </DetailValue>
               </CustomTooltip>
@@ -292,7 +286,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               </DetailLabel>
               <CustomTooltip title={formatADAFull(data.tx.totalOutput || 0)}>
                 <DetailValue>
-                  {formatADA(data.tx.totalOutput) || 0}
+                  {formatADAFull(data.tx.totalOutput) || 0}
                   <ADAToken color="black" />
                 </DetailValue>
               </CustomTooltip>

@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
 import useFetchList from "../../../../commons/hooks/useFetchList";
-import { formatADA, formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
 import Table, { Column } from "../../../commons/Table";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { details } from "../../../../commons/routers";
@@ -47,7 +47,7 @@ const columns: Column<Instantaneous>[] = [
     render: r => (
       <>
         <CustomTooltip title={formatADAFull(r.amount)}>
-          <Box component={"span"}> {formatADA(r.amount)}</Box>
+          <Box component={"span"}> {formatADAFull(r.amount)}</Box>
         </CustomTooltip>
         <ADAToken />
       </>

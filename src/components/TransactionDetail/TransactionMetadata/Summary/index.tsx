@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
-import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
 import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
@@ -59,7 +59,7 @@ const SummaryItems = ({
                   fontWeight="bold"
                   mr={1}
                 >
-                  {type === "down" ? `-${formatADA(item.value)}` : `+${formatADA(item.value)}`}
+                  {type === "down" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
                 </Box>
                 <img src={AIcon} alt="ADA icon" />
               </Box>

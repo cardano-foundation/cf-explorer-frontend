@@ -7,7 +7,7 @@ import { useWindowSize } from "react-use";
 import { Column } from "../../types/table";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { details } from "../../commons/routers";
-import { formatADA, formatADAFull, getPageInfo, getShortHash } from "../../commons/utils/helper";
+import { formatADAFull, getPageInfo, getShortHash } from "../../commons/utils/helper";
 import { Box } from "@mui/material";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { AIcon } from "../../commons/resources";
@@ -59,7 +59,7 @@ const BlockList = () => {
       render: r => (
         <CustomTooltip title={formatADAFull(r.totalFees)}>
           <PriceWrapper>
-            {formatADA(r.totalFees) || 0}
+            {formatADAFull(r.totalFees) || 0}
             <img src={AIcon} alt="ADA Icon" />
           </PriceWrapper>
         </CustomTooltip>
@@ -72,7 +72,7 @@ const BlockList = () => {
       render: r => (
         <CustomTooltip title={formatADAFull(r.totalOutput)}>
           <PriceWrapper>
-            {formatADA(r.totalOutput) || 0}
+            {formatADAFull(r.totalOutput) || 0}
             <img src={AIcon} alt="ADA Icon" />
             {block === (r.blockNo || r.hash) && (
               <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>

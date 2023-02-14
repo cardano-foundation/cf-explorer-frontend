@@ -8,7 +8,7 @@ import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
 import { Box } from "@mui/material";
 import { TitleCard } from "./styles";
-import { formatADA, formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
 import { ADAToken } from "../../commons/Token";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -51,7 +51,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       value: (
         <CustomTooltip title={formatADAFull(data?.totalFees || 0)}>
           <Box component={"span"}>
-            {formatADA(data?.totalFees || 0)} <ADAToken />
+            {formatADAFull(data?.totalFees || 0)} <ADAToken />
           </Box>
         </CustomTooltip>
       ),
@@ -67,7 +67,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       value: (
         <CustomTooltip title={formatADAFull(data?.totalOutput || 0)}>
           <Box component={"span"}>
-            {formatADA(data?.totalOutput || 0)} <ADAToken />
+            {formatADAFull(data?.totalOutput || 0)} <ADAToken />
           </Box>
         </CustomTooltip>
       ),

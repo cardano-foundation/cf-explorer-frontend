@@ -1,7 +1,7 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { parse, stringify } from "qs";
 import Table, { Column } from "../../commons/Table";
-import { formatADA, formatADAFull, formatPercent, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
+import { formatADAFull, formatPercent, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 import { HeaderSearchIcon } from "../../../commons/resources";
@@ -34,7 +34,7 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     minWidth: "120px",
     render: r => (
       <CustomTooltip title={formatADAFull(r.poolSize)}>
-        <Box component={"span"}>{formatADA(r.poolSize)}</Box>
+        <Box component={"span"}>{formatADAFull(r.poolSize)}</Box>
       </CustomTooltip>
     ),
   },
@@ -48,7 +48,7 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     title: "Fee (A) ",
     key: "fee",
     minWidth: "120px",
-    render: r => `${formatPercent(r.feePercent)} (${formatADA(r.feeAmount)} A)`,
+    render: r => `${formatPercent(r.feePercent)} (${formatADAFull(r.feeAmount)} A)`,
   },
   {
     title: "Declared Pledge (A)",
@@ -56,7 +56,7 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     minWidth: "120px",
     render: r => (
       <CustomTooltip title={formatADAFull(r.pledge)}>
-        <Box component={"span"}>{formatADA(r.pledge)}</Box>
+        <Box component={"span"}>{formatADAFull(r.pledge)}</Box>
       </CustomTooltip>
     ),
   },

@@ -6,7 +6,7 @@ import Card from "../commons/Card";
 import styles from "./index.module.scss";
 import highestIcon from "../../commons/resources/images/highestIcon.png";
 import lowestIcon from "../../commons/resources/images/lowestIcon.png";
-import { formatADA, formatPrice, numberWithCommas } from "../../commons/utils/helper";
+import { formatADAFull, formatPrice, numberWithCommas } from "../../commons/utils/helper";
 import {
   BoxInfo,
   BoxInfoItem,
@@ -107,7 +107,7 @@ const WalletAddressChart: React.FC<WalletAddressChartProps> = ({
                   <Title>Highest Balance</Title>
                   <ValueInfo>
                     {maxBalanceLoading && <SkeletonUI variant="rectangular" />}
-                    {!maxBalanceLoading && formatADA(maxBalance || 0)}
+                    {!maxBalanceLoading && formatADAFull(maxBalance || 0)}
                   </ValueInfo>
                 </Box>
               </BoxInfoItemRight>
@@ -119,7 +119,7 @@ const WalletAddressChart: React.FC<WalletAddressChartProps> = ({
                   <Title>Lowest Balance</Title>
                   <ValueInfo>
                     {minBalanceLoading && <SkeletonUI variant="rectangular" />}
-                    {!minBalanceLoading && formatADA(minBalance || 0)}
+                    {!minBalanceLoading && formatADAFull(minBalance || 0)}
                   </ValueInfo>
                 </Box>
               </BoxInfoItem>
@@ -140,7 +140,7 @@ const Chart = ({ data }: { data: WalletAddressChartProps["data"] }) => {
 
   useEffect(() => {
     if (data) {
-      setData(data.map(i => +formatADA(i.value || 0).replace(",", "")));
+      setData(data.map(i => +formatADAFull(i.value || 0).replace(",", "")));
       setCategories(data.map(i => moment(i.date).format("DD MMM")));
     }
   }, [data]);

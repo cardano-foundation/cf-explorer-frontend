@@ -128,13 +128,9 @@ export const exchangeADAToUSD = (value: number | string, rate: number) => {
   return formatADA(exchangedValue);
 };
 
-export const formatADAFull = (
-  value?: string | number,
-  abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS
-): string => {
-  if (!value) return `0${abbreviations[0]}`;
-  const realAda = new BigNumber(value).div(10 ** 6);
-  return numberWithCommas(realAda.toString() || "0");
+export const formatADAFull = (value?: string | number): string => {
+  if (!value) return `0`;
+  return numberWithCommas(new BigNumber(value).div(10 ** 6).toString() || "0");
 };
 
 export const removeAuthInfo = () => {

@@ -10,7 +10,7 @@ import slotIcon from "../../../commons/resources/icons/slot.svg";
 import { TitleCard } from "../../BlockDetail/BlockOverview/styles";
 import { Box } from "@mui/material";
 import { ADAToken } from "../../commons/Token";
-import { formatADA, formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 interface EpochOverviewProps {
   data: IDataEpoch | null;
@@ -56,7 +56,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       value: (
         <CustomTooltip title={formatADAFull(data?.outSum || 0)}>
           <Box component={"span"}>
-            {formatADA(data?.outSum || 0)} <ADAToken />
+            {formatADAFull(data?.outSum || 0)} <ADAToken />
           </Box>
         </CustomTooltip>
       ),

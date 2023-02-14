@@ -37,7 +37,7 @@ import {
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatADA, formatADAFull } from "../../../commons/utils/helper";
+import { formatADAFull } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import { ADAToken } from "../Token";
@@ -163,7 +163,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </DetailLabel>
               <CustomTooltip title={formatADAFull(data.rewardAvailable || 0)}>
                 <DetailValue>
-                  {formatADA(data.rewardAvailable) || 0}
+                  {formatADAFull(data.rewardAvailable) || 0}
                   <ADAToken color="black" />
                 </DetailValue>
               </CustomTooltip>
@@ -175,7 +175,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </DetailLabel>
               <CustomTooltip title={formatADAFull(data.rewardWithdrawn || 0)}>
                 <DetailValue>
-                  {formatADA(data.rewardWithdrawn) || 0}
+                  {formatADAFull(data.rewardWithdrawn) || 0}
                   <ADAToken color="black" />
                 </DetailValue>
               </CustomTooltip>
@@ -200,7 +200,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </DetailLabel>
               <CustomTooltip title={formatADAFull(data.totalStake || 0)}>
                 <DetailValue>
-                  {formatADA(data.totalStake) || 0}
+                  {formatADAFull(data.totalStake) || 0}
                   <ADAToken color="black" />
                 </DetailValue>
               </CustomTooltip>

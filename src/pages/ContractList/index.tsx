@@ -6,7 +6,6 @@ import { stringify } from "qs";
 import { Box } from "@mui/material";
 import {
   exchangeADAToUSD,
-  formatADA,
   formatADAFull,
   getPageInfo,
   getShortWallet,
@@ -61,7 +60,7 @@ const Transactions: React.FC = () => {
       render: r => (
         <CustomTooltip title={formatADAFull(r.balance)}>
           <Box display="inline-flex" alignItems="center">
-            <Box mr={1}>{formatADA(r.balance) || 0}</Box>
+            <Box mr={1}>{formatADAFull(r.balance) || 0}</Box>
             <img src={AIcon} alt="a icon" />
           </Box>
         </CustomTooltip>
