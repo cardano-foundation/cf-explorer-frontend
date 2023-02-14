@@ -147,6 +147,22 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
     },
     {
+      icon: txConfirm,
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <TitleCard mr={1}>Total Output</TitleCard>
+          <img src={infoIcon} alt="info icon" width={18} />
+        </Box>
+      ),
+      value: (
+        <CustomTooltip title={formatADAFull(data?.tx?.totalOutput || 0)}>
+          <Box component={"span"}>
+            {formatADA(data?.tx?.totalOutput || 0)} <ADAToken />{" "}
+          </Box>
+        </CustomTooltip>
+      ),
+    },
+    {
       icon: exchageAltIcon,
       title: (
         <Box display={"flex"} alignItems="center">
@@ -196,7 +212,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   ];
   return (
     <DetailHeader
-      listItem={listOverview}
+      listTrxOverview={listOverview}
       data={
         data && {
           type: "transaction",
