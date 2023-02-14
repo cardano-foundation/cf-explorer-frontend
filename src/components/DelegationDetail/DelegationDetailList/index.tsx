@@ -3,7 +3,6 @@ import { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { details } from "../../../commons/routers";
 import {
-  formatADA,
   formatADAFull,
   formatDateTimeLocal,
   formatPercent,
@@ -53,7 +52,7 @@ const DelegationEpochList = ({
 
       render: data => (
         <CustomTooltip title={formatADAFull(data.stakeAmount)}>
-          <Box component={"span"}>{formatADA(data.stakeAmount)}</Box>
+          <Box component={"span"}>{formatADAFull(data.stakeAmount)}</Box>
         </CustomTooltip>
       ),
     },
@@ -63,7 +62,7 @@ const DelegationEpochList = ({
       minWidth: "120px",
       render: data => (
         <CustomTooltip title={formatADAFull(data.delegators)}>
-          <Box component={"span"}>{formatADA(data.delegators)}</Box>
+          <Box component={"span"}>{formatADAFull(data.delegators)}</Box>
         </CustomTooltip>
       ),
     },
@@ -74,7 +73,7 @@ const DelegationEpochList = ({
 
       render: data => (
         <CustomTooltip title={formatADAFull(data.fee)}>
-          <Box component={"span"}>{formatADA(data.fee)}</Box>
+          <Box component={"span"}>{formatADAFull(data.fee)}</Box>
         </CustomTooltip>
       ),
     },
@@ -150,7 +149,7 @@ const DelegationStakingDelegatorsList = ({
       minWidth: "120px",
       render: data => (
         <CustomTooltip title={formatADAFull(data.totalStake)}>
-          <Box component={"span"}>{formatADA(data.totalStake || 0)}</Box>
+          <Box component={"span"}>{formatADAFull(data.totalStake || 0)}</Box>
         </CustomTooltip>
       ),
     },
@@ -166,7 +165,7 @@ const DelegationStakingDelegatorsList = ({
       minWidth: "120px",
       render: data => (
         <CustomTooltip title={formatADAFull(data.fee)}>
-          <Box component={"span"}>{formatADA(data.fee || 0)}</Box>
+          <Box component={"span"}>{formatADAFull(data.fee || 0)}</Box>
         </CustomTooltip>
       ),
     },

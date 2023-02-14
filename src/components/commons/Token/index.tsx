@@ -23,8 +23,3 @@ export const ADAToken: React.FC<StyledComponentProps & TokenProps> = props => {
     </Box>
   );
 };
-const Token = () => {
-  return <div>hihi</div>;
-};
-
-export default Token;

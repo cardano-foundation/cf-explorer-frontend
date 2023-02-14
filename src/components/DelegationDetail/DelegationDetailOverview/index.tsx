@@ -1,7 +1,7 @@
 import { Box, Grid, Skeleton } from "@mui/material";
 import React from "react";
 
-import { formatADA, formatPercent, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADAFull, formatPercent, numberWithCommas } from "../../../commons/utils/helper";
 
 import { Item, StyledContainer, Title, Value } from "./styles";
 
@@ -15,8 +15,8 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
     Reward: data?.reward ? `${data.reward}%` : "0%",
     Fee: data?.margin ? formatPercent(data.margin) : "0%",
     ROS: data?.ros ? formatPercent(data.ros) : "0%",
-    "Pledge(A)": formatADA(data?.pledge) || 0,
-    "Cost(A)": formatADA(data?.cost) || 0,
+    "Pledge(A)": formatADAFull(data?.pledge) || 0,
+    "Cost(A)": formatADAFull(data?.cost) || 0,
     "Epoch Block": data?.epochBlock || 0,
     "Lifetime Block": numberWithCommas(data?.lifetimeBlock || 0),
   };

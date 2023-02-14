@@ -1,4 +1,4 @@
-import { Box, IconButton, Skeleton } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import React, { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link } from "react-router-dom";
@@ -14,7 +14,7 @@ import {
   UserIcon,
 } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
-import { formatADA, formatDateTimeLocal, formatPercent, getShortWallet } from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatPercent, getShortWallet } from "../../../commons/utils/helper";
 import BookmarkButton from "../../commons/BookmarkIcon";
 import CopyButton from "../../commons/CopyButton";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -223,7 +223,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoTitle>
             <InfoValue>
               <FlexGap10>
-                {formatADA(data?.poolSize)}
+                {formatADAFull(data?.poolSize)}
                 <img src={AIcon} alt={"ADA Icon"} />
               </FlexGap10>
             </InfoValue>
@@ -237,7 +237,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoTitle>
             <InfoValue>
               <FlexGap10>
-                {formatADA(data?.stakeLimit)}
+                {formatADAFull(data?.stakeLimit)}
                 <img src={AIcon} alt={"ADA Icon"} />
               </FlexGap10>
             </InfoValue>
