@@ -65,14 +65,16 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <Box display="flex" alignItems="center" justifyContent="space-between" pr={2}>
+        <Box>
           <StyledFlexValue>
             <CustomTooltip title={formatADAFull(data?.totalStake || 0)}>
               <Box component={"span"}>{formatADAFull(data?.totalStake || 0)}</Box>
             </CustomTooltip>
             <ADAToken />
           </StyledFlexValue>
-          <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>
+          <Box textAlign={"right"} pr={2}>
+            <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>
+          </Box>
         </Box>
       ),
     },
