@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import { details, routers } from "../../../commons/routers";
-import { formatADA, formatADAFull, formatPercent } from "../../../commons/utils/helper";
+import { formatADAFull, formatPercent } from "../../../commons/utils/helper";
 import ViewAllButton from "../../commons/ViewAllButton";
 import { Column } from "../../commons/Table";
 import {
@@ -43,7 +43,7 @@ const TopDelegationPools: React.FC<Props> = () => {
     {
       title: "Pool size (A)",
       key: "size",
-      render: r => formatADA(r.poolSize / 10 ** 6),
+      render: r => formatADAFull(r.poolSize / 10 ** 6),
     },
     {
       title: "Reward",
@@ -56,7 +56,7 @@ const TopDelegationPools: React.FC<Props> = () => {
       render: r => (
         <CustomTooltip title={`${r.feePercent * 100 || 0}% (${formatADAFull(r.feeAmount)} A)`}>
           <Box display="inline-block">
-            {formatPercent(r.feePercent || 0)} ({formatADA(r.feeAmount)} A)
+            {formatPercent(r.feePercent || 0)} ({formatADAFull(r.feeAmount)} A)
           </Box>
         </CustomTooltip>
       ),
@@ -66,7 +66,7 @@ const TopDelegationPools: React.FC<Props> = () => {
       key: "declaredPledge",
       render: r => (
         <CustomTooltip title={formatADAFull(r.pledge)}>
-          <Box display="inline-block">{formatADA(r.pledge)}</Box>
+          <Box display="inline-block">{formatADAFull(r.pledge)}</Box>
         </CustomTooltip>
       ),
     },

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Grid, Box, Autocomplete } from "@mui/material";
 import {
   exchangeADAToUSD,
-  formatADA,
+  formatADAFull,
   formatPrice,
   getShortWallet,
   numberWithCommas,
@@ -107,7 +107,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       value: (
         <CustomTooltip title={numberWithCommas(new BigNumber(dataStake?.totalStake || 0).div(10 ** 6).toString())}>
           <Box>
-            {formatADA(dataStake?.totalStake || 0)}
+            {formatADAFull(dataStake?.totalStake || 0)}
             <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
           </Box>
         </CustomTooltip>
@@ -131,7 +131,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       value: (
         <CustomTooltip title={numberWithCommas(new BigNumber(dataStake?.rewardAvailable || 0).div(10 ** 6).toString())}>
           <Box>
-            {formatADA(dataStake?.rewardAvailable || 0)}
+            {formatADAFull(dataStake?.rewardAvailable || 0)}
             <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
           </Box>
         </CustomTooltip>

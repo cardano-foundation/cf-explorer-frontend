@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import {
-  formatADA,
+  formatADAFull,
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
@@ -112,7 +112,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       render: r => (
         <CustomTooltip title={numberWithCommas(new BigNumber(r.fee).div(10 ** 6).toString())}>
           <Box display="inline-flex" alignItems="center">
-            <Box mr={1}>{formatADA(r.fee) || 0}</Box>
+            <Box mr={1}>{formatADAFull(r.fee) || 0}</Box>
             <img src={AIcon} alt="a icon" />
           </Box>
         </CustomTooltip>
@@ -125,7 +125,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       render: r => (
         <CustomTooltip title={numberWithCommas(new BigNumber(r.totalOutput).div(10 ** 6).toString())}>
           <Box display="inline-flex" alignItems="center">
-            <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
+            <Box mr={1}>{formatADAFull(r.totalOutput) || 0}</Box>
             <img src={AIcon} alt="a icon" />
           </Box>
         </CustomTooltip>

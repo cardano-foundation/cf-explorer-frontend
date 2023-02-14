@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import Card from "../../commons/Card";
 import Table, { Column } from "../../commons/Table";
-import { formatADA, formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
 import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer } from "./styles";
@@ -78,7 +78,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       render: r => (
         <CustomTooltip title={formatADAFull(r.totalOutput)}>
           <StyledOutput>
-            <StyledColorBlueDard>{formatADA(r.totalOutput) || 0}</StyledColorBlueDard>
+            <StyledColorBlueDard>{formatADAFull(r.totalOutput) || 0}</StyledColorBlueDard>
             <img src={AIcon} alt="ADA Icon" />
           </StyledOutput>
         </CustomTooltip>

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Box, IconButton, Skeleton } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { routers } from "../../../commons/routers";
-import { formatADA, formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
@@ -10,7 +10,6 @@ import infoIcon from "../../../commons/resources/icons/info.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
 import exchageIcon from "../../../commons/resources/icons/Union.svg";
 import decimalIcon from "../../../commons/resources/icons/decimal.svg";
-import { ReactComponent as Bookmark } from "../../../commons/resources/icons/Bookmark.svg";
 import {
   BackButton,
   BackText,
@@ -43,7 +42,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: "Total Supply",
       value: (
         <CustomTooltip title={numberWithCommas(data?.supply || 0)}>
-          <Box component={"span"}>{formatADA(data?.supply ? data.supply * 1000000 : 0)}</Box>
+          <Box component={"span"}>{formatADAFull(data?.supply ? data.supply * 1000000 : 0)}</Box>
         </CustomTooltip>
       ),
       icon: slotIcon,

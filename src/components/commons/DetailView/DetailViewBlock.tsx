@@ -37,19 +37,12 @@ import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import {
-  formatADA,
-  formatADAFull,
-  formatDateTimeLocal,
-  getShortHash,
-  getShortWallet,
-} from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
-import { Box } from "@mui/material";
 import { API } from "../../../commons/utils/api";
 
 type DetailViewBlockProps = {
@@ -202,7 +195,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               </DetailLabel>
               <CustomTooltip title={formatADAFull(data.totalFees || 0)}>
                 <DetailValue>
-                  {formatADA(data.totalFees) || 0}
+                  {formatADAFull(data.totalFees) || 0}
                   <ADAToken color="black" />
                 </DetailValue>
               </CustomTooltip>
@@ -214,7 +207,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               </DetailLabel>
               <CustomTooltip title={formatADAFull(data.totalOutput || 0)}>
                 <DetailValue>
-                  {formatADA(data.totalOutput) || 0}
+                  {formatADAFull(data.totalOutput) || 0}
                   <ADAToken color="black" />
                 </DetailValue>
               </CustomTooltip>

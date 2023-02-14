@@ -20,7 +20,7 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import Card from "../../commons/Card";
-import { formatADA, formatADAFull, formatPrice, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADAFull, formatPrice } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { BigNumber } from "bignumber.js";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -138,7 +138,7 @@ const AddressAnalytics: React.FC = () => {
                   <Title>Highest Balance</Title>
                   <CustomTooltip title={formatADAFull(maxBalance || 0)} placement="bottom">
                     <ValueInfo>
-                      {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADA(maxBalance || 0)}
+                      {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance || 0)}
                     </ValueInfo>
                   </CustomTooltip>
                 </Box>
@@ -151,7 +151,7 @@ const AddressAnalytics: React.FC = () => {
                   <Title>Lowest Balance</Title>
                   <CustomTooltip title={formatADAFull(minBalance || 0)} placement="bottom">
                     <ValueInfo>
-                      {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADA(minBalance || 0)}
+                      {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance || 0)}
                     </ValueInfo>
                   </CustomTooltip>
                 </Box>

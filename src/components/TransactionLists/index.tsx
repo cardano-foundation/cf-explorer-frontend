@@ -3,7 +3,7 @@ import { stringify } from "qs";
 import { Box } from "@mui/material";
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { formatADA, formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../../commons/utils/helper";
+import { formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
@@ -73,7 +73,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       render: r => (
         <CustomTooltip title={formatADAFull(r.fee)}>
           <Box display="inline-flex" alignItems="center">
-            <Box mr={1}>{formatADA(r.fee) || 0}</Box>
+            <Box mr={1}>{formatADAFull(r.fee) || 0}</Box>
             <img src={AIcon} alt="a icon" />
           </Box>
         </CustomTooltip>
@@ -86,7 +86,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       render: r => (
         <CustomTooltip title={formatADAFull(r.totalOutput)}>
           <Box display="inline-flex" alignItems="center">
-            <Box mr={1}>{formatADA(r.totalOutput) || 0}</Box>
+            <Box mr={1}>{formatADAFull(r.totalOutput) || 0}</Box>
             <img src={AIcon} alt="a icon" />
             {hash === r.hash && (
               <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
