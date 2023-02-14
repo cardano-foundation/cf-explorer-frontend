@@ -219,7 +219,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 </DetailValue>
               </CustomTooltip>
             </DetailsInfoItem>
-            <DetailsInfoItem>
+            {/* <DetailsInfoItem>
               <DetailLabel>
                 <InfoIcon />
                 Slot leader
@@ -230,7 +230,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 </CustomTooltip>
                 <CopyButton text={data.slotLeader} />
               </DetailValue>
-            </DetailsInfoItem>
+            </DetailsInfoItem> */}
           </Group>
           <Group>
             <DetailLink to={details.block(blockNo)}>
