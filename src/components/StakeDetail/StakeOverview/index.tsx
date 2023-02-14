@@ -72,7 +72,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
             </CustomTooltip>
             <ADAToken />
           </StyledFlexValue>
-          <Box textAlign={"right"} pr={2}>
+          <Box>
             <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>
           </Box>
         </Box>
