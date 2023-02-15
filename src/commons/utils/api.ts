@@ -1,5 +1,3 @@
-import { COINGECKO_URL } from "./constants";
-
 export const API = {
   ADDRESS: {
     ANALYTICS: "address/analytics",
@@ -41,10 +39,11 @@ export const API = {
     TOP_DELEGATOR: "stake/top-delegators",
     REGISTRATION: "stake/registration",
   },
+  MARKETS: "markets",
 };
 
-export const EXTEN_API = {
-  COINGECKO: {
-    PRICE: `${COINGECKO_URL}coins/markets`,
-  },
+export const USER_API = {
+  ACTIVITY_LOG: "user/activities-log",
+  INFO: "user/info",
+  BOOKMARK: "find-all-key",
 };
