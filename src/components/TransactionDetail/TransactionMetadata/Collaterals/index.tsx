@@ -2,7 +2,7 @@ import { Box, styled } from "@mui/material";
 
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
-import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADAFull, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import { AIcon } from "../../../../commons/resources";
 import { details } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
@@ -55,7 +55,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
             <Box display={"flex"} alignItems={"center"}>
               <Box mr={"8px"}>
                 <Box component={"span"} fontWeight="bold" color={props => props.colorGreenLight}>
-                  {type === "up" ? `- ${formatADA(item?.amount)}` : `+ ${formatADA(item?.amount)}`}
+                  {type === "up" ? `- ${formatADAFull(item?.amount)}` : `+ ${formatADAFull(item?.amount)}`}
                 </Box>
               </Box>
               <Box>

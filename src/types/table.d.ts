@@ -56,4 +56,5 @@ export interface TableProps<T extends ColumnType = any> {
 export interface FooterTableProps {
   total: TableProps["total"];
   pagination: TableProps["pagination"];
+  loading: boolean;
 }

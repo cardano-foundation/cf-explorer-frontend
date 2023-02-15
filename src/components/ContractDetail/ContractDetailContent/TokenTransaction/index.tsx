@@ -2,7 +2,6 @@ import React from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
 import {
-  formatADA,
   formatADAFull,
   formatDateTimeLocal,
   getPageInfo,
@@ -98,7 +97,7 @@ const columns: Column<Transactions>[] = [
     render: r => (
       <CustomTooltip title={formatADAFull(r.fee)}>
         <PriceValue>
-          <SmallText>{formatADA(r.fee) || 0}</SmallText>
+          <SmallText>{formatADAFull(r.fee) || 0}</SmallText>
           <PriceIcon src={AIcon} alt="a icon" />
         </PriceValue>
       </CustomTooltip>
@@ -111,7 +110,7 @@ const columns: Column<Transactions>[] = [
     render: r => (
       <CustomTooltip title={formatADAFull(r.totalOutput)}>
         <PriceValue>
-          <SmallText>{formatADA(r.totalOutput) || 0}</SmallText>
+          <SmallText>{formatADAFull(r.totalOutput) || 0}</SmallText>
           <PriceIcon src={AIcon} alt="a icon" />
         </PriceValue>
       </CustomTooltip>

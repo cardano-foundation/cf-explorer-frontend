@@ -4,7 +4,7 @@ import { ButtonClose, ModalContainer } from "./styles";
 import closeIcon from "../../../commons/resources/icons/closeIcon.svg";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import Table, { Column } from "../../commons/Table";
-import { formatADA, formatADAFull, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADAFull, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import { Link, useHistory } from "react-router-dom";
 import { details } from "../../../commons/routers";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -47,7 +47,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
       minWidth: 80,
       render: (r, idx) => (
         <CustomTooltip title={formatADAFull(r.balance)}>
-          <Box component={"span"}>{formatADA(r.balance || 0)}</Box>
+          <Box component={"span"}>{formatADAFull(r.balance || 0)}</Box>
         </CustomTooltip>
       ),
       key: "Balance",

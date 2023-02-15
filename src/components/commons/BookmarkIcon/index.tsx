@@ -9,6 +9,8 @@ import Toast from "../Toast";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { addBookmark, deleteBookmark } from "../../../commons/utils/userRequest";
+import { NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
+import { BookMark } from "../../../types/bookmark";
 
 interface BookmarkButtonProps {
   keyword: string;
@@ -32,7 +34,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
   const updateBookmark = async () => {
     if (!isLogin) {
       if (!bookmark) {
-        setBookmarks([...(bookmarks || []), { keyword: `${keyword}`, type }]);
+        setBookmarks([...(bookmarks || []), { keyword: `${keyword}`, type, network: NETWORK_TYPES[NETWORK] }]);
       } else {
         setBookmarks((bookmarks || []).filter(b => b.keyword !== `${keyword}`));
       }
@@ -46,6 +48,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
             const { data } = await addBookmark({
               keyword,
               type,
+              network: NETWORK_TYPES[NETWORK],
             });
             setBookmarks([...(bookmarks || []), data]);
             setMessage("Successfully!");

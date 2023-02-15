@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import Card from "../../commons/Card";
 import Table, { Column } from "../../commons/Table";
-import { formatADA, formatADAFull, getPageInfo, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
 import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer } from "./styles";
@@ -37,7 +37,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       title: "Block",
       key: "block",
       minWidth: "100px",
-      render: r => <StyledColorBlueDard>{r.blockNo}</StyledColorBlueDard>,
+      render: r => <StyledColorBlueDard>{r.blockNo || getShortHash(r.hash || "")}</StyledColorBlueDard>,
     },
     {
       title: "Slot",
@@ -47,7 +47,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
         <>
           <FakedLink>{r.slotNo}</FakedLink>
           <div>
-            {r.epochNo}/{r.epochSlotNo}
+            {r.epochNo}/{r.epochSlotNo || 0}
           </div>
         </>
       ),
@@ -69,7 +69,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       title: "Transactions",
       key: "blkCount",
       minWidth: "100px",
-      render: r => <StyledColorBlueDard>{r.txCount}</StyledColorBlueDard>,
+      render: r => <StyledColorBlueDard>{r.txCount || 0}</StyledColorBlueDard>,
     },
     {
       title: "Output",
@@ -78,7 +78,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       render: r => (
         <CustomTooltip title={formatADAFull(r.totalOutput)}>
           <StyledOutput>
-            <StyledColorBlueDard>{formatADA(r.totalOutput) || 0}</StyledColorBlueDard>
+            <StyledColorBlueDard>{formatADAFull(r.totalOutput) || 0}</StyledColorBlueDard>
             <img src={AIcon} alt="ADA Icon" />
           </StyledOutput>
         </CustomTooltip>
@@ -98,7 +98,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
             total: fetchData.total,
             onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
           }}
-          onClickRow={(_, r) => history.push(details.block(r.blockNo))}
+          onClickRow={(_, r) => history.push(details.block(r.blockNo || r.hash))}
         />
       </Card>
     </StyledContainer>

@@ -105,8 +105,8 @@ export const TokenName = styled("h4")`
 `;
 
 export const TokenIcon = styled("img")`
-  width: 15px;
-  height: 15px;
+  width: auto;
+  height: 36px;
 `;
 
 export const MetaData = styled("small")`
@@ -380,8 +380,8 @@ export const TokenDetailName = styled("small")`
 `;
 
 export const TokenDetailIcon = styled("img")`
-  width: 20px;
-  height: 20px;
+  width: 'auto';
+  height: 30px;
 `;
 
 export const SeemoreBox = styled(Box)`

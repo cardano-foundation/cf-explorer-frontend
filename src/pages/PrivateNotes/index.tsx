@@ -13,6 +13,7 @@ import { ReactComponent as Expand } from "../../commons/resources/icons/expand.s
 import { ReactComponent as Warning } from "../../commons/resources/icons/warning.svg";
 import { Box } from "@mui/material";
 import { removePrivateNote } from "../../commons/utils/userRequest";
+import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
 
 type TAction = {
   onClick: () => void;
@@ -48,7 +49,7 @@ const PrivateNotes = () => {
 
   const [openModal, setOpenModal] = useState(false);
   const [currentNote, setCurrentNote] = useState<TCurrentNote | undefined>();
-  const { data, total, refesh } = useFetchList("note/find-all", undefined, true);
+  const { data, total, refesh } = useFetchList("note/find-all", { network: NETWORK_TYPES[NETWORK] }, true);
   const { search } = useLocation();
   const pageInfo = getPageInfo(search);
 

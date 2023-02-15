@@ -11,8 +11,9 @@ export const AssetName = styled(Link)`
 `;
 
 export const Logo = styled("img")`
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
 `;
 export const LogoEmpty = styled(Box)`
   width: 30px;

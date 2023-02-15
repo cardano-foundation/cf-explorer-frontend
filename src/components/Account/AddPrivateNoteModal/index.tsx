@@ -1,5 +1,6 @@
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
+import { NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
 import { addPrivateNote, editPrivateNote } from "../../../commons/utils/userRequest";
 import StyledModal from "../../commons/StyledModal";
 import { StyledDarkLoadingButton, StyledHelperText, StyledInput, StyledLabelInput } from "../../share/styled";
@@ -30,7 +31,11 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
     try {
       setLoading(true);
       if (!currentNote) {
-        const payload = { note: privateNote?.value || "", txHash: txHash?.value || "" };
+        const payload = {
+          note: privateNote?.value || "",
+          txHash: txHash?.value || "",
+          network: NETWORK_TYPES[NETWORK],
+        };
         await addPrivateNote(payload);
       } else {
         const payload = { note: privateNote?.value || "", noteId: currentNote.id };

@@ -14,7 +14,7 @@ interface ScriptModalProps {
   policy: string;
 }
 const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
-  const { data, loading } = useFetch<PolicyDetail>(`${API.POLICY}/${policy && policy}`);
+  const { data, loading } = useFetch<PolicyDetail>(policy && `${API.POLICY}/${policy && policy}`);
 
   return (
     <Modal {...props}>

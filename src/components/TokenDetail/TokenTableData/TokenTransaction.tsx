@@ -5,7 +5,6 @@ import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
 import {
-  formatADA,
   formatADAFull,
   formatDateTimeLocal,
   getPageInfo,
@@ -108,7 +107,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       render: r => (
         <CustomTooltip title={formatADAFull(r.fee)}>
           <PriceValue>
-            <SmallText>{formatADA(r.fee) || 0}</SmallText>
+            <SmallText>{formatADAFull(r.fee) || 0}</SmallText>
             <PriceIcon src={AIcon} alt="a icon" />
           </PriceValue>
         </CustomTooltip>
@@ -121,7 +120,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       render: r => (
         <CustomTooltip title={formatADAFull(r.totalOutput)}>
           <PriceValue>
-            <SmallText>{formatADA(r.totalOutput) || 0}</SmallText>
+            <SmallText>{formatADAFull(r.totalOutput) || 0}</SmallText>
             <PriceIcon src={AIcon} alt="a icon" />
           </PriceValue>
         </CustomTooltip>

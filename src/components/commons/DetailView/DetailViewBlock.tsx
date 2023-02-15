@@ -37,13 +37,12 @@ import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatADA, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
-import { Box } from "@mui/material";
 import { API } from "../../../commons/utils/api";
 
 type DetailViewBlockProps = {
@@ -194,22 +193,26 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 <InfoIcon />
                 Transaction Fees
               </DetailLabel>
-              <DetailValue>
-                {formatADA(data.totalFees) || 0}
-                <ADAToken color="black" />
-              </DetailValue>
+              <CustomTooltip title={formatADAFull(data.totalFees || 0)}>
+                <DetailValue>
+                  {formatADAFull(data.totalFees) || 0}
+                  <ADAToken color="black" />
+                </DetailValue>
+              </CustomTooltip>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
                 <InfoIcon />
                 Total Output
               </DetailLabel>
-              <DetailValue>
-                {formatADA(data.totalOutput) || 0}
-                <ADAToken color="black" />
-              </DetailValue>
+              <CustomTooltip title={formatADAFull(data.totalOutput || 0)}>
+                <DetailValue>
+                  {formatADAFull(data.totalOutput) || 0}
+                  <ADAToken color="black" />
+                </DetailValue>
+              </CustomTooltip>
             </DetailsInfoItem>
-            <DetailsInfoItem>
+            {/* <DetailsInfoItem>
               <DetailLabel>
                 <InfoIcon />
                 Slot leader
@@ -220,7 +223,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 </CustomTooltip>
                 <CopyButton text={data.slotLeader} />
               </DetailValue>
-            </DetailsInfoItem>
+            </DetailsInfoItem> */}
           </Group>
           <Group>
             <DetailLink to={details.block(blockNo)}>

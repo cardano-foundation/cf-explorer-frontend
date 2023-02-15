@@ -339,3 +339,16 @@ export const ValueCard = styled(Box)(({ theme }) => ({
   fontSize: "1rem",
   fontWeight: "bold",
 }));
+
+export const CardItemTrx = styled(CardItem)(({ theme }) => ({
+  ":nth-child(5)": {
+    borderLeft: "none",
+  },
+  ":nth-child(-n+4)": {
+    borderBottom: "1px solid rgba(0,0,0,0.1)",
+    paddingBottom: theme.spacing(1),
+  },
+  ":nth-child(n+4)": {
+    paddingTop: theme.spacing(2),
+  },
+}));

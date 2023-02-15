@@ -5,7 +5,7 @@ import useFetchList from "../../../commons/hooks/useFetchList";
 import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
-import { formatADA, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
+import { formatADAFull, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import ViewAllButton from "../../commons/ViewAllButton";
 import {
@@ -59,7 +59,7 @@ const LatestTransactions: React.FC = () => {
                     <Item onClick={e => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
                       <ItemHeader>
                         <PriceImage src={ADAIcon} alt="check green" />
-                        <PriveValue>{formatADA(totalOutput)}</PriveValue>
+                        <PriveValue>{formatADAFull(totalOutput)}</PriveValue>
                       </ItemHeader>
                       <ItemDetail>
                         <p>
