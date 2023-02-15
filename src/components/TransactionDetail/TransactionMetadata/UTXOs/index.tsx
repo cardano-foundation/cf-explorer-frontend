@@ -97,7 +97,7 @@ const Card = ({
                         fontWeight="bold"
                         mr={1}
                       >
-                        {type === "down" ? `${formatADAFull(i.value)}` : `${formatADAFull(i.value)}`}
+                        {type === "down" ? `-${formatADAFull(i.value)}` : `+${formatADAFull(i.value)}`}
                       </Box>
                       <img src={AIcon} alt="ADA icon" />
                     </Box>
