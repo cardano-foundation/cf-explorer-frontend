@@ -1,12 +1,12 @@
 import { Grid } from "@mui/material";
 import BigNumber from "bignumber.js";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
-import { API, EXTEN_API } from "../../../commons/utils/api";
+import { API } from "../../../commons/utils/api";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { formatADA, formatCurrency, numberWithCommas } from "../../../commons/utils/helper";
 import { RootState } from "../../../stores/types";
@@ -46,9 +46,15 @@ const SkeletonBox = () => (
 const MILION = 10 ** 6;
 
 const HomeStatistic: React.FC<Props> = () => {
+  const [timestamp, setTimestamp] = useState(0);
   const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
-  const btcMarket = useFetch<CardanoMarket[]>(`${EXTEN_API.COINGECKO.PRICE}?vs_currency=btc&ids=cardano`);
+  const btcMarket = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=btc&timestamp=${timestamp}`);
+
+  useEffect(() => {
+    const interval = setInterval(() => setTimestamp(Date.now()), 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const { circulating_supply: supply = 1, total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
