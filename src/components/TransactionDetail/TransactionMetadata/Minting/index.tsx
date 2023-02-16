@@ -4,6 +4,7 @@ import Table, { Column } from "../../../commons/Table";
 import ScriptModal from "../../../ScriptModal";
 import { Amount, AssetName, LogoEmpty } from "./styles";
 import { PolicyScriptIcon } from "../../../../commons/resources";
+import { Logo } from "../../../../pages/Token/styles";
 
 interface MintingProps {
   data: Transaction["mints"] | null;
@@ -21,7 +22,11 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       render: (r, index) => {
         return (
           <AssetName>
-            <LogoEmpty />
+            {r?.metadata?.logo ? (
+              <Logo src={`data:/image/png;base64,${r?.metadata?.logo}`} alt="icon" />
+            ) : (
+              <LogoEmpty />
+            )}
             {r.assetName}
           </AssetName>
         );

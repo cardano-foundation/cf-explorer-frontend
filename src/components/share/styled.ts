@@ -53,8 +53,8 @@ export const StyledDarkLoadingButton = styled(LoadingButton)`
   &:hover {
     background: ${props => props.theme.colorBlueDark};
   }
-  .MuiLoadingButton-loadingIndicator,
-  &.MuiLoadingButton-loading.Mui-disabled {
+  &:disabled {
     color: white;
+    background: ${props => props.theme.colorBlueDark}70;
   }
 `;
