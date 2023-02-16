@@ -24,11 +24,9 @@ const Tokens: React.FC<ITokenList> = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const query = parse(search);
 
   const { data, ...fetchData } = useFetchList<ITokenOverview>(API.TOKEN, {
     ...pageInfo,
-    sort: query.sort ? `${query.sort}` : "supply,DESC",
   });
 
   useEffect(() => {

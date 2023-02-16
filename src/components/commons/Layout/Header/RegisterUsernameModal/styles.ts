@@ -13,10 +13,12 @@ export const Span = styled("span")`
 `;
 
 export const TextNote = styled(Box)`
+  font-size: 0.875rem;
   margin-bottom: 20px;
 `;
 
 export const Label = styled(FormLabel)`
+  font-size: 0.875rem;
   color: var(--text-color);
   margin-top: 20px;
   .MuiFormLabel-asterisk {

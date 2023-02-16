@@ -3,7 +3,7 @@ import { Box, Select, styled, Theme } from "@mui/material";
 export const Empty = styled(Box)`
   text-align: center;
   padding: 30px 0;
-  background: #e7e8eb;
+  background: #00000080;
   position: relative;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
