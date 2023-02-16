@@ -60,7 +60,7 @@ const Transactions: React.FC = () => {
       render: r => (
         <CustomTooltip title={formatADAFull(r.balance)}>
           <Box display="inline-flex" alignItems="center">
-            <Box mr={1}>{formatADAFull(r.balance) || 0}</Box>
+            <Box mr={1}>{formatADAFull(r.balance)}</Box>
             <img src={AIcon} alt="a icon" />
           </Box>
         </CustomTooltip>
@@ -71,9 +71,9 @@ const Transactions: React.FC = () => {
       key: "value",
       minWidth: 120,
       render: r => (
-        <CustomTooltip title={numberWithCommas(r.balance * adaRate || 0)}>
+        <CustomTooltip title={exchangeADAToUSD(r.balance, adaRate, true)}>
           <Box display="inline-flex" alignItems="center">
-            {exchangeADAToUSD(r.balance, adaRate)}
+            {exchangeADAToUSD(r.balance, adaRate, true)}
           </Box>
         </CustomTooltip>
       ),
