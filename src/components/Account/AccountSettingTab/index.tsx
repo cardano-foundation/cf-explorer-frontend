@@ -17,15 +17,18 @@ type TRowItem = {
   action: () => void;
   onChangeValue: (event: any) => void;
   disabled?: boolean;
+  field: "email" | "username" | "wallet";
 };
 
-const RowItem: React.FC<TRowItem> = ({ label, value, errorMsg, onChangeValue, action, disabled = false }) => {
+const RowItem: React.FC<TRowItem> = ({ label, value, errorMsg, onChangeValue, action, disabled = false, field }) => {
   return (
     <WrapRowItem>
       <StyledLabel>{label}</StyledLabel>
       <StyledRowItem>
         <StyledInput disabled={disabled} value={value} onChange={onChangeValue} placeholder={label} />
-        <StyledButton onClick={action}>Change</StyledButton>
+        <StyledButton onClick={action} disabled={["email", "username"].includes(field) && !value}>
+          Change
+        </StyledButton>
       </StyledRowItem>
       <StyledHelper>{errorMsg}</StyledHelper>
     </WrapRowItem>
@@ -101,14 +104,28 @@ const AccountSettingTab: React.FC = () => {
         label="Your username"
         value={username.value}
         errorMsg={username.errorMsg}
-        onChangeValue={event => setUsername({ value: event.target.value, errorMsg: "" })}
+        onChangeValue={event => {
+          if (event.target.value) {
+            setUsername({ value: event.target.value, errorMsg: "" });
+          } else {
+            setUsername({ value: event.target.value, errorMsg: "Username is required!" });
+          }
+        }}
+        field="username"
         action={() => onEditInfo("username")}
       />
       <RowItem
         label="Your email address "
         value={email.value}
         errorMsg={email.errorMsg}
-        onChangeValue={event => setEmail({ value: event.target.value, errorMsg: "" })}
+        onChangeValue={event => {
+          if (event.target.value) {
+            setEmail({ value: event.target.value, errorMsg: "" });
+          } else {
+            setEmail({ value: event.target.value, errorMsg: "Email is required!" });
+          }
+        }}
+        field="email"
         action={() => onEditInfo("email")}
       />
       <RowItem
@@ -117,6 +134,7 @@ const AccountSettingTab: React.FC = () => {
         errorMsg={wallet.errorMsg}
         onChangeValue={event => setWallet({ value: event.target.value, errorMsg: "" })}
         action={onTransferWallet}
+        field="wallet"
       />
     </Box>
   );
