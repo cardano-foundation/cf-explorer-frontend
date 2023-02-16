@@ -1,6 +1,6 @@
 import { Box, Skeleton } from "@mui/material";
 import { Modal } from "@mui/material";
-import ReactJson from "react-json-view";
+import { JsonViewer } from "@textea/json-viewer";
 import { ButtonClose, ButtonLink, ModalContainer, ViewJson } from "./styles";
 import closeIcon from "../../commons/resources/icons/closeIcon.svg";
 import CopyButton from "../commons/CopyButton";
@@ -61,16 +61,15 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
               Policy script:
             </Box>
             <ViewJson>
-              {data?.policyScript && (
-                <ReactJson
-                  name={false}
-                  src={JSON.parse(data?.policyScript || "")}
-                  enableClipboard={false}
-                  displayDataTypes={false}
-                  style={{ padding: 0, background: "none", color: "#344054" }}
+              {!loading && data?.policyScript && (
+                <JsonViewer
+                  value={JSON.parse(data.policyScript || "")}
                   displayObjectSize={false}
-                  collapsed={false}
-                  shouldCollapse={() => false}
+                  displayDataTypes={false}
+                  enableClipboard={false}
+                  collapseStringsAfterLength={false}
+                  style={{ padding: 0, background: "none", color: "#344054" }}
+                  rootName={false}
                 />
               )}
             </ViewJson>
