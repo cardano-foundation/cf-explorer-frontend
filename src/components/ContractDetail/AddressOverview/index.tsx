@@ -37,7 +37,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
         </StyledAAmount>
       ),
     },
-    { title: "ADA Value", value: exchangeADAToUSD(data?.balance || 0, adaRate) },
+    { title: "ADA Value", value: exchangeADAToUSD(data?.balance || 0, adaRate, true) },
     {
       value: (
         <Autocomplete
