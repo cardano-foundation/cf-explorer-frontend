@@ -32,13 +32,6 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : ""
   );
   const { adaRate } = useSelector(({ system }: RootState) => system);
-  const adaBlance = numberWithCommas(new BigNumber(data?.balance || 0).div(10 ** 6).toString());
-  const adaValue = numberWithCommas(
-    new BigNumber(data?.balance || 0)
-      .div(10 ** 6)
-      .multipliedBy(adaRate)
-      .toString()
-  );
 
   useEffect(() => {
     setStakeKey(data?.stakeAddress || "");
@@ -49,9 +42,9 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: "ADA Balance",
       value: (
-        <CustomTooltip title={adaBlance}>
+        <CustomTooltip title={formatADAFull(data?.balance)}>
           <Box display="flex" alignItems="center">
-            {adaBlance}
+            {formatADAFull(data?.balance)}
             <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
           </Box>
         </CustomTooltip>
@@ -60,8 +53,8 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: "ADA Value",
       value: (
-        <CustomTooltip title={"$ " + adaValue}>
-          <Box>$ {adaValue}</Box>
+        <CustomTooltip title={"$ " + exchangeADAToUSD(data?.balance || 0, adaRate, true)}>
+          <Box>$ {exchangeADAToUSD(data?.balance || 0, adaRate, true)}</Box>
         </CustomTooltip>
       ),
     },
@@ -105,9 +98,9 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: "Total Stake",
       value: (
-        <CustomTooltip title={numberWithCommas(new BigNumber(dataStake?.totalStake || 0).div(10 ** 6).toString())}>
+        <CustomTooltip title={formatADAFull(dataStake?.totalStake)}>
           <Box>
-            {formatADAFull(dataStake?.totalStake || 0)}
+            {formatADAFull(dataStake?.totalStake)}
             <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
           </Box>
         </CustomTooltip>
@@ -129,9 +122,9 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: "Reward",
       value: (
-        <CustomTooltip title={numberWithCommas(new BigNumber(dataStake?.rewardAvailable || 0).div(10 ** 6).toString())}>
+        <CustomTooltip title={formatADAFull(dataStake?.rewardAvailable)}>
           <Box>
-            {formatADAFull(dataStake?.rewardAvailable || 0)}
+            {formatADAFull(dataStake?.rewardAvailable)}
             <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
           </Box>
         </CustomTooltip>
