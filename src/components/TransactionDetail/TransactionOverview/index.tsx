@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import DetailHeader from "../../commons/DetailHeader";
-import { formatADA, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
 import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { Box, IconButton } from "@mui/material";
 import { ConfirmStatus, StyledLink, TitleCard } from "./component";
@@ -147,6 +147,22 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
     },
     {
+      icon: txConfirm,
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <TitleCard mr={1}>Total Output</TitleCard>
+          <img src={infoIcon} alt="info icon" width={18} />
+        </Box>
+      ),
+      value: (
+        <CustomTooltip title={formatADAFull(data?.tx?.totalOutput || 0)}>
+          <Box component={"span"}>
+            {formatADAFull(data?.tx?.totalOutput || 0)} <ADAToken />{" "}
+          </Box>
+        </CustomTooltip>
+      ),
+    },
+    {
       icon: exchageAltIcon,
       title: (
         <Box display={"flex"} alignItems="center">
@@ -155,10 +171,11 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <>
-          {" "}
-          {formatADA(data?.tx?.fee || 0)} <ADAToken />{" "}
-        </>
+        <CustomTooltip title={formatADAFull(data?.tx?.fee || 0)}>
+          <Box component={"span"}>
+            {formatADAFull(data?.tx?.fee || 0)} <ADAToken />{" "}
+          </Box>
+        </CustomTooltip>
       ),
     },
     {
@@ -195,7 +212,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   ];
   return (
     <DetailHeader
-      listItem={listOverview}
+      listTrxOverview={listOverview}
       data={
         data && {
           type: "transaction",

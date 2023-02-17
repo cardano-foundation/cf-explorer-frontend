@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
-import { getShortWallet, formatADA, getShortHash } from "../../../../commons/utils/helper";
+import { getShortWallet, formatADAFull, getShortHash } from "../../../../commons/utils/helper";
 import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
@@ -97,7 +97,7 @@ const Card = ({
                         fontWeight="bold"
                         mr={1}
                       >
-                        {type === "down" ? `${formatADA(i.value)}` : `${formatADA(i.value)}`}
+                        {type === "down" ? `-${formatADAFull(i.value)}` : `+${formatADAFull(i.value)}`}
                       </Box>
                       <img src={AIcon} alt="ADA icon" />
                     </Box>
@@ -156,7 +156,7 @@ const Card = ({
             </Box>
             <Box display={"flex"} alignItems="center">
               <Box mr="8px" fontWeight={"bold"} className={`${styles.ffText}`} color="red">
-                {formatADA(fee)}
+                {formatADAFull(fee)}
               </Box>
               <Box>
                 <img src={AIcon} alt="ADA icon" />
@@ -169,7 +169,7 @@ const Card = ({
         <div>Total {type === "down" ? "Input" : "Output"}</div>
         <div>
           <Box fontWeight={"bold"} component="span" pr={1}>
-            {type === "down" ? `${formatADA(totalADA)}` : `${formatADA(totalADA)}`}
+            {type === "down" ? `${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}
           </Box>
           <img src={AIcon} alt="ADA icon" />
         </div>

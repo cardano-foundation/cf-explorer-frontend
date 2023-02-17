@@ -1,6 +1,6 @@
 import moment from "moment";
 import useFetch from "../../../commons/hooks/useFetch";
-import { USER_API } from "../../../commons/utils/api";
+// import { USER_API } from "../../../commons/utils/api";
 import { getShortHash } from "../../../commons/utils/helper";
 import StyledModal from "../../commons/StyledModal";
 import { Column } from "../../commons/Table";
@@ -20,7 +20,7 @@ type TActivityLog = {
   userAction: string;
 };
 const ActivityLogModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
-  const { data: activitiesLog } = useFetch<TActivityLog[]>(USER_API.ACTIVITY_LOG, undefined, true);
+  // const { data: activitiesLog } = useFetch<TActivityLog[]>(USER_API.ACTIVITY_LOG, undefined, true);
   const columns: Column<TActivityLog>[] = [
     {
       title: "Time",
@@ -45,7 +45,7 @@ const ActivityLogModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
     <StyledModal open={open} handleCloseModal={handleCloseModal}>
       <Container>
         <Title>Activity Log</Title>
-        <StyledTable columns={columns} data={activitiesLog || []}></StyledTable>
+        {/* <StyledTable columns={columns} data={activitiesLog || []}></StyledTable> */}
       </Container>
     </StyledModal>
   );

@@ -24,11 +24,9 @@ const Tokens: React.FC<ITokenList> = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const query = parse(search);
 
   const { data, ...fetchData } = useFetchList<ITokenOverview>(API.TOKEN, {
     ...pageInfo,
-    sort: query.sort ? `${query.sort}` : "supply,DESC",
   });
 
   useEffect(() => {
@@ -54,7 +52,9 @@ const Tokens: React.FC<ITokenList> = () => {
             <AssetName to={details.token(r?.fingerprint ?? "")}>{getShortWallet(r.displayName || "")}</AssetName>
           </CustomTooltip>
         ) : (
-          <AssetName to={details.token(r?.fingerprint ?? "")}>{r.displayName}</AssetName>
+          <AssetName to={details.token(r?.fingerprint ?? "")}>
+            {r.displayName || getShortWallet(r.fingerprint || "")}
+          </AssetName>
         ),
     },
     {

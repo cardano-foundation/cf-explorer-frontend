@@ -8,7 +8,13 @@ import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
 import { ReactComponent as TokenIcon } from "../../../commons/resources/icons/tokenIcon.svg";
 import { ReactComponent as AssetHolderIcon } from "../../../commons/resources/icons/assetHolder.svg";
-import { formatADA, formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "../../../commons/utils/helper";
+import {
+  formatADAFull,
+  formatDateTimeLocal,
+  getPageInfo,
+  getShortHash,
+  getShortWallet,
+} from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
 import { LinkComponent, TitleTab } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -48,7 +54,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     minWidth: "150px",
     render: r => (
       <CustomTooltip title={formatADAFull(r?.supply ? +r.supply * 10 ** 6 : "")}>
-        <Box component={"span"}>{formatADA(r?.supply ? +r.supply * 10 ** 6 : "")}</Box>
+        <Box component={"span"}>{formatADAFull(r?.supply ? +r.supply * 10 ** 6 : "")}</Box>
       </CustomTooltip>
     ),
   },
@@ -75,10 +81,10 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     title: "Token name",
     key: "id",
     minWidth: "100px",
-    render: r => <LinkComponent to={details.token(r.fingerprint)}>{r.tokenName || ""}</LinkComponent>,
+    render: r => <LinkComponent to={details.token(r.fingerprint)}>{r.displayName || ""}</LinkComponent>,
   },
   {
-    title: "Token id",
+    title: "Token ID",
     key: "id",
     minWidth: "100px",
     render: r => (
@@ -93,7 +99,7 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     minWidth: "150px",
     render: r => (
       <CustomTooltip title={formatADAFull(r?.quantity)}>
-        <Box component={"span"}>{formatADA(r.quantity ? r.quantity * 10 ** 6 : "")}</Box>
+        <Box component={"span"}>{formatADAFull(r.quantity ? r.quantity * 10 ** 6 : "")}</Box>
       </CustomTooltip>
     ),
   },

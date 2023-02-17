@@ -37,7 +37,7 @@ import moment from "moment";
 import { HiOutlineCube } from "react-icons/hi2";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatADA, formatDateTimeLocal } from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import { API } from "../../../commons/utils/api";
@@ -119,10 +119,9 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
       </ViewDetailDrawer>
     );
 
-  const slot =
-    data.status === "FINISHED"
-      ? MAX_SLOT_EPOCH
-      : (data?.endTime && data.startTime && moment(data.endTime).diff(data.startTime) / 1000) || 0;
+  const slot = ["FINISHED", "REWARDING"].includes(data.status)
+    ? MAX_SLOT_EPOCH
+    : Math.round((data.startTime && moment().diff(data.startTime) / 1000) || 0);
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
   return (
     <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
@@ -189,10 +188,12 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
                 <InfoIcon />
                 Total Output
               </DetailLabel>
-              <DetailValue>
-                {formatADA(data.outSum) || 0}
-                <ADAToken color="black" />
-              </DetailValue>
+              <CustomTooltip title={formatADAFull(data.outSum || 0)}>
+                <DetailValue>
+                  {formatADAFull(data.outSum) || 0}
+                  <ADAToken color="black" />
+                </DetailValue>
+              </CustomTooltip>
             </DetailsInfoItem>
           </Group>
           <Group>

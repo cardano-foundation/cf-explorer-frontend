@@ -5,7 +5,9 @@ import { Description, ModalTitle } from "./styles";
 import { StyledDarkLoadingButton } from "../../../../share/styled";
 import { StyledButton } from "./styles";
 import { useLocalStorage } from "react-use";
-import { addListBookmark } from "../../../../../commons/utils/userRequest";
+import { addListBookmark, getAllBookmarks } from "../../../../../commons/utils/userRequest";
+import { BookMark } from "../../../../../types/bookmark";
+import { NETWORK, NETWORK_TYPES } from "../../../../../commons/utils/constants";
 
 interface SyncBookmarkModalProps {
   open: boolean;
@@ -16,7 +18,7 @@ const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, loadingSubm
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<BookMark[]>([]);
   const [message, setMessage] = useState("");
-  const [bookmarks] = useLocalStorage<BookMark[]>("bookmark", []);
+  const [bookmarks, setBookmark] = useLocalStorage<BookMark[]>("bookmark", []);
 
   const hanldeSyncBookmark = async () => {
     try {
@@ -24,6 +26,10 @@ const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, loadingSubm
       const { data } = await addListBookmark(bookmarks || []);
       setMessage("Successfully!");
       setData(data);
+      const { data: dataBookmarks } = await getAllBookmarks(NETWORK_TYPES[NETWORK]);
+      if (data) {
+        setBookmark(dataBookmarks);
+      }
     } catch (error) {
       setMessage("Something went wrong!");
     } finally {

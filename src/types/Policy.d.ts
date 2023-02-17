@@ -31,6 +31,6 @@ interface HolderPolicys {
 interface PolicyHolder {
   address: string;
   fingerprint: string;
-  tokenName: string;
+  displayName: string;
   quantity: number;
 }

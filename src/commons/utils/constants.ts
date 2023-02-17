@@ -89,7 +89,6 @@ export const PREPROD_API_URL = process.env.REACT_APP_PREPROD_API_URL;
 export const MAINNET_API_URL = process.env.REACT_APP_MAINNET_API_URL;
 
 export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL;
-export const COINGECKO_URL = "https://api.coingecko.com/api/v3/";
 
 export const getApiUrl = () => {
   switch (NETWORK) {

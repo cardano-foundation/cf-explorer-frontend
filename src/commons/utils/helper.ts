@@ -4,23 +4,15 @@ import { parse } from "qs";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const alphaNumeric = /[^0-9a-zA-Z]/;
+
 export const regexEmail = /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$/;
+
 export const getShortWallet = (address: string) => {
   return `${address.slice(0, 5)}...${address.slice(-5)}`;
 };
+
 export const getShortHash = (address: string) => {
   return `${address.slice(0, 10)}...${address.slice(-7)}`;
-};
-
-export const getDifferentTime = (after: string | number | Date, before?: string | number | Date) => {
-  const first = new Date(after).getTime();
-  const last = (before && new Date(before).getTime()) || Date.now() + new Date().getTimezoneOffset() * 60 * 1000;
-  const diff = (last - first) / 1000;
-  if (diff > 24 * 60 * 60) return `${Math.round(diff / (24 * 60 * 60))} days ago`;
-  if (diff > 60 * 60) return `${Math.round(diff / (60 * 60))} hours ago`;
-  if (diff > 60) return `${Math.round(diff / 60)} minutes ago`;
-  if (diff > 0) return `${Math.round(diff)} seconds ago`;
-  return "";
 };
 
 export const formatNumber = (value: number | string, decimal: number = 0, decimalSeparator: string = ".") => {
@@ -51,12 +43,6 @@ export const formatCurrency = (
   if (scale !== undefined) splittedStrs[1] = splittedStrs[1].toString().slice(0, scale);
   str[str.length - 1] = splittedStrs.join(decimalSeparator);
   return formatNumber(str.join("-"), decimal, decimalSeparator);
-};
-
-export const getNumberFromCurrency = (value?: string | number, groupSeparator: string = ","): string => {
-  if (!value) return "0";
-  const str = value.toString();
-  return str.replace(new RegExp(groupSeparator, "g"), "");
 };
 
 export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "T", "q", "Q", "s", "S"];
@@ -100,6 +86,19 @@ export const formatADA = (value?: string | number, abbreviations: string[] = LAR
   return numberWithCommas(formated ? formated[0] : "0");
 };
 
+export const formatADAFull = (value?: string | number): string => {
+  if (!value) return `0`;
+  return numberWithCommas(new BigNumber(value).div(10 ** 6).toString() || "0");
+};
+
+export const exchangeADAToUSD = (value: number | string, rate: number, isFull?: boolean) => {
+  if (!value) return 0;
+  const realAda = new BigNumber(value);
+  const exchangedValue = realAda.multipliedBy(rate).toString();
+  if (isFull) return formatADAFull(exchangedValue);
+  return formatADA(exchangedValue);
+};
+
 export const handleClicktWithoutAnchor = (e: React.MouseEvent, fn: (e: React.MouseEvent) => void): void => {
   let parent: Element | null = e.target as Element;
   while (parent !== null && parent?.tagName !== "A" && parent?.tagName !== "BUTTON") {
@@ -119,22 +118,6 @@ export const getPageInfo = (search: string): { page: number; size: number } => {
   const page = Number(query.page) > 0 ? Number(query.page) - 1 : 0;
   const size = Number(query.size) > 0 ? Number(query.size) : 10;
   return { page, size };
-};
-
-export const exchangeADAToUSD = (value: number | string, rate: number) => {
-  if (!value) return 0;
-  const realAda = new BigNumber(value);
-  const exchangedValue = realAda.multipliedBy(rate).toString();
-  return formatADA(exchangedValue);
-};
-
-export const formatADAFull = (
-  value?: string | number,
-  abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS
-): string => {
-  if (!value) return `0${abbreviations[0]}`;
-  const realAda = new BigNumber(value).div(10 ** 6);
-  return numberWithCommas(realAda.toString() || "0");
 };
 
 export const removeAuthInfo = () => {

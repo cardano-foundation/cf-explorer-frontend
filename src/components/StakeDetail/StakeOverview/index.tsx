@@ -7,7 +7,7 @@ import totalStakeIcon from "../../../commons/resources/icons/totalStake.svg";
 import rewardIcon from "../../../commons/resources/icons/reward.svg";
 import rewardWithdrawIcon from "../../../commons/resources/icons/rewardWithdraw.svg";
 import infoIcon from "../../../commons/resources/icons/info.svg";
-import { formatADA, formatADAFull } from "../../../commons/utils/helper";
+import { formatADAFull } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import {
   BackButton,
@@ -30,7 +30,6 @@ import { ADAToken } from "../../commons/Token";
 import { useParams } from "react-router-dom";
 import ModalAllAddress from "../ModalAllAddress";
 import CustomTooltip from "../../commons/CustomTooltip";
-import { IconButton } from "@mui/material";
 import BookmarkButton from "../../commons/BookmarkIcon";
 
 interface Props {
@@ -66,12 +65,16 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <Box display="flex" alignItems="center" justifyContent="space-between" pr={2}>
+        <Box>
           <StyledFlexValue>
-            {formatADA(data?.totalStake || 0)}
+            <CustomTooltip title={formatADAFull(data?.totalStake || 0)}>
+              <Box component={"span"}>{formatADAFull(data?.totalStake || 0)}</Box>
+            </CustomTooltip>
             <ADAToken />
           </StyledFlexValue>
-          <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>
+          <Box>
+            <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>
+          </Box>
         </Box>
       ),
     },
@@ -85,7 +88,9 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       ),
       value: (
         <StyledFlexValue>
-          {formatADA(data?.rewardAvailable || 0)}
+          <CustomTooltip title={formatADAFull(data?.rewardAvailable || 0)}>
+            <Box component={"span"}>{formatADAFull(data?.rewardAvailable || 0)}</Box>
+          </CustomTooltip>
           <ADAToken />
         </StyledFlexValue>
       ),
@@ -101,7 +106,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       value: (
         <CustomTooltip title={formatADAFull(data?.rewardWithdrawn || 0)}>
           <StyledFlexValue>
-            {formatADA(data?.rewardWithdrawn || 0)}
+            {formatADAFull(data?.rewardWithdrawn || 0)}
             <ADAToken />
           </StyledFlexValue>
         </CustomTooltip>

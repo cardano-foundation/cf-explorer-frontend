@@ -68,7 +68,7 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, address, onTriggerSignM
         </FormHelperText>
         <TextError>{errorMessage}</TextError>
         <WrapButton>
-          <StyledDarkLoadingButton loading={loading} onClick={onSubmit}>
+          <StyledDarkLoadingButton loading={loading} disabled={loading || !!errorMessage || !value} onClick={onSubmit}>
             Confirm
           </StyledDarkLoadingButton>
         </WrapButton>

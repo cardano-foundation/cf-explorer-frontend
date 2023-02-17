@@ -117,6 +117,13 @@ interface Transaction {
     assetName: string;
     assetQuantity: number;
     policy: string;
+    metadata?: {
+      decimals: number;
+      description: string;
+      logo: string;
+      ticker: string;
+      url: string;
+    };
   }[];
   delegations?: {
     address: string;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Grid, Skeleton, styled, Box } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-import { formatADA, formatPrice } from "../../../commons/utils/helper";
+import { formatADAFull, formatPrice } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import useFetch from "../../../commons/hooks/useFetch";
 import {
@@ -25,7 +25,6 @@ interface DelegationDetailChartProps {
 const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId }) => {
   const [selected, setSelected] = useState<"epochChart" | "delegatorChart">("epochChart");
   const { data, loading } = useFetch<AnalyticsDelegators>(`${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`);
-  const el = document.getElementsByClassName("y-axis-lable");
 
   const categories = data?.[selected]?.dataByDays?.map(item => item.epochNo) || [];
   const epochs = data?.epochChart?.dataByDays?.map(item => item.totalStake / 10 ** 6) || [];
@@ -114,7 +113,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                 {loading || !data?.[selected] ? (
                   <SkeletonUI variant="rectangular" />
                 ) : selected === "epochChart" ? (
-                  formatADA(data[selected].highest)
+                  formatADAFull(data[selected].highest)
                 ) : (
                   data[selected].highest
                 )}
@@ -127,7 +126,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                 {loading || !data ? (
                   <SkeletonUI variant="rectangular" />
                 ) : selected === "epochChart" ? (
-                  formatADA(data[selected].lowest)
+                  formatADAFull(data[selected].lowest)
                 ) : (
                   data[selected].lowest
                 )}

@@ -48,7 +48,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage })
   return (
     <ConnectOption>
       <WrapContent>
-        <Title>Connect to a Wallet</Title>
+        <Title>Connect to a wallet</Title>
         <CloseButton connecting={walletConnecting ? 1 : 0} onClick={walletConnecting ? undefined : handleClose}>
           <IoMdClose />
         </CloseButton>

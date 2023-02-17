@@ -37,7 +37,7 @@ import {
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatADA } from "../../../commons/utils/helper";
+import { formatADAFull } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import { ADAToken } from "../Token";
@@ -161,20 +161,24 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
                 <InfoIcon />
                 Reward available
               </DetailLabel>
-              <DetailValue>
-                {formatADA(data.rewardAvailable) || 0}
-                <ADAToken color="black" />
-              </DetailValue>
+              <CustomTooltip title={formatADAFull(data.rewardAvailable || 0)}>
+                <DetailValue>
+                  {formatADAFull(data.rewardAvailable) || 0}
+                  <ADAToken color="black" />
+                </DetailValue>
+              </CustomTooltip>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
                 <InfoIcon />
                 Reward withdrawn
               </DetailLabel>
-              <DetailValue>
-                {formatADA(data.rewardWithdrawn) || 0}
-                <ADAToken color="black" />
-              </DetailValue>
+              <CustomTooltip title={formatADAFull(data.rewardWithdrawn || 0)}>
+                <DetailValue>
+                  {formatADAFull(data.rewardWithdrawn) || 0}
+                  <ADAToken color="black" />
+                </DetailValue>
+              </CustomTooltip>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
@@ -182,7 +186,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
                 Delegated to
               </DetailLabel>
               <CustomTooltip title={data.pool?.poolName || ""}>
-                <Box component={Link} display='inline-block' to={details.delegation(data.pool?.poolId)}>
+                <Box component={Link} display="inline-block" to={details.delegation(data.pool?.poolId)}>
                   <DelegatedDetail>
                     {data.pool?.tickerName} - {data.pool?.poolName}
                   </DelegatedDetail>
@@ -194,10 +198,12 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
                 <InfoIcon />
                 Total Stake
               </DetailLabel>
-              <DetailValue>
-                {formatADA(data.totalStake) || 0}
-                <ADAToken color="black" />
-              </DetailValue>
+              <CustomTooltip title={formatADAFull(data.totalStake || 0)}>
+                <DetailValue>
+                  {formatADAFull(data.totalStake) || 0}
+                  <ADAToken color="black" />
+                </DetailValue>
+              </CustomTooltip>
             </DetailsInfoItem>
             <Box textAlign={"right"}>
               <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>

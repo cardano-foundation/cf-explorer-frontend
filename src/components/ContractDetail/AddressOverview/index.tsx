@@ -6,9 +6,10 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { AIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
-import { exchangeADAToUSD, formatADA, formatPrice } from "../../../commons/utils/helper";
+import { exchangeADAToUSD, formatADAFull, formatPrice } from "../../../commons/utils/helper";
 import { RootState } from "../../../stores/types";
 import Card from "../../commons/Card";
+import CustomTooltip from "../../commons/CustomTooltip";
 import CardAddress from "../../share/CardAddress";
 import { Pool, StyledAAmount, StyledTextField, WrapPaperDropdown } from "./styles";
 
@@ -29,12 +30,14 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       title: "ADA Balance",
       value: (
         <StyledAAmount>
-          {formatADA(data?.balance || 0)}
+          <CustomTooltip title={formatADAFull(data?.balance || 0)}>
+            <Box>{formatADAFull(data?.balance || 0)}</Box>
+          </CustomTooltip>
           <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
         </StyledAAmount>
       ),
     },
-    { title: "ADA Value", value: exchangeADAToUSD(data?.balance || 0, adaRate) },
+    { title: "ADA Value", value: exchangeADAToUSD(data?.balance || 0, adaRate, true) },
     {
       value: (
         <Autocomplete
@@ -73,7 +76,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       title: "Controlled Total Stake",
       value: (
         <StyledAAmount>
-          {formatADA(dataStake?.totalStake)}
+          {formatADAFull(dataStake?.totalStake)}
           <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
         </StyledAAmount>
       ),
@@ -82,7 +85,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       title: "Reward Available",
       value: (
         <StyledAAmount>
-          {formatADA(dataStake?.rewardAvailable)}
+          {formatADAFull(dataStake?.rewardAvailable)}
           <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
         </StyledAAmount>
       ),
@@ -91,7 +94,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       title: "Reward Withdrawn",
       value: (
         <StyledAAmount>
-          {formatADA(dataStake?.rewardWithdrawn)}
+          {formatADAFull(dataStake?.rewardWithdrawn)}
           <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
         </StyledAAmount>
       ),

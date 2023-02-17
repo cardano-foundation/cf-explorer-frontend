@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 
-import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
 import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
@@ -51,8 +51,8 @@ const Items = ({ item, type }: { item?: Required<Transaction>["withdrawals"][num
               <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
                 {item &&
                   item?.amount > 0 &&
-                  (type === "down" ? `- ${formatADA(item?.amount)}` : `+ ${formatADA(item?.amount)}`)}
-                {type === "down" && item && item?.amount === 0 && `${formatADA(item?.amount)}`}
+                  (type === "down" ? `- ${formatADAFull(item?.amount)}` : `+ ${formatADAFull(item?.amount)}`)}
+                {type === "down" && item && item?.amount === 0 && `${formatADAFull(item?.amount)}`}
               </span>
               <img src={AIcon} alt="ADA icon" />
             </div>

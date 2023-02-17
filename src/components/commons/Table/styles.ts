@@ -3,7 +3,7 @@ import { Box, Select, styled, Theme } from "@mui/material";
 export const Empty = styled(Box)`
   text-align: center;
   padding: 30px 0;
-  background: #e7e8eb;
+  background: #00000080;
   position: relative;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -63,7 +63,15 @@ export const TCol = styled("td")<{ width?: number | string; minWidth?: number | 
   color: ${props => props.theme.textColor};
   padding: 24px 20px;
 `;
-export const TBody = styled("tbody")``;
+export const TBody = styled("tbody")`
+  position: relative;
+`;
+export const LoadingWrapper = styled(Box)`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+`;
 
 export const TFooter = styled(Box)`
   display: flex;
