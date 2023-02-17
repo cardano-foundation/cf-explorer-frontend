@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocalStorage } from "react-use";
 import useFetch from "../../commons/hooks/useFetch";
@@ -12,14 +12,17 @@ export const SystemLoader = () => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const isLogin = !!userData?.username;
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
-  const [timestamp, setTimestamp] = useState(0);
-  const epochResponse = useFetch<EpochCurrentType>(`${API.EPOCH.CURRENT_EPOCH}?timestamp=${timestamp}`);
-  const usdMarket = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=usd&timestamp=${timestamp}`);
+  const epochResponse = useFetch<EpochCurrentType>(`${API.EPOCH.CURRENT_EPOCH}`);
+  const usdMarket = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=usd`);
   const { data: dataBookmark } = useFetch<string[]>(isLogin ? USER_API.BOOKMARK : "", undefined, true);
 
   useEffect(() => {
-    const interval = setInterval(() => setTimestamp(Date.now()), 5000);
+    const interval = setInterval(() => {
+      epochResponse.refesh();
+      usdMarket.refesh();
+    }, 5000);
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
