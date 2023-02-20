@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import BigNumber from "bignumber.js";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
@@ -46,14 +46,14 @@ const SkeletonBox = () => (
 const MILION = 10 ** 6;
 
 const HomeStatistic: React.FC<Props> = () => {
-  const [timestamp, setTimestamp] = useState(0);
   const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
-  const btcMarket = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=btc&timestamp=${timestamp}`);
+  const btcMarket = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=btc`);
 
   useEffect(() => {
-    const interval = setInterval(() => setTimestamp(Date.now()), 5000);
+    const interval = setInterval(() => btcMarket.refesh(), 5000);
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { circulating_supply: supply = 1, total_supply: total = 1 } = usdMarket || {};

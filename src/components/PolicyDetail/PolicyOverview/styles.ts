@@ -169,29 +169,8 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   borderRadius: theme.borderRadius,
   padding: theme.spacing(2),
   marginTop: theme.spacing(2),
-  "& .object-contentw": {
-    pointerEvents: "none",
-  },
-  "& .variable-row": {
-    border: " none !important",
-  },
-  "& .object-key": {
-    color: "#344054 !important",
-    opacity: "1 !important",
-    "& span": {
-      "&:first-of-type ": {
-        display: "none",
-      },
-      "&:last-child ": {
-        display: "none",
-      },
-    },
-  },
-  "& .string-value": {
-    color: " #344054",
-    wordBreak: "break-all",
-  },
-  "& .icon-container": {
+
+  "& .MuiSvgIcon-root": {
     display: "none !important",
   },
 }));

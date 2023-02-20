@@ -23,7 +23,8 @@ import {
 } from "./styles";
 import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
-import ReactJson from "react-json-view";
+import { JsonViewer } from "@textea/json-viewer";
+
 import { IconButton } from "@mui/material";
 import { ReactComponent as Bookmark } from "../../../commons/resources/icons/Bookmark.svg";
 
@@ -107,15 +108,14 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ script, ...props }) => {
         </Box>
         {script && (
           <ViewJson>
-            <ReactJson
-              name={false}
-              src={JSON.parse(script || "")}
-              enableClipboard={false}
-              displayDataTypes={false}
-              style={{ padding: 0, background: "none", color: "#344054" }}
+            <JsonViewer
+              value={JSON.parse(script || "")}
               displayObjectSize={false}
-              collapsed={false}
-              shouldCollapse={() => false}
+              displayDataTypes={false}
+              enableClipboard={false}
+              collapseStringsAfterLength={false}
+              style={{ padding: 0, background: "none", color: "#344054" }}
+              rootName={false}
             />
           </ViewJson>
         )}
