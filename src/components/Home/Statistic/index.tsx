@@ -48,13 +48,12 @@ const MILION = 10 ** 6;
 const HomeStatistic: React.FC<Props> = () => {
   const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
-  const btcMarket = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=btc`);
+  const { data: btcMarket, refesh } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=btc`);
 
   useEffect(() => {
-    const interval = setInterval(() => btcMarket.refesh(), 5000);
-    return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const interval = setInterval(() =>  refesh(), 5000);
+    return () => clearInterval(interval); 
+  }, [refesh]);
 
   const { circulating_supply: supply = 1, total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
@@ -67,7 +66,7 @@ const HomeStatistic: React.FC<Props> = () => {
   return (
     <StatisticContainer container spacing={2}>
       <Grid item xl lg={3} sm={6} xs={12}>
-        {!usdMarket || !btcMarket.data?.[0] ? (
+        {!usdMarket || !btcMarket?.[0] ? (
           <SkeletonBox />
         ) : (
           <Item>
@@ -77,7 +76,7 @@ const HomeStatistic: React.FC<Props> = () => {
               <Title>${usdMarket.current_price || 0}</Title>
               <br />
               <RateWithIcon value={usdMarket.price_change_percentage_24h || 0} />
-              <Small style={{ marginLeft: 15 }}>{btcMarket.data[0]?.current_price || 0} BTC</Small>
+              <Small style={{ marginLeft: 15 }}>{btcMarket[0]?.current_price || 0} BTC</Small>
             </Content>
           </Item>
         )}
