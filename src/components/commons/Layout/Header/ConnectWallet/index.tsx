@@ -17,14 +17,12 @@ import { routers } from "../../../../../commons/routers";
 import SignMessageModal from "../SignMessageModal";
 import SyncBookmarkModal from "../SyncBookmarkModal";
 import { useLocalStorage } from "react-use";
-import useFetch from "../../../../../commons/hooks/useFetch";
 import { BookMark } from "../../../../../types/bookmark";
 import Toast from "../../../Toast";
 interface Props {}
 
 const ConnectWallet: React.FC<Props> = () => {
   const { openModal, modalRegister, modalSignMessage } = useSelector(({ user }: RootState) => user);
-  const history = useHistory();
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
