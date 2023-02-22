@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocalStorage } from "react-use";
 import useFetch from "../../commons/hooks/useFetch";
@@ -9,44 +9,41 @@ import { RootState } from "../../stores/types";
 
 export const SystemLoader = () => {
   const { userData } = useSelector(({ user }: RootState) => user);
-  const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const isLogin = !!userData?.username;
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
-  const [timestamp, setTimestamp] = useState(0);
-  const epochResponse = useFetch<EpochCurrentType>(`${API.EPOCH.CURRENT_EPOCH}?timestamp=${timestamp}`);
-  const usdMarket = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=usd&timestamp=${timestamp}`);
+  const { data: currentEpoch } = useFetch<EpochCurrentType>(`${API.EPOCH.CURRENT_EPOCH}`);
+  const { data: usdMarket, refesh } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=usd`);
   const { data: dataBookmark } = useFetch<string[]>(isLogin ? USER_API.BOOKMARK : "", undefined, true);
 
   useEffect(() => {
-    const interval = setInterval(() => setTimestamp(Date.now()), 5000);
+    const interval = setInterval(() => refesh(), 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [refesh]);
 
   useEffect(() => {
     if (currentEpoch) {
+      let { no, slot, totalSlot } = currentEpoch;
       const interval = setInterval(() => {
-        const { no, slot, totalSlot } = currentEpoch;
-        setCurrentEpoch({
-          slot: (slot + 1) % (totalSlot || MAX_SLOT_EPOCH),
-          no: slot + 1 > (totalSlot || MAX_SLOT_EPOCH) ? no + 1 : no,
-          totalSlot,
-        });
+        const isIncreaseEpoch = slot === (totalSlot || MAX_SLOT_EPOCH);
+        slot = isIncreaseEpoch ? 0 : slot + 1;
+        no = isIncreaseEpoch ? no + 1 : no;
+        setCurrentEpoch({ slot, no, totalSlot });
       }, 1000);
       return () => clearInterval(interval);
     }
   }, [currentEpoch]);
 
   useEffect(() => {
-    if (usdMarket.data?.[0]) setUsdMarket(usdMarket.data[0]);
-  }, [usdMarket.data]);
+    if (usdMarket?.[0]) setUsdMarket(usdMarket[0]);
+  }, [usdMarket]);
 
   useEffect(() => {
     if (dataBookmark) setBookmark(dataBookmark);
   }, [dataBookmark, setBookmark]);
 
   useEffect(() => {
-    if (epochResponse.data) setCurrentEpoch(epochResponse.data);
-  }, [epochResponse.data]);
+    if (currentEpoch) setCurrentEpoch(currentEpoch);
+  }, [currentEpoch]);
 
   return null;
 };

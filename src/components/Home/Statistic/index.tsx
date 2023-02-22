@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import BigNumber from "bignumber.js";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
@@ -46,15 +46,14 @@ const SkeletonBox = () => (
 const MILION = 10 ** 6;
 
 const HomeStatistic: React.FC<Props> = () => {
-  const [timestamp, setTimestamp] = useState(0);
   const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
-  const btcMarket = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=btc&timestamp=${timestamp}`);
+  const { data: btcMarket, refesh } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=btc`);
 
   useEffect(() => {
-    const interval = setInterval(() => setTimestamp(Date.now()), 5000);
-    return () => clearInterval(interval);
-  }, []);
+    const interval = setInterval(() =>  refesh(), 5000);
+    return () => clearInterval(interval); 
+  }, [refesh]);
 
   const { circulating_supply: supply = 1, total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
@@ -67,7 +66,7 @@ const HomeStatistic: React.FC<Props> = () => {
   return (
     <StatisticContainer container spacing={2}>
       <Grid item xl lg={3} sm={6} xs={12}>
-        {!usdMarket || !btcMarket.data?.[0] ? (
+        {!usdMarket || !btcMarket?.[0] ? (
           <SkeletonBox />
         ) : (
           <Item>
@@ -77,7 +76,7 @@ const HomeStatistic: React.FC<Props> = () => {
               <Title>${usdMarket.current_price || 0}</Title>
               <br />
               <RateWithIcon value={usdMarket.price_change_percentage_24h || 0} />
-              <Small style={{ marginLeft: 15 }}>{btcMarket.data[0]?.current_price || 0} BTC</Small>
+              <Small style={{ marginLeft: 15 }}>{btcMarket[0]?.current_price || 0} BTC</Small>
             </Content>
           </Item>
         )}
