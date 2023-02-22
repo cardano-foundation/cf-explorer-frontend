@@ -31,7 +31,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
           </Box>
         )}
         {!loading && (
-          <Box>
+          <Box mt={2}>
             <ButtonLink to={details.policyDetail(data?.policyId || "")}>{data?.policyId || ""}</ButtonLink>
             <CopyButton text={data?.policyId || ""} />
           </Box>
