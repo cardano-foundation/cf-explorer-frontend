@@ -19,18 +19,29 @@ import SyncBookmarkModal from "../SyncBookmarkModal";
 import { useLocalStorage } from "react-use";
 import useFetch from "../../../../../commons/hooks/useFetch";
 import { BookMark } from "../../../../../types/bookmark";
+import Toast from "../../../Toast";
 interface Props {}
 
 const ConnectWallet: React.FC<Props> = () => {
   const { openModal, modalRegister, modalSignMessage } = useSelector(({ user }: RootState) => user);
   const history = useHistory();
-  const [openSyncBookmark, setOpenSyncBookmark] = useState(false);
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
   const [, setBookmark] = useLocalStorage<BookMark[]>("bookmark", []);
 
+  const [openSyncBookmark, setOpenSyncBookmark] = useState(false);
+  const [message, setMessage] = React.useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [isSign, setIsSign] = useState(isConnected);
+
+  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setMessage("");
+  };
 
   const handleClick = () => {
     setOpenModal(!openModal);
@@ -57,6 +68,7 @@ const ConnectWallet: React.FC<Props> = () => {
         signature,
       };
       const response = await signIn(payload);
+      setIsSign(true);
       const data = response.data;
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);
@@ -82,17 +94,52 @@ const ConnectWallet: React.FC<Props> = () => {
     setSubmitting(true);
     const nonceValue = await getNonceValue();
     if (nonceValue) {
-      await signMessage(nonceValue, handleSignIn, () => {
+      await signMessage(nonceValue, handleSignIn, (error: Error) => {
+        setMessage("User rejected the request!");
+        setModalSignMessage(false);
         disconnect();
-        history.push(routers.HOME);
       });
     }
     setSubmitting(false);
   };
 
-  return isEnabled && stakeAddress ? (
-    <>
-      <ConnectedProfileOption isConnected={isConnected} disconnect={disconnect} stakeAddress={stakeAddress} />
+  if (isEnabled && stakeAddress && isSign) {
+    return (
+      <>
+        <ConnectedProfileOption isConnected={isConnected} disconnect={disconnect} stakeAddress={stakeAddress} />
+
+        <SyncBookmarkModal
+          open={openSyncBookmark}
+          handleCloseModal={() => {
+            setOpenSyncBookmark(false);
+          }}
+          loadingSubmit={submitting}
+        />
+        <RegisterUsernameModal
+          open={modalRegister}
+          address={stakeAddress}
+          onTriggerSignMessage={() => setModalSignMessage(true)}
+        />
+      </>
+    );
+  }
+
+  if (isConnected && isSign) {
+    return (
+      <StyledButton type="button">
+        <Spin size={20} />
+        <Span>Re-Connecting</Span>
+      </StyledButton>
+    );
+  }
+
+  return (
+    <Box position="relative">
+      <StyledButton type="button" onClick={handleClick}>
+        <Image src={WalletIcon} alt="wallet" />
+        <Span>Connect Wallet</Span>
+      </StyledButton>
+      {openModal && <ConnectWalletModal connect={connect} onTriggerSignMessage={() => setModalSignMessage(true)} />}
       <SignMessageModal
         open={modalSignMessage}
         handleCloseModal={() => {
@@ -102,31 +149,7 @@ const ConnectWallet: React.FC<Props> = () => {
         onSignMessage={onSignMessage}
         loadingSubmit={submitting}
       />
-      <SyncBookmarkModal
-        open={openSyncBookmark}
-        handleCloseModal={() => {
-          setOpenSyncBookmark(false);
-        }}
-        loadingSubmit={submitting}
-      />
-      <RegisterUsernameModal
-        open={modalRegister}
-        address={stakeAddress}
-        onTriggerSignMessage={() => setModalSignMessage(true)}
-      />
-    </>
-  ) : isConnected ? (
-    <StyledButton type="button">
-      <Spin size={20} />
-      <Span>Re-Connecting</Span>
-    </StyledButton>
-  ) : (
-    <Box position="relative">
-      <StyledButton type="button" onClick={handleClick}>
-        <Image src={WalletIcon} alt="wallet" />
-        <Span>Connect Wallet</Span>
-      </StyledButton>
-      {openModal && <ConnectWalletModal connect={connect} onTriggerSignMessage={() => setModalSignMessage(true)} />}
+      <Toast open={!!message} onClose={handleCloseToast} messsage={message} severity={"error"} />
     </Box>
   );
 };
