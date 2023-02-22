@@ -24,7 +24,7 @@ import { Box } from "@mui/material";
 import { API } from "../../commons/utils/api";
 
 const Epoch: React.FC = () => {
-  const [epoch, setEpoch] = useState<number | null>(null);
+  const [epoch, setEpoch] = useState<IDataEpoch | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();
   const { search } = useLocation();
@@ -77,7 +77,7 @@ const Epoch: React.FC = () => {
       render: r => (
         <StyledColorBlueDard>
           {formatDateTimeLocal(r.endTime || "")}
-          {epoch === r.no && (
+          {epoch?.no === r.no && (
             <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
               <MdOutlineKeyboardArrowRight fontSize={30} />
             </Box>
@@ -95,7 +95,7 @@ const Epoch: React.FC = () => {
   const openDetail = (_: any, r: IDataEpoch, index: number) => {
     if (width > 1023) {
       setOnDetailView(true);
-      setEpoch(r.no);
+      setEpoch(r);
       setSelected(index);
     } else history.push(details.epoch(r.no));
   };
@@ -122,7 +122,7 @@ const Epoch: React.FC = () => {
           selected={selected}
         />
       </Card>
-      {epoch !== null && <DetailViewEpoch epochNo={epoch} handleClose={handleClose} />}
+      {epoch !== null && <DetailViewEpoch data={epoch} handleClose={handleClose} />}
     </StyledContainer>
   );
 };
