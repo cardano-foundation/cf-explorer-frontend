@@ -32,6 +32,7 @@ import {
   StyledViewMore,
 } from "./styles";
 import { ADAToken } from "../Token";
+import useFetch from "../../../commons/hooks/useFetch";
 import moment from "moment";
 import { HiOutlineCube } from "react-icons/hi2";
 import { BiChevronRight } from "react-icons/bi";
@@ -39,21 +40,23 @@ import { details } from "../../../commons/routers";
 import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
+import { API } from "../../../commons/utils/api";
 
 type DetailViewEpochProps = {
-  data: IDataEpoch;
+  epochNo: number;
   handleClose: () => void;
 };
 
 const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
-  const { data, handleClose } = props;
+  const { epochNo, handleClose } = props;
+  const { data } = useFetch<IDataEpoch>(`${API.EPOCH.DETAIL}/${epochNo}`);
 
   if (!data)
     return (
       <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
         <ViewDetailContainer>
           <ViewDetailScroll>
-            <StyledViewMore tooltipTitle="View Detail" to={"#"} />
+            <StyledViewMore tooltipTitle="View Detail" to={details.epoch(epochNo)} />
             <CustomTooltip title="Close">
               <CloseButton onClick={handleClose}>
                 <CgClose />
@@ -112,11 +115,11 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
             })}
           </ViewDetailScroll>
         </ViewDetailContainer>
-        <ViewMoreButton to={"#"} />
+        <ViewMoreButton to={details.epoch(epochNo)} />
       </ViewDetailDrawer>
     );
 
-  const slot = ["FINISHED", "REWARDING", "SYNCING"].includes(data.status)
+  const slot = ["FINISHED", "REWARDING"].includes(data.status)
     ? MAX_SLOT_EPOCH
     : Math.round((data.startTime && moment().diff(data.startTime) / 1000) || 0);
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
@@ -124,7 +127,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
     <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
       <ViewDetailContainer>
         <ViewDetailScroll>
-          <StyledViewMore tooltipTitle="View Detail" to={details.epoch(data.no)} />
+          <StyledViewMore tooltipTitle="View Detail" to={details.epoch(epochNo)} />
           <CustomTooltip title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
@@ -139,7 +142,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
               percent={progress}
               trailOpacity={1}
             >
-              <EpochNumber>{data.no}</EpochNumber>
+              <EpochNumber>{epochNo}</EpochNumber>
               <EpochText>Epoch</EpochText>
             </ProgressCircle>
           </HeaderContainer>
@@ -194,7 +197,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
             </DetailsInfoItem>
           </Group>
           <Group>
-            <DetailLink to={details.epoch(data.no)}>
+            <DetailLink to={details.epoch(epochNo)}>
               <DetailLabel style={{ fontSize: 18 }}>
                 <DetailLinkIcon>
                   <HiOutlineCube />
@@ -210,7 +213,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
           </Group>
         </ViewDetailScroll>
       </ViewDetailContainer>
-      <ViewMoreButton to={details.epoch(data.no)} />
+      <ViewMoreButton to={details.epoch(epochNo)} />
     </ViewDetailDrawer>
   );
 };

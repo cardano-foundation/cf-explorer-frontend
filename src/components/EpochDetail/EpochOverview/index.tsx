@@ -18,9 +18,10 @@ interface EpochOverviewProps {
 }
 
 const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
-  const slot = ["FINISHED", "REWARDING", "SYNCING"].includes(data?.status || "")
-    ? MAX_SLOT_EPOCH
-    : Math.round((data?.startTime && moment().diff(data?.startTime) / 1000) || 0);
+  const slot =
+    data?.status !== "IN_PROGRESS"
+      ? MAX_SLOT_EPOCH
+      : Math.round((data?.startTime && moment().diff(data?.startTime) / 1000) || 0);
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
 
   const listOverview = [
