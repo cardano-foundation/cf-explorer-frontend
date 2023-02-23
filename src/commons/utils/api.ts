@@ -26,6 +26,7 @@ export const API = {
   POLICY: "policy",
   POOL: "pool",
   TOKEN: "tokens",
+  TOKEN_TRX: "tokens/:tokenId/txs",
   TRANSACTION: {
     CURRENT: "tx/current",
     DETAIL: "tx",
