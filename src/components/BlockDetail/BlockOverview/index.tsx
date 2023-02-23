@@ -11,7 +11,6 @@ import { TitleCard } from "./styles";
 import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
 import { ADAToken } from "../../commons/Token";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import CustomTooltip from "../../commons/CustomTooltip";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
@@ -49,11 +48,9 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <CustomTooltip title={formatADAFull(data?.totalFees || 0)}>
-          <Box component={"span"}>
-            {formatADAFull(data?.totalFees || 0)} <ADAToken />
-          </Box>
-        </CustomTooltip>
+        <Box component={"span"}>
+          {formatADAFull(data?.totalFees)} <ADAToken />
+        </Box>
       ),
     },
     {
@@ -65,11 +62,9 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <CustomTooltip title={formatADAFull(data?.totalOutput || 0)}>
-          <Box component={"span"}>
-            {formatADAFull(data?.totalOutput || 0)} <ADAToken />
-          </Box>
-        </CustomTooltip>
+        <Box component={"span"}>
+          {formatADAFull(data?.totalOutput)} <ADAToken />
+        </Box>
       ),
     },
     {

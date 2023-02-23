@@ -161,24 +161,20 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
                 <InfoIcon />
                 Reward available
               </DetailLabel>
-              <CustomTooltip title={formatADAFull(data.rewardAvailable || 0)}>
-                <DetailValue>
-                  {formatADAFull(data.rewardAvailable) || 0}
-                  <ADAToken color="black" />
-                </DetailValue>
-              </CustomTooltip>
+              <DetailValue>
+                {formatADAFull(data.rewardAvailable)}
+                <ADAToken color="black" />
+              </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
                 <InfoIcon />
                 Reward withdrawn
               </DetailLabel>
-              <CustomTooltip title={formatADAFull(data.rewardWithdrawn || 0)}>
-                <DetailValue>
-                  {formatADAFull(data.rewardWithdrawn) || 0}
-                  <ADAToken color="black" />
-                </DetailValue>
-              </CustomTooltip>
+              <DetailValue>
+                {formatADAFull(data.rewardWithdrawn)}
+                <ADAToken color="black" />
+              </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
@@ -198,12 +194,10 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
                 <InfoIcon />
                 Total Stake
               </DetailLabel>
-              <CustomTooltip title={formatADAFull(data.totalStake || 0)}>
-                <DetailValue>
-                  {formatADAFull(data.totalStake) || 0}
-                  <ADAToken color="black" />
-                </DetailValue>
-              </CustomTooltip>
+              <DetailValue>
+                {formatADAFull(data.totalStake)}
+                <ADAToken color="black" />
+              </DetailValue>
             </DetailsInfoItem>
             <Box textAlign={"right"}>
               <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>

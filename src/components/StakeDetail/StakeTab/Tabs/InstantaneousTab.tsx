@@ -46,9 +46,7 @@ const columns: Column<Instantaneous>[] = [
     minWidth: "120px",
     render: r => (
       <>
-        <CustomTooltip title={formatADAFull(r.amount)}>
-          <Box component={"span"}> {formatADAFull(r.amount)}</Box>
-        </CustomTooltip>
+        <Box component={"span"}> {formatADAFull(r.amount)}</Box>
         <ADAToken />
       </>
     ),

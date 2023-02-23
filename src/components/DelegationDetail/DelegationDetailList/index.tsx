@@ -43,39 +43,27 @@ const DelegationEpochList = ({
       title: "Blocks",
       key: "block",
       minWidth: "120px",
-      render: data => <StyledLink to={details.block(data.block)}>{numberWithCommas(data.block || 0)}</StyledLink>,
+      render: data => <StyledLink to={details.block(data.block)}>{numberWithCommas(data.block)}</StyledLink>,
     },
     {
       title: "Stake Amount (A)",
       key: "stakeAmount",
       minWidth: "120px",
 
-      render: data => (
-        <CustomTooltip title={formatADAFull(data.stakeAmount)}>
-          <Box component={"span"}>{formatADAFull(data.stakeAmount)}</Box>
-        </CustomTooltip>
-      ),
+      render: data => <Box component={"span"}>{formatADAFull(data.stakeAmount)}</Box>,
     },
     {
       title: "Delegator Rewards (A)",
       key: "delegatorReward",
       minWidth: "120px",
-      render: data => (
-        <CustomTooltip title={formatADAFull(data.delegators)}>
-          <Box component={"span"}>{formatADAFull(data.delegators)}</Box>
-        </CustomTooltip>
-      ),
+      render: data => <Box component={"span"}>{formatADAFull(data.delegators)}</Box>,
     },
     {
       title: "Fees (A)",
       key: "fees",
       minWidth: "120px",
 
-      render: data => (
-        <CustomTooltip title={formatADAFull(data.fee)}>
-          <Box component={"span"}>{formatADAFull(data.fee)}</Box>
-        </CustomTooltip>
-      ),
+      render: data => <Box component={"span"}>{formatADAFull(data.fee)}</Box>,
     },
     {
       title: "ROS",
@@ -147,11 +135,7 @@ const DelegationStakingDelegatorsList = ({
       title: "Total Value (A)",
       key: "value",
       minWidth: "120px",
-      render: data => (
-        <CustomTooltip title={formatADAFull(data.totalStake)}>
-          <Box component={"span"}>{formatADAFull(data.totalStake || 0)}</Box>
-        </CustomTooltip>
-      ),
+      render: data => <Box component={"span"}>{formatADAFull(data.totalStake)}</Box>,
     },
     {
       title: "Staked Time",
@@ -163,11 +147,7 @@ const DelegationStakingDelegatorsList = ({
       title: "Fees (A)",
       key: "fees",
       minWidth: "120px",
-      render: data => (
-        <CustomTooltip title={formatADAFull(data.fee)}>
-          <Box component={"span"}>{formatADAFull(data.fee || 0)}</Box>
-        </CustomTooltip>
-      ),
+      render: data => <Box component={"span"}>{formatADAFull(data.fee)}</Box>,
     },
   ];
 
