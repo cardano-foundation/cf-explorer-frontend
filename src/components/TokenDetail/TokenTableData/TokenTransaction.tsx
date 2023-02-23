@@ -27,7 +27,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<Transactions>(API.TRANSACTION.LIST, { ...pageInfo, tokenId });
+  const fetchData = useFetchList<Transactions>(API.TOKEN_TRX.replace(":tokenId", tokenId), { ...pageInfo });
 
   const columns: Column<Transactions>[] = [
     {
