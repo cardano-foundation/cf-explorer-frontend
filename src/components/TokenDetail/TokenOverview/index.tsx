@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, Skeleton } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { routers } from "../../../commons/routers";
-import { formatADAFull, formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/helper";
+import { formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
@@ -26,7 +26,7 @@ import {
   ValueCard,
 } from "./styles";
 import ScriptModal from "../../ScriptModal";
-import CustomTooltip from "../../commons/CustomTooltip";
+import BigNumber from "bignumber.js";
 
 interface ITokenOverview {
   data: IToken | null;
@@ -40,11 +40,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   const listItem = [
     {
       title: "Total Supply",
-      value: (
-        <CustomTooltip title={numberWithCommas(data?.supply || 0)}>
-          <Box component={"span"}>{formatADAFull(data?.supply ? data.supply * 1000000 : 0)}</Box>
-        </CustomTooltip>
-      ),
+      value: <Box component={"span"}>{numberWithCommas(data?.supply)}</Box>,
       icon: slotIcon,
     },
     { title: "Decimal", icon: decimalIcon, value: data?.metadata?.decimals || 0 },
@@ -58,7 +54,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
         </Box>
       ),
       icon: exchageIcon,
-      value: numberWithCommas(data?.txCount || 0),
+      value: numberWithCommas(data?.txCount),
     },
     {
       title: (
