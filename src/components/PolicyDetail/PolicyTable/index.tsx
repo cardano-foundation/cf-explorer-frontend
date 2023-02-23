@@ -14,11 +14,13 @@ import {
   getPageInfo,
   getShortHash,
   getShortWallet,
+  numberWithCommas,
 } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
 import { LinkComponent, TitleTab } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { API } from "../../../commons/utils/api";
+import BigNumber from "bignumber.js";
 
 enum TABS {
   TOKENS = "tokens",
@@ -53,9 +55,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     key: "totalSupply",
     minWidth: "150px",
     render: r => (
-      <CustomTooltip title={formatADAFull(r?.supply ? +r.supply * 10 ** 6 : "")}>
-        <Box component={"span"}>{formatADAFull(r?.supply ? +r.supply * 10 ** 6 : "")}</Box>
-      </CustomTooltip>
+      <Box component={"span"}>{formatADAFull(new BigNumber(r.supply).multipliedBy(10 ** 6).toString())}</Box>
     ),
   },
   {
@@ -97,11 +97,7 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     title: "Balance",
     key: "Balance",
     minWidth: "150px",
-    render: r => (
-      <CustomTooltip title={formatADAFull(r?.quantity)}>
-        <Box component={"span"}>{formatADAFull(r.quantity ? r.quantity * 10 ** 6 : "")}</Box>
-      </CustomTooltip>
-    ),
+    render: r => <Box component={"span"}>{numberWithCommas(r.quantity)}</Box>,
   },
 ];
 

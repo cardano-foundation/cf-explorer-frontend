@@ -57,12 +57,10 @@ const BlockList = () => {
       title: "Fees",
       key: "fees",
       render: r => (
-        <CustomTooltip title={formatADAFull(r.totalFees)}>
-          <PriceWrapper>
-            {formatADAFull(r.totalFees) || 0}
-            <img src={AIcon} alt="ADA Icon" />
-          </PriceWrapper>
-        </CustomTooltip>
+        <PriceWrapper>
+          {formatADAFull(r.totalFees)}
+          <img src={AIcon} alt="ADA Icon" />
+        </PriceWrapper>
       ),
     },
     {
@@ -70,17 +68,15 @@ const BlockList = () => {
       key: "output",
       minWidth: "100px",
       render: r => (
-        <CustomTooltip title={formatADAFull(r.totalOutput)}>
-          <PriceWrapper>
-            {formatADAFull(r.totalOutput) || 0}
-            <img src={AIcon} alt="ADA Icon" />
-            {block === (r.blockNo || r.hash) && (
-              <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
-                <MdOutlineKeyboardArrowRight fontSize={30} />
-              </Box>
-            )}
-          </PriceWrapper>
-        </CustomTooltip>
+        <PriceWrapper>
+          {formatADAFull(r.totalOutput)}
+          <img src={AIcon} alt="ADA Icon" />
+          {block === (r.blockNo || r.hash) && (
+            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
+              <MdOutlineKeyboardArrowRight fontSize={30} />
+            </Box>
+          )}
+        </PriceWrapper>
       ),
     },
   ];

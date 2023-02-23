@@ -198,12 +198,10 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
                 <InfoIcon />
                 Total Output
               </DetailLabel>
-              <CustomTooltip title={formatADAFull(data.outSum || 0)}>
-                <DetailValue>
-                  {formatADAFull(data.outSum) || 0}
-                  <ADAToken color="black" />
-                </DetailValue>
-              </CustomTooltip>
+              <DetailValue>
+                {formatADAFull(data.outSum)}
+                <ADAToken color="black" />
+              </DetailValue>
             </DetailsInfoItem>
           </Group>
           <Group>

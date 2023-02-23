@@ -1,12 +1,6 @@
 import { Link } from "react-router-dom";
 import { Grid, Box, Autocomplete } from "@mui/material";
-import {
-  exchangeADAToUSD,
-  formatADAFull,
-  formatPrice,
-  getShortWallet,
-  numberWithCommas,
-} from "../../../commons/utils/helper";
+import { exchangeADAToUSD, formatADAFull, formatPrice, getShortWallet } from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronDown } from "react-icons/bi";
@@ -17,8 +11,6 @@ import { StyledTextField, WrapPaperDropdown } from "./styles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { useEffect, useState } from "react";
-import CustomTooltip from "../../commons/CustomTooltip";
-import BigNumber from "bignumber.js";
 import { API } from "../../../commons/utils/api";
 import BookmarkButton from "../../commons/BookmarkIcon";
 import { EmptyIcon } from "../../../commons/resources";
@@ -43,21 +35,15 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: "ADA Balance",
       value: (
-        <CustomTooltip title={formatADAFull(data?.balance)}>
-          <Box display="flex" alignItems="center">
-            {formatADAFull(data?.balance)}
-            <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
-          </Box>
-        </CustomTooltip>
+        <Box display="flex" alignItems="center">
+          {formatADAFull(data?.balance)}
+          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+        </Box>
       ),
     },
     {
       title: "ADA Value",
-      value: (
-        <CustomTooltip title={"$ " + exchangeADAToUSD(data?.balance || 0, adaRate, true)}>
-          <Box>$ {exchangeADAToUSD(data?.balance || 0, adaRate, true)}</Box>
-        </CustomTooltip>
-      ),
+      value: <Box>$ {exchangeADAToUSD(data?.balance || 0, adaRate, true)}</Box>,
     },
     {
       value: (
@@ -89,7 +75,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
                     {option.displayName} #{option.name || option.fingerprint}
                   </Box>
                 </Box>
-                <Box fontWeight={"bold"}>{formatPrice(option.quantity || 0)}</Box>
+                <Box fontWeight={"bold"}>{formatPrice(option.quantity)}</Box>
               </Box>
             </li>
           )}
@@ -103,12 +89,10 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: "Total Stake",
       value: (
-        <CustomTooltip title={formatADAFull(dataStake?.totalStake)}>
-          <Box>
-            {formatADAFull(dataStake?.totalStake)}
-            <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
-          </Box>
-        </CustomTooltip>
+        <Box>
+          {formatADAFull(dataStake?.totalStake)}
+          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+        </Box>
       ),
     },
     {
@@ -127,12 +111,10 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: "Reward",
       value: (
-        <CustomTooltip title={formatADAFull(dataStake?.rewardAvailable)}>
-          <Box>
-            {formatADAFull(dataStake?.rewardAvailable)}
-            <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
-          </Box>
-        </CustomTooltip>
+        <Box>
+          {formatADAFull(dataStake?.rewardAvailable)}
+          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+        </Box>
       ),
     },
   ];

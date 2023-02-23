@@ -4,7 +4,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details, routers } from "../../commons/routers";
 import {
-  formatADA,
+  formatADAFull,
   formatDateTimeLocal,
   formatPercent,
   getPageInfo,
@@ -60,12 +60,12 @@ const columns: Column<Registration>[] = [
   {
     title: "Pledge (A)",
     key: "pledge",
-    render: r => <>{formatADA(r.pledge)}</>,
+    render: r => <>{formatADAFull(r.pledge)}</>,
   },
   {
     title: "Cost (A)",
     key: "cost",
-    render: r => <>{formatADA(r.cost)}</>,
+    render: r => <>{formatADAFull(r.cost)}</>,
   },
   {
     title: "Fee",

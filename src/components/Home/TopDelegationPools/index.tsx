@@ -64,11 +64,7 @@ const TopDelegationPools: React.FC<Props> = () => {
     {
       title: "Declared Pledge (A)",
       key: "declaredPledge",
-      render: r => (
-        <CustomTooltip title={formatADAFull(r.pledge)}>
-          <Box display="inline-block">{formatADAFull(r.pledge)}</Box>
-        </CustomTooltip>
-      ),
+      render: r => <Box display="inline-block">{formatADAFull(r.pledge)}</Box>,
     },
     {
       title: "Saturation",

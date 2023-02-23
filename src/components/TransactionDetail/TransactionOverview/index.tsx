@@ -155,11 +155,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <CustomTooltip title={formatADAFull(data?.tx?.totalOutput || 0)}>
-          <Box component={"span"}>
-            {formatADAFull(data?.tx?.totalOutput || 0)} <ADAToken />{" "}
-          </Box>
-        </CustomTooltip>
+        <Box component={"span"}>
+          {formatADAFull(data?.tx?.totalOutput)} <ADAToken />{" "}
+        </Box>
       ),
     },
     {
@@ -171,11 +169,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <CustomTooltip title={formatADAFull(data?.tx?.fee || 0)}>
-          <Box component={"span"}>
-            {formatADAFull(data?.tx?.fee || 0)} <ADAToken />{" "}
-          </Box>
-        </CustomTooltip>
+        <Box component={"span"}>
+          {formatADAFull(data?.tx?.fee)} <ADAToken />{" "}
+        </Box>
       ),
     },
     {
@@ -212,7 +208,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   ];
   return (
     <DetailHeader
-    listItem={listOverview}
+      listItem={listOverview}
       data={
         data && {
           type: "transaction",

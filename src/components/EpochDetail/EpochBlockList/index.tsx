@@ -7,7 +7,6 @@ import { formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../.
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
 import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer } from "./styles";
-import CustomTooltip from "../../commons/CustomTooltip";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { API } from "../../../commons/utils/api";
 
@@ -76,12 +75,10 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       key: "outSum",
       minWidth: "100px",
       render: r => (
-        <CustomTooltip title={formatADAFull(r.totalOutput)}>
-          <StyledOutput>
-            <StyledColorBlueDard>{formatADAFull(r.totalOutput) || 0}</StyledColorBlueDard>
-            <img src={AIcon} alt="ADA Icon" />
-          </StyledOutput>
-        </CustomTooltip>
+        <StyledOutput>
+          <StyledColorBlueDard>{formatADAFull(r.totalOutput)}</StyledColorBlueDard>
+          <img src={AIcon} alt="ADA Icon" />
+        </StyledOutput>
       ),
     },
   ];
