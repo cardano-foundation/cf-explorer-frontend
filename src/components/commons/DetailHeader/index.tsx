@@ -137,7 +137,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
             percent={
               currentEpoch && blockDetail.epochNo < currentEpoch?.no
                 ? 100
-                : ((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100
+                : ((blockDetail.epochSlot || 0) / MAX_SLOT_EPOCH) * 100
             }
           >
             <EpochNumber>{blockDetail?.epochNo}</EpochNumber>
