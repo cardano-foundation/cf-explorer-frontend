@@ -46,6 +46,7 @@ import { formatDateTimeLocal, getShortWallet, formatADAFull } from "../../../com
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
+import { Box } from "@mui/material";
 
 type DetailViewTokenProps = {
   token: IToken | null;
@@ -55,6 +56,7 @@ type DetailViewTokenProps = {
 
 const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
   const { token: data, handleClose, tokenId } = props;
+  console.log("🚀 ~ file: DetailViewToken.tsx:58 ~ data:", data);
 
   if (!data)
     return (
@@ -159,7 +161,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                     <LogoEmpty />
                   )}
                 </TokenInfo>
-                <MetaData>{""}</MetaData>
+                <Box pb={2}>
+                  <MetaData>{data?.metadata?.description || ""}</MetaData>
+                </Box>
               </TokenMetaData>
             ) : (
               ""

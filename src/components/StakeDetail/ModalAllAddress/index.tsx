@@ -8,6 +8,7 @@ import { formatADAFull, getShortWallet, numberWithCommas } from "../../../common
 import { Link, useHistory } from "react-router-dom";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 interface ModalAllAddressProps {
   open: boolean;
@@ -36,7 +37,9 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
           to={details.address(r.address)}
           style={{ fontFamily: "var(--font-family-text)", color: "var(--color-blue)" }}
         >
-          {getShortWallet(r.address)}
+          <CustomTooltip title={r.address || ""}>
+            <Box component={"span"}>{getShortWallet(r.address)}</Box>
+          </CustomTooltip>
         </Link>
       ),
       key: "Addresses",
