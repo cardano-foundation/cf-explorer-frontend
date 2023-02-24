@@ -30,7 +30,7 @@ export const formatPrice = (value?: string | number, abbreviations: string[] = L
   return `${newValue && newValue[0]}${syntax ?? `x 10^${exponential}`}`;
 };
 
-export const numberWithCommas = (value?: number | string, decimal: number = 5) => {
+export const numberWithCommas = (value?: number | string, decimal: number = 18) => {
   if (!value) return "0";
   const formated = value.toString().match(new RegExp(`^-?\\d+(?:\\.\\d{0,${decimal}})?`))?.[0] || "0";
   return formated.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
