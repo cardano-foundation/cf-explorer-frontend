@@ -1,7 +1,6 @@
-import { useHistory, useLocation } from "react-router-dom";
-import { parse, stringify } from "qs";
+import { useHistory } from "react-router-dom";
 import Table, { Column } from "../../commons/Table";
-import { formatADAFull, formatPercent, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
+import { formatADAFull, formatPercent, getShortWallet } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 import { HeaderSearchIcon } from "../../../commons/resources";
@@ -68,14 +67,15 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
 ];
 
 const DelegationLists: React.FC = () => {
-  const { search } = useLocation();
   const history = useHistory();
   const [value, setValue] = useState("");
-  const { name } = parse(search.split("?")[1]);
-  const pageInfo = getPageInfo(search);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
   const fetchData = useFetchList<Delegators>(API.DELEGATION.POOL_LIST, {
-    ...pageInfo,
-    search: (name as string) || "",
+    page: page - 1,
+    size,
+    search,
   });
 
   return (
@@ -87,11 +87,12 @@ const DelegationLists: React.FC = () => {
           value={value}
           onKeyUp={e => {
             if (e.key === "Enter") {
-              history.push({ search: stringify({ name: value, page: 1 }) });
+              setSearch(value);
+              setPage(1);
             }
           }}
         />
-        <SubmitButton onClick={() => history.push({ search: stringify({ name: value, page: 1 }) })}>
+        <SubmitButton onClick={() => setSearch(value)}>
           <Image src={HeaderSearchIcon} alt="Search" />
         </SubmitButton>
       </SearchContainer>
@@ -101,9 +102,13 @@ const DelegationLists: React.FC = () => {
         total={{ count: fetchData.total, title: "Total" }}
         onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId))}
         pagination={{
-          ...pageInfo,
+          page,
+          size,
           total: fetchData.total,
-          onChange: (page, size) => history.push({ search: stringify({ page, size, name }) }),
+          onChange: (page, size) => {
+            setPage(page);
+            setSize(size);
+          },
         }}
       />
     </>

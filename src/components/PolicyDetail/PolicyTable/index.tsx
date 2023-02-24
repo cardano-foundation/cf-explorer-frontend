@@ -40,7 +40,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     minWidth: "100px",
     render: r => (
       <CustomTooltip title={r.fingerprint}>
-        <LinkComponent to={details.token(r.fingerprint)}>{getShortHash(r.fingerprint)}</LinkComponent>
+        <LinkComponent to={details.token(r.fingerprint)}>{getShortWallet(r.fingerprint)}</LinkComponent>
       </CustomTooltip>
     ),
   },

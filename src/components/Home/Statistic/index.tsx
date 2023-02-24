@@ -55,9 +55,9 @@ const HomeStatistic: React.FC<Props> = () => {
     return () => clearInterval(interval);
   }, [refesh]);
 
-  const { circulating_supply: supply = 1, total_supply: total = 1 } = usdMarket || {};
+  const { circulating_supply, total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
-
+  const supply = Number(circulating_supply);
   const liveRate = new BigNumber(liveStake).div(MILION).div(supply).multipliedBy(100);
   const activeRate = activeStake && new BigNumber(liveStake).div(activeStake).minus(1).multipliedBy(100);
   const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
@@ -126,7 +126,7 @@ const HomeStatistic: React.FC<Props> = () => {
             <Content>
               <ItemIcon src={LiveStakeIcon} alt="Total ADA Stake" />
               <Name>Live Stake</Name>
-              <CustomTooltip title={new BigNumber(liveStake).div(MILION).toString()}>
+              <CustomTooltip title={formatADAFull(liveStake)}>
                 <Title>{formatADA(liveStake)}</Title>
               </CustomTooltip>
               <Progress>

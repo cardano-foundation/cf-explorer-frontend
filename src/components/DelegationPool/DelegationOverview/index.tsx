@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import moment from "moment";
 import React from "react";
 import useFetch from "../../../commons/hooks/useFetch";
@@ -48,29 +48,37 @@ const OverViews: React.FC = () => {
         </StyledCard.Container>
       </Grid>
       <Grid item xl={4} md={6} xs={12}>
-        <StyledCard.Container>
-          <StyledCard.Content>
-            <StyledCard.Title>Slot</StyledCard.Title>
-            <StyledCard.Value>
-              {data?.epochSlotNo}
-              <span style={{ color: "#98A2B3", fontWeight: "400" }}> / {MAX_SLOT_EPOCH}</span>
-            </StyledCard.Value>
-            <StyledLinearProgress variant="determinate" value={((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100} />
-          </StyledCard.Content>
-          <StyledImg src={RocketBackground} alt="Rocket" />
-        </StyledCard.Container>
+        <Box>
+          <Box bgcolor={"#fff"} boxShadow="0px 10px 25px rgba(0, 0, 0, 0.03)" borderRadius="12px">
+            <StyledCard.Container style={{ boxShadow: "none" }}>
+              <StyledCard.Content>
+                <StyledCard.Title>Slot</StyledCard.Title>
+                <StyledCard.Value>
+                  {data?.epochSlotNo}
+                  <span style={{ color: "#98A2B3", fontWeight: "400" }}> / {MAX_SLOT_EPOCH}</span>
+                </StyledCard.Value>
+              </StyledCard.Content>
+              <StyledImg src={RocketBackground} alt="Rocket" />
+            </StyledCard.Container>
+            <Box position={"relative"} top={-30} px={4}>
+              <StyledLinearProgress variant="determinate" value={((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100} />
+            </Box>
+          </Box>
+        </Box>
       </Grid>
       <Grid item xl={4} md={6} xs={12}>
         <StyledCard.Container>
-          <StyledCard.Content>
+          <StyledCard.Content style={{ flex: 1 }}>
             <StyledCard.Title>Live Stake</StyledCard.Title>
             <StyledCard.Value>{formatADAFull(data?.liveStake)}</StyledCard.Value>
           </StyledCard.Content>
-          <StyledCard.Content>
+          <StyledCard.Content style={{ flex: 1 }}>
             <StyledCard.Title>Delegators</StyledCard.Title>
             <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
           </StyledCard.Content>
-          <StyledImg src={LiveStakeIcon} alt="Rocket" />
+          <Box flex={"1"}>
+            <StyledImg src={LiveStakeIcon} alt="Rocket" />
+          </Box>
         </StyledCard.Container>
       </Grid>
     </Grid>
