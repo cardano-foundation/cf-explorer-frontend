@@ -37,7 +37,7 @@ import {
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatADAFull } from "../../../commons/utils/helper";
+import { formatADAFull, getShortWallet } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import { ADAToken } from "../Token";
@@ -131,6 +131,11 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
         <ViewMoreButton to={details.stake(stakeId)} />
       </ViewDetailDrawer>
     );
+  const poolName = data.pool?.poolName
+    ? `${data.pool.tickerName || ""} - ${data.pool.poolName}`
+    : data.pool?.poolId
+    ? `Pool [${getShortWallet(data.pool.poolId)}]`
+    : "-";
 
   return (
     <ViewDetailDrawer anchor="right" open={!!stakeId} hideBackdrop variant="permanent">
@@ -181,11 +186,9 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
                 <InfoIcon />
                 Delegated to
               </DetailLabel>
-              <CustomTooltip title={data.pool?.poolName || ""}>
+              <CustomTooltip title={poolName}>
                 <Box component={Link} display="inline-block" to={details.delegation(data.pool?.poolId)}>
-                  <DelegatedDetail>
-                    {data.pool?.tickerName} - {data.pool?.poolName}
-                  </DelegatedDetail>
+                  <DelegatedDetail>{poolName}</DelegatedDetail>
                 </Box>
               </CustomTooltip>
             </DetailsInfoItem>
