@@ -142,6 +142,8 @@ export const ButtonView = styled(Link)(({ theme }) => ({
 }));
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
+  height: "80vh",
+  overflowY: "auto",
   position: "relative",
   top: "50%",
   left: "50%",

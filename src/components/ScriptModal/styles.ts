@@ -2,11 +2,13 @@ import { Box, styled, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
+  height: "80vh",
+  overflowY: "auto",
   position: "relative",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "min(80vw, 350px)",
+  width: "min(80vw, 550px)",
   backgroundColor: "#fff",
   padding: theme.spacing(4),
   borderRadius: theme.borderRadius,
