@@ -2,11 +2,15 @@ import { Box, styled, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
+  height: "80vh",
+  overflow: "hidden",
   position: "relative",
   top: "50%",
   left: "50%",
+  display: "flex",
+  flexDirection: "column",
   transform: "translate(-50%, -50%)",
-  width: "min(80vw, 350px)",
+  width: "min(80vw, 550px)",
   backgroundColor: "#fff",
   padding: theme.spacing(4),
   borderRadius: theme.borderRadius,
@@ -25,6 +29,7 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
 }));
 
 export const ViewJson = styled(Box)(({ theme }) => ({
+  overflowY: "auto",
   textAlign: "left",
   backgroundColor: "rgba(152, 162, 179, 0.1)",
   borderRadius: theme.borderRadius,
