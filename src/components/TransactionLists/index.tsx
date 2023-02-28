@@ -94,9 +94,13 @@ const TransactionList: React.FC<TransactionListProps> = ({
       ),
     },
   ];
-
+  const { pathname } = window.location;
   return (
-    <Card title={"Transactions"} underline={underline}>
+    <Card
+      title={pathname === "/transactions" ? "Transactions" : ""}
+      titleChilren={pathname !== "/transactions" ? "Transactions" : ""}
+      underline={underline}
+    >
       <Table
         {...fetchData}
         columns={columns}
