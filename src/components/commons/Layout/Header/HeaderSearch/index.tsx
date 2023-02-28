@@ -116,15 +116,15 @@ const options: Option[] = [
   },
   {
     value: "epoch",
-    label: "Epoch",
+    label: "Epochs",
   },
   {
     value: "block",
-    label: "Block",
+    label: "Blocks",
   },
   {
     value: "tx",
-    label: "Transaction",
+    label: "Transactions",
   },
   {
     value: "tokens",
@@ -132,11 +132,15 @@ const options: Option[] = [
   },
   {
     value: "stake",
-    label: "Stake key",
+    label: "Stake keys",
   },
   {
     value: "address",
     label: "Addresses",
+  },
+  {
+    value: "delegation/pool-detail-header",
+    label: "Pools",
   },
 ];
 
@@ -175,7 +179,7 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
         type="search"
         value={search}
         spellCheck={false}
-        placeholder={home ? "Search transaction, address, block, epoch, pool..." : "Search ..."}
+        placeholder={home ? "Search transactions, address, blocks, epochs, pools..." : "Search ..."}
         onChange={handleChangeSearch}
         disableUnderline
       />

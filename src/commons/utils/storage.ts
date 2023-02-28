@@ -5,7 +5,7 @@ export default class StorageUtils {
     return localStorage.getItem(key) ?? defaultValue;
   }
   static getNetwork(): NETWORKS {
-    return this.getItem(STORAGE_KEYS.NETWORK, NETWORKS.testnet) as NETWORKS;
+    return this.getItem(STORAGE_KEYS.NETWORK, NETWORKS.mainnet) as NETWORKS;
   }
 
   static setNetwork(network: NETWORKS) {

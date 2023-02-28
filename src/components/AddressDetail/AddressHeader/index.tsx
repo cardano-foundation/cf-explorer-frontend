@@ -21,6 +21,7 @@ import CustomTooltip from "../../commons/CustomTooltip";
 import BigNumber from "bignumber.js";
 import { API } from "../../../commons/utils/api";
 import BookmarkButton from "../../commons/BookmarkIcon";
+import { EmptyIcon } from "../../../commons/resources";
 
 interface Props {
   data: WalletAddress | null;
@@ -64,7 +65,11 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           PaperComponent={({ children }) => <WrapPaperDropdown>{children}</WrapPaperDropdown>}
           options={data?.tokens || []}
           getOptionLabel={option => option.displayName}
-          noOptionsText="No data found"
+          noOptionsText={
+            <Box>
+              <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
+            </Box>
+          }
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
             <li {...props} key={option.fingerprint}>
               <Box
