@@ -143,7 +143,9 @@ export const ButtonView = styled(Link)(({ theme }) => ({
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
   height: "80vh",
-  overflowY: "auto",
+  overflow: "hidden",
+  display: "flex",
+  flexDirection: "column",
   position: "relative",
   top: "50%",
   left: "50%",
@@ -167,6 +169,7 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
 
 export const ViewJson = styled(Box)(({ theme }) => ({
   textAlign: "left",
+  overflowY: "auto",
   backgroundColor: "rgba(152, 162, 179, 0.1)",
   borderRadius: theme.borderRadius,
   padding: theme.spacing(2),
