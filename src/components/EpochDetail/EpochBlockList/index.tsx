@@ -85,7 +85,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
 
   return (
     <StyledContainer>
-      <Card title={"Blocks"} underline={true}>
+      <Card titleChilren={"Blocks"} underline={true}>
         <Table
           {...fetchData}
           columns={columns}

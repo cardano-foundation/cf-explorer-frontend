@@ -42,7 +42,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
 
   return (
     <Card
-      title={mappingValue[type].title}
+      titleChilren={mappingValue[type].title}
       underline={true}
       extra={
         <StyledSelect
