@@ -83,6 +83,10 @@ const Item = styled(Box)(({ theme }) => ({
   textAlign: "left",
   padding: "10px 0",
   borderBottom: "1px solid #0000001a",
+  ":last-child": {
+    padding: "10px 0 0",
+    borderBottom: "none",
+  },
 }));
 
 const Header = styled(Box)(({ theme }) => ({

@@ -58,12 +58,24 @@ const TableHeader = <T extends ColumnType>({ columns }: TableHeaderProps<T>) => 
   );
 };
 
-const TableRow = <T extends ColumnType>({ row, columns, index, onClickRow, selectedProps }: TableRowProps<T>) => {
+const TableRow = <T extends ColumnType>({
+  row,
+  columns,
+  index,
+  onClickRow,
+  selectedProps,
+  dataLength,
+}: TableRowProps<T>) => {
   return (
     <TRow onClick={e => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
       {columns.map((column, idx) => {
         return (
-          <TCol key={idx} minWidth={column.minWidth} maxWidth={column.maxWidth}>
+          <TCol
+            key={idx}
+            minWidth={column.minWidth}
+            maxWidth={column.maxWidth}
+            hiddenBorder={column.isHiddeBorder && dataLength === index + 1}
+          >
             {column.render ? column.render(row, index) : row[column.key]}
           </TCol>
         );
@@ -103,6 +115,7 @@ const TableBody = <T extends ColumnType>({
             key={index}
             columns={columns}
             index={index}
+            dataLength={data.length}
             onClickRow={onClickRow}
             selectedProps={selected === index ? selectedProps : undefined}
           />
