@@ -1,4 +1,4 @@
-import { Box, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
+import { Box, Button, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const HeaderDetailContainer = styled(Box)`
@@ -7,7 +7,7 @@ export const HeaderDetailContainer = styled(Box)`
 `;
 
 export const BackButton = styled(Link)`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
@@ -158,3 +158,11 @@ export const SavingImg = styled("img")`
   top: 0;
   right: 0;
 `;
+
+export const ButtonViewAll = styled(Button)(({ theme }) => ({
+  backgroundColor: "#d9e9e1",
+  border: "1px solid #000",
+  padding: `0 ${theme.spacing(1)}`,
+  textTransform: "capitalize",
+  fontWeight: "bold",
+}));

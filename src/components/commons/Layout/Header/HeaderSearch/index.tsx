@@ -19,7 +19,6 @@ const Form = styled("form")<{ home: number }>`
   background-color: #fff;
   color: ${props => props.theme.textColor};
   padding: 0px 0px 0px ${props => (props.home ? 15 : 0)}px;
-  border: 1px solid ${props => props.theme.borderColor};
   box-sizing: border-box;
   margin-top: ${props => (props.home ? 30 : 0)}px;
   @media screen and (max-width: 1023px) {
