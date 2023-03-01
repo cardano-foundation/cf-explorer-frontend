@@ -27,7 +27,7 @@ const BlockDetail = () => {
       <BlockOverview data={data} loading={loading} />
       <TransactionListsFull
         underline={true}
-        url={`${API.TRANSACTION.LIST}?${isNaN(+blockId) ? "blockHash=" : "blockNo="}${blockId}`}
+        url={`${API.BLOCK.DETAIL}/${blockId}/txs`}
       />
     </StyledContainer>
   );
