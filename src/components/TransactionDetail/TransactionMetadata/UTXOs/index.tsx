@@ -166,7 +166,7 @@ const Card = ({
         </Box>
       )}
       <Box display={"flex"} justifyContent="space-between" padding={"12px 25px"} style={{ background: "#dedede" }}>
-        <div>Total {type === "down" ? "Input" : "Output"}</div>
+        <Box fontWeight={"bold"}>Total {type === "down" ? "Input" : "Output"}</Box>
         <div>
           <Box fontWeight={"bold"} component="span" pr={1}>
             {type === "down" ? `${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}

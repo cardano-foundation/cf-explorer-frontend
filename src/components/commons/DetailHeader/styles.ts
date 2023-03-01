@@ -10,7 +10,7 @@ export const HeaderDetailContainer = styled(Box)`
 `;
 
 export const BackButton = styled(Link)`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
