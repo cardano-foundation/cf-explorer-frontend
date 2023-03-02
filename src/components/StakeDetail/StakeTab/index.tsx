@@ -77,7 +77,7 @@ const StakeTab = () => {
           </TabList>
         </Box>
         {tabs.map(item => (
-          <TabPanel key={item.key} value={item.key}>
+          <TabPanel key={item.key} value={item.key} style={{ padding: 0 }}>
             {item.component}
           </TabPanel>
         ))}
