@@ -84,7 +84,9 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
                     </CustomTooltip>
                   );
                 })}
-                {r.addressesInput.length > 1 && <StyledLink to={details.transaction(r.hash)}> ...</StyledLink>}
+                <Box>
+                  {r.addressesInput.length > 1 && <StyledLink to={details.transaction(r.hash)}> ...</StyledLink>}
+                </Box>
               </div>
             </Box>
             <Box display={"flex"} mt={1}>
@@ -97,7 +99,9 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
                     </CustomTooltip>
                   );
                 })}
-                {r.addressesOutput.length > 1 && <StyledLink to={details.transaction(r.hash)}> ...</StyledLink>}
+                <Box>
+                  {r.addressesOutput.length > 1 && <StyledLink to={details.transaction(r.hash)}> ...</StyledLink>}
+                </Box>
               </div>
             </Box>
           </div>
@@ -109,10 +113,10 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       key: "fee",
       minWidth: 120,
       render: r => (
-          <Box display="inline-flex" alignItems="center">
-            <Box mr={1}>{formatADAFull(r.fee)}</Box>
-            <img src={AIcon} alt="a icon" />
-          </Box>
+        <Box display="inline-flex" alignItems="center">
+          <Box mr={1}>{formatADAFull(r.fee)}</Box>
+          <img src={AIcon} alt="a icon" />
+        </Box>
       ),
     },
     {
@@ -120,10 +124,10 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       minWidth: 120,
       key: "ouput",
       render: r => (
-          <Box display="inline-flex" alignItems="center">
-            <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
-            <img src={AIcon} alt="a icon" />
-          </Box>
+        <Box display="inline-flex" alignItems="center">
+          <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
+          <img src={AIcon} alt="a icon" />
+        </Box>
       ),
     },
   ];
