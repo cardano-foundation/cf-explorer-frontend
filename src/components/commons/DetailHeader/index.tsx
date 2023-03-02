@@ -32,6 +32,8 @@ import {
 } from "./styles";
 import { routers } from "../../../commons/routers";
 import Bookmark from "../BookmarkIcon";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../stores/types";
 
 interface DetailHeaderProps {
   loading: boolean;
@@ -47,7 +49,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
     if (data?.type === "epoch") return routers.EPOCH_LIST;
     else return "/";
   };
-
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
   if (loading || !data) {
     return (
       <HeaderDetailContainer>
@@ -129,7 +131,15 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           )}
         </Box>
         <Box>
-          <ProgressCircle size={120} pathWidth={8} percent={((blockDetail?.epochSlot || 0) / MAX_SLOT_EPOCH) * 100}>
+          <ProgressCircle
+            size={120}
+            pathWidth={8}
+            percent={
+              currentEpoch && blockDetail.epochNo < currentEpoch?.no
+                ? 100
+                : ((blockDetail.epochSlot || 0) / MAX_SLOT_EPOCH) * 100
+            }
+          >
             <EpochNumber>{blockDetail?.epochNo}</EpochNumber>
             <EpochText>Epoch</EpochText>
           </ProgressCircle>
