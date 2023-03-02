@@ -26,7 +26,7 @@ pipeline {
         stage('Deliver') {
             steps {
 				script {
-                    if (env.BRANCH_NAME == 'dev') {
+                    if (env.BRANCH_NAME == 'develop') {
                         envFileDeploy = '/tmp/dev-fe.env'
                     }
                     if (env.BRANCH_NAME == 'test') {
