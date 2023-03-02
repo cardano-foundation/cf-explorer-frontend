@@ -130,6 +130,7 @@ export const ValueCard = styled(Box)(({ theme }) => ({
   color: theme.colorBlack,
   fontSize: "var(--font-size-text-small)",
   fontWeight: "bold",
+  marginTop: theme.spacing(1),
 }));
 
 export const StyledFlexValue = styled(Box)(({ theme }) => ({
