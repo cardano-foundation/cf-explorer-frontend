@@ -29,9 +29,6 @@ pipeline {
                     if (env.BRANCH_NAME == 'dev') {
                         envFileDeploy = '/tmp/dev-fe.env'
                     }
-                    if (env.BRANCH_NAME == 'test') {
-                        envFileDeploy = '/tmp/test-fe.env'
-                    }
                 }
                 sh "docker-compose --env-file ${envFileDeploy} up -d --build"
 				sh "docker images -f 'dangling=true' -q --no-trunc | xargs --no-run-if-empty docker rmi"
