@@ -46,7 +46,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
       minWidth: "200px",
       render: r => (
         <PriceValue>
-          <SmallText>{numberWithCommas(r.amount) || 0}</SmallText>
+          <SmallText>{numberWithCommas(r.amount)}</SmallText>
         </PriceValue>
       ),
     },

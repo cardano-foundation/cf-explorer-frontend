@@ -71,12 +71,10 @@ const TransactionList: React.FC<TransactionListProps> = ({
       key: "fee",
       minWidth: 120,
       render: r => (
-        <CustomTooltip title={formatADAFull(r.fee)}>
-          <Box display="inline-flex" alignItems="center">
-            <Box mr={1}>{formatADAFull(r.fee) || 0}</Box>
-            <img src={AIcon} alt="a icon" />
-          </Box>
-        </CustomTooltip>
+        <Box display="inline-flex" alignItems="center">
+          <Box mr={1}>{formatADAFull(r.fee)}</Box>
+          <img src={AIcon} alt="a icon" />
+        </Box>
       ),
     },
     {
@@ -84,17 +82,15 @@ const TransactionList: React.FC<TransactionListProps> = ({
       minWidth: 120,
       key: "ouput",
       render: r => (
-        <CustomTooltip title={formatADAFull(r.totalOutput)}>
-          <Box display="inline-flex" alignItems="center">
-            <Box mr={1}>{formatADAFull(r.totalOutput) || 0}</Box>
-            <img src={AIcon} alt="a icon" />
-            {hash === r.hash && (
-              <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
-                <MdOutlineKeyboardArrowRight fontSize={30} />
-              </Box>
-            )}
-          </Box>
-        </CustomTooltip>
+        <Box display="inline-flex" alignItems="center">
+          <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
+          <img src={AIcon} alt="a icon" />
+          {hash === r.hash && (
+            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
+              <MdOutlineKeyboardArrowRight fontSize={30} />
+            </Box>
+          )}
+        </Box>
       ),
     },
   ];

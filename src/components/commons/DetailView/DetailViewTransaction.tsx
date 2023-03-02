@@ -272,24 +272,20 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                 <InfoIcon />
                 Transaction Fees
               </DetailLabel>
-              <CustomTooltip title={formatADAFull(data.tx.fee || 0)}>
-                <DetailValue>
-                  {formatADAFull(data.tx.fee) || 0}
-                  <ADAToken color="black" />
-                </DetailValue>
-              </CustomTooltip>
+              <DetailValue>
+                {formatADAFull(data.tx.fee)}
+                <ADAToken color="black" />
+              </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
                 <InfoIcon />
                 Total Output
               </DetailLabel>
-              <CustomTooltip title={formatADAFull(data.tx.totalOutput || 0)}>
-                <DetailValue>
-                  {formatADAFull(data.tx.totalOutput) || 0}
-                  <ADAToken color="black" />
-                </DetailValue>
-              </CustomTooltip>
+              <DetailValue>
+                {formatADAFull(data.tx.totalOutput)}
+                <ADAToken color="black" />
+              </DetailValue>
             </DetailsInfoItem>
           </Group>
           {tabs.map(({ key, label, icon }) => {

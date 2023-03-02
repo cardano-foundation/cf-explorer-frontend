@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
-import { formatADAFull, getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import { getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { PriceValue, SmallText, StyledLink } from "./styles";
@@ -46,11 +46,9 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       key: "balance",
       minWidth: "200px",
       render: r => (
-        <CustomTooltip title={formatADAFull(r?.quantity ? r.quantity * 1000000 : 0)}>
-          <PriceValue>
-            <SmallText>{formatADAFull(r?.quantity ? r.quantity * 1000000 : 0) || 0}</SmallText>
-          </PriceValue>
-        </CustomTooltip>
+        <PriceValue>
+          <SmallText>{numberWithCommas(r?.quantity)}</SmallText>
+        </PriceValue>
       ),
     },
     {

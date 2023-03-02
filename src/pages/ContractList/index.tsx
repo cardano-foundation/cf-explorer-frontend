@@ -58,12 +58,10 @@ const Transactions: React.FC = () => {
       key: "balance",
       minWidth: 60,
       render: r => (
-        <CustomTooltip title={formatADAFull(r.balance)}>
-          <Box display="inline-flex" alignItems="center">
-            <Box mr={1}>{formatADAFull(r.balance)}</Box>
-            <img src={AIcon} alt="a icon" />
-          </Box>
-        </CustomTooltip>
+        <Box display="inline-flex" alignItems="center">
+          <Box mr={1}>{formatADAFull(r.balance)}</Box>
+          <img src={AIcon} alt="a icon" />
+        </Box>
       ),
     },
     {

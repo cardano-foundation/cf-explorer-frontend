@@ -68,7 +68,7 @@ const OverViews: React.FC = () => {
           </StyledCard.Content>
           <StyledCard.Content>
             <StyledCard.Title>Delegators</StyledCard.Title>
-            <StyledCard.Value>{numberWithCommas(data?.delegators || 0)}</StyledCard.Value>
+            <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
           </StyledCard.Content>
           <StyledImg src={LiveStakeIcon} alt="Rocket" />
         </StyledCard.Container>

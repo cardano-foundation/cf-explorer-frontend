@@ -42,7 +42,7 @@ import {
 } from "./styles";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatCurrency, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
+import { numberWithCommas, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
@@ -167,7 +167,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
             <TokenHeaderInfo>
               <TokenTotalSupply>
                 <TokenInfoLabel>Total Supply</TokenInfoLabel>
-                <TokenInfoValue>{formatCurrency(data.supply || 0)}</TokenInfoValue>
+                <TokenInfoValue>{numberWithCommas(data.supply)}</TokenInfoValue>
               </TokenTotalSupply>
               <TokenDecimal>
                 <TokenInfoLabel>Decimal</TokenInfoLabel>
@@ -224,9 +224,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                 <InfoIcon />
                 Created
               </DetailLabel>
-              <DetailValue>
-                {formatDateTimeLocal(data.createdOn || "")}
-              </DetailValue>
+              <DetailValue>{formatDateTimeLocal(data.createdOn || "")}</DetailValue>
             </DetailsInfoItem>
           </Group>
           <Group>
