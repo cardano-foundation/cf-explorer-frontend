@@ -41,7 +41,7 @@ const Card = ({
     item &&
     item.reduce((prv, i) => {
       return prv + i.value;
-    }, fee || 0);
+    }, 0);
 
   return (
     <Box textAlign={"left"} mb={1} style={{ background: "#fff" }}>

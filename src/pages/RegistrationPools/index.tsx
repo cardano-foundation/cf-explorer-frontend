@@ -16,6 +16,7 @@ import Table, { Column } from "../../components/commons/Table";
 import { RegistrationContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
 import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
+import { Box } from "@mui/material";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",
@@ -53,7 +54,9 @@ const columns: Column<Registration>[] = [
     key: "pool",
     render: r => (
       <StyledLink to={details.delegation(r.poolView || "")}>
-        {r.poolName || `Pool[${getShortHash(r.poolView)}]`}
+        <CustomTooltip title={r.poolName || `Pool[${r.poolView}]` || ""}>
+          <Box component={"span"}>{r.poolName || `Pool[${getShortHash(r.poolView)}]`}</Box>
+        </CustomTooltip>
       </StyledLink>
     ),
   },
