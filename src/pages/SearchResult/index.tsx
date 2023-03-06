@@ -32,7 +32,7 @@ const getUrl = (filter?: FilterParams | "all", value?: string): FilterParams | n
   return null;
 };
 
-const createNavigator = (filter?: FilterParams | string) => {
+const createNavigator = (filter?: FilterParams) => {
   switch (filter) {
     case "epoch":
       return details.epoch;
