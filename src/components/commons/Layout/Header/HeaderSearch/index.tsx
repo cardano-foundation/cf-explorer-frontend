@@ -114,15 +114,15 @@ const options: Option[] = [
     label: "All Filters",
   },
   {
-    value: "epoch",
+    value: "epochs",
     label: "Epochs",
   },
   {
-    value: "block",
+    value: "blocks",
     label: "Blocks",
   },
   {
-    value: "tx",
+    value: "txs",
     label: "Transactions",
   },
   {
@@ -130,15 +130,15 @@ const options: Option[] = [
     label: "Tokens",
   },
   {
-    value: "stake",
+    value: "stakes",
     label: "Stake keys",
   },
   {
-    value: "address",
+    value: "addresses",
     label: "Addresses",
   },
   {
-    value: "delegation/pool-detail-header",
+    value: "delegations/pool-detail-header",
     label: "Pools",
   },
 ];
