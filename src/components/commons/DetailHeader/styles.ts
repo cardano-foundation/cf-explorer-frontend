@@ -342,7 +342,7 @@ export const CardItemTrx = styled(CardItem)(({ theme }) => ({
     borderBottom: "1px solid rgba(0,0,0,0.1)",
     paddingBottom: theme.spacing(1),
   },
-  ":nth-child(n+4)": {
+  ":nth-child(n+5)": {
     paddingTop: theme.spacing(2),
     borderTop: "none",
   },
