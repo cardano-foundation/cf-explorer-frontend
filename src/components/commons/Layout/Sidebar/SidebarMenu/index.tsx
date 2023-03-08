@@ -72,7 +72,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       selected={pathname === href}
                       sx={theme => ({
                         ...itemStyle(theme, sidebar),
-                        ...(pathname === href ? { backgroundColor: `${theme.colorGreen} !important` } : {}),
+                        ...(pathname === href ? { backgroundColor: `${theme.green_1} !important` } : {}),
                       })}
                     >
                       {icon ? (
@@ -94,10 +94,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`menu-${index}` === active
                         ? {
-                            backgroundColor: theme => `${theme.colorGreenPale} !important`,
-                            color: theme => theme.colorGreen,
+                            backgroundColor: theme => `${theme.green_2_20} !important`,
+                            color: theme => theme.green_1,
                           }
-                        : { color: theme => theme.textColorPale }),
+                        : { color: theme => theme.textColorLight }),
                     })}
                   >
                     {icon ? (
@@ -159,7 +159,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                               ...itemStyle(theme, sidebar),
                               ...(pathname === href ||
                               (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1]))
-                                ? { backgroundColor: theme => `${theme.colorGreen} !important` }
+                                ? { backgroundColor: theme => `${theme.green_1} !important` }
                                 : {}),
                               paddingLeft: "70px",
                               [theme.breakpoints.down(1023)]: {
@@ -214,7 +214,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     selected={pathname === href}
                     sx={theme => ({
                       ...itemStyle(theme, sidebar),
-                      ...(pathname === href ? { backgroundColor: theme => `${theme.colorGreen} !important` } : {}),
+                      ...(pathname === href ? { backgroundColor: theme => `${theme.green_1} !important` } : {}),
                     })}
                   >
                     {icon ? (
@@ -231,10 +231,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     ...itemStyle(theme, sidebar),
                     ...(`footer-${index}` === active
                       ? {
-                          backgroundColor: `${theme.colorGreenPale} !important`,
-                          color: theme.colorGreen,
+                          backgroundColor: `${theme.green_2_20} !important`,
+                          color: theme.green_1,
                         }
-                      : { color: theme.textColorPale }),
+                      : { color: theme.textColorLight }),
                   })}
                 >
                   {icon ? (
@@ -293,7 +293,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={theme => ({
                               ...itemStyle(theme, sidebar),
                               ...(pathname === href
-                                ? { backgroundColor: theme => `${theme.colorGreen} !important` }
+                                ? { backgroundColor: theme => `${theme.green_1} !important` }
                                 : {}),
                               paddingLeft: "70px",
                               [theme.breakpoints.down(1023)]: {

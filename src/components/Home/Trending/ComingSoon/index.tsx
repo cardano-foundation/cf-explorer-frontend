@@ -20,7 +20,7 @@ const Image = styled("img")`
 
 const Title = styled("h3")`
   margin-bottom: 0;
-  color: ${props => props.theme.titleColor};
+  color: ${props => props.theme.textColorLighter};
   font-size: var(--font-size-text-x-large);
 `;
 

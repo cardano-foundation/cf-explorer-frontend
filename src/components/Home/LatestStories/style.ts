@@ -61,7 +61,7 @@ export const StyledSlider = styled(Slider)`
           width: 6px;
           height: 6px;
           border-radius: 6px;
-          background: #98a2b3;
+          background: ${props => props.theme.gray_5};
           opacity: 0.3;
           top: 50%;
           left: 50%;
@@ -72,7 +72,7 @@ export const StyledSlider = styled(Slider)`
         button::before {
           width: 8px;
           height: 8px;
-          background: #438f68;
+          background: ${props => props.theme.green_2};
           opacity: 1;
         }
       }
@@ -87,7 +87,7 @@ export const Item = styled(BoxRaised)`
   text-align: left;
   overflow: hidden;
   &:hover {
-    box-shadow: ${props => props.theme.shadowRaisedHover};
+    box-shadow: ${props => props.theme.shadow_1};
   }
 `;
 
@@ -114,8 +114,8 @@ export const Author = styled("h6")`
   -webkit-line-clamp: 3;
   overflow: hidden;
   font-family: var(--font-family-text);
-  color: ${props => props.theme.colorGreenLight};
-  background-color: ${props => props.theme.colorGreenPale};
+  color: ${props => props.theme.green_2};
+  background-color: ${props => props.theme.green_2_20};
   padding: 3px 4.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -143,7 +143,7 @@ export const Time = styled("h5")`
   gap: 6px;
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-normal);
-  color: ${props => props.theme.textColorPale};
+  color: ${props => props.theme.textColorLight};
   line-height: 1.15;
   margin: 0;
 `;

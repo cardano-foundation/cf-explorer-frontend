@@ -2,7 +2,7 @@ import { Box, styled } from "@mui/material";
 
 export const Wrapper = styled(Box)(({ theme }) => ({
   minHight: "400px",
-  background: "#fff",
+  background: theme.boxBackgroundColor,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -10,7 +10,7 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   padding: "25px 0",
 }));
 
-export const Img = styled("img")(({ theme }) => ({
+export const Img = styled("img")(() => ({
   display: "flex",
   alignItems: "center",
   padding: "15px 0 0",

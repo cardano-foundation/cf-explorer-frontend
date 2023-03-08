@@ -1,9 +1,9 @@
-import { Box, Select, styled, Theme } from "@mui/material";
+import { Box, Select, styled } from "@mui/material";
 
 export const Empty = styled(Box)`
   text-align: center;
   padding: 30px 0;
-  background: #e7e8eb;
+  background: ${props => props.theme.gray_11};
   position: relative;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -17,10 +17,10 @@ export const EmtyImage = styled("img")`
 export const Error = styled(Box)`
   text-align: center;
   padding: 0 0 30px;
-  background: #e7e8eb;
+  background: ${props => props.theme.gray_11};
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  color: ${props => props.theme.textColorPale};
+  color: ${props => props.theme.textColorLight};
   font-size: var(--font-size-text-x-large);
 `;
 
@@ -35,7 +35,7 @@ export const THeader = styled("th")`
   font-size: var(--font-size-text-small);
   border-bottom: 1px solid ${props => props.theme.borderColor};
   padding: 20px 20px 25px;
-  color: ${props => props.theme.titleColor};
+  color: ${props => props.theme.textColorLight};
 `;
 
 export const TRow = styled("tr")<{ selected?: number }>`
@@ -44,10 +44,10 @@ export const TRow = styled("tr")<{ selected?: number }>`
   font-size: 14px;
   cursor: pointer;
   position: relative;
-  background-color: ${props => (props.selected ? "#ECECEC " : "transparent")};
+  background-color: ${({ selected, theme }) => (selected ? theme.gray_10 : "transparent")};
   &:hover {
     border-radius: 10px;
-    background-color: ${props => (props.selected ? "#ECECEC " : "#ededed")};
+    background-color: ${({ theme }) => theme.gray_10};
   }
 `;
 
@@ -78,7 +78,7 @@ export const TFooter = styled(Box)`
   justify-content: space-between;
   align-items: baseline;
   flex-wrap: wrap;
-  color: ${props => props.theme.textColorPale};
+  color: ${props => props.theme.textColorLight};
   margin-top: 10px;
 
   @media screen and (max-width: 767px) {
@@ -108,14 +108,14 @@ export const TableFullWidth = styled("table")`
   width: max-content;
 `;
 
-export const InputNumber = styled("input")(({ theme, length }: { length: number; theme?: Theme }) => ({
+export const InputNumber = styled("input")<{ length: number }>(({ theme, length }) => ({
   width: length + "ch !important",
   padding: `4px ${theme?.spacing(1)}`,
   marginRight: theme?.spacing(1),
   borderRadius: 4,
   textAlign: "center",
   fontWeight: "bold",
-  border: "1px solid rgba(227, 229, 233, 1)",
+  border: `1px solid ${theme.borderColor}`,
   "::-webkit-inner-spin-button": {
     appearance: "none",
     margin: 0,
@@ -129,14 +129,14 @@ export const SelectMui = styled(Select)(({ theme }) => ({
   padding: 0,
   textAlign: "center",
   ".MuiOutlinedInput-notchedOutline": {
-    borderColor: "rgba(227, 229, 233, 1)",
+    borderColor: theme.borderColor,
     height: 40,
   },
   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "rgba(227, 229, 233, 1)",
+    borderColor: theme.borderColor,
   },
   "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "rgba(227, 229, 233, 1)",
+    borderColor: theme.borderColor,
   },
   ".MuiSelect-select": {
     paddingRight: "10px !important",

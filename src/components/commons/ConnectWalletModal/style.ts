@@ -31,7 +31,7 @@ export const CloseButton = styled(IconButton)<{ connecting: number }>`
   width: 30px;
   height: 30px;
   padding: 0;
-  border: 1px solid #a3a3a3;
+  border: 1px solid ${props => props.theme.gray_9};
   cursor: ${props => (props.connecting ? `wait` : `pointer`)};
   &:hover {
     ${props => (props.connecting ? `background: none;` : ``)}
@@ -50,8 +50,8 @@ export const WalletItem = styled(Box)<{ active: number; connecting: number }>`
   box-sizing: border-box;
   border-radius: 10px;
   cursor: ${props => (props.connecting ? `wait` : `pointer`)};
-  box-shadow: ${props => (props.active ? props.theme.shadowRaised : "none")};
-  background-color: ${props => (props.active ? props.theme.bodyBackground : "rgba(152, 162, 179, 0.1)")};
+  box-shadow: ${props => (props.active ? props.theme.shadow_0 : "none")};
+  background-color: ${props => (props.active ? props.theme.bodyBackground : props.theme.gray_5_10)};
   &:hover {
     background-color: ${props => props.theme.bodyBackground};
   }
@@ -68,7 +68,7 @@ export const GroupFlex = styled(Box)`
 
 export const WalletName = styled("h4")`
   margin: 0px;
-  color: #667085;
+  color: ${props => props.theme.textColorLight};
 `;
 
 export const InstallButton = styled(Button)`
@@ -76,11 +76,11 @@ export const InstallButton = styled(Button)`
   justify-content: space-between;
   align-items: center;
   gap: 5px;
-  background: #e3e2fc;
+  background: ${props => props.theme.purple_6};
   border-radius: 5px;
   padding: 4px 10px;
   height: 29px;
-  color: #6866d4;
+  color: ${props => props.theme.purple_2};
   text-transform: none;
   font-size: var(--font-size-text-x-small);
   font-weight: var(--font-weight-bold);

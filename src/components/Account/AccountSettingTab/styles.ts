@@ -38,9 +38,9 @@ export const StyledButton = styled(Button)`
   padding: 0 20px;
   font-size: var(--font-size-text-small);
   font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.colorGreenLight};
+  color: ${props => props.theme.green_2};
   font-family: var(--font-family-title);
   text-transform: unset;
-  border: 2px solid ${props => props.theme.colorGreenLight};
+  border: 2px solid ${props => props.theme.green_2};
   border-radius: 6px;
 `;

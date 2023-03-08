@@ -25,7 +25,7 @@ export const PolicyBody = styled("div")`
   align-items: center;
   justify-content: space-between;
 
-  background: rgba(24, 76, 120, 0.1);
+  background: ${props => props.theme.green_9_10};
   border-radius: 5px;
   margin-top: 15px;
   padding: 13px 15px;
@@ -43,7 +43,7 @@ export const PolicyBodyTitle = styled("span")`
 `;
 
 export const PolicyBodyDetail = styled("span")`
-  color: #667085;
+  color: ${props => props.theme.textColorLight};
   font-size: 12px;
   margin-top: 5px;
 `;
@@ -63,11 +63,11 @@ export const TokenDetailSupply = styled("div")`
 export const TokenDetailDecimal = styled(TokenDetailSupply)`
   padding: 0;
   padding-left: 15px;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-left: 1px solid ${props => props.theme.black_10};
 `;
 
 export const TokenDetailTitle = styled("span")`
-  color: #667085;
+  color: ${props => props.theme.textColorLight};
   font-size: 14px;
 `;
 
@@ -87,8 +87,8 @@ export const CardInfo = styled(Card)`
   padding-left: 40px;
   padding-right: 40px;
   text-align: left;
-  background-color: #fff;
-  box-shadow: ${props => props.theme.shadowRaised};
+  background-color: ${props => props.theme.boxBackgroundColor};
+  box-shadow: ${props => props.theme.shadow_0};
 
   @media screen and (max-width: 1023px) {
     height: auto;
@@ -124,8 +124,8 @@ export const CardProgress = styled(Card)`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  box-shadow: ${props => props.theme.shadowRaised};
-  background-color: #fff;
+  box-shadow: ${props => props.theme.shadow_0};
+  background-color: ${props => props.theme.boxBackgroundColor};
   height: 100%;
   overflow-x: auto;
   padding: 25px 30px;
@@ -142,12 +142,12 @@ export const CardProgress = styled(Card)`
 
 export const EpochNumber = styled("h1")`
   font-size: 56px;
-  color: #29744d;
+  color: ${props => props.theme.green_1};
   margin: 0;
 `;
 
 export const EpochText = styled("span")`
-  color: ${props => props.theme.textColorPale};
+  color: ${props => props.theme.textColorLight};
 `;
 
 export const ProgressData = styled(Box)`

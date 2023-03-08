@@ -1,12 +1,12 @@
 import { Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const TitleTab = styled(Box)<{ active: boolean }>(({ active }) => ({
+export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
   fontWeight: "bold",
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? "#000000" : "unset",
+  color: active ? theme.textColorBold : "unset",
 }));
 
 export const LabelStatus = styled(Box)(({ theme }) => ({
@@ -22,5 +22,5 @@ export const LabelStatus = styled(Box)(({ theme }) => ({
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.colorBlue}!important;
+  color: ${props => props.theme.linkColor}!important;
 `;

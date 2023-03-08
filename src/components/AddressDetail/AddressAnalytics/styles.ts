@@ -2,9 +2,9 @@ import { Grid, Skeleton, Button, styled, Box } from "@mui/material";
 
 export const BoxInfo = styled(Box)(({ theme }) => ({
   height: `100%`,
-  background: "#344054",
-  borderRadius: theme.borderRadius,
-  color: "white",
+  background: theme.gray_3,
+  borderRadius: "10px",
+  color: theme.textColorReverse,
   display: "flex",
   flexDirection: "column",
   textAlign: "center",
@@ -36,10 +36,10 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   width: "80%",
   margin: "0 auto",
-  borderBottom: "1px solid #424d60",
+  borderBottom: `1px solid ${theme.white_7}`,
   overflow: "hidden",
   [theme.breakpoints.down("lg")]: {
-    borderRight: "1px solid #424d60",
+    borderRight: `1px solid ${theme.white_7}`,
     height: "100%",
     borderBottom: "none",
     width: "100%",
@@ -49,7 +49,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     width: "80%",
     borderRight: "none",
-    borderBottom: "1px solid #424d60",
+    borderBottom: `1px solid ${theme.white_7}`,
   },
 }));
 
@@ -65,23 +65,23 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
 }));
 
 export const Wrapper = styled(Grid)(({ theme }) => ({
-  backgroundColor: "#fff",
-  borderRadius: theme.borderRadius,
+  backgroundColor: theme.boxBackgroundColor,
+  borderRadius: 10,
   minHeight: "400px",
-  boxShadow: theme.shadowRaised,
+  boxShadow: theme.shadow_0,
   padding: "25px",
   textAlign: "left",
 }));
 
 export const ButtonTitle = styled("button")(({ theme }) => ({
   border: "none",
-  borderRadius: theme.borderRadius,
+  borderRadius: 10,
   padding: "8px 30px",
   fontWeight: "bold",
   fontSize: "1rem",
   marginRight: 5,
-  color: "#fff",
-  backgroundColor: theme.colorGreenLight,
+  color: theme.textColorReverse,
+  backgroundColor: theme.green_2,
   fontFamily: "var(--font-family-title)",
 }));
 
@@ -92,7 +92,7 @@ export const ChartBox = styled(Box)(({ theme }) => ({
 export const SkeletonUI = styled(Skeleton)(({ theme }) => ({
   paddingTop: theme.spacing(3),
   marginRight: theme.spacing(2),
-  borderRadius: theme.borderRadius,
+  borderRadius: 10,
 }));
 
 export const Tabs = styled(Box)(({ theme }) => ({
@@ -108,12 +108,12 @@ export const Tabs = styled(Box)(({ theme }) => ({
 
 export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   textTransform: "lowercase",
-  borderRadius: theme.borderRadius,
-  border: "2px solid rgba(24, 76, 120, 0.2)",
+  borderRadius: 10,
+  border: `2px solid ${theme.green_9_20}`,
   marginRight: theme.spacing(1),
-  color: active ? "#fff !important" : theme.textColorPale,
+  color: active ? `${theme.textColorReverse} !important` : theme.textColorLight,
   fontWeight: "bold",
-  backgroundColor: active ? theme.colorGreenLight : "none",
+  backgroundColor: active ? theme.green_2 : "none",
 }));
 export const StyledLine = styled(Box)<{ left?: number }>(({ theme, left }) => ({
   position: "absolute",
@@ -121,5 +121,5 @@ export const StyledLine = styled(Box)<{ left?: number }>(({ theme, left }) => ({
   width: 1.5,
   top: 0,
   left: left,
-  background: "#E3E5E9",
+  background: theme.gray_6,
 }));

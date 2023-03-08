@@ -19,7 +19,7 @@ const Image = styled("img")`
 `;
 
 const Title = styled("h3")`
-  color: ${props => props.theme.textColorPale};
+  color: ${props => props.theme.textColorLight};
   margin-bottom: 2rem;
   font-weight: var(--font-weight-normal);
 `;
@@ -29,17 +29,17 @@ const BackToHome = styled(Link)`
   width: max-content;
   margin: auto;
   padding: 6.5px 20px;
-  border: 2px solid ${props => props.theme.colorGreenLight};
+  border: 2px solid ${props => props.theme.green_2};
   border-radius: 5px;
-  color: ${props => props.theme.colorGreenLight};
+  color: ${props => props.theme.green_2};
   font-weight: var(--font-weight-bold);
   &:link,
   &:visited {
-    color: ${props => props.theme.colorGreenLight};
+    color: ${props => props.theme.green_2};
   }
   &:hover {
-    border: 2px solid ${props => props.theme.colorGreen};
-    color: ${props => props.theme.colorGreen};
+    border: 2px solid ${props => props.theme.green_1};
+    color: ${props => props.theme.green_1};
   }
 `;
 

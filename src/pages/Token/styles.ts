@@ -6,7 +6,7 @@ export const StyledContainer = styled(Container)`
 `;
 
 export const AssetName = styled(Link)`
-  color: ${props => props.theme.colorBlue} !important;
+  color: ${props => props.theme.linkColor} !important;
   font-family: var(--font-family-text) !important;
 `;
 
@@ -18,15 +18,15 @@ export const Logo = styled("img")`
 export const LogoEmpty = styled(Box)`
   width: 30px;
   height: 30px;
-  background: #ffffff99;
+  background: ${props => props.theme.white_60};
   border-radius: 50%;
-  border: 1px solid #e5e5e5;
+  border: 1px solid ${props => props.theme.borderColor};
 `;
 
 export const StyledSelect = styled(Select)`
   font-family: var(--font-family-text);
-  background: #fff;
-  color: #344054;
+  background: ${props => props.theme.boxBackgroundColor};
+  color: ${props => props.theme.gray_3};
   border-radius: 8px;
   min-width: 250px;
   & > div {
@@ -40,7 +40,7 @@ export const StyledSelect = styled(Select)`
     border: none !important;
   }
   & > svg {
-    color: #344054;
+    color: ${props => props.theme.gray_3};
     font-size: 20px;
   }
 `;

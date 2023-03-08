@@ -1,5 +1,5 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Tab } from "@mui/material";
+import { Box, Tab, useTheme } from "@mui/material";
 import React from "react";
 import { ReactComponent as UtxoIcon } from "../../../commons/resources/images/utxoIcon.svg";
 import { TabTitle } from "./styles";
@@ -13,6 +13,7 @@ const ContractDetailContent: React.FC = () => {
     address: string;
   }>();
   const history = useHistory();
+  const theme = useTheme();
 
   const handleChange = (event: React.SyntheticEvent, tab: "transaction" | "transcript") => {
     history.push({ pathname: details.contract(address, tab) });
@@ -23,7 +24,7 @@ const ContractDetailContent: React.FC = () => {
       label: (
         <TabTitle className={tabActive === "transaction" ? "active" : ""}>
           <Box display={"flex"} alignItems="center">
-            <UtxoIcon fill={tabActive === "transaction" ? "#438F68" : "#98A2B3"} />
+            <UtxoIcon fill={tabActive === "transaction" ? theme.green_2 : theme.textColorLighter} />
             <Box pl={1}>Transaction</Box>
           </Box>
         </TabTitle>
@@ -31,34 +32,23 @@ const ContractDetailContent: React.FC = () => {
       key: "transaction",
       children: <TokenTransaction />,
     },
-    // {
-    //   label: (
-    //     <TabTitle className={tabActive === "transcript" ? "active" : ""}>
-    //       <Box display={"flex"} alignItems="center">
-    //         <Script fill={tabActive === "transcript" ? "#438F68" : "#98A2B3"} />
-    //         <Box pl={1}>Transcript</Box>
-    //       </Box>
-    //     </TabTitle>
-    //   ),
-    //   key: "transcript",
-    //   children: <TokenTransaction />,
-    // },
   ];
 
   return (
     <TabContext value={tabActive}>
       <Box>
-        <TabList
-          onChange={handleChange}
-          TabIndicatorProps={{ style: { background: "#438f68", color: "#438f68", height: "3px" } }}
-        >
+        <TabList onChange={handleChange} TabIndicatorProps={{ sx: { background: theme => theme.green_2, height: 3 } }}>
           {tabs?.map(item => (
             <Tab key={item.key} label={item.label} value={item.key} />
           ))}
         </TabList>
       </Box>
       {tabs.map(item => (
-        <TabPanel sx={{ padding: 0, borderTop: "1px solid rgba(24, 76, 120, 0.1)" }} key={item.key} value={item.key}>
+        <TabPanel
+          sx={{ padding: 0, borderTop: theme => `1px solid ${theme.green_9_10}` }}
+          key={item.key}
+          value={item.key}
+        >
           {item.children}
         </TabPanel>
       ))}

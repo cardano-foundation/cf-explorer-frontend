@@ -4,11 +4,11 @@ import { FormHelperText, FormLabel, InputBase, Link, styled } from "@mui/materia
 export const StyledLink = styled(Link)`
   text-decoration: none;
   font-family: var(--font-family-text);
-  color: ${props => props.theme.colorBlue};
+  color: ${props => props.theme.linkColor};
   font-weight: var(--font-weight-normal);
   &:hover {
     font-family: var(--font-family-text);
-    color: ${props => props.theme.colorBlue};
+    color: ${props => props.theme.linkColor};
   }
 `;
 
@@ -41,7 +41,7 @@ export const StyledLabelInput = styled(FormLabel)`
 export const StyledDarkLoadingButton = styled(LoadingButton)`
   padding: 10px 20px;
   min-width: 150px;
-  background: ${props => props.theme.colorBlueDark};
+  background: ${props => props.theme.gray_1};
   border: none;
   border-radius: var(--border-radius-sm);
   font-size: var(--font-size-text);
@@ -51,10 +51,10 @@ export const StyledDarkLoadingButton = styled(LoadingButton)`
   font-weight: var(--font-weight-bold);
   text-transform: unset;
   &:hover {
-    background: ${props => props.theme.colorBlueDark};
+    background: ${props => props.theme.gray_1};
   }
   &:disabled {
     color: white;
-    background: ${props => props.theme.colorBlueDark}70;
+    background: ${props => props.theme.gray_1_44};
   }
 `;

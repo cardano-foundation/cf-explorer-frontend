@@ -11,9 +11,9 @@ const StyledLink = styled(Link)`
   width: 35px;
   height: 35px;
   border-radius: 5px;
-  background: ${props => props.theme.colorGreenLight}16;
+  background: ${props => props.theme.green_2_10};
   &:hover {
-    background: ${props => props.theme.colorGreenLight}42;
+    background: ${props => props.theme.green_2_30};
   }
 `;
 

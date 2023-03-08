@@ -9,7 +9,7 @@ export const Flex = styled("div")`
 
 export const StyledLink = styled("span")`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.colorBlue} !important;
+  color: ${props => props.theme.linkColor} !important;
 `;
 
 export const StyledSpan = styled("span")`
@@ -21,6 +21,6 @@ export const StyledImage = styled("img")`
   margin-left: 10px;
 `;
 export const TitleCard = styled(Box)(({ theme }) => ({
-  color: "rgba(0,0,0,0.5)",
+  color: `${theme.black_50}`,
   fontSize: "0.875rem",
 }));

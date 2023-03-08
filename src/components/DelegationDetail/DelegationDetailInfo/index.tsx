@@ -70,7 +70,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <PoolId>
           <PoolIdSkeleton variant="rectangular" />
         </PoolId>
-        <Box borderRadius={props => props.borderRadius} overflow="hidden">
+        <Box borderRadius={10} overflow="hidden">
           <Skeleton variant="rectangular" height={250} width="100%" />
         </Box>
         {/* <SavingImg src={saving ? SaveOnIcon : SaveOffIcon} alt="Save Icon" onClick={() => setSaving(!saving)} /> */}
@@ -144,7 +144,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                       component={Link}
                       to={details.stake(data?.rewardAccounts[0] || "")}
                       style={{ fontFamily: "var(--font-family-text)" }}
-                      color={props => `${props.colorBlue} !important`}
+                      color={theme => `${theme.linkColor} !important`}
                     >
                       {getShortWallet(data?.rewardAccounts[0] || "")}
                     </Box>
@@ -191,7 +191,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                   <CustomTooltip title={data?.ownerAccounts[0] || ""}>
                     <Box
                       component={Link}
-                      color={props => `${props.colorBlue} !important`}
+                      color={theme => `${theme.linkColor} !important`}
                       to={details.stake(data?.ownerAccounts[0] || "")}
                       style={{ fontFamily: "var(--font-family-text)" }}
                     >

@@ -24,7 +24,7 @@ const FooterContainer = styled(Container)`
 `;
 
 const Copyright = styled("small")`
-  color: ${props => props.theme.textColorPale};
+  color: ${props => props.theme.textColorLight};
   font-family: var(--font-family-title);
   @media screen and (max-width: 1023px) {
     width: 100%;
@@ -41,7 +41,7 @@ const Hyperlink = styled(Box)`
 `;
 
 const ExternalLink = styled("a")`
-  color: ${props => props.theme.colorGreen}!important;
+  color: ${props => props.theme.green_1}!important;
   &:hover {
     text-decoration: underline !important;
   }
@@ -52,7 +52,7 @@ const Dot = styled("a")`
   margin: 0.1rem 10px;
   width: 4px;
   height: 4px;
-  background-color: ${props => props.theme.textColorPale};
+  background-color: ${props => props.theme.textColorLight};
   border-radius: 50%;
 `;
 

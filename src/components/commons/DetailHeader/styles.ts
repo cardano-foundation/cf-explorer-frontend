@@ -17,7 +17,7 @@ export const BackButton = styled(Link)`
 `;
 
 export const BackText = styled("small")`
-  color: #344054;
+  color: ${props => props.theme.gray_3};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -27,7 +27,7 @@ export const HeaderContainer = styled(Box)`
 `;
 
 export const HeaderTitle = styled("h2")`
-  color: ${props => props.theme.colorBlack};
+  color: ${props => props.theme.textColorBold};
   font-size: 2.25rem;
   margin: 0.5rem 0;
 `;
@@ -39,29 +39,29 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
   border-radius: 4px;
 `;
 
-export const HeaderStatus = styled("small") <{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
+export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
   color: ${props => {
     switch (props.status) {
       case TRANSACTION_STATUS.SUCCESS:
-        return props.theme.colorGreenLight;
+        return props.theme.green_2;
       case "IN_PROGRESS":
-        return props.theme.colorYellow;
+        return props.theme.warning_1;
       case "FINISHED":
-        return props.theme.colorBlue;
+        return props.theme.blue_0;
       default:
-        return props.theme.colorGreenLight;
+        return props.theme.green_2;
     }
   }};
   background-color: ${props => {
     switch (props.status) {
       case TRANSACTION_STATUS.SUCCESS:
-        return `${props.theme.colorGreenLight}32`;
+        return `${props.theme.green_2_20}`;
       case "IN_PROGRESS":
-        return `${props.theme.colorYellow}32`;
+        return `${props.theme.warning_1_20}`;
       case "FINISHED":
-        return `${props.theme.colorBlue}32`;
+        return `${props.theme.blue_0_20}`;
       default:
-        return `${props.theme.colorGreenLight}32`;
+        return `${props.theme.green_2_20}`;
     }
   }};
   font-weight: var(--font-weight-bold);
@@ -82,7 +82,7 @@ export const SlotLeaderSkeleton = styled(Skeleton)`
 
 export const SlotLeaderValue = styled("span")`
   font-family: var(--font-family-text);
-  color: ${props => props.theme.colorBlue};
+  color: ${props => props.theme.linkColor};
   white-space: pre-wrap;
   display: inline-block;
   word-break: break-word;
@@ -100,12 +100,11 @@ export const SlotLeaderCopy = styled(CopyButton)`
 export const DetailsInfo = styled(Grid)`
   padding: ${props => props.theme.spacing(3)} ${props => props.theme.spacing(2)};
   margin-top: 15px;
-  background: #ffffff;
+  background: ${props => props.theme.boxBackgroundColor};
   border-radius: 15px;
-  // color: ${props => props.theme.textColorReverse};
 `;
 
-export const DetailsInfoItem = styled(Grid) <{ center?: number }>`
+export const DetailsInfoItem = styled(Grid)<{ center?: number }>`
   display: flex;
   justify-content: center;
   align-items: ${props => (props.center ? `center` : `flex-start`)};
@@ -120,7 +119,7 @@ export const DetailsInfoItem = styled(Grid) <{ center?: number }>`
     width: 1px;
     height: 70%;
     transform: translateY(-50%);
-    background-image: linear-gradient(0deg, #ffffff00 0%, #ffffff40 50%, #ffffff00 100%);
+    background-image: ${props => props.theme.gradient_8};
   }
   &:first-of-type::after {
     display: none;
@@ -133,7 +132,7 @@ export const ProgressSkeleton = styled(Skeleton)`
 `;
 
 export const EpochNumber = styled("h3")`
-  color: ${props => props.theme.colorBlack};
+  color: ${props => props.theme.textColorBold};
   margin: 0;
 `;
 
@@ -194,21 +193,21 @@ export const ConfirmationValue = styled(DetailValue)`
   align-items: center;
 `;
 
-export const ConfirmStatus = styled("small") <{ status?: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
   color: ${props => {
     switch (props.status) {
       case CONFIRMATION_STATUS.MEDIUM:
-        return props.theme.colorYellow;
+        return props.theme.warning_1;
       default:
-        return props.theme.colorYellow;
+        return props.theme.warning_1;
     }
   }};
   background-color: ${props => {
     switch (props.status) {
       case CONFIRMATION_STATUS.MEDIUM:
-        return `${props.theme.colorYellow}32`;
+        return `${props.theme.warning_1_20}`;
       default:
-        return `${props.theme.colorYellow}32`;
+        return `${props.theme.warning_1_20}`;
     }
   }};
   margin-left: 10px;
@@ -223,10 +222,10 @@ export const InfoIcon = styled(FiInfo)`
   margin-left: 2px;
 `;
 
-export const ProgressLiner = styled("div") <{ progress: number }>`
+export const ProgressLiner = styled("div")<{ progress: number }>`
   position: relative;
   width: 100%;
-  background: ${props => props.theme.colorBlack}32;
+  background: ${props => props.theme.black_20};
   height: 12px;
   margin-bottom: 10px;
   border-radius: 12px;
@@ -238,7 +237,7 @@ export const ProgressLiner = styled("div") <{ progress: number }>`
     width: ${props => props.progress || 0}%;
     height: 100%;
     border-radius: 12px;
-    background: linear-gradient(90deg, #e65c00 0%, #f9d423 100%);
+    background: ${props => props.theme.gradient_4};
   }
 `;
 
@@ -256,18 +255,18 @@ export const ProgressStatusText = styled("h4")`
 `;
 
 export const ProgressPercent = styled("h4")`
-  color: ${props => props.theme.colorYellow};
+  color: ${props => props.theme.warning_1};
   font-weight: var(--font-weight-normal);
   margin: 0;
 `;
 
 export const CardInfoOverview = styled(Box)(({ theme }) => ({
   padding: `${theme.spacing(3)} ${theme.spacing(5)}`,
-  backgroundColor: "#fff",
+  backgroundColor: theme.boxBackgroundColor,
   display: "flex",
   textAlign: "left",
-  boxShadow: theme.shadowRaised,
-  borderRadius: theme.borderRadius,
+  boxShadow: theme.shadow_0,
+  borderRadius: 10,
   marginTop: theme.spacing(5),
   flexWrap: "wrap",
 }));
@@ -275,7 +274,7 @@ export const CardInfoOverview = styled(Box)(({ theme }) => ({
 export const CardItem = styled(Grid)<{ multiRow: number }>(({ theme, multiRow }) => ({
   position: "relative",
   width: "max-content",
-  borderLeft: "1px solid rgba(0,0,0,0.1)",
+  borderLeft: `1px solid ${theme.black_10}`,
   paddingLeft: theme.spacing(2),
   paddingRight: theme.spacing(2),
   ":first-of-type": {
@@ -288,36 +287,38 @@ export const CardItem = styled(Grid)<{ multiRow: number }>(({ theme, multiRow })
     width: "calc(100% - 30px)",
     left: "50%",
     transform: "translateX(-50%)",
-    borderBottom: "0px solid rgba(0,0,0,0.1)",
+    borderBottom: `0px solid ${theme.black_10}`,
   },
-  ...multiRow ? {
-    marginBottom: 30,
-    "&::after": {
-      borderBottomWidth: 1,
-    },
-    [theme.breakpoints.up(theme.breakpoints.values.lg)]: {
-      ":nth-child(4n+1)": {
-        borderLeftWidth: 0,
-      },
-      ":nth-last-child(-n + 4)": {
-        ":nth-child(4n + 1)": {
-          "::after": {
-            borderBottomWidth: 0,
+  ...(multiRow
+    ? {
+        marginBottom: 30,
+        "&::after": {
+          borderBottomWidth: 1,
+        },
+        [theme.breakpoints.up(theme.breakpoints.values.lg)]: {
+          ":nth-child(4n+1)": {
+            borderLeftWidth: 0,
           },
-          "&~div::after": {
-            borderBottomWidth: 0,
+          ":nth-last-child(-n + 4)": {
+            ":nth-child(4n + 1)": {
+              "::after": {
+                borderBottomWidth: 0,
+              },
+              "&~div::after": {
+                borderBottomWidth: 0,
+              },
+            },
           },
         },
-      },
-    },
-  } : {
-    [theme.breakpoints.down(theme.breakpoints.values.lg)]: {
-      marginBottom: 30,
-      "&::after": {
-        borderBottomWidth: 1,
-      },
-    },
-  },
+      }
+    : {
+        [theme.breakpoints.down(theme.breakpoints.values.lg)]: {
+          marginBottom: 30,
+          "&::after": {
+            borderBottomWidth: 1,
+          },
+        },
+      }),
   [theme.breakpoints.between(theme.breakpoints.values.md, theme.breakpoints.values.lg)]: {
     ":nth-child(3n+1)": {
       borderLeftWidth: 0,
@@ -357,7 +358,7 @@ export const CardItem = styled(Grid)<{ multiRow: number }>(({ theme, multiRow })
 }));
 
 export const ValueCard = styled(Box)(({ theme }) => ({
-  color: theme.colorBlack,
+  color: theme.textColorBold,
   fontSize: "1rem",
   fontWeight: "bold",
 }));

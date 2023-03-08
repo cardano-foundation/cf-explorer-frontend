@@ -124,9 +124,9 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
             {!loading && <Skeleton variant="rectangular" width={"100"} />}
             {!loading && (
               <LabelStatus
-                color={props => (data?.status === "ACTIVE" ? props.colorGreenLight : props.textColorPale)}
-                style={{
-                  background: data?.status === "ACTIVE" ? "rgba(67, 143, 104, 0.2)" : "rgba(102, 112, 133, 0.2)",
+                color={theme => (data?.status === "ACTIVE" ? theme.green_2 : theme.textColorLight)}
+                sx={{
+                  background: theme => (data?.status === "ACTIVE" ? theme.green_2_20 : theme.gray_4_20),
                 }}
               >
                 {data?.status}

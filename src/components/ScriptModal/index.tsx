@@ -1,4 +1,4 @@
-import { Box, Skeleton } from "@mui/material";
+import { Box, Skeleton, useTheme } from "@mui/material";
 import { Modal } from "@mui/material";
 import { JsonViewer } from "@textea/json-viewer";
 import { ButtonClose, ButtonLink, ModalContainer, ViewJson } from "./styles";
@@ -15,7 +15,7 @@ interface ScriptModalProps {
 }
 const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
   const { data, loading } = useFetch<PolicyDetail>(policy && `${API.POLICY}/${policy && policy}`);
-
+  const theme = useTheme();
   return (
     <Modal {...props}>
       <ModalContainer>
@@ -26,7 +26,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
           Policy ID
         </Box>
         {loading && (
-          <Box height={40} width="100%" borderRadius={props => props.borderRadius} overflow="hidden">
+          <Box height={40} width="100%" borderRadius={10} overflow="hidden">
             <Skeleton height={"100%"} width="100%" variant="rectangular" />
           </Box>
         )}
@@ -37,7 +37,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
           </Box>
         )}
         {loading && (
-          <Box height={20} my={1} width="100%" borderRadius={props => props.borderRadius} overflow="hidden">
+          <Box height={20} my={1} width="100%" borderRadius={10} overflow="hidden">
             <Skeleton height={"100%"} width="100%" variant="rectangular" />
           </Box>
         )}
@@ -51,7 +51,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
         )}
 
         {loading && (
-          <Box height={150} width="100%" borderRadius={props => props.borderRadius} overflow="hidden">
+          <Box height={150} width="100%" borderRadius={10} overflow="hidden">
             <Skeleton height={"100%"} width="100%" variant="rectangular" />
           </Box>
         )}
@@ -68,7 +68,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                   displayDataTypes={false}
                   enableClipboard={false}
                   collapseStringsAfterLength={false}
-                  style={{ padding: 0, background: "none", color: "#344054" }}
+                  style={{ padding: 0, background: "none", color: theme.gray_3 }}
                   rootName={false}
                 />
               )}

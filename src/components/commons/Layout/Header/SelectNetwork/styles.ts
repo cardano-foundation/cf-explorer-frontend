@@ -18,11 +18,11 @@ export const SubMenu = styled(Menu)<{ isActive: boolean }>`
   position: absolute;
   z-index: 1;
   top: 100%;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: var(--shadow-raised);
+  background: ${props => props.theme.white_90};
+  box-shadow: ${props => props.theme.shadow_1};
   backdrop-filter: blur(2px);
   border-radius: 10px;
-  color: var(--color-black);
+  color: ${props => props.theme.textColorBold};
   visibility: hidden;
   padding: 20px 0px;
   @media screen and (max-width: 1023px) {
@@ -70,8 +70,8 @@ export const InternalLink = styled(Link)<{ isSubMenu: boolean }>`
     color: inherit;
   }
   &:hover {
-    color: ${props => props.theme.textColorReverseHover};
-    text-shadow: 1px 1px 5px ${props => props.theme.textColorReverseHover};
+    color: ${props => props.theme.textColorReverse};
+    text-shadow: 1px 1px 5px ${props => props.theme.textColorReverse};
     @media screen and (max-width: 1023px) {
       color: inherit;
     }
@@ -90,8 +90,8 @@ export const ExternalLink = styled("a")<{ isSubMenu: boolean }>`
     color: inherit;
   }
   &:hover {
-    color: ${props => props.theme.textColorReverseHover};
-    text-shadow: 1px 1px 5px ${props => props.theme.textColorReverseHover};
+    color: ${props => props.theme.textColorReverse};
+    text-shadow: 1px 1px 5px ${props => props.theme.textColorReverse};
     @media screen and (max-width: 1023px) {
       color: inherit;
     }

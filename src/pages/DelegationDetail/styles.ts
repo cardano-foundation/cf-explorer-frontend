@@ -2,11 +2,10 @@ import { MenuItem, Select, styled, Box } from "@mui/material";
 
 export const Title = styled("h2")``;
 
-
 export const StyledSelect = styled(Select)`
   font-family: var(--font-family-text);
-  background: #fff;
-  color: #344054;
+  background: ${props => props.theme.boxBackgroundColor};
+  color: ${props => props.theme.gray_3};
   border-radius: 8px;
   min-width: 250px;
   & > div {
@@ -20,7 +19,7 @@ export const StyledSelect = styled(Select)`
     border: none !important;
   }
   & > svg {
-    color: #344054;
+    color: ${props => props.theme.gray_3};
     font-size: 20px;
   }
 `;

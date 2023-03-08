@@ -45,8 +45,8 @@ const columns: Column<StakeHistory>[] = [
     minWidth: "120px",
     render: r => (
       <LabelStatus
-        color={props => (r.action === "Registered" ? props.colorRed : props.textColorPale)}
-        style={{ background: r.action === "Registered" ? "rgba(221, 67, 67, 0.2)" : "rgba(102, 112, 133, 0.2" }}
+        color={theme => (r.action === "Registered" ? theme.error_1 : theme.textColorLight)}
+        sx={{ background: theme => (r.action === "Registered" ? theme.error_1_20 : theme.gray_4_20) }}
       >
         {r.action ? r.action.split(" ").join("") : ""}
       </LabelStatus>

@@ -41,7 +41,7 @@ export const Item = styled(BoxRaised)`
   cursor: pointer;
   height: calc(100% - 56px);
   &:hover {
-    box-shadow: ${props => props.theme.shadowRaisedHover};
+    box-shadow: ${props => props.theme.shadow_1};
   }
 `;
 export const ItemHeader = styled(Box)`
@@ -69,7 +69,7 @@ export const ItemDetail = styled("div")`
 export const Hash = styled("small")`
   font-style: normal;
   font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.colorBlue};
+  color: ${props => props.theme.linkColor};
   font-family: var(--font-family-text);
 `;
 
@@ -80,7 +80,7 @@ export const BlockNo = styled("small")`
 `;
 
 export const WalletAddress = styled("small")`
-  color: ${props => props.theme.colorBlue};
+  color: ${props => props.theme.linkColor};
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-bold);
 `;

@@ -16,7 +16,7 @@ export const BackButton = styled(Link)`
 `;
 
 export const BackText = styled("small")`
-  color: #344054;
+  color: ${props => props.theme.gray_3};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -26,7 +26,7 @@ export const HeaderContainer = styled(Box)`
 `;
 
 export const HeaderTitle = styled("h2")`
-  color: ${props => props.theme.colorBlack};
+  color: ${props => props.theme.textColorBold};
   font-size: 2.25rem;
   margin: 0.5rem 0;
 `;
@@ -47,7 +47,7 @@ export const SlotLeaderContainer = styled(Box)`
 export const SlotLeader = styled(Box)`
   margin-top: 0px;
   font-weight: bold;
-  color: ${props => props.theme.colorBlue};
+  color: ${props => props.theme.linkColor};
   display: flex;
   align-items: center;
 `;
@@ -60,7 +60,7 @@ export const SlotLeaderSkeleton = styled(Skeleton)`
 
 export const SlotLeaderValue = styled("span")`
   font-family: var(--font-family-text);
-  color: ${props => props.theme.colorBlue};
+  color: ${props => props.theme.linkColor};
   white-space: pre-wrap;
   display: inline-block;
   word-break: break-word;
@@ -101,7 +101,7 @@ export const InfoIcon = styled(FiInfo)`
 export const ProgressLiner = styled("div")<{ progress: number }>`
   position: relative;
   width: 100%;
-  background: ${props => props.theme.colorBlack}32;
+  background: ${props => props.theme.black_20};
   height: 12px;
   margin-bottom: 10px;
   border-radius: 12px;
@@ -113,7 +113,7 @@ export const ProgressLiner = styled("div")<{ progress: number }>`
     width: ${props => props.progress || 0}%;
     height: 100%;
     border-radius: 12px;
-    background: linear-gradient(90deg, #e65c00 0%, #f9d423 100%);
+    background: ${props => props.theme.gradient_4};
   }
 `;
 
@@ -131,21 +131,21 @@ export const ProgressStatusText = styled("h4")`
 `;
 
 export const ProgressPercent = styled("h4")`
-  color: ${props => props.theme.colorYellow};
+  color: ${props => props.theme.warning_1};
   font-weight: var(--font-weight-normal);
   margin: 0;
 `;
 
 export const CardInfo = styled(Box)(({ theme }) => ({
   display: "flex",
-  borderRadius: theme.borderRadius,
-  background: "#344054",
+  borderRadius: 10,
+  background: theme.gray_3,
   padding: `${theme.spacing(2)} ${theme.spacing(4)}`,
   alignItems: "center",
   justifyContent: "space-between",
 }));
 export const TokenInfo = styled(Box)(({ theme }) => ({
-  color: "#fff",
+  color: theme.textColorReverse,
   position: "relative",
   minHeight: "150px",
   minWidth: 200,
@@ -161,31 +161,31 @@ export const TokenInfo = styled(Box)(({ theme }) => ({
     width: "1px",
     height: "80%",
     transform: "translateY(-50%)",
-    backgroundImage: "linear-gradient(0deg, #ffffff00 0%, #ffffff40 50%, #ffffff00 100%)",
+    backgroundImage: theme.gradient_8,
   },
 }));
 
 export const ViewMetaData = styled(Link)`
   display: block;
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.textColor}!important;
+  color: ${props => props.theme.textColor} !important;
   text-decoration: underline !important;
 `;
 
 export const CardInfoOverview = styled(Box)(({ theme }) => ({
   padding: `${theme.spacing(3)} ${theme.spacing(5)}`,
-  backgroundColor: "#fff",
+  backgroundColor: theme.boxBackgroundColor,
   display: "flex",
   textAlign: "left",
-  boxShadow: theme.shadowRaised,
-  borderRadius: theme.borderRadius,
+  boxShadow: theme.shadow_0,
+  borderRadius: 10,
   marginTop: theme.spacing(2),
   flexWrap: "wrap",
 }));
 
 export const CardItem = styled(Box)(({ theme }) => ({
   width: "max-content",
-  borderLeft: "1px solid rgba(0,0,0,0.1)",
+  borderLeft: `1px solid ${theme.black_10}`,
   paddingLeft: theme.spacing(2),
   paddingRight: theme.spacing(2),
   ":first-of-type": {
@@ -194,11 +194,11 @@ export const CardItem = styled(Box)(({ theme }) => ({
 }));
 
 export const TitleCard = styled(Box)(({ theme }) => ({
-  color: "rgba(0,0,0,0.5)",
+  color: theme.black_50,
   fontSize: "0.875rem",
 }));
 export const ValueCard = styled(Box)(({ theme }) => ({
-  color: theme.colorBlack,
+  color: theme.textColorBold,
   fontSize: "1rem",
   fontWeight: "bold",
 }));
@@ -209,7 +209,7 @@ export const ButtonView = styled(Link)(({ theme }) => ({
   minWidth: 0,
   fontWeight: "bold",
   textTransform: "capitalize",
-  color: `${theme.colorBlue} !important`,
+  color: `${theme.linkColor} !important`,
   fontFamily: "Helvetica, monospace",
 }));
 
@@ -219,9 +219,9 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "min(80vw, 350px)",
-  backgroundColor: "#fff",
+  backgroundColor: theme.boxBackgroundColor,
   padding: theme.spacing(4),
-  borderRadius: theme.borderRadius,
+  borderRadius: 10,
   textAlign: "left",
 }));
 
@@ -238,8 +238,8 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
 
 export const ViewJson = styled(Box)(({ theme }) => ({
   textAlign: "left",
-  backgroundColor: "rgba(152, 162, 179, 0.1)",
-  borderRadius: theme.borderRadius,
+  backgroundColor: theme.gray_5_10,
+  borderRadius: 10,
   padding: theme.spacing(2),
   "& .object-contentw": {
     pointerEvents: "none",
@@ -248,7 +248,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
     border: " none !important",
   },
   "& .object-key": {
-    color: "#344054 !important",
+    color: `${theme.gray_3} !important`,
     opacity: "1 !important",
     "& span": {
       "&:first-of-type ": {
@@ -260,7 +260,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
     },
   },
   "& .string-value": {
-    color: " #344054",
+    color: theme.gray_3,
     wordBreak: "break-all",
   },
   "& .icon-container": {
@@ -270,7 +270,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
 
 export const ButtonLink = styled(Link)(({ theme }) => ({
   fontWeight: "bold",
-  color: `${theme.colorBlue} !important`,
+  color: `${theme.linkColor} !important`,
   fontFamily: "Helvetica, monospace !important",
   textAlign: "left",
   wordBreak: "break-all",
@@ -280,7 +280,7 @@ export const ButtonLink = styled(Link)(({ theme }) => ({
 export const LogoEmpty = styled(Box)`
   width: 20px;
   height: 20px;
-  background: #ffffff99;
+  background: ${props => props.theme.white_60};
   border-radius: 50%;
-  border: 1px solid #e5e5e5;
+  border: 1px solid ${props => props.theme.borderColor};
 `;

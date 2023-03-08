@@ -5,18 +5,18 @@ export const AssetName = styled(Box)`
   align-items: center;
   gap: 10px;
   font-size: var(--font-size-text-small);
-  color: #344054;
+  color: ${props => props.theme.gray_3};
 `;
 
 export const LogoEmpty = styled(Box)`
   width: 30px;
   height: 30px;
-  background: #ffffff99;
+  background: ${props => props.theme.white_60};
   border-radius: 50%;
-  border: 1px solid #e5e5e5;
+  border: 1px solid ${props => props.theme.borderColor};
 `;
 
 export const Amount = styled(Box)`
   font-size: var(--font-size-text-small);
-  color: #344054;
+  color: ${props => props.theme.gray_3};
 `;

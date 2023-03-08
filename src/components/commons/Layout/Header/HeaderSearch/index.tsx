@@ -16,7 +16,7 @@ const Form = styled("form")<{ home: number }>`
   height: ${props => (props.home ? 60 : 44)}px;
   margin: auto;
   border-radius: ${props => (props.home ? 30 : 8)}px;
-  background-color: #fff;
+  background-color: ${props => props.theme.boxBackgroundColor};
   color: ${props => props.theme.textColor};
   padding: 0px 0px 0px ${props => (props.home ? 15 : 0)}px;
   border: 1px solid ${props => props.theme.borderColor};
@@ -51,13 +51,13 @@ const StyledSelect = styled(Select)<{ home: number }>`
     border: none !important;
   }
   & > svg {
-    color: ${props => props.theme.textColorPale};
+    color: ${props => props.theme.textColorLight};
     font-size: 1.75rem;
   }
 `;
 const SelectOption = styled(MenuItem)<{ home: number }>`
   font-size: ${props => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.textColorLight};
   font-weight: var(--font-weight-normal);
 `;
 

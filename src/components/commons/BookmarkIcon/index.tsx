@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { AxiosResponse } from "axios";
 import { useLocalStorage } from "react-use";
 
@@ -22,6 +22,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
   const isLogin = !!userData?.username;
   const [bookmarks, setBookmarks] = useLocalStorage<BookMark[]>("bookmark", []);
   const [message, setMessage] = React.useState("");
+  const theme = useTheme();
 
   const bookmark = (bookmarks || []).find(r => r.keyword === `${keyword}`);
   const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
@@ -68,7 +69,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
   return (
     <Box>
       <Box mx={1} component={IconButton} style={{ width: 45, height: 45 }} onClick={updateBookmark}>
-        <BookmarkIcon fill={!!bookmark ? "#ffa800" : "#98A2B3"} />
+        <BookmarkIcon fill={!!bookmark ? theme.warning_1 : theme.gray_5} />
       </Box>
       <Toast
         open={!!message}

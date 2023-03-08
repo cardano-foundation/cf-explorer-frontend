@@ -10,8 +10,8 @@ export const Item = styled("div")`
   align-items: center;
   gap: 10px;
   justify-content: center;
-  background: #ECECEC;
-  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.03);
+  background: ${props => props.theme.gray_10};
+  box-shadow: ${props => props.theme.shadow_0};
   border-radius: 12px;
   padding: 24px;
 `;
@@ -19,7 +19,7 @@ export const Item = styled("div")`
 export const Title = styled("span")`
   font-family: var(--font-family-title);
   line-height: 24px;
-  color: #667085;
+  color: ${props => props.theme.textColorLight};
 `;
 
 export const Value = styled("span")`

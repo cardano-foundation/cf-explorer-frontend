@@ -3,25 +3,25 @@ import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS } from "../../../commons/utils/constants";
 
 export const TitleCard = styled(Box)(({ theme }) => ({
-  color: "rgba(0,0,0,0.5)",
+  color: theme.black_50,
   fontSize: "0.875rem",
   minHeight: 20,
 }));
 export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
-  color: ${props => {
-    switch (props.status) {
+  color: ${({ status, theme }) => {
+    switch (status) {
       case CONFIRMATION_STATUS.MEDIUM:
-        return props.theme.colorYellow;
+        return theme.warning_1;
       default:
-        return props.theme.colorYellow;
+        return theme.warning_1;
     }
   }};
-  background-color: ${props => {
-    switch (props.status) {
+  background-color: ${({ status, theme }) => {
+    switch (status) {
       case CONFIRMATION_STATUS.MEDIUM:
-        return `${props.theme.colorYellow}32`;
+        return `${theme.warning_1_20}`;
       default:
-        return `${props.theme.colorYellow}32`;
+        return `${theme.warning_1_20}`;
     }
   }};
   margin-left: 10px;
@@ -32,5 +32,5 @@ export const ConfirmStatus = styled("small")<{ status?: keyof typeof Confirmatio
 `;
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.colorBlue} !important;
+  color: ${props => props.theme.linkColor} !important;
 `;

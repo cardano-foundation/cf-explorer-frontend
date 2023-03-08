@@ -11,9 +11,9 @@ import { BookMark } from "../../../../../types/bookmark";
 
 const StyledSelect = styled(Select)<{ home: number }>`
   font-family: var(--font-family-title);
-  border: 2px solid ${props => (props.home ? "#FFFFFF48" : "#c8cdd8")};
+  border: 2px solid ${({ home, theme }) => (home ? theme.white_30 : theme.gray_12)};
   background: transparent;
-  color: ${props => (props.home ? props.theme.textColorReverse : "#344054")};
+  color: ${({ home, theme }) => (home ? theme.textColorReverse : theme.gray_3)};
   border-radius: 8px;
   & > div {
     padding: 6.5px 12px;
@@ -25,7 +25,7 @@ const StyledSelect = styled(Select)<{ home: number }>`
     border: none !important;
   }
   & > svg {
-    color: ${props => (props.home ? props.theme.textColorReverse : "#344054")};
+    color: ${({ home, theme }) => (home ? theme.textColorReverse : theme.gray_3)};
     font-size: 20px;
   }
 `;

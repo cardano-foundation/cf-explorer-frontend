@@ -2,12 +2,12 @@ import { styled, Container } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledColorBlueDard = styled("span")`
-  color: ${props => props.theme.colorBlueDark};
+  color: ${props => props.theme.textColor};
 `;
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.colorBlue} !important;
+  color: ${props => props.theme.linkColor} !important;
 `;
 
 export const StyledImage = styled("img")`

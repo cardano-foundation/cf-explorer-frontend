@@ -72,7 +72,7 @@ export const DelegateTable = styled(Table)`
 
 export const PoolName = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.colorBlue} !important;
+  color: ${props => props.theme.linkColor} !important;
 `;
 
 export const ProgressContainer = styled("div")`
@@ -99,7 +99,7 @@ export const StyledProgress = styled("div")<{ value: number; width?: number }>`
     height: 100%;
     border-radius: 6px;
     width: ${props => props.value}%;
-    background: ${props => props.theme.linearGradientGreen};
+    background: ${props => props.theme.gradient_0};
   }
 `;
 
@@ -108,10 +108,10 @@ export const StyledLinearProgress = styled(LinearProgress)`
   width: 100%;
   height: 8px;
   border-radius: 8px;
-  background: rgba(0, 0, 0, 0.1);
+  background: ${props => props.theme.black_10};
   margin-left: 8px;
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 8px;
-    background: ${props => props.theme.linearGradientGreen};
+    background: ${props => props.theme.gradient_0};
   }
 `;

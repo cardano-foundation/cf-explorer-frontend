@@ -206,10 +206,10 @@ const StyledLinearProgress = styled(LinearProgress)`
   width: 100%;
   height: 10px;
   border-radius: 34px;
-  background: rgba(0, 0, 0, 0.1);
+  background: ${props => props.theme.black_10};
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${props => props.theme.linearGradientGreen};
+    background: ${props => props.theme.gradient_0};
   }
 `;

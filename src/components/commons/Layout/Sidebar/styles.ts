@@ -12,7 +12,7 @@ export const NavbarContainer = styled.nav`
   text-align: left;
   @media screen and (max-width: 1023px) {
     height: auto;
-    background-color: #ffffff;
+    background-color: ${props => props.theme.boxBackgroundColor};
     padding: 0px;
   }
 `;
@@ -55,16 +55,16 @@ export const NetworkName = styled.small<{ network: keyof typeof NETWORKS }>`
   color: ${props => {
     switch (props.network) {
       case NETWORKS.mainnet: {
-        return props.theme.colorGreenLight;
+        return props.theme.green_2;
       }
       case NETWORKS.preprod: {
-        return props.theme.colorBlue;
+        return props.theme.blue_0;
       }
       case NETWORKS.preview: {
-        return props.theme.colorBlue;
+        return props.theme.blue_0;
       }
       default: {
-        return props.theme.colorYellow;
+        return props.theme.warning_1;
       }
     }
   }};

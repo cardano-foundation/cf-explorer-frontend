@@ -6,11 +6,11 @@ export const StyledLinearProgress = styled(LinearProgress)`
   width: 100%;
   height: 8px;
   border-radius: 34px;
-  background: rgba(0, 0, 0, 0.1);
+  background: ${props => props.theme.black_10};
   margin-left: 8px;
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${props => props.theme.linearGradientGreen};
+    background: ${props => props.theme.gradient_0};
   }
 `;
 
@@ -25,7 +25,7 @@ export const SearchContainer = styled("div")`
   align-items: center;
   width: 100%;
   max-width: 360px;
-  background: #ffffff;
+  background: ${props => props.theme.boxBackgroundColor};
   padding: 0 12px;
   border-radius: 8px;
   margin-bottom: 15px;

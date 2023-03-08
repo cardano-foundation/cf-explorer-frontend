@@ -12,7 +12,7 @@ export const StyledSpan = styled("span")`
 
 export const HorizonDiv = styled("div")`
   width: 100%;
-  border: 1px solid ${props => props.theme.colorBlack};
+  border: 1px solid ${props => props.theme.black};
   opacity: 0.1;
 `;
 
@@ -25,11 +25,11 @@ export const StyledLinearProgress = styled(LinearProgress)`
   width: 100%;
   height: 12px;
   border-radius: 34px;
-  background: rgba(0, 0, 0, 0.1);
+  background: ${props => props.theme.black_10};
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${props => props.theme.linearGradientGreen};
+    background: ${props => props.theme.gradient_0};
   }
 `;
 
@@ -43,5 +43,5 @@ export const ProgressStatus = styled("h4")`
 `;
 
 export const ProgressPercent = styled("h4")`
-  color: ${props => props.theme.colorGreenLight};
+  color: ${props => props.theme.green_2};
 `;

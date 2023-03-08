@@ -42,7 +42,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
                 <CustomTooltip title={item?.address}>
                   <Box
                     component={"span"}
-                    color={props => props.colorBlue}
+                    color={theme => theme.linkColor}
                     fontWeight="bold"
                     fontFamily="Helvetica, monospace"
                   >
@@ -54,7 +54,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
             </div>
             <Box display={"flex"} alignItems={"center"}>
               <Box mr={"8px"}>
-                <Box component={"span"} fontWeight="bold" color={props => props.colorGreenLight}>
+                <Box component={"span"} fontWeight="bold" color={theme => theme.green_2}>
                   {type === "up" ? `- ${formatADAFull(item?.amount)}` : `+ ${formatADAFull(item?.amount)}`}
                 </Box>
               </Box>
@@ -66,7 +66,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
           <Box display="flex" alignItems={"center"}>
             <Link to={details.transaction(item?.txHash)}>
               <CustomTooltip title={item?.txHash || ""}>
-                <Box component={"span"} color={props => props.colorBlue} fontFamily="Helvetica, monospace">
+                <Box component={"span"} color={theme => theme.linkColor}>
                   {getShortHash(item?.txHash || "")}
                 </Box>
               </CustomTooltip>
@@ -82,7 +82,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
 const Item = styled(Box)(({ theme }) => ({
   textAlign: "left",
   padding: "10px 0",
-  borderBottom: "1px solid #0000001a",
+  borderBottom: `1px solid ${theme.black_10}`,
 }));
 
 const Header = styled(Box)(({ theme }) => ({
@@ -90,7 +90,7 @@ const Header = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   fontSize: "0.875rem",
   fontWeight: "bold",
-  color: theme.titleColor,
-  borderBottom: "1px solid #0000001a",
+  color: theme.textColorLighter,
+  borderBottom: `1px solid ${theme.black_10}`,
   paddingBottom: "8px",
 }));

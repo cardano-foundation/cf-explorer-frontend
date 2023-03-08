@@ -28,7 +28,7 @@ export const Label = styled(FormLabel)`
 
 export const TextError = styled(FormHelperText)`
   margin-top: 0px;
-  color: ${props => props.theme.colorRed};
+  color: ${props => props.theme.error_1};
   font-size: 14px;
 `;
 

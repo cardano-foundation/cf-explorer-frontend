@@ -44,7 +44,7 @@ const Card = ({
     }, 0);
 
   return (
-    <Box textAlign={"left"} mb={1} style={{ background: "#fff" }}>
+    <Box textAlign={"left"} mb={1} sx={{ background: theme => theme.boxBackgroundColor }}>
       <Header>
         <div>
           <Box color={"black"} fontWeight="bold" fontSize={"1rem"}>
@@ -56,7 +56,7 @@ const Card = ({
       </Header>
       {item &&
         item.map((i, ii) => (
-          <Box textAlign={"left"} padding="10px 25px" borderBottom={"1px solid #0000001a"} key={ii}>
+          <Box textAlign={"left"} padding="10px 25px" borderBottom={theme => `1px solid ${theme.black_10}`} key={ii}>
             <Box display={"flex"} alignItems="center">
               <Box width={50}>
                 <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />
@@ -76,7 +76,7 @@ const Card = ({
                     >
                       <Link to={details.address(i.address)}>
                         <CustomTooltip title={i.address}>
-                          <Box color={props => props.colorBlue} fontWeight="bold" className={styles.ffText}>
+                          <Box color={theme => theme.linkColor} fontWeight="bold" className={styles.ffText}>
                             {getShortWallet(i.address)}
                           </Box>
                         </CustomTooltip>
@@ -93,7 +93,7 @@ const Card = ({
                       <Box
                         component={"span"}
                         whiteSpace="nowrap"
-                        color={props => (type === "up" ? props.colorGreenLight : props.colorRed)}
+                        color={theme => (type === "up" ? theme.green_2 : theme.error_1)}
                         fontWeight="bold"
                         mr={1}
                       >
@@ -113,7 +113,7 @@ const Card = ({
                               component={"span"}
                               fontWeight="bold"
                               className={styles.ffText}
-                              color={props => props.colorBlue}
+                              color={theme => theme.linkColor}
                               mr={1}
                             >
                               {getShortHash(i.txHash)}
@@ -146,7 +146,7 @@ const Card = ({
           </Box>
         ))}
       {type === "up" && (
-        <Box textAlign={"left"} padding="10px 25px" borderBottom={"1px solid #0000001a"}>
+        <Box textAlign={"left"} padding="10px 25px" borderBottom={theme => `1px solid ${theme.black_10}`}>
           <Box width={"100%"} display="flex" justifyContent={"space-between"} alignItems="center">
             <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
               <Box display={"flex"} alignItems="center">
@@ -165,7 +165,12 @@ const Card = ({
           </Box>
         </Box>
       )}
-      <Box display={"flex"} justifyContent="space-between" padding={"12px 25px"} style={{ background: "#dedede" }}>
+      <Box
+        display={"flex"}
+        justifyContent="space-between"
+        padding={"12px 25px"}
+        sx={{ background: theme => theme.green_9_10 }}
+      >
         <div>Total {type === "down" ? "Input" : "Output"}</div>
         <div>
           <Box fontWeight={"bold"} component="span" pr={1}>

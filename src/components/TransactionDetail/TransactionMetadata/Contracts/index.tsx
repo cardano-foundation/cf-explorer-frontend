@@ -30,7 +30,7 @@ const Contracts: React.FC<ContractsProps> = ({ data }) => {
           <Img src={contractImg} alt="contract icon" />
           <Box display={"flex"} alignItems="center" padding={"15px 0 0"} flexDirection="column">
             <Box
-              color={props => props.textColor}
+              color={theme => theme.textColor}
               mx={"auto"}
               display="flex"
               alignItems={"center"}
@@ -79,9 +79,9 @@ export default Contracts;
 const CopyButtonMui = styled(Button)(({ theme }) => {
   return {
     display: "block",
-    color: theme.colorGreenLight,
-    border: `2px solid ${theme.colorGreenLight}`,
-    borderRadius: theme.borderRadius,
+    color: theme.green_2,
+    border: `2px solid ${theme.green_2}`,
+    borderRadius: 10,
     padding: `${theme.spacing(1)} ${theme.spacing(4)}`,
     marginTop: theme.spacing(2),
     textTransform: "capitalize",

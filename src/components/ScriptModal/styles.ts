@@ -7,9 +7,9 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "min(80vw, 350px)",
-  backgroundColor: "#fff",
+  backgroundColor: theme.boxBackgroundColor,
   padding: theme.spacing(4),
-  borderRadius: theme.borderRadius,
+  borderRadius: 10,
   textAlign: "left",
 }));
 
@@ -26,8 +26,8 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
 
 export const ViewJson = styled(Box)(({ theme }) => ({
   textAlign: "left",
-  backgroundColor: "rgba(152, 162, 179, 0.1)",
-  borderRadius: theme.borderRadius,
+  backgroundColor: `${theme.gray_5_10}`,
+  borderRadius: 10,
   padding: theme.spacing(2),
 
   "& .MuiSvgIcon-root": {
@@ -37,7 +37,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
 
 export const ButtonLink = styled(Link)(({ theme }) => ({
   fontWeight: "bold",
-  color: `${theme.colorBlue} !important`,
+  color: `${theme.linkColor} !important`,
   fontFamily: "Helvetica, monospace !important",
   textAlign: "left",
   wordBreak: "break-all",

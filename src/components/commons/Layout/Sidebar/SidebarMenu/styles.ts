@@ -51,16 +51,9 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
   width: ${props => (props.open ? "unset" : 0)};
   * {
     font-family: var(--font-family-title) !important;
-    font-weight: var(--font-weight-bold) !important;
-    color: ${props => (props.active ? props.theme.textColor : props.theme.textColorPale)};
-    color: ${props =>
-      props.active
-        ? props.text
-          ? props.theme.textColor
-          : props.theme.textColorReverse
-        : props.disable
-        ? "#66708580"
-        : props.theme.textColorPale};
+    font-weight: var(--font-weight-bold) !important; 
+    color: ${({ active, text, disable, theme }) =>
+      active ? (text ? theme.textColor : theme.textColorLight) : disable ? theme.gray_4_50 : theme.textColorLight};
     white-space: break-spaces;
     width: 165px;
   }
@@ -73,7 +66,7 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
 export const SubMenuText = styled(MenuText)`
   * {
     font-weight: var(--font-weight-normal) !important;
-    color: ${props => (props.active ? props.theme.textColorReverse : props.theme.textColorPale)};
+    color: ${({ active, theme }) => (active ? theme.textColorReverse : theme.textColorLight)};
   }
 `;
 
