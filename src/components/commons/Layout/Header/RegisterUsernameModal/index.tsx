@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { authAxios } from "../../../../../commons/utils/axios";
-import { NETWORK, NETWORK_TYPES } from "../../../../../commons/utils/constants";
+import { NETWORK, NETWORKS, NETWORK_TYPES } from "../../../../../commons/utils/constants";
 import { alphaNumeric } from "../../../../../commons/utils/helper";
 import { RootState } from "../../../../../stores/types";
 import { setModalRegister } from "../../../../../stores/user";
@@ -9,12 +9,19 @@ import StyledModal from "../../../StyledModal";
 import { Label, StyledTitle, TextError, TextNote, WrapButton } from "./styles";
 import { StyledInput, StyledDarkLoadingButton } from "../../../../share/styled";
 import { FormHelperText } from "@mui/material";
+import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 interface IProps {
   address: string;
+  nonce: NonceObject | null;
+  signature: string;
   open: boolean;
-  onTriggerSignMessage: () => void;
+  setMessage: (message: string) => void;
+  setIsSign: (isSign: boolean) => void;
 }
-const RegisterUsernameModal: React.FC<IProps> = ({ open, address, onTriggerSignMessage }) => {
+const RegisterUsernameModal: React.FC<IProps> = ({ open, address, signature, nonce, setMessage, setIsSign }) => {
+  const { disconnect } = useCardano({
+    limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
+  });
   const { wallet } = useSelector(({ user }: RootState) => user);
   const [errorMessage, setErrorMessage] = useState("");
   const [value, setValue] = useState("");
@@ -25,25 +32,42 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, address, onTriggerSignM
       setLoading(true);
       if (errorMessage) return;
       const payload = {
+        id: nonce?.userId,
         username: value,
         wallet: {
+          id: nonce?.walletId,
           address,
           networkType: NETWORK_TYPES[NETWORK],
           networkId: NETWORK_TYPES[NETWORK],
           walletName: wallet?.toUpperCase(),
+          signature,
         },
       };
-      await authAxios.post("auth/sign-up", payload);
-      onTriggerSignMessage();
+      const { data } = await authAxios.post("auth/sign-up", payload);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("username", data.username);
+      localStorage.setItem("refreshToken", data.refreshToken);
+      localStorage.setItem("walletId", data.walletId);
+      localStorage.setItem("email", data.email);
+      setIsSign(true);
+      setModalRegister(false);
     } catch (error: any) {
       setErrorMessage(error.response?.data.errorMessage);
+      setMessage(error.response?.data.errorMessage || "");
+      disconnect();
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <StyledModal open={open} handleCloseModal={() => setModalRegister(false)}>
+    <StyledModal
+      open={open}
+      handleCloseModal={() => {
+        setModalRegister(false);
+        disconnect();
+      }}
+    >
       <>
         <StyledTitle>Enter your Username </StyledTitle>
         <TextNote>Please enter your Username to create a new unique one</TextNote>
