@@ -26,7 +26,6 @@ import {
   ValueCard,
 } from "./styles";
 import ScriptModal from "../../ScriptModal";
-import CustomTooltip from "../../commons/CustomTooltip";
 
 interface ITokenOverview {
   data: IToken | null;
@@ -40,11 +39,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   const listItem = [
     {
       title: "Total Supply",
-      value: (
-        <CustomTooltip title={numberWithCommas(data?.supply || 0)}>
-          <Box component={"span"}>{formatADAFull(data?.supply ? data.supply * 1000000 : 0)}</Box>
-        </CustomTooltip>
-      ),
+      value: <Box component={"span"}>{formatADAFull(data?.supply)}</Box>,
       icon: slotIcon,
     },
     { title: "Decimal", icon: decimalIcon, value: data?.metadata?.decimals || 0 },
@@ -58,7 +53,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
         </Box>
       ),
       icon: exchageIcon,
-      value: numberWithCommas(data?.txCount || 0),
+      value: numberWithCommas(data?.txCount),
     },
     {
       title: (
@@ -75,7 +70,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   ];
 
   return (
-    <Box>
+    <Box textAlign={"left"}>
       <BackButton to={routers.TOKEN_LIST}>
         <HiArrowLongLeft />
         <BackText>Back</BackText>

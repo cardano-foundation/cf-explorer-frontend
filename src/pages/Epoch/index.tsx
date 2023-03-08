@@ -4,13 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AIcon } from "../../commons/resources";
 import { EPOCH_STATUS } from "../../commons/utils/constants";
-import {
-  formatADA,
-  formatADAFull,
-  formatDateTimeLocal,
-  getPageInfo,
-  numberWithCommas,
-} from "../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
@@ -18,7 +12,6 @@ import { Blocks, StyledContainer, Output, Status, StyledColorBlueDard, Index } f
 import { setOnDetailView } from "../../stores/user";
 import DetailViewEpoch from "../../components/commons/DetailView/DetailViewEpoch";
 import { useWindowSize } from "react-use";
-import CustomTooltip from "../../components/commons/CustomTooltip";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { Box } from "@mui/material";
 import { API } from "../../commons/utils/api";
@@ -56,12 +49,10 @@ const Epoch: React.FC = () => {
       key: "outSum",
       minWidth: "100px",
       render: r => (
-        <CustomTooltip title={formatADAFull(r.outSum)}>
-          <Output>
-            {formatADA(r.outSum)}
-            <img src={AIcon} alt="ADA Icon" />
-          </Output>
-        </CustomTooltip>
+        <Output>
+          {formatADAFull(r.outSum)}
+          <img src={AIcon} alt="ADA Icon" />
+        </Output>
       ),
     },
     {
@@ -122,7 +113,7 @@ const Epoch: React.FC = () => {
           selected={selected}
         />
       </Card>
-      {epoch !== null && <DetailViewEpoch epochNo={epoch} handleClose={handleClose} />}
+      {epoch !== null && <DetailViewEpoch epochNo={epoch} handleClose={handleClose} callback={fetchData.update} />}
     </StyledContainer>
   );
 };

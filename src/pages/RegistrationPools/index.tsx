@@ -4,7 +4,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details, routers } from "../../commons/routers";
 import {
-  formatADA,
+  formatADAFull,
   formatDateTimeLocal,
   formatPercent,
   getPageInfo,
@@ -16,6 +16,7 @@ import Table, { Column } from "../../components/commons/Table";
 import { RegistrationContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
 import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
+import { Box } from "@mui/material";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",
@@ -53,19 +54,21 @@ const columns: Column<Registration>[] = [
     key: "pool",
     render: r => (
       <StyledLink to={details.delegation(r.poolView || "")}>
-        {r.poolName || `Pool[${getShortHash(r.poolView)}]`}
+        <CustomTooltip title={r.poolName || `Pool[${r.poolView}]` || ""}>
+          <Box component={"span"}>{r.poolName || `Pool[${getShortHash(r.poolView)}]`}</Box>
+        </CustomTooltip>
       </StyledLink>
     ),
   },
   {
     title: "Pledge (A)",
     key: "pledge",
-    render: r => <>{formatADA(r.pledge)}</>,
+    render: r => <>{formatADAFull(r.pledge)}</>,
   },
   {
     title: "Cost (A)",
     key: "cost",
-    render: r => <>{formatADA(r.cost)}</>,
+    render: r => <>{formatADAFull(r.cost)}</>,
   },
   {
     title: "Fee",
@@ -110,6 +113,7 @@ const RegistrationPools = () => {
       <StyledTabs
         value={poolType}
         onChange={onChangeTab}
+        style={{ borderBottom: "1px solid #e5e5e5" }}
         TabIndicatorProps={{ sx: { backgroundColor: props => props.colorGreenLight, height: 4 } }}
       >
         <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />

@@ -152,9 +152,7 @@ const DetailCard: React.FC<DetailCardProps> = ({
           <TokenDetail>
             <TokenDetailSupply>
               <TokenDetailTitle>Total Supply</TokenDetailTitle>
-              <TokenDetailDetail>
-                {tokenDetail?.totalSupply && numberWithCommas(tokenDetail.totalSupply)}
-              </TokenDetailDetail>
+              <TokenDetailDetail>{numberWithCommas(tokenDetail.totalSupply)}</TokenDetailDetail>
             </TokenDetailSupply>
             <TokenDetailDecimal>
               <TokenDetailTitle>Decimal</TokenDetailTitle>

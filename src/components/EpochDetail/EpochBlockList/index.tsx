@@ -7,7 +7,6 @@ import { formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../.
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
 import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer } from "./styles";
-import CustomTooltip from "../../commons/CustomTooltip";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { API } from "../../../commons/utils/api";
 
@@ -20,7 +19,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<BlockDetail>(`${API.BLOCK.LIST}?epochNo=${epochId}`, pageInfo);
+  const fetchData = useFetchList<BlockDetail>(`${API.EPOCH.DETAIL}/${epochId}/blocks`, pageInfo);
 
   const columns: Column<BlockDetail>[] = [
     {
@@ -76,19 +75,17 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       key: "outSum",
       minWidth: "100px",
       render: r => (
-        <CustomTooltip title={formatADAFull(r.totalOutput)}>
-          <StyledOutput>
-            <StyledColorBlueDard>{formatADAFull(r.totalOutput) || 0}</StyledColorBlueDard>
-            <img src={AIcon} alt="ADA Icon" />
-          </StyledOutput>
-        </CustomTooltip>
+        <StyledOutput>
+          <StyledColorBlueDard>{formatADAFull(r.totalOutput)}</StyledColorBlueDard>
+          <img src={AIcon} alt="ADA Icon" />
+        </StyledOutput>
       ),
     },
   ];
 
   return (
     <StyledContainer>
-      <Card title={"Blocks"} underline={true}>
+      <Card titleChilren={"Blocks"} underline={true}>
         <Table
           {...fetchData}
           columns={columns}

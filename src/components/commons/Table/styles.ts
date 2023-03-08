@@ -34,7 +34,7 @@ export const THeader = styled("th")`
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-text-small);
   border-bottom: 1px solid ${props => props.theme.borderColor};
-  padding: 20px 20px 25px;
+  padding: 20px;
   color: ${props => props.theme.titleColor};
 `;
 
@@ -51,8 +51,13 @@ export const TRow = styled("tr")<{ selected?: number }>`
   }
 `;
 
-export const TCol = styled("td")<{ width?: number | string; minWidth?: number | string; maxWidth?: number | string }>`
-  border-bottom: 1px solid ${props => props.theme.borderColor};
+export const TCol = styled("td")<{
+  width?: number | string;
+  minWidth?: number | string;
+  maxWidth?: number | string;
+  hiddenBorder?: boolean;
+}>`
+  border-bottom: ${({ hiddenBorder, theme }) => (hiddenBorder ? "none" : `1px solid ${theme.borderColor}`)};
   width: ${({ width }) => (typeof width === "number" ? `${width}px` : width || "max-content%")};
   min-width: ${({ minWidth }) => (typeof minWidth === "number" ? `${minWidth}px` : minWidth || "80px")};
   max-width: ${({ maxWidth }) => (typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth || "unset")};
@@ -63,6 +68,7 @@ export const TCol = styled("td")<{ width?: number | string; minWidth?: number | 
   color: ${props => props.theme.textColor};
   padding: 24px 20px;
 `;
+
 export const TBody = styled("tbody")`
   position: relative;
 `;

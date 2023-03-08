@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CgClose } from "react-icons/cg";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { CubeIcon, RocketIcon } from "../../../commons/resources";
@@ -45,11 +45,21 @@ import { API } from "../../../commons/utils/api";
 type DetailViewEpochProps = {
   epochNo: number;
   handleClose: () => void;
+  callback: (callback: (data: IDataEpoch[]) => IDataEpoch[]) => void;
 };
 
-const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
-  const { epochNo, handleClose } = props;
+const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose, callback }) => {
   const { data } = useFetch<IDataEpoch>(`${API.EPOCH.DETAIL}/${epochNo}`);
+
+  useEffect(() => {
+    if (data) {
+      callback(list => {
+        const index = list.findIndex(item => item.no === data?.no);
+        if (index >= 0) list[index] = { ...list[index], ...data };
+        return [...list];
+      });
+    }
+  }, [data, callback]);
 
   if (!data)
     return (
@@ -188,12 +198,10 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
                 <InfoIcon />
                 Total Output
               </DetailLabel>
-              <CustomTooltip title={formatADAFull(data.outSum || 0)}>
-                <DetailValue>
-                  {formatADAFull(data.outSum) || 0}
-                  <ADAToken color="black" />
-                </DetailValue>
-              </CustomTooltip>
+              <DetailValue>
+                {formatADAFull(data.outSum)}
+                <ADAToken color="black" />
+              </DetailValue>
             </DetailsInfoItem>
           </Group>
           <Group>

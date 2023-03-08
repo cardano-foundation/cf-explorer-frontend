@@ -19,7 +19,10 @@
     padding: 10px 0;
     font-size: var(--font-size-text);
     border-bottom: 1px solid #0000001a;
-
+    &:last-child {
+      border-bottom: none;
+      padding: 10px 0 0;
+    }
     .top {
       display: flex;
       align-items: center;

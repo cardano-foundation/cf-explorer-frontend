@@ -25,7 +25,7 @@ const TopDelegators = () => {
       title: "#",
       minWidth: 30,
       key: "index",
-      render: (r, idx) => numberWithCommas(idx + 1 || 0),
+      render: (r, idx) => numberWithCommas(idx + 1),
     },
     {
       title: "Stake key Addresses",
@@ -53,7 +53,7 @@ const TopDelegators = () => {
       key: "Stakeamount",
       render: (r, idx) => (
         <Box component={"span"}>
-          {formatADAFull(r.balance || 0)} <ADAToken />
+          {formatADAFull(r.balance)} <ADAToken />
         </Box>
       ),
     },
@@ -63,7 +63,7 @@ const TopDelegators = () => {
     <StyledContainer>
       <Card title="Top 50 delegators">
         <Table
-          onClickRow={(_, r) => history.push(details.address(r.stakeKey))}
+          onClickRow={(_, r) => history.push(details.stake(r.stakeKey))}
           data={data}
           error={error}
           loading={loading}

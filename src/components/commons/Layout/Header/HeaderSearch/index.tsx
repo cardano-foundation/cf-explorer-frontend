@@ -19,7 +19,6 @@ const Form = styled("form")<{ home: number }>`
   background-color: #fff;
   color: ${props => props.theme.textColor};
   padding: 0px 0px 0px ${props => (props.home ? 15 : 0)}px;
-  border: 1px solid ${props => props.theme.borderColor};
   box-sizing: border-box;
   margin-top: ${props => (props.home ? 30 : 0)}px;
   @media screen and (max-width: 1023px) {
@@ -115,28 +114,32 @@ const options: Option[] = [
     label: "All Filters",
   },
   {
-    value: "epoch",
-    label: "Epoch",
+    value: "epochs",
+    label: "Epochs",
   },
   {
-    value: "block",
-    label: "Block",
+    value: "blocks",
+    label: "Blocks",
   },
   {
-    value: "tx",
-    label: "Transaction",
+    value: "txs",
+    label: "Transactions",
   },
   {
     value: "tokens",
     label: "Tokens",
   },
   {
-    value: "stake",
-    label: "Stake key",
+    value: "stakes",
+    label: "Stake keys",
   },
   {
-    value: "address",
+    value: "addresses",
     label: "Addresses",
+  },
+  {
+    value: "delegations/pool-detail-header",
+    label: "Pools",
   },
 ];
 
@@ -175,7 +178,7 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
         type="search"
         value={search}
         spellCheck={false}
-        placeholder={home ? "Search transaction, address, block, epoch, pool..." : "Search ..."}
+        placeholder={home ? "Search transactions, address, blocks, epochs, pools..." : "Search ..."}
         onChange={handleChangeSearch}
         disableUnderline
       />

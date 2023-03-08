@@ -17,10 +17,9 @@ import { StyledTextField, WrapPaperDropdown } from "./styles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { useEffect, useState } from "react";
-import CustomTooltip from "../../commons/CustomTooltip";
-import BigNumber from "bignumber.js";
 import { API } from "../../../commons/utils/api";
 import BookmarkButton from "../../commons/BookmarkIcon";
+import { EmptyIcon } from "../../../commons/resources";
 
 interface Props {
   data: WalletAddress | null;
@@ -42,29 +41,27 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: "ADA Balance",
       value: (
-        <CustomTooltip title={formatADAFull(data?.balance)}>
-          <Box display="flex" alignItems="center">
-            {formatADAFull(data?.balance)}
-            <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
-          </Box>
-        </CustomTooltip>
+        <Box display="flex" alignItems="center">
+          {formatADAFull(data?.balance)}
+          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+        </Box>
       ),
     },
     {
       title: "ADA Value",
-      value: (
-        <CustomTooltip title={"$ " + exchangeADAToUSD(data?.balance || 0, adaRate, true)}>
-          <Box>$ {exchangeADAToUSD(data?.balance || 0, adaRate, true)}</Box>
-        </CustomTooltip>
-      ),
+      value: <Box>$ {exchangeADAToUSD(data?.balance || 0, adaRate, true)}</Box>,
     },
     {
       value: (
         <Autocomplete
-          PaperComponent={({ children }) => <WrapPaperDropdown>{children}</WrapPaperDropdown>}
           options={data?.tokens || []}
+          componentsProps={{ paper: { elevation: 2 } }}
           getOptionLabel={option => option.displayName}
-          noOptionsText="No data found"
+          noOptionsText={
+            <Box>
+              <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
+            </Box>
+          }
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
             <li {...props} key={option.fingerprint}>
               <Box
@@ -80,11 +77,11 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
                   <Box width={50}>
                     <img src={AIcon} alt="a icon" />
                   </Box>
-                  <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"}>
+                  <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="200px">
                     {option.displayName} #{option.name || option.fingerprint}
                   </Box>
                 </Box>
-                <Box fontWeight={"bold"}>{formatPrice(option.quantity || 0)}</Box>
+                <Box fontWeight={"bold"}>{numberWithCommas(option.quantity)}</Box>
               </Box>
             </li>
           )}
@@ -98,12 +95,10 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: "Total Stake",
       value: (
-        <CustomTooltip title={formatADAFull(dataStake?.totalStake)}>
-          <Box>
-            {formatADAFull(dataStake?.totalStake)}
-            <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
-          </Box>
-        </CustomTooltip>
+        <Box>
+          {formatADAFull(dataStake?.totalStake)}
+          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+        </Box>
       ),
     },
     {
@@ -122,12 +117,10 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: "Reward",
       value: (
-        <CustomTooltip title={formatADAFull(dataStake?.rewardAvailable)}>
-          <Box>
-            {formatADAFull(dataStake?.rewardAvailable)}
-            <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
-          </Box>
-        </CustomTooltip>
+        <Box>
+          {formatADAFull(dataStake?.rewardAvailable)}
+          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+        </Box>
       ),
     },
   ];

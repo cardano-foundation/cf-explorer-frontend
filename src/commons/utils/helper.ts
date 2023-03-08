@@ -15,36 +15,6 @@ export const getShortHash = (address: string) => {
   return `${address.slice(0, 10)}...${address.slice(-7)}`;
 };
 
-export const formatNumber = (value: number | string, decimal: number = 0, decimalSeparator: string = ".") => {
-  const arr = `${value}`.split(decimalSeparator);
-  if (!decimal) return arr[0];
-  if (!arr[1]) arr.push("0");
-  return arr[0] + decimalSeparator + arr[1].slice(0, decimal) + "0".repeat(decimal - arr[1].slice(0, decimal).length);
-};
-
-export const formatBalanceWithDecimal = (value: number | string, decimal: number = 0) => {
-  const realAda = new BigNumber(value).div(10 ** 6);
-  const newValue = realAda.toFixed(decimal, 3).toString();
-  return numberWithCommas(newValue);
-};
-
-export const formatCurrency = (
-  value?: string | number,
-  decimal: number = 0,
-  scale?: number,
-  groupSeparator: string = ",",
-  decimalSeparator: string = "."
-): string => {
-  if (!value) return "0";
-  const str = value.toString().split("-");
-  const valueStr = str[str.length - 1];
-  const splittedStrs = valueStr.split(decimalSeparator);
-  splittedStrs[0] = new BigNumber(splittedStrs[0]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, groupSeparator);
-  if (scale !== undefined) splittedStrs[1] = splittedStrs[1].toString().slice(0, scale);
-  str[str.length - 1] = splittedStrs.join(decimalSeparator);
-  return formatNumber(str.join("-"), decimal, decimalSeparator);
-};
-
 export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "T", "q", "Q", "s", "S"];
 
 export const formatPrice = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
@@ -60,8 +30,10 @@ export const formatPrice = (value?: string | number, abbreviations: string[] = L
   return `${newValue && newValue[0]}${syntax ?? `x 10^${exponential}`}`;
 };
 
-export const numberWithCommas = (x: number | string) => {
-  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+export const numberWithCommas = (value?: number | string, decimal: number = 18) => {
+  if (!value) return "0";
+  const formated = value.toString().match(new RegExp(`^-?\\d+(?:\\.\\d{0,${decimal}})?`))?.[0] || "0";
+  return formated.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 };
 
 export const formatADA = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
@@ -81,21 +53,22 @@ export const formatADA = (value?: string | number, abbreviations: string[] = LAR
       return `${newValue}${syntax ?? `x 10^${exponential}`}`;
     }
   }
-
-  const formated = realAda.toString().match(/^-?\d+(?:\.\d{0,5})?/);
-  return numberWithCommas(formated ? formated[0] : "0");
+  return numberWithCommas(realAda.toString());
 };
 
 export const formatADAFull = (value?: string | number): string => {
   if (!value) return `0`;
-  return numberWithCommas(new BigNumber(value).div(10 ** 6).toString() || "0");
+  const realAda = new BigNumber(value).div(10 ** 6);
+  return numberWithCommas(realAda.toString());
 };
 
 export const exchangeADAToUSD = (value: number | string, rate: number, isFull?: boolean) => {
   if (!value) return 0;
   const realAda = new BigNumber(value);
   const exchangedValue = realAda.multipliedBy(rate).toString();
+
   if (isFull) return formatADAFull(exchangedValue);
+
   return formatADA(exchangedValue);
 };
 
@@ -111,7 +84,7 @@ export const handleClicktWithoutAnchor = (e: React.MouseEvent, fn: (e: React.Mou
 };
 
 export const isExtenalLink = (href?: string) => href && (href.search("http://") >= 0 || href.search("https://") >= 0);
-export const formatPercent = (percent: number) => `${Math.floor(percent * 100 * 100) / 100}%`;
+export const formatPercent = (percent?: number) => `${Math.round((percent || 0) * 100 * 100) / 100}%`;
 
 export const getPageInfo = (search: string): { page: number; size: number } => {
   const query = parse(search.split("?")[1]);

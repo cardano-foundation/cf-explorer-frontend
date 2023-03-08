@@ -24,11 +24,12 @@ export const SearchContainer = styled("div")`
   justify-content: start;
   align-items: center;
   width: 100%;
-  max-width: 400px;
+  max-width: 360px;
   background: #ffffff;
-  padding: 12px 14px;
+  padding: 0 12px;
   border-radius: 8px;
   margin-bottom: 15px;
+  height: 35px;
 `;
 
 export const StyledInput = styled("input")`
@@ -45,9 +46,9 @@ export const SubmitButton = styled(Button)`
   border: none;
   box-shadow: none;
   border-radius: 12.5%;
-  min-width: 44px;
-  width: 44px;
-  height: 44px;
+  min-width: 35px;
+  width: 35px;
+  height: 35px;
 `;
 export const Image = styled("img")`
   width: 20px;

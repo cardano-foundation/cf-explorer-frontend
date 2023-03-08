@@ -67,9 +67,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       value: (
         <Box>
           <StyledFlexValue>
-            <CustomTooltip title={formatADAFull(data?.totalStake || 0)}>
-              <Box component={"span"}>{formatADAFull(data?.totalStake || 0)}</Box>
-            </CustomTooltip>
+            <Box component={"span"}>{formatADAFull(data?.totalStake)}</Box>
             <ADAToken />
           </StyledFlexValue>
           <Box>
@@ -88,9 +86,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       ),
       value: (
         <StyledFlexValue>
-          <CustomTooltip title={formatADAFull(data?.rewardAvailable || 0)}>
-            <Box component={"span"}>{formatADAFull(data?.rewardAvailable || 0)}</Box>
-          </CustomTooltip>
+          <Box component={"span"}>{formatADAFull(data?.rewardAvailable)}</Box>
           <ADAToken />
         </StyledFlexValue>
       ),
@@ -104,12 +100,10 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <CustomTooltip title={formatADAFull(data?.rewardWithdrawn || 0)}>
-          <StyledFlexValue>
-            {formatADAFull(data?.rewardWithdrawn || 0)}
-            <ADAToken />
-          </StyledFlexValue>
-        </CustomTooltip>
+        <StyledFlexValue>
+          {formatADAFull(data?.rewardWithdrawn)}
+          <ADAToken />
+        </StyledFlexValue>
       ),
     },
   ];
@@ -117,7 +111,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
   return (
     <Box>
       <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
-        <Box>
+        <Box textAlign={"left"}>
           <BackButton to={routers.STAKE_LIST.replace(":poolType?", "registration")}>
             <HiArrowLongLeft />
             <BackText>Back</BackText>
@@ -160,12 +154,8 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
               <Box>
                 <img src={item.icon} alt="" />
               </Box>
-              <Box mt={2} mb={1}>
-                {item.title}
-              </Box>
-              <ValueCard mt={2} mb={1}>
-                {item.value}
-              </ValueCard>
+              <Box mt={2}>{item.title}</Box>
+              <ValueCard>{item.value}</ValueCard>
             </CardItem>
           );
         })}

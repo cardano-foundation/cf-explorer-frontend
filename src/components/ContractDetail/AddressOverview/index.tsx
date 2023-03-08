@@ -6,10 +6,9 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { AIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
-import { exchangeADAToUSD, formatADAFull, formatPrice } from "../../../commons/utils/helper";
+import { exchangeADAToUSD, formatADAFull, formatPrice, getShortWallet } from "../../../commons/utils/helper";
 import { RootState } from "../../../stores/types";
 import Card from "../../commons/Card";
-import CustomTooltip from "../../commons/CustomTooltip";
 import CardAddress from "../../share/CardAddress";
 import { Pool, StyledAAmount, StyledTextField, WrapPaperDropdown } from "./styles";
 
@@ -30,9 +29,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       title: "ADA Balance",
       value: (
         <StyledAAmount>
-          <CustomTooltip title={formatADAFull(data?.balance || 0)}>
-            <Box>{formatADAFull(data?.balance || 0)}</Box>
-          </CustomTooltip>
+          <Box>{formatADAFull(data?.balance)}</Box>
           <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
         </StyledAAmount>
       ),
@@ -61,7 +58,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
                   </Box>
                   <Box>{option.displayName}</Box>
                 </Box>
-                <Box fontWeight={"bold"}>{formatPrice(option.quantity || 0)}</Box>
+                <Box fontWeight={"bold"}>{formatPrice(option.quantity)}</Box>
               </Box>
             </li>
           )}
@@ -102,7 +99,9 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
     {
       title: "Delegated To",
       value: (
-        <Pool to={details.delegation(dataStake?.pool ? dataStake?.pool?.poolId : "")}>{dataStake?.pool?.poolName}</Pool>
+        <Pool to={details.delegation(dataStake?.pool ? dataStake?.pool?.poolId : "")}>
+          {dataStake?.pool?.poolName || `Pool [${getShortWallet(dataStake?.pool?.poolId || "")}]`}
+        </Pool>
       ),
     },
   ];
@@ -127,7 +126,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
               type="right"
               address={dataStake?.stakeAddress || ""}
               item={itemRight}
-              loading={loadingStake}
+              loading={loading || loadingStake}
               addressDestination={details.stake(dataStake?.stakeAddress)}
             />
           </Box>

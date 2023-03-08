@@ -27,7 +27,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<Transactions>(API.TRANSACTION.LIST, { ...pageInfo, tokenId });
+  const fetchData = useFetchList<Transactions>(API.TOKEN_TRX.replace(":tokenId", tokenId), { ...pageInfo });
 
   const columns: Column<Transactions>[] = [
     {
@@ -105,12 +105,10 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       key: "fee",
       minWidth: "120px",
       render: r => (
-        <CustomTooltip title={formatADAFull(r.fee)}>
-          <PriceValue>
-            <SmallText>{formatADAFull(r.fee) || 0}</SmallText>
-            <PriceIcon src={AIcon} alt="a icon" />
-          </PriceValue>
-        </CustomTooltip>
+        <PriceValue>
+          <SmallText>{formatADAFull(r.fee)}</SmallText>
+          <PriceIcon src={AIcon} alt="a icon" />
+        </PriceValue>
       ),
     },
     {
@@ -118,12 +116,10 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       minWidth: "120px",
       key: "ouput",
       render: r => (
-        <CustomTooltip title={formatADAFull(r.totalOutput)}>
-          <PriceValue>
-            <SmallText>{formatADAFull(r.totalOutput) || 0}</SmallText>
-            <PriceIcon src={AIcon} alt="a icon" />
-          </PriceValue>
-        </CustomTooltip>
+        <PriceValue>
+          <SmallText>{formatADAFull(r.totalOutput)}</SmallText>
+          <PriceIcon src={AIcon} alt="a icon" />
+        </PriceValue>
       ),
     },
   ];

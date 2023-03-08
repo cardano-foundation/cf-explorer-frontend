@@ -18,6 +18,7 @@ interface FetchReturnType<T> {
   totalPage: number;
   currentPage: number;
   refesh: () => void;
+  update: (callback: (data: T[]) => T[]) => void;
 }
 
 const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean): FetchReturnType<T> => {
@@ -68,6 +69,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean): Fe
     totalPage,
     currentPage,
     refesh: getList,
+    update: setData,
   };
 };
 

@@ -23,7 +23,6 @@ import Card from "../../commons/Card";
 import { formatADAFull, formatPrice } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { BigNumber } from "bignumber.js";
-import CustomTooltip from "../../commons/CustomTooltip";
 import { API } from "../../../commons/utils/api";
 
 type AnalyticsData = { date: string; value: number };
@@ -40,7 +39,10 @@ const AddressAnalytics: React.FC = () => {
   const { address } = useParams<{ address: string }>();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`);
   const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${address}`);
-  const dataChart = data?.map(i => +formatADAFull(BigNumber(i.value).toNumber() || 0).replaceAll(",", ""));
+  const dataChart = data?.map(i => {
+    const value = BigNumber(i.value).div(10 ** 6);
+    return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
+  });
 
   const categories = data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
   const minBalance = Math.min(...(balance || []), 0);
@@ -85,7 +87,7 @@ const AddressAnalytics: React.FC = () => {
                       labels: {
                         style: { fontSize: 12 },
                         formatter: (e: { value: string }) => {
-                          return formatPrice(e.value || 0);
+                          return formatPrice(e.value);
                         },
                       },
                     },
@@ -136,11 +138,9 @@ const AddressAnalytics: React.FC = () => {
                 <Box>
                   <img src={HighestIcon} width={"20%"} alt="heighest icon" />
                   <Title>Highest Balance</Title>
-                  <CustomTooltip title={formatADAFull(maxBalance || 0)} placement="bottom">
-                    <ValueInfo>
-                      {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance || 0)}
-                    </ValueInfo>
-                  </CustomTooltip>
+                  <ValueInfo>
+                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance)}
+                  </ValueInfo>
                 </Box>
               </BoxInfoItemRight>
             </Box>
@@ -149,11 +149,9 @@ const AddressAnalytics: React.FC = () => {
                 <Box>
                   <img src={LowestIcon} width={"20%"} alt="lowest icon" />
                   <Title>Lowest Balance</Title>
-                  <CustomTooltip title={formatADAFull(minBalance || 0)} placement="bottom">
-                    <ValueInfo>
-                      {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance || 0)}
-                    </ValueInfo>
-                  </CustomTooltip>
+                  <ValueInfo>
+                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance)}
+                  </ValueInfo>
                 </Box>
               </BoxInfoItem>
             </Box>

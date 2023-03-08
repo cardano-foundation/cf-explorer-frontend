@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
-import { formatADAFull, formatBalanceWithDecimal, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
+import { formatADAFull, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
@@ -25,7 +25,7 @@ const TopAddresses: React.FC<Props> = () => {
       title: "#",
       key: "id",
       minWidth: 30,
-      render: (_, index) => numberWithCommas(index + 1 || 0),
+      render: (_, index) => numberWithCommas(index + 1),
     },
     {
       title: "Addresses",
@@ -45,12 +45,10 @@ const TopAddresses: React.FC<Props> = () => {
       key: "balance",
       minWidth: 60,
       render: r => (
-        <CustomTooltip title={formatADAFull(r.balance)}>
-          <Box display="inline-flex" alignItems="center">
-            <Box mr={1}>{formatBalanceWithDecimal(r.balance || 0, 5)}</Box>
-            <img src={AIcon} alt="a icon" />
-          </Box>
-        </CustomTooltip>
+        <Box display="inline-flex" alignItems="center">
+          <Box mr={1}>{formatADAFull(r.balance)}</Box>
+          <img src={AIcon} alt="a icon" />
+        </Box>
       ),
     },
   ];

@@ -110,7 +110,7 @@ export const TokenIcon = styled("img")`
 `;
 
 export const MetaData = styled("small")`
-  color: ${props => props.theme.textColorReverse};
+  color: #ffffff80;
   font-size: var(--font-size-text-x-small);
 `;
 
@@ -380,7 +380,7 @@ export const TokenDetailName = styled("small")`
 `;
 
 export const TokenDetailIcon = styled("img")`
-  width: 'auto';
+  width: "auto";
   height: 30px;
 `;
 

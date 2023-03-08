@@ -11,7 +11,6 @@ import { TitleCard } from "../../BlockDetail/BlockOverview/styles";
 import { Box } from "@mui/material";
 import { ADAToken } from "../../commons/Token";
 import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
-import CustomTooltip from "../../commons/CustomTooltip";
 interface EpochOverviewProps {
   data: IDataEpoch | null;
   loading: boolean;
@@ -19,9 +18,9 @@ interface EpochOverviewProps {
 
 const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
   const slot =
-    data?.status === "FINISHED"
+    data?.status !== "IN_PROGRESS"
       ? MAX_SLOT_EPOCH
-      : (data?.endTime && data.startTime && moment(data.endTime).diff(data.startTime) / 1000) || 0;
+      : Math.round((data?.startTime && moment().diff(data?.startTime) / 1000) || 0);
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
 
   const listOverview = [
@@ -54,11 +53,9 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <CustomTooltip title={formatADAFull(data?.outSum || 0)}>
-          <Box component={"span"}>
-            {formatADAFull(data?.outSum || 0)} <ADAToken />
-          </Box>
-        </CustomTooltip>
+        <Box component={"span"}>
+          {formatADAFull(data?.outSum || 0)} <ADAToken />
+        </Box>
       ),
     },
     {

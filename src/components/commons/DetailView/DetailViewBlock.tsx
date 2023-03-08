@@ -193,24 +193,20 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 <InfoIcon />
                 Transaction Fees
               </DetailLabel>
-              <CustomTooltip title={formatADAFull(data.totalFees || 0)}>
-                <DetailValue>
-                  {formatADAFull(data.totalFees) || 0}
-                  <ADAToken color="black" />
-                </DetailValue>
-              </CustomTooltip>
+              <DetailValue>
+                {formatADAFull(data.totalFees)}
+                <ADAToken color="black" />
+              </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
                 <InfoIcon />
                 Total Output
               </DetailLabel>
-              <CustomTooltip title={formatADAFull(data.totalOutput || 0)}>
-                <DetailValue>
-                  {formatADAFull(data.totalOutput) || 0}
-                  <ADAToken color="black" />
-                </DetailValue>
-              </CustomTooltip>
+              <DetailValue>
+                {formatADAFull(data.totalOutput)}
+                <ADAToken color="black" />
+              </DetailValue>
             </DetailsInfoItem>
             {/* <DetailsInfoItem>
               <DetailLabel>

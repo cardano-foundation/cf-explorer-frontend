@@ -27,27 +27,31 @@ import {
   ProgressSkeleton,
   SlotLeaderSkeleton,
   SlotLeaderTitle,
-  CardItem,
   ValueCard,
+  CardItemTrx,
+  CardItems,
 } from "./styles";
 import { routers } from "../../../commons/routers";
 import Bookmark from "../BookmarkIcon";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../stores/types";
 
 interface DetailHeaderProps {
   loading: boolean;
   data?: TransactionHeaderDetail | BlockHeaderDetail | EpochHeaderDetail | null;
-  listItem: { icon: string; title: React.ReactNode; value?: React.ReactNode }[];
+  listItem?: { icon: string; title: React.ReactNode; value?: React.ReactNode }[];
+  listTrxOverview?: { icon: string; title: React.ReactNode; value?: React.ReactNode }[];
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = props => {
-  const { data, loading, listItem } = props;
+  const { data, loading, listItem, listTrxOverview } = props;
   const getRouterList = () => {
     if (data?.type === "transaction") return routers.TRANSACTION_LIST;
     if (data?.type === "block") return routers.BLOCK_LIST;
     if (data?.type === "epoch") return routers.EPOCH_LIST;
     else return "/";
   };
-
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
   if (loading || !data) {
     return (
       <HeaderDetailContainer>
@@ -100,7 +104,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
       type: "TRANSACTION",
     },
   };
-  const multiRow = listItem.length > 6 ? 3 : 0;
+  const multiRow = (listItem || listTrxOverview || []).length > 6 ? 3 : 0;
 
   return (
     <HeaderDetailContainer>
@@ -129,23 +133,47 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           )}
         </Box>
         <Box>
-          <ProgressCircle size={120} pathWidth={8} percent={((blockDetail?.epochSlot || 0) / MAX_SLOT_EPOCH) * 100}>
+          <ProgressCircle
+            size={120}
+            pathWidth={8}
+            percent={
+              currentEpoch && blockDetail.epochNo < currentEpoch?.no
+                ? 100
+                : ((blockDetail.epochSlot || 0) / MAX_SLOT_EPOCH) * 100
+            }
+          >
             <EpochNumber>{blockDetail?.epochNo}</EpochNumber>
             <EpochText>Epoch</EpochText>
           </ProgressCircle>
         </Box>
       </Box>
+
       {listItem && (
         <DetailsInfo container>
           {listItem?.map((item, idx) => {
             return (
-              <CardItem item xs={12} sm={6} md={4} lg={multiRow || true} multiRow={multiRow} key={idx}>
+              <CardItems item xs={12} sm={6} md={4} lg={multiRow || true} multiRow={multiRow} key={idx}>
                 <Box>
                   <img src={item.icon} alt="" height={20} />
                 </Box>
                 <Box my={1}>{item.title}</Box>
                 <ValueCard>{item.value}</ValueCard>
-              </CardItem>
+              </CardItems>
+            );
+          })}
+        </DetailsInfo>
+      )}
+      {listTrxOverview && (
+        <DetailsInfo container>
+          {listTrxOverview?.map((item, idx) => {
+            return (
+              <CardItemTrx item xs={12} sm={6} md={4} lg={multiRow || true} multiRow={multiRow} key={idx}>
+                <Box>
+                  <img src={item.icon} alt="" height={20} />
+                </Box>
+                <Box my={1}>{item.title}</Box>
+                <ValueCard>{item.value}</ValueCard>
+              </CardItemTrx>
             );
           })}
         </DetailsInfo>

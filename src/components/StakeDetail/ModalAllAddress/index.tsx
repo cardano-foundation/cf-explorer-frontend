@@ -7,8 +7,8 @@ import Table, { Column } from "../../commons/Table";
 import { formatADAFull, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import { Link, useHistory } from "react-router-dom";
 import { details } from "../../../commons/routers";
-import CustomTooltip from "../../commons/CustomTooltip";
 import { API } from "../../../commons/utils/api";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 interface ModalAllAddressProps {
   open: boolean;
@@ -37,7 +37,9 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
           to={details.address(r.address)}
           style={{ fontFamily: "var(--font-family-text)", color: "var(--color-blue)" }}
         >
-          {getShortWallet(r.address)}
+          <CustomTooltip title={r.address || ""} placement="top-start">
+            <Box component={"span"}>{getShortWallet(r.address)}</Box>
+          </CustomTooltip>
         </Link>
       ),
       key: "Addresses",
@@ -45,11 +47,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
     {
       title: "Balance",
       minWidth: 80,
-      render: (r, idx) => (
-        <CustomTooltip title={formatADAFull(r.balance)}>
-          <Box component={"span"}>{formatADAFull(r.balance || 0)}</Box>
-        </CustomTooltip>
-      ),
+      render: (r, idx) => <Box component={"span"}>{formatADAFull(r.balance)}</Box>,
       key: "Balance",
     },
   ];

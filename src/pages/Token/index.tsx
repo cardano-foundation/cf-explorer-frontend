@@ -6,7 +6,13 @@ import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
 import { details } from "../../commons/routers";
-import { formatDateTimeLocal, getPageInfo, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
+import {
+  formatADAFull,
+  formatDateTimeLocal,
+  getPageInfo,
+  getShortWallet,
+  numberWithCommas,
+} from "../../commons/utils/helper";
 import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AssetName, Logo, StyledContainer, LogoEmpty } from "./styles";
@@ -61,13 +67,13 @@ const Tokens: React.FC<ITokenList> = () => {
       title: "Total Transactions",
       key: "totalTransactions",
       minWidth: "150px",
-      render: r => numberWithCommas(r?.txCount ?? ""),
+      render: r => numberWithCommas(r?.txCount),
     },
     {
       title: "Total Supply",
       key: "totalSupply",
       minWidth: "150px",
-      render: r => numberWithCommas(r?.supply ?? ""),
+      render: r => formatADAFull(r?.supply),
     },
     {
       title: "Created",
