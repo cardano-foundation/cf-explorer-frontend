@@ -141,7 +141,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
   return (
     <>
       <TabContext value={tabActive}>
-        <Box className={styles.tab}>
+        <Box className={styles.tab} borderBottom="1px solid rgba(24, 76, 120, 0.1)">
           <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: "#438f68", color: "#438f68" } }}>
             {items?.map(item => (
               <Tab key={item.key} label={item.label} value={item.key} />
