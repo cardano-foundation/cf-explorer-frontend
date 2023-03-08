@@ -6,7 +6,9 @@ export const Img = styled("img")(({ theme }) => ({
 }));
 
 export const Header = styled(Box)(({ theme }) => ({
-  padding: "25px 25px 0",
+  padding: "25px 0 0",
+  marginRight:'25px',
+  marginLeft:'25px',
   display: "flex",
   justifyContent: "space-between",
   fontSize: "14px",

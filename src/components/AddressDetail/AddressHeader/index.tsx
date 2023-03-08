@@ -27,6 +27,7 @@ interface Props {
 }
 const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   const [stakeKey, setStakeKey] = useState("");
+  const [selected, setSelected] = useState("");
   const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
     stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : ""
   );
@@ -56,14 +57,21 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
         <Autocomplete
           options={data?.tokens || []}
           componentsProps={{ paper: { elevation: 2 } }}
-          getOptionLabel={option => option.displayName}
+          getOptionLabel={option => option.displayName || option.name || option.fingerprint}
           noOptionsText={
             <Box>
               <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
             </Box>
           }
+          onChange={(e, value) => {
+            setSelected(value?.fingerprint || "");
+          }}
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
-            <li {...props} key={option.fingerprint}>
+            <li
+              {...props}
+              key={option.fingerprint}
+              style={{ background: selected === option.fingerprint ? "rgba(67, 143, 104, 0.1)" : "#fff" }}
+            >
               <Box
                 display="flex"
                 alignItems={"center"}
