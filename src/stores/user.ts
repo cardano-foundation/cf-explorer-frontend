@@ -19,6 +19,7 @@ const initialState: UserStoreType = {
   onDetailView: false,
   modalRegister: false,
   modalSignMessage: false,
+  nonce: null,
 };
 
 const storeWallet = createSlice({
@@ -69,6 +70,10 @@ const storeWallet = createSlice({
       ...state,
       modalSignMessage: action.payload,
     }),
+    setNonce: (state, action: PayloadAction<NonceObject | null>) => ({
+      ...state,
+      nonce: action.payload,
+    }),
   },
 });
 
@@ -114,6 +119,9 @@ export const setModalRegister = (state: boolean) => {
 
 export const setModalSignMessage = (state: boolean) => {
   userStore?.dispatch(storeWallet.actions.setModalSignMessage(state));
+};
+export const setNonce = (state: NonceObject | null) => {
+  userStore?.dispatch(storeWallet.actions.setNonce(state));
 };
 
 export default storeWallet.reducer;
