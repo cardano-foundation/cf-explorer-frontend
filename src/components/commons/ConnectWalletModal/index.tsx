@@ -18,7 +18,6 @@ import { SupportedWallets, Wallet } from "../../../types/user";
 import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet";
 import { MdOutlineFileDownload } from "react-icons/md";
 import Toast from "../Toast";
-import { disconnect } from "process";
 
 interface IProps {
   connect: (name: string, onSuccess: () => void, onError: (error: Error) => void) => Promise<any>;
@@ -42,7 +41,11 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage })
     onTriggerSignMessage();
   };
   const onError = (error: Error) => {
-    setMessage(`You are currently connect to ${NETWORK}, please switch to  ${NETWORK}!`);
+    if (error.name === "EnablementFailedError") {
+      setMessage(`You are currently connect to ${NETWORK}, please switch to  ${NETWORK}!`);
+    } else {
+      setMessage("Something went wrong!");
+    }
     setWalletConnecting(null);
   };
   const handleConnect = (walletName: SupportedWallets) => {

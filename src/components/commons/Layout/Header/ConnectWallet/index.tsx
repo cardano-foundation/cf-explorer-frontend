@@ -42,9 +42,6 @@ const ConnectWallet: React.FC<Props> = () => {
       if (!localStorage.getItem("token")) {
         disconnect();
       }
-    }
-    return () => {
-      window.onbeforeunload = null;
     };
   }, []);
 
