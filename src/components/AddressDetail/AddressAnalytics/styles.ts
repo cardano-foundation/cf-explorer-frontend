@@ -62,6 +62,7 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "2rem",
   margin: "0 auto",
+  overflowWrap: "anywhere",
 }));
 
 export const Wrapper = styled(Grid)(({ theme }) => ({

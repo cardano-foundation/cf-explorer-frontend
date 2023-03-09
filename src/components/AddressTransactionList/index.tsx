@@ -75,7 +75,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
         return (
           <div>
             <Box display={"flex"}>
-              <div> Input: </div>
+              <Box width={"50px"}> Input: </Box>
               <div>
                 {r.addressesInput.slice(0, 1).map((tx, key) => {
                   return (
@@ -90,7 +90,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
               </div>
             </Box>
             <Box display={"flex"} mt={1}>
-              <div>Output: </div>
+              <Box width={"50px"}>Output: </Box>
               <div>
                 {r.addressesOutput.slice(0, 1).map((tx, key) => {
                   return (

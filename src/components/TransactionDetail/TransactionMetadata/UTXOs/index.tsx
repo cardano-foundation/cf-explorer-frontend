@@ -56,7 +56,7 @@ const Card = ({
       </Header>
       {item &&
         item.map((i, ii) => (
-          <Box textAlign={"left"} padding="10px 25px" borderBottom={"1px solid #0000001a"} key={ii}>
+          <Box textAlign={"left"} padding="10px 0" mx={"25px"} borderBottom={"1px solid #0000001a"} key={ii}>
             <Box display={"flex"} alignItems="center">
               <Box width={50}>
                 <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />
