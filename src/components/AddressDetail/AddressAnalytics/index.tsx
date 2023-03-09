@@ -47,7 +47,6 @@ const AddressAnalytics: React.FC = () => {
   const categories = data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
   const minBalance = Math.min(...(balance || []), 0);
   const maxBalance = Math.max(...(balance || []), 0);
-  const el = document.getElementsByClassName("y-axis-lable");
 
   return (
     <Card title="Analytics" pt={5}>
@@ -126,7 +125,6 @@ const AddressAnalytics: React.FC = () => {
                     ],
                   }}
                 />
-                <StyledLine left={el.length && el.length > 2 ? el[2].getBoundingClientRect().width + 24 : 0} />
               </Box>
             )}
           </ChartBox>
