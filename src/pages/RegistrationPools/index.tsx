@@ -79,16 +79,21 @@ const columns: Column<Registration>[] = [
     title: "Stake Key",
     key: "stakeKey",
     render: r =>
-      r.stakeKey && r.stakeKey.length > 0
-        ? r.stakeKey.map((sk, idx) => (
+      r.stakeKey && r.stakeKey.length > 0 ? (
+        <>
+          {r.stakeKey.slice(0, 2).map((sk, idx) => (
             <>
               <CustomTooltip title={sk} key={idx}>
                 <StyledLink to={details.stake(sk)}>{getShortWallet(sk)}</StyledLink>
               </CustomTooltip>
               {r.stakeKey.length > 1 && <Box mb={1} />}
             </>
-          ))
-        : "",
+          ))}
+          {r.stakeKey.length > 2 && <StyledLink to={details.delegation(r.poolView || "")}> ...</StyledLink>}
+        </>
+      ) : (
+        ""
+      ),
   },
 ];
 

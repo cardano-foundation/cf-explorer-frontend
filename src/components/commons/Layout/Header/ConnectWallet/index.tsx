@@ -1,6 +1,6 @@
-import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import React, { useCallback, useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { useSelector } from "react-redux";
 import { WalletIcon } from "../../../../../commons/resources";
 import { RootState } from "../../../../../stores/types";
@@ -30,14 +30,20 @@ const ConnectWallet: React.FC<Props> = () => {
   const [signature, setSignature] = React.useState("");
   const [submitting, setSubmitting] = useState(false);
   const [isSign, setIsSign] = useState(isConnected);
-
   const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === "clickaway") {
       return;
     }
-
     setMessage("");
   };
+
+  useEffect(() => {
+    window.onbeforeunload = function () {
+      if (!localStorage.getItem("token")) {
+        disconnect();
+      }
+    };
+  }, []);
 
   const handleClick = () => {
     setOpenModal(!openModal);
