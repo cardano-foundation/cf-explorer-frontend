@@ -46,13 +46,15 @@ const Card = ({
   return (
     <Box textAlign={"left"} mb={1} style={{ background: "#fff" }}>
       <Header>
-        <div>
-          <Box color={"black"} fontWeight="bold" fontSize={"1rem"}>
+        <Box color={"#98A2B3"} fontWeight="bold">
+          <Box color={"black"} fontSize={"1rem"}>
             {type === "down" ? "Input" : "Output"}
           </Box>
           Wallet Addresses
-        </div>
-        <div>Amount</div>
+        </Box>
+        <Box color={"#98A2B3"} fontWeight="bold">
+          Amount
+        </Box>
       </Header>
       {item &&
         item.map((i, ii) => (

@@ -57,7 +57,7 @@ const TopAddresses: React.FC<Props> = () => {
     <StyledContainer>
       <Card title={"Top 50 addresses"} underline={false}>
         <Table
-          onClickRow={(_, r) => history.push(details.address(r.address))}
+          // onClickRow={(_, r) => history.push(details.address(r.address))}
           data={data}
           error={error}
           loading={loading}
