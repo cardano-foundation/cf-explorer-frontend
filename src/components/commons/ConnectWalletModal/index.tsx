@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { setOpenModal, setWallet } from "../../../stores/user";
-import { SUPPORTED_WALLETS } from "../../../commons/utils/constants";
+import { NETWORK, SUPPORTED_WALLETS } from "../../../commons/utils/constants";
 import { CircularProgress } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
 import {
@@ -30,7 +30,6 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage })
     if (reason === "clickaway") {
       return;
     }
-
     setMessage("");
   };
   const handleClose = () => {
@@ -42,7 +41,11 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage })
     onTriggerSignMessage();
   };
   const onError = (error: Error) => {
-    setMessage(error.message || "Something went wrong!");
+    if (error.name === "EnablementFailedError") {
+      setMessage(`You are currently connect to ${NETWORK}, please switch to  ${NETWORK}!`);
+    } else {
+      setMessage("Something went wrong!");
+    }
     setWalletConnecting(null);
   };
   const handleConnect = (walletName: SupportedWallets) => {
@@ -54,7 +57,6 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage })
   const handleOpenLink = (wallet: Wallet) => {
     window.open(wallet.link, "_blank");
   };
-
   return (
     <ConnectOption>
       <WrapContent>
