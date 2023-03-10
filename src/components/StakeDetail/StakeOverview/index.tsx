@@ -128,6 +128,8 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
                 style={{
                   background: data?.status === "ACTIVE" ? "rgba(67, 143, 104, 0.2)" : "rgba(102, 112, 133, 0.2)",
                 }}
+                py={1}
+                px={2}
               >
                 {data?.status}
               </LabelStatus>
