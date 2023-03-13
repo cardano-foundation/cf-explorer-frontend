@@ -1,4 +1,4 @@
-import React from "react"; 
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { routers } from "./commons/routers";
 import Home from "./pages/Home";
@@ -27,6 +27,7 @@ import MyProfile from "./pages/MyProfile";
 import AccountLayout from "./components/commons/Layout/AccountLayout";
 import Bookmark from "./pages/Bookmark";
 import PrivateNotes from "./pages/PrivateNotes";
+import { Box } from "@mui/system";
 
 const Routes: React.FC = () => {
   return (

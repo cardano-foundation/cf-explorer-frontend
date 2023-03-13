@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { authAxios } from "../../../../../commons/utils/axios";
 import { NETWORK, NETWORKS, NETWORK_TYPES } from "../../../../../commons/utils/constants";
-import { alphaNumeric } from "../../../../../commons/utils/helper";
+import { alphaNumeric, removeAuthInfo } from "../../../../../commons/utils/helper";
 import { RootState } from "../../../../../stores/types";
 import { setModalRegister } from "../../../../../stores/user";
 import StyledModal from "../../../StyledModal";
@@ -10,19 +10,19 @@ import { Label, StyledTitle, TextError, TextNote, WrapButton } from "./styles";
 import { StyledInput, StyledDarkLoadingButton } from "../../../../share/styled";
 import { FormHelperText } from "@mui/material";
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { existUserName } from "../../../../../commons/utils/userRequest";
 interface IProps {
-  address: string;
   nonce: NonceObject | null;
   signature: string;
   open: boolean;
   setMessage: (message: string) => void;
   setIsSign: (isSign: boolean) => void;
 }
-const RegisterUsernameModal: React.FC<IProps> = ({ open, address, signature, nonce, setMessage, setIsSign }) => {
+const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setMessage, setIsSign }) => {
   const { disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
-  const { wallet } = useSelector(({ user }: RootState) => user);
+  const { wallet, address } = useSelector(({ user }: RootState) => user);
   const [errorMessage, setErrorMessage] = useState("");
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
@@ -43,18 +43,24 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, address, signature, non
           signature,
         },
       };
-      const { data } = await authAxios.post("auth/sign-up", payload);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("username", data.username);
-      localStorage.setItem("refreshToken", data.refreshToken);
-      localStorage.setItem("walletId", data.walletId);
-      localStorage.setItem("email", data.email);
-      setIsSign(true);
-      setModalRegister(false);
+      const { data: isExistUsername } = await existUserName({ username: value });
+      if (!isExistUsername) {
+        const { data } = await authAxios.post("auth/sign-up", payload);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("refreshToken", data.refreshToken);
+        localStorage.setItem("walletId", data.walletId);
+        localStorage.setItem("email", data.email);
+        setIsSign(true);
+        setModalRegister(false);
+      } else {
+        setErrorMessage("This username is already taken, please choose another name");
+      }
     } catch (error: any) {
       setErrorMessage(error.response?.data.errorMessage);
       setMessage(error.response?.data.errorMessage || "");
       disconnect();
+      removeAuthInfo();
     } finally {
       setLoading(false);
     }
@@ -66,6 +72,7 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, address, signature, non
       handleCloseModal={() => {
         setModalRegister(false);
         disconnect();
+        removeAuthInfo();
       }}
     >
       <>

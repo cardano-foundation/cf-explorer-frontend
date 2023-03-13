@@ -1,5 +1,6 @@
 import moment from "moment";
 import useFetch from "../../../commons/hooks/useFetch";
+import { details } from "../../../commons/routers";
 // import { USER_API } from "../../../commons/utils/api";
 import { getShortHash } from "../../../commons/utils/helper";
 import StyledModal from "../../commons/StyledModal";
@@ -35,7 +36,7 @@ const ActivityLogModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
           <>
             <SmallText>Transaction hash</SmallText>
             <br />
-            <StyledLink>{getShortHash(r.description || "")}</StyledLink>
+            <StyledLink to={details.transaction(r.description)}>{getShortHash(r.description || "")}</StyledLink>
           </>
         );
       },
