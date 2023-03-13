@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { authAxios } from "../../../../../commons/utils/axios";
 import { NETWORK, NETWORKS, NETWORK_TYPES } from "../../../../../commons/utils/constants";
-import { alphaNumeric } from "../../../../../commons/utils/helper";
+import { alphaNumeric, removeAuthInfo } from "../../../../../commons/utils/helper";
 import { RootState } from "../../../../../stores/types";
 import { setModalRegister } from "../../../../../stores/user";
 import StyledModal from "../../../StyledModal";
@@ -60,6 +60,7 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setMe
       setErrorMessage(error.response?.data.errorMessage);
       setMessage(error.response?.data.errorMessage || "");
       disconnect();
+      removeAuthInfo();
     } finally {
       setLoading(false);
     }
@@ -71,6 +72,7 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setMe
       handleCloseModal={() => {
         setModalRegister(false);
         disconnect();
+        removeAuthInfo();
       }}
     >
       <>

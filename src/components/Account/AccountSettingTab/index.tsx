@@ -113,7 +113,7 @@ const AccountSettingTab: React.FC = () => {
           }
           await fetchUserInfo();
           setMessage({
-            message: `Your ${field === "email" ? "email" : "username"} has been changed.`,
+            message: `Your ${field} has been changed.`,
             severity: "success",
           });
         }

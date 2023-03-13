@@ -16,6 +16,7 @@ import SyncBookmarkModal from "../SyncBookmarkModal";
 import { useLocalStorage } from "react-use";
 import { BookMark } from "../../../../../types/bookmark";
 import Toast from "../../../Toast";
+import { removeAuthInfo } from "../../../../../commons/utils/helper";
 interface Props {}
 
 const ConnectWallet: React.FC<Props> = () => {
@@ -41,6 +42,7 @@ const ConnectWallet: React.FC<Props> = () => {
     window.onbeforeunload = function () {
       if (!localStorage.getItem("token")) {
         disconnect();
+        removeAuthInfo();
       }
     };
   }, []);
@@ -89,6 +91,7 @@ const ConnectWallet: React.FC<Props> = () => {
       }
     } catch (error) {
       disconnect();
+      removeAuthInfo();
     } finally {
       setModalSignMessage(false);
     }
@@ -107,6 +110,7 @@ const ConnectWallet: React.FC<Props> = () => {
             setMessage("User rejected the request!");
             setModalSignMessage(false);
             disconnect();
+            removeAuthInfo();
           }
         );
       }
@@ -154,6 +158,7 @@ const ConnectWallet: React.FC<Props> = () => {
         handleCloseModal={() => {
           setModalSignMessage(false);
           disconnect();
+          removeAuthInfo();
         }}
         onSignMessage={onSignMessage}
         loadingSubmit={submitting}
