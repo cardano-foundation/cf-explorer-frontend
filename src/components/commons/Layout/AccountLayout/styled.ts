@@ -1,4 +1,4 @@
-import { styled, Box, Container, Theme } from "@mui/material";
+import { styled, Box, Container, Theme, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Wrapper = styled(Container)(({ theme }) => ({}));
@@ -11,6 +11,9 @@ export const ContentBox = styled(Box)(({ theme }) => ({
 }));
 export const SideBar = styled(Box)(({ theme }) => ({
   borderRight: "1px solid #f6f6f6",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
 }));
 
 export const NavItem = styled(Link)(({ theme, active }: { active: boolean; theme?: Theme }) => ({
@@ -25,4 +28,22 @@ export const StyledUsername = styled(Box)`
   max-width: 200px;
   over-flow: hidden;
   text-overflow: ellipsis;
-`
+`;
+
+export const StyledButton = styled(Button)(() => ({
+  textTransform: "lowercase",
+  padding: 0,
+  minWidth: "unset",
+  lineHeight: 1,
+  fontSize: "0.75rem",
+  fontFamily: "var(--font-family-text)",
+}));
+
+export const StyledButtonReport = styled(Button)(() => ({ padding: 0 }));
+export const StyledButtonClose = styled(Button)(({ theme }) => ({
+  border: "1px solid #C8CDD8",
+  textTransform: "capitalize",
+  fontWeight: "bold",
+  color: "#344054",
+  fontSize: "1rem",
+}));

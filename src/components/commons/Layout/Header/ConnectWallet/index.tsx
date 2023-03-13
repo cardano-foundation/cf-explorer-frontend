@@ -4,7 +4,7 @@ import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-wit
 import { useSelector } from "react-redux";
 import { WalletIcon } from "../../../../../commons/resources";
 import { RootState } from "../../../../../stores/types";
-import { setModalRegister, setModalSignMessage, setOpenModal, setNonce } from "../../../../../stores/user";
+import { setModalRegister, setModalSignMessage, setOpenModal, setNonce, setAddress } from "../../../../../stores/user";
 import ConnectedProfileOption from "../../../ConnectedProfileOption";
 import ConnectWalletModal from "../../../ConnectWalletModal";
 import RegisterUsernameModal from "../RegisterUsernameModal";
@@ -84,6 +84,7 @@ const ConnectWallet: React.FC<Props> = () => {
           }
         }
       } else {
+        setAddress(stakeAddress);
         setModalRegister(true);
       }
     } catch (error) {
@@ -162,7 +163,6 @@ const ConnectWallet: React.FC<Props> = () => {
         open={modalRegister}
         nonce={nonce}
         signature={signature}
-        address={stakeAddress || ""}
         setMessage={setMessage}
         setIsSign={setIsSign}
       />
