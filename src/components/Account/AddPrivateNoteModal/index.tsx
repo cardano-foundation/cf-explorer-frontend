@@ -1,3 +1,4 @@
+import { AlertProps } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
@@ -11,13 +12,14 @@ interface IProps {
   handleCloseModal: () => void;
   currentNote?: TCurrentNote;
   refesh: () => void;
+  setMessage: ({ message, severity }: { message: string; severity: AlertProps["severity"] }) => void;
 }
 
 type TInput = {
   value?: string;
   error?: string;
 };
-const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseModal, refesh }) => {
+const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseModal, refesh, setMessage }) => {
   const [txHash, setTxHash] = useState<TInput | undefined>();
   const [privateNote, setPrivateNote] = useState<TInput | undefined>();
   const [loading, setLoading] = useState(false);
@@ -41,6 +43,10 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
         const payload = { note: privateNote?.value || "", noteId: currentNote.id };
         await editPrivateNote(payload);
       }
+      setMessage({
+        message: `${!currentNote ? "Add" : "Update"} transaction private note successfully!`,
+        severity: "success",
+      });
       setTxHash(undefined);
       setPrivateNote(undefined);
       setLoading(false);
@@ -57,10 +63,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal}>
       <Box>
-        <Title>
-          {currentNote ? "View/Update" : "Add"} <br />
-          My Transasaction Private Note
-        </Title>
+        <Title>{currentNote ? "View/Update" : "Add"} My Transasaction Private Note</Title>
         <WrapFormInput>
           <StyledLabelInput>Transaction Hash</StyledLabelInput>
           <br />
@@ -73,7 +76,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
         </WrapFormInput>
 
         <WrapFormInput>
-          <StyledLabelInput>{currentNote ? "View/Update" : "Add"} Private Note</StyledLabelInput>
+          <StyledLabelInput>{currentNote ? "Update" : "Add"} Private Note</StyledLabelInput>
           <br />
           <StyledInput
             value={privateNote?.value}
@@ -84,7 +87,12 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
           />
           <StyledHelperText>{privateNote?.error}</StyledHelperText>
         </WrapFormInput>
-        <StyledDarkLoadingButton loading={loading} loadingPosition="end" onClick={handleSubmitData}>
+        <StyledDarkLoadingButton
+          loading={loading}
+          disabled={!privateNote?.value || !txHash?.value}
+          loadingPosition="end"
+          onClick={handleSubmitData}
+        >
           {currentNote ? "Update" : "Add"}
         </StyledDarkLoadingButton>
       </Box>

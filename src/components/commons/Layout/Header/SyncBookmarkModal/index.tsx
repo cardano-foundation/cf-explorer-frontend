@@ -16,10 +16,10 @@ interface SyncBookmarkModalProps {
 }
 const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, loadingSubmit, handleCloseModal }) => {
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<BookMark[]>([]);
+  const [data, setData] = useState<{ passNumber: number; failNumber: number }>();
   const [message, setMessage] = useState("");
   const [bookmarks, setBookmark] = useLocalStorage<BookMark[]>("bookmark", []);
-
+  const bookmark = bookmarks?.filter(r => !r.id).length;
   const hanldeSyncBookmark = async () => {
     try {
       setLoading(true);
@@ -42,23 +42,17 @@ const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, loadingSubm
       <Box textAlign="center">
         <ModalTitle>Notify</ModalTitle>
         <Description>
-          {data && !message && (
-            <>
-              {bookmarks?.filter(r => !r.id).length || 0} bookmarks detected in local storage, would you like to sync
-              log with your account?
-            </>
+          {!data && !message && (
+            <>{bookmark} bookmarks detected in local storage, would you like to sync log with your account?</>
           )}
-          {data && data.length === 0 && message && (
-            <>{bookmarks?.filter(r => !r.id).length || 0} bookmarks successfully synced</>
-          )}
-          {data && data.length > 0 && message && (
+          {data?.passNumber && message && <>{data?.passNumber} bookmarks successfully synced</>}
+          {data?.failNumber && data?.failNumber > 0 && message ? (
             <>
-              <Box>
-                {bookmarks?.filter(r => !r.id).length ? bookmarks?.filter(r => !r.id).length - data.length : 0}{" "}
-                bookmarks successfully synced
-              </Box>
-              <Box mt={1}>{data.length || 0} bookmarks failure synced</Box>
+              <Box>{data?.passNumber} bookmarks successfully synced</Box>
+              <Box mt={1}>{data?.failNumber} bookmarks failure synced</Box>
             </>
+          ) : (
+            <></>
           )}
         </Description>
         <Box display={"flex"} justifyContent="center" gap={2}>

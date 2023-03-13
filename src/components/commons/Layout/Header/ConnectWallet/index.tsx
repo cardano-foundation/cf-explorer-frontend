@@ -4,7 +4,7 @@ import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-wit
 import { useSelector } from "react-redux";
 import { WalletIcon } from "../../../../../commons/resources";
 import { RootState } from "../../../../../stores/types";
-import { setModalRegister, setModalSignMessage, setOpenModal, setNonce } from "../../../../../stores/user";
+import { setModalRegister, setModalSignMessage, setOpenModal, setNonce, setAddress } from "../../../../../stores/user";
 import ConnectedProfileOption from "../../../ConnectedProfileOption";
 import ConnectWalletModal from "../../../ConnectWalletModal";
 import RegisterUsernameModal from "../RegisterUsernameModal";
@@ -16,6 +16,7 @@ import SyncBookmarkModal from "../SyncBookmarkModal";
 import { useLocalStorage } from "react-use";
 import { BookMark } from "../../../../../types/bookmark";
 import Toast from "../../../Toast";
+import { removeAuthInfo } from "../../../../../commons/utils/helper";
 interface Props {}
 
 const ConnectWallet: React.FC<Props> = () => {
@@ -41,6 +42,7 @@ const ConnectWallet: React.FC<Props> = () => {
     window.onbeforeunload = function () {
       if (!localStorage.getItem("token")) {
         disconnect();
+        removeAuthInfo();
       }
     };
   }, []);
@@ -84,10 +86,12 @@ const ConnectWallet: React.FC<Props> = () => {
           }
         }
       } else {
+        setAddress(stakeAddress);
         setModalRegister(true);
       }
     } catch (error) {
       disconnect();
+      removeAuthInfo();
     } finally {
       setModalSignMessage(false);
     }
@@ -106,6 +110,7 @@ const ConnectWallet: React.FC<Props> = () => {
             setMessage("User rejected the request!");
             setModalSignMessage(false);
             disconnect();
+            removeAuthInfo();
           }
         );
       }
@@ -153,6 +158,7 @@ const ConnectWallet: React.FC<Props> = () => {
         handleCloseModal={() => {
           setModalSignMessage(false);
           disconnect();
+          removeAuthInfo();
         }}
         onSignMessage={onSignMessage}
         loadingSubmit={submitting}
@@ -162,7 +168,6 @@ const ConnectWallet: React.FC<Props> = () => {
         open={modalRegister}
         nonce={nonce}
         signature={signature}
-        address={stakeAddress || ""}
         setMessage={setMessage}
         setIsSign={setIsSign}
       />
