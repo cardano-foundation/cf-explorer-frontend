@@ -14,6 +14,7 @@ import { ReactComponent as Warning } from "../../commons/resources/icons/warning
 import { Box } from "@mui/material";
 import { removePrivateNote } from "../../commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
+import { details } from "../../commons/routers";
 
 type TAction = {
   onClick: () => void;
@@ -79,9 +80,14 @@ const PrivateNotes = () => {
       title: "Transaction Private Note",
       key: "privateNote",
       minWidth: "40px",
+      maxWidth: "300px",
       render: item => (
         <>
-          <StyledLink>{getShortHash(item.txHash)}</StyledLink>
+          <CustomTooltip title={item.txHash}>
+            <StyledLink to={details.transaction(item.txHash)}>
+              <>{getShortHash(item.txHash)}</>
+            </StyledLink>
+          </CustomTooltip>
           <br />
           <SmallText>{item.note}</SmallText>
         </>
@@ -114,17 +120,20 @@ const PrivateNotes = () => {
           Add
         </AddButton>
       </Header>
-      <StyledTable
-        emptyClassName="empty-content-table"
-        columns={columns}
-        data={data}
-        total={{ count: total, title: "Total Private Notes" }}
-        pagination={{
-          ...pageInfo,
-          total: total,
-          onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
-        }}
-      />
+      <Box overflow={"auto"}>
+        <StyledTable
+          style={{ overflow: "auto" }}
+          emptyClassName="empty-content-table"
+          columns={columns}
+          data={data}
+          total={{ count: total, title: "Total Private Notes" }}
+          pagination={{
+            ...pageInfo,
+            total: total,
+            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+          }}
+        />
+      </Box>
       <AddPrivateNoteModal currentNote={currentNote} open={openModal} handleCloseModal={onCloseModal} refesh={refesh} />
     </Container>
   );

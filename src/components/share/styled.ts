@@ -1,5 +1,6 @@
 import { LoadingButton } from "@mui/lab";
-import { FormHelperText, FormLabel, InputBase, Link, styled } from "@mui/material";
+import { FormHelperText, FormLabel, InputBase, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const StyledLink = styled(Link)`
   text-decoration: none;

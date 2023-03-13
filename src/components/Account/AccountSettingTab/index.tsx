@@ -1,14 +1,18 @@
-import { Box } from "@mui/material";
+import { Box, AlertProps } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+
 import { RootState } from "../../../stores/types";
 import { StyledButton, StyledHelper, StyledInput, StyledLabel, StyledRowItem, WrapRowItem } from "./styles";
 import { editInfo, existEmail, existUserName, transferWallet } from "../../../commons/utils/userRequest";
-import { regexEmail, removeAuthInfo } from "../../../commons/utils/helper";
-import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
-import { useHistory } from "react-router-dom";
-import { routers } from "../../../commons/routers";
+import { regexEmail, removeAuthInfo, alphaNumeric } from "../../../commons/utils/helper";
+import { getInfo } from "../../../commons/utils/userRequest";
+import { setUserData } from "../../../stores/user";
 import { NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
+import Toast from "../../commons/Toast";
+import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { routers } from "../../../commons/routers";
+import { useHistory } from "react-router-dom";
 
 type TRowItem = {
   label: string;
@@ -17,16 +21,26 @@ type TRowItem = {
   action: () => void;
   onChangeValue: (event: any) => void;
   disabled?: boolean;
+  disabledButton?: boolean;
   field: "email" | "username" | "wallet";
 };
 
-const RowItem: React.FC<TRowItem> = ({ label, value, errorMsg, onChangeValue, action, disabled = false, field }) => {
+const RowItem: React.FC<TRowItem> = ({
+  label,
+  value,
+  errorMsg,
+  onChangeValue,
+  action,
+  disabled = false,
+  field,
+  disabledButton = false,
+}) => {
   return (
     <WrapRowItem>
       <StyledLabel>{label}</StyledLabel>
       <StyledRowItem>
         <StyledInput disabled={disabled} value={value} onChange={onChangeValue} placeholder={label} />
-        <StyledButton onClick={action} disabled={["email", "username"].includes(field) && !value}>
+        <StyledButton onClick={action} disabled={(["email", "username"].includes(field) && !value) || disabledButton}>
           Change
         </StyledButton>
       </StyledRowItem>
@@ -41,12 +55,30 @@ type TFieldInput = {
 };
 
 const AccountSettingTab: React.FC = () => {
-  const { userData, wallet: walletAddress } = useSelector(({ user }: RootState) => user);
+  const { userData } = useSelector(({ user }: RootState) => user);
   const { disconnect } = useCardano();
   const history = useHistory();
+  const [message, setMessage] = useState<{ message: string; severity: AlertProps["severity"] }>({
+    message: "",
+    severity: "error",
+  });
   const [username, setUsername] = useState<TFieldInput>({ value: userData?.username });
   const [email, setEmail] = useState<TFieldInput>({ value: userData?.email });
   const [wallet, setWallet] = useState<TFieldInput>({ value: userData?.wallet });
+
+  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setMessage({ message: "", severity: "error" });
+  };
+
+  const fetchUserInfo = useCallback(async () => {
+    try {
+      const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
+      setUserData(response.data);
+    } catch (error) {}
+  }, []);
 
   const onEditInfo = async (field: "email" | "username") => {
     try {
@@ -54,47 +86,51 @@ const AccountSettingTab: React.FC = () => {
       if (field === "email") {
         const checkEmail = (email?.value && regexEmail.test(email.value)) || !email.value;
         if (!checkEmail) {
-          setEmail(prev => ({ ...prev, errorMsg: "Please enter a valid email Address e.g: abcxyz@gmail.com" }));
+          setMessage({ message: "Please enter a valid email Address e.g: abcxyz@gmail.com", severity: "error" });
           return;
         }
         const checkExistEmail = await existEmail({ email: email.value || "" });
         if (checkExistEmail.data) {
-          setEmail(prev => ({ ...prev, errorMsg: "Email exist. Try other email!" }));
+          setMessage({ message: "Email existed, Please try another!", severity: "error" });
           return;
         }
         payload = { email: email.value };
       } else {
         const checkExistUsername = await existUserName({ username: username.value || "" });
         if (checkExistUsername.data) {
-          setUsername(prev => ({ ...prev, errorMsg: "Username exist. Try other!" }));
+          setMessage({ message: "This username existed, please enter another!", severity: "error" });
           return;
         }
         payload = { username: username.value };
       }
-      await editInfo(payload);
-      if (field === "username") {
-        disconnect();
-        removeAuthInfo();
-        history.push(routers.HOME);
+      if (!message.message) {
+        const { data } = await editInfo(payload);
+        if (data.userName || data.id) {
+          if (field === "username") {
+            localStorage.setItem("token", data?.jwtToken);
+            localStorage.setItem("username", data?.username);
+            localStorage.setItem("email", data?.email);
+          }
+          await fetchUserInfo();
+          setMessage({
+            message: `Your ${field === "email" ? "email" : "Username"} has been changed.`,
+            severity: "success",
+          });
+        }
       }
-    } catch (error) {}
+    } catch (error) {
+      setMessage({
+        message: (error as Error).message || "Something went wrong!",
+        severity: "error",
+      });
+    }
   };
 
   const onTransferWallet = async () => {
     try {
-      const payload = {
-        username: username.value,
-        wallet: {
-          address: wallet.value,
-          walletName: walletAddress?.toUpperCase(),
-          networkType: NETWORK_TYPES[NETWORK],
-          networkId: NETWORK_TYPES[NETWORK],
-        },
-        refreshJwt: localStorage.getItem("refreshToken") || "",
-      };
-      const { data } = await transferWallet(payload);
-      localStorage.setItem("token", data?.token);
-      localStorage.setItem("refreshToken", data?.refreshToken);
+      await disconnect();
+      removeAuthInfo();
+      history.push(routers.HOME);
     } catch (error) {}
   };
 
@@ -111,6 +147,11 @@ const AccountSettingTab: React.FC = () => {
             setUsername({ value: event.target.value, errorMsg: "Username is required!" });
           }
         }}
+        disabledButton={
+          (username.value || "")?.length < 5 ||
+          (username.value || "")?.length > 30 ||
+          alphaNumeric.test(username.value || "")
+        }
         field="username"
         action={() => onEditInfo("username")}
       />
@@ -126,6 +167,7 @@ const AccountSettingTab: React.FC = () => {
           }
         }}
         field="email"
+        disabledButton={!email.value}
         action={() => onEditInfo("email")}
       />
       <RowItem
@@ -135,6 +177,12 @@ const AccountSettingTab: React.FC = () => {
         onChangeValue={event => setWallet({ value: event.target.value, errorMsg: "" })}
         action={onTransferWallet}
         field="wallet"
+      />
+      <Toast
+        open={!!message.message}
+        onClose={handleCloseToast}
+        messsage={message.message}
+        severity={message.severity}
       />
     </Box>
   );

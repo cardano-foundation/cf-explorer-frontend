@@ -26,7 +26,9 @@ export const NavItem = styled(Link)(({ theme, active }: { active: boolean; theme
 
 export const StyledUsername = styled(Box)`
   max-width: 200px;
-  over-flow: hidden;
+  padding-left: ${({ theme }) => theme.spacing(1)};
+  padding-right: ${({ theme }) => theme.spacing(1)};
+  overflow: hidden;
   text-overflow: ellipsis;
 `;
 

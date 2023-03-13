@@ -1,5 +1,5 @@
-import { Avatar, Box, Button, Dialog, IconButton } from "@mui/material";
-import React, { useCallback, useEffect, useState } from "react";
+import { Avatar, Box, CircularProgress, Dialog, IconButton } from "@mui/material";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { routers } from "../../../../commons/routers";
 import { RootState } from "../../../../stores/types";
@@ -19,9 +19,13 @@ import { MdChevronRight } from "react-icons/md";
 import { setUserData } from "../../../../stores/user";
 import { getInfo } from "../../../../commons/utils/userRequest";
 import { NETWORK_TYPES, NETWORK } from "../../../../commons/utils/constants";
+import { uploadAxios } from "../../../../commons/utils/axios";
 import { ReactComponent as ReportDiscord } from "../../../../commons/resources/icons/reportDiscord.svg";
 import { ReactComponent as ReportMail } from "../../../../commons/resources/icons/reportMail.svg";
 import { DialogTitle } from "@mui/material";
+import CustomTooltip from "../../CustomTooltip";
+import Toast from "../../Toast";
+import { AlertProps } from "@mui/material";
 interface Props {
   children: React.ReactNode;
 }
@@ -30,6 +34,11 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   const { pathname } = useLocation();
   const { userData } = useSelector(({ user }: RootState) => user);
   const [openReportModal, setOpenReportModal] = useState(false);
+  const [isUploadAvatar, setIsUploadAvatar] = useState(false);
+  const [message, setMessage] = useState<{ message: string; severity: AlertProps["severity"] }>({
+    message: "",
+    severity: "error",
+  });
   const fetchUserInfo = useCallback(async () => {
     try {
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
@@ -37,10 +46,40 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
     } catch (error) {}
   }, []);
 
+  const uploadImgRef = useRef(null);
+
   useEffect(() => {
     fetchUserInfo();
   }, [fetchUserInfo]);
 
+  const hanldeUploadImage = async (e: any) => {
+    try {
+      if (e.target && e.target.files && e.target.files.length > 0) {
+        setIsUploadAvatar(true);
+        const formData = new FormData();
+        formData.append("avatar", e.target.files[0]);
+        const { data } = await uploadAxios.put("/user/edit-avatar", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        if (data && data.id && data.avatar) {
+          await fetchUserInfo();
+        }
+        setMessage({ message: "Your avatar has been changed.", severity: "success" });
+      }
+    } catch (error) {
+    } finally {
+      setIsUploadAvatar(false);
+    }
+  };
+  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setMessage({ message: "", severity: "error" });
+  };
   // if (!userData) return <NotFound />;
   return (
     <Wrapper>
@@ -53,19 +92,50 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
             <Box>
               <Box pt={4} textAlign="center" display={"flex"} justifyContent="center">
                 <Box position={"relative"}>
-                  <Avatar
-                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                    alt="avatar"
-                    sx={{ height: "100px", width: "100px", textAlign: "center" }}
-                  />
-                  <Box component={IconButton} position="absolute" bottom="0" right="0" p={0}>
+                  {!isUploadAvatar && (
+                    <Avatar
+                      src={userData?.avatar}
+                      alt="avatar"
+                      sx={{ height: "100px", width: "100px", textAlign: "center" }}
+                    />
+                  )}
+                  {isUploadAvatar && (
+                    <Box
+                      height={"100px"}
+                      width={"100px"}
+                      bgcolor="#0000001a"
+                      borderRadius={"50%"}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <CircularProgress />
+                    </Box>
+                  )}
+                  <Box
+                    component={IconButton}
+                    position="absolute"
+                    bottom="0"
+                    right="0"
+                    p={0}
+                    onClick={() => uploadImgRef.current && (uploadImgRef.current as any).click()}
+                  >
                     <Box component={"img"} src={editAva} alt="editava" />
+                    <input
+                      accept="image/*"
+                      type="file"
+                      ref={uploadImgRef}
+                      onChange={hanldeUploadImage}
+                      style={{ display: "none" }}
+                    />
                   </Box>
                 </Box>
               </Box>
-              <StyledUsername component={"h4"} pt={1} m="auto">
-                {userData?.username}
-              </StyledUsername>
+              <CustomTooltip title={userData?.username || ""} placement="bottom">
+                <StyledUsername component={"h4"} pt={1} m="auto">
+                  {userData?.username}
+                </StyledUsername>
+              </CustomTooltip>
             </Box>
             <Box mt={4}>
               {router.map((i, ii) => (
@@ -118,6 +188,12 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
           </Box>
         </Box>
       </Dialog>
+      <Toast
+        open={!!message.message}
+        onClose={handleCloseToast}
+        messsage={message.message}
+        severity={message.severity}
+      />
     </Wrapper>
   );
 };

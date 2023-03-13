@@ -35,7 +35,7 @@ const ActivityLogModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
           <>
             <SmallText>Transaction hash</SmallText>
             <br />
-            <StyledLink>{getShortHash(r.description || "")}</StyledLink>
+            <StyledLink to={"#"}>{getShortHash(r.description || "")}</StyledLink>
           </>
         );
       },
