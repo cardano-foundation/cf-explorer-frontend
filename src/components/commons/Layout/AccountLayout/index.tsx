@@ -159,7 +159,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
             Missing any data? click <StyledButton onClick={() => setOpenReportModal(true)}>here</StyledButton> to report
           </Box>
         </SideBar>
-        <Box px={3} py={2} flex={1}>
+        <Box px={3} py={2} flex={1} overflow={"auto"}>
           {children}
         </Box>
       </ContentBox>

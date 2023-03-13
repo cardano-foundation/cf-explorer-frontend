@@ -23,7 +23,9 @@ export const removePrivateNote = (noteId: number) => authAxios.delete(`note/dele
 export const addBookmark = (payload: BookMark) =>
   authAxios.post<any, AxiosResponse<BookMark, any>>("/bookmark/add", payload);
 export const addListBookmark = (payload: BookMark[]) =>
-  authAxios.post<any, AxiosResponse<BookMark[], any>>("/bookmark/add-list", { bookMarks: payload });
+  authAxios.post<any, AxiosResponse<{ passNumber: number; failNumber: number }, any>>("/bookmark/add-list", {
+    bookMarks: payload,
+  });
 export const deleteBookmark = (id: number) => authAxios.delete("/bookmark/delete/" + id);
 export const getAllBookmarks = (network: string) =>
   authAxios.get<any, AxiosResponse<BookMark[], any>>("bookmark/find-all-key?network=" + network);

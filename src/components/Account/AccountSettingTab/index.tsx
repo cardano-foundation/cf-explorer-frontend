@@ -58,13 +58,13 @@ const AccountSettingTab: React.FC = () => {
   const { userData } = useSelector(({ user }: RootState) => user);
   const { disconnect } = useCardano();
   const history = useHistory();
+  const [username, setUsername] = useState<TFieldInput>({ value: userData?.username });
+  const [email, setEmail] = useState<TFieldInput>({ value: userData?.email });
+  const [wallet, setWallet] = useState<TFieldInput>({ value: userData?.wallet });
   const [message, setMessage] = useState<{ message: string; severity: AlertProps["severity"] }>({
     message: "",
     severity: "error",
   });
-  const [username, setUsername] = useState<TFieldInput>({ value: userData?.username });
-  const [email, setEmail] = useState<TFieldInput>({ value: userData?.email });
-  const [wallet, setWallet] = useState<TFieldInput>({ value: userData?.wallet });
 
   const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === "clickaway") {
