@@ -113,7 +113,7 @@ const AccountSettingTab: React.FC = () => {
           }
           await fetchUserInfo();
           setMessage({
-            message: `Your ${field === "email" ? "email" : "Username"} has been changed.`,
+            message: `Your ${field === "email" ? "email" : "username"} has been changed.`,
             severity: "success",
           });
         }
@@ -148,8 +148,8 @@ const AccountSettingTab: React.FC = () => {
           }
         }}
         disabledButton={
-          (username.value || "")?.length < 5 ||
-          (username.value || "")?.length > 30 ||
+          (username.value && username.value?.length < 5) ||
+          (username.value && username?.value?.length > 30) ||
           alphaNumeric.test(username.value || "")
         }
         field="username"

@@ -1,6 +1,7 @@
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { parse } from "qs";
+import { setUserData } from "../../stores/user";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const alphaNumeric = /[^0-9a-zA-Z]/;
@@ -102,6 +103,7 @@ export const removeAuthInfo = () => {
   localStorage.removeItem("persist:user");
   localStorage.setItem("cf-wallet-connected", "false");
   localStorage.removeItem("cf-last-connected-wallet");
+  setUserData(null);
 };
 
 export const formatDateTime = (date: string) => {

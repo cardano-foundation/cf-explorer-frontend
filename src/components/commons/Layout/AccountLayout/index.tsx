@@ -138,8 +138,8 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
               </CustomTooltip>
             </Box>
             <Box mt={4}>
-              {router.map((i, ii) => (
-                <NavItem to={i.to} active={i.to === pathname} key={ii}>
+              {router.map((route, index) => (
+                <NavItem to={route.to} active={route.to === pathname} key={index}>
                   <Box
                     display="flex"
                     alignItems={"center"}
@@ -148,8 +148,8 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                     mx={4}
                     borderBottom="1px solid rgba(0,0,0,0.07)"
                   >
-                    <Box>{i.title}</Box>
-                    <MdChevronRight size={25} color={i.to === pathname ? "#438F68" : "#98A2B3"} />
+                    <Box>{route.title}</Box>
+                    <MdChevronRight size={25} color={route.to === pathname ? "#438F68" : "#98A2B3"} />
                   </Box>
                 </NavItem>
               ))}
