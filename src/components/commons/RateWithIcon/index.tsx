@@ -21,12 +21,12 @@ const ImageRate = styled("img")<{ sign: number }>`
 `;
 
 const PriceValue = styled("span")<{ sign: number }>`
-  color: ${({ theme, sign }) => (sign > 0 ? theme.green_2 : theme.error_1)};
+  color: ${({ theme, sign }) => (sign > 0 ? theme.palette.primary.main : theme.palette.error.main)};
   font-weight: var(--font-weight-bold);
 `;
 
 const PriceNoValue = styled("span")`
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.palette.text.primary};
   margin-left: 28px;
   font-weight: var(--font-weight-bold);
 `;

@@ -54,7 +54,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
             ) : (
               <Box>
                 <SlotLeader>
-                  <Box fontWeight={400} color={theme => theme.gray_3}>
+                  <Box fontWeight={400} color={theme => theme.palette.text.secondary}>
                     Policy ID:{" "}
                   </Box>{" "}
                   <Box ml={2}>{data?.policyId}</Box> <CopyButton text={data?.policyId} />
@@ -64,7 +64,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
           </SlotLeaderContainer>
         </Box>
         <CardItem
-          color={theme => theme.green_2}
+          color={theme => theme.palette.primary.main}
           fontWeight="bold"
           fontFamily={'"Roboto", sans-serif'}
           fontSize={"1.125rem"}
@@ -115,7 +115,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ script, ...props }) => {
               displayDataTypes={false}
               enableClipboard={false}
               collapseStringsAfterLength={false}
-              style={{ padding: 0, background: "none", color: theme.gray_3 }}
+              style={{ padding: 0, background: "none", color: theme.palette.text.secondary }}
               rootName={false}
             />
           </ViewJson>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.linkColor} !important;
+  color: ${props => props.theme.palette.secondary.main} !important;
 `;
 
 export const RegistrationContainer = styled(Container)`
@@ -21,10 +21,10 @@ export const StyledTabs = styled(Tabs)`
 `;
 
 export const StyledTab = styled(Tab)`
-  color: ${props => props.theme.textColorLight};
+  color: ${props => props.theme.palette.grey[400]};
   padding: 0;
   &.Mui-selected {
-    color: ${props => props.theme.textColor};
+    color: ${props => props.theme.palette.text.primary};
   }
 `;
 

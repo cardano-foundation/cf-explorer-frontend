@@ -2,7 +2,7 @@ import { Box, styled } from "@mui/material";
 
 export const Wrapper = styled(Box)(({ theme }) => ({
   minHight: "400px",
-  background: theme.boxBackgroundColor,
+  background: theme.palette.background.paper,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",

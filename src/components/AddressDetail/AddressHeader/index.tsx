@@ -101,7 +101,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       value: (
         <Link
           to={dataStake?.pool?.poolName ? details.delegation(dataStake.pool.poolId) : "#"}
-          style={{ fontFamily: "var(--font-family-text)", color: theme.linkColor }}
+          style={{ fontFamily: "var(--font-family-text)", color: theme.palette.secondary.main }}
         >
           {dataStake?.pool?.poolName ||
             (dataStake?.pool?.poolId && `Pool [${getShortWallet(dataStake.pool.poolId)}]`) ||

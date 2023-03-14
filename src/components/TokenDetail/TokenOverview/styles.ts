@@ -1,4 +1,4 @@
-import { Box, Button, Container, Skeleton, styled } from "@mui/material";
+import { alpha, Box, Button, Container, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import CopyButton from "../../commons/CopyButton";
@@ -16,7 +16,7 @@ export const BackButton = styled(Link)`
 `;
 
 export const BackText = styled("small")`
-  color: ${props => props.theme.gray_3};
+  color: ${props => props.theme.palette.text.secondary};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -26,7 +26,7 @@ export const HeaderContainer = styled(Box)`
 `;
 
 export const HeaderTitle = styled("h2")`
-  color: ${props => props.theme.textColorBold};
+  color: ${props => props.theme.palette.common.black};
   font-size: 2.25rem;
   margin: 0.5rem 0;
 `;
@@ -47,7 +47,7 @@ export const SlotLeaderContainer = styled(Box)`
 export const SlotLeader = styled(Box)`
   margin-top: 0px;
   font-weight: bold;
-  color: ${props => props.theme.linkColor};
+  color: ${props => props.theme.palette.secondary.main};
   display: flex;
   align-items: center;
 `;
@@ -60,7 +60,7 @@ export const SlotLeaderSkeleton = styled(Skeleton)`
 
 export const SlotLeaderValue = styled("span")`
   font-family: var(--font-family-text);
-  color: ${props => props.theme.linkColor};
+  color: ${props => props.theme.palette.secondary.main};
   white-space: pre-wrap;
   display: inline-block;
   word-break: break-word;
@@ -71,7 +71,7 @@ export const SlotLeaderCopy = styled(CopyButton)`
   margin-bottom: 3px;
 `;
 export const EpochNumber = styled("h3")`
-  color: ${props => props.theme.textColorReverse};
+  color: ${props => props.theme.palette.primary.contrastText};
   margin: 0;
 `;
 
@@ -86,7 +86,7 @@ export const Icon = styled("img")`
 
 export const BlockDefault = styled("span")`
   font-size: var(--font-size-text);
-  color: ${props => props.theme.textColorReverse};
+  color: ${props => props.theme.palette.primary.contrastText};
   font-weight: var(--font-weight-normal);
   opacity: 0.5;
   margin: 0;
@@ -101,7 +101,7 @@ export const InfoIcon = styled(FiInfo)`
 export const ProgressLiner = styled("div")<{ progress: number }>`
   position: relative;
   width: 100%;
-  background: ${props => props.theme.black_20};
+  background: ${props => alpha(props.theme.palette.common.black, 0.2)};
   height: 12px;
   margin-bottom: 10px;
   border-radius: 12px;
@@ -113,7 +113,7 @@ export const ProgressLiner = styled("div")<{ progress: number }>`
     width: ${props => props.progress || 0}%;
     height: 100%;
     border-radius: 12px;
-    background: ${props => props.theme.gradient_4};
+    background: ${props => props.theme.palette.gradient[4]};
   }
 `;
 
@@ -125,13 +125,13 @@ export const ProgressStatus = styled(Box)`
 `;
 
 export const ProgressStatusText = styled("h4")`
-  color: ${props => props.theme.textColorReverse};
+  color: ${props => props.theme.palette.primary.contrastText};
   font-weight: var(--font-weight-normal);
   margin: 0;
 `;
 
 export const ProgressPercent = styled("h4")`
-  color: ${props => props.theme.warning_1};
+  color: ${props => props.theme.palette.warning.main};
   font-weight: var(--font-weight-normal);
   margin: 0;
 `;
@@ -139,13 +139,13 @@ export const ProgressPercent = styled("h4")`
 export const CardInfo = styled(Box)(({ theme }) => ({
   display: "flex",
   borderRadius: 10,
-  background: theme.gray_3,
+  background: theme.palette.text.secondary,
   padding: `${theme.spacing(2)} ${theme.spacing(4)}`,
   alignItems: "center",
   justifyContent: "space-between",
 }));
 export const TokenInfo = styled(Box)(({ theme }) => ({
-  color: theme.textColorReverse,
+  color: theme.palette.primary.contrastText,
   position: "relative",
   minHeight: "150px",
   minWidth: 200,
@@ -161,23 +161,23 @@ export const TokenInfo = styled(Box)(({ theme }) => ({
     width: "1px",
     height: "80%",
     transform: "translateY(-50%)",
-    backgroundImage: theme.gradient_8,
+    backgroundImage: theme.palette.gradient[8],
   },
 }));
 
 export const ViewMetaData = styled(Link)`
   display: block;
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.textColor} !important;
+  color: ${props => props.theme.palette.text.primary} !important;
   text-decoration: underline !important;
 `;
 
 export const CardInfoOverview = styled(Box)(({ theme }) => ({
   padding: `${theme.spacing(3)} ${theme.spacing(5)}`,
-  backgroundColor: theme.boxBackgroundColor,
+  backgroundColor: theme.palette.background.paper,
   display: "flex",
   textAlign: "left",
-  boxShadow: theme.shadow_0,
+  boxShadow: theme.shadow.card,
   borderRadius: 10,
   marginTop: theme.spacing(2),
   flexWrap: "wrap",
@@ -185,7 +185,7 @@ export const CardInfoOverview = styled(Box)(({ theme }) => ({
 
 export const CardItem = styled(Box)(({ theme }) => ({
   width: "max-content",
-  borderLeft: `1px solid ${theme.black_10}`,
+  borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
   paddingLeft: theme.spacing(2),
   paddingRight: theme.spacing(2),
   ":first-of-type": {
@@ -194,11 +194,11 @@ export const CardItem = styled(Box)(({ theme }) => ({
 }));
 
 export const TitleCard = styled(Box)(({ theme }) => ({
-  color: theme.black_50,
+  color: alpha(theme.palette.common.black, 0.5),
   fontSize: "0.875rem",
 }));
 export const ValueCard = styled(Box)(({ theme }) => ({
-  color: theme.textColorBold,
+  color: theme.palette.common.black,
   fontSize: "1rem",
   fontWeight: "bold",
 }));
@@ -209,7 +209,7 @@ export const ButtonView = styled(Link)(({ theme }) => ({
   minWidth: 0,
   fontWeight: "bold",
   textTransform: "capitalize",
-  color: `${theme.linkColor} !important`,
+  color: `${theme.palette.secondary.main} !important`,
   fontFamily: "Helvetica, monospace",
 }));
 
@@ -219,7 +219,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "min(80vw, 350px)",
-  backgroundColor: theme.boxBackgroundColor,
+  backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
   borderRadius: 10,
   textAlign: "left",
@@ -238,7 +238,7 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
 
 export const ViewJson = styled(Box)(({ theme }) => ({
   textAlign: "left",
-  backgroundColor: theme.gray_5_10,
+  backgroundColor: alpha(theme.palette.grey[300], 0.1),
   borderRadius: 10,
   padding: theme.spacing(2),
   "& .object-contentw": {
@@ -248,7 +248,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
     border: " none !important",
   },
   "& .object-key": {
-    color: `${theme.gray_3} !important`,
+    color: `${theme.palette.text.secondary} !important`,
     opacity: "1 !important",
     "& span": {
       "&:first-of-type ": {
@@ -260,7 +260,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
     },
   },
   "& .string-value": {
-    color: theme.gray_3,
+    color: theme.palette.text.secondary,
     wordBreak: "break-all",
   },
   "& .icon-container": {
@@ -270,7 +270,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
 
 export const ButtonLink = styled(Link)(({ theme }) => ({
   fontWeight: "bold",
-  color: `${theme.linkColor} !important`,
+  color: `${theme.palette.secondary.main} !important`,
   fontFamily: "Helvetica, monospace !important",
   textAlign: "left",
   wordBreak: "break-all",
@@ -280,7 +280,7 @@ export const ButtonLink = styled(Link)(({ theme }) => ({
 export const LogoEmpty = styled(Box)`
   width: 20px;
   height: 20px;
-  background: ${props => props.theme.white_60};
+  background: ${props => alpha(props.theme.palette.common.white, 0.6)};
   border-radius: 50%;
-  border: 1px solid ${props => props.theme.borderColor};
+  border: 1px solid ${props => props.theme.palette.grey[200]};
 `;

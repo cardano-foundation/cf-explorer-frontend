@@ -6,7 +6,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "min(80vw, 500px)",
-  backgroundColor: theme.boxBackgroundColor,
+  backgroundColor: theme.palette.background.paper,
   padding: "30px 40px 48px",
   borderRadius: 20,
   textAlign: "left",
@@ -19,7 +19,7 @@ export const CloseButton = styled(IconButton)<{ saving: boolean }>`
   width: 30px;
   height: 30px;
   padding: 0;
-  border: 1px solid ${props => props.theme.gray_9};
+  border: 1px solid ${props => props.theme.palette.grey["A100"]};
   cursor: ${props => (props.saving ? `wait` : `pointer`)};
   &:hover {
     ${props => (props.saving ? `background: none;` : ``)}

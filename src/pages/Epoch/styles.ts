@@ -5,7 +5,7 @@ export const StyledContainer = styled(Container)`
 `;
 
 export const StyledColorBlueDard = styled("span")`
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.palette.text.primary};
 `;
 
 export const Index = styled(StyledColorBlueDard)``;
@@ -17,9 +17,17 @@ export const Status = styled("span")<{ status: string }>`
   border-radius: 2px;
   text-transform: uppercase;
   color: ${({ status, theme }) =>
-    status === "finished" ? theme.blue_0 : status === "rewarding" ? theme.green_2 : theme.warning_1};
+    status === "finished"
+      ? theme.palette.info.main
+      : status === "rewarding"
+      ? theme.palette.success.main
+      : theme.palette.warning.main};
   background: ${({ status, theme }) =>
-    status === "finished" ? theme.blue_0_20 : status === "rewarding" ? theme.green_2_20 : theme.warning_1_20};
+    status === "finished"
+      ? theme.palette.info.light
+      : status === "rewarding"
+      ? theme.palette.success.light
+      : theme.palette.warning.light};
 `;
 
 export const Blocks = styled(StyledColorBlueDard)``;

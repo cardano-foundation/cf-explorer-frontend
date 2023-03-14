@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { alpha, Box, styled } from "@mui/material";
 
 export const Img = styled("img")(({ theme }) => ({
   paddingRight: "10px",
@@ -10,8 +10,8 @@ export const Header = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   fontSize: "14px",
-  color: theme.textColor,
-  borderBottom: `1px solid ${theme.black_10}`,
+  color: theme.palette.text.primary,
+  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
   paddingBottom: "8px",
   alignItems: "flex-end",
 }));
@@ -21,8 +21,8 @@ export const LabelStatus = styled("h4")(({ theme }) => ({
   textTransform: "uppercase",
   borderRadius: "2px",
   padding: "0 12px",
-  backgroundColor: theme.gray_5_20,
-  color: theme.textColorLight,
+  backgroundColor: alpha(theme.palette.grey[300], 0.2),
+  color: theme.palette.grey[400],
   fontWeight: "bold",
   lineHeight: "2rem",
   display: "inline",

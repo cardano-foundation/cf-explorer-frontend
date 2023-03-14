@@ -6,7 +6,7 @@ export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => 
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.textColorBold : "unset",
+  color: active ? theme.palette.common.black : "unset",
 }));
 
 export const LabelStatus = styled(Box)(({ theme }) => ({
@@ -22,5 +22,5 @@ export const LabelStatus = styled(Box)(({ theme }) => ({
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.linkColor}!important;
+  color: ${props => props.theme.palette.secondary.main}!important;
 `;

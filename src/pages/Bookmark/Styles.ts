@@ -7,7 +7,7 @@ export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => 
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.textColorBold : theme.textColorLighter,
+  color: active ? theme.palette.common.black : theme.palette.text.hint,
 }));
 export const StyledTable = styled(Table)`
   & .empty-content-table {

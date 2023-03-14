@@ -57,8 +57,8 @@ const StakeTab = () => {
   return (
     <Box mt={4}>
       <TabContext value={tabActive}>
-        <Box sx={{ borderBottom: theme => `1px solid ${theme.green_9_10}` }}>
-          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: theme.green_2 } }}>
+        <Box sx={{ borderBottom: theme => `1px solid ${theme.palette.border.secondary}` }}>
+          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}>
             {tabs.map(({ icon: Icon, key, label }) => (
               <Tab
                 key={key}
@@ -66,7 +66,7 @@ const StakeTab = () => {
                 label={
                   <Box>
                     <Box display={"flex"} alignItems="center">
-                      <Icon fill={key === tabActive ? theme.green_2 : theme.gray_5} />
+                      <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.text.hint} />
                       <TitleTab pl={1} active={key === tabActive}>
                         {label}
                       </TitleTab>

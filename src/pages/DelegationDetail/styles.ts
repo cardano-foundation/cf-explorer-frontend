@@ -4,8 +4,8 @@ export const Title = styled("h2")``;
 
 export const StyledSelect = styled(Select)`
   font-family: var(--font-family-text);
-  background: ${props => props.theme.boxBackgroundColor};
-  color: ${props => props.theme.gray_3};
+  background: ${props => props.theme.palette.background.paper};
+  color: ${props => props.theme.palette.text.secondary};
   border-radius: 8px;
   min-width: 250px;
   & > div {
@@ -19,7 +19,7 @@ export const StyledSelect = styled(Select)`
     border: none !important;
   }
   & > svg {
-    color: ${props => props.theme.gray_3};
+    color: ${props => props.theme.palette.text.secondary};
     font-size: 20px;
   }
 `;

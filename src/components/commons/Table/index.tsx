@@ -7,6 +7,7 @@ import {
   MenuItem,
   styled,
   CircularProgress,
+  alpha,
 } from "@mui/material";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
 import { EmptyIcon } from "../../../commons/resources";
@@ -85,7 +86,7 @@ const TableBody = <T extends ColumnType>({
     <TBody>
       {loading && initialized && (
         <LoadingWrapper
-          bgcolor={theme => theme.black_5}
+          bgcolor={theme => alpha(theme.palette.common.black, 0.05)}
           width={"100%"}
           height={"100%"}
           zIndex={1000}
@@ -340,7 +341,7 @@ const PaginationCustom = ({
                 }
               }}
             />
-            <Box component={"span"} color={theme => theme.textColorLight} fontSize="0.875rem">
+            <Box component={"span"} color={theme => theme.palette.grey[400]} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
               {numberWithCommas((page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size)} of{" "}
               {numberWithCommas(pagination?.total || 0)}
@@ -356,14 +357,14 @@ const PaginationCustom = ({
 };
 
 const StartPageIcon = styled(StartPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.gray_4_40 : theme.textColorLight,
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
 }));
 const EndPageIcon = styled(EndPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.gray_4_40 : theme.textColorLight,
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
 }));
 const NextPageIcon = styled(NextPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.gray_4_40 : theme.textColorLight,
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
 }));
 const PrevPageIcon = styled(PrevPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.gray_4_40 : theme.textColorLight,
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
 }));

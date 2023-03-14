@@ -1,4 +1,4 @@
-import { Box, Button, Skeleton, styled } from "@mui/material";
+import { alpha, Box, Button, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Status = styled("span")`
@@ -10,13 +10,13 @@ export const Status = styled("span")`
 `;
 
 export const Active = styled(Status)`
-  background: ${props => props.theme.green_2_20};
-  color: ${props => props.theme.green_2};
+  background: ${props => props.theme.palette.success.light};
+  color: ${props => props.theme.palette.success.main};
 `;
 
 export const Deactive = styled(Status)`
-  background: ${props => props.theme.green_9_10};
-  color: ${props => props.theme.textColorLight};
+  background: ${props => props.theme.palette.green[800_10]};
+  color: ${props => props.theme.palette.grey[400]};
 `;
 
 export const Title = styled("div")`
@@ -32,7 +32,7 @@ export const Flex = styled("div")`
 
 export const StyledLink = styled("span")`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.linkColor} !important;
+  color: ${props => props.theme.palette.secondary.main} !important;
 `;
 
 export const BackButton = styled("button")`
@@ -47,7 +47,7 @@ export const BackButton = styled("button")`
   font-family: "Roboto", sans-serif;
 `;
 export const BackText = styled("small")`
-  color: ${props => props.theme.gray_3};
+  color: ${props => props.theme.palette.text.secondary};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -57,7 +57,7 @@ export const HeaderContainer = styled(Box)`
 `;
 
 export const HeaderTitle = styled("h2")`
-  color: ${props => props.theme.textColorBold};
+  color: ${props => props.theme.palette.common.black};
   font-size: 2.25rem;
   margin: 0.5rem 0;
 `;
@@ -82,7 +82,7 @@ export const SlotLeaderSkeleton = styled(Skeleton)`
 export const SlotLeader = styled(Box)`
   margin-top: 0px;
   font-weight: bold;
-  color: ${props => props.theme.linkColor};
+  color: ${props => props.theme.palette.secondary.main};
   display: flex;
   align-items: center;
 `;
@@ -90,7 +90,7 @@ export const SlotLeader = styled(Box)`
 export const ViewMetaData = styled(Link)`
   display: block;
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.textColor}!important;
+  color: ${props => props.theme.palette.text.primary}!important;
   text-decoration: underline !important;
 `;
 export const LabelStatus = styled(Box)(({ theme }) => ({
@@ -106,10 +106,10 @@ export const LabelStatus = styled(Box)(({ theme }) => ({
 
 export const CardInfoOverview = styled(Box)(({ theme }) => ({
   padding: `${theme.spacing(3)} ${theme.spacing(5)}`,
-  backgroundColor: theme.boxBackgroundColor,
+  backgroundColor: theme.palette.background.paper,
   display: "flex",
   textAlign: "left",
-  boxShadow: theme.shadow_0,
+  boxShadow: theme.shadow.card,
   borderRadius: 10,
   marginTop: theme.spacing(2),
   flexWrap: "wrap",
@@ -117,16 +117,16 @@ export const CardInfoOverview = styled(Box)(({ theme }) => ({
 
 export const CardItem = styled(Box)(({ theme }) => ({
   padding: `${theme.spacing(2)} ${theme.spacing(5)}`,
-  background: theme.boxBackgroundColor,
+  background: theme.palette.background.paper,
   borderRadius: 10,
 }));
 
 export const TitleCard = styled(Box)(({ theme }) => ({
-  color: `${theme.black_50}`,
+  color: `${alpha(theme.palette.common.black, 0.5)}`,
   fontSize: "0.875rem",
 }));
 export const ValueCard = styled(Box)(({ theme }) => ({
-  color: theme.textColorBold,
+  color: theme.palette.common.black,
   fontSize: "1rem",
   fontWeight: "bold",
 }));
@@ -137,7 +137,7 @@ export const ButtonView = styled(Link)(({ theme }) => ({
   minWidth: 0,
   fontWeight: "bold",
   textTransform: "capitalize",
-  color: `${theme.linkColor} !important`,
+  color: `${theme.palette.secondary.main} !important`,
   fontFamily: "Helvetica, monospace",
 }));
 
@@ -147,7 +147,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "min(80vw, 600px)",
-  backgroundColor: theme.boxBackgroundColor,
+  backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
   borderRadius: 10,
 }));
@@ -165,7 +165,7 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
 
 export const ViewJson = styled(Box)(({ theme }) => ({
   textAlign: "left",
-  backgroundColor: `${theme.gray_5_10}`,
+  backgroundColor: alpha(theme.palette.grey[300], 0.1),
   borderRadius: 10,
   padding: theme.spacing(2),
   marginTop: theme.spacing(2),

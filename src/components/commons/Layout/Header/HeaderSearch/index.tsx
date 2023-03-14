@@ -16,10 +16,10 @@ const Form = styled("form")<{ home: number }>`
   height: ${props => (props.home ? 60 : 44)}px;
   margin: auto;
   border-radius: ${props => (props.home ? 30 : 8)}px;
-  background-color: ${props => props.theme.boxBackgroundColor};
-  color: ${props => props.theme.textColor};
+  background-color: ${props => props.theme.palette.background.paper};
+  color: ${props => props.theme.palette.text.primary};
   padding: 0px 0px 0px ${props => (props.home ? 15 : 0)}px;
-  border: 1px solid ${props => props.theme.borderColor};
+  border: 1px solid ${props => props.theme.palette.border.main};
   box-sizing: border-box;
   margin-top: ${props => (props.home ? 30 : 0)}px;
   @media screen and (max-width: 1023px) {
@@ -44,20 +44,20 @@ const StyledSelect = styled(Select)<{ home: number }>`
     font-weight: var(--font-weight-normal);
     border-radius: 0px !important;
     padding-right: 2em !important;
-    color: ${props => props.theme.textColor};
+    color: ${props => props.theme.palette.text.primary};
   }
   & > fieldset {
     top: 0;
     border: none !important;
   }
   & > svg {
-    color: ${props => props.theme.textColorLight};
+    color: ${props => props.theme.palette.grey[400]};
     font-size: 1.75rem;
   }
 `;
 const SelectOption = styled(MenuItem)<{ home: number }>`
   font-size: ${props => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
-  color: ${props => props.theme.textColorLight};
+  color: ${props => props.theme.palette.grey[400]};
   font-weight: var(--font-weight-normal);
 `;
 
@@ -68,7 +68,7 @@ const StyledInput = styled(Input)<{ home: number }>`
   border-radius: 0;
   font-size: ${props => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
   width: 100%;
-  border-left: 2px solid ${props => props.theme.borderColor};
+  border-left: 2px solid ${props => props.theme.palette.border.main};
   @media screen and (max-width: 539px) {
     padding: 0px 0px 0px 10px;
   }

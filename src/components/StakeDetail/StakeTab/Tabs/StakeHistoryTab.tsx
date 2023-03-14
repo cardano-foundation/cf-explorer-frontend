@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { alpha, Box } from "@mui/material";
 import { LabelStatus, StyledLink } from "../styles";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
@@ -45,8 +45,11 @@ const columns: Column<StakeHistory>[] = [
     minWidth: "120px",
     render: r => (
       <LabelStatus
-        color={theme => (r.action === "Registered" ? theme.error_1 : theme.textColorLight)}
-        sx={{ background: theme => (r.action === "Registered" ? theme.error_1_20 : theme.gray_4_20) }}
+        color={theme => (r.action === "Registered" ? theme.palette.red[700] : theme.palette.grey[400])}
+        sx={{
+          background: theme =>
+            r.action === "Registered" ? theme.palette.red[700_20] : alpha(theme.palette.grey[400], 0.2),
+        }}
       >
         {r.action ? r.action.split(" ").join("") : ""}
       </LabelStatus>

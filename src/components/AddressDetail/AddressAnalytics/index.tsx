@@ -81,7 +81,7 @@ const AddressAnalytics: React.FC = () => {
                     yAxis: {
                       title: { text: null },
                       lineWidth: 2,
-                      lineColor: theme.borderColor,
+                      lineColor: theme.palette.border.main,
                       className: "y-axis-lable",
                       gridLineWidth: 1,
                       minorGridLineWidth: 1,
@@ -95,7 +95,7 @@ const AddressAnalytics: React.FC = () => {
                     xAxis: {
                       categories,
                       lineWidth: 2,
-                      lineColor: theme.borderColor,
+                      lineColor: theme.palette.border.main,
                       plotLines: [],
                       angle: 0,
                       labels: {
@@ -114,12 +114,12 @@ const AddressAnalytics: React.FC = () => {
                         type: "areaspline",
                         marker: { enabled: false },
                         lineWidth: 4,
-                        color: theme.green_2,
+                        color: theme.palette.primary.main,
                         fillColor: {
                           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                           stops: [
-                            [0, theme.green_2_20],
-                            [1, theme.green_2_0],
+                            [0, theme.palette.success.light],
+                            [1, "transparent"],
                           ],
                         },
                         data: dataChart,

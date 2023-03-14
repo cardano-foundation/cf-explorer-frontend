@@ -72,7 +72,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       selected={pathname === href}
                       sx={theme => ({
                         ...itemStyle(theme, sidebar),
-                        ...(pathname === href ? { backgroundColor: `${theme.green_1} !important` } : {}),
+                        ...(pathname === href ? { backgroundColor: `${theme.palette.success.dark} !important` } : {}),
                       })}
                     >
                       {icon ? (
@@ -94,10 +94,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`menu-${index}` === active
                         ? {
-                            backgroundColor: theme => `${theme.green_2_20} !important`,
-                            color: theme => theme.green_1,
+                            backgroundColor: theme => `${theme.palette.success.light} !important`,
+                            color: theme => theme.palette.success.dark,
                           }
-                        : { color: theme => theme.textColorLight }),
+                        : { color: theme => theme.palette.grey[400] }),
                     })}
                   >
                     {icon ? (
@@ -159,7 +159,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                               ...itemStyle(theme, sidebar),
                               ...(pathname === href ||
                               (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1]))
-                                ? { backgroundColor: theme => `${theme.green_1} !important` }
+                                ? { backgroundColor: theme => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
                               [theme.breakpoints.down(1023)]: {
@@ -214,7 +214,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     selected={pathname === href}
                     sx={theme => ({
                       ...itemStyle(theme, sidebar),
-                      ...(pathname === href ? { backgroundColor: theme => `${theme.green_1} !important` } : {}),
+                      ...(pathname === href
+                        ? { backgroundColor: theme => `${theme.palette.success.dark} !important` }
+                        : {}),
                     })}
                   >
                     {icon ? (
@@ -231,10 +233,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     ...itemStyle(theme, sidebar),
                     ...(`footer-${index}` === active
                       ? {
-                          backgroundColor: `${theme.green_2_20} !important`,
-                          color: theme.green_1,
+                          backgroundColor: `${theme.palette.success.light} !important`,
+                          color: theme.palette.success.dark,
                         }
-                      : { color: theme.textColorLight }),
+                      : { color: theme.palette.grey[400] }),
                   })}
                 >
                   {icon ? (
@@ -293,7 +295,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={theme => ({
                               ...itemStyle(theme, sidebar),
                               ...(pathname === href
-                                ? { backgroundColor: theme => `${theme.green_1} !important` }
+                                ? { backgroundColor: theme => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
                               [theme.breakpoints.down(1023)]: {

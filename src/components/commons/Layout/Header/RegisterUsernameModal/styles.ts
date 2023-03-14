@@ -7,7 +7,7 @@ export const StyledTitle = styled("h3")`
 export const Span = styled("span")`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.textColorReverse};
+  color: ${props => props.theme.palette.primary.contrastText};
   white-space: nowrap;
   line-height: 1;
 `;
@@ -28,7 +28,7 @@ export const Label = styled(FormLabel)`
 
 export const TextError = styled(FormHelperText)`
   margin-top: 0px;
-  color: ${props => props.theme.error_1};
+  color: ${props => props.theme.palette.error.main};
   font-size: 14px;
 `;
 

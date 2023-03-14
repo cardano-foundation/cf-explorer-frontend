@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { alpha, styled } from "@mui/material";
 import { BiChevronDown } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
@@ -18,11 +18,11 @@ export const SubMenu = styled(Menu)<{ isActive: boolean }>`
   position: absolute;
   z-index: 1;
   top: 100%;
-  background: ${props => props.theme.white_90};
-  box-shadow: ${props => props.theme.shadow_1};
+  background: ${props => alpha(props.theme.palette.common.white, 0.9)};
+  box-shadow: ${props => props.theme.shadow.dialog};
   backdrop-filter: blur(2px);
   border-radius: 10px;
-  color: ${props => props.theme.textColorBold};
+  color: ${props => props.theme.palette.common.black};
   visibility: hidden;
   padding: 20px 0px;
   @media screen and (max-width: 1023px) {
@@ -70,8 +70,8 @@ export const InternalLink = styled(Link)<{ isSubMenu: boolean }>`
     color: inherit;
   }
   &:hover {
-    color: ${props => props.theme.textColorReverse};
-    text-shadow: 1px 1px 5px ${props => props.theme.textColorReverse};
+    color: ${props => props.theme.palette.primary.contrastText};
+    text-shadow: 1px 1px 5px ${props => props.theme.palette.primary.contrastText};
     @media screen and (max-width: 1023px) {
       color: inherit;
     }
@@ -90,8 +90,8 @@ export const ExternalLink = styled("a")<{ isSubMenu: boolean }>`
     color: inherit;
   }
   &:hover {
-    color: ${props => props.theme.textColorReverse};
-    text-shadow: 1px 1px 5px ${props => props.theme.textColorReverse};
+    color: ${props => props.theme.palette.primary.contrastText};
+    text-shadow: 1px 1px 5px ${props => props.theme.palette.primary.contrastText};
     @media screen and (max-width: 1023px) {
       color: inherit;
     }

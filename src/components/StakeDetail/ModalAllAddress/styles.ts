@@ -6,7 +6,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "min(80vw, 600px)",
-  backgroundColor: theme.boxBackgroundColor,
+  backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
   borderRadius: 10,
   textAlign: "left",
@@ -17,16 +17,16 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   },
 
   "::-webkit-scrollbar-thumb": {
-    background: theme.gray_13,
+    background: theme.palette.grey["A400"],
     borderRadius: "8px",
     border: "4px solid transparent",
     backgroundClip: "padding-box",
     ":hover": {
-      background: theme.gray_9,
+      background: theme.palette.grey[300],
       backgroundClip: "padding-box",
     },
     ":active": {
-      background: theme.gray_4,
+      background: theme.palette.grey[400],
       backgroundClip: "padding-box",
     },
   },

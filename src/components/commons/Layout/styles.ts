@@ -1,4 +1,4 @@
-import { styled, Theme, CSSObject } from "@mui/material/styles";
+import { styled, Theme, CSSObject, alpha } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import { Box } from "@mui/material";
 
@@ -20,16 +20,16 @@ export const Layout = styled(Box)`
     }
 
     &::-webkit-scrollbar-thumb {
-      background: ${props => props.theme.gray_13};
+      background: ${props => props.theme.palette.grey["A400"]};
       border-radius: 8px;
       border: 4px solid transparent;
       background-clip: padding-box;
       &:hover {
-        background: ${props => props.theme.gray_9};
+        background: ${props => props.theme.palette.grey[300]};
         background-clip: padding-box;
       }
       &:active {
-        background: ${props => props.theme.gray_4};
+        background: ${props => props.theme.palette.grey[400]};
         background-clip: padding-box;
       }
     }
@@ -43,7 +43,7 @@ export const BackDrop = styled("div")<{ isShow: number }>`
   left: 0;
   right: 0;
   bottom: 0;
-  background: ${props => props.theme.black_40};
+  background: ${props => alpha(props.theme.palette.common.black, 0.4)};
   display: none;
   @media screen and (max-width: 1023px) {
     display: ${props => (props.isShow ? "block" : "none")};
@@ -63,7 +63,7 @@ export const openedMixin = (theme: Theme): CSSObject => ({
     width: "100%",
     minWidth: "100%",
     height: "auto",
-    boxShadow: theme.shadow_0,
+    boxShadow: theme.shadow.card,
   },
 });
 
@@ -78,7 +78,7 @@ export const closedMixin = (theme: Theme): CSSObject => ({
   [theme.breakpoints.down(1023)]: {
     width: "100%",
     height: "auto",
-    boxShadow: theme.shadow_0,
+    boxShadow: theme.shadow.card,
   },
 });
 
@@ -88,7 +88,7 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== "o
   whiteSpace: "nowrap",
   boxSizing: "border-box",
   borderRightWidth: 0,
-  boxShadow: theme.shadow_3,
+  boxShadow: theme.shadow.draw,
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),
@@ -100,7 +100,7 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== "o
   [theme.breakpoints.down(1023)]: {
     width: "100%",
     height: "auto",
-    boxShadow: theme.shadow_0,
+    boxShadow: theme.shadow.card,
   },
   "&>div": {
     "&>button": {
@@ -127,9 +127,9 @@ export const ToggleMenu = styled("button")`
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background-image: ${props => props.theme.gradient_0};
+  background-image: ${props => props.theme.palette.gradient[0]};
   border: none;
-  color: ${props => props.theme.textColorReverse};
+  color: ${props => props.theme.palette.primary.contrastText};
   cursor: pointer;
   z-index: 1;
   @media screen and (max-width: 1023px) {

@@ -19,7 +19,7 @@ const SummaryItems = ({
   type?: "up" | "down";
 }) => {
   return (
-    <Box textAlign={"left"} px={3} py={2} sx={{ background: theme => theme.white }} mb={2}>
+    <Box textAlign={"left"} px={3} py={2} sx={{ background: theme => theme.palette.common.white }} mb={2}>
       <Box display={"flex"} alignItems="center">
         <Box width={50}>
           <Icon src={type === "down" ? receiveImg : sendImg} alt="send icon" />
@@ -36,7 +36,7 @@ const SummaryItems = ({
                     to={item.address.startsWith("stake") ? details.stake(item.address) : details.address(item.address)}
                   >
                     <CustomTooltip title={item.address}>
-                      <Box color={theme => theme.textColor} fontWeight="bold" className={styles.ffText}>
+                      <Box color={theme => theme.palette.text.primary} fontWeight="bold" className={styles.ffText}>
                         {getShortWallet(item.address)}
                       </Box>
                     </CustomTooltip>
@@ -55,7 +55,7 @@ const SummaryItems = ({
                 <Box
                   component={"span"}
                   whiteSpace="nowrap"
-                  color={theme => (type === "up" ? theme.green_2 : theme.error_1)}
+                  color={theme => (type === "up" ? theme.palette.success.main : theme.palette.error.main)}
                   fontWeight="bold"
                   mr={1}
                 >

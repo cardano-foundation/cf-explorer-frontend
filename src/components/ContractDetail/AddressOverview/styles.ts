@@ -23,7 +23,7 @@ export const StyledTextField = styled(TextField)`
 
 export const WrapPaperDropdown = styled(Paper)`
   border-radius: 8px;
-  box-shadow: ${props => props.theme.shadow_2};
+  box-shadow: ${props => props.theme.shadow.dropdown};
   padding: 8px 0;
   & > .MuiAutocomplete-listbox {
     padding: 0px;
@@ -33,7 +33,7 @@ export const WrapPaperDropdown = styled(Paper)`
 export const Pool = styled(Link)`
   max-width: 200px;
   text-overflow: hidden;
-  color: ${props => props.theme.linkColor} !important;
+  color: ${props => props.theme.palette.secondary.main} !important;
   font-weight: bold;
   &:hover {
     cursor: pointer;

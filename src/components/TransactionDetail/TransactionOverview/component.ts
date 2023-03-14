@@ -1,9 +1,9 @@
-import { styled, Box } from "@mui/material";
+import { styled, Box, alpha } from "@mui/material";
 import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS } from "../../../commons/utils/constants";
 
 export const TitleCard = styled(Box)(({ theme }) => ({
-  color: theme.black_50,
+  color: alpha(theme.palette.common.black, 0.5),
   fontSize: "0.875rem",
   minHeight: 20,
 }));
@@ -11,17 +11,17 @@ export const ConfirmStatus = styled("small")<{ status?: keyof typeof Confirmatio
   color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.MEDIUM:
-        return theme.warning_1;
+        return theme.palette.warning.main;
       default:
-        return theme.warning_1;
+        return theme.palette.warning.main;
     }
   }};
   background-color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.MEDIUM:
-        return `${theme.warning_1_20}`;
+        return `${theme.palette.warning.light}`;
       default:
-        return `${theme.warning_1_20}`;
+        return `${theme.palette.warning.light}`;
     }
   }};
   margin-left: 10px;
@@ -32,5 +32,5 @@ export const ConfirmStatus = styled("small")<{ status?: keyof typeof Confirmatio
 `;
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.linkColor} !important;
+  color: ${props => props.theme.palette.secondary.main} !important;
 `;

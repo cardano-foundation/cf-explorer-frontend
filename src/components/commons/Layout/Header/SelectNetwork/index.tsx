@@ -1,5 +1,5 @@
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
-import { MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
+import { alpha, MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
 import React from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { useLocalStorage } from "react-use";
@@ -11,9 +11,9 @@ import { BookMark } from "../../../../../types/bookmark";
 
 const StyledSelect = styled(Select)<{ home: number }>`
   font-family: var(--font-family-title);
-  border: 2px solid ${({ home, theme }) => (home ? theme.white_30 : theme.gray_12)};
+  border: 2px solid ${({ home, theme }) => (home ? alpha(theme.palette.common.white, 0.3) : theme.palette.border.hint)};
   background: transparent;
-  color: ${({ home, theme }) => (home ? theme.textColorReverse : theme.gray_3)};
+  color: ${({ home, theme }) => (home ? theme.palette.primary.contrastText : theme.palette.text.secondary)};
   border-radius: 8px;
   & > div {
     padding: 6.5px 12px;
@@ -25,7 +25,7 @@ const StyledSelect = styled(Select)<{ home: number }>`
     border: none !important;
   }
   & > svg {
-    color: ${({ home, theme }) => (home ? theme.textColorReverse : theme.gray_3)};
+    color: ${({ home, theme }) => (home ? theme.palette.primary.contrastText : theme.palette.text.secondary)};
     font-size: 20px;
   }
 `;

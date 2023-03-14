@@ -69,7 +69,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
   return (
     <Box>
       <Box mx={1} component={IconButton} style={{ width: 45, height: 45 }} onClick={updateBookmark}>
-        <BookmarkIcon fill={!!bookmark ? theme.warning_1 : theme.gray_5} />
+        <BookmarkIcon fill={!!bookmark ? theme.palette.warning.main : theme.palette.text.hint} />
       </Box>
       <Toast
         open={!!message}

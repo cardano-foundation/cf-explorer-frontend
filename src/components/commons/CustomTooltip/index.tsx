@@ -13,7 +13,7 @@ export const CustomTooltip = (props: TooltipProps) => {
           ...(componentsProps?.arrow || {}),
           style: {
             fontSize: "var(--font-size-text-small)",
-            color: theme.textColorBold,
+            color: theme.palette.common.black,
             ...(componentsProps?.arrow?.style || {}),
           },
         },
@@ -24,7 +24,7 @@ export const CustomTooltip = (props: TooltipProps) => {
             fontSize: "var(--font-size-text-small)",
             padding: "6px 8px",
             lineHeight: 1.5,
-            backgroundColor: theme.black,
+            backgroundColor: theme.palette.common.black,
             opacity: 0.78,
             borderRadius: 2,
             ...(componentsProps?.transition?.style || {}),

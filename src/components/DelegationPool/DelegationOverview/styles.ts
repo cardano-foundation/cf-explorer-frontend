@@ -1,4 +1,4 @@
-import { LinearProgress, Skeleton, styled } from "@mui/material";
+import { alpha, LinearProgress, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledSkeleton = styled(Skeleton)`
@@ -11,11 +11,11 @@ export const StyledLinearProgress = styled(LinearProgress)`
   width: 100%;
   height: 10px;
   border-radius: 34px;
-  background: ${props => props.theme.black_10};
+  background: ${props => alpha(props.theme.palette.common.black, 0.1)};
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${props => props.theme.gradient_0};
+    background: ${props => props.theme.palette.gradient[0]};
   }
 `;
 
@@ -30,9 +30,9 @@ export const StyledImg = styled("img")`
 export const StyledCard = {
   Container: styled("div")`
     height: 100%;
-    background: ${props => props.theme.boxBackgroundColor};
+    background: ${props => props.theme.palette.background.paper};
     border-radius: 12px;
-    box-shadow: ${props => props.theme.shadow_0};
+    box-shadow: ${props => props.theme.shadow.card};
     position: relative;
     display: flex;
   `,
@@ -43,7 +43,7 @@ export const StyledCard = {
     align-items: flex-start;
   `,
   Title: styled("span")`
-    color: ${props => props.theme.gray_3};
+    color: ${props => props.theme.palette.text.secondary};
     font-weight: var(--font-weight-bold);
     margin-bottom: 15px;
   `,
@@ -60,6 +60,6 @@ export const StyledCard = {
   `,
   Comment: styled("span")`
     font-weight: var(--font-weight-bold);
-    color: ${props => props.theme.green_2};
+    color: ${props => props.theme.palette.primary.main};
   `,
 };

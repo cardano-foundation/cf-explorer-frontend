@@ -1,5 +1,5 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Tab, useTheme } from "@mui/material";
+import { alpha, Box, Tab, useTheme } from "@mui/material";
 import React from "react";
 import { ReactComponent as UtxoIcon } from "../../../commons/resources/images/utxoIcon.svg";
 import { TabTitle } from "./styles";
@@ -24,7 +24,7 @@ const ContractDetailContent: React.FC = () => {
       label: (
         <TabTitle className={tabActive === "transaction" ? "active" : ""}>
           <Box display={"flex"} alignItems="center">
-            <UtxoIcon fill={tabActive === "transaction" ? theme.green_2 : theme.textColorLighter} />
+            <UtxoIcon fill={tabActive === "transaction" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}>Transaction</Box>
           </Box>
         </TabTitle>
@@ -37,7 +37,10 @@ const ContractDetailContent: React.FC = () => {
   return (
     <TabContext value={tabActive}>
       <Box>
-        <TabList onChange={handleChange} TabIndicatorProps={{ sx: { background: theme => theme.green_2, height: 3 } }}>
+        <TabList
+          onChange={handleChange}
+          TabIndicatorProps={{ sx: { background: theme => theme.palette.primary.main, height: 3 } }}
+        >
           {tabs?.map(item => (
             <Tab key={item.key} label={item.label} value={item.key} />
           ))}
@@ -45,7 +48,7 @@ const ContractDetailContent: React.FC = () => {
       </Box>
       {tabs.map(item => (
         <TabPanel
-          sx={{ padding: 0, borderTop: theme => `1px solid ${theme.green_9_10}` }}
+          sx={{ padding: 0, borderTop: theme => `1px solid ${alpha(theme.palette.green[800], 0.1)}` }}
           key={item.key}
           value={item.key}
         >

@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { alpha, styled } from "@mui/material";
 
 export const Img = styled("img")(() => ({
   display: "flex",
@@ -15,8 +15,8 @@ export const LabelStatus = styled("h4")(({ theme }) => ({
   textTransform: "uppercase",
   borderRadius: "2px",
   padding: "0 12px",
-  backgroundColor: theme.gray_5_20,
-  color: theme.textColorLight,
+  backgroundColor: alpha(theme.palette.grey[300], 0.2),
+  color: theme.palette.grey[400],
   fontWeight: "bold",
   lineHeight: "2rem",
   display: "inline",

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box } from "@mui/material";
+import { alpha, Box } from "@mui/material";
 import { getShortWallet, formatADAFull, getShortHash } from "../../../../commons/utils/helper";
 import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
@@ -44,7 +44,7 @@ const Card = ({
     }, 0);
 
   return (
-    <Box textAlign={"left"} mb={1} sx={{ background: theme => theme.boxBackgroundColor }}>
+    <Box textAlign={"left"} mb={1} sx={{ background: theme => theme.palette.background.paper }}>
       <Header>
         <div>
           <Box color={"black"} fontWeight="bold" fontSize={"1rem"}>
@@ -56,7 +56,7 @@ const Card = ({
       </Header>
       {item &&
         item.map((i, ii) => (
-          <Box textAlign={"left"} padding="10px 25px" borderBottom={theme => `1px solid ${theme.black_10}`} key={ii}>
+          <Box textAlign={"left"} padding="10px 25px" borderBottom={theme => `1px solid ${alpha(theme.palette.common.black, 0.1)}`} key={ii}>
             <Box display={"flex"} alignItems="center">
               <Box width={50}>
                 <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />
@@ -76,7 +76,7 @@ const Card = ({
                     >
                       <Link to={details.address(i.address)}>
                         <CustomTooltip title={i.address}>
-                          <Box color={theme => theme.linkColor} fontWeight="bold" className={styles.ffText}>
+                          <Box color={theme => theme.palette.secondary.main} fontWeight="bold" className={styles.ffText}>
                             {getShortWallet(i.address)}
                           </Box>
                         </CustomTooltip>
@@ -93,7 +93,7 @@ const Card = ({
                       <Box
                         component={"span"}
                         whiteSpace="nowrap"
-                        color={theme => (type === "up" ? theme.green_2 : theme.error_1)}
+                        color={theme => (type === "up" ? theme.palette.primary.main : theme.palette.error.main)}
                         fontWeight="bold"
                         mr={1}
                       >
@@ -113,7 +113,7 @@ const Card = ({
                               component={"span"}
                               fontWeight="bold"
                               className={styles.ffText}
-                              color={theme => theme.linkColor}
+                              color={theme => theme.palette.secondary.main}
                               mr={1}
                             >
                               {getShortHash(i.txHash)}
@@ -146,7 +146,7 @@ const Card = ({
           </Box>
         ))}
       {type === "up" && (
-        <Box textAlign={"left"} padding="10px 25px" borderBottom={theme => `1px solid ${theme.black_10}`}>
+        <Box textAlign={"left"} padding="10px 25px" borderBottom={theme => `1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
           <Box width={"100%"} display="flex" justifyContent={"space-between"} alignItems="center">
             <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
               <Box display={"flex"} alignItems="center">
@@ -169,7 +169,7 @@ const Card = ({
         display={"flex"}
         justifyContent="space-between"
         padding={"12px 25px"}
-        sx={{ background: theme => theme.green_9_10 }}
+        sx={{ background: theme => theme.palette.green[800_10] }}
       >
         <div>Total {type === "down" ? "Input" : "Output"}</div>
         <div>

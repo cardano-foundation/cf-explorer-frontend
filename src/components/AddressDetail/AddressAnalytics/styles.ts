@@ -1,10 +1,10 @@
-import { Grid, Skeleton, Button, styled, Box } from "@mui/material";
+import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
 
 export const BoxInfo = styled(Box)(({ theme }) => ({
   height: `100%`,
-  background: theme.gray_3,
+  background: theme.palette.secondary.dark,
   borderRadius: "10px",
-  color: theme.textColorReverse,
+  color: theme.palette.primary.contrastText,
   display: "flex",
   flexDirection: "column",
   textAlign: "center",
@@ -36,10 +36,10 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   width: "80%",
   margin: "0 auto",
-  borderBottom: `1px solid ${theme.white_7}`,
+  borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
   overflow: "hidden",
   [theme.breakpoints.down("lg")]: {
-    borderRight: `1px solid ${theme.white_7}`,
+    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
     height: "100%",
     borderBottom: "none",
     width: "100%",
@@ -49,7 +49,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     width: "80%",
     borderRight: "none",
-    borderBottom: `1px solid ${theme.white_7}`,
+    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
   },
 }));
 
@@ -65,10 +65,10 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
 }));
 
 export const Wrapper = styled(Grid)(({ theme }) => ({
-  backgroundColor: theme.boxBackgroundColor,
+  backgroundColor: theme.palette.background.paper,
   borderRadius: 10,
   minHeight: "400px",
-  boxShadow: theme.shadow_0,
+  boxShadow: theme.shadow.card,
   padding: "25px",
   textAlign: "left",
 }));
@@ -80,8 +80,8 @@ export const ButtonTitle = styled("button")(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "1rem",
   marginRight: 5,
-  color: theme.textColorReverse,
-  backgroundColor: theme.green_2,
+  color: theme.palette.primary.contrastText,
+  backgroundColor: theme.palette.primary.main,
   fontFamily: "var(--font-family-title)",
 }));
 
@@ -109,11 +109,11 @@ export const Tabs = styled(Box)(({ theme }) => ({
 export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   textTransform: "lowercase",
   borderRadius: 10,
-  border: `2px solid ${theme.green_9_20}`,
+  border: `2px solid ${theme.palette.green[800_20]}`,
   marginRight: theme.spacing(1),
-  color: active ? `${theme.textColorReverse} !important` : theme.textColorLight,
+  color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   fontWeight: "bold",
-  backgroundColor: active ? theme.green_2 : "none",
+  backgroundColor: active ? theme.palette.primary.main : "none",
 }));
 export const StyledLine = styled(Box)<{ left?: number }>(({ theme, left }) => ({
   position: "absolute",
@@ -121,5 +121,5 @@ export const StyledLine = styled(Box)<{ left?: number }>(({ theme, left }) => ({
   width: 1.5,
   top: 0,
   left: left,
-  background: theme.gray_6,
+  background: theme.palette.grey[200],
 }));

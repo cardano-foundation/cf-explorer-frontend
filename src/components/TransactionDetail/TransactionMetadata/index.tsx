@@ -43,7 +43,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
       label: (
         <h3 className={`${styles.title} ${tabActive === "summary" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <SummaryIcon fill={tabActive === "summary" ? theme.green_2 : theme.gray_5} />
+            <SummaryIcon fill={tabActive === "summary" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}>Summary</Box>
           </Box>
         </h3>
@@ -55,7 +55,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
       label: (
         <h3 className={`${styles.title} ${tabActive === "utxOs" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <UtxoIcon fill={tabActive === "utxOs" ? theme.green_2 : theme.gray_5} />
+            <UtxoIcon fill={tabActive === "utxOs" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}> UTXOs</Box>
           </Box>
         </h3>
@@ -67,7 +67,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
       label: (
         <h3 className={`${styles.title} ${tabActive === "contracts" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <ContractIcon fill={tabActive === "contracts" ? theme.green_2 : theme.gray_5} />
+            <ContractIcon fill={tabActive === "contracts" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}> Contracts({data?.contracts?.length || 0})</Box>
           </Box>
         </h3>
@@ -79,7 +79,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
       label: (
         <h3 className={`${styles.title} ${tabActive === "collaterals" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <CollateralIcon fill={tabActive === "collaterals" ? theme.green_2 : theme.gray_5} />
+            <CollateralIcon fill={tabActive === "collaterals" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}> Collaterals({data?.collaterals?.length || 0})</Box>
           </Box>
         </h3>
@@ -91,7 +91,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
       label: (
         <h3 className={`${styles.title} ${tabActive === "notes" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <NoteIcon fill={tabActive === "notes" ? theme.green_2 : theme.gray_5} />
+            <NoteIcon fill={tabActive === "notes" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}> Notes({data?.notes?.length || 0})</Box>
           </Box>
         </h3>
@@ -103,7 +103,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
       label: (
         <h3 className={`${styles.title} ${tabActive === "withdrawals" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <WithdrawalIcon fill={tabActive === "withdrawals" ? theme.green_2 : theme.gray_5} />
+            <WithdrawalIcon fill={tabActive === "withdrawals" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}>Withdrawals({data?.withdrawals?.length || 0})</Box>
           </Box>
         </h3>
@@ -115,7 +115,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
       label: (
         <h3 className={`${styles.title} ${tabActive === "delegations" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <DelegationIcon fill={tabActive === "delegations" ? theme.green_2 : theme.gray_5} />
+            <DelegationIcon fill={tabActive === "delegations" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}> Delegations({data?.delegations?.length || 0})</Box>
           </Box>
         </h3>
@@ -127,7 +127,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
       label: (
         <h3 className={`${styles.title} ${tabActive === "mints" && styles.active}`}>
           <Box display={"flex"} alignItems="center">
-            <MintingIcon fill={tabActive === "mints" ? theme.green_2 : theme.gray_5} />
+            <MintingIcon fill={tabActive === "mints" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}>Minting</Box>
           </Box>
         </h3>
@@ -145,7 +145,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
         <Box className={styles.tab} paddingX={3}>
           <TabList
             onChange={handleChange}
-            TabIndicatorProps={{ sx: { background: theme => theme.green_2, color: theme => theme.green_2 } }}
+            TabIndicatorProps={{ sx: { background: theme => theme.palette.primary.main, color: theme => theme.palette.primary.main } }}
           >
             {items?.map(item => (
               <Tab key={item.key} label={item.label} value={item.key} />

@@ -61,7 +61,7 @@ export const StyledSlider = styled(Slider)`
           width: 6px;
           height: 6px;
           border-radius: 6px;
-          background: ${props => props.theme.gray_5};
+          background: ${props => props.theme.palette.grey[300]};
           opacity: 0.3;
           top: 50%;
           left: 50%;
@@ -72,7 +72,7 @@ export const StyledSlider = styled(Slider)`
         button::before {
           width: 8px;
           height: 8px;
-          background: ${props => props.theme.green_2};
+          background: ${props => props.theme.palette.primary.main};
           opacity: 1;
         }
       }
@@ -87,7 +87,7 @@ export const Item = styled(BoxRaised)`
   text-align: left;
   overflow: hidden;
   &:hover {
-    box-shadow: ${props => props.theme.shadow_1};
+    box-shadow: ${props => props.theme.shadow.card};
   }
 `;
 
@@ -98,7 +98,7 @@ export const Image = styled("img")`
   min-width: 80px;
   border-radius: 5px;
   margin-bottom: 15px;
-  background-color: ${props => props.theme.bodyBackground};
+  background-color: ${props => props.theme.palette.background.default};
 `;
 export const Detail = styled(Box)`
   overflow: hidden;
@@ -114,8 +114,8 @@ export const Author = styled("h6")`
   -webkit-line-clamp: 3;
   overflow: hidden;
   font-family: var(--font-family-text);
-  color: ${props => props.theme.green_2};
-  background-color: ${props => props.theme.green_2_20};
+  color: ${props => props.theme.palette.primary.main};
+  background-color: ${props => props.theme.palette.success.light};
   padding: 3px 4.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -143,7 +143,7 @@ export const Time = styled("h5")`
   gap: 6px;
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-normal);
-  color: ${props => props.theme.textColorLight};
+  color: ${props => props.theme.palette.grey[400]};
   line-height: 1.15;
   margin: 0;
 `;

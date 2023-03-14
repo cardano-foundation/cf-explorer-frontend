@@ -1,5 +1,5 @@
 import { Collapse, List, ListItemText, styled, Theme } from "@mui/material";
-import { SystemStyleObject } from "@mui/system";
+import { alpha, SystemStyleObject } from "@mui/system";
 
 export const StyledCollapse = styled(Collapse)`
   @media screen and (max-width: 1023px) {
@@ -51,9 +51,15 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
   width: ${props => (props.open ? "unset" : 0)};
   * {
     font-family: var(--font-family-title) !important;
-    font-weight: var(--font-weight-bold) !important; 
+    font-weight: var(--font-weight-bold) !important;
     color: ${({ active, text, disable, theme }) =>
-      active ? (text ? theme.textColor : theme.textColorLight) : disable ? theme.gray_4_50 : theme.textColorLight};
+      active
+        ? text
+          ? theme.palette.text.primary
+          : theme.palette.grey[400]
+        : disable
+        ? theme.palette.text.disabled
+        : theme.palette.grey[400]};
     white-space: break-spaces;
     width: 165px;
   }
@@ -66,7 +72,7 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
 export const SubMenuText = styled(MenuText)`
   * {
     font-weight: var(--font-weight-normal) !important;
-    color: ${({ active, theme }) => (active ? theme.textColorReverse : theme.textColorLight)};
+    color: ${({ active, theme }) => (active ? theme.palette.primary.contrastText : theme.palette.grey[400])};
   }
 `;
 

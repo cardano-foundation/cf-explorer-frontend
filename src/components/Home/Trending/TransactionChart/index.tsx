@@ -65,13 +65,13 @@ const TransactionChart: React.FC = () => {
     yAxis: {
       title: { text: null },
       lineWidth: 2,
-      lineColor: theme.borderColor,
+      lineColor: theme.palette.border.main,
       gridLineWidth: 0,
     },
     xAxis: {
       categories,
       lineWidth: 2,
-      lineColor: theme.borderColor,
+      lineColor: theme.palette.border.main,
       plotLines: [],
       angle: 0,
       labels: {
@@ -91,12 +91,12 @@ const TransactionChart: React.FC = () => {
         type: "areaspline",
         marker: { enabled: false },
         lineWidth: 4,
-        color: theme.green_2,
+        color: theme.palette.primary.main,
         fillColor: {
           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
           stops: [
-            [0, theme.green_2_20],
-            [1, theme.green_2_0],
+            [0, theme.palette.success.light],
+            [1, "transparent"],
           ],
         },
         data,

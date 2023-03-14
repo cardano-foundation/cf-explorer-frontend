@@ -10,8 +10,8 @@ export const Item = styled("div")`
   align-items: center;
   gap: 10px;
   justify-content: center;
-  background: ${props => props.theme.gray_10};
-  box-shadow: ${props => props.theme.shadow_0};
+  background: ${props => props.theme.palette.background.neutral};
+  box-shadow: ${props => props.theme.shadow.card};
   border-radius: 12px;
   padding: 24px;
 `;
@@ -19,7 +19,7 @@ export const Item = styled("div")`
 export const Title = styled("span")`
   font-family: var(--font-family-title);
   line-height: 24px;
-  color: ${props => props.theme.textColorLight};
+  color: ${props => props.theme.palette.grey[400]};
 `;
 
 export const Value = styled("span")`
