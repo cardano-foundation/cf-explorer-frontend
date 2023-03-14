@@ -37,25 +37,27 @@ const OverViews: React.FC = () => {
           <StyledCard.Content>
             <StyledCard.Title>Epoch</StyledCard.Title>
             <StyledCard.Link to={details.epoch(data?.epochNo)}>{data?.epochNo}</StyledCard.Link>
-            <span style={{ color: "#667085" }}>
+            <Box component="span" sx={{ color: theme => theme.palette.grey[400] }}>
               End in:{" "}
               <StyledCard.Comment>
                 {duration.days()} day {duration.hours()} hours {duration.minutes()} minutes
               </StyledCard.Comment>
-            </span>
+            </Box>
           </StyledCard.Content>
           <StyledImg src={CurentEpochIcon} alt="Clock" />
         </StyledCard.Container>
       </Grid>
       <Grid item xl={4} md={6} xs={12}>
         <Box>
-          <Box bgcolor={"#fff"} boxShadow="0px 10px 25px rgba(0, 0, 0, 0.03)" borderRadius="12px">
+          <Box bgcolor={theme => theme.palette.common.white} boxShadow={theme => theme.shadow.card} borderRadius="12px">
             <StyledCard.Container style={{ boxShadow: "none" }}>
               <StyledCard.Content>
                 <StyledCard.Title>Slot</StyledCard.Title>
                 <StyledCard.Value>
                   {data?.epochSlotNo}
-                  <span style={{ color: "#98A2B3", fontWeight: "400" }}> / {MAX_SLOT_EPOCH}</span>
+                  <Box component="span" sx={{ color: theme => theme.palette.text.hint, fontWeight: "400" }}>
+                    / {MAX_SLOT_EPOCH}
+                  </Box>
                 </StyledCard.Value>
               </StyledCard.Content>
               <StyledImg src={RocketBackground} alt="Rocket" />

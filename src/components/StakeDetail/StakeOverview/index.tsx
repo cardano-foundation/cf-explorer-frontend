@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Skeleton } from "@mui/material";
+import { alpha, Box, Skeleton } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { details, routers } from "../../../commons/routers";
 import delegatedIcon from "../../../commons/resources/icons/delegated.svg";
@@ -124,9 +124,10 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
             {!loading && <Skeleton variant="rectangular" width={"100"} />}
             {!loading && (
               <LabelStatus
-                color={props => (data?.status === "ACTIVE" ? props.colorGreenLight : props.textColorPale)}
-                style={{
-                  background: data?.status === "ACTIVE" ? "rgba(67, 143, 104, 0.2)" : "rgba(102, 112, 133, 0.2)",
+                color={theme => (data?.status === "ACTIVE" ? theme.palette.success.main : theme.palette.grey[400])}
+                sx={{
+                  background: theme =>
+                    data?.status === "ACTIVE" ? theme.palette.success.light : alpha(theme.palette.grey[400], 0.2),
                 }}
               >
                 {data?.status}

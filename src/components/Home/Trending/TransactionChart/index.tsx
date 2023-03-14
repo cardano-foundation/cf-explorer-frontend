@@ -3,7 +3,7 @@ import moment from "moment";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import useFetch from "../../../../commons/hooks/useFetch";
-import { styled } from "@mui/material";
+import { styled, useTheme } from "@mui/material";
 import { BoxRaised } from "../../../commons/BoxRaised";
 import { API } from "../../../../commons/utils/api";
 
@@ -56,7 +56,7 @@ interface TransactionCount {
 const TransactionChart: React.FC = () => {
   const { data: dataOrigin } = useFetch<TransactionCount[]>(API.TRANSACTION.GRAPH);
   const data = (dataOrigin || []).map(item => item.txs);
-
+  const theme = useTheme();
   const categories = (dataOrigin || []).map(item => moment(item.date).format("MMM DD"));
 
   const options: Highcharts.Options = {
@@ -65,13 +65,13 @@ const TransactionChart: React.FC = () => {
     yAxis: {
       title: { text: null },
       lineWidth: 2,
-      lineColor: "#E3E5E9",
+      lineColor: theme.palette.border.main,
       gridLineWidth: 0,
     },
     xAxis: {
       categories,
       lineWidth: 2,
-      lineColor: "#E3E5E9",
+      lineColor: theme.palette.border.main,
       plotLines: [],
       angle: 0,
       labels: {
@@ -91,12 +91,12 @@ const TransactionChart: React.FC = () => {
         type: "areaspline",
         marker: { enabled: false },
         lineWidth: 4,
-        color: "#438f68",
+        color: theme.palette.primary.main,
         fillColor: {
           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
           stops: [
-            [0, "#438f6833"],
-            [1, "rgba(67, 143, 104, 0)"],
+            [0, theme.palette.success.light],
+            [1, "transparent"],
           ],
         },
         data,

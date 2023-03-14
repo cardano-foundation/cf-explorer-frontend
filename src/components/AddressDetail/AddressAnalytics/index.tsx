@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import {
@@ -37,6 +37,7 @@ const options = [
 const AddressAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { address } = useParams<{ address: string }>();
+  const theme = useTheme();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`);
   const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${address}`);
   const dataChart = data?.map(i => {
@@ -80,7 +81,7 @@ const AddressAnalytics: React.FC = () => {
                     yAxis: {
                       title: { text: null },
                       lineWidth: 2,
-                      lineColor: "#E3E5E9",
+                      lineColor: theme.palette.border.main,
                       className: "y-axis-lable",
                       gridLineWidth: 1,
                       minorGridLineWidth: 1,
@@ -94,7 +95,7 @@ const AddressAnalytics: React.FC = () => {
                     xAxis: {
                       categories,
                       lineWidth: 2,
-                      lineColor: "#E3E5E9",
+                      lineColor: theme.palette.border.main,
                       plotLines: [],
                       angle: 0,
                       labels: {
@@ -113,12 +114,12 @@ const AddressAnalytics: React.FC = () => {
                         type: "areaspline",
                         marker: { enabled: false },
                         lineWidth: 4,
-                        color: "#438f68",
+                        color: theme.palette.primary.main,
                         fillColor: {
                           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                           stops: [
-                            [0, "#438f6833"],
-                            [1, "rgba(67, 143, 104, 0)"],
+                            [0, theme.palette.success.light],
+                            [1, "transparent"],
                           ],
                         },
                         data: dataChart,
