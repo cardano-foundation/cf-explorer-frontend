@@ -1,6 +1,6 @@
 import React from "react";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Tab } from "@mui/material";
+import { Tab, useTheme } from "@mui/material";
 import { Box } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
@@ -122,7 +122,7 @@ const tabs: {
 ];
 const PolicyTable = () => {
   const [activeTab, setActiveTab] = React.useState<TABS>(TABS.TOKENS);
-
+  const theme = useTheme();
   const { policyId } = useParams<{ policyId: string }>();
   const { search } = useLocation();
   const history = useHistory();
@@ -138,8 +138,8 @@ const PolicyTable = () => {
   return (
     <Box mt={4}>
       <TabContext value={activeTab}>
-        <Box style={{ borderBottom: "1px solid rgba(24, 76, 120, 0.1)" }}>
-          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: "#438f68" } }}>
+        <Box style={{ borderBottom: `1px solid ${theme.palette.border.secondary}` }}>
+          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}>
             {tabs.map(({ icon: Icon, key, label }) => (
               <Tab
                 key={key}
@@ -147,7 +147,7 @@ const PolicyTable = () => {
                 label={
                   <Box>
                     <Box display={"flex"} alignItems="center">
-                      <Icon fill={activeTab === key ? "#438F68" : "#98A2B3"} />
+                      <Icon fill={activeTab === key ? theme.palette.primary.main : theme.palette.text.hint} />
                       <TitleTab pl={1} active={activeTab === key}>
                         {label}
                       </TitleTab>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Grid, Box, Autocomplete } from "@mui/material";
+import { Grid, Box, Autocomplete, useTheme } from "@mui/material";
 import { exchangeADAToUSD, formatADAFull, formatPrice, getShortWallet } from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
 import useFetch from "../../../commons/hooks/useFetch";
@@ -25,6 +25,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : ""
   );
   const { adaRate } = useSelector(({ system }: RootState) => system);
+  const theme = useTheme();
 
   useEffect(() => {
     setStakeKey(data?.stakeAddress || "");
@@ -100,7 +101,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       value: (
         <Link
           to={dataStake?.pool?.poolName ? details.delegation(dataStake.pool.poolId) : "#"}
-          style={{ fontFamily: "var(--font-family-text)", color: "var(--color-blue)" }}
+          style={{ fontFamily: "var(--font-family-text)", color: theme.palette.secondary.main }}
         >
           {dataStake?.pool?.poolName ||
             (dataStake?.pool?.poolId && `Pool [${getShortWallet(dataStake.pool.poolId)}]`) ||
@@ -130,7 +131,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     >
       <Grid container columnSpacing={2}>
         <Grid item xs={12} md={6}>
-          <Box overflow="hidden" borderRadius={props => props.borderRadius} height={"100%"}>
+          <Box overflow="hidden" borderRadius={10} height={"100%"}>
             <CardAddress
               title={"Wallet address"}
               type="left"
@@ -141,7 +142,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Box overflow="hidden" borderRadius={props => props.borderRadius} height={"100%"}>
+          <Box overflow="hidden" borderRadius={10} height={"100%"}>
             <CardAddress
               title={"Stake address"}
               type="right"

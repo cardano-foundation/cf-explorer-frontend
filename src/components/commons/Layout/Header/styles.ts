@@ -1,8 +1,9 @@
 import { Container, styled } from "@mui/material";
+import { HeaderBackgroundImage } from "../../../../commons/resources";
 
 export const HeaderContainer = styled("header")<{ home: number }>`
-  background-image: ${props => (props.home ? props.theme.linearGradientGreen : `none`)};
-  color: ${props => props.theme.textColorReverse};
+  background-image: ${props => (props.home ? props.theme.palette.gradient[0] : `none`)};
+  color: ${props => props.theme.palette.primary.contrastText};
   position: relative;
   @media (max-width: 1023px) {
     padding-top: 78px;
@@ -30,7 +31,7 @@ export const HeaderBackground = styled("div")<{ home: number }>`
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: ${props => props.theme.headerBackgroundImage};
+  background-image: ${HeaderBackgroundImage};
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -68,7 +69,7 @@ export const HeaderMain = styled("div")<{ home: number }>`
 `;
 
 export const Title = styled("h1")<{ home: number }>`
-  color: ${props => props.theme.textColorReverse};
+  color: ${props => props.theme.palette.primary.contrastText};
   display: ${props => (props.home ? "block" : "none")};
   @media screen and (max-width: 767px) {
     font-size: 30px;
