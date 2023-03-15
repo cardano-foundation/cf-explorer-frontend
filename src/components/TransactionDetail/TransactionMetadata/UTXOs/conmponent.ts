@@ -1,4 +1,5 @@
 import { Box, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const Img = styled("img")(({ theme }) => ({
   paddingRight: "10px",
@@ -7,8 +8,8 @@ export const Img = styled("img")(({ theme }) => ({
 
 export const Header = styled(Box)(({ theme }) => ({
   padding: "25px 0 0",
-  marginRight:'25px',
-  marginLeft:'25px',
+  marginRight: "25px",
+  marginLeft: "25px",
   display: "flex",
   justifyContent: "space-between",
   fontSize: "14px",
@@ -18,16 +19,16 @@ export const Header = styled(Box)(({ theme }) => ({
   alignItems: "flex-end",
 }));
 
-export const LabelStatus = styled("h4")(({ theme }) => ({
-  margin: 0,
+export const TokenLink = styled(Link)(({ theme }) => ({
+  margin: "0px 4px",
   textTransform: "uppercase",
   borderRadius: "2px",
-  padding: "0 12px",
+  padding: "2px 10px",
   backgroundColor: "#ced1d8",
-  color: theme.textColorPale,
+  color: `${theme.textColorPale} !important`,
+  fontSize: "var(--font-size-text)",
+  lineHeight: "1.5rem",
   fontWeight: "bold",
-  lineHeight: "2rem",
   display: "inline",
-  marginRight: "4px",
   whiteSpace: "nowrap",
 }));
