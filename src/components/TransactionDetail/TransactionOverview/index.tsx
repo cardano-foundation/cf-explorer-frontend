@@ -209,7 +209,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   ];
   return (
     <DetailHeader
-      listItem={listOverview}
+    listItem={listOverview}
       data={
         data && {
           type: "transaction",
