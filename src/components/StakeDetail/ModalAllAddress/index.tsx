@@ -37,7 +37,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
           to={details.address(r.address)}
           style={{ fontFamily: "var(--font-family-text)", color: "var(--color-blue)" }}
         >
-          <CustomTooltip title={r.address || ""}>
+          <CustomTooltip title={r.address || ""} placement="top-start">
             <Box component={"span"}>{getShortWallet(r.address)}</Box>
           </CustomTooltip>
         </Link>
