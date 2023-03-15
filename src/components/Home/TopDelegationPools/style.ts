@@ -39,7 +39,6 @@ export const Title = styled("h3")`
 export const DelegateTable = styled(Table)`
   overflow-x: auto;
   table {
-    // min-width: 1200px;
     tr {
       th {
         background-color: transparent !important;
