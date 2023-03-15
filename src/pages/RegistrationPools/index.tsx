@@ -78,17 +78,15 @@ const columns: Column<Registration>[] = [
   {
     title: "Stake Key",
     key: "stakeKey",
-    render: r =>
-      r.stakeKey && r.stakeKey.length > 0
-        ? r.stakeKey.map((sk, idx) => (
-            <>
-              <CustomTooltip title={sk} key={idx}>
-                <StyledLink to={details.stake(sk)}>{getShortWallet(sk)}</StyledLink>
-              </CustomTooltip>
-              {r.stakeKey.length > 1 && <Box mb={1} />}
-            </>
-          ))
-        : "",
+    render: record =>
+      record?.stakeKey?.map((stakeKey, index) => (
+        <>
+          {index ? <br /> : ""}
+          <CustomTooltip title={stakeKey} key={stakeKey}>
+            <StyledLink to={details.stake(stakeKey)}>{getShortWallet(stakeKey)}</StyledLink>
+          </CustomTooltip>
+        </>
+      )) || "",
   },
 ];
 
