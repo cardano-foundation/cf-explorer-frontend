@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import DetailHeader from "../../commons/DetailHeader";
 import { formatADAFull, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
 import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { ConfirmStatus, StyledLink, TitleCard } from "./component";
 import { ADAToken } from "../../commons/Token";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
@@ -30,6 +30,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const [openListInput, setOpenListInput] = useState(false);
   const [openListOutput, setOpenListOutput] = useState(false);
+  const theme = useTheme();
 
   const renderConfirmationTag = () => {
     if (data && data.tx && data.tx.confirmation) {
@@ -57,7 +58,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
                   setOpenListInput(!openListInput);
                 }}
               >
-                <BiShowAlt color={openListInput ? "#000" : "#98a2b3"} />
+                <BiShowAlt color={openListInput ? theme.palette.common.black : theme.palette.text.hint} />
               </IconButton>
             )}
           </TitleCard>
@@ -96,7 +97,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
                   setOpenListInput(false);
                 }}
               >
-                <BiShowAlt color={openListOutput ? "#000" : "#98a2b3"} />
+                <BiShowAlt color={openListOutput ? theme.palette.common.black : theme.palette.text.hint} />
               </IconButton>
             )}
           </TitleCard>
@@ -208,7 +209,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   ];
   return (
     <DetailHeader
-      listTrxOverview={listOverview}
+    listItem={listOverview}
       data={
         data && {
           type: "transaction",

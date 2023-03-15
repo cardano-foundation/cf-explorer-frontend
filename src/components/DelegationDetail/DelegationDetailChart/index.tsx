@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Skeleton, styled, Box } from "@mui/material";
+import { Grid, Skeleton, styled, Box, useTheme } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import { formatADAFull, formatPrice } from "../../../commons/utils/helper";
@@ -25,7 +25,7 @@ interface DelegationDetailChartProps {
 const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId }) => {
   const [selected, setSelected] = useState<"epochChart" | "delegatorChart">("epochChart");
   const { data, loading } = useFetch<AnalyticsDelegators>(`${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`);
-
+  const theme = useTheme();
   const categories = data?.[selected]?.dataByDays?.map(item => item.epochNo) || [];
   const epochs = data?.epochChart?.dataByDays?.map(item => item.totalStake / 10 ** 6) || [];
   const delegators = data?.delegatorChart?.dataByDays?.map(item => item.numberDelegator) || [];
@@ -60,7 +60,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                     yAxis: {
                       title: { text: null },
                       lineWidth: 2,
-                      lineColor: "#E3E5E9",
+                      lineColor: theme.palette.border.main,
                       className: "y-axis-lable",
                       gridLineWidth: 1,
                       labels: {
@@ -73,7 +73,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                     xAxis: {
                       categories,
                       lineWidth: 2,
-                      lineColor: "#E3E5E9",
+                      lineColor: theme.palette.border.main,
                       plotLines: [],
                       angle: 0,
                     },
@@ -87,12 +87,12 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                         type: "areaspline",
                         marker: { enabled: false },
                         lineWidth: 4,
-                        color: "#438f68",
+                        color: theme.palette.primary.main,
                         fillColor: {
                           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                           stops: [
-                            [0, "#438f6833"],
-                            [1, "rgba(67, 143, 104, 0)"],
+                            [0, theme.palette.success.light],
+                            [1, "transparent"],
                           ],
                         },
                         data: selected === "epochChart" ? epochs : delegators,
@@ -141,6 +141,6 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
 
 export default DelegationDetailChart;
 
-const SkeletonUI = styled(Skeleton)(({ theme }) => ({
-  borderRadius: theme.borderRadius,
+const SkeletonUI = styled(Skeleton)(() => ({
+  borderRadius: 10,
 }));

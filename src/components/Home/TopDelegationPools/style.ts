@@ -1,4 +1,4 @@
-import { Box, LinearProgress, styled } from "@mui/material";
+import { alpha, Box, LinearProgress, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 import { BoxRaised } from "../../commons/BoxRaised";
 import Table from "../../commons/Table";
@@ -55,7 +55,7 @@ export const DelegateTable = styled(Table)`
       td {
         cursor: pointer;
         font-size: var(--font-size-text-small);
-        border-bottom: 1px solid ${props => props.theme.borderColor};
+        border-bottom: 1px solid ${props => props.theme.palette.border.main};
         border-radius: 0 !important;
       }
       &:last-child {
@@ -72,7 +72,7 @@ export const DelegateTable = styled(Table)`
 
 export const PoolName = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.colorBlue} !important;
+  color: ${props => props.theme.palette.secondary.main} !important;
 `;
 
 export const ProgressContainer = styled("div")`
@@ -89,7 +89,7 @@ export const StyledProgress = styled("div")<{ value: number; width?: number }>`
   width: ${props => (typeof props.width === "number" ? `${props.width}px` : props.width || "100%")};
   height: 12px;
   margin-left: 8px;
-  background: ${props => props.theme.borderColor};
+  background: ${props => props.theme.palette.grey[200]};
   border-radius: 6px;
   &::after {
     content: "";
@@ -99,7 +99,7 @@ export const StyledProgress = styled("div")<{ value: number; width?: number }>`
     height: 100%;
     border-radius: 6px;
     width: ${props => props.value}%;
-    background: ${props => props.theme.linearGradientGreen};
+    background: ${props => props.theme.palette.gradient[0]};
   }
 `;
 
@@ -108,10 +108,10 @@ export const StyledLinearProgress = styled(LinearProgress)`
   width: 100%;
   height: 8px;
   border-radius: 8px;
-  background: rgba(0, 0, 0, 0.1);
+  background: ${props => alpha(props.theme.palette.common.black, 0.1)};
   margin-left: 8px;
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 8px;
-    background: ${props => props.theme.linearGradientGreen};
+    background: ${props => props.theme.palette.gradient[0]};
   }
 `;

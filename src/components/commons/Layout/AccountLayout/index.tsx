@@ -1,4 +1,4 @@
-import { Avatar, Box, IconButton } from "@mui/material";
+import { alpha, Avatar, Box, IconButton, useTheme } from "@mui/material";
 import React, { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { routers } from "../../../../commons/routers";
@@ -17,6 +17,7 @@ interface Props {
 const AccountLayout: React.FC<Props> = ({ children }) => {
   const { pathname } = useLocation();
   const { userData } = useSelector(({ user }: RootState) => user);
+  const theme = useTheme();
 
   const fetchUserInfo = useCallback(async () => {
     try {
@@ -63,10 +64,10 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                   justifyContent="space-between"
                   py={2}
                   mx={4}
-                  borderBottom="1px solid rgba(0,0,0,0.07)"
+                  borderBottom={theme => `1px solid ${alpha(theme.palette.common.black, .07)}`}
                 >
                   <Box>{i.title}</Box>
-                  <MdChevronRight size={25} color={i.to === pathname ? "#438F68" : "#98A2B3"} />
+                  <MdChevronRight size={25} color={i.to === pathname ? theme.palette.success.main : theme.palette.text.hint} />
                 </Box>
               </NavItem>
             ))}
