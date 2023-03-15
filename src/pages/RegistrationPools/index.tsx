@@ -27,13 +27,13 @@ const columns: Column<Registration>[] = [
   {
     title: "Trx Hash",
     key: "trxHash",
-    render: r => {
+    render: pool => {
       return (
         <>
-          <CustomTooltip title={r.txHash}>
-            <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash || "")}</StyledLink>
+          <CustomTooltip title={pool.txHash}>
+            <StyledLink to={details.transaction(pool.txHash)}>{getShortHash(pool.txHash || "")}</StyledLink>
           </CustomTooltip>
-          <div>{formatDateTimeLocal(r.txTime || "")}</div>
+          <div>{formatDateTimeLocal(pool.txTime || "")}</div>
         </>
       );
     },
@@ -41,21 +41,21 @@ const columns: Column<Registration>[] = [
   {
     title: "Block",
     key: "block",
-    render: r => (
+    render: pool => (
       <>
-        <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
+        <StyledLink to={details.block(pool.block)}>{pool.block}</StyledLink>
         <br />
-        <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/{r.slotNo}
+        <StyledLink to={details.epoch(pool.epoch)}>{pool.epoch}</StyledLink>/{pool.slotNo}
       </>
     ),
   },
   {
     title: "Pool",
     key: "pool",
-    render: r => (
-      <StyledLink to={details.delegation(r.poolView || "")}>
-        <CustomTooltip title={r.poolName || `Pool[${r.poolView}]` || ""}>
-          <Box component={"span"}>{r.poolName || `Pool[${getShortHash(r.poolView)}]`}</Box>
+    render: pool => (
+      <StyledLink to={details.delegation(pool.poolView || "")}>
+        <CustomTooltip title={pool.poolName || `Pool[${pool.poolView}]` || ""}>
+          <Box component={"span"}>{pool.poolName || `Pool[${getShortHash(pool.poolView)}]`}</Box>
         </CustomTooltip>
       </StyledLink>
     ),
@@ -63,23 +63,23 @@ const columns: Column<Registration>[] = [
   {
     title: "Pledge (A)",
     key: "pledge",
-    render: r => <>{formatADAFull(r.pledge)}</>,
+    render: pool => <>{formatADAFull(pool.pledge)}</>,
   },
   {
     title: "Cost (A)",
     key: "cost",
-    render: r => <>{formatADAFull(r.cost)}</>,
+    render: pool => <>{formatADAFull(pool.cost)}</>,
   },
   {
     title: "Fee",
     key: "margin",
-    render: r => formatPercent(r.margin || 0),
+    render: pool => formatPercent(pool.margin || 0),
   },
   {
     title: "Stake Key",
     key: "stakeKey",
-    render: record =>
-      record?.stakeKey?.map((stakeKey, index) => (
+    render: pool =>
+      pool?.stakeKey?.map((stakeKey, index) => (
         <>
           {index ? <br /> : ""}
           <CustomTooltip title={stakeKey} key={stakeKey}>
