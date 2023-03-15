@@ -56,7 +56,12 @@ const Card = ({
       </Header>
       {item &&
         item.map((i, ii) => (
-          <Box textAlign={"left"} padding="10px 25px" borderBottom={theme => `1px solid ${alpha(theme.palette.common.black, 0.1)}`} key={ii}>
+          <Box
+            textAlign={"left"}
+            padding="10px 25px"
+            borderBottom={theme => `1px solid ${alpha(theme.palette.common.black, 0.1)}`}
+            key={ii}
+          >
             <Box display={"flex"} alignItems="center">
               <Box width={50}>
                 <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />
@@ -76,7 +81,11 @@ const Card = ({
                     >
                       <Link to={details.address(i.address)}>
                         <CustomTooltip title={i.address}>
-                          <Box color={theme => theme.palette.secondary.main} fontWeight="bold" className={styles.ffText}>
+                          <Box
+                            color={theme => theme.palette.secondary.main}
+                            fontWeight="bold"
+                            className={styles.ffText}
+                          >
                             {getShortWallet(i.address)}
                           </Box>
                         </CustomTooltip>
@@ -146,7 +155,11 @@ const Card = ({
           </Box>
         ))}
       {type === "up" && (
-        <Box textAlign={"left"} padding="10px 25px" borderBottom={theme => `1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
+        <Box
+          textAlign={"left"}
+          padding="10px 25px"
+          borderBottom={theme => `1px solid ${alpha(theme.palette.common.black, 0.1)}`}
+        >
           <Box width={"100%"} display="flex" justifyContent={"space-between"} alignItems="center">
             <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
               <Box display={"flex"} alignItems="center">
@@ -171,7 +184,7 @@ const Card = ({
         padding={"12px 25px"}
         sx={{ background: theme => theme.palette.green[800_10] }}
       >
-        <div>Total {type === "down" ? "Input" : "Output"}</div>
+        <Box fontWeight={"bold"}>Total {type === "down" ? "Input" : "Output"}</Box>
         <div>
           <Box fontWeight={"bold"} component="span" pr={1}>
             {type === "down" ? `${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}

@@ -1,7 +1,6 @@
 import React from "react";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Tab, useTheme } from "@mui/material";
-import { Box } from "@mui/material";
+import { Box, Tab, useTheme } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
@@ -89,7 +88,7 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     minWidth: "100px",
     render: r => (
       <CustomTooltip title={r.fingerprint}>
-        <LinkComponent to={details.token(r.fingerprint)}>{getShortHash(r.fingerprint || "")}</LinkComponent>
+        <LinkComponent to={details.token(r.fingerprint)}>{getShortWallet(r.fingerprint || "")}</LinkComponent>
       </CustomTooltip>
     ),
   },

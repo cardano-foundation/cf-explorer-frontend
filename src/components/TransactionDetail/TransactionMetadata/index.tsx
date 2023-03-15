@@ -142,10 +142,12 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
   return (
     <>
       <TabContext value={tabActive}>
-        <Box className={styles.tab} paddingX={3}>
+        <Box className={styles.tab}>
           <TabList
             onChange={handleChange}
-            TabIndicatorProps={{ sx: { background: theme => theme.palette.primary.main, color: theme => theme.palette.primary.main } }}
+            TabIndicatorProps={{
+              sx: { background: theme => theme.palette.primary.main, color: theme => theme.palette.primary.main },
+            }}
           >
             {items?.map(item => (
               <Tab key={item.key} label={item.label} value={item.key} />
@@ -153,7 +155,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
           </TabList>
         </Box>
         {items.map(item => (
-          <TabPanel key={item.key} value={item.key}>
+          <TabPanel key={item.key} value={item.key} style={{ padding: 0, paddingTop: 12 }}>
             {item.children}
           </TabPanel>
         ))}
