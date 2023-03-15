@@ -49,10 +49,15 @@ export const TRow = styled("tr")<{ selected?: number }>`
   }
 `;
 
-export const TCol = styled("td")<{ width?: number | string; minWidth?: number | string; maxWidth?: number | string }>`
-  border-bottom: 1px solid ${props => props.theme.palette.grey[200]};
-  width: ${({ width }) => (typeof width === "number" ? `${width}px` : width || "max-content%")};
-  min-width: ${({ minWidth }) => (typeof minWidth === "number" ? `${minWidth}px` : minWidth || "80px")};
+export const TCol = styled("td")<{
+  width?: number | string;
+  minWidth?: number | string;
+  maxWidth?: number | string;
+  hiddenBorder?: boolean;
+}>`
+  border-bottom: ${({ hiddenBorder, theme }) => (hiddenBorder ? "none" : `1px solid ${theme.palette.grey[200]}`)};
+  width: ${({ width }) => (typeof width === "number" ? `${width}px` : width || "max-content%")};  
+  min-width: ${({ minWidth }) => (typeof minWidth === "number" ? `${minWidth}px` : minWidth || "80px")}; 
   max-width: ${({ maxWidth }) => (typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth || "unset")};
   text-overflow: ellipsis;
   overflow: hidden;
