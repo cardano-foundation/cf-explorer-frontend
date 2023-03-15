@@ -9,7 +9,7 @@ import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { Icon, LabelStatus } from "./component";
+import { Icon, TokenLink } from "./component";
 
 const SummaryItems = ({
   item,
@@ -71,10 +71,10 @@ const SummaryItems = ({
 
               {item.tokens.map((token, idx) => (
                 <Box key={idx} width="auto" component={"span"}>
-                  <LabelStatus>
-                    {token.assetName}
+                  <TokenLink to={details.token(token.assetId)}>
+                    {token.assetName || getShortWallet(token.assetId)}
                     {`(${type === "down" ? "-" : "+"}${token.assetQuantity || ""})`}
-                  </LabelStatus>
+                  </TokenLink>
                 </Box>
               ))}
               {/* </Box> */}
