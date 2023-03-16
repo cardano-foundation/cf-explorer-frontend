@@ -1,11 +1,10 @@
 import moment from "moment";
-import useFetch from "../../../commons/hooks/useFetch";
-// import { USER_API } from "../../../commons/utils/api";
+import { details } from "../../../commons/routers";
 import { getShortHash } from "../../../commons/utils/helper";
 import StyledModal from "../../commons/StyledModal";
 import { Column } from "../../commons/Table";
 import { SmallText, StyledLink } from "../../share/styled";
-import { Container, StyledTable, Title } from "./styles";
+import { Container, Title } from "./styles";
 
 interface IProps {
   open: boolean;
@@ -35,7 +34,7 @@ const ActivityLogModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
           <>
             <SmallText>Transaction hash</SmallText>
             <br />
-            <StyledLink>{getShortHash(r.description || "")}</StyledLink>
+            <StyledLink to={details.transaction(r.description)}>{getShortHash(r.description || "")}</StyledLink>
           </>
         );
       },

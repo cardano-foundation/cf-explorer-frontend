@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, IconButton, useTheme } from "@mui/material";
-import { AxiosResponse } from "axios";
 import { useLocalStorage } from "react-use";
 
 import { ReactComponent as BookmarkIcon } from "../../../commons/resources/icons/Bookmark.svg";
+import { ReactComponent as Bookmarked } from "../../../commons/resources/icons/Bookmarked.svg";
 
 import Toast from "../Toast";
 import { useSelector } from "react-redux";
@@ -69,13 +69,13 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
   return (
     <Box>
       <Box mx={1} component={IconButton} style={{ width: 45, height: 45 }} onClick={updateBookmark}>
-        <BookmarkIcon fill={!!bookmark ? theme.palette.warning.main : theme.palette.text.hint} />
+        {!!bookmark ? <Bookmarked /> : <BookmarkIcon fill={theme.palette.text.hint} />}
       </Box>
       <Toast
         open={!!message}
         onClose={handleCloseToast}
         messsage={message}
-        severity={message.includes("successfully") ? "success" : "error"}
+        severity={message.includes("Successfully") ? "success" : "error"}
       />
     </Box>
   );

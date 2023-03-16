@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { setOpenModal, setWallet } from "../../../stores/user";
-import { SUPPORTED_WALLETS } from "../../../commons/utils/constants";
+import { NETWORK, SUPPORTED_WALLETS } from "../../../commons/utils/constants";
 import { CircularProgress } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
 import {
@@ -17,6 +17,7 @@ import {
 import { SupportedWallets, Wallet } from "../../../types/user";
 import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet";
 import { MdOutlineFileDownload } from "react-icons/md";
+import Toast from "../Toast";
 
 interface IProps {
   connect: (name: string, onSuccess: () => void, onError: (error: Error) => void) => Promise<any>;
@@ -24,6 +25,13 @@ interface IProps {
 }
 const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage }) => {
   const [walletConnecting, setWalletConnecting] = useState<SupportedWallets | null>(null);
+  const [message, setMessage] = React.useState("");
+  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setMessage("");
+  };
   const handleClose = () => {
     setOpenModal(false);
   };
@@ -33,6 +41,16 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage })
     onTriggerSignMessage();
   };
   const onError = (error: Error) => {
+    if (error.name === "EnablementFailedError") {
+      setMessage(
+        `You are currently connect to ${
+          NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()
+        }, please switch to  ${NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()}!`
+      );
+    } else if (error.name === "WalletExtensionNotFoundError") {
+    } else {
+      setMessage("Something went wrong!");
+    }
     setWalletConnecting(null);
   };
   const handleConnect = (walletName: SupportedWallets) => {
@@ -44,7 +62,6 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage })
   const handleOpenLink = (wallet: Wallet) => {
     window.open(wallet.link, "_blank");
   };
-
   return (
     <ConnectOption>
       <WrapContent>
@@ -79,6 +96,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage })
           );
         })}
       </WrapContent>
+      <Toast open={!!message} onClose={handleCloseToast} messsage={message} severity={"error"} />
     </ConnectOption>
   );
 };

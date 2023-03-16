@@ -74,3 +74,10 @@ interface Bookmark {
   keyword: string;
   type: "BLOCK" | "EPOCH" | "TRANSACTION" | "ADDRESS" | "POOL" | "STAKE_KEY";
 }
+
+interface NonceObject {
+  message: "SS_0" | "SS_1";
+  nonce: string;
+  userId: number;
+  walletId: number;
+}

@@ -1,10 +1,11 @@
 import { LoadingButton } from "@mui/lab";
-import { alpha, FormHelperText, FormLabel, InputBase, Link, styled } from "@mui/material";
+import { alpha, FormHelperText, FormLabel, InputBase, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
   font-family: var(--font-family-text);
-  color: ${props => props.theme.palette.secondary.main};
+  color: ${props => props.theme.palette.secondary.main} !important;
   font-weight: var(--font-weight-normal);
   &:hover {
     font-family: var(--font-family-text);
@@ -12,7 +13,9 @@ export const StyledLink = styled(Link)`
   }
 `;
 
-export const SmallText = styled("small")``;
+export const SmallText = styled("small")`
+  white-space: nowrap;
+`;
 
 export const StyledInput = styled(InputBase)`
   input.MuiInputBase-input {
