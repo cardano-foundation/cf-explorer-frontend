@@ -442,7 +442,7 @@ export const StakeKeyLink = styled(StyledLink)`
   line-height: 1.575;
 `;
 
-export const StakeKeyStatus = styled("small")<{ status: StakeStaus }>`
+export const StakeKeyStatus = styled("small")<{ status: StakeStatus }>`
   color: ${props => {
     switch (props.status) {
       case STAKE_KEY_STATUS.ACTIVE:

@@ -10,17 +10,16 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { addBookmark, deleteBookmark } from "../../../commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
-import { BookMark } from "../../../types/bookmark";
 
 interface BookmarkButtonProps {
   keyword: string;
-  type: "BLOCK" | "EPOCH" | "TRANSACTION" | "ADDRESS" | "POOL" | "STAKE_KEY";
+  type: Bookmark["type"];
 }
 
 const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
   const { userData } = useSelector(({ user }: RootState) => user);
   const isLogin = !!userData?.username;
-  const [bookmarks, setBookmarks] = useLocalStorage<BookMark[]>("bookmark", []);
+  const [bookmarks, setBookmarks] = useLocalStorage<Bookmark[]>("bookmark", []);
   const [message, setMessage] = React.useState("");
   const theme = useTheme();
 
