@@ -1,4 +1,5 @@
 import { alpha, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const Img = styled("img")(() => ({
   display: "flex",
@@ -10,16 +11,16 @@ export const Icon = styled("img")(() => ({
   width: "35px",
 }));
 
-export const LabelStatus = styled("h4")(({ theme }) => ({
-  margin: 0,
+export const TokenLink = styled(Link)(({ theme }) => ({
+  margin: "0px 4px",
   textTransform: "uppercase",
   borderRadius: "2px",
-  padding: "0 12px",
+  padding: "2px 10px",
   backgroundColor: alpha(theme.palette.grey[300], 0.2),
-  color: theme.palette.grey[400],
+  color: `${theme.palette.grey[400]} !important`,
+  fontSize: "var(--font-size-text)",
+  lineHeight: "1.5rem",
   fontWeight: "bold",
-  lineHeight: "2rem",
   display: "inline",
-  marginRight: "4px",
   whiteSpace: "nowrap",
 }));

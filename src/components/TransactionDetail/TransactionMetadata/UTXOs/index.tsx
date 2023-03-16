@@ -9,7 +9,7 @@ import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { Header, Img, Item, LabelStatus } from "./styles";
+import { Header, Img, Item, TokenLink } from "./styles";
 
 interface Props {
   data: Transaction["utxOs"] | null;
@@ -139,7 +139,9 @@ const Card = ({
                         flexWrap={"nowrap"}
                         width="auto"
                       >
-                        <LabelStatus>{token.assetName}</LabelStatus>
+                        <TokenLink to={details.token(token.assetId)}>
+                          {token.assetName || getShortWallet(token.assetId)}
+                        </TokenLink>
                       </Box>
                     ))}
                   </Box>
