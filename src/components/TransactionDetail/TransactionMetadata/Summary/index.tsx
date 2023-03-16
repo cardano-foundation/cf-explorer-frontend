@@ -1,6 +1,5 @@
 import React from "react";
 import { Box } from "@mui/material";
-import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
@@ -9,7 +8,7 @@ import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { Icon, LabelStatus } from "./component";
+import { Icon, TokenLink } from "./styles";
 
 const SummaryItems = ({
   item,
@@ -19,7 +18,7 @@ const SummaryItems = ({
   type?: "up" | "down";
 }) => {
   return (
-    <Box textAlign={"left"} px={3} py={2} sx={{ background: theme => theme.palette.common.white }} mb={2}>
+    <Box textAlign={"left"} px={3} py={2} sx={{ background: theme => theme.palette.background.paper }} mb={2}>
       <Box display={"flex"} alignItems="center">
         <Box width={50}>
           <Icon src={type === "down" ? receiveImg : sendImg} alt="send icon" />
@@ -36,7 +35,11 @@ const SummaryItems = ({
                     to={item.address.startsWith("stake") ? details.stake(item.address) : details.address(item.address)}
                   >
                     <CustomTooltip title={item.address}>
-                      <Box color={theme => theme.palette.text.primary} fontWeight="bold" className={styles.ffText}>
+                      <Box
+                        color={theme => theme.palette.text.primary}
+                        fontWeight="bold"
+                        fontFamily={"var(--font-family-text)"}
+                      >
                         {getShortWallet(item.address)}
                       </Box>
                     </CustomTooltip>
@@ -71,10 +74,10 @@ const SummaryItems = ({
 
               {item.tokens.map((token, idx) => (
                 <Box key={idx} width="auto" component={"span"}>
-                  <LabelStatus>
-                    {token.assetName}
+                  <TokenLink to={details.token(token.assetId)}>
+                    {token.assetName || getShortWallet(token.assetId)}
                     {`(${type === "down" ? "-" : "+"}${token.assetQuantity || ""})`}
-                  </LabelStatus>
+                  </TokenLink>
                 </Box>
               ))}
               {/* </Box> */}
