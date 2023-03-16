@@ -1,5 +1,9 @@
-import { Container, styled, Tab, Tabs } from "@mui/material";
+import { Box, Container, styled, Tab, Tabs } from "@mui/material";
 import { Link } from "react-router-dom";
+
+export const StakeKey = styled(Box)`
+  display: block;
+`;
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
