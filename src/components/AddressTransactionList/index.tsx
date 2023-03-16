@@ -20,7 +20,7 @@ import useFetchList from "../../commons/hooks/useFetchList";
 interface AddressTransactionListProps {
   underline?: boolean;
   url: string;
-  openDetail?: (_: any, r: Transactions, index: number) => void;
+  openDetail?: (_: any, transaction: Transactions, index: number) => void;
   selected?: number | null;
 }
 
@@ -35,9 +35,9 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Transactions>(url, pageInfo);
 
-  const onClickRow = (_: any, r: Transactions, index: number) => {
-    if (openDetail) return openDetail(_, r, index);
-    history.push(details.transaction(r.hash));
+  const onClickRow = (_: any, transaction: Transactions, index: number) => {
+    if (openDetail) return openDetail(_, transaction, index);
+    history.push(details.transaction(transaction.hash));
   };
 
   const columns: Column<Transactions>[] = [
@@ -52,12 +52,12 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       key: "trxhash",
       minWidth: 120,
 
-      render: r => (
+      render: transaction => (
         <div>
-          <CustomTooltip title={r.hash}>
-            <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
+          <CustomTooltip title={transaction.hash}>
+            <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
           </CustomTooltip>
-          <Box mt={1}>{formatDateTimeLocal(r.time || "")}</Box>
+          <Box mt={1}>{formatDateTimeLocal(transaction.time || "")}</Box>
         </div>
       ),
     },
@@ -65,19 +65,19 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       title: "Block",
       key: "block",
       minWidth: 120,
-      render: r => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>,
+      render: transaction => <StyledLink to={details.block(transaction.blockNo)}>{transaction.blockNo}</StyledLink>,
     },
     {
       title: "Addresses",
       key: "address",
       minWidth: 120,
-      render(r, index) {
+      render(transaction, index) {
         return (
           <div>
             <Box display={"flex"}>
               <div> Input: </div>
               <div>
-                {r.addressesInput.slice(0, 1).map((tx, key) => {
+                {transaction.addressesInput.slice(0, 1).map((tx, key) => {
                   return (
                     <CustomTooltip key={key} title={tx}>
                       <StyledLink to={details.address(tx)}>{getShortWallet(tx)}</StyledLink>
@@ -85,14 +85,16 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
                   );
                 })}
                 <Box>
-                  {r.addressesInput.length > 1 && <StyledLink to={details.transaction(r.hash)}> ...</StyledLink>}
+                  {transaction.addressesInput.length > 1 && (
+                    <StyledLink to={details.transaction(transaction.hash)}> ...</StyledLink>
+                  )}
                 </Box>
               </div>
             </Box>
             <Box display={"flex"} mt={1}>
               <div>Output: </div>
               <div>
-                {r.addressesOutput.slice(0, 1).map((tx, key) => {
+                {transaction.addressesOutput.slice(0, 1).map((tx, key) => {
                   return (
                     <CustomTooltip key={key} title={tx}>
                       <StyledLink to={details.address(tx)}>{getShortWallet(tx)}</StyledLink>
@@ -100,7 +102,9 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
                   );
                 })}
                 <Box>
-                  {r.addressesOutput.length > 1 && <StyledLink to={details.transaction(r.hash)}> ...</StyledLink>}
+                  {transaction.addressesOutput.length > 1 && (
+                    <StyledLink to={details.transaction(transaction.hash)}> ...</StyledLink>
+                  )}
                 </Box>
               </div>
             </Box>
@@ -112,9 +116,9 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       title: "Fees",
       key: "fee",
       minWidth: 120,
-      render: r => (
+      render: transaction => (
         <Box display="inline-flex" alignItems="center">
-          <Box mr={1}>{formatADAFull(r.fee)}</Box>
+          <Box mr={1}>{formatADAFull(transaction.fee)}</Box>
           <img src={AIcon} alt="a icon" />
         </Box>
       ),
@@ -123,9 +127,9 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       title: "Output",
       minWidth: 120,
       key: "ouput",
-      render: r => (
+      render: transaction => (
         <Box display="inline-flex" alignItems="center">
-          <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
+          <Box mr={1}>{formatADAFull(transaction.totalOutput)}</Box>
           <img src={AIcon} alt="a icon" />
         </Box>
       ),
