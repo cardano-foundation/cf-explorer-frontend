@@ -13,7 +13,7 @@ import {
 } from "../../commons/utils/helper";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table, { Column } from "../../components/commons/Table";
-import { RegistrationContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
+import { RegistrationContainer, StakeKey, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
 import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import { Box } from "@mui/material";
@@ -73,20 +73,23 @@ const columns: Column<Registration>[] = [
   {
     title: "Fee",
     key: "margin",
-    render: pool => formatPercent(pool.margin || 0),
+    render: pool => formatPercent(pool.margin),
   },
   {
     title: "Stake Key",
     key: "stakeKey",
-    render: pool =>
-      pool?.stakeKey?.map((stakeKey, index) => (
-        <>
-          {index ? <br /> : ""}
-          <CustomTooltip title={stakeKey} key={stakeKey}>
-            <StyledLink to={details.stake(stakeKey)}>{getShortWallet(stakeKey)}</StyledLink>
-          </CustomTooltip>
-        </>
-      )) || "",
+    render: pool => (
+      <>
+        {pool.stakeKey?.map(stakeKey => (
+          <StakeKey key={stakeKey}>
+            <CustomTooltip title={stakeKey}>
+              <StyledLink to={details.stake(stakeKey)}>{getShortWallet(stakeKey)}</StyledLink>
+            </CustomTooltip>
+          </StakeKey>
+        ))}
+        {pool.stakeKey?.length > 2 ? <StyledLink to={details.delegation(pool.poolView || "")}>...</StyledLink> : ""}
+      </>
+    ),
   },
 ];
 
@@ -114,6 +117,7 @@ const RegistrationPools = () => {
       <StyledTabs
         value={poolType}
         onChange={onChangeTab}
+        sx={{ borderBottom: theme => `1px solid ${theme.palette.border.main}` }}
         TabIndicatorProps={{ sx: { backgroundColor: theme => theme.palette.primary.main, height: 4 } }}
       >
         <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
