@@ -23,7 +23,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
             </Box>
             <Box width={"100%"}>
               <Box>
-                From:{" "}
+                <span>From: </span>
                 <CustomTooltip title={item.address}>
                   <AddressLink to={details.address(item.address)}>{getShortWallet(item.address || "")}</AddressLink>
                 </CustomTooltip>

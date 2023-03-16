@@ -37,7 +37,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
         <Box width={"100%"}>
           <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
             <div>
-              From:{" "}
+              <span>From: </span>
               <Link to={details.address(item?.address)}>
                 <CustomTooltip title={item?.address}>
                   <Box

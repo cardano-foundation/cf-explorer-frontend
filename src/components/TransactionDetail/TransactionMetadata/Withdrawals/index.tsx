@@ -29,7 +29,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
             </Box>
             <Box flex={1}>
               <Box>
-                From:{" "}
+                <span>From: </span>
                 <CustomTooltip title={item.stakeAddressFrom}>
                   <AddressLink to={details.address(item.stakeAddressFrom)}>
                     {getShortWallet(item.stakeAddressFrom || "")}
