@@ -5,7 +5,7 @@ export interface ColumnType {
 
 export interface Column<T extends ColumnType = any> {
   key: string;
-  title?: string;
+  title?: React.ReactNode;
   width?: number | string;
   minWidth?: number | string;
   maxWidth?: number | string;
