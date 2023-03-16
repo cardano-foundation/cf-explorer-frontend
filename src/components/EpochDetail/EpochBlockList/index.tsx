@@ -19,7 +19,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<BlockDetail>(`${API.BLOCK.LIST}?epochNo=${epochId}`, pageInfo);
+  const fetchData = useFetchList<BlockDetail>(`${API.EPOCH.DETAIL}/${epochId}/blocks`, pageInfo);
 
   const columns: Column<BlockDetail>[] = [
     {
