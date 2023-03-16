@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Grid, Box, Autocomplete, useTheme } from "@mui/material";
-import { exchangeADAToUSD, formatADAFull, formatPrice, getShortWallet } from "../../../commons/utils/helper";
+import { exchangeADAToUSD, formatADAFull, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronDown } from "react-icons/bi";
@@ -50,8 +50,8 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       value: (
         <Autocomplete
-          PaperComponent={({ children }) => <WrapPaperDropdown>{children}</WrapPaperDropdown>}
           options={data?.tokens || []}
+          componentsProps={{ paper: { elevation: 2 } }}
           getOptionLabel={option => option.displayName || option.name || option.fingerprint}
           noOptionsText={
             <Box>
@@ -74,11 +74,11 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
                   <Box width={50}>
                     <img src={AIcon} alt="a icon" />
                   </Box>
-                  <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"}>
+                  <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="200px">
                     {option.displayName} #{option.name || option.fingerprint}
                   </Box>
                 </Box>
-                <Box fontWeight={"bold"}>{formatPrice(option.quantity)}</Box>
+                <Box fontWeight={"bold"}>{numberWithCommas(option.quantity)}</Box>
               </Box>
             </Option>
           )}
