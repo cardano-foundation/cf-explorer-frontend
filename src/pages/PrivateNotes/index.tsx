@@ -18,8 +18,6 @@ import { details } from "../../commons/routers";
 import Toast from "../../components/commons/Toast";
 import { DialogContentText } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { ButtonClose } from "../../components/ScriptModal/styles";
-import { CloseIcon } from "../../commons/resources";
 
 type TAction = {
   onClick: () => void;
@@ -159,8 +157,8 @@ const PrivateNotes = () => {
           style={{ overflow: "auto" }}
           emptyClassName="empty-content-table"
           columns={columns}
-          total={{ count: total, title: "Total Private Notes" }}
           data={data}
+          total={{ count: total, title: "Total Private Notes" }}
           pagination={{
             ...pageInfo,
             total: total,
@@ -185,30 +183,23 @@ const PrivateNotes = () => {
         severity={message.severity}
       />
       <Dialog open={!!selected}>
-        <DialogTitle textAlign={"left"} fontWeight="bold" color={"#13152F"}>
-          Confirmation Required
-        </DialogTitle>
-
-        <ButtonClose onClick={() => setSelected(null)}>
-          <img src={CloseIcon} alt="icon close" />
-        </ButtonClose>
+        <DialogTitle textAlign={"left"}>Confirmation Required</DialogTitle>
         <DialogContent>
-          <DialogContentText color={"#344054"}>
+          <DialogContentText>
             Are you sure to remove transaction private note {getShortHash(selected?.txHash || "")} ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <ButtonCancel autoFocus onClick={() => setSelected(null)}>
+          <Button autoFocus onClick={() => setSelected(null)}>
             Cancel
-          </ButtonCancel>
+          </Button>
           <LoadingButton
             loading={loadingDelete}
             onClick={() => selected && handleClickRemoveNote(selected)}
             variant="contained"
             color="error"
-            style={{ textTransform: "capitalize", height: "32px" }}
           >
-            Remove
+            Delete
           </LoadingButton>
         </DialogActions>
       </Dialog>

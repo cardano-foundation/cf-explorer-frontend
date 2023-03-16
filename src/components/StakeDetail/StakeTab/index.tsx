@@ -1,5 +1,5 @@
 import React from "react";
-import { Tab, Box } from "@mui/material";
+import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { ReactComponent as DelegationHistoryIcon } from "../../../commons/resources/icons/delegationHistory.svg";
 import { ReactComponent as StakeKeyHistoryIcon } from "../../../commons/resources/icons/stateKeyHistory.svg";
@@ -48,6 +48,7 @@ const tabs: {
 const StakeTab = () => {
   const { stakeId, tabActive = "delegation" } = useParams<{ stakeId: string; tabActive?: TabStakeDetail }>();
   const history = useHistory();
+  const theme = useTheme();
 
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
     history.push({ pathname: details.stake(stakeId || "", tab) });
@@ -56,8 +57,8 @@ const StakeTab = () => {
   return (
     <Box mt={4}>
       <TabContext value={tabActive}>
-        <Box style={{ borderBottom: "1px solid rgba(24, 76, 120, 0.1)" }}>
-          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: "#438f68" } }}>
+        <Box sx={{ borderBottom: theme => `1px solid ${theme.palette.border.secondary}` }}>
+          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}>
             {tabs.map(({ icon: Icon, key, label }) => (
               <Tab
                 key={key}
@@ -65,7 +66,7 @@ const StakeTab = () => {
                 label={
                   <Box>
                     <Box display={"flex"} alignItems="center">
-                      <Icon fill={key === tabActive ? "#438F68" : "#98A2B3"} />
+                      <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.text.hint} />
                       <TitleTab pl={1} active={key === tabActive}>
                         {label}
                       </TitleTab>

@@ -1,8 +1,6 @@
 import React from "react";
-import { Tab, Box } from "@mui/material";
+import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-
-import styles from "./index.module.scss";
 import "./index.css";
 import UTXO from "./UTXOs";
 import Summary from "./Summary";
@@ -21,6 +19,7 @@ import { ReactComponent as MintingIcon } from "../../../commons/resources/images
 import { ReactComponent as DelegationIcon } from "../../../commons/resources/images/DelegationIcon.svg";
 import { useHistory, useParams } from "react-router-dom";
 import { details } from "../../../commons/routers";
+import { Title } from "./styles";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
@@ -30,6 +29,7 @@ interface TransactionMetadataProps {
 const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading }) => {
   let { tabActive = "summary" } = useParams<{ tabActive: keyof Transaction }>();
   const history = useHistory();
+  const theme = useTheme();
 
   if (!data?.[tabActive]) tabActive = "summary";
 
@@ -40,96 +40,96 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
   const tabs: { label: React.ReactNode; key: keyof Transaction; children: React.ReactNode }[] = [
     {
       label: (
-        <h3 className={`${styles.title} ${tabActive === "summary" && styles.active}`}>
+        <Title active={tabActive === "summary" ? 1 : 0}>
           <Box display={"flex"} alignItems="center">
-            <SummaryIcon fill={tabActive === "summary" ? "#438F68" : "#98A2B3"} />
+            <SummaryIcon fill={tabActive === "summary" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}>Summary</Box>
           </Box>
-        </h3>
+        </Title>
       ),
       key: "summary",
       children: <Summary data={data?.summary || null} />,
     },
     {
       label: (
-        <h3 className={`${styles.title} ${tabActive === "utxOs" && styles.active}`}>
+        <Title active={tabActive === "utxOs" ? 1 : 0}>
           <Box display={"flex"} alignItems="center">
-            <UtxoIcon fill={tabActive === "utxOs" ? "#438F68" : "#98A2B3"} />
+            <UtxoIcon fill={tabActive === "utxOs" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}> UTXOs</Box>
           </Box>
-        </h3>
+        </Title>
       ),
       key: "utxOs",
       children: <UTXO data={data?.utxOs || null} fee={data?.tx.fee || 0} />,
     },
     {
       label: (
-        <h3 className={`${styles.title} ${tabActive === "contracts" && styles.active}`}>
+        <Title active={tabActive === "contracts" ? 1 : 0}>
           <Box display={"flex"} alignItems="center">
-            <ContractIcon fill={tabActive === "contracts" ? "#438F68" : "#98A2B3"} />
+            <ContractIcon fill={tabActive === "contracts" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}> Contracts({data?.contracts?.length || 0})</Box>
           </Box>
-        </h3>
+        </Title>
       ),
       key: "contracts",
       children: <Contracts data={data?.contracts || null} />,
     },
     {
       label: (
-        <h3 className={`${styles.title} ${tabActive === "collaterals" && styles.active}`}>
+        <Title active={tabActive === "collaterals" ? 1 : 0}>
           <Box display={"flex"} alignItems="center">
-            <CollateralIcon fill={tabActive === "collaterals" ? "#438F68" : "#98A2B3"} />
+            <CollateralIcon fill={tabActive === "collaterals" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}> Collaterals({data?.collaterals?.length || 0})</Box>
           </Box>
-        </h3>
+        </Title>
       ),
       key: "collaterals",
       children: <Collaterals data={data?.collaterals || null} />,
     },
     {
       label: (
-        <h3 className={`${styles.title} ${tabActive === "notes" && styles.active}`}>
+        <Title active={tabActive === "notes" ? 1 : 0}>
           <Box display={"flex"} alignItems="center">
-            <NoteIcon fill={tabActive === "notes" ? "#438F68" : "#98A2B3"} />
+            <NoteIcon fill={tabActive === "notes" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}> Notes({data?.notes?.length || 0})</Box>
           </Box>
-        </h3>
+        </Title>
       ),
       key: "notes",
       children: "",
     },
     {
       label: (
-        <h3 className={`${styles.title} ${tabActive === "withdrawals" && styles.active}`}>
+        <Title active={tabActive === "withdrawals" ? 1 : 0}>
           <Box display={"flex"} alignItems="center">
-            <WithdrawalIcon fill={tabActive === "withdrawals" ? "#438F68" : "#98A2B3"} />
+            <WithdrawalIcon fill={tabActive === "withdrawals" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}>Withdrawals({data?.withdrawals?.length || 0})</Box>
           </Box>
-        </h3>
+        </Title>
       ),
       key: "withdrawals",
       children: <Withdrawals data={data?.withdrawals || null} />,
     },
     {
       label: (
-        <h3 className={`${styles.title} ${tabActive === "delegations" && styles.active}`}>
+        <Title active={tabActive === "delegations" ? 1 : 0}>
           <Box display={"flex"} alignItems="center">
-            <DelegationIcon fill={tabActive === "delegations" ? "#438F68" : "#98A2B3"} />
+            <DelegationIcon fill={tabActive === "delegations" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}> Delegations({data?.delegations?.length || 0})</Box>
           </Box>
-        </h3>
+        </Title>
       ),
       key: "delegations",
       children: <Delegations data={data?.delegations || null} />,
     },
     {
       label: (
-        <h3 className={`${styles.title} ${tabActive === "mints" && styles.active}`}>
+        <Title active={tabActive === "mints" ? 1 : 0}>
           <Box display={"flex"} alignItems="center">
-            <MintingIcon fill={tabActive === "mints" ? "#438F68" : "#98A2B3"} />
+            <MintingIcon fill={tabActive === "mints" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}>Minting</Box>
           </Box>
-        </h3>
+        </Title>
       ),
       key: "mints",
       children: <Minting data={data?.mints || null} />,
@@ -141,8 +141,13 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
   return (
     <>
       <TabContext value={tabActive}>
-        <Box className={styles.tab} borderBottom="1px solid rgba(24, 76, 120, 0.1)">
-          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: "#438f68", color: "#438f68" } }}>
+        <Box paddingX={3}>
+          <TabList
+            onChange={handleChange}
+            TabIndicatorProps={{
+              sx: { background: theme => theme.palette.primary.main, color: theme => theme.palette.primary.main },
+            }}
+          >
             {items?.map(item => (
               <Tab key={item.key} label={item.label} value={item.key} />
             ))}

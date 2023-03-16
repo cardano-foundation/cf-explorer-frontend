@@ -112,10 +112,8 @@ const Stake: React.FC<IStake> = () => {
         <StyledTabs
           value={poolType}
           onChange={onChangeTab}
-          style={{ borderBottom: "1px solid #e5e5e5" }}
-          TabIndicatorProps={{
-            sx: { backgroundColor: props => props.colorGreenLight, height: 4 },
-          }}
+          sx={{ borderBottom: theme => `1px solid ${theme.palette.border.main}` }}
+          TabIndicatorProps={{ sx: { backgroundColor: theme => theme.palette.primary.main, height: 4 } }}
         >
           <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
           <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />

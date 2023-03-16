@@ -17,7 +17,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
   const columns: Column<Required<Transaction>["mints"][number]>[] = [
     {
       title: "Asset name",
-      isHiddeBorder: true,
+      isHiddenBorder : true,
       key: "Assetname",
       minWidth: "40px",
       render: (r, index) => {
@@ -35,7 +35,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
     },
     {
       title: "Amount minted",
-      isHiddeBorder: true,
+      isHiddenBorder : true,
       key: "Amount",
       minWidth: "40px",
       render: (r, index) => {
@@ -46,7 +46,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       title: "Policy script",
       key: "Policy",
       minWidth: "40px",
-      isHiddeBorder: true,
+      isHiddenBorder : true,
       render: (r, index) => {
         return (
           <div

@@ -1,15 +1,14 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-
-import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
-
 import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
 import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import CustomTooltip from "../../../commons/CustomTooltip";
+import { AddressLink, Amount, ItemContainer, StatusIcon, StyledItem, Wrapper } from "./styles";
+import Header from "../../../commons/Layout/Header";
 
 interface WithdrawalsProps {
   data: Transaction["withdrawals"] | null;
@@ -17,69 +16,52 @@ interface WithdrawalsProps {
 
 const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.header}>
-        <div>Wallet Addresses</div>
-        <div>Amount</div>
-      </div>
-      {data && data.map((item, key) => <Items item={item} key={key} type="down" />)}
-    </div>
+    <Wrapper>
+      <Header>
+        <Box>Wallet Addresses</Box>
+        <Box>Amount</Box>
+      </Header>
+      {data?.map(item => (
+        <StyledItem key={item.stakeAddressFrom}>
+          <ItemContainer>
+            <Box width={50}>
+              <StatusIcon src={sendImg} alt="wallet icon" />
+            </Box>
+            <Box flex={1}>
+              <Box>
+                <span>From: </span>
+                <CustomTooltip title={item.stakeAddressFrom}>
+                  <AddressLink to={details.address(item.stakeAddressFrom)}>
+                    {getShortWallet(item.stakeAddressFrom || "")}
+                  </AddressLink>
+                </CustomTooltip>
+                <CopyButton text={item.stakeAddressFrom || ""} />
+              </Box>
+              <Box display={"flex"}>
+                <Box minWidth="1.75rem">To:</Box>
+                <Box flex={1}>
+                  {item?.addressTo.map(address => {
+                    return (
+                      <>
+                        <CustomTooltip title={address}>
+                          <AddressLink to={details.address(address)}>{getShortWallet(address || "")}</AddressLink>
+                        </CustomTooltip>
+                        <CopyButton text={address || ""} />
+                      </>
+                    );
+                  })}
+                </Box>
+              </Box>
+            </Box>
+            <Box minWidth="max-content">
+              <Amount>+ {formatADAFull(item?.amount)}</Amount>
+              <img src={AIcon} alt="ADA icon" />
+            </Box>
+          </ItemContainer>
+        </StyledItem>
+      ))}
+    </Wrapper>
   );
 };
 
 export default Withdrawals;
-
-const Items = ({ item, type }: { item?: Required<Transaction>["withdrawals"][number]; type?: "up" | "down" }) => {
-  return (
-    <div className={styles.item}>
-      <Box display={"flex"} alignItems="center">
-        <Box width={50}>
-          <img className={styles.img} src={sendImg} alt="wallet icon" />
-        </Box>
-        <Box width={"100%"}>
-          <div className={styles.top}>
-            <div>
-              From:{" "}
-              <Link to={details.address(item?.stakeAddressFrom)} className={styles.address}>
-                <CustomTooltip title={item?.stakeAddressFrom || ""}>
-                  <span>{getShortWallet(item?.stakeAddressFrom || "")}</span>
-                </CustomTooltip>
-              </Link>
-              <CopyButton text={item?.stakeAddressFrom || ""} className={styles.icon} />
-            </div>
-            <div>
-              <span className={`${styles.address} ${type === "up" ? styles.up : styles.down}`}>
-                {item &&
-                  item?.amount > 0 &&
-                  (type === "down" ? `- ${formatADAFull(item?.amount)}` : `+ ${formatADAFull(item?.amount)}`)}
-                {type === "down" && item && item?.amount === 0 && `${formatADAFull(item?.amount)}`}
-              </span>
-              <img src={AIcon} alt="ADA icon" />
-            </div>
-          </div>
-          <div className={styles.bottom}>
-            <div className={styles.right}>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <div style={{ minWidth: "1.75rem" }}>To:</div>
-                <div>
-                  {item?.addressTo.map((adr, idx) => {
-                    return (
-                      <div key={adr}>
-                        <Link to={details.address(adr)} className={styles.address}>
-                          <CustomTooltip title={adr}>
-                            <span> {getShortWallet(adr)}</span>
-                          </CustomTooltip>
-                        </Link>
-                        <CopyButton text={adr} className={styles.icon} />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-        </Box>
-      </Box>
-    </div>
-  );
-};

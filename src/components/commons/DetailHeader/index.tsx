@@ -28,8 +28,7 @@ import {
   SlotLeaderSkeleton,
   SlotLeaderTitle,
   ValueCard,
-  CardItemTrx,
-  CardItems,
+  CardItem,
 } from "./styles";
 import { routers } from "../../../commons/routers";
 import Bookmark from "../BookmarkIcon";
@@ -39,12 +38,11 @@ import { RootState } from "../../../stores/types";
 interface DetailHeaderProps {
   loading: boolean;
   data?: TransactionHeaderDetail | BlockHeaderDetail | EpochHeaderDetail | null;
-  listItem?: { icon: string; title: React.ReactNode; value?: React.ReactNode }[];
-  listTrxOverview?: { icon: string; title: React.ReactNode; value?: React.ReactNode }[];
+  listItem: { icon: string; title: React.ReactNode; value?: React.ReactNode }[];
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = props => {
-  const { data, loading, listItem, listTrxOverview } = props;
+  const { data, loading, listItem } = props;
   const getRouterList = () => {
     if (data?.type === "transaction") return routers.TRANSACTION_LIST;
     if (data?.type === "block") return routers.BLOCK_LIST;
@@ -104,7 +102,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
       type: "TRANSACTION",
     },
   };
-  const multiRow = (listItem || listTrxOverview || []).length > 6 ? 3 : 0;
+  const multiRow = listItem.length > 6 ? 3 : 0;
 
   return (
     <HeaderDetailContainer>
@@ -149,31 +147,16 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
       </Box>
 
       {listItem && (
-        <DetailsInfo container>
+        <DetailsInfo container multiRow={multiRow}>
           {listItem?.map((item, idx) => {
             return (
-              <CardItems item xs={12} sm={6} md={4} lg={multiRow || true} multiRow={multiRow} key={idx}>
+              <CardItem item xs={12} sm={6} md={4} lg={multiRow || true} multiRow={multiRow} key={idx}>
                 <Box>
                   <img src={item.icon} alt="" height={20} />
                 </Box>
                 <Box my={1}>{item.title}</Box>
                 <ValueCard>{item.value}</ValueCard>
-              </CardItems>
-            );
-          })}
-        </DetailsInfo>
-      )}
-      {listTrxOverview && (
-        <DetailsInfo container>
-          {listTrxOverview?.map((item, idx) => {
-            return (
-              <CardItemTrx item xs={12} sm={6} md={4} lg={multiRow || true} multiRow={multiRow} key={idx}>
-                <Box>
-                  <img src={item.icon} alt="" height={20} />
-                </Box>
-                <Box my={1}>{item.title}</Box>
-                <ValueCard>{item.value}</ValueCard>
-              </CardItemTrx>
+              </CardItem>
             );
           })}
         </DetailsInfo>

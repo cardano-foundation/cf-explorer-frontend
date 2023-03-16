@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 export const StyledSelect = styled(Select)`
   font-family: var(--font-family-text);
-  background: #fff;
-  color: #344054;
+  background: ${props => props.theme.palette.common.white};
+  color: ${props => props.theme.palette.text.secondary};
   border-radius: 8px;
   min-width: 250px;
   & > div {
@@ -18,7 +18,7 @@ export const StyledSelect = styled(Select)`
     border: none !important;
   }
   & > svg {
-    color: #344054;
+    color: ${props => props.theme.palette.text.secondary};
     font-size: 20px;
   }
 `;
@@ -41,13 +41,13 @@ export const StyledLink = styled(Link)`
   display: inline-block;
   font-family: var(--font-family-text) !important;
   font-size: var(--font-size-text-small);
-  color: ${props => props.theme.colorBlue} !important;
+  color: ${props => props.theme.palette.secondary.main} !important;
   margin-bottom: 5px;
 `;
 
 export const SmallText = styled("small")`
   display: inline-block;
-  color: #344054;
+  color: ${props => props.theme.palette.text.secondary};
   margin-bottom: 5px;
 `;
 

@@ -88,7 +88,7 @@ const Bookmark = () => {
       key: "Address",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.address(data.keyword)} color={props => `${props.colorBlue} !important`}>
+        <Box component={Link} to={details.address(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
           {getShortWallet(data.keyword)}
         </Box>
       ),
@@ -98,7 +98,7 @@ const Bookmark = () => {
       key: "Transaction",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.transaction(data.keyword)} color={props => `${props.colorBlue} !important`}>
+        <Box component={Link} to={details.transaction(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
           {getShortHash(data.keyword)}
         </Box>
       ),
@@ -108,7 +108,7 @@ const Bookmark = () => {
       key: "Block",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.block(data.keyword)} color={props => `${props.colorBlue} !important`}>
+        <Box component={Link} to={details.block(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
           {data.keyword}
         </Box>
       ),
@@ -118,7 +118,7 @@ const Bookmark = () => {
       key: "Epoch",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.epoch(data.keyword)} color={props => `${props.colorBlue} !important`}>
+        <Box component={Link} to={details.epoch(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
           {data.keyword}
         </Box>
       ),
@@ -128,7 +128,7 @@ const Bookmark = () => {
       key: "Pool",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.delegation(data.keyword)} color={props => `${props.colorBlue} !important`}>
+        <Box component={Link} to={details.delegation(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
           {data.keyword}
         </Box>
       ),
@@ -138,7 +138,7 @@ const Bookmark = () => {
       key: "StakeKey",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.stake(data.keyword)} color={props => `${props.colorBlue} !important`}>
+        <Box component={Link} to={details.stake(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
           {getShortWallet(data.keyword)}
         </Box>
       ),
@@ -309,8 +309,11 @@ const Bookmark = () => {
   return (
     <Box>
       <TabContext value={activeTab}>
-        <Box style={{ borderBottom: "1px solid rgba(24, 76, 120, 0.1)" }}>
-          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: "#438f68" } }}>
+        <Box sx={{ borderBottom: theme => `1px solid ${theme.palette.border.secondary}` }}>
+          <TabList
+            onChange={handleChange}
+            TabIndicatorProps={{ sx: { style: { background: theme => theme.palette.primary.main } } }}
+          >
             {tabs.map(({ key, label }) => (
               <Tab
                 key={key}

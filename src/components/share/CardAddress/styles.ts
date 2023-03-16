@@ -12,7 +12,7 @@ export const TokenAddress = styled("small")`
   word-wrap: break-word;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
-  color: ${props => props.theme.colorBlue} !important;
+  color: ${props => props.theme.palette.text.primary} !important;
   line-height: 1.5;
 `;
 export const AddressLink = styled(Link)`
@@ -20,14 +20,14 @@ export const AddressLink = styled(Link)`
   word-wrap: break-word;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
-  color: ${props => props.theme.colorBlue} !important;
+  color: ${props => props.theme.palette.text.primary} !important;
   font-size: 14px;
 `;
 
 export const AddressGroup = styled(Box)`
   margin-top: 15px;
   margin-bottom: 24px;
-  background: rgba(16, 138, 239, 0.07);
+  background: ${props => props.theme.palette.secondary.light};
   border-radius: 8px;
   padding: 12px 20px;
   display: flex;
@@ -45,7 +45,7 @@ export const ItemDetail = styled(Box)`
 
 export const LabelItem = styled(Box)`
   margin-left: 10px;
-  color: #344054;
+  color: ${props => props.theme.palette.text.secondary};
   font-size: 14px;
 `;
 
@@ -61,11 +61,11 @@ export const RowItem = styled(Box)`
 `;
 
 export const CardItem = styled(Box)`
-  background-color: #fff;
+  background-color: ${props => props.theme.palette.background.paper};
   min-height: 200px;
   height: 100%;
-  border-radius: ${props => props.theme.borderRadius};
+  border-radius: 10px;
   overflow: hidden;
   text-align: left;
-  box-shadow: ${props => props.theme.shadowRaised};
+  box-shadow: ${props => props.theme.shadow.card};
 `;
