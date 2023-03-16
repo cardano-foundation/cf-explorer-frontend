@@ -75,7 +75,7 @@ const TableRow = <T extends ColumnType>({
             key={idx}
             minWidth={column.minWidth}
             maxWidth={column.maxWidth}
-            hiddenBorder={column.isHiddeBorder && dataLength === index + 1}
+            hiddenBorder={column.isHiddenBorder  && dataLength === index + 1}
           >
             {column.render ? column.render(row, index) : row[column.key]}
           </TCol>

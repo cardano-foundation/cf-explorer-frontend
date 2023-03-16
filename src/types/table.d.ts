@@ -8,7 +8,7 @@ export interface Column<T extends ColumnType = any> {
   title?: string;
   width?: number | string;
   minWidth?: number | string;
-  isHiddeBorder?: boolean;
+  isHiddenBorder ?: boolean;
   maxWidth?: number | string;
   render?: (data: T, index: number) => ReactNode;
 }
