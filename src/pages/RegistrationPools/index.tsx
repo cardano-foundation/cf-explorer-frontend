@@ -113,6 +113,7 @@ const RegistrationPools = () => {
       <StyledTabs
         value={poolType}
         onChange={onChangeTab}
+        sx={{ borderBottom: theme => `1px solid ${theme.palette.border.main}` }}
         TabIndicatorProps={{ sx: { backgroundColor: theme => theme.palette.primary.main, height: 4 } }}
       >
         <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />

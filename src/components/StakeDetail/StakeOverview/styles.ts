@@ -40,7 +40,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const BackButton = styled(Link)`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
@@ -70,7 +70,6 @@ export const SlotLeaderContainer = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 `;
 
 export const SlotLeaderSkeleton = styled(Skeleton)`
@@ -103,13 +102,13 @@ export const LabelStatus = styled(Box)(({ theme }) => ({
 }));
 
 export const CardInfoOverview = styled(Box)(({ theme }) => ({
-  padding: `${theme.spacing(3)} ${theme.spacing(5)}`,
+  padding: `${theme.spacing(3)} 0`,
   backgroundColor: theme.palette.background.paper,
   display: "flex",
   textAlign: "left",
   boxShadow: theme.shadow.card,
   borderRadius: 10,
-  marginTop: theme.spacing(5),
+  marginTop: theme.spacing(3),
   flexWrap: "wrap",
 }));
 
@@ -117,7 +116,7 @@ export const CardItem = styled(Box)(({ theme }) => ({
   width: "max-content",
   flex: 1,
   borderLeft: alpha(theme.palette.common.black, 0.1),
-  paddingLeft: theme.spacing(2),
+  paddingLeft: theme.spacing(3),
   ":first-of-type": {
     borderLeft: "none",
   },
@@ -131,6 +130,7 @@ export const ValueCard = styled(Box)(({ theme }) => ({
   color: theme.palette.common.black,
   fontSize: "var(--font-size-text-small)",
   fontWeight: "bold",
+  marginTop: theme.spacing(1),
 }));
 
 export const StyledFlexValue = styled(Box)(({ theme }) => ({

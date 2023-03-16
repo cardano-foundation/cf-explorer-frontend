@@ -31,7 +31,7 @@ export const HeaderBackground = styled("div")<{ home: number }>`
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: ${HeaderBackgroundImage};
+  background-image: url(${HeaderBackgroundImage});
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
