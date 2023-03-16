@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { alpha, Box } from "@mui/material";
 import { getShortWallet, formatADAFull, getShortHash } from "../../../../commons/utils/helper";
-import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import feeImg from "../../../../commons/resources/images/dola.svg";
@@ -10,7 +9,7 @@ import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { Header, Img, LabelStatus } from "./conmponent";
+import { Header, Img, LabelStatus } from "./styles";
 
 interface Props {
   data: Transaction["utxOs"] | null;
@@ -56,7 +55,12 @@ const Card = ({
       </Header>
       {item &&
         item.map((i, ii) => (
-          <Box textAlign={"left"} padding="10px 25px" borderBottom={theme => `1px solid ${alpha(theme.palette.common.black, 0.1)}`} key={ii}>
+          <Box
+            textAlign={"left"}
+            padding="10px 25px"
+            borderBottom={theme => `1px solid ${alpha(theme.palette.common.black, 0.1)}`}
+            key={ii}
+          >
             <Box display={"flex"} alignItems="center">
               <Box width={50}>
                 <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />
@@ -76,12 +80,16 @@ const Card = ({
                     >
                       <Link to={details.address(i.address)}>
                         <CustomTooltip title={i.address}>
-                          <Box color={theme => theme.palette.secondary.main} fontWeight="bold" className={styles.ffText}>
+                          <Box
+                            color={theme => theme.palette.secondary.main}
+                            fontWeight="bold"
+                            fontFamily={"var(--font-family-text)"}
+                          >
                             {getShortWallet(i.address)}
                           </Box>
                         </CustomTooltip>
                       </Link>{" "}
-                      <CopyButton text={i.address} className={styles.icon} />
+                      <CopyButton text={i.address} />
                     </Box>
                     <Box
                       display={"flex"}
@@ -112,7 +120,7 @@ const Card = ({
                             <Box
                               component={"span"}
                               fontWeight="bold"
-                              className={styles.ffText}
+                              fontFamily={"var(--font-family-text)"}
                               color={theme => theme.palette.secondary.main}
                               mr={1}
                             >
@@ -146,7 +154,11 @@ const Card = ({
           </Box>
         ))}
       {type === "up" && (
-        <Box textAlign={"left"} padding="10px 25px" borderBottom={theme => `1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
+        <Box
+          textAlign={"left"}
+          padding="10px 25px"
+          borderBottom={theme => `1px solid ${alpha(theme.palette.common.black, 0.1)}`}
+        >
           <Box width={"100%"} display="flex" justifyContent={"space-between"} alignItems="center">
             <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
               <Box display={"flex"} alignItems="center">
@@ -155,7 +167,7 @@ const Card = ({
               </Box>
             </Box>
             <Box display={"flex"} alignItems="center">
-              <Box mr="8px" fontWeight={"bold"} className={`${styles.ffText}`} color="red">
+              <Box mr="8px" fontWeight={"bold"} fontFamily={"var(--font-family-text)"} color="red">
                 {formatADAFull(fee)}
               </Box>
               <Box>
