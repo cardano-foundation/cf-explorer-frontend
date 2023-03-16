@@ -159,6 +159,7 @@ const PrivateNotes = () => {
           style={{ overflow: "auto" }}
           emptyClassName="empty-content-table"
           columns={columns}
+          total={{ count: total, title: "Total Private Notes" }}
           data={data}
           pagination={{
             ...pageInfo,

@@ -6,7 +6,14 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { AIcon, EmptyIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
-import { exchangeADAToUSD, formatADAFull, formatPrice, getShortWallet } from "../../../commons/utils/helper";
+import {
+  exchangeADAToUSD,
+  formatADAFull,
+  formatPrice,
+  getShortHash,
+  getShortWallet,
+  numberWithCommas,
+} from "../../../commons/utils/helper";
 import { RootState } from "../../../stores/types";
 import Card from "../../commons/Card";
 import CardAddress from "../../share/CardAddress";
@@ -39,7 +46,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       value: (
         <Autocomplete
           options={data?.tokens || []}
-          getOptionLabel={option => option.displayName}
+          getOptionLabel={option => option.displayName || option.fingerprint}
           noOptionsText={
             <Box>
               <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
@@ -60,9 +67,11 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
                   <Box width={50}>
                     <img src={AIcon} alt="a icon" />
                   </Box>
-                  <Box>{option.displayName}</Box>
+                  <Box>{option.displayName || getShortHash(option.fingerprint)}</Box>
                 </Box>
-                <Box fontWeight={"bold"}>{formatPrice(option.quantity)}</Box>
+                <Box color={"#13152F"} fontWeight={"bold"}>
+                  {numberWithCommas(option.quantity)}
+                </Box>
               </Box>
             </li>
           )}
