@@ -3,7 +3,7 @@ import React from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import useFetch from "../../../commons/hooks/useFetch";
-import { AIcon } from "../../../commons/resources";
+import { AIcon, EmptyIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
 import { exchangeADAToUSD, formatADAFull, formatPrice, getShortWallet } from "../../../commons/utils/helper";
@@ -38,9 +38,13 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
     {
       value: (
         <Autocomplete
-          PaperComponent={({ children }) => <WrapPaperDropdown>{children}</WrapPaperDropdown>}
           options={data?.tokens || []}
           getOptionLabel={option => option.displayName}
+          noOptionsText={
+            <Box>
+              <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
+            </Box>
+          }
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
             <li {...props} key={option.fingerprint}>
               <Box

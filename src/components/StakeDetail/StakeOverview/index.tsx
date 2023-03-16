@@ -111,7 +111,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
   return (
     <Box>
       <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
-        <Box textAlign={'left'}>
+        <Box textAlign={"left"}>
           <BackButton to={routers.STAKE_LIST.replace(":poolType?", "registration")}>
             <HiArrowLongLeft />
             <BackText>Back</BackText>
@@ -129,6 +129,8 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
                   background: theme =>
                     data?.status === "ACTIVE" ? theme.palette.success.light : alpha(theme.palette.grey[400], 0.2),
                 }}
+                py={1}
+                px={2}
               >
                 {data?.status}
               </LabelStatus>

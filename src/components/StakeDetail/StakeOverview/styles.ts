@@ -93,7 +93,6 @@ export const ViewMetaData = styled(Link)`
 `;
 export const LabelStatus = styled(Box)(({ theme }) => ({
   textTransform: "uppercase",
-  padding: "1.5px 10px",
   fontFamily: '"Roboto", sans-serif',
   fontWeight: "bold",
   fontSize: "var(--font-size-text-small)",

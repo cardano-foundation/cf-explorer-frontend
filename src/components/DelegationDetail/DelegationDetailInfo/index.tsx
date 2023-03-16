@@ -178,7 +178,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               </StyledTitle>
               {data?.ownerAccounts && data.ownerAccounts.length > 1 && (
                 <ButtonViewAll
-                sx={{ color: theme => theme.palette.common.black }}
+                  sx={{ color: theme => theme.palette.common.black }}
                   onClick={() => {
                     setOpenOwner(!isOpenOwner);
                     setOpenReward(false);
@@ -258,7 +258,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoValue>
               <StyledLinearProgress variant="determinate" value={data?.saturation || 0} />
               <div style={{ display: "flex", justifyContent: "space-between", marginTop: "9px" }}>
-                <span style={{ fontSize: "14px", fontWeight: "400", opacity: "0.5" }}>Saturation</span>
+                <Box component={"span"} mt={1} style={{ fontSize: "14px", fontWeight: "400", opacity: "0.5" }}>
+                  Saturation
+                </Box>
                 <span style={{ fontSize: "16px" }}>{formatPercent(data?.saturation || 0)}</span>
               </div>
             </InfoValue>
