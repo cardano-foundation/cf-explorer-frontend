@@ -154,7 +154,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
           </TabList>
         </Box>
         {items.map(item => (
-          <TabPanel key={item.key} value={item.key}>
+          <TabPanel key={item.key} value={item.key} style={{ padding: 0, paddingTop: 12 }}>
             {item.children}
           </TabPanel>
         ))}

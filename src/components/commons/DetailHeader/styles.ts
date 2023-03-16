@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import CopyButton from "../CopyButton";
 
-export const HeaderDetailContainer = styled(Container)`
+export const HeaderDetailContainer = styled(Box)`
   margin-top: 24px;
   text-align: left;
 `;
 
 export const BackButton = styled(Link)`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
@@ -97,11 +97,14 @@ export const SlotLeaderCopy = styled(CopyButton)`
   margin-bottom: 3px;
 `;
 
-export const DetailsInfo = styled(Grid)`
-  padding: ${props => props.theme.spacing(3)} ${props => props.theme.spacing(2)};
+export const DetailsInfo = styled(Grid)<{ multiRow?: number }>`
+  padding: 30px ${props => (props.multiRow ? 25 : 15)}px;
   margin-top: 15px;
   background: ${props => props.theme.palette.background.paper};
   border-radius: 15px;
+  ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.lg)} {
+    padding: 30px 25px;
+  }
 `;
 
 export const DetailsInfoItem = styled(Grid)<{ center?: number }>`
@@ -261,7 +264,7 @@ export const ProgressPercent = styled("h4")`
 `;
 
 export const CardInfoOverview = styled(Box)(({ theme }) => ({
-  padding: `${theme.spacing(3)} ${theme.spacing(5)}`,
+  padding: 25,
   backgroundColor: theme.palette.background.paper,
   display: "flex",
   textAlign: "left",
@@ -274,84 +277,88 @@ export const CardInfoOverview = styled(Box)(({ theme }) => ({
 export const CardItem = styled(Grid)<{ multiRow: number }>(({ theme, multiRow }) => ({
   position: "relative",
   width: "max-content",
+  padding: multiRow ? "20px 25px" : "0px 15px",
   borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-  paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(2),
+  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
   ":first-of-type": {
     borderLeft: "none",
   },
-  "::after": {
-    content: '""',
-    position: "absolute",
-    bottom: -15,
-    width: "calc(100% - 30px)",
-    left: "50%",
-    transform: "translateX(-50%)",
-    borderBottom: `0px solid ${alpha(theme.palette.common.black, 0.1)}`,
-  },
   ...(multiRow
     ? {
-        marginBottom: 30,
-        "&::after": {
-          borderBottomWidth: 1,
-        },
+        borderBottomWidth: 1,
         [theme.breakpoints.up(theme.breakpoints.values.lg)]: {
           ":nth-child(4n+1)": {
             borderLeftWidth: 0,
+            paddingLeft: 0,
           },
           ":nth-last-child(-n + 4)": {
             ":nth-child(4n + 1)": {
-              "::after": {
+              borderBottomWidth: 0,
+              "&~div": {
                 borderBottomWidth: 0,
-              },
-              "&~div::after": {
-                borderBottomWidth: 0,
+                paddingTop: 20,
+                paddingBottom: 0,
               },
             },
           },
         },
       }
     : {
+        borderBottomWidth: 0,
         [theme.breakpoints.down(theme.breakpoints.values.lg)]: {
-          marginBottom: 30,
-          "&::after": {
-            borderBottomWidth: 1,
-          },
+          padding: "20px 25px",
         },
       }),
   [theme.breakpoints.between(theme.breakpoints.values.md, theme.breakpoints.values.lg)]: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+    ":last-of-type::after": {
+      content: `""`,
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      right: -1,
+      borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+    },
+    ":nth-child(3n)::after": {
+      borderRight: 0,
+    },
     ":nth-child(3n+1)": {
       borderLeftWidth: 0,
+      paddingLeft: 0,
     },
-    ":nth-last-child(-n + 3)": {
-      ":nth-child(3n + 1)": {
-        "::after": {
-          borderBottomWidth: 0,
-        },
-        "&~div::after": {
+    ":nth-last-child(-n+3)": {
+      ":nth-child(3n+1)": {
+        borderBottomWidth: 0,
+        "&~div": {
           borderBottomWidth: 0,
         },
       },
     },
   },
   [theme.breakpoints.between(theme.breakpoints.values.sm, theme.breakpoints.values.md)]: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    borderBottomWidth: 1,
     ":nth-child(2n+1)": {
       borderLeftWidth: 0,
+      paddingLeft: 0,
     },
-    ":nth-last-child(-n + 2)": {
-      ":nth-child(2n + 1)": {
-        "::after": {
-          borderBottomWidth: 0,
-        },
-        "&~div::after": {
+    ":nth-last-child(-n+2)": {
+      ":nth-child(2n+1)": {
+        borderBottomWidth: 0,
+        "&~div": {
           borderBottomWidth: 0,
         },
       },
     },
   },
   [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
+    padding: "20px 0px",
+    borderBottomWidth: 1,
     borderLeftWidth: 0,
-    ":last-of-type::after": {
+    ":last-of-type": {
       borderBottomWidth: 0,
     },
   },

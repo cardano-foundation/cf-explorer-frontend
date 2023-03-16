@@ -28,10 +28,10 @@ export const API = {
   TOKEN: "tokens",
   TOKEN_TRX: "tokens/:tokenId/txs",
   TRANSACTION: {
-    CURRENT: "txs/current",
-    DETAIL: "txs",
-    LIST: "txs/list",
-    GRAPH: "txs/graph",
+    CURRENT: "tx/current",
+    DETAIL: "tx",
+    LIST: "tx/list",
+    GRAPH: "tx/graph",
   },
   STAKE: {
     ANALYTICS: "stake/analytics",
