@@ -30,7 +30,7 @@ const Bookmark = () => {
   const [activeTab, setActiveTab] = useState("ADDRESS");
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [message, setMessage] = useState("");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
   const [selected, setSelected] = useState<number | null>();
 
@@ -42,11 +42,11 @@ const Bookmark = () => {
     setMessage("");
   };
 
-  const { data, loading, refesh, currentPage, error, total } = useFetchList<Bookmark>(
+  const { data, loading, refesh, error, total } = useFetchList<Bookmark>(
     "/bookmark/find-all",
     {
       type: activeTab,
-      page: page - 1,
+      page: page,
       size,
       network: NETWORK_TYPES[NETWORK],
     },
@@ -74,6 +74,8 @@ const Bookmark = () => {
   };
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
     setActiveTab(tab);
+    setPage(0);
+    setSize(10);
   };
 
   useEffect(() => {
@@ -172,17 +174,68 @@ const Bookmark = () => {
     {
       label: "Address",
       key: "ADDRESS",
-      component: <StyledTable error={error} columns={columns} data={data || []} loading={loading} />,
+      component: (
+        <StyledTable
+          error={error}
+          total={{ title: "Total", count: total }}
+          columns={columns}
+          data={data || []}
+          loading={loading}
+          pagination={{
+            total: total,
+            page,
+            size,
+            onChange: (page, size) => {
+              setPage(page - 1);
+              setSize(size);
+            },
+          }}
+        />
+      ),
     },
     {
       label: "Transaction",
       key: "TRANSACTION",
-      component: <StyledTable error={error} columns={columns} data={data || []} loading={loading} />,
+      component: (
+        <StyledTable
+          error={error}
+          columns={columns}
+          total={{ title: "Total", count: total }}
+          data={data || []}
+          loading={loading}
+          pagination={{
+            total: total,
+            page,
+            size,
+            onChange: (page, size) => {
+              setPage(page - 1);
+              setSize(size);
+            },
+          }}
+        />
+      ),
     },
     {
       label: "Block",
       key: "BLOCK",
-      component: <StyledTable error={error} columns={columns} data={data || []} loading={loading} />,
+      component: (
+        <StyledTable
+          error={error}
+          total={{ title: "Total", count: total }}
+          columns={columns}
+          data={data || []}
+          loading={loading}
+          pagination={{
+            total: total,
+            page,
+            size,
+            onChange: (page, size) => {
+              setPage(page - 1);
+              setSize(size);
+            },
+          }}
+        />
+      ),
     },
     {
       label: "Epoch",
@@ -192,11 +245,11 @@ const Bookmark = () => {
           <StyledTable
             total={{ title: "Total", count: total }}
             pagination={{
-              page: currentPage,
-              size: 10,
               total: total,
+              page,
+              size,
               onChange: (page, size) => {
-                setPage(page);
+                setPage(page - 1);
                 setSize(size);
               },
             }}
@@ -211,12 +264,46 @@ const Bookmark = () => {
     {
       label: "Pool",
       key: "POOL",
-      component: <StyledTable error={error} columns={columns} data={data || []} loading={loading} />,
+      component: (
+        <StyledTable
+          error={error}
+          columns={columns}
+          data={data || []}
+          loading={loading}
+          total={{ title: "Total", count: total }}
+          pagination={{
+            total: total,
+            page,
+            size,
+            onChange: (page, size) => {
+              setPage(page - 1);
+              setSize(size);
+            },
+          }}
+        />
+      ),
     },
     {
       label: "Stake Key",
       key: "STAKE_KEY",
-      component: <StyledTable error={error} columns={columns} data={data || []} loading={loading} />,
+      component: (
+        <StyledTable
+          error={error}
+          columns={columns}
+          data={data || []}
+          loading={loading}
+          total={{ title: "Total", count: total }}
+          pagination={{
+            total: total,
+            page,
+            size,
+            onChange: (page, size) => {
+              setPage(page - 1);
+              setSize(size);
+            },
+          }}
+        />
+      ),
     },
   ];
   return (

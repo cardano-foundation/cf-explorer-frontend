@@ -1,11 +1,12 @@
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { parse } from "qs";
+import { setUserData } from "../../stores/user";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const alphaNumeric = /[^0-9a-zA-Z]/;
 
-export const regexEmail = /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$/;
+export const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 export const getShortWallet = (address: string) => {
   return `${address.slice(0, 5)}...${address.slice(-5)}`;
@@ -99,8 +100,10 @@ export const removeAuthInfo = () => {
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("walletId");
   localStorage.removeItem("email");
+  localStorage.removeItem("persist:user");
   localStorage.setItem("cf-wallet-connected", "false");
   localStorage.removeItem("cf-last-connected-wallet");
+  setUserData(null);
 };
 
 export const formatDateTime = (date: string) => {
