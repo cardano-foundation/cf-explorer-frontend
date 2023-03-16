@@ -1,5 +1,5 @@
-import React from "react"; 
-import { Route, Switch } from "react-router-dom";
+import React from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { routers } from "./commons/routers";
 import Home from "./pages/Home";
 import BlockList from "./pages/BlockList";
@@ -55,7 +55,7 @@ const Routes: React.FC = () => {
       <Route path={routers.ACCOUNT}>
         <AccountLayout>
           <Switch>
-            <Route path={routers.ACCOUNT} exact component={MyProfile} />
+            <Route path={routers.ACCOUNT} exact component={() => <Redirect to={routers.MY_PROFILE} />} />
             <Route path={routers.MY_PROFILE} exact component={MyProfile} />
             <Route path={routers.BOOKMARK} exact component={Bookmark} />
             <Route path={routers.PRIVATE_NOTES} exact component={PrivateNotes} />

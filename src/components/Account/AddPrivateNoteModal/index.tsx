@@ -1,7 +1,7 @@
 import { AlertProps } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import { NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
+import { ACCOUNT_ERROR, NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
 import { addPrivateNote, editPrivateNote } from "../../../commons/utils/userRequest";
 import StyledModal from "../../commons/StyledModal";
 import { StyledDarkLoadingButton, StyledHelperText, StyledInput, StyledLabelInput } from "../../share/styled";
@@ -30,35 +30,38 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
   }, [currentNote]);
 
   const handleSubmitData = async () => {
-    try {
-      setLoading(true);
-      if (!currentNote) {
-        const payload = {
-          note: privateNote?.value || "",
-          txHash: txHash?.value || "",
-          network: NETWORK_TYPES[NETWORK],
-        };
-        await addPrivateNote(payload);
-      } else {
-        const payload = { note: privateNote?.value || "", noteId: currentNote.id };
-        await editPrivateNote(payload);
+    if (txHash?.value && txHash.value?.length > 70) {
+      setMessage({ message: "Maximum reached!", severity: "error" });
+    } else
+      try {
+        setLoading(true);
+        if (!currentNote) {
+          const payload = {
+            note: privateNote?.value || "",
+            txHash: txHash?.value || "",
+            network: NETWORK_TYPES[NETWORK],
+          };
+          await addPrivateNote(payload);
+        } else {
+          const payload = { note: privateNote?.value || "", noteId: currentNote.id };
+          await editPrivateNote(payload);
+        }
+        setMessage({
+          message: `${!currentNote ? "Add" : "Update"} transaction private note successfully!`,
+          severity: "success",
+        });
+        setTxHash(undefined);
+        setPrivateNote(undefined);
+        setLoading(false);
+        handleCloseModal();
+        refesh();
+      } catch (error: any) {
+        const errorData = error.response?.data;
+        if (errorData?.errorCode === ACCOUNT_ERROR.PRIVATE_NOTE_IS_EXIST) {
+          setPrivateNote(prev => ({ ...prev, error: errorData.errorMessage }));
+        }
+        setLoading(false);
       }
-      setMessage({
-        message: `${!currentNote ? "Add" : "Update"} transaction private note successfully!`,
-        severity: "success",
-      });
-      setTxHash(undefined);
-      setPrivateNote(undefined);
-      setLoading(false);
-      handleCloseModal();
-      refesh();
-    } catch (error: any) {
-      const errorData = error.response?.data;
-      if (errorData?.errorCode === "CC_17") {
-        setPrivateNote(prev => ({ ...prev, error: errorData?.errorMessage }));
-      }
-      setLoading(false);
-    }
   };
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal}>

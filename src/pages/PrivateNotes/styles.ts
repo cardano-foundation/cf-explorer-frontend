@@ -35,7 +35,6 @@ export const StyledTable = styled(Table)`
     top: unset;
   }
   thead tr th {
-    padding: 10px 25px;
     font-size: var(--font-size-text-x-small);
   }
   tbody tr {
@@ -57,6 +56,18 @@ export const ActionButton = styled("button")<{ typeButton: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 5px;
   cursor: pointer;
+  margin-left: ${({ theme }) => theme.spacing(1)};
 `;
+
+export const ButtonCancel = styled(Button)(({ theme }) => ({
+  textTransform: "capitalize",
+  color: "#ffffff",
+  background: theme.palette.primary.main,
+  height: "32px",
+  boxShadow: theme.shadow.dialog,
+  ":hover": {
+    background: theme.palette.primary.main,
+    boxShadow: theme.shadow.dialog,
+  },
+}));
