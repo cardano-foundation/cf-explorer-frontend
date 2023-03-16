@@ -1,7 +1,7 @@
 import { AlertProps } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import { NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
+import { ACCOUNT_ERROR, NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
 import { addPrivateNote, editPrivateNote } from "../../../commons/utils/userRequest";
 import StyledModal from "../../commons/StyledModal";
 import { StyledDarkLoadingButton, StyledHelperText, StyledInput, StyledLabelInput } from "../../share/styled";
@@ -57,8 +57,8 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
         refesh();
       } catch (error: any) {
         const errorData = error.response?.data;
-        if (errorData?.errorCode === "CC_17") {
-          setPrivateNote(prev => ({ ...prev, error: errorData?.errorMessage }));
+        if (errorData?.errorCode === ACCOUNT_ERROR.PRIVATE_NOTE_IS_EXIST) {
+          setPrivateNote(prev => ({ ...prev, error: errorData.errorMessage }));
         }
         setLoading(false);
       }
