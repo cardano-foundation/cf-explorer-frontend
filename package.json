@@ -1,5 +1,5 @@
 {
-  "name": "discover-cardano",
+  "name": "cardano-blockchain-explorer",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

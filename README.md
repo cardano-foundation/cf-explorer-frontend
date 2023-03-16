@@ -1,6 +1,6 @@
-# Discover Cardano
+# Cardano blockchain explorer
 
-Discover Cardano is a front face application for Ledger Sync which has been build for showcasing various Cardano Blockchain functions like DID, Supply Chain, Explorer etc. It is a regulatory reporting system which non-blockchain users can simply generate reports using Cardano functions.
+Cardano blockchain explorer showcases the utility of Cardano by providing descriptive and visual representation of the ledger. It presents the information both in a web application as well as through API services
 
 ### Prerequisites
 
