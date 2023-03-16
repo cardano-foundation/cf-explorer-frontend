@@ -1,6 +1,6 @@
-# Cardano Explorer
+# Discover Cardano
 
-Current Caradno Ledger is working under performance the main goal of the project is to build the solution & architecture for ledger synchronization with fast speed following the technology to enhance communication between nodes. In addition, the system should be capable of extension to further development in the future, as well as to adding third parties service to the existing system.
+Discover Cardano is a front face application for Ledger Sync which has been build for showcasing various Cardano Blockchain functions like DID, Supply Chain, Explorer etc. It is a regulatory reporting system which non-blockchain users can simply generate reports using Cardano functions.
 
 ### Prerequisites
 
@@ -11,10 +11,8 @@ In order to compile and run everything you will need:
 
 ## Install and Setup
 
-Install the app with yarn (recommended) or npm:
+Install the app with npm:
 
-### `yarn install`
-or
 ### `npm install`
 
 Then copy file env.production.example and rename it to .env:
@@ -42,5 +40,3 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.
 Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
