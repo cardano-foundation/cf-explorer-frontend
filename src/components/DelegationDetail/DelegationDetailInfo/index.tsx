@@ -23,6 +23,7 @@ import DropdownDetail from "../../commons/DropdownDetail";
 import {
   BackButton,
   BackText,
+  ButtonViewAll,
   DataContainer,
   FlexGap10,
   HeaderContainer,
@@ -126,14 +127,15 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 Reward Account <InfoImg src={InfoIcon} alt="Info Icon" />
               </StyledTitle>
               {data?.rewardAccounts && data.rewardAccounts.length > 1 && (
-                <button
+                <ButtonViewAll
+                  sx={{ color: theme => theme.palette.common.black }}
                   onClick={() => {
                     setOpenReward(!isOpenReward);
                     setOpenOwner(false);
                   }}
                 >
                   View all
-                </button>
+                </ButtonViewAll>
               )}
             </InfoTitle>
             <InfoValue>
@@ -175,14 +177,15 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 Owner Account <InfoImg src={InfoIcon} alt="Info Icon" />
               </StyledTitle>
               {data?.ownerAccounts && data.ownerAccounts.length > 1 && (
-                <button
+                <ButtonViewAll
+                sx={{ color: theme => theme.palette.common.black }}
                   onClick={() => {
                     setOpenOwner(!isOpenOwner);
                     setOpenReward(false);
                   }}
                 >
                   View all
-                </button>
+                </ButtonViewAll>
               )}
             </InfoTitle>
             <InfoValue>

@@ -111,7 +111,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
   return (
     <Box>
       <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
-        <Box>
+        <Box textAlign={'left'}>
           <BackButton to={routers.STAKE_LIST.replace(":poolType?", "registration")}>
             <HiArrowLongLeft />
             <BackText>Back</BackText>
@@ -155,12 +155,8 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
               <Box>
                 <img src={item.icon} alt="" />
               </Box>
-              <Box mt={2} mb={1}>
-                {item.title}
-              </Box>
-              <ValueCard mt={2} mb={1}>
-                {item.value}
-              </ValueCard>
+              <Box mt={2}>{item.title}</Box>
+              <ValueCard>{item.value}</ValueCard>
             </CardItem>
           );
         })}

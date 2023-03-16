@@ -63,7 +63,7 @@ const TopDelegators = () => {
     <StyledContainer>
       <Card title="Top 50 delegators">
         <Table
-          onClickRow={(_, r) => history.push(details.address(r.stakeKey))}
+          onClickRow={(_, r) => history.push(details.stake(r.stakeKey))}
           data={data}
           error={error}
           loading={loading}

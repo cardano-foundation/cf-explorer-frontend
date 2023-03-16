@@ -21,6 +21,10 @@ export const StyledItem = styled(Box)`
   padding: 10px 0;
   font-size: var(--font-size-text);
   border-bottom: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)};
+  &:last-child {
+    border-bottom: none;
+    padding: 10px 0 0;
+  }
 `;
 
 export const ItemContainer = styled(Box)`

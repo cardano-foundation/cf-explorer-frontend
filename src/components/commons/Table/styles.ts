@@ -32,7 +32,7 @@ export const THeader = styled("th")`
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-text-small);
   border-bottom: 1px solid ${props => props.theme.palette.border.main};
-  padding: 20px 20px 25px;
+  padding: 20px;
   color: ${props => props.theme.palette.grey[400]};
 `;
 

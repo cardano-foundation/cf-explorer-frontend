@@ -27,8 +27,8 @@ import {
   ProgressSkeleton,
   SlotLeaderSkeleton,
   SlotLeaderTitle,
-  CardItem,
   ValueCard,
+  CardItem,
 } from "./styles";
 import { routers } from "../../../commons/routers";
 import Bookmark from "../BookmarkIcon";
@@ -145,8 +145,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           </ProgressCircle>
         </Box>
       </Box>
+
       {listItem && (
-        <DetailsInfo container>
+        <DetailsInfo container multiRow={multiRow}>
           {listItem?.map((item, idx) => {
             return (
               <CardItem item xs={12} sm={6} md={4} lg={multiRow || true} multiRow={multiRow} key={idx}>

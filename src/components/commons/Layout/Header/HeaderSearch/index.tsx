@@ -19,7 +19,6 @@ const Form = styled("form")<{ home: number }>`
   background-color: ${props => props.theme.palette.background.paper};
   color: ${props => props.theme.palette.text.primary};
   padding: 0px 0px 0px ${props => (props.home ? 15 : 0)}px;
-  border: 1px solid ${props => props.theme.palette.border.main};
   box-sizing: border-box;
   margin-top: ${props => (props.home ? 30 : 0)}px;
   @media screen and (max-width: 1023px) {
@@ -115,15 +114,15 @@ const options: Option[] = [
     label: "All Filters",
   },
   {
-    value: "epoch",
+    value: "epochs",
     label: "Epochs",
   },
   {
-    value: "block",
+    value: "blocks",
     label: "Blocks",
   },
   {
-    value: "tx",
+    value: "txs",
     label: "Transactions",
   },
   {
@@ -131,15 +130,15 @@ const options: Option[] = [
     label: "Tokens",
   },
   {
-    value: "stake",
+    value: "stakes",
     label: "Stake keys",
   },
   {
-    value: "address",
+    value: "addresses",
     label: "Addresses",
   },
   {
-    value: "delegation/pool-detail-header",
+    value: "delegations/pool-detail-header",
     label: "Pools",
   },
 ];

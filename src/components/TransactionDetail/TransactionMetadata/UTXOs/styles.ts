@@ -29,3 +29,13 @@ export const LabelStatus = styled("h4")(({ theme }) => ({
   marginRight: "4px",
   whiteSpace: "nowrap",
 }));
+
+export const Item = styled(Box)(({ theme }) => ({
+  textAlign: "left",
+  padding: "10px 25px",
+  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  "&:last-child": {
+    borderBottom: "none",
+    padding: "10px 0 0",
+  },
+}));

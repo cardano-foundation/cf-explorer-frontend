@@ -17,6 +17,7 @@ const Title = styled("h2")<{ underline: number }>`
   text-align: left;
   padding-bottom: 8px;
   position: relative;
+  ${props => (props.underline ? `font-size: 1.25rem;` : "")}
   &::after {
     content: "";
     position: absolute;
