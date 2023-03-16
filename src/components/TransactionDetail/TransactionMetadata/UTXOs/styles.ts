@@ -6,7 +6,9 @@ export const Img = styled("img")(({ theme }) => ({
 }));
 
 export const Header = styled(Box)(({ theme }) => ({
-  padding: "25px 25px 0",
+  padding: "25px 0 0",
+  marginRight: "25px",
+  marginLeft: "25px",
   display: "flex",
   justifyContent: "space-between",
   fontSize: "14px",
@@ -28,4 +30,15 @@ export const LabelStatus = styled("h4")(({ theme }) => ({
   display: "inline",
   marginRight: "4px",
   whiteSpace: "nowrap",
+}));
+
+export const Item = styled(Box)(({ theme }) => ({
+  textAlign: "left",
+  padding: "10px 0px",
+  margin: "0px 25px",
+  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  "&:last-child": {
+    borderBottom: "none",
+    padding: "10px 0 0",
+  },
 }));
