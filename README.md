@@ -1,6 +1,6 @@
-# Cardano blockchain explorer
+# Cardano Blockchain Explorer
 
-Cardano blockchain explorer showcases the utility of Cardano by providing descriptive and visual representation of the ledger. It presents the information both in a web application as well as through API services
+Cardano Blockchain Explorer showcases the utility of Cardano by providing descriptive and visual representation of the ledger. It presents the information both in a web application as well as through API services
 
 ### Prerequisites
 
