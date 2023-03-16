@@ -45,13 +45,15 @@ const Card = ({
   return (
     <Box textAlign={"left"} mb={1} sx={{ background: theme => theme.palette.background.paper }}>
       <Header>
-        <div>
-          <Box color={"black"} fontWeight="bold" fontSize={"1rem"}>
+        <Box color={theme => theme.palette.text.hint} fontWeight="bold">
+          <Box color={theme => theme.palette.text.dark} fontSize={"1rem"} mb={1}>
             {type === "down" ? "Input" : "Output"}
           </Box>
           Wallet Addresses
-        </div>
-        <div>Amount</div>
+        </Box>
+        <Box color={theme => theme.palette.text.hint} fontWeight="bold">
+          Amount
+        </Box>
       </Header>
       {items?.map(item => (
         <Item key={item.address}>
