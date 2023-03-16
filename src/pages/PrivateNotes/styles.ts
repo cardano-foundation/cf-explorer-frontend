@@ -6,7 +6,7 @@ export const Container = styled(Box)``;
 export const Header = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: end;
   font-family: var(--font-family-title);
   font-size: var(--font-size-text-x-large);
   font-weight: var(--font-weight-bold);
@@ -14,7 +14,9 @@ export const Header = styled(Box)`
   border-bottom: 1px solid rgba(24, 76, 120, 0.1);
 `;
 
-export const Title = styled("span")``;
+export const Title = styled("span")`
+  line-height: 1;
+`;
 
 export const AddButton = styled(Button)`
   background-color: ${props => props.theme.colorGreenLight};
