@@ -11,7 +11,7 @@ export const refreshToken = (payload: TRefreshToken) => authAxios.get("auth/refr
 export const getInfo = (payload: TGetInfo) =>
   authAxios.get<any, AxiosResponse<UserDataType, any>>("user/info", { params: payload });
 export const editInfo = (payload: TEditUser) => authAxios.put("user/edit", payload);
-export const getNonce = (payload: TGetNonce) => authAxios.get("user/get-nonce", { params: payload });
+export const getNonce = (payload: TGetNonce) => authAxios.get<NonceObject>("auth/get-nonce", { params: payload });
 export const existEmail = (payload: TCheckExistEmail) => authAxios.get("user/exist-email", { params: payload });
 export const existUserName = (payload: TCheckExistUsername) =>
   authAxios.get("user/exist-username", { params: payload });

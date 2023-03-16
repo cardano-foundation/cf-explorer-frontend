@@ -219,7 +219,6 @@ const Bookmark = () => {
       component: <StyledTable error={error} columns={columns} data={data || []} loading={loading} />,
     },
   ];
-
   return (
     <Box>
       <TabContext value={activeTab}>
@@ -278,7 +277,7 @@ const Bookmark = () => {
         open={!!message}
         onClose={handleCloseToast}
         messsage={message}
-        severity={message.includes("successfully") ? "success" : "error"}
+        severity={message.includes("Successfully") ? "success" : "error"}
       />
     </Box>
   );

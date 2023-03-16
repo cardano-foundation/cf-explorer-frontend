@@ -31,4 +31,5 @@ export declare interface UserStoreType {
   onDetailView: boolean;
   modalRegister: boolean;
   modalSignMessage: boolean;
+  nonce: NonceObject | null;
 }

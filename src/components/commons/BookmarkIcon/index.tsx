@@ -75,7 +75,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
         open={!!message}
         onClose={handleCloseToast}
         messsage={message}
-        severity={message.includes("successfully") ? "success" : "error"}
+        severity={message.includes("Successfully") ? "success" : "error"}
       />
     </Box>
   );
