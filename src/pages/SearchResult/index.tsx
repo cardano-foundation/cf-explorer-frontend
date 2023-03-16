@@ -24,9 +24,9 @@ const Title = styled("h3")`
 const getUrl = (filter?: FilterParams | "all", value?: string): FilterParams | null => {
   if (filter && filter !== "all") return filter;
   if (value) {
-    if (value.search("addr_") === 0) return "address";
-    if (value.search("stake_") === 0) return "stake";
-    if (value.search("pool") === 0) return "delegation/pool-detail-header";
+    if (value.search("addr_") === 0) return "addresses";
+    if (value.search("stake_") === 0) return "stakes";
+    if (value.search("pool") === 0) return "delegations/pool-detail-header";
     if (value.search("asset") === 0) return "tokens";
   }
   return null;
@@ -34,19 +34,19 @@ const getUrl = (filter?: FilterParams | "all", value?: string): FilterParams | n
 
 const createNavigator = (filter?: FilterParams | string) => {
   switch (filter) {
-    case "epoch":
+    case "epochs":
       return details.epoch;
-    case "block":
+    case "blocks":
       return details.block;
-    case "tx":
+    case "txs":
       return details.transaction;
     case "tokens":
       return details.token;
-    case "stake":
+    case "stakes":
       return details.stake;
-    case "address":
+    case "addresses":
       return details.address;
-    case "delegation/pool-detail-header":
+    case "delegations/pool-detail-header":
       return details.delegation;
     default:
       return null;
@@ -54,8 +54,8 @@ const createNavigator = (filter?: FilterParams | string) => {
 };
 
 const filterURLS = (value: string): FilterParams[] => {
-  if (!Number.isNaN(Number(value))) return ["epoch", "block"];
-  else return ["block", "tx", "tokens", "stake", "address", "delegation/pool-detail-header"];
+  if (!Number.isNaN(Number(value))) return ["epochs", "blocks"];
+  else return ["blocks", "txs", "tokens", "stakes", "addresses", "delegations/pool-detail-header"];
 };
 
 const SearchResult = () => {
