@@ -42,7 +42,11 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage })
   };
   const onError = (error: Error) => {
     if (error.name === "EnablementFailedError") {
-      setMessage(`You are currently connect to ${NETWORK}, please switch to  ${NETWORK}!`);
+      setMessage(
+        `You are currently connect to ${
+          NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()
+        }, please switch to  ${NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()}!`
+      );
     } else {
       setMessage("Something went wrong!");
     }
