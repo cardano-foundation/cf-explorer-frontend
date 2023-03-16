@@ -76,3 +76,7 @@ export const WrapPaperDropdown = styled(Paper)`
     padding: 0px;
   }
 `;
+
+export const Option = styled("li")<{ active: number }>(({ theme, active }) => ({
+  background: active ? theme.palette.green[600_10] : theme.palette.background.paper,
+}));
