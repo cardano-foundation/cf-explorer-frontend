@@ -70,7 +70,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   ];
 
   return (
-    <Box>
+    <Box textAlign={"left"}>
       <BackButton to={routers.TOKEN_LIST}>
         <HiArrowLongLeft />
         <BackText>Back</BackText>
