@@ -62,6 +62,7 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "2rem",
   margin: "0 auto",
+  overflowWrap: "anywhere",
 }));
 
 export const Wrapper = styled(Grid)(({ theme }) => ({
@@ -114,12 +115,4 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   fontWeight: "bold",
   backgroundColor: active ? theme.palette.primary.main : "none",
-}));
-export const StyledLine = styled(Box)<{ left?: number }>(({ theme, left }) => ({
-  position: "absolute",
-  height: 10,
-  width: 1.5,
-  top: 0,
-  left: left,
-  background: theme.palette.grey[200],
 }));

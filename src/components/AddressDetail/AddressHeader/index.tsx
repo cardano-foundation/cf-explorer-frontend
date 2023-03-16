@@ -7,7 +7,7 @@ import { BiChevronDown } from "react-icons/bi";
 import { AIcon } from "../../../commons/resources";
 import CardAddress from "../../share/CardAddress";
 import { details } from "../../../commons/routers";
-import { StyledTextField, WrapPaperDropdown } from "./styles";
+import { Option, StyledTextField, WrapPaperDropdown } from "./styles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { useEffect, useState } from "react";
@@ -21,6 +21,7 @@ interface Props {
 }
 const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   const [stakeKey, setStakeKey] = useState("");
+  const [selected, setSelected] = useState("");
   const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
     stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : ""
   );
@@ -51,14 +52,15 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
         <Autocomplete
           PaperComponent={({ children }) => <WrapPaperDropdown>{children}</WrapPaperDropdown>}
           options={data?.tokens || []}
-          getOptionLabel={option => option.displayName}
+          getOptionLabel={option => option.displayName || option.name || option.fingerprint}
           noOptionsText={
             <Box>
               <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
             </Box>
           }
+          onChange={(e, value) => setSelected(value?.fingerprint || "")}
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
-            <li {...props} key={option.fingerprint}>
+            <Option key={option.fingerprint} {...props} active={selected === option.fingerprint ? 1 : 0}>
               <Box
                 display="flex"
                 alignItems={"center"}
@@ -78,7 +80,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
                 </Box>
                 <Box fontWeight={"bold"}>{formatPrice(option.quantity)}</Box>
               </Box>
-            </li>
+            </Option>
           )}
           renderInput={params => <StyledTextField {...params} placeholder="Search Token" />}
           popupIcon={<BiChevronDown />}
