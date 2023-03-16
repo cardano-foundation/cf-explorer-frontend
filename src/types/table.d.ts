@@ -8,6 +8,7 @@ export interface Column<T extends ColumnType = any> {
   title?: string;
   width?: number | string;
   minWidth?: number | string;
+  isHiddenBorder ?: boolean;
   maxWidth?: number | string;
   render?: (data: T, index: number) => ReactNode;
 }
@@ -16,6 +17,7 @@ export type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "column
 
 export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
   row: T;
+  dataLength?: number;
   index: number;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
   selectedProps?: {
