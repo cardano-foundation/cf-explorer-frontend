@@ -22,6 +22,7 @@ import {
   SlotLeader,
   SlotLeaderContainer,
   SlotLeaderSkeleton,
+  SlotLeaderTitle,
   TitleCard,
   ValueCard,
 } from "./styles";
@@ -86,6 +87,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           <SlotLeaderSkeleton variant="rectangular" />
         ) : (
           <>
+            <SlotLeaderTitle>Token ID: </SlotLeaderTitle>
             <SlotLeader>
               <Box>{data?.fingerprint}</Box> <CopyButton text={data?.fingerprint} />
             </SlotLeader>
