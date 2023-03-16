@@ -10,6 +10,7 @@ import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
 import exchageAltIcon from "../../../commons/resources/icons/exchangeArrow.svg";
 import txConfirm from "../../../commons/resources/icons/txConfirm.svg";
+import totalOutput from "../../../commons/resources/icons/totalOutput.svg";
 import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
 import txInputIcon from "../../../commons/resources/icons/txInput.svg";
@@ -148,7 +149,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
     },
     {
-      icon: txConfirm,
+      icon: totalOutput,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Total Output</TitleCard>
