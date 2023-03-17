@@ -23,7 +23,7 @@ export const StyledHelper = styled(FormHelperText)`
 `;
 
 export const StyledInput = styled(InputBase)`
-  border: 1.5px solid ${props => props.theme.borderColor};
+  border: 1.5px solid ${props => props.theme.palette.border.main};
   border-radius: 8px;
   height: 40px;
   padding: 12px 14px;
@@ -38,9 +38,9 @@ export const StyledButton = styled(Button)`
   padding: 0 20px;
   font-size: var(--font-size-text-small);
   font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.colorGreenLight};
+  color: ${props => props.theme.palette.primary.main};
   font-family: var(--font-family-title);
   text-transform: unset;
-  border: 2px solid ${props => props.theme.colorGreenLight};
+  border: 2px solid ${props => props.theme.palette.primary.main};
   border-radius: 6px;
 `;

@@ -122,7 +122,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
     <Card title="Contract Detail">
       <Grid container columnSpacing={2}>
         <Grid item xs={12} md={6}>
-          <Box overflow="hidden" borderRadius={props => props.borderRadius} height={"100%"}>
+          <Box overflow="hidden" borderRadius={10} height={"100%"}>
             <CardAddress
               title={"Wallet address"}
               type="left"
@@ -133,7 +133,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Box overflow="hidden" borderRadius={props => props.borderRadius} height={"100%"}>
+          <Box overflow="hidden" borderRadius={10} height={"100%"}>
             <CardAddress
               title={"Controlled stake key"}
               type="right"

@@ -4,19 +4,19 @@ export const AlertTitle = styled(AlertTitleMui)<{ severity: AlertProps["severity
   const color = (severity: AlertProps["severity"]) => {
     switch (severity) {
       case "error": {
-        return theme.colorRed;
+        return theme.palette.error.dark;
       }
       case "success": {
-        return theme.colorGreen;
+        return theme.palette.success.dark;
       }
       case "warning": {
-        return theme.colorYellow;
+        return theme.palette.warning.dark;
       }
       case "info": {
-        return theme.colorBlue;
+        return theme.palette.info.dark;
       }
       default: {
-        return theme.colorGreen;
+        return theme.palette.success.dark;
       }
     }
   };

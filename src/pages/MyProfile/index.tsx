@@ -1,5 +1,5 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box } from "@mui/material";
+import { alpha, Box, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { ReactComponent as SettingIcon } from "../../commons/resources/icons/setting.svg";
 import { ReactComponent as FileSearch } from "../../commons/resources/icons/file-search.svg";
@@ -9,6 +9,7 @@ import AccountSettingTab from "../../components/Account/AccountSettingTab";
 
 const MyProfile: React.FC = () => {
   const [tabActive, setTabActive] = useState<"overview" | "setting">("overview");
+  const theme = useTheme();
   useEffect(() => {
     document.title = `My Profile | Cardano Explorer`;
   }, []);
@@ -21,7 +22,7 @@ const MyProfile: React.FC = () => {
       label: (
         <TabTitle className={tabActive === "overview" ? "active" : ""}>
           <Box display={"flex"} alignItems="center">
-            <FileSearch fill={tabActive === "overview" ? "#438F68" : "#98A2B3"} />
+            <FileSearch fill={tabActive === "overview" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}>Overview</Box>
           </Box>
         </TabTitle>
@@ -33,7 +34,7 @@ const MyProfile: React.FC = () => {
       label: (
         <TabTitle className={tabActive === "setting" ? "active" : ""}>
           <Box display={"flex"} alignItems="center">
-            <SettingIcon fill={tabActive === "setting" ? "#438F68" : "#98A2B3"} />
+            <SettingIcon fill={tabActive === "setting" ? theme.palette.primary.main : theme.palette.text.hint} />
             <Box pl={1}>Account settings & Profile</Box>
           </Box>
         </TabTitle>
@@ -48,7 +49,9 @@ const MyProfile: React.FC = () => {
       <Box>
         <TabList
           onChange={handleChange}
-          TabIndicatorProps={{ style: { background: "#438f68", color: "#438f68", height: "3px" } }}
+          TabIndicatorProps={{
+            style: { background: theme.palette.primary.main, color: theme.palette.primary.main, height: 3 },
+          }}
         >
           {tabs?.map(item => (
             <WrapTab key={item.key} label={item.label} value={item.key} />
@@ -57,7 +60,7 @@ const MyProfile: React.FC = () => {
       </Box>
       {tabs.map(item => (
         <TabPanel
-          sx={{ padding: "25px 0", borderTop: "1px solid rgba(24, 76, 120, 0.1)" }}
+          sx={{ padding: "25px 0", borderTop: `1px solid ${alpha(theme.palette.green[800], 0.1)}` }}
           key={item.key}
           value={item.key}
         >

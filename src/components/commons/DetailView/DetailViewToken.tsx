@@ -56,7 +56,6 @@ type DetailViewTokenProps = {
 
 const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
   const { token: data, handleClose, tokenId } = props;
-  console.log("🚀 ~ file: DetailViewToken.tsx:58 ~ data:", data);
 
   if (!data)
     return (

@@ -2,12 +2,12 @@ import { Box } from "@mui/material";
 import { styled } from "@mui/material";
 import Table from "../../components/commons/Table";
 
-export const TitleTab = styled(Box)<{ active: boolean }>(({ active }) => ({
+export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
   fontWeight: "bold",
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? "#000000" : "#98A2B3",
+  color: active ? theme.palette.common.black : theme.palette.text.hint,
 }));
 export const StyledTable = styled(Table)`
   & .empty-content-table {

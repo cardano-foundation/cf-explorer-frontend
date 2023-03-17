@@ -6,7 +6,7 @@ export const API = {
     TOP_ADDRESS: "addresses/top-addresses",
   },
   BLOCK: {
-    DETAIL: `blocks`,
+    DETAIL: "blocks",
     LIST: "blocks",
   },
   CONTRACT: "contracts",

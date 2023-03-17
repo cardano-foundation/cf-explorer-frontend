@@ -1,3 +1,4 @@
+import { useTheme } from "@mui/material";
 import React from "react";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const ProgressCircle: React.FC<Props> = props => {
+  const theme = useTheme();
   const {
     percent,
     children,
@@ -31,8 +33,8 @@ const ProgressCircle: React.FC<Props> = props => {
       <svg style={{ height: 0, width: 0 }}>
         <defs>
           <linearGradient id={"progress"} gradientTransform={gradientTransform}>
-            <stop offset="0%" stopColor={"#184C78"} />
-            <stop offset="100%" stopColor={"#5A9C56"} />
+            <stop offset="0%" stopColor={theme.palette.green[800]} />
+            <stop offset="100%" stopColor={theme.palette.green[450]} />
           </linearGradient>
         </defs>
       </svg>
@@ -40,7 +42,12 @@ const ProgressCircle: React.FC<Props> = props => {
       <CircularProgressbarWithChildren
         styles={{
           path: { stroke: `url(#progress)`, strokeWidth: pathWidth, strokeLinecap: pathLineCap },
-          trail: { strokeWidth: trailWidth, fill: "#FFFFFF", stroke: "linear-gradient(52.78deg, #5A9C56 20.64%, #184C78 73.83%)", opacity: trailOpacity },
+          trail: {
+            strokeWidth: trailWidth,
+            fill: theme.palette.background.paper,
+            stroke: theme.palette.gradient[8],
+            opacity: trailOpacity,
+          },
         }}
         value={percent}
       >

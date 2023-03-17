@@ -16,7 +16,7 @@ const SearchResultContainer = styled(Container)`
 `;
 
 const Title = styled("h3")`
-  color: ${props => props.theme.textColorPale};
+  color: ${props => props.theme.palette.grey[400]};
   margin-bottom: 2rem;
   font-weight: var(--font-weight-normal);
 `;

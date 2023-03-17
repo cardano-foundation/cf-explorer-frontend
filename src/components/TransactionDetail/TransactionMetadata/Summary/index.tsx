@@ -1,6 +1,5 @@
 import React from "react";
 import { Box } from "@mui/material";
-import styles from "./index.module.scss";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
@@ -9,7 +8,7 @@ import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { Icon, TokenLink } from "./component";
+import { Icon, TokenLink } from "./styles";
 
 const SummaryItems = ({
   item,
@@ -19,7 +18,7 @@ const SummaryItems = ({
   type?: "up" | "down";
 }) => {
   return (
-    <Box textAlign={"left"} px={3} py={2} style={{ background: "#fff" }} mb={2}>
+    <Box textAlign={"left"} px={3} py={2} sx={{ background: theme => theme.palette.background.paper }} mb={2}>
       <Box display={"flex"} alignItems="center">
         <Box width={50}>
           <Icon src={type === "down" ? receiveImg : sendImg} alt="send icon" />
@@ -36,7 +35,11 @@ const SummaryItems = ({
                     to={item.address.startsWith("stake") ? details.stake(item.address) : details.address(item.address)}
                   >
                     <CustomTooltip title={item.address}>
-                      <Box color={props => props.colorBlue} fontWeight="bold" className={styles.ffText}>
+                      <Box
+                        color={theme => theme.palette.text.primary}
+                        fontWeight="bold"
+                        fontFamily={"var(--font-family-text)"}
+                      >
                         {getShortWallet(item.address)}
                       </Box>
                     </CustomTooltip>
@@ -55,7 +58,7 @@ const SummaryItems = ({
                 <Box
                   component={"span"}
                   whiteSpace="nowrap"
-                  color={props => (type === "up" ? props.colorGreenLight : props.colorRed)}
+                  color={theme => (type === "up" ? theme.palette.success.main : theme.palette.error.main)}
                   fontWeight="bold"
                   mr={1}
                 >
@@ -98,18 +101,6 @@ const Summary: React.FC<SummaryProps> = ({ data }) => {
       {data?.stakeAddressTxOutputs.map((tx, key) => (
         <SummaryItems key={key} item={tx} type="up" />
       ))}
-      {/*
-      <Box textAlign={"left"} px={3} py={2} style={{ background: "#fff" }} mb={2}>
-        <Box display={"flex"} alignItems="center" py={2}>
-          <Box width={50}>
-            <Img src={messageImg} width="38px" alt="wallet icon" />
-          </Box>
-          <Box fontWeight={"bold"} maxWidth="700px">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Excepturi magni neque esse libero commodi. Facere
-            quis deserunt et nihil itaque quisquam in mollitia.
-          </Box>
-        </Box>
-      </Box> */}
     </Box>
   );
 };

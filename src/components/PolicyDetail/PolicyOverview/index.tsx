@@ -1,4 +1,4 @@
-import { Box, Modal } from "@mui/material";
+import { Box, Modal, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import infoIcon from "../../../commons/resources/icons/info.svg";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
@@ -54,7 +54,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
             ) : (
               <Box>
                 <SlotLeader>
-                  <Box fontWeight={400} color={"#344054"}>
+                  <Box fontWeight={400} color={theme => theme.palette.text.secondary}>
                     Policy ID:{" "}
                   </Box>{" "}
                   <Box ml={2}>{data?.policyId}</Box> <CopyButton text={data?.policyId} />
@@ -64,7 +64,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
           </SlotLeaderContainer>
         </Box>
         <CardItem
-          color={props => props.colorGreenLight}
+          color={theme => theme.palette.primary.main}
           fontWeight="bold"
           fontFamily={'"Roboto", sans-serif'}
           fontSize={"1.125rem"}
@@ -97,6 +97,7 @@ interface ScriptModalProps {
   script?: string;
 }
 const ScriptModal: React.FC<ScriptModalProps> = ({ script, ...props }) => {
+  const theme = useTheme();
   return (
     <Modal {...props}>
       <ModalContainer>
@@ -114,7 +115,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ script, ...props }) => {
               displayDataTypes={false}
               enableClipboard={false}
               collapseStringsAfterLength={false}
-              style={{ padding: 0, background: "none", color: "#344054" }}
+              style={{ padding: 0, background: "none", color: theme.palette.text.secondary }}
               rootName={false}
             />
           </ViewJson>

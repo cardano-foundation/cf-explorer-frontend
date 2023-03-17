@@ -1,26 +1,23 @@
-import { styled, Box, Container, Theme, Button } from "@mui/material";
+import { styled, Box, Container, alpha, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Wrapper = styled(Container)(({ theme }) => ({}));
 export const ContentBox = styled(Box)(({ theme }) => ({
   display: "flex",
-  background: "#fff",
+  background: theme.palette.background.paper,
   height: "calc(100vh - 252px)",
-  borderTopLeftRadius: theme.borderRadius,
-  borderTopRightRadius: theme.borderRadius,
+  borderTopLeftRadius: 10,
+  borderTopRightRadius: 10,
 }));
 export const SideBar = styled(Box)(({ theme }) => ({
-  borderRight: "1px solid #f6f6f6",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
+  borderRight: `1px solid ${theme.palette.grey[50]}`,
 }));
 
-export const NavItem = styled(Link)(({ theme, active }: { active: boolean; theme?: Theme }) => ({
+export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
   textAlign: "left",
   display: "block",
-  backgroundColor: active ? "rgba(67, 143, 104, 0.1)" : "#fff",
-  color: `${active ? theme?.colorGreenLight : theme?.textColorPale} !important`,
+  backgroundColor: active ? alpha(theme.palette.primary.main, 0.1) : theme.palette.background.paper,
+  color: `${active ? theme.palette.primary.main : theme.palette.grey[400]} !important`,
   fontWeight: "bold",
 }));
 
@@ -43,7 +40,7 @@ export const StyledButton = styled(Button)(() => ({
 
 export const StyledButtonReport = styled(Button)(() => ({ padding: 0 }));
 export const StyledButtonClose = styled(Button)(({ theme }) => ({
-  border: "1px solid #C8CDD8",
+  border: `1px solid ${theme.palette.border.hint}`,
   textTransform: "capitalize",
   fontWeight: "bold",
   color: "#344054",

@@ -145,7 +145,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
   ];
 
   return (
-    <Card titleChilren={"Transactions"} underline={underline}>
+    <Card title={"Transactions"} underline={underline}>
       <Table
         {...fetchData}
         columns={columns}

@@ -71,7 +71,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <PoolId>
           <PoolIdSkeleton variant="rectangular" />
         </PoolId>
-        <Box borderRadius={props => props.borderRadius} overflow="hidden">
+        <Box borderRadius={10} overflow="hidden">
           <Skeleton variant="rectangular" height={250} width="100%" />
         </Box>
         {/* <SavingImg src={saving ? SaveOnIcon : SaveOffIcon} alt="Save Icon" onClick={() => setSaving(!saving)} /> */}
@@ -128,7 +128,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               </StyledTitle>
               {data?.rewardAccounts && data.rewardAccounts.length > 1 && (
                 <ButtonViewAll
-                  sx={{ color: "black" }}
+                  sx={{ color: theme => theme.palette.common.black }}
                   onClick={() => {
                     setOpenReward(!isOpenReward);
                     setOpenOwner(false);
@@ -146,7 +146,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                       component={Link}
                       to={details.stake(data?.rewardAccounts[0] || "")}
                       style={{ fontFamily: "var(--font-family-text)" }}
-                      color={props => `${props.colorBlue} !important`}
+                      color={theme => `${theme.palette.secondary.main} !important`}
                     >
                       {getShortWallet(data?.rewardAccounts[0] || "")}
                     </Box>
@@ -178,7 +178,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               </StyledTitle>
               {data?.ownerAccounts && data.ownerAccounts.length > 1 && (
                 <ButtonViewAll
-                  sx={{ color: "black" }}
+                  sx={{ color: theme => theme.palette.common.black }}
                   onClick={() => {
                     setOpenOwner(!isOpenOwner);
                     setOpenReward(false);
@@ -194,7 +194,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                   <CustomTooltip title={data?.ownerAccounts[0] || ""}>
                     <Box
                       component={Link}
-                      color={props => `${props.colorBlue} !important`}
+                      color={theme => `${theme.palette.secondary.main} !important`}
                       to={details.stake(data?.ownerAccounts[0] || "")}
                       style={{ fontFamily: "var(--font-family-text)" }}
                     >
