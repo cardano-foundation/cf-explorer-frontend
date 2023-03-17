@@ -1,7 +1,8 @@
-import { Tooltip, TooltipProps } from "@mui/material";
+import { Tooltip, TooltipProps, useTheme } from "@mui/material";
 
 export const CustomTooltip = (props: TooltipProps) => {
   const { componentsProps, placement, ...otherProps } = props;
+  const theme = useTheme();
   return (
     <Tooltip
       arrow
@@ -12,7 +13,7 @@ export const CustomTooltip = (props: TooltipProps) => {
           ...(componentsProps?.arrow || {}),
           style: {
             fontSize: "var(--font-size-text-small)",
-            color: "rgba(0, 0, 0)",
+            color: theme.palette.common.black,
             ...(componentsProps?.arrow?.style || {}),
           },
         },
@@ -23,7 +24,7 @@ export const CustomTooltip = (props: TooltipProps) => {
             fontSize: "var(--font-size-text-small)",
             padding: "6px 8px",
             lineHeight: 1.5,
-            backgroundColor: "rgba(0, 0, 0 )",
+            backgroundColor: theme.palette.common.black,
             opacity: 0.78,
             borderRadius: 2,
             ...(componentsProps?.transition?.style || {}),

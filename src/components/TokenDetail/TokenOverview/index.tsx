@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Skeleton } from "@mui/material";
+import { alpha, Box, Skeleton } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { routers } from "../../../commons/routers";
 import { formatADAFull, formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/helper";
@@ -93,7 +93,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
         )}
       </SlotLeaderContainer>
       {loading && (
-        <Box height={150} width="100%" borderRadius={props => props.borderRadius} overflow="hidden">
+        <Box height={150} width="100%" borderRadius={10} overflow="hidden">
           <Skeleton height={"100%"} width="100%" variant="rectangular" />
         </Box>
       )}
@@ -105,7 +105,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
             </Box>
             <Box display={"flex"} flexDirection="column" height={"80%"} justifyContent="space-between">
               <Box
-                color={props => props.colorGreenLight}
+                color={theme => theme.palette.primary.main}
                 fontWeight="bold"
                 fontFamily={'"Roboto", sans-serif'}
                 fontSize={"1.125rem"}
@@ -138,7 +138,12 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
                     <LogoEmpty ml={1} />
                   )}
                 </Box>
-                <Box display={"flex"} alignItems="center" fontSize={"0.75rem"} color="rgba(0,0,0,0.5)">
+                <Box
+                  display={"flex"}
+                  alignItems="center"
+                  fontSize={"0.75rem"}
+                  color={theme => alpha(theme.palette.common.black, 0.5)}
+                >
                   {data?.metadata?.description || ""}
                 </Box>
               </Box>

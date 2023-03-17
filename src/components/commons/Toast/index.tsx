@@ -1,4 +1,4 @@
-import { Snackbar, Alert, SnackbarProps, AlertProps } from "@mui/material";
+import { Snackbar, Alert, SnackbarProps, AlertProps, useTheme } from "@mui/material";
 import {
   MdOutlineErrorOutline,
   MdOutlineCheckCircleOutline,
@@ -41,15 +41,16 @@ const Toast: React.FC<SnackbarProps & ToastProps> = ({
       }
     }
   };
+  const theme = useTheme();
 
   return (
     <Snackbar {...props} onClose={onClose} anchorOrigin={{ horizontal, vertical }} autoHideDuration={hideDuration}>
       <Alert
         iconMapping={{
-          error: <MdOutlineErrorOutline color="#dd4343" />,
-          success: <MdOutlineCheckCircleOutline color="#29744d" />,
-          info: <MdInfoOutline color={"#108aef"} />,
-          warning: <MdOutlineWarningAmber color="#ffa800" />,
+          error: <MdOutlineErrorOutline color={theme.palette.error.dark} />,
+          success: <MdOutlineCheckCircleOutline color={theme.palette.success.dark} />,
+          info: <MdInfoOutline color={theme.palette.info.dark} />,
+          warning: <MdOutlineWarningAmber color={theme.palette.info.dark} />,
         }}
         onClose={onClose}
         severity={severity}

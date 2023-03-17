@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { alpha, Box, styled } from "@mui/material";
 
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
@@ -37,12 +37,12 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
         <Box width={"100%"}>
           <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
             <div>
-              From:{" "}
+              <span>From: </span>
               <Link to={details.address(item?.address)}>
                 <CustomTooltip title={item?.address}>
                   <Box
                     component={"span"}
-                    color={props => props.colorBlue}
+                    color={theme => theme.palette.secondary.main}
                     fontWeight="bold"
                     fontFamily="Helvetica, monospace"
                   >
@@ -54,7 +54,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
             </div>
             <Box display={"flex"} alignItems={"center"}>
               <Box mr={"8px"}>
-                <Box component={"span"} fontWeight="bold" color={props => props.colorGreenLight}>
+                <Box component={"span"} fontWeight="bold" color={theme => theme.palette.primary.main}>
                   {type === "up" ? `- ${formatADAFull(item?.amount)}` : `+ ${formatADAFull(item?.amount)}`}
                 </Box>
               </Box>
@@ -66,7 +66,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
           <Box display="flex" alignItems={"center"}>
             <Link to={details.transaction(item?.txHash)}>
               <CustomTooltip title={item?.txHash || ""}>
-                <Box component={"span"} color={props => props.colorBlue} fontFamily="Helvetica, monospace">
+                <Box component={"span"} color={theme => theme.palette.secondary.main}>
                   {getShortHash(item?.txHash || "")}
                 </Box>
               </CustomTooltip>
@@ -82,7 +82,7 @@ const Items = ({ item, type }: { item?: Required<Transaction>["collaterals"][num
 const Item = styled(Box)(({ theme }) => ({
   textAlign: "left",
   padding: "10px 0",
-  borderBottom: "1px solid #0000001a",
+  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
   ":last-child": {
     padding: "10px 0 0",
     borderBottom: "none",
@@ -94,7 +94,7 @@ const Header = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   fontSize: "0.875rem",
   fontWeight: "bold",
-  color: theme.titleColor,
-  borderBottom: "1px solid #0000001a",
+  color: theme.palette.text.hint,
+  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
   paddingBottom: "8px",
 }));

@@ -7,6 +7,7 @@ import {
   MenuItem,
   styled,
   CircularProgress,
+  alpha,
 } from "@mui/material";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
 import { EmptyIcon } from "../../../commons/resources";
@@ -74,7 +75,7 @@ const TableRow = <T extends ColumnType>({
             key={idx}
             minWidth={column.minWidth}
             maxWidth={column.maxWidth}
-            hiddenBorder={column.isHiddeBorder && dataLength === index + 1}
+            hiddenBorder={column.isHiddenBorder  && dataLength === index + 1}
           >
             {column.render ? column.render(row, index) : row[column.key]}
           </TCol>
@@ -97,7 +98,7 @@ const TableBody = <T extends ColumnType>({
     <TBody>
       {loading && initialized && (
         <LoadingWrapper
-          bgcolor={"#0000000d"}
+          bgcolor={theme => alpha(theme.palette.common.black, 0.05)}
           width={"100%"}
           height={"100%"}
           zIndex={1000}
@@ -353,7 +354,7 @@ const PaginationCustom = ({
                 }
               }}
             />
-            <Box component={"span"} color={props => props.textColorPale} fontSize="0.875rem">
+            <Box component={"span"} color={theme => theme.palette.grey[400]} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
               {numberWithCommas((page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size)} of{" "}
               {numberWithCommas(pagination?.total || 0)}
@@ -368,15 +369,15 @@ const PaginationCustom = ({
   );
 };
 
-const StartPageIcon = styled(StartPage)(({ disabled }: { disabled: boolean }) => ({
-  stroke: disabled ? "#66708566" : "#667085",
+const StartPageIcon = styled(StartPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
 }));
-const EndPageIcon = styled(EndPage)(({ disabled }: { disabled: boolean }) => ({
-  stroke: disabled ? "#66708566" : "#667085",
+const EndPageIcon = styled(EndPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
 }));
-const NextPageIcon = styled(NextPage)(({ disabled }: { disabled: boolean }) => ({
-  stroke: disabled ? "#66708566" : "#667085",
+const NextPageIcon = styled(NextPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
 }));
-const PrevPageIcon = styled(PrevPage)(({ disabled }: { disabled: boolean }) => ({
-  stroke: disabled ? "#66708566" : "#667085",
+const PrevPageIcon = styled(PrevPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
 }));

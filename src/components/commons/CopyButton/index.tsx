@@ -7,7 +7,7 @@ import copy from "../../../commons/resources/images/copy.svg";
 import CustomTooltip from "../CustomTooltip";
 
 const Button = styled(IconButton)`
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.palette.text.primary};
   width: 23px;
   height: 23px;
   font-size: var(--font-size-text-large);

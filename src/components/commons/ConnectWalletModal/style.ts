@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, IconButton, Paper, styled } from "@mui/material";
+import { alpha, Box, Button, Dialog, IconButton, Paper, styled } from "@mui/material";
 
 export const ConnectDialog = styled(Dialog)<{ connecting: number }>`
   * {
@@ -31,7 +31,7 @@ export const CloseButton = styled(IconButton)<{ connecting: number }>`
   width: 30px;
   height: 30px;
   padding: 0;
-  border: 1px solid #a3a3a3;
+  border: 1px solid ${props => props.theme.palette.grey["A100"]};
   cursor: ${props => (props.connecting ? `wait` : `pointer`)};
   &:hover {
     ${props => (props.connecting ? `background: none;` : ``)}
@@ -50,10 +50,11 @@ export const WalletItem = styled(Box)<{ active: number; connecting: number }>`
   box-sizing: border-box;
   border-radius: 10px;
   cursor: ${props => (props.connecting ? `wait` : `pointer`)};
-  box-shadow: ${props => (props.active ? props.theme.shadowRaised : "none")};
-  background-color: ${props => (props.active ? props.theme.bodyBackground : "rgba(152, 162, 179, 0.1)")};
+  box-shadow: ${props => (props.active ? props.theme.shadow.card : "none")};
+  background-color: ${props =>
+    props.active ? props.theme.palette.background.default : alpha(props.theme.palette.grey[300], 0.1)};
   &:hover {
-    background-color: ${props => props.theme.bodyBackground};
+    background-color: ${props => props.theme.palette.background.default};
   }
 `;
 
@@ -68,7 +69,7 @@ export const GroupFlex = styled(Box)`
 
 export const WalletName = styled("h4")`
   margin: 0px;
-  color: #667085;
+  color: ${props => props.theme.palette.grey[400]};
 `;
 
 export const InstallButton = styled(Button)`
@@ -76,11 +77,11 @@ export const InstallButton = styled(Button)`
   justify-content: space-between;
   align-items: center;
   gap: 5px;
-  background: #e3e2fc;
+  background: ${props => props.theme.palette.purple[200]};
   border-radius: 5px;
   padding: 4px 10px;
   height: 29px;
-  color: #6866d4;
+  color: ${props => props.theme.palette.purple[500]};
   text-transform: none;
   font-size: var(--font-size-text-x-small);
   font-weight: var(--font-weight-bold);

@@ -13,7 +13,7 @@ import {
 } from "../../commons/utils/helper";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table, { Column } from "../../components/commons/Table";
-import { RegistrationContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
+import { RegistrationContainer, StakeKey, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
 import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import { Box } from "@mui/material";
@@ -27,13 +27,13 @@ const columns: Column<Registration>[] = [
   {
     title: "Trx Hash",
     key: "trxHash",
-    render: r => {
+    render: pool => {
       return (
         <>
-          <CustomTooltip title={r.txHash}>
-            <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash || "")}</StyledLink>
+          <CustomTooltip title={pool.txHash}>
+            <StyledLink to={details.transaction(pool.txHash)}>{getShortHash(pool.txHash || "")}</StyledLink>
           </CustomTooltip>
-          <div>{formatDateTimeLocal(r.txTime || "")}</div>
+          <div>{formatDateTimeLocal(pool.txTime || "")}</div>
         </>
       );
     },
@@ -41,21 +41,21 @@ const columns: Column<Registration>[] = [
   {
     title: "Block",
     key: "block",
-    render: r => (
+    render: pool => (
       <>
-        <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
+        <StyledLink to={details.block(pool.block)}>{pool.block}</StyledLink>
         <br />
-        <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/{r.slotNo}
+        <StyledLink to={details.epoch(pool.epoch)}>{pool.epoch}</StyledLink>/{pool.slotNo}
       </>
     ),
   },
   {
     title: "Pool",
     key: "pool",
-    render: r => (
-      <StyledLink to={details.delegation(r.poolView || "")}>
-        <CustomTooltip title={r.poolName || `Pool[${r.poolView}]` || ""}>
-          <Box component={"span"}>{r.poolName || `Pool[${getShortHash(r.poolView)}]`}</Box>
+    render: pool => (
+      <StyledLink to={details.delegation(pool.poolView || "")}>
+        <CustomTooltip title={pool.poolName || `Pool[${pool.poolView}]` || ""}>
+          <Box component={"span"}>{pool.poolName || `Pool[${getShortHash(pool.poolView)}]`}</Box>
         </CustomTooltip>
       </StyledLink>
     ),
@@ -63,37 +63,33 @@ const columns: Column<Registration>[] = [
   {
     title: "Pledge (A)",
     key: "pledge",
-    render: r => <>{formatADAFull(r.pledge)}</>,
+    render: pool => <>{formatADAFull(pool.pledge)}</>,
   },
   {
     title: "Cost (A)",
     key: "cost",
-    render: r => <>{formatADAFull(r.cost)}</>,
+    render: pool => <>{formatADAFull(pool.cost)}</>,
   },
   {
     title: "Fee",
     key: "margin",
-    render: r => formatPercent(r.margin || 0),
+    render: pool => formatPercent(pool.margin),
   },
   {
     title: "Stake Key",
     key: "stakeKey",
-    render: r =>
-      r.stakeKey && r.stakeKey.length > 0 ? (
-        <>
-          {r.stakeKey.slice(0, 2).map((sk, idx) => (
-            <>
-              <CustomTooltip title={sk} key={idx}>
-                <StyledLink to={details.stake(sk)}>{getShortWallet(sk)}</StyledLink>
-              </CustomTooltip>
-              {r.stakeKey.length > 1 && <Box mb={1} />}
-            </>
-          ))}
-          {r.stakeKey.length > 2 && <StyledLink to={details.delegation(r.poolView || "")}> ...</StyledLink>}
-        </>
-      ) : (
-        ""
-      ),
+    render: pool => (
+      <>
+        {pool.stakeKey?.map(stakeKey => (
+          <StakeKey key={stakeKey}>
+            <CustomTooltip title={stakeKey}>
+              <StyledLink to={details.stake(stakeKey)}>{getShortWallet(stakeKey)}</StyledLink>
+            </CustomTooltip>
+          </StakeKey>
+        ))}
+        {pool.stakeKey?.length > 2 ? <StyledLink to={details.delegation(pool.poolView || "")}>...</StyledLink> : ""}
+      </>
+    ),
   },
 ];
 
@@ -121,8 +117,8 @@ const RegistrationPools = () => {
       <StyledTabs
         value={poolType}
         onChange={onChangeTab}
-        style={{ borderBottom: "1px solid #e5e5e5" }}
-        TabIndicatorProps={{ sx: { backgroundColor: props => props.colorGreenLight, height: 4 } }}
+        sx={{ borderBottom: theme => `1px solid ${theme.palette.border.main}` }}
+        TabIndicatorProps={{ sx: { backgroundColor: theme => theme.palette.primary.main, height: 4 } }}
       >
         <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
         <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />

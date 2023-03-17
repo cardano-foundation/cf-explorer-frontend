@@ -1,4 +1,4 @@
-import { Avatar, Box, CircularProgress, Dialog, IconButton } from "@mui/material";
+import { alpha, Avatar, Box, CircularProgress, Dialog, IconButton, useTheme } from "@mui/material";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { routers } from "../../../../commons/routers";
@@ -45,6 +45,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
       setUserData(response.data);
     } catch (error) {}
   }, []);
+  const theme = useTheme();
 
   const uploadImgRef = useRef(null);
 
@@ -103,7 +104,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                     <Box
                       height={"100px"}
                       width={"100px"}
-                      bgcolor="#0000001a"
+                      bgcolor={alpha(theme.palette.common.black, 0.1)}
                       borderRadius={"50%"}
                       display="flex"
                       alignItems="center"
@@ -146,16 +147,19 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                     justifyContent="space-between"
                     py={2}
                     mx={4}
-                    borderBottom="1px solid rgba(0,0,0,0.07)"
+                    borderBottom={`1px solid${alpha(theme.palette.common.black, 0.07)}`}
                   >
                     <Box>{route.title}</Box>
-                    <MdChevronRight size={25} color={route.to === pathname ? "#438F68" : "#98A2B3"} />
+                    <MdChevronRight
+                      size={25}
+                      color={route.to === pathname ? theme.palette.primary.main : theme.palette.text.hint}
+                    />
                   </Box>
                 </NavItem>
               ))}
             </Box>
           </Box>
-          <Box px={3} pb={3} fontSize="0.75rem">
+          <Box px={3} pb={1} fontSize="0.75rem">
             Missing any data? click <StyledButton onClick={() => setOpenReportModal(true)}>here</StyledButton> to report
           </Box>
         </SideBar>

@@ -1,4 +1,4 @@
-import { Box, styled, Button } from "@mui/material";
+import { Box, styled, Button, alpha } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
@@ -11,9 +11,9 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   transform: "translate(-50%, -50%)",
   width: "min(80vw, 550px)",
-  backgroundColor: "#fff",
+  backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
-  borderRadius: theme.borderRadius,
+  borderRadius: 10,
   textAlign: "left",
 }));
 
@@ -31,8 +31,8 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
 export const ViewJson = styled(Box)(({ theme }) => ({
   overflowY: "auto",
   textAlign: "left",
-  backgroundColor: "rgba(152, 162, 179, 0.1)",
-  borderRadius: theme.borderRadius,
+  backgroundColor: `${alpha(theme.palette.grey[300], 0.1)}`,
+  borderRadius: 10,
   padding: theme.spacing(2),
 
   "& .MuiSvgIcon-root": {
@@ -42,7 +42,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
 
 export const ButtonLink = styled(Link)(({ theme }) => ({
   fontWeight: "bold",
-  color: `${theme.colorBlue} !important`,
+  color: `${theme.palette.secondary.main} !important`,
   fontFamily: "Helvetica, monospace !important",
   textAlign: "left",
   wordBreak: "break-all",

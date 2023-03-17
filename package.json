@@ -1,5 +1,5 @@
 {
-  "name": "cardano-explorer",
+  "name": "cardano-blockchain-explorer",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -76,6 +76,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "overrides": {
+    "react-json-view": {
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+    }
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3"

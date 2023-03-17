@@ -19,7 +19,7 @@ export const Menu = styled(List)<{ open: number }>`
   gap: 15px;
   flex-direction: row;
   padding: 0px 10px;
-  border-top: 1px solid ${props => props.theme.borderColor};
+  border-top: 1px solid ${props => props.theme.palette.border.main};
   @media screen and (max-width: 1023px) {
     border-top: 0px;
     position: relative;
@@ -43,11 +43,11 @@ const itemStyle: SxProps<Theme> = theme => ({
   cursor: "pointer",
   borderRadius: 30,
   padding: 0,
-  color: `${theme.footerColor} !important`,
-  background: `${theme.colorGreenDark}16`,
+  color: `${theme.palette.text.hint} !important`,
+  background: theme.palette.green[800_10],
   "&:hover": {
-    background: `${theme.colorGreenDark}32`,
-    color: `${theme.textColorPale} !important`,
+    background: theme.palette.green[800_20],
+    color: `${theme.palette.common.black} !important`,
     img: {
       filter: "brightness(0.75)",
     },
@@ -58,7 +58,7 @@ const expandStyle: SxProps<Theme> = theme => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  color: `${theme.colorGreenLight} !important`,
+  color: `${theme.palette.primary.main} !important`,
   fontSize: 30,
   width: 40,
   height: 40,

@@ -159,7 +159,6 @@ const PrivateNotes = () => {
           style={{ overflow: "auto" }}
           emptyClassName="empty-content-table"
           columns={columns}
-          total={{ count: total, title: "Total Private Notes" }}
           data={data}
           pagination={{
             ...pageInfo,
@@ -185,7 +184,7 @@ const PrivateNotes = () => {
         severity={message.severity}
       />
       <Dialog open={!!selected}>
-        <DialogTitle textAlign={"left"} fontWeight="bold" color={"#13152F"}>
+        <DialogTitle textAlign={"left"} fontWeight="bold" color={theme => theme.palette.text.primary}>
           Confirmation Required
         </DialogTitle>
 
@@ -193,7 +192,7 @@ const PrivateNotes = () => {
           <img src={CloseIcon} alt="icon close" />
         </ButtonClose>
         <DialogContent>
-          <DialogContentText color={"#344054"}>
+          <DialogContentText color={theme => theme.palette.text.secondary}>
             Are you sure to remove transaction private note {getShortHash(selected?.txHash || "")} ?
           </DialogContentText>
         </DialogContent>

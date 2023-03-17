@@ -1,19 +1,13 @@
 import { Link } from "react-router-dom";
-import { Grid, Box, Autocomplete } from "@mui/material";
-import {
-  exchangeADAToUSD,
-  formatADAFull,
-  formatPrice,
-  getShortWallet,
-  numberWithCommas,
-} from "../../../commons/utils/helper";
+import { Grid, Box, Autocomplete, useTheme } from "@mui/material";
+import { exchangeADAToUSD, formatADAFull, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronDown } from "react-icons/bi";
 import { AIcon } from "../../../commons/resources";
 import CardAddress from "../../share/CardAddress";
 import { details } from "../../../commons/routers";
-import { StyledTextField, WrapPaperDropdown } from "./styles";
+import { Option, StyledTextField, WrapPaperDropdown } from "./styles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { useEffect, useState } from "react";
@@ -32,6 +26,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : ""
   );
   const { adaRate } = useSelector(({ system }: RootState) => system);
+  const theme = useTheme();
 
   useEffect(() => {
     setStakeKey(data?.stakeAddress || "");
@@ -63,15 +58,9 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
               <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
             </Box>
           }
-          onChange={(e, value) => {
-            setSelected(value?.fingerprint || "");
-          }}
+          onChange={(e, value) => setSelected(value?.fingerprint || "")}
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
-            <li
-              {...props}
-              key={option.fingerprint}
-              style={{ background: selected === option.fingerprint ? "rgba(67, 143, 104, 0.1)" : "#fff" }}
-            >
+            <Option key={option.fingerprint} {...props} active={selected === option.fingerprint ? 1 : 0}>
               <Box
                 display="flex"
                 alignItems={"center"}
@@ -91,7 +80,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
                 </Box>
                 <Box fontWeight={"bold"}>{numberWithCommas(option.quantity)}</Box>
               </Box>
-            </li>
+            </Option>
           )}
           renderInput={params => <StyledTextField {...params} placeholder="Search Token" />}
           popupIcon={<BiChevronDown />}
@@ -114,7 +103,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       value: (
         <Link
           to={dataStake?.pool?.poolName ? details.delegation(dataStake.pool.poolId) : "#"}
-          style={{ fontFamily: "var(--font-family-text)", color: "var(--color-blue)" }}
+          style={{ fontFamily: "var(--font-family-text)", color: theme.palette.secondary.main }}
         >
           {dataStake?.pool?.poolName ||
             (dataStake?.pool?.poolId && `Pool [${getShortWallet(dataStake.pool.poolId)}]`) ||
@@ -144,7 +133,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     >
       <Grid container columnSpacing={2}>
         <Grid item xs={12} md={6}>
-          <Box overflow="hidden" borderRadius={props => props.borderRadius} height={"100%"}>
+          <Box overflow="hidden" borderRadius={10} height={"100%"}>
             <CardAddress
               title={"Wallet address"}
               type="left"
@@ -155,7 +144,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Box overflow="hidden" borderRadius={props => props.borderRadius} height={"100%"}>
+          <Box overflow="hidden" borderRadius={10} height={"100%"}>
             <CardAddress
               title={"Stake address"}
               type="right"
