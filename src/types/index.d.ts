@@ -1,4 +1,12 @@
-type FilterParams = "all" | "epochs" | "blocks" | "txs" | "tokens" | "stakes" | "addresses" | "delegations/pool-detail-header";
+type FilterParams =
+  | "all"
+  | "epochs"
+  | "blocks"
+  | "txs"
+  | "tokens"
+  | "stakes"
+  | "addresses"
+  | "delegations/pool-detail-header";
 
 interface SearchParams {
   filter?: FilterParams;
@@ -6,3 +14,5 @@ interface SearchParams {
 }
 
 type NETWORKS = import("../commons/utils/constants").NETWORKS;
+
+type ACCOUNT_ERROR = import("../commons/utils/constants").ACCOUNT_ERROR;

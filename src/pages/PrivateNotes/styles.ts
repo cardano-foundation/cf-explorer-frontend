@@ -65,11 +65,11 @@ export const ActionButton = styled("button")<{ typeButton: string }>`
 export const ButtonCancel = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
   color: "#ffffff",
-  background: theme.colorGreenLight,
+  background: theme.palette.primary.main,
   height: "32px",
-  boxShadow: "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
+  boxShadow: theme.shadow.dialog,
   ":hover": {
-    background: theme.colorGreenLight,
-    boxShadow: "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
+    background: theme.palette.primary.main,
+    boxShadow: theme.shadow.dialog,
   },
 }));

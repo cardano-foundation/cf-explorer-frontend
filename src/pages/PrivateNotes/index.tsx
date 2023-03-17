@@ -18,6 +18,8 @@ import { details } from "../../commons/routers";
 import Toast from "../../components/commons/Toast";
 import { DialogContentText } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { ButtonClose } from "../../components/ScriptModal/styles";
+import { CloseIcon } from "../../commons/resources";
 
 type TAction = {
   onClick: () => void;
@@ -158,7 +160,6 @@ const PrivateNotes = () => {
           emptyClassName="empty-content-table"
           columns={columns}
           data={data}
-          total={{ count: total, title: "Total Private Notes" }}
           pagination={{
             ...pageInfo,
             total: total,
@@ -183,23 +184,30 @@ const PrivateNotes = () => {
         severity={message.severity}
       />
       <Dialog open={!!selected}>
-        <DialogTitle textAlign={"left"}>Confirmation Required</DialogTitle>
+        <DialogTitle textAlign={"left"} fontWeight="bold" color={theme => theme.palette.text.primary}>
+          Confirmation Required
+        </DialogTitle>
+
+        <ButtonClose onClick={() => setSelected(null)}>
+          <img src={CloseIcon} alt="icon close" />
+        </ButtonClose>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText color={theme => theme.palette.text.secondary}>
             Are you sure to remove transaction private note {getShortHash(selected?.txHash || "")} ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={() => setSelected(null)}>
+          <ButtonCancel autoFocus onClick={() => setSelected(null)}>
             Cancel
-          </Button>
+          </ButtonCancel>
           <LoadingButton
             loading={loadingDelete}
             onClick={() => selected && handleClickRemoveNote(selected)}
             variant="contained"
             color="error"
+            style={{ textTransform: "capitalize", height: "32px" }}
           >
-            Delete
+            Remove
           </LoadingButton>
         </DialogActions>
       </Dialog>
