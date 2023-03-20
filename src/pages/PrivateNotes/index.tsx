@@ -6,20 +6,19 @@ import { SmallText, StyledLink } from "../../components/share/styled";
 import useFetchList from "../../commons/hooks/useFetchList";
 import AddPrivateNoteModal from "../../components/Account/AddPrivateNoteModal";
 import { Column } from "../../types/table";
-import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { ReactComponent as Expand } from "../../commons/resources/icons/expand.svg";
 import { ReactComponent as Warning } from "../../commons/resources/icons/warning.svg";
-import { AlertProps, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { Box, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { removePrivateNote } from "../../commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
 import { details } from "../../commons/routers";
-import Toast from "../../components/commons/Toast";
 import { DialogContentText } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { ButtonClose } from "../../components/ScriptModal/styles";
 import { CloseIcon } from "../../commons/resources";
+import useToast from "../../commons/hooks/useToast";
 
 type TAction = {
   onClick: () => void;
@@ -58,21 +57,11 @@ const PrivateNotes = () => {
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [selected, setSelected] = useState<TPrivateNote | null>(null);
   const [currentNote, setCurrentNote] = useState<TCurrentNote | undefined>();
-  const [message, setMessage] = useState<{ message: string; severity: AlertProps["severity"] }>({
-    message: "",
-    severity: "error",
-  });
+  const toast = useToast();
 
   const { data, total, refesh } = useFetchList("note/find-all", { network: NETWORK_TYPES[NETWORK], page, size }, true);
   const { search } = useLocation();
   const pageInfo = getPageInfo(search);
-
-  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setMessage({ message: "", severity: "error" });
-  };
 
   const handleClickViewDetail = (note: TPrivateNote) => {
     setCurrentNote({
@@ -87,17 +76,11 @@ const PrivateNotes = () => {
     setLoadingDelete(true);
     try {
       await removePrivateNote(note.id);
-      setMessage({
-        message: `Delete transaction private note ${getShortHash(note.txHash || "")} successfully`,
-        severity: "success",
-      });
+      toast.success(`Delete transaction private note ${getShortHash(note.txHash || "")} successfully`);
       setSelected(null);
       refesh();
     } catch (error) {
-      setMessage({
-        message: "Something went wrong!",
-        severity: "error",
-      });
+      toast.error("Something went wrong!");
     } finally {
       setLoadingDelete(false);
     }
@@ -170,18 +153,11 @@ const PrivateNotes = () => {
           }}
         />
       </Box>
-      <AddPrivateNoteModal
-        setMessage={setMessage}
+      <AddPrivateNoteModal 
         currentNote={currentNote}
         open={openModal}
         handleCloseModal={onCloseModal}
         refesh={refesh}
-      />
-      <Toast
-        open={!!message.message}
-        onClose={handleCloseToast}
-        messsage={message.message}
-        severity={message.severity}
       />
       <Dialog open={!!selected}>
         <DialogTitle textAlign={"left"} fontWeight="bold" color={theme => theme.palette.text.primary}>
