@@ -19,6 +19,7 @@ export const Title = styled("h3")`
   position: relative;
   text-align: left;
   margin: 0px;
+  margin-left: 20px;
 
   &::after {
     position: absolute;
