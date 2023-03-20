@@ -32,6 +32,7 @@ export const ItemIcon = styled("img")`
 
 export const Content = styled(Box)`
   min-height: 9.1425rem;
+  overflow: hidden;
 `;
 
 export const Name = styled("h4")`
