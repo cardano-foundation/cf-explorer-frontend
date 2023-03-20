@@ -5,7 +5,7 @@ import Table from "../../commons/Table";
 
 export const TopDelegateContainer = styled(BoxRaised)`
   margin-bottom: 24px;
-  padding: 30px 30px;
+  padding: 20px;
   text-align: left;
   @media screen and (max-width: 539px) {
     padding: 20px 15px;

@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 
 export const Title = styled("h3")<{ active: number }>`
   background: ${props => props.theme.palette.common.white};
@@ -8,3 +8,11 @@ export const Title = styled("h3")<{ active: number }>`
   text-align: left;
   text-transform: capitalize !important;
 `;
+
+export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
+  fontWeight: "bold",
+  textTransform: "capitalize",
+  fontFamily: '"Roboto", sans-serif',
+  fontSize: "1.125rem",
+  color: active ? theme.palette.common.black : theme.palette.text.hint,
+}));
