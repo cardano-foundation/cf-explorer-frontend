@@ -257,24 +257,22 @@ const Bookmark = () => {
       label: "Epoch",
       key: "EPOCH",
       component: (
-        <Box overflow={"auto"} height={"600px"}>
-          <StyledTable
-            total={{ title: "Total", count: total }}
-            pagination={{
-              total: total,
-              page,
-              size,
-              onChange: (page, size) => {
-                setPage(page - 1);
-                setSize(size);
-              },
-            }}
-            columns={columns}
-            data={data || []}
-            error={error}
-            loading={loading}
-          />
-        </Box>
+        <StyledTable
+          total={{ title: "Total", count: total }}
+          pagination={{
+            total: total,
+            page,
+            size,
+            onChange: (page, size) => {
+              setPage(page - 1);
+              setSize(size);
+            },
+          }}
+          columns={columns}
+          data={data || []}
+          error={error}
+          loading={loading}
+        />
       ),
     },
     {
