@@ -31,6 +31,7 @@ const Title = styled("h3")`
   text-align: left;
   margin-top: 0px;
   margin-bottom: 1.5rem;
+  font-size: 1.25rem;
 
   &::after {
     position: absolute;
