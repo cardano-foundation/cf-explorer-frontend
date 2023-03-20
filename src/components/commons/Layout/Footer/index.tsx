@@ -26,6 +26,11 @@ const FooterContainer = styled(Container)`
 const Copyright = styled("small")`
   color: ${props => props.theme.palette.grey[400]};
   font-family: var(--font-family-title);
+  ::first-letter {
+    font-size: 0.75em;
+    vertical-align: top;
+    margin-right: 2px;
+  }
   @media screen and (max-width: 1023px) {
     width: 100%;
     text-align: center;

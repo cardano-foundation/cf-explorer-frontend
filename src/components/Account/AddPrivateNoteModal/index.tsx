@@ -31,7 +31,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
 
   const handleSubmitData = async () => {
     if (txHash?.value && txHash.value?.length > 70) {
-      setMessage({ message: "Maximum reached!", severity: "error" });
+      setPrivateNote(prev => ({ ...prev, error: "Maximum reached!" }));
     } else
       try {
         setLoading(true);
