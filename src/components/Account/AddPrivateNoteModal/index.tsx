@@ -1,6 +1,6 @@
-import { AlertProps } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
+import useToast from "../../../commons/hooks/useToast";
 import { ACCOUNT_ERROR, NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
 import { addPrivateNote, editPrivateNote } from "../../../commons/utils/userRequest";
 import StyledModal from "../../commons/StyledModal";
@@ -12,17 +12,17 @@ interface IProps {
   handleCloseModal: () => void;
   currentNote?: TCurrentNote;
   refesh: () => void;
-  setMessage: ({ message, severity }: { message: string; severity: AlertProps["severity"] }) => void;
 }
 
 type TInput = {
   value?: string;
   error?: string;
 };
-const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseModal, refesh, setMessage }) => {
+const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseModal, refesh }) => {
   const [txHash, setTxHash] = useState<TInput | undefined>();
   const [privateNote, setPrivateNote] = useState<TInput | undefined>();
   const [loading, setLoading] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     setTxHash(prev => ({ ...prev, value: currentNote?.hash }));
@@ -31,7 +31,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
 
   const handleSubmitData = async () => {
     if (txHash?.value && txHash.value?.length > 70) {
-      setPrivateNote(prev => ({ ...prev, error: "Maximum reached!" }));
+      toast.error("Maximum reached!");
     } else
       try {
         setLoading(true);
@@ -46,10 +46,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
           const payload = { note: privateNote?.value || "", noteId: currentNote.id };
           await editPrivateNote(payload);
         }
-        setMessage({
-          message: `${!currentNote ? "Add" : "Update"} transaction private note successfully!`,
-          severity: "success",
-        });
+        toast.success(`${!currentNote ? "Add" : "Update"} transaction private note successfully!`);
         setTxHash(undefined);
         setPrivateNote(undefined);
         setLoading(false);

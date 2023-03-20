@@ -13,6 +13,7 @@ interface WalletAddress {
       displayName: string;
       fingerprint: string;
       quantity: number;
+      metadata?: ITokenMetadata;
     }
   ];
   stakeAddress: string;
@@ -30,4 +31,3 @@ interface WalletStake {
     poolId: string;
   };
 }
-
