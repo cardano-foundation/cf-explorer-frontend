@@ -8,7 +8,6 @@ export const HeaderDetailContainer = styled(Box)`
 
 export const BackButton = styled(Link)`
   display: inline-flex;
-  display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;

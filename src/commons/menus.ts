@@ -8,7 +8,6 @@ import {
   MediumIcon,
   ResourcesIcon,
   SupplyChainMenuIcon,
-  ToolMenuIcon,
 } from "./resources";
 import { routers } from "./routers";
 
@@ -26,8 +25,9 @@ interface Social {
   icon: IconType | string;
 }
 export const menus: Menu[] = [
-  { title: "DID", icon: DIDMenuIcon, tooltip: "Coming soon" },
-  { title: "Supply Chain", icon: SupplyChainMenuIcon, tooltip: "Coming soon" },
+  // comment for future use
+  // { title: "DID", icon: DIDMenuIcon, tooltip: "Coming soon" },
+  // { title: "Supply Chain", icon: SupplyChainMenuIcon, tooltip: "Coming soon" },
   {
     title: "Blockchain",
     icon: BlockChainMenuIcon,
@@ -49,11 +49,6 @@ export const menus: Menu[] = [
       { title: "Stake key registration", href: routers.STAKE_LIST.replace(":poolType?", "registration") },
       { title: "Pool Registration", href: "/registration-pools" },
     ],
-  },
-  {
-    title: "Tool",
-    href: "https://cardano-tools.io/latest",
-    icon: ToolMenuIcon,
   },
 ];
 
