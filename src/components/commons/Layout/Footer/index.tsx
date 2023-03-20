@@ -65,8 +65,10 @@ const Footer: React.FC = () => {
   return (
     <StyledFooter>
       <FooterContainer>
-        <Copyright>©2022 Cardano Foundation. All rights reserved (v1.0)</Copyright>
-        <Hyperlink>
+        <Copyright>© 2022 Cardano Foundation. All rights reserved v1.0</Copyright>
+        {/*
+        comment for laster use
+         <Hyperlink>
           <ExternalLink href="/" target="_blank" rel="noreferrer" title="Terms of Service">
             <small>Terms of Service</small>
           </ExternalLink>
@@ -74,7 +76,7 @@ const Footer: React.FC = () => {
           <ExternalLink href="/" target="_blank" rel="noreferrer" title="Privacy Policy">
             <small>Privacy Policy</small>
           </ExternalLink>
-        </Hyperlink>
+        </Hyperlink> */}
       </FooterContainer>
     </StyledFooter>
   );
