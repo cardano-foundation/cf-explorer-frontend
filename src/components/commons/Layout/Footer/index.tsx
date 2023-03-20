@@ -65,7 +65,7 @@ const Footer: React.FC = () => {
   return (
     <StyledFooter>
       <FooterContainer>
-        <Copyright>© 2022 Cardano Foundation. All rights reserved v1.0</Copyright>
+        <Copyright>©2022 Cardano Foundation. All rights reserved (v1.0)</Copyright>
         {/*
         comment for laster use
          <Hyperlink>
