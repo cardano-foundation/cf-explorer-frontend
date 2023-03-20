@@ -50,7 +50,6 @@ const PrivateNotes = () => {
     document.title = `My Notes | Cardano Explorer`;
   }, []);
 
-  const history = useHistory();
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
   const [openModal, setOpenModal] = useState(false);
@@ -142,7 +141,7 @@ const PrivateNotes = () => {
           style={{ overflow: "auto" }}
           emptyClassName="empty-content-table"
           columns={columns}
-          data={data}
+          data={data ?? []}
           pagination={{
             ...pageInfo,
             total: total,
@@ -153,12 +152,7 @@ const PrivateNotes = () => {
           }}
         />
       </Box>
-      <AddPrivateNoteModal 
-        currentNote={currentNote}
-        open={openModal}
-        handleCloseModal={onCloseModal}
-        refesh={refesh}
-      />
+      <AddPrivateNoteModal currentNote={currentNote} open={openModal} handleCloseModal={onCloseModal} refesh={refesh} />
       <Dialog open={!!selected}>
         <DialogTitle textAlign={"left"} fontWeight="bold" color={theme => theme.palette.text.primary}>
           Confirmation Required
