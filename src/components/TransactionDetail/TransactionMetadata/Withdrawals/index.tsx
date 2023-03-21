@@ -8,7 +8,7 @@ import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { AddressLink, Amount, ItemContainer, StatusIcon, StyledItem, Wrapper } from "./styles";
-import Header from "../../../commons/Layout/Header";
+import { Header } from "./styles";
 
 interface WithdrawalsProps {
   data: Transaction["withdrawals"] | null;
@@ -42,12 +42,12 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                 <Box flex={1}>
                   {item?.addressTo.map(address => {
                     return (
-                      <>
+                      <Box>
                         <CustomTooltip title={address}>
                           <AddressLink to={details.address(address)}>{getShortWallet(address || "")}</AddressLink>
                         </CustomTooltip>
                         <CopyButton text={address || ""} />
-                      </>
+                      </Box>
                     );
                   })}
                 </Box>
