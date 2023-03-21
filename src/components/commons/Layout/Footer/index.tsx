@@ -65,18 +65,7 @@ const Footer: React.FC = () => {
   return (
     <StyledFooter>
       <FooterContainer>
-        <Copyright>©2022 Cardano Foundation. All rights reserved (v1.0)</Copyright>
-        {/*
-        comment for laster use
-         <Hyperlink>
-          <ExternalLink href="/" target="_blank" rel="noreferrer" title="Terms of Service">
-            <small>Terms of Service</small>
-          </ExternalLink>
-          <Dot />
-          <ExternalLink href="/" target="_blank" rel="noreferrer" title="Privacy Policy">
-            <small>Privacy Policy</small>
-          </ExternalLink>
-        </Hyperlink> */}
+        <Copyright>©2022 Cardano Blockchain Explorer. All rights reserved. Version: 0.1.0</Copyright>
       </FooterContainer>
     </StyledFooter>
   );
