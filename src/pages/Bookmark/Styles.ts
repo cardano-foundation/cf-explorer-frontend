@@ -22,6 +22,6 @@ export const StyledTable = styled(Table)`
     height: 60px;
   }
   tbody tr td {
-    padding: 0 20px;
+    padding: 0 25px;
   }
 `;
