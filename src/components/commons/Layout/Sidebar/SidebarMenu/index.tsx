@@ -42,7 +42,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     if (!sidebar && width > 1023) setSidebar(true);
     else if (sidebar && width <= 1023) setSidebar(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width]);
+  }, [width > 1023]);
 
   const handleOpen = (item: string) => {
     setActive(item !== active ? item : null);
