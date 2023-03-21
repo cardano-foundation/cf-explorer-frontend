@@ -108,8 +108,8 @@ const Card = ({
                 </Box>
               </Box>
               <Box justifyContent={"space-between"} alignItems="center" width={"100%"} display="flex">
-                {type === "down" && (
-                  <Box mr={3}>
+                <Box mr={3}>
+                  {type === "down" && (
                     <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
                       <Link to={details.transaction(item.txHash)}>
                         <CustomTooltip title={item.txHash}>
@@ -126,9 +126,8 @@ const Card = ({
                       </Link>
                       <CopyButton text={item.txHash} />
                     </Box>
-                  </Box>
-                )}
-                <Box />
+                  )}
+                </Box>
                 <Box display={"flex"} alignItems="center" justifyContent={"space-between"}>
                   <Box overflow={"hidden"} display="flex" flexWrap={"wrap"} gap={1}>
                     {item.tokens.map((token, idx) => (
