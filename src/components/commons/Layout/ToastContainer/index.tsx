@@ -29,7 +29,7 @@ const ToastContainer: React.FC = () => {
       }
     }
   };
-  console.log(toasts);
+
   return (
     <>
       <StyledStack spacing={2}>

@@ -25,13 +25,15 @@ import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
 import { BookMark } from "../../types/bookmark";
 import useToast from "../../commons/hooks/useToast";
 
+type TabKeys = "ADDRESS" | "STAKE_KEY" | "POOL" | "EPOCH" | "BLOCK" | "TRANSACTION";
+
 const Bookmark = () => {
   const [bookmarks, setBookmarks] = useLocalStorage<BookMark[]>("bookmark", []);
-  const [activeTab, setActiveTab] = useState("ADDRESS");
+  const [activeTab, setActiveTab] = useState<TabKeys>("ADDRESS");
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
-  const [selected, setSelected] = useState<number | null>();
+  const [selected, setSelected] = useState<string | null>();
   const toast = useToast();
 
   const { data, loading, refesh, error, total } = useFetchList<Bookmark>(
@@ -49,22 +51,25 @@ const Bookmark = () => {
     setSelected(null);
   };
 
-  const deleteBookMark = async (id: number) => {
+  const deleteBookMark = async (keyword: string) => {
     try {
       setLoadingDelete(true);
-      await deleteBookmark(id);
-      setSelected(null);
-      setLoadingDelete(false);
-      setBookmarks(bookmarks?.filter(r => r.id !== id));
-      refesh();
-      toast.success("Successfully!");
+      const selectedBookmark = data?.find(d => d.keyword === keyword);
+      if (selectedBookmark?.id) {
+        await deleteBookmark(selectedBookmark?.id);
+        setSelected(null);
+        setLoadingDelete(false);
+        setBookmarks(bookmarks?.filter(r => r.keyword !== keyword));
+        refesh();
+        toast.success("Successfully!");
+      }
     } catch (error) {
       setSelected(null);
       setLoadingDelete(false);
       toast.error("Something went wrong!");
     }
   };
-  const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
+  const handleChange = (event: React.SyntheticEvent, tab: TabKeys) => {
     setActiveTab(tab);
     setPage(0);
     setSize(10);
@@ -175,7 +180,7 @@ const Bookmark = () => {
       key: "Action",
       minWidth: 120,
       render: (data, index) => (
-        <IconButton onClick={() => setSelected(data.id || 0)}>
+        <IconButton onClick={() => setSelected(data.keyword || "")}>
           <DeleteBookmark fontSize={10} />
         </IconButton>
       ),
@@ -320,6 +325,20 @@ const Bookmark = () => {
       ),
     },
   ];
+
+  const renderIdSelected = (keyword: string) => {
+    switch (activeTab) {
+      case "TRANSACTION":
+        return getShortHash(keyword);
+      case "ADDRESS":
+      case "STAKE_KEY":
+        return getShortWallet(keyword);
+
+      default:
+        return keyword;
+    }
+  };
+
   return (
     <Box>
       <TabContext value={activeTab}>
@@ -356,7 +375,7 @@ const Bookmark = () => {
         <DialogTitle textAlign={"left"}>Confirmation Required</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure to remove {colDynamic[activeTab].title} {selected} ?
+            Are you sure to remove {colDynamic[activeTab].title} {renderIdSelected(selected || "")} ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
