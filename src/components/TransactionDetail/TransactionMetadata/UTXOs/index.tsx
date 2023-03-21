@@ -128,6 +128,7 @@ const Card = ({
                     </Box>
                   </Box>
                 )}
+                <Box />
                 <Box display={"flex"} alignItems="center" justifyContent={"space-between"}>
                   <Box overflow={"hidden"} display="flex" flexWrap={"wrap"} gap={1}>
                     {item.tokens.map((token, idx) => (
