@@ -150,7 +150,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
               ))}
             </Box>
           </Box>
-          <Box px={3} pb={1} fontSize="0.75rem">
+          <Box px={3} pb={4} fontSize="0.75rem">
             Missing any data? click <StyledButton onClick={() => setOpenReportModal(true)}>here</StyledButton> to report
           </Box>
         </SideBar>

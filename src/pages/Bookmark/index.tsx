@@ -176,13 +176,15 @@ const Bookmark = () => {
       render: data => moment(data.createdDate).format("MM/DD/YYYY hh:mm:ss"),
     },
     {
-      title: "Action",
+      title: <Box textAlign={"right"}>Action</Box>,
       key: "Action",
       minWidth: 120,
       render: (data, index) => (
-        <IconButton onClick={() => setSelected(data.keyword || "")}>
-          <DeleteBookmark fontSize={10} />
-        </IconButton>
+        <Box display="flex" justifyContent={"flex-end"}>
+          <IconButton onClick={() => setSelected(data.keyword || "")}>
+            <DeleteBookmark fontSize={10} />
+          </IconButton>
+        </Box>
       ),
     },
   ];
