@@ -1,5 +1,5 @@
 import { Grid, Skeleton } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
@@ -24,8 +24,14 @@ import {
 } from "./style";
 
 const LatestTransactions: React.FC = () => {
-  const { data, loading } = useFetchList<Transactions>(API.TRANSACTION.LIST, { page: 0, size: 4 });
+  const { data, initialized, refesh } = useFetchList<Transactions>(API.TRANSACTION.LIST, { page: 0, size: 4 });
   const history = useHistory();
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refesh();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [refesh]);
   return (
     <TransactionContainer>
       <Header>
@@ -34,7 +40,7 @@ const LatestTransactions: React.FC = () => {
       </Header>
       {
         <Grid container spacing={2}>
-          {loading
+          {!initialized
             ? new Array(4).fill(0).map((_, index) => {
                 return (
                   <Grid item xl lg={3} xs={6} key={index}>
