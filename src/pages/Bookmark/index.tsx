@@ -25,14 +25,16 @@ import { deleteBookmark } from "../../commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
 import { BookMark } from "../../types/bookmark";
 
+type TabKeys = "ADDRESS" | "STAKE_KEY" | "POOL" | "EPOCH" | "BLOCK" | "TRANSACTION";
+
 const Bookmark = () => {
   const [bookmarks, setBookmarks] = useLocalStorage<BookMark[]>("bookmark", []);
-  const [activeTab, setActiveTab] = useState("ADDRESS");
+  const [activeTab, setActiveTab] = useState<TabKeys>("ADDRESS");
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [message, setMessage] = useState("");
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
-  const [selected, setSelected] = useState<number | null>();
+  const [selected, setSelected] = useState<string | null>();
 
   const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === "clickaway") {
@@ -57,22 +59,25 @@ const Bookmark = () => {
     setSelected(null);
   };
 
-  const deleteBookMark = async (id: number) => {
+  const deleteBookMark = async (keyword: string) => {
     try {
       setLoadingDelete(true);
-      await deleteBookmark(id);
-      setSelected(null);
-      setLoadingDelete(false);
-      setBookmarks(bookmarks?.filter(r => r.id !== id));
-      refesh();
-      setMessage("Successfully!");
+      const selectedBookmark = data?.find(d => d.keyword === keyword);
+      if (selectedBookmark?.id) {
+        await deleteBookmark(selectedBookmark?.id);
+        setSelected(null);
+        setLoadingDelete(false);
+        setBookmarks(bookmarks?.filter(r => r.keyword !== keyword));
+        refesh();
+        setMessage("Successfully!");
+      }
     } catch (error) {
       setSelected(null);
       setLoadingDelete(false);
       setMessage("Something went wrong!");
     }
   };
-  const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
+  const handleChange = (event: React.SyntheticEvent, tab: TabKeys) => {
     setActiveTab(tab);
     setPage(0);
     setSize(10);
@@ -88,7 +93,11 @@ const Bookmark = () => {
       key: "Address",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.address(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.address(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {getShortWallet(data.keyword)}
         </Box>
       ),
@@ -98,7 +107,11 @@ const Bookmark = () => {
       key: "Transaction",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.transaction(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.transaction(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {getShortHash(data.keyword)}
         </Box>
       ),
@@ -108,7 +121,11 @@ const Bookmark = () => {
       key: "Block",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.block(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.block(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {data.keyword}
         </Box>
       ),
@@ -118,7 +135,11 @@ const Bookmark = () => {
       key: "Epoch",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.epoch(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.epoch(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {data.keyword}
         </Box>
       ),
@@ -128,7 +149,11 @@ const Bookmark = () => {
       key: "Pool",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.delegation(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.delegation(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {data.keyword}
         </Box>
       ),
@@ -138,7 +163,11 @@ const Bookmark = () => {
       key: "StakeKey",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.stake(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.stake(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {getShortWallet(data.keyword)}
         </Box>
       ),
@@ -155,13 +184,15 @@ const Bookmark = () => {
       render: data => moment(data.createdDate).format("MM/DD/YYYY hh:mm:ss"),
     },
     {
-      title: "Action",
+      title: <Box textAlign={"right"}>Action</Box>,
       key: "Action",
       minWidth: 120,
       render: (data, index) => (
-        <IconButton onClick={() => setSelected(data.id || 0)}>
-          <DeleteBookmark fontSize={10} />
-        </IconButton>
+        <Box display="flex" justifyContent={"flex-end"}>
+          <IconButton onClick={() => setSelected(data.keyword || "")}>
+            <DeleteBookmark fontSize={10} />
+          </IconButton>
+        </Box>
       ),
     },
   ];
@@ -306,6 +337,20 @@ const Bookmark = () => {
       ),
     },
   ];
+
+  const renderIdSelected = (keyword: string) => {
+    switch (activeTab) {
+      case "TRANSACTION":
+        return getShortHash(keyword);
+      case "ADDRESS":
+      case "STAKE_KEY":
+        return getShortWallet(keyword);
+
+      default:
+        return keyword;
+    }
+  };
+
   return (
     <Box>
       <TabContext value={activeTab}>
@@ -342,7 +387,7 @@ const Bookmark = () => {
         <DialogTitle textAlign={"left"}>Confirmation Required</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure to remove {colDynamic[activeTab].title} {selected} ?
+            Are you sure to remove {colDynamic[activeTab].title} {renderIdSelected(selected || "")} ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
