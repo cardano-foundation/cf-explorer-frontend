@@ -13,6 +13,7 @@ export const Header = styled(Box)`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  padding: 0 20px;
   gap: 10px;
 `;
 
@@ -20,6 +21,7 @@ export const Title = styled("h3")`
   position: relative;
   text-align: left;
   margin: 0px;
+  font-size: 1.25rem;
 
   &::after {
     position: absolute;

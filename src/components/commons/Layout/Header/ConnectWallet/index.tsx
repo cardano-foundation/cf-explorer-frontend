@@ -15,8 +15,8 @@ import SignMessageModal from "../SignMessageModal";
 import SyncBookmarkModal from "../SyncBookmarkModal";
 import { useLocalStorage } from "react-use";
 import { BookMark } from "../../../../../types/bookmark";
-import Toast from "../../../Toast";
 import { removeAuthInfo } from "../../../../../commons/utils/helper";
+import useToast from "../../../../../commons/hooks/useToast";
 interface Props {}
 
 const ConnectWallet: React.FC<Props> = () => {
@@ -27,16 +27,10 @@ const ConnectWallet: React.FC<Props> = () => {
   const [, setBookmark] = useLocalStorage<BookMark[]>("bookmark", []);
 
   const [openSyncBookmark, setOpenSyncBookmark] = useState(false);
-  const [message, setMessage] = React.useState("");
   const [signature, setSignature] = React.useState("");
   const [submitting, setSubmitting] = useState(false);
   const [isSign, setIsSign] = useState(isConnected);
-  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setMessage("");
-  };
+  const toast = useToast();
 
   useEffect(() => {
     window.onbeforeunload = function () {
@@ -56,7 +50,7 @@ const ConnectWallet: React.FC<Props> = () => {
       const response = await getNonce({ address: stakeAddress || "" });
       return response.data;
     } catch (error: any) {
-      setMessage(error.data?.errorMessage || "Something went wrong!");
+      toast.error(error.data?.errorMessage || "Something went wrong!");
       setModalSignMessage(false);
     }
   }, [stakeAddress]);
@@ -107,7 +101,7 @@ const ConnectWallet: React.FC<Props> = () => {
           nonceValue.nonce,
           signature => handleSignIn(signature, nonceValue),
           (error: Error) => {
-            setMessage("User rejected the request!");
+            toast.error("User rejected the request!");
             setModalSignMessage(false);
             disconnect();
             removeAuthInfo();
@@ -115,7 +109,7 @@ const ConnectWallet: React.FC<Props> = () => {
         );
       }
     } catch (error) {
-      setMessage("Something went wrong!");
+      toast.error("Something went wrong!");
     } finally {
       setSubmitting(false);
     }
@@ -163,12 +157,10 @@ const ConnectWallet: React.FC<Props> = () => {
         onSignMessage={onSignMessage}
         loadingSubmit={submitting}
       />
-      <Toast open={!!message} onClose={handleCloseToast} messsage={message} severity={"error"} />
       <RegisterUsernameModal
         open={modalRegister}
         nonce={nonce}
-        signature={signature}
-        setMessage={setMessage}
+        signature={signature} 
         setIsSign={setIsSign}
       />
     </Box>

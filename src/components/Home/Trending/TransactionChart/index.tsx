@@ -9,12 +9,8 @@ import { API } from "../../../../commons/utils/api";
 
 const TransactionContainer = styled(BoxRaised)`
   margin-bottom: 24px;
-  padding: 36px;
-  height: calc(100% - 88px);
-  @media screen and (max-width: 1023px) {
-    padding: 20px;
-    height: calc(100% - 56px);
-  }
+  padding: 20px;
+  height: calc(100% - 56px);
   [class*="highcharts-container"] {
     height: 230px;
     max-height: 300px;
@@ -35,6 +31,7 @@ const Title = styled("h3")`
   text-align: left;
   margin-top: 0px;
   margin-bottom: 1.5rem;
+  font-size: 1.25rem;
 
   &::after {
     position: absolute;

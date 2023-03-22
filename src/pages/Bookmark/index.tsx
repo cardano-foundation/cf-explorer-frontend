@@ -18,29 +18,23 @@ import { StyledTable, TitleTab } from "./Styles";
 import { ReactComponent as DeleteBookmark } from "../../commons/resources/icons/deleteBookmark.svg";
 import { Link } from "react-router-dom";
 import { details } from "../../commons/routers";
-import Toast from "../../components/commons/Toast";
 import { getShortHash, getShortWallet } from "../../commons/utils/helper";
 import { useLocalStorage } from "react-use";
 import { deleteBookmark } from "../../commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
 import { BookMark } from "../../types/bookmark";
+import useToast from "../../commons/hooks/useToast";
+
+type TabKeys = "ADDRESS" | "STAKE_KEY" | "POOL" | "EPOCH" | "BLOCK" | "TRANSACTION";
 
 const Bookmark = () => {
   const [bookmarks, setBookmarks] = useLocalStorage<BookMark[]>("bookmark", []);
-  const [activeTab, setActiveTab] = useState("ADDRESS");
+  const [activeTab, setActiveTab] = useState<TabKeys>("ADDRESS");
   const [loadingDelete, setLoadingDelete] = useState(false);
-  const [message, setMessage] = useState("");
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
-  const [selected, setSelected] = useState<number | null>();
-
-  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setMessage("");
-  };
+  const [selected, setSelected] = useState<string | null>();
+  const toast = useToast();
 
   const { data, loading, refesh, error, total } = useFetchList<Bookmark>(
     "/bookmark/find-all",
@@ -57,22 +51,25 @@ const Bookmark = () => {
     setSelected(null);
   };
 
-  const deleteBookMark = async (id: number) => {
+  const deleteBookMark = async (keyword: string) => {
     try {
       setLoadingDelete(true);
-      await deleteBookmark(id);
-      setSelected(null);
-      setLoadingDelete(false);
-      setBookmarks(bookmarks?.filter(r => r.id !== id));
-      refesh();
-      setMessage("Successfully!");
+      const selectedBookmark = data?.find(d => d.keyword === keyword);
+      if (selectedBookmark?.id) {
+        await deleteBookmark(selectedBookmark?.id);
+        setSelected(null);
+        setLoadingDelete(false);
+        setBookmarks(bookmarks?.filter(r => r.keyword !== keyword));
+        refesh();
+        toast.success("Successfully!");
+      }
     } catch (error) {
       setSelected(null);
       setLoadingDelete(false);
-      setMessage("Something went wrong!");
+      toast.error("Something went wrong!");
     }
   };
-  const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
+  const handleChange = (event: React.SyntheticEvent, tab: TabKeys) => {
     setActiveTab(tab);
     setPage(0);
     setSize(10);
@@ -88,7 +85,11 @@ const Bookmark = () => {
       key: "Address",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.address(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.address(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {getShortWallet(data.keyword)}
         </Box>
       ),
@@ -98,7 +99,11 @@ const Bookmark = () => {
       key: "Transaction",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.transaction(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.transaction(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {getShortHash(data.keyword)}
         </Box>
       ),
@@ -108,7 +113,11 @@ const Bookmark = () => {
       key: "Block",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.block(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.block(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {data.keyword}
         </Box>
       ),
@@ -118,7 +127,11 @@ const Bookmark = () => {
       key: "Epoch",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.epoch(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.epoch(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {data.keyword}
         </Box>
       ),
@@ -128,7 +141,11 @@ const Bookmark = () => {
       key: "Pool",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.delegation(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.delegation(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {data.keyword}
         </Box>
       ),
@@ -138,7 +155,11 @@ const Bookmark = () => {
       key: "StakeKey",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.stake(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.stake(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {getShortWallet(data.keyword)}
         </Box>
       ),
@@ -155,13 +176,15 @@ const Bookmark = () => {
       render: data => moment(data.createdDate).format("MM/DD/YYYY hh:mm:ss"),
     },
     {
-      title: "Action",
+      title: <Box textAlign={"right"}>Action</Box>,
       key: "Action",
       minWidth: 120,
       render: (data, index) => (
-        <IconButton onClick={() => setSelected(data.id || 0)}>
-          <DeleteBookmark fontSize={10} />
-        </IconButton>
+        <Box display="flex" justifyContent={"flex-end"}>
+          <IconButton onClick={() => setSelected(data.keyword || "")}>
+            <DeleteBookmark fontSize={10} />
+          </IconButton>
+        </Box>
       ),
     },
   ];
@@ -241,24 +264,22 @@ const Bookmark = () => {
       label: "Epoch",
       key: "EPOCH",
       component: (
-        <Box overflow={"auto"} height={"600px"}>
-          <StyledTable
-            total={{ title: "Total", count: total }}
-            pagination={{
-              total: total,
-              page,
-              size,
-              onChange: (page, size) => {
-                setPage(page - 1);
-                setSize(size);
-              },
-            }}
-            columns={columns}
-            data={data || []}
-            error={error}
-            loading={loading}
-          />
-        </Box>
+        <StyledTable
+          total={{ title: "Total", count: total }}
+          pagination={{
+            total: total,
+            page,
+            size,
+            onChange: (page, size) => {
+              setPage(page - 1);
+              setSize(size);
+            },
+          }}
+          columns={columns}
+          data={data || []}
+          error={error}
+          loading={loading}
+        />
       ),
     },
     {
@@ -306,6 +327,20 @@ const Bookmark = () => {
       ),
     },
   ];
+
+  const renderIdSelected = (keyword: string) => {
+    switch (activeTab) {
+      case "TRANSACTION":
+        return getShortHash(keyword);
+      case "ADDRESS":
+      case "STAKE_KEY":
+        return getShortWallet(keyword);
+
+      default:
+        return keyword;
+    }
+  };
+
   return (
     <Box>
       <TabContext value={activeTab}>
@@ -342,7 +377,7 @@ const Bookmark = () => {
         <DialogTitle textAlign={"left"}>Confirmation Required</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure to remove {colDynamic[activeTab].title} {selected} ?
+            Are you sure to remove {colDynamic[activeTab].title} {renderIdSelected(selected || "")} ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -359,13 +394,6 @@ const Bookmark = () => {
           </LoadingButton>
         </DialogActions>
       </Dialog>
-
-      <Toast
-        open={!!message}
-        onClose={handleCloseToast}
-        messsage={message}
-        severity={message.includes("Successfully") ? "success" : "error"}
-      />
     </Box>
   );
 };

@@ -11,6 +11,9 @@ export const ContentBox = styled(Box)(({ theme }) => ({
 }));
 export const SideBar = styled(Box)(({ theme }) => ({
   borderRight: `1px solid ${theme.palette.grey[50]}`,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
 }));
 
 export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
