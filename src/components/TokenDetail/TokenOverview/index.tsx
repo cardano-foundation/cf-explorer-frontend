@@ -39,7 +39,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   const listItem = [
     {
       title: "Total Supply",
-      value: <Box component={"span"}>{formatADAFull(data?.supply)}</Box>,
+      value: <Box component={"span"}>{numberWithCommas(data?.supply)}</Box>,
       icon: slotIcon,
     },
     { title: "Decimal", icon: decimalIcon, value: data?.metadata?.decimals || 0 },

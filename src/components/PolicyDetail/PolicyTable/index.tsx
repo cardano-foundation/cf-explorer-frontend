@@ -53,9 +53,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     title: "Total Supply",
     key: "totalSupply",
     minWidth: "150px",
-    render: r => (
-      <Box component={"span"}>{formatADAFull(new BigNumber(r.supply).multipliedBy(10 ** 6).toString())}</Box>
-    ),
+    render: r => <Box component={"span"}>{numberWithCommas(r.supply)}</Box>,
   },
   {
     title: "Total Transactions",
