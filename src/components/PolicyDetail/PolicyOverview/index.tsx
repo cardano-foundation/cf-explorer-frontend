@@ -27,6 +27,7 @@ import { JsonViewer } from "@textea/json-viewer";
 
 import { IconButton } from "@mui/material";
 import { ReactComponent as Bookmark } from "../../../commons/resources/icons/Bookmark.svg";
+import ScriptModal from "../../ScriptModal";
 
 interface Props {
   data: PolicyDetail | null;
@@ -34,6 +35,7 @@ interface Props {
 }
 
 const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
+  console.log("🚀 ~ file: index.tsx:37 ~ data:", data);
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
 
@@ -84,43 +86,9 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
         </CardItem>
       </Box>
 
-      <ScriptModal open={openModal} onClose={() => setOpenModal(false)} script={data?.policyScript} />
+      <ScriptModal open={openModal} onClose={() => setOpenModal(false)} policy={data?.policyId || ""} />
     </Box>
   );
 };
 
 export default PolicyOverview;
-
-interface ScriptModalProps {
-  open: boolean;
-  onClose: () => void;
-  script?: string;
-}
-const ScriptModal: React.FC<ScriptModalProps> = ({ script, ...props }) => {
-  const theme = useTheme();
-  return (
-    <Modal {...props}>
-      <ModalContainer>
-        <ButtonClose onClick={props.onClose}>
-          <img src={closeIcon} alt="icon close" />
-        </ButtonClose>
-        <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Roboto", sans-serif'}>
-          Policy script
-        </Box>
-        {script && (
-          <ViewJson>
-            <JsonViewer
-              value={JSON.parse(script || "")}
-              displayObjectSize={false}
-              displayDataTypes={false}
-              enableClipboard={false}
-              collapseStringsAfterLength={false}
-              style={{ padding: 0, background: "none", color: theme.palette.text.secondary }}
-              rootName={false}
-            />
-          </ViewJson>
-        )}
-      </ModalContainer>
-    </Modal>
-  );
-};
