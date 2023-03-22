@@ -34,7 +34,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
       <AnalyticsTitle>Analytics</AnalyticsTitle>
       <GridWrapper container columns={12} spacing={3}>
         <Grid item xs={12} lg={9}>
-          <Box marginBottom={10}>
+          <Box>
             <Button
               active={selected === "epochChart" ? 1 : 0}
               style={{ marginRight: "2px" }}
