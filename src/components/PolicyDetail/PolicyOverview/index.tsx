@@ -23,6 +23,7 @@ interface Props {
 }
 
 const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
+  console.log("🚀 ~ file: index.tsx:37 ~ data:", data);
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
 
