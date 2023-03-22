@@ -34,7 +34,7 @@ export const ChartContainer = styled("div")`
 
 export const GridRight = styled(Grid)`
   flex: 1;
-  max-height: calc(100% - 50px);
+  max-height: calc(100% - 38px);
   background: ${props => props.theme.palette.text.secondary};
   border-radius: 12px;
   box-shadow: ${props => props.theme.shadow.card};
