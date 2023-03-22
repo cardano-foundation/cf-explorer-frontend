@@ -18,29 +18,21 @@ import { StyledTable, TitleTab } from "./Styles";
 import { ReactComponent as DeleteBookmark } from "../../commons/resources/icons/deleteBookmark.svg";
 import { Link } from "react-router-dom";
 import { details } from "../../commons/routers";
-import Toast from "../../components/commons/Toast";
 import { getShortHash, getShortWallet } from "../../commons/utils/helper";
 import { useLocalStorage } from "react-use";
 import { deleteBookmark } from "../../commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
 import { BookMark } from "../../types/bookmark";
+import useToast from "../../commons/hooks/useToast";
 
 const Bookmark = () => {
   const [bookmarks, setBookmarks] = useLocalStorage<BookMark[]>("bookmark", []);
   const [activeTab, setActiveTab] = useState("ADDRESS");
   const [loadingDelete, setLoadingDelete] = useState(false);
-  const [message, setMessage] = useState("");
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
   const [selected, setSelected] = useState<number | null>();
-
-  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setMessage("");
-  };
+  const toast = useToast();
 
   const { data, loading, refesh, error, total } = useFetchList<Bookmark>(
     "/bookmark/find-all",
@@ -65,11 +57,11 @@ const Bookmark = () => {
       setLoadingDelete(false);
       setBookmarks(bookmarks?.filter(r => r.id !== id));
       refesh();
-      setMessage("Successfully!");
+      toast.success("Successfully!");
     } catch (error) {
       setSelected(null);
       setLoadingDelete(false);
-      setMessage("Something went wrong!");
+      toast.error("Something went wrong!");
     }
   };
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
@@ -88,7 +80,11 @@ const Bookmark = () => {
       key: "Address",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.address(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.address(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {getShortWallet(data.keyword)}
         </Box>
       ),
@@ -98,7 +94,11 @@ const Bookmark = () => {
       key: "Transaction",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.transaction(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.transaction(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {getShortHash(data.keyword)}
         </Box>
       ),
@@ -108,7 +108,11 @@ const Bookmark = () => {
       key: "Block",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.block(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.block(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {data.keyword}
         </Box>
       ),
@@ -118,7 +122,11 @@ const Bookmark = () => {
       key: "Epoch",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.epoch(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.epoch(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {data.keyword}
         </Box>
       ),
@@ -128,7 +136,11 @@ const Bookmark = () => {
       key: "Pool",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.delegation(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.delegation(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {data.keyword}
         </Box>
       ),
@@ -138,7 +150,11 @@ const Bookmark = () => {
       key: "StakeKey",
       minWidth: 120,
       render: data => (
-        <Box component={Link} to={details.stake(data.keyword)} color={theme => `${theme.palette.secondary.main} !important`}>
+        <Box
+          component={Link}
+          to={details.stake(data.keyword)}
+          color={theme => `${theme.palette.secondary.main} !important`}
+        >
           {getShortWallet(data.keyword)}
         </Box>
       ),
@@ -361,13 +377,6 @@ const Bookmark = () => {
           </LoadingButton>
         </DialogActions>
       </Dialog>
-
-      <Toast
-        open={!!message}
-        onClose={handleCloseToast}
-        messsage={message}
-        severity={message.includes("Successfully") ? "success" : "error"}
-      />
     </Box>
   );
 };

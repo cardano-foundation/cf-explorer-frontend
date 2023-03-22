@@ -24,8 +24,8 @@ import { ReactComponent as ReportDiscord } from "../../../../commons/resources/i
 import { ReactComponent as ReportMail } from "../../../../commons/resources/icons/reportMail.svg";
 import { DialogTitle } from "@mui/material";
 import CustomTooltip from "../../CustomTooltip";
-import Toast from "../../Toast";
-import { AlertProps } from "@mui/material";
+import useToast from "../../../../commons/hooks/useToast";
+import NotFound from "../../../../pages/NotFound";
 interface Props {
   children: React.ReactNode;
 }
@@ -35,10 +35,6 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   const { userData } = useSelector(({ user }: RootState) => user);
   const [openReportModal, setOpenReportModal] = useState(false);
   const [isUploadAvatar, setIsUploadAvatar] = useState(false);
-  const [message, setMessage] = useState<{ message: string; severity: AlertProps["severity"] }>({
-    message: "",
-    severity: "error",
-  });
   const fetchUserInfo = useCallback(async () => {
     try {
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
@@ -46,6 +42,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
     } catch (error) {}
   }, []);
   const theme = useTheme();
+  const toast = useToast();
 
   const uploadImgRef = useRef(null);
 
@@ -68,20 +65,14 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
         if (data && data.id && data.avatar) {
           await fetchUserInfo();
         }
-        setMessage({ message: "Your avatar has been changed.", severity: "success" });
+        toast.success("Your avatar has been changed.");
       }
     } catch (error) {
     } finally {
       setIsUploadAvatar(false);
     }
   };
-  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setMessage({ message: "", severity: "error" });
-  };
-  // if (!userData) return <NotFound />;
+  if (!userData) return <NotFound />;
   return (
     <Wrapper>
       <Box component={"h2"} textAlign="left">
@@ -192,12 +183,6 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
           </Box>
         </Box>
       </Dialog>
-      <Toast
-        open={!!message.message}
-        onClose={handleCloseToast}
-        messsage={message.message}
-        severity={message.severity}
-      />
     </Wrapper>
   );
 };

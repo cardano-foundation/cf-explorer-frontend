@@ -6,6 +6,7 @@ import storage from "redux-persist/lib/storage";
 import { RootState } from "./types";
 import userReducer, { setStoreUser } from "./user";
 import systemReducer, { setStoreSystem } from "./system";
+import toastReducer, { setStoreToast } from "./toast";
 
 let customStore: Store | undefined;
 
@@ -35,6 +36,7 @@ export const getStore = (): Store<RootState> => {
 const appReducer = combineReducers({
   user: persistReducer(userPersistConfig, userReducer),
   system: systemReducer,
+  toast: toastReducer,
 });
 
 const rootReducer = (state: any, action: any) => appReducer(state, action);
@@ -52,5 +54,6 @@ export const persistor = persistStore(store, {});
 setStore(store);
 setStoreUser(store);
 setStoreSystem(store);
+setStoreToast(store);
 
 export default store;
