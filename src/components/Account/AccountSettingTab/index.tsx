@@ -84,6 +84,14 @@ const AccountSettingTab: React.FC = () => {
         }
         payload = { email: email.value };
       } else {
+        if (
+          (username.value?.length || 0) < 5 ||
+          (username?.value?.length || 0) > 30 ||
+          alphaNumeric.test(username.value || "")
+        )
+          return toast.error(
+            "Username has to be from 5 to 30 characters in length, only alphanumeric characters allowed"
+          );
         const checkExistUsername = await existUserName({ username: username.value || "" });
         if (checkExistUsername.data) {
           return toast.error("This username existed, please enter another!");
@@ -102,7 +110,7 @@ const AccountSettingTab: React.FC = () => {
         return toast.success(`Your ${field} has been changed.`);
       }
     } catch (error) {
-      return toast.success((error as Error).message || "Something went wrong!");
+      return toast.error((error as Error).message || "Something went wrong!");
     }
   };
 
@@ -127,11 +135,6 @@ const AccountSettingTab: React.FC = () => {
             setUsername({ value: event.target.value, errorMsg: "Username is required!" });
           }
         }}
-        disabledButton={
-          (username.value && username.value?.length < 5) ||
-          (username.value && username?.value?.length > 30) ||
-          alphaNumeric.test(username.value || "")
-        }
         field="username"
         action={() => onEditInfo("username")}
       />
