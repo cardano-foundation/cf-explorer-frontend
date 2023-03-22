@@ -1,60 +1,28 @@
-import axios from "axios";
-import React, { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
-
+import React, { useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import useFetch from "../../commons/hooks/useFetch";
+import { API } from "../../commons/utils/api";
+import NoRecord from "../../components/commons/NoRecord";
 import TokenOverview from "../../components/TokenDetail/TokenOverview";
 import TokenTableData from "../../components/TokenDetail/TokenTableData";
-
 import { StyledContainer } from "./styles";
 
-interface ITokenDetail {}
-
-const TokenDetail: React.FC<ITokenDetail> = () => {
-  const params = useParams<{ tokenId: string }>();
-  const { data: tokenOverview, loading } = useFetch<ITokenOverview>(`tokens/${params.tokenId}`);
-
-  const [tokenMetadataLoading, setTokenMetadataLoading] = useState<boolean>(false);
-  const [tokenMetadata, setTokenMetadata] = useState<ITokenMetadata>({});
+const TokenDetail: React.FC = () => {
+  const { tokenId } = useParams<{ tokenId: string }>();
+  const { state } = useLocation<{ data?: IToken }>();
+  const { data, loading, initialized, error } = useFetch<IToken>(state?.data ? "" : `${API.TOKEN}/${tokenId}`, state?.data);
 
   useEffect(() => {
-    async function loadMetadata() {
-      if (tokenOverview) {
-        setTokenMetadataLoading(true);
+    window.history.replaceState({}, document.title);
+    document.title = `Token ${tokenId} | Cardano Explorer`;
+  }, [tokenId]);
 
-        try {
-          const {
-            data: { subjects },
-          } = await axios.post("/metadata/query", {
-            subjects: [`${tokenOverview.policy}${tokenOverview.name}`],
-            properties: ["policy", "logo", "decimals"],
-          });
-
-          if (subjects.length !== 0) {
-            setTokenMetadata({
-              policy: subjects[0]?.policy,
-              logo: subjects[0]?.logo.value,
-              decimals: subjects[0]?.decimals.value,
-            });
-          }
-        } catch (err) {}
-
-        setTokenMetadataLoading(false);
-      }
-      return true;
-    }
-    loadMetadata();
-  }, [tokenOverview]);
-
-  const mergedToken: IToken = useMemo(
-    () => ({ ...tokenOverview, logo: tokenMetadata.logo, decimals: tokenMetadata.decimals }),
-    [tokenOverview, tokenMetadata]
-  );
+  if ((initialized && !data) || error) return <NoRecord />;
 
   return (
     <StyledContainer>
-      <TokenOverview data={mergedToken} loading={loading} tokenMetadataLoading={tokenMetadataLoading} />
-      <TokenTableData totalSupply={mergedToken.supply}/>
+      <TokenOverview data={data} loading={loading} />
+      <TokenTableData totalSupply={data?.supply} />
     </StyledContainer>
   );
 };

@@ -1,16 +1,19 @@
-import { MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
+import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { alpha, MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
 import React from "react";
 import { BiChevronDown } from "react-icons/bi";
-import { useSelector } from "react-redux";
-import { NETWORKS } from "../../../../../commons/utils/constants";
-import { RootState } from "../../../../../stores/types";
-import { setNetwork } from "../../../../../stores/user";
+import { useLocalStorage } from "react-use";
+import { NETWORK, NETWORKS, NETWORK_NAMES } from "../../../../../commons/utils/constants";
+import { removeAuthInfo } from "../../../../../commons/utils/helper";
+import StorageUtils from "../../../../../commons/utils/storage";
+import { signOut } from "../../../../../commons/utils/userRequest";
+import { BookMark } from "../../../../../types/bookmark";
 
 const StyledSelect = styled(Select)<{ home: number }>`
   font-family: var(--font-family-title);
-  border: 2px solid ${props => (props.home ? "#FFFFFF48" : "#c8cdd8")};
+  border: 2px solid ${({ home, theme }) => (home ? alpha(theme.palette.common.white, 0.3) : theme.palette.border.hint)};
   background: transparent;
-  color: ${props => (props.home ? props.theme.textColorReverse : "#344054")};
+  color: ${({ home, theme }) => (home ? theme.palette.primary.contrastText : theme.palette.text.secondary)};
   border-radius: 8px;
   & > div {
     padding: 6.5px 12px;
@@ -22,7 +25,7 @@ const StyledSelect = styled(Select)<{ home: number }>`
     border: none !important;
   }
   & > svg {
-    color: ${props => (props.home ? props.theme.textColorReverse : "#344054")};
+    color: ${({ home, theme }) => (home ? theme.palette.primary.contrastText : theme.palette.text.secondary)};
     font-size: 20px;
   }
 `;
@@ -32,15 +35,31 @@ interface Props {
 }
 
 const SelectNetwork: React.FC<Props> = props => {
-  const { network } = useSelector(({ user }: RootState) => user);
+  const { disconnect } = useCardano({
+    limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
+  });
+  const [, , clearBookmark] = useLocalStorage<BookMark[]>("bookmark", []);
 
-  const handleChange = (e: SelectChangeEvent<unknown>) => {
-    setNetwork(e.target.value as keyof typeof NETWORKS);
+  const handleChange = async (e: SelectChangeEvent<unknown>) => {
+    try {
+      await signOut({
+        refreshJwt: localStorage.getItem("refreshToken") || "",
+        username: localStorage.getItem("username") || "",
+      });
+    } catch (error) {
+    } finally {
+      clearBookmark();
+      removeAuthInfo();
+      disconnect();
+      removeAuthInfo();
+      StorageUtils.setNetwork(e.target.value as NETWORKS);
+      window.location.href = "/";
+    }
   };
 
   return (
-    <StyledSelect onChange={handleChange} value={network} IconComponent={BiChevronDown} home={props.home ? 1 : 0}>
-      {Object.entries(NETWORKS).map(([value, name]) => (
+    <StyledSelect onChange={handleChange} value={NETWORK} IconComponent={BiChevronDown} home={props.home ? 1 : 0}>
+      {Object.entries(NETWORK_NAMES).map(([value, name]) => (
         <MenuItem key={value} value={value}>
           {name}
         </MenuItem>

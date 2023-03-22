@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Box, Skeleton } from "@mui/material";
+import { alpha, Box, Skeleton } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { routers } from "../../../commons/routers";
-
-import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
@@ -11,7 +10,6 @@ import infoIcon from "../../../commons/resources/icons/info.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
 import exchageIcon from "../../../commons/resources/icons/Union.svg";
 import decimalIcon from "../../../commons/resources/icons/decimal.svg";
-
 import {
   BackButton,
   BackText,
@@ -20,37 +18,31 @@ import {
   HeaderContainer,
   HeaderTitle,
   HeaderTitleSkeleton,
+  LogoEmpty,
   SlotLeader,
   SlotLeaderContainer,
   SlotLeaderSkeleton,
   TitleCard,
   ValueCard,
 } from "./styles";
-import moment from "moment";
 import ScriptModal from "../../ScriptModal";
-import CustomTooltip from "../../commons/CustomTooltip";
 
 interface ITokenOverview {
   data: IToken | null;
   loading: boolean;
-  tokenMetadataLoading: boolean;
 }
 
-const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataLoading }) => {
+const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
 
   const listItem = [
     {
       title: "Total Supply",
-      value: (
-        <CustomTooltip title={numberWithCommas(data?.supply || 0)}>
-          <Box>{formatADA(data?.supply ? data.supply * 1000000 : 0)}</Box>
-        </CustomTooltip>
-      ),
+      value: <Box component={"span"}>{formatADAFull(data?.supply)}</Box>,
       icon: slotIcon,
     },
-    { title: "Decimal", icon: decimalIcon, value: data?.decimals || 0 },
+    { title: "Decimal", icon: decimalIcon, value: data?.metadata?.decimals || 0 },
     {
       title: (
         <Box display={"flex"} alignItems="center">
@@ -61,7 +53,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataL
         </Box>
       ),
       icon: exchageIcon,
-      value: numberWithCommas(data?.txCount || 0),
+      value: numberWithCommas(data?.txCount),
     },
     {
       title: (
@@ -73,12 +65,12 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataL
         </Box>
       ),
       icon: timeIcon,
-      value: moment(data?.createdOn).format("MM/DD/YYYY HH:mm:ss"),
+      value: formatDateTimeLocal(data?.createdOn || ""),
     },
   ];
 
   return (
-    <Box>
+    <Box textAlign={"left"}>
       <BackButton to={routers.TOKEN_LIST}>
         <HiArrowLongLeft />
         <BackText>Back</BackText>
@@ -101,7 +93,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataL
         )}
       </SlotLeaderContainer>
       {loading && (
-        <Box height={150} width="100%" borderRadius={props => props.borderRadius} overflow="hidden">
+        <Box height={150} width="100%" borderRadius={10} overflow="hidden">
           <Skeleton height={"100%"} width="100%" variant="rectangular" />
         </Box>
       )}
@@ -113,9 +105,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataL
             </Box>
             <Box display={"flex"} flexDirection="column" height={"80%"} justifyContent="space-between">
               <Box
-                color={props => props.colorGreenLight}
+                color={theme => theme.palette.primary.main}
                 fontWeight="bold"
-                fontFamily={'"Space Mono", monospace, sans-serif'}
+                fontFamily={'"Roboto", sans-serif'}
                 fontSize={"1.125rem"}
                 component="button"
                 border={"none"}
@@ -131,20 +123,27 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, tokenMetadataL
                 Policy Script
               </Box>
               <Box>
-                <Box display={"flex"} alignItems="center" fontWeight={"bold"}>
+                <Box display={"flex"} alignItems="center" fontWeight={"bold"} mb={1}>
                   {data?.displayName || ""}
-                  {data?.metadata && data?.metadata?.logo && (
+                  {data?.metadata && data?.metadata?.logo ? (
                     <Box
                       component={"img"}
-                      width={30}
-                      height={30}
+                      width={"auto"}
+                      height={36}
                       src={`data:image/png;base64,${data.metadata.logo}`}
                       alt="logo icon"
                       ml={1}
                     />
+                  ) : (
+                    <LogoEmpty ml={1} />
                   )}
                 </Box>
-                <Box display={"flex"} alignItems="center" fontSize={"0.75rem"} color="rgba(0,0,0,0.5)">
+                <Box
+                  display={"flex"}
+                  alignItems="center"
+                  fontSize={"0.75rem"}
+                  color={theme => alpha(theme.palette.common.black, 0.5)}
+                >
                   {data?.metadata?.description || ""}
                 </Box>
               </Box>

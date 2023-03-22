@@ -1,17 +1,16 @@
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import moment from "moment";
 import React from "react";
 import useFetch from "../../../commons/hooks/useFetch";
-
 import { CurentEpochIcon, LiveStakeIcon, RocketBackground } from "../../../commons/resources";
-import { routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
+import { API } from "../../../commons/utils/api";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
-
+import { formatADAFull, numberWithCommas } from "../../../commons/utils/helper";
 import { StyledCard, StyledImg, StyledLinearProgress, StyledSkeleton } from "./styles";
 
 const OverViews: React.FC = () => {
-  const { data, loading } = useFetch<OverViewDelegation>("/delegation/header");
+  const { data, loading } = useFetch<OverViewDelegation>(API.DELEGATION.HEADER);
 
   if (loading) {
     return (
@@ -37,43 +36,51 @@ const OverViews: React.FC = () => {
         <StyledCard.Container>
           <StyledCard.Content>
             <StyledCard.Title>Epoch</StyledCard.Title>
-            <StyledCard.Link to={routers.EPOCH_DETAIL.replace(":epochId", "" + data?.epochNo || "")}>
-              {data?.epochNo}
-            </StyledCard.Link>
-            <span style={{ color: "#667085" }}>
+            <StyledCard.Link to={details.epoch(data?.epochNo)}>{data?.epochNo}</StyledCard.Link>
+            <Box component="span" sx={{ color: theme => theme.palette.grey[400] }}>
               End in:{" "}
               <StyledCard.Comment>
                 {duration.days()} day {duration.hours()} hours {duration.minutes()} minutes
               </StyledCard.Comment>
-            </span>
+            </Box>
           </StyledCard.Content>
           <StyledImg src={CurentEpochIcon} alt="Clock" />
         </StyledCard.Container>
       </Grid>
       <Grid item xl={4} md={6} xs={12}>
-        <StyledCard.Container>
-          <StyledCard.Content>
-            <StyledCard.Title>Slot</StyledCard.Title>
-            <StyledCard.Value>
-              {data?.epochSlotNo}
-              <span style={{ color: "#98A2B3", fontWeight: "400" }}> / {MAX_SLOT_EPOCH}</span>
-            </StyledCard.Value>
-            <StyledLinearProgress variant="determinate" value={((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100} />
-          </StyledCard.Content>
-          <StyledImg src={RocketBackground} alt="Rocket" />
-        </StyledCard.Container>
+        <Box>
+          <Box bgcolor={theme => theme.palette.common.white} boxShadow={theme => theme.shadow.card} borderRadius="12px">
+            <StyledCard.Container style={{ boxShadow: "none" }}>
+              <StyledCard.Content>
+                <StyledCard.Title>Slot</StyledCard.Title>
+                <StyledCard.Value>
+                  {data?.epochSlotNo}
+                  <Box component="span" sx={{ color: theme => theme.palette.text.hint, fontWeight: "400" }}>
+                    / {MAX_SLOT_EPOCH}
+                  </Box>
+                </StyledCard.Value>
+              </StyledCard.Content>
+              <StyledImg src={RocketBackground} alt="Rocket" />
+            </StyledCard.Container>
+            <Box position={"relative"} top={-30} px={4}>
+              <StyledLinearProgress variant="determinate" value={((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100} />
+            </Box>
+          </Box>
+        </Box>
       </Grid>
       <Grid item xl={4} md={6} xs={12}>
         <StyledCard.Container>
-          <StyledCard.Content>
+          <StyledCard.Content style={{ flex: 1 }}>
             <StyledCard.Title>Live Stake</StyledCard.Title>
-            <StyledCard.Value>{formatADA(data?.liveStake)}</StyledCard.Value>
+            <StyledCard.Value>{formatADAFull(data?.liveStake)}</StyledCard.Value>
           </StyledCard.Content>
-          <StyledCard.Content>
+          <StyledCard.Content style={{ flex: 1 }}>
             <StyledCard.Title>Delegators</StyledCard.Title>
-            <StyledCard.Value>{numberWithCommas(data?.delegators || 0)}</StyledCard.Value>
+            <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
           </StyledCard.Content>
-          <StyledImg src={LiveStakeIcon} alt="Rocket" />
+          <Box flex={"1"}>
+            <StyledImg src={LiveStakeIcon} alt="Rocket" />
+          </Box>
         </StyledCard.Container>
       </Grid>
     </Grid>

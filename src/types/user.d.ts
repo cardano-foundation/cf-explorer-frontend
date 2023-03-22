@@ -1,18 +1,22 @@
 import { NETWORKS } from "../commons/utils/constants";
 
-export declare type SupportedWallets = "Flint" | "Nami" | "Eternl" | "Yoroi";
+export declare type SupportedWallets = "Flint" | "Nami" | "Eternl" | "Yoroi" | "Typhon";
 
 export type Wallet = {
   name: SupportedWallets;
   icon: string;
+  link: string;
 };
 export declare type ThemeType = "dark" | "light";
 
 export declare interface UserDataType {
-  id: number;
+  avatar: string;
   email: string;
   wallet: string;
-  name: string;
+  username: string;
+  sizeBookmark: number;
+  sizeNote: number;
+  lastLogin: string;
 }
 
 export declare interface UserStoreType {
@@ -23,7 +27,9 @@ export declare interface UserStoreType {
   chainID: string | null;
   provider: any;
   openModal: boolean;
-  network: keyof typeof NETWORKS;
   sidebar: boolean;
   onDetailView: boolean;
+  modalRegister: boolean;
+  modalSignMessage: boolean;
+  nonce: NonceObject | null;
 }

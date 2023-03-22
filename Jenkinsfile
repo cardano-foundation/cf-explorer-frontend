@@ -26,17 +26,17 @@ pipeline {
         stage('Deliver') {
             steps {
 				script {
-                    if (env.BRANCH_NAME == 'dev') {
+                    if (env.BRANCH_NAME == 'develop') {
                         envFileDeploy = '/tmp/dev-fe.env'
                     }
                     if (env.BRANCH_NAME == 'test') {
                         envFileDeploy = '/tmp/test-fe.env'
                     }
-                    if (env.BRANCH_NAME == 'prod') {
-                        envFileDeploy = '/tmp/prod-fe.env'
+                    if (env.BRANCH_NAME == 'uat') {
+                        envFileDeploy = '/tmp/uat-fe.env'
                     }
-                    if (env.BRANCH_NAME == 'demo') {
-                        envFileDeploy = '/tmp/dev-fe.env'
+                    if (env.BRANCH_NAME == 'main') {
+                        envFileDeploy = '/tmp/main-fe.env'
                     }
                 }
                 sh "docker-compose --env-file ${envFileDeploy} up -d --build"

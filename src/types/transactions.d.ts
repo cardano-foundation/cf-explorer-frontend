@@ -11,7 +11,9 @@ enum ConfirmationStatus {
 interface Transactions {
   hash: string;
   blockNo: number;
+  blockHash: string;
   epochNo: number;
+  epochSlotNo: number;
   slot: number;
   addressesInput: string[];
   addressesOutput: string[];
@@ -115,6 +117,13 @@ interface Transaction {
     assetName: string;
     assetQuantity: number;
     policy: string;
+    metadata?: {
+      decimals: number;
+      description: string;
+      logo: string;
+      ticker: string;
+      url: string;
+    };
   }[];
   delegations?: {
     address: string;

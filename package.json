@@ -1,5 +1,5 @@
 {
-  "name": "cardano-explorer",
+  "name": "cardano-blockchain-explorer",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -15,11 +15,12 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@textea/json-viewer": "^2.13.1",
     "@types/jest": "^27.5.2",
+    "@types/json-bigint": "^1.0.1",
     "@types/lodash": "^4.14.188",
     "@types/node": "^16.18.3",
     "@types/react": "^18.0.25",
-    "@types/react-copy-to-clipboard": "^5.0.4",
     "@types/react-dom": "^18.0.8",
     "@types/react-slick": "^0.23.10",
     "@web3-react/core": "^6.1.9",
@@ -28,16 +29,15 @@
     "ethers": "^5.7.2",
     "highcharts": "^10.3.1",
     "highcharts-react-official": "^3.1.0",
+    "json-bigint": "^1.0.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "number-to-bn": "^1.7.0",
     "qs": "^6.11.0",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
-    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
-    "react-json-view": "^1.21.3",
     "react-redux": "^8.0.5",
     "react-router-dom": "^5.3.0",
     "react-scripts": "5.0.1",
@@ -76,6 +76,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "overrides": {
+    "react-json-view": {
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+    }
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3"

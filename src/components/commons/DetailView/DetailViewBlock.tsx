@@ -37,28 +37,31 @@ import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
-import moment from "moment";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../stores/types";
+import { API } from "../../../commons/utils/api";
 
 type DetailViewBlockProps = {
-  blockNo: number;
+  blockNo: number | string;
   handleClose: () => void;
 };
 
 const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
   const { blockNo, handleClose } = props;
-  const { data } = useFetch<BlockDetail>(blockNo ? `block/${blockNo}` : ``);
+  const { data } = useFetch<BlockDetail>(`${API.BLOCK.DETAIL}/${blockNo}`);
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
 
   if (!data)
     return (
-      <ViewDetailDrawer anchor="right" open={!!blockNo} hideBackdrop variant="permanent">
+      <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
         <ViewDetailContainer>
           <ViewDetailScroll>
             <StyledViewMore tooltipTitle="View Detail" to={details.block(blockNo)} />
-            <CustomTooltip placement="top" title="Close">
+            <CustomTooltip title="Close">
               <CloseButton onClick={handleClose}>
                 <CgClose />
               </CloseButton>
@@ -121,11 +124,11 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
     );
 
   return (
-    <ViewDetailDrawer anchor="right" open={!!blockNo} hideBackdrop variant="permanent">
+    <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
       <ViewDetailContainer>
         <ViewDetailScroll>
           <StyledViewMore tooltipTitle="View Detail" to={details.block(blockNo)} />
-          <CustomTooltip placement="top" title="Close">
+          <CustomTooltip title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -136,10 +139,10 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               pathLineCap="butt"
               pathWidth={4}
               trailWidth={2}
-              percent={((data.epochSlotNo || 0) / (data.totalSlot || MAX_SLOT_EPOCH)) * 100}
+              percent={data.epochNo === currentEpoch?.no ? ((data.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100 : 100}
               trailOpacity={1}
             >
-              <EpochNumber>{data.epochNo}</EpochNumber>
+              <EpochNumber>{data.epochNo !== null ? data.epochNo : "_"}</EpochNumber>
               <EpochText>Epoch</EpochText>
             </ProgressCircle>
           </HeaderContainer>
@@ -147,13 +150,13 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
             <Item>
               <Icon src={CubeIcon} alt="socket" />
               <ItemName>Block</ItemName>
-              <ItemValue>{blockNo}</ItemValue>
+              <ItemValue>{data.blockNo !== null ? data.blockNo : "_"}</ItemValue>
             </Item>
             <Item>
               <Icon src={RocketIcon} alt="socket" />
               <ItemName>slot</ItemName>
               <ItemValue>
-                {data.epochSlotNo}
+                {data.epochSlotNo || 0}
                 <BlockDefault>/{data.totalSlot || MAX_SLOT_EPOCH}</BlockDefault>
               </ItemValue>
             </Item>
@@ -165,7 +168,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 Block ID
               </DetailLabel>
               <DetailValue>
-                <CustomTooltip placement="top" title={data.hash}>
+                <CustomTooltip title={data.hash}>
                   <StyledLink to={details.block(blockNo)}>{getShortHash(data.hash)}</StyledLink>
                 </CustomTooltip>
                 <CopyButton text={data.hash} />
@@ -176,7 +179,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 <InfoIcon />
                 Created at
               </DetailLabel>
-              <DetailValue>{moment(data.time).format("MM/DD/yyyy hh:mm:ss")}</DetailValue>
+              <DetailValue>{formatDateTimeLocal(data.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
@@ -191,7 +194,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 Transaction Fees
               </DetailLabel>
               <DetailValue>
-                {formatADA(data.totalFees) || 0}
+                {formatADAFull(data.totalFees)}
                 <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
@@ -201,22 +204,22 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
                 Total Output
               </DetailLabel>
               <DetailValue>
-                {formatADA(data.totalOutput) || 0}
+                {formatADAFull(data.totalOutput)}
                 <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
-            <DetailsInfoItem>
+            {/* <DetailsInfoItem>
               <DetailLabel>
                 <InfoIcon />
                 Slot leader
               </DetailLabel>
               <DetailValue>
-                <CustomTooltip placement="top" title={data.slotLeader}>
-                  <StyledLink to={details.address(data.slotLeader)}>{getShortWallet(data.slotLeader)}</StyledLink>
+                <CustomTooltip title={data.slotLeader}>
+                  <Box component={"span"}>{getShortWallet(data.slotLeader)}</Box>
                 </CustomTooltip>
                 <CopyButton text={data.slotLeader} />
               </DetailValue>
-            </DetailsInfoItem>
+            </DetailsInfoItem> */}
           </Group>
           <Group>
             <DetailLink to={details.block(blockNo)}>

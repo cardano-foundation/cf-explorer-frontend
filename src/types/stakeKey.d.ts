@@ -5,6 +5,7 @@ interface IStakeKey {
   block: number;
   epoch: number;
   slotNo: number;
+  epochSlotNo: number;
   stakeKey: string;
   poolNames: string[];
 }
@@ -24,7 +25,7 @@ interface IStakeKeyDetail {
   };
 }
 
-type TabStakeDetail = "delegation" | "stakeKey" | "withdrawal" | "instantaneous";
+type TabStakeDetail = "delegation" | "stake-key" | "withdrawal" | "instantaneous";
 
 interface DelegationHistory {
   time: string;
@@ -69,4 +70,9 @@ interface TopDelegator {
   poolId: string;
   tickerName: string;
   poolName: string;
+}
+
+interface StakeAnalytics {
+  activeStake: number;
+  liveStake: number;
 }

@@ -1,4 +1,4 @@
-import { Box, LinearProgress, styled } from "@mui/material";
+import { alpha, Box, LinearProgress, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 import { BoxRaised } from "../../commons/BoxRaised";
 import Table from "../../commons/Table";
@@ -39,7 +39,6 @@ export const Title = styled("h3")`
 export const DelegateTable = styled(Table)`
   overflow-x: auto;
   table {
-    min-width: 1200px;
     tr {
       th {
         background-color: transparent !important;
@@ -55,7 +54,7 @@ export const DelegateTable = styled(Table)`
       td {
         cursor: pointer;
         font-size: var(--font-size-text-small);
-        border-bottom: 1px solid ${props => props.theme.borderColor};
+        border-bottom: 1px solid ${props => props.theme.palette.border.main};
         border-radius: 0 !important;
       }
       &:last-child {
@@ -72,24 +71,9 @@ export const DelegateTable = styled(Table)`
 
 export const PoolName = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.colorBlue} !important;
+  color: ${props => props.theme.palette.secondary.main} !important;
 `;
 
-export const PriceRate = styled("div")`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 5px;
-  font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.colorRed};
-`;
-export const ImageRate = styled("img")<{ up: number }>`
-  width: 1.5rem;
-  height: 1.5rem;
-`;
-export const PriceValue = styled("span")<{ up: number }>`
-  color: ${props => (props.up ? props.theme.colorGreen : props.theme.colorRed)};
-`;
 export const ProgressContainer = styled("div")`
   display: flex;
   justify-content: flex-start;
@@ -104,7 +88,7 @@ export const StyledProgress = styled("div")<{ value: number; width?: number }>`
   width: ${props => (typeof props.width === "number" ? `${props.width}px` : props.width || "100%")};
   height: 12px;
   margin-left: 8px;
-  background: ${props => props.theme.borderColor};
+  background: ${props => props.theme.palette.grey[200]};
   border-radius: 6px;
   &::after {
     content: "";
@@ -114,7 +98,7 @@ export const StyledProgress = styled("div")<{ value: number; width?: number }>`
     height: 100%;
     border-radius: 6px;
     width: ${props => props.value}%;
-    background: ${props => props.theme.linearGradientGreen};
+    background: ${props => props.theme.palette.gradient[0]};
   }
 `;
 
@@ -123,10 +107,10 @@ export const StyledLinearProgress = styled(LinearProgress)`
   width: 100%;
   height: 8px;
   border-radius: 8px;
-  background: rgba(0, 0, 0, 0.1);
+  background: ${props => alpha(props.theme.palette.common.black, 0.1)};
   margin-left: 8px;
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 8px;
-    background: ${props => props.theme.linearGradientGreen};
+    background: ${props => props.theme.palette.gradient[0]};
   }
 `;

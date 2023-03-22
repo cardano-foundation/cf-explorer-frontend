@@ -7,8 +7,8 @@ const StyledLink = styled(Link)`
   text-align: center;
   padding: 10px 20px;
   margin: 20px 30px;
-  background: ${props => props.theme.textColor};
-  color: ${props => props.theme.textColorReverse}!important;
+  background: ${props => props.theme.palette.text.primary};
+  color: ${props => props.theme.palette.primary.contrastText}!important;
   border-radius: 6px;
   font-weight: var(--font-weight-bold);
 `;

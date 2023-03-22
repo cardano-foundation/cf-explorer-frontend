@@ -1,90 +1,91 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
-
 import Card from "../../commons/Card";
 import Table, { Column } from "../../commons/Table";
-import { formatADA, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
+import { formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
-import { StyledAddress, StyledLink, StyledOutput, StyledColorBlueDard, StyledContainer } from "./styles";
-import CustomTooltip from "../../commons/CustomTooltip";
+import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer } from "./styles";
 import useFetchList from "../../../commons/hooks/useFetchList";
+import { API } from "../../../commons/utils/api";
 
 interface IEpochBlockList {
   epochId: string;
 }
-
-const columns: Column<BlockDetail>[] = [
-  {
-    title: "#",
-    key: "#",
-    minWidth: "50px",
-    render: (_, index) => {
-      return <StyledColorBlueDard>{index + 1}</StyledColorBlueDard>;
-    },
-  },
-  {
-    title: "Block",
-    key: "block",
-    minWidth: "100px",
-    render: r => <StyledColorBlueDard>{r.blockNo}</StyledColorBlueDard>,
-  },
-  {
-    title: "Slot",
-    key: "slot",
-    minWidth: "100px",
-    render: r => (
-      <>
-        <StyledLink>{r.slotNo}</StyledLink>
-        <div>
-          <StyledLink>{r.epochNo}</StyledLink>/{r.epochSlotNo}
-        </div>
-      </>
-    ),
-  },
-  {
-    title: "Created by",
-    key: "createdBy",
-    minWidth: "100px",
-    render: r => (
-      <>
-        Input:
-        <CustomTooltip placement="top" title={r.slotLeader}>
-          <StyledAddress to={details.address(r.slotLeader)}>{getShortWallet(r.slotLeader)}</StyledAddress>
-        </CustomTooltip>
-      </>
-    ),
-  },
-  {
-    title: "Transactions",
-    key: "blkCount",
-    minWidth: "100px",
-    render: r => <StyledColorBlueDard>{r.txCount}</StyledColorBlueDard>,
-  },
-  {
-    title: "Output",
-    key: "outSum",
-    minWidth: "100px",
-    render: r => (
-      <StyledOutput>
-        <StyledColorBlueDard>{formatADA(r.totalFees) || 0}</StyledColorBlueDard>
-        <img src={AIcon} alt="ADA Icon" />
-      </StyledOutput>
-    ),
-  },
-];
 
 const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<BlockDetail>(`block/list?epochNo=${epochId}`, pageInfo);
+  const fetchData = useFetchList<BlockDetail>(`${API.EPOCH.DETAIL}/${epochId}/blocks`, pageInfo);
+
+  const columns: Column<BlockDetail>[] = [
+    {
+      title: "#",
+      key: "#",
+      minWidth: "50px",
+      render: (_, index) => {
+        return (
+          <StyledColorBlueDard>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</StyledColorBlueDard>
+        );
+      },
+    },
+    {
+      title: "Block",
+      key: "block",
+      minWidth: "100px",
+      render: r => <StyledColorBlueDard>{r.blockNo || getShortHash(r.hash || "")}</StyledColorBlueDard>,
+    },
+    {
+      title: "Slot",
+      key: "slot",
+      minWidth: "100px",
+      render: r => (
+        <>
+          <FakedLink>{r.slotNo}</FakedLink>
+          <div>
+            {r.epochNo}/{r.epochSlotNo || 0}
+          </div>
+        </>
+      ),
+    },
+    // {
+    //   title: "Created by",
+    //   key: "createdBy",
+    //   minWidth: "100px",
+    //   render: r => (
+    //     <>
+    //       Input:
+    //       <CustomTooltip title={r.slotLeader}>
+    //         <StyledLink to={details.address(r.slotLeader)}>{getShortWallet(r.slotLeader)}</StyledLink>
+    //       </CustomTooltip>
+    //     </>
+    //   ),
+    // },
+    {
+      title: "Transactions",
+      key: "blkCount",
+      minWidth: "100px",
+      render: r => <StyledColorBlueDard>{r.txCount || 0}</StyledColorBlueDard>,
+    },
+    {
+      title: "Output",
+      key: "outSum",
+      minWidth: "100px",
+      render: r => (
+        <StyledOutput>
+          <StyledColorBlueDard>{formatADAFull(r.totalOutput)}</StyledColorBlueDard>
+          <img src={AIcon} alt="ADA Icon" />
+        </StyledOutput>
+      ),
+    },
+  ];
 
   return (
     <StyledContainer>
-      <Card title={"Blocks"} underline={true}>
+      <Card title={"Blocks"} underline>
         <Table
           {...fetchData}
           columns={columns}
@@ -94,7 +95,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
             total: fetchData.total,
             onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
           }}
-          onClickRow={(_, r) => history.push(details.block(r.blockNo))}
+          onClickRow={(_, r) => history.push(details.block(r.blockNo || r.hash))}
         />
       </Card>
     </StyledContainer>

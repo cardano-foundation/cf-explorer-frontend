@@ -1,11 +1,10 @@
 import { stringify } from "qs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import moment from "moment";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AIcon } from "../../commons/resources";
 import { EPOCH_STATUS } from "../../commons/utils/constants";
-import { formatADA, getPageInfo } from "../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
@@ -13,50 +12,9 @@ import { Blocks, StyledContainer, Output, Status, StyledColorBlueDard, Index } f
 import { setOnDetailView } from "../../stores/user";
 import DetailViewEpoch from "../../components/commons/DetailView/DetailViewEpoch";
 import { useWindowSize } from "react-use";
-
-const columns: Column<IDataEpoch>[] = [
-  {
-    title: "#",
-    key: "#",
-    minWidth: "50px",
-    render: r => <Index>{r.no}</Index>,
-  },
-  {
-    title: "Status",
-    key: "status",
-    minWidth: "100px",
-    render: r => <Status status={r.status.toLowerCase()}>{EPOCH_STATUS[r.status]}</Status>,
-  },
-  {
-    title: "Blocks",
-    key: "blkCount",
-    minWidth: "100px",
-    render: r => <Blocks>{r.blkCount}</Blocks>,
-  },
-  {
-    title: "Output",
-    key: "outSum",
-    minWidth: "100px",
-    render: r => (
-      <Output>
-        {formatADA(r.outSum)}
-        <img src={AIcon} alt="ADA Icon" />
-      </Output>
-    ),
-  },
-  {
-    title: "Start date",
-    key: "startTime",
-    minWidth: "100px",
-    render: r => <StyledColorBlueDard>{moment(r.startTime).format("MM/DD/YYYY HH:mm:ss")}</StyledColorBlueDard>,
-  },
-  {
-    title: "End date",
-    key: "endTime",
-    minWidth: "100px",
-    render: r => <StyledColorBlueDard>{moment(r.endTime).format("MM/DD/YYYY HH:mm:ss")}</StyledColorBlueDard>,
-  },
-];
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { Box } from "@mui/material";
+import { API } from "../../commons/utils/api";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -65,7 +23,65 @@ const Epoch: React.FC = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<IDataEpoch>(`epoch/list`, pageInfo);
+  const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, pageInfo);
+
+  const columns: Column<IDataEpoch>[] = [
+    {
+      title: "#",
+      key: "#",
+      minWidth: "50px",
+      render: r => <Index>{numberWithCommas(r.no)}</Index>,
+    },
+    {
+      title: "Status",
+      key: "status",
+      minWidth: "150px",
+      render: r => <Status status={r.status.toLowerCase()}>{EPOCH_STATUS[r.status]}</Status>,
+    },
+    {
+      title: "Blocks",
+      key: "blkCount",
+      minWidth: "100px",
+      render: r => <Blocks>{r.blkCount}</Blocks>,
+    },
+    {
+      title: "Output",
+      key: "outSum",
+      minWidth: "100px",
+      render: r => (
+        <Output>
+          {formatADAFull(r.outSum)}
+          <img src={AIcon} alt="ADA Icon" />
+        </Output>
+      ),
+    },
+    {
+      title: "Start date",
+      key: "startTime",
+      minWidth: "100px",
+      render: r => <StyledColorBlueDard>{formatDateTimeLocal(r.startTime || "")}</StyledColorBlueDard>,
+    },
+    {
+      title: "End date",
+      key: "endTime",
+      minWidth: "100px",
+      render: r => (
+        <StyledColorBlueDard>
+          {formatDateTimeLocal(r.endTime || "")}
+          {epoch === r.no && (
+            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
+              <MdOutlineKeyboardArrowRight fontSize={30} />
+            </Box>
+          )}
+        </StyledColorBlueDard>
+      ),
+    },
+  ];
+
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Epochs List | Cardano Explorer`;
+  }, []);
 
   const openDetail = (_: any, r: IDataEpoch, index: number) => {
     if (width > 1023) {
@@ -91,12 +107,13 @@ const Epoch: React.FC = () => {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+            handleCloseDetailView: handleClose,
           }}
           onClickRow={openDetail}
           selected={selected}
         />
       </Card>
-      {epoch && <DetailViewEpoch epochNo={epoch} handleClose={handleClose} />}
+      {epoch !== null && <DetailViewEpoch epochNo={epoch} handleClose={handleClose} callback={fetchData.update} />}
     </StyledContainer>
   );
 };

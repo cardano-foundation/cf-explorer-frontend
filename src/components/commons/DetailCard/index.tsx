@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, LinearProgress, Skeleton, styled } from "@mui/material";
+import { alpha, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 import styles from "./index.module.scss";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
@@ -152,9 +152,7 @@ const DetailCard: React.FC<DetailCardProps> = ({
           <TokenDetail>
             <TokenDetailSupply>
               <TokenDetailTitle>Total Supply</TokenDetailTitle>
-              <TokenDetailDetail>
-                {tokenDetail?.totalSupply && numberWithCommas(tokenDetail.totalSupply)}
-              </TokenDetailDetail>
+              <TokenDetailDetail>{numberWithCommas(tokenDetail.totalSupply)}</TokenDetailDetail>
             </TokenDetailSupply>
             <TokenDetailDecimal>
               <TokenDetailTitle>Decimal</TokenDetailTitle>
@@ -208,10 +206,10 @@ const StyledLinearProgress = styled(LinearProgress)`
   width: 100%;
   height: 10px;
   border-radius: 34px;
-  background: rgba(0, 0, 0, 0.1);
+  background: ${props => alpha(props.theme.palette.common.black, 0.1)};
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${props => props.theme.linearGradientGreen};
+    background: ${props => props.theme.palette.gradient[0]};
   }
 `;

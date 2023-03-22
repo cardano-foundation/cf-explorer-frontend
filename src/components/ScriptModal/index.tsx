@@ -1,11 +1,12 @@
-import { Box, Skeleton } from "@mui/material";
+import { Box, Skeleton, useTheme } from "@mui/material";
 import { Modal } from "@mui/material";
-import ReactJson from "react-json-view";
+import { JsonViewer } from "@textea/json-viewer";
 import { ButtonClose, ButtonLink, ModalContainer, ViewJson } from "./styles";
 import closeIcon from "../../commons/resources/icons/closeIcon.svg";
 import CopyButton from "../commons/CopyButton";
 import useFetch from "../../commons/hooks/useFetch";
 import { details } from "../../commons/routers";
+import { API } from "../../commons/utils/api";
 
 interface ScriptModalProps {
   open: boolean;
@@ -13,30 +14,30 @@ interface ScriptModalProps {
   policy: string;
 }
 const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
-  const { data, loading } = useFetch<PolicyDetail>(`/policy/${policy && policy}`);
-
+  const { data, loading } = useFetch<PolicyDetail>(policy && `${API.POLICY}/${policy && policy}`);
+  const theme = useTheme();
   return (
     <Modal {...props}>
       <ModalContainer>
         <ButtonClose onClick={props.onClose}>
           <img src={closeIcon} alt="icon close" />
         </ButtonClose>
-        <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Space Mono", monospace, sans-serif '}>
+        <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Roboto", sans-serif '}>
           Policy ID
         </Box>
         {loading && (
-          <Box height={40} width="100%" borderRadius={props => props.borderRadius} overflow="hidden">
+          <Box height={40} width="100%" borderRadius={10} overflow="hidden">
             <Skeleton height={"100%"} width="100%" variant="rectangular" />
           </Box>
         )}
         {!loading && (
-          <Box>
+          <Box mt={2}>
             <ButtonLink to={details.policyDetail(data?.policyId || "")}>{data?.policyId || ""}</ButtonLink>
             <CopyButton text={data?.policyId || ""} />
           </Box>
         )}
         {loading && (
-          <Box height={20} my={1} width="100%" borderRadius={props => props.borderRadius} overflow="hidden">
+          <Box height={20} my={1} width="100%" borderRadius={10} overflow="hidden">
             <Skeleton height={"100%"} width="100%" variant="rectangular" />
           </Box>
         )}
@@ -50,7 +51,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
         )}
 
         {loading && (
-          <Box height={150} width="100%" borderRadius={props => props.borderRadius} overflow="hidden">
+          <Box height={150} width="100%" borderRadius={10} overflow="hidden">
             <Skeleton height={"100%"} width="100%" variant="rectangular" />
           </Box>
         )}
@@ -60,16 +61,15 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
               Policy script:
             </Box>
             <ViewJson>
-              {data?.policyScript && (
-                <ReactJson
-                  name={false}
-                  src={JSON.parse(data?.policyScript || "")}
-                  enableClipboard={false}
-                  displayDataTypes={false}
-                  style={{ padding: 0, background: "none", color: "#344054" }}
+              {!loading && data?.policyScript && (
+                <JsonViewer
+                  value={JSON.parse(data.policyScript || "")}
                   displayObjectSize={false}
-                  collapsed={false}
-                  shouldCollapse={() => false}
+                  displayDataTypes={false}
+                  enableClipboard={false}
+                  collapseStringsAfterLength={false}
+                  style={{ padding: 0, background: "none", color: theme.palette.text.secondary }}
+                  rootName={false}
                 />
               )}
             </ViewJson>

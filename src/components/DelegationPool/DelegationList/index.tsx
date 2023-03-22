@@ -1,7 +1,6 @@
-import { useHistory, useLocation } from "react-router-dom";
-import { parse, stringify } from "qs";
+import { useHistory } from "react-router-dom";
 import Table, { Column } from "../../commons/Table";
-import { formatADA, formatPercent, getPageInfo } from "../../../commons/utils/helper";
+import { formatADAFull, formatPercent, getShortWallet } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 import { HeaderSearchIcon } from "../../../commons/resources";
@@ -9,6 +8,8 @@ import useFetchList from "../../../commons/hooks/useFetchList";
 import { useState } from "react";
 import { Box } from "@mui/material";
 import CustomTooltip from "../../commons/CustomTooltip";
+import RateWithIcon from "../../commons/RateWithIcon";
+import { API } from "../../../commons/utils/api";
 
 const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
   {
@@ -17,62 +18,64 @@ const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     minWidth: "40px",
     maxWidth: "350px",
     render: r => (
-      <PoolName to={details.delegation(r.poolId)}>
-        <CustomTooltip title={r.poolName || r.poolId} placement="top">
-          <Box>{r.poolName || r.poolId}</Box>
-        </CustomTooltip>
-      </PoolName>
+      <CustomTooltip title={r.poolName || r.poolId}>
+        <PoolName to={details.delegation(r.poolId)}>
+          <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
+            {r.poolName || `Pool [${getShortWallet(r.poolId)}]`}
+          </Box>
+        </PoolName>
+      </CustomTooltip>
     ),
   },
   {
     title: "Pool size (A)",
     key: "PoolsizeA",
     minWidth: "120px",
-    render: r => formatADA(r.poolSize),
+    render: r => <Box component={"span"}>{formatADAFull(r.poolSize)}</Box>,
   },
   {
     title: "Reward",
     key: "Reward",
     minWidth: "120px",
-    render: r => r.reward,
+    render: r => <RateWithIcon value={r.reward} multiple={100} />,
   },
   {
     title: "Fee (A) ",
     key: "fee",
     minWidth: "120px",
-    render: r => `${formatPercent(r.feePercent)} (${formatADA(r.feeAmount)} A)`,
+    render: r => `${formatPercent(r.feePercent)} (${formatADAFull(r.feeAmount)} A)`,
   },
   {
     title: "Declared Pledge (A)",
     key: "Declared",
     minWidth: "120px",
-    render: r => formatADA(r.pledge),
+    render: r => <Box component={"span"}>{formatADAFull(r.pledge)}</Box>,
   },
   {
     title: "Saturation",
     minWidth: "200px",
     key: "Saturation",
     render: r => (
-      <Box display="flex" alignItems="center">
-        <span>{formatPercent(r.saturation) || `0%`}</span>
-        <StyledLinearProgress
-          variant="determinate"
-          value={Math.max(0, Math.min(100, Number(r.saturation * 100) || 0))}
-        />
-      </Box>
+      <CustomTooltip title={r.saturation ? r.saturation * 100 : 0}>
+        <Box display="flex" alignItems="center">
+          <span>{formatPercent(r.saturation) || `0%`}</span>
+          <StyledLinearProgress variant="determinate" value={r.saturation * 100 || 0} />
+        </Box>
+      </CustomTooltip>
     ),
   },
 ];
 
 const DelegationLists: React.FC = () => {
-  const { search } = useLocation();
   const history = useHistory();
   const [value, setValue] = useState("");
-  const { name } = parse(search.split("?")[1]);
-  const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<Delegators>("/delegation/pool-list", {
-    ...pageInfo,
-    search: (name as string) || "",
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
+  const fetchData = useFetchList<Delegators>(API.DELEGATION.POOL_LIST, {
+    page: page - 1,
+    size,
+    search,
   });
 
   return (
@@ -84,11 +87,12 @@ const DelegationLists: React.FC = () => {
           value={value}
           onKeyUp={e => {
             if (e.key === "Enter") {
-              history.push({ search: stringify({ name: value, page: 1 }) });
+              setSearch(value);
+              setPage(1);
             }
           }}
         />
-        <SubmitButton onClick={() => history.push({ search: stringify({ name: value, page: 1 }) })}>
+        <SubmitButton onClick={() => setSearch(value)}>
           <Image src={HeaderSearchIcon} alt="Search" />
         </SubmitButton>
       </SearchContainer>
@@ -98,9 +102,13 @@ const DelegationLists: React.FC = () => {
         total={{ count: fetchData.total, title: "Total" }}
         onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId))}
         pagination={{
-          ...pageInfo,
+          page,
+          size,
           total: fetchData.total,
-          onChange: (page, size) => history.push({ search: stringify({ page, size, name }) }),
+          onChange: (page, size) => {
+            setPage(page);
+            setSize(size);
+          },
         }}
       />
     </>

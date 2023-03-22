@@ -1,8 +1,14 @@
-import moment from "moment";
+import { Box } from "@mui/material";
 import { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { details } from "../../../commons/routers";
-import { formatADA, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import {
+  formatADAFull,
+  formatDateTimeLocal,
+  formatPercent,
+  getShortWallet,
+  numberWithCommas,
+} from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
@@ -12,7 +18,7 @@ const DelegationEpochList = ({
   data,
   loading,
   total,
-  initialized, 
+  initialized,
 }: {
   data: DelegationEpoch[] | null;
   loading: boolean;
@@ -37,35 +43,33 @@ const DelegationEpochList = ({
       title: "Blocks",
       key: "block",
       minWidth: "120px",
-      render: data => (
-        <StyledLink to={details.block(data.block)}>
-          {numberWithCommas(data.block || 0)}
-        </StyledLink>
-      ),
+      render: data => <StyledLink to={details.block(data.block)}>{numberWithCommas(data.block)}</StyledLink>,
     },
     {
       title: "Stake Amount (A)",
       key: "stakeAmount",
       minWidth: "120px",
-      render: data => <> {formatADA(data.stakeAmount)}</>,
+
+      render: data => <Box component={"span"}>{formatADAFull(data.stakeAmount)}</Box>,
     },
     {
-      title: "Delegator Reward (A)",
+      title: "Delegator Rewards (A)",
       key: "delegatorReward",
       minWidth: "120px",
-      render: data => <>{formatADA(data.delegatorReward)}</>,
+      render: data => <Box component={"span"}>{formatADAFull(data.delegators)}</Box>,
     },
     {
       title: "Fees (A)",
       key: "fees",
       minWidth: "120px",
-      render: data => <>{formatADA(data.fees)}</>,
+
+      render: data => <Box component={"span"}>{formatADAFull(data.fee)}</Box>,
     },
     {
       title: "ROS",
       key: "ros",
       minWidth: "120px",
-      render: data => <>{data.ros ? `${data.ros}%` : ""}</>,
+      render: data => formatPercent(data.ros || 0),
     },
   ];
 
@@ -79,7 +83,7 @@ const DelegationEpochList = ({
       initialized={initialized}
       pagination={{
         onChange: (page, size) => {
-          setQuery({ page, size });
+          setQuery({ tab: query.tab, page, size });
         },
         page: query.page ? +query.page - 1 : 0,
         total: total,
@@ -111,23 +115,19 @@ const DelegationStakingDelegatorsList = ({
     {
       title: "No",
       key: "no",
-      render: (r, idx) => (
-        <>{idx + 1}</>
-      ),
+      render: (r, idx) => idx + 1,
     },
     {
       title: "Delegator",
       key: "delegator",
       minWidth: "50px",
       render: data =>
-        data.address && (
+        data.view && (
           <div style={{ display: "flex", alignItems: "center" }}>
-            <CustomTooltip placement="top" title={data.address || ""}>
-              <StyledLink to={details.address(data.address)}>
-                {getShortWallet(data.address || "")}
-              </StyledLink>
+            <CustomTooltip title={data.address || ""}>
+              <StyledLink to={details.address(data.view)}>{getShortWallet(data.view || "")}</StyledLink>
             </CustomTooltip>
-            <CopyButton text={data.address || ""} />
+            <CopyButton text={data.view || ""} />
           </div>
         ),
     },
@@ -135,19 +135,19 @@ const DelegationStakingDelegatorsList = ({
       title: "Total Value (A)",
       key: "value",
       minWidth: "120px",
-      render: data => <> {formatADA(data.totalStake || 0)}</>,
+      render: data => <Box component={"span"}>{formatADAFull(data.totalStake)}</Box>,
     },
     {
       title: "Staked Time",
       key: "stakedTime",
       minWidth: "120px",
-      render: data => <>{moment(data.time).format("DD/MM/YYYY HH:mm/ss")}</>,
+      render: data => formatDateTimeLocal(data.time || ""),
     },
     {
       title: "Fees (A)",
       key: "fees",
       minWidth: "120px",
-      render: data => <>{formatADA(data.fee || 0)}</>,
+      render: data => <Box component={"span"}>{formatADAFull(data.fee)}</Box>,
     },
   ];
 
@@ -160,7 +160,7 @@ const DelegationStakingDelegatorsList = ({
       initialized={initialized}
       pagination={{
         onChange: (page, size) => {
-          setQuery({ page, size });
+          setQuery({ tab: query.tab, page, size });
         },
         page: query.page ? +query.page - 1 : 0,
         total: total,

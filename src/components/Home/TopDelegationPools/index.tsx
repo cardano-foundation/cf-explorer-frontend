@@ -1,29 +1,29 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
-import { DownRedIcon, UpGreenIcon } from "../../../commons/resources";
-import { routers } from "../../../commons/routers";
-import { formatPrice } from "../../../commons/utils/helper";
+import { details, routers } from "../../../commons/routers";
+import { formatADAFull, formatPercent } from "../../../commons/utils/helper";
 import ViewAllButton from "../../commons/ViewAllButton";
 import { Column } from "../../commons/Table";
 import {
   DelegateTable,
   Header,
-  ImageRate,
   PoolName,
-  PriceRate,
-  PriceValue,
   ProgressContainer,
   ProgressTitle,
   StyledLinearProgress,
   Title,
   TopDelegateContainer,
 } from "./style";
+import RateWithIcon from "../../commons/RateWithIcon";
+import CustomTooltip from "../../commons/CustomTooltip";
+import { Box } from "@mui/system";
+import { API } from "../../../commons/utils/api";
 
 interface Props {}
 
 const TopDelegationPools: React.FC<Props> = () => {
-  const { data, loading, initialized } = useFetch<DelegationPool[]>(`delegation/top?page=1&size=4`);
+  const { data, loading, initialized } = useFetch<DelegationPool[]>(`${API.DELEGATION.TOP}?page=1&size=4`);
   const history = useHistory();
   data?.forEach(item => {
     if (!item.poolSize) {
@@ -43,38 +43,40 @@ const TopDelegationPools: React.FC<Props> = () => {
     {
       title: "Pool size (A)",
       key: "size",
-      render: r => formatPrice(r.poolSize / 10 ** 6),
+      render: r => formatADAFull(r.poolSize / 10 ** 6),
     },
     {
       title: "Reward",
       key: "reward",
-      render: r => (
-        <PriceRate>
-          <ImageRate up={r.reward >= 0 ? 1 : 0} src={r.reward >= 0 ? UpGreenIcon : DownRedIcon} alt="price rate" />
-          <PriceValue up={r.reward >= 0 ? 1 : 0}>
-            {r.reward >= 0 ? "+" : ""}
-            {r.reward?.toString().replace(".", ",") || 0} %
-          </PriceValue>
-        </PriceRate>
-      ),
+      render: r => <RateWithIcon value={r.reward} multiple={100} />,
     },
     {
       title: "Fee (A)",
       key: "fee",
-      render: r => `${r.feePercent || 0}% (${formatPrice(r.feeAmount / 10 ** 6)} A)`,
+      render: r => (
+        <CustomTooltip title={`${r.feePercent * 100 || 0}% (${formatADAFull(r.feeAmount)} A)`}>
+          <Box display="inline-block">
+            {formatPercent(r.feePercent || 0)} ({formatADAFull(r.feeAmount)} A)
+          </Box>
+        </CustomTooltip>
+      ),
     },
     {
       title: "Declared Pledge (A)",
       key: "declaredPledge",
-      render: r => formatPrice(r.pledge / 10 ** 6),
+      render: r => <Box display="inline-block">{formatADAFull(r.pledge)}</Box>,
     },
     {
       title: "Saturation",
       key: "output",
       render: r => (
         <ProgressContainer>
-          <ProgressTitle>{r.saturation}%</ProgressTitle>
-          <StyledLinearProgress variant="determinate" value={r.saturation} style={{ width: 150 }} />
+          <CustomTooltip title={`${r.saturation}%`}>
+            <ProgressTitle>{formatPercent(r.saturation / 100)}</ProgressTitle>
+          </CustomTooltip>
+          <CustomTooltip title={`${r.saturation}%`}>
+            <StyledLinearProgress variant="determinate" value={r.saturation} style={{ width: 150 }} />
+          </CustomTooltip>
         </ProgressContainer>
       ),
     },
@@ -90,9 +92,7 @@ const TopDelegationPools: React.FC<Props> = () => {
         initialized={initialized}
         columns={columns}
         data={data?.slice(0, 3) || []}
-        onClickRow={(_, r: DelegationPool) =>
-          history.push(routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${r.poolId}`))
-        }
+        onClickRow={(_, r: DelegationPool) => history.push(details.delegation(r.poolId))}
       />
     </TopDelegateContainer>
   );

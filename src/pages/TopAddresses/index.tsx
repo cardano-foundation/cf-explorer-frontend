@@ -1,31 +1,31 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
-import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { formatADA, getPageInfo, getShortWallet } from "../../commons/utils/helper";
+import { formatADAFull, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
 import { StyledContainer, StyledLink } from "./styles";
 import Table, { Column } from "../../components/commons/Table";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
+import { API } from "../../commons/utils/api";
 interface Props {}
 
 const TopAddresses: React.FC<Props> = () => {
-  const { search } = useLocation();
   const history = useHistory();
-  const pageInfo = getPageInfo(search);
+  const { error, data, initialized, loading } = useFetchList<Contracts>(API.ADDRESS.TOP_ADDRESS, { page: 0, size: 50 });
 
-  const fetchData = useFetchList<Contracts>("address/top-addresses", pageInfo);
+  useEffect(() => {
+    document.title = `Top Addresses | Cardano Explorer`;
+  }, []);
 
   const columns: Column<Address>[] = [
     {
       title: "#",
       key: "id",
       minWidth: 30,
-      render: (_, index) => index + 1,
+      render: (_, index) => numberWithCommas(index + 1),
     },
     {
       title: "Addresses",
@@ -34,7 +34,7 @@ const TopAddresses: React.FC<Props> = () => {
 
       render: r => (
         <div>
-          <CustomTooltip title={r.address} placement="top">
+          <CustomTooltip title={r.address}>
             <StyledLink to={details.address(r.address)}>{getShortWallet(r.address)}</StyledLink>
           </CustomTooltip>
         </div>
@@ -45,8 +45,8 @@ const TopAddresses: React.FC<Props> = () => {
       key: "balance",
       minWidth: 60,
       render: r => (
-        <Box display="flex" alignItems="center">
-          <Box mr={1}>{formatADA(r.balance) || 0}</Box>
+        <Box display="inline-flex" alignItems="center">
+          <Box mr={1}>{formatADAFull(r.balance)}</Box>
           <img src={AIcon} alt="a icon" />
         </Box>
       ),
@@ -57,14 +57,12 @@ const TopAddresses: React.FC<Props> = () => {
     <StyledContainer>
       <Card title={"Top 50 addresses"} underline={false}>
         <Table
-          {...fetchData}
+          onClickRow={(_, r) => history.push(details.address(r.address))}
+          data={data}
+          error={error}
+          loading={loading}
+          initialized={initialized}
           columns={columns}
-          total={{ title: "Total Addresses", count: fetchData.total }}
-          pagination={{
-            ...pageInfo,
-            total: fetchData.total,
-            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
-          }}
         />
       </Card>
     </StyledContainer>

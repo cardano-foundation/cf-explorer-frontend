@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import TransactionList from "../../components/TransactionLists";
@@ -8,6 +8,7 @@ import { setOnDetailView } from "../../stores/user";
 import { details } from "../../commons/routers";
 import DetailViewTransaction from "../../components/commons/DetailView/DetailViewTransaction";
 import styled from "@emotion/styled";
+import { API } from "../../commons/utils/api";
 
 const StyledContainer = styled(Container)`
   padding: 20px 0 40px;
@@ -20,6 +21,11 @@ const Transactions: React.FC<Props> = () => {
   const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();
   const history = useHistory();
+
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Transactions List | Cardano Explorer`;
+  }, []);
 
   const openDetail = (_: any, r: Transactions, index: number) => {
     if (width > 1023) {
@@ -36,7 +42,13 @@ const Transactions: React.FC<Props> = () => {
   };
   return (
     <StyledContainer>
-      <TransactionList url="tx/list" openDetail={openDetail} selected={selected} />
+      <TransactionList
+        url={API.TRANSACTION.LIST}
+        openDetail={openDetail}
+        selected={selected}
+        hash={hash}
+        handleClose={handleClose}
+      />
       {hash && <DetailViewTransaction hash={hash} handleClose={handleClose} />}
     </StyledContainer>
   );

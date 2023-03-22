@@ -1,4 +1,4 @@
-import { Box, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
+import { alpha, Box, Button, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const HeaderDetailContainer = styled(Box)`
@@ -7,6 +7,7 @@ export const HeaderDetailContainer = styled(Box)`
 `;
 
 export const BackButton = styled(Link)`
+  display: inline-flex;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -14,7 +15,7 @@ export const BackButton = styled(Link)`
 `;
 
 export const BackText = styled("small")`
-  color: #344054;
+  color: ${props => props.theme.palette.text.secondary};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -24,9 +25,13 @@ export const HeaderContainer = styled(Box)`
 `;
 
 export const HeaderTitle = styled("h2")`
-  color: ${props => props.theme.colorBlack};
+  color: ${props => props.theme.palette.common.black};
   font-size: 2.25rem;
   margin: 0.5rem 0;
+  max-width: 75%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const HeaderTitleSkeleton = styled(Skeleton)`
@@ -51,13 +56,13 @@ export const PoolIdSkeleton = styled(Skeleton)`
 
 export const PoolIdLabel = styled("small")`
   font-family: var(--font-family-text);
-  color: #344054;
+  color: ${props => props.theme.palette.text.secondary};
 `;
 
 export const PoolIdValue = styled("small")`
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.colorBlue};
+  color: ${props => props.theme.palette.secondary.main};
   white-space: pre-wrap;
   display: inline-block;
   word-break: break-word;
@@ -66,10 +71,10 @@ export const PoolIdValue = styled("small")`
 `;
 
 export const DataContainer = styled("div")`
-  background: #ffffff;
+  background: ${props => props.theme.palette.background.paper};
   display: flex;
   flex-direction: column;
-  box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.05);
+  box-shadow: ${props => props.theme.shadow[4]};
   border-radius: 12px;
   padding: 30px 25px;
 `;
@@ -77,8 +82,8 @@ export const DataContainer = styled("div")`
 export const Item = styled(Grid)<{ top?: number }>`
   position: relative;
   padding: ${({ top }) => (top ? 0 : 20)}px 25px ${({ top }) => (top ? 20 : 0)}px;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: ${({ top }) => (top ? "1px solid rgba(0, 0, 0, 0.1)" : "none")};
+  border-left: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)};
+  border-bottom: ${({ top, theme }) => (top ? `1px solid ${alpha(theme.palette.common.black, 0.1)}` : "none")};
 
   &:first-of-type {
     border-left: 0;
@@ -92,7 +97,7 @@ export const Item = styled(Grid)<{ top?: number }>`
 
   @media (max-width: 1023px) {
     padding: 20px 25px !important;
-    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)} !important;
   }
 `;
 
@@ -133,11 +138,11 @@ export const StyledLinearProgress = styled(LinearProgress)`
   width: 100%;
   height: 10px;
   border-radius: 34px;
-  background: rgba(0, 0, 0, 0.1);
+  background: ${props => alpha(props.theme.palette.common.black, 0.1)};
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${props => props.theme.linearGradientGreen};
+    background: ${props => props.theme.palette.gradient[0]};
   }
 `;
 
@@ -154,3 +159,11 @@ export const SavingImg = styled("img")`
   top: 0;
   right: 0;
 `;
+
+export const ButtonViewAll = styled(Button)(({ theme }) => ({
+  backgroundColor: "#d9e9e1",
+  border: "1px solid #000",
+  padding: `0 ${theme.spacing(1)}`,
+  textTransform: "capitalize",
+  fontWeight: "bold",
+}));

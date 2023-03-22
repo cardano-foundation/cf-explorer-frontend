@@ -1,16 +1,19 @@
-import { Box, styled, Button } from "@mui/material";
+import { Box, styled, Button, alpha } from "@mui/material";
 import { Link } from "react-router-dom";
 
-
 export const ModalContainer = styled(Box)(({ theme }) => ({
+  height: "80vh",
+  overflow: "hidden",
   position: "relative",
   top: "50%",
   left: "50%",
+  display: "flex",
+  flexDirection: "column",
   transform: "translate(-50%, -50%)",
-  width: "min(80vw, 350px)",
-  backgroundColor: "#fff",
+  width: "min(80vw, 550px)",
+  backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
-  borderRadius: theme.borderRadius,
+  borderRadius: 10,
   textAlign: "left",
 }));
 
@@ -26,40 +29,20 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
 }));
 
 export const ViewJson = styled(Box)(({ theme }) => ({
+  overflowY: "auto",
   textAlign: "left",
-  backgroundColor: "rgba(152, 162, 179, 0.1)",
-  borderRadius: theme.borderRadius,
+  backgroundColor: `${alpha(theme.palette.grey[300], 0.1)}`,
+  borderRadius: 10,
   padding: theme.spacing(2),
-  "& .object-contentw": {
-    pointerEvents: "none",
-  },
-  "& .variable-row": {
-    border: " none !important",
-  },
-  "& .object-key": {
-    color: "#344054 !important",
-    opacity: "1 !important",
-    "& span": {
-      "&:first-of-type ": {
-        display: "none",
-      },
-      "&:last-child ": {
-        display: "none",
-      },
-    },
-  },
-  "& .string-value": {
-    color: " #344054",
-    wordBreak: "break-all",
-  },
-  "& .icon-container": {
+
+  "& .MuiSvgIcon-root": {
     display: "none !important",
   },
 }));
 
 export const ButtonLink = styled(Link)(({ theme }) => ({
   fontWeight: "bold",
-  color: `${theme.colorBlue} !important`,
+  color: `${theme.palette.secondary.main} !important`,
   fontFamily: "Helvetica, monospace !important",
   textAlign: "left",
   wordBreak: "break-all",

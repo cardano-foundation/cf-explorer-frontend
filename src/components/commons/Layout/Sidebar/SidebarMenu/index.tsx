@@ -15,10 +15,25 @@ import FooterMenu from "../FooterMenu";
 import CustomTooltip from "../../../CustomTooltip";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
+  const pathname = history.location.pathname;
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { width } = useWindowSize(0);
-  const [active, setActive] = useState<string | null>(null);
 
+  const getActive = () => {
+    const active = menus.findIndex(menu => {
+      return menu?.children?.find(r => {
+        return pathname.split("/").length > 2 ? r.href?.includes(pathname.split("/")[1]) : r.href === pathname;
+      });
+    });
+
+    if (active !== -1) {
+      return `menu-${active}`;
+    }
+
+    return "";
+  };
+
+  const [active, setActive] = useState<string | null>(getActive());
   useEffect(() => {
     if (!sidebar) setActive(null);
   }, [sidebar]);
@@ -27,14 +42,12 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     if (!sidebar && width > 1023) setSidebar(true);
     else if (sidebar && width <= 1023) setSidebar(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width]);
+  }, [width > 1023]);
 
   const handleOpen = (item: string) => {
     setActive(item !== active ? item : null);
     if (!sidebar) setSidebar(true);
   };
-
-  const pathname = history.location.pathname;
 
   return (
     <StyledCollapse in={width > 1023 ? true : sidebar} timeout="auto" unmountOnExit>
@@ -59,7 +72,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       selected={pathname === href}
                       sx={theme => ({
                         ...itemStyle(theme, sidebar),
-                        ...(pathname === href ? { backgroundColor: `${theme.colorGreen} !important` } : {}),
+                        ...(pathname === href ? { backgroundColor: `${theme.palette.success.dark} !important` } : {}),
                       })}
                     >
                       {icon ? (
@@ -81,10 +94,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`menu-${index}` === active
                         ? {
-                            backgroundColor: theme => `${theme.colorGreenPale} !important`,
-                            color: theme => theme.colorGreen,
+                            backgroundColor: theme => `${theme.palette.success.light} !important`,
+                            color: theme => theme.palette.success.dark,
                           }
-                        : { color: theme => theme.textColorPale }),
+                        : { color: theme => theme.palette.grey[400] }),
                     })}
                   >
                     {icon ? (
@@ -101,6 +114,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       open={sidebar ? 1 : 0}
                       active={`menu-${index}` === active ? 1 : 0}
                       text={1}
+                      disable={!!tooltipTitle}
                     />
                     {children?.length ? (
                       `menu-${index}` === active ? (
@@ -117,7 +131,6 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
                       const { href, title, icon } = subItem;
-                      console.log("🚀 ~ file: index.tsx:120 ~ {children.map ~ href", pathname.split("/"));
                       return href ? (
                         isExtenalLink(href) ? (
                           <ListItem
@@ -146,7 +159,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                               ...itemStyle(theme, sidebar),
                               ...(pathname === href ||
                               (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1]))
-                                ? { backgroundColor: theme => `${theme.colorGreen} !important` }
+                                ? { backgroundColor: theme => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
                               [theme.breakpoints.down(1023)]: {
@@ -182,137 +195,133 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
             </React.Fragment>
           );
         })}
-        <Divider sx={{ margin: "10px 30px", display: sidebar ? "block" : "none" }} />
-        {sidebar &&
-          footerMenus.map((item, index) => {
-            const { href, title, children, icon } = item;
-            return (
-              <React.Fragment key={index}>
-                {href ? (
-                  isExtenalLink(href) ? (
-                    <ListItem button onClick={e => window.open(href, "_blank")} sx={theme => itemStyle(theme, sidebar)}>
-                      {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
-                      <MenuText primary={title} open={sidebar ? 1 : 0} />
-                    </ListItem>
-                  ) : (
-                    <ListItem
-                      button
-                      component={Link}
-                      to={href}
-                      selected={pathname === href}
-                      sx={theme => ({
-                        ...itemStyle(theme, sidebar),
-                        ...(pathname === href ? { backgroundColor: theme => `${theme.colorGreen} !important` } : {}),
-                      })}
-                    >
-                      {icon ? (
-                        <MenuIcon
-                          src={icon}
-                          alt={title}
-                          iconOnly={!sidebar ? 1 : 0}
-                          active={pathname === href ? 1 : 0}
-                        />
-                      ) : null}
-                      <MenuText primary={title} open={sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
-                    </ListItem>
-                  )
+        <Divider sx={{ margin: "10px 30px" }} />
+        {footerMenus.map((item, index) => {
+          const { href, title, children, icon } = item;
+          return (
+            <React.Fragment key={index}>
+              {href ? (
+                isExtenalLink(href) ? (
+                  <ListItem button onClick={e => window.open(href, "_blank")} sx={theme => itemStyle(theme, sidebar)}>
+                    {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
+                    <MenuText primary={title} open={sidebar ? 1 : 0} />
+                  </ListItem>
                 ) : (
                   <ListItem
                     button
-                    onClick={() => handleOpen(`footer-${index}`)}
+                    component={Link}
+                    to={href}
+                    selected={pathname === href}
                     sx={theme => ({
                       ...itemStyle(theme, sidebar),
-                      ...(`footer-${index}` === active
-                        ? {
-                            backgroundColor: `${theme.colorGreenPale} !important`,
-                            color: theme.colorGreen,
-                          }
-                        : { color: theme.textColorPale }),
+                      ...(pathname === href
+                        ? { backgroundColor: theme => `${theme.palette.success.dark} !important` }
+                        : {}),
                     })}
                   >
                     {icon ? (
-                      <MenuIcon
-                        src={icon}
-                        alt={title}
-                        iconOnly={!sidebar ? 1 : 0}
-                        text={!!children?.length ? 1 : 0}
-                        active={`footer-${index}` === active ? 1 : 0}
-                      />
+                      <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
                     ) : null}
-                    <MenuText
-                      primary={title}
-                      open={sidebar ? 1 : 0}
-                      active={`footer-${index}` === active ? 1 : 0}
-                      text={1}
-                    />
-                    {children?.length ? (
-                      `footer-${index}` === active ? (
-                        <BiChevronUp size={24} />
-                      ) : (
-                        <BiChevronDown size={24} />
-                      )
-                    ) : null}
+                    <MenuText primary={title} open={sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
                   </ListItem>
-                )}
-                {children?.length ? (
-                  <Collapse in={`footer-${index}` === active} timeout="auto" unmountOnExit>
-                    <SubMenu disablePadding>
-                      {children.map((subItem, subIndex) => {
-                        const { href, title, icon } = subItem;
-                        return href ? (
-                          isExtenalLink(href) ? (
-                            <ListItem
-                              key={subIndex}
-                              button
-                              onClick={e => window.open(href, "_blank")}
-                              sx={theme => ({
-                                ...itemStyle(theme, sidebar),
-                                paddingLeft: "70px",
-                                [theme.breakpoints.down(1023)]: {
-                                  paddingLeft: "60px",
-                                },
-                              })}
-                            >
-                              {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
-                              <SubMenuText primary={title} open={sidebar ? 1 : 0} />
-                            </ListItem>
-                          ) : (
-                            <ListItem
-                              key={subIndex}
-                              button
-                              component={Link}
-                              to={href}
-                              selected={pathname === href}
-                              sx={theme => ({
-                                ...itemStyle(theme, sidebar),
-                                ...(pathname === href
-                                  ? { backgroundColor: theme => `${theme.colorGreen} !important` }
-                                  : {}),
-                                paddingLeft: "70px",
-                                [theme.breakpoints.down(1023)]: {
-                                  paddingLeft: "60px",
-                                },
-                              })}
-                            >
-                              {icon ? (
-                                <MenuIcon
-                                  src={icon}
-                                  alt={title}
-                                  iconOnly={!sidebar ? 1 : 0}
-                                  active={pathname === href ? 1 : 0}
-                                />
-                              ) : null}
-                              <SubMenuText primary={title} open={sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
-                            </ListItem>
-                          )
-                        ) : null;
-                      })}
-                    </SubMenu>
-                  </Collapse>
-                ) : null}
-              </React.Fragment>
-            );
-          })}
+                )
+              ) : (
+                <ListItem
+                  button
+                  onClick={() => handleOpen(`footer-${index}`)}
+                  sx={theme => ({
+                    ...itemStyle(theme, sidebar),
+                    ...(`footer-${index}` === active
+                      ? {
+                          backgroundColor: `${theme.palette.success.light} !important`,
+                          color: theme.palette.success.dark,
+                        }
+                      : { color: theme.palette.grey[400] }),
+                  })}
+                >
+                  {icon ? (
+                    <MenuIcon
+                      src={icon}
+                      alt={title}
+                      iconOnly={!sidebar ? 1 : 0}
+                      text={!!children?.length ? 1 : 0}
+                      active={`footer-${index}` === active ? 1 : 0}
+                    />
+                  ) : null}
+                  <MenuText
+                    primary={title}
+                    open={sidebar ? 1 : 0}
+                    active={`footer-${index}` === active ? 1 : 0}
+                    text={1}
+                  />
+                  {children?.length ? (
+                    `footer-${index}` === active ? (
+                      <BiChevronUp size={24} />
+                    ) : (
+                      <BiChevronDown size={24} />
+                    )
+                  ) : null}
+                </ListItem>
+              )}
+              {children?.length ? (
+                <Collapse in={`footer-${index}` === active} timeout="auto" unmountOnExit>
+                  <SubMenu disablePadding>
+                    {children.map((subItem, subIndex) => {
+                      const { href, title, icon } = subItem;
+                      return href ? (
+                        isExtenalLink(href) ? (
+                          <ListItem
+                            key={subIndex}
+                            button
+                            onClick={e => window.open(href, "_blank")}
+                            sx={theme => ({
+                              ...itemStyle(theme, sidebar),
+                              paddingLeft: "70px",
+                              [theme.breakpoints.down(1023)]: {
+                                paddingLeft: "60px",
+                              },
+                            })}
+                          >
+                            {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
+                            <SubMenuText primary={title} open={sidebar ? 1 : 0} />
+                          </ListItem>
+                        ) : (
+                          <ListItem
+                            key={subIndex}
+                            button
+                            component={Link}
+                            to={href}
+                            selected={pathname === href}
+                            sx={theme => ({
+                              ...itemStyle(theme, sidebar),
+                              ...(pathname === href
+                                ? { backgroundColor: theme => `${theme.palette.success.dark} !important` }
+                                : {}),
+                              paddingLeft: "70px",
+                              [theme.breakpoints.down(1023)]: {
+                                paddingLeft: "60px",
+                              },
+                            })}
+                          >
+                            {icon ? (
+                              <MenuIcon
+                                src={icon}
+                                alt={title}
+                                iconOnly={!sidebar ? 1 : 0}
+                                active={pathname === href ? 1 : 0}
+                              />
+                            ) : null}
+                            <SubMenuText primary={title} open={sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
+                          </ListItem>
+                        )
+                      ) : null;
+                    })}
+                  </SubMenu>
+                </Collapse>
+              ) : null}
+            </React.Fragment>
+          );
+        })}
       </Menu>
       <NavbarMenuBottom>
         <SelectNetwork />

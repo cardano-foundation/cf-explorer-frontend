@@ -1,5 +1,4 @@
 import { Box, Skeleton } from "@mui/material";
-import moment from "moment";
 import React, { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link } from "react-router-dom";
@@ -11,13 +10,12 @@ import {
   HighestIcon,
   InfoIcon,
   RewardIcon,
-  SaveOffIcon,
-  SaveOnIcon,
   TickerIcon,
   UserIcon,
 } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
-import { formatADA, getShortWallet } from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatPercent, getShortWallet } from "../../../commons/utils/helper";
+import BookmarkButton from "../../commons/BookmarkIcon";
 import CopyButton from "../../commons/CopyButton";
 import CustomTooltip from "../../commons/CustomTooltip";
 import DropdownDetail from "../../commons/DropdownDetail";
@@ -25,6 +23,7 @@ import DropdownDetail from "../../commons/DropdownDetail";
 import {
   BackButton,
   BackText,
+  ButtonViewAll,
   DataContainer,
   FlexGap10,
   HeaderContainer,
@@ -39,7 +38,6 @@ import {
   PoolIdLabel,
   PoolIdSkeleton,
   PoolIdValue,
-  SavingImg,
   StyledGrid,
   StyledImg,
   StyledLinearProgress,
@@ -73,7 +71,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <PoolId>
           <PoolIdSkeleton variant="rectangular" />
         </PoolId>
-        <Box borderRadius={props => props.borderRadius} overflow="hidden">
+        <Box borderRadius={10} overflow="hidden">
           <Skeleton variant="rectangular" height={250} width="100%" />
         </Box>
         {/* <SavingImg src={saving ? SaveOnIcon : SaveOffIcon} alt="Save Icon" onClick={() => setSaving(!saving)} /> */}
@@ -88,11 +86,14 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <BackText>Back</BackText>
       </BackButton>
       <HeaderContainer>
-        <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
+        <CustomTooltip title={data?.poolName || poolId}>
+          <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
+        </CustomTooltip>
+        <BookmarkButton keyword={poolId} type="POOL" />
       </HeaderContainer>
       <PoolId>
-        <CustomTooltip title={poolId} placement="top">
-          <Link to={routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${poolId}`)}>
+        <CustomTooltip title={poolId}>
+          <Link to={details.delegation(poolId)}>
             <PoolIdLabel>Pool Id: </PoolIdLabel>
             <PoolIdValue>{poolId}</PoolIdValue>
           </Link>
@@ -117,7 +118,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 Created date <InfoImg src={InfoIcon} alt="Info Icon" />
               </StyledTitle>
             </InfoTitle>
-            <InfoValue>{data?.createDate && moment(data.createDate).format("MM/DD/YYYY hh:mm:ss")}</InfoValue>
+            <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={RewardIcon} alt="Reward Icon" />
@@ -126,25 +127,26 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 Reward Account <InfoImg src={InfoIcon} alt="Info Icon" />
               </StyledTitle>
               {data?.rewardAccounts && data.rewardAccounts.length > 1 && (
-                <button
+                <ButtonViewAll
+                  sx={{ color: theme => theme.palette.common.black }}
                   onClick={() => {
                     setOpenReward(!isOpenReward);
                     setOpenOwner(false);
                   }}
                 >
                   View all
-                </button>
+                </ButtonViewAll>
               )}
             </InfoTitle>
             <InfoValue>
               {data?.rewardAccounts ? (
                 <>
-                  <CustomTooltip placement="top" title={data?.rewardAccounts[0] || ""}>
+                  <CustomTooltip title={data?.rewardAccounts[0] || ""}>
                     <Box
                       component={Link}
                       to={details.stake(data?.rewardAccounts[0] || "")}
                       style={{ fontFamily: "var(--font-family-text)" }}
-                      color={props => `${props.colorBlue} !important`}
+                      color={theme => `${theme.palette.secondary.main} !important`}
                     >
                       {getShortWallet(data?.rewardAccounts[0] || "")}
                     </Box>
@@ -175,23 +177,24 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 Owner Account <InfoImg src={InfoIcon} alt="Info Icon" />
               </StyledTitle>
               {data?.ownerAccounts && data.ownerAccounts.length > 1 && (
-                <button
+                <ButtonViewAll
+                  sx={{ color: theme => theme.palette.common.black }}
                   onClick={() => {
                     setOpenOwner(!isOpenOwner);
                     setOpenReward(false);
                   }}
                 >
                   View all
-                </button>
+                </ButtonViewAll>
               )}
             </InfoTitle>
             <InfoValue>
               {data?.ownerAccounts ? (
                 <>
-                  <CustomTooltip placement="top" title={data?.ownerAccounts[0] || ""}>
+                  <CustomTooltip title={data?.ownerAccounts[0] || ""}>
                     <Box
                       component={Link}
-                      color={props => `${props.colorBlue} !important`}
+                      color={theme => `${theme.palette.secondary.main} !important`}
                       to={details.stake(data?.ownerAccounts[0] || "")}
                       style={{ fontFamily: "var(--font-family-text)" }}
                     >
@@ -223,7 +226,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoTitle>
             <InfoValue>
               <FlexGap10>
-                {formatADA(data?.poolSize)}
+                {formatADAFull(data?.poolSize)}
                 <img src={AIcon} alt={"ADA Icon"} />
               </FlexGap10>
             </InfoValue>
@@ -237,7 +240,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoTitle>
             <InfoValue>
               <FlexGap10>
-                {formatADA(data?.stakeLimit)}
+                {formatADAFull(data?.stakeLimit)}
                 <img src={AIcon} alt={"ADA Icon"} />
               </FlexGap10>
             </InfoValue>
@@ -255,14 +258,15 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoValue>
               <StyledLinearProgress variant="determinate" value={data?.saturation || 0} />
               <div style={{ display: "flex", justifyContent: "space-between", marginTop: "9px" }}>
-                <span style={{ fontSize: "14px", fontWeight: "400", opacity: "0.5" }}>Saturation</span>
-                <span style={{ fontSize: "16px" }}>{data?.saturation || 0}%</span>
+                <Box component={"span"} mt={1} style={{ fontSize: "14px", fontWeight: "400", opacity: "0.5" }}>
+                  Saturation
+                </Box>
+                <span style={{ fontSize: "16px" }}>{formatPercent(data?.saturation || 0)}</span>
               </div>
             </InfoValue>
           </Item>
         </StyledGrid>
       </DataContainer>
-      <SavingImg src={saving ? SaveOnIcon : SaveOffIcon} alt="Save Icon" onClick={() => setSaving(!saving)} />
     </HeaderDetailContainer>
   );
 };

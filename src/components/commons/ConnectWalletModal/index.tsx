@@ -1,49 +1,74 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { setOpenModal } from "../../../stores/user";
-import { SUPPORTED_WALLETS } from "../../../commons/utils/constants";
-import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
-import { RootState } from "../../../stores/types";
+import { setOpenModal, setWallet } from "../../../stores/user";
+import { NETWORK, SUPPORTED_WALLETS } from "../../../commons/utils/constants";
 import { CircularProgress } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
-import { CloseButton, ConnectDialog, Content, Header, Title, WalletIcon, WalletItem, WalletName } from "./style";
-import { SupportedWallets } from "../../../types/user";
+import {
+  CloseButton,
+  ConnectOption,
+  GroupFlex,
+  InstallButton,
+  Title,
+  WalletIcon,
+  WalletItem,
+  WalletName,
+  WrapContent,
+} from "./style";
+import { SupportedWallets, Wallet } from "../../../types/user";
+import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet";
+import { MdOutlineFileDownload } from "react-icons/md";
+import Toast from "../Toast";
 
-const ConnectWalletModal: React.FC = () => {
-  const { connect } = useCardano();
-  const { openModal } = useSelector(({ user }: RootState) => user);
+interface IProps {
+  connect: (name: string, onSuccess: () => void, onError: (error: Error) => void) => Promise<any>;
+  onTriggerSignMessage: () => void;
+}
+const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage }) => {
   const [walletConnecting, setWalletConnecting] = useState<SupportedWallets | null>(null);
-
+  const [message, setMessage] = React.useState("");
+  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setMessage("");
+  };
   const handleClose = () => {
     setOpenModal(false);
   };
   const onSuccess = () => {
     setWalletConnecting(null);
     setOpenModal(false);
+    onTriggerSignMessage();
   };
   const onError = (error: Error) => {
+    if (error.name === "EnablementFailedError") {
+      setMessage(
+        `You are currently connect to ${
+          NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()
+        }, please switch to  ${NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()}!`
+      );
+    } else if (error.name === "WalletExtensionNotFoundError") {
+    } else {
+      setMessage("Something went wrong!");
+    }
     setWalletConnecting(null);
   };
   const handleConnect = (walletName: SupportedWallets) => {
     setWalletConnecting(walletName);
-    connect(walletName, onSuccess, onError);
+    setWallet(walletName);
+    connect(walletName, () => onSuccess(), onError);
   };
 
+  const handleOpenLink = (wallet: Wallet) => {
+    window.open(wallet.link, "_blank");
+  };
   return (
-    <ConnectDialog
-      onClose={walletConnecting ? undefined : handleClose}
-      open={openModal}
-      fullWidth
-      connecting={walletConnecting ? 1 : 0}
-      PaperProps={{ style: { borderRadius: 20 } }}
-    >
-      <Header>
-        <Title>Connect to a Wallet</Title>
+    <ConnectOption>
+      <WrapContent>
+        <Title>Connect to a wallet</Title>
         <CloseButton connecting={walletConnecting ? 1 : 0} onClick={walletConnecting ? undefined : handleClose}>
           <IoMdClose />
         </CloseButton>
-      </Header>
-      <Content>
         {SUPPORTED_WALLETS.map(wallet => {
           const active = walletConnecting === wallet.name;
           return (
@@ -53,14 +78,26 @@ const ConnectWalletModal: React.FC = () => {
               connecting={walletConnecting ? 1 : 0}
               onClick={() => !walletConnecting && handleConnect(wallet.name)}
             >
-              <WalletIcon src={wallet.icon} alt={wallet.name} />
-              {active ? <CircularProgress size={30} /> : ""}
-              <WalletName>{wallet.name}</WalletName>
+              <GroupFlex>
+                <WalletName>{wallet.name}</WalletName>
+                {active ? <CircularProgress size={30} /> : ""}
+              </GroupFlex>
+              <GroupFlex>
+                {!isWalletInstalled(wallet.name.toLocaleLowerCase()) ? (
+                  <InstallButton onClick={() => handleOpenLink(wallet)}>
+                    Not Installed <MdOutlineFileDownload size={18} />
+                  </InstallButton>
+                ) : (
+                  <i />
+                )}
+                <WalletIcon src={wallet.icon} alt={wallet.name} />
+              </GroupFlex>
             </WalletItem>
           );
         })}
-      </Content>
-    </ConnectDialog>
+      </WrapContent>
+      <Toast open={!!message} onClose={handleCloseToast} messsage={message} severity={"error"} />
+    </ConnectOption>
   );
 };
 

@@ -2,20 +2,25 @@ import { Autocomplete, Box, Grid } from "@mui/material";
 import React from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
-import { AIcon } from "../../../commons/resources";
+import { AIcon, EmptyIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
-import { exchangeADAToUSD, formatADA, formatPrice } from "../../../commons/utils/helper";
+import { API } from "../../../commons/utils/api";
+import { exchangeADAToUSD, formatADAFull, formatPrice, getShortWallet } from "../../../commons/utils/helper";
 import { RootState } from "../../../stores/types";
 import Card from "../../commons/Card";
 import CardAddress from "../../share/CardAddress";
 import { Pool, StyledAAmount, StyledTextField, WrapPaperDropdown } from "./styles";
 
-const AddressOverview: React.FC = () => {
-  const params = useParams<{ address: string }>();
-  const { data, loading } = useFetch<WalletAddress>(`/address/${params.address}`);
-  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(`/stakeKey/${params.address}`);
+interface Props {
+  data: WalletAddress | null;
+  loading: boolean;
+}
+
+const AddressOverview: React.FC<Props> = ({ data, loading }) => {
+  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
+    data?.stakeAddress ? `${API.STAKE.DETAIL}/${data?.stakeAddress}` : ""
+  );
   const { adaRate } = useSelector(({ system }: RootState) => system);
 
   const itemLeft = [
@@ -24,22 +29,22 @@ const AddressOverview: React.FC = () => {
       title: "ADA Balance",
       value: (
         <StyledAAmount>
-          {formatADA(data?.balance || 0)}
+          <Box>{formatADAFull(data?.balance)}</Box>
           <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
         </StyledAAmount>
       ),
     },
-    { title: "ADA Value", value: exchangeADAToUSD(data?.balance || 0, adaRate) },
+    { title: "ADA Value", value: exchangeADAToUSD(data?.balance || 0, adaRate, true) },
     {
       value: (
         <Autocomplete
-          // value={selectedToken}
-          // onChange={(event, newValue) => {
-          //   setSelectedToken(newValue as WalletAddress["tokens"][number]);
-          // }}
-          PaperComponent={({ children }) => <WrapPaperDropdown>{children}</WrapPaperDropdown>}
           options={data?.tokens || []}
           getOptionLabel={option => option.displayName}
+          noOptionsText={
+            <Box>
+              <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
+            </Box>
+          }
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
             <li {...props} key={option.fingerprint}>
               <Box
@@ -57,7 +62,7 @@ const AddressOverview: React.FC = () => {
                   </Box>
                   <Box>{option.displayName}</Box>
                 </Box>
-                <Box fontWeight={"bold"}>{formatPrice(option.quantity || 0)}</Box>
+                <Box fontWeight={"bold"}>{formatPrice(option.quantity)}</Box>
               </Box>
             </li>
           )}
@@ -72,7 +77,7 @@ const AddressOverview: React.FC = () => {
       title: "Controlled Total Stake",
       value: (
         <StyledAAmount>
-          {formatADA(dataStake?.totalStake)}
+          {formatADAFull(dataStake?.totalStake)}
           <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
         </StyledAAmount>
       ),
@@ -81,7 +86,7 @@ const AddressOverview: React.FC = () => {
       title: "Reward Available",
       value: (
         <StyledAAmount>
-          {formatADA(dataStake?.rewardAvailable)}
+          {formatADAFull(dataStake?.rewardAvailable)}
           <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
         </StyledAAmount>
       ),
@@ -90,21 +95,25 @@ const AddressOverview: React.FC = () => {
       title: "Reward Withdrawn",
       value: (
         <StyledAAmount>
-          {formatADA(dataStake?.rewardWithdrawn)}
+          {formatADAFull(dataStake?.rewardWithdrawn)}
           <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
         </StyledAAmount>
       ),
     },
     {
       title: "Delegated To",
-      value: <Pool to={details.delegation(dataStake?.pool.poolId)}>{dataStake?.pool.poolName}</Pool>,
+      value: (
+        <Pool to={details.delegation(dataStake?.pool ? dataStake?.pool?.poolId : "")}>
+          {dataStake?.pool?.poolName || `Pool [${getShortWallet(dataStake?.pool?.poolId || "")}]`}
+        </Pool>
+      ),
     },
   ];
   return (
     <Card title="Contract Detail">
       <Grid container columnSpacing={2}>
         <Grid item xs={12} md={6}>
-          <Box overflow="hidden" borderRadius={props => props.borderRadius} height={"100%"}>
+          <Box overflow="hidden" borderRadius={10} height={"100%"}>
             <CardAddress
               title={"Wallet address"}
               type="left"
@@ -115,13 +124,14 @@ const AddressOverview: React.FC = () => {
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Box overflow="hidden" borderRadius={props => props.borderRadius} height={"100%"}>
+          <Box overflow="hidden" borderRadius={10} height={"100%"}>
             <CardAddress
               title={"Controlled stake key"}
               type="right"
               address={dataStake?.stakeAddress || ""}
               item={itemRight}
-              loading={loadingStake}
+              loading={loading || loadingStake}
+              addressDestination={details.stake(dataStake?.stakeAddress)}
             />
           </Box>
         </Grid>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { routers } from "./commons/routers";
 import Home from "./pages/Home";
 import BlockList from "./pages/BlockList";
@@ -22,6 +22,11 @@ import ContractList from "./pages/ContractList";
 import ContractDetail from "./pages/ContractDetail";
 import TopAddresses from "./pages/TopAddresses";
 import TopDelegators from "./pages/TopDelegators";
+import SearchResult from "./pages/SearchResult";
+import MyProfile from "./pages/MyProfile";
+import AccountLayout from "./components/commons/Layout/AccountLayout";
+import Bookmark from "./pages/Bookmark";
+import PrivateNotes from "./pages/PrivateNotes";
 
 const Routes: React.FC = () => {
   return (
@@ -30,7 +35,7 @@ const Routes: React.FC = () => {
       <Route path={routers.BLOCK_LIST} exact component={BlockList} />
       <Route path={routers.BLOCK_DETAIL} component={BlockDetail} />
       <Route path={routers.TRANSACTION_LIST} exact component={TransactionList} />
-      <Route path={routers.TRANSACTION_DETAIL} exact component={TransactionDetail} />
+      <Route path={routers.TRANSACTION_DETAIL} component={TransactionDetail} />
       <Route path={routers.EPOCH_LIST} exact component={Epoch} />
       <Route path={routers.EPOCH_DETAIL} exact component={EpochDetail} />
       <Route path={routers.DELEGATION_POOLS} exact component={DelegationPools} />
@@ -46,6 +51,18 @@ const Routes: React.FC = () => {
       <Route path={routers.POLICY_DETAIL} exact component={PolicyDetail} />
       <Route path={routers.ADDRESS_LIST} exact component={TopAddresses} />
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
+      <Route path={routers.SEARCH} exact component={SearchResult} />
+      <Route path={routers.ACCOUNT}>
+        <AccountLayout>
+          <Switch>
+            <Route path={routers.ACCOUNT} exact component={() => <Redirect to={routers.MY_PROFILE} />} />
+            <Route path={routers.MY_PROFILE} exact component={MyProfile} />
+            <Route path={routers.BOOKMARK} exact component={Bookmark} />
+            <Route path={routers.PRIVATE_NOTES} exact component={PrivateNotes} />
+            <Route path={routers.NOT_FOUND} component={NotFound} />
+          </Switch>
+        </AccountLayout>
+      </Route>
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );

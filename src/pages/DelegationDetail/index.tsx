@@ -1,33 +1,31 @@
 import { Container } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { parse, stringify } from "qs";
-
+import { BiChevronDown } from "react-icons/bi";
 import useFetch from "../../commons/hooks/useFetch";
-
 import DelegationDetailInfo from "../../components/DelegationDetail/DelegationDetailInfo";
 import DelegationDetailOverview from "../../components/DelegationDetail/DelegationDetailOverview";
 import DelegationDetailChart from "../../components/DelegationDetail/DelegationDetailChart";
-
 import { OptionSelect, StyledSelect, Title } from "./styles";
 import {
   DelegationEpochList,
   DelegationStakingDelegatorsList,
 } from "../../components/DelegationDetail/DelegationDetailList";
 import useFetchList from "../../commons/hooks/useFetchList";
-
-interface IDelegationDetail {}
+import NoRecord from "../../components/commons/NoRecord";
+import { API } from "../../commons/utils/api";
 
 const titles = {
   epochs: "Epoch",
   delegators: "Staking Delegators",
 };
-const DelegationDetail: React.FC<IDelegationDetail> = () => {
+const DelegationDetail: React.FC = () => {
   const { poolId } = useParams<{ poolId: string }>();
-  const { search } = useLocation();
+  const { search, state } = useLocation<{ data?: DelegationOverview }>();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
-  const [tab, setTab] = useState<"epochs" | "delegators">("epochs");
+  const tab = (query.tab as "epochs" | "delegators") || "epochs";
   const [saving, setSaving] = useState<boolean>(false);
   const tableRef = useRef(null);
 
@@ -44,15 +42,27 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
     history.push({ search: stringify(query) });
   };
 
-  const { data, loading } = useFetch<DelegationOverview>(`/delegation/pool-detail-header/${poolId}`);
+  const { data, loading, initialized, error } = useFetch<DelegationOverview>(
+    state?.data ? "" : `${API.DELEGATION.POOL_DETAIL_HEADER}/${poolId}`,
+    state?.data
+  );
   const {
     data: dataTable,
     loading: loadingTable,
     total,
-    initialized,
+    initialized: initalTable,
   } = useFetchList<DelegationEpoch | StakingDelegators>(
-    `/delegation/pool-detail-${tab}?poolView=${poolId}&page=${query.page || 0}&size=${query.size || 10}`
+    `${API.DELEGATION.POOL_DETAIL}-${tab}?poolView=${poolId}&page=${query.page ? +query.page - 1 : 0}&size=${
+      query.size || 10
+    }`
   );
+
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Delegation Pool ${poolId} | Cardano Explorer`;
+  }, [poolId]);
+
+  if ((initialized && !data) || error) return <NoRecord />;
 
   const render = () => {
     if (tab === "epochs") {
@@ -61,7 +71,7 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
           <DelegationEpochList
             data={dataTable as DelegationEpoch[]}
             loading={loadingTable}
-            initialized={initialized}
+            initialized={initalTable}
             total={total}
             scrollEffect={scrollEffect}
           />
@@ -74,7 +84,7 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
           <DelegationStakingDelegatorsList
             data={dataTable as StakingDelegators[]}
             loading={loadingTable}
-            initialized={initialized}
+            initialized={initalTable}
             total={total}
             scrollEffect={scrollEffect}
           />
@@ -94,10 +104,10 @@ const DelegationDetail: React.FC<IDelegationDetail> = () => {
         <StyledSelect
           value={tab}
           onChange={e => {
-            setTab(e.target.value as typeof tab);
-            setQuery({ page: 1, size: 10 });
+            setQuery({ tab: e.target.value, page: 1, size: 10 });
             scrollEffect();
           }}
+          IconComponent={() => <BiChevronDown size={30} style={{ paddingRight: 10 }} />}
         >
           <OptionSelect value="epochs">Epoch</OptionSelect>
           <OptionSelect value="delegators">Staking Delegators</OptionSelect>

@@ -8,8 +8,7 @@ import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
 import { Box } from "@mui/material";
 import { TitleCard } from "./styles";
-import moment from "moment";
-import { formatADA } from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
 import { ADAToken } from "../../commons/Token";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 
@@ -28,7 +27,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
           <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
-      value: moment(data?.time).format("MM/DD/YYYY hh:mm:ss"),
+      value: formatDateTimeLocal(data?.time || ""),
     },
     {
       icon: exchageIcon,
@@ -49,9 +48,9 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <>
-          {formatADA(data?.totalFees || 0)} <ADAToken />
-        </>
+        <Box component={"span"}>
+          {formatADAFull(data?.totalFees)} <ADAToken />
+        </Box>
       ),
     },
     {
@@ -63,9 +62,9 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <>
-          {formatADA(data?.totalOutput || 0)} <ADAToken />
-        </>
+        <Box component={"span"}>
+          {formatADAFull(data?.totalOutput)} <ADAToken />
+        </Box>
       ),
     },
     {
@@ -86,7 +85,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       ),
       value: (
         <>
-          {data?.slotNo || 0}
+          {data?.epochSlotNo || 0}
           <Box component={"span"} fontWeight="400">
             /{MAX_SLOT_EPOCH}
           </Box>
@@ -102,8 +101,8 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
         data && {
           type: "block",
           header: {
-            title: data.blockNo,
-            hash: data.slotLeader,
+            title: "Block detail",
+            hash: data.hash,
             slotLeader: true,
           },
 

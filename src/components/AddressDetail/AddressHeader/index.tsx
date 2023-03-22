@@ -1,42 +1,66 @@
-import React from "react";
-import { Link, useParams } from "react-router-dom";
-import { styled, Grid, Box, Autocomplete, Skeleton } from "@mui/material";
-import { formatADA, formatPrice } from "../../../commons/utils/helper";
+import { Link } from "react-router-dom";
+import { Grid, Box, Autocomplete, useTheme } from "@mui/material";
+import { exchangeADAToUSD, formatADAFull, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
-import CopyButton from "../../commons/CopyButton"; 
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronDown } from "react-icons/bi";
-import { AIcon, InfoIcon } from "../../../commons/resources";
-import { TextField } from "@mui/material";
+import { AIcon } from "../../../commons/resources";
+import CardAddress from "../../share/CardAddress";
+import { details } from "../../../commons/routers";
+import { Option, StyledTextField, WrapPaperDropdown } from "./styles";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../stores/types";
+import { useEffect, useState } from "react";
+import { API } from "../../../commons/utils/api";
+import BookmarkButton from "../../commons/BookmarkIcon";
 import { EmptyIcon } from "../../../commons/resources";
-import { details, routers } from "../../../commons/routers";
-import { AddressGroup, AddressLink, ItemDetail, ItemLeft, ItemLeftTitle, TitleDetail, Value } from "./styles";
 
-const AddressHeader = () => {
-  const { address } = useParams<{ address: string }>();
-  const { data, loading } = useFetch<WalletAddress>(`/address/${address}`);
-  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(`/stakeKey/${address}`);
+interface Props {
+  data: WalletAddress | null;
+  loading: boolean;
+}
+const AddressHeader: React.FC<Props> = ({ data, loading }) => {
+  const [stakeKey, setStakeKey] = useState("");
+  const [selected, setSelected] = useState("");
+  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
+    stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : ""
+  );
+  const { adaRate } = useSelector(({ system }: RootState) => system);
+  const theme = useTheme();
 
-  const itemRight = [
+  useEffect(() => {
+    setStakeKey(data?.stakeAddress || "");
+  }, [data]);
+
+  const itemLeft = [
     { title: "Transaction", value: data?.txCount || 0 },
     {
       title: "ADA Balance",
       value: (
-        <>
-          {formatADA(data?.balance || 0)}
+        <Box display="flex" alignItems="center">
+          {formatADAFull(data?.balance)}
           <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
-        </>
+        </Box>
       ),
     },
-    { title: "ADA Value", value: "NaN" },
+    {
+      title: "ADA Value",
+      value: <Box>$ {exchangeADAToUSD(data?.balance || 0, adaRate, true)}</Box>,
+    },
     {
       value: (
         <Autocomplete
           options={data?.tokens || []}
-          getOptionLabel={option => option.displayName}
-          noOptionsText="No data found"
+          componentsProps={{ paper: { elevation: 2 } }}
+          getOptionLabel={option => option.displayName || option.name || option.fingerprint}
+          noOptionsText={
+            <Box>
+              <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
+            </Box>
+          }
+          onChange={(e, value) => setSelected(value?.fingerprint || "")}
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
-            <li {...props}>
+            <Option key={option.fingerprint} {...props} active={selected === option.fingerprint ? 1 : 0}>
               <Box
                 display="flex"
                 alignItems={"center"}
@@ -50,13 +74,13 @@ const AddressHeader = () => {
                   <Box width={50}>
                     <img src={AIcon} alt="a icon" />
                   </Box>
-                  <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"}>
+                  <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="200px">
                     {option.displayName} #{option.name || option.fingerprint}
                   </Box>
                 </Box>
-                <Box fontWeight={"bold"}>{formatPrice(option.quantity || 0)}</Box>
+                <Box fontWeight={"bold"}>{numberWithCommas(option.quantity)}</Box>
               </Box>
-            </li>
+            </Option>
           )}
           renderInput={params => <StyledTextField {...params} placeholder="Search Token" />}
           popupIcon={<BiChevronDown />}
@@ -64,62 +88,70 @@ const AddressHeader = () => {
       ),
     },
   ];
-  const itemLeft = [
+  const itemRight = [
     {
       title: "Total Stake",
       value: (
-        <>
-          {formatADA(dataStake?.totalStake || 0)}
+        <Box>
+          {formatADAFull(dataStake?.totalStake)}
           <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
-        </>
+        </Box>
       ),
     },
     {
       title: "POOL NAME",
       value: (
         <Link
-          to={
-            dataStake?.pool?.poolName ? routers.DELEGATION_POOL_DETAIL.replace(":poolId", dataStake.pool.poolId) : "#"
-          }
-          style={{ fontFamily: "var(--font-family-text)", color: "var(--color-blue)" }}
+          to={dataStake?.pool?.poolName ? details.delegation(dataStake.pool.poolId) : "#"}
+          style={{ fontFamily: "var(--font-family-text)", color: theme.palette.secondary.main }}
         >
-          {dataStake?.pool?.poolName || ""}
+          {dataStake?.pool?.poolName ||
+            (dataStake?.pool?.poolId && `Pool [${getShortWallet(dataStake.pool.poolId)}]`) ||
+            ""}
         </Link>
       ),
     },
     {
       title: "Reward",
       value: (
-        <>
-          {formatADA(dataStake?.rewardAvailable || 0)}
+        <Box>
+          {formatADAFull(dataStake?.rewardAvailable)}
           <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
-        </>
+        </Box>
       ),
     },
   ];
 
   return (
-    <Card title="Address Detail">
+    <Card
+      title={
+        <Box display={"flex"}>
+          <Box>Address Detail</Box>
+          <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
+        </Box>
+      }
+    >
       <Grid container columnSpacing={2}>
         <Grid item xs={12} md={6}>
-          <Box overflow="hidden" borderRadius={props => props.borderRadius} height={"100%"}>
-            <DetailCard
+          <Box overflow="hidden" borderRadius={10} height={"100%"}>
+            <CardAddress
               title={"Wallet address"}
               type="left"
               address={data?.address || ""}
-              item={itemRight}
+              item={itemLeft}
               loading={loading}
             />
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Box overflow="hidden" borderRadius={props => props.borderRadius} height={"100%"}>
-            <DetailCard
+          <Box overflow="hidden" borderRadius={10} height={"100%"}>
+            <CardAddress
               title={"Stake address"}
               type="right"
               address={data?.stakeAddress || ""}
-              item={itemLeft}
+              item={itemRight}
               loading={loading || loadingStake}
+              addressDestination={details.stake(data?.stakeAddress)}
             />
           </Box>
         </Grid>
@@ -129,69 +161,3 @@ const AddressHeader = () => {
 };
 
 export default AddressHeader;
-
-interface DetailCardProps {
-  title: string;
-  address: string;
-  item: { title?: string; value: React.ReactNode }[];
-  type: "left" | "right";
-  loading: boolean;
-}
-const DetailCard: React.FC<DetailCardProps> = ({ title, address, item, type, loading }) => {
-  if (loading) {
-    return (
-      <CardItem padding={0}>
-        <Skeleton variant="rectangular" height="100%" width="100%" />
-      </CardItem>
-    );
-  }
-  if (type === "right" && !address) {
-    return (
-      <CardItem>
-        <Box height={"100%"} display="flex" alignItems="center" justifyContent="center">
-          <img alt="icon" src={EmptyIcon} />
-        </Box>
-      </CardItem>
-    );
-  }
-  return (
-    <CardItem padding={props => props.spacing(4)}>
-      <TitleDetail>{title}</TitleDetail>
-      <AddressGroup>
-        <AddressLink to={type === "left" ? details.address(address) : details.stake(address)}>{address}</AddressLink>
-        <CopyButton text={address} />
-      </AddressGroup>
-      <Box>
-        {item.map((item, index) => {
-          return (
-            <ItemDetail key={index}>
-              {item.title && (
-                <ItemLeft>
-                  <img src={InfoIcon} alt="info icon" />
-                  <ItemLeftTitle>{item.title}:</ItemLeftTitle>
-                </ItemLeft>
-              )}
-              <Value style={{ width: `${item.title ? "auto" : "100%"}` }}>{item.value}</Value>
-            </ItemDetail>
-          );
-        })}
-      </Box>
-    </CardItem>
-  );
-};
-
-const CardItem = styled(Box)(({ theme }) => ({
-  background: "#fff",
-  minHeight: 200,
-  height: "100%",
-  borderRadius: theme.borderRadius,
-  overflow: "hidden",
-  textAlign: "left",
-  boxShadow: theme.shadowRaised,
-}));
-
-const StyledTextField = styled(TextField)`
-  .MuiInputBase-input {
-    font-size: 14px;
-  }
-`;

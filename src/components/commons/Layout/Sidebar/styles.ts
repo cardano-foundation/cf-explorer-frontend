@@ -12,7 +12,7 @@ export const NavbarContainer = styled.nav`
   text-align: left;
   @media screen and (max-width: 1023px) {
     height: auto;
-    background-color: #ffffff;
+    background-color: ${props => props.theme.palette.background.paper};
     padding: 0px;
   }
 `;
@@ -54,17 +54,17 @@ export const NetworkName = styled.small<{ network: keyof typeof NETWORKS }>`
   font-family: var(--font-family-title);
   color: ${props => {
     switch (props.network) {
-      case "mainnet": {
-        return props.theme.colorGreenLight;
+      case NETWORKS.mainnet: {
+        return props.theme.palette.primary.main;
       }
-      case "preprod": {
-        return props.theme.colorBlue;
+      case NETWORKS.preprod: {
+        return props.theme.palette.secondary.main;
       }
-      case "preview": {
-        return props.theme.colorBlue;
+      case NETWORKS.preview: {
+        return props.theme.palette.secondary.main;
       }
       default: {
-        return props.theme.colorYellow;
+        return props.theme.palette.warning.main;
       }
     }
   }};
@@ -80,4 +80,3 @@ export const Toggle = styled.i`
     display: block;
   }
 `;
-

@@ -1,4 +1,18 @@
 @font-face {
+  font-family: "Roboto Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url(./commons/resources/fonts/Roboto-Bold.ttf) format("ttf");;
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  src: url(./commons/resources/fonts/Roboto-Light.ttf) format("ttf");;
+}
+
+@font-face {
   font-family: "Space Mono";
   font-style: normal;
   font-weight: 400;
@@ -61,9 +75,9 @@
 }
 
 :root {
-  --font-family-title: "Space Mono", monospace, sans-serif;
-  --font-family-text: Helvetica, monospace;
-  --font-weight-normal: 400;
+  --font-family-title: "Roboto Bold", sans-serif;
+  --font-family-text: "Roboto", sans-serif;
+  --font-weight-normal: 300;
   --font-weight-bold: 700;
   --font-size-text: 16px;
   --font-size-text-large: 18px;
@@ -103,6 +117,7 @@
   --footer-color-green: #29744d;
   --shadow-raised: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12);
   --border-radius: 10px;
+  --border-radius-sm: 8px;
   --background: #e9eaec;
   @media screen and (max-width: 1400px) {
     --container-max-width: calc(100% - 40px);

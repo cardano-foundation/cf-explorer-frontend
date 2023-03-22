@@ -49,10 +49,13 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { TbFileCheck } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatADA, getShortHash, getShortWallet } from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../stores/types";
+import { API } from "../../../commons/utils/api";
 
 type DetailViewTransactionProps = {
   hash: string;
@@ -70,7 +73,8 @@ const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] 
 
 const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
   const { hash, handleClose } = props;
-  const { data } = useFetch<Transaction>(hash ? `tx/${hash}` : ``);
+  const { data } = useFetch<Transaction>(hash ? `${API.TRANSACTION.DETAIL}/${hash}` : ``);
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
 
   if (!data)
     return (
@@ -78,7 +82,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
         <ViewDetailContainer>
           <ViewDetailScroll>
             <StyledViewMore tooltipTitle="View Detail" to={details.transaction(hash)} />
-            <CustomTooltip placement="top" title="Close">
+            <CustomTooltip title="Close">
               <CloseButton onClick={handleClose}>
                 <CgClose />
               </CloseButton>
@@ -122,8 +126,8 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
             </Group>
             {new Array(2).fill(0).map((_, index) => {
               return (
-                <Group>
-                  <DetailsInfoItem key={index}>
+                <Group key={index}>
+                  <DetailsInfoItem>
                     <DetailLabel>
                       <DetailValueSkeleton variant="rectangular" />
                     </DetailLabel>
@@ -146,7 +150,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
       if (data.tx.confirmation > 9) {
         return CONFIRMATION_STATUS.HIGH;
       }
-      if (2 < data.tx.confirmation && data.tx.confirmation  <= 8) {
+      if (2 < data.tx.confirmation && data.tx.confirmation <= 8) {
         return CONFIRMATION_STATUS.MEDIUM;
       }
       return CONFIRMATION_STATUS.LOW;
@@ -159,7 +163,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
       <ViewDetailContainer>
         <ViewDetailScroll>
           <StyledViewMore tooltipTitle="View Detail" to={details.transaction(hash)} />
-          <CustomTooltip placement="top" title="Close">
+          <CustomTooltip title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -170,7 +174,11 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               pathLineCap="butt"
               pathWidth={4}
               trailWidth={2}
-              percent={((data.tx.epochSlot || 0) / (data.tx.maxEpochSlot || MAX_SLOT_EPOCH)) * 100}
+              percent={
+                data.tx.epochNo === currentEpoch?.no
+                  ? ((data.tx.epochSlot || 0) / (data.tx.maxEpochSlot || MAX_SLOT_EPOCH)) * 100
+                  : 100
+              }
               trailOpacity={1}
             >
               <EpochNumber>{data.tx.epochNo}</EpochNumber>
@@ -181,7 +189,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
             <Item>
               <Icon src={CubeIcon} alt="socket" />
               <ItemName>Block</ItemName>
-              <ItemValue>{data.tx.epochNo}</ItemValue>
+              <ItemValue>{data.tx.blockNo}</ItemValue>
             </Item>
             <Item>
               <Icon src={RocketIcon} alt="socket" />
@@ -199,7 +207,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                 Transaction hash
               </DetailLabel>
               <DetailValue>
-                <CustomTooltip placement="top" title={hash}>
+                <CustomTooltip title={hash} placement="top-start">
                   <StyledLink to={details.transaction(hash)}>{getShortHash(hash)}</StyledLink>
                 </CustomTooltip>
                 <CopyButton text={hash} />
@@ -212,7 +220,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                   Input
                 </DetailLabel>
                 <DetailValue>
-                  <CustomTooltip placement="top" title={input}>
+                  <CustomTooltip title={input} placement="top-start">
                     <StyledLink to={details.address(input)}>{getShortWallet(input)}</StyledLink>
                   </CustomTooltip>
                   <CopyButton text={input} />
@@ -226,7 +234,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                   Output
                 </DetailLabel>
                 <DetailValue>
-                  <CustomTooltip placement="top" title={output}>
+                  <CustomTooltip title={output} placement="top-start">
                     <StyledLink to={details.address(output)}>{getShortWallet(output)}</StyledLink>
                   </CustomTooltip>
                   <CopyButton text={output} />
@@ -238,7 +246,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                 <InfoIcon />
                 Time
               </DetailLabel>
-              <DetailValue>{data.tx.time}</DetailValue>
+              <DetailValue>{formatDateTimeLocal(data.tx.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
@@ -265,8 +273,8 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                 Transaction Fees
               </DetailLabel>
               <DetailValue>
-                {formatADA(data.tx.fee) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                {formatADAFull(data.tx.fee)}
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -275,8 +283,8 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
                 Total Output
               </DetailLabel>
               <DetailValue>
-                {formatADA(data.tx.totalOutput) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                {formatADAFull(data.tx.totalOutput)}
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
           </Group>
@@ -285,7 +293,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
             if (!value) return null;
             return (
               <Group key={key}>
-                <DetailLink to={details.transaction(hash)}>
+                <DetailLink to={details.transaction(hash, key)}>
                   <DetailLabel>
                     <DetailLinkIcon>{icon}</DetailLinkIcon>
                     <DetailLinkName>

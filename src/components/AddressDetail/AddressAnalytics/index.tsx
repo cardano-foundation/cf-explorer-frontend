@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-
 import {
   BoxInfo,
   BoxInfoItem,
@@ -20,8 +19,10 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import Card from "../../commons/Card";
-import { formatADA, formatPrice } from "../../../commons/utils/helper";
+import { formatADAFull, formatPrice } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
+import { BigNumber } from "bignumber.js";
+import { API } from "../../../commons/utils/api";
 
 type AnalyticsData = { date: string; value: number };
 
@@ -35,12 +36,18 @@ const options = [
 const AddressAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { address } = useParams<{ address: string }>();
-  const { data, loading } = useFetch<AnalyticsData[]>(`/address/analytics/${address}/${rangeTime}`);
-  const { data: balance, loading: balanceLoading } = useFetch<number[]>(`/address/min-max-balance/${address}`);
-  const dataChart = data?.map(i => +formatADA(+i.value || 0) || []);
-  const categories = data?.map(i => moment(i.date).format("DD MMM")) || [];
+  const theme = useTheme();
+  const { data, loading } = useFetch<AnalyticsData[]>(`${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`);
+  const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${address}`);
+  const dataChart = data?.map(i => {
+    const value = BigNumber(i.value).div(10 ** 6);
+    return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
+  });
+
+  const categories = data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
   const minBalance = Math.min(...(balance || []), 0);
   const maxBalance = Math.max(...(balance || []), 0);
+
   return (
     <Card title="Analytics" pt={5}>
       <Wrapper container columns={24}>
@@ -63,61 +70,62 @@ const AddressAnalytics: React.FC = () => {
             {loading ? (
               <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={{
-                  chart: { type: "areaspline", style: { fontFamily: "Helvetica, monospace" } },
-                  title: { text: "" },
-                  yAxis: {
-                    title: { text: null },
-                    lineWidth: 1,
-                    lineColor: "#E3E5E9",
-                    gridLineWidth: 0,
-                    labels: {
-                      style: { fontSize: 12 },
-                      formatter: (e: { value: string }) => formatPrice(e.value || 0),
-                    },
-                  },
-                  xAxis: {
-                    categories,
-                    lineWidth: 1,
-                    lineColor: "#E3E5E9",
-                    plotLines: [],
-                    angle: 0,
-                    labels: {
-                      style: {
-                        fontSize: 12,
+              <Box position={"relative"}>
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={{
+                    chart: { type: "areaspline", style: { fontFamily: "Helvetica, monospace" } },
+                    title: { text: "" },
+                    yAxis: {
+                      title: { text: null },
+                      lineWidth: 2,
+                      lineColor: theme.palette.border.main,
+                      className: "y-axis-lable",
+                      gridLineWidth: 1,
+                      minorGridLineWidth: 1,
+                      labels: {
+                        style: { fontSize: 12 },
+                        formatter: (e: { value: string }) => {
+                          return formatPrice(e.value);
+                        },
                       },
                     },
-                  },
-                  legend: { enabled: false },
-                  tooltip: { shared: true },
-                  credits: { enabled: false },
-                  series: [
-                    {
-                      name: "",
-                      pointPlacement: "on",
-                      type: "areaspline",
-                      marker: { enabled: false },
-                      color: {
-                        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-                        stops: [
-                          [0, "#184C78"],
-                          [1, "#5A9C56"],
-                        ],
+                    xAxis: {
+                      categories,
+                      lineWidth: 2,
+                      lineColor: theme.palette.border.main,
+                      plotLines: [],
+                      angle: 0,
+                      labels: {
+                        style: {
+                          fontSize: 12,
+                        },
                       },
-                      fillColor: {
-                        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-                        stops: [
-                          [0, "rgba(24, 76, 120, 0.3)"],
-                          [1, "rgba(90, 156, 86, 0)"],
-                        ],
-                      },
-                      data: dataChart,
                     },
-                  ],
-                }}
-              />
+                    legend: { enabled: false },
+                    tooltip: { shared: true },
+                    credits: { enabled: false },
+                    series: [
+                      {
+                        name: "",
+                        pointPlacement: "on",
+                        type: "areaspline",
+                        marker: { enabled: false },
+                        lineWidth: 4,
+                        color: theme.palette.primary.main,
+                        fillColor: {
+                          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+                          stops: [
+                            [0, theme.palette.success.light],
+                            [1, "transparent"],
+                          ],
+                        },
+                        data: dataChart,
+                      },
+                    ],
+                  }}
+                />
+              </Box>
             )}
           </ChartBox>
         </Grid>
@@ -129,7 +137,7 @@ const AddressAnalytics: React.FC = () => {
                   <img src={HighestIcon} width={"20%"} alt="heighest icon" />
                   <Title>Highest Balance</Title>
                   <ValueInfo>
-                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADA(maxBalance || 0)}
+                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance)}
                   </ValueInfo>
                 </Box>
               </BoxInfoItemRight>
@@ -140,7 +148,7 @@ const AddressAnalytics: React.FC = () => {
                   <img src={LowestIcon} width={"20%"} alt="lowest icon" />
                   <Title>Lowest Balance</Title>
                   <ValueInfo>
-                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADA(minBalance || 0)}
+                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance)}
                   </ValueInfo>
                 </Box>
               </BoxInfoItem>

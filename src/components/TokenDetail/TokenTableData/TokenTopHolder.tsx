@@ -2,12 +2,12 @@ import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import useFetchList from "../../../commons/hooks/useFetchList";
-import { AIcon } from "../../../commons/resources";
-import { details, routers } from "../../../commons/routers";
-import { formatADA, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
+import { details } from "../../../commons/routers";
+import { getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
-import { PriceIcon, PriceValue, SmallText, StyledLink } from "./styles";
+import { PriceValue, SmallText, StyledLink } from "./styles";
+import { API } from "../../../commons/utils/api";
 
 interface ITokenTopHolder {
   active: boolean;
@@ -20,24 +20,24 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<ITokenTopHolderTable>(`tokens/${tokenId}/top_holders`, { ...pageInfo, tokenId });
+  const fetchData = useFetchList<ITokenTopHolderTable>(`${API.TOKEN}/${tokenId}/top_holders`, { ...pageInfo, tokenId });
 
   const columns: Column<ITokenTopHolderTable>[] = [
     {
       title: "#",
       key: "id",
       minWidth: "40px",
-      render: (data, index) => <SmallText>{index + 1}</SmallText>,
+      render: (data, index) => (
+        <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
+      ),
     },
     {
       title: "Address",
       key: "address",
       minWidth: "200px",
       render: r => (
-        <CustomTooltip title={r.address} placement="top">
-          <StyledLink to={routers.ADDRESS_DETAIL.replace(":address", r.address)}>
-            {getShortWallet(r.address)}
-          </StyledLink>
+        <CustomTooltip title={r.address}>
+          <StyledLink to={details.address(r.address)}>{getShortWallet(r.address)}</StyledLink>
         </CustomTooltip>
       ),
     },
@@ -47,8 +47,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
       minWidth: "200px",
       render: r => (
         <PriceValue>
-          <SmallText>{formatADA(r.quantity) || 0}</SmallText>
-          <PriceIcon src={AIcon} alt="a icon" />
+          <SmallText>{numberWithCommas(r?.quantity)}</SmallText>
         </PriceValue>
       ),
     },

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import CustomLayout from "./components/commons/Layout";
 import { RootState } from "./stores/types";
@@ -6,32 +6,16 @@ import { useHistory } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import themes from "./themes";
 import { setOnDetailView } from "./stores/user";
-import { setAdaRate } from "./stores/system";
+import { SystemLoader } from "./components/SystemLoader";
 interface Props {
   children: React.ReactNode;
 }
 
 const AppContainer: React.FC<Props> = props => {
+  const { theme } = useSelector(({ user }: RootState) => user);
   const history = useHistory();
   const lastPath = useRef(history.location.pathname);
   const { children } = props;
-  const { theme } = useSelector(({ user }: RootState) => user);
-
-  const getCurrentAdaPrice = useCallback(async () => {
-    try {
-      const response = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd");
-      const data = await response.json();
-      setAdaRate(data.cardano.usd);
-    } catch (error) {}
-  }, []);
-
-  useEffect(() => {
-    getCurrentAdaPrice();
-  }, [getCurrentAdaPrice]);
-
-  useEffect(() => {
-    setOnDetailView(false);
-  }, []);
 
   useEffect(() => {
     const unlisten = history.listen(() => {
@@ -48,6 +32,7 @@ const AppContainer: React.FC<Props> = props => {
 
   return (
     <ThemeProvider theme={themes[theme]}>
+      <SystemLoader />
       <div data-theme={theme}>
         <CustomLayout>{children}</CustomLayout>
       </div>

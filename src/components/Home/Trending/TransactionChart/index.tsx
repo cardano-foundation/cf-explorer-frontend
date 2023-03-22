@@ -3,8 +3,9 @@ import moment from "moment";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import useFetch from "../../../../commons/hooks/useFetch";
-import { styled } from "@mui/material";
+import { styled, useTheme } from "@mui/material";
 import { BoxRaised } from "../../../commons/BoxRaised";
+import { API } from "../../../../commons/utils/api";
 
 const TransactionContainer = styled(BoxRaised)`
   margin-bottom: 24px;
@@ -53,9 +54,9 @@ interface TransactionCount {
 }
 
 const TransactionChart: React.FC = () => {
-  const { data: dataOrigin } = useFetch<TransactionCount[]>(`tx/graph`);
+  const { data: dataOrigin } = useFetch<TransactionCount[]>(API.TRANSACTION.GRAPH);
   const data = (dataOrigin || []).map(item => item.txs);
-
+  const theme = useTheme();
   const categories = (dataOrigin || []).map(item => moment(item.date).format("MMM DD"));
 
   const options: Highcharts.Options = {
@@ -63,14 +64,14 @@ const TransactionChart: React.FC = () => {
     title: { text: "" },
     yAxis: {
       title: { text: null },
-      lineWidth: 1,
-      lineColor: "#E3E5E9",
+      lineWidth: 2,
+      lineColor: theme.palette.border.main,
       gridLineWidth: 0,
     },
     xAxis: {
       categories,
-      lineWidth: 1,
-      lineColor: "#E3E5E9",
+      lineWidth: 2,
+      lineColor: theme.palette.border.main,
       plotLines: [],
       angle: 0,
       labels: {
@@ -89,18 +90,13 @@ const TransactionChart: React.FC = () => {
         pointPlacement: "on",
         type: "areaspline",
         marker: { enabled: false },
-        color: {
-          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-          stops: [
-            [0, "#184C78"],
-            [1, "#5A9C56"],
-          ],
-        },
+        lineWidth: 4,
+        color: theme.palette.primary.main,
         fillColor: {
           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
           stops: [
-            [0, "rgba(24, 76, 120, 0.3)"],
-            [1, "rgba(90, 156, 86, 0)"],
+            [0, theme.palette.success.light],
+            [1, "transparent"],
           ],
         },
         data,

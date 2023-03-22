@@ -1,15 +1,6 @@
 import { FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
-import {
-  BlockChainMenuIcon,
-  BrowseIcon,
-  DelegatePoolMenuIcon,
-  DIDMenuIcon,
-  MediumIcon,
-  ResourcesIcon,
-  SupplyChainMenuIcon,
-  ToolMenuIcon,
-} from "./resources";
+import { BlockChainMenuIcon, BrowseIcon, DelegatePoolMenuIcon, MediumIcon, ResourcesIcon } from "./resources";
 import { routers } from "./routers";
 
 interface Menu {
@@ -26,8 +17,6 @@ interface Social {
   icon: IconType | string;
 }
 export const menus: Menu[] = [
-  { title: "DID", icon: DIDMenuIcon, tooltip: "Coming soon" },
-  { title: "Supply Chain", icon: SupplyChainMenuIcon, tooltip: "Coming soon" },
   {
     title: "Blockchain",
     icon: BlockChainMenuIcon,
@@ -46,14 +35,9 @@ export const menus: Menu[] = [
     icon: DelegatePoolMenuIcon,
     children: [
       { title: "Delegation Pools", href: routers.DELEGATION_POOLS },
-      { title: "Stake key registration", href: routers.STAKE_LIST },
+      { title: "Stake key registration", href: routers.STAKE_LIST.replace(":poolType?", "registration") },
       { title: "Pool Registration", href: "/registration-pools" },
     ],
-  },
-  {
-    title: "Tool",
-    href: "https://cardano-tools.io/latest",
-    icon: ToolMenuIcon,
   },
 ];
 

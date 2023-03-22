@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CgClose } from "react-icons/cg";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { CubeIcon, RocketIcon } from "../../../commons/resources";
@@ -37,26 +37,37 @@ import moment from "moment";
 import { HiOutlineCube } from "react-icons/hi2";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatADA } from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
+import { API } from "../../../commons/utils/api";
 
 type DetailViewEpochProps = {
   epochNo: number;
   handleClose: () => void;
+  callback: (callback: (data: IDataEpoch[]) => IDataEpoch[]) => void;
 };
 
-const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
-  const { epochNo, handleClose } = props;
-  const { data } = useFetch<IDataEpoch>(epochNo ? `epoch/${epochNo}` : ``);
+const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose, callback }) => {
+  const { data } = useFetch<IDataEpoch>(`${API.EPOCH.DETAIL}/${epochNo}`);
+
+  useEffect(() => {
+    if (data) {
+      callback(list => {
+        const index = list.findIndex(item => item.no === data?.no);
+        if (index >= 0) list[index] = { ...list[index], ...data };
+        return [...list];
+      });
+    }
+  }, [data, callback]);
 
   if (!data)
     return (
-      <ViewDetailDrawer anchor="right" open={!!epochNo} hideBackdrop variant="permanent">
+      <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
         <ViewDetailContainer>
           <ViewDetailScroll>
             <StyledViewMore tooltipTitle="View Detail" to={details.epoch(epochNo)} />
-            <CustomTooltip placement="top" title="Close">
+            <CustomTooltip title="Close">
               <CloseButton onClick={handleClose}>
                 <CgClose />
               </CloseButton>
@@ -118,17 +129,16 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
       </ViewDetailDrawer>
     );
 
-  const slot =
-    data.status === "FINISHED"
-      ? MAX_SLOT_EPOCH
-      : (data?.endTime && data.startTime && moment(data.endTime).diff(data.startTime) / 1000) || 0;
+  const slot = ["FINISHED", "REWARDING"].includes(data.status)
+    ? MAX_SLOT_EPOCH
+    : Math.round((data.startTime && moment().diff(data.startTime) / 1000) || 0);
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
   return (
-    <ViewDetailDrawer anchor="right" open={!!epochNo} hideBackdrop variant="permanent">
+    <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
       <ViewDetailContainer>
         <ViewDetailScroll>
           <StyledViewMore tooltipTitle="View Detail" to={details.epoch(epochNo)} />
-          <CustomTooltip placement="top" title="Close">
+          <CustomTooltip title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -167,14 +177,14 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
                 <InfoIcon />
                 Start time
               </DetailLabel>
-              <DetailValue>{data.startTime}</DetailValue>
+              <DetailValue>{formatDateTimeLocal(data.startTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
                 <InfoIcon />
                 End time
               </DetailLabel>
-              <DetailValue>{data.endTime}</DetailValue>
+              <DetailValue>{formatDateTimeLocal(data.endTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>
@@ -189,8 +199,8 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = props => {
                 Total Output
               </DetailLabel>
               <DetailValue>
-                {formatADA(data.outSum) || 0}
-                <ADAToken color="black" size={"var(--font-size-text-x-small)"} />
+                {formatADAFull(data.outSum)}
+                <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
           </Group>

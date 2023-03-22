@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction, Store } from "@reduxjs/toolkit";
-import { NETWORKS } from "../commons/utils/constants";
 import { SupportedWallets, ThemeType, UserDataType, UserStoreType } from "../types/user";
 
 let userStore: Store | undefined;
@@ -16,9 +15,11 @@ const initialState: UserStoreType = {
   wallet: null,
   provider: null,
   openModal: false,
-  network: "testnet",
   sidebar: true,
   onDetailView: false,
+  modalRegister: false,
+  modalSignMessage: false,
+  nonce: null,
 };
 
 const storeWallet = createSlice({
@@ -29,7 +30,7 @@ const storeWallet = createSlice({
       ...state,
       theme: action.payload,
     }),
-    setUserData: (state, action: PayloadAction<UserDataType>) => ({
+    setUserData: (state, action: PayloadAction<UserDataType | null>) => ({
       ...state,
       userData: action.payload,
     }),
@@ -53,10 +54,6 @@ const storeWallet = createSlice({
       ...state,
       openModal: action.payload,
     }),
-    setNetwork: (state, action: PayloadAction<keyof typeof NETWORKS>) => ({
-      ...state,
-      network: action.payload,
-    }),
     setSidebar: (state, action: PayloadAction<boolean>) => ({
       ...state,
       sidebar: action.payload,
@@ -65,6 +62,18 @@ const storeWallet = createSlice({
       ...state,
       onDetailView: action.payload,
     }),
+    setModalRegister: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      modalRegister: action.payload,
+    }),
+    setModalSignMessage: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      modalSignMessage: action.payload,
+    }),
+    setNonce: (state, action: PayloadAction<NonceObject | null>) => ({
+      ...state,
+      nonce: action.payload,
+    }),
   },
 });
 
@@ -72,7 +81,7 @@ export const setTheme = (theme: ThemeType) => {
   userStore?.dispatch(storeWallet.actions.setTheme(theme));
 };
 
-export const setUserData = (userData: UserDataType) => {
+export const setUserData = (userData: UserDataType | null) => {
   userStore?.dispatch(storeWallet.actions.setUserData(userData));
 };
 
@@ -95,9 +104,6 @@ export const setProvider = (provider: any) => {
 export const setOpenModal = (openModal: boolean) => {
   userStore?.dispatch(storeWallet.actions.setOpenModal(openModal));
 };
-export const setNetwork = (network: keyof typeof NETWORKS) => {
-  userStore?.dispatch(storeWallet.actions.setNetwork(network));
-};
 
 export const setSidebar = (sidebar: boolean) => {
   userStore?.dispatch(storeWallet.actions.setSidebar(sidebar));
@@ -105,6 +111,17 @@ export const setSidebar = (sidebar: boolean) => {
 
 export const setOnDetailView = (onDetailView: boolean) => {
   userStore?.dispatch(storeWallet.actions.setOnDetailView(onDetailView));
+};
+
+export const setModalRegister = (state: boolean) => {
+  userStore?.dispatch(storeWallet.actions.setModalRegister(state));
+};
+
+export const setModalSignMessage = (state: boolean) => {
+  userStore?.dispatch(storeWallet.actions.setModalSignMessage(state));
+};
+export const setNonce = (state: NonceObject | null) => {
+  userStore?.dispatch(storeWallet.actions.setNonce(state));
 };
 
 export default storeWallet.reducer;

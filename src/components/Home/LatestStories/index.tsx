@@ -2,7 +2,7 @@ import moment from "moment";
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { CalenderPaleIcon } from "../../../commons/resources";
-import { routers } from "../../../commons/routers";
+import { details, routers } from "../../../commons/routers";
 import Temp from "../../../commons/resources/temp/Rectangle 31.png";
 import {
   Author,
@@ -11,7 +11,7 @@ import {
   Image,
   Item,
   ItemTitle,
-  LatestStoriesContainer, 
+  LatestStoriesContainer,
   StyledSlider,
   Time,
   TimeIcon,
@@ -57,7 +57,7 @@ const LatestStories: React.FC<Props> = () => {
   return (
     <LatestStoriesContainer>
       <Header>
-        <Title>Latest Stories</Title> 
+        <Title>Latest Stories</Title>
         <ViewAllButton to={routers.STORY_LIST} />
       </Header>
       <StyledSlider
@@ -76,12 +76,7 @@ const LatestStories: React.FC<Props> = () => {
       >
         {data.map(({ id, image, author, title, createdDate }) => {
           return (
-            <Link
-              key={id}
-              to={routers.STORY_DETAIL.replace(":storyId", `${id}`)}
-              title={title}
-              onClick={e => drag.current && e.preventDefault()}
-            >
+            <Link key={id} to={details.story(id)} title={title} onClick={e => drag.current && e.preventDefault()}>
               <Item>
                 <Image src={image} alt={title} />
                 <Detail>
@@ -89,14 +84,14 @@ const LatestStories: React.FC<Props> = () => {
                   <ItemTitle>{title}</ItemTitle>
                   <Time>
                     <TimeIcon src={CalenderPaleIcon} alt="calender pale" />
-                    {moment(createdDate).format("MM/DD/YYYY")}
+                    {moment(createdDate).format("MM/DD/YYYY HH:mm:ss")}
                   </Time>
                 </Detail>
               </Item>
             </Link>
           );
         })}
-      </StyledSlider> 
+      </StyledSlider>
     </LatestStoriesContainer>
   );
 };

@@ -1,16 +1,36 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { styled, Container } from "@mui/material";
 import AddressTransactionList from "../../components/AddressTransactionList";
 import AddressHeader from "../../components/AddressDetail/AddressHeader";
 import AddressAnalytics from "../../components/AddressDetail/AddressAnalytics";
+import useFetch from "../../commons/hooks/useFetch";
+import NoRecord from "../../components/commons/NoRecord";
+import { useEffect, useRef } from "react";
+import { API } from "../../commons/utils/api";
 
 const AddressWalletDetail = () => {
   const { address } = useParams<{ address: string }>();
+  const { state } = useLocation<{ data?: WalletAddress }>();
+  const { data, loading, initialized, error } = useFetch<WalletAddress>(
+    state?.data ? "" : `${API.ADDRESS.DETAIL}/${address}`,
+    state?.data
+  );
+
+  const refBox = useRef(null);
+
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    refBox.current && (refBox.current as any).scrollIntoView({ behavior: "smooth", block: "start" });
+    document.title = `Address ${address} | Cardano Explorer`;
+  }, [address]);
+
+  if ((initialized && !data) || error) return <NoRecord />;
+
   return (
-    <ContainerBox>
-      <AddressHeader />
+    <ContainerBox ref={refBox}>
+      <AddressHeader data={data} loading={loading} />
       <AddressAnalytics />
-      <AddressTransactionList url={`tx/list?address=${address}`} />
+      <AddressTransactionList url={`${API.ADDRESS.DETAIL}/${address}/txs`} />
     </ContainerBox>
   );
 };

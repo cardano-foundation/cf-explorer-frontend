@@ -1,5 +1,5 @@
 import { Collapse, List, ListItemText, styled, Theme } from "@mui/material";
-import { SystemStyleObject } from "@mui/system";
+import { alpha, SystemStyleObject } from "@mui/system";
 
 export const StyledCollapse = styled(Collapse)`
   @media screen and (max-width: 1023px) {
@@ -31,7 +31,7 @@ export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<The
   },
 });
 
-export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; text?: number }>`
+export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; text?: number; disable?: boolean }>`
   width: 24px;
   height: 24px;
   min-width: 24px;
@@ -46,19 +46,20 @@ export const SubMenu = styled(List)<{ isActive?: number }>`
   margin-left: 0px;
 `;
 
-export const MenuText = styled(ListItemText)<{ open?: number; active?: number; text?: number }>`
+export const MenuText = styled(ListItemText)<{ open?: number; active?: number; text?: number; disable?: boolean }>`
   opacity: ${props => (props.open ? 1 : 0)};
   width: ${props => (props.open ? "unset" : 0)};
   * {
     font-family: var(--font-family-title) !important;
     font-weight: var(--font-weight-bold) !important;
-    color: ${props => (props.active ? props.theme.textColor : props.theme.textColorPale)};
-    color: ${props =>
-      props.active
-        ? props.text
-          ? props.theme.textColor
-          : props.theme.textColorReverse
-        : props.theme.textColorPale};
+    color: ${({ active, text, disable, theme }) =>
+      active
+        ? text
+          ? theme.palette.text.primary
+          : theme.palette.grey[400]
+        : disable
+        ? theme.palette.text.disabled
+        : theme.palette.grey[400]};
     white-space: break-spaces;
     width: 165px;
   }
@@ -71,7 +72,7 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
 export const SubMenuText = styled(MenuText)`
   * {
     font-weight: var(--font-weight-normal) !important;
-    color: ${props => (props.active ? props.theme.textColorReverse : props.theme.textColorPale)};
+    color: ${({ active, theme }) => (active ? theme.palette.primary.contrastText : theme.palette.grey[400])};
   }
 `;
 

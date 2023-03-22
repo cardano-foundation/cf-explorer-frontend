@@ -4,7 +4,8 @@ import { Link, useHistory } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
-import { formatADA, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
+import { API } from "../../../commons/utils/api";
+import { formatADAFull, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import ViewAllButton from "../../commons/ViewAllButton";
 import {
@@ -23,7 +24,7 @@ import {
 } from "./style";
 
 const LatestTransactions: React.FC = () => {
-  const { data, loading } = useFetchList<Transactions>(`tx/list`, { page: 0, size: 4 });
+  const { data, loading } = useFetchList<Transactions>(API.TRANSACTION.LIST, { page: 0, size: 4 });
   const history = useHistory();
   return (
     <TransactionContainer>
@@ -58,12 +59,12 @@ const LatestTransactions: React.FC = () => {
                     <Item onClick={e => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
                       <ItemHeader>
                         <PriceImage src={ADAIcon} alt="check green" />
-                        <PriveValue>{formatADA(totalOutput)}</PriveValue>
+                        <PriveValue>{formatADAFull(totalOutput)}</PriveValue>
                       </ItemHeader>
                       <ItemDetail>
                         <p>
                           <small>Transaction hash: </small>
-                          <CustomTooltip placement="top" title={hash}>
+                          <CustomTooltip title={hash}>
                             <Link to={details.transaction(hash)}>
                               <Hash>{getShortHash(hash)}</Hash>
                             </Link>
@@ -79,7 +80,7 @@ const LatestTransactions: React.FC = () => {
                           return (
                             <p key={add}>
                               <small>From: </small>
-                              <CustomTooltip placement="top" title={add}>
+                              <CustomTooltip title={add}>
                                 <Link to={details.address(add)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
                                   <BlankImage src={BlankBlueIcon} alt="blank blue" />
@@ -92,7 +93,7 @@ const LatestTransactions: React.FC = () => {
                           return (
                             <p key={add}>
                               <small>To: </small>
-                              <CustomTooltip placement="top" title={add}>
+                              <CustomTooltip title={add}>
                                 <Link to={details.address(add)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
                                   <BlankImage src={BlankBlueIcon} alt="blank blue" />

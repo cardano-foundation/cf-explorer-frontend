@@ -1,23 +1,23 @@
-import { Box, Container, Grid, Skeleton, styled } from "@mui/material";
+import { alpha, Box, Container, Grid, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import CopyButton from "../CopyButton";
 
-export const HeaderDetailContainer = styled(Container)`
+export const HeaderDetailContainer = styled(Box)`
   margin-top: 24px;
   text-align: left;
 `;
 
 export const BackButton = styled(Link)`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
 `;
 
 export const BackText = styled("small")`
-  color: #344054;
+  color: ${props => props.theme.palette.text.secondary};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -27,7 +27,7 @@ export const HeaderContainer = styled(Box)`
 `;
 
 export const HeaderTitle = styled("h2")`
-  color: ${props => props.theme.colorBlack};
+  color: ${props => props.theme.palette.common.black};
   font-size: 2.25rem;
   margin: 0.5rem 0;
 `;
@@ -39,32 +39,31 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
   border-radius: 4px;
 `;
 
-export const HeaderStatus = styled("small") <{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
+export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
   color: ${props => {
     switch (props.status) {
       case TRANSACTION_STATUS.SUCCESS:
-        return props.theme.colorGreenLight;
+        return props.theme.palette.primary.main;
       case "IN_PROGRESS":
-        return props.theme.colorYellow;
+        return props.theme.palette.warning.main;
       case "FINISHED":
-        return props.theme.colorBlue;
+        return props.theme.palette.info.main;
       default:
-        return props.theme.colorGreenLight;
+        return props.theme.palette.primary.main;
     }
   }};
   background-color: ${props => {
     switch (props.status) {
       case TRANSACTION_STATUS.SUCCESS:
-        return `${props.theme.colorGreenLight}32`;
+        return `${props.theme.palette.success.light}`;
       case "IN_PROGRESS":
-        return `${props.theme.colorYellow}32`;
+        return `${props.theme.palette.warning.light}`;
       case "FINISHED":
-        return `${props.theme.colorBlue}32`;
+        return `${props.theme.palette.info.light}`;
       default:
-        return `${props.theme.colorGreenLight}32`;
+        return `${props.theme.palette.success.light}`;
     }
   }};
-  margin-left: 15px;
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   padding: 5px 10px;
@@ -83,7 +82,7 @@ export const SlotLeaderSkeleton = styled(Skeleton)`
 
 export const SlotLeaderValue = styled("span")`
   font-family: var(--font-family-text);
-  color: ${props => props.theme.colorBlue};
+  color: ${props => props.theme.palette.secondary.main};
   white-space: pre-wrap;
   display: inline-block;
   word-break: break-word;
@@ -98,15 +97,17 @@ export const SlotLeaderCopy = styled(CopyButton)`
   margin-bottom: 3px;
 `;
 
-export const DetailsInfo = styled(Grid)`
-  padding: ${props => props.theme.spacing(3)} ${props => props.theme.spacing(2)};
+export const DetailsInfo = styled(Grid)<{ multiRow?: number }>`
+  padding: 30px ${props => (props.multiRow ? 25 : 15)}px;
   margin-top: 15px;
-  background: #ffffff;
+  background: ${props => props.theme.palette.background.paper};
   border-radius: 15px;
-  // color: ${props => props.theme.textColorReverse};
+  ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.lg)} {
+    padding: 30px 25px;
+  }
 `;
 
-export const DetailsInfoItem = styled(Grid) <{ center?: number }>`
+export const DetailsInfoItem = styled(Grid)<{ center?: number }>`
   display: flex;
   justify-content: center;
   align-items: ${props => (props.center ? `center` : `flex-start`)};
@@ -121,7 +122,7 @@ export const DetailsInfoItem = styled(Grid) <{ center?: number }>`
     width: 1px;
     height: 70%;
     transform: translateY(-50%);
-    background-image: linear-gradient(0deg, #ffffff00 0%, #ffffff40 50%, #ffffff00 100%);
+    background-image: ${props => props.theme.palette.gradient[8]};
   }
   &:first-of-type::after {
     display: none;
@@ -134,7 +135,7 @@ export const ProgressSkeleton = styled(Skeleton)`
 `;
 
 export const EpochNumber = styled("h3")`
-  color: ${props => props.theme.colorBlack};
+  color: ${props => props.theme.palette.common.black};
   margin: 0;
 `;
 
@@ -164,7 +165,7 @@ export const DetailLabelSkeleton = styled(Skeleton)`
 `;
 
 export const DetailValue = styled("h3")`
-  color: ${props => props.theme.textColorReverse};
+  color: ${props => props.theme.palette.primary.contrastText};
   font-family: var(--font-family-text);
   font-size: var(--font-size-text-x-large);
   margin: 0;
@@ -183,7 +184,7 @@ export const DetailValueSkeleton = styled(Skeleton)`
 
 export const BlockDefault = styled("span")`
   font-size: var(--font-size-text);
-  color: ${props => props.theme.textColorReverse};
+  color: ${props => props.theme.palette.primary.contrastText};
   font-weight: var(--font-weight-normal);
   opacity: 0.5;
   margin: 0;
@@ -195,21 +196,21 @@ export const ConfirmationValue = styled(DetailValue)`
   align-items: center;
 `;
 
-export const ConfirmStatus = styled("small") <{ status?: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
   color: ${props => {
     switch (props.status) {
       case CONFIRMATION_STATUS.MEDIUM:
-        return props.theme.colorYellow;
+        return props.theme.palette.warning.main;
       default:
-        return props.theme.colorYellow;
+        return props.theme.palette.warning.main;
     }
   }};
   background-color: ${props => {
     switch (props.status) {
       case CONFIRMATION_STATUS.MEDIUM:
-        return `${props.theme.colorYellow}32`;
+        return `${props.theme.palette.warning.light}`;
       default:
-        return `${props.theme.colorYellow}32`;
+        return `${props.theme.palette.warning.light}`;
     }
   }};
   margin-left: 10px;
@@ -224,10 +225,10 @@ export const InfoIcon = styled(FiInfo)`
   margin-left: 2px;
 `;
 
-export const ProgressLiner = styled("div") <{ progress: number }>`
+export const ProgressLiner = styled("div")<{ progress: number }>`
   position: relative;
   width: 100%;
-  background: ${props => props.theme.colorBlack}32;
+  background: ${props => alpha(props.theme.palette.common.black, 0.2)};
   height: 12px;
   margin-bottom: 10px;
   border-radius: 12px;
@@ -239,7 +240,7 @@ export const ProgressLiner = styled("div") <{ progress: number }>`
     width: ${props => props.progress || 0}%;
     height: 100%;
     border-radius: 12px;
-    background: linear-gradient(90deg, #e65c00 0%, #f9d423 100%);
+    background: ${props => props.theme.palette.gradient[4]};
   }
 `;
 
@@ -251,40 +252,120 @@ export const ProgressStatus = styled(Box)`
 `;
 
 export const ProgressStatusText = styled("h4")`
-  color: ${props => props.theme.textColorReverse};
+  color: ${props => props.theme.palette.primary.contrastText};
   font-weight: var(--font-weight-normal);
   margin: 0;
 `;
 
 export const ProgressPercent = styled("h4")`
-  color: ${props => props.theme.colorYellow};
+  color: ${props => props.theme.palette.warning.main};
   font-weight: var(--font-weight-normal);
   margin: 0;
 `;
 
 export const CardInfoOverview = styled(Box)(({ theme }) => ({
-  padding: `${theme.spacing(3)} ${theme.spacing(5)}`,
-  backgroundColor: "#fff",
+  padding: 25,
+  backgroundColor: theme.palette.background.paper,
   display: "flex",
   textAlign: "left",
-  boxShadow: theme.shadowRaised,
-  borderRadius: theme.borderRadius,
+  boxShadow: theme.shadow.card,
+  borderRadius: 10,
   marginTop: theme.spacing(5),
   flexWrap: "wrap",
 }));
 
-export const CardItem = styled(Grid)(({ theme }) => ({
+export const CardItem = styled(Grid)<{ multiRow: number }>(({ theme, multiRow }) => ({
+  position: "relative",
   width: "max-content",
-  borderLeft: "1px solid rgba(0,0,0,0.1)",
-  paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(2),
+  padding: multiRow ? "20px 25px" : "0px 15px",
+  borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
   ":first-of-type": {
     borderLeft: "none",
+  },
+  ...(multiRow
+    ? {
+        borderBottomWidth: 1,
+        [theme.breakpoints.up(theme.breakpoints.values.lg)]: {
+          ":nth-child(4n+1)": {
+            borderLeftWidth: 0,
+            paddingLeft: 0,
+          },
+          ":nth-last-child(-n + 4)": {
+            ":nth-child(4n + 1)": {
+              borderBottomWidth: 0,
+              "&~div": {
+                borderBottomWidth: 0,
+                paddingTop: 20,
+                paddingBottom: 0,
+              },
+            },
+          },
+        },
+      }
+    : {
+        borderBottomWidth: 0,
+        [theme.breakpoints.down(theme.breakpoints.values.lg)]: {
+          padding: "20px 25px",
+        },
+      }),
+  [theme.breakpoints.between(theme.breakpoints.values.md, theme.breakpoints.values.lg)]: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+    ":last-of-type::after": {
+      content: `""`,
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      right: -1,
+      borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+    },
+    ":nth-child(3n)::after": {
+      borderRight: 0,
+    },
+    ":nth-child(3n+1)": {
+      borderLeftWidth: 0,
+      paddingLeft: 0,
+    },
+    ":nth-last-child(-n+3)": {
+      ":nth-child(3n+1)": {
+        borderBottomWidth: 0,
+        "&~div": {
+          borderBottomWidth: 0,
+        },
+      },
+    },
+  },
+  [theme.breakpoints.between(theme.breakpoints.values.sm, theme.breakpoints.values.md)]: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+    ":nth-child(2n+1)": {
+      borderLeftWidth: 0,
+      paddingLeft: 0,
+    },
+    ":nth-last-child(-n+2)": {
+      ":nth-child(2n+1)": {
+        borderBottomWidth: 0,
+        "&~div": {
+          borderBottomWidth: 0,
+        },
+      },
+    },
+  },
+  [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
+    padding: "20px 0px",
+    borderBottomWidth: 1,
+    borderLeftWidth: 0,
+    ":last-of-type": {
+      borderBottomWidth: 0,
+    },
   },
 }));
 
 export const ValueCard = styled(Box)(({ theme }) => ({
-  color: theme.colorBlack,
+  color: theme.palette.common.black,
   fontSize: "1rem",
   fontWeight: "bold",
 }));

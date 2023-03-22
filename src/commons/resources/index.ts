@@ -1,7 +1,6 @@
 import LogoFullIcon from "./icons/logo-mobile.svg";
 import LogoIcon from "./icons/logo.svg";
 import WalletIcon from "./icons/wallet.svg";
-
 import HeaderSearchIcon from "./icons/header-search.svg";
 import CopyIcon from "./icons/copy.svg";
 import CloseIcon from "./icons/closeIcon.svg";
@@ -35,7 +34,6 @@ import DIDMenuIcon from "./icons/menus/did.svg";
 import SupplyChainMenuIcon from "./icons/menus/supplychain.svg";
 import BlockChainMenuIcon from "./icons/menus/blockchain.svg";
 import DelegatePoolMenuIcon from "./icons/menus/delegate.svg";
-import ToolMenuIcon from "./icons/menus/tool.svg";
 import BrowseIcon from "./icons/menus/browser.svg";
 import ResourcesIcon from "./icons/menus/resources.svg";
 import RocketIcon from "./icons/rocket.svg";
@@ -65,13 +63,18 @@ import DelegatorIcon from "./icons/delegator.svg";
 import LightningIcon from "./icons/lightning.svg";
 import SaveOnIcon from "./icons/save-on.svg";
 import SaveOffIcon from "./icons/save-off.svg";
+import LinkOff from "./icons/link-off.svg";
+import User2 from "./icons/user2.svg";
 
-import FlintIcon from "./images/flint.jpg";
-import NamiIcon from "./images/nami.png";
-import EternlIcon from "./images/eternl.png";
-import YoroiIcon from "./images/yoroi.png";
-import HeaderBackground from "./images/header-bg.png";
+import FlintIcon from "./icons/flint.svg";
+import NamiIcon from "./icons/nami.svg";
+import EternlIcon from "./icons/eternl.svg";
+import YoroiIcon from "./icons/yoroi.svg";
+import TyphonIcon from "./icons/typhon.svg";
+import HeaderBackgroundImage from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
+
+import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
 
 export {
   LogoFullIcon,
@@ -81,6 +84,7 @@ export {
   NamiIcon,
   EternlIcon,
   YoroiIcon,
+  TyphonIcon,
   HeaderSearchIcon,
   CopyIcon,
   CloseIcon,
@@ -108,13 +112,12 @@ export {
   ArrowDownIcon,
   ArrowDropDownIcon,
   Policy,
-  HeaderBackground,
+  HeaderBackgroundImage,
   MenuIcon,
   DIDMenuIcon,
   SupplyChainMenuIcon,
   BlockChainMenuIcon,
   DelegatePoolMenuIcon,
-  ToolMenuIcon,
   EmptyIcon,
   RocketIcon,
   CubeIcon,
@@ -146,4 +149,7 @@ export {
   LightningIcon,
   SaveOnIcon,
   SaveOffIcon,
+  LinkOff,
+  User2,
+  PolicyScriptIcon,
 };

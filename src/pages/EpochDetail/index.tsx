@@ -1,18 +1,31 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import useFetch from "../../commons/hooks/useFetch";
+import { API } from "../../commons/utils/api";
+import NoRecord from "../../components/commons/NoRecord";
 import EpochBlockList from "../../components/EpochDetail/EpochBlockList";
 import EpochOverview from "../../components/EpochDetail/EpochOverview";
 import { StyledContainer } from "./styles";
 
 const EpochDetail: React.FC = () => {
   const { epochId } = useParams<{ epochId: string }>();
+  const { state } = useLocation<{ data?: IDataEpoch }>();
 
-  const { data, loading, initialized } = useFetch<IDataEpoch>(`epoch/${epochId}`);
+  const { data, loading, initialized, error } = useFetch<IDataEpoch>(
+    state?.data ? "" : `${API.EPOCH.DETAIL}/${epochId}`,
+    state?.data
+  );
+
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Epoch ${epochId} | Cardano Explorer`;
+  }, [epochId]);
+
+  if ((initialized && !data) || error) return <NoRecord />;
 
   return (
     <StyledContainer>
-      <EpochOverview data={data} loading={loading || !initialized} />
+      <EpochOverview data={data} loading={loading} />
       <EpochBlockList epochId={epochId} />
     </StyledContainer>
   );

@@ -1,70 +1,177 @@
+import React, { useCallback, useState, useEffect } from "react";
+import { Box } from "@mui/material";
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
-import { ButtonBase, CircularProgress, styled } from "@mui/material";
-import React from "react";
 import { useSelector } from "react-redux";
 import { WalletIcon } from "../../../../../commons/resources";
-import { getShortWallet } from "../../../../../commons/utils/helper";
 import { RootState } from "../../../../../stores/types";
-import { setOpenModal } from "../../../../../stores/user";
-
+import { setModalRegister, setModalSignMessage, setOpenModal, setNonce, setAddress } from "../../../../../stores/user";
+import ConnectedProfileOption from "../../../ConnectedProfileOption";
+import ConnectWalletModal from "../../../ConnectWalletModal";
+import RegisterUsernameModal from "../RegisterUsernameModal";
+import { Image, Span, Spin, StyledButton } from "./styles";
+import { getAllBookmarks, getNonce, signIn } from "../../../../../commons/utils/userRequest";
+import { NETWORK, NETWORKS, NETWORK_TYPES } from "../../../../../commons/utils/constants";
+import SignMessageModal from "../SignMessageModal";
+import SyncBookmarkModal from "../SyncBookmarkModal";
+import { useLocalStorage } from "react-use";
+import { BookMark } from "../../../../../types/bookmark";
+import Toast from "../../../Toast";
+import { removeAuthInfo } from "../../../../../commons/utils/helper";
 interface Props {}
 
-const StyledButton = styled(ButtonBase)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 12px 20px;
-  gap: 8px;
-  background: ${props => props.theme.colorBlueDark};
-  border-radius: 8px;
-  cursor: pointer;
-  height: auto;
-  border: none;
-  font-size: var(--font-size-text);
-  line-height: 1;
-  height: 40px;
-`;
-
-const Span = styled("span")`
-  font-family: var(--font-family-title);
-  font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.textColorReverse};
-  white-space: nowrap;
-  line-height: 1;
-`;
-
-const Image = styled("img")`
-  width: 24px;
-  height: 24px;
-`;
-const Spin = styled(CircularProgress)`
-  color: ${props => props.theme.textColorReverse};
-`;
-
 const ConnectWallet: React.FC<Props> = () => {
-  const { network } = useSelector(({ user }: RootState) => user);
-
-  const { isEnabled, stakeAddress, isConnected } = useCardano({
-    limitNetwork: network === "mainnet" ? NetworkType.MAINNET : NetworkType.TESTNET,
+  const { openModal, modalRegister, modalSignMessage, nonce } = useSelector(({ user }: RootState) => user);
+  const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect } = useCardano({
+    limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
-  const handleClick = () => {
-    setOpenModal(true);
+  const [, setBookmark] = useLocalStorage<BookMark[]>("bookmark", []);
+
+  const [openSyncBookmark, setOpenSyncBookmark] = useState(false);
+  const [message, setMessage] = React.useState("");
+  const [signature, setSignature] = React.useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [isSign, setIsSign] = useState(isConnected);
+  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setMessage("");
   };
 
-  return isEnabled && stakeAddress ? (
-    <StyledButton type="button">
-      <Span>{getShortWallet(stakeAddress)}</Span>
-    </StyledButton>
-  ) : isConnected ? (
-    <StyledButton type="button">
-      <Spin size={20} />
-      <Span>Re-Connecting</Span>
-    </StyledButton>
-  ) : (
-    <StyledButton type="button" onClick={handleClick}>
-      <Image src={WalletIcon} alt="wallet" />
-      <Span>Connect Wallet</Span>
-    </StyledButton>
+  useEffect(() => {
+    window.onbeforeunload = function () {
+      if (!localStorage.getItem("token")) {
+        disconnect();
+        removeAuthInfo();
+      }
+    };
+  }, []);
+
+  const handleClick = () => {
+    setOpenModal(!openModal);
+  };
+
+  const getNonceValue = useCallback(async () => {
+    try {
+      const response = await getNonce({ address: stakeAddress || "" });
+      return response.data;
+    } catch (error: any) {
+      setMessage(error.data?.errorMessage || "Something went wrong!");
+      setModalSignMessage(false);
+    }
+  }, [stakeAddress]);
+
+  const handleSignIn = async (signature: string, nonce: NonceObject | null) => {
+    try {
+      setSignature(signature);
+      if (nonce?.message === "SS_0") {
+        const payload = {
+          address: stakeAddress || "",
+          signature,
+        };
+        const response = await signIn(payload);
+        setIsSign(true);
+        const data = response.data;
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("refreshToken", data.refreshToken);
+        localStorage.setItem("walletId", data.walletId);
+        localStorage.setItem("email", data.email);
+        if ((((JSON.parse(localStorage?.bookmark) as BookMark[]) || [])?.filter(r => !r.id) || []).length > 0) {
+          setOpenSyncBookmark(true);
+        } else {
+          const { data } = await getAllBookmarks(NETWORK_TYPES[NETWORK]);
+          if (data) {
+            setBookmark(data);
+          }
+        }
+      } else {
+        setAddress(stakeAddress);
+        setModalRegister(true);
+      }
+    } catch (error) {
+      disconnect();
+      removeAuthInfo();
+    } finally {
+      setModalSignMessage(false);
+    }
+  };
+
+  const onSignMessage = async () => {
+    setSubmitting(true);
+    try {
+      const nonceValue = await getNonceValue();
+      if (nonceValue) {
+        setNonce(nonceValue);
+        await signMessage(
+          nonceValue.nonce,
+          signature => handleSignIn(signature, nonceValue),
+          (error: Error) => {
+            setMessage("User rejected the request!");
+            setModalSignMessage(false);
+            disconnect();
+            removeAuthInfo();
+          }
+        );
+      }
+    } catch (error) {
+      setMessage("Something went wrong!");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (isEnabled && stakeAddress && isSign) {
+    return (
+      <>
+        <ConnectedProfileOption isConnected={isConnected} disconnect={disconnect} stakeAddress={stakeAddress} />
+
+        <SyncBookmarkModal
+          open={openSyncBookmark}
+          handleCloseModal={() => {
+            setOpenSyncBookmark(false);
+          }}
+          loadingSubmit={submitting}
+        />
+      </>
+    );
+  }
+
+  if (isConnected && isSign) {
+    return (
+      <StyledButton type="button">
+        <Spin size={20} />
+        <Span>Re-Connecting</Span>
+      </StyledButton>
+    );
+  }
+
+  return (
+    <Box position="relative">
+      <StyledButton type="button" onClick={handleClick}>
+        <Image src={WalletIcon} alt="wallet" />
+        <Span>Connect Wallet</Span>
+      </StyledButton>
+      {openModal && <ConnectWalletModal connect={connect} onTriggerSignMessage={() => setModalSignMessage(true)} />}
+      <SignMessageModal
+        open={modalSignMessage}
+        handleCloseModal={() => {
+          setModalSignMessage(false);
+          disconnect();
+          removeAuthInfo();
+        }}
+        onSignMessage={onSignMessage}
+        loadingSubmit={submitting}
+      />
+      <Toast open={!!message} onClose={handleCloseToast} messsage={message} severity={"error"} />
+      <RegisterUsernameModal
+        open={modalRegister}
+        nonce={nonce}
+        signature={signature}
+        setMessage={setMessage}
+        setIsSign={setIsSign}
+      />
+    </Box>
   );
 };
 

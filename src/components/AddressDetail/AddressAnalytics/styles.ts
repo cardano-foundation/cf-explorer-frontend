@@ -1,10 +1,10 @@
-import { Grid, Skeleton, Button, styled, Box } from "@mui/material";
+import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
 
 export const BoxInfo = styled(Box)(({ theme }) => ({
   height: `100%`,
-  background: "#344054",
-  borderRadius: theme.borderRadius,
-  color: "white",
+  background: theme.palette.secondary.dark,
+  borderRadius: "10px",
+  color: theme.palette.primary.contrastText,
   display: "flex",
   flexDirection: "column",
   textAlign: "center",
@@ -36,10 +36,10 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   width: "80%",
   margin: "0 auto",
-  borderBottom: "1px solid #424d60",
+  borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
   overflow: "hidden",
   [theme.breakpoints.down("lg")]: {
-    borderRight: "1px solid #424d60",
+    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
     height: "100%",
     borderBottom: "none",
     width: "100%",
@@ -49,7 +49,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     width: "80%",
     borderRight: "none",
-    borderBottom: "1px solid #424d60",
+    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
   },
 }));
 
@@ -61,26 +61,28 @@ export const Title = styled(Box)(({ theme }) => ({
 export const ValueInfo = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "2rem",
+  margin: "0 auto",
+  overflowWrap: "anywhere",
 }));
 
 export const Wrapper = styled(Grid)(({ theme }) => ({
-  backgroundColor: "#fff",
-  borderRadius: theme.borderRadius,
+  backgroundColor: theme.palette.background.paper,
+  borderRadius: 10,
   minHeight: "400px",
-  boxShadow: theme.shadowRaised,
+  boxShadow: theme.shadow.card,
   padding: "25px",
   textAlign: "left",
 }));
 
 export const ButtonTitle = styled("button")(({ theme }) => ({
   border: "none",
-  borderRadius: theme.borderRadius,
+  borderRadius: 10,
   padding: "8px 30px",
   fontWeight: "bold",
   fontSize: "1rem",
   marginRight: 5,
-  color: "#fff",
-  backgroundColor: theme.colorGreenLight,
+  color: theme.palette.primary.contrastText,
+  backgroundColor: theme.palette.primary.main,
   fontFamily: "var(--font-family-title)",
 }));
 
@@ -91,7 +93,7 @@ export const ChartBox = styled(Box)(({ theme }) => ({
 export const SkeletonUI = styled(Skeleton)(({ theme }) => ({
   paddingTop: theme.spacing(3),
   marginRight: theme.spacing(2),
-  borderRadius: theme.borderRadius,
+  borderRadius: 10,
 }));
 
 export const Tabs = styled(Box)(({ theme }) => ({
@@ -107,11 +109,10 @@ export const Tabs = styled(Box)(({ theme }) => ({
 
 export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   textTransform: "lowercase",
-  borderRadius: theme.borderRadius,
-  border: "2px solid rgba(24, 76, 120, 0.2)",
+  borderRadius: 10,
+  border: `2px solid ${theme.palette.green[800_20]}`,
   marginRight: theme.spacing(1),
-  color: active ? "#fff !important" : theme.textColorPale,
+  color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   fontWeight: "bold",
-  backgroundColor: active ? theme.colorGreenLight : "none",
+  backgroundColor: active ? theme.palette.primary.main : "none",
 }));
-

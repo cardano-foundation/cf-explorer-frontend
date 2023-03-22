@@ -9,5 +9,7 @@ interface Registration {
   pledge: number;
   cost: number;
   margin: number;
-  stakeKey: string;
+  stakeKey: string[];
+  poolId: string;
+  poolView: string;
 }

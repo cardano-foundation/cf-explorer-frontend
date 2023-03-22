@@ -13,7 +13,7 @@ export const Item = styled(BoxRaised)`
   margin-bottom: 0px;
   text-align: left;
   &:hover {
-    box-shadow: ${props => props.theme.shadowRaisedHover};
+    box-shadow: ${props => props.theme.shadow.card};
   }
 `;
 
@@ -37,31 +37,34 @@ export const Content = styled(Box)`
 export const Name = styled("h4")`
   width: calc(100% - 60px);
   margin-bottom: 0.75rem;
-  color: #344054;
+  color: ${props => props.theme.palette.text.secondary};
   font-family: var(--font-family-text);
   font-size: 14px;
 `;
 
 export const Title = styled("h3")`
+  display: inline-block;
   font-family: var(--font-family-text);
+  margin-top: 0;
   margin-bottom: 0.25rem;
   font-size: 20px;
 `;
 
 export const Small = styled("small")`
-  color: ${props => props.theme.textColorPale};
+  color: ${props => props.theme.palette.grey[400]};
+  white-space: nowrap;
+`;
+export const XSmall = styled("span")`
+  font-size: var(--font-size-text-x-small);
+  color: ${props => props.theme.palette.grey[400]};
   white-space: nowrap;
 `;
 
-export const Value = styled("small")<{ up: number }>`
-  color: ${props => (props.up ? props.theme.colorGreen : props.theme.colorRed)};
-  white-space: nowrap;
+export const Value = styled(Small)<{ down?: number }>`
+  color: ${props => (props.down ? props.theme.palette.error.main : props.theme.palette.success.dark)};
 `;
-
-export const RateIcon = styled("img")`
-  width: 1.5rem;
-  height: 1.5rem;
-  margin: 0px 5px;
+export const XValue = styled(XSmall)<{ down?: number }>`
+  color: ${props => (props.down ? props.theme.palette.error.main : props.theme.palette.success.dark)};
 `;
 
 export const Progress = styled("div")`
@@ -73,7 +76,7 @@ export const Progress = styled("div")`
   font-size: 10px;
   font-weight: var(--font-weight-bold);
   color: var(--text-color-reverse);
-  color: ${props => props.theme.textColorReverse};
+  color: ${props => props.theme.palette.primary.contrastText};
   margin-bottom: 0.5rem;
 `;
 
@@ -82,10 +85,10 @@ export const ProcessActive = styled("div")<{ rate: number }>`
   justify-content: center;
   align-items: center;
   width: ${props => props.rate}%;
-  background-color: ${props => props.theme.colorGreenLight};
+  background-color: ${props => props.theme.palette.primary.main};
 `;
 
 export const ProgressPending = styled(ProcessActive)`
   width: ${props => props.rate}%;
-  background-color: ${props => props.theme.colorYellow};
+  background-color: ${props => props.theme.palette.warning.main};
 `;

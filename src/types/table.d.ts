@@ -5,9 +5,10 @@ export interface ColumnType {
 
 export interface Column<T extends ColumnType = any> {
   key: string;
-  title?: string;
+  title?: React.ReactNode;
   width?: number | string;
   minWidth?: number | string;
+  isHiddenBorder ?: boolean;
   maxWidth?: number | string;
   render?: (data: T, index: number) => ReactNode;
 }
@@ -16,6 +17,7 @@ export type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "column
 
 export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
   row: T;
+  dataLength?: number;
   index: number;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
   selectedProps?: {
@@ -28,6 +30,7 @@ export interface TableProps<T extends ColumnType = any> {
   columns: Column<T>[];
   data?: T[];
   className?: string;
+  emptyClassName?: string;
   style?: React.CSSProperties;
   loading?: boolean;
   initialized?: boolean;
@@ -41,6 +44,7 @@ export interface TableProps<T extends ColumnType = any> {
     page?: number;
     size?: number;
     total?: number;
+    handleCloseDetailView?: () => void;
   };
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
@@ -54,4 +58,5 @@ export interface TableProps<T extends ColumnType = any> {
 export interface FooterTableProps {
   total: TableProps["total"];
   pagination: TableProps["pagination"];
+  loading: boolean;
 }

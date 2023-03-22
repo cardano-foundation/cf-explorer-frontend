@@ -1,82 +1,73 @@
 import React from "react";
-import { Tab, Box } from "@mui/material";
+import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-
 import { ReactComponent as DelegationHistoryIcon } from "../../../commons/resources/icons/delegationHistory.svg";
-import { ReactComponent as StateKeyHistoryIcon } from "../../../commons/resources/icons/stateKeyHistory.svg";
+import { ReactComponent as StakeKeyHistoryIcon } from "../../../commons/resources/icons/stateKeyHistory.svg";
 import { ReactComponent as WithdrawHistoryIcon } from "../../../commons/resources/icons/withdrawHistory.svg";
 import { ReactComponent as InstantaneousHistoryIcon } from "../../../commons/resources/icons/instantaneousHistory.svg";
-import { TitleTab } from "./component";
-import TableTab from "./TableTab";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import { stringify } from "qs";
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { getPageInfo } from "../../../commons/utils/helper";
+import { TitleTab } from "./styles";
+import { useHistory, useParams } from "react-router-dom";
+import DelegationHistoryTab from "./Tabs/DelegationHistoryTab";
+import StakeHistoryTab from "./Tabs/StakeHistoryTab";
+import WithdrawalHistoryTab from "./Tabs/WithdrawalHistoryTab";
+import InstantaneousTab from "./Tabs/InstantaneousTab";
+import { details } from "../../../commons/routers";
 
-enum TABS {
-  delegation = "delegation-history",
-  stakeKey = "stake-history",
-  withdrawal = "withdrawal-history",
-  instantaneous = "instantaneous-rewards",
-}
-
-type DataTable = DelegationHistory | Instantaneous | StakeHistory | WithdrawalHistory;
+const tabs: {
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  label: React.ReactNode;
+  key: TabStakeDetail;
+  component: React.ReactNode;
+}[] = [
+  {
+    icon: DelegationHistoryIcon,
+    label: "Delegation History",
+    key: "delegation",
+    component: <DelegationHistoryTab />,
+  },
+  {
+    icon: StakeKeyHistoryIcon,
+    label: "Stake Key History",
+    key: "stake-key",
+    component: <StakeHistoryTab />,
+  },
+  {
+    icon: WithdrawHistoryIcon,
+    label: "Withdrawal History",
+    key: "withdrawal",
+    component: <WithdrawalHistoryTab />,
+  },
+  {
+    icon: InstantaneousHistoryIcon,
+    label: "Instantaneous Rewards",
+    key: "instantaneous",
+    component: <InstantaneousTab />,
+  },
+];
 
 const StakeTab = () => {
-  const [activeTab, setActiveTab] = React.useState<TabStakeDetail>("delegation");
-  const { stakeId } = useParams<{ stakeId: string }>();
-  const { search } = useLocation();
+  const { stakeId, tabActive = "delegation" } = useParams<{ stakeId: string; tabActive?: TabStakeDetail }>();
   const history = useHistory();
-  const pageInfo = getPageInfo(search);
-
-  const fetchData = useFetchList<DataTable>(`/stake/${stakeId}/${TABS[activeTab]}`, pageInfo);
+  const theme = useTheme();
 
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
-    setActiveTab(tab);
-    history.push({ search: stringify({ page: 1, size: 10 }) });
+    history.push({ pathname: details.stake(stakeId || "", tab) });
   };
-
-  const tabs: {
-    icon: React.FC<React.SVGProps<SVGSVGElement>>;
-    label: React.ReactNode;
-    key: keyof typeof TABS;
-  }[] = [
-    {
-      icon: DelegationHistoryIcon,
-      label: "Delegation History",
-      key: "delegation",
-    },
-    {
-      icon: StateKeyHistoryIcon,
-      label: "Stake Key History",
-      key: "stakeKey",
-    },
-    {
-      icon: WithdrawHistoryIcon,
-      label: "Withdrawal History",
-      key: "withdrawal",
-    },
-    {
-      icon: InstantaneousHistoryIcon,
-      label: "Instantaneous Rewards",
-      key: "instantaneous",
-    },
-  ];
 
   return (
     <Box mt={4}>
-      <TabContext value={activeTab}>
-        <Box style={{ borderBottom: "1px solid rgba(24, 76, 120, 0.1)" }}>
-          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: "#438f68" } }}>
-            {tabs?.map(({ icon: Icon, key, label }) => (
+      <TabContext value={tabActive}>
+        <Box sx={{ borderBottom: theme => `1px solid ${theme.palette.border.secondary}` }}>
+          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}>
+            {tabs.map(({ icon: Icon, key, label }) => (
               <Tab
                 key={key}
                 value={key}
                 label={
                   <Box>
                     <Box display={"flex"} alignItems="center">
-                      <Icon fill={key === activeTab ? "#438F68" : "#98A2B3"} />
-                      <TitleTab pl={1} active={key === activeTab}>
+                      <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.text.hint} />
+                      <TitleTab pl={1} active={key === tabActive}>
                         {label}
                       </TitleTab>
                     </Box>
@@ -87,8 +78,8 @@ const StakeTab = () => {
           </TabList>
         </Box>
         {tabs.map(item => (
-          <TabPanel key={item.key} value={item.key}>
-            <TableTab {...fetchData} type={activeTab} />
+          <TabPanel key={item.key} value={item.key} style={{ padding: 0 }}>
+            {item.component}
           </TabPanel>
         ))}
       </TabContext>

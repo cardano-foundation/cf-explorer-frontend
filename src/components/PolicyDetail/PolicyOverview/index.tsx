@@ -1,4 +1,4 @@
-import { Box, Modal } from "@mui/material";
+import { Box, Modal, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import infoIcon from "../../../commons/resources/icons/info.svg";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
@@ -21,16 +21,21 @@ import {
   ValueCard,
   ViewJson,
 } from "./styles";
-import useFetch from "../../../commons/hooks/useFetch";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
-import ReactJson from "react-json-view";
+import { JsonViewer } from "@textea/json-viewer";
 
-const PolicyOverview = () => {
-  const { policyId } = useParams<{ policyId: string }>();
+import { IconButton } from "@mui/material";
+import { ReactComponent as Bookmark } from "../../../commons/resources/icons/Bookmark.svg";
+
+interface Props {
+  data: PolicyDetail | null;
+  loading: boolean;
+}
+
+const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
-  const { data, loading } = useFetch<PolicyDetail>(`/policy/${policyId}`);
 
   return (
     <Box>
@@ -49,8 +54,8 @@ const PolicyOverview = () => {
             ) : (
               <Box>
                 <SlotLeader>
-                  <Box fontWeight={400} color={"#344054"}>
-                    Policy Id:{" "}
+                  <Box fontWeight={400} color={theme => theme.palette.text.secondary}>
+                    Policy ID:{" "}
                   </Box>{" "}
                   <Box ml={2}>{data?.policyId}</Box> <CopyButton text={data?.policyId} />
                 </SlotLeader>
@@ -58,39 +63,27 @@ const PolicyOverview = () => {
             )}
           </SlotLeaderContainer>
         </Box>
-      </Box>
-
-      <CardInfoOverview>
-        <CardItem display={"flex"} gap={2}>
+        <CardItem
+          color={theme => theme.palette.primary.main}
+          fontWeight="bold"
+          fontFamily={'"Roboto", sans-serif'}
+          fontSize={"1.125rem"}
+          component="button"
+          border={"none"}
+          bgcolor="transparent"
+          padding={0}
+          onClick={() => setOpenModal(true)}
+          style={{ cursor: "pointer" }}
+        >
           <Box>
-            <img src={policyIcon} alt="" />
+            <img src={policyIcon} alt="" width={"40%"} />
           </Box>
           <Box display={"flex"} flexDirection="column" height={"100%"} justifyContent="space-between">
-            <Box
-              color={props => props.colorGreenLight}
-              fontWeight="bold"
-              fontFamily={'"Space Mono", monospace, sans-serif'}
-              fontSize={"1.125rem"}
-              component="button"
-              border={"none"}
-              bgcolor="transparent"
-              padding={0}
-              onClick={() => setOpenModal(true)}
-              style={{ cursor: "pointer" }}
-            >
-              Policy Script
-            </Box>
-            <Box>
-              <Box display={"flex"} alignItems="center">
-                <TitleCard mr={1}> Total Tokens </TitleCard>
-                <img src={infoIcon} alt="info icon" />
-              </Box>
-              <ValueCard mt={1}>{numberWithCommas(data?.totalToken || 0)}</ValueCard>
-            </Box>
+            <Box>Policy Script</Box>
           </Box>
         </CardItem>
-        <CardItem />
-      </CardInfoOverview>
+      </Box>
+
       <ScriptModal open={openModal} onClose={() => setOpenModal(false)} script={data?.policyScript} />
     </Box>
   );
@@ -104,26 +97,26 @@ interface ScriptModalProps {
   script?: string;
 }
 const ScriptModal: React.FC<ScriptModalProps> = ({ script, ...props }) => {
+  const theme = useTheme();
   return (
     <Modal {...props}>
       <ModalContainer>
         <ButtonClose onClick={props.onClose}>
           <img src={closeIcon} alt="icon close" />
         </ButtonClose>
-        <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Space Mono", monospace, sans-serif'}>
+        <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Roboto", sans-serif'}>
           Policy script
         </Box>
         {script && (
           <ViewJson>
-            <ReactJson
-              name={false}
-              src={JSON.parse(script || "")}
-              enableClipboard={false}
-              displayDataTypes={false}
-              style={{ padding: 0, background: "none", color: "#344054" }}
+            <JsonViewer
+              value={JSON.parse(script || "")}
               displayObjectSize={false}
-              collapsed={false}
-              shouldCollapse={() => false}
+              displayDataTypes={false}
+              enableClipboard={false}
+              collapseStringsAfterLength={false}
+              style={{ padding: 0, background: "none", color: theme.palette.text.secondary }}
+              rootName={false}
             />
           </ViewJson>
         )}

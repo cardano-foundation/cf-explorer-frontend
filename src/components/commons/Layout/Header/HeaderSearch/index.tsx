@@ -16,10 +16,9 @@ const Form = styled("form")<{ home: number }>`
   height: ${props => (props.home ? 60 : 44)}px;
   margin: auto;
   border-radius: ${props => (props.home ? 30 : 8)}px;
-  background-color: #fff;
-  color: ${props => props.theme.textColor};
+  background-color: ${props => props.theme.palette.background.paper};
+  color: ${props => props.theme.palette.text.primary};
   padding: 0px 0px 0px ${props => (props.home ? 15 : 0)}px;
-  border: 1px solid ${props => props.theme.borderColor};
   box-sizing: border-box;
   margin-top: ${props => (props.home ? 30 : 0)}px;
   @media screen and (max-width: 1023px) {
@@ -44,20 +43,20 @@ const StyledSelect = styled(Select)<{ home: number }>`
     font-weight: var(--font-weight-normal);
     border-radius: 0px !important;
     padding-right: 2em !important;
-    color: ${props => props.theme.textColor};
+    color: ${props => props.theme.palette.text.primary};
   }
   & > fieldset {
     top: 0;
     border: none !important;
   }
   & > svg {
-    color: ${props => props.theme.textColorPale};
+    color: ${props => props.theme.palette.grey[400]};
     font-size: 1.75rem;
   }
 `;
 const SelectOption = styled(MenuItem)<{ home: number }>`
   font-size: ${props => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.palette.grey[400]};
   font-weight: var(--font-weight-normal);
 `;
 
@@ -68,7 +67,7 @@ const StyledInput = styled(Input)<{ home: number }>`
   border-radius: 0;
   font-size: ${props => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
   width: 100%;
-  border-left: 2px solid ${props => props.theme.borderColor};
+  border-left: 2px solid ${props => props.theme.palette.border.main};
   @media screen and (max-width: 539px) {
     padding: 0px 0px 0px 10px;
   }
@@ -97,11 +96,11 @@ interface Props {
   home: boolean;
 }
 interface FormValues {
-  filter: string;
+  filter: FilterParams;
   search: string;
 }
 interface Option {
-  value: string;
+  value: FilterParams;
   label: React.ReactNode;
 }
 const intitalValue: FormValues = {
@@ -115,26 +114,35 @@ const options: Option[] = [
     label: "All Filters",
   },
   {
-    value: "block",
-    label: "Block",
+    value: "epochs",
+    label: "Epochs",
   },
   {
-    value: "transaction",
-    label: "Transaction",
+    value: "blocks",
+    label: "Blocks",
   },
   {
-    value: "token",
+    value: "txs",
+    label: "Transactions",
+  },
+  {
+    value: "tokens",
     label: "Tokens",
   },
   {
-    value: "stake",
-    label: "Stake key",
+    value: "stakes",
+    label: "Stake keys",
   },
   {
-    value: "address",
+    value: "addresses",
     label: "Addresses",
   },
+  {
+    value: "delegations/pool-detail-header",
+    label: "Pools",
+  },
 ];
+
 const HeaderSearch: React.FC<Props> = ({ home }) => {
   const history = useHistory();
   const [{ search, filter }, setValues] = useState<FormValues>({ ...intitalValue });
@@ -142,24 +150,17 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
   const handleSearch = (e?: FormEvent) => {
     e?.preventDefault();
     if (search) {
-      history.push(
-        `${routers.TRANSACTION_LIST}?${stringify({ search, filter: filter !== "all" ? filter : undefined })}`
-      );
+      history.push(`${routers.SEARCH}?${stringify({ search, filter: filter !== "all" ? filter : undefined })}`);
       setValues({ ...intitalValue });
     }
   };
+
   const handleChangeFilter = (e: SelectChangeEvent<unknown>) => {
     setValues({ search, filter: e.target.value as Option["value"] });
   };
+
   const handleChangeSearch = (e?: React.ChangeEvent) => {
-    const search = (e?.target as HTMLInputElement)?.value as string;
-    if (!/^[a-zA-Z0-9_]*$/.test(search)) return;
-    setValues({ filter, search });
-  };
-  const handleKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" || e.code === "Enter" || e.keyCode === 13 || e.which === 13) {
-      handleSearch();
-    }
+    setValues({ filter, search: (e?.target as HTMLInputElement)?.value });
   };
 
   return (
@@ -177,9 +178,8 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
         type="search"
         value={search}
         spellCheck={false}
-        placeholder={home ? "Search transaction, address, block, epoch, pool..." : "Search ..."}
+        placeholder={home ? "Search transactions, address, blocks, epochs, pools..." : "Search ..."}
         onChange={handleChangeSearch}
-        onKeyDown={handleKeydown}
         disableUnderline
       />
       <SubmitButton type="submit" home={home ? 1 : 0} disabled={!search}>

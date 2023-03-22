@@ -8,6 +8,7 @@ import { StyledSelect } from "./styles";
 import TokenTopHolder from "./TokenTopHolder";
 import TokenMinting from "./TokenMinting";
 import { MenuItem } from "@mui/material";
+import { BiChevronDown } from "react-icons/bi";
 
 interface ITokenTableData {
   totalSupply?: number;
@@ -42,9 +43,13 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
   return (
     <Card
       title={mappingValue[type].title}
-      underline={true}
+      underline
       extra={
-        <StyledSelect value={type} onChange={(e: any) => setType(e.target.value)}>
+        <StyledSelect
+          value={type}
+          onChange={(e: any) => setType(e.target.value)}
+          IconComponent={() => <BiChevronDown size={30} style={{ paddingRight: 10 }} />}
+        >
           {Object.keys(mappingValue).map(key => (
             <MenuItem value={key}>{mappingValue[key].title}</MenuItem>
           ))}

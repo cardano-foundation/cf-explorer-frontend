@@ -10,7 +10,7 @@ import slotIcon from "../../../commons/resources/icons/slot.svg";
 import { TitleCard } from "../../BlockDetail/BlockOverview/styles";
 import { Box } from "@mui/material";
 import { ADAToken } from "../../commons/Token";
-import { formatADA } from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
 interface EpochOverviewProps {
   data: IDataEpoch | null;
   loading: boolean;
@@ -18,9 +18,9 @@ interface EpochOverviewProps {
 
 const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
   const slot =
-    data?.status === "FINISHED"
+    data?.status !== "IN_PROGRESS"
       ? MAX_SLOT_EPOCH
-      : (data?.endTime && data.startTime && moment(data.endTime).diff(data.startTime) / 1000) || 0;
+      : Math.round((data?.startTime && moment().diff(data?.startTime) / 1000) || 0);
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
 
   const listOverview = [
@@ -32,31 +32,30 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
           <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
-      value: moment(data?.startTime).format("MM/DD/YYYY hh:mm:ss"),
+      value: formatDateTimeLocal(data?.startTime || ""),
     },
     {
       icon: timeIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>End time </TitleCard>
-          <img src={infoIcon} alt="info icon"  width={18} />
+          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
-      value: moment(data?.endTime).format("MM/DD/YYYY hh:mm:ss"),
+      value: formatDateTimeLocal(data?.endTime || ""),
     },
     {
       icon: outputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Total Output</TitleCard>
-          <img src={infoIcon} alt="info icon"  width={18} />
+          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: (
-        <>
-          {" "}
-          {formatADA(data?.outSum || 0)} <ADAToken />{" "}
-        </>
+        <Box component={"span"}>
+          {formatADAFull(data?.outSum || 0)} <ADAToken />
+        </Box>
       ),
     },
     {

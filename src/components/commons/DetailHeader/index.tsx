@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Box, IconButton } from "@mui/material";
+
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import ProgressCircle from "../ProgressCircle";
 import {
   BackButton,
@@ -26,30 +27,30 @@ import {
   ProgressSkeleton,
   SlotLeaderSkeleton,
   SlotLeaderTitle,
-  CardItem,
   ValueCard,
+  CardItem,
 } from "./styles";
-import NotFound from "../../../pages/NotFound";
 import { routers } from "../../../commons/routers";
-import { Box } from "@mui/material";
+import Bookmark from "../BookmarkIcon";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../stores/types";
 
 interface DetailHeaderProps {
   loading: boolean;
   data?: TransactionHeaderDetail | BlockHeaderDetail | EpochHeaderDetail | null;
-  listItem?: { icon: string; title: React.ReactNode; value?: React.ReactNode }[];
+  listItem: { icon: string; title: React.ReactNode; value?: React.ReactNode }[];
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = props => {
   const { data, loading, listItem } = props;
-
   const getRouterList = () => {
     if (data?.type === "transaction") return routers.TRANSACTION_LIST;
     if (data?.type === "block") return routers.BLOCK_LIST;
     if (data?.type === "epoch") return routers.EPOCH_LIST;
     else return "/";
   };
-
-  if (loading) {
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  if (loading || !data) {
     return (
       <HeaderDetailContainer>
         <BackButton to={getRouterList()}>
@@ -86,8 +87,22 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
     );
   }
 
-  if (!data) return <NotFound />;
   const { header, blockDetail } = data;
+  const bookmarkData: { [key: string]: { keyword: string; type: "EPOCH" | "BLOCK" | "TRANSACTION" } } = {
+    epoch: {
+      keyword: `${blockDetail?.epochNo}`,
+      type: "EPOCH",
+    },
+    block: {
+      keyword: `${blockDetail?.blockNo}`,
+      type: "BLOCK",
+    },
+    transaction: {
+      keyword: header?.hash,
+      type: "TRANSACTION",
+    },
+  };
+  const multiRow = listItem.length > 6 ? 3 : 0;
 
   return (
     <HeaderDetailContainer>
@@ -99,43 +114,53 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           </BackButton>
           <HeaderContainer>
             <HeaderTitle>{header.title}</HeaderTitle>
+            <Bookmark {...bookmarkData[data?.type]} />
             {header.status && <HeaderStatus status={header.status}>{header.status}</HeaderStatus>}
-            {header.epochStatus && <HeaderStatus status={header.epochStatus}>{header.epochStatus}</HeaderStatus>}
+            {header.epochStatus && (
+              <HeaderStatus status={header.epochStatus}>{EPOCH_STATUS[header.epochStatus]}</HeaderStatus>
+            )}
           </HeaderContainer>
           {header.hash && (
             <SlotLeader>
-              {/* <Link to={routers.ADDRESS_DETAIL.replace(":address", `${header.slotLeader}`)}> */}
-              <Link to={"#"}>
-                {header.slotLeader && (
-                  <SlotLeaderTitle>{data.type === "block" ? "Block ID:" : "Slot leader:"}</SlotLeaderTitle>
-                )}{" "}
-                <SlotLeaderValue>{header.hash}</SlotLeaderValue>
-              </Link>
+              {header.slotLeader && (
+                <SlotLeaderTitle>{data.type === "block" ? "Block ID:" : "Slot leader:"}</SlotLeaderTitle>
+              )}{" "}
+              <SlotLeaderValue>{header.hash}</SlotLeaderValue>
               <SlotLeaderCopy text={header.hash} />
             </SlotLeader>
           )}
         </Box>
         <Box>
-          <ProgressCircle size={120} pathWidth={8} percent={((blockDetail?.epochSlot || 0) / MAX_SLOT_EPOCH) * 100}>
+          <ProgressCircle
+            size={120}
+            pathWidth={8}
+            percent={
+              currentEpoch && blockDetail.epochNo < currentEpoch?.no
+                ? 100
+                : ((blockDetail.epochSlot || 0) / MAX_SLOT_EPOCH) * 100
+            }
+          >
             <EpochNumber>{blockDetail?.epochNo}</EpochNumber>
             <EpochText>Epoch</EpochText>
           </ProgressCircle>
         </Box>
       </Box>
 
-      <DetailsInfo container>
-        {listItem?.map((item, idx) => {
-          return (
-            <CardItem item sm={12} md={6} xl key={idx}>
-              <Box>
-                <img src={item.icon} alt="" height={20} />
-              </Box>
-              <Box my={1}>{item.title}</Box>
-              <ValueCard>{item.value}</ValueCard>
-            </CardItem>
-          );
-        })}
-      </DetailsInfo>
+      {listItem && (
+        <DetailsInfo container multiRow={multiRow}>
+          {listItem?.map((item, idx) => {
+            return (
+              <CardItem item xs={12} sm={6} md={4} lg={multiRow || true} multiRow={multiRow} key={idx}>
+                <Box>
+                  <img src={item.icon} alt="" height={20} />
+                </Box>
+                <Box my={1}>{item.title}</Box>
+                <ValueCard>{item.value}</ValueCard>
+              </CardItem>
+            );
+          })}
+        </DetailsInfo>
+      )}
     </HeaderDetailContainer>
   );
 };

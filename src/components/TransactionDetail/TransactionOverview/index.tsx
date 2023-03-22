@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import moment from "moment";
+import { useSelector } from "react-redux";
 import DetailHeader from "../../commons/DetailHeader";
-import { formatADA, getShortWallet } from "../../../commons/utils/helper";
-import { CONFIRMATION_STATUS } from "../../../commons/utils/constants";
-import { Box, IconButton } from "@mui/material";
+import { formatADAFull, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { ConfirmStatus, StyledLink, TitleCard } from "./component";
 import { ADAToken } from "../../commons/Token";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
 import exchageAltIcon from "../../../commons/resources/icons/exchangeArrow.svg";
 import txConfirm from "../../../commons/resources/icons/txConfirm.svg";
+import totalOutput from "../../../commons/resources/icons/totalOutput.svg";
 import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
 import txInputIcon from "../../../commons/resources/icons/txInput.svg";
@@ -18,7 +19,8 @@ import CopyButton from "../../commons/CopyButton";
 import { details } from "../../../commons/routers";
 import DropdownDetail from "../../commons/DropdownDetail";
 import { BiShowAlt } from "react-icons/bi";
-import { Tooltip } from "@mui/material";
+import { RootState } from "../../../stores/types";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 interface Props {
   data: Transaction | null;
@@ -26,8 +28,11 @@ interface Props {
 }
 
 const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const [openListInput, setOpenListInput] = useState(false);
   const [openListOutput, setOpenListOutput] = useState(false);
+  const theme = useTheme();
+
   const renderConfirmationTag = () => {
     if (data && data.tx && data.tx.confirmation) {
       if (data.tx.confirmation <= 2) {
@@ -54,7 +59,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
                   setOpenListInput(!openListInput);
                 }}
               >
-                <BiShowAlt color={openListInput ? "#000" : "#98a2b3"} />
+                <BiShowAlt color={openListInput ? theme.palette.common.black : theme.palette.text.hint} />
               </IconButton>
             )}
           </TitleCard>
@@ -62,11 +67,11 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
       value: data?.utxOs && data?.utxOs?.inputs?.length > 0 && (
         <Box position={"relative"}>
-          <Tooltip title={data?.utxOs?.inputs[0]?.address || ""} placement="top">
+          <CustomTooltip title={data?.utxOs?.inputs[0]?.address || ""}>
             <StyledLink to={details.address(data?.utxOs?.inputs[0]?.address || "")}>
               {getShortWallet(data?.utxOs?.inputs[0]?.address || "")}
             </StyledLink>
-          </Tooltip>
+          </CustomTooltip>
           <CopyButton text={data?.utxOs?.inputs[0]?.address || ""} />
           {openListInput && (
             <DropdownDetail
@@ -93,7 +98,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
                   setOpenListInput(false);
                 }}
               >
-                <BiShowAlt color={openListOutput ? "#000" : "#98a2b3"} />
+                <BiShowAlt color={openListOutput ? theme.palette.common.black : theme.palette.text.hint} />
               </IconButton>
             )}
           </TitleCard>
@@ -101,11 +106,11 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
       value: data?.utxOs && data?.utxOs?.outputs?.length > 0 && (
         <Box position={"relative"}>
-          <Tooltip title={data?.utxOs?.outputs[0]?.address || ""} placement="top">
+          <CustomTooltip title={data?.utxOs?.outputs[0]?.address || ""}>
             <StyledLink to={details.address(data?.utxOs?.outputs[0]?.address || "")}>
               {getShortWallet(data?.utxOs?.outputs[0]?.address || "")}
             </StyledLink>
-          </Tooltip>
+          </CustomTooltip>
           <CopyButton text={data?.utxOs?.outputs[0]?.address || ""} />
           {openListOutput && (
             <DropdownDetail
@@ -126,7 +131,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
-      value: moment(data?.tx?.time).format("MM/DD/YYYY hh:mm:ss"),
+      value: formatDateTimeLocal(data?.tx?.time || ""),
     },
     {
       icon: txConfirm,
@@ -144,6 +149,20 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
     },
     {
+      icon: totalOutput,
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <TitleCard mr={1}>Total Output</TitleCard>
+          <img src={infoIcon} alt="info icon" width={18} />
+        </Box>
+      ),
+      value: (
+        <Box component={"span"}>
+          {formatADAFull(data?.tx?.totalOutput)} <ADAToken />{" "}
+        </Box>
+      ),
+    },
+    {
       icon: exchageAltIcon,
       title: (
         <Box display={"flex"} alignItems="center">
@@ -152,10 +171,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <>
-          {" "}
-          {formatADA(data?.tx?.fee || 0)} <ADAToken />{" "}
-        </>
+        <Box component={"span"}>
+          {formatADAFull(data?.tx?.fee)} <ADAToken />{" "}
+        </Box>
       ),
     },
     {
@@ -192,7 +210,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   ];
   return (
     <DetailHeader
-      listItem={listOverview}
+    listItem={listOverview}
       data={
         data && {
           type: "transaction",
@@ -204,7 +222,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
 
           blockDetail: {
             epochNo: data.tx.epochNo,
-            epochSlot: data.tx.epochSlot,
+            epochSlot: currentEpoch?.no === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH,
             maxEpochSlot: data.tx.maxEpochSlot,
             blockNo: data.tx.blockNo,
           },

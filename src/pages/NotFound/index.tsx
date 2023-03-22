@@ -1,4 +1,5 @@
 import { Container, styled } from "@mui/material";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { NotFoundIcon } from "../../commons/resources";
 import { routers } from "../../commons/routers";
@@ -18,7 +19,7 @@ const Image = styled("img")`
 `;
 
 const Title = styled("h3")`
-  color: ${props => props.theme.textColorPale};
+  color: ${props => props.theme.palette.grey[400]};
   margin-bottom: 2rem;
   font-weight: var(--font-weight-normal);
 `;
@@ -28,21 +29,26 @@ const BackToHome = styled(Link)`
   width: max-content;
   margin: auto;
   padding: 6.5px 20px;
-  border: 2px solid ${props => props.theme.colorGreenLight};
+  border: 2px solid ${props => props.theme.palette.primary.main};
   border-radius: 5px;
-  color: ${props => props.theme.colorGreenLight};
+  color: ${props => props.theme.palette.primary.main};
   font-weight: var(--font-weight-bold);
   &:link,
   &:visited {
-    color: ${props => props.theme.colorGreenLight};
+    color: ${props => props.theme.palette.primary.main};
   }
   &:hover {
-    border: 2px solid ${props => props.theme.colorGreen};
-    color: ${props => props.theme.colorGreen};
+    border: 2px solid ${props => props.theme.palette.primary.dark};
+    color: ${props => props.theme.palette.primary.dark};
   }
 `;
 
 const NotFound = () => {
+
+  useEffect(() => { 
+    document.title = `Page Not Found | Cardano Explorer`;
+  }, []);
+  
   return (
     <NotFoundContainer>
       <Image src={NotFoundIcon} alt="404" />

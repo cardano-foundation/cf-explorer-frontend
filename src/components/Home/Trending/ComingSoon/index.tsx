@@ -4,8 +4,6 @@ import { ComingSoonIcon } from "../../../../commons/resources";
 import { BoxRaised } from "../../../commons/BoxRaised";
 import CustomTooltip from "../../../commons/CustomTooltip";
 
-interface Props {}
-
 const ComingSoonContainer = styled(BoxRaised)`
   display: flex;
   flex-direction: column;
@@ -22,13 +20,13 @@ const Image = styled("img")`
 
 const Title = styled("h3")`
   margin-bottom: 0;
-  color: ${props => props.theme.titleColor};
+  color: ${props => props.theme.palette.text.hint};
   font-size: var(--font-size-text-x-large);
 `;
 
-const ComingSoon: React.FC<Props> = () => {
+const ComingSoon: React.FC = () => {
   return (
-    <CustomTooltip title="Exciting things incoming" placement="top">
+    <CustomTooltip title="Exciting things incoming">
       <ComingSoonContainer>
         <Image src={ComingSoonIcon} alt="Coming soon" />
         <Title>Coming soon</Title>

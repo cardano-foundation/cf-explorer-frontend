@@ -1,7 +1,7 @@
 import { Box, Grid, Skeleton } from "@mui/material";
 import React from "react";
 
-import { formatADA, formatPercent, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADAFull, formatPercent, numberWithCommas } from "../../../commons/utils/helper";
 
 import { Item, StyledContainer, Title, Value } from "./styles";
 
@@ -12,13 +12,13 @@ interface IDelegationDetailOverview {
 
 const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, loading }) => {
   const overviewData = {
-    Reward: data?.reward ? `${data.reward}%` : "0%",
-    Fee: data?.margin ? formatPercent(data.margin) : "0%",
-    ROS: data?.ros ? formatPercent(data.ros) : "0%",
-    "Pledge(A)": formatADA(data?.pledge) || 0,
-    "Cost(A)": formatADA(data?.cost) || 0,
+    Reward: `${data?.reward || 0}%`,
+    Fee: formatPercent(data?.margin),
+    ROS: formatPercent(data?.ros),
+    "Pledge(A)": formatADAFull(data?.pledge),
+    "Cost(A)": formatADAFull(data?.cost),
     "Epoch Block": data?.epochBlock || 0,
-    "Lifetime Block": numberWithCommas(data?.lifetimeBlock || 0),
+    "Lifetime Block": numberWithCommas(data?.lifetimeBlock),
   };
 
   if (loading) {
@@ -28,7 +28,7 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
           {Object.keys(overviewData).map((i, ii) => {
             return (
               <Grid item xs={24} sm={12} md={8} key={ii} xl={6}>
-                <Box borderRadius={props => props.borderRadius} overflow="hidden">
+                <Box borderRadius={10} overflow="hidden">
                   <Skeleton variant="rectangular" height={115} />
                 </Box>
               </Grid>
@@ -46,7 +46,7 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
             <Grid item xs={30} sm={20} md={15} xl={12} key={ii}>
               <Item>
                 <Title>{i}</Title>
-                <Value style={{ color: `${i === "Reward" && "#438F68"}` }}>
+                <Value sx={{ color: theme => (i === "Reward" ? theme.palette.primary.main : "initial") }}>
                   {overviewData[i as keyof typeof overviewData]}
                 </Value>
               </Item>
