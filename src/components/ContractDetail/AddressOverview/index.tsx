@@ -6,11 +6,11 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { AIcon, EmptyIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
-import { exchangeADAToUSD, formatADAFull, formatPrice, getShortWallet } from "../../../commons/utils/helper";
+import { exchangeADAToUSD, formatADAFull, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import { RootState } from "../../../stores/types";
 import Card from "../../commons/Card";
 import CardAddress from "../../share/CardAddress";
-import { Pool, StyledAAmount, StyledTextField, WrapPaperDropdown } from "./styles";
+import { Logo, LogoEmpty, Pool, StyledAAmount, StyledTextField } from "./styles";
 
 interface Props {
   data: WalletAddress | null;
@@ -39,14 +39,15 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       value: (
         <Autocomplete
           options={data?.tokens || []}
-          getOptionLabel={option => option.displayName}
+          componentsProps={{ paper: { elevation: 2 } }}
+          getOptionLabel={option => option.displayName || option.name || option.fingerprint}
           noOptionsText={
             <Box>
               <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
             </Box>
           }
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
-            <li {...props} key={option.fingerprint}>
+            <li key={option.fingerprint} {...props}>
               <Box
                 display="flex"
                 alignItems={"center"}
@@ -58,15 +59,26 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
               >
                 <Box display="flex" alignItems={"center"}>
                   <Box width={50}>
-                    <img src={AIcon} alt="a icon" />
+                    {option?.metadata?.logo ? (
+                      <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt="icon" />
+                    ) : (
+                      <LogoEmpty />
+                    )}
                   </Box>
-                  <Box>{option.displayName}</Box>
+                  <Box>
+                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="200px">
+                      {option.displayName}
+                    </Box>
+                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="200px">
+                      #{option.name || option.fingerprint}
+                    </Box>
+                  </Box>
                 </Box>
-                <Box fontWeight={"bold"}>{formatPrice(option.quantity)}</Box>
+                <Box fontWeight={"bold"}>{numberWithCommas(option.quantity)}</Box>
               </Box>
             </li>
           )}
-          renderInput={params => <StyledTextField {...params} placeholder="Select Token" />}
+          renderInput={params => <StyledTextField {...params} placeholder="Search Token" />}
           popupIcon={<BiChevronDown />}
         />
       ),
