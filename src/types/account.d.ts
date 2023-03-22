@@ -68,13 +68,6 @@ type TSignOut = {
   username: string;
 };
 
-interface Bookmark {
-  createdDate?: string;
-  id?: number;
-  keyword: string;
-  type: "BLOCK" | "EPOCH" | "TRANSACTION" | "ADDRESS" | "POOL" | "STAKE_KEY";
-}
-
 interface NonceObject {
   message: "SS_0" | "SS_1";
   nonce: string;

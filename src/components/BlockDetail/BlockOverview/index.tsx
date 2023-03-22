@@ -97,29 +97,14 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
     <DetailHeader
       loading={loading}
       listItem={listOverview}
-      data={
+      type="BLOCK"
+      hash={data?.hash}
+      bookmarkData={`${data?.blockNo || ""}`}
+      title={"Block detail"}
+      epoch={
         data && {
-          type: "block",
-          header: {
-            title: "Block detail",
-            hash: data.hash,
-            slotLeader: true,
-          },
-
-          blockDetail: {
-            epochNo: data.epochNo,
-            epochSlot: data.epochSlotNo,
-            maxEpochSlot: data.totalSlot,
-            blockNo: data.blockNo,
-          },
-          transactionFees: {
-            fee: data.totalFees,
-            token: "ADA",
-          },
-          totalOutput: {
-            totalOutput: data.totalOutput,
-            token: "ADA",
-          },
+          no: data.epochNo,
+          slot: data.epochSlotNo,
         }
       }
     />

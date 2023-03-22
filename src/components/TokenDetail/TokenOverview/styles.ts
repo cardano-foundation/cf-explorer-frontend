@@ -41,10 +41,15 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
 
 export const SlotLeaderContainer = styled(Box)`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 `;
+
+export const SlotLeaderTitle = styled("small")`
+  font-family: var(--font-family-text);
+  margin-right: 5px;
+`;
+
 export const SlotLeader = styled(Box)`
   margin-top: 0px;
   font-weight: bold;

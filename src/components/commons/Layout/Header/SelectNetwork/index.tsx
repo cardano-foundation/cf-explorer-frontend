@@ -7,7 +7,6 @@ import { NETWORK, NETWORKS, NETWORK_NAMES } from "../../../../../commons/utils/c
 import { removeAuthInfo } from "../../../../../commons/utils/helper";
 import StorageUtils from "../../../../../commons/utils/storage";
 import { signOut } from "../../../../../commons/utils/userRequest";
-import { BookMark } from "../../../../../types/bookmark";
 
 const StyledSelect = styled(Select)<{ home: number }>`
   font-family: var(--font-family-title);
@@ -38,7 +37,7 @@ const SelectNetwork: React.FC<Props> = props => {
   const { disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
-  const [, , clearBookmark] = useLocalStorage<BookMark[]>("bookmark", []);
+  const [, , clearBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
 
   const handleChange = async (e: SelectChangeEvent<unknown>) => {
     try {
