@@ -2,6 +2,7 @@ import { Box, Button, styled } from "@mui/material";
 
 export const ModalTitle = styled("h3")`
   font-family: var(--font-family-title);
+  margin-top: 0px;
 `;
 
 export const Description = styled(Box)`

@@ -49,3 +49,8 @@ export const StyledButtonClose = styled(Button)(({ theme }) => ({
   color: "#344054",
   fontSize: "1rem",
 }));
+
+export const ModalTitle = styled("h3")`
+  font-family: var(--font-family-title);
+  margin-top: 0px;
+`;
