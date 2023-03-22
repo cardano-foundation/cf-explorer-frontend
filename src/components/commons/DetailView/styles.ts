@@ -16,15 +16,27 @@ export const ViewDetailDrawer = styled(Drawer)`
   }
 `;
 
+export const ViewDetailHeader = styled(Box)`
+  margin: 100px 30px 0px;
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)};
+`;
+
+export const CloseButton = styled(IconButton)`
+  color: ${props => props.theme.palette.text.hint};
+  padding: 5.5px;
+`;
+
 export const ViewDetailContainer = styled(Box)`
   position: relative;
   width: 430px;
   height: calc(100vh - 244px);
   overflow-x: hidden;
   overflow-y: auto;
-  margin: 100px 0 0 30px;
-  padding: 40px 0px 0px;
-  border-top: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)};
+  margin-left: 30px;
   text-align: center;
 `;
 export const ViewDetailScroll = styled(Box)`
@@ -33,20 +45,8 @@ export const ViewDetailScroll = styled(Box)`
   margin-right: 16px;
   overflow-x: hidden;
   overflow: hidden;
+  padding-top: 15px;
 `;
-
-export const StyledViewMore = styled(ViewAllButton)`
-  position: absolute;
-  top: 10px;
-  left: 0px;
-`;
-export const CloseButton = styled(IconButton)`
-  position: absolute;
-  top: 10px;
-  left: 365px;
-  color: ${props => props.theme.palette.text.hint};
-`;
-
 export const HeaderContainer = styled(Box)`
   display: flex;
   justify-content: center;
@@ -55,10 +55,8 @@ export const HeaderContainer = styled(Box)`
 export const TokenContainer = styled(Box)`
   width: calc(100% - 40px);
   background: ${props => props.theme.palette.text.secondary};
-  box-shadow: 0px 10px 25px ${props => alpha(props.theme.palette.common.black, 0.1)};
   border-radius: 12px;
   padding: 25px 20px;
-  margin-top: 10px;
   text-align: left;
 `;
 

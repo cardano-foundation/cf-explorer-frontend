@@ -1,10 +1,11 @@
-import { alpha, Avatar, Box, CircularProgress, Dialog, IconButton, useTheme } from "@mui/material";
+import { alpha, Avatar, Box, CircularProgress, IconButton, useTheme } from "@mui/material";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { routers } from "../../../../commons/routers";
 import { RootState } from "../../../../stores/types";
 import {
   ContentBox,
+  ModalTitle,
   NavItem,
   SideBar,
   StyledButton,
@@ -22,10 +23,10 @@ import { NETWORK_TYPES, NETWORK } from "../../../../commons/utils/constants";
 import { uploadAxios } from "../../../../commons/utils/axios";
 import { ReactComponent as ReportDiscord } from "../../../../commons/resources/icons/reportDiscord.svg";
 import { ReactComponent as ReportMail } from "../../../../commons/resources/icons/reportMail.svg";
-import { DialogTitle } from "@mui/material";
 import CustomTooltip from "../../CustomTooltip";
 import Toast from "../../Toast";
 import { AlertProps } from "@mui/material";
+import StyledModal from "../../StyledModal";
 interface Props {
   children: React.ReactNode;
 }
@@ -167,11 +168,9 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
           {children}
         </Box>
       </ContentBox>
-      <Dialog open={openReportModal} onClose={() => setOpenReportModal(false)}>
-        <Box py={2}>
-          <DialogTitle fontSize={"1.5rem"} fontWeight={"bold"}>
-            Having a problem? Contact us via these channel
-          </DialogTitle>
+      <StyledModal open={openReportModal} handleCloseModal={() => setOpenReportModal(false)}>
+        <Box textAlign="center">
+          <ModalTitle>Having a problem?<br/>Contact us via these channel</ModalTitle>
           <Box display={"flex"} gap={2} justifyContent="center">
             <StyledButtonReport>
               <ReportDiscord />
@@ -180,7 +179,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
               <ReportMail />
             </StyledButtonReport>
           </Box>
-          <Box py={3}>
+          <Box pt={3}>
             <StyledButtonClose
               onClick={() => {
                 setOpenReportModal(false);
@@ -191,7 +190,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
             </StyledButtonClose>
           </Box>
         </Box>
-      </Dialog>
+      </StyledModal>
       <Toast
         open={!!message.message}
         onClose={handleCloseToast}
