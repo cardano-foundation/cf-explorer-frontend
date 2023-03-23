@@ -1,7 +1,7 @@
 import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
 
-export const BoxInfo = styled(Box)(({ theme }) => ({
-  height: "calc(100% - 36px)",
+export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
+  height: `calc(100% - ${space}px)`,
   background: theme.palette.secondary.dark,
   borderRadius: "10px",
   color: theme.palette.primary.contrastText,

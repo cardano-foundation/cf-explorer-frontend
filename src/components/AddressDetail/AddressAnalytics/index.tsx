@@ -134,7 +134,7 @@ const AddressAnalytics: React.FC = () => {
           </ChartBox>
         </Grid>
         <Grid item xs={24} lg={6}>
-          <BoxInfo>
+          <BoxInfo space={categories.length ? 36 : 16}>
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
