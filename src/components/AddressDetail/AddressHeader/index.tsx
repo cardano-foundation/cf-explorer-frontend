@@ -80,9 +80,9 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
                       <LogoEmpty />
                     )}
                   </Box>
-                  <CustomTooltip title={`${option.displayName} #${option.name || option.fingerprint}`}>
+                  <CustomTooltip title={`${option.displayName || ""} #${option.name || option.fingerprint}`}>
                     <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="150px">
-                      {option.displayName} #{option.name || option.fingerprint}
+                      {option.displayName || ""} #{option.name || option.fingerprint}
                     </Box>
                   </CustomTooltip>
                 </Box>
