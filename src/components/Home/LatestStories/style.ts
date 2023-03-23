@@ -149,7 +149,6 @@ export const Time = styled("h5")`
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-normal);
   color: ${props => props.theme.palette.grey[400]};
-  line-height: 1.15;
   margin: 0;
 `;
 export const TimeIcon = styled("img")`
