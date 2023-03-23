@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { API } from "../../../commons/utils/api";
 import BookmarkButton from "../../commons/BookmarkIcon";
 import { EmptyIcon } from "../../../commons/resources";
+import { Logo, LogoEmpty } from "../../ContractDetail/AddressOverview/styles";
 
 interface Props {
   data: WalletAddress | null;
@@ -72,7 +73,11 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
               >
                 <Box display="flex" alignItems={"center"}>
                   <Box width={50}>
-                    <img src={AIcon} alt="a icon" />
+                    {option?.metadata?.logo ? (
+                      <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt="icon" />
+                    ) : (
+                      <LogoEmpty />
+                    )}
                   </Box>
                   <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="200px">
                     {option.displayName} #{option.name || option.fingerprint}

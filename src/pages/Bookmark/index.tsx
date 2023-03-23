@@ -18,12 +18,12 @@ import { StyledTable, TitleTab } from "./Styles";
 import { ReactComponent as DeleteBookmark } from "../../commons/resources/icons/deleteBookmark.svg";
 import { Link } from "react-router-dom";
 import { details } from "../../commons/routers";
-import Toast from "../../components/commons/Toast";
 import { getShortHash, getShortWallet } from "../../commons/utils/helper";
 import { useLocalStorage } from "react-use";
 import { deleteBookmark } from "../../commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
 import { BookMark } from "../../types/bookmark";
+import useToast from "../../commons/hooks/useToast";
 
 type TabKeys = "ADDRESS" | "STAKE_KEY" | "POOL" | "EPOCH" | "BLOCK" | "TRANSACTION";
 
@@ -31,18 +31,10 @@ const Bookmark = () => {
   const [bookmarks, setBookmarks] = useLocalStorage<BookMark[]>("bookmark", []);
   const [activeTab, setActiveTab] = useState<TabKeys>("ADDRESS");
   const [loadingDelete, setLoadingDelete] = useState(false);
-  const [message, setMessage] = useState("");
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
   const [selected, setSelected] = useState<string | null>();
-
-  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setMessage("");
-  };
+  const toast = useToast();
 
   const { data, loading, refesh, error, total } = useFetchList<Bookmark>(
     "/bookmark/find-all",
@@ -69,12 +61,12 @@ const Bookmark = () => {
         setLoadingDelete(false);
         setBookmarks(bookmarks?.filter(r => r.keyword !== keyword));
         refesh();
-        setMessage("Successfully!");
+        toast.success("Successfully!");
       }
     } catch (error) {
       setSelected(null);
       setLoadingDelete(false);
-      setMessage("Something went wrong!");
+      toast.error("Something went wrong!");
     }
   };
   const handleChange = (event: React.SyntheticEvent, tab: TabKeys) => {
@@ -404,13 +396,6 @@ const Bookmark = () => {
           </LoadingButton>
         </DialogActions>
       </Dialog>
-
-      <Toast
-        open={!!message}
-        onClose={handleCloseToast}
-        messsage={message}
-        severity={message.includes("Successfully") ? "success" : "error"}
-      />
     </Box>
   );
 };
