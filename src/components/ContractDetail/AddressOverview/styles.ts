@@ -41,13 +41,13 @@ export const Pool = styled(Link)`
   }
 `;
 export const Logo = styled("img")`
-  width: 36px;
-  height: 36px;
+  width: 25px;
+  height: 25px;
   object-fit: cover;
 `;
 export const LogoEmpty = styled(Box)`
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   background: ${props => alpha(props.theme.palette.common.white, 0.6)};
   border-radius: 50%;
   border: 1px solid ${props => props.theme.palette.border.main};
