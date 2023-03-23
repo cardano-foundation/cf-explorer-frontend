@@ -75,7 +75,7 @@ const TableRow = <T extends ColumnType>({
             key={idx}
             minWidth={column.minWidth}
             maxWidth={column.maxWidth}
-            hiddenBorder={column.isHiddenBorder  && dataLength === index + 1}
+            hiddenBorder={column.isHiddenBorder && dataLength === index + 1}
           >
             {column.render ? column.render(row, index) : row[column.key]}
           </TCol>
@@ -175,8 +175,8 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading })
         ) : (
           ""
         )}
-        {total ? (
-          <Total ml={2} fontSize="0.875rem" lineHeight={"1 !important"}>
+        {total?.count ? (
+          <Total ml={"20px"} fontSize="0.875rem" lineHeight={"1 !important"}>
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> {`Result${total.count > 1 ? "s" : ""}`}
           </Total>
         ) : (

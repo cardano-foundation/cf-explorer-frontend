@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { setSidebar } from "../../../stores/user";
 import { RootState } from "../../../stores/types";
 import CustomTooltip from "../CustomTooltip";
+import ToastContainer from "./ToastContainer";
 
 interface Props {
   children: React.ReactNode;
@@ -35,6 +36,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
         </Main>
         <Footer />
       </MainContainer>
+      <ToastContainer />
     </Layout>
   );
 };

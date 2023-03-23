@@ -11,14 +11,14 @@ import { StyledInput, StyledDarkLoadingButton } from "../../../../share/styled";
 import { FormHelperText } from "@mui/material";
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { existUserName } from "../../../../../commons/utils/userRequest";
+import useToast from "../../../../../commons/hooks/useToast";
 interface IProps {
   nonce: NonceObject | null;
   signature: string;
   open: boolean;
-  setMessage: (message: string) => void;
   setIsSign: (isSign: boolean) => void;
 }
-const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setMessage, setIsSign }) => {
+const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIsSign }) => {
   const { disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
@@ -26,6 +26,7 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setMe
   const [errorMessage, setErrorMessage] = useState("");
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
+  const toast = useToast();
 
   const onSubmit = async () => {
     try {
@@ -58,7 +59,7 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setMe
       }
     } catch (error: any) {
       setErrorMessage(error.response?.data.errorMessage);
-      setMessage(error.response?.data.errorMessage || "");
+      toast.error(error.response?.data.errorMessage || "");
       disconnect();
       removeAuthInfo();
     } finally {
