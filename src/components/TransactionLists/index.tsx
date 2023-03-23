@@ -86,7 +86,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
           <img src={AIcon} alt="a icon" />
           {hash === r.hash && (
-            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
+            <Box position={"absolute"} right="-10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
               <MdOutlineKeyboardArrowRight fontSize={30} />
             </Box>
           )}
