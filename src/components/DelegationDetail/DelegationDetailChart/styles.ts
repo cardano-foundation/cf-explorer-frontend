@@ -32,9 +32,9 @@ export const ChartContainer = styled("div")`
   padding-top: 20px;
 `;
 
-export const GridRight = styled(Grid)`
+export const GridRight = styled(Grid)<{ space: number }>`
   flex: 1;
-  max-height: calc(100% - 38px);
+  max-height: calc(100% - ${props => props.space}px);
   background: ${props => props.theme.palette.text.secondary};
   border-radius: 12px;
   box-shadow: ${props => props.theme.shadow.card};
