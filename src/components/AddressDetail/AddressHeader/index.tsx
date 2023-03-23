@@ -59,7 +59,6 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
               <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
             </Box>
           }
-          open
           onChange={(e, value) => setSelected(value?.fingerprint || "")}
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
             <Option key={option.fingerprint} {...props} active={selected === option.fingerprint ? 1 : 0}>
