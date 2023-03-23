@@ -103,6 +103,9 @@ export const Image = styled("img")`
 `;
 export const Detail = styled(Box)`
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const Author = styled("h6")`
