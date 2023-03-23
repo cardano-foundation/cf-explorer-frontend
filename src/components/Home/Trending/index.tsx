@@ -1,22 +1,21 @@
-import { Col, Row } from 'antd';
-import React from 'react';
-import styles from './index.module.scss';
-import TransactionChart from './TransactionChart';
+import React from "react";
+import TransactionChart from "./TransactionChart";
+import ComingSoon from "./ComingSoon";
+import { Grid } from "@mui/material";
 
-interface Props { }
+interface Props {}
 
 const HomeTrending: React.FC<Props> = () => {
-
   return (
-    <Row gutter={24}>
-      <Col span={24} xl={12}>
+    <Grid container spacing={2}>
+      <Grid item lg={8} md={8} xs={12}>
         <TransactionChart />
-      </Col>
-      <Col span={24} xl={12}>
-      </Col>
-    </Row>
-  )
-
-}
+      </Grid>
+      <Grid item lg={4} md={4} xs={12}>
+        <ComingSoon />
+      </Grid>
+    </Grid>
+  );
+};
 
 export default HomeTrending;

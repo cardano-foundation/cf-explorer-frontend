@@ -1,19 +1,33 @@
-import React from 'react';
-import HomeStatistic from '../../components/Home/Statistic';
-import HomeTrending from '../../components/Home/Trending';
-import styles from './index.module.scss';
+import { Container, styled } from "@mui/material";
+import React, { useEffect } from "react";
+import LatestStories from "../../components/Home/LatestStories";
+import LatestTransactions from "../../components/Home/LatestTransactions";
+import HomeStatistic from "../../components/Home/Statistic";
+import TopDelegationPools from "../../components/Home/TopDelegationPools";
+import HomeTrending from "../../components/Home/Trending";
 
-interface Props { }
+const HomeContainer = styled(Container)`
+  padding-top: 30px;
+  padding-bottom: 40px;
+`;
+
+interface Props {}
 
 const Home: React.FC<Props> = () => {
 
+  useEffect(() => { 
+    document.title = `Cardano Explorer`;
+  }, []);
+  
   return (
-    <div className={styles.container}>
+    <HomeContainer>
       <HomeStatistic />
       <HomeTrending />
-    </div>
-  )
-
-}
+      <LatestTransactions />
+      <TopDelegationPools />
+      <LatestStories />
+    </HomeContainer>
+  );
+};
 
 export default Home;

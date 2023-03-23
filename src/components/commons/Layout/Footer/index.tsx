@@ -1,47 +1,74 @@
-import React from 'react';
-import { FacebookIcon, GithubIcon, LinkedInIcon, RedditIcon, TelegramIcon, TwitterIcon, YoutubeIcon } from '../../../../commons/resources';
-import styles from './index.module.scss';
+import React from "react";
+import { styled, Box, Container } from "@mui/material";
 
-interface Props { }
+const StyledFooter = styled("footer")`
+  height: 60px;
+  padding: 0px 10px;
+  border-top: 1px solid ${props => props.theme.palette.border.main};
+  @media screen and (max-width: 1023px) {
+    height: unset;
+    padding: 10px;
+  }
+`;
 
-const socials = [
-  { href: "https://fb.me", title: "Facebook", icon: FacebookIcon },
-  { href: "https://twitter.com", title: "Twitter", icon: TwitterIcon },
-  { href: "https://reddit.com", title: "Reddit", icon: RedditIcon },
-  { href: "https://telegram.com", title: "Telegram", icon: TelegramIcon },
-  { href: "https://linkedin.com", title: "Linked In", icon: LinkedInIcon },
-  { href: "https://github.com", title: "Github", icon: GithubIcon },
-  { href: "https://youtube.com", title: "Youtube", icon: YoutubeIcon },
-]
+const FooterContainer = styled(Container)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 60px;
+  max-width: unset !important;
+  @media screen and (max-width: 1023px) {
+    height: unset;
+  }
+`;
 
-const Footer: React.FC<Props> = () => {
+const Copyright = styled("small")`
+  color: ${props => props.theme.palette.grey[400]};
+  font-family: var(--font-family-title);
+  ::first-letter {
+    font-size: 0.75em;
+    vertical-align: top;
+    margin-right: 2px;
+  }
+  @media screen and (max-width: 1023px) {
+    width: 100%;
+    text-align: center;
+  }
+`;
 
+const Hyperlink = styled(Box)`
+  text-align: right;
+  @media screen and (max-width: 1023px) {
+    width: 100%;
+    text-align: center;
+  }
+`;
+
+const ExternalLink = styled("a")`
+  color: ${props => props.theme.palette.primary.dark}!important;
+  &:hover {
+    text-decoration: underline !important;
+  }
+`;
+
+const Dot = styled("a")`
+  display: inline-block;
+  margin: 0.1rem 10px;
+  width: 4px;
+  height: 4px;
+  background-color: ${props => props.theme.palette.grey[400]};
+  border-radius: 50%;
+`;
+
+const Footer: React.FC = () => {
   return (
-    <footer>
-      <div className={styles.container}>
-        <div className={styles.footerMenu}>
-          Footer Menu
-        </div>
-      </div>
-      <div className={styles.copyright}>
-        <div className={styles.container}>
-          <span>© 2022 Cardano. All rights reserved</span>
-          <ul>
-            {socials.map(social => {
-              return (
-                <li key={social.title}>
-                  <a href={social.href} target="_blank" rel="noreferrer" title={social.title}>
-                    <img src={social.icon} alt={social.title} />
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </div>
-    </footer>
-  )
-
-}
+    <StyledFooter>
+      <FooterContainer>
+        <Copyright>©2022 Cardano Blockchain Explorer. All rights reserved. Version: 0.1.0</Copyright>
+      </FooterContainer>
+    </StyledFooter>
+  );
+};
 
 export default Footer;

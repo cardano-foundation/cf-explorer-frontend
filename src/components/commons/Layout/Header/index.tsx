@@ -1,37 +1,32 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { LogoIcon } from '../../../../commons/resources';
-import ConnectWalletModal from '../../ConnectWalletModal';
-import ConnectWallet from './ConnectWallet';
-import HeaderMenu from './HeaderMenu';
-import HeaderSearch from './HeaderSearch';
-import styles from './index.module.scss';
+import React from "react";
+import { useSelector } from "react-redux";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import { RootState } from "../../../../stores/types";
+import ConnectWallet from "./ConnectWallet";
+import HeaderSearch from "./HeaderSearch";
+import SelectNetwork from "./SelectNetwork";
+import { HeaderBackground, HeaderBox, HeaderContainer, HeaderMain, HeaderTop, Title } from "./styles";
 
-interface Props { }
-
-const Header: React.FC<Props> = () => {
+const Header: React.FC<RouteComponentProps> = props => {
+  const { onDetailView } = useSelector(({ user }: RootState) => user);
+  const { history } = props;
+  const home = history.location.pathname === "/";
 
   return (
-    <header>
-      <div className={styles.container}>
-        <div className={styles.headerTop}>
-          <NavLink to="/">
-            <img src={LogoIcon} alt="logo" />
-          </NavLink>
-          <div className={styles.headerMenu}>
-            <HeaderMenu />
-            <ConnectWallet />
-          </div>
-        </div>
-        <div className={styles.headerMain}>
-          <h1>Cardano Block Chain Explorer</h1>
-          <HeaderSearch />
-        </div>
-      </div>
-      <ConnectWalletModal />
-    </header>
-  )
+    <HeaderContainer home={home ? 1 : 0}>
+      <HeaderBackground home={home ? 1 : 0} />
+      <HeaderBox home={home ? 1 : 0}>
+        <HeaderMain home={home ? 1 : 0}>
+          <Title home={home ? 1 : 0}>Cardano Blockchain Explorer</Title>
+          <HeaderSearch home={home} />
+        </HeaderMain>
+        <HeaderTop fixed={onDetailView ? 1 : 0}>
+          <SelectNetwork home={home} />
+          <ConnectWallet />
+        </HeaderTop>
+      </HeaderBox>
+    </HeaderContainer>
+  );
+};
 
-}
-
-export default Header;
+export default withRouter(Header);

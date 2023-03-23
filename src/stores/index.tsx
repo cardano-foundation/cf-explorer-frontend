@@ -1,14 +1,29 @@
 import { Store } from "@reduxjs/toolkit";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { applyMiddleware, combineReducers, createStore } from "redux";
-import { persistStore } from "redux-persist";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import { RootState } from "./types";
 import userReducer, { setStoreUser } from "./user";
+import systemReducer, { setStoreSystem } from "./system";
+import toastReducer, { setStoreToast } from "./toast";
 
 let customStore: Store | undefined;
 
 const setStore = (store: Store) => {
   customStore = store;
+};
+
+const persistConfig = {
+  key: "root",
+  storage: storage,
+  whitelist: [],
+};
+
+const userPersistConfig = {
+  key: "user",
+  storage: storage,
+  blacklist: ["onDetailView", "openModal", "modalSignMessage", "modalRegister"],
 };
 
 export const getStore = (): Store<RootState> => {
@@ -19,7 +34,9 @@ export const getStore = (): Store<RootState> => {
 };
 
 const appReducer = combineReducers({
-  user: userReducer,
+  user: persistReducer(userPersistConfig, userReducer),
+  system: systemReducer,
+  toast: toastReducer,
 });
 
 const rootReducer = (state: any, action: any) => appReducer(state, action);
@@ -28,13 +45,15 @@ const middleWares: any[] = [];
 
 const enhancer = composeWithDevTools(applyMiddleware(...middleWares));
 
-export const store = createStore(rootReducer, enhancer);
+const pReducer = persistReducer(persistConfig, rootReducer);
 
-export const persistor = persistStore(store);
+export const store = createStore(pReducer, enhancer);
 
+export const persistor = persistStore(store, {});
 
 setStore(store);
 setStoreUser(store);
+setStoreSystem(store);
+setStoreToast(store);
 
 export default store;
-

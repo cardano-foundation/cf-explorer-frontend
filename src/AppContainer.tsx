@@ -1,25 +1,43 @@
-import React from "react";
-import { Layout } from "antd";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import CustomLayout from "./components/commons/Layout";
 import { RootState } from "./stores/types";
-
+import { useHistory } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+import themes from "./themes";
+import { setOnDetailView } from "./stores/user";
+import { SystemLoader } from "./components/SystemLoader";
 interface Props {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
-
-const AppContainer: React.FC<Props> = (props) => {
+const AppContainer: React.FC<Props> = props => {
+  const { theme } = useSelector(({ user }: RootState) => user);
+  const history = useHistory();
+  const lastPath = useRef(history.location.pathname);
   const { children } = props;
-  const theme = useSelector((state) => (state as RootState).user.theme);
+
+  useEffect(() => {
+    const unlisten = history.listen(() => {
+      window.scrollTo(0, 0);
+      if (lastPath.current !== history.location.pathname) {
+        setOnDetailView(false);
+        lastPath.current = history.location.pathname;
+      }
+    });
+    return () => {
+      unlisten();
+    };
+  }, [history]);
 
   return (
-    <Layout data-theme={theme}>
-      <CustomLayout>
-        {children}
-      </CustomLayout>
-    </Layout>
+    <ThemeProvider theme={themes[theme]}>
+      <SystemLoader />
+      <div data-theme={theme}>
+        <CustomLayout>{children}</CustomLayout>
+      </div>
+    </ThemeProvider>
   );
-}
+};
 
 export default AppContainer;

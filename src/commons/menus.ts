@@ -1,65 +1,76 @@
+import { FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons/fa";
+import { IconType } from "react-icons/lib";
+import { BlockChainMenuIcon, BrowseIcon, DelegatePoolMenuIcon, MediumIcon, ResourcesIcon } from "./resources";
+import { routers } from "./routers";
 
-export const menus = [
-    { title: "DID", href: "https://fb.me" },
-    { title: "Supply Chain", href: "https://fb.me" },
-    {
-        title: "Blockchain",
-        mega: true,
-        children: [
-            {
-                title: "Tools",
-                children: [
-                    { title: "Token Registry", href: "/Token-Registry" },
-                    { title: "Daedalous Wallet", href: "/Daedalous-Wallet" },
-                    { title: "Cardano RTView", href: "/Cardano-RTView" },
-                    { title: "...", href: "/..." },
-                    { title: "...", href: "/..." }
-                ]
-            },
-            {
-                title: "Documents",
-                children: [
-                    { title: "Stakepool", href: "/Stakepool" },
-                    { title: "About us", href: "/About-us" },
-                    { title: "...", href: "/..." },
-                    { title: "...", href: "/..." }
-                ]
-            },
-            {
-                title: "Developer",
-                children: [
-                    { title: "Ouroboros Protocol", href: "/Ouroboros-Protocol" },
-                    { title: "Cardano Nodes", href: "/Cardano-Nodes" },
-                    { title: "Github", href: "https://github.com" },
-                    { title: "Developer Tools", href: "/Developer-Tools" }
-                ]
-            }
-        ]
-    },
-    {
-        title: "Resource",
-        children: [
-            { title: "Charts and Stats", href: "/Charts-and-Stats" },
-            { title: "Top Statsitics", href: "/Top-Statsitics" },
-            { title: "Developer API", href: "/Developer-API" },
-            { title: "Builder Tools", href: "/Builder-Tools" },
-            { title: "Project Showcase", href: "/Project-Showcase" }
-        ]
-    },
-    {
-        title: "Delegate Pools",
-        children: [
-            { title: "Delegation Pools", href: "/Delegation-Pools" },
-            { title: "Stake key registration", href: "/Stake-key-registration" },
-            { title: "Pool Registration", href: "/Pool-Registration" }
-        ]
-    },
-    {
-        title: "More",
-        children: [
-            { title: "Cardano Mainet", href: "/Cardano-Mainet" },
-            { title: "Cardano Testnet", href: "/Cardano-Testnet" },
-            { title: "Cardano Preview Testnet", href: "/Cardano-Preview-Testnet" }
-        ]
-    },
+interface Menu {
+  title: string;
+  href?: string;
+  mega?: boolean;
+  children?: Menu[];
+  icon?: string;
+  tooltip?: string;
+}
+interface Social {
+  title: string;
+  href: string;
+  icon: IconType | string;
+}
+export const menus: Menu[] = [
+  {
+    title: "Blockchain",
+    icon: BlockChainMenuIcon,
+    children: [
+      { title: "Epoch", href: routers.EPOCH_LIST },
+      { title: "Blocks", href: routers.BLOCK_LIST },
+      { title: "Transactions", href: routers.TRANSACTION_LIST },
+      { title: "Tokens", href: "/tokens" },
+      { title: "Top Delegators", href: routers.TOP_DELEGATOR },
+      { title: "Top Addresses", href: "/addresses" },
+      { title: "Contracts", href: routers.CONTRACT_LIST },
+    ],
+  },
+  {
+    title: "Delegate Pools",
+    icon: DelegatePoolMenuIcon,
+    children: [
+      { title: "Delegation Pools", href: routers.DELEGATION_POOLS },
+      { title: "Stake key registration", href: routers.STAKE_LIST.replace(":poolType?", "registration") },
+      { title: "Pool Registration", href: "/registration-pools" },
+    ],
+  },
+];
+
+export const socials: Social[] = [
+  { href: "https://www.linkedin.com/company/cardano-foundation/", title: "LinkedIn", icon: FaLinkedinIn },
+  { href: "https://medium.com/@cardano.foundation", title: "Medium", icon: MediumIcon },
+  { href: "https://t.me/CardanoAnnouncements", title: "Telegram", icon: FaTelegramPlane },
+  { href: "https://twitter.com/Cardano_CF", title: "Twitter", icon: FaTwitter },
+  { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube", icon: FaYoutube },
+];
+
+export const footerMenus: Menu[] = [
+  {
+    title: "Browse",
+    icon: BrowseIcon,
+    children: [
+      { href: "https://cardanofoundation.org/en/about-us/", title: "About Us" },
+      { href: "https://cardanofoundation.org/en/contact-us/", title: "Contact Us" },
+      { href: "https://github.com/cardano-foundation", title: "Github" },
+      { href: "https://docs.cardano.org/en/latest/", title: "Documentation" },
+      { href: "https://cardanofoundation.org/en/news", title: "News and Blog" },
+    ],
+  },
+  {
+    title: "Resources",
+    icon: ResourcesIcon,
+    children: [
+      { href: "https://tutorials.cardanoacademy.io/", title: "Academy" },
+      { href: "https://developers.cardano.org/tools/", title: "Builder tools" },
+      { href: "https://cardanocrowd.com/dapps", title: "Dapps" },
+      { href: "https://cardanocrowd.com/ico", title: "ICO" },
+      { href: "https://cardanocrowd.com/development", title: "Development" },
+      { href: "https://cardano.org/enterprise/", title: "Project" },
+    ],
+  },
 ];

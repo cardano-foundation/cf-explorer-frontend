@@ -1,0 +1,26 @@
+@import "../../../themes/variable.scss";
+
+.wrapper {
+  .alignCenter {
+    @include flex-center-center;
+    .link {
+      font-family: var(--font-family-text) !important;
+      color: var(--color-blue) !important;
+      display: flex;
+      align-items: center;
+      width: max-content;
+    }
+    .icon {
+      margin-left: 8px;
+    }
+  }
+  .transaction {
+    color: var(--color-red);
+    display: flex;
+    align-items: center;
+  }
+  .img {
+    display: block;
+    padding-left: 8px;
+  }
+}

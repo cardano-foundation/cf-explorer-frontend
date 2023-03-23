@@ -1,14 +1,16 @@
 interface Block {
-  slot: string;
-  blockId: string;
-  createdAt: string;
-  transactions: number;
-  fees: number;
-  output: number;
+  blockNo: number;
+  hash: string;
+  slotLeader: string;
+  time: string;
+  totalFees: number;
+  totalOutput: number;
+  txCount: number;
 }
 
 type BlockDetail = Block & {
-  slotLeaded: string;
-  transactionFees: string;
-  totalOutput: string;
+  epochNo: number;
+  epochSlotNo: number;
+  slotNo: number;
+  totalSlot: number;
 };

@@ -1,141 +1,120 @@
-import { useMemo, useRef, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import useFetch from '../../commons/hooks/useFetch';
-import AIcon from '../../commons/resources/images/AIcon.png';
-import { checkStatus } from '../../commons/utils/helper';
-import Card from '../../components/commons/Card';
-import Table, { Column } from '../../components/commons/Table';
-import styles from './index.module.scss';
-
-interface IDataEpoch {
-  no: number;
-  status: string;
-  blkCount: number;
-  endTime: string;
-  startTime: string;
-  outSum: number;
-  txCount: number;
-}
-
-interface IEpoch {
-  data: IDataEpoch[];
-  currentPage: number;
-  totalItems: number;
-  totalPages: number;
-}
-
-const styleFont700 = {
-  fontSize: '17px',
-  fontWeight: 700,
-  color: '#273253',
-};
-
-const styleFont400 = {
-  fontSize: '17px',
-  fontWeight: 400,
-  color: '#273253',
-};
-const columns: Column<IDataEpoch>[] = [
-  {
-    title: '#',
-    key: '#',
-    minWidth: '100px',
-    render: r => {
-      return <span style={styleFont400}>{r.no}</span>;
-    },
-  },
-  {
-    title: 'Status',
-    key: 'status',
-    minWidth: '100px',
-    render: r => {
-      return <span style={checkStatus(r.status)}>{r.status}</span>;
-    },
-  },
-  {
-    title: 'Start date',
-    key: 'startTime',
-    minWidth: '100px',
-    render: r => {
-      return <span style={styleFont400}>{r.startTime}</span>;
-    },
-  },
-  {
-    title: 'End date',
-    key: 'endTime',
-    minWidth: '100px',
-    render: r => {
-      return <span style={styleFont400}>{r.endTime}</span>;
-    },
-  },
-  {
-    title: 'Blocks',
-    key: 'blkCount',
-    minWidth: '100px',
-    render: r => {
-      return (
-        <div>
-          <img style={{ marginRight: '8px' }} src={AIcon} alt="a icon" />
-          <span style={styleFont700}>{r.blkCount}</span>
-        </div>
-      );
-    },
-  },
-  {
-    title: 'Output',
-    key: 'outSum',
-    minWidth: '100px',
-    render: r => {
-      return (
-        <div>
-          <img style={{ marginRight: '8px' }} src={AIcon} alt="a icon" />
-          <span style={styleFont700}>{r.outSum}</span>
-        </div>
-      );
-    },
-  },
-];
+import { stringify } from "qs";
+import { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import useFetchList from "../../commons/hooks/useFetchList";
+import { AIcon } from "../../commons/resources";
+import { EPOCH_STATUS } from "../../commons/utils/constants";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, numberWithCommas } from "../../commons/utils/helper";
+import { details } from "../../commons/routers";
+import Card from "../../components/commons/Card";
+import Table, { Column } from "../../components/commons/Table";
+import { Blocks, StyledContainer, Output, Status, StyledColorBlueDard, Index } from "./styles";
+import { setOnDetailView } from "../../stores/user";
+import DetailViewEpoch from "../../components/commons/DetailView/DetailViewEpoch";
+import { useWindowSize } from "react-use";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { Box } from "@mui/material";
+import { API } from "../../commons/utils/api";
 
 const Epoch: React.FC = () => {
-  const [limit] = useState(10);
+  const [epoch, setEpoch] = useState<number | null>(null);
+  const [selected, setSelected] = useState<number | null>(null);
+  const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
-  const ref = useRef<HTMLDivElement>(null);
-  const page = useMemo(() => {
-    const page = new URLSearchParams(search).get('page') || 1;
-    return Number(page);
-  }, [search]);
+  const pageInfo = getPageInfo(search);
+  const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, pageInfo);
 
-  const { data, refesh } = useFetch<IEpoch>(`epoch/list?page=${page}&size=${limit}`);
+  const columns: Column<IDataEpoch>[] = [
+    {
+      title: "#",
+      key: "#",
+      minWidth: "50px",
+      render: r => <Index>{numberWithCommas(r.no)}</Index>,
+    },
+    {
+      title: "Status",
+      key: "status",
+      minWidth: "150px",
+      render: r => <Status status={r.status.toLowerCase()}>{EPOCH_STATUS[r.status]}</Status>,
+    },
+    {
+      title: "Blocks",
+      key: "blkCount",
+      minWidth: "100px",
+      render: r => <Blocks>{r.blkCount}</Blocks>,
+    },
+    {
+      title: "Output",
+      key: "outSum",
+      minWidth: "100px",
+      render: r => (
+        <Output>
+          {formatADAFull(r.outSum)}
+          <img src={AIcon} alt="ADA Icon" />
+        </Output>
+      ),
+    },
+    {
+      title: "Start date",
+      key: "startTime",
+      minWidth: "100px",
+      render: r => <StyledColorBlueDard>{formatDateTimeLocal(r.startTime || "")}</StyledColorBlueDard>,
+    },
+    {
+      title: "End date",
+      key: "endTime",
+      minWidth: "100px",
+      render: r => (
+        <StyledColorBlueDard>
+          {formatDateTimeLocal(r.endTime || "")}
+          {epoch === r.no && (
+            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
+              <MdOutlineKeyboardArrowRight fontSize={30} />
+            </Box>
+          )}
+        </StyledColorBlueDard>
+      ),
+    },
+  ];
 
-  if (!data?.data) return null;
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Epochs List | Cardano Explorer`;
+  }, []);
 
-  const excuteScroll = () => ref.current?.scrollIntoView();
+  const openDetail = (_: any, r: IDataEpoch, index: number) => {
+    if (width > 1023) {
+      setOnDetailView(true);
+      setEpoch(r.no);
+      setSelected(index);
+    } else history.push(details.epoch(r.no));
+  };
 
+  const handleClose = () => {
+    setOnDetailView(false);
+    setEpoch(null);
+    setSelected(null);
+  };
   return (
-    <div className={styles.container} id="epoch" ref={ref}>
-      <Card title={'Epoch'}>
+    <StyledContainer>
+      <Card title={"Epochs"}>
         <Table
-          className={styles.table}
+          {...fetchData}
           columns={columns}
-          data={data?.data}
-          total={{ count: 1000, title: 'Total Transactions' }}
+          total={{ title: "Total Epochs", count: fetchData.total }}
           pagination={{
-            defaultCurrent: page,
-            total: data.totalItems,
-            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
-            size: 'small',
-            pageSizeOptions: [10, 20, 50],
-            pageSize: limit,
-            onChange(page, pageSize) {
-              history.push(`?page=${page}`);
-              excuteScroll();
-              refesh();
-            },
+            ...pageInfo,
+            total: fetchData.total,
+            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+            handleCloseDetailView: handleClose,
           }}
+          onClickRow={openDetail}
+          selected={selected}
         />
       </Card>
-    </div>
+      {epoch !== null && <DetailViewEpoch epochNo={epoch} handleClose={handleClose} callback={fetchData.update} />}
+    </StyledContainer>
   );
 };
 
