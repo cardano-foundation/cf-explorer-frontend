@@ -9,6 +9,7 @@ import { API } from "../../../commons/utils/api";
 import { exchangeADAToUSD, formatADAFull, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import { RootState } from "../../../stores/types";
 import Card from "../../commons/Card";
+import CustomTooltip from "../../commons/CustomTooltip";
 import CardAddress from "../../share/CardAddress";
 import { Logo, LogoEmpty, Pool, StyledAAmount, StyledTextField } from "./styles";
 
@@ -54,27 +55,27 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
                 justifyContent="space-between"
                 width={"100%"}
                 fontSize={"14px"}
-                padding={1}
-                paddingLeft={0}
+                padding={0}
+                gap="10px"
+                minHeight="34px"
               >
-                <Box display="flex" alignItems={"center"}>
-                  <Box width={50}>
+                <Box display="flex" alignItems={"center"} overflow="hidden" gap="10px">
+                  <Box>
                     {option?.metadata?.logo ? (
                       <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt="icon" />
                     ) : (
                       <LogoEmpty />
                     )}
                   </Box>
-                  <Box>
-                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="200px">
-                      {option.displayName}
+                  <CustomTooltip title={`${option.displayName} #${option.name || option.fingerprint}`}>
+                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="150px">
+                      {option.displayName} #{option.name || option.fingerprint}
                     </Box>
-                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="200px">
-                      #{option.name || option.fingerprint}
-                    </Box>
-                  </Box>
+                  </CustomTooltip>
                 </Box>
-                <Box fontWeight={"bold"}>{numberWithCommas(option.quantity)}</Box>
+                <Box fontWeight={"bold"} flex={1} textAlign="right">
+                  {numberWithCommas(option.quantity)}
+                </Box>
               </Box>
             </li>
           )}

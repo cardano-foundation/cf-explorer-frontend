@@ -1,4 +1,4 @@
-import { Paper, TextField } from "@mui/material";
+import { alpha, TextField } from "@mui/material";
 import { styled, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -68,15 +68,19 @@ export const StyledTextField = styled(TextField)`
   }
 `;
 
-export const WrapPaperDropdown = styled(Paper)`
-  border-radius: 8px;
-  box-shadow: ${props => props.theme.shadow.dropdown};
-  padding: 8px 0;
-  & > .MuiAutocomplete-listbox {
-    padding: 0px;
-  }
-`;
-
 export const Option = styled("li")<{ active: number }>(({ theme, active }) => ({
   background: active ? theme.palette.green[600_10] : theme.palette.background.paper,
 }));
+
+export const Logo = styled("img")`
+  width: 25px;
+  height: 25px;
+  object-fit: cover;
+`;
+export const LogoEmpty = styled(Box)`
+  width: 25px;
+  height: 25px;
+  background: ${props => alpha(props.theme.palette.common.white, 0.6)};
+  border-radius: 50%;
+  border: 1px solid ${props => props.theme.palette.border.main};
+`;
