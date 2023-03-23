@@ -72,7 +72,7 @@ const BlockList = () => {
           {formatADAFull(r.totalOutput)}
           <img src={AIcon} alt="ADA Icon" />
           {block === (r.blockNo || r.hash) && (
-            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
+            <Box position={"absolute"} right="-10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
               <MdOutlineKeyboardArrowRight fontSize={30} />
             </Box>
           )}
