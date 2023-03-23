@@ -143,6 +143,7 @@ export const ItemTitle = styled("h5")`
 export const Time = styled("h5")`
   font-size: var(--font-size-text-x-small);
   display: flex;
+  line-height: 1;
   justify-content: flex-start;
   align-items: center;
   gap: 6px;
