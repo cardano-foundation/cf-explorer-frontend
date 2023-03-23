@@ -19,7 +19,7 @@ type TRowItem = {
   value?: string;
   errorMsg?: string;
   action: () => void;
-  onChangeValue: (event: any) => void;
+  onChangeValue: (event: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   disabledButton?: boolean;
   field: "email" | "username" | "wallet";
@@ -84,11 +84,7 @@ const AccountSettingTab: React.FC = () => {
         }
         payload = { email: email.value };
       } else {
-        if (
-          (username.value?.length || 0) < 5 ||
-          (username?.value?.length || 0) > 30 ||
-          alphaNumeric.test(username.value || "")
-        )
+        if ((username.value?.length || 0) < 5 || (username?.value?.length || 0) > 30)
           return toast.error(
             "Username has to be from 5 to 30 characters in length, only alphanumeric characters allowed"
           );
@@ -129,6 +125,7 @@ const AccountSettingTab: React.FC = () => {
         value={username.value}
         errorMsg={username.errorMsg}
         onChangeValue={event => {
+          if (alphaNumeric.test(event.target.value || "")) return event.preventDefault();
           if (event.target.value) {
             setUsername({ value: event.target.value, errorMsg: "" });
           } else {
