@@ -6,19 +6,12 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { AIcon, EmptyIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
-import {
-  exchangeADAToUSD,
-  formatADAFull,
-  formatPrice,
-  getShortHash,
-  getShortWallet,
-  numberWithCommas,
-} from "../../../commons/utils/helper";
+import { exchangeADAToUSD, formatADAFull, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import { RootState } from "../../../stores/types";
 import Card from "../../commons/Card";
 import CustomTooltip from "../../commons/CustomTooltip";
 import CardAddress from "../../share/CardAddress";
-import { Logo, LogoEmpty, Pool, StyledAAmount, StyledTextField, WrapPaperDropdown } from "./styles";
+import { Logo, LogoEmpty, Pool, StyledAAmount, StyledTextField } from "./styles";
 
 interface Props {
   data: WalletAddress | null;

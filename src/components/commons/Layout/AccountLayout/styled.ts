@@ -32,8 +32,10 @@ export const StyledUsername = styled(Box)`
   text-overflow: ellipsis;
 `;
 
-export const StyledButton = styled(Button)(() => ({
+export const StyledButton = styled("span")(({ theme }) => ({
   textTransform: "lowercase",
+  cursor: "pointer",
+  color: theme.palette.primary.main,
   padding: 0,
   minWidth: "unset",
   lineHeight: 1,
