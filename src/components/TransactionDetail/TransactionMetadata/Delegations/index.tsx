@@ -25,7 +25,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
               <Box>
                 <span>From: </span>
                 <CustomTooltip title={item.address}>
-                  <AddressLink to={details.address(item.address)}>{getShortWallet(item.address || "")}</AddressLink>
+                  <AddressLink to={details.stake(item.address)}>{getShortWallet(item.address || "")}</AddressLink>
                 </CustomTooltip>
                 <CopyButton text={item.address || ""} />
               </Box>

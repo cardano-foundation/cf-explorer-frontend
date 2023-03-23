@@ -5,7 +5,6 @@ import { BoxRaised } from "../../commons/BoxRaised";
 export const LatestStoriesContainer = styled(Box)`
   text-align: center;
   padding: 1rem 0px;
-  margin-bottom: 30px;
 `;
 
 export const Header = styled(Box)`
