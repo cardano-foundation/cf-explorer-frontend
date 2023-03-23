@@ -18,11 +18,18 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   const { sidebar, onDetailView } = useSelector(({ user }: RootState) => user);
   const scrollElement = React.useRef<HTMLElement | null>(null);
   const history = useHistory();
+  const lastPath = React.useRef<string>(history.location.pathname);
 
   React.useEffect(() => {
-    scrollElement.current?.scrollTo(0, 0);
-    setOnDetailView(false);
-  }, [history.location.pathname]);
+    const unlisten = history.listen(() => {
+      lastPath.current = history.location.pathname;
+      scrollElement.current?.scrollTo(0, 0);
+      setOnDetailView(false);
+    });
+    return () => {
+      unlisten();
+    };
+  }, [history]);
 
   const handleToggle = () => setSidebar(!sidebar);
 
