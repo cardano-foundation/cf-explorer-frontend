@@ -1,11 +1,11 @@
 import React from "react";
 import { Tab, Box, useTheme } from "@mui/material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { TabContext, TabPanel } from "@mui/lab";
 import { ReactComponent as DelegationHistoryIcon } from "../../../commons/resources/icons/delegationHistory.svg";
 import { ReactComponent as StakeKeyHistoryIcon } from "../../../commons/resources/icons/stateKeyHistory.svg";
 import { ReactComponent as WithdrawHistoryIcon } from "../../../commons/resources/icons/withdrawHistory.svg";
 import { ReactComponent as InstantaneousHistoryIcon } from "../../../commons/resources/icons/instantaneousHistory.svg";
-import { TitleTab } from "./styles";
+import { StyledTabList, TitleTab } from "./styles";
 import { useHistory, useParams } from "react-router-dom";
 import DelegationHistoryTab from "./Tabs/DelegationHistoryTab";
 import StakeHistoryTab from "./Tabs/StakeHistoryTab";
@@ -58,7 +58,10 @@ const StakeTab = () => {
     <Box mt={4}>
       <TabContext value={tabActive}>
         <Box sx={{ borderBottom: theme => `1px solid ${theme.palette.border.secondary}` }}>
-          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}>
+          <StyledTabList
+            onChange={handleChange}
+            TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
+          >
             {tabs.map(({ icon: Icon, key, label }) => (
               <Tab
                 key={key}
@@ -74,7 +77,7 @@ const StakeTab = () => {
                 }
               />
             ))}
-          </TabList>
+          </StyledTabList>
         </Box>
         {tabs.map(item => (
           <TabPanel key={item.key} value={item.key} style={{ padding: 0 }}>
