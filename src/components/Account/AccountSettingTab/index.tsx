@@ -19,7 +19,7 @@ type TRowItem = {
   value?: string;
   errorMsg?: string;
   action: () => void;
-  onChangeValue: (event: any) => void;
+  onChangeValue: (event: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   disabledButton?: boolean;
   field: "email" | "username" | "wallet";
@@ -84,6 +84,10 @@ const AccountSettingTab: React.FC = () => {
         }
         payload = { email: email.value };
       } else {
+        if ((username.value?.length || 0) < 5 || (username?.value?.length || 0) > 30)
+          return toast.error(
+            "Username has to be from 5 to 30 characters in length, only alphanumeric characters allowed"
+          );
         const checkExistUsername = await existUserName({ username: username.value || "" });
         if (checkExistUsername.data) {
           return toast.error("This username existed, please enter another!");
@@ -121,17 +125,13 @@ const AccountSettingTab: React.FC = () => {
         value={username.value}
         errorMsg={username.errorMsg}
         onChangeValue={event => {
+          if (alphaNumeric.test(event.target.value || "")) return event.preventDefault();
           if (event.target.value) {
             setUsername({ value: event.target.value, errorMsg: "" });
           } else {
             setUsername({ value: event.target.value, errorMsg: "Username is required!" });
           }
         }}
-        disabledButton={
-          (username.value && username.value?.length < 5) ||
-          (username.value && username?.value?.length > 30) ||
-          alphaNumeric.test(username.value || "")
-        }
         field="username"
         action={() => onEditInfo("username")}
       />
