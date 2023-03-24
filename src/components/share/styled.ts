@@ -23,21 +23,21 @@ export const StyledInput = styled(InputBase)`
   }
   .MuiInputBase-input {
     padding: 10px 14px;
-    border: 1.5px solid var(--border-color);
+    border: 1.5px solid ${({ theme, error }) => (error ? theme.palette.error.main : theme.palette.border.main)};
     border-radius: var(--border-radius-sm);
     box-sizing: border-box;
   }
 `;
 
 export const StyledHelperText = styled(FormHelperText)`
-  color: var(--color-red);
+  color: ${({ theme }) => theme.palette.error.main};
 `;
 
 export const StyledLabelInput = styled(FormLabel)`
-  color: var(--text-color);
+  color: ${({ theme }) => theme.palette.text.primary};
   font-size: var(--font-size-text-small);
   .MuiFormLabel-asterisk {
-    color: var(--color-red);
+    color: ${({ theme }) => theme.palette.error.main};
   }
 `;
 
