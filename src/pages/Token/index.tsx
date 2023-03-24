@@ -83,7 +83,7 @@ const Tokens: React.FC<ITokenList> = () => {
         <>
           {formatDateTimeLocal(r.createdOn || "")}{" "}
           {JSON.stringify(token) === JSON.stringify(r) && (
-            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
+            <Box position={"absolute"} right="-10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
               <MdOutlineKeyboardArrowRight fontSize={30} />
             </Box>
           )}

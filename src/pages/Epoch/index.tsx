@@ -69,7 +69,7 @@ const Epoch: React.FC = () => {
         <StyledColorBlueDard>
           {formatDateTimeLocal(r.endTime || "")}
           {epoch === r.no && (
-            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
+            <Box position={"absolute"} right="-10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
               <MdOutlineKeyboardArrowRight fontSize={30} />
             </Box>
           )}

@@ -95,7 +95,7 @@ const Stake: React.FC<IStake> = () => {
           </CustomTooltip>
 
           {selected === idx && (
-            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
+            <Box position={"absolute"} right="-10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
               <MdOutlineKeyboardArrowRight fontSize={30} />
             </Box>
           )}
