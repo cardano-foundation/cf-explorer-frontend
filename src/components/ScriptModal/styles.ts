@@ -11,6 +11,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   transform: "translate(-50%, -50%)",
   width: "min(80vw, 550px)",
+  maxHeight: "90vh",
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
   borderRadius: 10,
