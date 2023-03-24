@@ -1,3 +1,4 @@
+import { TabList } from "@mui/lab";
 import { Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -6,7 +7,7 @@ export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => 
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.common.black : "unset",
+  color: active ? theme.palette.common.black : theme.palette.text.hint,
 }));
 
 export const LabelStatus = styled(Box)(({ theme }) => ({
@@ -23,4 +24,10 @@ export const LabelStatus = styled(Box)(({ theme }) => ({
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
   color: ${props => props.theme.palette.secondary.main}!important;
+`;
+
+export const StyledTabList = styled(TabList)`
+  & > div > div {
+    justify-content: space-between;
+  }
 `;
