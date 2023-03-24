@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { Box } from "@mui/material";
+import { Backdrop, Box } from "@mui/material";
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { useSelector } from "react-redux";
 import { WalletIcon } from "../../../../../commons/resources";
@@ -141,6 +141,7 @@ const ConnectWallet: React.FC<Props> = () => {
 
   return (
     <Box position="relative">
+      <Backdrop sx={{ backgroundColor: "unset" }} open={openModal} onClick={() => setOpenModal(false)} />
       <StyledButton type="button" onClick={handleClick}>
         <Image src={WalletIcon} alt="wallet" />
         <Span>Connect Wallet</Span>
