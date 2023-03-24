@@ -123,7 +123,13 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
                 Policy Script
               </Box>
               <Box>
-                <Box display={"flex"} alignItems="center" fontWeight={"bold"} mb={1}>
+                <Box
+                  display={"flex"}
+                  alignItems="center"
+                  fontWeight={"bold"}
+                  mb={1}
+                  color={({ palette }) => palette.common.black}
+                >
                   {data?.displayName || ""}
                   {data?.metadata && data?.metadata?.logo ? (
                     <Box

@@ -2,7 +2,7 @@ import { Box, styled, Button, alpha } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
-  height: "80vh",
+  maxheight: "80vh",
   overflow: "hidden",
   position: "relative",
   top: "50%",

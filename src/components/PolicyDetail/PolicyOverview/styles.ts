@@ -142,7 +142,7 @@ export const ButtonView = styled(Link)(({ theme }) => ({
 }));
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
-  height: "80vh",
+  maxHeight: "80vh",
   overflow: "hidden",
   display: "flex",
   flexDirection: "column",
