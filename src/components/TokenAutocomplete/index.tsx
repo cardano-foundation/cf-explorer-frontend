@@ -29,12 +29,15 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
   const [selected, setSelected] = useState("");
   const [search, setSearch] = useState("");
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
-  const { data, loading } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, { page: 0, size: 10 });
+  const { data, loading, total } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
+    page: 0,
+    size: 10,
+  });
 
   return (
     <Box>
       <Autocomplete
-        options={data.length > 0 ? [...data, "more"] : []}
+        options={total > 10 ? [...data, "more"] : data}
         componentsProps={{ paper: { elevation: 2 } }}
         loading={loading}
         getOptionLabel={option =>
@@ -128,6 +131,12 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
 
   const columns: Column<WalletAddress["tokens"][number]>[] = [
     {
+      title: "#",
+      key: "#",
+      minWidth: "50px",
+      render: (r, index) => numberWithCommas((page - 1) * size + index + 1),
+    },
+    {
       title: "Icon",
       key: "icon",
       minWidth: "50px",
@@ -150,8 +159,8 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
         ),
     },
     {
-      title: "Quantity",
-      key: "quantity",
+      title: "Balance",
+      key: "balance",
       minWidth: "50px",
       render: r => numberWithCommas(r.quantity || 0),
     },
