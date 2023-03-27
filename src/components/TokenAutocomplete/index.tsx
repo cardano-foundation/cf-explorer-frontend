@@ -2,24 +2,34 @@ import { useState } from "react";
 import { Autocomplete, Box, Button, Modal } from "@mui/material";
 import { BiChevronDown } from "react-icons/bi";
 
-import { CloseIcon, EmptyIcon } from "../../commons/resources";
+import { CloseIcon, EmptyIcon, HeaderSearchIcon } from "../../commons/resources";
 import { getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import CustomTooltip from "../commons/CustomTooltip";
-import { ButtonClose, Logo, LogoEmpty, ModalContainer, Option, StyledTextField } from "./styles";
+import {
+  ButtonClose,
+  Image,
+  Logo,
+  LogoEmpty,
+  ModalContainer,
+  Option,
+  SearchContainer,
+  StyledInput,
+  StyledTextField,
+  SubmitButton,
+} from "./styles";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { API } from "../../commons/utils/api";
 import Table, { Column } from "../commons/Table";
 import { AssetName } from "../../pages/Token/styles";
 import { details } from "../../commons/routers";
+import { debounce } from "lodash";
 
 const TokenAutocomplete = ({ address }: { address: string }) => {
   const [openModalToken, setOpenModalToken] = useState(false);
   const [selected, setSelected] = useState("");
-
-  const { data, loading } = useFetchList<WalletAddress["tokens"][number]>(
-    address && API.ADDRESS.TOKENS.replace(":address", address),
-    { page: 0, size: 10 }
-  );
+  const [search, setSearch] = useState("");
+  const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
+  const { data, loading } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, { page: 0, size: 10 });
 
   return (
     <Box>
@@ -30,6 +40,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
         getOptionLabel={option =>
           typeof option === "string" ? "more" : option.displayName || option.name || option.fingerprint
         }
+        onInputChange={debounce((e, value) => setSearch(value), 500)}
         onChange={(e, value) => typeof value !== "string" && setSelected(value?.fingerprint || "")}
         noOptionsText={
           <Box>
@@ -106,11 +117,14 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
 export default TokenAutocomplete;
 
 const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => void; address: string }) => {
-  const [{ page, size }, setPagination] = useState({ page: 0, size: 10 });
-  const { data, ...fetchData } = useFetchList<WalletAddress["tokens"][number]>(
-    address && API.ADDRESS.TOKENS.replace(":address", address),
-    { page, size }
-  );
+  const [{ page, size }, setPagination] = useState({ page: 1, size: 10 });
+  const [value, setValue] = useState("");
+  const [search, setSearch] = useState("");
+  const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
+  const { data, ...fetchData } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
+    page: page - 1,
+    size,
+  });
 
   const columns: Column<WalletAddress["tokens"][number]>[] = [
     {
@@ -151,6 +165,22 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
         <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Roboto", sans-serif '}>
           Token List
         </Box>
+        <SearchContainer mt={2} mb={1}>
+          <StyledInput
+            placeholder="Search tokens"
+            onChange={e => setValue(e.target.value)}
+            value={value}
+            onKeyUp={e => {
+              if (e.key === "Enter") {
+                setSearch(value);
+                setPagination({ page: 1, size: 10 });
+              }
+            }}
+          />
+          <SubmitButton onClick={() => setSearch(value)}>
+            <Image src={HeaderSearchIcon} alt="Search" />
+          </SubmitButton>
+        </SearchContainer>
         <Box>
           <Table
             {...fetchData}
