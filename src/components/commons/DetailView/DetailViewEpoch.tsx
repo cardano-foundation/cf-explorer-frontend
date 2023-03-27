@@ -29,7 +29,7 @@ import {
   DetailLinkIcon,
   DetailLinkRight,
   ViewDetailScroll,
-  StyledViewMore,
+  ViewDetailHeader,
 } from "./styles";
 import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
@@ -41,6 +41,7 @@ import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helpe
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import { API } from "../../../commons/utils/api";
+import ViewAllButton from "../ViewAllButton";
 
 type DetailViewEpochProps = {
   epochNo: number;
@@ -64,14 +65,16 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
   if (!data)
     return (
       <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
+        <ViewDetailHeader>
+          <ViewAllButton tooltipTitle="View Detail" to={details.epoch(epochNo)} />
+          <CustomTooltip title="Close">
+            <CloseButton onClick={handleClose}>
+              <CgClose />
+            </CloseButton>
+          </CustomTooltip>
+        </ViewDetailHeader>
         <ViewDetailContainer>
           <ViewDetailScroll>
-            <StyledViewMore tooltipTitle="View Detail" to={details.epoch(epochNo)} />
-            <CustomTooltip title="Close">
-              <CloseButton onClick={handleClose}>
-                <CgClose />
-              </CloseButton>
-            </CustomTooltip>
             <HeaderContainer>
               <ProgressSkeleton variant="circular" />
             </HeaderContainer>
@@ -135,14 +138,16 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
   return (
     <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
+      <ViewDetailHeader>
+        <ViewAllButton tooltipTitle="View Detail" to={details.epoch(epochNo)} />
+        <CustomTooltip title="Close">
+          <CloseButton onClick={handleClose}>
+            <CgClose />
+          </CloseButton>
+        </CustomTooltip>
+      </ViewDetailHeader>
       <ViewDetailContainer>
         <ViewDetailScroll>
-          <StyledViewMore tooltipTitle="View Detail" to={details.epoch(epochNo)} />
-          <CustomTooltip title="Close">
-            <CloseButton onClick={handleClose}>
-              <CgClose />
-            </CloseButton>
-          </CustomTooltip>
           <HeaderContainer>
             <ProgressCircle
               size={150}
