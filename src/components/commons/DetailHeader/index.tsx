@@ -52,7 +52,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
     if (type === "TRANSACTION") return routers.TRANSACTION_LIST;
     if (type === "BLOCK") return routers.BLOCK_LIST;
     if (type === "EPOCH") return routers.EPOCH_LIST;
-    if (type === "STAKE_KEY") return routers.EPOCH_LIST;
+    if (type === "STAKE_KEY") return routers.STAKE_LIST.replace(":poolType?", "");
     else return "/";
   };
 
@@ -80,7 +80,15 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
         <DetailsInfo container numberOfItems={numberOfItems}>
           {new Array(4).fill(0).map((_, index) => {
             return (
-              <CardItem item xs={12} sm={6} md={4} lg={numberOfItems > 6 ? 3 : true} numberOfItems={numberOfItems} key={index}>
+              <CardItem
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                lg={numberOfItems > 6 ? 3 : true}
+                numberOfItems={numberOfItems}
+                key={index}
+              >
                 <IconSkeleton variant="circular" />
                 <DetailValueSkeleton variant="rectangular" />
                 <ValueCard>

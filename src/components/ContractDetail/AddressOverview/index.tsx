@@ -6,11 +6,12 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { AIcon, EmptyIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
-import { exchangeADAToUSD, formatADAFull, formatPrice, getShortWallet } from "../../../commons/utils/helper";
+import { exchangeADAToUSD, formatADAFull, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import { RootState } from "../../../stores/types";
 import Card from "../../commons/Card";
+import CustomTooltip from "../../commons/CustomTooltip";
 import CardAddress from "../../share/CardAddress";
-import { Pool, StyledAAmount, StyledTextField, WrapPaperDropdown } from "./styles";
+import { Logo, LogoEmpty, Pool, StyledAAmount, StyledTextField } from "./styles";
 
 interface Props {
   data: WalletAddress | null;
@@ -39,34 +40,46 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       value: (
         <Autocomplete
           options={data?.tokens || []}
-          getOptionLabel={option => option.displayName}
+          componentsProps={{ paper: { elevation: 2 } }}
+          getOptionLabel={option => option.displayName || option.name || option.fingerprint}
           noOptionsText={
             <Box>
               <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
             </Box>
           }
           renderOption={(props, option: WalletAddress["tokens"][number]) => (
-            <li {...props} key={option.fingerprint}>
+            <li key={option.fingerprint} {...props}>
               <Box
                 display="flex"
                 alignItems={"center"}
                 justifyContent="space-between"
                 width={"100%"}
                 fontSize={"14px"}
-                padding={1}
-                paddingLeft={0}
+                padding={0}
+                gap="10px"
+                minHeight="34px"
               >
-                <Box display="flex" alignItems={"center"}>
-                  <Box width={50}>
-                    <img src={AIcon} alt="a icon" />
+                <Box display="flex" alignItems={"center"} overflow="hidden" gap="10px">
+                  <Box>
+                    {option?.metadata?.logo ? (
+                      <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt="icon" />
+                    ) : (
+                      <LogoEmpty />
+                    )}
                   </Box>
-                  <Box>{option.displayName}</Box>
+                  <CustomTooltip title={`${option.displayName || ""} #${option.name || option.fingerprint}`}>
+                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="150px">
+                      {option.displayName || ""} #{option.name || option.fingerprint}
+                    </Box>
+                  </CustomTooltip>
                 </Box>
-                <Box fontWeight={"bold"}>{formatPrice(option.quantity)}</Box>
+                <Box fontWeight={"bold"} flex={1} textAlign="right">
+                  {numberWithCommas(option.quantity)}
+                </Box>
               </Box>
             </li>
           )}
-          renderInput={params => <StyledTextField {...params} placeholder="Select Token" />}
+          renderInput={params => <StyledTextField {...params} placeholder="Search Token" />}
           popupIcon={<BiChevronDown />}
         />
       ),

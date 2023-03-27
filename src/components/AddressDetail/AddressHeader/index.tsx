@@ -7,13 +7,14 @@ import { BiChevronDown } from "react-icons/bi";
 import { AIcon } from "../../../commons/resources";
 import CardAddress from "../../share/CardAddress";
 import { details } from "../../../commons/routers";
-import { Option, StyledTextField, WrapPaperDropdown } from "./styles";
+import { Option, StyledTextField, Logo, LogoEmpty } from "./styles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { useEffect, useState } from "react";
 import { API } from "../../../commons/utils/api";
 import BookmarkButton from "../../commons/BookmarkIcon";
 import { EmptyIcon } from "../../../commons/resources";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 interface Props {
   data: WalletAddress | null;
@@ -67,18 +68,27 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
                 justifyContent="space-between"
                 width={"100%"}
                 fontSize={"14px"}
-                padding={1}
-                paddingLeft={0}
+                padding={0}
+                gap="10px"
+                minHeight="34px"
               >
-                <Box display="flex" alignItems={"center"}>
-                  <Box width={50}>
-                    <img src={AIcon} alt="a icon" />
+                <Box display="flex" alignItems={"center"} overflow="hidden" gap="10px">
+                  <Box>
+                    {option?.metadata?.logo ? (
+                      <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt="icon" />
+                    ) : (
+                      <LogoEmpty />
+                    )}
                   </Box>
-                  <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="200px">
-                    {option.displayName} #{option.name || option.fingerprint}
-                  </Box>
+                  <CustomTooltip title={`${option.displayName || ""} #${option.name || option.fingerprint}`}>
+                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="150px">
+                      {option.displayName || ""} #{option.name || option.fingerprint}
+                    </Box>
+                  </CustomTooltip>
                 </Box>
-                <Box fontWeight={"bold"}>{numberWithCommas(option.quantity)}</Box>
+                <Box fontWeight={"bold"} flex={1} textAlign="right">
+                  {numberWithCommas(option.quantity)}
+                </Box>
               </Box>
             </Option>
           )}
