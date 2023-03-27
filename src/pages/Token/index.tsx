@@ -20,6 +20,7 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { Box } from "@mui/material";
 import { API } from "../../commons/utils/api";
+import SelectedIcon from "../../components/commons/SelectedIcon";
 
 interface ITokenList {}
 
@@ -81,12 +82,7 @@ const Tokens: React.FC<ITokenList> = () => {
       minWidth: "150px",
       render: r => (
         <>
-          {formatDateTimeLocal(r.createdOn || "")}{" "}
-          {JSON.stringify(token) === JSON.stringify(r) && (
-            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
-              <MdOutlineKeyboardArrowRight fontSize={30} />
-            </Box>
-          )}
+          {formatDateTimeLocal(r.createdOn || "")} {JSON.stringify(token) === JSON.stringify(r) && <SelectedIcon />}
         </>
       ),
     },

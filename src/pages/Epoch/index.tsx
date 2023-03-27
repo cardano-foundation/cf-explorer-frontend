@@ -15,6 +15,7 @@ import { useWindowSize } from "react-use";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { Box } from "@mui/material";
 import { API } from "../../commons/utils/api";
+import SelectedIcon from "../../components/commons/SelectedIcon";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -68,11 +69,7 @@ const Epoch: React.FC = () => {
       render: r => (
         <StyledColorBlueDard>
           {formatDateTimeLocal(r.endTime || "")}
-          {epoch === r.no && (
-            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
-              <MdOutlineKeyboardArrowRight fontSize={30} />
-            </Box>
-          )}
+          {epoch === r.no && <SelectedIcon />}
         </StyledColorBlueDard>
       ),
     },
