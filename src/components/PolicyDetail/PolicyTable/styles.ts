@@ -9,5 +9,5 @@ export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => 
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.common.black : "unset",
+  color: active ? theme.palette.common.black : theme.palette.grey[300],
 }));

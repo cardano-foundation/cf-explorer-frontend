@@ -17,7 +17,7 @@ import {
 import { SupportedWallets, Wallet } from "../../../types/user";
 import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet";
 import { MdOutlineFileDownload } from "react-icons/md";
-import Toast from "../Toast";
+import useToast from "../../../commons/hooks/useToast";
 
 interface IProps {
   connect: (name: string, onSuccess: () => void, onError: (error: Error) => void) => Promise<any>;
@@ -25,13 +25,8 @@ interface IProps {
 }
 const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage }) => {
   const [walletConnecting, setWalletConnecting] = useState<SupportedWallets | null>(null);
-  const [message, setMessage] = React.useState("");
-  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setMessage("");
-  };
+
+  const toast = useToast();
   const handleClose = () => {
     setOpenModal(false);
   };
@@ -42,14 +37,14 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage })
   };
   const onError = (error: Error) => {
     if (error.name === "EnablementFailedError") {
-      setMessage(
+      toast.error(
         `You are currently connect to ${
           NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()
         }, please switch to  ${NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()}!`
       );
     } else if (error.name === "WalletExtensionNotFoundError") {
     } else {
-      setMessage("Something went wrong!");
+      toast.error("Something went wrong!");
     }
     setWalletConnecting(null);
   };
@@ -96,7 +91,6 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage })
           );
         })}
       </WrapContent>
-      <Toast open={!!message} onClose={handleCloseToast} messsage={message} severity={"error"} />
     </ConnectOption>
   );
 };

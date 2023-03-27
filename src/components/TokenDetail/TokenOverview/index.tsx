@@ -39,7 +39,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   const listItem = [
     {
       title: "Total Supply",
-      value: <Box component={"span"}>{formatADAFull(data?.supply)}</Box>,
+      value: <Box component={"span"}>{numberWithCommas(data?.supply)}</Box>,
       icon: slotIcon,
     },
     { title: "Decimal", icon: decimalIcon, value: data?.metadata?.decimals || 0 },
@@ -123,7 +123,13 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
                 Policy Script
               </Box>
               <Box>
-                <Box display={"flex"} alignItems="center" fontWeight={"bold"} mb={1}>
+                <Box
+                  display={"flex"}
+                  alignItems="center"
+                  fontWeight={"bold"}
+                  mb={1}
+                  color={({ palette }) => palette.common.black}
+                >
                   {data?.displayName || ""}
                   {data?.metadata && data?.metadata?.logo ? (
                     <Box
