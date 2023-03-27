@@ -88,28 +88,14 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
     <DetailHeader
       loading={loading}
       listItem={listOverview}
-      data={
+      type="EPOCH"
+      bookmarkData={`${data?.no || ""}`}
+      title={"Epoch detail"}
+      epoch={
         data && {
-          type: "epoch",
-          header: {
-            title: "Epoch Detail",
-            hash: "",
-            epochStatus: data.status || "",
-          },
-
-          blockDetail: {
-            epochNo: data.no,
-            epochSlot: slot,
-            blockNo: data.blkCount,
-          },
-          totalOutput: {
-            totalOutput: data.outSum || 0,
-            token: "ADA",
-          },
-          progress: {
-            progress,
-            status: data.status,
-          },
+          no: data.no,
+          slot: slot,
+          status: data.status,
         }
       }
     />

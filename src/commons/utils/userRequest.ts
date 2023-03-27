@@ -1,5 +1,4 @@
 import { AxiosResponse } from "axios";
-import { BookMark } from "../../types/bookmark";
 import { UserDataType } from "../../types/user";
 import { authAxios } from "./axios";
 //user
@@ -20,12 +19,12 @@ export const addPrivateNote = (payload: TAddPrivateNote) => authAxios.post("note
 export const editPrivateNote = (payload: TEditPrivateNote) => authAxios.put("note/edit", {}, { params: payload });
 export const removePrivateNote = (noteId: number) => authAxios.delete(`note/delete/${noteId}`);
 //
-export const addBookmark = (payload: BookMark) =>
-  authAxios.post<any, AxiosResponse<BookMark, any>>("/bookmark/add", payload);
-export const addListBookmark = (payload: BookMark[]) =>
+export const addBookmark = (payload: Bookmark) =>
+  authAxios.post<any, AxiosResponse<Bookmark, any>>("/bookmark/add", payload);
+export const addListBookmark = (payload: Bookmark[]) =>
   authAxios.post<any, AxiosResponse<{ passNumber: number; failNumber: number }, any>>("/bookmark/add-list", {
     bookMarks: payload,
   });
 export const deleteBookmark = (id: number) => authAxios.delete("/bookmark/delete/" + id);
 export const getAllBookmarks = (network: string) =>
-  authAxios.get<any, AxiosResponse<BookMark[], any>>("bookmark/find-all-key?network=" + network);
+  authAxios.get<any, AxiosResponse<Bookmark[], any>>("bookmark/find-all-key?network=" + network);

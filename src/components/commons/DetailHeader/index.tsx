@@ -14,9 +14,6 @@ import {
   HeaderTitle,
   HeaderDetailContainer,
   DetailsInfo,
-  DetailsInfoItem,
-  DetailLabel,
-  DetailValue,
   SlotLeader,
   SlotLeaderValue,
   SlotLeaderCopy,
@@ -24,11 +21,10 @@ import {
   DetailLabelSkeleton,
   DetailValueSkeleton,
   IconSkeleton,
-  ProgressSkeleton,
-  SlotLeaderSkeleton,
   SlotLeaderTitle,
   ValueCard,
   CardItem,
+  StakeKeyStatus,
 } from "./styles";
 import { routers } from "../../../commons/routers";
 import Bookmark from "../BookmarkIcon";
@@ -36,21 +32,40 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 
 interface DetailHeaderProps {
+  type: Bookmark["type"];
+  bookmarkData: string;
   loading: boolean;
-  data?: TransactionHeaderDetail | BlockHeaderDetail | EpochHeaderDetail | null;
+  title: number | string;
+  hash?: string;
+  transactionStatus?: keyof typeof TransactionStatus;
+  stakeKeyStatus?: StakeStatus;
+  epoch?: DetailHeaderBlock | null;
   listItem: { icon: string; title: React.ReactNode; value?: React.ReactNode }[];
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = props => {
-  const { data, loading, listItem } = props;
+  const { loading, listItem, epoch, type, title, hash, transactionStatus, bookmarkData, stakeKeyStatus } = props;
+
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+
   const getRouterList = () => {
-    if (data?.type === "transaction") return routers.TRANSACTION_LIST;
-    if (data?.type === "block") return routers.BLOCK_LIST;
-    if (data?.type === "epoch") return routers.EPOCH_LIST;
+    if (type === "TRANSACTION") return routers.TRANSACTION_LIST;
+    if (type === "BLOCK") return routers.BLOCK_LIST;
+    if (type === "EPOCH") return routers.EPOCH_LIST;
+    if (type === "STAKE_KEY") return routers.STAKE_LIST.replace(":poolType?", "");
     else return "/";
   };
-  const { currentEpoch } = useSelector(({ system }: RootState) => system);
-  if (loading || !data) {
+
+  const getHashLabel = () => {
+    if (type === "BLOCK") return "Block ID";
+    if (type === "STAKE_KEY") return "Token ID";
+    if (type === "POOL") return "Pool ID";
+  };
+
+  const hashLabel = getHashLabel();
+
+  const numberOfItems = listItem.length;
+  if (loading) {
     return (
       <HeaderDetailContainer>
         <BackButton to={getRouterList()}>
@@ -62,24 +77,24 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
             <HeaderTitleSkeleton variant="rectangular" />
           </HeaderTitle>
         </HeaderContainer>
-        <SlotLeader>
-          <SlotLeaderSkeleton variant="rectangular" />
-        </SlotLeader>
-        <DetailsInfo container>
-          <DetailsInfoItem item xs={12} sm center={1}>
-            <ProgressSkeleton variant="circular" />
-          </DetailsInfoItem>
+        <DetailsInfo container numberOfItems={numberOfItems}>
           {new Array(4).fill(0).map((_, index) => {
             return (
-              <DetailsInfoItem key={index} item xs={12} sm>
+              <CardItem
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                lg={numberOfItems > 6 ? 3 : true}
+                numberOfItems={numberOfItems}
+                key={index}
+              >
                 <IconSkeleton variant="circular" />
-                <DetailLabel>
-                  <DetailValueSkeleton variant="rectangular" />
-                </DetailLabel>
-                <DetailValue>
+                <DetailValueSkeleton variant="rectangular" />
+                <ValueCard>
                   <DetailLabelSkeleton variant="rectangular" />
-                </DetailValue>
-              </DetailsInfoItem>
+                </ValueCard>
+              </CardItem>
             );
           })}
         </DetailsInfo>
@@ -87,80 +102,67 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
     );
   }
 
-  const { header, blockDetail } = data;
-  const bookmarkData: { [key: string]: { keyword: string; type: "EPOCH" | "BLOCK" | "TRANSACTION" } } = {
-    epoch: {
-      keyword: `${blockDetail?.epochNo}`,
-      type: "EPOCH",
-    },
-    block: {
-      keyword: `${blockDetail?.blockNo}`,
-      type: "BLOCK",
-    },
-    transaction: {
-      keyword: header?.hash,
-      type: "TRANSACTION",
-    },
-  };
-  const multiRow = listItem.length > 6 ? 3 : 0;
-
   return (
     <HeaderDetailContainer>
-      <Box display={"flex"} justifyContent="space-between" flexWrap={"wrap"}>
+      <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap={"wrap"}>
         <Box>
           <BackButton to={getRouterList()}>
             <HiArrowLongLeft />
             <BackText>Back</BackText>
           </BackButton>
           <HeaderContainer>
-            <HeaderTitle>{header.title}</HeaderTitle>
-            <Bookmark {...bookmarkData[data?.type]} />
-            {header.status && <HeaderStatus status={header.status}>{header.status}</HeaderStatus>}
-            {header.epochStatus && (
-              <HeaderStatus status={header.epochStatus}>{EPOCH_STATUS[header.epochStatus]}</HeaderStatus>
-            )}
+            <HeaderTitle>{title}</HeaderTitle>
+            <Bookmark type={type} keyword={bookmarkData} />
+            {transactionStatus && <HeaderStatus status={transactionStatus}>{transactionStatus}</HeaderStatus>}
+            {epoch?.status && <HeaderStatus status={epoch.status}>{EPOCH_STATUS[epoch.status]}</HeaderStatus>}
+            {stakeKeyStatus && <StakeKeyStatus status={stakeKeyStatus}>{stakeKeyStatus}</StakeKeyStatus>}
           </HeaderContainer>
-          {header.hash && (
+          {hash && (
             <SlotLeader>
-              {header.slotLeader && (
-                <SlotLeaderTitle>{data.type === "block" ? "Block ID:" : "Slot leader:"}</SlotLeaderTitle>
-              )}{" "}
-              <SlotLeaderValue>{header.hash}</SlotLeaderValue>
-              <SlotLeaderCopy text={header.hash} />
+              {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
+              <SlotLeaderValue>{hash}</SlotLeaderValue>
+              <SlotLeaderCopy text={hash} />
             </SlotLeader>
           )}
         </Box>
-        <Box>
-          <ProgressCircle
-            size={120}
-            pathWidth={8}
-            percent={
-              currentEpoch && blockDetail.epochNo < currentEpoch?.no
-                ? 100
-                : ((blockDetail.epochSlot || 0) / MAX_SLOT_EPOCH) * 100
-            }
-          >
-            <EpochNumber>{blockDetail?.epochNo}</EpochNumber>
-            <EpochText>Epoch</EpochText>
-          </ProgressCircle>
-        </Box>
+        {epoch ? (
+          <Box>
+            <ProgressCircle
+              size={100}
+              pathWidth={8}
+              percent={
+                currentEpoch && (epoch?.no || 0) < currentEpoch?.no ? 100 : ((epoch?.slot || 0) / MAX_SLOT_EPOCH) * 100
+              }
+            >
+              <EpochNumber>{epoch?.no}</EpochNumber>
+              <EpochText>Epoch</EpochText>
+            </ProgressCircle>
+          </Box>
+        ) : (
+          ""
+        )}
       </Box>
-
-      {listItem && (
-        <DetailsInfo container multiRow={multiRow}>
-          {listItem?.map((item, idx) => {
-            return (
-              <CardItem item xs={12} sm={6} md={4} lg={multiRow || true} multiRow={multiRow} key={idx}>
-                <Box>
-                  <img src={item.icon} alt="" height={20} />
-                </Box>
-                <Box my={1}>{item.title}</Box>
-                <ValueCard>{item.value}</ValueCard>
-              </CardItem>
-            );
-          })}
-        </DetailsInfo>
-      )}
+      <DetailsInfo container numberOfItems={numberOfItems}>
+        {listItem.map((item, index) => {
+          return (
+            <CardItem
+              item
+              xs={12}
+              sm={6}
+              md={listItem.length === 4 ? 3 : 4}
+              lg={numberOfItems > 6 ? 3 : true}
+              numberOfItems={numberOfItems}
+              key={index}
+            >
+              <Box>
+                <img src={item.icon} alt="" height={20} />
+              </Box>
+              <Box my={1}>{item.title}</Box>
+              <ValueCard>{item.value}</ValueCard>
+            </CardItem>
+          );
+        })}
+      </DetailsInfo>
     </HeaderDetailContainer>
   );
 };

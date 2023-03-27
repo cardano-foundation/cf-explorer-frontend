@@ -1,10 +1,10 @@
-import { NETWORK_TYPES } from "../commons/utils/constants";
+declare type NETWORK_TYPES = import("../commons/utils/constants").NETWORK_TYPES;
 
-interface BookMark {
+declare interface Bookmark {
   createdDate?: string;
   id?: number;
   keyword: string;
-  type: "BLOCK" | "EPOCH" | "TRANSACTION" | "ADDRESS" | "POOL" | "STAKE_KEY";
+  type: "BLOCK" | "EPOCH" | "TRANSACTION" | "ADDRESS" | "POOL" | "STAKE_KEY" | "TOKEN";
   urlPage?: string;
-  network: NETWORK_TYPES[keyof NETWORK_TYPES];
+  network: NETWORK_TYPES;
 }
