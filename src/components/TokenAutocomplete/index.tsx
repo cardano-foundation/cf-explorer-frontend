@@ -136,8 +136,8 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
         ),
     },
     {
-      title: "Quanlity",
-      key: "icon",
+      title: "Quantity",
+      key: "quantity",
       minWidth: "50px",
       render: r => numberWithCommas(r.quantity || 0),
     },
