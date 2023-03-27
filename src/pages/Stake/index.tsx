@@ -15,6 +15,7 @@ import { setOnDetailView } from "../../stores/user";
 import { StyledContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
 import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
+import SelectedIcon from "../../components/commons/SelectedIcon";
 
 interface IStake {}
 
@@ -94,11 +95,7 @@ const Stake: React.FC<IStake> = () => {
             <StyledLink to={details.stake(r.stakeKey)}>{getShortWallet(r.stakeKey)}</StyledLink>
           </CustomTooltip>
 
-          {selected === idx && (
-            <Box position={"absolute"} right="-10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
-              <MdOutlineKeyboardArrowRight fontSize={30} />
-            </Box>
-          )}
+          {selected === idx && <SelectedIcon />}
         </>
       ),
     },
