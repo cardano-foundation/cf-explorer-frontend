@@ -149,7 +149,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
           <img src={CloseIcon} alt="icon close" />
         </ButtonClose>
         <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Roboto", sans-serif '}>
-          Tokens
+          Token List
         </Box>
         <Box>
           <Table
