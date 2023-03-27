@@ -5,16 +5,31 @@ import Sidebar from "./Sidebar";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Drawer, Layout, ToggleMenu, Main, BackDrop, MainContainer } from "./styles";
 import { useSelector } from "react-redux";
-import { setSidebar } from "../../../stores/user";
+import { setOnDetailView, setSidebar } from "../../../stores/user";
 import { RootState } from "../../../stores/types";
 import CustomTooltip from "../CustomTooltip";
 import ToastContainer from "./ToastContainer";
+import { useHistory } from "react-router-dom";
 
 interface Props {
   children: React.ReactNode;
 }
 const CustomLayout: React.FC<Props> = ({ children }) => {
   const { sidebar, onDetailView } = useSelector(({ user }: RootState) => user);
+  const scrollElement = React.useRef<HTMLElement | null>(null);
+  const history = useHistory();
+  const lastPath = React.useRef<string>(history.location.pathname);
+
+  React.useEffect(() => {
+    const unlisten = history.listen(() => {
+      lastPath.current = history.location.pathname;
+      scrollElement.current?.scrollTo(0, 0);
+      setOnDetailView(false);
+    });
+    return () => {
+      unlisten();
+    };
+  }, [history]);
 
   const handleToggle = () => setSidebar(!sidebar);
 
@@ -30,7 +45,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
         <Sidebar />
       </Drawer>
       <MainContainer>
-        <Main component="main" open={onDetailView ? 1 : 0} sidebar={sidebar ? 1 : 0}>
+        <Main ref={scrollElement} component="main" open={onDetailView ? 1 : 0} sidebar={sidebar ? 1 : 0}>
           <Header />
           {children}
         </Main>

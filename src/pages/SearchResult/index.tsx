@@ -24,8 +24,8 @@ const Title = styled("h3")`
 const getUrl = (filter?: FilterParams | "all", value?: string): FilterParams | null => {
   if (filter && filter !== "all") return filter;
   if (value) {
-    if (value.search("addr_") === 0) return "addresses";
-    if (value.search("stake_") === 0) return "stakes";
+    if (value.search("addr") === 0) return "addresses";
+    if (value.search("stake") === 0) return "stakes";
     if (value.search("pool") === 0) return "delegations/pool-detail-header";
     if (value.search("asset") === 0) return "tokens";
   }
