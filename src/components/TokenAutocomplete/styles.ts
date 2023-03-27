@@ -112,3 +112,39 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
   padding: 0,
   minWidth: 0,
 }));
+
+export const SearchContainer = styled(Box)`
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  max-width: 250px;
+  background: ${props => props.theme.palette.background.paper};
+  padding: 0 12px;
+  border-radius: 8px;
+  height: 35px;
+  border: 1px solid ${props => alpha(props.theme.palette.primary.main, 0.2)};
+`;
+
+export const StyledInput = styled("input")`
+  border: none;
+  width: 100%;
+  font-size: var(--font-size-text-small);
+  border-radius: 8px;
+`;
+
+export const SubmitButton = styled(Button)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  box-shadow: none;
+  border-radius: 12.5%;
+  min-width: 35px;
+  width: 35px;
+  height: 35px;
+`;
+export const Image = styled("img")`
+  width: 20px;
+  height: 20px;
+`;
