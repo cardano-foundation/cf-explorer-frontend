@@ -24,7 +24,6 @@ const Title = styled("h3")`
 const getUrl = (filter?: FilterParams | "all", value?: string): FilterParams | null => {
   if (filter && filter !== "all") return filter;
   if (value) {
-    if (value.search("addr") === 0) return "addresses";
     if (value.search("stake") === 0) return "stakes";
     if (value.search("pool") === 0) return "delegations/pool-detail-header";
     if (value.search("asset") === 0) return "tokens";
@@ -48,6 +47,8 @@ const createNavigator = (filter?: FilterParams) => {
       return details.address;
     case "delegations/pool-detail-header":
       return details.delegation;
+    case "contract":
+      return details.contract;
     default:
       return null;
   }
@@ -87,15 +88,16 @@ const SearchResult = () => {
       try {
         const urls = filterURLS(value);
         const result = await Promise.any(
-          urls.map(async url => {
+          urls.map(async (url): Promise<{ url: FilterParams; data: any }> => {
             try {
               const res = await defaultAxios.get(`${url}/${value}`);
+              if (url === "addresses" && (res.data as WalletAddress)?.isContract)
+                return Promise.resolve({ url: "contract", data: res.data });
               if (res.data) return Promise.resolve({ url, data: res.data });
             } catch {}
             return Promise.reject();
           })
         );
-        if (!result?.url) setLoading(false);
         const { url, data } = result;
         const navigate = createNavigator(url);
 
