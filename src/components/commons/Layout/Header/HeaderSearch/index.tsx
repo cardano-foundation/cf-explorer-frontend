@@ -1,5 +1,5 @@
 import React, { FormEvent, useState, useEffect } from "react";
-import { Box, Button, SelectChangeEvent } from "@mui/material";
+import { Backdrop, Box, Button, SelectChangeEvent } from "@mui/material";
 import { useHistory, useLocation } from "react-router-dom";
 import { HeaderSearchIcon } from "../../../../../commons/resources";
 import { routers } from "../../../../../commons/routers";
@@ -85,7 +85,6 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
 
   const handleSearch = (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
-
     if (search) {
       history.push(
         `${routers.SEARCH}?${stringify({ search, filter: filterParams || (filter !== "all" ? filter : undefined) })}`
@@ -112,6 +111,7 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
 
   return (
     <Box position={"relative"} component={Form} onSubmit={handleSearch} home={home ? 1 : 0}>
+      <Backdrop sx={{ backgroundColor: "unset" }} open={showOption} onClick={() => setShowOption(false)} />
       <StyledSelect onChange={handleChangeFilter} value={filter} IconComponent={BiChevronDown} home={home ? 1 : 0}>
         {options.map(({ value, label }) => (
           <SelectOption key={value} value={value} home={home ? 1 : 0}>
@@ -128,7 +128,6 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
         placeholder={home ? "Search transactions, address, blocks, epochs, pools..." : "Search ..."}
         onChange={handleChangeSearch}
         disableUnderline
-        onBlur={() => setShowOption(false)}
         onFocus={() => onFocus()}
       />
       <OptionsSearch home={home} show={showOption} value={search} handleSearch={handleSearch} />
