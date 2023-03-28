@@ -26,7 +26,7 @@ import {
   CardItem,
   StakeKeyStatus,
 } from "./styles";
-import { routers } from "../../../commons/routers";
+import { details, routers } from "../../../commons/routers";
 import Bookmark from "../BookmarkIcon";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
@@ -134,7 +134,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
                 currentEpoch && (epoch?.no || 0) < currentEpoch?.no ? 100 : ((epoch?.slot || 0) / MAX_SLOT_EPOCH) * 100
               }
             >
-              <EpochNumber>{epoch?.no}</EpochNumber>
+              <EpochNumber to={details.epoch(epoch.no || 0)}>{epoch?.no}</EpochNumber>
               <EpochText>Epoch</EpochText>
             </ProgressCircle>
           </Box>
