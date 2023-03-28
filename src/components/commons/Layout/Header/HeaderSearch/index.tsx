@@ -128,8 +128,8 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
         placeholder={home ? "Search transactions, address, blocks, epochs, pools..." : "Search ..."}
         onChange={handleChangeSearch}
         disableUnderline
-        // onBlur={() => setShowOption(false)}
-        // onFocus={() => onFocus()}
+        onBlur={() => setShowOption(false)}
+        onFocus={() => onFocus()}
       />
       <OptionsSearch home={home} show={showOption} value={search} handleSearch={handleSearch} />
       <SubmitButton type="submit" home={home ? 1 : 0} disabled={!search}>
