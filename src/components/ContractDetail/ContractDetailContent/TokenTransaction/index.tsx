@@ -33,8 +33,6 @@ const columns: Column<Transactions>[] = [
         <CustomTooltip title={r.hash}>
           <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
         </CustomTooltip>
-        <br />
-        <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
       </>
     ),
   },
