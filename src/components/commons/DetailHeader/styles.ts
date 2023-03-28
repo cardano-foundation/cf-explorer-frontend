@@ -125,9 +125,9 @@ export const DetailsInfo = styled(Grid)<{ numberOfItems: number }>`
   }
 `;
 
-export const EpochNumber = styled(Link)(({ theme }) => ({
+export const EpochNumber = styled(Link)<{ isEpoch: boolean }>(({ theme, isEpoch }) => ({
   fontWeight: "bold",
-  color: `${theme.palette.secondary.main} !important`,
+  color: `${isEpoch ? theme.palette.common.black : theme.palette.secondary.main} !important`,
   margin: 0,
   fontSize: "1.5rem",
 }));

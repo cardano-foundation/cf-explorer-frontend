@@ -134,7 +134,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
                 currentEpoch && (epoch?.no || 0) < currentEpoch?.no ? 100 : ((epoch?.slot || 0) / MAX_SLOT_EPOCH) * 100
               }
             >
-              <EpochNumber to={details.epoch(epoch.no || 0)}>{epoch?.no}</EpochNumber>
+              <EpochNumber isEpoch={type === "EPOCH"} to={details.epoch(epoch.no || 0)}>
+                {epoch?.no}
+              </EpochNumber>
               <EpochText>Epoch</EpochText>
             </ProgressCircle>
           </Box>
