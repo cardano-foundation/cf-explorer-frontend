@@ -21,6 +21,7 @@ import DropdownDetail from "../../commons/DropdownDetail";
 import { BiShowAlt } from "react-icons/bi";
 import { RootState } from "../../../stores/types";
 import CustomTooltip from "../../commons/CustomTooltip";
+import { Link } from "react-router-dom";
 
 interface Props {
   data: Transaction | null;
@@ -186,7 +187,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           </TitleCard>
         </Box>
       ),
-      value: data?.tx?.blockNo || 0,
+      value: <StyledLink to={details.block(data?.tx?.blockNo || 0)}>{data?.tx?.blockNo || 0}</StyledLink>,
     },
     {
       icon: slotIcon,
