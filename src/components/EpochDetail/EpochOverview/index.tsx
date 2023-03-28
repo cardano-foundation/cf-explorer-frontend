@@ -11,16 +11,15 @@ import { TitleCard } from "../../BlockDetail/BlockOverview/styles";
 import { Box } from "@mui/material";
 import { ADAToken } from "../../commons/Token";
 import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
+import { useSelector } from "react-redux";
 interface EpochOverviewProps {
   data: IDataEpoch | null;
   loading: boolean;
 }
 
 const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
-  const slot =
-    data?.status !== "IN_PROGRESS"
-      ? MAX_SLOT_EPOCH
-      : Math.round((data?.startTime && moment().diff(data?.startTime) / 1000) || 0);
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const slot = data && data?.no === currentEpoch?.no ? currentEpoch.slot : MAX_SLOT_EPOCH;
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
 
   const listOverview = [

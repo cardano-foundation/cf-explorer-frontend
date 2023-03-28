@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useLocalStorage } from "react-use";
 import useFetch from "../../commons/hooks/useFetch";
@@ -14,6 +14,7 @@ export const SystemLoader = () => {
   const { data: currentEpoch } = useFetch<EpochCurrentType>(`${API.EPOCH.CURRENT_EPOCH}`);
   const { data: usdMarket, refesh } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=usd`);
   const { data: dataBookmark } = useFetch<string[]>(isLogin ? USER_API.BOOKMARK : "", undefined, true);
+  const startTime = useRef(Date.now());
 
   useEffect(() => {
     const interval = setInterval(() => refesh(), 5000);
@@ -22,12 +23,12 @@ export const SystemLoader = () => {
 
   useEffect(() => {
     if (currentEpoch) {
-      let { no, slot, totalSlot } = currentEpoch;
+      startTime.current = Date.now();
+      const { no, slot, totalSlot } = currentEpoch;
       const interval = setInterval(() => {
-        const isIncreaseEpoch = slot === (totalSlot || MAX_SLOT_EPOCH);
-        slot = isIncreaseEpoch ? 0 : slot + 1;
-        no = isIncreaseEpoch ? no + 1 : no;
-        setCurrentEpoch({ slot, no, totalSlot });
+        const newSlot = slot + Math.floor((Date.now() - startTime.current) / 1000);
+        const newNo = newSlot >= MAX_SLOT_EPOCH ? no + 1 : no;
+        setCurrentEpoch({ slot: newSlot % MAX_SLOT_EPOCH, no: newNo, totalSlot });
       }, 1000);
       return () => clearInterval(interval);
     }
