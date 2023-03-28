@@ -1,6 +1,6 @@
 import React, { FormEvent, useState, useEffect } from "react";
 import { Box, Button, SelectChangeEvent } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { HeaderSearchIcon } from "../../../../../commons/resources";
 import { routers } from "../../../../../commons/routers";
 import { stringify } from "qs";
@@ -17,6 +17,7 @@ import {
   SubmitButton,
   ValueOption,
 } from "./style";
+import { useSelector } from "react-redux";
 
 interface Props {
   home: boolean;
@@ -78,6 +79,9 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
       setShowOption(false);
     }
   }, [search]);
+  useEffect(() => {
+    setValues({ ...intitalValue });
+  }, [history.location.pathname]);
 
   const handleSearch = (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
@@ -96,7 +100,10 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
 
   const handleChangeSearch = (e?: React.ChangeEvent) => {
     setValues({ filter, search: (e?.target as HTMLInputElement)?.value });
-    if (e?.target && (e?.target as HTMLInputElement)?.value && !isNaN(+(e?.target as HTMLInputElement)?.value)) {
+    onFocus((e?.target as HTMLInputElement)?.value);
+  };
+  const onFocus = (newValue?: string) => {
+    if (!isNaN(+(newValue ?? search)) && filter === "all") {
       setShowOption(true);
     } else {
       setShowOption(false);
@@ -121,6 +128,8 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
         placeholder={home ? "Search transactions, address, blocks, epochs, pools..." : "Search ..."}
         onChange={handleChangeSearch}
         disableUnderline
+        // onBlur={() => setShowOption(false)}
+        // onFocus={() => onFocus()}
       />
       <OptionsSearch home={home} show={showOption} value={search} handleSearch={handleSearch} />
       <SubmitButton type="submit" home={home ? 1 : 0} disabled={!search}>
@@ -143,16 +152,26 @@ const OptionsSearch = ({
   value: string;
   handleSearch: (e?: FormEvent, filterParams?: FilterParams) => void;
 }) => {
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const submitSearch = (filter: FilterParams) => {
     handleSearch(undefined, filter);
   };
+
   return (
     <OptionsWrapper display={show ? "block" : "none"} home={home}>
-      <Option onClick={() => submitSearch("epochs")}>
-        Search for an epoch <ValueOption> {value}</ValueOption> <GoChevronRight />
-      </Option>
+      {+value <= (currentEpoch?.no || 0) && (
+        <Option onClick={() => submitSearch("epochs")}>
+          <Box>
+            Search for an epoch <ValueOption> {value}</ValueOption>
+          </Box>
+          <GoChevronRight />
+        </Option>
+      )}
       <Option onClick={() => submitSearch("blocks")}>
-        Search for a block by number <ValueOption>{value}</ValueOption> <GoChevronRight />
+        <Box>
+          Search for a block by number <ValueOption>{value}</ValueOption>
+        </Box>
+        <GoChevronRight />
       </Option>
     </OptionsWrapper>
   );
