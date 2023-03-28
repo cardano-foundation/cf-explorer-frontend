@@ -28,8 +28,8 @@ const ComingSoon: React.FC = () => {
   return (
     <CustomTooltip title="Exciting things incoming">
       <ComingSoonContainer>
-        <Image src={ComingSoonIcon} alt="Coming soon" />
-        <Title>Coming soon</Title>
+        <Image src={ComingSoonIcon} alt="News" />
+        <Title>News</Title>
       </ComingSoonContainer>
     </CustomTooltip>
   );
