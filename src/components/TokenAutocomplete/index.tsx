@@ -67,10 +67,10 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                   <Box
                     component={Button}
                     width="100%"
-                    textTransform={"capitalize"}
+                    textTransform={"inherit"}
                     onClick={() => setOpenModalToken(true)}
                   >
-                    More
+                    See more
                   </Box>
                 </Box>
               </Option>
