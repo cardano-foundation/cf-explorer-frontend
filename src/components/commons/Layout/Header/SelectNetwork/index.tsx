@@ -8,11 +8,11 @@ import { removeAuthInfo } from "../../../../../commons/utils/helper";
 import StorageUtils from "../../../../../commons/utils/storage";
 import { signOut } from "../../../../../commons/utils/userRequest";
 
-const StyledSelect = styled(Select)<{ home: number }>`
+const StyledSelect = styled(Select)`
   font-family: var(--font-family-title);
-  border: 2px solid ${({ home, theme }) => (home ? alpha(theme.palette.common.white, 0.3) : theme.palette.border.hint)};
+  border: 2px solid ${({ theme }) => theme.palette.border.hint};
   background: transparent;
-  color: ${({ home, theme }) => (home ? theme.palette.primary.contrastText : theme.palette.text.secondary)};
+  color: ${({ theme }) => theme.palette.text.secondary};
   border-radius: 8px;
   & > div {
     padding: 6.5px 12px;
@@ -24,16 +24,12 @@ const StyledSelect = styled(Select)<{ home: number }>`
     border: none !important;
   }
   & > svg {
-    color: ${({ home, theme }) => (home ? theme.palette.primary.contrastText : theme.palette.text.secondary)};
+    color: ${({ theme }) => theme.palette.text.secondary};
     font-size: 20px;
   }
 `;
 
-interface Props {
-  home?: boolean;
-}
-
-const SelectNetwork: React.FC<Props> = props => {
+const SelectNetwork: React.FC = () => {
   const { disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
@@ -57,7 +53,7 @@ const SelectNetwork: React.FC<Props> = props => {
   };
 
   return (
-    <StyledSelect onChange={handleChange} value={NETWORK} IconComponent={BiChevronDown} home={props.home ? 1 : 0}>
+    <StyledSelect onChange={handleChange} value={NETWORK} IconComponent={BiChevronDown}>
       {Object.entries(NETWORK_NAMES).map(([value, name]) => (
         <MenuItem key={value} value={value}>
           {name}
