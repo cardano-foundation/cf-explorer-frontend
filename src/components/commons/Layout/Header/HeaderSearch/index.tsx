@@ -103,7 +103,7 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
     onFocus((e?.target as HTMLInputElement)?.value);
   };
   const onFocus = (newValue?: string) => {
-    if (!isNaN(+(newValue ?? search)) && filter === "all") {
+    if (!isNaN(+(newValue ?? search)) && (newValue ?? search) && filter === "all") {
       setShowOption(true);
     } else {
       setShowOption(false);
