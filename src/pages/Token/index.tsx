@@ -74,7 +74,7 @@ const Tokens: React.FC<ITokenList> = () => {
       title: "Total Supply",
       key: "totalSupply",
       minWidth: "150px",
-      render: r => formatADAFull(r?.supply),
+      render: r => numberWithCommas(r?.supply),
     },
     {
       title: "Created",

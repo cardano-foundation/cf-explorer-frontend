@@ -66,6 +66,7 @@ export const TCol = styled("td")<{
   color: ${props => props.theme.palette.text.primary};
   padding: 24px 20px;
 `;
+
 export const TBody = styled("tbody")`
   position: relative;
 `;

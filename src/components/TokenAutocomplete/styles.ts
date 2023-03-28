@@ -1,4 +1,4 @@
-import { alpha, TextField } from "@mui/material";
+import { alpha, Button, TextField } from "@mui/material";
 import { styled, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -83,4 +83,68 @@ export const LogoEmpty = styled(Box)`
   background: ${props => alpha(props.theme.palette.common.white, 0.6)};
   border-radius: 50%;
   border: 1px solid ${props => props.theme.palette.border.main};
+`;
+
+export const ModalContainer = styled(Box)(({ theme }) => ({
+  maxHeight: "80vh",
+  overflow: "hidden",
+  position: "relative",
+  top: "50%",
+  left: "50%",
+  display: "flex",
+  flexDirection: "column",
+  transform: "translate(-50%, -50%)",
+  width: "min(80vw, 650px)",
+  backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(4),
+  borderRadius: 10,
+  textAlign: "left",
+  overflowY: "auto",
+}));
+
+export const ButtonClose = styled(Button)(({ theme }) => ({
+  position: "absolute",
+  top: theme.spacing(2),
+  right: theme.spacing(2),
+  width: 30,
+  height: 30,
+  borderRadius: "50%",
+  padding: 0,
+  minWidth: 0,
+}));
+
+export const SearchContainer = styled(Box)`
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  max-width: 250px;
+  background: ${props => props.theme.palette.background.paper};
+  padding: 0 12px;
+  border-radius: 8px;
+  height: 35px;
+  border: 1px solid ${props => alpha(props.theme.palette.primary.main, 0.2)};
+`;
+
+export const StyledInput = styled("input")`
+  border: none;
+  width: 100%;
+  font-size: var(--font-size-text-small);
+  border-radius: 8px;
+`;
+
+export const SubmitButton = styled(Button)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  box-shadow: none;
+  border-radius: 12.5%;
+  min-width: 35px;
+  width: 35px;
+  height: 35px;
+`;
+export const Image = styled("img")`
+  width: 20px;
+  height: 20px;
 `;

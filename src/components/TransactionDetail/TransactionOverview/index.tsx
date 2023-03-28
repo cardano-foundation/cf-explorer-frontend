@@ -210,31 +210,18 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   ];
   return (
     <DetailHeader
-    listItem={listOverview}
-      data={
+      type="TRANSACTION"
+      bookmarkData={data?.tx.hash || ""}
+      title={"Transaction detail"}
+      hash={data?.tx.hash}
+      transactionStatus={data?.tx.status}
+      epoch={
         data && {
-          type: "transaction",
-          header: {
-            title: "Transaction detail",
-            hash: data.tx.hash,
-            status: data.tx.status,
-          },
-
-          blockDetail: {
-            epochNo: data.tx.epochNo,
-            epochSlot: currentEpoch?.no === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH,
-            maxEpochSlot: data.tx.maxEpochSlot,
-            blockNo: data.tx.blockNo,
-          },
-          confirmation: {
-            confirmation: data.tx.confirmation,
-            status: renderConfirmationTag(),
-          },
-          transactionFees: {
-            fee: data.tx.fee,
-          },
+          no: data.tx.epochNo,
+          slot: currentEpoch?.no === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH,
         }
       }
+      listItem={listOverview}
       loading={loading}
     />
   );

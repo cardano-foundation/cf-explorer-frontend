@@ -45,10 +45,11 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
     } finally {
       disconnect();
       removeAuthInfo();
+      history.push("/");
       setBookmark([]);
       setUsername("");
       setUser({ ...user, userData: {} });
-      window.location.href = "/";
+      window.location.reload();
     }
   };
 

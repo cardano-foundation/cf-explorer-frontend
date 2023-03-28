@@ -34,7 +34,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
       <AnalyticsTitle>Analytics</AnalyticsTitle>
       <GridWrapper container columns={12} spacing={3}>
         <Grid item xs={12} lg={9}>
-          <Box marginBottom={10}>
+          <Box>
             <Button
               active={selected === "epochChart" ? 1 : 0}
               style={{ marginRight: "2px" }}
@@ -105,7 +105,11 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
           </ChartContainer>
         </Grid>
         <Grid item xs={12} lg={3} display="flex" flexDirection="column">
-          <GridRight container columns={12}>
+          <GridRight
+            container
+            columns={12}
+            space={categories.length ? (categories.find(item => item > 99) ? 50 : 36) : 16}
+          >
             <Item item xs={12} sm={6} lg={12}>
               <img src={HighestIcon} alt="heighest icon" />
               <Title>{selected === "epochChart" ? "Highest stake" : "Highest number of delegators"}</Title>
