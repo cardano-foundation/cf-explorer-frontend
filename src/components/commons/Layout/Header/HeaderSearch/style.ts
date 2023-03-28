@@ -88,10 +88,9 @@ export const Image = styled("img")<{ home: number }>`
 
 export const OptionsWrapper = styled(Box)<{ home: boolean }>(({ theme, home }) => ({
   position: "absolute",
-  top: home ? "60px" : "42px",
+  top: home ? "61px" : "44px",
   left: home ? "175px" : "0",
-  width: home ? "max-content" : "380px",
-  maxWidth: home ? "min(80vw, 300px)" : "none",
+  width: home ? "calc(100% - 370px)" : "380px",
   backgroundColor: theme.palette.common.white,
   textAlign: "left",
   padding: "0 10px",
@@ -104,12 +103,11 @@ export const Option = styled(Button)(({ theme }) => ({
   textTransform: "inherit",
   color: theme.palette.common.black,
   width: "100%",
-  justifyContent: "flex-start",
+  justifyContent: "space-between",
   margin: "4px 0",
 }));
 
 export const ValueOption = styled("span")(({ theme }) => ({
   color: theme.palette.primary.main,
-  marginLeft: 4,
   fontWeight: "500",
 }));
