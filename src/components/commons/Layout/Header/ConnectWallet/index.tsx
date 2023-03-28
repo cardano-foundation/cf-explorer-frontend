@@ -157,12 +157,7 @@ const ConnectWallet: React.FC<Props> = () => {
         onSignMessage={onSignMessage}
         loadingSubmit={submitting}
       />
-      <RegisterUsernameModal
-        open={modalRegister}
-        nonce={nonce}
-        signature={signature} 
-        setIsSign={setIsSign}
-      />
+      <RegisterUsernameModal open={modalRegister} nonce={nonce} signature={signature} setIsSign={setIsSign} />
     </Box>
   );
 };

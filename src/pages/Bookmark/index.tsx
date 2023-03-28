@@ -24,11 +24,9 @@ import { deleteBookmark } from "../../commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
 import useToast from "../../commons/hooks/useToast";
 
-type TabKeys = "ADDRESS" | "STAKE_KEY" | "POOL" | "EPOCH" | "BLOCK" | "TRANSACTION";
-
 const Bookmark = () => {
   const [bookmarks, setBookmarks] = useLocalStorage<Bookmark[]>("bookmark", []);
-  const [activeTab, setActiveTab] = useState<TabKeys>("ADDRESS");
+  const [activeTab, setActiveTab] = useState("ADDRESS");
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
@@ -68,7 +66,7 @@ const Bookmark = () => {
       toast.error("Something went wrong!");
     }
   };
-  const handleChange = (event: React.SyntheticEvent, tab: TabKeys) => {
+  const handleChange = (event: React.SyntheticEvent, tab: Bookmark["type"]) => {
     setActiveTab(tab);
     setPage(0);
     setSize(10);

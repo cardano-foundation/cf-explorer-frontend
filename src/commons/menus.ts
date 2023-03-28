@@ -21,22 +21,22 @@ export const menus: Menu[] = [
     title: "Blockchain",
     icon: BlockChainMenuIcon,
     children: [
-      { title: "Epoch", href: routers.EPOCH_LIST },
+      { title: "Epochs", href: routers.EPOCH_LIST },
       { title: "Blocks", href: routers.BLOCK_LIST },
       { title: "Transactions", href: routers.TRANSACTION_LIST },
       { title: "Tokens", href: "/tokens" },
-      { title: "Top Delegators", href: routers.TOP_DELEGATOR },
       { title: "Top Addresses", href: "/addresses" },
-      { title: "Contracts", href: routers.CONTRACT_LIST },
+      { title: "Smart Contracts", href: routers.CONTRACT_LIST },
     ],
   },
   {
-    title: "Delegate Pools",
+    title: "Staking",
     icon: DelegatePoolMenuIcon,
     children: [
-      { title: "Delegation Pools", href: routers.DELEGATION_POOLS },
+      { title: "Pools", href: routers.DELEGATION_POOLS },
       { title: "Stake key registration", href: routers.STAKE_LIST.replace(":poolType?", "registration") },
       { title: "Pool Registration", href: "/registration-pools" },
+      { title: "Top Delegators", href: routers.TOP_DELEGATOR },
     ],
   },
 ];
@@ -65,12 +65,9 @@ export const footerMenus: Menu[] = [
     title: "Resources",
     icon: ResourcesIcon,
     children: [
-      { href: "https://tutorials.cardanoacademy.io/", title: "Academy" },
+      { href: "https://education.cardanofoundation.org/", title: "Blockchain Course" },
       { href: "https://developers.cardano.org/tools/", title: "Builder tools" },
-      { href: "https://cardanocrowd.com/dapps", title: "Dapps" },
-      { href: "https://cardanocrowd.com/ico", title: "ICO" },
-      { href: "https://cardanocrowd.com/development", title: "Development" },
-      { href: "https://cardano.org/enterprise/", title: "Project" },
+      { href: "https://dappsoncardano.com/", title: "Dapps" },
     ],
   },
 ];
