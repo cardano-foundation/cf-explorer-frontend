@@ -13,6 +13,7 @@ export const Header = styled(Box)`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  padding: 0 20px;
   gap: 10px;
 `;
 
@@ -20,6 +21,7 @@ export const Title = styled("h3")`
   position: relative;
   text-align: left;
   margin: 0px;
+  font-size: 1.25rem;
 
   &::after {
     position: absolute;
@@ -97,7 +99,6 @@ export const Image = styled("img")`
   height: 80px;
   min-width: 80px;
   border-radius: 5px;
-  margin-bottom: 15px;
   background-color: ${props => props.theme.palette.background.default};
 `;
 export const Detail = styled(Box)`
@@ -129,7 +130,7 @@ export const ItemTitle = styled("h5")`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
-  font-size: var(--font-size-text-small);
+  font-size: var(--font-size-text-x-small);
   line-height: 1.15;
   margin-top: 0;
   margin-bottom: 5px;

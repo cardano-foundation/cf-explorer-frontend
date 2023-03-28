@@ -26,13 +26,13 @@ import {
   TokenTotalSupply,
   TokenDecimal,
   ViewDetailScroll,
-  StyledViewMore,
   StakeKeyHeader,
   StakeKeyStatus,
   DetailLinkImage,
   StakeKeyLink,
   DelegatedDetail,
   ButtonModal,
+  ViewDetailHeader,
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
@@ -47,6 +47,7 @@ import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import ModalAllAddress from "../../StakeDetail/ModalAllAddress";
 import { API } from "../../../commons/utils/api";
+import ViewAllButton from "../ViewAllButton";
 
 type DetailViewStakeKeyProps = {
   stakeId: string;
@@ -67,14 +68,16 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
   if (!data)
     return (
       <ViewDetailDrawer anchor="right" open={!!stakeId} hideBackdrop variant="permanent">
+        <ViewDetailHeader>
+          <ViewAllButton tooltipTitle="View Detail" to={details.stake(stakeId)} />
+          <CustomTooltip title="Close">
+            <CloseButton onClick={handleClose}>
+              <CgClose />
+            </CloseButton>
+          </CustomTooltip>
+        </ViewDetailHeader>
         <ViewDetailContainer>
           <ViewDetailScroll>
-            <StyledViewMore tooltipTitle="View Detail" to={details.stake(stakeId)} />
-            <CustomTooltip title="Close">
-              <CloseButton onClick={handleClose}>
-                <CgClose />
-              </CloseButton>
-            </CustomTooltip>
             <TokenContainer>
               <TokenHeaderContainer>
                 <IconSkeleton variant="circular" />
@@ -139,14 +142,16 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
 
   return (
     <ViewDetailDrawer anchor="right" open={!!stakeId} hideBackdrop variant="permanent">
+      <ViewDetailHeader>
+        <ViewAllButton tooltipTitle="View Detail" to={details.stake(stakeId)} />
+        <CustomTooltip title="Close">
+          <CloseButton onClick={handleClose}>
+            <CgClose />
+          </CloseButton>
+        </CustomTooltip>
+      </ViewDetailHeader>
       <ViewDetailContainer>
         <ViewDetailScroll>
-          <StyledViewMore tooltipTitle="View Detail" to={details.stake(stakeId)} />
-          <CustomTooltip title="Close">
-            <CloseButton onClick={handleClose}>
-              <CgClose />
-            </CloseButton>
-          </CustomTooltip>
           <StakeKeyHeader>
             <StakeKeyLink to={details.stake(stakeId)}>{stakeId}</StakeKeyLink>
             <CopyButton text={stakeId} />

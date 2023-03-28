@@ -6,7 +6,6 @@ import { StyledDarkLoadingButton } from "../../../../share/styled";
 import { StyledButton } from "./styles";
 import { useLocalStorage } from "react-use";
 import { addListBookmark, getAllBookmarks } from "../../../../../commons/utils/userRequest";
-import { BookMark } from "../../../../../types/bookmark";
 import { NETWORK, NETWORK_TYPES } from "../../../../../commons/utils/constants";
 
 interface SyncBookmarkModalProps {
@@ -18,7 +17,7 @@ const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, loadingSubm
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<{ passNumber: number; failNumber: number }>();
   const [message, setMessage] = useState("");
-  const [bookmarks, setBookmark] = useLocalStorage<BookMark[]>("bookmark", []);
+  const [bookmarks, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
   const bookmark = bookmarks?.filter(r => !r.id).length;
   const hanldeSyncBookmark = async () => {
     try {
