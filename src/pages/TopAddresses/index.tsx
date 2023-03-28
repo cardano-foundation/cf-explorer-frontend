@@ -49,6 +49,16 @@ const TopAddresses: React.FC<Props> = () => {
         </Box>
       ),
     },
+    {
+      title: "Transaction Count",
+      minWidth: 120,
+      key: "transaction_count",
+      render: r => (
+        <Box display="flex" alignItems="center">
+          {r.txCount || 0}
+        </Box>
+      ),
+    },
   ];
 
   return (
