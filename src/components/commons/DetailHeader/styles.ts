@@ -127,7 +127,7 @@ export const DetailsInfo = styled(Grid)<{ numberOfItems: number }>`
 
 export const EpochNumber = styled(Link)(({ theme }) => ({
   fontWeight: "bold",
-  color: `${theme.palette.blue[800]} !important`,
+  color: `${theme.palette.secondary.main} !important`,
   margin: 0,
   fontSize: "1.5rem",
 }));
