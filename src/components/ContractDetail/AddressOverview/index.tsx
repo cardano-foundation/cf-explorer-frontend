@@ -1,17 +1,16 @@
-import { Autocomplete, Box, Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import React from "react";
-import { BiChevronDown } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import useFetch from "../../../commons/hooks/useFetch";
-import { AIcon, EmptyIcon } from "../../../commons/resources";
+import { AIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
-import { exchangeADAToUSD, formatADAFull, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import { exchangeADAToUSD, formatADAFull, getShortWallet } from "../../../commons/utils/helper";
 import { RootState } from "../../../stores/types";
 import Card from "../../commons/Card";
-import CustomTooltip from "../../commons/CustomTooltip";
 import CardAddress from "../../share/CardAddress";
-import { Logo, LogoEmpty, Pool, StyledAAmount, StyledTextField } from "./styles";
+import TokenAutocomplete from "../../TokenAutocomplete";
+import { Pool, StyledAAmount } from "./styles";
 
 interface Props {
   data: WalletAddress | null;
@@ -37,52 +36,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
     },
     { title: "ADA Value", value: exchangeADAToUSD(data?.balance || 0, adaRate, true) },
     {
-      value: (
-        <Autocomplete
-          options={data?.tokens || []}
-          componentsProps={{ paper: { elevation: 2 } }}
-          getOptionLabel={option => option.displayName || option.name || option.fingerprint}
-          noOptionsText={
-            <Box>
-              <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
-            </Box>
-          }
-          renderOption={(props, option: WalletAddress["tokens"][number]) => (
-            <li key={option.fingerprint} {...props}>
-              <Box
-                display="flex"
-                alignItems={"center"}
-                justifyContent="space-between"
-                width={"100%"}
-                fontSize={"14px"}
-                padding={0}
-                gap="10px"
-                minHeight="34px"
-              >
-                <Box display="flex" alignItems={"center"} overflow="hidden" gap="10px">
-                  <Box>
-                    {option?.metadata?.logo ? (
-                      <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt="icon" />
-                    ) : (
-                      <LogoEmpty />
-                    )}
-                  </Box>
-                  <CustomTooltip title={`${option.displayName || ""} #${option.name || option.fingerprint}`}>
-                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="150px">
-                      {option.displayName || ""} #{option.name || option.fingerprint}
-                    </Box>
-                  </CustomTooltip>
-                </Box>
-                <Box fontWeight={"bold"} flex={1} textAlign="right">
-                  {numberWithCommas(option.quantity)}
-                </Box>
-              </Box>
-            </li>
-          )}
-          renderInput={params => <StyledTextField {...params} placeholder="Search Token" />}
-          popupIcon={<BiChevronDown />}
-        />
-      ),
+      value: <TokenAutocomplete address={data?.address || ""} />,
     },
   ];
   const itemRight = [

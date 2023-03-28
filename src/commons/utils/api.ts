@@ -4,6 +4,7 @@ export const API = {
     DETAIL: "addresses",
     MIN_MAX_BALANCE: "addresses/min-max-balance",
     TOP_ADDRESS: "addresses/top-addresses",
+    TOKENS: "addresses/:address/tokens",
   },
   BLOCK: {
     DETAIL: "blocks",
