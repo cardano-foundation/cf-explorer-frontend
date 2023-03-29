@@ -78,7 +78,11 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
     if (!search) {
       setShowOption(false);
     }
-  }, [search]);
+    if (filter !== "all") {
+      setShowOption(false);
+    }
+  }, [search, filter]);
+
   useEffect(() => {
     setValues({ ...intitalValue });
   }, [history.location.pathname]);
