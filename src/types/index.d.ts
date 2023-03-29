@@ -6,6 +6,7 @@ type FilterParams =
   | "tokens"
   | "stakes"
   | "addresses"
+  | "contract"
   | "delegations/pool-detail-header";
 
 interface SearchParams {

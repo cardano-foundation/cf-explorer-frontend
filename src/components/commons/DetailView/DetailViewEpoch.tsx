@@ -29,11 +29,10 @@ import {
   DetailLinkIcon,
   DetailLinkRight,
   ViewDetailScroll,
-  StyledViewMore,
+  ViewDetailHeader,
 } from "./styles";
 import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
-import moment from "moment";
 import { HiOutlineCube } from "react-icons/hi2";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
@@ -41,6 +40,8 @@ import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helpe
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import { API } from "../../../commons/utils/api";
+import { useSelector } from "react-redux";
+import ViewAllButton from "../ViewAllButton";
 
 type DetailViewEpochProps = {
   epochNo: number;
@@ -50,6 +51,7 @@ type DetailViewEpochProps = {
 
 const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose, callback }) => {
   const { data } = useFetch<IDataEpoch>(`${API.EPOCH.DETAIL}/${epochNo}`);
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
 
   useEffect(() => {
     if (data) {
@@ -64,14 +66,16 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
   if (!data)
     return (
       <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
+        <ViewDetailHeader>
+          <ViewAllButton tooltipTitle="View Detail" to={details.epoch(epochNo)} />
+          <CustomTooltip title="Close">
+            <CloseButton onClick={handleClose}>
+              <CgClose />
+            </CloseButton>
+          </CustomTooltip>
+        </ViewDetailHeader>
         <ViewDetailContainer>
           <ViewDetailScroll>
-            <StyledViewMore tooltipTitle="View Detail" to={details.epoch(epochNo)} />
-            <CustomTooltip title="Close">
-              <CloseButton onClick={handleClose}>
-                <CgClose />
-              </CloseButton>
-            </CustomTooltip>
             <HeaderContainer>
               <ProgressSkeleton variant="circular" />
             </HeaderContainer>
@@ -129,20 +133,21 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
       </ViewDetailDrawer>
     );
 
-  const slot = ["FINISHED", "REWARDING"].includes(data.status)
-    ? MAX_SLOT_EPOCH
-    : Math.round((data.startTime && moment().diff(data.startTime) / 1000) || 0);
+  const slot = data.no === currentEpoch?.no ? currentEpoch.slot : MAX_SLOT_EPOCH;
+
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
   return (
     <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
+      <ViewDetailHeader>
+        <ViewAllButton tooltipTitle="View Detail" to={details.epoch(epochNo)} />
+        <CustomTooltip title="Close">
+          <CloseButton onClick={handleClose}>
+            <CgClose />
+          </CloseButton>
+        </CustomTooltip>
+      </ViewDetailHeader>
       <ViewDetailContainer>
         <ViewDetailScroll>
-          <StyledViewMore tooltipTitle="View Detail" to={details.epoch(epochNo)} />
-          <CustomTooltip title="Close">
-            <CloseButton onClick={handleClose}>
-              <CgClose />
-            </CloseButton>
-          </CustomTooltip>
           <HeaderContainer>
             <ProgressCircle
               size={150}

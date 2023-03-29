@@ -16,6 +16,7 @@ import DetailViewBlock from "../../components/commons/DetailView/DetailViewBlock
 import Card from "../../components/commons/Card";
 import Table from "../../components/commons/Table";
 import { API } from "../../commons/utils/api";
+import SelectedIcon from "../../components/commons/SelectedIcon";
 
 const BlockList = () => {
   const [block, setBlock] = useState<number | string | null>(null);
@@ -71,11 +72,7 @@ const BlockList = () => {
         <PriceWrapper>
           {formatADAFull(r.totalOutput)}
           <img src={AIcon} alt="ADA Icon" />
-          {block === (r.blockNo || r.hash) && (
-            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
-              <MdOutlineKeyboardArrowRight fontSize={30} />
-            </Box>
-          )}
+          {block === (r.blockNo || r.hash) && <SelectedIcon />}
         </PriceWrapper>
       ),
     },

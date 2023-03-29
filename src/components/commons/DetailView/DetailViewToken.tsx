@@ -37,16 +37,17 @@ import {
   TokenDetailIcon,
   TokenHeader,
   ViewDetailScroll,
-  StyledViewMore,
   LogoEmpty,
+  ViewDetailHeader,
 } from "./styles";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
-import { formatDateTimeLocal, getShortWallet, formatADAFull } from "../../../commons/utils/helper";
+import { formatDateTimeLocal, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
 import { Box } from "@mui/material";
+import ViewAllButton from "../ViewAllButton";
 
 type DetailViewTokenProps = {
   token: IToken | null;
@@ -60,14 +61,16 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
   if (!data)
     return (
       <ViewDetailDrawer anchor="right" open={!!tokenId} hideBackdrop variant="permanent">
+        <ViewDetailHeader>
+          <ViewAllButton tooltipTitle="View Detail" to={details.token(tokenId)} />
+          <CustomTooltip title="Close">
+            <CloseButton onClick={handleClose}>
+              <CgClose />
+            </CloseButton>
+          </CustomTooltip>
+        </ViewDetailHeader>
         <ViewDetailContainer>
           <ViewDetailScroll>
-            <StyledViewMore tooltipTitle="View Detail" to={details.token(tokenId)} />
-            <CustomTooltip title="Close">
-              <CloseButton onClick={handleClose}>
-                <CgClose />
-              </CloseButton>
-            </CustomTooltip>
             <TokenContainer>
               <TokenHeaderContainer>
                 <IconSkeleton variant="circular" />
@@ -127,14 +130,16 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
 
   return (
     <ViewDetailDrawer anchor="right" open={!!tokenId} hideBackdrop variant="permanent">
+      <ViewDetailHeader>
+        <ViewAllButton tooltipTitle="View Detail" to={details.token(tokenId)} />
+        <CustomTooltip title="Close">
+          <CloseButton onClick={handleClose}>
+            <CgClose />
+          </CloseButton>
+        </CustomTooltip>
+      </ViewDetailHeader>
       <ViewDetailContainer>
         <ViewDetailScroll>
-          <StyledViewMore tooltipTitle="View Detail" to={details.token(tokenId)} />
-          <CustomTooltip title="Close">
-            <CloseButton onClick={handleClose}>
-              <CgClose />
-            </CloseButton>
-          </CustomTooltip>
           <TokenContainer>
             <TokenHeaderContainer>
               <TokenHeader>
@@ -170,7 +175,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
             <TokenHeaderInfo>
               <TokenTotalSupply>
                 <TokenInfoLabel>Total Supply</TokenInfoLabel>
-                <TokenInfoValue>{formatADAFull(data.supply)}</TokenInfoValue>
+                <TokenInfoValue>{numberWithCommas(data.supply)}</TokenInfoValue>
               </TokenTotalSupply>
               <TokenDecimal>
                 <TokenInfoLabel>Decimal</TokenInfoLabel>

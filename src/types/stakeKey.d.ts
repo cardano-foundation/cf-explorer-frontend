@@ -10,10 +10,10 @@ interface IStakeKey {
   poolNames: string[];
 }
 
-type StakeStaus = "ACTIVE" | "DEACTIVATED";
+type StakeStatus = "ACTIVE" | "DEACTIVATED";
 
 interface IStakeKeyDetail {
-  status: StakeStaus;
+  status: StakeStatus;
   stakeAddress: string;
   totalStake: number;
   rewardAvailable: number;

@@ -232,10 +232,7 @@ const Table: React.FC<TableProps> = ({
           />
         </TableFullWidth>
         {loading && !initialized && <TableSekeleton />}
-        {!loading && ((initialized && data?.length === 0) || (error && error !== true)) && (
-          <EmptyRecord className={emptyClassName} />
-        )}
-        {error && error !== true && <Error>{error || "Something went wrong!"}</Error>}
+        {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord className={emptyClassName} />}
       </Wrapper>
       <FooterTable total={total} pagination={pagination} loading={loading || false} />
     </Box>

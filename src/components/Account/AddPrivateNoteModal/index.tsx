@@ -70,11 +70,17 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
           <StyledInput
             disabled={!!currentNote}
             value={txHash?.value}
-            onChange={e => setTxHash(prev => ({ ...prev, value: e.target.value }))}
+            onChange={e =>
+              setTxHash({
+                value: e.target.value.slice(0, 70),
+                error: e.target.value.length > 70 ? "Maximum reached!" : "",
+              })
+            }
             fullWidth={true}
+            error={!!txHash?.error}
           />
+          <StyledHelperText>{txHash?.error}</StyledHelperText>
         </WrapFormInput>
-
         <WrapFormInput>
           <StyledLabelInput>{currentNote ? "Update" : "Add"} Private Note</StyledLabelInput>
           <br />
@@ -84,6 +90,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
             fullWidth={true}
             multiline={true}
             rows={5}
+            error={!!privateNote?.error}
           />
           <StyledHelperText>{privateNote?.error}</StyledHelperText>
         </WrapFormInput>
