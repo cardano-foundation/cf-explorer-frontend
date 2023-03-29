@@ -18,6 +18,7 @@ import {
   Title,
 } from "./style";
 import ViewAllButton from "../../commons/ViewAllButton";
+import { Box } from "@mui/material";
 
 interface Props {}
 
@@ -80,11 +81,13 @@ const LatestStories: React.FC<Props> = () => {
               <Item>
                 <Image src={image} alt={title} />
                 <Detail>
-                  <Author>{author}</Author>
-                  <ItemTitle>{title}</ItemTitle>
+                  <Box>
+                    <Author>{author}</Author>
+                    <ItemTitle>{title}</ItemTitle>
+                  </Box>
                   <Time>
                     <TimeIcon src={CalenderPaleIcon} alt="calender pale" />
-                    {moment(createdDate).format("MM/DD/YYYY HH:mm:ss")}
+                    {moment(createdDate).format("MM/DD/YYYY")}
                   </Time>
                 </Detail>
               </Item>
