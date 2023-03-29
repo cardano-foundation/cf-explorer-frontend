@@ -152,12 +152,7 @@ const PrivateNotes = () => {
           }}
         />
       </Box>
-      <AddPrivateNoteModal 
-        currentNote={currentNote}
-        open={openModal}
-        handleCloseModal={onCloseModal}
-        refesh={refesh}
-      />
+      <AddPrivateNoteModal currentNote={currentNote} open={openModal} handleCloseModal={onCloseModal} refesh={refesh} />
       <Dialog open={!!selected}>
         <DialogTitle textAlign={"left"} fontWeight="bold" color={theme => theme.palette.text.primary}>
           Confirmation Required
