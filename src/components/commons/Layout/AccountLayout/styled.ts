@@ -45,11 +45,17 @@ export const StyledButton = styled("span")(({ theme }) => ({
 
 export const StyledButtonReport = styled(Button)(() => ({ padding: 0 }));
 export const StyledButtonClose = styled(Button)(({ theme }) => ({
-  border: `1px solid ${theme.palette.border.hint}`,
+  border: `2px solid ${theme.palette.border.hint}`,
   textTransform: "capitalize",
   fontWeight: "bold",
   color: "#344054",
   fontSize: "1rem",
+  width: "150px",
+  height: "44px",
+  borderRadius: "8px",
+  ":hover": {
+    border: `2px solid ${theme.palette.border.hint}`,
+  },
 }));
 
 export const ModalTitle = styled("h3")`
