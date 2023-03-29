@@ -42,14 +42,11 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
       setUserData(response.data);
     } catch (error) {}
   }, []);
+  
   const theme = useTheme();
   const toast = useToast();
 
   const uploadImgRef = useRef(null);
-
-  useEffect(() => {
-    fetchUserInfo();
-  }, [fetchUserInfo]);
 
   const hanldeUploadImage = async (e: any) => {
     try {
@@ -161,7 +158,11 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
       </ContentBox>
       <StyledModal open={openReportModal} handleCloseModal={() => setOpenReportModal(false)}>
         <Box textAlign="center">
-          <ModalTitle>Having a problem?<br/>Contact us via these channel</ModalTitle>
+          <ModalTitle>
+            Having a problem?
+            <br />
+            Contact us via these channel
+          </ModalTitle>
           <Box display={"flex"} gap={2} justifyContent="center">
             <StyledButtonReport>
               <ReportDiscord />
