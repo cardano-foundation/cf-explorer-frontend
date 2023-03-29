@@ -66,11 +66,8 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
 }));
 
 export const Wrapper = styled(Grid)(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
   borderRadius: 10,
   minHeight: "400px",
-  boxShadow: theme.shadow.card,
-  padding: "25px",
   textAlign: "left",
 }));
 
