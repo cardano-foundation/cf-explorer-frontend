@@ -10,18 +10,22 @@ export const TitleCard = styled(Box)(({ theme }) => ({
 export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
   color: ${({ status, theme }) => {
     switch (status) {
+      case CONFIRMATION_STATUS.HIGH:
+        return theme.palette.success.main;
       case CONFIRMATION_STATUS.MEDIUM:
         return theme.palette.warning.main;
       default:
-        return theme.palette.warning.main;
+        return theme.palette.error.main;
     }
   }};
   background-color: ${({ status, theme }) => {
     switch (status) {
+      case CONFIRMATION_STATUS.HIGH:
+        return theme.palette.success.light;
       case CONFIRMATION_STATUS.MEDIUM:
-        return `${theme.palette.warning.light}`;
+        return theme.palette.warning.light;
       default:
-        return `${theme.palette.warning.light}`;
+        return theme.palette.error.light;
     }
   }};
   margin-left: 10px;
