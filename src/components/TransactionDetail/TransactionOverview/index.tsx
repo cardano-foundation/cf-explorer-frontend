@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import DetailHeader from "../../commons/DetailHeader";
 import { formatADAFull, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
 import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import { Box, IconButton, useTheme } from "@mui/material";
-import { ConfirmStatus, StyledLink, TitleCard } from "./component";
+import { alpha, Box, IconButton, useTheme } from "@mui/material";
+import { ConfirmStatus, MaxSlot, StyledLink, TitleCard } from "./styles";
 import { ADAToken } from "../../commons/Token";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
@@ -193,17 +193,13 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
-            {" "}
             Slot
           </TitleCard>
         </Box>
       ),
       value: (
         <>
-          {data?.tx?.epochSlot || 0}/
-          <Box component={"span"} fontWeight="400">
-            432000
-          </Box>
+          {data?.tx?.epochSlot || 0}/<MaxSlot>432000</MaxSlot>
         </>
       ),
     },
