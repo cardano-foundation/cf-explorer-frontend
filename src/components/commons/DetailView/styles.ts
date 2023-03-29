@@ -343,20 +343,24 @@ export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatu
   border-radius: 2px;
 `;
 export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
-  color: ${props => {
-    switch (props.status) {
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case CONFIRMATION_STATUS.HIGH:
+        return theme.palette.success.main;
       case CONFIRMATION_STATUS.MEDIUM:
-        return props.theme.palette.warning.main;
+        return theme.palette.warning.main;
       default:
-        return props.theme.palette.warning.main;
+        return theme.palette.error.main;
     }
   }};
-  background-color: ${props => {
-    switch (props.status) {
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case CONFIRMATION_STATUS.HIGH:
+        return theme.palette.success.light;
       case CONFIRMATION_STATUS.MEDIUM:
-        return `${props.theme.palette.warning.light}`;
+        return theme.palette.warning.light;
       default:
-        return `${props.theme.palette.warning.light}`;
+        return theme.palette.error.light;
     }
   }};
   margin-left: 10px;
