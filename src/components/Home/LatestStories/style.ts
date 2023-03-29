@@ -5,7 +5,6 @@ import { BoxRaised } from "../../commons/BoxRaised";
 export const LatestStoriesContainer = styled(Box)`
   text-align: center;
   padding: 1rem 0px;
-  margin-bottom: 30px;
 `;
 
 export const Header = styled(Box)`
@@ -103,6 +102,9 @@ export const Image = styled("img")`
 `;
 export const Detail = styled(Box)`
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const Author = styled("h6")`
@@ -139,13 +141,13 @@ export const ItemTitle = styled("h5")`
 export const Time = styled("h5")`
   font-size: var(--font-size-text-x-small);
   display: flex;
+  line-height: 1;
   justify-content: flex-start;
   align-items: center;
   gap: 6px;
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-normal);
   color: ${props => props.theme.palette.grey[400]};
-  line-height: 1.15;
   margin: 0;
 `;
 export const TimeIcon = styled("img")`

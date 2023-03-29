@@ -123,9 +123,30 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={RewardIcon} alt="Reward Icon" />
             <InfoTitle>
-              <StyledTitle>
-                Reward Account <InfoImg src={InfoIcon} alt="Info Icon" />
-              </StyledTitle>
+              <Box>
+                <StyledTitle>
+                  Reward Account <InfoImg src={InfoIcon} alt="Info Icon" />
+                </StyledTitle>
+                <InfoValue mt={"4px"}>
+                  {data?.rewardAccounts ? (
+                    <>
+                      <CustomTooltip title={data?.rewardAccounts[0] || ""}>
+                        <Box
+                          component={Link}
+                          to={details.stake(data?.rewardAccounts[0] || "")}
+                          style={{ fontFamily: "var(--font-family-text)" }}
+                          color={theme => `${theme.palette.secondary.main} !important`}
+                        >
+                          {getShortWallet(data?.rewardAccounts[0] || "")}
+                        </Box>
+                      </CustomTooltip>
+                      <CopyButton text={data?.rewardAccounts[0] || ""} />
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </InfoValue>
+              </Box>
               {data?.rewardAccounts && data.rewardAccounts.length > 1 && (
                 <ButtonViewAll
                   sx={{ color: theme => theme.palette.common.black }}
@@ -138,25 +159,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 </ButtonViewAll>
               )}
             </InfoTitle>
-            <InfoValue>
-              {data?.rewardAccounts ? (
-                <>
-                  <CustomTooltip title={data?.rewardAccounts[0] || ""}>
-                    <Box
-                      component={Link}
-                      to={details.stake(data?.rewardAccounts[0] || "")}
-                      style={{ fontFamily: "var(--font-family-text)" }}
-                      color={theme => `${theme.palette.secondary.main} !important`}
-                    >
-                      {getShortWallet(data?.rewardAccounts[0] || "")}
-                    </Box>
-                  </CustomTooltip>
-                  <CopyButton text={data?.rewardAccounts[0] || ""} />
-                </>
-              ) : (
-                ""
-              )}
-            </InfoValue>
+
             {isOpenReward && (
               <DropdownDetail
                 title="Reward account list"
@@ -173,9 +176,30 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 setOpenReward(false);
               }}
             >
-              <StyledTitle>
-                Owner Account <InfoImg src={InfoIcon} alt="Info Icon" />
-              </StyledTitle>
+              <Box>
+                <StyledTitle>
+                  Owner Account <InfoImg src={InfoIcon} alt="Info Icon" />
+                </StyledTitle>{" "}
+                <InfoValue mt={"4px"}>
+                  {data?.ownerAccounts ? (
+                    <>
+                      <CustomTooltip title={data?.ownerAccounts[0] || ""}>
+                        <Box
+                          component={Link}
+                          color={theme => `${theme.palette.blue[800]} !important`}
+                          to={details.stake(data?.ownerAccounts[0] || "")}
+                          style={{ fontFamily: "var(--font-family-text)" }}
+                        >
+                          {getShortWallet(data?.ownerAccounts[0] || "")}
+                        </Box>
+                      </CustomTooltip>
+                      <CopyButton text={data?.ownerAccounts[0] || ""} />
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </InfoValue>
+              </Box>
               {data?.ownerAccounts && data.ownerAccounts.length > 1 && (
                 <ButtonViewAll
                   sx={{ color: theme => theme.palette.common.black }}
@@ -188,25 +212,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 </ButtonViewAll>
               )}
             </InfoTitle>
-            <InfoValue>
-              {data?.ownerAccounts ? (
-                <>
-                  <CustomTooltip title={data?.ownerAccounts[0] || ""}>
-                    <Box
-                      component={Link}
-                      color={theme => `${theme.palette.secondary.main} !important`}
-                      to={details.stake(data?.ownerAccounts[0] || "")}
-                      style={{ fontFamily: "var(--font-family-text)" }}
-                    >
-                      {getShortWallet(data?.ownerAccounts[0] || "")}
-                    </Box>
-                  </CustomTooltip>
-                  <CopyButton text={data?.ownerAccounts[0] || ""} />
-                </>
-              ) : (
-                ""
-              )}
-            </InfoValue>
+
             {isOpenOwner && (
               <DropdownDetail
                 title="Owner address list"
