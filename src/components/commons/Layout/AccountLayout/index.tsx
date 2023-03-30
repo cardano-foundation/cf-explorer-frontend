@@ -161,7 +161,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
           <ModalTitle>
             Having a problem?
             <br />
-            Contact us via these channel
+            Contact us via these channels
           </ModalTitle>
           <Box display={"flex"} gap={2} justifyContent="center">
             <StyledButtonReport>
