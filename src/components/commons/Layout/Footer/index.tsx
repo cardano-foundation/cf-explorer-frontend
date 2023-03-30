@@ -65,7 +65,7 @@ const Footer: React.FC = () => {
   return (
     <StyledFooter>
       <FooterContainer>
-        <Copyright>©2022 Cardano Blockchain Explorer. All rights reserved. Version: 0.1.2</Copyright>
+        <Copyright>©2022 Cardano Blockchain Explorer. All rights reserved. Version: 0.1.3</Copyright>
       </FooterContainer>
     </StyledFooter>
   );

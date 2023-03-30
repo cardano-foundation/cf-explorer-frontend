@@ -1,4 +1,5 @@
 enum TransactionStatus {
+  FAIL = "FAIL",
   SUCCESS = "SUCCESS",
   PENDDING = "PENDDING",
 }
