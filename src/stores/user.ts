@@ -15,7 +15,7 @@ const initialState: UserStoreType = {
   wallet: null,
   provider: null,
   openModal: false,
-  sidebar: true,
+  sidebar: window.innerWidth > 1023,
   onDetailView: false,
   modalRegister: false,
   modalSignMessage: false,
