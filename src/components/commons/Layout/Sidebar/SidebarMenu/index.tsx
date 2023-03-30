@@ -44,6 +44,11 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width > 1023]);
 
+  useEffect(() => {
+    if (width < 1023) setSidebar(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+
   const handleOpen = (item: string) => {
     setActive(item !== active ? item : null);
     if (!sidebar) setSidebar(true);
