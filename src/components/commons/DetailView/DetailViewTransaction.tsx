@@ -160,6 +160,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
       }
       return CONFIRMATION_STATUS.HIGH;
     }
+    return CONFIRMATION_STATUS.LOW;
   };
 
   return (
