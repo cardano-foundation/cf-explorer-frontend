@@ -35,11 +35,10 @@ export const TokenLink = styled(Link)(({ theme }) => ({
 
 export const Item = styled(Box)(({ theme }) => ({
   textAlign: "left",
-  padding: "10px 0px",
+  padding: "15px 0px",
   margin: "0px 25px",
   borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-  "&:last-child": {
+  "&:last-of-type": {
     borderBottom: "none",
-    padding: "10px 0 0",
   },
 }));
