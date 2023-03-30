@@ -146,19 +146,20 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
         <ViewMoreButton to={details.transaction(hash)} />
       </ViewDetailDrawer>
     );
+    
   const input = data.utxOs?.inputs[0]?.address || "";
   const output = data.utxOs?.outputs[0]?.address || "";
+
   const renderConfirmationTag = () => {
     if (data?.tx?.confirmation) {
-      if (data.tx.confirmation > 9) {
-        return CONFIRMATION_STATUS.HIGH;
+      if (data.tx.confirmation <= 2) {
+        return CONFIRMATION_STATUS.LOW;
       }
-      if (2 < data.tx.confirmation && data.tx.confirmation <= 8) {
+      if (data.tx.confirmation <= 8) {
         return CONFIRMATION_STATUS.MEDIUM;
       }
-      return CONFIRMATION_STATUS.LOW;
+      return CONFIRMATION_STATUS.HIGH;
     }
-    return CONFIRMATION_STATUS.LOW;
   };
 
   return (
@@ -269,7 +270,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {data.tx.confirmation}
-                <ConfirmStatus status={renderConfirmationTag()}>{renderConfirmationTag() || "LOW"}</ConfirmStatus>
+                <ConfirmStatus status={renderConfirmationTag()}>{renderConfirmationTag()}</ConfirmStatus>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
