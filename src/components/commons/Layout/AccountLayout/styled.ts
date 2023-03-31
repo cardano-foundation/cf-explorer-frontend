@@ -5,7 +5,7 @@ export const Wrapper = styled(Container)(({ theme }) => ({}));
 export const ContentBox = styled(Box)(({ theme }) => ({
   display: "flex",
   background: theme.palette.background.paper,
-  height: "calc(100vh - 252px)",
+  minHeight: "calc(100vh - 252px)",
   borderTopLeftRadius: 10,
   borderTopRightRadius: 10,
 }));
