@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useWindowSize } from "react-use";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details, routers } from "../../commons/routers";
 import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
@@ -31,6 +31,7 @@ const Stake: React.FC<IStake> = () => {
   const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
+  const theme = useTheme();
   const pageInfo = getPageInfo(search);
 
   const fetchData = useFetchList<IStakeKey>(`${API.STAKE.DETAIL}/${poolType}`, pageInfo);
@@ -46,7 +47,7 @@ const Stake: React.FC<IStake> = () => {
   };
 
   const openDetail = (_: any, r: IStakeKey, index: number) => {
-    if (width > 1023) {
+    if (width >= theme.breakpoints.values.md) {
       setOnDetailView(true);
       setStake(r.stakeKey);
       setSelected(index);

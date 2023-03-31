@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { footerMenus, menus } from "../../../../../commons/menus";
 import { Menu, MenuIcon, MenuText, NavbarMenuBottom, SubMenu, SubMenuText, itemStyle, StyledCollapse } from "./styles";
-import { Collapse, Divider, ListItem } from "@mui/material";
+import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
 import { isExtenalLink } from "../../../../../commons/utils/helper";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
@@ -18,6 +18,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const pathname = history.location.pathname;
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { width } = useWindowSize(0);
+  const theme = useTheme();
 
   const getActive = () => {
     const active = menus.findIndex(menu => {
@@ -39,13 +40,13 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   }, [sidebar]);
 
   useEffect(() => {
-    if (!sidebar && width > 1023) setSidebar(true);
-    else if (sidebar && width <= 1023) setSidebar(false);
+    if (!sidebar && width >= theme.breakpoints.values.md) setSidebar(true);
+    else if (sidebar && width < theme.breakpoints.values.md) setSidebar(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width > 1023]);
+  }, [width >= theme.breakpoints.values.md]);
 
   useEffect(() => {
-    if (width < 1023) setSidebar(false);
+    if (width <= theme.breakpoints.values.md) setSidebar(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
@@ -55,7 +56,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   };
 
   return (
-    <StyledCollapse in={width > 1023 ? true : sidebar} timeout="auto" unmountOnExit>
+    <StyledCollapse in={width >= theme.breakpoints.values.md ? true : sidebar} timeout="auto" unmountOnExit>
       <Menu open={sidebar ? 1 : 0}>
         {menus.map((item, index) => {
           const { href, title, children, icon, tooltip } = item;
@@ -145,7 +146,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={theme => ({
                               ...itemStyle(theme, sidebar),
                               paddingLeft: "70px",
-                              [theme.breakpoints.down(1023)]: {
+                              [theme.breakpoints.down(theme.breakpoints.values.md)]: {
                                 paddingLeft: "60px",
                               },
                             })}
@@ -167,7 +168,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                                 ? { backgroundColor: theme => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
-                              [theme.breakpoints.down(1023)]: {
+                              [theme.breakpoints.down(theme.breakpoints.values.md)]: {
                                 paddingLeft: "60px",
                               },
                             })}
@@ -282,7 +283,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={theme => ({
                               ...itemStyle(theme, sidebar),
                               paddingLeft: "70px",
-                              [theme.breakpoints.down(1023)]: {
+                              [theme.breakpoints.down(theme.breakpoints.values.md)]: {
                                 paddingLeft: "60px",
                               },
                             })}
@@ -303,7 +304,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                                 ? { backgroundColor: theme => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
-                              [theme.breakpoints.down(1023)]: {
+                              [theme.breakpoints.down(theme.breakpoints.values.md)]: {
                                 paddingLeft: "60px",
                               },
                             })}
