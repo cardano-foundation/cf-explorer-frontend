@@ -13,7 +13,7 @@ import { setOnDetailView } from "../../stores/user";
 import DetailViewEpoch from "../../components/commons/DetailView/DetailViewEpoch";
 import { useWindowSize } from "react-use";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
 
@@ -23,6 +23,7 @@ const Epoch: React.FC = () => {
   const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
+  const theme = useTheme();
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, pageInfo);
 
@@ -81,7 +82,7 @@ const Epoch: React.FC = () => {
   }, []);
 
   const openDetail = (_: any, r: IDataEpoch, index: number) => {
-    if (width > 1023) {
+    if (width >= theme.breakpoints.values.md) {
       setOnDetailView(true);
       setEpoch(r.no);
       setSelected(index);
