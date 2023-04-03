@@ -79,11 +79,12 @@ const Card = ({
                             color={theme => theme.palette.secondary.main}
                             fontWeight="bold"
                             fontFamily={"var(--font-family-text)"}
+                            mr={1}
                           >
                             {getShortWallet(item.address)}
                           </Box>
                         </CustomTooltip>
-                      </Link>{" "}
+                      </Link>
                       <CopyButton text={item.address} />
                     </Box>
                     <Box

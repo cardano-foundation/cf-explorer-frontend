@@ -10,7 +10,7 @@ export const Header = styled(Box)(({ theme }) => ({
   padding: "8px 0 10px",
   marginRight: "25px",
   marginLeft: "25px",
-  fontSize: "14px",
+  fontSize: "12px",
   color: theme.palette.text.primary,
   borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
 }));

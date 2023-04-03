@@ -6,7 +6,7 @@ BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const alphaNumeric = /[^0-9a-zA-Z]/;
 
-export const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+export const regexEmail = /^[\w\.\+\-]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 export const getShortWallet = (address: string) => {
   return `${address.slice(0, 5)}...${address.slice(-5)}`;
@@ -60,7 +60,7 @@ export const formatADA = (value?: string | number, abbreviations: string[] = LAR
 export const formatADAFull = (value?: string | number): string => {
   if (!value) return `0`;
   const realAda = new BigNumber(value).div(10 ** 6);
-  return numberWithCommas(realAda.toString());
+  return numberWithCommas(realAda.toFixed(6).toString());
 };
 
 export const exchangeADAToUSD = (value: number | string, rate: number, isFull?: boolean) => {

@@ -39,28 +39,36 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
 `;
 
 export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
-  color: ${props => {
-    switch (props.status) {
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case TRANSACTION_STATUS.FAIL:
+        return theme.palette.error.main;
+      case TRANSACTION_STATUS.PENDDING:
+        return theme.palette.warning.main;
       case TRANSACTION_STATUS.SUCCESS:
-        return props.theme.palette.primary.main;
+        return theme.palette.success.main;
       case "IN_PROGRESS":
-        return props.theme.palette.warning.main;
+        return theme.palette.warning.main;
       case "FINISHED":
-        return props.theme.palette.info.main;
+        return theme.palette.info.main;
       default:
-        return props.theme.palette.primary.main;
+        return theme.palette.success.main;
     }
   }};
-  background-color: ${props => {
-    switch (props.status) {
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case TRANSACTION_STATUS.FAIL:
+        return theme.palette.error.light;
+      case TRANSACTION_STATUS.PENDDING:
+        return theme.palette.warning.light;
       case TRANSACTION_STATUS.SUCCESS:
-        return `${props.theme.palette.success.light}`;
+        return theme.palette.success.light;
       case "IN_PROGRESS":
-        return `${props.theme.palette.warning.light}`;
+        return theme.palette.warning.light;
       case "FINISHED":
-        return `${props.theme.palette.info.light}`;
+        return theme.palette.info.light;
       default:
-        return `${props.theme.palette.success.light}`;
+        return theme.palette.success.light;
     }
   }};
   font-weight: var(--font-weight-bold);
@@ -170,20 +178,24 @@ export const BlockDefault = styled("span")`
 `;
 
 export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
-  color: ${props => {
-    switch (props.status) {
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case CONFIRMATION_STATUS.HIGH:
+        return theme.palette.success.main;
       case CONFIRMATION_STATUS.MEDIUM:
-        return props.theme.palette.warning.main;
+        return theme.palette.warning.main;
       default:
-        return props.theme.palette.warning.main;
+        return theme.palette.error.main;
     }
   }};
-  background-color: ${props => {
-    switch (props.status) {
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case CONFIRMATION_STATUS.HIGH:
+        return theme.palette.success.light;
       case CONFIRMATION_STATUS.MEDIUM:
-        return `${props.theme.palette.warning.light}`;
+        return theme.palette.warning.light;
       default:
-        return `${props.theme.palette.warning.light}`;
+        return theme.palette.error.light;
     }
   }};
   margin-left: 10px;

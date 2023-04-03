@@ -320,20 +320,24 @@ export const DetailLinkRight = styled("span")`
 `;
 
 export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
-  color: ${props => {
-    switch (props.status) {
-      case TRANSACTION_STATUS.SUCCESS:
-        return props.theme.palette.primary.main;
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case TRANSACTION_STATUS.FAIL:
+        return theme.palette.error.main;
+      case TRANSACTION_STATUS.PENDDING:
+        return theme.palette.warning.main;
       default:
-        return props.theme.palette.primary.main;
+        return theme.palette.success.main;
     }
   }};
-  background-color: ${props => {
-    switch (props.status) {
-      case TRANSACTION_STATUS.SUCCESS:
-        return `${props.theme.palette.success.light}`;
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case TRANSACTION_STATUS.FAIL:
+        return theme.palette.error.light;
+      case TRANSACTION_STATUS.PENDDING:
+        return theme.palette.warning.light;
       default:
-        return `${props.theme.palette.success.light}`;
+        return theme.palette.success.light;
     }
   }};
   margin-left: 15px;
