@@ -19,11 +19,11 @@ const SummaryItems = ({
 }) => {
   return (
     <Box textAlign={"left"} px={3} py={2} sx={{ background: theme => theme.palette.background.paper }} mb={2}>
-      <Box display={"flex"} alignItems="center">
-        <Box width={50}>
+      <Box display={"flex"}>
+        <Box width={50} py="20px">
           <Icon src={type === "down" ? receiveImg : sendImg} alt="send icon" />
         </Box>
-        <Box>
+        <Box flex={1}>
           <Box display={"flex"} alignItems="center" justifyContent={"flex-start"}>
             <Box width={"100%"} display="flex" alignItems={"center"} justifyContent="center" flexWrap={"wrap"}>
               <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} pr={1} mb={1}>
