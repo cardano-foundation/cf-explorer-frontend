@@ -33,7 +33,7 @@ export const THeader = styled("th")`
   font-size: var(--font-size-text-small);
   border-bottom: 1px solid ${props => props.theme.palette.border.main};
   padding: 20px;
-  color: ${props => props.theme.palette.grey[400]};
+  color: ${props => props.theme.palette.grey[300]};
 `;
 
 export const TRow = styled("tr")<{ selected?: number }>`
@@ -56,8 +56,8 @@ export const TCol = styled("td")<{
   hiddenBorder?: boolean;
 }>`
   border-bottom: ${({ hiddenBorder, theme }) => (hiddenBorder ? "none" : `1px solid ${theme.palette.grey[200]}`)};
-  width: ${({ width }) => (typeof width === "number" ? `${width}px` : width || "max-content%")};  
-  min-width: ${({ minWidth }) => (typeof minWidth === "number" ? `${minWidth}px` : minWidth || "80px")}; 
+  width: ${({ width }) => (typeof width === "number" ? `${width}px` : width || "max-content%")};
+  min-width: ${({ minWidth }) => (typeof minWidth === "number" ? `${minWidth}px` : minWidth || "80px")};
   max-width: ${({ maxWidth }) => (typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth || "unset")};
   text-overflow: ellipsis;
   overflow: hidden;
