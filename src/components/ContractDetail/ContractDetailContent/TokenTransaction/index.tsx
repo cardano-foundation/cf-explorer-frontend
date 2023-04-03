@@ -15,6 +15,7 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
 import { AIcon } from "../../../../commons/resources";
+import { API } from "../../../../commons/utils/api";
 
 const columns: Column<Transactions>[] = [
   {
@@ -33,8 +34,6 @@ const columns: Column<Transactions>[] = [
         <CustomTooltip title={r.hash}>
           <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
         </CustomTooltip>
-        <br />
-        <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
       </>
     ),
   },
@@ -119,7 +118,7 @@ const TokenTransaction: React.FC = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<Transactions>(`address/${params.address}/txs`, pageInfo);
+  const fetchData = useFetchList<Transactions>(`${API.ADDRESS.DETAIL}/${params.address}/txs`, pageInfo);
 
   return (
     <Table

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import Card from "../../commons/Card";
 import TokenTransaction from "./TokenTransaction";
@@ -9,6 +9,7 @@ import TokenTopHolder from "./TokenTopHolder";
 import TokenMinting from "./TokenMinting";
 import { MenuItem } from "@mui/material";
 import { BiChevronDown } from "react-icons/bi";
+import { stringify } from "qs";
 
 interface ITokenTableData {
   totalSupply?: number;
@@ -24,6 +25,7 @@ interface IMappingvalue {
 const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
   const [type, setType] = useState<string>("transactions");
   const params = useParams<{ tokenId: string }>();
+  const history = useHistory();
 
   const mappingValue: IMappingvalue = {
     transactions: {
@@ -47,7 +49,11 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
       extra={
         <StyledSelect
           value={type}
-          onChange={(e: any) => setType(e.target.value)}
+          onChange={(e: any) => {
+            setType(e.target.value);
+
+            history.push({ search: stringify({ page: 1, size: 10 }) });
+          }}
           IconComponent={() => <BiChevronDown size={30} style={{ paddingRight: 10 }} />}
         >
           {Object.keys(mappingValue).map(key => (

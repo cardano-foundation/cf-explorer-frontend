@@ -8,7 +8,6 @@ export const HeaderDetailContainer = styled(Box)`
 
 export const BackButton = styled(Link)`
   display: inline-flex;
-  display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
@@ -114,9 +113,10 @@ export const InfoImg = styled("img")`
 
 export const InfoTitle = styled(Box)`
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
   font-size: 14px;
-  opacity: 0.5;
+
   margin-top: 14px;
   margin-bottom: 5px;
   cursor: pointer;
@@ -126,6 +126,7 @@ export const StyledTitle = styled("span")`
   display: flex;
   align-items: center;
   gap: 7px;
+  opacity: 0.5;
 `;
 
 export const InfoValue = styled(Box)`
@@ -166,4 +167,5 @@ export const ButtonViewAll = styled(Button)(({ theme }) => ({
   padding: `0 ${theme.spacing(1)}`,
   textTransform: "capitalize",
   fontWeight: "bold",
+  opacity: 0.5,
 }));

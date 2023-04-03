@@ -125,10 +125,12 @@ export const DetailsInfo = styled(Grid)<{ numberOfItems: number }>`
   }
 `;
 
-export const EpochNumber = styled("h3")`
-  color: ${props => props.theme.palette.common.black};
-  margin: 0;
-`;
+export const EpochNumber = styled(Link)<{ isEpoch: boolean }>(({ theme, isEpoch }) => ({
+  fontWeight: "bold",
+  color: `${isEpoch ? theme.palette.common.black : theme.palette.secondary.main} !important`,
+  margin: 0,
+  fontSize: "1.5rem",
+}));
 
 export const EpochText = styled("small")`
   opacity: 0.8;

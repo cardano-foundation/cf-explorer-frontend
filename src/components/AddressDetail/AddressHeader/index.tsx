@@ -1,20 +1,17 @@
 import { Link } from "react-router-dom";
-import { Grid, Box, Autocomplete, useTheme } from "@mui/material";
-import { exchangeADAToUSD, formatADAFull, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import { Grid, Box, useTheme } from "@mui/material";
+import { exchangeADAToUSD, formatADAFull, getShortWallet } from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
 import useFetch from "../../../commons/hooks/useFetch";
-import { BiChevronDown } from "react-icons/bi";
 import { AIcon } from "../../../commons/resources";
 import CardAddress from "../../share/CardAddress";
 import { details } from "../../../commons/routers";
-import { Option, StyledTextField, Logo, LogoEmpty } from "./styles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { useEffect, useState } from "react";
 import { API } from "../../../commons/utils/api";
 import BookmarkButton from "../../commons/BookmarkIcon";
-import { EmptyIcon } from "../../../commons/resources";
-import CustomTooltip from "../../commons/CustomTooltip";
+import TokenAutocomplete from "../../TokenAutocomplete";
 
 interface Props {
   data: WalletAddress | null;
@@ -22,7 +19,6 @@ interface Props {
 }
 const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   const [stakeKey, setStakeKey] = useState("");
-  const [selected, setSelected] = useState("");
   const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
     stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : ""
   );
@@ -49,53 +45,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       value: <Box>$ {exchangeADAToUSD(data?.balance || 0, adaRate, true)}</Box>,
     },
     {
-      value: (
-        <Autocomplete
-          options={data?.tokens || []}
-          componentsProps={{ paper: { elevation: 2 } }}
-          getOptionLabel={option => option.displayName || option.name || option.fingerprint}
-          noOptionsText={
-            <Box>
-              <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
-            </Box>
-          }
-          onChange={(e, value) => setSelected(value?.fingerprint || "")}
-          renderOption={(props, option: WalletAddress["tokens"][number]) => (
-            <Option key={option.fingerprint} {...props} active={selected === option.fingerprint ? 1 : 0}>
-              <Box
-                display="flex"
-                alignItems={"center"}
-                justifyContent="space-between"
-                width={"100%"}
-                fontSize={"14px"}
-                padding={0}
-                gap="10px"
-                minHeight="34px"
-              >
-                <Box display="flex" alignItems={"center"} overflow="hidden" gap="10px">
-                  <Box>
-                    {option?.metadata?.logo ? (
-                      <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt="icon" />
-                    ) : (
-                      <LogoEmpty />
-                    )}
-                  </Box>
-                  <CustomTooltip title={`${option.displayName || ""} #${option.name || option.fingerprint}`}>
-                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="150px">
-                      {option.displayName || ""} #{option.name || option.fingerprint}
-                    </Box>
-                  </CustomTooltip>
-                </Box>
-                <Box fontWeight={"bold"} flex={1} textAlign="right">
-                  {numberWithCommas(option.quantity)}
-                </Box>
-              </Box>
-            </Option>
-          )}
-          renderInput={params => <StyledTextField {...params} placeholder="Search Token" />}
-          popupIcon={<BiChevronDown />}
-        />
-      ),
+      value: <TokenAutocomplete address={data?.address || ""} />,
     },
   ];
   const itemRight = [

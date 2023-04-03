@@ -74,7 +74,11 @@ const AddressAnalytics: React.FC = () => {
                 <HighchartsReact
                   highcharts={Highcharts}
                   options={{
-                    chart: { type: "areaspline", style: { fontFamily: "Helvetica, monospace" } },
+                    chart: {
+                      type: "areaspline",
+                      backgroundColor: "transparent",
+                      style: { fontFamily: "Helvetica, monospace" },
+                    },
                     title: { text: "" },
                     yAxis: {
                       title: { text: null },
