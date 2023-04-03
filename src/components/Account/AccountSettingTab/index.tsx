@@ -23,6 +23,7 @@ type TRowItem = {
   disabled?: boolean;
   disabledButton?: boolean;
   field: "email" | "username" | "wallet";
+  loading?: boolean;
 };
 
 const RowItem: React.FC<TRowItem> = ({
@@ -34,13 +35,18 @@ const RowItem: React.FC<TRowItem> = ({
   disabled = false,
   field,
   disabledButton = false,
+  loading = false,
 }) => {
   return (
     <WrapRowItem>
       <StyledLabel>{label}</StyledLabel>
       <StyledRowItem>
-        <StyledInput disabled={disabled} value={value} onChange={onChangeValue} placeholder={label} />
-        <StyledButton onClick={action} disabled={(["email", "username"].includes(field) && !value) || disabledButton}>
+        <StyledInput disabled={disabled || loading} value={value} onChange={onChangeValue} placeholder={label} />
+        <StyledButton
+          loading={loading}
+          onClick={action}
+          disabled={(["email", "username"].includes(field) && !value) || disabledButton}
+        >
           Change
         </StyledButton>
       </StyledRowItem>
@@ -61,6 +67,7 @@ const AccountSettingTab: React.FC = () => {
   const [username, setUsername] = useState<TFieldInput>({ value: userData?.username });
   const [email, setEmail] = useState<TFieldInput>({ value: userData?.email });
   const [wallet, setWallet] = useState<TFieldInput>({ value: userData?.wallet });
+  const [loading, setLoading] = useState<"email" | "username" | "">("");
   const toast = useToast();
 
   const fetchUserInfo = useCallback(async () => {
@@ -94,7 +101,7 @@ const AccountSettingTab: React.FC = () => {
         }
         payload = { username: username.value };
       }
-
+      setLoading(field);
       const { data } = await editInfo(payload);
       if (data.userName || data.id) {
         if (field === "username") {
@@ -103,6 +110,7 @@ const AccountSettingTab: React.FC = () => {
           localStorage.setItem("email", data?.email);
         }
         await fetchUserInfo();
+        setLoading("");
         return toast.success(`Your ${field} has been changed.`);
       }
     } catch (error) {
@@ -134,6 +142,7 @@ const AccountSettingTab: React.FC = () => {
         }}
         field="username"
         action={() => onEditInfo("username")}
+        loading={loading === "username"}
       />
       <RowItem
         label="Your email address "
@@ -148,6 +157,7 @@ const AccountSettingTab: React.FC = () => {
         }}
         field="email"
         disabledButton={!email.value}
+        loading={loading === "email"}
         action={() => onEditInfo("email")}
       />
       <RowItem
