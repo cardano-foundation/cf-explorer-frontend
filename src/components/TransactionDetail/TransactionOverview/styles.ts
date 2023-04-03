@@ -7,6 +7,12 @@ export const TitleCard = styled(Box)(({ theme }) => ({
   fontSize: "0.875rem",
   minHeight: 20,
 }));
+
+export const MaxSlot = styled("span")(({ theme }) => ({
+  color: alpha(theme.palette.common.black, 0.5),
+  fontWeight: "400",
+}));
+
 export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
   color: ${({ status, theme }) => {
     switch (status) {

@@ -124,7 +124,7 @@ const DelegationStakingDelegatorsList = ({
       render: data =>
         data.view && (
           <div style={{ display: "flex", alignItems: "center" }}>
-            <CustomTooltip title={data.address || ""}>
+            <CustomTooltip title={data.view || ""}>
               <StyledLink to={details.address(data.view)}>{getShortWallet(data.view || "")}</StyledLink>
             </CustomTooltip>
             <CopyButton text={data.view || ""} />

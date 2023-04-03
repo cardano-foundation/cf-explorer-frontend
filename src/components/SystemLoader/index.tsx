@@ -3,9 +3,11 @@ import { useSelector } from "react-redux";
 import { useLocalStorage } from "react-use";
 import useFetch from "../../commons/hooks/useFetch";
 import { API, USER_API } from "../../commons/utils/api";
-import { MAX_SLOT_EPOCH } from "../../commons/utils/constants";
+import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
+import { getInfo } from "../../commons/utils/userRequest";
 import { setCurrentEpoch, setUsdMarket } from "../../stores/system";
 import { RootState } from "../../stores/types";
+import { setUserData } from "../../stores/user";
 
 export const SystemLoader = () => {
   const { userData } = useSelector(({ user }: RootState) => user);
@@ -45,6 +47,16 @@ export const SystemLoader = () => {
   useEffect(() => {
     if (currentEpoch) setCurrentEpoch(currentEpoch);
   }, [currentEpoch]);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
+        setUserData(response.data);
+      } catch (error) {}
+    };
+    if (localStorage.getItem("token")) fetchUserInfo();
+  }, []);
 
   return null;
 };

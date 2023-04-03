@@ -1,3 +1,4 @@
+import { useTheme } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useWindowSize } from "react-use";
@@ -12,12 +13,16 @@ const Sidebar: React.FC = () => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const handleToggle = () => setSidebar(!sidebar);
   const { width } = useWindowSize(0);
+  const theme = useTheme();
 
   return (
     <NavbarContainer>
       <HeaderTop>
         <LogoLink to="/" open={sidebar ? 1 : 0}>
-          <NavBarLogo src={sidebar || width <= 1023 ? LogoFullIcon : LogoIcon} alt="logo desktop" />
+          <NavBarLogo
+            src={sidebar || width < theme.breakpoints.values.md ? LogoFullIcon : LogoIcon}
+            alt="logo desktop"
+          />
           <NetworkName network={NETWORK}>{NETWORK_NAMES[NETWORK]}</NetworkName>
         </LogoLink>
         <Toggle onClick={handleToggle} />
