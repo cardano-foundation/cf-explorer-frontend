@@ -1,5 +1,6 @@
 import { alpha, Box, Button, styled } from "@mui/material";
 import Table from "../../components/commons/Table";
+import { Link } from "react-router-dom";
 
 export const Container = styled(Box)``;
 
@@ -14,7 +15,10 @@ export const Header = styled(Box)`
   border-bottom: 1px solid ${props => alpha(props.theme.palette.green[800], 0.1)};
 `;
 
-export const Title = styled("span")``;
+export const Title = styled("span")`
+  line-height: 1;
+  color: ${props => props.theme.palette.common.black};
+`;
 
 export const AddButton = styled(Button)`
   background-color: ${props => props.theme.palette.primary.main};
@@ -36,6 +40,7 @@ export const StyledTable = styled(Table)`
   }
   thead tr th {
     font-size: var(--font-size-text-x-small);
+    padding: 10px 20px;
   }
   tbody tr {
     padding: 0;
@@ -71,3 +76,21 @@ export const ButtonCancel = styled(Button)(({ theme }) => ({
     boxShadow: theme.shadow.dialog,
   },
 }));
+export const StyledLink = styled(Link)`
+  display: block;
+  text-decoration: none;
+  font-family: var(--font-family-text);
+  color: ${props => props.theme.palette.secondary.main} !important;
+  font-weight: var(--font-weight-normal);
+  &:hover {
+    font-family: var(--font-family-text);
+    color: ${props => props.theme.palette.secondary.main};
+  }
+`;
+
+export const SmallText = styled("small")`
+  display: block;
+  white-space: nowrap;
+  color: ${props => props.theme.palette.grey[500]};
+  margin-top: 4px;
+`;
