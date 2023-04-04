@@ -16,6 +16,7 @@ export const Header = styled(Box)`
 `;
 
 export const Title = styled("span")`
+  line-height: 1;
   color: ${props => props.theme.palette.common.black};
 `;
 
