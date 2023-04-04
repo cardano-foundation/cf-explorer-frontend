@@ -15,7 +15,7 @@ jobs:
         with:
           repository: cardano-foundation/cf-qa-testsuite
           path: main
-#          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Java
         uses: actions/setup-java@v3
