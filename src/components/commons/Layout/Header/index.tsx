@@ -1,14 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { RootState } from "../../../../stores/types";
 import ConnectWallet from "./ConnectWallet";
 import HeaderSearch from "./HeaderSearch";
 import SelectNetwork from "./SelectNetwork";
 import { HeaderBox, HeaderContainer, HeaderMain, HeaderTop, Title } from "./styles";
 
 const Header: React.FC<RouteComponentProps> = props => {
-  const { onDetailView } = useSelector(({ user }: RootState) => user);
   const { history } = props;
   const home = history.location.pathname === "/";
 
@@ -19,7 +16,7 @@ const Header: React.FC<RouteComponentProps> = props => {
           <Title home={home ? 1 : 0}>Cardano Blockchain Explorer</Title>
           <HeaderSearch home={home} />
         </HeaderMain>
-        <HeaderTop fixed={onDetailView ? 1 : 0}>
+        <HeaderTop>
           <SelectNetwork />
           <ConnectWallet />
         </HeaderTop>
