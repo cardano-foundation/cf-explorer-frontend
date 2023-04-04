@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
 import { formatADAFull, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
@@ -13,7 +12,6 @@ import { API } from "../../commons/utils/api";
 interface Props {}
 
 const TopAddresses: React.FC<Props> = () => {
-  const history = useHistory();
   const { error, data, initialized, loading } = useFetchList<Contracts>(API.ADDRESS.TOP_ADDRESS, { page: 0, size: 50 });
 
   useEffect(() => {
@@ -51,13 +49,23 @@ const TopAddresses: React.FC<Props> = () => {
         </Box>
       ),
     },
+    {
+      title: "Transaction Count",
+      minWidth: 120,
+      key: "transaction_count",
+      render: r => (
+        <Box display="flex" alignItems="center">
+          {r.txCount || 0}
+        </Box>
+      ),
+    },
   ];
 
   return (
     <StyledContainer>
       <Card title={"Top 50 addresses"} underline={false}>
         <Table
-          onClickRow={(_, r) => history.push(details.address(r.address))}
+          // onClickRow={(_, r) => history.push(details.address(r.address))}
           data={data}
           error={error}
           loading={loading}

@@ -69,6 +69,7 @@ export enum NETWORK_TYPES {
 export const NETWORK: NETWORKS = StorageUtils.getNetwork();
 
 export enum TRANSACTION_STATUS {
+  FAIL = "FAIL",
   SUCCESS = "SUCCESS",
   PENDDING = "PENDDING",
 }

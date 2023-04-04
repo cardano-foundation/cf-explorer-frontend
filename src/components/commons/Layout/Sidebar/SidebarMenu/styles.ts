@@ -25,7 +25,7 @@ export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<The
   cursor: "pointer",
   marginBottom: "5px",
   justifyContent: sidebar ? "initial" : "center",
-  [theme.breakpoints.down(1023)]: {
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
     padding: "8px 20px 8px 30px",
     marginBottom: 0,
   },

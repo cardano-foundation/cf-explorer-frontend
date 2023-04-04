@@ -8,7 +8,7 @@ import { Column } from "../../types/table";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { details } from "../../commons/routers";
 import { formatADAFull, getPageInfo, getShortHash } from "../../commons/utils/helper";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { AIcon } from "../../commons/resources";
 import { setOnDetailView } from "../../stores/user";
@@ -26,6 +26,7 @@ const BlockList = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<IStakeKey>(API.BLOCK.LIST, pageInfo);
+  const theme = useTheme();
 
   useEffect(() => {
     document.title = `Blocks List | Cardano Explorer`;
@@ -79,7 +80,7 @@ const BlockList = () => {
   ];
 
   const openDetail = (_: any, r: Block, index: number) => {
-    if (width > 1023) {
+    if (width >= theme.breakpoints.values.md) {
       setOnDetailView(true);
       setBlock(r.blockNo || r.hash);
       setSelected(index);

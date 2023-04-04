@@ -102,7 +102,7 @@ const HomeStatistic: React.FC<Props> = () => {
             <Item>
               <Content>
                 <ItemIcon src={CurentEpochIcon} alt="Curent Epoch" />
-                <Name>Curent Epoch</Name>
+                <Name>Current Epoch</Name>
                 <XSmall>Epoch: </XSmall>
                 <XValue>
                   <b>{numberWithCommas(currentEpoch?.no)}</b>

@@ -80,6 +80,11 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                   rootName={false}
                 />
               )}
+              {!loading && !data?.policyScript && (
+                <Box textAlign={"center"} py={2} color={({ palette }) => palette.grey[300]}>
+                  Script not found
+                </Box>
+              )}
             </ViewJson>
           </>
         )}

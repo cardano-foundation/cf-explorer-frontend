@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import TransactionList from "../../components/TransactionLists";
-import { Container } from "@mui/material";
+import { Container, useTheme } from "@mui/material";
 import { useWindowSize } from "react-use";
 import { setOnDetailView } from "../../stores/user";
 import { details } from "../../commons/routers";
@@ -20,6 +20,7 @@ const Transactions: React.FC<Props> = () => {
   const [hash, setHash] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();
+  const theme = useTheme();
   const history = useHistory();
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const Transactions: React.FC<Props> = () => {
   }, []);
 
   const openDetail = (_: any, r: Transactions, index: number) => {
-    if (width > 1023) {
+    if (width >= theme.breakpoints.values.md) {
       setOnDetailView(true);
       setHash(r.hash);
       setSelected(index);

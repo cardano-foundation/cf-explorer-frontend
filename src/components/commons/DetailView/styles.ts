@@ -320,20 +320,24 @@ export const DetailLinkRight = styled("span")`
 `;
 
 export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
-  color: ${props => {
-    switch (props.status) {
-      case TRANSACTION_STATUS.SUCCESS:
-        return props.theme.palette.primary.main;
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case TRANSACTION_STATUS.FAIL:
+        return theme.palette.error.main;
+      case TRANSACTION_STATUS.PENDDING:
+        return theme.palette.warning.main;
       default:
-        return props.theme.palette.primary.main;
+        return theme.palette.success.main;
     }
   }};
-  background-color: ${props => {
-    switch (props.status) {
-      case TRANSACTION_STATUS.SUCCESS:
-        return `${props.theme.palette.success.light}`;
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case TRANSACTION_STATUS.FAIL:
+        return theme.palette.error.light;
+      case TRANSACTION_STATUS.PENDDING:
+        return theme.palette.warning.light;
       default:
-        return `${props.theme.palette.success.light}`;
+        return theme.palette.success.light;
     }
   }};
   margin-left: 15px;
@@ -343,20 +347,24 @@ export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatu
   border-radius: 2px;
 `;
 export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
-  color: ${props => {
-    switch (props.status) {
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case CONFIRMATION_STATUS.HIGH:
+        return theme.palette.success.main;
       case CONFIRMATION_STATUS.MEDIUM:
-        return props.theme.palette.warning.main;
+        return theme.palette.warning.main;
       default:
-        return props.theme.palette.warning.main;
+        return theme.palette.error.main;
     }
   }};
-  background-color: ${props => {
-    switch (props.status) {
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case CONFIRMATION_STATUS.HIGH:
+        return theme.palette.success.light;
       case CONFIRMATION_STATUS.MEDIUM:
-        return `${props.theme.palette.warning.light}`;
+        return theme.palette.warning.light;
       default:
-        return `${props.theme.palette.warning.light}`;
+        return theme.palette.error.light;
     }
   }};
   margin-left: 10px;

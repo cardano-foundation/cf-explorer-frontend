@@ -7,7 +7,7 @@ export const Container = styled(Box)``;
 export const Header = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: end;
   font-family: var(--font-family-title);
   font-size: var(--font-size-text-x-large);
   font-weight: var(--font-weight-bold);
