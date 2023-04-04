@@ -14,7 +14,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: cardano-foundation/cf-qa-testsuite
-          ref: main
           token: ${{ secrets.PAT }}
 
       - name: Setup Java
