@@ -2,6 +2,8 @@ name: Run Explorer FE testcases
 
 on:
   workflow_dispatch:
+  pull_request:
+    types: [ opened, synchronize ]
 
 jobs:
   run-web-test:
@@ -10,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          repository: cardano-foundation/cf-qa-testsuite
 
       - name: Setup Java
         uses: actions/setup-java@v3
