@@ -56,7 +56,7 @@ export const TCol = styled("td")<{
   hiddenBorder?: boolean;
 }>`
   border-bottom: ${({ hiddenBorder, theme }) => (hiddenBorder ? "none" : `1px solid ${theme.palette.grey[200]}`)};
-  width: ${({ width }) => (typeof width === "number" ? `${width}px` : width || "max-content%")};
+  width: ${({ width }) => (typeof width === "number" ? `${width}px` : width || "max-content")};
   min-width: ${({ minWidth }) => (typeof minWidth === "number" ? `${minWidth}px` : minWidth || "80px")};
   max-width: ${({ maxWidth }) => (typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth || "unset")};
   text-overflow: ellipsis;
