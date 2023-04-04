@@ -55,13 +55,14 @@ const Card = ({
           Amount
         </Box>
       </Header>
+      <Box>
       {items?.map(item => (
         <Item key={item.address}>
-          <Box display={"flex"} alignItems="center">
+          <Box display={"flex"}>
             <Box width={50}>
               <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />
             </Box>
-            <Box width={"100%"}>
+            <Box width={"100%"} display="flex" flexDirection="column" justifyContent="center" paddingTop="5px">
               <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
                 <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1}>
                   {type === "down" ? "From" : "To"}:
@@ -107,8 +108,8 @@ const Card = ({
                   </Box>
                 </Box>
               </Box>
-              <Box justifyContent={"space-between"} alignItems="center" width={"100%"} display="flex">
-                <Box mr={3}>
+              <Box justifyContent={"space-between"} width={"100%"} display="flex" paddingTop="5px">
+                <Box mr={3} minWidth={200}>
                   {type === "down" && (
                     <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
                       <Link to={details.transaction(item.txHash)}>
@@ -171,6 +172,7 @@ const Card = ({
           </Box>
         </Item>
       )}
+      </Box>
       <Box
         display={"flex"}
         justifyContent="space-between"

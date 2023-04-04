@@ -1,5 +1,6 @@
 import React from "react";
 import { styled, Box, Container } from "@mui/material";
+import { APP_VERSION } from "../../../../commons/utils/constants";
 
 const StyledFooter = styled("footer")`
   height: 60px;
@@ -27,7 +28,7 @@ const Copyright = styled("small")`
   color: ${props => props.theme.palette.grey[400]};
   font-family: var(--font-family-title);
   ::first-letter {
-    font-size: 0.75em;
+    font-size: 1em;
     vertical-align: top;
     margin-right: 2px;
   }
@@ -65,7 +66,7 @@ const Footer: React.FC = () => {
   return (
     <StyledFooter>
       <FooterContainer>
-        <Copyright>©2022 Cardano Blockchain Explorer. All rights reserved. Version: 0.1.0</Copyright>
+        <Copyright> &copy; {new Date().getFullYear()} Cardano Blockchain Explorer. All rights reserved. Version: {APP_VERSION}</Copyright>
       </FooterContainer>
     </StyledFooter>
   );

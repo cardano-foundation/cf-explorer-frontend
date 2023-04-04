@@ -1,22 +1,23 @@
 import { alpha, Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
+export const Wrapper = styled(Box)`
+  background: ${props => props.theme.palette.common.white};
+  padding: 25px;
+`;
+export const Header = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-text-small);
+  font-weight: var(--font-weight-bold);
+  color: ${props => props.theme.palette.text.hint};
+  border-bottom: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)};
+  padding-bottom: 8px;
+`;
+
 export const Img = styled("img")(({ theme }) => ({
   paddingRight: "10px",
   width: "35px",
-}));
-
-export const Header = styled(Box)(({ theme }) => ({
-  padding: "25px 0 0",
-  marginRight: "25px",
-  marginLeft: "25px",
-  display: "flex",
-  justifyContent: "space-between",
-  fontSize: "14px",
-  color: theme.palette.text.primary,
-  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-  paddingBottom: "8px",
-  alignItems: "flex-end",
 }));
 
 export const TokenLink = styled(Link)(({ theme }) => ({
@@ -25,7 +26,7 @@ export const TokenLink = styled(Link)(({ theme }) => ({
   borderRadius: "2px",
   padding: "2px 10px",
   backgroundColor: alpha(theme.palette.grey[300], 0.2),
-  color: `${theme.palette.grey[400]} !important`,
+  color: theme.palette.grey[400],
   fontSize: "var(--font-size-text)",
   lineHeight: "1.5rem",
   fontWeight: "bold",
@@ -35,10 +36,12 @@ export const TokenLink = styled(Link)(({ theme }) => ({
 
 export const Item = styled(Box)(({ theme }) => ({
   textAlign: "left",
-  padding: "15px 0px",
-  margin: "0px 25px",
+  padding: "10px 0px",
   borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-  "&:last-of-type": {
+}));
+export const ItemBox = styled(Box)(({ theme }) => ({
+  "> *:last-child > div": {
+    padding: "10px 0 0",
     borderBottom: "none",
   },
 }));

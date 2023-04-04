@@ -18,7 +18,7 @@ import useFetchList from "../../commons/hooks/useFetchList";
 import { AssetName, Logo, StyledContainer, LogoEmpty } from "./styles";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
 
@@ -29,6 +29,7 @@ const Tokens: React.FC<ITokenList> = () => {
   const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();
   const { search } = useLocation();
+  const theme = useTheme();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
@@ -89,7 +90,7 @@ const Tokens: React.FC<ITokenList> = () => {
   ];
 
   const openDetail = (_: any, r: IToken, index: number) => {
-    if (width > 1023) {
+    if (width >= theme.breakpoints.values.md) {
       setOnDetailView(true);
       setToken(r || null);
       setSelected(index);

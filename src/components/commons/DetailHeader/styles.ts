@@ -39,28 +39,36 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
 `;
 
 export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
-  color: ${props => {
-    switch (props.status) {
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case TRANSACTION_STATUS.FAIL:
+        return theme.palette.error.main;
+      case TRANSACTION_STATUS.PENDDING:
+        return theme.palette.warning.main;
       case TRANSACTION_STATUS.SUCCESS:
-        return props.theme.palette.primary.main;
+        return theme.palette.success.main;
       case "IN_PROGRESS":
-        return props.theme.palette.warning.main;
+        return theme.palette.warning.main;
       case "FINISHED":
-        return props.theme.palette.info.main;
+        return theme.palette.info.main;
       default:
-        return props.theme.palette.primary.main;
+        return theme.palette.success.main;
     }
   }};
-  background-color: ${props => {
-    switch (props.status) {
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case TRANSACTION_STATUS.FAIL:
+        return theme.palette.error.light;
+      case TRANSACTION_STATUS.PENDDING:
+        return theme.palette.warning.light;
       case TRANSACTION_STATUS.SUCCESS:
-        return `${props.theme.palette.success.light}`;
+        return theme.palette.success.light;
       case "IN_PROGRESS":
-        return `${props.theme.palette.warning.light}`;
+        return theme.palette.warning.light;
       case "FINISHED":
-        return `${props.theme.palette.info.light}`;
+        return theme.palette.info.light;
       default:
-        return `${props.theme.palette.success.light}`;
+        return theme.palette.success.light;
     }
   }};
   font-weight: var(--font-weight-bold);
@@ -125,10 +133,12 @@ export const DetailsInfo = styled(Grid)<{ numberOfItems: number }>`
   }
 `;
 
-export const EpochNumber = styled("h3")`
-  color: ${props => props.theme.palette.common.black};
-  margin: 0;
-`;
+export const EpochNumber = styled(Link)<{ isEpoch: boolean }>(({ theme, isEpoch }) => ({
+  fontWeight: "bold",
+  color: `${isEpoch ? theme.palette.common.black : theme.palette.secondary.main} !important`,
+  margin: 0,
+  fontSize: "1.5rem",
+}));
 
 export const EpochText = styled("small")`
   opacity: 0.8;
@@ -168,20 +178,24 @@ export const BlockDefault = styled("span")`
 `;
 
 export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
-  color: ${props => {
-    switch (props.status) {
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case CONFIRMATION_STATUS.HIGH:
+        return theme.palette.success.main;
       case CONFIRMATION_STATUS.MEDIUM:
-        return props.theme.palette.warning.main;
+        return theme.palette.warning.main;
       default:
-        return props.theme.palette.warning.main;
+        return theme.palette.error.main;
     }
   }};
-  background-color: ${props => {
-    switch (props.status) {
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case CONFIRMATION_STATUS.HIGH:
+        return theme.palette.success.light;
       case CONFIRMATION_STATUS.MEDIUM:
-        return `${props.theme.palette.warning.light}`;
+        return theme.palette.warning.light;
       default:
-        return `${props.theme.palette.warning.light}`;
+        return theme.palette.error.light;
     }
   }};
   margin-left: 10px;

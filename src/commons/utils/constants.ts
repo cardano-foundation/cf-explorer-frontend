@@ -69,6 +69,7 @@ export enum NETWORK_TYPES {
 export const NETWORK: NETWORKS = StorageUtils.getNetwork();
 
 export enum TRANSACTION_STATUS {
+  FAIL = "FAIL",
   SUCCESS = "SUCCESS",
   PENDDING = "PENDDING",
 }
@@ -82,7 +83,7 @@ export enum STAKE_KEY_STATUS {
   ACTIVE = "ACTIVE",
   DEACTIVATED = "DEACTIVATED",
 }
-
+export const APP_VERSION = process.env.REACT_APP_VERSION;
 export const TESTNET_API_URL = process.env.REACT_APP_TESTNET_API_URL;
 export const PREVIEW_API_URL = process.env.REACT_APP_PREVIEW_API_URL;
 export const PREPROD_API_URL = process.env.REACT_APP_PREPROD_API_URL;

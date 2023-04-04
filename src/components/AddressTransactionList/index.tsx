@@ -16,6 +16,7 @@ import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
+import { SmallText } from "../share/styled";
 
 interface AddressTransactionListProps {
   underline?: boolean;
@@ -57,15 +58,28 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
           <CustomTooltip title={transaction.hash}>
             <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
           </CustomTooltip>
-          <Box mt={1}>{formatDateTimeLocal(transaction.time || "")}</Box>
         </div>
       ),
+    },
+    {
+      title: "Time",
+      key: "time",
+      minWidth: "180px",
+
+      render: r => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>,
     },
     {
       title: "Block",
       key: "block",
       minWidth: 120,
-      render: transaction => <StyledLink to={details.block(transaction.blockNo)}>{transaction.blockNo}</StyledLink>,
+      render: transaction => (
+        <>
+          <StyledLink to={details.block(transaction.blockNo)}>{transaction.blockNo}</StyledLink>
+          <br />
+          <StyledLink to={details.epoch(transaction.epochNo)}>{transaction.epochNo}</StyledLink>/
+          <SmallText>{transaction.epochSlotNo} </SmallText>
+        </>
+      ),
     },
     {
       title: "Addresses",

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction, Store } from "@reduxjs/toolkit";
+import breakpoints from "../themes/breakpoints";
 import { SupportedWallets, ThemeType, UserDataType, UserStoreType } from "../types/user";
 
 let userStore: Store | undefined;
@@ -15,7 +16,7 @@ const initialState: UserStoreType = {
   wallet: null,
   provider: null,
   openModal: false,
-  sidebar: true,
+  sidebar: window.innerWidth >= breakpoints.values.md,
   onDetailView: false,
   modalRegister: false,
   modalSignMessage: false,

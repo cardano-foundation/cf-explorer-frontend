@@ -64,7 +64,16 @@ const TransactionList: React.FC<TransactionListProps> = ({
       key: "block",
       minWidth: 60,
       render: r => (
-        <StyledLink to={details.block(r.blockNo || r.blockHash)}>{r.blockNo || getShortHash(r.blockHash)}</StyledLink>
+        <Box>
+          <Box>
+            <StyledLink to={details.block(r.blockNo || r.blockHash)}>
+              {r.blockNo || getShortHash(r.blockHash)}
+            </StyledLink>
+          </Box>
+          <Box mt={1}>
+            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+          </Box>
+        </Box>
       ),
     },
     {
