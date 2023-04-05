@@ -68,8 +68,8 @@ const TableHeader = <T extends ColumnType>({ columns, loading }: TableHeaderProp
           return { columnKey: key, sortValue: "DESC" };
         }
       }
-    setSort({ columnKey: key, sort: "ASC" });
-    return { columnKey: key, sortValue: "ASC" };
+    setSort({ columnKey: key, sort: "DESC" });
+    return { columnKey: key, sortValue: "DESC" };
   };
   const IconSort = ({ key, sort }: { key: string; sort: "" | "DESC" | "ASC" }) => {
     if (key === columnKey)
