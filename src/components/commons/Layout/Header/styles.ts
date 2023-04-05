@@ -26,7 +26,6 @@ export const HeaderBox = styled(Container)<{ home: number }>`
 `;
 
 export const HeaderTop = styled("div")`
-  flex: 1;
   z-index: 1300;
   display: flex;
   justify-content: flex-end;
@@ -41,7 +40,7 @@ export const HeaderTop = styled("div")`
 export const HeaderMain = styled("div")<{ home: number }>`
   position: relative;
   text-align: start;
-  flex: 1;
+
   padding: ${props => (props.home ? "0px 0px 50px" : "27px 0px")};
   & > div {
     padding-top: ${props => (props.home ? "0px" : "30px")};
