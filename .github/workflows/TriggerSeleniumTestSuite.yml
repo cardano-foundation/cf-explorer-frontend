@@ -2,6 +2,8 @@ name: Run Explorer FE testcases
 
 on:
   workflow_dispatch:
+  pull_request:
+    types: [ opened, synchronize, reopened]
 
 jobs:
   run-web-test:
@@ -22,6 +24,7 @@ jobs:
 
       - name: Set environment variables
         run: |
+          pwd
           echo 'SeleniumHub=${SELENIUM_HUB}' >> src/main/resources/application-test.properties
           echo 'FE_URL=${DEV_DEPLOYMENT}' >> src/main/resources/application-test.properties
 
