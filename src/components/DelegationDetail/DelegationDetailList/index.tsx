@@ -125,7 +125,7 @@ const DelegationStakingDelegatorsList = ({
         data.view && (
           <div style={{ display: "flex", alignItems: "center" }}>
             <CustomTooltip title={data.view || ""}>
-              <StyledLink to={details.address(data.view)}>{getShortWallet(data.view || "")}</StyledLink>
+              <StyledLink to={details.stake(data.view)}>{getShortWallet(data.view || "")}</StyledLink>
             </CustomTooltip>
             <CopyButton text={data.view || ""} />
           </div>
@@ -165,7 +165,9 @@ const DelegationStakingDelegatorsList = ({
         page: query.page ? +query.page - 1 : 0,
         total: total,
       }}
-      onClickRow={(e, r) => history.push(details.address(r.address))}
+      onClickRow={(e, r) => {
+        history.push(details.stake(r.view));
+      }}
     />
   );
 };

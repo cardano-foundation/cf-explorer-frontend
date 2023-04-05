@@ -46,7 +46,7 @@ const Card = ({
     <Box textAlign={"left"} mb={1} sx={{ background: theme => theme.palette.background.paper }}>
       <Header>
         <Box color={theme => theme.palette.text.hint} fontWeight="bold">
-          <Box color={theme => theme.palette.text.dark} fontSize={"1rem"} mb={1}>
+          <Box color={theme => theme.palette.text.dark} fontSize={"1rem"} mb="3px">
             {type === "down" ? "Input" : "Output"}
           </Box>
           Wallet Addresses
