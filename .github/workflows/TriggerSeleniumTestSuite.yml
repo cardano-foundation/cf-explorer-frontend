@@ -24,15 +24,12 @@ jobs:
 
       - name: Set environment variables
         run: |
-          pwd
-          ls -la
           echo 'SeleniumHub=${SELENIUM_HUB}' >> src/main/resources/application-test.properties
           echo 'FE_URL=${DEV_DEPLOYMENT}' >> src/main/resources/application-test.properties
 
       - name: Run the FE tests
         run: |
-          pwd
-          ls -la
+          cat src/main/resources/application-test.properties
           gradle clean test
 
       - name: Get allure history
