@@ -2,6 +2,8 @@ name: Run Explorer FE testcases
 
 on:
   workflow_dispatch:
+    branches:
+      - develop
 
 jobs:
   run-web-test:
