@@ -129,7 +129,6 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Time </TitleCard>
-          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: formatDateTimeLocal(data?.tx?.time || ""),
@@ -139,7 +138,6 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Confirmation</TitleCard>
-          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: (
@@ -154,7 +152,6 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Total Output</TitleCard>
-          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: (
@@ -168,7 +165,6 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction Fees </TitleCard>
-          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: (
