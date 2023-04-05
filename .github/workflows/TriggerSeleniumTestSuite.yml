@@ -24,7 +24,7 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo 'SeleniumHub=${SELENIUM_HUB}' >> src/main/resources/application-test.properties
+          echo 'Selenium_Hub=${SELENIUM_HUB}' >> src/main/resources/application-test.properties
           echo 'FE_URL=${DEV_DEPLOYMENT}' >> src/main/resources/application-test.properties
 
       - name: Run the FE tests
