@@ -33,9 +33,6 @@ const Epoch: React.FC = () => {
       key: "#",
       minWidth: "50px",
       render: r => <Index>{numberWithCommas(r.no)}</Index>,
-      sort: columnKey => {
-        console.log(columnKey);
-      },
     },
     {
       title: "Status",
@@ -48,9 +45,6 @@ const Epoch: React.FC = () => {
       key: "blkCount",
       minWidth: "100px",
       render: r => <Blocks>{r.blkCount}</Blocks>,
-      sort: columnKey => {
-        console.log(columnKey);
-      },
     },
     {
       title: "Output",
