@@ -27,6 +27,7 @@ jobs:
 
       - name: Run the FE tests
         run: |
+          pwd
           gradle clean test
 
       - name: Get allure history
