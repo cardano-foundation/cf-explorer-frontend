@@ -39,6 +39,7 @@ import {
 import { ColumnType, FooterTableProps, TableHeaderProps, TableProps, TableRowProps } from "../../../types/table";
 import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
+import { TbArrowsDownUp, TbArrowUp, TbArrowDown } from "react-icons/tb";
 
 type TEmptyRecord = {
   className?: string;
@@ -75,14 +76,14 @@ const TableHeader = <T extends ColumnType>({ columns, loading }: TableHeaderProp
     if (key === columnKey)
       switch (sort) {
         case "DESC":
-          return <TiArrowSortedDown />;
+          return <TbArrowDown color={"#98A2B3"} size={"18px"} />;
         case "ASC":
-          return <TiArrowSortedUp />;
+          return <TbArrowUp color={"#98A2B3"} size={"18px"} />;
         default: {
-          return <TiArrowUnsorted />;
+          return <TbArrowsDownUp color={"#98A2B3"} size={"18px"} />;
         }
       }
-    return <TiArrowUnsorted />;
+    return <TbArrowsDownUp color={"#98A2B3"} size={"18px"} />;
   };
   return (
     <THead>
