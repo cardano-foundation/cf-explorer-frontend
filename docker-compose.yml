@@ -1,8 +1,4 @@
 version: '3.9'
-networks:
-  default:
-    name: infrastructure-net
-    external: true
 
 services:
   cardano-explorer-fe-test:
@@ -12,7 +8,7 @@ services:
     build:
       context: .
     environment:
-      - PORT=${PORT}
+      - PORT=${PORT:-3000}
       - REACT_APP_TESTNET_API_URL=${REACT_APP_TESTNET_API_URL}
       - REACT_APP_PREVIEW_API_URL=${REACT_APP_PREVIEW_API_URL}
       - REACT_APP_PREPROD_API_URL=${REACT_APP_PREPROD_API_URL}
