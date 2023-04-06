@@ -24,7 +24,6 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Created at </TitleCard>
-          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: formatDateTimeLocal(data?.time || ""),
@@ -34,7 +33,6 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction</TitleCard>
-          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: data?.txCount || 0,
@@ -44,7 +42,6 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction Fees </TitleCard>
-          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: (
@@ -57,8 +54,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       icon: outputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Total Output</TitleCard>
-          <img src={infoIcon} alt="info icon" width={18} />
+          <TitleCard mr={1}> Total Output in ADA</TitleCard>
         </Box>
       ),
       value: (

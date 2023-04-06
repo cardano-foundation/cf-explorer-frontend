@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { ActionButton, AddButton, ButtonCancel, Container, Header, StyledTable, Title } from "./styles";
+import { ActionButton, AddButton, ButtonCancel, Container, Header, SmallText, StyledLink, StyledTable, Title } from "./styles";
 import { ReactComponent as Plus } from "../../commons/resources/icons/plus.svg";
 import { formatDateTime, getPageInfo, getShortHash } from "../../commons/utils/helper";
-import { SmallText, StyledLink } from "../../components/share/styled";
 import useFetchList from "../../commons/hooks/useFetchList";
 import AddPrivateNoteModal from "../../components/Account/AddPrivateNoteModal";
 import { Column } from "../../types/table";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { ReactComponent as Expand } from "../../commons/resources/icons/expand.svg";
 import { ReactComponent as Warning } from "../../commons/resources/icons/warning.svg";
@@ -103,7 +102,6 @@ const PrivateNotes = () => {
               <>{getShortHash(item.txHash)}</>
             </StyledLink>
           </CustomTooltip>
-          <br />
           <SmallText>{item.note}</SmallText>
         </>
       ),

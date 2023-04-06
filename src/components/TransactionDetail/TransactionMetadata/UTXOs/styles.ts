@@ -7,16 +7,12 @@ export const Img = styled("img")(({ theme }) => ({
 }));
 
 export const Header = styled(Box)(({ theme }) => ({
-  padding: "25px 0 0",
+  padding: "8px 0 10px",
   marginRight: "25px",
   marginLeft: "25px",
-  display: "flex",
-  justifyContent: "space-between",
-  fontSize: "14px",
+  fontSize: "12px",
   color: theme.palette.text.primary,
   borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-  paddingBottom: "8px",
-  alignItems: "flex-end",
 }));
 
 export const TokenLink = styled(Link)(({ theme }) => ({
