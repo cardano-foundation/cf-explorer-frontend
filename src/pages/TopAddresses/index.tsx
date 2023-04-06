@@ -10,6 +10,7 @@ import Table, { Column } from "../../components/commons/Table";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { API } from "../../commons/utils/api";
+import ADAicon from "../../components/commons/ADAIcon";
 interface Props {}
 
 const TopAddresses: React.FC<Props> = () => {
@@ -47,7 +48,7 @@ const TopAddresses: React.FC<Props> = () => {
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.balance)}</Box>
-          <img src={AIcon} alt="a icon" />
+          <ADAicon />
         </Box>
       ),
     },

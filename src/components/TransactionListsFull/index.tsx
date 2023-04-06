@@ -16,6 +16,7 @@ import { AIcon } from "../../commons/resources";
 import { Label, StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
+import ADAicon from "../commons/ADAIcon";
 
 interface TransactionListFullProps {
   underline?: boolean;
@@ -129,7 +130,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.fee)}</Box>
-          <img src={AIcon} alt="a icon" />
+            <ADAicon />
         </Box>
       ),
     },
@@ -140,7 +141,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
-          <img src={AIcon} alt="a icon" />
+            <ADAicon />
         </Box>
       ),
     },

@@ -31,7 +31,6 @@ import {
   ViewDetailScroll,
   ViewDetailHeader,
 } from "./styles";
-import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
 import { HiOutlineCube } from "react-icons/hi2";
 import { BiChevronRight } from "react-icons/bi";
@@ -42,6 +41,7 @@ import CustomTooltip from "../CustomTooltip";
 import { API } from "../../../commons/utils/api";
 import { useSelector } from "react-redux";
 import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
 
 type DetailViewEpochProps = {
   epochNo: number;
@@ -205,7 +205,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
               </DetailLabel>
               <DetailValue>
                 {formatADAFull(data.outSum)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
           </Group>

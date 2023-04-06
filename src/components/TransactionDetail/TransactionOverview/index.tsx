@@ -3,9 +3,8 @@ import { useSelector } from "react-redux";
 import DetailHeader from "../../commons/DetailHeader";
 import { formatADAFull, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
 import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import { alpha, Box, IconButton, useTheme } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { ConfirmStatus, MaxSlot, StyledLink, TitleCard } from "./styles";
-import { ADAToken } from "../../commons/Token";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
 import exchageAltIcon from "../../../commons/resources/icons/exchangeArrow.svg";
@@ -21,7 +20,7 @@ import DropdownDetail from "../../commons/DropdownDetail";
 import { BiShowAlt } from "react-icons/bi";
 import { RootState } from "../../../stores/types";
 import CustomTooltip from "../../commons/CustomTooltip";
-import { Link } from "react-router-dom";
+import ADAicon from "../../commons/ADAIcon";
 
 interface Props {
   data: Transaction | null;
@@ -159,7 +158,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
       value: (
         <Box component={"span"}>
-          {formatADAFull(data?.tx?.totalOutput)} <ADAToken />{" "}
+          {formatADAFull(data?.tx?.totalOutput)} <ADAicon />
         </Box>
       ),
     },
@@ -173,7 +172,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
       value: (
         <Box component={"span"}>
-          {formatADAFull(data?.tx?.fee)} <ADAToken />{" "}
+          {formatADAFull(data?.tx?.fee)} <ADAicon />
         </Box>
       ),
     },

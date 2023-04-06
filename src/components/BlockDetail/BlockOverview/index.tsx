@@ -9,8 +9,8 @@ import slotIcon from "../../../commons/resources/icons/slot.svg";
 import { Box } from "@mui/material";
 import { TitleCard } from "./styles";
 import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
-import { ADAToken } from "../../commons/Token";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import ADAicon from "../../commons/ADAIcon";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
@@ -49,7 +49,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       ),
       value: (
         <Box component={"span"}>
-          {formatADAFull(data?.totalFees)} <ADAToken />
+          {formatADAFull(data?.totalFees)} <ADAicon />
         </Box>
       ),
     },
@@ -63,7 +63,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       ),
       value: (
         <Box component={"span"}>
-          {formatADAFull(data?.totalOutput)} <ADAToken />
+          {formatADAFull(data?.totalOutput)} <ADAicon />
         </Box>
       ),
     },
