@@ -66,7 +66,7 @@ export const footerMenus: Menu[] = [
     icon: ResourcesIcon,
     children: [
       { href: "https://education.cardanofoundation.org/", title: "Blockchain Course" },
-      { href: "https://developers.cardano.org/tools/", title: "Builder tools" },
+      { href: "https://developers.cardano.org/tools/", title: "Builder Tools" },
       { href: "https://dappsoncardano.com/", title: "Dapps" },
     ],
   },
