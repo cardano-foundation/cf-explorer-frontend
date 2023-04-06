@@ -31,7 +31,7 @@ const Bookmark = () => {
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [message, setMessage] = useState("");
   const [page, setPage] = useState(0);
-  const [size, setSize] = useState(10);
+  const [size, setSize] = useState(50);
   const [selected, setSelected] = useState<number | null>();
 
   const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
