@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { alpha, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { getShortWallet, formatADAFull, getShortHash } from "../../../../commons/utils/helper";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
@@ -45,15 +45,13 @@ const Card = ({
 
   return (
     <Box textAlign={"left"} mb={1} sx={{ background: theme => theme.palette.background.paper }}>
-      <Header>
-        <Box color={theme => theme.palette.text.hint} fontWeight="bold">
-          <Box color={theme => theme.palette.text.dark} fontSize={"1rem"} mb="3px">
-            {type === "down" ? "Input" : "Output"}
-          </Box>
-          Wallet Addresses
+      <Header fontWeight="bold">
+        <Box color={theme => theme.palette.text.dark} fontSize={"1rem"} lineHeight="19px" mb="2px">
+          {type === "down" ? "Input" : "Output"}
         </Box>
-        <Box color={theme => theme.palette.text.hint} fontWeight="bold">
-          Amount
+        <Box color={theme => theme.palette.text.hint} display="flex" justifyContent="space-between">
+          <Box>Wallet Addresses</Box>
+          <Box>Amount</Box>
         </Box>
       </Header>
       <Box>
@@ -82,6 +80,7 @@ const Card = ({
                             color={theme => theme.palette.secondary.main}
                             fontWeight="bold"
                             fontFamily={"var(--font-family-text)"}
+                            mr={1}
                           >
                             {getShortWallet(item.address)}
                           </Box>

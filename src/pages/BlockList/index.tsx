@@ -7,7 +7,7 @@ import { useWindowSize } from "react-use";
 import { Column } from "../../types/table";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { details } from "../../commons/routers";
-import { formatADAFull, getPageInfo, getShortHash } from "../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../commons/utils/helper";
 import { useTheme } from "@mui/material";
 import { AIcon } from "../../commons/resources";
 import { setOnDetailView } from "../../stores/user";
@@ -76,6 +76,12 @@ const BlockList = () => {
           {block === (r.blockNo || r.hash) && <SelectedIcon />}
         </PriceWrapper>
       ),
+    },
+    {
+      title: "Created At",
+      key: "timestamp",
+      minWidth: "100px",
+      render: r => <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>,
     },
   ];
 

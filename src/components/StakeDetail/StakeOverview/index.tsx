@@ -32,7 +32,6 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Delegated to </TitleCard>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       value: (
@@ -48,7 +47,6 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Total Stake</TitleCard>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       value: (
@@ -69,7 +67,6 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Reward available </TitleCard>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       value: (
@@ -84,7 +81,6 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Reward withdrawn </TitleCard>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       value: (
