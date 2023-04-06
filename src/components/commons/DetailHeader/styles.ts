@@ -43,11 +43,11 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
     switch (status) {
       case TRANSACTION_STATUS.FAIL:
         return theme.palette.error.main;
-      case TRANSACTION_STATUS.PENDDING:
-        return theme.palette.warning.main;
       case TRANSACTION_STATUS.SUCCESS:
         return theme.palette.success.main;
+      case TRANSACTION_STATUS.PENDDING:
       case "IN_PROGRESS":
+      case "SYNCING":
         return theme.palette.warning.main;
       case "FINISHED":
         return theme.palette.info.main;
@@ -59,11 +59,11 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
     switch (status) {
       case TRANSACTION_STATUS.FAIL:
         return theme.palette.error.light;
-      case TRANSACTION_STATUS.PENDDING:
-        return theme.palette.warning.light;
       case TRANSACTION_STATUS.SUCCESS:
         return theme.palette.success.light;
+      case TRANSACTION_STATUS.PENDDING:
       case "IN_PROGRESS":
+      case "SYNCING":
         return theme.palette.warning.light;
       case "FINISHED":
         return theme.palette.info.light;
