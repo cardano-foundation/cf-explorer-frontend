@@ -47,8 +47,8 @@ const TransactionList: React.FC<TransactionListProps> = ({
       render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0),
     },
     {
-      title: "Trx Hash",
-      key: "trxhash",
+      title: "Tx Hash",
+      key: "txhash",
       minWidth: 120,
 
       render: r => (
@@ -77,7 +77,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       ),
     },
     {
-      title: "Fees",
+      title: "Fee",
       key: "fee",
       minWidth: 120,
       render: r => (
@@ -88,7 +88,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       ),
     },
     {
-      title: "Output",
+      title: "Output in ADA",
       minWidth: 120,
       key: "ouput",
       render: r => (
