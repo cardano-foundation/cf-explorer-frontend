@@ -8,8 +8,7 @@ import { Column } from "../../types/table";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { details } from "../../commons/routers";
 import { formatADAFull, getPageInfo, getShortHash } from "../../commons/utils/helper";
-import { Box, useTheme } from "@mui/material";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { useTheme } from "@mui/material";
 import { AIcon } from "../../commons/resources";
 import { setOnDetailView } from "../../stores/user";
 import DetailViewBlock from "../../components/commons/DetailView/DetailViewBlock";
@@ -17,6 +16,7 @@ import Card from "../../components/commons/Card";
 import Table from "../../components/commons/Table";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
+import ADAicon from "../../components/commons/ADAIcon";
 
 const BlockList = () => {
   const [block, setBlock] = useState<number | string | null>(null);
@@ -61,7 +61,7 @@ const BlockList = () => {
       render: r => (
         <PriceWrapper>
           {formatADAFull(r.totalFees)}
-          <img src={AIcon} alt="ADA Icon" />
+          <ADAicon />
         </PriceWrapper>
       ),
     },
@@ -72,7 +72,7 @@ const BlockList = () => {
       render: r => (
         <PriceWrapper>
           {formatADAFull(r.totalOutput)}
-          <img src={AIcon} alt="ADA Icon" />
+          <ADAicon />
           {block === (r.blockNo || r.hash) && <SelectedIcon />}
         </PriceWrapper>
       ),

@@ -43,6 +43,7 @@ import {
   StyledLinearProgress,
   StyledTitle,
 } from "./styles";
+import ADAicon from "../../commons/ADAIcon";
 
 interface IDelegationDetailInfo {
   data: DelegationOverview | null;
@@ -233,7 +234,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoValue>
               <FlexGap10>
                 {formatADAFull(data?.poolSize)}
-                <img src={AIcon} alt={"ADA Icon"} />
+                <ADAicon />
               </FlexGap10>
             </InfoValue>
           </Item>
@@ -247,7 +248,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoValue>
               <FlexGap10>
                 {formatADAFull(data?.stakeLimit)}
-                <img src={AIcon} alt={"ADA Icon"} />
+                <ADAicon />
               </FlexGap10>
             </InfoValue>
           </Item>

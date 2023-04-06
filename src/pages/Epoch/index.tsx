@@ -16,6 +16,7 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { Box, useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
+import ADAicon from "../../components/commons/ADAIcon";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -53,7 +54,7 @@ const Epoch: React.FC = () => {
       render: r => (
         <Output>
           {formatADAFull(r.outSum)}
-          <img src={AIcon} alt="ADA Icon" />
+          <ADAicon />
         </Output>
       ),
     },
