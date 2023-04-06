@@ -1,5 +1,5 @@
-import { Box } from "@mui/material";
-import { useEffect } from "react";
+import { Box, MenuItem, Select } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details } from "../../commons/routers";
@@ -10,11 +10,15 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table from "../../components/commons/Table";
 import { ADAToken } from "../../components/commons/Token";
 import { Column } from "../../types/table";
-import { StyledContainer, StyledLink } from "./styles";
+import { PerPage, StyledContainer, StyledLink } from "./styles";
 
 const TopDelegators = () => {
   const history = useHistory();
-  const { error, data, initialized, loading } = useFetchList<Contracts>(API.STAKE.TOP_DELEGATOR, { page: 0, size: 50 });
+  const [pageSize, setPageSize] = useState("50");
+  const { error, data, initialized, loading } = useFetchList<Contracts>(API.STAKE.TOP_DELEGATOR, {
+    page: 0,
+    size: +pageSize,
+  });
 
   useEffect(() => {
     document.title = `Top Delegators | Cardano Explorer`;
@@ -61,7 +65,25 @@ const TopDelegators = () => {
 
   return (
     <StyledContainer>
-      <Card title="Top 50 delegators">
+      <Card
+        title="Top delegators"
+        extra={
+          <Box display="flex" alignItems="center">
+            <Select
+              value={pageSize}
+              onChange={(event) => setPageSize(event.target.value)}
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+            >
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={20}>20</MenuItem>
+              <MenuItem value={50}>50</MenuItem>
+              <MenuItem value={100}>100</MenuItem>
+            </Select>
+            <PerPage>Per page</PerPage>
+          </Box>
+        }
+      >
         <Table
           onClickRow={(_, r) => history.push(details.stake(r.stakeKey))}
           data={data}
