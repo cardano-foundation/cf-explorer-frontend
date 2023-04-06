@@ -10,6 +10,7 @@ import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { Header, Img, Item, TokenLink } from "./styles";
+import ADAicon from "../../../commons/ADAIcon";
 
 interface Props {
   data: Transaction["utxOs"] | null;
@@ -84,7 +85,7 @@ const Card = ({
                             {getShortWallet(item.address)}
                           </Box>
                         </CustomTooltip>
-                      </Link>
+                      </Link>{" "}
                       <CopyButton text={item.address} />
                     </Box>
                     <Box
@@ -103,7 +104,7 @@ const Card = ({
                       >
                         {type === "down" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
                       </Box>
-                      <img src={AIcon} alt="ADA icon" />
+                      <ADAicon />
                     </Box>
                   </Box>
                 </Box>
@@ -165,7 +166,7 @@ const Card = ({
                   {formatADAFull(fee)}
                 </Box>
                 <Box>
-                  <img src={AIcon} alt="ADA icon" />
+                  <ADAicon />
                 </Box>
               </Box>
             </Box>
@@ -183,7 +184,7 @@ const Card = ({
           <Box fontWeight={"bold"} component="span" pr={1}>
             {type === "down" ? `${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}
           </Box>
-          <img src={AIcon} alt="ADA icon" />
+          <ADAicon />
         </div>
       </Box>
     </Box>

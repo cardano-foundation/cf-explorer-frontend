@@ -16,6 +16,7 @@ import Card from "../../components/commons/Card";
 import Table from "../../components/commons/Table";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
+import ADAicon from "../../components/commons/ADAIcon";
 
 const BlockList = () => {
   const [block, setBlock] = useState<number | string | null>(null);
@@ -60,7 +61,7 @@ const BlockList = () => {
       render: r => (
         <PriceWrapper>
           {formatADAFull(r.totalFees)}
-          <img src={AIcon} alt="ADA Icon" />
+          <ADAicon />
         </PriceWrapper>
       ),
     },
@@ -71,7 +72,7 @@ const BlockList = () => {
       render: r => (
         <PriceWrapper>
           {formatADAFull(r.totalOutput)}
-          <img src={AIcon} alt="ADA Icon" />
+          <ADAicon />
           {block === (r.blockNo || r.hash) && <SelectedIcon />}
         </PriceWrapper>
       ),

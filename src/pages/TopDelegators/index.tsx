@@ -8,9 +8,9 @@ import { formatADAFull, getShortWallet, numberWithCommas } from "../../commons/u
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table from "../../components/commons/Table";
-import { ADAToken } from "../../components/commons/Token";
 import { Column } from "../../types/table";
 import { StyledContainer, StyledLink } from "./styles";
+import ADAicon from "../../components/commons/ADAIcon";
 
 const TopDelegators = () => {
   const history = useHistory();
@@ -53,7 +53,7 @@ const TopDelegators = () => {
       key: "Stakeamount",
       render: (r, idx) => (
         <Box component={"span"}>
-          {formatADAFull(r.balance)} <ADAToken />
+          {formatADAFull(r.balance)} <ADAicon />
         </Box>
       ),
     },
