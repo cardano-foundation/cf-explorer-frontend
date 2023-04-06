@@ -184,7 +184,7 @@ const TableSekeleton = () => {
 
 const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading }) => {
   const [page, setPage] = useState(pagination?.page || 1);
-  const [size, setSize] = useState(pagination?.size || 10);
+  const [size, setSize] = useState(pagination?.size || 50);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
 
   useUpdateEffect(() => {
@@ -214,6 +214,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading })
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>
               <MenuItem value={50}>50</MenuItem>
+              <MenuItem value={100}>100</MenuItem>
             </SelectMui>
             <Box component={"span"} ml={1} fontSize="0.875rem">
               Per page
