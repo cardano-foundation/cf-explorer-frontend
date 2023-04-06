@@ -6,12 +6,7 @@ import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
 import { details } from "../../commons/routers";
-import {
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortWallet,
-  numberWithCommas,
-} from "../../commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AssetName, Logo, StyledContainer, LogoEmpty } from "./styles";
@@ -75,6 +70,12 @@ const Tokens: React.FC<ITokenList> = () => {
       },
     },
     {
+      title: "Volume In 24H",
+      key: "volumeIn24h",
+      minWidth: "150px",
+      render: r => numberWithCommas(r?.volumeIn24h),
+    },
+    {
       title: "Total Supply",
       key: "supply",
       minWidth: "150px",
@@ -84,7 +85,7 @@ const Tokens: React.FC<ITokenList> = () => {
       },
     },
     {
-      title: "Created",
+      title: "Created At",
       key: "time",
       minWidth: "150px",
       render: r => (

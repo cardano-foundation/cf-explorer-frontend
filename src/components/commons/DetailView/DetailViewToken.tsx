@@ -185,10 +185,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
           </TokenContainer>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Token ID
-              </DetailLabel>
+              <DetailLabel>Token ID</DetailLabel>
               <DetailValue>
                 <CustomTooltip title={tokenId}>
                   <StyledLink to={details.token(tokenId)}>{getShortWallet(tokenId || "")}</StyledLink>
@@ -197,10 +194,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Asset name
-              </DetailLabel>
+              <DetailLabel>Asset name</DetailLabel>
               <DetailValue>
                 <TokenDetailInfo>
                   <TokenDetailName>
@@ -221,17 +215,19 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Transactions
-              </DetailLabel>
+              <DetailLabel>Transactions</DetailLabel>
               <DetailValue>{data.txCount}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Created
-              </DetailLabel>
+              <DetailLabel>Number of Holders</DetailLabel>
+              <DetailValue>{data.numberHolders || 0}</DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>Volume 24H</DetailLabel>
+              <DetailValue>{data.volumeIn24h || 0}</DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>Created</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.createdOn || "")}</DetailValue>
             </DetailsInfoItem>
           </Group>
@@ -242,6 +238,36 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                   <CgArrowsExchange />
                 </DetailLinkIcon>
                 <DetailLinkName>Transactions</DetailLinkName>
+              </DetailLabel>
+              <DetailValue>
+                <DetailLinkRight>
+                  <BiChevronRight size={24} />
+                </DetailLinkRight>
+              </DetailValue>
+            </DetailLink>{" "}
+          </Group>
+          <Group>
+            <DetailLink to={details.token(tokenId, "topHolders")}>
+              <DetailLabel>
+                <DetailLinkIcon>
+                  <CgArrowsExchange />
+                </DetailLinkIcon>
+                <DetailLinkName>Top Holders</DetailLinkName>
+              </DetailLabel>
+              <DetailValue>
+                <DetailLinkRight>
+                  <BiChevronRight size={24} />
+                </DetailLinkRight>
+              </DetailValue>
+            </DetailLink>
+          </Group>
+          <Group>
+            <DetailLink to={details.token(tokenId, "tokenMint")}>
+              <DetailLabel>
+                <DetailLinkIcon>
+                  <CgArrowsExchange />
+                </DetailLinkIcon>
+                <DetailLinkName>Token Mint</DetailLinkName>
               </DetailLabel>
               <DetailValue>
                 <DetailLinkRight>

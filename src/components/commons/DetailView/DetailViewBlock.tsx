@@ -168,10 +168,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
           </ListItem>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Block ID
-              </DetailLabel>
+              <DetailLabel>Block ID</DetailLabel>
               <DetailValue>
                 <CustomTooltip title={data.hash}>
                   <StyledLink to={details.block(blockNo)}>{getShortHash(data.hash)}</StyledLink>
@@ -180,34 +177,22 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Created at
-              </DetailLabel>
+              <DetailLabel>Created at</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Transaction
-              </DetailLabel>
+              <DetailLabel>Transaction</DetailLabel>
               <DetailValue>{data.txCount}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Transaction Fees
-              </DetailLabel>
+              <DetailLabel>Transaction Fees</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.totalFees)}
                 <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Total Output
-              </DetailLabel>
+              <DetailLabel>Total Output</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.totalOutput)}
                 <ADAToken color="black" />
@@ -215,7 +200,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
             </DetailsInfoItem>
             {/* <DetailsInfoItem>
               <DetailLabel>
-                <InfoIcon />
+
                 Slot leader
               </DetailLabel>
               <DetailValue>

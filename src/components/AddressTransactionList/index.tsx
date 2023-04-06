@@ -1,6 +1,8 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
+import { useState } from "react";
+
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import {
@@ -34,7 +36,9 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<Transactions>(url, pageInfo);
+  const [sort, setSort] = useState<string>("");
+
+  const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort });
 
   const onClickRow = (_: any, transaction: Transactions, index: number) => {
     if (openDetail) return openDetail(_, transaction, index);
@@ -67,6 +71,9 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       minWidth: "180px",
 
       render: r => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>,
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
     {
       title: "Block",
@@ -136,17 +143,23 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
           <img src={AIcon} alt="a icon" />
         </Box>
       ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
     {
       title: "Output",
       minWidth: 120,
-      key: "ouput",
+      key: "outSum",
       render: transaction => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(transaction.totalOutput)}</Box>
           <img src={AIcon} alt="a icon" />
         </Box>
       ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
   ];
 

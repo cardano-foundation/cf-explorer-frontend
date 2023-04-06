@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
@@ -25,8 +25,9 @@ const Transactions: React.FC = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
+  const [sort, setSort] = useState<string>("");
 
-  const fetchData = useFetchList<Contracts>(API.CONTRACT, pageInfo);
+  const fetchData = useFetchList<Contracts>(API.CONTRACT, { ...pageInfo, sort });
   const { adaRate } = useSelector(({ system }: RootState) => system);
 
   useEffect(() => {
@@ -63,6 +64,9 @@ const Transactions: React.FC = () => {
           <img src={AIcon} alt="a icon" />
         </Box>
       ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
     {
       title: "Value",
@@ -79,12 +83,15 @@ const Transactions: React.FC = () => {
     {
       title: "Transaction Count",
       minWidth: 120,
-      key: "transaction_count",
+      key: "txCount",
       render: r => (
         <Box display="flex" alignItems="center">
           {r.txCount}
         </Box>
       ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
   ];
 
