@@ -27,8 +27,8 @@ const Epoch: React.FC = () => {
 
   const columns: Column<IDataEpoch>[] = [
     {
-      title: "#",
-      key: "#",
+      title: "Epoch Number",
+      key: "epochNumber",
       minWidth: "50px",
       render: r => <Index>{numberWithCommas(r.no)}</Index>,
     },
@@ -45,7 +45,7 @@ const Epoch: React.FC = () => {
       render: r => <Blocks>{r.blkCount}</Blocks>,
     },
     {
-      title: "Output",
+      title: "Total Output",
       key: "outSum",
       minWidth: "100px",
       render: r => (
@@ -56,13 +56,13 @@ const Epoch: React.FC = () => {
       ),
     },
     {
-      title: "Start date",
+      title: "Start Timestamp",
       key: "startTime",
       minWidth: "100px",
       render: r => <StyledColorBlueDard>{formatDateTimeLocal(r.startTime || "")}</StyledColorBlueDard>,
     },
     {
-      title: "End date",
+      title: "End Timestamp",
       key: "endTime",
       minWidth: "100px",
       render: r => (
