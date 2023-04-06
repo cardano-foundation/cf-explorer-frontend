@@ -42,7 +42,7 @@ import {
   DetailLinkName,
   DetailLinkImage,
   ViewDetailScroll,
-  StyledViewMore,
+  ViewDetailHeader,
 } from "./styles";
 import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
@@ -56,6 +56,7 @@ import CopyButton from "../CopyButton";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { API } from "../../../commons/utils/api";
+import ViewAllButton from "../ViewAllButton";
 
 type DetailViewTransactionProps = {
   hash: string;
@@ -79,14 +80,16 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
   if (!data)
     return (
       <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
+        <ViewDetailHeader>
+          <ViewAllButton tooltipTitle="View Detail" to={details.transaction(hash)} />
+          <CustomTooltip title="Close">
+            <CloseButton onClick={handleClose}>
+              <CgClose />
+            </CloseButton>
+          </CustomTooltip>
+        </ViewDetailHeader>
         <ViewDetailContainer>
           <ViewDetailScroll>
-            <StyledViewMore tooltipTitle="View Detail" to={details.transaction(hash)} />
-            <CustomTooltip title="Close">
-              <CloseButton onClick={handleClose}>
-                <CgClose />
-              </CloseButton>
-            </CustomTooltip>
             <HeaderContainer>
               <ProgressSkeleton variant="circular" />
             </HeaderContainer>
@@ -143,31 +146,35 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
         <ViewMoreButton to={details.transaction(hash)} />
       </ViewDetailDrawer>
     );
+    
   const input = data.utxOs?.inputs[0]?.address || "";
   const output = data.utxOs?.outputs[0]?.address || "";
+
   const renderConfirmationTag = () => {
     if (data?.tx?.confirmation) {
-      if (data.tx.confirmation > 9) {
-        return CONFIRMATION_STATUS.HIGH;
+      if (data.tx.confirmation <= 2) {
+        return CONFIRMATION_STATUS.LOW;
       }
-      if (2 < data.tx.confirmation && data.tx.confirmation <= 8) {
+      if (data.tx.confirmation <= 8) {
         return CONFIRMATION_STATUS.MEDIUM;
       }
-      return CONFIRMATION_STATUS.LOW;
+      return CONFIRMATION_STATUS.HIGH;
     }
     return CONFIRMATION_STATUS.LOW;
   };
 
   return (
     <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
+      <ViewDetailHeader>
+        <ViewAllButton tooltipTitle="View Detail" to={details.transaction(hash)} />
+        <CustomTooltip title="Close">
+          <CloseButton onClick={handleClose}>
+            <CgClose />
+          </CloseButton>
+        </CustomTooltip>
+      </ViewDetailHeader>
       <ViewDetailContainer>
         <ViewDetailScroll>
-          <StyledViewMore tooltipTitle="View Detail" to={details.transaction(hash)} />
-          <CustomTooltip title="Close">
-            <CloseButton onClick={handleClose}>
-              <CgClose />
-            </CloseButton>
-          </CustomTooltip>
           <HeaderContainer>
             <ProgressCircle
               size={150}
@@ -264,7 +271,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {data.tx.confirmation}
-                <ConfirmStatus status={renderConfirmationTag()}>{renderConfirmationTag() || "LOW"}</ConfirmStatus>
+                <ConfirmStatus status={renderConfirmationTag()}>{renderConfirmationTag()}</ConfirmStatus>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>

@@ -75,7 +75,7 @@ const TableRow = <T extends ColumnType>({
             key={idx}
             minWidth={column.minWidth}
             maxWidth={column.maxWidth}
-            hiddenBorder={column.isHiddenBorder  && dataLength === index + 1}
+            hiddenBorder={column.isHiddenBorder && dataLength === index + 1}
           >
             {column.render ? column.render(row, index) : row[column.key]}
           </TCol>
@@ -176,8 +176,8 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading })
         ) : (
           ""
         )}
-        {total ? (
-          <Total ml={2} fontSize="0.875rem" lineHeight={"1 !important"}>
+        {total?.count ? (
+          <Total ml={"20px"} fontSize="0.875rem" lineHeight={"1 !important"}>
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> {`Result${total.count > 1 ? "s" : ""}`}
           </Total>
         ) : (
@@ -233,10 +233,7 @@ const Table: React.FC<TableProps> = ({
           />
         </TableFullWidth>
         {loading && !initialized && <TableSekeleton />}
-        {!loading && ((initialized && data?.length === 0) || (error && error !== true)) && (
-          <EmptyRecord className={emptyClassName} />
-        )}
-        {error && error !== true && <Error>{error || "Something went wrong!"}</Error>}
+        {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord className={emptyClassName} />}
       </Wrapper>
       <FooterTable total={total} pagination={pagination} loading={loading || false} />
     </Box>

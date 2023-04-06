@@ -1,3 +1,4 @@
+import { LoadingButton } from "@mui/lab";
 import { Box, Button, FormHelperText, FormLabel, InputBase, styled } from "@mui/material";
 
 export const WrapRowItem = styled(Box)`
@@ -19,7 +20,7 @@ export const StyledHelper = styled(FormHelperText)`
   position: absolute;
   top: 60px;
   font-size: var(--font-size-text-small);
-  color: #FF0000;
+  color: #ff0000;
 `;
 
 export const StyledInput = styled(InputBase)`
@@ -32,7 +33,7 @@ export const StyledInput = styled(InputBase)`
   max-width: 500px;
 `;
 
-export const StyledButton = styled(Button)`
+export const StyledButton = styled(LoadingButton)`
   height: 40px;
   margin-left: 10px;
   padding: 0 20px;

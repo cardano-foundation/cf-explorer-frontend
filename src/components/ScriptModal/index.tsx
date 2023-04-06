@@ -22,7 +22,13 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
         <ButtonClose onClick={props.onClose}>
           <img src={closeIcon} alt="icon close" />
         </ButtonClose>
-        <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Roboto", sans-serif '}>
+        <Box
+          textAlign={"left"}
+          color={({ palette }) => palette.grey[700]}
+          fontSize="1.5rem"
+          fontWeight="bold"
+          fontFamily={'"Roboto", sans-serif '}
+        >
           Policy ID
         </Box>
         {loading && (
@@ -43,8 +49,10 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
         )}
         {!loading && (
           <Box mt={2}>
-            <Box component={"span"}>Total Token:</Box>
-            <Box component={"span"} ml={2} fontWeight="bold">
+            <Box component={"span"} color={({ palette }) => palette.grey[500]}>
+              Total Token:
+            </Box>
+            <Box component={"span"} ml={2} fontWeight="bold" color={({ palette }) => palette.common.black}>
               {data?.totalToken || 0}
             </Box>
           </Box>
@@ -57,7 +65,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
         )}
         {!loading && (
           <>
-            <Box mt={2} mb={1}>
+            <Box mt={2} mb={1} color={({ palette }) => palette.grey[500]}>
               Policy script:
             </Box>
             <ViewJson>
@@ -71,6 +79,11 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                   style={{ padding: 0, background: "none", color: theme.palette.text.secondary }}
                   rootName={false}
                 />
+              )}
+              {!loading && !data?.policyScript && (
+                <Box textAlign={"center"} py={2} color={({ palette }) => palette.grey[300]}>
+                  Script not found
+                </Box>
               )}
             </ViewJson>
           </>

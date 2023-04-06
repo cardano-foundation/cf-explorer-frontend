@@ -10,6 +10,7 @@ import { StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import SelectedIcon from "../commons/SelectedIcon";
 
 interface TransactionListProps {
   underline?: boolean;
@@ -63,7 +64,16 @@ const TransactionList: React.FC<TransactionListProps> = ({
       key: "block",
       minWidth: 60,
       render: r => (
-        <StyledLink to={details.block(r.blockNo || r.blockHash)}>{r.blockNo || getShortHash(r.blockHash)}</StyledLink>
+        <Box>
+          <Box>
+            <StyledLink to={details.block(r.blockNo || r.blockHash)}>
+              {r.blockNo || getShortHash(r.blockHash)}
+            </StyledLink>
+          </Box>
+          <Box mt={1}>
+            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+          </Box>
+        </Box>
       ),
     },
     {
@@ -85,11 +95,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
           <img src={AIcon} alt="a icon" />
-          {hash === r.hash && (
-            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
-              <MdOutlineKeyboardArrowRight fontSize={30} />
-            </Box>
-          )}
+          {hash === r.hash && <SelectedIcon />}
         </Box>
       ),
     },

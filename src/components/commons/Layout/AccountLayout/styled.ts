@@ -5,12 +5,15 @@ export const Wrapper = styled(Container)(({ theme }) => ({}));
 export const ContentBox = styled(Box)(({ theme }) => ({
   display: "flex",
   background: theme.palette.background.paper,
-  height: "calc(100vh - 252px)",
+  minHeight: "calc(100vh - 252px)",
   borderTopLeftRadius: 10,
   borderTopRightRadius: 10,
 }));
 export const SideBar = styled(Box)(({ theme }) => ({
   borderRight: `1px solid ${theme.palette.grey[50]}`,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
 }));
 
 export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
@@ -29,8 +32,10 @@ export const StyledUsername = styled(Box)`
   text-overflow: ellipsis;
 `;
 
-export const StyledButton = styled(Button)(() => ({
+export const StyledButton = styled("span")(({ theme }) => ({
   textTransform: "lowercase",
+  cursor: "pointer",
+  color: theme.palette.primary.main,
   padding: 0,
   minWidth: "unset",
   lineHeight: 1,
@@ -40,9 +45,20 @@ export const StyledButton = styled(Button)(() => ({
 
 export const StyledButtonReport = styled(Button)(() => ({ padding: 0 }));
 export const StyledButtonClose = styled(Button)(({ theme }) => ({
-  border: `1px solid ${theme.palette.border.hint}`,
+  border: `2px solid ${theme.palette.border.hint}`,
   textTransform: "capitalize",
   fontWeight: "bold",
   color: "#344054",
   fontSize: "1rem",
+  width: "150px",
+  height: "44px",
+  borderRadius: "8px",
+  ":hover": {
+    border: `2px solid ${theme.palette.border.hint}`,
+  },
 }));
+
+export const ModalTitle = styled("h3")`
+  font-family: var(--font-family-title);
+  margin-top: 0px;
+`;

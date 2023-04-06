@@ -1,11 +1,10 @@
-import { alpha, Box, Container, Grid, Skeleton, styled } from "@mui/material";
+import { alpha, Box, Grid, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import CopyButton from "../CopyButton";
 
 export const HeaderDetailContainer = styled(Box)`
-  margin-top: 24px;
   text-align: left;
 `;
 
@@ -40,28 +39,36 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
 `;
 
 export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
-  color: ${props => {
-    switch (props.status) {
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case TRANSACTION_STATUS.FAIL:
+        return theme.palette.error.main;
+      case TRANSACTION_STATUS.PENDDING:
+        return theme.palette.warning.main;
       case TRANSACTION_STATUS.SUCCESS:
-        return props.theme.palette.primary.main;
+        return theme.palette.success.main;
       case "IN_PROGRESS":
-        return props.theme.palette.warning.main;
+        return theme.palette.warning.main;
       case "FINISHED":
-        return props.theme.palette.info.main;
+        return theme.palette.info.main;
       default:
-        return props.theme.palette.primary.main;
+        return theme.palette.success.main;
     }
   }};
-  background-color: ${props => {
-    switch (props.status) {
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case TRANSACTION_STATUS.FAIL:
+        return theme.palette.error.light;
+      case TRANSACTION_STATUS.PENDDING:
+        return theme.palette.warning.light;
       case TRANSACTION_STATUS.SUCCESS:
-        return `${props.theme.palette.success.light}`;
+        return theme.palette.success.light;
       case "IN_PROGRESS":
-        return `${props.theme.palette.warning.light}`;
+        return theme.palette.warning.light;
       case "FINISHED":
-        return `${props.theme.palette.info.light}`;
+        return theme.palette.info.light;
       default:
-        return `${props.theme.palette.success.light}`;
+        return theme.palette.success.light;
     }
   }};
   font-weight: var(--font-weight-bold);
@@ -70,14 +77,33 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
   border-radius: 2px;
 `;
 
-export const SlotLeader = styled("p")`
-  margin-top: 0px;
+export const StakeKeyStatus = styled("small")<{ status?: StakeStatus }>`
+  color: ${({ theme, status }) => {
+    switch (status) {
+      case "ACTIVE":
+        return theme.palette.success.main;
+      default:
+        return theme.palette.grey[400];
+    }
+  }};
+  background-color: ${({ theme, status }) => {
+    switch (status) {
+      case "ACTIVE":
+        return theme.palette.success.light;
+      default:
+        return alpha(theme.palette.grey[400], 0.2);
+    }
+  }};
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: var(--font-size-text-small);
+  border-radius: 4px;
+  height: 60%;
+  padding: 8px 16px;
 `;
 
-export const SlotLeaderSkeleton = styled(Skeleton)`
-  height: 1em;
-  width: 50%;
-  border-radius: 4px;
+export const SlotLeader = styled("p")`
+  margin-top: 0px;
 `;
 
 export const SlotLeaderValue = styled("span")`
@@ -97,8 +123,8 @@ export const SlotLeaderCopy = styled(CopyButton)`
   margin-bottom: 3px;
 `;
 
-export const DetailsInfo = styled(Grid)<{ multiRow?: number }>`
-  padding: 30px ${props => (props.multiRow ? 25 : 15)}px;
+export const DetailsInfo = styled(Grid)<{ numberOfItems: number }>`
+  padding: 30px ${props => (props.numberOfItems > 6 ? 25 : 15)}px;
   margin-top: 15px;
   background: ${props => props.theme.palette.background.paper};
   border-radius: 15px;
@@ -107,37 +133,12 @@ export const DetailsInfo = styled(Grid)<{ multiRow?: number }>`
   }
 `;
 
-export const DetailsInfoItem = styled(Grid)<{ center?: number }>`
-  display: flex;
-  justify-content: center;
-  align-items: ${props => (props.center ? `center` : `flex-start`)};
-  flex-direction: column;
-  padding: 22.5px 20px;
-  position: relative;
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 1px;
-    height: 70%;
-    transform: translateY(-50%);
-    background-image: ${props => props.theme.palette.gradient[8]};
-  }
-  &:first-of-type::after {
-    display: none;
-  }
-`;
-
-export const ProgressSkeleton = styled(Skeleton)`
-  width: 100px;
-  height: 100px;
-`;
-
-export const EpochNumber = styled("h3")`
-  color: ${props => props.theme.palette.common.black};
-  margin: 0;
-`;
+export const EpochNumber = styled(Link)<{ isEpoch: boolean }>(({ theme, isEpoch }) => ({
+  fontWeight: "bold",
+  color: `${isEpoch ? theme.palette.common.black : theme.palette.secondary.main} !important`,
+  margin: 0,
+  fontSize: "1.5rem",
+}));
 
 export const EpochText = styled("small")`
   opacity: 0.8;
@@ -152,27 +153,12 @@ export const IconSkeleton = styled(Skeleton)`
   width: 24px;
   height: 24px;
 `;
-export const DetailLabel = styled("small")`
-  margin: 10px 10px 5px 0px;
-  opacity: 0.8;
-`;
 
 export const DetailLabelSkeleton = styled(Skeleton)`
   height: 1em;
   width: 50%;
   min-width: 100px;
   border-radius: 4px;
-`;
-
-export const DetailValue = styled("h3")`
-  color: ${props => props.theme.palette.primary.contrastText};
-  font-family: var(--font-family-text);
-  font-size: var(--font-size-text-x-large);
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 10px 10px;
 `;
 
 export const DetailValueSkeleton = styled(Skeleton)`
@@ -191,26 +177,25 @@ export const BlockDefault = styled("span")`
   margin-top: 0.25rem;
 `;
 
-export const ConfirmationValue = styled(DetailValue)`
-  display: flex;
-  align-items: center;
-`;
-
 export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
-  color: ${props => {
-    switch (props.status) {
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case CONFIRMATION_STATUS.HIGH:
+        return theme.palette.success.main;
       case CONFIRMATION_STATUS.MEDIUM:
-        return props.theme.palette.warning.main;
+        return theme.palette.warning.main;
       default:
-        return props.theme.palette.warning.main;
+        return theme.palette.error.main;
     }
   }};
-  background-color: ${props => {
-    switch (props.status) {
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case CONFIRMATION_STATUS.HIGH:
+        return theme.palette.success.light;
       case CONFIRMATION_STATUS.MEDIUM:
-        return `${props.theme.palette.warning.light}`;
+        return theme.palette.warning.light;
       default:
-        return `${props.theme.palette.warning.light}`;
+        return theme.palette.error.light;
     }
   }};
   margin-left: 10px;
@@ -263,27 +248,16 @@ export const ProgressPercent = styled("h4")`
   margin: 0;
 `;
 
-export const CardInfoOverview = styled(Box)(({ theme }) => ({
-  padding: 25,
-  backgroundColor: theme.palette.background.paper,
-  display: "flex",
-  textAlign: "left",
-  boxShadow: theme.shadow.card,
-  borderRadius: 10,
-  marginTop: theme.spacing(5),
-  flexWrap: "wrap",
-}));
-
-export const CardItem = styled(Grid)<{ multiRow: number }>(({ theme, multiRow }) => ({
+export const CardItem = styled(Grid)<{ numberOfItems: number }>(({ theme, numberOfItems }) => ({
   position: "relative",
   width: "max-content",
-  padding: multiRow ? "20px 25px" : "0px 15px",
+  padding: numberOfItems > 6 ? "20px 25px" : "0px 15px",
   borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
   borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
   ":first-of-type": {
     borderLeft: "none",
   },
-  ...(multiRow
+  ...(numberOfItems > 6
     ? {
         borderBottomWidth: 1,
         [theme.breakpoints.up(theme.breakpoints.values.lg)]: {
@@ -321,15 +295,15 @@ export const CardItem = styled(Grid)<{ multiRow: number }>(({ theme, multiRow })
       right: -1,
       borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
     },
-    ":nth-child(3n)::after": {
+    [`:nth-child(${numberOfItems === 4 ? 4 : 3}n)::after`]: {
       borderRight: 0,
     },
-    ":nth-child(3n+1)": {
+    [`:nth-child(${numberOfItems === 4 ? 4 : 3}n+1)`]: {
       borderLeftWidth: 0,
       paddingLeft: 0,
     },
-    ":nth-last-child(-n+3)": {
-      ":nth-child(3n+1)": {
+    [`:nth-last-child(-n+${numberOfItems === 4 ? 4 : 3})`]: {
+      [`:nth-child(${numberOfItems === 4 ? 4 : 3}n+1)`]: {
         borderBottomWidth: 0,
         "&~div": {
           borderBottomWidth: 0,
@@ -344,6 +318,17 @@ export const CardItem = styled(Grid)<{ multiRow: number }>(({ theme, multiRow })
     ":nth-child(2n+1)": {
       borderLeftWidth: 0,
       paddingLeft: 0,
+    },
+    ":last-of-type::after": {
+      content: `""`,
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      right: -1,
+      borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+    },
+    ":nth-child(2n)::after": {
+      borderRight: 0,
     },
     ":nth-last-child(-n+2)": {
       ":nth-child(2n+1)": {

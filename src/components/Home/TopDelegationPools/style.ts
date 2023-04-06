@@ -5,7 +5,7 @@ import Table from "../../commons/Table";
 
 export const TopDelegateContainer = styled(BoxRaised)`
   margin-bottom: 24px;
-  padding: 30px 30px;
+  padding: 20px;
   text-align: left;
   @media screen and (max-width: 539px) {
     padding: 20px 15px;
@@ -16,7 +16,7 @@ export const Header = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
   gap: 10px;
 `;
 
@@ -24,6 +24,7 @@ export const Title = styled("h3")`
   position: relative;
   text-align: left;
   margin: 0px;
+  font-size: 1.25rem;
 
   &::after {
     position: absolute;

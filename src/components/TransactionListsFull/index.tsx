@@ -13,7 +13,7 @@ import {
 } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
-import { StyledLink } from "./styles";
+import { Label, StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
 
@@ -63,7 +63,9 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
       render: r => (
         <Box>
           <Box>
-            <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
+            <StyledLink to={details.block(r.blockNo || r.blockHash)}>
+              {r.blockNo || getShortHash(r.blockHash)}
+            </StyledLink>
           </Box>
           <Box mt={1}>
             <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
@@ -79,7 +81,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
         return (
           <div>
             <Box display={"flex"}>
-              <div> Input: </div>
+              <Label> Input: </Label>
               <div>
                 {r.addressesInput.slice(0, 1).map((tx, key) => {
                   return (
@@ -98,7 +100,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
               </div>
             </Box>
             <Box display={"flex"} mt={1}>
-              <div>Output: </div>
+              <Label>Output: </Label>
               <div>
                 {r.addressesOutput.slice(0, 1).map((tx, key) => {
                   return (

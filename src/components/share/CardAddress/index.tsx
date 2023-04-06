@@ -34,8 +34,9 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
   }
   if (type === "right" && !address) {
     return (
-      <CardItem>
-        <Box height={"100%"} display="flex" alignItems="center" justifyContent="center">
+      <CardItem padding={props => props.spacing(4)}>
+        <TitleDetail paddingBottom={props => props.spacing(2)}>{title}</TitleDetail>
+        <Box width={"100%"} display="flex" alignItems="center" justifyContent="center">
           <img alt="icon" src={EmptyIcon} />
         </Box>
       </CardItem>

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useWindowSize } from "react-use";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details, routers } from "../../commons/routers";
 import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
@@ -15,6 +15,7 @@ import { setOnDetailView } from "../../stores/user";
 import { StyledContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
 import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
+import SelectedIcon from "../../components/commons/SelectedIcon";
 
 interface IStake {}
 
@@ -30,6 +31,7 @@ const Stake: React.FC<IStake> = () => {
   const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
+  const theme = useTheme();
   const pageInfo = getPageInfo(search);
 
   const fetchData = useFetchList<IStakeKey>(`${API.STAKE.DETAIL}/${poolType}`, pageInfo);
@@ -45,7 +47,7 @@ const Stake: React.FC<IStake> = () => {
   };
 
   const openDetail = (_: any, r: IStakeKey, index: number) => {
-    if (width > 1023) {
+    if (width >= theme.breakpoints.values.md) {
       setOnDetailView(true);
       setStake(r.stakeKey);
       setSelected(index);
@@ -94,11 +96,7 @@ const Stake: React.FC<IStake> = () => {
             <StyledLink to={details.stake(r.stakeKey)}>{getShortWallet(r.stakeKey)}</StyledLink>
           </CustomTooltip>
 
-          {selected === idx && (
-            <Box position={"absolute"} right="10px" top={"50%"} style={{ transform: "translateY(-50%)" }}>
-              <MdOutlineKeyboardArrowRight fontSize={30} />
-            </Box>
-          )}
+          {selected === idx && <SelectedIcon />}
         </>
       ),
     },

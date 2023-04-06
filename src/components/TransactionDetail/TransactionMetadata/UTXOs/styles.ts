@@ -25,7 +25,7 @@ export const TokenLink = styled(Link)(({ theme }) => ({
   borderRadius: "2px",
   padding: "2px 10px",
   backgroundColor: alpha(theme.palette.grey[300], 0.2),
-  color: theme.palette.grey[400],
+  color: `${theme.palette.grey[400]} !important`,
   fontSize: "var(--font-size-text)",
   lineHeight: "1.5rem",
   fontWeight: "bold",
@@ -35,11 +35,10 @@ export const TokenLink = styled(Link)(({ theme }) => ({
 
 export const Item = styled(Box)(({ theme }) => ({
   textAlign: "left",
-  padding: "10px 0px",
+  padding: "15px 0px",
   margin: "0px 25px",
   borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-  "&:last-child": {
+  "&:last-of-type": {
     borderBottom: "none",
-    padding: "10px 0 0",
   },
 }));

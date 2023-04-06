@@ -1,5 +1,6 @@
 import { Box, styled } from "@mui/material";
 import { BoxRaised } from "../../commons/BoxRaised";
+import { TRANSACTION_STATUS } from "../../../commons/utils/constants";
 
 export const TransactionContainer = styled(Box)`
   margin-bottom: 24px;
@@ -12,6 +13,7 @@ export const Header = styled(Box)`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  padding: 0 20px;
   gap: 10px;
 `;
 
@@ -19,6 +21,7 @@ export const Title = styled("h3")`
   position: relative;
   text-align: left;
   margin: 0px;
+  font-size: 1.25rem;
 
   &::after {
     position: absolute;
@@ -50,6 +53,11 @@ export const ItemHeader = styled(Box)`
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
+`;
+export const RowItem = styled(Box)`
+  line-height: 1;
+  margin-top: ${props => props.theme.spacing(1)};
+}
 `;
 
 export const PriceImage = styled("img")`
@@ -91,4 +99,43 @@ export const BlankImage = styled("img")`
   width: 14px;
   height: 14px;
   vertical-align: baseline;
+`;
+
+export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case TRANSACTION_STATUS.FAIL:
+        return theme.palette.error.main;
+      case TRANSACTION_STATUS.PENDDING:
+        return theme.palette.warning.main;
+      case TRANSACTION_STATUS.SUCCESS:
+        return theme.palette.success.main;
+      case "IN_PROGRESS":
+        return theme.palette.warning.main;
+      case "FINISHED":
+        return theme.palette.info.main;
+      default:
+        return theme.palette.success.main;
+    }
+  }};
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case TRANSACTION_STATUS.FAIL:
+        return theme.palette.error.light;
+      case TRANSACTION_STATUS.PENDDING:
+        return theme.palette.warning.light;
+      case TRANSACTION_STATUS.SUCCESS:
+        return theme.palette.success.light;
+      case "IN_PROGRESS":
+        return theme.palette.warning.light;
+      case "FINISHED":
+        return theme.palette.info.light;
+      default:
+        return theme.palette.success.light;
+    }
+  }};
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 2px;
 `;

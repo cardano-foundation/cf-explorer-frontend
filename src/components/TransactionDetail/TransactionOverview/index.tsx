@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import DetailHeader from "../../commons/DetailHeader";
 import { formatADAFull, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
 import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import { Box, IconButton, useTheme } from "@mui/material";
-import { ConfirmStatus, StyledLink, TitleCard } from "./component";
+import { alpha, Box, IconButton, useTheme } from "@mui/material";
+import { ConfirmStatus, MaxSlot, StyledLink, TitleCard } from "./styles";
 import { ADAToken } from "../../commons/Token";
 import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
@@ -21,6 +21,7 @@ import DropdownDetail from "../../commons/DropdownDetail";
 import { BiShowAlt } from "react-icons/bi";
 import { RootState } from "../../../stores/types";
 import CustomTooltip from "../../commons/CustomTooltip";
+import { Link } from "react-router-dom";
 
 interface Props {
   data: Transaction | null;
@@ -186,55 +187,38 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           </TitleCard>
         </Box>
       ),
-      value: data?.tx?.blockNo || 0,
+      value: <StyledLink to={details.block(data?.tx?.blockNo || 0)}>{data?.tx?.blockNo || 0}</StyledLink>,
     },
     {
       icon: slotIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
-            {" "}
             Slot
           </TitleCard>
         </Box>
       ),
       value: (
         <>
-          {data?.tx?.epochSlot || 0}/
-          <Box component={"span"} fontWeight="400">
-            432000
-          </Box>
+          {data?.tx?.epochSlot || 0}/<MaxSlot>432000</MaxSlot>
         </>
       ),
     },
   ];
   return (
     <DetailHeader
-    listItem={listOverview}
-      data={
+      type="TRANSACTION"
+      bookmarkData={data?.tx.hash || ""}
+      title={"Transaction detail"}
+      hash={data?.tx.hash}
+      transactionStatus={data?.tx.status}
+      epoch={
         data && {
-          type: "transaction",
-          header: {
-            title: "Transaction detail",
-            hash: data.tx.hash,
-            status: data.tx.status,
-          },
-
-          blockDetail: {
-            epochNo: data.tx.epochNo,
-            epochSlot: currentEpoch?.no === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH,
-            maxEpochSlot: data.tx.maxEpochSlot,
-            blockNo: data.tx.blockNo,
-          },
-          confirmation: {
-            confirmation: data.tx.confirmation,
-            status: renderConfirmationTag(),
-          },
-          transactionFees: {
-            fee: data.tx.fee,
-          },
+          no: data.tx.epochNo,
+          slot: currentEpoch?.no === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH,
         }
       }
+      listItem={listOverview}
       loading={loading}
     />
   );

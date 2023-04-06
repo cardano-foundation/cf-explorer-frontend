@@ -1,4 +1,5 @@
 enum TransactionStatus {
+  FAIL = "FAIL",
   SUCCESS = "SUCCESS",
   PENDDING = "PENDDING",
 }
@@ -20,6 +21,14 @@ interface Transactions {
   fee: number;
   totalOutput: number;
   time: string;
+}
+interface CurrentTransactions {
+  blockNo: number;
+  fromAddress: string[];
+  toAddress: string[];
+  amount: number;
+  hash: string;
+  status: "FAIL" | "SUCCESS" | "PENDING";
 }
 
 interface Transaction {
@@ -70,10 +79,10 @@ interface Transaction {
     contract: string;
   }[];
   collaterals?: {
-    address: string;
-    txHash: string;
-    amount: number;
-  }[];
+    collateralInputResponses: CollateralResponses[];
+
+    collateralOutputResponses: CollateralResponses[];
+  };
   notes?: {
     note: string;
   }[];
@@ -133,5 +142,23 @@ interface Transaction {
     stakeAddressFrom: string;
     addressTo: string[];
     amount: 0;
+  }[];
+}
+
+interface CollateralResponses {
+  address: string;
+  assetId: string;
+  index: string;
+  txHash: string;
+  value: number;
+  tokens: {
+    assetName: string;
+    assetQuantity: number;
+    assetId: string;
+    policy: {
+      policyId: string;
+      totalToken: number;
+      policyScript: string;
+    };
   }[];
 }

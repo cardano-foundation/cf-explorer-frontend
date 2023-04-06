@@ -1,11 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useLocalStorage } from "react-use";
 import useFetch from "../../commons/hooks/useFetch";
 import { API, USER_API } from "../../commons/utils/api";
-import { MAX_SLOT_EPOCH } from "../../commons/utils/constants";
+import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
+import { getInfo } from "../../commons/utils/userRequest";
 import { setCurrentEpoch, setUsdMarket } from "../../stores/system";
 import { RootState } from "../../stores/types";
+import { setUserData } from "../../stores/user";
 
 export const SystemLoader = () => {
   const { userData } = useSelector(({ user }: RootState) => user);
@@ -14,6 +16,7 @@ export const SystemLoader = () => {
   const { data: currentEpoch } = useFetch<EpochCurrentType>(`${API.EPOCH.CURRENT_EPOCH}`);
   const { data: usdMarket, refesh } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=usd`);
   const { data: dataBookmark } = useFetch<string[]>(isLogin ? USER_API.BOOKMARK : "", undefined, true);
+  const startTime = useRef(Date.now());
 
   useEffect(() => {
     const interval = setInterval(() => refesh(), 5000);
@@ -22,12 +25,12 @@ export const SystemLoader = () => {
 
   useEffect(() => {
     if (currentEpoch) {
-      let { no, slot, totalSlot } = currentEpoch;
+      startTime.current = Date.now();
+      const { no, slot, totalSlot } = currentEpoch;
       const interval = setInterval(() => {
-        const isIncreaseEpoch = slot === (totalSlot || MAX_SLOT_EPOCH);
-        slot = isIncreaseEpoch ? 0 : slot + 1;
-        no = isIncreaseEpoch ? no + 1 : no;
-        setCurrentEpoch({ slot, no, totalSlot });
+        const newSlot = slot + Math.floor((Date.now() - startTime.current) / 1000);
+        const newNo = newSlot >= MAX_SLOT_EPOCH ? no + 1 : no;
+        setCurrentEpoch({ slot: newSlot % MAX_SLOT_EPOCH, no: newNo, totalSlot });
       }, 1000);
       return () => clearInterval(interval);
     }
@@ -44,6 +47,16 @@ export const SystemLoader = () => {
   useEffect(() => {
     if (currentEpoch) setCurrentEpoch(currentEpoch);
   }, [currentEpoch]);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
+        setUserData(response.data);
+      } catch (error) {}
+    };
+    if (localStorage.getItem("token")) fetchUserInfo();
+  }, []);
 
   return null;
 };

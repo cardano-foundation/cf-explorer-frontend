@@ -16,15 +16,27 @@ export const ViewDetailDrawer = styled(Drawer)`
   }
 `;
 
+export const ViewDetailHeader = styled(Box)`
+  margin: 100px 30px 0px;
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)};
+`;
+
+export const CloseButton = styled(IconButton)`
+  color: ${props => props.theme.palette.text.hint};
+  padding: 5.5px;
+`;
+
 export const ViewDetailContainer = styled(Box)`
   position: relative;
   width: 430px;
   height: calc(100vh - 244px);
   overflow-x: hidden;
   overflow-y: auto;
-  margin: 100px 0 0 30px;
-  padding: 40px 0px 0px;
-  border-top: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)};
+  margin-left: 30px;
   text-align: center;
 `;
 export const ViewDetailScroll = styled(Box)`
@@ -33,20 +45,8 @@ export const ViewDetailScroll = styled(Box)`
   margin-right: 16px;
   overflow-x: hidden;
   overflow: hidden;
+  padding-top: 15px;
 `;
-
-export const StyledViewMore = styled(ViewAllButton)`
-  position: absolute;
-  top: 10px;
-  left: 0px;
-`;
-export const CloseButton = styled(IconButton)`
-  position: absolute;
-  top: 10px;
-  left: 365px;
-  color: ${props => props.theme.palette.text.hint};
-`;
-
 export const HeaderContainer = styled(Box)`
   display: flex;
   justify-content: center;
@@ -55,10 +55,8 @@ export const HeaderContainer = styled(Box)`
 export const TokenContainer = styled(Box)`
   width: calc(100% - 40px);
   background: ${props => props.theme.palette.text.secondary};
-  box-shadow: 0px 10px 25px ${props => alpha(props.theme.palette.common.black, 0.1)};
   border-radius: 12px;
   padding: 25px 20px;
-  margin-top: 10px;
   text-align: left;
 `;
 
@@ -322,20 +320,24 @@ export const DetailLinkRight = styled("span")`
 `;
 
 export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
-  color: ${props => {
-    switch (props.status) {
-      case TRANSACTION_STATUS.SUCCESS:
-        return props.theme.palette.primary.main;
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case TRANSACTION_STATUS.FAIL:
+        return theme.palette.error.main;
+      case TRANSACTION_STATUS.PENDDING:
+        return theme.palette.warning.main;
       default:
-        return props.theme.palette.primary.main;
+        return theme.palette.success.main;
     }
   }};
-  background-color: ${props => {
-    switch (props.status) {
-      case TRANSACTION_STATUS.SUCCESS:
-        return `${props.theme.palette.success.light}`;
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case TRANSACTION_STATUS.FAIL:
+        return theme.palette.error.light;
+      case TRANSACTION_STATUS.PENDDING:
+        return theme.palette.warning.light;
       default:
-        return `${props.theme.palette.success.light}`;
+        return theme.palette.success.light;
     }
   }};
   margin-left: 15px;
@@ -345,20 +347,24 @@ export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatu
   border-radius: 2px;
 `;
 export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
-  color: ${props => {
-    switch (props.status) {
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case CONFIRMATION_STATUS.HIGH:
+        return theme.palette.success.main;
       case CONFIRMATION_STATUS.MEDIUM:
-        return props.theme.palette.warning.main;
+        return theme.palette.warning.main;
       default:
-        return props.theme.palette.warning.main;
+        return theme.palette.error.main;
     }
   }};
-  background-color: ${props => {
-    switch (props.status) {
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case CONFIRMATION_STATUS.HIGH:
+        return theme.palette.success.light;
       case CONFIRMATION_STATUS.MEDIUM:
-        return `${props.theme.palette.warning.light}`;
+        return theme.palette.warning.light;
       default:
-        return `${props.theme.palette.warning.light}`;
+        return theme.palette.error.light;
     }
   }};
   margin-left: 10px;
@@ -442,7 +448,7 @@ export const StakeKeyLink = styled(StyledLink)`
   line-height: 1.575;
 `;
 
-export const StakeKeyStatus = styled("small")<{ status: StakeStaus }>`
+export const StakeKeyStatus = styled("small")<{ status: StakeStatus }>`
   color: ${props => {
     switch (props.status) {
       case STAKE_KEY_STATUS.ACTIVE:

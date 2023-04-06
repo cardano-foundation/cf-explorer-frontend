@@ -59,7 +59,7 @@ export const openedMixin = (theme: Theme): CSSObject => ({
   }),
   overflowY: "unset",
   borderRightWidth: 0,
-  [theme.breakpoints.down(1023)]: {
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
     width: "100%",
     minWidth: "100%",
     height: "auto",
@@ -75,7 +75,7 @@ export const closedMixin = (theme: Theme): CSSObject => ({
   overflowY: "unset",
   width: drawerCollaspWidth,
   borderRightWidth: 0,
-  [theme.breakpoints.down(1023)]: {
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
     width: "100%",
     height: "auto",
     boxShadow: theme.shadow.card,
@@ -97,7 +97,7 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== "o
     ...closedMixin(theme),
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
-  [theme.breakpoints.down(1023)]: {
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
     width: "100%",
     height: "auto",
     boxShadow: theme.shadow.card,
