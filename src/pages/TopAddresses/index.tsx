@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { Box } from "@mui/material";
+import { Box, MenuItem, Select } from "@mui/material";
 import { formatADAFull, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
-import { AIcon } from "../../commons/resources";
-import { StyledContainer, StyledLink } from "./styles";
+import { PerPage, StyledContainer, StyledLink } from "./styles";
 import Table, { Column } from "../../components/commons/Table";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
@@ -13,7 +12,12 @@ import ADAicon from "../../components/commons/ADAIcon";
 interface Props {}
 
 const TopAddresses: React.FC<Props> = () => {
-  const { error, data, initialized, loading } = useFetchList<Contracts>(API.ADDRESS.TOP_ADDRESS, { page: 0, size: 50 });
+  const [pageSize, setPageSize] = useState("50");
+
+  const { error, data, initialized, loading } = useFetchList<Contracts>(API.ADDRESS.TOP_ADDRESS, {
+    page: 0,
+    size: +pageSize,
+  });
 
   useEffect(() => {
     document.title = `Top Addresses | Cardano Explorer`;
@@ -64,15 +68,27 @@ const TopAddresses: React.FC<Props> = () => {
 
   return (
     <StyledContainer>
-      <Card title={"Top 50 addresses"} underline={false}>
-        <Table
-          // onClickRow={(_, r) => history.push(details.address(r.address))}
-          data={data}
-          error={error}
-          loading={loading}
-          initialized={initialized}
-          columns={columns}
-        />
+      <Card
+        title={"Top addresses"}
+        underline={false}
+        extra={
+          <Box display="flex" alignItems="center">
+            <Select
+              value={pageSize}
+              onChange={event => setPageSize(event.target.value)}
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+            >
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={20}>20</MenuItem>
+              <MenuItem value={50}>50</MenuItem>
+              <MenuItem value={100}>100</MenuItem>
+            </Select>
+            <PerPage>Per page</PerPage>
+          </Box>
+        }
+      >
+        <Table data={data} error={error} loading={loading} initialized={initialized} columns={columns} />
       </Card>
     </StyledContainer>
   );
