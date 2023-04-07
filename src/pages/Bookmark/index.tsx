@@ -29,7 +29,7 @@ const Bookmark = () => {
   const [activeTab, setActiveTab] = useState("ADDRESS");
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [page, setPage] = useState(0);
-  const [size, setSize] = useState(10);
+  const [size, setSize] = useState(50);
   const [selected, setSelected] = useState<string | null>();
   const toast = useToast();
 
