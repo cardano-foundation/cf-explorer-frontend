@@ -19,6 +19,7 @@ import { StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { SmallText } from "../share/styled";
+import ADAicon from "../commons/ADAIcon";
 
 interface AddressTransactionListProps {
   underline?: boolean;
@@ -140,7 +141,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       render: transaction => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(transaction.fee)}</Box>
-          <img src={AIcon} alt="a icon" />
+          <ADAicon />
         </Box>
       ),
       sort: ({ columnKey, sortValue }) => {
@@ -154,7 +155,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       render: transaction => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(transaction.totalOutput)}</Box>
-          <img src={AIcon} alt="a icon" />
+          <ADAicon />
         </Box>
       ),
       sort: ({ columnKey, sortValue }) => {

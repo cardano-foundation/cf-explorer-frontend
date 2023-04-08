@@ -16,6 +16,7 @@ import Table, { Column } from "../../commons/Table";
 import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { API } from "../../../commons/utils/api";
+import ADAicon from "../../commons/ADAIcon";
 
 interface ITokenTransaction {
   active: boolean;
@@ -108,7 +109,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       render: r => (
         <PriceValue>
           <SmallText>{formatADAFull(r.fee)}</SmallText>
-          <PriceIcon src={AIcon} alt="a icon" />
+          <ADAicon mb={"5px"} ml={"8px"} />
         </PriceValue>
       ),
       sort: ({ columnKey, sortValue }) => {
@@ -122,7 +123,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       render: r => (
         <PriceValue>
           <SmallText>{formatADAFull(r.totalOutput)}</SmallText>
-          <PriceIcon src={AIcon} alt="a icon" />
+          <ADAicon mb={"5px"} ml={"8px"} />
         </PriceValue>
       ),
       sort: ({ columnKey, sortValue }) => {
