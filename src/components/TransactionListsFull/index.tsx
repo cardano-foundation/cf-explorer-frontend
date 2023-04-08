@@ -23,9 +23,16 @@ interface TransactionListFullProps {
   url: string;
   openDetail?: (_: any, r: Transactions, index: number) => void;
   selected?: number | null;
+  showTitle?: boolean;
 }
 
-const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = false, url, openDetail, selected }) => {
+const TransactionListFull: React.FC<TransactionListFullProps> = ({
+  underline = false,
+  url,
+  openDetail,
+  selected,
+  showTitle = true,
+}) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -148,7 +155,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
   ];
 
   return (
-    <Card title={"Transactions"} underline={underline}>
+    <Card title={showTitle ? "Transactions" : ""} underline={underline}>
       <Table
         {...fetchData}
         columns={columns}
