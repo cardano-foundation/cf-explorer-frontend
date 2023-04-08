@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import useFetchList from "../../../commons/hooks/useFetchList";
@@ -26,8 +26,9 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
+  const [sort, setSort] = useState<string>("");
 
-  const fetchData = useFetchList<Transactions>(API.TOKEN_TRX.replace(":tokenId", tokenId), { ...pageInfo });
+  const fetchData = useFetchList<Transactions>(API.TOKEN.TOKEN_TRX.replace(":tokenId", tokenId), { ...pageInfo, sort });
 
   const columns: Column<Transactions>[] = [
     {
@@ -110,17 +111,23 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
           <PriceIcon src={AIcon} alt="a icon" />
         </PriceValue>
       ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
     {
       title: "Output",
       minWidth: "120px",
-      key: "ouput",
+      key: "outSum",
       render: r => (
         <PriceValue>
           <SmallText>{formatADAFull(r.totalOutput)}</SmallText>
           <PriceIcon src={AIcon} alt="a icon" />
         </PriceValue>
       ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
   ];
 
