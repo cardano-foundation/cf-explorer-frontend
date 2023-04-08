@@ -4,12 +4,14 @@ import { useHistory, useParams } from "react-router-dom";
 import Card from "../../commons/Card";
 import TokenTransaction from "./TokenTransaction";
 
-import { StyledSelect } from "./styles";
+import { StyledSelect, TitleTab } from "./styles";
 import TokenTopHolder from "./TokenTopHolder";
 import TokenMinting from "./TokenMinting";
-import { MenuItem } from "@mui/material";
+import { Box, MenuItem, Tab } from "@mui/material";
 import { BiChevronDown } from "react-icons/bi";
 import { stringify } from "qs";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { details } from "../../../commons/routers";
 
 interface ITokenTableData {
   totalSupply?: number;
@@ -24,46 +26,63 @@ interface IMappingvalue {
 
 const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
   const [type, setType] = useState<string>("transactions");
-  const params = useParams<{ tokenId: string }>();
   const history = useHistory();
+  let { tabActive = "transactions", tokenId } = useParams<{ tabActive: keyof Transaction; tokenId: string }>();
 
-  const mappingValue: IMappingvalue = {
-    transactions: {
-      title: "Transactions",
-      component: <TokenTransaction tokenId={params.tokenId} active={type === "transactions"} />,
+  const tabs: {
+    key: string;
+    label: string;
+    children: React.ReactNode;
+  }[] = [
+    {
+      key: "transactions",
+      label: "Transactions",
+      children: <TokenTransaction tokenId={tokenId} active={type === "transactions"} />,
     },
-    topHolders: {
-      title: "Top Holders",
-      component: <TokenTopHolder tokenId={params.tokenId} active={type === "topHolders"} totalSupply={totalSupply} />,
+    {
+      key: "topHolders",
+      label: "Top Holders",
+      children: <TokenTopHolder tokenId={tokenId} active={type === "topHolders"} totalSupply={totalSupply} />,
     },
-    minting: {
-      title: "Minting",
-      component: <TokenMinting tokenId={params.tokenId} active={type === "minting"} />,
+    {
+      key: "tokenMint",
+      label: "Token Mint",
+      children: <TokenMinting tokenId={tokenId} active={type === "minting"} />,
     },
+  ];
+
+  const handleChange = (event: React.SyntheticEvent, tab: keyof Transaction) => {
+    history.push(details.token(tokenId, tab));
   };
-
   return (
-    <Card
-      title={mappingValue[type].title}
-      underline
-      extra={
-        <StyledSelect
-          value={type}
-          onChange={(e: any) => {
-            setType(e.target.value);
-
-            history.push({ search: stringify({ page: 1, size: 10 }) });
-          }}
-          IconComponent={() => <BiChevronDown size={30} style={{ paddingRight: 10 }} />}
-        >
-          {Object.keys(mappingValue).map(key => (
-            <MenuItem value={key}>{mappingValue[key].title}</MenuItem>
-          ))}
-        </StyledSelect>
-      }
-    >
-      {mappingValue[type].component}
-    </Card>
+    <TabContext value={tabActive}>
+      <TabList
+        onChange={handleChange}
+        TabIndicatorProps={{
+          sx: { background: theme => theme.palette.primary.main, color: theme => theme.palette.primary.main },
+        }}
+      >
+        {tabs?.map(({ key, label }) => (
+          <Tab
+            key={key}
+            value={key}
+            style={{ padding: "12px 0px", marginRight: 40 }}
+            label={
+              <Box display={"flex"} alignItems="center">
+                <TitleTab pl={1} active={key === tabActive}>
+                  {label}
+                </TitleTab>
+              </Box>
+            }
+          />
+        ))}
+      </TabList>
+      {tabs.map(item => (
+        <TabPanel key={item.key} value={item.key} style={{ padding: 0, paddingTop: 12 }}>
+          {item.children}
+        </TabPanel>
+      ))}
+    </TabContext>
   );
 };
 
