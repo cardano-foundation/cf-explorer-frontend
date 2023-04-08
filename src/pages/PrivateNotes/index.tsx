@@ -1,5 +1,17 @@
 import { useEffect, useState } from "react";
-import { ActionButton, AddButton, ButtonCancel, Container, Header, SmallText, StyledLink, StyledTable, Title } from "./styles";
+import {
+  ActionButton,
+  AddButton,
+  CancelButton,
+  Container,
+  DeleteButton,
+  Header,
+  SmallText,
+  StyledLink,
+  StyledTable,
+  Title,
+} from "./styles";
+import { ReactComponent as QuestionConfirm } from "../../commons/resources/icons/questionConfirm.svg";
 import { ReactComponent as Plus } from "../../commons/resources/icons/plus.svg";
 import { formatDateTime, getPageInfo, getShortHash } from "../../commons/utils/helper";
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -14,7 +26,6 @@ import { removePrivateNote } from "../../commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
 import { details } from "../../commons/routers";
 import { DialogContentText } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
 import { ButtonClose } from "../../components/ScriptModal/styles";
 import { CloseIcon } from "../../commons/resources";
 import useToast from "../../commons/hooks/useToast";
@@ -151,32 +162,39 @@ const PrivateNotes = () => {
         />
       </Box>
       <AddPrivateNoteModal currentNote={currentNote} open={openModal} handleCloseModal={onCloseModal} refesh={refesh} />
-      <Dialog open={!!selected}>
-        <DialogTitle textAlign={"left"} fontWeight="bold" color={theme => theme.palette.text.primary}>
+      <Dialog
+        open={!!selected}
+        PaperProps={{
+          style: { borderRadius: 20, width: 550 },
+        }}
+      >
+        <Box textAlign={"center"} pt={5} pb={2}>
+          <QuestionConfirm />
+        </Box>
+        <Box component={"h2"} textAlign={"center"} fontWeight={"bold"} fontSize={"1.125rem"} paddingBottom={"0px"}>
           Confirmation Required
-        </DialogTitle>
-
-        <ButtonClose onClick={() => setSelected(null)}>
+        </Box>
+        <ButtonClose disabled={loadingDelete} onClick={() => setSelected(null)}>
           <img src={CloseIcon} alt="icon close" />
         </ButtonClose>
-        <DialogContent>
-          <DialogContentText color={theme => theme.palette.text.secondary}>
+        <Box>
+          <DialogContentText color={theme => theme.palette.text.secondary} fontSize={"1.125rem"}>
             Are you sure to remove transaction private note {getShortHash(selected?.txHash || "")} ?
           </DialogContentText>
-        </DialogContent>
+        </Box>
         <DialogActions>
-          <ButtonCancel autoFocus onClick={() => setSelected(null)}>
-            Cancel
-          </ButtonCancel>
-          <LoadingButton
-            loading={loadingDelete}
-            onClick={() => selected && handleClickRemoveNote(selected)}
-            variant="contained"
-            color="error"
-            style={{ textTransform: "capitalize", height: "32px" }}
-          >
-            Remove
-          </LoadingButton>
+          <Box flex={1} pt={2} pb={3}>
+            <CancelButton disabled={loadingDelete} autoFocus onClick={() => setSelected(null)}>
+              Cancel
+            </CancelButton>
+            <DeleteButton
+              loading={loadingDelete}
+              onClick={() => selected && handleClickRemoveNote(selected)}
+              variant="contained"
+            >
+              Continue
+            </DeleteButton>
+          </Box>
         </DialogActions>
       </Dialog>
     </Container>
