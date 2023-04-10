@@ -59,7 +59,7 @@ const DelegationLists: React.FC = () => {
     },
     {
       title: "Fee (A) ",
-      key: "feeAmount",
+      key: "pu.fixedCost",
       minWidth: "120px",
       render: r => `${formatPercent(r.feePercent)} (${formatADAFull(r.feeAmount)} A)`,
       sort: ({ columnKey, sortValue }) => {
@@ -68,7 +68,7 @@ const DelegationLists: React.FC = () => {
     },
     {
       title: "Declared Pledge (A)",
-      key: "pledge",
+      key: "pu.pledge",
       minWidth: "120px",
       render: r => <Box component={"span"}>{formatADAFull(r.pledge)}</Box>,
       sort: ({ columnKey, sortValue }) => {
