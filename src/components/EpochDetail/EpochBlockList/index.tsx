@@ -11,6 +11,7 @@ import useFetchList from "../../../commons/hooks/useFetchList";
 import { API } from "../../../commons/utils/api";
 import { Box } from "@mui/material";
 import ADAicon from "../../commons/ADAIcon";
+import { REFRESH_TIMES } from "../../../commons/utils/constants";
 
 interface IEpochBlockList {
   epochId: string;
@@ -21,7 +22,12 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<BlockDetail>(`${API.EPOCH.DETAIL}/${epochId}/blocks`, pageInfo);
+  const fetchData = useFetchList<BlockDetail>(
+    `${API.EPOCH.DETAIL}/${epochId}/blocks`,
+    pageInfo,
+    false,
+    pageInfo.page === 0 ? REFRESH_TIMES.EPOCH_DETAIL : 0
+  );
 
   const columns: Column<BlockDetail>[] = [
     {
@@ -39,9 +45,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       key: "block",
       minWidth: "100px",
       render: r => (
-        <StyledLink to={details.block(r.blockNo || r.hash)}>
-          {r.blockNo || getShortHash(r.hash || "")}
-        </StyledLink>
+        <StyledLink to={details.block(r.blockNo || r.hash)}>{r.blockNo || getShortHash(r.hash || "")}</StyledLink>
       ),
     },
     {
