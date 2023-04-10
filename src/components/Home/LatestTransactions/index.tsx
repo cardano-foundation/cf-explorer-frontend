@@ -30,7 +30,7 @@ import { TRANSACTION_STATUS } from "../../../commons/utils/constants";
 
 const LatestTransactions: React.FC = () => {
   const { data, initialized } = useFetch<CurrentTransactions[]>(
-    API.TRANSACTION.LIST,
+    API.TRANSACTION.CURRENT,
     undefined,
     false,
     REFRESH_TIMES.LATEST_TRANSACTION
