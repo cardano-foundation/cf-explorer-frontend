@@ -20,13 +20,14 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useSelector } from "react-redux";
 import { RootState } from "../../stores/types";
 import { API } from "../../commons/utils/api";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const Transactions: React.FC = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<Contracts>(API.CONTRACT, pageInfo);
+  const fetchData = useFetchList<Contracts>(API.CONTRACT, pageInfo, false, REFRESH_TIMES.CONTRACTS);
   const { adaRate } = useSelector(({ system }: RootState) => system);
 
   useEffect(() => {

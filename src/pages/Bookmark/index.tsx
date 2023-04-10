@@ -33,7 +33,7 @@ const Bookmark = () => {
   const [selected, setSelected] = useState<string | null>();
   const toast = useToast();
 
-  const { data, loading, refesh, error, total } = useFetchList<Bookmark>(
+  const { data, loading, refresh, error, total } = useFetchList<Bookmark>(
     "/bookmark/find-all",
     {
       type: activeTab,
@@ -57,7 +57,7 @@ const Bookmark = () => {
         setSelected(null);
         setLoadingDelete(false);
         setBookmarks(bookmarks?.filter(r => r.keyword !== keyword));
-        refesh();
+        refresh();
         toast.success("Successfully!");
       }
     } catch (error) {

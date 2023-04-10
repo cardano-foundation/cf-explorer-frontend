@@ -57,7 +57,7 @@ const PrivateNotes = () => {
   const [currentNote, setCurrentNote] = useState<TCurrentNote | undefined>();
   const toast = useToast();
 
-  const { data, total, refesh } = useFetchList("note/find-all", { network: NETWORK_TYPES[NETWORK], page, size }, true);
+  const { data, total, refresh } = useFetchList("note/find-all", { network: NETWORK_TYPES[NETWORK], page, size }, true);
   const { search } = useLocation();
   const pageInfo = getPageInfo(search);
 
@@ -76,7 +76,7 @@ const PrivateNotes = () => {
       await removePrivateNote(note.id);
       toast.success(`Delete transaction private note ${getShortHash(note.txHash || "")} successfully`);
       setSelected(null);
-      refesh();
+      refresh();
     } catch (error) {
       toast.error("Something went wrong!");
     } finally {
@@ -150,7 +150,7 @@ const PrivateNotes = () => {
           }}
         />
       </Box>
-      <AddPrivateNoteModal currentNote={currentNote} open={openModal} handleCloseModal={onCloseModal} refesh={refesh} />
+      <AddPrivateNoteModal currentNote={currentNote} open={openModal} handleCloseModal={onCloseModal} refresh={refresh} />
       <Dialog open={!!selected}>
         <DialogTitle textAlign={"left"} fontWeight="bold" color={theme => theme.palette.text.primary}>
           Confirmation Required

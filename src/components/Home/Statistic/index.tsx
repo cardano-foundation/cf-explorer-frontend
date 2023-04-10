@@ -7,7 +7,7 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
-import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
 import { formatADA, formatADAFull, numberWithCommas } from "../../../commons/utils/helper";
 import { RootState } from "../../../stores/types";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -48,12 +48,12 @@ const MILION = 10 ** 6;
 const HomeStatistic: React.FC<Props> = () => {
   const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
-  const { data: btcMarket, refesh } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=btc`);
-
-  useEffect(() => {
-    const interval = setInterval(() => refesh(), 5000);
-    return () => clearInterval(interval);
-  }, [refesh]);
+  const { data: btcMarket, refresh } = useFetch<CardanoMarket[]>(
+    `${API.MARKETS}?currency=btc`,
+    undefined,
+    false,
+    REFRESH_TIMES.CURRENT_PRICE_BTC
+  );
 
   const { circulating_supply, total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};

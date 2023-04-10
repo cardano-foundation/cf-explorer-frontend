@@ -11,10 +11,16 @@ import Table from "../../components/commons/Table";
 import { ADAToken } from "../../components/commons/Token";
 import { Column } from "../../types/table";
 import { StyledContainer, StyledLink } from "./styles";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const TopDelegators = () => {
   const history = useHistory();
-  const { error, data, initialized, loading } = useFetchList<Contracts>(API.STAKE.TOP_DELEGATOR, { page: 0, size: 50 });
+  const { error, data, initialized, loading } = useFetchList<Contracts>(
+    API.STAKE.TOP_DELEGATOR,
+    { page: 0, size: 50 },
+    false,
+    REFRESH_TIMES.TOP_DELEGATORS
+  );
 
   useEffect(() => {
     document.title = `Top Delegators | Cardano Explorer`;
