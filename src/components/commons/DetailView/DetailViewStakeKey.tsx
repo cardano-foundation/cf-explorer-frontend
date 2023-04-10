@@ -158,39 +158,27 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
           </StakeKeyHeader>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Status
-              </DetailLabel>
+              <DetailLabel>Status</DetailLabel>
               <DetailValue>
                 <StakeKeyStatus status={data.status}>{data.status}</StakeKeyStatus>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Reward available
-              </DetailLabel>
+              <DetailLabel>Reward available</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.rewardAvailable)}
                 <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Reward withdrawn
-              </DetailLabel>
+              <DetailLabel>Reward withdrawn</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.rewardWithdrawn)}
                 <ADAToken color="black" />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Delegated to
-              </DetailLabel>
+              <DetailLabel>Delegated to</DetailLabel>
               <CustomTooltip title={poolName}>
                 <Box component={Link} display="inline-block" to={details.delegation(data.pool?.poolId)}>
                   <DelegatedDetail>{poolName}</DelegatedDetail>
@@ -198,10 +186,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </CustomTooltip>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Total Stake
-              </DetailLabel>
+              <DetailLabel>Total Stake</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.totalStake)}
                 <ADAToken color="black" />
