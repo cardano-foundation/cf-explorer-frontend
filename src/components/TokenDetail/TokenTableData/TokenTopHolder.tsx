@@ -20,7 +20,10 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSuppl
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<ITokenTopHolderTable>(`${API.TOKEN}/${tokenId}/top_holders`, { ...pageInfo, tokenId });
+  const fetchData = useFetchList<ITokenTopHolderTable>(`${API.TOKEN.LIST}/${tokenId}/top_holders`, {
+    ...pageInfo,
+    tokenId,
+  });
 
   const columns: Column<ITokenTopHolderTable>[] = [
     {

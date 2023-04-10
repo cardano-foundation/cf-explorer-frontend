@@ -44,7 +44,6 @@ import {
   ViewDetailScroll,
   ViewDetailHeader,
 } from "./styles";
-import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
 import { TbFileCheck } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
@@ -57,6 +56,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { API } from "../../../commons/utils/api";
 import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
 
 type DetailViewTransactionProps = {
   hash: string;
@@ -260,14 +260,14 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               <DetailLabel>Transaction Fees</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.tx.fee)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Total Output</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.tx.totalOutput)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
           </Group>

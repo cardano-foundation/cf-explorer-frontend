@@ -219,6 +219,14 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
               <DetailValue>{data.txCount}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
+              <DetailLabel>Number of Holders</DetailLabel>
+              <DetailValue>{numberWithCommas(data.numberHolders || 0)}</DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>Volume 24H</DetailLabel>
+              <DetailValue>{numberWithCommas(data.volumeIn24h || 0)}</DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
               <DetailLabel>Created</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.createdOn || "")}</DetailValue>
             </DetailsInfoItem>
@@ -226,10 +234,40 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
           <Group>
             <DetailLink to={details.token(tokenId)}>
               <DetailLabel>
-                <DetailLinkIcon>
+                {/* <DetailLinkIcon>
                   <CgArrowsExchange />
-                </DetailLinkIcon>
+                </DetailLinkIcon> */}
                 <DetailLinkName>Transactions</DetailLinkName>
+              </DetailLabel>
+              <DetailValue>
+                <DetailLinkRight>
+                  <BiChevronRight size={24} />
+                </DetailLinkRight>
+              </DetailValue>
+            </DetailLink>{" "}
+          </Group>
+          <Group>
+            <DetailLink to={details.token(tokenId, "topHolders")}>
+              <DetailLabel>
+                {/* <DetailLinkIcon>
+                  <CgArrowsExchange />
+                </DetailLinkIcon> */}
+                <DetailLinkName>Top Holders</DetailLinkName>
+              </DetailLabel>
+              <DetailValue>
+                <DetailLinkRight>
+                  <BiChevronRight size={24} />
+                </DetailLinkRight>
+              </DetailValue>
+            </DetailLink>
+          </Group>
+          <Group>
+            <DetailLink to={details.token(tokenId, "tokenMint")}>
+              <DetailLabel>
+                {/* <DetailLinkIcon>
+                  <CgArrowsExchange />
+                </DetailLinkIcon> */}
+                <DetailLinkName>Token Mint</DetailLinkName>
               </DetailLabel>
               <DetailValue>
                 <DetailLinkRight>

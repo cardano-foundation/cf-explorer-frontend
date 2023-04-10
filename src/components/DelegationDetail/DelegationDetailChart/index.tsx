@@ -55,7 +55,11 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                   key={selected}
                   highcharts={Highcharts}
                   options={{
-                    chart: { type: "areaspline", backgroundColor: "transparent" },
+                    chart: {
+                      type: "areaspline",
+                      backgroundColor: "transparent",
+                      style: { fontFamily: "Roboto, sans-serif" },
+                    },
                     title: { text: "" },
                     yAxis: {
                       title: { text: null },

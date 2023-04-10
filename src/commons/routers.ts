@@ -14,7 +14,7 @@ export const routers = {
   ADDRESS_LIST: "/addresses",
   ADDRESS_DETAIL: "/address/:address",
   TOKEN_LIST: "/tokens",
-  TOKEN_DETAIL: "/token/:tokenId",
+  TOKEN_DETAIL: "/token/:tokenId/:tabActive?",
   STAKE_LIST: "/stakes/:poolType?",
   STAKE_DETAIL: "/stake/:stakeId/:tabActive?",
   CONTRACT_LIST: "/contracts",
@@ -39,7 +39,8 @@ export const details = {
   delegation: (poolId?: number | string) => routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${poolId}` ?? ""),
   story: (storyId?: string) => routers.STORY_DETAIL.replace(":storyId", storyId ?? ""),
   address: (address?: string) => routers.ADDRESS_DETAIL.replace(":address", address ?? ""),
-  token: (tokenId?: string) => routers.TOKEN_DETAIL.replace(":tokenId", tokenId ?? ""),
+  token: (tokenId?: string, tab = "transactions") =>
+    routers.TOKEN_DETAIL.replace(":tokenId", tokenId ?? "").replace(":tabActive?", tab),
   stake: (stakeId?: string, tab = "delegation") =>
     routers.STAKE_DETAIL.replace(":stakeId", stakeId ?? "").replace(":tabActive?", tab),
   nft: (nftId?: string) => routers.NFT_DETAIL.replace(":nftId", nftId ?? ""),
@@ -47,3 +48,17 @@ export const details = {
   contract: (address?: string, tab = "transaction") =>
     routers.CONTRACT_DETAIL.replace(":address", address ?? "").replace(":tabActive?", tab),
 };
+
+export const listRouters = [
+  routers.BLOCK_LIST,
+  routers.TRANSACTION_LIST,
+  routers.EPOCH_LIST,
+  routers.DELEGATION_POOLS,
+  routers.REGISTRATION_POOLS.replace("/:poolType?", ""),
+  routers.ADDRESS_LIST,
+  routers.TOKEN_LIST,
+  routers.STAKE_LIST.replace("/:poolType?", ""),
+  routers.CONTRACT_LIST,
+  routers.NFT_LIST,
+  routers.TOP_DELEGATOR,
+];
