@@ -16,6 +16,7 @@ import { StyledContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./
 import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import SelectedIcon from "../../components/commons/SelectedIcon";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 interface IStake {}
 
@@ -34,7 +35,12 @@ const Stake: React.FC<IStake> = () => {
   const theme = useTheme();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<IStakeKey>(`${API.STAKE.DETAIL}/${poolType}`, pageInfo);
+  const fetchData = useFetchList<IStakeKey>(
+    `${API.STAKE.DETAIL}/${poolType}`,
+    pageInfo,
+    false,
+    REFRESH_TIMES.STAKE_REGISTRATION
+  );
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registrations" : "Deregistrations";

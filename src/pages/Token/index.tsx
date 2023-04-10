@@ -14,6 +14,7 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 interface ITokenList {}
 
@@ -27,10 +28,12 @@ const Tokens: React.FC<ITokenList> = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const { data, ...fetchData } = useFetchList<ITokenOverview>(API.TOKEN.LIST, {
-    ...pageInfo,
-    sort,
-  });
+  const { data, ...fetchData } = useFetchList<ITokenOverview>(
+    API.TOKEN.LIST,
+    { ...pageInfo },
+    false,
+    REFRESH_TIMES.TOKEN_LIST
+  );
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
