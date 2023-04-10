@@ -14,7 +14,6 @@ import {
   numberWithCommas,
 } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
-import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -37,9 +36,8 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const [sort, setSort] = useState<string>("");
 
-  const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort });
+  const fetchData = useFetchList<Transactions>(url, { ...pageInfo });
 
   const onClickRow = (_: any, transaction: Transactions, index: number) => {
     if (openDetail) return openDetail(_, transaction, index);
@@ -70,11 +68,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       title: "Time",
       key: "time",
       minWidth: "180px",
-
       render: r => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>,
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
     },
     {
       title: "Block",
@@ -144,9 +138,6 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
           <ADAicon />
         </Box>
       ),
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
     },
     {
       title: "Output",
@@ -158,9 +149,6 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
           <ADAicon />
         </Box>
       ),
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
     },
   ];
 

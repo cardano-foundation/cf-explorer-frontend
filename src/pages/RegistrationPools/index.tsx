@@ -45,7 +45,7 @@ const RegistrationPools = () => {
   const columns: Column<Registration>[] = [
     {
       title: "Trx Hash",
-      key: "txTime",
+      key: "bk.time",
       render: pool => {
         return (
           <>
@@ -84,7 +84,7 @@ const RegistrationPools = () => {
     },
     {
       title: "Pledge (A)",
-      key: "pledge",
+      key: poolType === POOL_TYPE.REGISTRATION ? "pledge" : "pu.pledge",
       render: pool => <>{formatADAFull(pool.pledge)}</>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
@@ -92,7 +92,7 @@ const RegistrationPools = () => {
     },
     {
       title: "Cost (A)",
-      key: "cost",
+      key: poolType === POOL_TYPE.REGISTRATION ? "fixedCost" : "pu.fixedCost",
       render: pool => <>{formatADAFull(pool.cost)}</>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
@@ -100,7 +100,7 @@ const RegistrationPools = () => {
     },
     {
       title: "Fee",
-      key: "margin",
+      key: poolType === POOL_TYPE.REGISTRATION ? "margin" : "pu.margin",
       render: pool => formatPercent(pool.margin),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
