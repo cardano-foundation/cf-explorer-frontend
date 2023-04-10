@@ -30,7 +30,7 @@ const Tokens: React.FC<ITokenList> = () => {
 
   const { data, ...fetchData } = useFetchList<ITokenOverview>(
     API.TOKEN.LIST,
-    { ...pageInfo },
+    { ...pageInfo, sort },
     false,
     REFRESH_TIMES.TOKEN_LIST
   );
