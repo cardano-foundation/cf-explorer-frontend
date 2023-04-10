@@ -57,7 +57,7 @@ const TransactionChart: React.FC = () => {
   const categories = (dataOrigin || []).map(item => moment(item.date).format("MMM DD"));
 
   const options: Highcharts.Options = {
-    chart: { type: "areaspline", height: 230 },
+    chart: { type: "areaspline", height: 230, style: { fontFamily: "Roboto, sans-serif" } },
     title: { text: "" },
     yAxis: {
       title: { text: null },
