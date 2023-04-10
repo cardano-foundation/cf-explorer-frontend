@@ -29,7 +29,7 @@ export const routers = {
   BOOKMARK: "/account/bookmark",
   PRIVATE_NOTES: "/account/notes",
   NOT_FOUND: "/*",
-};
+} as const;
 
 export const details = {
   block: (blockId?: number | string) => routers.BLOCK_DETAIL.replace(":blockId", `${blockId ?? ""}`),
