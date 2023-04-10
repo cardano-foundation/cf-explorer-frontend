@@ -19,7 +19,7 @@ interface ITokenList {}
 
 const Tokens: React.FC<ITokenList> = () => {
   const [token, setToken] = useState<IToken | null>(null);
-  const [sort, setSort] = useState<string>("");
+  const [sort, setSort] = useState<string>("txCount,DESC");
   const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();
   const { search } = useLocation();
@@ -121,6 +121,7 @@ const Tokens: React.FC<ITokenList> = () => {
           data={data}
           columns={columns}
           total={{ title: "Total", count: fetchData.total }}
+          defaultSort="txCount,DESC"
           pagination={{
             ...pageInfo,
             total: fetchData.total,

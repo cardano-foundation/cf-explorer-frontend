@@ -8,9 +8,7 @@ import {
   styled,
   CircularProgress,
   alpha,
-  Button,
 } from "@mui/material";
-import { TiArrowUnsorted, TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
 import { EmptyIcon } from "../../../commons/resources";
 import { ReactComponent as StartPage } from "../../../commons/resources/icons/startPagePagination.svg";
@@ -31,7 +29,6 @@ import {
   TotalNumber,
   Wrapper,
   TableFullWidth,
-  Error,
   InputNumber,
   SelectMui,
   LoadingWrapper,
@@ -50,10 +47,10 @@ export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
   </Empty>
 );
 
-const TableHeader = <T extends ColumnType>({ columns, loading }: TableHeaderProps<T>) => {
+const TableHeader = <T extends ColumnType>({ columns, loading, defaultSort }: TableHeaderProps<T>) => {
   const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
-    columnKey: "",
-    sort: "",
+    columnKey: defaultSort ? defaultSort.split(",")[0] : "",
+    sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : "",
   });
   const sortValue = ({ key, sort }: { key: string; sort: "" | "DESC" | "ASC" }) => {
     if (key === columnKey)
@@ -263,12 +260,13 @@ const Table: React.FC<TableProps> = ({
   onClickRow,
   selected,
   selectedProps,
+  defaultSort,
 }) => {
   return (
     <Box className={className || ""} style={style}>
       <Wrapper>
         <TableFullWidth>
-          <TableHeader columns={columns} loading={loading} />
+          <TableHeader columns={columns} loading={loading} defaultSort={defaultSort} />
           <TableBody
             columns={columns}
             data={data}
