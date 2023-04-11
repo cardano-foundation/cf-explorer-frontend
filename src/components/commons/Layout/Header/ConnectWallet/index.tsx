@@ -4,12 +4,19 @@ import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-wit
 import { useSelector } from "react-redux";
 import { WalletIcon } from "../../../../../commons/resources";
 import { RootState } from "../../../../../stores/types";
-import { setModalRegister, setModalSignMessage, setOpenModal, setNonce, setAddress } from "../../../../../stores/user";
+import {
+  setModalRegister,
+  setModalSignMessage,
+  setOpenModal,
+  setNonce,
+  setAddress,
+  setUserData,
+} from "../../../../../stores/user";
 import ConnectedProfileOption from "../../../ConnectedProfileOption";
 import ConnectWalletModal from "../../../ConnectWalletModal";
 import RegisterUsernameModal from "../RegisterUsernameModal";
 import { Image, Span, Spin, StyledButton } from "./styles";
-import { getAllBookmarks, getNonce, signIn } from "../../../../../commons/utils/userRequest";
+import { getAllBookmarks, getInfo, getNonce, signIn } from "../../../../../commons/utils/userRequest";
 import { NETWORK, NETWORKS, NETWORK_TYPES } from "../../../../../commons/utils/constants";
 import SignMessageModal from "../SignMessageModal";
 import SyncBookmarkModal from "../SyncBookmarkModal";
@@ -63,13 +70,18 @@ const ConnectWallet: React.FC<Props> = () => {
           signature,
         };
         const response = await signIn(payload);
+
         setIsSign(true);
         const data = response.data;
+
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
         localStorage.setItem("refreshToken", data.refreshToken);
         localStorage.setItem("walletId", data.walletId);
         localStorage.setItem("email", data.email);
+
+        const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
+        setUserData(userInfo.data);
         if ((((JSON.parse(localStorage?.bookmark) as Bookmark[]) || [])?.filter(r => !r.id) || []).length > 0) {
           setOpenSyncBookmark(true);
         } else {

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useLocalStorage } from "react-use";
 import useFetch from "../../commons/hooks/useFetch";
 import { API, USER_API } from "../../commons/utils/api";
-import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
+import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES, REFRESH_TIMES } from "../../commons/utils/constants";
 import { getInfo } from "../../commons/utils/userRequest";
 import { setCurrentEpoch, setUsdMarket } from "../../stores/system";
 import { RootState } from "../../stores/types";
@@ -14,14 +14,14 @@ export const SystemLoader = () => {
   const isLogin = !!userData?.username;
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
   const { data: currentEpoch } = useFetch<EpochCurrentType>(`${API.EPOCH.CURRENT_EPOCH}`);
-  const { data: usdMarket, refesh } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=usd`);
+  const { data: usdMarket } = useFetch<CardanoMarket[]>(
+    `${API.MARKETS}?currency=usd`,
+    undefined,
+    false,
+    REFRESH_TIMES.CURRENT_PRICE_USD
+  );
   const { data: dataBookmark } = useFetch<string[]>(isLogin ? USER_API.BOOKMARK : "", undefined, true);
   const startTime = useRef(Date.now());
-
-  useEffect(() => {
-    const interval = setInterval(() => refesh(), 5000);
-    return () => clearInterval(interval);
-  }, [refesh]);
 
   useEffect(() => {
     if (currentEpoch) {
@@ -47,16 +47,6 @@ export const SystemLoader = () => {
   useEffect(() => {
     if (currentEpoch) setCurrentEpoch(currentEpoch);
   }, [currentEpoch]);
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-        setUserData(response.data);
-      } catch (error) {}
-    };
-    if (localStorage.getItem("token")) fetchUserInfo();
-  }, []);
 
   return null;
 };
