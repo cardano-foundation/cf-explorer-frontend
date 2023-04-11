@@ -61,12 +61,13 @@ export const RowItem = styled(Box)`
 `;
 
 export const PriceImage = styled("img")`
-  height: 57px;
+  height: 45px;
 `;
 
 export const PriveValue = styled("span")`
   font-size: var(--font-size-text-x-large);
   font-weight: var(--font-weight-bold);
+  line-height: 1;
 `;
 
 export const ItemDetail = styled("div")`
@@ -137,5 +138,7 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
   text-transform: uppercase;
   padding: 5px 7px;
   border-radius: 2px;
+  font-size: 0.8125rem;
+  line-height: 1;
   width: min-content;
 `;
