@@ -1,21 +1,12 @@
-import { TabContext, TabList, TabPanel, LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  IconButton,
-  Tab,
-} from "@mui/material";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { Box, Dialog, DialogActions, DialogContentText, IconButton, Tab } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { Column } from "../../types/table";
-import { StyledTable, TitleTab } from "./Styles";
+import { CancelButton, DeleteButton, StyledTable, TitleTab } from "./Styles";
 import { ReactComponent as DeleteBookmark } from "../../commons/resources/icons/deleteBookmark.svg";
+import { ReactComponent as QuestionConfirm } from "../../commons/resources/icons/questionConfirm.svg";
 import { Link } from "react-router-dom";
 import { details } from "../../commons/routers";
 import { getShortHash, getShortWallet } from "../../commons/utils/helper";
@@ -23,6 +14,8 @@ import { useLocalStorage } from "react-use";
 import { deleteBookmark } from "../../commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
 import useToast from "../../commons/hooks/useToast";
+import { ButtonClose } from "../../components/ScriptModal/styles";
+import { CloseIcon } from "../../commons/resources";
 
 const Bookmark = () => {
   const [bookmarks, setBookmarks] = useLocalStorage<Bookmark[]>("bookmark", []);
@@ -370,25 +363,39 @@ const Bookmark = () => {
         ))}
       </TabContext>
 
-      <Dialog open={!!selected}>
-        <DialogTitle textAlign={"left"}>Confirmation Required</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
+      <Dialog
+        open={!!selected}
+        PaperProps={{
+          style: { borderRadius: 20, width: 550 },
+        }}
+      >
+        <ButtonClose disabled={loadingDelete} onClick={() => setSelected(null)}>
+          <img src={CloseIcon} alt="icon close" />
+        </ButtonClose>
+        <Box textAlign={"center"} pt={5} pb={2}>
+          <QuestionConfirm />
+        </Box>
+        <Box component={"h2"} textAlign={"center"} fontWeight={"bold"} fontSize={"1.125rem"} paddingBottom={"0px"}>
+          Confirmation Required
+        </Box>
+        <Box px={2}>
+          <DialogContentText fontSize={"1.125rem"}>
             Are you sure to remove {colDynamic[activeTab].title} {renderIdSelected(selected || "")} ?
           </DialogContentText>
-        </DialogContent>
+        </Box>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Cancel
-          </Button>
-          <LoadingButton
-            loading={loadingDelete}
-            onClick={() => selected && deleteBookMark(selected)}
-            variant="contained"
-            color="error"
-          >
-            Delete
-          </LoadingButton>
+          <Box flex={1} pt={2} pb={3}>
+            <CancelButton disabled={loadingDelete} autoFocus onClick={handleClose} variant="outlined">
+              Cancel
+            </CancelButton>
+            <DeleteButton
+              loading={loadingDelete}
+              onClick={() => selected && deleteBookMark(selected)}
+              variant="contained"
+            >
+              Continue
+            </DeleteButton>
+          </Box>
         </DialogActions>
       </Dialog>
     </Box>

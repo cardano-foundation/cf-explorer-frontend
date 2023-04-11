@@ -1,6 +1,7 @@
 import { alpha, Box, Button, styled } from "@mui/material";
 import Table from "../../components/commons/Table";
 import { Link } from "react-router-dom";
+import { LoadingButton } from "@mui/lab";
 
 export const Container = styled(Box)``;
 
@@ -65,17 +66,6 @@ export const ActionButton = styled("button")<{ typeButton: string }>`
   margin-left: ${({ theme }) => theme.spacing(1)};
 `;
 
-export const ButtonCancel = styled(Button)(({ theme }) => ({
-  textTransform: "capitalize",
-  color: "#ffffff",
-  background: theme.palette.primary.main,
-  height: "32px",
-  boxShadow: theme.shadow.dialog,
-  ":hover": {
-    background: theme.palette.primary.main,
-    boxShadow: theme.shadow.dialog,
-  },
-}));
 export const StyledLink = styled(Link)`
   display: block;
   text-decoration: none;
@@ -94,3 +84,25 @@ export const SmallText = styled("small")`
   color: ${props => props.theme.palette.grey[500]};
   margin-top: 4px;
 `;
+export const CancelButton = styled(Button)(({ theme }) => ({
+  textTransform: "capitalize",
+  color: theme.palette.grey[500],
+  fontWeight: "bold",
+  marginRight: theme.spacing(2),
+  padding: "6px 35px",
+  border: `2px solid ${theme.palette.border.hint}`,
+  ":hover": {
+    border: `2px solid ${theme.palette.border.hint}`,
+  },
+}));
+
+export const DeleteButton = styled(LoadingButton)(({ theme }) => ({
+  background: theme.palette.grey[700],
+  textTransform: "capitalize",
+  padding: "8px 35px",
+  fontWeight: "bold",
+  color: theme.palette.common.white,
+  ":hover": {
+    background: theme.palette.grey[700],
+  },
+}));
