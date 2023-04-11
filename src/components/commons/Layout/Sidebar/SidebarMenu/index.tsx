@@ -38,6 +38,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   useEffect(() => {
     if (!sidebar) setActive(null);
   }, [sidebar]);
+  useEffect(() => {
+    if (pathname === "/") setActive(null);
+  }, [pathname]);
 
   useEffect(() => {
     if (!sidebar && width >= theme.breakpoints.values.md) setSidebar(true);
