@@ -56,7 +56,6 @@ export const footerMenus: Menu[] = [
     children: [
       { href: "https://cardanofoundation.org/en/about-us/", title: "About Us" },
       { href: "https://cardanofoundation.org/en/contact-us/", title: "Contact Us" },
-      { href: "https://github.com/cardano-foundation", title: "Github" },
       { href: "https://docs.cardano.org/en/latest/", title: "Documentation" },
       { href: "https://cardanofoundation.org/en/news", title: "News and Blog" },
     ],
@@ -66,8 +65,9 @@ export const footerMenus: Menu[] = [
     icon: ResourcesIcon,
     children: [
       { href: "https://education.cardanofoundation.org/", title: "Blockchain Course" },
-      { href: "https://developers.cardano.org/tools/", title: "Builder tools" },
+      { href: "https://developers.cardano.org/tools/", title: "Builder Tools" },
       { href: "https://dappsoncardano.com/", title: "Dapps" },
+      { href: "https://github.com/cardano-foundation", title: "Github" },
     ],
   },
 ];
