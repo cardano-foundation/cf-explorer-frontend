@@ -55,6 +55,7 @@ export const HeaderMain = styled("div")<{ home: number }>`
 
 export const Title = styled("h1")<{ home: number }>`
   display: ${props => (props.home ? "block" : "none")};
+  text-align: center;
   @media screen and (max-width: 767px) {
     font-size: 30px;
   }
