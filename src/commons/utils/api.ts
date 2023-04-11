@@ -40,6 +40,7 @@ export const API = {
     DE_REGISTRATION: "stakes/de-registration",
     TOP_DELEGATOR: "stakes/top-delegators",
     REGISTRATION: "stakes/registration",
+    MIN_MAX_BALANCE: "stakes/min-max-balance",
   },
   MARKETS: "markets",
 };
