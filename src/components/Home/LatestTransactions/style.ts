@@ -49,7 +49,7 @@ export const Item = styled(BoxRaised)`
 `;
 export const ItemHeader = styled(Box)`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
@@ -61,8 +61,7 @@ export const RowItem = styled(Box)`
 `;
 
 export const PriceImage = styled("img")`
-  width: 30px;
-  height: 30px;
+  height: 57px;
 `;
 
 export const PriveValue = styled("span")`
@@ -136,6 +135,7 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
   }};
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
-  padding: 5px 10px;
+  padding: 5px 7px;
   border-radius: 2px;
+  width: min-content;
 `;
