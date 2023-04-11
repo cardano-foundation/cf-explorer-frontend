@@ -26,8 +26,8 @@ export const API = {
   },
   POLICY: "policies",
   POOL: "pools",
-  TOKEN: "tokens",
-  TOKEN_TRX: "tokens/:tokenId/txs",
+
+  TOKEN: { LIST: "tokens", TOKEN_TRX: "tokens/:tokenId/txs", ANALYTICS: "tokens/analytics" },
   TRANSACTION: {
     CURRENT: "txs/current",
     DETAIL: "txs",
@@ -40,6 +40,7 @@ export const API = {
     DE_REGISTRATION: "stakes/de-registration",
     TOP_DELEGATOR: "stakes/top-delegators",
     REGISTRATION: "stakes/registration",
+    MIN_MAX_BALANCE: "stakes/min-max-balance",
   },
   MARKETS: "markets",
 };

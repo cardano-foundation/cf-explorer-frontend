@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { Header, Img, Item, ItemBox, TokenLink, Wrapper } from "./style";
+import ADAicon from "../../../commons/ADAIcon";
 
 interface CollateralProps {
   data: Transaction["collaterals"] | null;
@@ -82,7 +83,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                     >
                       {type === "input" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
                     </Box>
-                    <img src={AIcon} alt="ADA icon" />
+                    <ADAicon />
                   </Box>
                 </Box>
               </Box>

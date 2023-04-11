@@ -5,6 +5,7 @@ import useFetchList from "../../../commons/hooks/useFetchList";
 import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
+import { REFRESH_TIMES } from "../../../commons/utils/constants";
 import { formatADAFull, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import ViewAllButton from "../../commons/ViewAllButton";
@@ -28,14 +29,15 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { TRANSACTION_STATUS } from "../../../commons/utils/constants";
 
 const LatestTransactions: React.FC = () => {
-  const { data, initialized, refesh } = useFetch<CurrentTransactions[]>(API.TRANSACTION.CURRENT);
+  const { data, initialized,refesh } = useFetch<CurrentTransactions[]>(
+    API.TRANSACTION.CURRENT,
+    undefined,
+    false,
+    REFRESH_TIMES.LATEST_TRANSACTION
+  );
+
   const history = useHistory();
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refesh();
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [refesh]);
+
   return (
     <TransactionContainer>
       <Header>

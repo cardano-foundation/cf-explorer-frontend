@@ -5,12 +5,16 @@ import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import TokenOverview from "../../components/TokenDetail/TokenOverview";
 import TokenTableData from "../../components/TokenDetail/TokenTableData";
+import TokenAnalytics from "../../components/TokenDetail/TokenAnalytics";
 import { StyledContainer } from "./styles";
 
 const TokenDetail: React.FC = () => {
   const { tokenId } = useParams<{ tokenId: string }>();
   const { state } = useLocation<{ data?: IToken }>();
-  const { data, loading, initialized, error } = useFetch<IToken>(state?.data ? "" : `${API.TOKEN}/${tokenId}`, state?.data);
+  const { data, loading, initialized, error } = useFetch<IToken>(
+    state?.data ? "" : `${API.TOKEN.LIST}/${tokenId}`,
+    state?.data
+  );
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -22,6 +26,7 @@ const TokenDetail: React.FC = () => {
   return (
     <StyledContainer>
       <TokenOverview data={data} loading={loading} />
+      <TokenAnalytics />
       <TokenTableData totalSupply={data?.supply} />
     </StyledContainer>
   );
