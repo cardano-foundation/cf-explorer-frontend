@@ -28,13 +28,14 @@ import {
 import useFetch from "../../../commons/hooks/useFetch";
 import { TRANSACTION_STATUS } from "../../../commons/utils/constants";
 
-const LatestTransactions: React.FC = () => 
-  const { data, initialized,refesh } = useFetch<CurrentTransactions[]>(
+const LatestTransactions: React.FC = () => {
+  const { data, initialized } = useFetch<CurrentTransactions[]>(
     API.TRANSACTION.CURRENT,
     undefined,
     false,
     REFRESH_TIMES.LATEST_TRANSACTION
   );
+
   const history = useHistory();
 
   return (
