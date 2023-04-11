@@ -5,6 +5,7 @@ import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import StakeKeyOverview from "../../components/StakeDetail/StakeOverview";
 import StakeTab from "../../components/StakeDetail/StakeTab";
+import StakeAnalytics from "../../components/StakeDetail/StakeAnalytics";
 import { StyledContainer } from "./styles";
 
 const StakeDetail: React.FC = () => {
@@ -25,6 +26,7 @@ const StakeDetail: React.FC = () => {
   return (
     <StyledContainer>
       <StakeKeyOverview data={data} loading={loading} />
+      <StakeAnalytics />
       <StakeTab />
     </StyledContainer>
   );
