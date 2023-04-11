@@ -71,7 +71,7 @@ const DelegationLists: React.FC = () => {
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
+  const [size, setSize] = useState(50);
   const fetchData = useFetchList<Delegators>(API.DELEGATION.POOL_LIST, {
     page: page - 1,
     size,
