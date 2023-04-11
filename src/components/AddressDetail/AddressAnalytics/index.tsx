@@ -45,7 +45,7 @@ const AddressAnalytics: React.FC = () => {
   });
 
   const categories = data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
-  const minBalance = Math.min(...(balance || []), 0);
+  const minBalance = Math.min(...(balance || []));
   const maxBalance = Math.max(...(balance || []), 0);
 
   return (
