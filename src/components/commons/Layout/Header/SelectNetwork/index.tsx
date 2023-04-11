@@ -1,8 +1,10 @@
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
-import { alpha, MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
+import { MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
 import React from "react";
 import { BiChevronDown } from "react-icons/bi";
+import { useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
+import { listRouters } from "../../../../../commons/routers";
 import { NETWORK, NETWORKS, NETWORK_NAMES } from "../../../../../commons/utils/constants";
 import { removeAuthInfo } from "../../../../../commons/utils/helper";
 import StorageUtils from "../../../../../commons/utils/storage";
@@ -30,10 +32,17 @@ const StyledSelect = styled(Select)`
 `;
 
 const SelectNetwork: React.FC = () => {
+  const { location } = useHistory();
   const { disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
   const [, , clearBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
+
+  const refreshPage = () => {
+    const currentPath = "/" + location.pathname?.split("/")[1];
+    if (listRouters.includes(currentPath)) window.location.href = location.pathname;
+    else window.location.href = "/";
+  };
 
   const handleChange = async (e: SelectChangeEvent<unknown>) => {
     try {
@@ -48,7 +57,7 @@ const SelectNetwork: React.FC = () => {
       disconnect();
       removeAuthInfo();
       StorageUtils.setNetwork(e.target.value as NETWORKS);
-      window.location.href = "/";
+      refreshPage();
     }
   };
 
