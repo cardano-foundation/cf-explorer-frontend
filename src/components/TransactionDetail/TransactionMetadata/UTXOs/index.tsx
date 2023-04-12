@@ -56,8 +56,8 @@ const Card = ({
         </Box>
       </Header>
       <Box>
-      {items?.map(item => (
-        <Item key={item.address}>
+      {items?.map((item, index) => (
+        <Item key={index}>
           <Box display={"flex"}>
             <Box width={50}>
               <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />

@@ -97,17 +97,21 @@ const TableBody = <T extends ColumnType>({
   return (
     <TBody>
       {loading && initialized && (
-        <LoadingWrapper
-          bgcolor={theme => alpha(theme.palette.common.black, 0.05)}
-          width={"100%"}
-          height={"100%"}
-          zIndex={1000}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <CircularProgress />
-        </LoadingWrapper>
+        <tr>
+          <td>
+            <LoadingWrapper
+              bgcolor={theme => alpha(theme.palette.common.black, 0.05)}
+              width={"100%"}
+              height={"100%"}
+              zIndex={1000}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <CircularProgress />
+            </LoadingWrapper>
+          </td>
+        </tr>
       )}
       {data &&
         data.map((row, index) => (

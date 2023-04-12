@@ -161,7 +161,7 @@ const OptionsSearch = ({
   };
 
   return (
-    <OptionsWrapper display={show ? "block" : "none"} home={home}>
+    <OptionsWrapper display={show ? "block" : "none"} home={+home}>
       {+value <= (currentEpoch?.no || 0) && (
         <Option onClick={() => submitSearch("epochs")}>
           <Box>

@@ -120,7 +120,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       open={sidebar ? 1 : 0}
                       active={`menu-${index}` === active ? 1 : 0}
                       text={1}
-                      disable={!!tooltipTitle}
+                      disable={tooltipTitle ? 1 : 0}
                     />
                     {children?.length ? (
                       `menu-${index}` === active ? (
