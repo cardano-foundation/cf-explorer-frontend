@@ -42,7 +42,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
       setUserData(response.data);
     } catch (error) {}
   }, []);
-  
+
   const theme = useTheme();
   const toast = useToast();
 

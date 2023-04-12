@@ -216,7 +216,7 @@ export const ButtonView = styled(Link)(({ theme }) => ({
   fontWeight: "bold",
   textTransform: "capitalize",
   color: `${theme.palette.secondary.main} !important`,
-  fontFamily: "Helvetica, monospace",
+  fontFamily: "Roboto, sans-serif",
 }));
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
@@ -277,7 +277,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
 export const ButtonLink = styled(Link)(({ theme }) => ({
   fontWeight: "bold",
   color: `${theme.palette.secondary.main} !important`,
-  fontFamily: "Helvetica, monospace !important",
+  fontFamily: "Roboto, sans-serif !important",
   textAlign: "left",
   wordBreak: "break-all",
   marginTop: theme.spacing(2),

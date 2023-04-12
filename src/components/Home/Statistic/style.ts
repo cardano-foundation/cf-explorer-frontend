@@ -55,6 +55,12 @@ export const Small = styled("small")`
   color: ${props => props.theme.palette.grey[400]};
   white-space: nowrap;
 `;
+export const TimeDuration = styled("small")<{ marginTop?: string }>`
+  color: ${props => props.theme.palette.grey[400]};
+  margin-top: ${props => props.marginTop || 0};
+  white-space: nowrap;
+  display: block;
+`;
 export const XSmall = styled("span")`
   font-size: var(--font-size-text-x-small);
   color: ${props => props.theme.palette.grey[400]};

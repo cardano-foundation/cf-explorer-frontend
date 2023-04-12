@@ -23,11 +23,13 @@ import {
   ProgressPending,
   Small,
   StatisticContainer,
+  TimeDuration,
   Title,
   Value,
   XSmall,
   XValue,
 } from "./style";
+import moment from "moment";
 
 interface Props {}
 
@@ -77,6 +79,9 @@ const HomeStatistic: React.FC<Props> = () => {
               <br />
               <RateWithIcon data-testid='Ada24HrPriceChange' value={usdMarket.price_change_percentage_24h} />
               <Small data-testid='AdaPriceInBTC' style={{ marginLeft: 15 }}>{btcMarket[0]?.current_price} BTC</Small>
+              <TimeDuration marginTop={"8px"}>
+                Last updated {moment(btcMarket[0]?.last_updated).fromNow()}{" "}
+              </TimeDuration>
             </Content>
           </Item>
         )}
@@ -90,6 +95,7 @@ const HomeStatistic: React.FC<Props> = () => {
             <Content>
               <Name data-testid='MarketCapBoxTitle'>Market cap</Name>
               <Title data-testid='MarketCapValue'>${numberWithCommas(usdMarket.market_cap)}</Title>
+              <TimeDuration>Last updated {moment(usdMarket.last_updated).fromNow()} </TimeDuration>
             </Content>
           </Item>
         )}
