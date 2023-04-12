@@ -25,7 +25,11 @@ import { BigNumber } from "bignumber.js";
 import { API } from "../../../commons/utils/api";
 import CustomTooltip from "../../commons/CustomTooltip";
 
-type AnalyticsData = { date: string; value: number };
+type AnalyticsBalance = { date: string; value: number };
+type AnalyticsReward = {
+  epoch: number;
+  value: number;
+};
 
 const options = [
   { value: "ONE_DAY", label: "1d" },
@@ -36,16 +40,27 @@ const options = [
 
 const StakeAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
+  const [tab, setTab] = useState<"BALANCE" | "REWARD">("BALANCE");
   const { stakeId } = useParams<{ stakeId: string }>();
   const theme = useTheme();
-  const { data, loading } = useFetch<AnalyticsData[]>(`${API.STAKE.ANALYTICS}/${stakeId}/${rangeTime}`);
+
+  const { data, loading } = useFetch<AnalyticsBalance[]>(`${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`);
+  const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
+    `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
+  );
   const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.STAKE.MIN_MAX_BALANCE}/${stakeId}`);
-  const dataChart = data?.map(i => {
+  const dataBalanceChart = data?.map(i => {
+    const value = BigNumber(i.value).div(10 ** 6);
+    return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
+  });
+  const dataRewardChart = dataReward?.map(i => {
     const value = BigNumber(i.value).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
   });
 
-  const categories = data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
+  const categoriesBalance =
+    data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
+  const categoriesReward = dataReward?.map(i => i.epoch) || [];
   const minBalance = Math.min(...(balance || []));
   const maxBalance = Math.max(...(balance || []), 0);
 
@@ -55,20 +70,27 @@ const StakeAnalytics: React.FC = () => {
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
             <Grid item xs={12} sm={6}>
-              <ButtonTitle>Balance</ButtonTitle>
+              <ButtonTitle active={tab === "BALANCE"} onClick={() => setTab("BALANCE")}>
+                Balance
+              </ButtonTitle>
+              <ButtonTitle active={tab === "REWARD"} onClick={() => setTab("REWARD")}>
+                Reward
+              </ButtonTitle>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Tabs>
-                {options.map(({ value, label }) => (
-                  <Tab key={value} active={rangeTime === value ? 1 : 0} onClick={() => setRangeTime(value)}>
-                    {label}
-                  </Tab>
-                ))}
-              </Tabs>
+              {tab === "BALANCE" && (
+                <Tabs>
+                  {options.map(({ value, label }) => (
+                    <Tab key={value} active={rangeTime === value ? 1 : 0} onClick={() => setRangeTime(value)}>
+                      {label}
+                    </Tab>
+                  ))}
+                </Tabs>
+              )}
             </Grid>
           </Grid>
           <ChartBox>
-            {loading ? (
+            {loading || loadingReward ? (
               <SkeletonUI variant="rectangular" style={{ height: "375px" }} />
             ) : (
               <Box position={"relative"}>
@@ -96,7 +118,7 @@ const StakeAnalytics: React.FC = () => {
                       },
                     },
                     xAxis: {
-                      categories,
+                      categories: tab === "BALANCE" ? categoriesBalance : categoriesReward,
                       lineWidth: 2,
                       lineColor: theme.palette.border.main,
                       plotLines: [],
@@ -125,7 +147,7 @@ const StakeAnalytics: React.FC = () => {
                             [1, "transparent"],
                           ],
                         },
-                        data: dataChart,
+                        data: tab === "BALANCE" ? dataBalanceChart : dataRewardChart,
                       },
                     ],
                   }}
@@ -135,15 +157,21 @@ const StakeAnalytics: React.FC = () => {
           </ChartBox>
         </Grid>
         <Grid item xs={24} lg={6}>
-          <BoxInfo space={categories.length ? 36 : 16}>
+          <BoxInfo space={(categoriesBalance || categoriesReward).length ? 36 : 16}>
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={HighestIcon} width={"20%"} alt="heighest icon" />
-                  <Title>Highest Balance</Title>
+                  <Title>{tab === "BALANCE" ? "Highest Balance" : "Highest Reward"}</Title>
                   <CustomTooltip title={numberWithCommas(maxBalance || 0)}>
                     <ValueInfo>
-                      {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADA(maxBalance)}
+                      {balanceLoading ? (
+                        <SkeletonUI variant="rectangular" />
+                      ) : tab === "BALANCE" ? (
+                        formatADA(maxBalance)
+                      ) : (
+                        0
+                      )}
                     </ValueInfo>
                   </CustomTooltip>
                 </Box>
@@ -153,10 +181,16 @@ const StakeAnalytics: React.FC = () => {
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={LowestIcon} width={"20%"} alt="lowest icon" />
-                  <Title>Lowest Balance</Title>
+                  <Title>{tab === "BALANCE" ? "Lowest Balance" : "Lowest Reward"}</Title>
                   <CustomTooltip title={numberWithCommas(minBalance || 0)}>
                     <ValueInfo>
-                      {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADA(minBalance)}
+                      {balanceLoading ? (
+                        <SkeletonUI variant="rectangular" />
+                      ) : tab === "BALANCE" ? (
+                        formatADA(minBalance)
+                      ) : (
+                        0
+                      )}
                     </ValueInfo>
                   </CustomTooltip>
                 </Box>
