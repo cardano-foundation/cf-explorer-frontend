@@ -14,7 +14,7 @@ const StyledLink = styled(Link)`
 `;
 
 const ViewMoreButton: React.FC<LinkProps> = ({ children, ...props }) => {
-  return <StyledLink {...props}>{children || "View More"}</StyledLink>;
+  return <StyledLink {...props}>{children || "View Details"}</StyledLink>;
 };
 
 export default ViewMoreButton;

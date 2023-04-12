@@ -27,7 +27,6 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Start time </TitleCard>
-          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: formatDateTimeLocal(data?.startTime || ""),
@@ -37,7 +36,6 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>End time </TitleCard>
-          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: formatDateTimeLocal(data?.endTime || ""),
@@ -47,7 +45,6 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Total Output</TitleCard>
-          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: (

@@ -23,9 +23,16 @@ interface TransactionListFullProps {
   url: string;
   openDetail?: (_: any, r: Transactions, index: number) => void;
   selected?: number | null;
+  showTitle?: boolean;
 }
 
-const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = false, url, openDetail, selected }) => {
+const TransactionListFull: React.FC<TransactionListFullProps> = ({
+  underline = false,
+  url,
+  openDetail,
+  selected,
+  showTitle = true,
+}) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -44,8 +51,8 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
       render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0),
     },
     {
-      title: "Trx Hash",
-      key: "trxhash",
+      title: "Tx Hash",
+      key: "txhash",
       minWidth: 120,
 
       render: r => (
@@ -124,7 +131,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
       },
     },
     {
-      title: "Fees",
+      title: "Fee",
       key: "fee",
       minWidth: 120,
       render: r => (
@@ -135,7 +142,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
       ),
     },
     {
-      title: "Output",
+      title: "Output in ADA",
       minWidth: 120,
       key: "ouput",
       render: r => (
@@ -148,7 +155,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
   ];
 
   return (
-    <Card title={"Transactions"} underline={underline}>
+    <Card title={showTitle ? "Transactions" : ""} underline={underline}>
       <Table
         {...fetchData}
         columns={columns}

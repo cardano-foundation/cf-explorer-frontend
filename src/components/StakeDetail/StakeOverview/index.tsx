@@ -5,14 +5,8 @@ import delegatedIcon from "../../../commons/resources/icons/delegated.svg";
 import totalStakeIcon from "../../../commons/resources/icons/totalStake.svg";
 import rewardIcon from "../../../commons/resources/icons/reward.svg";
 import rewardWithdrawIcon from "../../../commons/resources/icons/rewardWithdraw.svg";
-import infoIcon from "../../../commons/resources/icons/info.svg";
 import { formatADAFull } from "../../../commons/utils/helper";
-import {
-  ButtonModal,
-  StyledFlexValue,
-  StyledLink,
-  TitleCard,
-} from "./styles";
+import { ButtonModal, StyledFlexValue, StyledLink, TitleCard } from "./styles";
 import { useParams } from "react-router-dom";
 import ModalAllAddress from "../ModalAllAddress";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -32,7 +26,6 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Delegated to </TitleCard>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       value: (
@@ -48,7 +41,6 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Total Stake</TitleCard>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       value: (
@@ -69,7 +61,6 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Reward available </TitleCard>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       value: (
@@ -84,7 +75,6 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Reward withdrawn </TitleCard>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       value: (
