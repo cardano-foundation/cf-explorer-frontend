@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import useFetchList from "../../../commons/hooks/useFetchList";
@@ -16,6 +16,7 @@ import Table, { Column } from "../../commons/Table";
 import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { API } from "../../../commons/utils/api";
+import ADAicon from "../../commons/ADAIcon";
 
 interface ITokenTransaction {
   active: boolean;
@@ -26,8 +27,9 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
+  const [sort, setSort] = useState<string>("");
 
-  const fetchData = useFetchList<Transactions>(API.TOKEN_TRX.replace(":tokenId", tokenId), { ...pageInfo });
+  const fetchData = useFetchList<Transactions>(API.TOKEN.TOKEN_TRX.replace(":tokenId", tokenId), { ...pageInfo, sort });
 
   const columns: Column<Transactions>[] = [
     {
@@ -107,20 +109,26 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       render: r => (
         <PriceValue>
           <SmallText>{formatADAFull(r.fee)}</SmallText>
-          <PriceIcon src={AIcon} alt="a icon" />
+          <ADAicon mb={"5px"} ml={"8px"} />
         </PriceValue>
       ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
     {
       title: "Output",
       minWidth: "120px",
-      key: "ouput",
+      key: "outSum",
       render: r => (
         <PriceValue>
           <SmallText>{formatADAFull(r.totalOutput)}</SmallText>
-          <PriceIcon src={AIcon} alt="a icon" />
+          <ADAicon mb={"5px"} ml={"8px"} />
         </PriceValue>
       ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
   ];
 

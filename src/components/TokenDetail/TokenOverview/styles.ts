@@ -8,12 +8,13 @@ export const HeaderDetailContainer = styled(Container)`
   text-align: left;
 `;
 
-export const BackButton = styled(Link)`
+export const BackButton = styled(Box)`
   display: inline-flex;
   text-align: left;
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
+  cursor: pointer;
 `;
 
 export const BackText = styled("small")`

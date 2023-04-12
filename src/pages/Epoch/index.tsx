@@ -12,10 +12,10 @@ import { Blocks, StyledContainer, Output, Status, StyledColorBlueDard, Index } f
 import { setOnDetailView } from "../../stores/user";
 import DetailViewEpoch from "../../components/commons/DetailView/DetailViewEpoch";
 import { useWindowSize } from "react-use";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { Box, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
+import ADAicon from "../../components/commons/ADAIcon";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -25,7 +25,9 @@ const Epoch: React.FC = () => {
   const history = useHistory();
   const theme = useTheme();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, pageInfo);
+  const [sort, setSort] = useState<string>("");
+
+  const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo, sort });
 
   const columns: Column<IDataEpoch>[] = [
     {
@@ -45,6 +47,15 @@ const Epoch: React.FC = () => {
       key: "blkCount",
       minWidth: "100px",
       render: r => <Blocks>{r.blkCount}</Blocks>,
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
+    },
+    {
+      title: "Transaction Count",
+      key: "transactionCount",
+      minWidth: "100px",
+      render: r => <Blocks>{r.txCount}</Blocks>,
     },
     {
       title: "Transaction Count",
@@ -59,9 +70,12 @@ const Epoch: React.FC = () => {
       render: r => (
         <Output>
           {formatADAFull(r.outSum)}
-          <img src={AIcon} alt="ADA Icon" />
+          <ADAicon />
         </Output>
       ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
     {
       title: "Start Timestamp",

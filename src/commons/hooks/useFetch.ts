@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { defaultAxios, authAxios } from "../utils/axios";
 
 interface FetchReturnType<T> {
@@ -7,14 +7,15 @@ interface FetchReturnType<T> {
   loading: boolean;
   error: string | null;
   initialized: boolean;
-  refesh: () => void;
+  refresh: () => void;
 }
 
-const useFetch = <T>(url: string, initial?: T, isAuth?: boolean): FetchReturnType<T> => {
+const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, timeout?: number): FetchReturnType<T> => {
   const [data, setData] = useState<T | null>(initial || null);
   const [initialized, setInitialized] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const lastFetch = useRef<number>(Date.now());
 
   const fetch = useCallback(async () => {
     if (!url) return;
@@ -36,10 +37,28 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean): FetchReturnTyp
   }, [url, isAuth]);
 
   useEffect(() => {
+    if (timeout) {
+      const interval = setInterval(() => {
+        if (!document.hidden) fetch();
+        lastFetch.current = Date.now();
+      }, timeout * 1000);
+
+      const onFocus = () => lastFetch.current + timeout * 1000 <= Date.now() && fetch();
+
+      window.addEventListener("focus", onFocus);
+
+      return () => {
+        clearInterval(interval);
+        window.removeEventListener("focus", onFocus);
+      };
+    }
+  }, [fetch, timeout]);
+
+  useEffect(() => {
     fetch();
   }, [fetch]);
 
-  return { data, loading, error, initialized, refesh: fetch };
+  return { data, loading, error, initialized, refresh: fetch };
 };
 
 export default useFetch;

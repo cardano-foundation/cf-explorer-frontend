@@ -42,7 +42,6 @@ import ViewMoreButton from "../ViewMoreButton";
 import { ReactComponent as StakeKeyHistoryIcon } from "../../../commons/resources/icons/stateKeyHistory.svg";
 import { ReactComponent as TransactionIcon } from "../../../commons/resources/icons/exchangeArrow.svg";
 import CustomTooltip from "../CustomTooltip";
-import { ADAToken } from "../Token";
 import { TbFileCheck } from "react-icons/tb";
 import CopyButton from "../CopyButton";
 import { Link } from "react-router-dom";
@@ -50,6 +49,7 @@ import { Box } from "@mui/material";
 import ModalAllAddress from "../../StakeDetail/ModalAllAddress";
 import { API } from "../../../commons/utils/api";
 import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
 
 type DetailViewStakeKeyProps = {
   stakeId: string;
@@ -171,39 +171,27 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
           </StakeKeyHeader>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Status
-              </DetailLabel>
+              <DetailLabel>Status</DetailLabel>
               <DetailValue>
                 <StakeKeyStatus status={data.status}>{data.status}</StakeKeyStatus>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Reward available
-              </DetailLabel>
+              <DetailLabel>Reward available</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.rewardAvailable)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Reward withdrawn
-              </DetailLabel>
+              <DetailLabel>Reward withdrawn</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.rewardWithdrawn)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Delegated to
-              </DetailLabel>
+              <DetailLabel>Delegated to</DetailLabel>
               <CustomTooltip title={poolName}>
                 <Box component={Link} display="inline-block" to={details.delegation(data.pool?.poolId)}>
                   <DelegatedDetail>{poolName}</DelegatedDetail>
@@ -211,13 +199,10 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </CustomTooltip>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Total Stake
-              </DetailLabel>
+              <DetailLabel>Total Stake</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.totalStake)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <Box textAlign={"right"}>
