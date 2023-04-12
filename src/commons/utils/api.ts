@@ -35,6 +35,7 @@ export const API = {
     GRAPH: "txs/graph",
   },
   STAKE: {
+    ANALYTICS: "stakes/analytics",
     ANALYTICS_BALANCE: "stakes/analytics-balance",
     ANALYTICS_REWARD: "stakes/analytics-reward",
     DETAIL: "stakes",
