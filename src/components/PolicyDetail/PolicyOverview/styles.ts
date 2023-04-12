@@ -138,7 +138,7 @@ export const ButtonView = styled(Link)(({ theme }) => ({
   fontWeight: "bold",
   textTransform: "capitalize",
   color: `${theme.palette.secondary.main} !important`,
-  fontFamily: "Helvetica, monospace",
+  fontFamily: "Roboto, sans-serif",
 }));
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
