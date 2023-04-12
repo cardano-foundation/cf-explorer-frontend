@@ -55,37 +55,16 @@ const Card = ({
         </Box>
       </Header>
       <Box>
-      {items?.map((item, index) => (
-        <Item key={index}>
-          <Box display={"flex"}>
-            <Box width={50}>
-              <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />
-            </Box>
-            <Box width={"100%"} display="flex" flexDirection="column" justifyContent="center" paddingTop="5px">
-              <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
-                <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1}>
-                  {type === "down" ? "From" : "To"}:
-                </Box>
-                <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"}>
-                  <Box
-                    display={"flex"}
-                    justifyContent="flex-start"
-                    alignItems={"center"}
-                    flexWrap="nowrap"
-                    width={"auto"}
-                  >
-                    <Link to={details.address(item.address)}>
-                      <CustomTooltip title={item.address}>
-                        <Box
-                          color={theme => theme.palette.secondary.main}
-                          fontWeight="bold"
-                          fontFamily={"var(--font-family-text)"}
-                        >
-                          {getShortWallet(item.address)}
-                        </Box>
-                      </CustomTooltip>
-                    </Link>{" "}
-                    <CopyButton text={item.address} />
+        {items?.map((item, index) => (
+          <Item key={index}>
+            <Box display={"flex"}>
+              <Box width={50}>
+                <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />
+              </Box>
+              <Box width={"100%"} display="flex" flexDirection="column" justifyContent="center" paddingTop="5px">
+                <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
+                  <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1}>
+                    {type === "down" ? "From" : "To"}:
                   </Box>
                   <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"}>
                     <Box
