@@ -66,14 +66,20 @@ const StakeAnalytics: React.FC = () => {
   const categoriesReward = dataReward?.map(i => i.epoch) || [];
 
   const minReward = dataReward
-    ? dataReward.reduce(function (prev, current) {
-        return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
-      })
+    ? dataReward.reduce(
+        function (prev, current) {
+          return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
+        },
+        { epoch: 0, value: 0 }
+      )
     : { epoch: 0, value: 0 };
   const maxReward = dataReward
-    ? dataReward.reduce(function (prev, current) {
-        return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
-      })
+    ? dataReward.reduce(
+        function (prev, current) {
+          return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
+        },
+        { epoch: 0, value: 0 }
+      )
     : { epoch: 0, value: 0 };
   return (
     <Card title="Analytics" pt={5}>
