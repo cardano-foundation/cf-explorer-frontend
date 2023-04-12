@@ -49,21 +49,32 @@ const StakeAnalytics: React.FC = () => {
     `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
   );
   const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.STAKE.MIN_MAX_BALANCE}/${stakeId}`);
+
   const dataBalanceChart = data?.map(i => {
     const value = BigNumber(i.value).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
   });
+  const categoriesBalance =
+    data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
+  const minBalance = Math.min(...(balance || []));
+  const maxBalance = Math.max(...(balance || []), 0);
+
   const dataRewardChart = dataReward?.map(i => {
     const value = BigNumber(i.value).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
   });
-
-  const categoriesBalance =
-    data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
   const categoriesReward = dataReward?.map(i => i.epoch) || [];
-  const minBalance = Math.min(...(balance || []));
-  const maxBalance = Math.max(...(balance || []), 0);
 
+  const minReward = dataReward
+    ? dataReward.reduce(function (prev, current) {
+        return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
+      })
+    : { epoch: 0, value: 0 };
+  const maxReward = dataReward
+    ? dataReward.reduce(function (prev, current) {
+        return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
+      })
+    : { epoch: 0, value: 0 };
   return (
     <Card title="Analytics" pt={5}>
       <Wrapper container columns={24} spacing="35px">
@@ -170,7 +181,7 @@ const StakeAnalytics: React.FC = () => {
                       ) : tab === "BALANCE" ? (
                         formatADA(maxBalance)
                       ) : (
-                        0
+                        formatADA(maxReward.value)
                       )}
                     </ValueInfo>
                   </CustomTooltip>
@@ -189,7 +200,7 @@ const StakeAnalytics: React.FC = () => {
                       ) : tab === "BALANCE" ? (
                         formatADA(minBalance)
                       ) : (
-                        0
+                        formatADA(minReward.value)
                       )}
                     </ValueInfo>
                   </CustomTooltip>
