@@ -16,6 +16,7 @@ import { AIcon } from "../../commons/resources";
 import { Label, StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
+import ADAicon from "../commons/ADAIcon";
 
 interface TransactionListFullProps {
   underline?: boolean;
@@ -50,8 +51,8 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0),
     },
     {
-      title: "Trx Hash",
-      key: "trxhash",
+      title: "Tx Hash",
+      key: "txhash",
       minWidth: 120,
 
       render: r => (
@@ -130,24 +131,24 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       },
     },
     {
-      title: "Fees",
+      title: "Fee",
       key: "fee",
       minWidth: 120,
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.fee)}</Box>
-          <img src={AIcon} alt="a icon" />
+            <ADAicon />
         </Box>
       ),
     },
     {
-      title: "Output",
+      title: "Output in ADA",
       minWidth: 120,
       key: "ouput",
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
-          <img src={AIcon} alt="a icon" />
+            <ADAicon />
         </Box>
       ),
     },

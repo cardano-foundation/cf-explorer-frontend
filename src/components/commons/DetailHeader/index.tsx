@@ -30,6 +30,7 @@ import { details, routers } from "../../../commons/routers";
 import Bookmark from "../BookmarkIcon";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
+import { useHistory } from "react-router-dom";
 
 interface DetailHeaderProps {
   type: Bookmark["type"];
@@ -45,21 +46,14 @@ interface DetailHeaderProps {
 
 const DetailHeader: React.FC<DetailHeaderProps> = props => {
   const { loading, listItem, epoch, type, title, hash, transactionStatus, bookmarkData, stakeKeyStatus } = props;
+  const history = useHistory();
 
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
 
-  const getRouterList = () => {
-    if (type === "TRANSACTION") return routers.TRANSACTION_LIST;
-    if (type === "BLOCK") return routers.BLOCK_LIST;
-    if (type === "EPOCH") return routers.EPOCH_LIST;
-    if (type === "STAKE_KEY") return routers.STAKE_LIST.replace(":poolType?", "");
-    else return "/";
-  };
-
   const getHashLabel = () => {
-    if (type === "BLOCK") return "Block ID";
-    if (type === "STAKE_KEY") return "Token ID";
-    if (type === "POOL") return "Pool ID";
+    if (type === "BLOCK") return "Block Id";
+    if (type === "STAKE_KEY") return "Token Id";
+    if (type === "POOL") return "Pool Id";
   };
 
   const hashLabel = getHashLabel();
@@ -68,7 +62,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
   if (loading) {
     return (
       <HeaderDetailContainer>
-        <BackButton to={getRouterList()}>
+        <BackButton onClick={history.goBack}>
           <HiArrowLongLeft />
           <BackText>Back</BackText>
         </BackButton>
@@ -106,7 +100,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
     <HeaderDetailContainer>
       <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap={"wrap"}>
         <Box>
-          <BackButton to={getRouterList()}>
+          <BackButton onClick={history.goBack}>
             <HiArrowLongLeft />
             <BackText>Back</BackText>
           </BackButton>

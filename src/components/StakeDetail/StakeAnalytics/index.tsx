@@ -19,10 +19,11 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import Card from "../../commons/Card";
-import { formatADAFull, formatPrice } from "../../../commons/utils/helper";
+import { formatADA, formatPrice, numberWithCommas } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { BigNumber } from "bignumber.js";
 import { API } from "../../../commons/utils/api";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 type AnalyticsData = { date: string; value: number };
 
@@ -33,12 +34,12 @@ const options = [
   { value: "THREE_MONTH", label: "3m" },
 ];
 
-const AddressAnalytics: React.FC = () => {
+const StakeAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
-  const { address } = useParams<{ address: string }>();
+  const { stakeId } = useParams<{ stakeId: string }>();
   const theme = useTheme();
-  const { data, loading } = useFetch<AnalyticsData[]>(`${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`);
-  const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${address}`);
+  const { data, loading } = useFetch<AnalyticsData[]>(`${API.STAKE.ANALYTICS}/${stakeId}/${rangeTime}`);
+  const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.STAKE.MIN_MAX_BALANCE}/${stakeId}`);
   const dataChart = data?.map(i => {
     const value = BigNumber(i.value).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
@@ -68,7 +69,7 @@ const AddressAnalytics: React.FC = () => {
           </Grid>
           <ChartBox>
             {loading ? (
-              <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
+              <SkeletonUI variant="rectangular" style={{ height: "375px" }} />
             ) : (
               <Box position={"relative"}>
                 <HighchartsReact
@@ -77,7 +78,7 @@ const AddressAnalytics: React.FC = () => {
                     chart: {
                       type: "areaspline",
                       backgroundColor: "transparent",
-                      style: { fontFamily: "Roboto, sans-serif" },
+                      style: { fontFamily: "Helvetica, monospace" },
                     },
                     title: { text: "" },
                     yAxis: {
@@ -140,9 +141,11 @@ const AddressAnalytics: React.FC = () => {
                 <Box>
                   <img src={HighestIcon} width={"20%"} alt="heighest icon" />
                   <Title>Highest Balance</Title>
-                  <ValueInfo>
-                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance)}
-                  </ValueInfo>
+                  <CustomTooltip title={numberWithCommas(maxBalance || 0)}>
+                    <ValueInfo>
+                      {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADA(maxBalance)}
+                    </ValueInfo>
+                  </CustomTooltip>
                 </Box>
               </BoxInfoItemRight>
             </Box>
@@ -151,9 +154,11 @@ const AddressAnalytics: React.FC = () => {
                 <Box>
                   <img src={LowestIcon} width={"20%"} alt="lowest icon" />
                   <Title>Lowest Balance</Title>
-                  <ValueInfo>
-                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance)}
-                  </ValueInfo>
+                  <CustomTooltip title={numberWithCommas(minBalance || 0)}>
+                    <ValueInfo>
+                      {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADA(minBalance)}
+                    </ValueInfo>
+                  </CustomTooltip>
                 </Box>
               </BoxInfoItem>
             </Box>
@@ -164,4 +169,4 @@ const AddressAnalytics: React.FC = () => {
   );
 };
 
-export default AddressAnalytics;
+export default StakeAnalytics;
