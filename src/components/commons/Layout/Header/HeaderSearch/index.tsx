@@ -116,14 +116,14 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
   return (
     <Box position={"relative"} component={Form} onSubmit={handleSearch} home={home ? 1 : 0}>
       <Backdrop sx={{ backgroundColor: "unset" }} open={showOption} onClick={() => setShowOption(false)} />
-      <StyledSelect data-testid='AllFiltersDropdown' onChange={handleChangeFilter} value={filter} IconComponent={BiChevronDown} home={home ? 1 : 0}>
+      <StyledSelect data-testid='all-filters-dropdown' onChange={handleChangeFilter} value={filter} IconComponent={BiChevronDown} home={home ? 1 : 0}>
         {options.map(({ value, label }) => (
-          <SelectOption data-testid='FilterOptions' key={value} value={value} home={home ? 1 : 0}>
+          <SelectOption data-testid='filter-options' key={value} value={value} home={home ? 1 : 0}>
             {label}
           </SelectOption>
         ))}
       </StyledSelect>
-      <StyledInput data-testid='SearchBar'
+      <StyledInput data-testid='search-bar'
         home={home ? 1 : 0}
         required
         type="search"

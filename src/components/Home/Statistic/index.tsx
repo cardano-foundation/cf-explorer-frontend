@@ -71,14 +71,14 @@ const HomeStatistic: React.FC<Props> = () => {
         {!usdMarket || !btcMarket?.[0] ? (
           <SkeletonBox />
         ) : (
-          <Item data-testid='AdaPriceBox'> 
-            <ItemIcon data-testid='AdaPriceIcon' src={AdaPriceIcon} alt="Ada Price" />
+          <Item data-testid='ada-price-box'> 
+            <ItemIcon data-testid='ada-price-icon' src={AdaPriceIcon} alt="Ada Price" />
             <Content>
-              <Name data-testid='AdaPriceBoxTitle'>Ada Price</Name>
-              <Title data-testid='AdaCurrentPrice'>${usdMarket.current_price}</Title>
+              <Name data-testid='ada-price-box-title'>Ada Price</Name>
+              <Title data-testid='ada-current-price'>${usdMarket.current_price}</Title>
               <br />
-              <RateWithIcon data-testid='Ada24HrPriceChange' value={usdMarket.price_change_percentage_24h} />
-              <Small data-testid='AdaPriceInBTC' style={{ marginLeft: 15 }}>{btcMarket[0]?.current_price} BTC</Small>
+              <RateWithIcon data-testid='ada-24Hr-price-change' value={usdMarket.price_change_percentage_24h} />
+              <Small data-testid='ada-price-in-BTC' style={{ marginLeft: 15 }}>{btcMarket[0]?.current_price} BTC</Small>
               <TimeDuration marginTop={"8px"}>
                 Last updated {moment(btcMarket[0]?.last_updated).fromNow()}{" "}
               </TimeDuration>
@@ -90,11 +90,11 @@ const HomeStatistic: React.FC<Props> = () => {
         {!usdMarket ? (
           <SkeletonBox />
         ) : (
-          <Item data-testid='MarketCapBox'>
-            <ItemIcon data-testid='MarketCapIcon' src={MarketCapIcon} alt="Market cap" />
+          <Item data-testid='market-cap-box'>
+            <ItemIcon data-testid='market-cap-icon' src={MarketCapIcon} alt="Market cap" />
             <Content>
-              <Name data-testid='MarketCapBoxTitle'>Market cap</Name>
-              <Title data-testid='MarketCapValue'>${numberWithCommas(usdMarket.market_cap)}</Title>
+              <Name data-testid='market-cap-box-title'>Market cap</Name>
+              <Title data-testid='market-cap-value'>${numberWithCommas(usdMarket.market_cap)}</Title>
               <TimeDuration>Last updated {moment(usdMarket.last_updated).fromNow()} </TimeDuration>
             </Content>
           </Item>
@@ -105,20 +105,20 @@ const HomeStatistic: React.FC<Props> = () => {
           <SkeletonBox />
         ) : (
           <Link to={details.epoch(currentEpoch?.no)}>
-            <Item data-testid='CurrentEpochBox'>
+            <Item data-testid='current-epoch-box'>
               <Content>
-                <ItemIcon data-testid='CurrentEpochIcon' src={CurentEpochIcon} alt="Curent Epoch" />
-                <Name data-testid='CurrentEpochBoxTitle'>Current Epoch</Name>
-                <XSmall data-testid='EpochLabel'>Epoch: </XSmall>
-                <XValue data-testid='CurrentEpochNumber'>
+                <ItemIcon data-testid='current-epoch-icon' src={CurentEpochIcon} alt="Curent Epoch" />
+                <Name data-testid='current-epoch-box-title'>Current Epoch</Name>
+                <XSmall data-testid='epoch-label'>Epoch: </XSmall>
+                <XValue data-testid='current-epoch-number'>
                   <b>{numberWithCommas(currentEpoch?.no)}</b>
                 </XValue>
                 <br />
-                <XSmall data-testid='SlotLabel'>Slot: </XSmall>
-                <XValue data-testid='CurrentSlotNumber'>
+                <XSmall data-testid='slot-label'>Slot: </XSmall>
+                <XValue data-testid='current-slot-number'>
                   <b>{numberWithCommas(currentEpoch?.slot % MAX_SLOT_EPOCH)}</b>
                 </XValue>
-                <XSmall data-testid='TotalSlots'> / {numberWithCommas(MAX_SLOT_EPOCH)}</XSmall>
+                <XSmall data-testid='total-slots'> / {numberWithCommas(MAX_SLOT_EPOCH)}</XSmall>
               </Content>
             </Item>
           </Link>
@@ -128,14 +128,14 @@ const HomeStatistic: React.FC<Props> = () => {
         {!data || !usdMarket ? (
           <SkeletonBox />
         ) : (
-          <Item data-testid='LiveStakeBox'>
+          <Item data-testid='live-stake-box'>
             <Content>
-              <ItemIcon data-testid='LiveStakeIcon' src={LiveStakeIcon} alt="Total ADA Stake" />
-              <Name data-testid='LiveStakeBoxTitle'>Live Stake</Name>
+              <ItemIcon data-testid='live-stake-icon' src={LiveStakeIcon} alt="Total ADA Stake" />
+              <Name data-testid='live-stake-box-title'>Live Stake</Name>
               <CustomTooltip title={formatADAFull(liveStake)}>
                 <Title>{formatADA(liveStake)}</Title>
               </CustomTooltip>
-              <Progress data-testid='LiveStakeProgressBar'>
+              <Progress data-testid='live-stake-progress-bar'>
                 <CustomTooltip title={liveRate.toFixed(5)}>
                   <ProcessActive rate={liveRate.toNumber()}>{liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%</ProcessActive>
                 </CustomTooltip>
@@ -145,24 +145,24 @@ const HomeStatistic: React.FC<Props> = () => {
                   </ProgressPending>
                 </CustomTooltip>
               </Progress>
-              <Small data-testid='ActiveStakeLabel'>Active Stake: </Small>
+              <Small data-testid='active-stake-label'>Active Stake: </Small>
               <CustomTooltip title={formatADAFull(activeStake)}>
-                <Value data-testid='ActiveStakeValue'>
+                <Value data-testid='active-stake-value'>
                   <b>{formatADA(activeStake)} </b>
                 </Value>
               </CustomTooltip>
               <CustomTooltip title={`${activeRate.toFixed(5)}%`}>
-                <Small data-testid='ActiveStakePercentage'>({activeRate.toFixed(1)}%)</Small>
+                <Small data-testid='active-stake-percentage'>({activeRate.toFixed(1)}%)</Small>
               </CustomTooltip>
               <br />
-              <Small data-testid='CirculatingSupplyLabel'>Circulating supply: </Small>
-              <Value data-testid='CirculatingSupplyValue'>
+              <Small data-testid='circulating-supply-label'>Circulating supply: </Small>
+              <Value data-testid='circulating-supply-value'>
                 <CustomTooltip title={numberWithCommas(supply)}>
                   <b>{formatADA(circulatingSupply.toString())} </b>
                 </CustomTooltip>
               </Value>
               <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
-                <Small data-testid='CirculatingSupplyPercentage'>({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)</Small>
+                <Small data-testid='circulating-supply-percentage'>({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)</Small>
               </CustomTooltip>
             </Content>
           </Item>
