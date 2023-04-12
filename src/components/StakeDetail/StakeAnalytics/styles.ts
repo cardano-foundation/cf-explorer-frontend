@@ -71,16 +71,17 @@ export const Wrapper = styled(Grid)(({ theme }) => ({
   textAlign: "left",
 }));
 
-export const ButtonTitle = styled("button")(({ theme }) => ({
-  border: "none",
+export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, active }) => ({
   borderRadius: 10,
   padding: "8px 30px",
   fontWeight: "bold",
   fontSize: "1rem",
   marginRight: 5,
-  color: theme.palette.primary.contrastText,
-  backgroundColor: theme.palette.primary.main,
+  color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
+  backgroundColor: active ? theme.palette.primary.main : "none",
   fontFamily: "var(--font-family-title)",
+  border: `2px solid ${theme.palette.green[800_20]}`,
+  cursor: "pointer",
 }));
 
 export const ChartBox = styled(Box)(({ theme }) => ({
@@ -108,7 +109,11 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   borderRadius: 10,
   border: `2px solid ${theme.palette.green[800_20]}`,
   marginRight: theme.spacing(1),
-  color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   fontWeight: "bold",
+  color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   backgroundColor: active ? theme.palette.primary.main : "none",
+  ":hover": {
+    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
+    backgroundColor: active ? theme.palette.primary.main : "none",
+  },
 }));
