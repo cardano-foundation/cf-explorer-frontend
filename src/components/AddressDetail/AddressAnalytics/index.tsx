@@ -77,7 +77,7 @@ const AddressAnalytics: React.FC = () => {
                     chart: {
                       type: "areaspline",
                       backgroundColor: "transparent",
-                      style: { fontFamily: "Helvetica, monospace" },
+                      style: { fontFamily: "Roboto, sans-serif" },
                     },
                     title: { text: "" },
                     yAxis: {

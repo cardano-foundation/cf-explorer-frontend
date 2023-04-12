@@ -16,15 +16,23 @@ import { AIcon } from "../../commons/resources";
 import { Label, StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
+import ADAicon from "../commons/ADAIcon";
 
 interface TransactionListFullProps {
   underline?: boolean;
   url: string;
   openDetail?: (_: any, r: Transactions, index: number) => void;
   selected?: number | null;
+  showTitle?: boolean;
 }
 
-const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = false, url, openDetail, selected }) => {
+const TransactionListFull: React.FC<TransactionListFullProps> = ({
+  underline = false,
+  url,
+  openDetail,
+  selected,
+  showTitle = true,
+}) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -43,8 +51,8 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
       render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0),
     },
     {
-      title: "Trx Hash",
-      key: "trxhash",
+      title: "Tx Hash",
+      key: "txhash",
       minWidth: 120,
 
       render: r => (
@@ -123,31 +131,31 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({ underline = f
       },
     },
     {
-      title: "Fees",
+      title: "Fee",
       key: "fee",
       minWidth: 120,
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.fee)}</Box>
-          <img src={AIcon} alt="a icon" />
+            <ADAicon />
         </Box>
       ),
     },
     {
-      title: "Output",
+      title: "Output in ADA",
       minWidth: 120,
       key: "ouput",
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
-          <img src={AIcon} alt="a icon" />
+            <ADAicon />
         </Box>
       ),
     },
   ];
 
   return (
-    <Card title={"Transactions"} underline={underline}>
+    <Card title={showTitle ? "Transactions" : ""} underline={underline}>
       <Table
         {...fetchData}
         columns={columns}

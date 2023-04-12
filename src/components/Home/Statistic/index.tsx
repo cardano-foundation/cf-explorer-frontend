@@ -7,7 +7,7 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
-import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
 import { formatADA, formatADAFull, numberWithCommas } from "../../../commons/utils/helper";
 import { RootState } from "../../../stores/types";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -23,11 +23,13 @@ import {
   ProgressPending,
   Small,
   StatisticContainer,
+  TimeDuration,
   Title,
   Value,
   XSmall,
   XValue,
 } from "./style";
+import moment from "moment";
 
 interface Props {}
 
@@ -48,12 +50,12 @@ const MILION = 10 ** 6;
 const HomeStatistic: React.FC<Props> = () => {
   const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS_BALANCE);
-  const { data: btcMarket, refesh } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=btc`);
-
-  useEffect(() => {
-    const interval = setInterval(() => refesh(), 5000);
-    return () => clearInterval(interval);
-  }, [refesh]);
+  const { data: btcMarket, refresh } = useFetch<CardanoMarket[]>(
+    `${API.MARKETS}?currency=btc`,
+    undefined,
+    false,
+    REFRESH_TIMES.CURRENT_PRICE_BTC
+  );
 
   const { circulating_supply, total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
@@ -77,6 +79,9 @@ const HomeStatistic: React.FC<Props> = () => {
               <br />
               <RateWithIcon value={usdMarket.price_change_percentage_24h} />
               <Small style={{ marginLeft: 15 }}>{btcMarket[0]?.current_price} BTC</Small>
+              <TimeDuration marginTop={"8px"}>
+                Last updated {moment(btcMarket[0]?.last_updated).fromNow()}{" "}
+              </TimeDuration>
             </Content>
           </Item>
         )}
@@ -90,6 +95,7 @@ const HomeStatistic: React.FC<Props> = () => {
             <Content>
               <Name>Market cap</Name>
               <Title>${numberWithCommas(usdMarket.market_cap)}</Title>
+              <TimeDuration>Last updated {moment(usdMarket.last_updated).fromNow()} </TimeDuration>
             </Content>
           </Item>
         )}
@@ -113,6 +119,11 @@ const HomeStatistic: React.FC<Props> = () => {
                   <b>{numberWithCommas(currentEpoch?.slot % MAX_SLOT_EPOCH)}</b>
                 </XValue>
                 <XSmall> / {numberWithCommas(MAX_SLOT_EPOCH)}</XSmall>
+                {/* <br />
+                <XSmall>Unique accounts: </XSmall>
+                <XValue>
+                  <b>12</b>
+                </XValue> */}
               </Content>
             </Item>
           </Link>

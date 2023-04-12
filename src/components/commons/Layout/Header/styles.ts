@@ -10,6 +10,7 @@ export const HeaderContainer = styled("header")`
 
 export const HeaderBox = styled(Container)<{ home: number }>`
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   ${props =>
     props.home
@@ -24,10 +25,7 @@ export const HeaderBox = styled(Container)<{ home: number }>`
   }
 `;
 
-export const HeaderTop = styled("div")<{ fixed: number }>`
-  position: ${props => (props.fixed ? "fixed" : "")};
-  top: ${props => (props.fixed ? "0px" : "unset")};
-  right: ${props => (props.fixed ? "30px" : "unset")};
+export const HeaderTop = styled("div")`
   z-index: 1300;
   display: flex;
   justify-content: flex-end;
@@ -41,7 +39,8 @@ export const HeaderTop = styled("div")<{ fixed: number }>`
 
 export const HeaderMain = styled("div")<{ home: number }>`
   position: relative;
-  text-align: center;
+  text-align: start;
+
   padding: ${props => (props.home ? "0px 0px 50px" : "27px 0px")};
   & > div {
     padding-top: ${props => (props.home ? "0px" : "30px")};
@@ -55,6 +54,7 @@ export const HeaderMain = styled("div")<{ home: number }>`
 
 export const Title = styled("h1")<{ home: number }>`
   display: ${props => (props.home ? "block" : "none")};
+  text-align: center;
   @media screen and (max-width: 767px) {
     font-size: 30px;
   }
