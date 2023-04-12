@@ -49,7 +49,7 @@ const MILION = 10 ** 6;
 
 const HomeStatistic: React.FC<Props> = () => {
   const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
-  const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS_BALANCE);
+  const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
   const { data: btcMarket, refresh } = useFetch<CardanoMarket[]>(
     `${API.MARKETS}?currency=btc`,
     undefined,
