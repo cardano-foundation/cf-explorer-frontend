@@ -34,7 +34,7 @@ const RegistrationPools = () => {
 
   const fetchData = useFetchList<Registration>(
     `${API.POOL}/${poolType}`,
-    pageInfo,
+    { ...pageInfo, sort },
     false,
     REFRESH_TIMES.POOL_REGISTRATIONS
   );

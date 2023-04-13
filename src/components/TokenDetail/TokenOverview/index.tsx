@@ -61,6 +61,17 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
+            Volume in 24h
+          </Box>
+        </Box>
+      ),
+      icon: exchageIcon,
+      value: numberWithCommas(data?.volumeIn24h),
+    },
+    {
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <Box component={"span"} mr={1}>
             Created at
           </Box>
         </Box>
