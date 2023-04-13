@@ -18,11 +18,10 @@ import CustomTooltip from "../../commons/CustomTooltip";
 import { API } from "../../../commons/utils/api";
 
 interface ITokenTransaction {
-  active: boolean;
   tokenId: string;
 }
 
-const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
+const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);

@@ -227,7 +227,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
               <DetailValue>{data.volumeIn24h || 0}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Created</DetailLabel>
+              <DetailLabel>Created at</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.createdOn || "")}</DetailValue>
             </DetailsInfoItem>
           </Group>
