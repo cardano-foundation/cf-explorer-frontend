@@ -15,7 +15,7 @@ import {
   Wrapper,
 } from "./styled";
 import editAva from "../../../../commons/resources/icons/editAva.svg";
-import { useLocation } from "react-router-dom";
+import { Redirect, useLocation } from "react-router-dom";
 import { MdChevronRight } from "react-icons/md";
 import { setUserData } from "../../../../stores/user";
 import { getInfo } from "../../../../commons/utils/userRequest";
@@ -25,7 +25,6 @@ import { ReactComponent as ReportDiscord } from "../../../../commons/resources/i
 import { ReactComponent as ReportMail } from "../../../../commons/resources/icons/reportMail.svg";
 import CustomTooltip from "../../CustomTooltip";
 import useToast from "../../../../commons/hooks/useToast";
-import NotFound from "../../../../pages/NotFound";
 import StyledModal from "../../StyledModal";
 interface Props {
   children: React.ReactNode;
@@ -82,7 +81,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
     }
   }, [fetchUserInfo]);
   if (firstLoad) return null;
-  if (!userData) return <NotFound />;
+  if (!userData) return <Redirect to={routers.HOME} />;
   return (
     <Wrapper>
       <Box component={"h2"} textAlign="left">

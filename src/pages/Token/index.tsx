@@ -46,7 +46,14 @@ const Tokens: React.FC<ITokenList> = () => {
       key: "icon",
       minWidth: "50px",
       render: r =>
-        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />,
+        r?.metadata?.logo ? (
+          <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" />
+        ) : (
+          <LogoEmpty
+            name={r.displayName || r.fingerprint || ""}
+            children={`${(r.displayName || r.fingerprint || "").toUpperCase().slice(0, 2)}`}
+          />
+        ),
     },
     {
       title: "Asset Name",

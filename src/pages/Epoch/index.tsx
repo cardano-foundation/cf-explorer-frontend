@@ -58,12 +58,6 @@ const Epoch: React.FC = () => {
       render: r => <Blocks>{r.txCount}</Blocks>,
     },
     {
-      title: "Transaction Count",
-      key: "transactionCount",
-      minWidth: "100px",
-      render: r => <Blocks>{r.txCount}</Blocks>,
-    },
-    {
       title: "Total Output",
       key: "outSum",
       minWidth: "100px",
