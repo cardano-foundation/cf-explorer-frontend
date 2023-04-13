@@ -7,12 +7,15 @@ export const Img = styled("img")(({ theme }) => ({
 }));
 
 export const Header = styled(Box)(({ theme }) => ({
-  padding: "8px 0 10px",
+  padding: "10px 0",
   marginRight: "25px",
   marginLeft: "25px",
+  display: "flex",
+  justifyContent: "space-between",
   fontSize: "12px",
   color: theme.palette.text.primary,
   borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  alignItems: "flex-end",
 }));
 
 export const TokenLink = styled(Link)(({ theme }) => ({
@@ -22,7 +25,7 @@ export const TokenLink = styled(Link)(({ theme }) => ({
   padding: "2px 10px",
   backgroundColor: alpha(theme.palette.grey[300], 0.2),
   color: `${theme.palette.grey[400]} !important`,
-  fontSize: "var(--font-size-text)",
+  fontSize: "var(--font-size-text-small)",
   lineHeight: "1.5rem",
   fontWeight: "bold",
   display: "inline",
