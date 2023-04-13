@@ -42,7 +42,6 @@ import ViewMoreButton from "../ViewMoreButton";
 import { ReactComponent as StakeKeyHistoryIcon } from "../../../commons/resources/icons/stateKeyHistory.svg";
 import { ReactComponent as TransactionIcon } from "../../../commons/resources/icons/exchangeArrow.svg";
 import CustomTooltip from "../CustomTooltip";
-import { ADAToken } from "../Token";
 import { TbFileCheck } from "react-icons/tb";
 import CopyButton from "../CopyButton";
 import { Link } from "react-router-dom";
@@ -50,6 +49,7 @@ import { Box } from "@mui/material";
 import ModalAllAddress from "../../StakeDetail/ModalAllAddress";
 import { API } from "../../../commons/utils/api";
 import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
 
 type DetailViewStakeKeyProps = {
   stakeId: string;
@@ -186,7 +186,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADAFull(data.rewardAvailable)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -196,7 +196,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADAFull(data.rewardWithdrawn)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -217,7 +217,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADAFull(data.totalStake)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <Box textAlign={"right"}>
