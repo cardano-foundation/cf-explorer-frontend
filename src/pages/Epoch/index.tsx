@@ -12,10 +12,10 @@ import { Blocks, StyledContainer, Output, Status, StyledColorBlueDard, Index } f
 import { setOnDetailView } from "../../stores/user";
 import DetailViewEpoch from "../../components/commons/DetailView/DetailViewEpoch";
 import { useWindowSize } from "react-use";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { Box, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
+import Link from "../../components/commons/Link";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -32,7 +32,7 @@ const Epoch: React.FC = () => {
       title: "Epoch Number",
       key: "epochNumber",
       minWidth: "50px",
-      render: r => <Index>{numberWithCommas(r.no)}</Index>,
+      render: r => <Link to={details.epoch(r.no || 0)}>{numberWithCommas(r.no)}</Link>,
     },
     {
       title: "Status",

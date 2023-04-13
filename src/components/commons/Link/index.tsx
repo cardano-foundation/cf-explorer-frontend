@@ -1,13 +1,13 @@
 import { styled } from "@mui/material";
 import { Link as LinkDom, LinkProps } from "react-router-dom";
 
-const StyledLink: React.FC<LinkProps & { children: React.ReactNode }> = ({ children, ...props }) => {
-  return <Link {...props}>{children}</Link>;
+const Link: React.FC<LinkProps & { children: React.ReactNode }> = ({ children, ...props }) => {
+  return <LinkStyled {...props}>{children}</LinkStyled>;
 };
 
-export default StyledLink;
+export default Link;
 
-const Link = styled(LinkDom)`
+const LinkStyled = styled(LinkDom)`
   color: ${props => props.theme.palette.secondary.main} !important;
   font-family: var(--font-family-text) !important;
 `;
