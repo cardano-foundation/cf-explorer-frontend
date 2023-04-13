@@ -31,7 +31,6 @@ import {
   TotalNumber,
   Wrapper,
   TableFullWidth,
-  Error,
   InputNumber,
   SelectMui,
   LoadingWrapper,
@@ -50,10 +49,10 @@ export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
   </Empty>
 );
 
-const TableHeader = <T extends ColumnType>({ columns, loading }: TableHeaderProps<T>) => {
+const TableHeader = <T extends ColumnType>({ columns, loading, defaultSort }: TableHeaderProps<T>) => {
   const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
-    columnKey: "",
-    sort: "",
+    columnKey: defaultSort ? defaultSort.split(",")[0] : "",
+    sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : "",
   });
   const sortValue = ({ key, sort }: { key: string; sort: "" | "DESC" | "ASC" }) => {
     if (key === columnKey)
@@ -144,17 +143,21 @@ const TableBody = <T extends ColumnType>({
   return (
     <TBody>
       {loading && initialized && (
-        <LoadingWrapper
-          bgcolor={theme => alpha(theme.palette.common.black, 0.05)}
-          width={"100%"}
-          height={"100%"}
-          zIndex={1000}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <CircularProgress />
-        </LoadingWrapper>
+        <tr>
+          <td>
+            <LoadingWrapper
+              bgcolor={theme => alpha(theme.palette.common.black, 0.05)}
+              width={"100%"}
+              height={"100%"}
+              zIndex={1000}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <CircularProgress />
+            </LoadingWrapper>
+          </td>
+        </tr>
       )}
       {data &&
         data.map((row, index) => (
@@ -184,7 +187,7 @@ const TableSekeleton = () => {
 
 const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading }) => {
   const [page, setPage] = useState(pagination?.page || 1);
-  const [size, setSize] = useState(pagination?.size || 10);
+  const [size, setSize] = useState(pagination?.size || 50);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
 
   useUpdateEffect(() => {
@@ -214,6 +217,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading })
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>
               <MenuItem value={50}>50</MenuItem>
+              <MenuItem value={100}>100</MenuItem>
             </SelectMui>
             <Box component={"span"} ml={1} fontSize="0.875rem">
               Per page
@@ -262,12 +266,13 @@ const Table: React.FC<TableProps> = ({
   onClickRow,
   selected,
   selectedProps,
+  defaultSort,
 }) => {
   return (
     <Box className={className || ""} style={style}>
       <Wrapper>
         <TableFullWidth>
-          <TableHeader columns={columns} loading={loading} />
+          <TableHeader columns={columns} loading={loading} defaultSort={defaultSort} />
           <TableBody
             columns={columns}
             data={data}

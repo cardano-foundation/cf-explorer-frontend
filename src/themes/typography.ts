@@ -1,2 +1,2 @@
-const typography = { fontFamily: "Helvetica, sans-serif, monospace" };
+const typography = { fontFamily: "Roboto, sans-serif, monospace" };
 export default typography;

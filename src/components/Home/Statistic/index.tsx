@@ -7,7 +7,7 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
-import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
 import { formatADA, formatADAFull, numberWithCommas } from "../../../commons/utils/helper";
 import { RootState } from "../../../stores/types";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -23,11 +23,13 @@ import {
   ProgressPending,
   Small,
   StatisticContainer,
+  TimeDuration,
   Title,
   Value,
   XSmall,
   XValue,
 } from "./style";
+import moment from "moment";
 
 interface Props {}
 
@@ -48,12 +50,12 @@ const MILION = 10 ** 6;
 const HomeStatistic: React.FC<Props> = () => {
   const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
-  const { data: btcMarket, refesh } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=btc`);
-
-  useEffect(() => {
-    const interval = setInterval(() => refesh(), 5000);
-    return () => clearInterval(interval);
-  }, [refesh]);
+  const { data: btcMarket, refresh } = useFetch<CardanoMarket[]>(
+    `${API.MARKETS}?currency=btc`,
+    undefined,
+    false,
+    REFRESH_TIMES.CURRENT_PRICE_BTC
+  );
 
   const { circulating_supply, total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
@@ -69,14 +71,17 @@ const HomeStatistic: React.FC<Props> = () => {
         {!usdMarket || !btcMarket?.[0] ? (
           <SkeletonBox />
         ) : (
-          <Item>
-            <ItemIcon src={AdaPriceIcon} alt="Ada Price" />
+          <Item data-testid='ada-price-box'> 
+            <ItemIcon data-testid='ada-price-icon' src={AdaPriceIcon} alt="Ada Price" />
             <Content>
-              <Name>Ada Price</Name>
-              <Title>${usdMarket.current_price}</Title>
+              <Name data-testid='ada-price-box-title'>Ada Price</Name>
+              <Title data-testid='ada-current-price'>${usdMarket.current_price}</Title>
               <br />
-              <RateWithIcon value={usdMarket.price_change_percentage_24h} />
-              <Small style={{ marginLeft: 15 }}>{btcMarket[0]?.current_price} BTC</Small>
+              <RateWithIcon data-testid='ada-24Hr-price-change' value={usdMarket.price_change_percentage_24h} />
+              <Small data-testid='ada-price-in-BTC' style={{ marginLeft: 15 }}>{btcMarket[0]?.current_price} BTC</Small>
+              <TimeDuration marginTop={"8px"}>
+                Last updated {moment(btcMarket[0]?.last_updated).fromNow()}{" "}
+              </TimeDuration>
             </Content>
           </Item>
         )}
@@ -85,11 +90,12 @@ const HomeStatistic: React.FC<Props> = () => {
         {!usdMarket ? (
           <SkeletonBox />
         ) : (
-          <Item>
-            <ItemIcon src={MarketCapIcon} alt="Market cap" />
+          <Item data-testid='market-cap-box'>
+            <ItemIcon data-testid='market-cap-icon' src={MarketCapIcon} alt="Market cap" />
             <Content>
-              <Name>Market cap</Name>
-              <Title>${numberWithCommas(usdMarket.market_cap)}</Title>
+              <Name data-testid='market-cap-box-title'>Market cap</Name>
+              <Title data-testid='market-cap-value'>${numberWithCommas(usdMarket.market_cap)}</Title>
+              <TimeDuration>Last updated {moment(usdMarket.last_updated).fromNow()} </TimeDuration>
             </Content>
           </Item>
         )}
@@ -99,20 +105,25 @@ const HomeStatistic: React.FC<Props> = () => {
           <SkeletonBox />
         ) : (
           <Link to={details.epoch(currentEpoch?.no)}>
-            <Item>
+            <Item data-testid='current-epoch-box'>
               <Content>
-                <ItemIcon src={CurentEpochIcon} alt="Curent Epoch" />
-                <Name>Current Epoch</Name>
-                <XSmall>Epoch: </XSmall>
-                <XValue>
+                <ItemIcon data-testid='current-epoch-icon' src={CurentEpochIcon} alt="Curent Epoch" />
+                <Name data-testid='current-epoch-box-title'>Current Epoch</Name>
+                <XSmall data-testid='epoch-label'>Epoch: </XSmall>
+                <XValue data-testid='current-epoch-number'>
                   <b>{numberWithCommas(currentEpoch?.no)}</b>
                 </XValue>
                 <br />
-                <XSmall>Slot: </XSmall>
-                <XValue>
+                <XSmall data-testid='slot-label'>Slot: </XSmall>
+                <XValue data-testid='current-slot-number'>
                   <b>{numberWithCommas(currentEpoch?.slot % MAX_SLOT_EPOCH)}</b>
                 </XValue>
                 <XSmall> / {numberWithCommas(MAX_SLOT_EPOCH)}</XSmall>
+                <br />
+                <XSmall>Unique accounts: </XSmall>
+                <XValue>
+                  <b>{numberWithCommas(currentEpoch?.account)}</b>
+                </XValue>
               </Content>
             </Item>
           </Link>
@@ -122,14 +133,14 @@ const HomeStatistic: React.FC<Props> = () => {
         {!data || !usdMarket ? (
           <SkeletonBox />
         ) : (
-          <Item>
+          <Item data-testid='live-stake-box'>
             <Content>
-              <ItemIcon src={LiveStakeIcon} alt="Total ADA Stake" />
-              <Name>Live Stake</Name>
+              <ItemIcon data-testid='live-stake-icon' src={LiveStakeIcon} alt="Total ADA Stake" />
+              <Name data-testid='live-stake-box-title'>Live Stake</Name>
               <CustomTooltip title={formatADAFull(liveStake)}>
                 <Title>{formatADA(liveStake)}</Title>
               </CustomTooltip>
-              <Progress>
+              <Progress data-testid='live-stake-progress-bar'>
                 <CustomTooltip title={liveRate.toFixed(5)}>
                   <ProcessActive rate={liveRate.toNumber()}>{liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%</ProcessActive>
                 </CustomTooltip>
@@ -139,24 +150,24 @@ const HomeStatistic: React.FC<Props> = () => {
                   </ProgressPending>
                 </CustomTooltip>
               </Progress>
-              <Small>Active Stake: </Small>
+              <Small data-testid='active-stake-label'>Active Stake: </Small>
               <CustomTooltip title={formatADAFull(activeStake)}>
-                <Value>
+                <Value data-testid='active-stake-value'>
                   <b>{formatADA(activeStake)} </b>
                 </Value>
               </CustomTooltip>
               <CustomTooltip title={`${activeRate.toFixed(5)}%`}>
-                <Small>({activeRate.toFixed(1)}%)</Small>
+                <Small data-testid='active-stake-percentage'>({activeRate.toFixed(1)}%)</Small>
               </CustomTooltip>
               <br />
-              <Small>Circulating supply: </Small>
-              <Value>
+              <Small data-testid='circulating-supply-label'>Circulating supply: </Small>
+              <Value data-testid='circulating-supply-value'>
                 <CustomTooltip title={numberWithCommas(supply)}>
                   <b>{formatADA(circulatingSupply.toString())} </b>
                 </CustomTooltip>
               </Value>
               <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
-                <Small>({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)</Small>
+                <Small data-testid='circulating-supply-percentage'>({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)</Small>
               </CustomTooltip>
             </Content>
           </Item>

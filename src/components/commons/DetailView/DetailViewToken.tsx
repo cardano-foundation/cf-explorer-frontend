@@ -220,23 +220,23 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Number of Holders</DetailLabel>
-              <DetailValue>{data.numberHolders || 0}</DetailValue>
+              <DetailValue>{numberWithCommas(data.numberHolders || 0)}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Volume 24H</DetailLabel>
-              <DetailValue>{data.volumeIn24h || 0}</DetailValue>
+              <DetailValue>{numberWithCommas(data.volumeIn24h || 0)}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Created at</DetailLabel>
+              <DetailLabel>Created</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.createdOn || "")}</DetailValue>
             </DetailsInfoItem>
           </Group>
           <Group>
             <DetailLink to={details.token(tokenId)}>
               <DetailLabel>
-                <DetailLinkIcon>
+                {/* <DetailLinkIcon>
                   <CgArrowsExchange />
-                </DetailLinkIcon>
+                </DetailLinkIcon> */}
                 <DetailLinkName>Transactions</DetailLinkName>
               </DetailLabel>
               <DetailValue>
@@ -249,9 +249,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
           <Group>
             <DetailLink to={details.token(tokenId, "topHolders")}>
               <DetailLabel>
-                <DetailLinkIcon>
+                {/* <DetailLinkIcon>
                   <CgArrowsExchange />
-                </DetailLinkIcon>
+                </DetailLinkIcon> */}
                 <DetailLinkName>Top Holders</DetailLinkName>
               </DetailLabel>
               <DetailValue>
@@ -264,9 +264,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
           <Group>
             <DetailLink to={details.token(tokenId, "tokenMint")}>
               <DetailLabel>
-                <DetailLinkIcon>
+                {/* <DetailLinkIcon>
                   <CgArrowsExchange />
-                </DetailLinkIcon>
+                </DetailLinkIcon> */}
                 <DetailLinkName>Token Mint</DetailLinkName>
               </DetailLabel>
               <DetailValue>

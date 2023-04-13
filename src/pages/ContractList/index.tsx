@@ -20,6 +20,8 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useSelector } from "react-redux";
 import { RootState } from "../../stores/types";
 import { API } from "../../commons/utils/api";
+import ADAicon from "../../components/commons/ADAIcon";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const Transactions: React.FC = () => {
   const { search } = useLocation();
@@ -27,7 +29,7 @@ const Transactions: React.FC = () => {
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
 
-  const fetchData = useFetchList<Contracts>(API.CONTRACT, { ...pageInfo, sort });
+  const fetchData = useFetchList<Contracts>(API.CONTRACT, pageInfo, false, REFRESH_TIMES.CONTRACTS);
   const { adaRate } = useSelector(({ system }: RootState) => system);
 
   useEffect(() => {
@@ -61,7 +63,7 @@ const Transactions: React.FC = () => {
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.balance)}</Box>
-          <img src={AIcon} alt="a icon" />
+          <ADAicon />
         </Box>
       ),
       sort: ({ columnKey, sortValue }) => {

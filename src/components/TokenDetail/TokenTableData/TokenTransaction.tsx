@@ -16,6 +16,7 @@ import Table, { Column } from "../../commons/Table";
 import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { API } from "../../../commons/utils/api";
+import ADAicon from "../../commons/ADAIcon";
 
 interface ITokenTransaction {
   tokenId: string;
@@ -27,7 +28,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
 
-  const fetchData = useFetchList<Transactions>(API.TOKEN_TRX.replace(":tokenId", tokenId), { ...pageInfo, sort });
+  const fetchData = useFetchList<Transactions>(API.TOKEN.TOKEN_TRX.replace(":tokenId", tokenId), { ...pageInfo, sort });
 
   const columns: Column<Transactions>[] = [
     {
@@ -39,7 +40,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       ),
     },
     {
-      title: "Trx Hash",
+      title: "Tx Hash",
       key: "trxhash",
       minWidth: "200px",
 
@@ -107,7 +108,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       render: r => (
         <PriceValue>
           <SmallText>{formatADAFull(r.fee)}</SmallText>
-          <PriceIcon src={AIcon} alt="a icon" />
+          <ADAicon mb={"5px"} ml={"8px"} />
         </PriceValue>
       ),
       sort: ({ columnKey, sortValue }) => {
@@ -121,7 +122,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       render: r => (
         <PriceValue>
           <SmallText>{formatADAFull(r.totalOutput)}</SmallText>
-          <PriceIcon src={AIcon} alt="a icon" />
+          <ADAicon mb={"5px"} ml={"8px"} />
         </PriceValue>
       ),
       sort: ({ columnKey, sortValue }) => {

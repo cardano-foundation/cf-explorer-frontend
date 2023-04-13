@@ -15,6 +15,8 @@ import { useWindowSize } from "react-use";
 import { useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
+import Link from "../../components/commons/Link";
+import ADAicon from "../../components/commons/ADAIcon";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -30,10 +32,10 @@ const Epoch: React.FC = () => {
 
   const columns: Column<IDataEpoch>[] = [
     {
-      title: "#",
-      key: "#",
+      title: "Epoch Number",
+      key: "epochNumber",
       minWidth: "50px",
-      render: r => <Index>{numberWithCommas(r.no)}</Index>,
+      render: r => <Link to={details.epoch(r.no || 0)}>{numberWithCommas(r.no)}</Link>,
     },
     {
       title: "Status",
@@ -51,13 +53,19 @@ const Epoch: React.FC = () => {
       },
     },
     {
-      title: "Output",
+      title: "Transaction Count",
+      key: "transactionCount",
+      minWidth: "100px",
+      render: r => <Blocks>{r.txCount}</Blocks>,
+    },
+    {
+      title: "Total Output",
       key: "outSum",
       minWidth: "100px",
       render: r => (
         <Output>
           {formatADAFull(r.outSum)}
-          <img src={AIcon} alt="ADA Icon" />
+          <ADAicon />
         </Output>
       ),
       sort: ({ columnKey, sortValue }) => {
@@ -65,13 +73,13 @@ const Epoch: React.FC = () => {
       },
     },
     {
-      title: "Start date",
+      title: "Start Timestamp",
       key: "startTime",
       minWidth: "100px",
       render: r => <StyledColorBlueDard>{formatDateTimeLocal(r.startTime || "")}</StyledColorBlueDard>,
     },
     {
-      title: "End date",
+      title: "End Timestamp",
       key: "endTime",
       minWidth: "100px",
       render: r => (

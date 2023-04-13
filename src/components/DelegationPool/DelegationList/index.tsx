@@ -16,7 +16,7 @@ const DelegationLists: React.FC = () => {
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
+  const [size, setSize] = useState(50);
   const [sort, setSort] = useState<string>("");
 
   const fetchData = useFetchList<Delegators>(API.DELEGATION.POOL_LIST, {
@@ -59,7 +59,7 @@ const DelegationLists: React.FC = () => {
     },
     {
       title: "Fee (A) ",
-      key: "feeAmount",
+      key: "pu.fixedCost",
       minWidth: "120px",
       render: r => `${formatPercent(r.feePercent)} (${formatADAFull(r.feeAmount)} A)`,
       sort: ({ columnKey, sortValue }) => {
@@ -68,7 +68,7 @@ const DelegationLists: React.FC = () => {
     },
     {
       title: "Declared Pledge (A)",
-      key: "pledge",
+      key: "pu.pledge",
       minWidth: "120px",
       render: r => <Box component={"span"}>{formatADAFull(r.pledge)}</Box>,
       sort: ({ columnKey, sortValue }) => {

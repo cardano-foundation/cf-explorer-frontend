@@ -1,6 +1,6 @@
 import React from "react";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
-import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { CubeIcon, RocketIcon } from "../../../commons/resources";
 import ProgressCircle from "../ProgressCircle";
 import {
@@ -32,8 +32,8 @@ import {
   DetailLinkName,
   ViewDetailScroll,
   ViewDetailHeader,
+  ConfirmStatus,
 } from "./styles";
-import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
@@ -45,6 +45,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { API } from "../../../commons/utils/api";
 import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
 
 type DetailViewBlockProps = {
   blockNo: number | string;
@@ -55,6 +56,19 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
   const { blockNo, handleClose } = props;
   const { data } = useFetch<BlockDetail>(`${API.BLOCK.DETAIL}/${blockNo}`);
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
+
+  const renderConfirmationTag = () => {
+    if (data?.confirmation) {
+      if (data.confirmation <= 2) {
+        return CONFIRMATION_STATUS.LOW;
+      }
+      if (data.confirmation <= 8) {
+        return CONFIRMATION_STATUS.MEDIUM;
+      }
+      return CONFIRMATION_STATUS.HIGH;
+    }
+    return CONFIRMATION_STATUS.LOW;
+  };
 
   if (!data)
     return (
@@ -168,7 +182,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
           </ListItem>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>Block ID</DetailLabel>
+              <DetailLabel>Block Id</DetailLabel>
               <DetailValue>
                 <CustomTooltip title={data.hash}>
                   <StyledLink to={details.block(blockNo)}>{getShortHash(data.hash)}</StyledLink>
@@ -177,25 +191,28 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Created at</DetailLabel>
+              <DetailLabel>Created At</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Transaction</DetailLabel>
-              <DetailValue>{data.txCount}</DetailValue>
+              <DetailLabel>Confirmation</DetailLabel>
+              <DetailValue>
+                {data.confirmation}
+                <ConfirmStatus status={renderConfirmationTag()}>{renderConfirmationTag()}</ConfirmStatus>
+              </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Transaction Fees</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.totalFees)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Total Output</DetailLabel>
+              <DetailLabel>Total Out in ADA</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.totalOutput)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             {/* <DetailsInfoItem>

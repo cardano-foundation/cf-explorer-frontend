@@ -5,6 +5,7 @@ import useFetchList from "../../../commons/hooks/useFetchList";
 import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
+import { REFRESH_TIMES } from "../../../commons/utils/constants";
 import { formatADAFull, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import ViewAllButton from "../../commons/ViewAllButton";
@@ -28,14 +29,15 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { TRANSACTION_STATUS } from "../../../commons/utils/constants";
 
 const LatestTransactions: React.FC = () => {
-  const { data, initialized, refesh } = useFetch<CurrentTransactions[]>(API.TRANSACTION.CURRENT);
+  const { data, initialized } = useFetch<CurrentTransactions[]>(
+    API.TRANSACTION.CURRENT,
+    undefined,
+    false,
+    REFRESH_TIMES.LATEST_TRANSACTION
+  );
+
   const history = useHistory();
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refesh();
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [refesh]);
+
   return (
     <TransactionContainer>
       <Header>
@@ -69,7 +71,10 @@ const LatestTransactions: React.FC = () => {
                     <Item onClick={e => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
                       <ItemHeader>
                         <PriceImage src={ADAIcon} alt="check green" />
-                        <PriveValue>{formatADAFull(amount)}</PriveValue>
+                        <Box display={"flex"} flexDirection={"column"} rowGap={"4px"} alignItems={"end"}>
+                          <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>
+                          <PriveValue>{formatADAFull(amount)}</PriveValue>
+                        </Box>
                       </ItemHeader>
                       <ItemDetail>
                         <RowItem>
@@ -111,7 +116,6 @@ const LatestTransactions: React.FC = () => {
                                   </Link>
                                 </CustomTooltip>
                               </Box>
-                              <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>
                             </RowItem>
                           );
                         })}

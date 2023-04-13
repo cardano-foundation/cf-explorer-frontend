@@ -17,6 +17,7 @@ import { RegistrationContainer, StakeKey, StyledLink, StyledTab, StyledTabs, Tab
 import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import { Box } from "@mui/material";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",
@@ -31,7 +32,12 @@ const RegistrationPools = () => {
 
   const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
 
-  const fetchData = useFetchList<Registration>(`${API.POOL}/${poolType}`, { ...pageInfo, sort });
+  const fetchData = useFetchList<Registration>(
+    `${API.POOL}/${poolType}`,
+    { ...pageInfo, sort },
+    false,
+    REFRESH_TIMES.POOL_REGISTRATIONS
+  );
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";
@@ -45,7 +51,7 @@ const RegistrationPools = () => {
   const columns: Column<Registration>[] = [
     {
       title: "Trx Hash",
-      key: "txTime",
+      key: "bk.time",
       render: pool => {
         return (
           <>
@@ -84,7 +90,7 @@ const RegistrationPools = () => {
     },
     {
       title: "Pledge (A)",
-      key: "pledge",
+      key: poolType === POOL_TYPE.REGISTRATION ? "pledge" : "pu.pledge",
       render: pool => <>{formatADAFull(pool.pledge)}</>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
@@ -92,7 +98,7 @@ const RegistrationPools = () => {
     },
     {
       title: "Cost (A)",
-      key: "cost",
+      key: poolType === POOL_TYPE.REGISTRATION ? "fixedCost" : "pu.fixedCost",
       render: pool => <>{formatADAFull(pool.cost)}</>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
@@ -100,7 +106,7 @@ const RegistrationPools = () => {
     },
     {
       title: "Fee",
-      key: "margin",
+      key: poolType === POOL_TYPE.REGISTRATION ? "margin" : "pu.margin",
       render: pool => formatPercent(pool.margin),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");

@@ -44,7 +44,6 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
     } catch (error) {
     } finally {
       disconnect();
-      history.push("/");
       removeAuthInfo();
       setBookmark([]);
       setUsername("");

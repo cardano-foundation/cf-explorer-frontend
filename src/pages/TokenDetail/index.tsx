@@ -12,7 +12,7 @@ const TokenDetail: React.FC = () => {
   const { tokenId } = useParams<{ tokenId: string }>();
   const { state } = useLocation<{ data?: IToken }>();
   const { data, loading, initialized, error } = useFetch<IToken>(
-    state?.data ? "" : `${API.TOKEN}/${tokenId}`,
+    state?.data ? "" : `${API.TOKEN.LIST}/${tokenId}`,
     state?.data
   );
 

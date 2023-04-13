@@ -14,12 +14,13 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 interface ITokenList {}
 
 const Tokens: React.FC<ITokenList> = () => {
   const [token, setToken] = useState<IToken | null>(null);
-  const [sort, setSort] = useState<string>("");
+  const [sort, setSort] = useState<string>("txCount,DESC");
   const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();
   const { search } = useLocation();
@@ -27,10 +28,12 @@ const Tokens: React.FC<ITokenList> = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const { data, ...fetchData } = useFetchList<ITokenOverview>(API.TOKEN, {
-    ...pageInfo,
-    sort,
-  });
+  const { data, ...fetchData } = useFetchList<ITokenOverview>(
+    API.TOKEN.LIST,
+    { ...pageInfo, sort },
+    false,
+    REFRESH_TIMES.TOKEN_LIST
+  );
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -43,7 +46,14 @@ const Tokens: React.FC<ITokenList> = () => {
       key: "icon",
       minWidth: "50px",
       render: r =>
-        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />,
+        r?.metadata?.logo ? (
+          <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" />
+        ) : (
+          <LogoEmpty
+            name={r.displayName || r.fingerprint || ""}
+            children={`${(r.displayName || r.fingerprint || "").toUpperCase().slice(0, 2)}`}
+          />
+        ),
     },
     {
       title: "Asset Name",
@@ -121,6 +131,7 @@ const Tokens: React.FC<ITokenList> = () => {
           data={data}
           columns={columns}
           total={{ title: "Total", count: fetchData.total }}
+          defaultSort="txCount,DESC"
           pagination={{
             ...pageInfo,
             total: fetchData.total,

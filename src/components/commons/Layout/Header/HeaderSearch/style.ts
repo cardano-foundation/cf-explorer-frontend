@@ -86,7 +86,7 @@ export const Image = styled("img")<{ home: number }>`
   height: ${props => (props.home ? 24 : 20)}px;
 `;
 
-export const OptionsWrapper = styled(Box)<{ home: boolean }>(({ theme, home }) => ({
+export const OptionsWrapper = styled(Box)<{ home: number }>(({ theme, home }) => ({
   position: "absolute",
   top: home ? "61px" : "44px",
   left: home ? "175px" : "0",

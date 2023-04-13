@@ -19,10 +19,11 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import Card from "../../commons/Card";
-import { formatADAFull, formatPrice } from "../../../commons/utils/helper";
+import { formatPrice, numberWithCommas } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { BigNumber } from "bignumber.js";
 import { API } from "../../../commons/utils/api";
+import CustomTooltip from "../../commons/CustomTooltip";
 
 type AnalyticsData = { date: string; value: number };
 
@@ -35,22 +36,30 @@ const options = [
 
 const AddressAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
-  const { address } = useParams<{ address: string }>();
+  const { tokenId } = useParams<{ tokenId: string }>();
   const theme = useTheme();
   // Change path API
-  const { data, loading } = useFetch<AnalyticsData[]>(`${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`);
-  const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${address}`);
+  const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
+  // const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${tokenId}`);
   const dataChart = data?.map(i => {
-    const value = BigNumber(i.value).div(10 ** 6);
+    const value = BigNumber(i.value);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
   });
 
   const categories = data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
-  const minBalance = Math.min(...(balance || []), 0);
-  const maxBalance = Math.max(...(balance || []), 0);
+  const minBalance = data
+    ? data.reduce(function (prev, current) {
+        return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
+      })
+    : { date: "", value: 0 };
+  const maxBalance = data
+    ? data.reduce(function (prev, current) {
+        return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
+      })
+    : { date: "", value: 0 };
 
   return (
-    <Card title="Analytics" pt={5}>
+    <Card title="Analytics" py={4}>
       <Wrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
@@ -69,7 +78,7 @@ const AddressAnalytics: React.FC = () => {
           </Grid>
           <ChartBox>
             {loading ? (
-              <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
+              <SkeletonUI variant="rectangular" style={{ height: "375px", display: "block" }} />
             ) : (
               <Box position={"relative"}>
                 <HighchartsReact
@@ -135,15 +144,17 @@ const AddressAnalytics: React.FC = () => {
           </ChartBox>
         </Grid>
         <Grid item xs={24} lg={6}>
-          <BoxInfo space={categories.length ? 36 : 16}>
+          <BoxInfo space={0}>
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={HighestIcon} width={"20%"} alt="heighest icon" />
                   <Title>Highest Volume</Title>
-                  <ValueInfo>
-                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance)}
-                  </ValueInfo>
+                  <CustomTooltip title={numberWithCommas(maxBalance.value || 0)}>
+                    <ValueInfo>
+                      {loading ? <SkeletonUI variant="rectangular" /> : formatPrice(maxBalance.value)}
+                    </ValueInfo>
+                  </CustomTooltip>
                 </Box>
               </BoxInfoItemRight>
             </Box>
@@ -152,9 +163,11 @@ const AddressAnalytics: React.FC = () => {
                 <Box>
                   <img src={LowestIcon} width={"20%"} alt="lowest icon" />
                   <Title>Lowest Volume</Title>
-                  <ValueInfo>
-                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance)}
-                  </ValueInfo>
+                  <CustomTooltip title={numberWithCommas(minBalance.value || 0)}>
+                    <ValueInfo>
+                      {loading ? <SkeletonUI variant="rectangular" /> : formatPrice(minBalance.value)}
+                    </ValueInfo>
+                  </CustomTooltip>
                 </Box>
               </BoxInfoItem>
             </Box>
