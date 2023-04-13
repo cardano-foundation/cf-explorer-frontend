@@ -19,7 +19,7 @@ interface ModalAllAddressProps {
 const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) => {
   const history = useHistory();
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
+  const [size, setSize] = useState(50);
   const fetchData = useFetchList<Addresses>(`${API.STAKE.DETAIL}/${stake}/list-address`, { page: page - 1, size });
 
   const columns: Column<Addresses>[] = [

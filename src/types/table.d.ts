@@ -8,12 +8,13 @@ export interface Column<T extends ColumnType = any> {
   title?: React.ReactNode;
   width?: number | string;
   minWidth?: number | string;
-  isHiddenBorder ?: boolean;
+  isHiddenBorder?: boolean;
   maxWidth?: number | string;
   render?: (data: T, index: number) => ReactNode;
+  sort?: ({ columnKey, sortValue }: { columnKey: string; sortValue: string }) => void;
 }
 
-export type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns">;
+export type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns" | "loading">;
 
 export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
   row: T;
