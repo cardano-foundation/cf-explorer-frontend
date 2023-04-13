@@ -7,12 +7,17 @@ import rewardIcon from "../../../commons/resources/icons/reward.svg";
 import rewardWithdrawIcon from "../../../commons/resources/icons/rewardWithdraw.svg";
 import infoIcon from "../../../commons/resources/icons/info.svg";
 import { formatADAFull } from "../../../commons/utils/helper";
-import { ButtonModal, StyledFlexValue, StyledLink, TitleCard } from "./styles";
-import { ADAToken } from "../../commons/Token";
+import {
+  ButtonModal,
+  StyledFlexValue,
+  StyledLink,
+  TitleCard,
+} from "./styles";
 import { useParams } from "react-router-dom";
 import ModalAllAddress from "../ModalAllAddress";
 import CustomTooltip from "../../commons/CustomTooltip";
 import DetailHeader from "../../commons/DetailHeader";
+import ADAicon from "../../commons/ADAIcon";
 
 interface Props {
   data: IStakeKeyDetail | null;
@@ -48,7 +53,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
         <Box>
           <StyledFlexValue>
             <Box component={"span"}>{formatADAFull(data?.totalStake)}</Box>
-            <ADAToken />
+            <ADAicon />
           </StyledFlexValue>
           <Box>
             <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>
@@ -67,7 +72,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       value: (
         <StyledFlexValue>
           <Box component={"span"}>{formatADAFull(data?.rewardAvailable)}</Box>
-          <ADAToken />
+          <ADAicon />
         </StyledFlexValue>
       ),
     },
@@ -81,7 +86,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       value: (
         <StyledFlexValue>
           {formatADAFull(data?.rewardWithdrawn)}
-          <ADAToken />
+          <ADAicon />
         </StyledFlexValue>
       ),
     },
