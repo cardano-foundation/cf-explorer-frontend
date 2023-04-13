@@ -9,6 +9,7 @@ import { details } from "../../../../commons/routers";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { AddressLink, Amount, ItemContainer, StatusIcon, StyledItem, Wrapper } from "./styles";
 import { Header } from "./styles";
+import ADAicon from "../../../commons/ADAIcon";
 
 interface WithdrawalsProps {
   data: Transaction["withdrawals"] | null;
@@ -55,7 +56,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
             </Box>
             <Box minWidth="max-content">
               <Amount>+ {formatADAFull(item?.amount)}</Amount>
-              <img src={AIcon} alt="ADA icon" />
+              <ADAicon ml={"3px"} />
             </Box>
           </ItemContainer>
         </StyledItem>

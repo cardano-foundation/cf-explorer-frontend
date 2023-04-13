@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import qs from "qs";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { authAxios, defaultAxios } from "../utils/axios";
 
 interface Params {
@@ -17,11 +17,11 @@ interface FetchReturnType<T> {
   total: number;
   totalPage: number;
   currentPage: number;
-  refesh: () => void;
+  refresh: () => void;
   update: (callback: (data: T[]) => T[]) => void;
 }
 
-const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean): FetchReturnType<T> => {
+const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, timeout?: number): FetchReturnType<T> => {
   const [data, setData] = useState<T[]>([]);
   const [initialized, setInitialized] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -29,6 +29,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean): Fe
   const [currentPage, setCurrentPage] = useState(params.page ?? 0);
   const [totalPage, setTotalPage] = useState(0);
   const [total, setTotal] = useState(0);
+  const lastFetch = useRef<number>(Date.now());
 
   const getList = useCallback(async () => {
     if (!url) return;
@@ -55,6 +56,24 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean): Fe
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, ...Object.values(params || {})]);
+  
+  useEffect(() => {
+    if (timeout) {
+      const interval = setInterval(() => {
+        if (!document.hidden) getList();
+        lastFetch.current = Date.now();
+      }, timeout * 1000);
+
+      const onFocus = () => lastFetch.current + timeout * 1000 <= Date.now() && getList();
+
+      window.addEventListener("focus", onFocus);
+
+      return () => {
+        clearInterval(interval);
+        window.removeEventListener("focus", onFocus);
+      };
+    }
+  }, [getList, timeout]);
 
   useEffect(() => {
     getList();
@@ -68,7 +87,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean): Fe
     total,
     totalPage,
     currentPage,
-    refesh: getList,
+    refresh: getList,
     update: setData,
   };
 };

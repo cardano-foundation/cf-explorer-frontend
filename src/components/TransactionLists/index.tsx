@@ -1,6 +1,8 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
+import { useState } from "react";
+
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import { formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../../commons/utils/helper";
@@ -9,8 +11,8 @@ import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import SelectedIcon from "../commons/SelectedIcon";
+import ADAicon from "../commons/ADAIcon";
 
 interface TransactionListProps {
   underline?: boolean;
@@ -32,7 +34,8 @@ const TransactionList: React.FC<TransactionListProps> = ({
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<Transactions>(url, pageInfo);
+  const [sort, setSort] = useState<string>("");
+  const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort });
 
   const onClickRow = (_: any, r: Transactions, index: number) => {
     if (openDetail) return openDetail(_, r, index);
@@ -47,8 +50,8 @@ const TransactionList: React.FC<TransactionListProps> = ({
       render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0),
     },
     {
-      title: "Trx Hash",
-      key: "trxhash",
+      title: "Tx Hash",
+      key: "txhash",
       minWidth: 120,
 
       render: r => (
@@ -77,27 +80,33 @@ const TransactionList: React.FC<TransactionListProps> = ({
       ),
     },
     {
-      title: "Fees",
+      title: "Fee",
       key: "fee",
       minWidth: 120,
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.fee)}</Box>
-          <img src={AIcon} alt="a icon" />
+            <ADAicon  />
         </Box>
       ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
     {
-      title: "Output",
+      title: "Output in ADA",
       minWidth: 120,
-      key: "ouput",
+      key: "outSum",
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
-          <img src={AIcon} alt="a icon" />
+            <ADAicon  />
           {hash === r.hash && <SelectedIcon />}
         </Box>
       ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
   ];
   const { pathname } = window.location;

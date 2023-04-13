@@ -1,31 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { parse, stringify } from "qs";
+import { stringify } from "qs";
 import { useWindowSize } from "react-use";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
 import { details } from "../../commons/routers";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortWallet,
-  numberWithCommas,
-} from "../../commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AssetName, Logo, StyledContainer, LogoEmpty } from "./styles";
 import CustomTooltip from "../../components/commons/CustomTooltip";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { Box, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 interface ITokenList {}
 
 const Tokens: React.FC<ITokenList> = () => {
   const [token, setToken] = useState<IToken | null>(null);
+  const [sort, setSort] = useState<string>("txCount,DESC");
   const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();
   const { search } = useLocation();
@@ -33,9 +28,12 @@ const Tokens: React.FC<ITokenList> = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const { data, ...fetchData } = useFetchList<ITokenOverview>(API.TOKEN, {
-    ...pageInfo,
-  });
+  const { data, ...fetchData } = useFetchList<ITokenOverview>(
+    API.TOKEN.LIST,
+    { ...pageInfo, sort },
+    false,
+    REFRESH_TIMES.TOKEN_LIST
+  );
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -48,7 +46,14 @@ const Tokens: React.FC<ITokenList> = () => {
       key: "icon",
       minWidth: "50px",
       render: r =>
-        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />,
+        r?.metadata?.logo ? (
+          <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" />
+        ) : (
+          <LogoEmpty
+            name={r.displayName || r.fingerprint || ""}
+            children={`${(r.displayName || r.fingerprint || "").toUpperCase().slice(0, 2)}`}
+          />
+        ),
     },
     {
       title: "Asset Name",
@@ -67,25 +72,40 @@ const Tokens: React.FC<ITokenList> = () => {
     },
     {
       title: "Total Transactions",
-      key: "totalTransactions",
+      key: "txCount",
       minWidth: "150px",
       render: r => numberWithCommas(r?.txCount),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
+    },
+    {
+      title: "Volume In 24H",
+      key: "volumeIn24h",
+      minWidth: "150px",
+      render: r => numberWithCommas(r?.volumeIn24h),
     },
     {
       title: "Total Supply",
-      key: "totalSupply",
+      key: "supply",
       minWidth: "150px",
       render: r => numberWithCommas(r?.supply),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
     {
-      title: "Created",
-      key: "created",
+      title: "Created At",
+      key: "time",
       minWidth: "150px",
       render: r => (
         <>
           {formatDateTimeLocal(r.createdOn || "")} {JSON.stringify(token) === JSON.stringify(r) && <SelectedIcon />}
         </>
       ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
   ];
 
@@ -111,6 +131,7 @@ const Tokens: React.FC<ITokenList> = () => {
           data={data}
           columns={columns}
           total={{ title: "Total", count: fetchData.total }}
+          defaultSort="txCount,DESC"
           pagination={{
             ...pageInfo,
             total: fetchData.total,
