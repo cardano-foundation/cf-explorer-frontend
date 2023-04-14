@@ -74,7 +74,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
 
   return (
     <Box textAlign={"left"}>
-    <BackButton onClick={history.goBack}>
+      <BackButton onClick={history.goBack}>
         <HiArrowLongLeft />
         <BackText>Back</BackText>
       </BackButton>
