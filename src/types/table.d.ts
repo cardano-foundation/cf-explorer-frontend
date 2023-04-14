@@ -14,13 +14,18 @@ export interface Column<T extends ColumnType = any> {
   sort?: ({ columnKey, sortValue }: { columnKey: string; sortValue: string }) => void;
 }
 
-export type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns" | "loading">;
+export type TableHeaderProps<T extends ColumnType> = Pick<
+  TableProps<T>,
+  "columns" | "loading" | "showTabView" | "selected"
+>;
 
 export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
   row: T;
   dataLength?: number;
   index: number;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
+  showTabView?: boolean;
+  selected?: number | null;
   selectedProps?: {
     className?: string;
     style?: React.CSSProperties;
@@ -49,6 +54,7 @@ export interface TableProps<T extends ColumnType = any> {
   };
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
+  showTabView?: boolean;
   selected?: number | null;
   selectedProps?: {
     className?: string;

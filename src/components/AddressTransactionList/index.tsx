@@ -23,6 +23,7 @@ interface AddressTransactionListProps {
   url: string;
   openDetail?: (_: any, transaction: Transactions, index: number) => void;
   selected?: number | null;
+  showTabView?: boolean;
 }
 
 const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
@@ -30,6 +31,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   url,
   openDetail,
   selected,
+  showTabView,
 }) => {
   const { search } = useLocation();
   const history = useHistory();
@@ -163,6 +165,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
         }}
         onClickRow={onClickRow}
         selected={selected}
+        showTabView={showTabView}
       />
     </Card>
   );

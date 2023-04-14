@@ -12,12 +12,7 @@ import {
 } from "@mui/material";
 import { TiArrowUnsorted, TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
-import { EmptyIcon } from "../../../commons/resources";
-import { ReactComponent as StartPage } from "../../../commons/resources/icons/startPagePagination.svg";
-import { ReactComponent as EndPage } from "../../../commons/resources/icons/endPagePagination.svg";
-import { ReactComponent as PrevPage } from "../../../commons/resources/icons/prevPagePagination.svg";
-import { ReactComponent as NextPage } from "../../../commons/resources/icons/nextPagePagination.svg";
-import { ReactComponent as DownIcon } from "../../../commons/resources/icons/down.svg";
+import { DownIcon, EmptyIcon, EndPage, EyeIcon, NextPage, PrevPage, StartPage } from "../../../commons/resources";
 import {
   Empty,
   EmtyImage,
@@ -49,7 +44,7 @@ export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
   </Empty>
 );
 
-const TableHeader = <T extends ColumnType>({ columns, loading }: TableHeaderProps<T>) => {
+const TableHeader = <T extends ColumnType>({ columns, loading, showTabView, selected = null }: TableHeaderProps<T>) => {
   const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
     columnKey: "",
     sort: "",
@@ -100,6 +95,7 @@ const TableHeader = <T extends ColumnType>({ columns, loading }: TableHeaderProp
             )}
           </THeader>
         ))}
+        {showTabView && selected === null && <THeader />}
       </tr>
     </THead>
   );
@@ -110,7 +106,9 @@ const TableRow = <T extends ColumnType>({
   columns,
   index,
   onClickRow,
+  showTabView,
   selectedProps,
+  selected = null,
   dataLength,
 }: TableRowProps<T>) => {
   return (
@@ -127,6 +125,11 @@ const TableRow = <T extends ColumnType>({
           </TCol>
         );
       })}
+      {showTabView && selected === null && (
+        <TCol minWidth={50} maxWidth={90}>
+          <EyeIcon style={{ transform: "scale(.6)" }} />
+        </TCol>
+      )}
     </TRow>
   );
 };
@@ -135,6 +138,7 @@ const TableBody = <T extends ColumnType>({
   data,
   columns,
   onClickRow,
+  showTabView,
   selected,
   selectedProps,
   loading,
@@ -164,6 +168,8 @@ const TableBody = <T extends ColumnType>({
             index={index}
             dataLength={data.length}
             onClickRow={onClickRow}
+            showTabView={showTabView}
+            selected={selected}
             selectedProps={selected === index ? selectedProps : undefined}
           />
         ))}
@@ -260,6 +266,7 @@ const Table: React.FC<TableProps> = ({
   initialized = true,
   error,
   onClickRow,
+  showTabView,
   selected,
   selectedProps,
 }) => {
@@ -267,11 +274,12 @@ const Table: React.FC<TableProps> = ({
     <Box className={className || ""} style={style}>
       <Wrapper>
         <TableFullWidth>
-          <TableHeader columns={columns} loading={loading} />
+          <TableHeader columns={columns} loading={loading} showTabView={showTabView} selected={selected} />
           <TableBody
             columns={columns}
             data={data}
             onClickRow={onClickRow}
+            showTabView={showTabView}
             selected={selected}
             selectedProps={selectedProps}
             initialized={initialized}
