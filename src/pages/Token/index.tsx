@@ -80,7 +80,7 @@ const Tokens: React.FC<ITokenList> = () => {
       },
     },
     {
-      title: "Volume In 24H",
+      title: "Volume 24H",
       key: "volumeIn24h",
       minWidth: "150px",
       render: r => numberWithCommas(r?.volumeIn24h),
@@ -95,7 +95,7 @@ const Tokens: React.FC<ITokenList> = () => {
       },
     },
     {
-      title: "Created At",
+      title: "Created",
       key: "time",
       minWidth: "150px",
       render: r => (
