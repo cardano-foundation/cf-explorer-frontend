@@ -22,6 +22,8 @@ jobs:
 
       - name: Set environment variables
         run: |
+          pwd
+          ls -la
           echo 'SAUCE_HUB=${SAUCEHUB}' >> src/main/resources/application-test.properties
           echo 'SELENIUM_HUB=${SELENIUMHUB}' >> src/main/resources/application-test.properties
           echo 'FE_URL=${DEV_DEPLOYMENT}' >> src/main/resources/application-test.properties
