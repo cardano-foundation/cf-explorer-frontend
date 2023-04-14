@@ -48,7 +48,7 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
       setBookmark([]);
       setUsername("");
       setUser({ ...user, userData: {} });
-      window.location.reload();
+      // window.location.reload();
     }
   };
 
