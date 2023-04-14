@@ -124,6 +124,7 @@ const Epoch: React.FC = () => {
           }}
           onClickRow={openDetail}
           selected={selected}
+          showTabView
         />
       </Card>
       {epoch !== null && <DetailViewEpoch epochNo={epoch} handleClose={handleClose} callback={fetchData.update} />}

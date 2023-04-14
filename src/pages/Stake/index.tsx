@@ -134,6 +134,7 @@ const Stake: React.FC<IStake> = () => {
           }}
           onClickRow={openDetail}
           selected={selected}
+          showTabView
         />
       </Card>
       {stake && <DetailViewStakeKey stakeId={stake} handleClose={handleClose} />}
