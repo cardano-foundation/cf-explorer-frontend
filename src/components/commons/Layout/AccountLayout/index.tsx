@@ -80,8 +80,10 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
       fetchUserInfo();
     }
   }, [fetchUserInfo]);
+  if (!userData) {
+    return <Redirect to={routers.HOME} />;
+  }
   if (firstLoad) return null;
-  if (!userData) return <Redirect to={routers.HOME} />;
   return (
     <Wrapper>
       <Box component={"h2"} textAlign="left">
