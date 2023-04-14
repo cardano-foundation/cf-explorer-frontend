@@ -3,7 +3,6 @@ import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS, STAKE_KEY_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import { BoxRaised } from "../BoxRaised";
-import ViewAllButton from "../ViewAllButton";
 
 export const ViewDetailDrawer = styled(Drawer)`
   & > div {
@@ -17,8 +16,8 @@ export const ViewDetailDrawer = styled(Drawer)`
 `;
 
 export const ViewDetailHeader = styled(Box)`
-  margin: 100px 30px 0px;
-  padding-bottom: 15px;
+  margin: 0px 30px 0px;
+  padding: 15px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -33,7 +32,7 @@ export const CloseButton = styled(IconButton)`
 export const ViewDetailContainer = styled(Box)`
   position: relative;
   width: 430px;
-  height: calc(100vh - 244px);
+  height: calc(100vh - 200px);
   overflow-x: hidden;
   overflow-y: auto;
   margin-left: 30px;

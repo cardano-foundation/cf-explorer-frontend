@@ -33,7 +33,6 @@ import {
   ViewDetailScroll,
   ViewDetailHeader,
 } from "./styles";
-import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
@@ -45,6 +44,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { API } from "../../../commons/utils/api";
 import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
 
 type DetailViewBlockProps = {
   blockNo: number | string;
@@ -200,7 +200,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADAFull(data.totalFees)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -210,7 +210,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
               </DetailLabel>
               <DetailValue>
                 {formatADAFull(data.totalOutput)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             {/* <DetailsInfoItem>
