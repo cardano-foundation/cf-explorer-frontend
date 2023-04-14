@@ -55,7 +55,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       ),
     },
     {
-      title: "Block",
+      title: "Block/ Epoch/ Slot",
       key: "block",
       minWidth: "200px",
       render: r => (
