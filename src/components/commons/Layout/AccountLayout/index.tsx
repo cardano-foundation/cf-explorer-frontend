@@ -15,7 +15,7 @@ import {
   Wrapper,
 } from "./styled";
 import editAva from "../../../../commons/resources/icons/editAva.svg";
-import { useLocation } from "react-router-dom";
+import { Redirect, useLocation } from "react-router-dom";
 import { MdChevronRight } from "react-icons/md";
 import { setUserData } from "../../../../stores/user";
 import { getInfo } from "../../../../commons/utils/userRequest";
@@ -25,7 +25,6 @@ import { ReactComponent as ReportDiscord } from "../../../../commons/resources/i
 import { ReactComponent as ReportMail } from "../../../../commons/resources/icons/reportMail.svg";
 import CustomTooltip from "../../CustomTooltip";
 import useToast from "../../../../commons/hooks/useToast";
-import NotFound from "../../../../pages/NotFound";
 import StyledModal from "../../StyledModal";
 interface Props {
   children: React.ReactNode;
@@ -36,13 +35,18 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   const { userData } = useSelector(({ user }: RootState) => user);
   const [openReportModal, setOpenReportModal] = useState(false);
   const [isUploadAvatar, setIsUploadAvatar] = useState(false);
+  const [firstLoad, setFirstLoad] = useState(true);
   const fetchUserInfo = useCallback(async () => {
     try {
+      setFirstLoad(true);
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
       setUserData(response.data);
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setFirstLoad(false);
+    }
   }, []);
-  
+
   const theme = useTheme();
   const toast = useToast();
 
@@ -70,7 +74,14 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
       setIsUploadAvatar(false);
     }
   };
-  if (!userData) return <NotFound />;
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      fetchUserInfo();
+    }
+  }, [fetchUserInfo]);
+  if (firstLoad) return null;
+  if (!userData) return <Redirect to={routers.HOME} />;
   return (
     <Wrapper>
       <Box component={"h2"} textAlign="left">

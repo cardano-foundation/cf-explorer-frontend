@@ -5,14 +5,18 @@ import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import StakeKeyOverview from "../../components/StakeDetail/StakeOverview";
 import StakeTab from "../../components/StakeDetail/StakeTab";
+import StakeAnalytics from "../../components/StakeDetail/StakeAnalytics";
 import { StyledContainer } from "./styles";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const StakeDetail: React.FC = () => {
   const { stakeId } = useParams<{ stakeId: string }>();
   const { state } = useLocation<{ data?: IStakeKeyDetail }>();
-  const { data, loading, initialized, error } = useFetch<IStakeKeyDetail>(
-    state?.data ? "" : `${API.STAKE.DETAIL}/${stakeId}`,
-    state?.data
+  const { data, initialized, error } = useFetch<IStakeKeyDetail>(
+    `${API.STAKE.DETAIL}/${stakeId}`,
+    state?.data,
+    false,
+    REFRESH_TIMES.STAKE_REGISTRATION
   );
 
   useEffect(() => {
@@ -24,7 +28,8 @@ const StakeDetail: React.FC = () => {
 
   return (
     <StyledContainer>
-      <StakeKeyOverview data={data} loading={loading} />
+      <StakeKeyOverview data={data} loading={!initialized} />
+      <StakeAnalytics />
       <StakeTab />
     </StyledContainer>
   );

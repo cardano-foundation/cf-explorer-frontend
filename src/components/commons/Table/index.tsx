@@ -8,14 +8,11 @@ import {
   styled,
   CircularProgress,
   alpha,
+  Button,
 } from "@mui/material";
+import { TiArrowUnsorted, TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
-import { EmptyIcon } from "../../../commons/resources";
-import { ReactComponent as StartPage } from "../../../commons/resources/icons/startPagePagination.svg";
-import { ReactComponent as EndPage } from "../../../commons/resources/icons/endPagePagination.svg";
-import { ReactComponent as PrevPage } from "../../../commons/resources/icons/prevPagePagination.svg";
-import { ReactComponent as NextPage } from "../../../commons/resources/icons/nextPagePagination.svg";
-import { ReactComponent as DownIcon } from "../../../commons/resources/icons/down.svg";
+import { DownIcon, EmptyIcon, EndPage, EyeIcon, NextPage, PrevPage, StartPage } from "../../../commons/resources";
 import {
   Empty,
   EmtyImage,
@@ -29,7 +26,6 @@ import {
   TotalNumber,
   Wrapper,
   TableFullWidth,
-  Error,
   InputNumber,
   SelectMui,
   LoadingWrapper,
@@ -37,6 +33,7 @@ import {
 import { ColumnType, FooterTableProps, TableHeaderProps, TableProps, TableRowProps } from "../../../types/table";
 import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
+import { TbArrowsDownUp, TbArrowUp, TbArrowDown } from "react-icons/tb";
 
 type TEmptyRecord = {
   className?: string;
@@ -47,13 +44,64 @@ export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
   </Empty>
 );
 
-const TableHeader = <T extends ColumnType>({ columns }: TableHeaderProps<T>) => {
+const TableHeader = <T extends ColumnType>({
+  columns,
+  loading,
+  defaultSort,
+  showTabView,
+  selected = null,
+}: TableHeaderProps<T>) => {
+  const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
+    columnKey: defaultSort ? defaultSort.split(",")[0] : "",
+    sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : "",
+  });
+  const sortValue = ({ key, sort }: { key: string; sort: "" | "DESC" | "ASC" }) => {
+    if (key === columnKey)
+      switch (sort) {
+        case "DESC":
+          setSort({ columnKey: key, sort: "ASC" });
+          return { columnKey: key, sortValue: "ASC" };
+        case "ASC":
+          setSort({ columnKey: key, sort: "" });
+          return { columnKey: key, sortValue: "" };
+        default: {
+          setSort({ columnKey: key, sort: "DESC" });
+          return { columnKey: key, sortValue: "DESC" };
+        }
+      }
+    setSort({ columnKey: key, sort: "DESC" });
+    return { columnKey: key, sortValue: "DESC" };
+  };
+  const IconSort = ({ key, sort }: { key: string; sort: "" | "DESC" | "ASC" }) => {
+    if (key === columnKey)
+      switch (sort) {
+        case "DESC":
+          return <TbArrowDown color={"#98A2B3"} size={"18px"} />;
+        case "ASC":
+          return <TbArrowUp color={"#98A2B3"} size={"18px"} />;
+        default: {
+          return <TbArrowsDownUp color={"#98A2B3"} size={"18px"} />;
+        }
+      }
+    return <TbArrowsDownUp color={"#98A2B3"} size={"18px"} />;
+  };
   return (
     <THead>
       <tr>
         {columns.map((column, idx) => (
-          <THeader key={idx}>{column.title}</THeader>
+          <THeader key={idx}>
+            {column.title}
+            {column.sort && (
+              <IconButton
+                disabled={loading}
+                onClick={() => column?.sort && column?.sort(sortValue({ sort, key: column.key }))}
+              >
+                {IconSort({ sort, key: column.key })}
+              </IconButton>
+            )}
+          </THeader>
         ))}
+        {showTabView && selected === null && <THeader />}
       </tr>
     </THead>
   );
@@ -64,7 +112,9 @@ const TableRow = <T extends ColumnType>({
   columns,
   index,
   onClickRow,
+  showTabView,
   selectedProps,
+  selected = null,
   dataLength,
 }: TableRowProps<T>) => {
   return (
@@ -81,6 +131,11 @@ const TableRow = <T extends ColumnType>({
           </TCol>
         );
       })}
+      {showTabView && selected === null && (
+        <TCol minWidth={50} maxWidth={90}>
+          <EyeIcon style={{ transform: "scale(.6)" }} />
+        </TCol>
+      )}
     </TRow>
   );
 };
@@ -89,6 +144,7 @@ const TableBody = <T extends ColumnType>({
   data,
   columns,
   onClickRow,
+  showTabView,
   selected,
   selectedProps,
   loading,
@@ -97,17 +153,21 @@ const TableBody = <T extends ColumnType>({
   return (
     <TBody>
       {loading && initialized && (
-        <LoadingWrapper
-          bgcolor={theme => alpha(theme.palette.common.black, 0.05)}
-          width={"100%"}
-          height={"100%"}
-          zIndex={1000}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <CircularProgress />
-        </LoadingWrapper>
+        <tr>
+          <td>
+            <LoadingWrapper
+              bgcolor={theme => alpha(theme.palette.common.black, 0.05)}
+              width={"100%"}
+              height={"100%"}
+              zIndex={1000}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <CircularProgress />
+            </LoadingWrapper>
+          </td>
+        </tr>
       )}
       {data &&
         data.map((row, index) => (
@@ -118,6 +178,8 @@ const TableBody = <T extends ColumnType>({
             index={index}
             dataLength={data.length}
             onClickRow={onClickRow}
+            showTabView={showTabView}
+            selected={selected}
             selectedProps={selected === index ? selectedProps : undefined}
           />
         ))}
@@ -137,7 +199,7 @@ const TableSekeleton = () => {
 
 const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading }) => {
   const [page, setPage] = useState(pagination?.page || 1);
-  const [size, setSize] = useState(pagination?.size || 10);
+  const [size, setSize] = useState(pagination?.size || 50);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
 
   useUpdateEffect(() => {
@@ -167,6 +229,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading })
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>
               <MenuItem value={50}>50</MenuItem>
+              <MenuItem value={100}>100</MenuItem>
             </SelectMui>
             <Box component={"span"} ml={1} fontSize="0.875rem">
               Per page
@@ -213,18 +276,27 @@ const Table: React.FC<TableProps> = ({
   initialized = true,
   error,
   onClickRow,
+  showTabView,
   selected,
   selectedProps,
+  defaultSort,
 }) => {
   return (
     <Box className={className || ""} style={style}>
       <Wrapper>
         <TableFullWidth>
-          <TableHeader columns={columns} />
+          <TableHeader
+            columns={columns}
+            loading={loading}
+            defaultSort={defaultSort}
+            showTabView={showTabView}
+            selected={selected}
+          />
           <TableBody
             columns={columns}
             data={data}
             onClickRow={onClickRow}
+            showTabView={showTabView}
             selected={selected}
             selectedProps={selectedProps}
             initialized={initialized}

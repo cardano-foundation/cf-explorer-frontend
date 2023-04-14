@@ -44,11 +44,11 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
     switch (status) {
       case TRANSACTION_STATUS.FAIL:
         return theme.palette.error.main;
-      case TRANSACTION_STATUS.PENDDING:
-        return theme.palette.warning.main;
       case TRANSACTION_STATUS.SUCCESS:
         return theme.palette.success.main;
+      case TRANSACTION_STATUS.PENDDING:
       case "IN_PROGRESS":
+      case "SYNCING":
         return theme.palette.warning.main;
       case "FINISHED":
         return theme.palette.info.main;
@@ -60,11 +60,11 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
     switch (status) {
       case TRANSACTION_STATUS.FAIL:
         return theme.palette.error.light;
-      case TRANSACTION_STATUS.PENDDING:
-        return theme.palette.warning.light;
       case TRANSACTION_STATUS.SUCCESS:
         return theme.palette.success.light;
+      case TRANSACTION_STATUS.PENDDING:
       case "IN_PROGRESS":
+      case "SYNCING":
         return theme.palette.warning.light;
       case "FINISHED":
         return theme.palette.info.light;
@@ -124,8 +124,8 @@ export const SlotLeaderCopy = styled(CopyButton)`
   margin-bottom: 3px;
 `;
 
-export const DetailsInfo = styled(Grid)<{ numberOfItems: number }>`
-  padding: 30px ${props => (props.numberOfItems > 6 ? 25 : 15)}px;
+export const DetailsInfo = styled(Grid)<{ items_length: number }>`
+  padding: 30px ${props => (props.items_length > 6 ? 25 : 15)}px;
   margin-top: 15px;
   background: ${props => props.theme.palette.background.paper};
   border-radius: 15px;
@@ -134,9 +134,9 @@ export const DetailsInfo = styled(Grid)<{ numberOfItems: number }>`
   }
 `;
 
-export const EpochNumber = styled(Link)<{ isEpoch: boolean }>(({ theme, isEpoch }) => ({
+export const EpochNumber = styled(Link)<{ is_epoch: number }>(({ theme, is_epoch }) => ({
   fontWeight: "bold",
-  color: `${isEpoch ? theme.palette.common.black : theme.palette.secondary.main} !important`,
+  color: `${is_epoch ? theme.palette.common.black : theme.palette.secondary.main} !important`,
   margin: 0,
   fontSize: "1.5rem",
 }));
@@ -249,25 +249,25 @@ export const ProgressPercent = styled("h4")`
   margin: 0;
 `;
 
-export const CardItem = styled(Grid)<{ numberOfItems: number }>(({ theme, numberOfItems }) => ({
+export const CardItem = styled(Grid)<{ items_length: number }>(({ theme, items_length }) => ({
   position: "relative",
   width: "max-content",
-  padding: numberOfItems > 6 ? "20px 25px" : "0px 15px",
+  padding: items_length > 6 ? "20px 25px" : "0px 15px",
   borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
   borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
   ":first-of-type": {
     borderLeft: "none",
   },
-  ...(numberOfItems > 6
+  ...(items_length > 6
     ? {
         borderBottomWidth: 1,
         [theme.breakpoints.up(theme.breakpoints.values.lg)]: {
-          ":nth-child(4n+1)": {
+          ":nth-of-type(4n+1)": {
             borderLeftWidth: 0,
             paddingLeft: 0,
           },
-          ":nth-last-child(-n + 4)": {
-            ":nth-child(4n + 1)": {
+          ":nth-last-of-type(-n + 4)": {
+            ":nth-of-type(4n + 1)": {
               borderBottomWidth: 0,
               "&~div": {
                 borderBottomWidth: 0,
@@ -296,15 +296,15 @@ export const CardItem = styled(Grid)<{ numberOfItems: number }>(({ theme, number
       right: -1,
       borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
     },
-    [`:nth-child(${numberOfItems === 4 ? 4 : 3}n)::after`]: {
+    [`:nth-of-type(${items_length === 4 ? 4 : 3}n)::after`]: {
       borderRight: 0,
     },
-    [`:nth-child(${numberOfItems === 4 ? 4 : 3}n+1)`]: {
+    [`:nth-of-type(${items_length === 4 ? 4 : 3}n+1)`]: {
       borderLeftWidth: 0,
       paddingLeft: 0,
     },
-    [`:nth-last-child(-n+${numberOfItems === 4 ? 4 : 3})`]: {
-      [`:nth-child(${numberOfItems === 4 ? 4 : 3}n+1)`]: {
+    [`:nth-last-of-type(-n+${items_length === 4 ? 4 : 3})`]: {
+      [`:nth-of-type(${items_length === 4 ? 4 : 3}n+1)`]: {
         borderBottomWidth: 0,
         "&~div": {
           borderBottomWidth: 0,
@@ -316,7 +316,7 @@ export const CardItem = styled(Grid)<{ numberOfItems: number }>(({ theme, number
     paddingTop: 20,
     paddingBottom: 20,
     borderBottomWidth: 1,
-    ":nth-child(2n+1)": {
+    ":nth-of-type(2n+1)": {
       borderLeftWidth: 0,
       paddingLeft: 0,
     },
@@ -328,11 +328,11 @@ export const CardItem = styled(Grid)<{ numberOfItems: number }>(({ theme, number
       right: -1,
       borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
     },
-    ":nth-child(2n)::after": {
+    ":nth-of-type(2n)::after": {
       borderRight: 0,
     },
-    ":nth-last-child(-n+2)": {
-      ":nth-child(2n+1)": {
+    ":nth-last-of-type(-n+2)": {
+      ":nth-of-type(2n+1)": {
         borderBottomWidth: 0,
         "&~div": {
           borderBottomWidth: 0,

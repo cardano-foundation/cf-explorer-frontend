@@ -7,6 +7,7 @@ import useFetch from "../../commons/hooks/useFetch";
 import Card from "../../components/commons/Card";
 import NoRecord from "../../components/commons/NoRecord";
 import { API } from "../../commons/utils/api";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const StyledContainer = styled(Container)`
   padding: 30px 0px 40px;
@@ -15,9 +16,11 @@ const StyledContainer = styled(Container)`
 const Transaction: React.FC = () => {
   const { trxHash } = useParams<{ trxHash: string }>();
   const { state } = useLocation<{ data?: Transaction }>();
-  const { data, loading, initialized, error } = useFetch<Transaction>(
-    state?.data ? "" : `${API.TRANSACTION.DETAIL}/${trxHash}`,
-    state?.data
+  const { data, initialized, error } = useFetch<Transaction>(
+    `${API.TRANSACTION.DETAIL}/${trxHash}`,
+    state?.data,
+    false,
+    REFRESH_TIMES.EPOCH_DETAIL
   );
 
   useEffect(() => {
@@ -29,15 +32,15 @@ const Transaction: React.FC = () => {
 
   return (
     <StyledContainer>
-      <TransactionOverview data={data} loading={loading} />
+      <TransactionOverview data={data} loading={!initialized} />
       <Box>
-        {loading ? (
+        {!initialized ? (
           <Card>
             <Skeleton variant="rectangular" style={{ borderRadius: 10, height: 50, marginBottom: 10 }} />
             <Skeleton variant="rectangular" style={{ borderRadius: 10, minHeight: 350 }} />
           </Card>
         ) : (
-          <TransactionMetadata data={data} loading={loading} />
+          <TransactionMetadata data={data} loading={!initialized} />
         )}
       </Box>
     </StyledContainer>

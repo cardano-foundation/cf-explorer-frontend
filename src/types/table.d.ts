@@ -8,18 +8,24 @@ export interface Column<T extends ColumnType = any> {
   title?: React.ReactNode;
   width?: number | string;
   minWidth?: number | string;
-  isHiddenBorder ?: boolean;
+  isHiddenBorder?: boolean;
   maxWidth?: number | string;
   render?: (data: T, index: number) => ReactNode;
+  sort?: ({ columnKey, sortValue }: { columnKey: string; sortValue: string }) => void;
 }
 
-export type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns">;
+export type TableHeaderProps<T extends ColumnType> = Pick<
+  TableProps<T>,
+  "columns" | "loading" | "defaultSort" | "showTabView" | "selected"
+>;
 
 export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
   row: T;
   dataLength?: number;
   index: number;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
+  showTabView?: boolean;
+  selected?: number | null;
   selectedProps?: {
     className?: string;
     style?: React.CSSProperties;
@@ -39,6 +45,7 @@ export interface TableProps<T extends ColumnType = any> {
     count: number;
     title: string;
   };
+  defaultSort?: string;
   pagination?: {
     onChange?: (page: number, size: number) => void;
     page?: number;
@@ -48,6 +55,7 @@ export interface TableProps<T extends ColumnType = any> {
   };
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
+  showTabView?: boolean;
   selected?: number | null;
   selectedProps?: {
     className?: string;

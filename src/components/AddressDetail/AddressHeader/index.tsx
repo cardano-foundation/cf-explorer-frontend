@@ -14,6 +14,7 @@ import BookmarkButton from "../../commons/BookmarkIcon";
 import TokenAutocomplete from "../../TokenAutocomplete";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { BackButton, BackText } from "./styles";
+import ADAicon from "../../commons/ADAIcon";
 
 interface Props {
   data: WalletAddress | null;
@@ -39,7 +40,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       value: (
         <Box display="flex" alignItems="center">
           {formatADAFull(data?.balance)}
-          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          <ADAicon pl={"8px"} />
         </Box>
       ),
     },
@@ -57,7 +58,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       value: (
         <Box>
           {formatADAFull(dataStake?.totalStake)}
-          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          <ADAicon pl={"8px"} />
         </Box>
       ),
     },
@@ -79,7 +80,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       value: (
         <Box>
           {formatADAFull(dataStake?.rewardAvailable)}
-          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          <ADAicon pl={"8px"} />
         </Box>
       ),
     },

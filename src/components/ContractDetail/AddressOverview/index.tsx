@@ -11,6 +11,7 @@ import Card from "../../commons/Card";
 import CardAddress from "../../share/CardAddress";
 import TokenAutocomplete from "../../TokenAutocomplete";
 import { Pool, StyledAAmount } from "./styles";
+import ADAicon from "../../commons/ADAIcon";
 
 interface Props {
   data: WalletAddress | null;
@@ -30,7 +31,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       value: (
         <StyledAAmount>
           <Box>{formatADAFull(data?.balance)}</Box>
-          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          <ADAicon pl={"8px"} />
         </StyledAAmount>
       ),
     },
@@ -45,7 +46,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       value: (
         <StyledAAmount>
           {formatADAFull(dataStake?.totalStake)}
-          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          <ADAicon pl={"8px"} />
         </StyledAAmount>
       ),
     },
@@ -54,7 +55,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       value: (
         <StyledAAmount>
           {formatADAFull(dataStake?.rewardAvailable)}
-          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          <ADAicon pl={"8px"} />
         </StyledAAmount>
       ),
     },
@@ -63,7 +64,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       value: (
         <StyledAAmount>
           {formatADAFull(dataStake?.rewardWithdrawn)}
-          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          <ADAicon pl={"8px"} />
         </StyledAAmount>
       ),
     },
