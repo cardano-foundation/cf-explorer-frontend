@@ -55,6 +55,7 @@ const TransactionChart: React.FC = () => {
   const dataTxs = (data || []).map(item => [formatDateTimeLocal(item.date), item.txs]);
   const dataComplexTxs = (data || []).map(item => [formatDateTimeLocal(item.date), item.complexTxs]);
   const dataSimpleTxs = (data || []).map(item => [formatDateTimeLocal(item.date), item.simpleTxs]);
+
   const sumTxs = (data || []).reduce((prev, item) => prev + item.txs, 0);
   const sumComplexTxs = (data || []).reduce((prev, item) => prev + item.complexTxs, 0);
   const sumSimpleTxs = (data || []).reduce((prev, item) => prev + item.simpleTxs, 0);
@@ -66,6 +67,7 @@ const TransactionChart: React.FC = () => {
   ];
 
   const theme = useTheme();
+  console.log("🚀 ~ file: index.tsx:94 ~ dataTxs.length / 5:", Math.floor(dataTxs.length / 5));
 
   const options: Highcharts.Options = {
     chart: { type: "areaspline", height: 300, style: { fontFamily: "Roboto, sans-serif" } },
@@ -88,7 +90,7 @@ const TransactionChart: React.FC = () => {
         rotation: 0,
         align: "left",
         format: "{value:%Y}",
-        step: 1,
+        step: Math.floor((dataTxs || []).length / 4),
       },
     },
     legend: { enabled: false },
