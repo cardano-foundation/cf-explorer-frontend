@@ -44,13 +44,15 @@ const Card = ({
 
   return (
     <Box textAlign={"left"} mb={1} sx={{ background: theme => theme.palette.background.paper }}>
-      <Header fontWeight="bold">
-        <Box color={theme => theme.palette.text.dark} fontSize={"1rem"} lineHeight="19px" mb="2px">
-          {type === "down" ? "Input" : "Output"}
+      <Header>
+        <Box color={theme => theme.palette.text.hint} fontWeight="bold">
+          <Box color={theme => theme.palette.text.dark} fontSize={"1rem"} mb="3px">
+            {type === "down" ? "Input" : "Output"}
+          </Box>
+          Wallet Addresses
         </Box>
-        <Box color={theme => theme.palette.text.hint} display="flex" justifyContent="space-between">
-          <Box>Wallet Addresses</Box>
-          <Box>Amount</Box>
+        <Box color={theme => theme.palette.text.hint} fontWeight="bold">
+          Amount
         </Box>
       </Header>
       <Box fontSize={14}>
