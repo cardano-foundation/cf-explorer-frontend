@@ -29,6 +29,10 @@ interface CurrentTransactions {
   amount: number;
   hash: string;
   status: "FAIL" | "SUCCESS" | "PENDING";
+  time: string;
+  slot: number;
+  epochNo: number;
+  epochSlotNo: number;
 }
 
 interface Transaction {
