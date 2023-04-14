@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
+import { REFRESH_TIMES } from "../../../commons/utils/constants";
 import { formatADAFull, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import ViewAllButton from "../../commons/ViewAllButton";
@@ -27,14 +28,15 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { TRANSACTION_STATUS } from "../../../commons/utils/constants";
 
 const LatestTransactions: React.FC = () => {
-  const { data, initialized, refesh } = useFetch<CurrentTransactions[]>(API.TRANSACTION.CURRENT);
+  const { data, initialized } = useFetch<CurrentTransactions[]>(
+    API.TRANSACTION.CURRENT,
+    undefined,
+    false,
+    REFRESH_TIMES.LATEST_TRANSACTION
+  );
+
   const history = useHistory();
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refesh();
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [refesh]);
+
   return (
     <TransactionContainer>
       <Header>
@@ -63,6 +65,7 @@ const LatestTransactions: React.FC = () => {
               })
             : data?.map(item => {
                 const { hash, fromAddress, toAddress, blockNo, amount, status, time, epochNo, epochSlotNo } = item;
+
                 return (
                   <Grid item xl lg={3} xs={6} key={hash}>
                     <Item onClick={e => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>

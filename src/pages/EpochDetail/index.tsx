@@ -6,14 +6,17 @@ import NoRecord from "../../components/commons/NoRecord";
 import EpochBlockList from "../../components/EpochDetail/EpochBlockList";
 import EpochOverview from "../../components/EpochDetail/EpochOverview";
 import { StyledContainer } from "./styles";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const EpochDetail: React.FC = () => {
   const { epochId } = useParams<{ epochId: string }>();
   const { state } = useLocation<{ data?: IDataEpoch }>();
 
-  const { data, loading, initialized, error } = useFetch<IDataEpoch>(
-    state?.data ? "" : `${API.EPOCH.DETAIL}/${epochId}`,
-    state?.data
+  const { data, initialized, error } = useFetch<IDataEpoch>(
+    `${API.EPOCH.DETAIL}/${epochId}`,
+    state?.data,
+    false,
+    REFRESH_TIMES.EPOCH_DETAIL
   );
 
   useEffect(() => {
@@ -25,7 +28,7 @@ const EpochDetail: React.FC = () => {
 
   return (
     <StyledContainer>
-      <EpochOverview data={data} loading={loading} />
+      <EpochOverview data={data} loading={!initialized} />
       <EpochBlockList epochId={epochId} />
     </StyledContainer>
   );

@@ -27,6 +27,7 @@ import {
   ValueCard,
 } from "./styles";
 import ScriptModal from "../../ScriptModal";
+import { useHistory } from "react-router";
 
 interface ITokenOverview {
   data: IToken | null;
@@ -36,6 +37,7 @@ interface ITokenOverview {
 const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
+  const history = useHistory();
 
   const listItem = [
     {
@@ -59,6 +61,17 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
+            Volume in 24h
+          </Box>
+        </Box>
+      ),
+      icon: exchageIcon,
+      value: numberWithCommas(data?.volumeIn24h),
+    },
+    {
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <Box component={"span"} mr={1}>
             Created at
           </Box>
         </Box>
@@ -70,7 +83,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
 
   return (
     <Box textAlign={"left"}>
-      <BackButton to={routers.TOKEN_LIST}>
+    <BackButton onClick={history.goBack}>
         <HiArrowLongLeft />
         <BackText>Back</BackText>
       </BackButton>

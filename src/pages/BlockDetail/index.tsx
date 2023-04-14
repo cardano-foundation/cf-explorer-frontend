@@ -6,13 +6,16 @@ import { StyledContainer } from "./styles";
 import NoRecord from "../../components/commons/NoRecord";
 import { useEffect } from "react";
 import { API } from "../../commons/utils/api";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const BlockDetail = () => {
   const { blockId } = useParams<{ blockId: string }>();
   const { state } = useLocation<{ data?: BlockDetail }>();
-  const { data, loading, initialized, error } = useFetch<BlockDetail>(
-    state?.data ? "" : `${API.BLOCK.DETAIL}/${blockId}`,
-    state?.data
+  const { data, initialized, error } = useFetch<BlockDetail>(
+    `${API.BLOCK.DETAIL}/${blockId}`,
+    state?.data,
+    false,
+    REFRESH_TIMES.BLOCK_DETAIL
   );
 
   useEffect(() => {
@@ -24,11 +27,8 @@ const BlockDetail = () => {
 
   return (
     <StyledContainer>
-      <BlockOverview data={data} loading={loading} />
-      <TransactionListsFull
-        underline={true}
-        url={`${API.BLOCK.DETAIL}/${blockId}/txs`}
-      />
+      <BlockOverview data={data} loading={!initialized} />
+      <TransactionListsFull underline={true} url={`${API.BLOCK.DETAIL}/${blockId}/txs`} />
     </StyledContainer>
   );
 };
