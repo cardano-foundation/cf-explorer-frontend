@@ -162,7 +162,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                   {data?.metadata?.logo ? (
                     <TokenIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt="token logo" />
                   ) : (
-                    <LogoEmpty />
+                    ""
                   )}
                 </TokenInfo>
                 <Box pb={2}>
@@ -209,7 +209,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                   {data.metadata?.logo ? (
                     <TokenDetailIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt="token logo" />
                   ) : (
-                    <LogoEmpty />
+                    ""
                   )}
                 </TokenDetailInfo>
               </DetailValue>

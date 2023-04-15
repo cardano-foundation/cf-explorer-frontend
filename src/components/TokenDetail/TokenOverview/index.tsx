@@ -154,7 +154,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
                       ml={1}
                     />
                   ) : (
-                    <LogoEmpty ml={1} />
+                    ""
                   )}
                 </Box>
                 <Box
