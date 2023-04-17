@@ -27,7 +27,6 @@ import MyProfile from "./pages/MyProfile";
 import AccountLayout from "./components/commons/Layout/AccountLayout";
 import Bookmark from "./pages/Bookmark";
 import PrivateNotes from "./pages/PrivateNotes";
-import { Box } from "@mui/system";
 
 const Routes: React.FC = () => {
   return (

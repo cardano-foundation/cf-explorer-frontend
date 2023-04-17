@@ -9,8 +9,8 @@ import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table from "../../components/commons/Table";
 import { Column } from "../../types/table";
-import { PerPage, StyledContainer, StyledLink } from "./styles";
 import ADAicon from "../../components/commons/ADAIcon";
+import { PerPage, StyledContainer, StyledLink } from "./styles";
 
 const TopDelegators = () => {
   const history = useHistory();
