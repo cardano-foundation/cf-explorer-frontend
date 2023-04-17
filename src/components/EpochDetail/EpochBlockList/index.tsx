@@ -6,10 +6,12 @@ import Table, { Column } from "../../commons/Table";
 import { formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { AIcon } from "../../../commons/resources";
-import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer } from "./styles";
+import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer, StyledLink } from "./styles";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { API } from "../../../commons/utils/api";
 import { REFRESH_TIMES } from "../../../commons/utils/constants";
+import { Box } from "@mui/material";
+import ADAicon from "../../commons/ADAIcon";
 
 interface IEpochBlockList {
   epochId: string;
@@ -42,7 +44,11 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       title: "Block",
       key: "block",
       minWidth: "100px",
-      render: r => <StyledColorBlueDard>{r.blockNo || getShortHash(r.hash || "")}</StyledColorBlueDard>,
+      render: r => (
+        <StyledLink to={details.block(r.blockNo || r.hash)}>
+          {r.blockNo || getShortHash(r.hash || "")}
+        </StyledLink>
+      ),
     },
     {
       title: "Slot",
@@ -83,7 +89,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       render: r => (
         <StyledOutput>
           <StyledColorBlueDard>{formatADAFull(r.totalOutput)}</StyledColorBlueDard>
-          <img src={AIcon} alt="ADA Icon" />
+          <ADAicon />
         </StyledOutput>
       ),
     },

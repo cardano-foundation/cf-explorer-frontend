@@ -5,12 +5,14 @@ import { ReactComponent as DelegationHistoryIcon } from "../../../commons/resour
 import { ReactComponent as StakeKeyHistoryIcon } from "../../../commons/resources/icons/stateKeyHistory.svg";
 import { ReactComponent as WithdrawHistoryIcon } from "../../../commons/resources/icons/withdrawHistory.svg";
 import { ReactComponent as InstantaneousHistoryIcon } from "../../../commons/resources/icons/instantaneousHistory.svg";
+import { ReactComponent as TransactionIcon } from "../../../commons/resources/icons/transactionIcon.svg";
 import { StyledTabList, TitleTab } from "./styles";
 import { useHistory, useParams } from "react-router-dom";
 import DelegationHistoryTab from "./Tabs/DelegationHistoryTab";
 import StakeHistoryTab from "./Tabs/StakeHistoryTab";
 import WithdrawalHistoryTab from "./Tabs/WithdrawalHistoryTab";
 import InstantaneousTab from "./Tabs/InstantaneousTab";
+import TransactionTab from "./Tabs/TransactionTab";
 import { details } from "../../../commons/routers";
 
 const tabs: {
@@ -43,6 +45,12 @@ const tabs: {
     key: "instantaneous",
     component: <InstantaneousTab />,
   },
+  {
+    icon: TransactionIcon,
+    label: "Transactions",
+    key: "transactions",
+    component: <TransactionTab />,
+  },
 ];
 
 const StakeTab = () => {
@@ -66,7 +74,7 @@ const StakeTab = () => {
               <Tab
                 key={key}
                 value={key}
-                style={{padding: "12px 0px", marginRight: 40 }}
+                style={{ padding: "12px 0px", marginRight: 40 }}
                 label={
                   <Box display={"flex"} alignItems="center">
                     <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.text.hint} />

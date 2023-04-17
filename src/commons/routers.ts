@@ -29,7 +29,7 @@ export const routers = {
   BOOKMARK: "/account/bookmark",
   PRIVATE_NOTES: "/account/notes",
   NOT_FOUND: "/*",
-};
+} as const;
 
 export const details = {
   block: (blockId?: number | string) => routers.BLOCK_DETAIL.replace(":blockId", `${blockId ?? ""}`),
@@ -47,3 +47,17 @@ export const details = {
   contract: (address?: string, tab = "transaction") =>
     routers.CONTRACT_DETAIL.replace(":address", address ?? "").replace(":tabActive?", tab),
 };
+
+export const listRouters = [
+  routers.BLOCK_LIST,
+  routers.TRANSACTION_LIST,
+  routers.EPOCH_LIST,
+  routers.DELEGATION_POOLS,
+  routers.REGISTRATION_POOLS.replace("/:poolType?", ""),
+  routers.ADDRESS_LIST,
+  routers.TOKEN_LIST,
+  routers.STAKE_LIST.replace("/:poolType?", ""),
+  routers.CONTRACT_LIST,
+  routers.NFT_LIST,
+  routers.TOP_DELEGATOR,
+];

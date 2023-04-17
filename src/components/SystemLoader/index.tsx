@@ -48,15 +48,5 @@ export const SystemLoader = () => {
     if (currentEpoch) setCurrentEpoch(currentEpoch);
   }, [currentEpoch]);
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-        setUserData(response.data);
-      } catch (error) {}
-    };
-    if (localStorage.getItem("token")) fetchUserInfo();
-  }, []);
-
   return null;
 };

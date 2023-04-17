@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../stores/types";
 import { API } from "../../commons/utils/api";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
+import ADAicon from "../../components/commons/ADAIcon";
 
 const Transactions: React.FC = () => {
   const { search } = useLocation();
@@ -61,7 +62,7 @@ const Transactions: React.FC = () => {
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.balance)}</Box>
-          <img src={AIcon} alt="a icon" />
+          <ADAicon />
         </Box>
       ),
     },
