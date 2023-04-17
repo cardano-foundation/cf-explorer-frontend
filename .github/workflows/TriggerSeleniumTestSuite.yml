@@ -1,14 +1,31 @@
 name: Run Explorer FE testcases
 
 on:
-  workflow_dispatch:
-    
+ pull_request:
+   types: [opened, synchronize]
+
+
 jobs:
   run-web-test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: test-1
+
+      - name: Set env file
+        run: |
+          touch .env
+          echo ${ENV_SECRETS} >> .env
+          
+      - name: Build FE application
+        run: |
+          npm i
+          npm start &>/dev/null &
+
+      - name: Checkout test code
         uses: actions/checkout@v3
         with:
           repository: cardano-foundation/cf-qa-testsuite
@@ -22,8 +39,6 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo 'SAUCE_HUB=${SAUCEHUB}' >> src/main/resources/application-test.properties
-          echo 'SELENIUM_HUB=${SELENIUMHUB}' >> src/main/resources/application-test.properties
           echo 'FE_URL=${DEV_DEPLOYMENT}' >> src/main/resources/application-test.properties
           cat src/main/resources/application-test.properties
 
@@ -55,6 +70,4 @@ jobs:
           PUBLISH_DIR: allure-history
 
     env:
-      SAUCE_HUB: ${{ secrets.SAUCEHUB }}
-      SELENIUMHUB: ${{ secrets.SELENIUM_HUB_DEPLOYMENT }}
       DEV_DEPLOYMENT: ${{ secrets.DEVBOXDEPLOYMENT }}
