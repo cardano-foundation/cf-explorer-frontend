@@ -85,20 +85,21 @@ export const ColorChart = styled(Box)<{ type: TypeChart }>(({ theme, type }) => 
   const bgColor = (type: TypeChart) => {
     switch (type) {
       case "trx":
-        return theme.palette.green[450];
+        return theme.palette.yellow[600];
       case "simple":
-        return theme.palette.green[800];
+        return theme.palette.blue[800];
       case "complex":
-        return "#387269";
+        return theme.palette.green[600];
 
       default:
-        return theme.palette.green[450];
+        return theme.palette.yellow[600];
     }
   };
 
   return {
-    width: "80px",
-    height: "100%",
+    width: "38px",
+    height: "38px",
+    borderRadius: "5px",
     background: bgColor(type),
     marginRight: theme.spacing(3),
   };

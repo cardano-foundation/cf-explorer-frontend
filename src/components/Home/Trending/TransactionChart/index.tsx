@@ -67,7 +67,6 @@ const TransactionChart: React.FC = () => {
   ];
 
   const theme = useTheme();
-  console.log("🚀 ~ file: index.tsx:94 ~ dataTxs.length / 5:", Math.floor(dataTxs.length / 5));
 
   const options: Highcharts.Options = {
     chart: { type: "areaspline", height: 300, style: { fontFamily: "Roboto, sans-serif" } },
@@ -90,7 +89,7 @@ const TransactionChart: React.FC = () => {
         rotation: 0,
         align: "left",
         format: "{value:%Y}",
-        step: Math.floor((dataTxs || []).length / 4),
+        step: 1,
       },
     },
     legend: { enabled: false },
@@ -101,14 +100,14 @@ const TransactionChart: React.FC = () => {
         pointPlacement: "on",
         type: "areaspline",
         marker: { enabled: false },
-        lineWidth: 1.5,
-        color: theme.palette.green[450],
+        lineWidth: 2,
+        color: theme.palette.yellow[600],
         tooltip: { valuePrefix: "Total transaction: " },
         fillColor: {
           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
           stops: [
-            [0, alpha(theme.palette.green[800], 0.3)],
-            [1, alpha(theme.palette.green[450], 0)],
+            [0, alpha(theme.palette.yellow[600], 0.5)],
+            [1, alpha(theme.palette.green[600], 0)],
           ],
         },
         data: dataTxs,
@@ -119,13 +118,13 @@ const TransactionChart: React.FC = () => {
         type: "areaspline",
         marker: { enabled: false },
         lineWidth: 1.5,
-        color: "#387269",
+        color: theme.palette.green[600],
         tooltip: { valuePrefix: "Complex transaction: " },
         fillColor: {
           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
           stops: [
-            [0, alpha(theme.palette.green[800], 0.3)],
-            [1, alpha(theme.palette.green[450], 0)],
+            [0, alpha(theme.palette.green[600], 0.5)],
+            [1, alpha(theme.palette.green[600], 0)],
           ],
         },
         data: dataComplexTxs,
@@ -135,14 +134,14 @@ const TransactionChart: React.FC = () => {
         pointPlacement: "on",
         type: "areaspline",
         marker: { enabled: false },
-        lineWidth: 1.5,
+        lineWidth: 2,
         tooltip: { valuePrefix: "Simple transaction: " },
-        color: theme.palette.green[800],
+        color: theme.palette.blue[800],
         fillColor: {
           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
           stops: [
-            [0, alpha(theme.palette.green[800], 0.3)],
-            [1, alpha(theme.palette.green[450], 0)],
+            [0, alpha(theme.palette.blue[800], 0.5)],
+            [1, alpha(theme.palette.green[800], 0)],
           ],
         },
         data: dataSimpleTxs,
@@ -153,10 +152,10 @@ const TransactionChart: React.FC = () => {
   const renderLoading = () => {
     return (
       <Grid container spacing={2}>
-        <Grid item xs={12} lg={8}>
+        <Grid item xs={12} lg={9}>
           <Skeleton variant="rectangular" height={"300px"} style={{ borderRadius: 10 }} />
         </Grid>
-        <Grid item xs={12} lg={4}>
+        <Grid item xs={12} lg={3}>
           <Skeleton variant="rectangular" height={"300px"} />
         </Grid>
       </Grid>
@@ -183,10 +182,10 @@ const TransactionChart: React.FC = () => {
       {loading && renderLoading()}
       {!loading && (
         <Grid container spacing={2}>
-          <Grid item xs={12} lg={8}>
+          <Grid item xs={12} lg={9}>
             <HighchartsReact highcharts={Highcharts} options={options} />
           </Grid>
-          <Grid item xs={12} lg={4}>
+          <Grid item xs={12} lg={3}>
             <BoxInfo>
               {dataOverview.map(item => (
                 <InfoItem key={item.key}>
