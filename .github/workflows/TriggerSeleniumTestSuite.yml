@@ -28,6 +28,8 @@ jobs:
     
       - name: Set environment variables
         run: |
+          pwd
+          ls -la
           echo 'FE_URL=http://localhost:1102' >> src/main/resources/application-test.properties
           
       - name: Checkout code
