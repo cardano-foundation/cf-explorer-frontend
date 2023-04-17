@@ -15,6 +15,7 @@ import Card from "../../components/commons/Card";
 import Table from "../../components/commons/Table";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
+import Link from "../../components/commons/Link";
 import ADAicon from "../../components/commons/ADAIcon";
 
 const BlockList = () => {
@@ -37,7 +38,7 @@ const BlockList = () => {
       title: "Block No",
       key: "blockNo",
       minWidth: "50px",
-      render: r => <StyledColorBlueDard>{r.blockNo !== null ? r.blockNo : "_"}</StyledColorBlueDard>,
+      render: r => <Link to={details.block(r.blockNo || r.hash)}>{r.blockNo !== null ? r.blockNo : "_"}</Link>,
     },
     {
       title: "Block ID",
