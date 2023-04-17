@@ -62,9 +62,9 @@ const SelectNetwork: React.FC = () => {
   };
 
   return (
-    <StyledSelect onChange={handleChange} value={NETWORK} IconComponent={BiChevronDown}>
+    <StyledSelect data-testid='network-selection-dropdown' onChange={handleChange} value={NETWORK} IconComponent={BiChevronDown}>
       {Object.entries(NETWORK_NAMES).map(([value, name]) => (
-        <MenuItem key={value} value={value}>
+        <MenuItem data-testid='network-options' key={value} value={value}>
           {name}
         </MenuItem>
       ))}

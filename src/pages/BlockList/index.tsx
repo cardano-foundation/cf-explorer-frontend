@@ -9,7 +9,6 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import { details } from "../../commons/routers";
 import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../commons/utils/helper";
 import { useTheme } from "@mui/material";
-import { AIcon } from "../../commons/resources";
 import { setOnDetailView } from "../../stores/user";
 import DetailViewBlock from "../../components/commons/DetailView/DetailViewBlock";
 import Card from "../../components/commons/Card";

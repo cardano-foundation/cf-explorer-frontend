@@ -5,14 +5,8 @@ import delegatedIcon from "../../../commons/resources/icons/delegated.svg";
 import totalStakeIcon from "../../../commons/resources/icons/totalStake.svg";
 import rewardIcon from "../../../commons/resources/icons/reward.svg";
 import rewardWithdrawIcon from "../../../commons/resources/icons/rewardWithdraw.svg";
-import infoIcon from "../../../commons/resources/icons/info.svg";
 import { formatADAFull } from "../../../commons/utils/helper";
-import {
-  ButtonModal,
-  StyledFlexValue,
-  StyledLink,
-  TitleCard,
-} from "./styles";
+import { ButtonModal, StyledFlexValue, StyledLink, TitleCard } from "./styles";
 import { useParams } from "react-router-dom";
 import ModalAllAddress from "../ModalAllAddress";
 import CustomTooltip from "../../commons/CustomTooltip";
