@@ -23,7 +23,7 @@ jobs:
       - name: Build FE application
         run: |
           npm i
-          npm start 2>/dev/null
+          npm start &>/dev/null &
           ping -c 10 google.com
 
       - name: Checkout test code
