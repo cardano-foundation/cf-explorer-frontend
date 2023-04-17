@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  FRONTEND_URL=http://localhost:9296
+  FRONTEND_URL: http://localhost:9296
 
 jobs:
   run-web-test:
