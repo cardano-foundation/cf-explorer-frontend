@@ -23,11 +23,10 @@ jobs:
       - name: Build FE application
         run: |
           npm i
-          npm run start &>/dev/null &
+          npm start 2>/dev/null
           ping -c 10 google.com
-          ping 127.0.0.1:1102
 
-      - name: Checkout code
+      - name: Checkout test code
         uses: actions/checkout@v3
         with:
           repository: cardano-foundation/cf-qa-testsuite
