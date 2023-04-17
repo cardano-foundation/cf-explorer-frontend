@@ -9,7 +9,7 @@ export const Title = styled("h3")<{ active: number }>`
   text-transform: capitalize !important;
 `;
 
-export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
+export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => ({
   fontWeight: "bold",
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',

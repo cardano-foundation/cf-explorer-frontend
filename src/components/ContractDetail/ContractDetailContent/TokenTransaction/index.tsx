@@ -16,6 +16,7 @@ import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
 import { AIcon } from "../../../../commons/resources";
 import { API } from "../../../../commons/utils/api";
+import ADAicon from "../../../commons/ADAIcon";
 
 const columns: Column<Transactions>[] = [
   {
@@ -96,7 +97,7 @@ const columns: Column<Transactions>[] = [
     render: r => (
       <PriceValue>
         <SmallText>{formatADAFull(r.fee)}</SmallText>
-        <PriceIcon src={AIcon} alt="a icon" />
+        <ADAicon mb={"5px"} pl={"8px"} />
       </PriceValue>
     ),
   },
@@ -107,7 +108,7 @@ const columns: Column<Transactions>[] = [
     render: r => (
       <PriceValue>
         <SmallText>{formatADAFull(r.totalOutput)}</SmallText>
-        <PriceIcon src={AIcon} alt="a icon" />
+        <ADAicon mb={"5px"} pl={"8px"} />
       </PriceValue>
     ),
   },

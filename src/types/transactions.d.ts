@@ -22,6 +22,18 @@ interface Transactions {
   totalOutput: number;
   time: string;
 }
+interface CurrentTransactions {
+  blockNo: number;
+  fromAddress: string[];
+  toAddress: string[];
+  amount: number;
+  hash: string;
+  status: "FAIL" | "SUCCESS" | "PENDING";
+  time: string;
+  slot: number;
+  epochNo: number;
+  epochSlotNo: number;
+}
 
 interface Transaction {
   tx: {
