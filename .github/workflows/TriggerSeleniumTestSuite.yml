@@ -24,7 +24,6 @@ jobs:
         run: |
           npm i
           npm start &>/dev/null &
-          ping -c 10 google.com
 
       - name: Checkout test code
         uses: actions/checkout@v3
