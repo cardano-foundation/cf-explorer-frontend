@@ -90,7 +90,7 @@ export const formatPercent = (percent?: number) => `${Math.round((percent || 0) 
 export const getPageInfo = (search: string): { page: number; size: number } => {
   const query = parse(search.split("?")[1]);
   const page = Number(query.page) > 0 ? Number(query.page) - 1 : 0;
-  const size = Number(query.size) > 0 ? Number(query.size) : 10;
+  const size = Number(query.size) > 0 ? Number(query.size) : 50;
   return { page, size };
 };
 

@@ -71,7 +71,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
             <HeaderTitleSkeleton variant="rectangular" />
           </HeaderTitle>
         </HeaderContainer>
-        <DetailsInfo container numberOfItems={numberOfItems}>
+        <DetailsInfo container items_length={numberOfItems}>
           {new Array(4).fill(0).map((_, index) => {
             return (
               <CardItem
@@ -80,7 +80,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
                 sm={6}
                 md={4}
                 lg={numberOfItems > 6 ? 3 : true}
-                numberOfItems={numberOfItems}
+                items_length={numberOfItems}
                 key={index}
               >
                 <IconSkeleton variant="circular" />
@@ -128,7 +128,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
                 currentEpoch && (epoch?.no || 0) < currentEpoch?.no ? 100 : ((epoch?.slot || 0) / MAX_SLOT_EPOCH) * 100
               }
             >
-              <EpochNumber isEpoch={type === "EPOCH"} to={details.epoch(epoch.no || 0)}>
+              <EpochNumber is_epoch={+(type === "EPOCH")} to={details.epoch(epoch.no || 0)}>
                 {epoch?.no}
               </EpochNumber>
               <EpochText>Epoch</EpochText>
@@ -138,7 +138,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           ""
         )}
       </Box>
-      <DetailsInfo container numberOfItems={numberOfItems}>
+      <DetailsInfo container items_length={numberOfItems}>
         {listItem.map((item, index) => {
           return (
             <CardItem
@@ -147,7 +147,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
               sm={6}
               md={listItem.length === 4 ? 3 : 4}
               lg={numberOfItems > 6 ? 3 : true}
-              numberOfItems={numberOfItems}
+              items_length={numberOfItems}
               key={index}
             >
               <Box>

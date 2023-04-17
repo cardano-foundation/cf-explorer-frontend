@@ -11,6 +11,7 @@ import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import SelectedIcon from "../commons/SelectedIcon";
+import ADAicon from "../commons/ADAIcon";
 
 interface TransactionListProps {
   underline?: boolean;
@@ -47,8 +48,8 @@ const TransactionList: React.FC<TransactionListProps> = ({
       render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0),
     },
     {
-      title: "Trx Hash",
-      key: "trxhash",
+      title: "Tx Hash",
+      key: "txhash",
       minWidth: 120,
 
       render: r => (
@@ -77,24 +78,24 @@ const TransactionList: React.FC<TransactionListProps> = ({
       ),
     },
     {
-      title: "Fees",
+      title: "Fee",
       key: "fee",
       minWidth: 120,
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.fee)}</Box>
-          <img src={AIcon} alt="a icon" />
+            <ADAicon  />
         </Box>
       ),
     },
     {
-      title: "Output",
+      title: "Output in ADA",
       minWidth: 120,
       key: "ouput",
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
-          <img src={AIcon} alt="a icon" />
+            <ADAicon  />
           {hash === r.hash && <SelectedIcon />}
         </Box>
       ),

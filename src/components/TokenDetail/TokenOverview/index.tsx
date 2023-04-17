@@ -52,7 +52,6 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           <Box component={"span"} mr={1}>
             Transactions
           </Box>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       icon: exchageIcon,
@@ -64,7 +63,6 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           <Box component={"span"} mr={1}>
             Created at
           </Box>
-          <img src={infoIcon} alt="info icon" />
         </Box>
       ),
       icon: timeIcon,

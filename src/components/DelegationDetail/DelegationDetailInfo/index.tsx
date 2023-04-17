@@ -43,6 +43,7 @@ import {
   StyledLinearProgress,
   StyledTitle,
 } from "./styles";
+import ADAicon from "../../commons/ADAIcon";
 
 interface IDelegationDetailInfo {
   data: DelegationOverview | null;
@@ -103,18 +104,14 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={TickerIcon} alt="Ticker Icon" />
             <InfoTitle>
-              <StyledTitle>
-                Ticker <InfoImg src={InfoIcon} alt="Info Icon" />
-              </StyledTitle>
+              <StyledTitle>Ticker</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.tickerName || ""}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={CalendarIcon} alt="Calendar Icon" />
             <InfoTitle>
-              <StyledTitle>
-                Created date <InfoImg src={InfoIcon} alt="Info Icon" />
-              </StyledTitle>
+              <StyledTitle>Created date</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
           </Item>
@@ -122,9 +119,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <StyledImg src={RewardIcon} alt="Reward Icon" />
             <InfoTitle>
               <Box>
-                <StyledTitle>
-                  Reward Account <InfoImg src={InfoIcon} alt="Info Icon" />
-                </StyledTitle>
+                <StyledTitle>Reward Account</StyledTitle>
                 <InfoValue mt={"4px"}>
                   {data?.rewardAccounts ? (
                     <>
@@ -175,9 +170,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               }}
             >
               <Box>
-                <StyledTitle>
-                  Owner Account <InfoImg src={InfoIcon} alt="Info Icon" />
-                </StyledTitle>{" "}
+                <StyledTitle>Owner Account</StyledTitle>{" "}
                 <InfoValue mt={"4px"}>
                   {data?.ownerAccounts ? (
                     <>
@@ -224,37 +217,31 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3}>
             <StyledImg src={DropIcon} alt="Drop Icon" />
             <InfoTitle>
-              <StyledTitle>
-                Pool size <InfoImg src={InfoIcon} alt="Info Icon" />
-              </StyledTitle>
+              <StyledTitle>Pool size</StyledTitle>
             </InfoTitle>
             <InfoValue>
               <FlexGap10>
                 {formatADAFull(data?.poolSize)}
-                <img src={AIcon} alt={"ADA Icon"} />
+                <ADAicon />
               </FlexGap10>
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
             <StyledImg src={HighestIcon} alt="Highest Icon" />
             <InfoTitle>
-              <StyledTitle>
-                Stake limit <InfoImg src={InfoIcon} alt="Info Icon" />
-              </StyledTitle>
+              <StyledTitle>Stake limit</StyledTitle>
             </InfoTitle>
             <InfoValue>
               <FlexGap10>
                 {formatADAFull(data?.stakeLimit)}
-                <img src={AIcon} alt={"ADA Icon"} />
+                <ADAicon />
               </FlexGap10>
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
             <StyledImg src={DelegatorIcon} alt="Delegator Icon" />
             <InfoTitle>
-              <StyledTitle>
-                Delegators <InfoImg src={InfoIcon} alt="Info Icon" />
-              </StyledTitle>
+              <StyledTitle>Delegators</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.delegators || ""}</InfoValue>
           </Item>
