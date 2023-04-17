@@ -53,6 +53,7 @@ jobs:
 
       - name: Run frontend (using docker-compose)
         run: |
+          cd cf-explorer-frontend
           docker-compose up -d
           bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' ${{ env.FRONTEND_URL }})" != "200" ]]; do sleep 1; done'
           
