@@ -19,8 +19,13 @@ jobs:
         run: |
           touch .env
           echo ${ENV_SECRETS} >> .env
+          
+      - name: Build FE application
+        run: |
           npm i
           npm run start &>/dev/null &
+          ping -c 10 google.com
+          ping 127.0.0.1:1102
 
       - name: Checkout code
         uses: actions/checkout@v3
