@@ -59,10 +59,8 @@ jobs:
           
       - name: Run tests
         run: |
-          cd cf-explorer-frontend
-          pwd
-          npm install
-          npm run selenium-test
+          cd cf-qa-testsuite
+          gradle clean test
 
       - name: Get allure history
         uses: actions/checkout@v3
