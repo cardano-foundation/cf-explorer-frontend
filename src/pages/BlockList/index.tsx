@@ -19,12 +19,13 @@ import ADAicon from "../../components/commons/ADAIcon";
 
 const BlockList = () => {
   const [block, setBlock] = useState<number | string | null>(null);
+  const [sort, setSort] = useState<string>("");
   const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<IStakeKey>(API.BLOCK.LIST, pageInfo);
+  const fetchData = useFetchList<IStakeKey>(API.BLOCK.LIST, { ...pageInfo, sort });
   const theme = useTheme();
 
   useEffect(() => {
@@ -50,9 +51,12 @@ const BlockList = () => {
     },
     {
       title: "Transactions",
-      key: "transactions",
+      key: "txCount",
       minWidth: "50px",
       render: r => <StyledColorBlueDard>{r.txCount}</StyledColorBlueDard>,
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
     {
       title: "Fees",
@@ -78,9 +82,12 @@ const BlockList = () => {
     },
     {
       title: "Created At",
-      key: "timestamp",
+      key: "time",
       minWidth: "100px",
       render: r => <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>,
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
   ];
 

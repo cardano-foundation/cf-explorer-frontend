@@ -1,7 +1,7 @@
 import { Box, Skeleton } from "@mui/material";
 import React, { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   AIcon,
   CalendarIcon,
@@ -49,18 +49,17 @@ interface IDelegationDetailInfo {
   data: DelegationOverview | null;
   loading: boolean;
   poolId: string;
-  saving: boolean;
-  setSaving: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId, saving, setSaving }) => {
+const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId }) => {
+  const history = useHistory();
   const [isOpenReward, setOpenReward] = useState<boolean>(false);
   const [isOpenOwner, setOpenOwner] = useState<boolean>(false);
 
   if (loading) {
     return (
       <HeaderDetailContainer>
-        <BackButton to={"/"}>
+        <BackButton onClick={history.goBack}>
           <HiArrowLongLeft />
           <BackText>Back</BackText>
         </BackButton>
@@ -75,14 +74,13 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <Box borderRadius={10} overflow="hidden">
           <Skeleton variant="rectangular" height={250} width="100%" />
         </Box>
-        {/* <SavingImg src={saving ? SaveOnIcon : SaveOffIcon} alt="Save Icon" onClick={() => setSaving(!saving)} /> */}
       </HeaderDetailContainer>
     );
   }
 
   return (
     <HeaderDetailContainer>
-      <BackButton to={routers.DELEGATION_POOLS}>
+      <BackButton onClick={history.goBack}>
         <HiArrowLongLeft />
         <BackText>Back</BackText>
       </BackButton>

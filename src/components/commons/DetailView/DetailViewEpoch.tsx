@@ -178,31 +178,19 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           </ListItem>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Start time
-              </DetailLabel>
+              <DetailLabel>Start time</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.startTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                End time
-              </DetailLabel>
+              <DetailLabel>End time</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.endTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Blocks
-              </DetailLabel>
+              <DetailLabel>Blocks</DetailLabel>
               <DetailValue>{data.blkCount}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Total Output
-              </DetailLabel>
+              <DetailLabel>Total Output</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.outSum)}
                 <ADAicon />
