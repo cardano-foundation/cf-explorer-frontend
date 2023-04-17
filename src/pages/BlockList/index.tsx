@@ -24,7 +24,7 @@ const BlockList = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<IStakeKey>(API.BLOCK.LIST, pageInfo);
+  const fetchData = useFetchList<Block>(API.BLOCK.LIST, pageInfo);
   const theme = useTheme();
 
   useEffect(() => {
@@ -46,6 +46,16 @@ const BlockList = () => {
         <CustomTooltip title={r.hash}>
           <StyledLink to={details.block(r.blockNo || r.hash)}>{getShortHash(`${r.hash}`)}</StyledLink>
         </CustomTooltip>
+      ),
+    },
+    {
+      title: "Epoch/Slot",
+      key: "epoch",
+      minWidth: "150px",
+      render: r => (
+        <>
+          <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+        </>
       ),
     },
     {

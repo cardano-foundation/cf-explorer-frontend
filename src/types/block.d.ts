@@ -1,5 +1,8 @@
 interface Block {
   blockNo: number;
+  epochNo: number;
+  epochSlotNo: number;
+  slotNo: number;
   hash: string;
   slotLeader: string;
   time: string;
@@ -9,8 +12,5 @@ interface Block {
 }
 
 type BlockDetail = Block & {
-  epochNo: number;
-  epochSlotNo: number;
-  slotNo: number;
   totalSlot: number;
 };
