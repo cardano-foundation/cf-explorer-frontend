@@ -31,7 +31,9 @@ jobs:
         run: |
           pwd
           ls -la
+          cd cf-qa-testsuite
           echo 'FE_URL=http://localhost:1102' >> src/main/resources/application-test.properties
+          cd ..
           
       - name: Checkout code
         uses: actions/checkout@v3

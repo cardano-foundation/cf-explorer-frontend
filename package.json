@@ -51,7 +51,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "selenium-test": "concurrently \"npm start\" \"wait-on http://localhost:1102 && cd .. && gradle clean test && kill-port 1102\"",
+    "selenium-test": "concurrently \"npm start\" \"wait-on http://localhost:1102 && cd .. && cd cf-qa-testsuite && gradle clean test && kill-port 1102\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
