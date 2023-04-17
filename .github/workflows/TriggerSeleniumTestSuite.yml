@@ -20,7 +20,7 @@ jobs:
           touch .env
           echo ${ENV_SECRETS} >> .env
           npm i
-          npm run start&
+          npm run start &>/dev/null &
 
       - name: Checkout code
         uses: actions/checkout@v3
