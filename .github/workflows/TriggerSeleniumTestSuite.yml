@@ -1,8 +1,9 @@
 name: Run Explorer FE testcases
 
 on:
- pull_request:
-   types: [opened, synchronize]
+  pull_request:
+    types: [opened, synchronize]
+  workflow_dispatch:
 
 env:
   FRONTEND_URL=http://localhost:9296
