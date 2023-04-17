@@ -43,14 +43,15 @@ jobs:
 
       - name: Set env file
         run: |
-          pwd
+          cd cf-explorer-frontend
           touch .env
           echo ${ENV_SECRETS} >> .env
-          pwd
-          ls -la
+          pwd ls -la
           
       - name: Build application and run tests
         run: |
+          cd cf-explorer-frontend
+          pwd
           npm install
           npm i -D concurrently
           npm i -D wait-on
