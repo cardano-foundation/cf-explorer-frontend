@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { useHistory } from "react-router-dom";
 import { Box, MenuItem, Select } from "@mui/material";
 import { formatADAFull, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
-import { AIcon } from "../../commons/resources";
 import { PerPage, StyledContainer, StyledLink } from "./styles";
 import Table, { Column } from "../../components/commons/Table";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { API } from "../../commons/utils/api";
 import ADAicon from "../../components/commons/ADAIcon";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
+
 interface Props {}
 
 const TopAddresses: React.FC<Props> = () => {
-  const history = useHistory();
   const [pageSize, setPageSize] = useState("50");
 
-  const { error, data, initialized, loading } = useFetchList<Contracts>(API.ADDRESS.TOP_ADDRESS, {
-    page: 0,
-    size: +pageSize,
-  });
+  const { error, data, initialized, loading } = useFetchList<Contracts>(
+    API.ADDRESS.TOP_ADDRESS,
+    { page: 0, size: +pageSize },
+    false,
+    REFRESH_TIMES.TOP_ADDRESS
+  );
 
   useEffect(() => {
     document.title = `Top Addresses | Cardano Explorer`;
@@ -91,14 +92,7 @@ const TopAddresses: React.FC<Props> = () => {
           </Box>
         }
       >
-        <Table
-          onClickRow={(_, r) => history.push(details.address(r.address))}
-          data={data}
-          error={error}
-          loading={loading}
-          initialized={initialized}
-          columns={columns}
-        />
+        <Table data={data} error={error} loading={loading} initialized={initialized} columns={columns} />
       </Card>
     </StyledContainer>
   );

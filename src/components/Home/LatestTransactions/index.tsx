@@ -1,10 +1,10 @@
 import { Box, Grid, Skeleton } from "@mui/material";
 import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import useFetchList from "../../../commons/hooks/useFetchList";
 import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
+import { REFRESH_TIMES } from "../../../commons/utils/constants";
 import { formatADAFull, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import ViewAllButton from "../../commons/ViewAllButton";
@@ -28,14 +28,15 @@ import useFetch from "../../../commons/hooks/useFetch";
 import { TRANSACTION_STATUS } from "../../../commons/utils/constants";
 
 const LatestTransactions: React.FC = () => {
-  const { data, initialized, refesh } = useFetch<CurrentTransactions[]>(API.TRANSACTION.CURRENT);
+  const { data, initialized } = useFetch<CurrentTransactions[]>(
+    API.TRANSACTION.CURRENT,
+    undefined,
+    false,
+    REFRESH_TIMES.LATEST_TRANSACTION
+  );
+
   const history = useHistory();
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refesh();
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [refesh]);
+
   return (
     <TransactionContainer>
       <Header>
@@ -63,13 +64,14 @@ const LatestTransactions: React.FC = () => {
                 );
               })
             : data?.map(item => {
-                const { hash, fromAddress, toAddress, blockNo, amount, status } = item;
+                const { hash, fromAddress, toAddress, blockNo, amount, status, time, epochNo, epochSlotNo } = item;
+
                 return (
                   <Grid item xl lg={3} xs={6} key={hash}>
                     <Item onClick={e => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
                       <ItemHeader>
                         <PriceImage src={ADAIcon} alt="check green" />
-                        <Box display={"flex"} flexDirection={"column"} rowGap={'4px'} alignItems={"end"}>
+                        <Box display={"flex"} flexDirection={"column"} rowGap={"4px"} alignItems={"end"}>
                           <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>
                           <PriveValue>{formatADAFull(amount)}</PriveValue>
                         </Box>
@@ -88,6 +90,16 @@ const LatestTransactions: React.FC = () => {
                           <Link to={details.block(blockNo)}>
                             <BlockNo>{blockNo}</BlockNo>
                           </Link>
+                        </RowItem>
+                        <RowItem>
+                          <small>Epoch: </small>
+                          <Link to={details.epoch(epochNo)}>
+                            <BlockNo>{epochNo}</BlockNo>
+                          </Link>
+                        </RowItem>
+                        <RowItem>
+                          <small>Slot: </small>
+                          <small>{epochSlotNo}</small>
                         </RowItem>
                         {fromAddress?.slice(0, 1).map(add => {
                           return (
@@ -117,6 +129,11 @@ const LatestTransactions: React.FC = () => {
                             </RowItem>
                           );
                         })}
+
+                        <RowItem>
+                          <small>Timestamp: </small>
+                          <small>{time}</small>
+                        </RowItem>
                       </ItemDetail>
                     </Item>
                   </Grid>

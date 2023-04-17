@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { alpha, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { getShortWallet, formatADAFull, getShortHash } from "../../../../commons/utils/helper";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import feeImg from "../../../../commons/resources/images/dola.svg";
-import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import CustomTooltip from "../../../commons/CustomTooltip";
@@ -56,9 +55,9 @@ const Card = ({
           Amount
         </Box>
       </Header>
-      <Box>
-        {items?.map(item => (
-          <Item key={item.address}>
+      <Box fontSize={14}>
+        {items?.map((item, index) => (
+          <Item key={index}>t
             <Box display={"flex"}>
               <Box width={50}>
                 <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />
@@ -82,11 +81,12 @@ const Card = ({
                             color={theme => theme.palette.secondary.main}
                             fontWeight="bold"
                             fontFamily={"var(--font-family-text)"}
+                            mr={1}
                           >
                             {getShortWallet(item.address)}
                           </Box>
                         </CustomTooltip>
-                      </Link>{" "}
+                      </Link>
                       <CopyButton text={item.address} />
                     </Box>
                     <Box
