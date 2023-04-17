@@ -10,6 +10,7 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import { API } from "../../commons/utils/api";
 import ADAicon from "../../components/commons/ADAIcon";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
+
 interface Props {}
 
 const TopAddresses: React.FC<Props> = () => {

@@ -10,6 +10,7 @@ import slotIcon from "../../../commons/resources/icons/slot.svg";
 import { Box } from "@mui/material";
 import { ConfirmStatus, TitleCard } from "./styles";
 import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
+import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import ADAicon from "../../commons/ADAIcon";
 
