@@ -34,14 +34,16 @@ jobs:
           cd cf-qa-testsuite
           echo 'FE_URL=http://localhost:1102' >> src/main/resources/application-test.properties
           cd ..
-          
+
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           ref: test-1
+          path: cf-explorer-frontend
 
       - name: Set env file
         run: |
+          pwd
           touch .env
           echo ${ENV_SECRETS} >> .env
           pwd
