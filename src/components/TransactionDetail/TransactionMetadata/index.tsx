@@ -117,7 +117,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
                 label={
                   <Box display={"flex"} alignItems="center">
                     <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.text.hint} />
-                    <TitleTab pl={1} active={key === tabActive}>
+                    <TitleTab pl={1} active={+(key === tabActive)}>
                       {label}
                     </TitleTab>
                   </Box>

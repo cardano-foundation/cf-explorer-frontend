@@ -5,12 +5,13 @@ import exchageIcon from "../../../commons/resources/icons/Union.svg";
 import exchageAltIcon from "../../../commons/resources/icons/exchangeArrow.svg";
 import outputIcon from "../../../commons/resources/icons/outputIcon.svg";
 import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";
+import txConfirm from "../../../commons/resources/icons/txConfirm.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
 import { Box } from "@mui/material";
-import { TitleCard } from "./styles";
+import { ConfirmStatus, TitleCard } from "./styles";
 import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
-import { ADAToken } from "../../commons/Token";
-import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import ADAicon from "../../commons/ADAIcon";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
@@ -18,6 +19,18 @@ interface BlockOverviewProps {
 }
 
 const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
+  const renderConfirmationTag = () => {
+    if (data && data.confirmation) {
+      if (data.confirmation <= 2) {
+        return CONFIRMATION_STATUS.LOW;
+      }
+      if (data.confirmation <= 8) {
+        return CONFIRMATION_STATUS.MEDIUM;
+      }
+      return CONFIRMATION_STATUS.HIGH;
+    }
+  };
+
   const listOverview = [
     {
       icon: timeIcon,
@@ -27,6 +40,20 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
         </Box>
       ),
       value: formatDateTimeLocal(data?.time || ""),
+    },
+    {
+      icon: txConfirm,
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <TitleCard mr={1}>Confirmation</TitleCard>
+        </Box>
+      ),
+      value: (
+        <>
+          {data?.confirmation || 0}
+          <ConfirmStatus status={renderConfirmationTag() || "LOW"}>{renderConfirmationTag() || "LOW"}</ConfirmStatus>
+        </>
+      ),
     },
     {
       icon: exchageIcon,
@@ -46,7 +73,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       ),
       value: (
         <Box component={"span"}>
-          {formatADAFull(data?.totalFees)} <ADAToken />
+          {formatADAFull(data?.totalFees)} <ADAicon />
         </Box>
       ),
     },
@@ -54,12 +81,13 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       icon: outputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Total Output in ADA</TitleCard>
+          <TitleCard mr={1}>Total Out in ADA</TitleCard>
+          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: (
         <Box component={"span"}>
-          {formatADAFull(data?.totalOutput)} <ADAToken />
+          {formatADAFull(data?.totalOutput)} <ADAicon />
         </Box>
       ),
     },

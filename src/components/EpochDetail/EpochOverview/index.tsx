@@ -9,9 +9,9 @@ import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
 import { TitleCard } from "../../BlockDetail/BlockOverview/styles";
 import { Box } from "@mui/material";
-import { ADAToken } from "../../commons/Token";
 import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
 import { useSelector } from "react-redux";
+import ADAicon from "../../commons/ADAIcon";
 interface EpochOverviewProps {
   data: IDataEpoch | null;
   loading: boolean;
@@ -20,7 +20,6 @@ interface EpochOverviewProps {
 const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const slot = data && data?.no === currentEpoch?.no ? currentEpoch.slot : MAX_SLOT_EPOCH;
-  const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
 
   const listOverview = [
     {
@@ -50,7 +49,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       ),
       value: (
         <Box component={"span"}>
-          {formatADAFull(data?.outSum || 0)} <ADAToken />
+          {formatADAFull(data?.outSum || 0)} <ADAicon />
         </Box>
       ),
     },

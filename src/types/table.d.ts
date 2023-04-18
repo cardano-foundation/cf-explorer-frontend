@@ -16,7 +16,7 @@ export interface Column<T extends ColumnType = any> {
 
 export type TableHeaderProps<T extends ColumnType> = Pick<
   TableProps<T>,
-  "columns" | "loading" | "showTabView" | "selected"
+  "columns" | "loading" | "defaultSort" | "showTabView" | "selected"
 >;
 
 export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
@@ -45,6 +45,7 @@ export interface TableProps<T extends ColumnType = any> {
     count: number;
     title: string;
   };
+  defaultSort?: string;
   pagination?: {
     onChange?: (page: number, size: number) => void;
     page?: number;

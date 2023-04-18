@@ -8,9 +8,7 @@ import {
   styled,
   CircularProgress,
   alpha,
-  Button,
 } from "@mui/material";
-import { TiArrowUnsorted, TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
 import { DownIcon, EmptyIcon, EndPage, EyeIcon, NextPage, PrevPage, StartPage } from "../../../commons/resources";
 import {
@@ -26,7 +24,6 @@ import {
   TotalNumber,
   Wrapper,
   TableFullWidth,
-  Error,
   InputNumber,
   SelectMui,
   LoadingWrapper,
@@ -34,6 +31,7 @@ import {
 import { ColumnType, FooterTableProps, TableHeaderProps, TableProps, TableRowProps } from "../../../types/table";
 import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
+import { TbArrowsDownUp, TbArrowUp, TbArrowDown } from "react-icons/tb";
 
 type TEmptyRecord = {
   className?: string;
@@ -44,10 +42,16 @@ export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
   </Empty>
 );
 
-const TableHeader = <T extends ColumnType>({ columns, loading, showTabView, selected = null }: TableHeaderProps<T>) => {
+const TableHeader = <T extends ColumnType>({
+  columns,
+  loading,
+  defaultSort,
+  showTabView,
+  selected = null,
+}: TableHeaderProps<T>) => {
   const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
-    columnKey: "",
-    sort: "",
+    columnKey: defaultSort ? defaultSort.split(",")[0] : "",
+    sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : "",
   });
   const sortValue = ({ key, sort }: { key: string; sort: "" | "DESC" | "ASC" }) => {
     if (key === columnKey)
@@ -63,21 +67,21 @@ const TableHeader = <T extends ColumnType>({ columns, loading, showTabView, sele
           return { columnKey: key, sortValue: "DESC" };
         }
       }
-    setSort({ columnKey: key, sort: "ASC" });
-    return { columnKey: key, sortValue: "ASC" };
+    setSort({ columnKey: key, sort: "DESC" });
+    return { columnKey: key, sortValue: "DESC" };
   };
   const IconSort = ({ key, sort }: { key: string; sort: "" | "DESC" | "ASC" }) => {
     if (key === columnKey)
       switch (sort) {
         case "DESC":
-          return <TiArrowSortedDown />;
+          return <TbArrowDown color={"#98A2B3"} size={"18px"} />;
         case "ASC":
-          return <TiArrowSortedUp />;
+          return <TbArrowUp color={"#98A2B3"} size={"18px"} />;
         default: {
-          return <TiArrowUnsorted />;
+          return <TbArrowsDownUp color={"#98A2B3"} size={"18px"} />;
         }
       }
-    return <TiArrowUnsorted />;
+    return <TbArrowsDownUp color={"#98A2B3"} size={"18px"} />;
   };
   return (
     <THead>
@@ -147,17 +151,21 @@ const TableBody = <T extends ColumnType>({
   return (
     <TBody>
       {loading && initialized && (
-        <LoadingWrapper
-          bgcolor={theme => alpha(theme.palette.common.black, 0.05)}
-          width={"100%"}
-          height={"100%"}
-          zIndex={1000}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <CircularProgress />
-        </LoadingWrapper>
+        <tr>
+          <td>
+            <LoadingWrapper
+              bgcolor={theme => alpha(theme.palette.common.black, 0.05)}
+              width={"100%"}
+              height={"100%"}
+              zIndex={1000}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <CircularProgress />
+            </LoadingWrapper>
+          </td>
+        </tr>
       )}
       {data &&
         data.map((row, index) => (
@@ -269,12 +277,19 @@ const Table: React.FC<TableProps> = ({
   showTabView,
   selected,
   selectedProps,
+  defaultSort,
 }) => {
   return (
     <Box className={className || ""} style={style}>
       <Wrapper>
         <TableFullWidth>
-          <TableHeader columns={columns} loading={loading} showTabView={showTabView} selected={selected} />
+          <TableHeader
+            columns={columns}
+            loading={loading}
+            defaultSort={defaultSort}
+            showTabView={showTabView}
+            selected={selected}
+          />
           <TableBody
             columns={columns}
             data={data}

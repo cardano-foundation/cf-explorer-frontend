@@ -9,6 +9,8 @@ import { AIcon } from "../../../commons/resources";
 import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer, StyledLink } from "./styles";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { API } from "../../../commons/utils/api";
+import { Box } from "@mui/material";
+import ADAicon from "../../commons/ADAIcon";
 
 interface IEpochBlockList {
   epochId: string;
@@ -81,7 +83,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       render: r => (
         <StyledOutput>
           <StyledColorBlueDard>{formatADAFull(r.totalOutput)}</StyledColorBlueDard>
-          <img src={AIcon} alt="ADA Icon" />
+          <ADAicon />
         </StyledOutput>
       ),
     },
