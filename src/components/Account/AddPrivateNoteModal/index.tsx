@@ -11,14 +11,14 @@ interface IProps {
   open: boolean;
   handleCloseModal: () => void;
   currentNote?: TCurrentNote;
-  refesh: () => void;
+  refresh: () => void;
 }
 
 type TInput = {
   value?: string;
   error?: string;
 };
-const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseModal, refesh }) => {
+const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseModal, refresh }) => {
   const [txHash, setTxHash] = useState<TInput | undefined>();
   const [privateNote, setPrivateNote] = useState<TInput | undefined>();
   const [loading, setLoading] = useState(false);
@@ -51,7 +51,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
         setPrivateNote(undefined);
         setLoading(false);
         handleCloseModal();
-        refesh();
+        refresh();
       } catch (error: any) {
         const errorData = error.response?.data;
         if (errorData?.errorCode === ACCOUNT_ERROR.PRIVATE_NOTE_IS_EXIST) {
