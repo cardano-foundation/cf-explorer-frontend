@@ -14,6 +14,7 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 interface ITokenList {}
 
@@ -27,10 +28,12 @@ const Tokens: React.FC<ITokenList> = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const { data, ...fetchData } = useFetchList<ITokenOverview>(API.TOKEN.LIST, {
-    ...pageInfo,
-    sort,
-  });
+  const { data, ...fetchData } = useFetchList<ITokenOverview>(
+    API.TOKEN.LIST,
+    { ...pageInfo, sort },
+    false,
+    REFRESH_TIMES.TOKEN_LIST
+  );
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -42,8 +45,7 @@ const Tokens: React.FC<ITokenList> = () => {
       title: "Icon",
       key: "icon",
       minWidth: "50px",
-      render: r =>
-        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />,
+      render: r => (r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : ""),
     },
     {
       title: "Asset Name",
@@ -70,7 +72,7 @@ const Tokens: React.FC<ITokenList> = () => {
       },
     },
     {
-      title: "Volume In 24H",
+      title: "Volume 24H",
       key: "volumeIn24h",
       minWidth: "150px",
       render: r => numberWithCommas(r?.volumeIn24h),
@@ -85,7 +87,7 @@ const Tokens: React.FC<ITokenList> = () => {
       },
     },
     {
-      title: "Created At",
+      title: "Created",
       key: "time",
       minWidth: "150px",
       render: r => (
@@ -130,6 +132,7 @@ const Tokens: React.FC<ITokenList> = () => {
           }}
           onClickRow={openDetail}
           selected={selected}
+          showTabView
         />
         {token && <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />}
       </Card>

@@ -19,12 +19,17 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import Card from "../../commons/Card";
-import { formatADAFull, formatPrice } from "../../../commons/utils/helper";
+import { formatADA, formatPrice, numberWithCommas } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { BigNumber } from "bignumber.js";
 import { API } from "../../../commons/utils/api";
+import CustomTooltip from "../../commons/CustomTooltip";
 
-type AnalyticsData = { date: string; value: number };
+type AnalyticsBalance = { date: string; value: number };
+type AnalyticsReward = {
+  epoch: number;
+  value: number;
+};
 
 const options = [
   { value: "ONE_DAY", label: "1d" },
@@ -33,42 +38,77 @@ const options = [
   { value: "THREE_MONTH", label: "3m" },
 ];
 
-const AddressAnalytics: React.FC = () => {
+const StakeAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
-  const { address } = useParams<{ address: string }>();
+  const [tab, setTab] = useState<"BALANCE" | "REWARD">("BALANCE");
+  const { stakeId } = useParams<{ stakeId: string }>();
   const theme = useTheme();
-  const { data, loading } = useFetch<AnalyticsData[]>(`${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`);
-  const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${address}`);
-  const dataChart = data?.map(i => {
+
+  const { data, loading } = useFetch<AnalyticsBalance[]>(`${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`);
+  const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
+    `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
+  );
+  const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.STAKE.MIN_MAX_BALANCE}/${stakeId}`);
+
+  const dataBalanceChart = data?.map(i => {
     const value = BigNumber(i.value).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
   });
-
-  const categories = data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
+  const categoriesBalance =
+    data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
   const minBalance = Math.min(...(balance || []));
   const maxBalance = Math.max(...(balance || []), 0);
 
+  const dataRewardChart = dataReward?.map(i => {
+    const value = BigNumber(i.value).div(10 ** 6);
+    return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
+  });
+  const categoriesReward = dataReward?.map(i => i.epoch) || [];
+
+  const minReward = dataReward
+    ? dataReward.reduce(
+        function (prev, current) {
+          return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
+        },
+        { epoch: 0, value: 0 }
+      )
+    : { epoch: 0, value: 0 };
+  const maxReward = dataReward
+    ? dataReward.reduce(
+        function (prev, current) {
+          return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
+        },
+        { epoch: 0, value: 0 }
+      )
+    : { epoch: 0, value: 0 };
   return (
     <Card title="Analytics" pt={5}>
       <Wrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
             <Grid item xs={12} sm={6}>
-              <ButtonTitle>Balance</ButtonTitle>
+              <ButtonTitle active={tab === "BALANCE"} onClick={() => setTab("BALANCE")}>
+                Balance
+              </ButtonTitle>
+              <ButtonTitle active={tab === "REWARD"} onClick={() => setTab("REWARD")}>
+                Reward
+              </ButtonTitle>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Tabs>
-                {options.map(({ value, label }) => (
-                  <Tab key={value} active={rangeTime === value ? 1 : 0} onClick={() => setRangeTime(value)}>
-                    {label}
-                  </Tab>
-                ))}
-              </Tabs>
+              {tab === "BALANCE" && (
+                <Tabs>
+                  {options.map(({ value, label }) => (
+                    <Tab key={value} active={rangeTime === value ? 1 : 0} onClick={() => setRangeTime(value)}>
+                      {label}
+                    </Tab>
+                  ))}
+                </Tabs>
+              )}
             </Grid>
           </Grid>
           <ChartBox>
-            {loading ? (
-              <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
+            {loading || loadingReward ? (
+              <SkeletonUI variant="rectangular" style={{ height: "375px" }} />
             ) : (
               <Box position={"relative"}>
                 <HighchartsReact
@@ -77,7 +117,7 @@ const AddressAnalytics: React.FC = () => {
                     chart: {
                       type: "areaspline",
                       backgroundColor: "transparent",
-                      style: { fontFamily: "Roboto, sans-serif" },
+                      style: { fontFamily: "Helvetica, monospace" },
                     },
                     title: { text: "" },
                     yAxis: {
@@ -95,7 +135,7 @@ const AddressAnalytics: React.FC = () => {
                       },
                     },
                     xAxis: {
-                      categories,
+                      categories: tab === "BALANCE" ? categoriesBalance : categoriesReward,
                       lineWidth: 2,
                       lineColor: theme.palette.border.main,
                       plotLines: [],
@@ -124,7 +164,7 @@ const AddressAnalytics: React.FC = () => {
                             [1, "transparent"],
                           ],
                         },
-                        data: dataChart,
+                        data: tab === "BALANCE" ? dataBalanceChart : dataRewardChart,
                       },
                     ],
                   }}
@@ -134,15 +174,23 @@ const AddressAnalytics: React.FC = () => {
           </ChartBox>
         </Grid>
         <Grid item xs={24} lg={6}>
-          <BoxInfo space={categories.length ? 36 : 16}>
+          <BoxInfo space={(categoriesBalance || categoriesReward).length ? 36 : 16}>
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={HighestIcon} width={"20%"} alt="heighest icon" />
-                  <Title>Highest Balance</Title>
-                  <ValueInfo>
-                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance)}
-                  </ValueInfo>
+                  <Title>{tab === "BALANCE" ? "Highest Balance" : "Highest Reward"}</Title>
+                  <CustomTooltip title={numberWithCommas(maxBalance || 0)}>
+                    <ValueInfo>
+                      {balanceLoading ? (
+                        <SkeletonUI variant="rectangular" />
+                      ) : tab === "BALANCE" ? (
+                        formatADA(maxBalance)
+                      ) : (
+                        formatADA(maxReward.value)
+                      )}
+                    </ValueInfo>
+                  </CustomTooltip>
                 </Box>
               </BoxInfoItemRight>
             </Box>
@@ -150,10 +198,18 @@ const AddressAnalytics: React.FC = () => {
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={LowestIcon} width={"20%"} alt="lowest icon" />
-                  <Title>Lowest Balance</Title>
-                  <ValueInfo>
-                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance)}
-                  </ValueInfo>
+                  <Title>{tab === "BALANCE" ? "Lowest Balance" : "Lowest Reward"}</Title>
+                  <CustomTooltip title={numberWithCommas(minBalance || 0)}>
+                    <ValueInfo>
+                      {balanceLoading ? (
+                        <SkeletonUI variant="rectangular" />
+                      ) : tab === "BALANCE" ? (
+                        formatADA(minBalance)
+                      ) : (
+                        formatADA(minReward.value)
+                      )}
+                    </ValueInfo>
+                  </CustomTooltip>
                 </Box>
               </BoxInfoItem>
             </Box>
@@ -164,4 +220,4 @@ const AddressAnalytics: React.FC = () => {
   );
 };
 
-export default AddressAnalytics;
+export default StakeAnalytics;

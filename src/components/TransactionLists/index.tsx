@@ -19,6 +19,7 @@ interface TransactionListProps {
   url: string;
   openDetail?: (_: any, r: Transactions, index: number) => void;
   selected?: number | null;
+  showTabView?: boolean;
   hash?: string | null;
   handleClose: () => void;
 }
@@ -28,6 +29,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
   url,
   openDetail,
   selected,
+  showTabView,
   hash,
   handleClose,
 }) => {
@@ -124,6 +126,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
         }}
         onClickRow={onClickRow}
         selected={selected}
+        showTabView={showTabView}
       />
     </Card>
   );

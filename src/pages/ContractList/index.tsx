@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../stores/types";
 import { API } from "../../commons/utils/api";
 import ADAicon from "../../components/commons/ADAIcon";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const Transactions: React.FC = () => {
   const { search } = useLocation();
@@ -28,7 +29,7 @@ const Transactions: React.FC = () => {
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
 
-  const fetchData = useFetchList<Contracts>(API.CONTRACT, { ...pageInfo, sort });
+  const fetchData = useFetchList<Contracts>(API.CONTRACT, pageInfo, false, REFRESH_TIMES.CONTRACTS);
   const { adaRate } = useSelector(({ system }: RootState) => system);
 
   useEffect(() => {

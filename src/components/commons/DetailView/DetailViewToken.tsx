@@ -162,7 +162,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                   {data?.metadata?.logo ? (
                     <TokenIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt="token logo" />
                   ) : (
-                    <LogoEmpty />
+                    ""
                   )}
                 </TokenInfo>
                 <Box pb={2}>
@@ -209,19 +209,19 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
                   {data.metadata?.logo ? (
                     <TokenDetailIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt="token logo" />
                   ) : (
-                    <LogoEmpty />
+                    ""
                   )}
                 </TokenDetailInfo>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Transactions</DetailLabel>
+              <DetailLabel>Total Transactions</DetailLabel>
               <DetailValue>{data.txCount}</DetailValue>
             </DetailsInfoItem>
-            <DetailsInfoItem>
+            {/* <DetailsInfoItem>
               <DetailLabel>Number of Holders</DetailLabel>
               <DetailValue>{numberWithCommas(data.numberHolders || 0)}</DetailValue>
-            </DetailsInfoItem>
+            </DetailsInfoItem> */}
             <DetailsInfoItem>
               <DetailLabel>Volume 24H</DetailLabel>
               <DetailValue>{numberWithCommas(data.volumeIn24h || 0)}</DetailValue>
