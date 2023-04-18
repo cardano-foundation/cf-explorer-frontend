@@ -70,7 +70,7 @@ jobs:
         uses: simple-elf/allure-report-action@master
         if: always()
         with:
-          allure_results: build/allure-results
+          allure_results: cf-qa-testsuite/build/allure-results
           allure_history: allure-history
 
       - name: Deploy report to Github Pages
