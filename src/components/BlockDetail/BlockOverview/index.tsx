@@ -10,8 +10,8 @@ import slotIcon from "../../../commons/resources/icons/slot.svg";
 import { Box } from "@mui/material";
 import { ConfirmStatus, TitleCard } from "./styles";
 import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
-import { ADAToken } from "../../commons/Token";
 import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import ADAicon from "../../commons/ADAIcon";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
@@ -36,8 +36,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       icon: timeIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Created At </TitleCard>
-          <img src={infoIcon} alt="info icon" width={18} />
+          <TitleCard mr={1}>Created at </TitleCard>
         </Box>
       ),
       value: formatDateTimeLocal(data?.time || ""),
@@ -61,7 +60,6 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction</TitleCard>
-          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: data?.txCount || 0,
@@ -71,12 +69,11 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction Fees </TitleCard>
-          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: (
         <Box component={"span"}>
-          {formatADAFull(data?.totalFees)} <ADAToken />
+          {formatADAFull(data?.totalFees)} <ADAicon />
         </Box>
       ),
     },
@@ -90,7 +87,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       ),
       value: (
         <Box component={"span"}>
-          {formatADAFull(data?.totalOutput)} <ADAToken />
+          {formatADAFull(data?.totalOutput)} <ADAicon />
         </Box>
       ),
     },

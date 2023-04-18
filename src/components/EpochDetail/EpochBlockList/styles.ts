@@ -13,7 +13,6 @@ export const FakedLink = styled("span")`
 `;
 
 export const StyledLink = styled(Link)`
-  margin-left: 15px;
   font-family: var(--font-family-text) !important;
   color: ${props => props.theme.palette.secondary.main} !important;
 `;

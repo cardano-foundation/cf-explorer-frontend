@@ -60,7 +60,7 @@ export const formatADA = (value?: string | number, abbreviations: string[] = LAR
 export const formatADAFull = (value?: string | number): string => {
   if (!value) return `0`;
   const realAda = new BigNumber(value).div(10 ** 6);
-  return numberWithCommas(realAda.toString());
+  return numberWithCommas(realAda.toFixed(6).toString());
 };
 
 export const exchangeADAToUSD = (value: number | string, rate: number, isFull?: boolean) => {
@@ -90,7 +90,7 @@ export const formatPercent = (percent?: number) => `${Math.round((percent || 0) 
 export const getPageInfo = (search: string): { page: number; size: number } => {
   const query = parse(search.split("?")[1]);
   const page = Number(query.page) > 0 ? Number(query.page) - 1 : 0;
-  const size = Number(query.size) > 0 ? Number(query.size) : 10;
+  const size = Number(query.size) > 0 ? Number(query.size) : 50;
   return { page, size };
 };
 

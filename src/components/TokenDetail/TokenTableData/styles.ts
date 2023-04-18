@@ -92,3 +92,11 @@ export const Minting = {
   MintingBalance,
   StyledImg: PriceIcon,
 };
+
+export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
+  fontWeight: "bold",
+  textTransform: "capitalize",
+  fontFamily: '"Roboto", sans-serif',
+  fontSize: "1.125rem",
+  color: active ? theme.palette.common.black : theme.palette.text.hint,
+}));

@@ -6,9 +6,9 @@ import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from ".
 import Table, { Column } from "../../../commons/Table";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { details } from "../../../../commons/routers";
-import { ADAToken } from "../../../commons/Token";
 import { StyledLink } from "../styles";
 import { API } from "../../../../commons/utils/api";
+import ADAicon from "../../../commons/ADAIcon";
 
 const columns: Column<WithdrawalHistory>[] = [
   {
@@ -47,7 +47,7 @@ const columns: Column<WithdrawalHistory>[] = [
     render: r => (
       <>
         <Box component={"span"}> {formatADAFull(r.amount)}</Box>
-        <ADAToken />
+        <ADAicon pl={"3px"} />
       </>
     ),
   },
