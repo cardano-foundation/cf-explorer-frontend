@@ -50,6 +50,16 @@ const BlockList = () => {
       ),
     },
     {
+      title: "Epoch/Slot",
+      key: "epoch",
+      minWidth: "150px",
+      render: r => (
+        <>
+          <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+        </>
+      ),
+    },
+    {
       title: "Transactions",
       key: "txCount",
       minWidth: "50px",
