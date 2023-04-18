@@ -58,7 +58,7 @@ jobs:
           docker-compose up -d
           bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' ${{ env.FRONTEND_URL }})" != "200" ]]; do sleep 1; done'
           cd ../cf-qa-testsuite
-          gradle clean test
+          gradle clean test --debug
 
       - name: Get allure history
         uses: actions/checkout@v3
