@@ -8,9 +8,7 @@ import {
   styled,
   CircularProgress,
   alpha,
-  Button,
 } from "@mui/material";
-import { TiArrowUnsorted, TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
 import { DownIcon, EmptyIcon, EndPage, EyeIcon, NextPage, PrevPage, StartPage } from "../../../commons/resources";
 import {
@@ -43,6 +41,7 @@ export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
     <EmtyImage src={EmptyIcon} alt="no data" />
   </Empty>
 );
+
 
 const TableHeader = <T extends ColumnType>({
   columns,

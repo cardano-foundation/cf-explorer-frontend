@@ -80,6 +80,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
       fetchUserInfo();
     }
   }, [fetchUserInfo]);
+
   if (!userData) {
     return <Redirect to={routers.HOME} />;
   }

@@ -65,7 +65,7 @@ const LatestTransactions: React.FC = () => {
               })
             : data?.map(item => {
                 const { hash, fromAddress, toAddress, blockNo, amount, status, time, epochNo, epochSlotNo } = item;
-
+                
                 return (
                   <Grid item xl lg={3} xs={6} key={hash}>
                     <Item onClick={e => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
