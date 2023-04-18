@@ -1,9 +1,12 @@
 name: Run Explorer FE testcases
 
 on:
- pull_request:
-   types: [opened, synchronize]
+  pull_request:
+    types: [opened, synchronize]
+  workflow_dispatch:
 
+env:
+  FRONTEND_URL: http://localhost:9296
 
 jobs:
   run-web-test:
@@ -26,13 +29,13 @@ jobs:
           repository: cardano-foundation/cf-qa-testsuite
           ssh-key: ${{ secrets.CF_QA_TESTSUITE_DEPLOY_KEY }}   
           path: 'cf-qa-testsuite'
-    
+
       - name: Set environment variables
         run: |
           pwd
           ls -la
           cd cf-qa-testsuite
-          echo 'FE_URL=http://localhost:1102' >> src/main/resources/application-test.properties
+          echo "FE_URL=${{ env.FRONTEND_URL }}" >> src/main/resources/application-test.properties
           cd ..
 
       - name: Checkout code
@@ -47,16 +50,17 @@ jobs:
           touch .env
           echo ${ENV_SECRETS} >> .env
           pwd ls -la
-          
-      - name: Build application and run tests
+
+      - name: Run frontend (using docker-compose)
         run: |
           cd cf-explorer-frontend
-          pwd
-          npm install
-          npm i -D concurrently
-          npm i -D wait-on
-          npm i -D kill-port
-          npm run selenium-test
+          docker-compose up -d
+          bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' ${{ env.FRONTEND_URL }})" != "200" ]]; do sleep 1; done'
+          
+      - name: Run tests
+        run: |
+          cd cf-qa-testsuite
+          gradle clean test
 
       - name: Get allure history
         uses: actions/checkout@v3
