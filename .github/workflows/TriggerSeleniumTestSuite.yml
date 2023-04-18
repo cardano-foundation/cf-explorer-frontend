@@ -35,6 +35,7 @@ jobs:
           pwd
           ls -la
           cd cf-qa-testsuite
+          echo "SELENIUM_HUB=http://localhost:4444/wd/hub" >> src/main/resources/application-test.properties
           echo "FE_URL=${{ env.FRONTEND_URL }}" >> src/main/resources/application-test.properties
           cd ..
 
@@ -54,6 +55,7 @@ jobs:
       - name: Run tests
         run: |
           cd cf-explorer-frontend
+          for env
           docker-compose up -d
           bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' ${{ env.FRONTEND_URL }})" != "200" ]]; do sleep 1; done'
           cd ../cf-qa-testsuite
