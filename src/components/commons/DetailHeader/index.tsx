@@ -30,6 +30,7 @@ import { details, routers } from "../../../commons/routers";
 import Bookmark from "../BookmarkIcon";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
+import { useHistory } from "react-router-dom";
 
 interface DetailHeaderProps {
   type: Bookmark["type"];
@@ -45,16 +46,9 @@ interface DetailHeaderProps {
 
 const DetailHeader: React.FC<DetailHeaderProps> = props => {
   const { loading, listItem, epoch, type, title, hash, transactionStatus, bookmarkData, stakeKeyStatus } = props;
+  const history = useHistory();
 
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-
-  const getRouterList = () => {
-    if (type === "TRANSACTION") return routers.TRANSACTION_LIST;
-    if (type === "BLOCK") return routers.BLOCK_LIST;
-    if (type === "EPOCH") return routers.EPOCH_LIST;
-    if (type === "STAKE_KEY") return routers.STAKE_LIST.replace(":poolType?", "");
-    else return "/";
-  };
 
   const getHashLabel = () => {
     if (type === "BLOCK") return "Block ID";
@@ -68,7 +62,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
   if (loading) {
     return (
       <HeaderDetailContainer>
-        <BackButton to={getRouterList()}>
+        <BackButton onClick={history.goBack}>
           <HiArrowLongLeft />
           <BackText>Back</BackText>
         </BackButton>
@@ -77,7 +71,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
             <HeaderTitleSkeleton variant="rectangular" />
           </HeaderTitle>
         </HeaderContainer>
-        <DetailsInfo container numberOfItems={numberOfItems}>
+        <DetailsInfo container items_length={numberOfItems}>
           {new Array(4).fill(0).map((_, index) => {
             return (
               <CardItem
@@ -86,7 +80,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
                 sm={6}
                 md={4}
                 lg={numberOfItems > 6 ? 3 : true}
-                numberOfItems={numberOfItems}
+                items_length={numberOfItems}
                 key={index}
               >
                 <IconSkeleton variant="circular" />
@@ -106,7 +100,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
     <HeaderDetailContainer>
       <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap={"wrap"}>
         <Box>
-          <BackButton to={getRouterList()}>
+          <BackButton onClick={history.goBack}>
             <HiArrowLongLeft />
             <BackText>Back</BackText>
           </BackButton>
@@ -134,7 +128,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
                 currentEpoch && (epoch?.no || 0) < currentEpoch?.no ? 100 : ((epoch?.slot || 0) / MAX_SLOT_EPOCH) * 100
               }
             >
-              <EpochNumber isEpoch={type === "EPOCH"} to={details.epoch(epoch.no || 0)}>
+              <EpochNumber is_epoch={+(type === "EPOCH")} to={details.epoch(epoch.no || 0)}>
                 {epoch?.no}
               </EpochNumber>
               <EpochText>Epoch</EpochText>
@@ -144,7 +138,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           ""
         )}
       </Box>
-      <DetailsInfo container numberOfItems={numberOfItems}>
+      <DetailsInfo container items_length={numberOfItems}>
         {listItem.map((item, index) => {
           return (
             <CardItem
@@ -153,7 +147,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
               sm={6}
               md={listItem.length === 4 ? 3 : 4}
               lg={numberOfItems > 6 ? 3 : true}
-              numberOfItems={numberOfItems}
+              items_length={numberOfItems}
               key={index}
             >
               <Box>

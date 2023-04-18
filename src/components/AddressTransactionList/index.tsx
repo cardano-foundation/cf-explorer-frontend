@@ -1,6 +1,8 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
+import { useState } from "react";
+
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import {
@@ -12,7 +14,6 @@ import {
   numberWithCommas,
 } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
-import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -35,7 +36,8 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<Transactions>(url, pageInfo);
+
+  const fetchData = useFetchList<Transactions>(url, { ...pageInfo });
 
   const onClickRow = (_: any, transaction: Transactions, index: number) => {
     if (openDetail) return openDetail(_, transaction, index);
@@ -66,7 +68,6 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       title: "Time",
       key: "time",
       minWidth: "180px",
-
       render: r => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>,
     },
     {
@@ -141,7 +142,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
     {
       title: "Output",
       minWidth: 120,
-      key: "ouput",
+      key: "outSum",
       render: transaction => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(transaction.totalOutput)}</Box>

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import Table, { Column } from "../../../commons/Table";
+import { Column } from "../../../commons/Table";
 import ScriptModal from "../../../ScriptModal";
-import { Amount, AssetName, LogoEmpty } from "./styles";
+import { Amount, AssetName, LogoEmpty, TableMinting } from "./styles";
 import { PolicyScriptIcon } from "../../../../commons/resources";
 import { Logo } from "../../../../pages/Token/styles";
 
@@ -17,7 +17,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
   const columns: Column<Required<Transaction>["mints"][number]>[] = [
     {
       title: "Asset name",
-      isHiddenBorder : true,
+      isHiddenBorder: true,
       key: "Assetname",
       minWidth: "40px",
       render: (r, index) => {
@@ -35,7 +35,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
     },
     {
       title: "Amount minted",
-      isHiddenBorder : true,
+      isHiddenBorder: true,
       key: "Amount",
       minWidth: "40px",
       render: (r, index) => {
@@ -46,7 +46,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       title: "Policy script",
       key: "Policy",
       minWidth: "40px",
-      isHiddenBorder : true,
+      isHiddenBorder: true,
       render: (r, index) => {
         return (
           <div
@@ -64,7 +64,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
 
   return (
     <Box bgcolor={"white"} px={2}>
-      <Table columns={columns} data={data || []} />
+      <TableMinting columns={columns} data={data || []} />
       <ScriptModal open={open} policy={selectedItem || ""} onClose={() => setOpen(false)} />
     </Box>
   );
