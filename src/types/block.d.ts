@@ -13,4 +13,5 @@ interface Block {
 
 type BlockDetail = Block & {
   totalSlot: number;
+  confirmation: number;
 };
