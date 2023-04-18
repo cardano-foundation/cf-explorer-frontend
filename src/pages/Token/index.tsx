@@ -7,9 +7,10 @@ import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
 import { details } from "../../commons/routers";
 import { formatDateTimeLocal, getPageInfo, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
+
 import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { AssetName, Logo, StyledContainer, LogoEmpty } from "./styles";
+import { AssetName, Logo, StyledContainer } from "./styles";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
@@ -42,8 +43,7 @@ const Tokens: React.FC<ITokenList> = () => {
       title: "Icon",
       key: "icon",
       minWidth: "50px",
-      render: r =>
-        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />,
+      render: r => (r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : ""),
     },
     {
       title: "Asset Name",
