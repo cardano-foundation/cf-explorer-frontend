@@ -25,15 +25,7 @@ interface Props {}
 const TopDelegationPools: React.FC<Props> = () => {
   const { data, loading, initialized } = useFetch<DelegationPool[]>(`${API.DELEGATION.TOP}?page=1&size=4`);
   const history = useHistory();
-  data?.forEach(item => {
-    if (!item.poolSize) {
-      item.poolSize = Math.floor(Math.random() * 10 ** 13);
-      item.feePercent = Number((Math.floor(Math.random() * 2 * 10) / 10).toFixed(1)) + 1;
-      item.feeAmount = (item.poolSize * item.feePercent) / 100;
-      item.reward = Math.floor((Math.random() * 20 * 100) / 100) + 10;
-      item.saturation = Math.floor(Math.random() * 60) + 30;
-    }
-  });
+
   const columns: Column<DelegationPool>[] = [
     {
       title: "Pool",
@@ -43,7 +35,7 @@ const TopDelegationPools: React.FC<Props> = () => {
     {
       title: "Pool size (A)",
       key: "size",
-      render: r => formatADAFull(r.poolSize / 10 ** 6),
+      render: r => formatADAFull(r.poolSize || 0),
     },
     {
       title: "Reward",
