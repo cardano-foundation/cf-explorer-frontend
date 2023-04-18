@@ -131,6 +131,7 @@ const BlockList = () => {
           }}
           onClickRow={openDetail}
           selected={selected}
+          showTabView
         />
         {block && <DetailViewBlock blockNo={block} handleClose={handleClose} />}
       </Card>

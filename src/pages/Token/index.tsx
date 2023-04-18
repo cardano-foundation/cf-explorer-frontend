@@ -130,6 +130,7 @@ const Tokens: React.FC<ITokenList> = () => {
           }}
           onClickRow={openDetail}
           selected={selected}
+          showTabView
         />
         {token && <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />}
       </Card>
