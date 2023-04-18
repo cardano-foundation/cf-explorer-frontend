@@ -1,16 +1,18 @@
-import { Box, Grid, Skeleton, styled } from "@mui/material";
-import { BoxRaised } from "../../commons/BoxRaised";
+import { Box, Card, Grid, Skeleton, styled } from "@mui/material";
 
 export const StatisticContainer = styled(Grid)`
   margin-bottom: 24px;
 `;
 
-export const Item = styled(BoxRaised)`
+export const Item = styled(Card)`
   font-family: var(--font-family-text);
+  box-shadow: ${props => props.theme.shadow.card};
+  padding: 20px;
   display: block;
   position: relative;
   padding-top: 30px;
   margin-bottom: 0px;
+  border-radius: 12px;
   text-align: left;
   &:hover {
     box-shadow: ${props => props.theme.shadow.card};
