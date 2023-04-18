@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { parse, stringify } from "qs";
+import { stringify } from "qs";
 import { useWindowSize } from "react-use";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
 import { details } from "../../commons/routers";
 import {
-  formatADAFull,
   formatDateTimeLocal,
   getPageInfo,
   getShortWallet,
@@ -15,10 +14,9 @@ import {
 } from "../../commons/utils/helper";
 import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { AssetName, Logo, StyledContainer, LogoEmpty } from "./styles";
+import { AssetName, Logo, StyledContainer } from "./styles";
 import CustomTooltip from "../../components/commons/CustomTooltip";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { Box, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
 
