@@ -11,8 +11,8 @@ import Table from "../../components/commons/Table";
 import { Column } from "../../types/table";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
 
-import { PerPage, StyledContainer, StyledLink } from "./styles";
 import ADAicon from "../../components/commons/ADAIcon";
+import { PerPage, StyledContainer, StyledLink } from "./styles";
 
 const TopDelegators = () => {
   const history = useHistory();
