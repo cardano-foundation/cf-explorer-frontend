@@ -31,7 +31,7 @@ export const Flex = styled("div")`
 `;
 
 export const StyledLink = styled(Link)`
-  max-width: 250px;
+  width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

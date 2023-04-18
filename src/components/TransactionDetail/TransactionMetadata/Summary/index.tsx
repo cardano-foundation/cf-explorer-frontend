@@ -9,6 +9,7 @@ import { details } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { Icon, TokenLink } from "./styles";
+import ADAicon from "../../../commons/ADAIcon";
 
 const SummaryItems = ({
   item,
@@ -64,7 +65,7 @@ const SummaryItems = ({
                 >
                   {type === "down" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
                 </Box>
-                <img src={AIcon} alt="ADA icon" />
+                <ADAicon />
               </Box>
             </Box>
           </Box>

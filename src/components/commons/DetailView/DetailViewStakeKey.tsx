@@ -39,8 +39,9 @@ import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
 import { formatADAFull, getShortWallet } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
+import { ReactComponent as StakeKeyHistoryIcon } from "../../../commons/resources/icons/stateKeyHistory.svg";
+import { ReactComponent as TransactionIcon } from "../../../commons/resources/icons/exchangeArrow.svg";
 import CustomTooltip from "../CustomTooltip";
-import { ADAToken } from "../Token";
 import { TbFileCheck } from "react-icons/tb";
 import CopyButton from "../CopyButton";
 import { Link } from "react-router-dom";
@@ -48,6 +49,7 @@ import { Box } from "@mui/material";
 import ModalAllAddress from "../../StakeDetail/ModalAllAddress";
 import { API } from "../../../commons/utils/api";
 import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
 
 type DetailViewStakeKeyProps = {
   stakeId: string;
@@ -55,9 +57,20 @@ type DetailViewStakeKeyProps = {
 };
 const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
   { key: "delegation", label: "Delegation History", icon: <TbFileCheck /> },
-  { key: "stake-key", label: "Stake Key History", icon: <CgArrowsExchange /> },
+  {
+    key: "stake-key",
+    label: "Stake Key History",
+    icon: (
+      <StakeKeyHistoryIcon fill="#438F68" width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
+    ),
+  },
   { key: "withdrawal", label: "Withdrawal History", icon: <DetailLinkImage src={FileEditIcon} alt="withdrawal" /> },
   { key: "instantaneous", label: "Instantaneous Rewards", icon: <DetailLinkImage src={LightningIcon} alt="rewards" /> },
+  {
+    key: "transactions",
+    label: "Transactions",
+    icon: <TransactionIcon width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />,
+  },
 ];
 
 const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
@@ -158,39 +171,27 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
           </StakeKeyHeader>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Status
-              </DetailLabel>
+              <DetailLabel>Status</DetailLabel>
               <DetailValue>
                 <StakeKeyStatus status={data.status}>{data.status}</StakeKeyStatus>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Reward available
-              </DetailLabel>
+              <DetailLabel>Reward available</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.rewardAvailable)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Reward withdrawn
-              </DetailLabel>
+              <DetailLabel>Reward withdrawn</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.rewardWithdrawn)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Delegated to
-              </DetailLabel>
+              <DetailLabel>Delegated to</DetailLabel>
               <CustomTooltip title={poolName}>
                 <Box component={Link} display="inline-block" to={details.delegation(data.pool?.poolId)}>
                   <DelegatedDetail>{poolName}</DelegatedDetail>
@@ -198,13 +199,10 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </CustomTooltip>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Total Stake
-              </DetailLabel>
+              <DetailLabel>Total Stake</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.totalStake)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <Box textAlign={"right"}>

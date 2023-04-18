@@ -5,4 +5,5 @@ interface CardanoMarket {
   price_change_percentage_24h: number;
   total_supply: number;
   circulating_supply: number;
+  last_updated: string;
 }
