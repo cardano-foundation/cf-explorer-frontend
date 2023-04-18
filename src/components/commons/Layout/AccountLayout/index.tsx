@@ -36,11 +36,16 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   const { userData } = useSelector(({ user }: RootState) => user);
   const [openReportModal, setOpenReportModal] = useState(false);
   const [isUploadAvatar, setIsUploadAvatar] = useState(false);
+  const [firstLoad, setFirstLoad] = useState(true);
   const fetchUserInfo = useCallback(async () => {
     try {
+      setFirstLoad(true);
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
       setUserData(response.data);
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setFirstLoad(false);
+    }
   }, []);
 
   const theme = useTheme();
@@ -70,6 +75,13 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
       setIsUploadAvatar(false);
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      fetchUserInfo();
+    }
+  }, [fetchUserInfo]);
+  if (firstLoad) return null;
   if (!userData) return <NotFound />;
   return (
     <Wrapper>

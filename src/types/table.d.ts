@@ -14,7 +14,7 @@ export interface Column<T extends ColumnType = any> {
   sort?: ({ columnKey, sortValue }: { columnKey: string; sortValue: string }) => void;
 }
 
-export type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns" | "loading">;
+export type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns" | "loading" | "defaultSort">;
 
 export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
   row: T;
@@ -40,6 +40,7 @@ export interface TableProps<T extends ColumnType = any> {
     count: number;
     title: string;
   };
+  defaultSort?: string;
   pagination?: {
     onChange?: (page: number, size: number) => void;
     page?: number;

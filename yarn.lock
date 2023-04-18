@@ -969,12 +969,16 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cardano-foundation/cardano-connect-with-wallet@^0.1.45":
-  version "0.1.47"
+"@cardano-foundation/cardano-connect-with-wallet@^0.1.53":
+  version "0.1.53"
+  resolved "https://registry.yarnpkg.com/@cardano-foundation/cardano-connect-with-wallet/-/cardano-connect-with-wallet-0.1.53.tgz#4726c3303255845083b5409ecb17828d6262968e"
+  integrity sha512-K7PWTNSONZDa08+yRmhGXbX/c403+TnYqMaNGkiW4XLYh5Ra7B+4LhNkb9l4AVzMEZ9VTs7d0/4Pnmx05CZ+7g==
   dependencies:
-    "@types/node" "^18.7.16"
-    "@types/react" "^18.0.18"
-    "@types/react-dom" "^18.0.6"
+    "@fabianbormann/cardano-peer-connect" "^1.2.2"
+    "@storybook/manager-webpack5" "^6.5.16"
+    "@types/node" "^18.15.0"
+    "@types/react" "^18.0.28"
+    "@types/react-dom" "^18.0.11"
     "@types/styled-components" "^5.1.26"
     bech32 "^2.0.0"
     buffer "^6.0.3"
