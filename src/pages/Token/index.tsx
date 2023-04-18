@@ -6,12 +6,8 @@ import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
 import { details } from "../../commons/routers";
-import {
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortWallet,
-  numberWithCommas,
-} from "../../commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
+
 import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AssetName, Logo, StyledContainer } from "./styles";
@@ -24,6 +20,7 @@ interface ITokenList {}
 
 const Tokens: React.FC<ITokenList> = () => {
   const [token, setToken] = useState<IToken | null>(null);
+  const [sort, setSort] = useState<string>("txCount,DESC");
   const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();
   const { search } = useLocation();
@@ -31,8 +28,9 @@ const Tokens: React.FC<ITokenList> = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const { data, ...fetchData } = useFetchList<ITokenOverview>(API.TOKEN, {
+  const { data, ...fetchData } = useFetchList<ITokenOverview>(API.TOKEN.LIST, {
     ...pageInfo,
+    sort,
   });
 
   useEffect(() => {
@@ -64,25 +62,40 @@ const Tokens: React.FC<ITokenList> = () => {
     },
     {
       title: "Total Transactions",
-      key: "totalTransactions",
+      key: "txCount",
       minWidth: "150px",
       render: r => numberWithCommas(r?.txCount),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
+    },
+    {
+      title: "Volume In 24H",
+      key: "volumeIn24h",
+      minWidth: "150px",
+      render: r => numberWithCommas(r?.volumeIn24h),
     },
     {
       title: "Total Supply",
-      key: "totalSupply",
+      key: "supply",
       minWidth: "150px",
       render: r => numberWithCommas(r?.supply),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
     {
-      title: "Created",
-      key: "created",
+      title: "Created At",
+      key: "time",
       minWidth: "150px",
       render: r => (
         <>
           {formatDateTimeLocal(r.createdOn || "")} {JSON.stringify(token) === JSON.stringify(r) && <SelectedIcon />}
         </>
       ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
   ];
 
@@ -108,6 +121,7 @@ const Tokens: React.FC<ITokenList> = () => {
           data={data}
           columns={columns}
           total={{ title: "Total", count: fetchData.total }}
+          defaultSort="txCount,DESC"
           pagination={{
             ...pageInfo,
             total: fetchData.total,

@@ -10,6 +10,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          repository: cardano-foundation/cf-qa-testsuite
+          ssh-key: ${{ secrets.CF_QA_TESTSUITE_DEPLOY_KEY }}
 
       - name: Setup Java
         uses: actions/setup-java@v3

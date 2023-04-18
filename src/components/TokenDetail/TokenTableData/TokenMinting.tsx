@@ -19,7 +19,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<ITokenTopHolderTable>(`${API.TOKEN}/${tokenId}/mints`, { ...pageInfo, tokenId });
+  const fetchData = useFetchList<ITokenTopHolderTable>(`${API.TOKEN.LIST}/${tokenId}/mints`, { ...pageInfo, tokenId });
 
   const columns: Column<ITokenMintingTable>[] = [
     {
