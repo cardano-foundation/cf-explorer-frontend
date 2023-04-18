@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { API } from "../../../commons/utils/api";
 import BookmarkButton from "../../commons/BookmarkIcon";
 import TokenAutocomplete from "../../TokenAutocomplete";
+import ADAicon from "../../commons/ADAIcon";
 
 interface Props {
   data: WalletAddress | null;
@@ -36,7 +37,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       value: (
         <Box display="flex" alignItems="center">
           {formatADAFull(data?.balance)}
-          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          <ADAicon pl={"8px"} />
         </Box>
       ),
     },
@@ -54,7 +55,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       value: (
         <Box>
           {formatADAFull(dataStake?.totalStake)}
-          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          <ADAicon pl={"8px"} />
         </Box>
       ),
     },
@@ -76,7 +77,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       value: (
         <Box>
           {formatADAFull(dataStake?.rewardAvailable)}
-          <img style={{ paddingLeft: 8 }} src={AIcon} alt="icon" />
+          <ADAicon pl={"8px"} />
         </Box>
       ),
     },

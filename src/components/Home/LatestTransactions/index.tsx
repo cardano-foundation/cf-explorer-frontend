@@ -1,7 +1,6 @@
-import { Grid, Skeleton } from "@mui/material";
+import { Box, Grid, Skeleton } from "@mui/material";
 import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import useFetchList from "../../../commons/hooks/useFetchList";
 import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
@@ -21,10 +20,14 @@ import {
   BlockNo,
   WalletAddress,
   BlankImage,
+  RowItem,
+  HeaderStatus,
 } from "./style";
+import useFetch from "../../../commons/hooks/useFetch";
+import { TRANSACTION_STATUS } from "../../../commons/utils/constants";
 
 const LatestTransactions: React.FC = () => {
-  const { data, initialized, refesh } = useFetchList<Transactions>(API.TRANSACTION.LIST, { page: 0, size: 4 });
+  const { data, initialized, refesh } = useFetch<CurrentTransactions[]>(API.TRANSACTION.CURRENT);
   const history = useHistory();
   useEffect(() => {
     const interval = setInterval(() => {
@@ -58,33 +61,46 @@ const LatestTransactions: React.FC = () => {
                   </Grid>
                 );
               })
-            : data.slice(0, 4).map(item => {
-                const { hash, addressesInput, addressesOutput, blockNo, totalOutput } = item;
+            : data?.map(item => {
+                const { hash, fromAddress, toAddress, blockNo, amount, status, time, epochNo, epochSlotNo } = item;
                 return (
                   <Grid item xl lg={3} xs={6} key={hash}>
                     <Item onClick={e => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
                       <ItemHeader>
                         <PriceImage src={ADAIcon} alt="check green" />
-                        <PriveValue>{formatADAFull(totalOutput)}</PriveValue>
+                        <Box display={"flex"} flexDirection={"column"} rowGap={"4px"} alignItems={"end"}>
+                          <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>
+                          <PriveValue>{formatADAFull(amount)}</PriveValue>
+                        </Box>
                       </ItemHeader>
                       <ItemDetail>
-                        <p>
+                        <RowItem>
                           <small>Transaction hash: </small>
                           <CustomTooltip title={hash}>
                             <Link to={details.transaction(hash)}>
                               <Hash>{getShortHash(hash)}</Hash>
                             </Link>
                           </CustomTooltip>
-                        </p>
-                        <p>
+                        </RowItem>
+                        <RowItem>
                           <small>Block: </small>
                           <Link to={details.block(blockNo)}>
                             <BlockNo>{blockNo}</BlockNo>
                           </Link>
-                        </p>
-                        {addressesInput?.slice(0, 1).map(add => {
+                        </RowItem>
+                        <RowItem>
+                          <small>Epoch: </small>
+                          <Link to={details.epoch(epochNo)}>
+                            <BlockNo>{epochNo}</BlockNo>
+                          </Link>
+                        </RowItem>
+                        <RowItem>
+                          <small>Slot: </small>
+                          <small>{epochSlotNo}</small>
+                        </RowItem>
+                        {fromAddress?.slice(0, 1).map(add => {
                           return (
-                            <p key={add}>
+                            <RowItem key={add}>
                               <small>From: </small>
                               <CustomTooltip title={add}>
                                 <Link to={details.address(add)}>
@@ -92,22 +108,29 @@ const LatestTransactions: React.FC = () => {
                                   <BlankImage src={BlankBlueIcon} alt="blank blue" />
                                 </Link>
                               </CustomTooltip>
-                            </p>
+                            </RowItem>
                           );
                         })}
-                        {addressesOutput?.slice(0, 1).map(add => {
+                        {toAddress?.slice(0, 1).map(add => {
                           return (
-                            <p key={add}>
-                              <small>To: </small>
-                              <CustomTooltip title={add}>
-                                <Link to={details.address(add)}>
-                                  <WalletAddress>{getShortWallet(add)}</WalletAddress>
-                                  <BlankImage src={BlankBlueIcon} alt="blank blue" />
-                                </Link>
-                              </CustomTooltip>
-                            </p>
+                            <RowItem key={add} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+                              <Box>
+                                <small>To: </small>
+                                <CustomTooltip title={add}>
+                                  <Link to={details.address(add)}>
+                                    <WalletAddress>{getShortWallet(add)}</WalletAddress>
+                                    <BlankImage src={BlankBlueIcon} alt="blank blue" />
+                                  </Link>
+                                </CustomTooltip>
+                              </Box>
+                            </RowItem>
                           );
                         })}
+
+                        <RowItem>
+                          <small>Timestamp: </small>
+                          <small>{time}</small>
+                        </RowItem>
                       </ItemDetail>
                     </Item>
                   </Grid>

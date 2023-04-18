@@ -7,6 +7,8 @@ interface ITokenOverview {
   supply?: number;
   createdOn?: string;
   metadata?: ITokenMetadata;
+  volumeIn24h: number;
+  numberHolders: number;
 }
 
 interface ITokenMetadata {

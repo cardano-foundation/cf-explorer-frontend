@@ -26,9 +26,11 @@ interface FormValues {
   filter: FilterParams;
   search: string;
 }
+
 interface Option {
   value: FilterParams;
   label: React.ReactNode;
+  paths?: typeof routers[keyof typeof routers][];
 }
 const intitalValue: FormValues = {
   filter: "all",
@@ -43,30 +45,37 @@ const options: Option[] = [
   {
     value: "epochs",
     label: "Epochs",
+    paths: [routers.EPOCH_LIST],
   },
   {
     value: "blocks",
     label: "Blocks",
+    paths: [routers.BLOCK_LIST],
   },
   {
     value: "txs",
     label: "Transactions",
+    paths: [routers.TRANSACTION_LIST],
   },
   {
     value: "tokens",
     label: "Tokens",
+    paths: [routers.TOKEN_LIST],
   },
   {
     value: "stakes",
     label: "Stake keys",
+    paths: [routers.STAKE_LIST, routers.TOP_DELEGATOR],
   },
   {
     value: "addresses",
     label: "Addresses",
+    paths: [routers.ADDRESS_LIST, routers.CONTRACT_LIST],
   },
   {
     value: "delegations/pool-detail-header",
     label: "Pools",
+    paths: [routers.DELEGATION_POOLS, routers.REGISTRATION_POOLS],
   },
 ];
 
@@ -84,7 +93,13 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
   }, [search, filter]);
 
   useEffect(() => {
-    setValues({ ...intitalValue });
+    const currentPath = history.location.pathname.split("/")[1];
+
+    const checkIncludesPath = (paths: Option["paths"]) => paths?.find(path => path?.split("/")[1] === currentPath);
+
+    const filter: FilterParams = options.find(item => checkIncludesPath(item.paths))?.value || "all";
+
+    setValues({ ...intitalValue, filter });
   }, [history.location.pathname]);
 
   const handleSearch = (e?: FormEvent, filterParams?: FilterParams) => {
@@ -116,14 +131,14 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
   return (
     <Box position={"relative"} component={Form} onSubmit={handleSearch} home={home ? 1 : 0}>
       <Backdrop sx={{ backgroundColor: "unset" }} open={showOption} onClick={() => setShowOption(false)} />
-      <StyledSelect onChange={handleChangeFilter} value={filter} IconComponent={BiChevronDown} home={home ? 1 : 0}>
+      <StyledSelect data-testid='all-filters-dropdown' onChange={handleChangeFilter} value={filter} IconComponent={BiChevronDown} home={home ? 1 : 0}>
         {options.map(({ value, label }) => (
-          <SelectOption key={value} value={value} home={home ? 1 : 0}>
+          <SelectOption data-testid='filter-options' key={value} value={value} home={home ? 1 : 0}>
             {label}
           </SelectOption>
         ))}
       </StyledSelect>
-      <StyledInput
+      <StyledInput data-testid='search-bar'
         home={home ? 1 : 0}
         required
         type="search"
@@ -161,7 +176,7 @@ const OptionsSearch = ({
   };
 
   return (
-    <OptionsWrapper display={show ? "block" : "none"} home={home}>
+    <OptionsWrapper display={show ? "block" : "none"} home={+home}>
       {+value <= (currentEpoch?.no || 0) && (
         <Option onClick={() => submitSearch("epochs")}>
           <Box>

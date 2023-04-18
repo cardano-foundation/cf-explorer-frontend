@@ -44,7 +44,6 @@ import {
   ViewDetailScroll,
   ViewDetailHeader,
 } from "./styles";
-import { ADAToken } from "../Token";
 import useFetch from "../../../commons/hooks/useFetch";
 import { TbFileCheck } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
@@ -57,6 +56,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { API } from "../../../commons/utils/api";
 import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
 
 type DetailViewTransactionProps = {
   hash: string;
@@ -146,7 +146,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
         <ViewMoreButton to={details.transaction(hash)} />
       </ViewDetailDrawer>
     );
-    
+
   const input = data.utxOs?.inputs[0]?.address || "";
   const output = data.utxOs?.outputs[0]?.address || "";
 
@@ -209,10 +209,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
           </ListItem>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Transaction hash
-              </DetailLabel>
+              <DetailLabel>Transaction hash</DetailLabel>
               <DetailValue>
                 <CustomTooltip title={hash} placement="top-start">
                   <StyledLink to={details.transaction(hash)}>{getShortHash(hash)}</StyledLink>
@@ -222,10 +219,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
             </DetailsInfoItem>
             {input && (
               <DetailsInfoItem>
-                <DetailLabel>
-                  <InfoIcon />
-                  Input
-                </DetailLabel>
+                <DetailLabel>Input</DetailLabel>
                 <DetailValue>
                   <CustomTooltip title={input} placement="top-start">
                     <StyledLink to={details.address(input)}>{getShortWallet(input)}</StyledLink>
@@ -236,10 +230,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
             )}
             {output && (
               <DetailsInfoItem>
-                <DetailLabel>
-                  <InfoIcon />
-                  Output
-                </DetailLabel>
+                <DetailLabel>Output</DetailLabel>
                 <DetailValue>
                   <CustomTooltip title={output} placement="top-start">
                     <StyledLink to={details.address(output)}>{getShortWallet(output)}</StyledLink>
@@ -249,49 +240,34 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
               </DetailsInfoItem>
             )}
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Time
-              </DetailLabel>
+              <DetailLabel>Time</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.tx.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Status
-              </DetailLabel>
+              <DetailLabel>Status</DetailLabel>
               <DetailValue>
                 <TxStatus status={data.tx.status}>{data.tx.status}</TxStatus>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Confirmation
-              </DetailLabel>
+              <DetailLabel>Confirmation</DetailLabel>
               <DetailValue>
                 {data.tx.confirmation}
                 <ConfirmStatus status={renderConfirmationTag()}>{renderConfirmationTag()}</ConfirmStatus>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Transaction Fees
-              </DetailLabel>
+              <DetailLabel>Transaction Fees</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.tx.fee)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Total Output
-              </DetailLabel>
+              <DetailLabel>Total Output</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.tx.totalOutput)}
-                <ADAToken color="black" />
+                <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
           </Group>
