@@ -1,4 +1,4 @@
-import { Collapse, List, ListItemText, styled, Theme } from "@mui/material";
+import { Box, Collapse, List, ListItemText, styled, Theme } from "@mui/material";
 import { alpha, SystemStyleObject } from "@mui/system";
 
 export const StyledCollapse = styled(Collapse)`
@@ -23,6 +23,7 @@ export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<The
   minHeight: 48,
   padding: `8px ${sidebar ? 20 : 8}px 8px 30px`,
   cursor: "pointer",
+  position: "relative",
   marginBottom: "5px",
   justifyContent: sidebar ? "initial" : "center",
   [theme.breakpoints.down(theme.breakpoints.values.md)]: {
@@ -87,3 +88,11 @@ export const NavbarMenuBottom = styled("div")`
     margin-bottom: 10px;
   }
 `;
+
+export const IconMenu = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  zIndex: 10,
+  top: "50%",
+  left: "210px",
+  transform: "translate(0, -50%)",
+}));

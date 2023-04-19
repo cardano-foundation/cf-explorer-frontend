@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import { details, routers } from "../../../commons/routers";
@@ -19,11 +19,17 @@ import RateWithIcon from "../../commons/RateWithIcon";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { Box } from "@mui/system";
 import { API } from "../../../commons/utils/api";
+import { REFRESH_TIMES } from "../../../commons/utils/constants";
 
 interface Props {}
 
 const TopDelegationPools: React.FC<Props> = () => {
-  const { data, loading, initialized } = useFetch<DelegationPool[]>(`${API.DELEGATION.TOP}?page=1&size=4`);
+  const { data, loading, initialized } = useFetch<DelegationPool[]>(
+    `${API.DELEGATION.TOP}?page=1&size=4`,
+    undefined,
+    false,
+    REFRESH_TIMES.TOP_DELEGATION_POOLS
+  );
   const history = useHistory();
   data?.forEach(item => {
     if (!item.poolSize) {
