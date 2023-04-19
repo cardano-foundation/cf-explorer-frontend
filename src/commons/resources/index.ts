@@ -75,6 +75,7 @@ import HeaderBackgroundImage from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
 
 import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
+export { ReactComponent as FilterIC } from './icons/filter-ic.svg';
 
 export {
   LogoFullIcon,

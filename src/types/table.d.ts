@@ -1,4 +1,5 @@
 import React from "react";
+import { Option } from "../components/commons/Filter";
 export interface ColumnType {
   [key: string | number | symbol]: any;
 }
@@ -14,7 +15,11 @@ export interface Column<T extends ColumnType = any> {
   sort?: ({ columnKey, sortValue }: { columnKey: string; sortValue: string }) => void;
 }
 
-export type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns" | "loading" | "defaultSort">;
+export type TableHeaderProps<T extends ColumnType> = Pick<TableProps<T>, "columns" | "loading" | "defaultSort"> & {
+  selectable?: boolean;
+  toggleSelectAll?: (checked: boolean) => void;
+  isSelectAll?:boolean;
+};
 
 export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
   row: T;
@@ -25,6 +30,9 @@ export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & 
     className?: string;
     style?: React.CSSProperties;
   };
+  selectable?: boolean;
+  toggleSelection?: (row: T) =>  void;
+  isSelected?:(item: T) => boolean;
 };
 
 export interface TableProps<T extends ColumnType = any> {
@@ -55,10 +63,31 @@ export interface TableProps<T extends ColumnType = any> {
     className?: string;
     style?: React.CSSProperties;
   };
+  selectable?: boolean;
+  toggleSelection?: (row: T) => void;
+  isSelected?: (row: T) => boolean;
+  selectionKey?: string;
+  onSelectionChange?:(items: string[]) => void;
+  tableTitle?: string | React.ReactNode | React.ReactElement;
+  fliterOptions?: Option[];
+  renderAction?: (items, clearSelection: () => void) =>  React.ReactElement;
+  onFilterChange?: (value: any, option?: Option) => void;
+  isShowingResult?: boolean;
 }
 
 export interface FooterTableProps {
   total: TableProps["total"];
   pagination: TableProps["pagination"];
   loading: boolean;
+  clearSelection?: () => void;
+}
+
+export interface TableTopHeaderProps {
+  title?: string | React.ReactNode | React.ReactElement;
+  fliterOptions?: Option[];
+  renderAction?: (items) =>  React.ReactNode;
+  selectedItems?: string[];
+  isSelectAll?: boolean;
+  totalShowingResult?: number | boolean;
+  onFilterChange?: (value: any, option?: Option) => void;
 }
