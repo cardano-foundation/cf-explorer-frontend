@@ -63,20 +63,18 @@ jobs:
           echo ${ENV_SECRETS} >> .env
           pwd ls -la
 
-      - name: Run tests
+      - name: Setup frontend
         env:
           FRONTEND_URL: ${{ steps.metadata.outputs.FRONTEND_URL }}
         run: |
           cd cf-explorer-frontend
           docker-compose up -d
           bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' ${{ env.FRONTEND_URL }})" != "200" ]]; do sleep 1; done'
-          docker ps
-          ifconfig -a
-          curl -v ${{ env.FRONTEND_URL }}
-          cd ../cf-qa-testsuite
-          gradle clean test --debug
-          docker ps
-          curl -v ${{ env.FRONTEND_URL }}
+
+      - name: Run testsuite
+        run: |
+          cd cf-qa-testsuite
+          gradle clean test
 
       - name: Get allure history
         uses: actions/checkout@v3
