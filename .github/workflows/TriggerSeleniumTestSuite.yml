@@ -41,7 +41,7 @@ jobs:
 
       - name: Set environment variables
         env:
-          - FRONTEND_URL: ${{ steps.metadata.outputs.FRONTEND_URL }}
+          FRONTEND_URL: ${{ steps.metadata.outputs.FRONTEND_URL }}
         run: |
           pwd
           ls -la
@@ -65,7 +65,7 @@ jobs:
 
       - name: Run tests
         env:
-          - FRONTEND_URL: ${{ steps.metadata.outputs.FRONTEND_URL }}
+          FRONTEND_URL: ${{ steps.metadata.outputs.FRONTEND_URL }}
         run: |
           cd cf-explorer-frontend
           docker-compose up -d
