@@ -14,6 +14,15 @@ jobs:
 
     steps:
 
+      - name: Make some more metadata available as variables
+        id: metadata
+        run: |
+          if [[ "${{ env.FRONTEND_URL }}" =~ .*localhost.* ]]
+          then
+            LOCALHOST_PRIVATE_IP=$(ip -j addr show dev eth0 | jq -r '.[0].addr_info | map(select(.family == "inet"))[0].local')
+            echo "FRONTEND_URL=$(echo $FRONTEND_URL | sed "s|localhost|${LOCALHOST_PRIVATE_IP}|g")" >> $GITHUB_OUTPUT
+          fi
+
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
@@ -31,6 +40,8 @@ jobs:
           path: 'cf-qa-testsuite'
 
       - name: Set environment variables
+        env:
+          - FRONTEND_URL: ${{ steps.metadata.outputs.FRONTEND_URL }}
         run: |
           pwd
           ls -la
@@ -53,6 +64,8 @@ jobs:
           pwd ls -la
 
       - name: Run tests
+        env:
+          - FRONTEND_URL: ${{ steps.metadata.outputs.FRONTEND_URL }}
         run: |
           cd cf-explorer-frontend
           docker-compose up -d
