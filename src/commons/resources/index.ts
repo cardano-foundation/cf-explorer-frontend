@@ -74,8 +74,14 @@ import TyphonIcon from "./icons/typhon.svg";
 import HeaderBackgroundImage from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
 
-import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
 
+import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
+import { ReactComponent as AIconGreen } from "./icons/AIconGreen.svg";
+import { ReactComponent as ArrowFromTopIcon } from "./icons/arrow-from-top.svg";
+import { ReactComponent as FilterIcon } from "./icons/filter.svg";
+import { ReactComponent as HashtagIcon } from "./icons/hashtag.svg";
+import { ReactComponent as SearchNormalIcon } from "./icons/search-normal.svg";
+import { ReactComponent as TimerIcon } from "./icons/timer.svg";
 export {
   LogoFullIcon,
   LogoIcon,
@@ -152,4 +158,11 @@ export {
   LinkOff,
   User2,
   PolicyScriptIcon,
+  TimerIcon,
+  SearchNormalIcon,
+  HashtagIcon,
+  FilterIcon,
+  ArrowFromTopIcon,
+  AIconGreen
 };
+
