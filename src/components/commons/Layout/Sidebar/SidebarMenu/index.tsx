@@ -214,7 +214,13 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
             </React.Fragment>
           );
         })}
-        <Divider sx={{ margin: "10px 30px" }} />
+        <Divider
+          sx={{
+            margin: "10px 0px 10px 30px",
+            width: sidebar ? 200 : 25,
+            transition: "width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms",
+          }}
+        />
         {footerMenus.map((item, index) => {
           const { href, title, children, icon } = item;
           return (
