@@ -1,3 +1,5 @@
+
+
 name: Run Explorer FE testcases
 
 on:
@@ -13,6 +15,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      - name: Make some more metadata available as variables
+        id: metadata
+        run: |
+          if [[ "${{ env.FRONTEND_URL }}" =~ .*localhost.* ]]
+          then
+            LOCALHOST_PRIVATE_IP=$(ip -j addr show dev eth0 | jq -r '.[0].addr_info | map(select(.family == "inet"))[0].local')
+            echo "FRONTEND_URL=$(echo $FRONTEND_URL | sed "s|localhost|${LOCALHOST_PRIVATE_IP}|g")" >> $GITHUB_OUTPUT
+          fi
 
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -31,6 +42,8 @@ jobs:
           path: 'cf-qa-testsuite'
 
       - name: Set environment variables
+        env:
+          FRONTEND_URL: ${{ steps.metadata.outputs.FRONTEND_URL }}
         run: |
           pwd
           ls -la
@@ -39,31 +52,30 @@ jobs:
           echo "FE_URL=${{ env.FRONTEND_URL }}" >> src/main/resources/application-test.properties
           cd ..
 
-      - name: Checkout code
+      - name: Checkout frontend code
         uses: actions/checkout@v3
         with:
-          ref: test-1
+          # ref: test-1
           path: cf-explorer-frontend
 
-      - name: Set env file
+      - name: Set dev env file
         run: |
           cd cf-explorer-frontend
           touch .env
           echo ${ENV_SECRETS} >> .env
-          pwd ls -la
 
-      - name: Run tests
+      - name: Build frontend
+        env:
+          FRONTEND_URL: ${{ steps.metadata.outputs.FRONTEND_URL }}
         run: |
           cd cf-explorer-frontend
           docker-compose up -d
           bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' ${{ env.FRONTEND_URL }})" != "200" ]]; do sleep 1; done'
-          docker ps
-          ifconfig -a
-          curl -v ${{ env.FRONTEND_URL }}
-          cd ../cf-qa-testsuite
-          gradle clean test --debug
-          docker ps
-          curl -v ${{ env.FRONTEND_URL }}
+
+      - name: Run testsuite
+        run: |
+          cd cf-qa-testsuite
+          gradle clean test
 
       - name: Get allure history
         uses: actions/checkout@v3
