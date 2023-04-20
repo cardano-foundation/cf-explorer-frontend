@@ -14,6 +14,12 @@ export const Menu = styled(List)<{ open: number }>`
   overflow-y: auto;
   overflow-x: hidden;
   margin-bottom: 5px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &:hover::-webkit-scrollbar {
+    display: block;
+  }
   @media screen and (max-width: 1023px) {
     max-height: unset;
   }
@@ -90,9 +96,5 @@ export const NavbarMenuBottom = styled("div")`
 `;
 
 export const IconMenu = styled(Box)(({ theme }) => ({
-  position: "absolute",
   zIndex: 10,
-  top: "50%",
-  left: "210px",
-  transform: "translate(0, -50%)",
 }));
