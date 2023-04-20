@@ -52,8 +52,8 @@ export const menus: Menu[] = [
     children: [
       // To do
       { title: "Dashboard", href: "/" },
-      { title: "Timeline Delegator", href: routers.DELEGATOR_LIFECYCLE },
-      { title: "Timeline SPO", href: routers.SPO_LIFECYCLE },
+      { title: "Timeline Delegator", href: routers.DELEGATOR_SEARCH },
+      { title: "Timeline SPO", href: routers.SPO_SEARCH },
       { title: "Report", href: "/" },
     ],
   },

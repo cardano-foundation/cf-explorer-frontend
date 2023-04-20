@@ -1,16 +1,9 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
 
-import { ReactComponent as OperatorRewardIcon } from "../../../commons/resources/icons/Staking/OperatorRewardIcon.svg";
-import { ReactComponent as PoolUpdateIcon } from "../../../commons/resources/icons/Staking/poolUpdateIcon.svg";
-import { ReactComponent as RegistrationIcon } from "../../../commons/resources/icons/Staking/RegistrationIcon.svg";
-import { ReactComponent as RewardsWithdrawalIcon } from "../../../commons/resources/icons/Staking/RewardsWithdrawalIcon.svg";
-import { ReactComponent as CheckIcon } from "../../../commons/resources/icons/Staking/Check.svg";
-import { ReactComponent as NextIcon } from "../../../commons/resources/icons/Staking/nextIcon.svg";
-import { ReactComponent as PreviousIcon } from "../../../commons/resources/icons/Staking/previousIcon.svg";
-
 import { NextButton, PreviousButton, Step, StepButton, TitleStep } from "./styles";
 
+import { CheckIcon, NextIcon, OperatorRewardIcon, PoolUpdateIcon, PreviousIcon, RegistrationIcon, RewardsWithdrawalIcon } from "../../../commons/resources";
 interface StepperProps {
   icon: React.ReactNode;
   title: string;

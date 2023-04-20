@@ -1,13 +1,15 @@
 import { Box } from "@mui/material";
 
-import { ReactComponent as DelegationIcon } from "../../../commons/resources/icons/Staking/DelegationIcon.svg";
-import { ReactComponent as DeredistrationIcon } from "../../../commons/resources/icons/Staking/DeredistrationIcon.svg";
-import { ReactComponent as RegistrationIcon } from "../../../commons/resources/icons/Staking/RegistrationIcon.svg";
-import { ReactComponent as RewardsDistributionIcon } from "../../../commons/resources/icons/Staking/RewardsDistributionIcon.svg";
-import { ReactComponent as RewardsWithdrawalIcon } from "../../../commons/resources/icons/Staking/RewardsWithdrawalIcon.svg";
-import { ReactComponent as CheckIcon } from "../../../commons/resources/icons/Staking/Check.svg";
-import { ReactComponent as NextIcon } from "../../../commons/resources/icons/Staking/nextIcon.svg";
-import { ReactComponent as PreviousIcon } from "../../../commons/resources/icons/Staking/previousIcon.svg";
+import {
+  DelegationIcon,
+  DeredistrationIcon,
+  RegistrationIcon,
+  RewardsDistributionIcon,
+  RewardsWithdrawalIcon,
+  CheckIcon,
+  NextIcon,
+  PreviousIcon,
+} from "../../../commons/resources";
 import { NextButton, PreviousButton, Step, StepButton, TitleStep } from "./styles";
 import { useState } from "react";
 
