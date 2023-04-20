@@ -29,7 +29,7 @@ const Transactions: React.FC = () => {
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
 
-  const fetchData = useFetchList<Contracts>(API.CONTRACT, pageInfo, false, REFRESH_TIMES.CONTRACTS);
+  const fetchData = useFetchList<Contracts>(API.CONTRACT, { ...pageInfo, sort }, false, REFRESH_TIMES.CONTRACTS);
   const { adaRate } = useSelector(({ system }: RootState) => system);
 
   useEffect(() => {

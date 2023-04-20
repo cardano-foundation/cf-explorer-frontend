@@ -25,7 +25,7 @@ const BlockList = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<IStakeKey>(API.BLOCK.LIST, { ...pageInfo, sort });
+  const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo, sort });
   const theme = useTheme();
 
   useEffect(() => {

@@ -139,7 +139,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     {sidebar &&
                       (children?.length ? (
                         <IconMenu component={"span"}>
-                          {`menu-${index}` === active ? <BiChevronUp size={24} /> : <BiChevronDown size={24} />}
+                          {`menu-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
                         </IconMenu>
                       ) : null)}
                   </ListItem>
@@ -276,7 +276,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   {sidebar &&
                     (children?.length ? (
                       <IconMenu component={"span"}>
-                        {`menu-${index}` === active ? <BiChevronUp size={24} /> : <BiChevronDown size={24} />}
+                        {`menu-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
                       </IconMenu>
                     ) : null)}
                 </ListItem>
