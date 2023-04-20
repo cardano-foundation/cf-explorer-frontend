@@ -1,40 +1,54 @@
-import Popover from '@mui/material/Popover';
+import React, { useState } from 'react';
+import { Box, Button, IconButton, Popover } from "@mui/material";
+import { CloseIcon } from '../../../commons/resources';
+import { InfoIcon } from '../DetailView/styles';
 
+const PopoverStyled = (props: any) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const { WrappedParent, children, showCloseButton } = props;
 
-interface PopoverStyledProps {
-  children: any;
-  anchorEl: any;
-  handleClose: any;
-}
+  const handleClick = (event: any) => {
+    console.log(123)
+    setAnchorEl(event.currentTarget);
+  };
 
-export default function PopoverStyled(props: PopoverStyledProps) {
-  const { children, anchorEl, handleClose } = props;
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const open = Boolean(anchorEl);
 
   return (
-    <Popover
-      open={open}
-      anchorEl={anchorEl}
-      onClose={handleClose}
-      anchorReference="anchorPosition"
-      anchorPosition={{ top: 260, left: 1510 }}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'left',
-      }}
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'left',
-      }}
-      sx={{
-        '& .MuiPopover-paper': {
-          borderRadius: '12px',
-          padding: '10px',
+    <>
+      <Box onClick={handleClick}>
+        <WrappedParent />
+      </Box>
+      <Popover
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        sx={{
+          '& .MuiPopover-paper': {
+            padding: "10px",
+          }
+        }}
+      >
+        {showCloseButton && (<Box position={"absolute"} top={0} right={0} onClick={handleClose} sx={{ transform: "scale(0.6)", cursor: "pointer" }}>
+          <img src={CloseIcon} />
+        </Box>)
         }
-      }}
-    >
-      {children}
-    </Popover>
+        {children}
+      </Popover>
+    </>
   );
-}
+};
+
+export default PopoverStyled;
