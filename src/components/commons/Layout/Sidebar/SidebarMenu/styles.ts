@@ -27,12 +27,13 @@ export const Menu = styled(List)<{ open: number }>`
 
 export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<Theme> => ({
   minHeight: 48,
-  padding: "8px 30px 8px 30px",
+  padding: `8px ${sidebar ? 20 : 8}px 8px 30px`,
   cursor: "pointer",
   position: "relative",
   marginBottom: "5px",
   justifyContent: sidebar ? "initial" : "center",
   [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+    padding: "8px 20px 8px 30px",
     marginBottom: 0,
   },
 });
@@ -95,5 +96,9 @@ export const NavbarMenuBottom = styled("div")`
 `;
 
 export const IconMenu = styled(Box)(({ theme }) => ({
+  position: "absolute",
   zIndex: 10,
+  top: "50%",
+  left: "210px",
+  transform: "translate(0, -50%)",
 }));
