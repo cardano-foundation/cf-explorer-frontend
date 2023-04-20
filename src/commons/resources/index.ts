@@ -73,6 +73,7 @@ import YoroiIcon from "./icons/yoroi.svg";
 import TyphonIcon from "./icons/typhon.svg";
 import HeaderBackgroundImage from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
+import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 
 import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
 
@@ -138,6 +139,7 @@ export {
   HighestIcon,
   LowestIcon,
   BrowseIcon,
+  StakingLifecycleIcon,
   ResourcesIcon,
   SeeMoreIcon,
   TickerIcon,
