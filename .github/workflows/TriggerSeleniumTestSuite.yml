@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  FRONTEND_URL: http://localhost:9296
+  FRONTEND_URL: http://localhost:7276
 
 jobs:
   run-web-test:
@@ -70,7 +70,7 @@ jobs:
         run: |
           cd cf-explorer-frontend
           docker-compose up -d
-          bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' ${{ env.FRONTEND_URL }})" != "200" ]]; do sleep 1; done'
+          bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' ${{ env.FRONTEND_URL }})" != "200" ]]; do echo "[+] Waiting for frontend to come up online..."; sleep 1; done'
 
       - name: Run testsuite
         run: |
