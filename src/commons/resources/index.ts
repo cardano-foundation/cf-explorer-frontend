@@ -73,6 +73,7 @@ import YoroiIcon from "./icons/yoroi.svg";
 import TyphonIcon from "./icons/typhon.svg";
 import HeaderBackgroundImage from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
+import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 
 
 import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
@@ -144,6 +145,7 @@ export {
   HighestIcon,
   LowestIcon,
   BrowseIcon,
+  StakingLifecycleIcon,
   ResourcesIcon,
   SeeMoreIcon,
   TickerIcon,
@@ -172,3 +174,15 @@ export { ReactComponent as EndPage } from "./icons/endPagePagination.svg";
 export { ReactComponent as PrevPage } from "./icons/prevPagePagination.svg";
 export { ReactComponent as NextPage } from "./icons/nextPagePagination.svg";
 export { ReactComponent as DownIcon } from "./icons/down.svg";
+export { ReactComponent as DelegationIcon } from "./icons/Staking/DelegationIcon.svg";
+export { ReactComponent as DeredistrationIcon } from "./icons/Staking/DeredistrationIcon.svg";
+export { ReactComponent as RegistrationIcon } from "./icons/Staking/RegistrationIcon.svg";
+export { ReactComponent as RewardsDistributionIcon } from "./icons/Staking/RewardsDistributionIcon.svg";
+export { ReactComponent as RewardsWithdrawalIcon } from "./icons/Staking/RewardsWithdrawalIcon.svg";
+export { ReactComponent as CheckIcon } from "./icons/Staking/Check.svg";
+export { ReactComponent as NextIcon } from "./icons/Staking/nextIcon.svg";
+export { ReactComponent as PreviousIcon } from "./icons/Staking/previousIcon.svg";
+export { ReactComponent as OperatorRewardIcon } from "./icons/Staking/OperatorRewardIcon.svg";
+export { ReactComponent as PoolUpdateIcon } from "./icons/Staking/poolUpdateIcon.svg";
+export { ReactComponent as SearchDelegatorIcon } from "./icons/Staking/searchDelegator.svg";
+export { ReactComponent as SearchSPOIcon } from "./icons/Staking/searchSPO.svg";

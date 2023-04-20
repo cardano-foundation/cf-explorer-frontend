@@ -28,6 +28,10 @@ export const routers = {
   MY_PROFILE: "/account/profile",
   BOOKMARK: "/account/bookmark",
   PRIVATE_NOTES: "/account/notes",
+  SPO_SEARCH: "/spo-lifecycle",
+  DELEGATOR_SEARCH: "/delegator-lifecycle",
+  DELEGATOR_LIFECYCLE: "/delegator-lifecycle/:stakeId",
+  SPO_LIFECYCLE: "/spo-lifecycle/:poolId",
   NOT_FOUND: "/*",
 } as const;
 
