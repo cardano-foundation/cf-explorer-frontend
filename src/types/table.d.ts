@@ -66,7 +66,6 @@ export interface TableProps<T extends ColumnType = any> {
   selectable?: boolean;
   toggleSelection?: (row: T) => void;
   isSelected?: (row: T) => boolean;
-  selectionKey?: string;
   onSelectionChange?:(items: string[]) => void;
   tableTitle?: string | React.ReactNode | React.ReactElement;
   fliterOptions?: Option[];
