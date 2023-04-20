@@ -39,6 +39,11 @@ export const menus: Menu[] = [
       { title: "Top Delegators", href: routers.TOP_DELEGATOR },
     ],
   },
+  {
+    title: "Straking lifecycle",
+    icon:DelegatePoolMenuIcon,
+    href: routers.STAKING_LIFECYCLE 
+  }
 ];
 
 export const socials: Social[] = [

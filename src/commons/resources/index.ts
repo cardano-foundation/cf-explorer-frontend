@@ -76,6 +76,13 @@ import EmptyIcon from "./images/noData.png";
 
 import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
 export { ReactComponent as FilterIC } from './icons/filter-ic.svg';
+export { ReactComponent as PersionalSettingIC} from './images/d-persional-ic.svg';
+export { ReactComponent as ScanQRCodeIC} from './images/d-scan-qr-ic.svg';
+export { ReactComponent as ListOfReportsIC} from './images/d-list-of-rp-ic.svg';
+export { ReactComponent as WatchlistIC} from './images/d-watchlist-tc.svg';
+export { ReactComponent as DownloadWhiteIC} from './icons/download-white-ic.svg';
+export { ReactComponent as DownloadBlueIC} from './icons/download-blue-ic.svg';
+
 
 export {
   LogoFullIcon,
