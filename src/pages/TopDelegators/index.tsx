@@ -9,16 +9,21 @@ import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table from "../../components/commons/Table";
 import { Column } from "../../types/table";
-import { PerPage, StyledContainer, StyledLink } from "./styles";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
+
 import ADAicon from "../../components/commons/ADAIcon";
+import { PerPage, StyledContainer, StyledLink } from "./styles";
 
 const TopDelegators = () => {
   const history = useHistory();
   const [pageSize, setPageSize] = useState("50");
-  const { error, data, initialized, loading } = useFetchList<Contracts>(API.STAKE.TOP_DELEGATOR, {
-    page: 0,
-    size: +pageSize,
-  });
+  const { error, data, initialized, loading } = useFetchList<Contracts>(
+    API.STAKE.TOP_DELEGATOR,
+    { page: 0, size: +pageSize },
+    false,
+    REFRESH_TIMES.TOP_DELEGATORS
+  );
+
   useEffect(() => {
     document.title = `Top Delegators | Cardano Explorer`;
   }, []);

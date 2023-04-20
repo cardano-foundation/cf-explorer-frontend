@@ -9,6 +9,7 @@ export const StyledContainer = styled(Container)`
     padding-bottom: 10px;
   }
 `;
+
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
   color: ${props => props.theme.palette.secondary.main} !important;
@@ -16,4 +17,4 @@ export const StyledLink = styled(Link)`
 
 export const PerPage = styled("div")`
   margin-left: 8px;
-`;
+`

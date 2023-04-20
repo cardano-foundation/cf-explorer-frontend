@@ -30,7 +30,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
     <Box>
       <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
         <Box>
-          <BackButton onClick={() => history.goBack()}>
+          <BackButton onClick={history.goBack}>
             <HiArrowLongLeft />
             <BackText>Back</BackText>
           </BackButton>

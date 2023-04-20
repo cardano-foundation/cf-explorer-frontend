@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { CgClose } from "react-icons/cg";
-import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
 import { CubeIcon, RocketIcon } from "../../../commons/resources";
 import ProgressCircle from "../ProgressCircle";
 import {
@@ -50,8 +50,13 @@ type DetailViewEpochProps = {
 };
 
 const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose, callback }) => {
-  const { data } = useFetch<IDataEpoch>(`${API.EPOCH.DETAIL}/${epochNo}`);
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const { data } = useFetch<IDataEpoch>(
+    `${API.EPOCH.DETAIL}/${epochNo}`,
+    undefined,
+    false,
+    epochNo === currentEpoch?.no ? REFRESH_TIMES.EPOCH_DETAIL_VIEW : 0
+  );
 
   useEffect(() => {
     if (data) {
@@ -178,31 +183,19 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           </ListItem>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Start time
-              </DetailLabel>
+              <DetailLabel>Start time</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.startTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                End time
-              </DetailLabel>
+              <DetailLabel>End time</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.endTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Blocks
-              </DetailLabel>
+              <DetailLabel>Blocks</DetailLabel>
               <DetailValue>{data.blkCount}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                <InfoIcon />
-                Total Output
-              </DetailLabel>
+              <DetailLabel>Total Output</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.outSum)}
                 <ADAicon />

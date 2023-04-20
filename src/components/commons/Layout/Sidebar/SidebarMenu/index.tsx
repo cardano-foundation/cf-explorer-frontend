@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { footerMenus, menus } from "../../../../../commons/menus";
-import { Menu, MenuIcon, MenuText, NavbarMenuBottom, SubMenu, SubMenuText, itemStyle, StyledCollapse } from "./styles";
-import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
+import {
+  Menu,
+  MenuIcon,
+  MenuText,
+  NavbarMenuBottom,
+  SubMenu,
+  SubMenuText,
+  itemStyle,
+  StyledCollapse,
+  IconMenu,
+} from "./styles";
+import { Box, Collapse, Divider, ListItem, useTheme } from "@mui/material";
 import { isExtenalLink } from "../../../../../commons/utils/helper";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
@@ -38,6 +48,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   useEffect(() => {
     if (!sidebar) setActive(null);
   }, [sidebar]);
+  useEffect(() => {
+    if (pathname === "/") setActive(null);
+  }, [pathname]);
 
   useEffect(() => {
     if (!sidebar && width >= theme.breakpoints.values.md) setSidebar(true);
@@ -120,15 +133,15 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       open={sidebar ? 1 : 0}
                       active={`menu-${index}` === active ? 1 : 0}
                       text={1}
-                      disable={!!tooltipTitle}
+                      disable={tooltipTitle ? 1 : 0}
                     />
-                    {children?.length ? (
-                      `menu-${index}` === active ? (
-                        <BiChevronUp size={24} />
-                      ) : (
-                        <BiChevronDown size={24} />
-                      )
-                    ) : null}
+
+                    {sidebar &&
+                      (children?.length ? (
+                        <IconMenu component={"span"}>
+                          {`menu-${index}` === active ? <BiChevronUp size={24} /> : <BiChevronDown size={24} />}
+                        </IconMenu>
+                      ) : null)}
                   </ListItem>
                 )}
               </CustomTooltip>
@@ -260,13 +273,12 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     active={`footer-${index}` === active ? 1 : 0}
                     text={1}
                   />
-                  {children?.length ? (
-                    `footer-${index}` === active ? (
-                      <BiChevronUp size={24} />
-                    ) : (
-                      <BiChevronDown size={24} />
-                    )
-                  ) : null}
+                  {sidebar &&
+                    (children?.length ? (
+                      <IconMenu component={"span"}>
+                        {`menu-${index}` === active ? <BiChevronUp size={24} /> : <BiChevronDown size={24} />}
+                      </IconMenu>
+                    ) : null)}
                 </ListItem>
               )}
               {children?.length ? (

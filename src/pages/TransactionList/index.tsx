@@ -47,6 +47,7 @@ const Transactions: React.FC<Props> = () => {
         url={API.TRANSACTION.LIST}
         openDetail={openDetail}
         selected={selected}
+        showTabView
         hash={hash}
         handleClose={handleClose}
       />

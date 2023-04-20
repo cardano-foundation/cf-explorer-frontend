@@ -153,3 +153,10 @@ export {
   User2,
   PolicyScriptIcon,
 };
+
+export { ReactComponent as EyeIcon } from "./icons/eye.svg";
+export { ReactComponent as StartPage } from "./icons/startPagePagination.svg";
+export { ReactComponent as EndPage } from "./icons/endPagePagination.svg";
+export { ReactComponent as PrevPage } from "./icons/prevPagePagination.svg";
+export { ReactComponent as NextPage } from "./icons/nextPagePagination.svg";
+export { ReactComponent as DownIcon } from "./icons/down.svg";

@@ -1,4 +1,4 @@
-import { styled, Container, Select, Box, alpha } from "@mui/material";
+import { styled, Container, Select, Box, alpha, Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
@@ -14,13 +14,6 @@ export const Logo = styled("img")`
   width: 36px;
   height: 36px;
   object-fit: cover;
-`;
-export const LogoEmpty = styled(Box)`
-  width: 30px;
-  height: 30px;
-  background: ${props => alpha(props.theme.palette.common.white, 0.6)};
-  border-radius: 50%;
-  border: 1px solid ${props => props.theme.palette.border.main};
 `;
 
 export const StyledSelect = styled(Select)`
