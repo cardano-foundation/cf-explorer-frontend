@@ -25,3 +25,10 @@ export const CloseButton = styled(IconButton)<{ saving: boolean }>`
     ${props => (props.saving ? `background: none;` : ``)}
   }
 `;
+
+export const WrapTitle = styled("span")`
+  color: ${props => props.theme.palette.text.primary};
+  font-size: 24px;
+  font-height: 28px;
+  font-weight: 700;
+`
