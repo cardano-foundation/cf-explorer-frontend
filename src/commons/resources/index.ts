@@ -27,7 +27,6 @@ import CalenderPaleIcon from "./icons/calender-pale.svg";
 import ArrowDownIcon from "./icons/arrow-down.svg";
 import ArrowDropDownIcon from "./icons/arrow-drop-down.svg";
 import MenuIcon from "./icons/menu.svg";
-import AIcon from "./icons/AIcon.svg";
 import Policy from "./icons/policy.svg";
 import PolicyWhiteIcon from "./icons/policy-white.svg";
 import DIDMenuIcon from "./icons/menus/did.svg";
@@ -75,6 +74,11 @@ import HeaderBackgroundImage from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
 
 import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
+
+import { ReactComponent as CopySquareIcon } from "./icons/copy_square.svg";
+import { ReactComponent as OptionIcon } from "./icons/option.svg";
+import { ReactComponent as ReloadIcon } from "./icons/reload.svg";
+import { ReactComponent as AIcon } from "./icons/AIcon.svg";
 
 export {
   LogoFullIcon,
@@ -152,4 +156,7 @@ export {
   LinkOff,
   User2,
   PolicyScriptIcon,
+  CopySquareIcon,
+  OptionIcon,
+  ReloadIcon,
 };
