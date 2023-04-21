@@ -11,6 +11,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   borderRadius: "10px",
   marginRight: theme.spacing(5),
   position: "relative",
+  background: theme.palette.common.white,
   "::after": {
     content: '"HOLD"',
     borderRadius: "4px",
@@ -34,6 +35,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
   padding: theme.spacing(2),
   border: `2px solid ${theme.palette.red[600]}`,
   borderRadius: "10px",
+  background: theme.palette.common.white,
   marginRight: theme.spacing(5),
   position: "relative",
   "::after": {
