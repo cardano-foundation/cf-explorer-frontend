@@ -13,12 +13,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-				sh "docker build -t cardano-explorer-fe ."
-            }
-        }
-        stage('Deliver') {
-            steps {
-				script {
+        	    script {
                     if (env.BRANCH_NAME == 'test') {
                         envFileDeploy = secretFolder + '/test-fe.env'
                         environmentName = 'test'
@@ -33,6 +28,11 @@ pipeline {
                     }
                 }
                 sh "cp ${envFileDeploy} .env"
+				sh "docker build -t cardano-explorer-fe ."
+            }
+        }
+        stage('Deliver') {
+            steps {
                 sh "docker compose --env-file ${envFileDeploy} -p ${env.BRANCH_NAME}  up -d --build"
 				sh "docker images -f 'dangling=true' -q --no-trunc | xargs --no-run-if-empty docker rmi"
             }
