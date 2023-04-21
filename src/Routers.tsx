@@ -31,6 +31,7 @@ import DelegatorLifecycle from "./pages/DelegatorLifecycle";
 import SPOLifecycle from "./pages/SPOLifecycle";
 import SPOSearch from "./pages/SPOSearch";
 import DelegatorSearch from "./pages/DelegatorSearch";
+import Icons from "./pages/Icons";
 
 const Routes: React.FC = () => {
   return (
@@ -71,6 +72,7 @@ const Routes: React.FC = () => {
           </Switch>
         </AccountLayout>
       </Route>
+      <Route path={"/icons"} component={Icons} />
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );
