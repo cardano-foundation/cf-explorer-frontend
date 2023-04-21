@@ -186,3 +186,11 @@ export { ReactComponent as OperatorRewardIcon } from "./icons/Staking/OperatorRe
 export { ReactComponent as PoolUpdateIcon } from "./icons/Staking/poolUpdateIcon.svg";
 export { ReactComponent as SearchDelegatorIcon } from "./icons/Staking/searchDelegator.svg";
 export { ReactComponent as SearchSPOIcon } from "./icons/Staking/searchSPO.svg";
+export { ReactComponent as TransactionIcon } from "./icons/transactionIcon.svg";
+export { ReactComponent as Wallet } from "./images/wallet-blue.svg";
+export { ReactComponent as WalletGreenIcon } from "./icons/wallet-green.svg";
+export { ReactComponent as BgBlue } from "./images/bg-blue.svg";
+export { ReactComponent as BgPink } from "./images/bg-pink.svg";
+export { ReactComponent as BgGreen } from "./images/bg-green.svg";
+export { ReactComponent as PigSave } from "./images/pig-save.svg";
+export { ReactComponent as Diamond } from "./images/diamond.svg";
