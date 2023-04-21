@@ -75,7 +75,6 @@ import HeaderBackgroundImage from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 
-
 import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
 import { ReactComponent as AIconGreen } from "./icons/AIconGreen.svg";
 import { ReactComponent as ArrowFromTopIcon } from "./icons/arrow-from-top.svg";
@@ -83,6 +82,9 @@ import { ReactComponent as FilterIcon } from "./icons/filter.svg";
 import { ReactComponent as HashtagIcon } from "./icons/hashtag.svg";
 import { ReactComponent as SearchNormalIcon } from "./icons/search-normal.svg";
 import { ReactComponent as TimerIcon } from "./icons/timer.svg";
+import { ReactComponent as IconRefresh } from "./icons/IconRefresh.svg";
+import { ReactComponent as IconThreeDot } from "./icons/IconThreeDot.svg";
+
 export {
   LogoFullIcon,
   LogoIcon,
@@ -165,7 +167,9 @@ export {
   HashtagIcon,
   FilterIcon,
   ArrowFromTopIcon,
-  AIconGreen
+  AIconGreen,
+  IconRefresh,
+  IconThreeDot,
 };
 
 export { ReactComponent as EyeIcon } from "./icons/eye.svg";
