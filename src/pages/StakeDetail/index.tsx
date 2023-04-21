@@ -7,13 +7,16 @@ import StakeKeyOverview from "../../components/StakeDetail/StakeOverview";
 import StakeTab from "../../components/StakeDetail/StakeTab";
 import { StyledContainer } from "./styles";
 import StakeAnalytics from "../../components/StakeDetail/StakeAnalystics";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const StakeDetail: React.FC = () => {
   const { stakeId } = useParams<{ stakeId: string }>();
   const { state } = useLocation<{ data?: IStakeKeyDetail }>();
-  const { data, loading, initialized, error } = useFetch<IStakeKeyDetail>(
-    state?.data ? "" : `${API.STAKE.DETAIL}/${stakeId}`,
-    state?.data
+  const { data, initialized, error } = useFetch<IStakeKeyDetail>(
+    `${API.STAKE.DETAIL}/${stakeId}`,
+    state?.data,
+    false,
+    REFRESH_TIMES.STAKE_REGISTRATION
   );
 
   useEffect(() => {

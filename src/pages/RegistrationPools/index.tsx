@@ -17,6 +17,7 @@ import { RegistrationContainer, StakeKey, StyledLink, StyledTab, StyledTabs, Tab
 import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import { Box } from "@mui/material";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",
@@ -31,7 +32,12 @@ const RegistrationPools = () => {
 
   const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
 
-  const fetchData = useFetchList<Registration>(`${API.POOL}/${poolType}`, { ...pageInfo, sort });
+  const fetchData = useFetchList<Registration>(
+    `${API.POOL}/${poolType}`,
+    { ...pageInfo, sort },
+    false,
+    REFRESH_TIMES.POOL_REGISTRATIONS
+  );
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";
