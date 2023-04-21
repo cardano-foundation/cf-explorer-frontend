@@ -135,7 +135,6 @@ export {
   WithdrawlIcon,
   MintingIcon,
   PolicyWhiteIcon,
-  InfoIcon,
   HighestIcon,
   LowestIcon,
   BrowseIcon,
@@ -174,3 +173,13 @@ export { ReactComponent as OperatorRewardIcon } from "./icons/Staking/OperatorRe
 export { ReactComponent as PoolUpdateIcon } from "./icons/Staking/poolUpdateIcon.svg";
 export { ReactComponent as SearchDelegatorIcon } from "./icons/Staking/searchDelegator.svg";
 export { ReactComponent as SearchSPOIcon } from "./icons/Staking/searchSPO.svg";
+export { ReactComponent as ADAHolderIcon } from "./icons/Staking/ADAHolderIcon.svg";
+export { ReactComponent as CadarnoSystemIcon } from "./icons/Staking/cadarnoSystemIcon.svg";
+export { ReactComponent as RegistrationCertificateIcon } from "./icons/Staking/RegistrationCertificateIcon.svg";
+export { ReactComponent as ButtonListIcon } from "./icons/Staking/buttonList.svg";
+export { ReactComponent as InfoIcon } from "./icons/Staking/infoIcon.svg";
+export { ReactComponent as TranferIcon } from "./icons/Staking/tranfer.svg";
+export { ReactComponent as BackIcon } from "./icons/Staking/BackIcon.svg";
+export { ReactComponent as AddressIcon } from "./icons/Staking/AddressIcon.svg";
+export { ReactComponent as ADAGreen } from "./icons/Staking/ADAGreen.svg";
+export { ReactComponent as TimeIcon } from "./icons/Staking/TimeIcon.svg";

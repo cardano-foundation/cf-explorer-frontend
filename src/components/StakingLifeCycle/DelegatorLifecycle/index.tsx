@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box } from "@mui/material";
 
 import {
@@ -6,12 +7,14 @@ import {
   RegistrationIcon,
   RewardsDistributionIcon,
   RewardsWithdrawalIcon,
-  CheckIcon,
   NextIcon,
   PreviousIcon,
+  InfoIcon,
+  TranferIcon,
 } from "../../../commons/resources";
-import { NextButton, PreviousButton, Step, StepButton, TitleStep } from "./styles";
-import { useState } from "react";
+import { ADATransfersButton, NextButton, PreviousButton, Step, StepButton, TitleStep } from "./styles";
+
+import Registration from "./Registration";
 
 interface StepperProps {
   icon: React.ReactNode;
@@ -19,13 +22,22 @@ interface StepperProps {
   component: React.ReactNode;
 }
 
-const DelegatorLifecycle = ({ setMode }: { setMode: (mode: "timeline" | "tablular") => void }) => {
+const DelegatorLifecycle = ({
+  setMode,
+  containerPosition,
+}: {
+  setMode: (mode: "timeline" | "tablular") => void;
+  containerPosition: {
+    top?: number;
+    left?: number;
+  };
+}) => {
   const [currentStep, setCurrentStep] = useState(0);
   const stepper: StepperProps[] = [
     {
       icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
       title: "Registration",
-      component: "Registration",
+      component: <Registration containerPosition={containerPosition} />,
     },
     {
       icon: <DelegationIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
@@ -55,7 +67,7 @@ const DelegatorLifecycle = ({ setMode }: { setMode: (mode: "timeline" | "tablula
         {stepper.map((step, idx) => (
           <Step component={"span"} key={idx} active={currentStep >= idx}>
             <StepButton active={currentStep >= idx} onClick={() => setCurrentStep(idx)}>
-              {currentStep > idx ? <CheckIcon width={"25px"} height={"25px"} /> : step.icon}
+              {step.icon}
             </StepButton>
             <TitleStep currentStep={currentStep} index={idx}>
               {step.title}
@@ -63,7 +75,18 @@ const DelegatorLifecycle = ({ setMode }: { setMode: (mode: "timeline" | "tablula
           </Step>
         ))}
       </Box>
-      <Box mt={3}>{stepper[currentStep].component}</Box>
+
+      <Box mt={3} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+        <Box fontSize={"1.5rem"} fontWeight={"bold"}>
+          {stepper[currentStep].title} <InfoIcon />
+        </Box>
+        <ADATransfersButton>
+          <TranferIcon /> ADA Transfers
+        </ADATransfersButton>
+      </Box>
+
+      <Box>{stepper[currentStep].component}</Box>
+
       {currentStep > 0 && (
         <PreviousButton onClick={() => setCurrentStep(prev => prev - 1)}>
           <PreviousIcon />
