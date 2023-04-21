@@ -11,6 +11,8 @@ import {
   ADAGreen,
   TimeIcon,
 } from "../../../../commons/resources";
+import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
+import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 
 import Line from "../../../Line";
 import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
@@ -89,7 +91,7 @@ const RegistrationTimeline = ({
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
             <Box display={"flex"} flex={1}>
-              <HoldBox ref={holdRef}>
+              <HoldBox ref={holdRef} ml={1}>
                 <Box>
                   <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
                     2.0
@@ -114,7 +116,8 @@ const RegistrationTimeline = ({
             </Box>
           </Box>
           <Box ref={cadarnoSystemRef}>
-            <CadarnoSystemIcon />
+            {/* <CadarnoSystemIcon /> */}
+            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
           </Box>
 
           <svg
@@ -186,11 +189,11 @@ const RegistrationTimeline = ({
           </svg>
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
-          <Box ref={fake1Ref} width={"242px"}></Box>
+          <Box ref={fake1Ref} width={"190px"}></Box>
           <Box ref={registrationRef}>
-            <RegistrationCertificateIcon />
+            <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
           </Box>
-          <Box ref={fake2Ref} width={"242px"}></Box>
+          <Box ref={fake2Ref} width={"190px"}></Box>
         </Box>
       </Box>
     </Box>
