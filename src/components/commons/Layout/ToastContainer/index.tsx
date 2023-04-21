@@ -50,7 +50,7 @@ const ToastContainer: React.FC = () => {
               onClose={() => removeToast(id)}
               onClick={() => removeToast(id)}
             >
-              <StyledTitle color={'#13152F'}>{title}</StyledTitle>
+              <StyledTitle>{title}</StyledTitle>
               {message}
             </StyledAlert>
           );
