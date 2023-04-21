@@ -75,6 +75,8 @@ import HeaderBackgroundImage from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
 
 import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
+import { ReactComponent as IconRefresh } from "./icons/IconRefresh.svg";
+import { ReactComponent as IconThreeDot } from "./icons/IconThreeDot.svg";
 
 export {
   LogoFullIcon,
@@ -152,4 +154,6 @@ export {
   LinkOff,
   User2,
   PolicyScriptIcon,
+  IconRefresh,
+  IconThreeDot,
 };
