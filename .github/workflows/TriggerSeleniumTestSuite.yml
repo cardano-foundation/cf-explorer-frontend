@@ -4,7 +4,7 @@ name: Run Explorer FE testcases
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
 
 env:
