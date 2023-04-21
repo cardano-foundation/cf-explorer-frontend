@@ -29,6 +29,7 @@ export const routers = {
   BOOKMARK: "/account/bookmark",
   PRIVATE_NOTES: "/account/notes",
   STAKING_LIFECYCLE: "/stacking-lifecycle",
+  REPORT_GENERATED: "/report-generated",
   NOT_FOUND: "/*",
 } as const;
 

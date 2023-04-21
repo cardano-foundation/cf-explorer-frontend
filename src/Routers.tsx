@@ -28,6 +28,7 @@ import AccountLayout from "./components/commons/Layout/AccountLayout";
 import Bookmark from "./pages/Bookmark";
 import PrivateNotes from "./pages/PrivateNotes";
 import StackingLifecycle from "./pages/StackingLifecycle";
+import ReportGenerated from "./pages/ReportGenerated";
 
 const Routes: React.FC = () => {
   return (
@@ -53,6 +54,7 @@ const Routes: React.FC = () => {
       <Route path={routers.ADDRESS_LIST} exact component={TopAddresses} />
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
       <Route path={routers.STAKING_LIFECYCLE} exact component={StackingLifecycle} />
+      <Route path={routers.REPORT_GENERATED} exact component={ReportGenerated} />
       <Route path={routers.SEARCH} exact component={SearchResult} />
       <Route path={routers.ACCOUNT}>
         <AccountLayout>
