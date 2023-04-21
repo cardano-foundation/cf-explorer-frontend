@@ -1,34 +1,38 @@
 def envFileDeploy
+def environmentName
 
 def COLOR_MAP = [
     'SUCCESS': 'good',
     'FAILURE': 'danger',
 ]
 
+def secretFolder = '~/configs/cardano-explorer-fe'
 pipeline {
 	agent any
 
     stages {
         stage('Build') {
-			agent { docker 'node:16' }
             steps {
-				sh "yarn install"
+				sh "docker build -t cardano-explorer-fe ."
             }
         }
         stage('Deliver') {
             steps {
 				script {
                     if (env.BRANCH_NAME == 'test') {
-                        envFileDeploy = '/tmp/test-fe.env'
+                        envFileDeploy = secretFolder + '/test-fe.env'
+                        environmentName = 'test'
                     }
                     if (env.BRANCH_NAME == 'uat') {
-                        envFileDeploy = '/tmp/uat-fe.env'
+                        envFileDeploy = secretFolder + '/uat-fe.env'
+                        environmentName = 'uat'
                     }
                     if (env.BRANCH_NAME == 'main') {
-                        envFileDeploy = '/tmp/main-fe.env'
+                        envFileDeploy = secretFolder + '/prod-fe.env'
+                        environmentName = 'prod'
                     }
                 }
-                sh "docker-compose --env-file ${envFileDeploy} up -d --build"
+                sh "docker compose --env-file ${envFileDeploy} -p ${env.BRANCH_NAME}  up -d --build"
 				sh "docker images -f 'dangling=true' -q --no-trunc | xargs --no-run-if-empty docker rmi"
             }
         }

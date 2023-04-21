@@ -1,10 +1,9 @@
 version: '3.9'
 
 services:
-  cardano-explorer-fe-test:
+  cardano-explorer-fe:
     stdin_open: true
-    container_name: cardano-explorer-fe-test
-    image: cardano-explorer-fe-test
+    image: cardano-explorer-fe
     build:
       context: .
     environment:
