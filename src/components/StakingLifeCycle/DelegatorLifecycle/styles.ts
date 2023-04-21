@@ -52,3 +52,13 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
     background: alpha(theme.palette.grey[700], 0.1),
   },
 }));
+
+export const ADATransfersButton = styled(Button)(({ theme }) => ({
+  background: theme.palette.green[600],
+  color: theme.palette.common.white,
+  textTransform: "capitalize",
+  fontWeight: "bold",
+  ":hover": {
+    background: alpha(theme.palette.green[600], 0.8),
+  },
+}));

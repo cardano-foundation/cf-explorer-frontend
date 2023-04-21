@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { useParams } from "react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { getShortHash } from "../../commons/utils/helper";
 import CopyButton from "../../components/commons/CopyButton";
@@ -15,12 +15,39 @@ import { ReactComponent as TableMode } from "../../commons/resources/icons/Staki
 const DelegatorLifecycle = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [mode, setMode] = useState<"timeline" | "tablular">("timeline");
+  const containerRef = useRef(null);
+  const [containerPosition, setContainerPosition] = useState<{ top?: number; left?: number }>({
+    top: undefined,
+    left: undefined,
+  });
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const position = (containerRef.current as any)?.getBoundingClientRect();
+      setContainerPosition({ top: position.top, left: position.left });
+    }
+  }, [containerRef.current]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current) {
+        const position = (containerRef.current as any).getBoundingClientRect();
+        setContainerPosition({ top: position.top, left: position.left });
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <StyledContainer>
+    <StyledContainer ref={containerRef}>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
         <Box>
-          <Box component={"h2"} mb={0}>
+          <Box component={"h2"} mb={0} mt={0}>
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
@@ -46,7 +73,7 @@ const DelegatorLifecycle = () => {
       </Box>
 
       <Box>
-        {mode === "timeline" && <DelegatorLifecycleComponent setMode={setMode} />}
+        {mode === "timeline" && <DelegatorLifecycleComponent containerPosition={containerPosition} setMode={setMode} />}
         {mode === "tablular" && <Tablular />}
       </Box>
     </StyledContainer>

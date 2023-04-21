@@ -150,7 +150,6 @@ export {
   WithdrawlIcon,
   MintingIcon,
   PolicyWhiteIcon,
-  InfoIcon,
   HighestIcon,
   LowestIcon,
   BrowseIcon,
@@ -177,6 +176,7 @@ export {
   AIconGreen,
   IconRefresh,
   IconThreeDot,
+  InfoIcon,
 };
 
 export { ReactComponent as EyeIcon } from "./icons/eye.svg";
@@ -205,3 +205,13 @@ export { ReactComponent as BgPink } from "./images/bg-pink.svg";
 export { ReactComponent as BgGreen } from "./images/bg-green.svg";
 export { ReactComponent as PigSave } from "./images/pig-save.svg";
 export { ReactComponent as Diamond } from "./images/diamond.svg";
+export { ReactComponent as ADAHolderIcon } from "./icons/Staking/ADAHolderIcon.svg";
+export { ReactComponent as CadarnoSystemIcon } from "./icons/Staking/cadarnoSystemIcon.svg";
+export { ReactComponent as RegistrationCertificateIcon } from "./icons/Staking/RegistrationCertificateIcon.svg";
+export { ReactComponent as ButtonListIcon } from "./icons/Staking/buttonList.svg";
+// export { ReactComponent as InfoIcon } from "./icons/Staking/infoIcon.svg";
+export { ReactComponent as TranferIcon } from "./icons/Staking/tranfer.svg";
+export { ReactComponent as BackIcon } from "./icons/Staking/BackIcon.svg";
+export { ReactComponent as AddressIcon } from "./icons/Staking/AddressIcon.svg";
+export { ReactComponent as ADAGreen } from "./icons/Staking/ADAGreen.svg";
+export { ReactComponent as TimeIcon } from "./icons/Staking/TimeIcon.svg";
