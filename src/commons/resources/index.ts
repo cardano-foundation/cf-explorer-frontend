@@ -84,15 +84,14 @@ import { ReactComponent as SearchNormalIcon } from "./icons/search-normal.svg";
 import { ReactComponent as TimerIcon } from "./icons/timer.svg";
 import { ReactComponent as IconRefresh } from "./icons/IconRefresh.svg";
 import { ReactComponent as IconThreeDot } from "./icons/IconThreeDot.svg";
-export { ReactComponent as FilterIC } from './icons/filter-ic.svg';
-export { ReactComponent as PersionalSettingIC} from './images/d-persional-ic.svg';
-export { ReactComponent as ScanQRCodeIC} from './images/d-scan-qr-ic.svg';
-export { ReactComponent as ListOfReportsIC} from './images/d-list-of-rp-ic.svg';
-export { ReactComponent as WatchlistIC} from './images/d-watchlist-tc.svg';
-export { ReactComponent as DownloadWhiteIC} from './icons/download-white-ic.svg';
-export { ReactComponent as DownloadBlueIC} from './icons/download-blue-ic.svg';
-
-
+export { ReactComponent as FilterIC } from "./icons/filter-ic.svg";
+export { ReactComponent as PersionalSettingIC } from "./images/d-persional-ic.svg";
+export { ReactComponent as ScanQRCodeIC } from "./images/d-scan-qr-ic.svg";
+export { ReactComponent as ListOfReportsIC } from "./images/d-list-of-rp-ic.svg";
+export { ReactComponent as WatchlistIC } from "./images/d-watchlist-tc.svg";
+export { ReactComponent as DownloadWhiteIC } from "./icons/download-white-ic.svg";
+export { ReactComponent as DownloadBlueIC } from "./icons/download-blue-ic.svg";
+export { ReactComponent as BalanceIcon } from "./icons/balance.svg";
 export {
   LogoFullIcon,
   LogoIcon,
