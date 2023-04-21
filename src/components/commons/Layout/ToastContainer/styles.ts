@@ -9,7 +9,7 @@ export const StyledStack = styled(Stack)(() => ({
   pointerEvents: "none",
 }));
 
-export const StyledAlert = styled(Alert)<{ background: string }>(({ theme, background }) => ({
+export const StyledAlert = styled(Alert)<{ background: string, borderColor: string }>(({ theme, background, borderColor }) => ({
   width: "max-content",
   pointerEvents: "all",
   textAlign: "left",
@@ -17,6 +17,7 @@ export const StyledAlert = styled(Alert)<{ background: string }>(({ theme, backg
   color: theme.palette.text.secondary,
   backgroundColor: theme.palette.background.paper,
   backgroundImage: `linear-gradient(0deg, ${background} 0%, ${background} 100%)`,
+  border: '1px solid ' + borderColor,
 }));
 
 export const StyledTitle = styled(AlertTitle)<{ color: string }>(({ color }) => ({
