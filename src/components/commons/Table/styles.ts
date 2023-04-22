@@ -160,7 +160,7 @@ export const TableHeaderContainer = styled(Box)`
   justify-content: flex-start;
   align-items: center;
   gap: 15px;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
 `;
 
 export const TableTitle = styled(Typography)`

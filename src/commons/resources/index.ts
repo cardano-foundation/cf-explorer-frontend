@@ -96,6 +96,8 @@ export { ReactComponent as DownloadWhiteIC } from "./icons/download-white-ic.svg
 export { ReactComponent as DownloadBlueIC } from "./icons/download-blue-ic.svg";
 export { ReactComponent as BalanceIcon } from "./icons/balance.svg";
 
+export { ReactComponent as ReceidvedRewardsIC } from "./icons/received-rewards-ic.svg";
+export { ReactComponent as ADAsigntIC } from "./icons/ada-sight-ic.svg";
 
 export {
   LogoFullIcon,
