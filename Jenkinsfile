@@ -34,7 +34,7 @@ pipeline {
         stage('Deliver') {
             steps {
                 sh "docker compose --env-file ${envFileDeploy} -p ${env.BRANCH_NAME}  up -d --build"
-				sh "docker images -f 'dangling=true' -q --no-trunc | xargs --no-run-if-empty docker rmi"
+				sh "docker images -f 'dangling=true' -q --no-trunc | xargs --no-run-if-empty docker rmi &> /dev/null"
             }
         }
     }
