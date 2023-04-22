@@ -24,7 +24,7 @@ const RecentDelegations: React.FC<RecentDelegationsProps> = ({ }) => {
       title={
         <Box display={"flex"} gap={1} alignItems={"center"}>
           Delegation
-          <img src={InfoIcon} alt="info" style={{ transform: 'scale(1.2)' }} />
+          <InfoIcon style={{ transform: 'scale(1.2)' }} />
         </Box>
       }
       extra={

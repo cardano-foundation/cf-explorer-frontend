@@ -24,7 +24,7 @@ const RecentWithdrawalsList: React.FC<RecentWithdrawalsListProps> = ({ }) => {
       title={
         <Box display={"flex"} gap={1} alignItems={"center"}>
           Reward Withdrawal
-          <img src={InfoIcon} alt="info" style={{ marginLeft: "5px" }} />
+          <InfoIcon style={{ marginLeft: "5px" }} />
         </Box>
       }
       extra={

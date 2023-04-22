@@ -49,7 +49,7 @@ import USDIcon from "./icons/usd.svg";
 import NoteEditIcon from "./icons/note-edit.svg";
 import WithdrawlIcon from "./icons/withdrawl.svg";
 import MintingIcon from "./icons/minting.svg";
-import InfoIcon from "./icons/infoIcon.svg";
+// import InfoIcon from "./icons/infoIcon.svg";
 import HighestIcon from "./icons/highest-icon.svg";
 import LowestIcon from "./icons/lowest-icon.svg";
 import SeeMoreIcon from "./icons/seemore.svg";
@@ -181,7 +181,7 @@ export {
   AIconGreen,
   IconRefresh,
   IconThreeDot,
-  InfoIcon,
+  // InfoIcon,
   CopySquareIcon,
   OptionIcon,
   ReloadIcon,
@@ -217,7 +217,7 @@ export { ReactComponent as ADAHolderIcon } from "./icons/Staking/ADAHolderIcon.s
 export { ReactComponent as CadarnoSystemIcon } from "./icons/Staking/cadarnoSystemIcon.svg";
 export { ReactComponent as RegistrationCertificateIcon } from "./icons/Staking/RegistrationCertificateIcon.svg";
 export { ReactComponent as ButtonListIcon } from "./icons/Staking/buttonList.svg";
-// export { ReactComponent as InfoIcon } from "./icons/Staking/infoIcon.svg";
+export { ReactComponent as InfoIcon } from "./icons/Staking/infoIcon.svg";
 export { ReactComponent as TranferIcon } from "./icons/Staking/tranfer.svg";
 export { ReactComponent as BackIcon } from "./icons/Staking/BackIcon.svg";
 export { ReactComponent as AddressIcon } from "./icons/Staking/AddressIcon.svg";
