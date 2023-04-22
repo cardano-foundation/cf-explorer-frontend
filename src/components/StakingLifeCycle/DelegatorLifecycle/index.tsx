@@ -15,6 +15,10 @@ import {
 import { ADATransfersButton, NextButton, PreviousButton, Step, StepButton, TitleStep } from "./styles";
 
 import Registration from "./Registration";
+import Delegation from "./Delegation";
+import RewardsDistribution from "./RewardsDistribution";
+import Deregistration from "./Deregistration";
+import RewardsWithdrawal from "./RewardsWithdrawal";
 
 interface StepperProps {
   icon: React.ReactNode;
@@ -42,22 +46,22 @@ const DelegatorLifecycle = ({
     {
       icon: <DelegationIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
       title: "Delegation",
-      component: "Delegation",
+      component: <Delegation containerPosition={containerPosition} />,
     },
     {
       icon: <RewardsDistributionIcon width={"25px"} height={"25px"} fill={currentStep >= 2 ? "#fff" : "#98A2B3"} />,
       title: "Rewards Distribution",
-      component: "Rewards Distribution",
+      component: <RewardsDistribution containerPosition={containerPosition} />,
     },
     {
       icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
-      title: "Reward Withdrawal",
-      component: "Reward Withdrawal",
+      title: "Rewards Withdrawal",
+      component: <RewardsWithdrawal containerPosition={containerPosition} />,
     },
     {
       icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 4 ? "#fff" : "#98A2B3"} />,
       title: "Deregistration",
-      component: "Deregistration",
+      component: <Deregistration containerPosition={containerPosition} />,
     },
   ];
 
@@ -66,7 +70,13 @@ const DelegatorLifecycle = ({
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
           <Step component={"span"} key={idx} active={currentStep >= idx}>
-            <StepButton active={currentStep >= idx} onClick={() => setCurrentStep(idx)}>
+            <StepButton
+              active={currentStep >= idx}
+              onClick={() => {
+                setCurrentStep(idx);
+                window.scrollTo(0, 0);
+              }}
+            >
               {step.icon}
             </StepButton>
             <TitleStep currentStep={currentStep} index={idx}>
@@ -88,7 +98,15 @@ const DelegatorLifecycle = ({
       <Box>{stepper[currentStep].component}</Box>
 
       {currentStep > 0 && (
-        <PreviousButton onClick={() => setCurrentStep(prev => prev - 1)}>
+        <PreviousButton
+          onClick={() => {
+            setCurrentStep(prev => prev - 1);
+            window.scrollTo({
+              top: document.documentElement.scrollHeight,
+              behavior: "smooth",
+            });
+          }}
+        >
           <PreviousIcon />
           <Box component={"span"}>Previous: {stepper[currentStep - 1]?.title}</Box>
         </PreviousButton>

@@ -13,11 +13,11 @@ import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSy
 import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 
 import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { FeeBox, IconButton, IconButtonBack, Info, InfoText, NetAmount, Payment, RoundBox, Withdrawn } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 
-const Registration = ({
+const RewardsWithdrawal = ({
   containerPosition,
 }: {
   containerPosition: {
@@ -29,20 +29,20 @@ const Registration = ({
   const [show, setShow] = useState<"list" | "timeline">("timeline");
   return (
     <Box>
-      <Box>{show === "list" && <RegistrationList />}</Box>
+      <Box>{show === "list" && <RewardsWithdrawalList />}</Box>
       <Box>
-        {show === "timeline" && <RegistrationTimeline setShow={setShow} containerPosition={containerPosition} />}
+        {show === "timeline" && <RewardsWithdrawalTimeline setShow={setShow} containerPosition={containerPosition} />}
       </Box>
     </Box>
   );
 };
-export default Registration;
+export default RewardsWithdrawal;
 
-const RegistrationList = () => {
-  return <Box>list Registration</Box>;
+const RewardsWithdrawalList = () => {
+  return <Box>list RewardsWithdrawal</Box>;
 };
 
-const RegistrationTimeline = ({
+const RewardsWithdrawalTimeline = ({
   containerPosition,
   setShow,
 }: {
@@ -53,12 +53,11 @@ const RegistrationTimeline = ({
   setShow: (show: "list" | "timeline") => void;
 }) => {
   const adaHolderRef = useRef(null);
-  const holdRef = useRef(null);
-  const feeRef = useRef(null);
   const cadarnoSystemRef = useRef(null);
-  const fake1Ref = useRef(null);
-  const fake2Ref = useRef(null);
-  const registrationRef = useRef(null);
+  const boxWalletRef = useRef(null);
+  const withdrawnRef = useRef(null);
+  const feesRef = useRef(null);
+  const netAmountRef = useRef(null);
 
   return (
     <Box>
@@ -86,35 +85,70 @@ const RegistrationTimeline = ({
           <Box ref={adaHolderRef}>
             <ADAHolderIcon />
           </Box>
+          <Payment ref={boxWalletRef}>
+            <NetAmount>
+              <Box>
+                <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                  2.0
+                </Box>
+                <ADAicon fontSize="18px" />
+              </Box>
+              <IconButton>
+                <ButtonListIcon />
+              </IconButton>
+            </NetAmount>
+            <NetAmount>
+              <Box>
+                <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                  2.0
+                </Box>
+                <ADAicon fontSize="18px" />
+              </Box>
+              <IconButton>
+                <ButtonListIcon />
+              </IconButton>
+            </NetAmount>
+          </Payment>
+          <RoundBox>
+            <NetAmount ref={netAmountRef}>
+              <Box>
+                <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                  2.0
+                </Box>
+                <ADAicon fontSize="18px" />
+              </Box>
+              <IconButton>
+                <ButtonListIcon />
+              </IconButton>
+            </NetAmount>
+            <Withdrawn ref={withdrawnRef}>
+              <Box>
+                <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                  2.0
+                </Box>
+                <ADAicon fontSize="18px" />
+              </Box>
+              <IconButton>
+                <ButtonListIcon />
+              </IconButton>
+            </Withdrawn>
+          </RoundBox>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
-            <Box display={"flex"} flex={1}>
-              <HoldBox ref={holdRef} ml={1}>
-                <Box>
-                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                    2.0
-                  </Box>
-                  <ADAicon fontSize="18px" />
+            <FeeBox ml={1} ref={feesRef}>
+              <Box>
+                <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                  2.0
                 </Box>
-                <IconButton>
-                  <ButtonListIcon />
-                </IconButton>
-              </HoldBox>
-              <FeeBox ref={feeRef}>
-                <Box>
-                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                    0.174433
-                  </Box>
-                  <ADAicon fontSize="18px" />
-                </Box>
-                <IconButton>
-                  <ButtonListIcon />
-                </IconButton>
-              </FeeBox>
-            </Box>
+                <ADAicon fontSize="18px" />
+              </Box>
+              <IconButton>
+                <ButtonListIcon />
+              </IconButton>
+            </FeeBox>
           </Box>
+
           <Box ref={cadarnoSystemRef}>
-            {/* <CadarnoSystemIcon /> */}
             <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
           </Box>
 
@@ -131,67 +165,57 @@ const RegistrationTimeline = ({
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={adaHolderRef}
-              toRef={holdRef}
+              toRef={boxWalletRef}
               pointTo="border"
               pointFrom="border"
               orient="vertical"
-            />
-            <Line
-              containerPosition={containerPosition}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
-              fromRef={holdRef}
-              toRef={feeRef}
             />
             <ArrowDiagram
               containerPosition={containerPosition}
-              fromRef={feeRef}
+              fromRef={boxWalletRef}
+              toRef={withdrawnRef}
+              pointTo="border"
+              pointFrom="border"
+              orient="vertical"
+            />
+            <ArrowDiagram
+              containerPosition={containerPosition}
+              fromRef={withdrawnRef}
               toRef={cadarnoSystemRef}
               pointTo="border"
               pointFrom="border"
               orient="vertical"
             />
-            <Line
+            <ArrowDiagram
               containerPosition={containerPosition}
-              fromRef={adaHolderRef}
-              toRef={fake1Ref}
-              orient="horizontal"
+              fromRef={cadarnoSystemRef}
+              toRef={feesRef}
+              pointTo="border"
               pointFrom="border"
-              pointTo="center"
+              orient="vertical"
+              connectToReverse={true}
             />
             <ArrowDiagram
               containerPosition={containerPosition}
-              fromRef={fake1Ref}
-              toRef={registrationRef}
+              fromRef={feesRef}
+              toRef={netAmountRef}
               pointTo="border"
-              pointFrom="center"
-              orient="vertical"
-            />
-            <Line
-              containerPosition={containerPosition}
-              fromRef={registrationRef}
-              toRef={fake2Ref}
-              orient="vertical"
+              connectFromReverse={true}
               pointFrom="border"
-              pointTo="center"
+              connectToReverse={true}
+              orient="vertical"
             />
             <ArrowDiagram
               containerPosition={containerPosition}
-              fromRef={fake2Ref}
-              toRef={cadarnoSystemRef}
-              orient="horizontal"
-              pointFrom="center"
+              fromRef={netAmountRef}
+              toRef={boxWalletRef}
               pointTo="border"
+              pointFrom="border"
+              connectToReverse={true}
+              connectFromReverse={true}
+              orient="vertical"
             />
           </svg>
-        </Box>
-        <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
-          <Box ref={fake1Ref} width={"190px"}></Box>
-          <Box ref={registrationRef}>
-            <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
-          </Box>
-          <Box ref={fake2Ref} width={"190px"}></Box>
         </Box>
       </Box>
     </Box>

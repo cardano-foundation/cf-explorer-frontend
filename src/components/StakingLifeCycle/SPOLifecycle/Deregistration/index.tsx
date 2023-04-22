@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useRef, useState } from "react";
 
 import {
-  ADAHolderIcon,
+  SPOStalking,
   ButtonListIcon,
   BackIcon,
   AddressIcon,
@@ -17,7 +17,7 @@ import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./s
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 
-const Registration = ({
+const Deregistration = ({
   containerPosition,
 }: {
   containerPosition: {
@@ -29,20 +29,20 @@ const Registration = ({
   const [show, setShow] = useState<"list" | "timeline">("timeline");
   return (
     <Box>
-      <Box>{show === "list" && <RegistrationList />}</Box>
+      <Box>{show === "list" && <DeregistrationList />}</Box>
       <Box>
-        {show === "timeline" && <RegistrationTimeline setShow={setShow} containerPosition={containerPosition} />}
+        {show === "timeline" && <DeregistrationTimeline setShow={setShow} containerPosition={containerPosition} />}
       </Box>
     </Box>
   );
 };
-export default Registration;
+export default Deregistration;
 
-const RegistrationList = () => {
-  return <Box>list Registration</Box>;
+const DeregistrationList = () => {
+  return <Box>list Deregistration</Box>;
 };
 
-const RegistrationTimeline = ({
+const DeregistrationTimeline = ({
   containerPosition,
   setShow,
 }: {
@@ -84,7 +84,7 @@ const RegistrationTimeline = ({
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef}>
-            <ADAHolderIcon />
+            <SPOStalking />
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
@@ -128,22 +128,15 @@ const RegistrationTimeline = ({
               zIndex: "-1",
             }}
           >
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={adaHolderRef}
-              toRef={holdRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
-            />
             <Line
               containerPosition={containerPosition}
+              fromRef={adaHolderRef}
+              toRef={feeRef}
               pointTo="border"
               pointFrom="border"
               orient="vertical"
-              fromRef={holdRef}
-              toRef={feeRef}
             />
+
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={feeRef}
@@ -151,6 +144,23 @@ const RegistrationTimeline = ({
               pointTo="border"
               pointFrom="border"
               orient="vertical"
+            />
+            <Line
+              containerPosition={containerPosition}
+              fromRef={cadarnoSystemRef}
+              toRef={holdRef}
+              orient="vertical"
+              pointFrom="border"
+              pointTo="center"
+            />
+            <ArrowDiagram
+              containerPosition={containerPosition}
+              fromRef={holdRef}
+              toRef={adaHolderRef}
+              pointTo="border"
+              pointFrom="border"
+              orient="vertical"
+              connectToReverse={true}
             />
             <Line
               containerPosition={containerPosition}

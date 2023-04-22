@@ -149,6 +149,8 @@ interface ArrowDiagramProps {
   pointFrom?: "center" | "border";
   pointTo?: "center" | "border";
   orient?: "horizontal" | "vertical";
+  connectFromReverse?: boolean;
+  connectToReverse?: boolean;
 }
 
 const ArrowDiagram: React.FC<ArrowDiagramProps> = ({
@@ -158,6 +160,8 @@ const ArrowDiagram: React.FC<ArrowDiagramProps> = ({
   orient,
   pointFrom,
   pointTo,
+  connectFromReverse = false,
+  connectToReverse = false,
 }) => {
   const [coords, setCoords] = useState<{ from: { x?: number; y?: number }; to: { x?: number; y?: number } }>({
     from: {},
@@ -194,12 +198,12 @@ const ArrowDiagram: React.FC<ArrowDiagramProps> = ({
 
       setCoords({
         from: {
-          x: fromCenter.x + (orient === "vertical" ? distanceFromX : 0),
-          y: fromCenter.y + (orient === "horizontal" ? distanceFromY : 0),
+          x: fromCenter.x + (orient === "vertical" ? (connectFromReverse ? distanceFromX * -1 : distanceFromX) : 0),
+          y: fromCenter.y + (orient === "horizontal" ? (connectFromReverse ? distanceFromY * -1 : distanceFromY) : 0),
         },
         to: {
-          x: toCenter.x - (orient === "vertical" ? distanceToX : 0),
-          y: toCenter.y + (orient === "horizontal" ? distanceToY : 0),
+          x: toCenter.x - (orient === "vertical" ? (connectToReverse ? distanceToX * -1 : distanceToX) : 0),
+          y: toCenter.y + (orient === "horizontal" ? (connectToReverse ? distanceToY * -1 : distanceToY) : 0),
         },
       });
     };
