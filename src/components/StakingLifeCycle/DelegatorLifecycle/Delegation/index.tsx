@@ -10,15 +10,18 @@ import {
   TimeIcon,
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
-import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
+import DelegationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 
 import Line from "../../../Line";
 import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
-import RecentRegistrations from "./RecentRegistrations";
+import RecentDelegations from "./RecentDelegations";
+import { useParams } from "react-router";
+import useFetch from "../../../../commons/hooks/useFetch";
+import { API } from "../../../../commons/utils/api";
 
-const Registration = ({
+const Delegation = ({
   containerPosition,
 }: {
   containerPosition: {
@@ -26,8 +29,10 @@ const Registration = ({
     left?: number;
   };
 }) => {
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [show, setShow] = useState<"list" | "timeline">("list");
   const [hash, setHash] = useState("");
+  const { data } = useFetch(hash && stakeId && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stakeId, hash));
 
   const handleSelect = (hash: string) => {
     setHash(hash);
@@ -36,16 +41,14 @@ const Registration = ({
 
   return (
     <Box>
-      <Box>{show === "list" && <RecentRegistrations onSelect={handleSelect} />}</Box>
-      <Box>
-        {show === "timeline" && <RegistrationTimeline setShow={setShow} containerPosition={containerPosition} />}
-      </Box>
+      <Box>{show === "list" && <RecentDelegations onSelect={handleSelect} />}</Box>
+      <Box>{show === "timeline" && <DelegationTimeline setShow={setShow} containerPosition={containerPosition} />}</Box>
     </Box>
   );
 };
-export default Registration;
+export default Delegation;
 
-const RegistrationTimeline = ({
+const DelegationTimeline = ({
   containerPosition,
   setShow,
 }: {
@@ -61,7 +64,7 @@ const RegistrationTimeline = ({
   const cadarnoSystemRef = useRef(null);
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
-  const registrationRef = useRef(null);
+  const DelegationRef = useRef(null);
 
   return (
     <Box>
@@ -166,14 +169,14 @@ const RegistrationTimeline = ({
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={fake1Ref}
-              toRef={registrationRef}
+              toRef={DelegationRef}
               pointTo="border"
               pointFrom="center"
               orient="vertical"
             />
             <Line
               containerPosition={containerPosition}
-              fromRef={registrationRef}
+              fromRef={DelegationRef}
               toRef={fake2Ref}
               orient="vertical"
               pointFrom="border"
@@ -191,8 +194,8 @@ const RegistrationTimeline = ({
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
           <Box ref={fake1Ref} width={"190px"}></Box>
-          <Box ref={registrationRef}>
-            <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
+          <Box ref={DelegationRef}>
+            <img style={{ marginLeft: "5px" }} src={DelegationCertificate} alt="DelegationCertificateIcon" />
           </Box>
           <Box ref={fake2Ref} width={"190px"}></Box>
         </Box>
