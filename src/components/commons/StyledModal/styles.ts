@@ -1,11 +1,11 @@
 import { styled, Box, IconButton } from "@mui/material";
 
-export const ModalContainer = styled(Box)(({ theme }) => ({
+export const ModalContainer = styled(Box)<{ width?: number | string }>(({ theme, width }) => ({
   position: "relative",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "min(80vw, 500px)",
+  width: `min(80vw, ${typeof width === "string" ? width : `${width || 500}px`})`,
   backgroundColor: theme.palette.background.paper,
   padding: "50px 40px",
   borderRadius: 20,
