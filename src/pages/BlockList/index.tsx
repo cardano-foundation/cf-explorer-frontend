@@ -17,7 +17,6 @@ import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
 import Link from "../../components/commons/Link";
 import ADAicon from "../../components/commons/ADAIcon";
-
 const BlockList = () => {
   const [block, setBlock] = useState<number | string | null>(null);
   const [sort, setSort] = useState<string>("");

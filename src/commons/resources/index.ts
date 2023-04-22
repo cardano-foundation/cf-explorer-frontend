@@ -27,7 +27,6 @@ import CalenderPaleIcon from "./icons/calender-pale.svg";
 import ArrowDownIcon from "./icons/arrow-down.svg";
 import ArrowDropDownIcon from "./icons/arrow-drop-down.svg";
 import MenuIcon from "./icons/menu.svg";
-import AIcon from "./icons/AIcon.svg";
 import Policy from "./icons/policy.svg";
 import PolicyWhiteIcon from "./icons/policy-white.svg";
 import DIDMenuIcon from "./icons/menus/did.svg";
@@ -50,7 +49,7 @@ import USDIcon from "./icons/usd.svg";
 import NoteEditIcon from "./icons/note-edit.svg";
 import WithdrawlIcon from "./icons/withdrawl.svg";
 import MintingIcon from "./icons/minting.svg";
-import InfoIcon from "./icons/infoIcon.svg";
+// import InfoIcon from "./icons/infoIcon.svg";
 import HighestIcon from "./icons/highest-icon.svg";
 import LowestIcon from "./icons/lowest-icon.svg";
 import SeeMoreIcon from "./icons/seemore.svg";
@@ -76,6 +75,29 @@ import EmptyIcon from "./images/noData.png";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 
 import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
+import { ReactComponent as AIconGreen } from "./icons/AIconGreen.svg";
+import { ReactComponent as ArrowFromTopIcon } from "./icons/arrow-from-top.svg";
+import { ReactComponent as FilterIcon } from "./icons/filter.svg";
+import { ReactComponent as HashtagIcon } from "./icons/hashtag.svg";
+import { ReactComponent as SearchNormalIcon } from "./icons/search-normal.svg";
+import { ReactComponent as TimerIcon } from "./icons/timer.svg";
+import { ReactComponent as IconRefresh } from "./icons/IconRefresh.svg";
+import { ReactComponent as IconThreeDot } from "./icons/IconThreeDot.svg";
+import { ReactComponent as CopySquareIcon } from "./icons/copy_square.svg";
+import { ReactComponent as OptionIcon } from "./icons/option.svg";
+import { ReactComponent as ReloadIcon } from "./icons/reload.svg";
+import { ReactComponent as AIcon } from "./icons/AIcon.svg";
+export { ReactComponent as FilterIC } from "./icons/filter-ic.svg";
+export { ReactComponent as PersionalSettingIC } from "./images/d-persional-ic.svg";
+export { ReactComponent as ScanQRCodeIC } from "./images/d-scan-qr-ic.svg";
+export { ReactComponent as ListOfReportsIC } from "./images/d-list-of-rp-ic.svg";
+export { ReactComponent as WatchlistIC } from "./images/d-watchlist-tc.svg";
+export { ReactComponent as DownloadWhiteIC } from "./icons/download-white-ic.svg";
+export { ReactComponent as DownloadBlueIC } from "./icons/download-blue-ic.svg";
+export { ReactComponent as BalanceIcon } from "./icons/balance.svg";
+
+export { ReactComponent as ReceidvedRewardsIC } from "./icons/received-rewards-ic.svg";
+export { ReactComponent as ADAsigntIC } from "./icons/ada-sight-ic.svg";
 
 export {
   LogoFullIcon,
@@ -153,6 +175,18 @@ export {
   LinkOff,
   User2,
   PolicyScriptIcon,
+  TimerIcon,
+  SearchNormalIcon,
+  HashtagIcon,
+  FilterIcon,
+  ArrowFromTopIcon,
+  AIconGreen,
+  IconRefresh,
+  IconThreeDot,
+  // InfoIcon,
+  CopySquareIcon,
+  OptionIcon,
+  ReloadIcon,
 };
 
 export { ReactComponent as EyeIcon } from "./icons/eye.svg";
@@ -173,6 +207,14 @@ export { ReactComponent as OperatorRewardIcon } from "./icons/Staking/OperatorRe
 export { ReactComponent as PoolUpdateIcon } from "./icons/Staking/poolUpdateIcon.svg";
 export { ReactComponent as SearchDelegatorIcon } from "./icons/Staking/searchDelegator.svg";
 export { ReactComponent as SearchSPOIcon } from "./icons/Staking/searchSPO.svg";
+export { ReactComponent as TransactionIcon } from "./icons/transactionIcon.svg";
+export { ReactComponent as Wallet } from "./images/wallet-blue.svg";
+export { ReactComponent as WalletGreenIcon } from "./icons/wallet-green.svg";
+export { ReactComponent as BgBlue } from "./images/bg-blue.svg";
+export { ReactComponent as BgPink } from "./images/bg-pink.svg";
+export { ReactComponent as BgGreen } from "./images/bg-green.svg";
+export { ReactComponent as PigSave } from "./images/pig-save.svg";
+export { ReactComponent as Diamond } from "./images/diamond.svg";
 export { ReactComponent as ADAHolderIcon } from "./icons/Staking/ADAHolderIcon.svg";
 export { ReactComponent as CadarnoSystemIcon } from "./icons/Staking/cadarnoSystemIcon.svg";
 export { ReactComponent as RegistrationCertificateIcon } from "./icons/Staking/RegistrationCertificateIcon.svg";
