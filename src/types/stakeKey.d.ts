@@ -76,3 +76,24 @@ interface StakeAnalytics {
   activeStake: number;
   liveStake: number;
 }
+
+interface RegistrationItem {
+  txHash: string;
+  fee: number;
+  deposit: number;
+  time: string;
+}
+
+interface DelegationItem {
+  txHash: string;
+  outSum: number;
+  time: string;
+}
+
+interface WithdrawItem {
+  txHash: string;
+  value: number;
+  time: string;
+}
+
+interface DeregistrationItem extends RegistrationItem {}

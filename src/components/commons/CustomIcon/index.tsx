@@ -47,7 +47,6 @@ const CustomIcon: React.FC<Props> = React.forwardRef((props: Props, boxRef) => {
   const [mounted, setMounted] = useState<boolean>(!!originWidth && !!originHeight);
 
   useEffect(() => {
-    console.log(ref.current?.width?.baseVal?.value);
     if (ref.current) {
       setSvgWidth(ref.current?.width?.baseVal?.value);
       setSvgWheight(ref.current?.height?.baseVal?.value);

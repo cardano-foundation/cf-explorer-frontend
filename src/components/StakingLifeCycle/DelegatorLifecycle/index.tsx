@@ -15,6 +15,8 @@ import {
 import { ADATransfersButton, NextButton, PreviousButton, Step, StepButton, TitleStep } from "./styles";
 
 import Registration from "./Registration";
+import Delegation from "./Delegation";
+import Withdraw from "./Withdraw";
 
 interface StepperProps {
   icon: React.ReactNode;
@@ -42,7 +44,7 @@ const DelegatorLifecycle = ({
     {
       icon: <DelegationIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
       title: "Delegation",
-      component: "Delegation",
+      component: <Delegation containerPosition={containerPosition} />,
     },
     {
       icon: <RewardsDistributionIcon width={"25px"} height={"25px"} fill={currentStep >= 2 ? "#fff" : "#98A2B3"} />,
@@ -52,7 +54,7 @@ const DelegatorLifecycle = ({
     {
       icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
       title: "Reward Withdrawal",
-      component: "Reward Withdrawal",
+      component: <Withdraw containerPosition={containerPosition} />,
     },
     {
       icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 4 ? "#fff" : "#98A2B3"} />,
