@@ -191,3 +191,5 @@ export { ReactComponent as ArrowFromBottomIcon } from "./icons/arrow-from-bottom
 export { ReactComponent as HashtagIcon } from "./icons/hashtag.svg";
 export { ReactComponent as SearchIcon } from "./icons/header-search.svg";
 export { ReactComponent as TimerIcon } from "./icons/timer.svg";
+export { ReactComponent as BalanceIcon } from "./icons/balance.svg";
+export { ReactComponent as RewardsIcon } from "./icons/rewards.svg";

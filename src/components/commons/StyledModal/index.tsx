@@ -5,12 +5,12 @@ import { CloseButton, ModalContainer, WrapTitle } from "./styles";
 interface IProps extends ModalProps {
   handleCloseModal: () => void;
   title?: string;
-  maxWidth?: number | string;
+  width?: number | string;
 }
-const StyledModal: React.FC<IProps> = ({ open, handleCloseModal, children, title, maxWidth }) => {
+const StyledModal: React.FC<IProps> = ({ open, handleCloseModal, children, title, width }) => {
   return (
     <Modal open={open}>
-      <ModalContainer sx={{ maxWidth: maxWidth }}>
+      <ModalContainer width={width}>
         <CloseButton saving={false} onClick={() => handleCloseModal()}>
           <IoMdClose />
         </CloseButton>
