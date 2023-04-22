@@ -559,7 +559,7 @@ function useSelection<T>({ onSelectionChange }: { onSelectionChange?: (items: T[
     setSelectedItems(prevSelectedItems => {
       const itemIndex = prevSelectedItems.indexOf(item);
       if (itemIndex >= 0) {
-        onSelectionChange?.([...prevSelectedItems, item]);
+        onSelectionChange?.(prevSelectedItems.filter(i => i !== item));
         return prevSelectedItems.filter(i => i !== item);
       }
       onSelectionChange?.([...prevSelectedItems, item]);
