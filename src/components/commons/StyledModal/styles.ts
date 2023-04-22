@@ -25,3 +25,11 @@ export const CloseButton = styled(IconButton)<{ saving: boolean }>`
     ${props => (props.saving ? `background: none;` : ``)}
   }
 `;
+
+export const WrapTitle = styled(Box)`
+  color: ${props => props.theme.palette.text.primary};
+  font-size: 24px;
+  font-height: 28px;
+  font-weight: 700;
+  margin-bototm: 20;
+`;
