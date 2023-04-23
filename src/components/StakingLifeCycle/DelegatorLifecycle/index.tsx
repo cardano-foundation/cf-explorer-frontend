@@ -103,10 +103,6 @@ const DelegatorLifecycle = ({
         <PreviousButton
           onClick={() => {
             setCurrentStep(prev => prev - 1);
-            window.scrollTo({
-              top: document.documentElement.scrollHeight,
-              behavior: "smooth",
-            });
           }}
         >
           <PreviousIcon />

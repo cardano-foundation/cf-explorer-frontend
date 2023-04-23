@@ -40,7 +40,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
         </Box>
       </Box>
       <GridBox>
-        {data.map(item => {
+        {dataFake.map(item => {
           return <OverviewStaking amount={item.deposit} time={item.time} hash={item.txHash} onClick={onSelect} />;
         })}
       </GridBox>
@@ -49,3 +49,72 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
 };
 
 export default RecentDeregistrations;
+
+const dataFake = [
+  {
+    txHash: "hasssssssssssssssssssssssssssssss",
+    fee: 10,
+    deposit: 11,
+    time: "31/12/2022",
+  },
+  {
+    txHash: "hasssssssssssssssssssssssssssssss",
+    fee: 10,
+    deposit: 11,
+    time: "31/12/2022",
+  },
+  {
+    txHash: "hasssssssssssssssssssssssssssssss",
+    fee: 10,
+    deposit: 11,
+    time: "31/12/2022",
+  },
+  {
+    txHash: "hasssssssssssssssssssssssssssssss",
+    fee: 10,
+    deposit: 11,
+    time: "31/12/2022",
+  },
+  {
+    txHash: "hasssssssssssssssssssssssssssssss",
+    fee: 10,
+    deposit: 11,
+    time: "31/12/2022",
+  },
+  {
+    txHash: "hasssssssssssssssssssssssssssssss",
+    fee: 10,
+    deposit: 11,
+    time: "31/12/2022",
+  },
+  {
+    txHash: "hasssssssssssssssssssssssssssssss",
+    fee: 10,
+    deposit: 11,
+    time: "31/12/2022",
+  },
+  {
+    txHash: "hasssssssssssssssssssssssssssssss",
+    fee: 10,
+    deposit: 11,
+    time: "31/12/2022",
+  },
+  {
+    txHash: "hasssssssssssssssssssssssssssssss",
+    fee: 10,
+    deposit: 11,
+    time: "31/12/2022",
+  },
+  {
+    txHash: "hasssssssssssssssssssssssssssssss",
+    fee: 10,
+    deposit: 11,
+    time: "31/12/2022",
+  },
+  {
+    txHash: "hasssssssssssssssssssssssssssssss",
+    fee: 10,
+    deposit: 11,
+    time: "31/12/2022",
+  },
+];

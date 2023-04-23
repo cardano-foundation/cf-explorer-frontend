@@ -38,15 +38,13 @@ const Deregistration = ({
   return (
     <Box>
       <Box>{show === "list" && <RecentDeregistrations onSelect={handleSelect} />}</Box>
-      <Box>{show === "timeline" && <DeregistrationTimeline setShow={setShow} containerPosition={containerPosition} />}</Box>
+      <Box>
+        {show === "timeline" && <DeregistrationTimeline setShow={setShow} containerPosition={containerPosition} />}
+      </Box>
     </Box>
   );
 };
 export default Deregistration;
-
-const DeregistrationList = () => {
-  return <Box>list Deregistration</Box>;
-};
 
 const DeregistrationTimeline = ({
   containerPosition,
@@ -65,7 +63,6 @@ const DeregistrationTimeline = ({
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
-  const DeregistrationRef = useRef(null);
 
   return (
     <Box>
@@ -158,6 +155,9 @@ const DeregistrationTimeline = ({
               orient="vertical"
               pointFrom="border"
               pointTo="center"
+              connectToReverse={true}
+              connectFromReverse={true}
+              isCentalVertical={false}
             />
             <ArrowDiagram
               containerPosition={containerPosition}
@@ -167,6 +167,8 @@ const DeregistrationTimeline = ({
               pointFrom="border"
               orient="vertical"
               connectToReverse={true}
+              connectFromReverse={true}
+              isCentalHorizontal={false}
             />
             <Line
               containerPosition={containerPosition}

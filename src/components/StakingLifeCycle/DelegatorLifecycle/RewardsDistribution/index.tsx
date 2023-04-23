@@ -90,6 +90,7 @@ const RewardsDistribution = ({
           pointTo="border"
           pointFrom="border"
           orient="vertical"
+          isCentalVertical={false}
         />
         <Line
           containerPosition={containerPosition}
@@ -97,6 +98,7 @@ const RewardsDistribution = ({
           toRef={adaIcon2Ref}
           pointTo="border"
           pointFrom="border"
+          isCentalVertical={false}
           orient="vertical"
         />
         <ArrowDiagram
