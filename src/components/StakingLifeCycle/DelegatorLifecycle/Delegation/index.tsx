@@ -11,7 +11,7 @@ import {
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import DelegationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
-
+import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 import Line from "../../../Line";
 import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
@@ -48,6 +48,10 @@ const Delegation = ({
 };
 export default Delegation;
 
+const DelegationList = () => {
+  return <Box>list Delegation</Box>;
+};
+
 const DelegationTimeline = ({
   containerPosition,
   setShow,
@@ -64,6 +68,7 @@ const DelegationTimeline = ({
   const cadarnoSystemRef = useRef(null);
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
+  const registrationRef = useRef(null);
   const DelegationRef = useRef(null);
 
   return (
@@ -134,21 +139,13 @@ const DelegationTimeline = ({
               zIndex: "-1",
             }}
           >
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={adaHolderRef}
-              toRef={holdRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
-            />
             <Line
               containerPosition={containerPosition}
+              fromRef={adaHolderRef}
+              toRef={feeRef}
               pointTo="border"
               pointFrom="border"
               orient="vertical"
-              fromRef={holdRef}
-              toRef={feeRef}
             />
             <ArrowDiagram
               containerPosition={containerPosition}
@@ -166,17 +163,17 @@ const DelegationTimeline = ({
               pointFrom="border"
               pointTo="center"
             />
-            <ArrowDiagram
+            <Line
               containerPosition={containerPosition}
               fromRef={fake1Ref}
-              toRef={DelegationRef}
+              toRef={registrationRef}
               pointTo="border"
               pointFrom="center"
               orient="vertical"
             />
             <Line
               containerPosition={containerPosition}
-              fromRef={DelegationRef}
+              fromRef={registrationRef}
               toRef={fake2Ref}
               orient="vertical"
               pointFrom="border"
@@ -194,8 +191,8 @@ const DelegationTimeline = ({
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
           <Box ref={fake1Ref} width={"190px"}></Box>
-          <Box ref={DelegationRef}>
-            <img style={{ marginLeft: "5px" }} src={DelegationCertificate} alt="DelegationCertificateIcon" />
+          <Box ref={registrationRef}>
+            <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
           </Box>
           <Box ref={fake2Ref} width={"190px"}></Box>
         </Box>

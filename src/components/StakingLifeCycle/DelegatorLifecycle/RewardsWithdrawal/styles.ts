@@ -1,6 +1,6 @@
 import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
 
-export const HoldBox = styled(Box)(({ theme }) => ({
+export const NetAmount = styled(Box)(({ theme }) => ({
   width: "200px",
   height: "35px",
   display: "flex",
@@ -9,12 +9,36 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   padding: theme.spacing(2),
   border: `2px solid ${theme.palette.green[600]}`,
   borderRadius: "10px",
-  marginRight: theme.spacing(5),
   position: "relative",
   background: theme.palette.common.white,
-  top: "-70px",
   "::after": {
-    content: '"HOLD"',
+    content: '"NET AMOUNT"',
+    borderRadius: "4px",
+    fontWeight: "bold",
+    color: theme.palette.common.white,
+    padding: "6px 8px",
+    fontSize: "14px",
+    position: "absolute",
+    top: "-50%",
+    left: theme.spacing(2),
+    background: theme.palette.green[600],
+    transform: " translate(0, 60%)",
+  },
+}));
+
+export const Withdrawn = styled(Box)(({ theme }) => ({
+  width: "200px",
+  height: "35px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  padding: theme.spacing(2),
+  border: `2px solid ${theme.palette.green[600]}`,
+  borderRadius: "10px",
+  position: "relative",
+  background: theme.palette.common.white,
+  "::after": {
+    content: '"WITHDRAWN"',
     borderRadius: "4px",
     fontWeight: "bold",
     color: theme.palette.common.white,
@@ -37,7 +61,6 @@ export const FeeBox = styled(Box)(({ theme }) => ({
   border: `2px solid ${theme.palette.red[600]}`,
   borderRadius: "10px",
   background: theme.palette.common.white,
-  marginRight: theme.spacing(5),
   position: "relative",
   "::after": {
     content: '"FEES"',
@@ -72,4 +95,25 @@ export const InfoText = styled(Box)(({ theme }) => ({
   marginLeft: theme.spacing(1),
   fontWeight: 600,
   fontSize: "14px",
+}));
+
+export const Payment = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  alignItems: "center",
+  height: "220px",
+  padding: theme.spacing(3),
+  border: "2px dashed #D2D2D2",
+  borderRadius: "25px",
+}));
+
+export const RoundBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  alignItems: "center",
+  height: "220px",
+  padding: theme.spacing(3),
+  borderRadius: "25px",
 }));

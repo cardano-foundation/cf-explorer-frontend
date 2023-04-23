@@ -7,12 +7,11 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.green[600]}`,
+  border: `2px solid ${theme.palette.red[600]}`,
   borderRadius: "10px",
   marginRight: theme.spacing(5),
   position: "relative",
   background: theme.palette.common.white,
-  top: "-70px",
   "::after": {
     content: '"HOLD"',
     borderRadius: "4px",
@@ -23,7 +22,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.green[600],
+    background: theme.palette.red[600],
     transform: " translate(0, 60%)",
   },
 }));
@@ -37,7 +36,6 @@ export const FeeBox = styled(Box)(({ theme }) => ({
   border: `2px solid ${theme.palette.red[600]}`,
   borderRadius: "10px",
   background: theme.palette.common.white,
-  marginRight: theme.spacing(5),
   position: "relative",
   "::after": {
     content: '"FEES"',

@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useRef, useState } from "react";
 
 import {
-  ADAHolderIcon,
+  SPOStalking,
   ButtonListIcon,
   BackIcon,
   AddressIcon,
@@ -11,15 +11,13 @@ import {
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
-import DeregistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 
 import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
-import RecentDeregistrations from "./RecentDeregistration";
 
-const Deregistration = ({
+const PoollUpdates = ({
   containerPosition,
 }: {
   containerPosition: {
@@ -27,28 +25,22 @@ const Deregistration = ({
     left?: number;
   };
 }) => {
-  const [show, setShow] = useState<"list" | "timeline">("list");
-  const [hash, setHash] = useState("");
-
-  const handleSelect = (hash: string) => {
-    setHash(hash);
-    setShow("timeline");
-  };
-
+  // To do: chonj default là list sau đó clickdetail nhấn sang timelne. Đổi trong tương lai
+  const [show, setShow] = useState<"list" | "timeline">("timeline");
   return (
     <Box>
-      <Box>{show === "list" && <RecentDeregistrations onSelect={handleSelect} />}</Box>
-      <Box>{show === "timeline" && <DeregistrationTimeline setShow={setShow} containerPosition={containerPosition} />}</Box>
+      <Box>{show === "list" && <PoollUpdatesList />}</Box>
+      <Box>{show === "timeline" && <PoollUpdatesTimeline setShow={setShow} containerPosition={containerPosition} />}</Box>
     </Box>
   );
 };
-export default Deregistration;
+export default PoollUpdates;
 
-const DeregistrationList = () => {
-  return <Box>list Deregistration</Box>;
+const PoollUpdatesList = () => {
+  return <Box>list PoollUpdates</Box>;
 };
 
-const DeregistrationTimeline = ({
+const PoollUpdatesTimeline = ({
   containerPosition,
   setShow,
 }: {
@@ -59,13 +51,11 @@ const DeregistrationTimeline = ({
   setShow: (show: "list" | "timeline") => void;
 }) => {
   const adaHolderRef = useRef(null);
-  const holdRef = useRef(null);
   const feeRef = useRef(null);
   const cadarnoSystemRef = useRef(null);
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
-  const DeregistrationRef = useRef(null);
 
   return (
     <Box>
@@ -91,22 +81,11 @@ const DeregistrationTimeline = ({
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef}>
-            <ADAHolderIcon />
+            <SPOStalking />
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
             <Box display={"flex"} flex={1}>
-              <HoldBox ref={holdRef} ml={1}>
-                <Box>
-                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                    2.0
-                  </Box>
-                  <ADAicon fontSize="18px" />
-                </Box>
-                <IconButton>
-                  <ButtonListIcon />
-                </IconButton>
-              </HoldBox>
               <FeeBox ref={feeRef}>
                 <Box>
                   <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
@@ -143,6 +122,7 @@ const DeregistrationTimeline = ({
               pointFrom="border"
               orient="vertical"
             />
+
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={feeRef}
@@ -153,30 +133,13 @@ const DeregistrationTimeline = ({
             />
             <Line
               containerPosition={containerPosition}
-              fromRef={cadarnoSystemRef}
-              toRef={holdRef}
-              orient="vertical"
-              pointFrom="border"
-              pointTo="center"
-            />
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={holdRef}
-              toRef={adaHolderRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
-              connectToReverse={true}
-            />
-            <Line
-              containerPosition={containerPosition}
               fromRef={adaHolderRef}
               toRef={fake1Ref}
               orient="horizontal"
               pointFrom="border"
               pointTo="center"
             />
-            <ArrowDiagram
+            <Line
               containerPosition={containerPosition}
               fromRef={fake1Ref}
               toRef={registrationRef}

@@ -183,6 +183,8 @@ export { ReactComponent as BackIcon } from "./icons/Staking/BackIcon.svg";
 export { ReactComponent as AddressIcon } from "./icons/Staking/AddressIcon.svg";
 export { ReactComponent as ADAGreen } from "./icons/Staking/ADAGreen.svg";
 export { ReactComponent as TimeIcon } from "./icons/Staking/TimeIcon.svg";
+export { ReactComponent as ADAOrangeIcon } from "./icons/Staking/ADAOrangeIcon.svg";
+export { ReactComponent as SPOStalking } from "./icons/Staking/SPOStalking.svg";
 export { ReactComponent as FilterIC } from "./icons/filter-ic.svg";
 export { ReactComponent as CalenderIcon } from "./icons/calender-pale.svg";
 export { ReactComponent as AIconGreen } from "./icons/AIconGreen.svg";
