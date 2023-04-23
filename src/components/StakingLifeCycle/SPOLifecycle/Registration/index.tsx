@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useRef, useState } from "react";
 
 import {
-  ADAHolderIcon,
+  SPOStalking,
   ButtonListIcon,
   BackIcon,
   AddressIcon,
@@ -84,7 +84,7 @@ const RegistrationTimeline = ({
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef}>
-            <ADAHolderIcon />
+            <SPOStalking />
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>

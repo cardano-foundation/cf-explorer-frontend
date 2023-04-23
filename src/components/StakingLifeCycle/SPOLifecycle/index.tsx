@@ -3,35 +3,59 @@ import { Box } from "@mui/material";
 
 import { NextButton, PreviousButton, Step, StepButton, TitleStep } from "./styles";
 
-import { CheckIcon, NextIcon, OperatorRewardIcon, PoolUpdateIcon, PreviousIcon, RegistrationIcon, RewardsWithdrawalIcon } from "../../../commons/resources";
+import {
+  CheckIcon,
+  InfoIcon,
+  NextIcon,
+  OperatorRewardIcon,
+  PoolUpdateIcon,
+  PreviousIcon,
+  RegistrationIcon,
+  RewardsWithdrawalIcon,
+  TranferIcon,
+} from "../../../commons/resources";
+import Registration from "./Registration";
+import PoollUpdates from "./PoollUpdates";
+import { ADATransfersButton } from "../DelegatorLifecycle/styles";
+import OperatorReward from "./OperatorRewards";
+import Deregistration from "./Deregistration";
 interface StepperProps {
   icon: React.ReactNode;
   title: string;
   component: React.ReactNode;
 }
 
-const SPOLifecycle = ({ setMode }: { setMode: (mode: "timeline" | "tablular") => void }) => {
+const SPOLifecycle = ({
+  setMode,
+  containerPosition,
+}: {
+  setMode: (mode: "timeline" | "tablular") => void;
+  containerPosition: {
+    top?: number;
+    left?: number;
+  };
+}) => {
   const [currentStep, setCurrentStep] = useState(0);
   const stepper: StepperProps[] = [
     {
       icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
       title: "Registration",
-      component: "Registration",
+      component: <Registration containerPosition={containerPosition} />,
     },
     {
       icon: <PoolUpdateIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
       title: "Pool Updates",
-      component: "Pool Updates",
+      component: <PoollUpdates containerPosition={containerPosition} />,
     },
     {
       icon: <OperatorRewardIcon width={"25px"} height={"25px"} fill={currentStep >= 2 ? "#fff" : "#98A2B3"} />,
       title: "Operator Rewards",
-      component: "Operator Rewards",
+      component: <OperatorReward containerPosition={containerPosition} />,
     },
     {
       icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
       title: "Deregistration",
-      component: "Deregistration",
+      component: <Deregistration containerPosition={containerPosition} />,
     },
   ];
 
@@ -49,7 +73,15 @@ const SPOLifecycle = ({ setMode }: { setMode: (mode: "timeline" | "tablular") =>
           </Step>
         ))}
       </Box>
-      <Box mt={3}>{stepper[currentStep].component}</Box>
+      <Box mt={3} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+        <Box fontSize={"1.5rem"} fontWeight={"bold"}>
+          {stepper[currentStep].title} <InfoIcon />
+        </Box>
+        <ADATransfersButton>
+          <TranferIcon /> ADA Transfers
+        </ADATransfersButton>
+      </Box>
+      <Box>{stepper[currentStep].component}</Box>
       {currentStep > 0 && (
         <PreviousButton onClick={() => setCurrentStep(prev => prev - 1)}>
           <PreviousIcon />

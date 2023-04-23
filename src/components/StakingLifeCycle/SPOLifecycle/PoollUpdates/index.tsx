@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useRef, useState } from "react";
 
 import {
-  ADAHolderIcon,
+  SPOStalking,
   ButtonListIcon,
   BackIcon,
   AddressIcon,
@@ -13,11 +13,11 @@ import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSy
 import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 
 import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 
-const Registration = ({
+const PoollUpdates = ({
   containerPosition,
 }: {
   containerPosition: {
@@ -29,20 +29,18 @@ const Registration = ({
   const [show, setShow] = useState<"list" | "timeline">("timeline");
   return (
     <Box>
-      <Box>{show === "list" && <RegistrationList />}</Box>
-      <Box>
-        {show === "timeline" && <RegistrationTimeline setShow={setShow} containerPosition={containerPosition} />}
-      </Box>
+      <Box>{show === "list" && <PoollUpdatesList />}</Box>
+      <Box>{show === "timeline" && <PoollUpdatesTimeline setShow={setShow} containerPosition={containerPosition} />}</Box>
     </Box>
   );
 };
-export default Registration;
+export default PoollUpdates;
 
-const RegistrationList = () => {
-  return <Box>list Registration</Box>;
+const PoollUpdatesList = () => {
+  return <Box>list PoollUpdates</Box>;
 };
 
-const RegistrationTimeline = ({
+const PoollUpdatesTimeline = ({
   containerPosition,
   setShow,
 }: {
@@ -53,7 +51,6 @@ const RegistrationTimeline = ({
   setShow: (show: "list" | "timeline") => void;
 }) => {
   const adaHolderRef = useRef(null);
-  const holdRef = useRef(null);
   const feeRef = useRef(null);
   const cadarnoSystemRef = useRef(null);
   const fake1Ref = useRef(null);
@@ -84,22 +81,11 @@ const RegistrationTimeline = ({
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef}>
-            <ADAHolderIcon />
+            <SPOStalking />
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
             <Box display={"flex"} flex={1}>
-              <HoldBox ref={holdRef} ml={1}>
-                <Box>
-                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                    2.0
-                  </Box>
-                  <ADAicon fontSize="18px" />
-                </Box>
-                <IconButton>
-                  <ButtonListIcon />
-                </IconButton>
-              </HoldBox>
               <FeeBox ref={feeRef}>
                 <Box>
                   <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
@@ -128,22 +114,15 @@ const RegistrationTimeline = ({
               zIndex: "-1",
             }}
           >
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={adaHolderRef}
-              toRef={holdRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
-            />
             <Line
               containerPosition={containerPosition}
+              fromRef={adaHolderRef}
+              toRef={feeRef}
               pointTo="border"
               pointFrom="border"
               orient="vertical"
-              fromRef={holdRef}
-              toRef={feeRef}
             />
+
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={feeRef}
@@ -160,7 +139,7 @@ const RegistrationTimeline = ({
               pointFrom="border"
               pointTo="center"
             />
-            <ArrowDiagram
+            <Line
               containerPosition={containerPosition}
               fromRef={fake1Ref}
               toRef={registrationRef}

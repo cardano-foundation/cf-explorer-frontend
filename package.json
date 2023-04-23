@@ -52,7 +52,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "selenium-test": "concurrently \"npm start\" \"wait-on http://localhost:1102 && cd .. && cd cf-qa-testsuite && gradle clean test && kill-port 1102\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -80,7 +80,10 @@
     }
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-router-dom": "^5.3.3",
+    "concurrently": "^8.0.1",
+    "kill-port": "^2.0.1",
+    "wait-on": "^7.0.1"
   },
   "proxy": "https://tokens.cardano.org"
 }
