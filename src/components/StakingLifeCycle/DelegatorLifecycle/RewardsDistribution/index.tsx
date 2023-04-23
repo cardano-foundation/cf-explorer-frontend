@@ -27,7 +27,7 @@ const RewardsDistribution = ({
   return (
     <Box mt={3}>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
-        <Box display={"flex"} flex={2} justifyContent={"space-between"}>
+        <Box display={"flex"} flex={3} justifyContent={"space-between"}>
           <Box ref={cadarnoSystemRef}>
             <ADAHolderIcon />
           </Box>
@@ -68,7 +68,7 @@ const RewardsDistribution = ({
             </Box>
           </Box>
         </Box>
-        <Box flex={1}>
+        <Box flex={1} textAlign={'end'}>
           <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
         </Box>
       </Box>
