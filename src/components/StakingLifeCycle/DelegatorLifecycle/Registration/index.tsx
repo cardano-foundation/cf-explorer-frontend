@@ -16,6 +16,7 @@ import Line from "../../../Line";
 import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
+import RecentRegistrations from "./RecentRegistrations";
 
 const Registration = ({
   containerPosition,
@@ -25,11 +26,17 @@ const Registration = ({
     left?: number;
   };
 }) => {
-  // To do: chonj default là list sau đó clickdetail nhấn sang timelne. Đổi trong tương lai
-  const [show, setShow] = useState<"list" | "timeline">("timeline");
+  const [show, setShow] = useState<"list" | "timeline">("list");
+  const [hash, setHash] = useState("");
+
+  const handleSelect = (hash: string) => {
+    setHash(hash);
+    setShow("timeline");
+  };
+
   return (
     <Box>
-      <Box>{show === "list" && <RegistrationList />}</Box>
+      <Box>{show === "list" && <RecentRegistrations onSelect={handleSelect} />}</Box>
       <Box>
         {show === "timeline" && <RegistrationTimeline setShow={setShow} containerPosition={containerPosition} />}
       </Box>
@@ -37,10 +44,6 @@ const Registration = ({
   );
 };
 export default Registration;
-
-const RegistrationList = () => {
-  return <Box>list Registration</Box>;
-};
 
 const RegistrationTimeline = ({
   containerPosition,

@@ -10,12 +10,16 @@ import {
   TimeIcon,
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
+import DelegationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
-
 import Line from "../../../Line";
-import { FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
+import RecentDelegations from "./RecentDelegations";
+import { useParams } from "react-router";
+import useFetch from "../../../../commons/hooks/useFetch";
+import { API } from "../../../../commons/utils/api";
 
 const Delegation = ({
   containerPosition,
@@ -25,11 +29,19 @@ const Delegation = ({
     left?: number;
   };
 }) => {
-  // To do: chonj default là list sau đó clickdetail nhấn sang timelne. Đổi trong tương lai
-  const [show, setShow] = useState<"list" | "timeline">("timeline");
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const [show, setShow] = useState<"list" | "timeline">("list");
+  const [hash, setHash] = useState("");
+  const { data } = useFetch(hash && stakeId && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stakeId, hash));
+
+  const handleSelect = (hash: string) => {
+    setHash(hash);
+    setShow("timeline");
+  };
+
   return (
     <Box>
-      <Box>{show === "list" && <DelegationList />}</Box>
+      <Box>{show === "list" && <RecentDelegations onSelect={handleSelect} />}</Box>
       <Box>{show === "timeline" && <DelegationTimeline setShow={setShow} containerPosition={containerPosition} />}</Box>
     </Box>
   );
@@ -51,11 +63,13 @@ const DelegationTimeline = ({
   setShow: (show: "list" | "timeline") => void;
 }) => {
   const adaHolderRef = useRef(null);
+  const holdRef = useRef(null);
   const feeRef = useRef(null);
   const cadarnoSystemRef = useRef(null);
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
+  const DelegationRef = useRef(null);
 
   return (
     <Box>
@@ -86,6 +100,17 @@ const DelegationTimeline = ({
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
             <Box display={"flex"} flex={1}>
+              <HoldBox ref={holdRef} ml={1}>
+                <Box>
+                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                    2.0
+                  </Box>
+                  <ADAicon fontSize="18px" />
+                </Box>
+                <IconButton>
+                  <ButtonListIcon />
+                </IconButton>
+              </HoldBox>
               <FeeBox ref={feeRef}>
                 <Box>
                   <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
@@ -122,7 +147,6 @@ const DelegationTimeline = ({
               pointFrom="border"
               orient="vertical"
             />
-
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={feeRef}

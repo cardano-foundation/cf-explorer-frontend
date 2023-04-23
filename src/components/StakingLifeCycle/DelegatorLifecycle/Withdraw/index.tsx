@@ -10,16 +10,18 @@ import {
   TimeIcon,
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
-import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
-import DeregistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
+import WithdrawCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 
 import Line from "../../../Line";
 import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
-import RecentDeregistrations from "./RecentDeregistration";
+import RecentWithdraws from "./RecentWithdraws";
+import useFetch from "../../../../commons/hooks/useFetch";
+import { API } from "../../../../commons/utils/api";
+import { useParams } from "react-router";
 
-const Deregistration = ({
+const Withdraw = ({
   containerPosition,
 }: {
   containerPosition: {
@@ -27,8 +29,10 @@ const Deregistration = ({
     left?: number;
   };
 }) => {
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [show, setShow] = useState<"list" | "timeline">("list");
   const [hash, setHash] = useState("");
+  const { data } = useFetch(hash && stakeId && API.STAKE_LIFECYCLE.WITHDRAW_DETAIL(stakeId, hash));
 
   const handleSelect = (hash: string) => {
     setHash(hash);
@@ -37,18 +41,14 @@ const Deregistration = ({
 
   return (
     <Box>
-      <Box>{show === "list" && <RecentDeregistrations onSelect={handleSelect} />}</Box>
-      <Box>{show === "timeline" && <DeregistrationTimeline setShow={setShow} containerPosition={containerPosition} />}</Box>
+      <Box>{show === "list" && <RecentWithdraws onSelect={handleSelect} />}</Box>
+      <Box>{show === "timeline" && <WithdrawTimeline setShow={setShow} containerPosition={containerPosition} />}</Box>
     </Box>
   );
 };
-export default Deregistration;
+export default Withdraw;
 
-const DeregistrationList = () => {
-  return <Box>list Deregistration</Box>;
-};
-
-const DeregistrationTimeline = ({
+const WithdrawTimeline = ({
   containerPosition,
   setShow,
 }: {
@@ -64,8 +64,7 @@ const DeregistrationTimeline = ({
   const cadarnoSystemRef = useRef(null);
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
-  const registrationRef = useRef(null);
-  const DeregistrationRef = useRef(null);
+  const WithdrawRef = useRef(null);
 
   return (
     <Box>
@@ -135,13 +134,21 @@ const DeregistrationTimeline = ({
               zIndex: "-1",
             }}
           >
-            <Line
+            <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={adaHolderRef}
-              toRef={feeRef}
+              toRef={holdRef}
               pointTo="border"
               pointFrom="border"
               orient="vertical"
+            />
+            <Line
+              containerPosition={containerPosition}
+              pointTo="border"
+              pointFrom="border"
+              orient="vertical"
+              fromRef={holdRef}
+              toRef={feeRef}
             />
             <ArrowDiagram
               containerPosition={containerPosition}
@@ -150,23 +157,6 @@ const DeregistrationTimeline = ({
               pointTo="border"
               pointFrom="border"
               orient="vertical"
-            />
-            <Line
-              containerPosition={containerPosition}
-              fromRef={cadarnoSystemRef}
-              toRef={holdRef}
-              orient="vertical"
-              pointFrom="border"
-              pointTo="center"
-            />
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={holdRef}
-              toRef={adaHolderRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
-              connectToReverse={true}
             />
             <Line
               containerPosition={containerPosition}
@@ -179,14 +169,14 @@ const DeregistrationTimeline = ({
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={fake1Ref}
-              toRef={registrationRef}
+              toRef={WithdrawRef}
               pointTo="border"
               pointFrom="center"
               orient="vertical"
             />
             <Line
               containerPosition={containerPosition}
-              fromRef={registrationRef}
+              fromRef={WithdrawRef}
               toRef={fake2Ref}
               orient="vertical"
               pointFrom="border"
@@ -204,8 +194,8 @@ const DeregistrationTimeline = ({
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
           <Box ref={fake1Ref} width={"190px"}></Box>
-          <Box ref={registrationRef}>
-            <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
+          <Box ref={WithdrawRef}>
+            <img style={{ marginLeft: "5px" }} src={WithdrawCertificate} alt="WithdrawCertificateIcon" />
           </Box>
           <Box ref={fake2Ref} width={"190px"}></Box>
         </Box>

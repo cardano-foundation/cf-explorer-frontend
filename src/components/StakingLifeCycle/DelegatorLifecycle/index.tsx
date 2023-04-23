@@ -19,6 +19,7 @@ import Delegation from "./Delegation";
 import RewardsDistribution from "./RewardsDistribution";
 import Deregistration from "./Deregistration";
 import RewardsWithdrawal from "./RewardsWithdrawal";
+import ADATransferModal from "./ADATransferModal";
 
 interface StepperProps {
   icon: React.ReactNode;
@@ -37,6 +38,7 @@ const DelegatorLifecycle = ({
   };
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [open, setOpen] = useState(false);
   const stepper: StepperProps[] = [
     {
       icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
@@ -64,7 +66,7 @@ const DelegatorLifecycle = ({
       component: <Deregistration containerPosition={containerPosition} />,
     },
   ];
-
+  console.log(open);
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"}>
@@ -90,7 +92,7 @@ const DelegatorLifecycle = ({
         <Box fontSize={"1.5rem"} fontWeight={"bold"}>
           {stepper[currentStep].title} <InfoIcon />
         </Box>
-        <ADATransfersButton>
+        <ADATransfersButton onClick={() => setOpen(true)}>
           <TranferIcon /> ADA Transfers
         </ADATransfersButton>
       </Box>
@@ -118,6 +120,7 @@ const DelegatorLifecycle = ({
         Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
         <NextIcon />
       </NextButton>
+      <ADATransferModal open={open} handleCloseModal={() => setOpen(false)} />
     </Box>
   );
 };
