@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import CustomIcon from "../../../../commons/CustomIcon";
 import { ArrowFromBottomIcon, ArrowFromTopIcon, CalenderIcon, SearchIcon } from "../../../../../commons/resources";
 import { useParams } from "react-router";
@@ -16,12 +16,12 @@ const filterOptions = [
 ];
 
 interface Props {
-  onSelect: (hash: string) => void;
+  onSelect: (ưithdraw: WithdrawItem) => void;
 }
 
 const RecentWithdraws: React.FC<Props> = ({ onSelect }) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
-  const { data, total } = useFetchList<WithdrawItem>(stakeId ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "", {
+  const { data, total, loading } = useFetchList<WithdrawItem>(stakeId ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "", {
     page: 0,
     size: 1000,
   });
@@ -40,9 +40,16 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect }) => {
         </Box>
       </Box>
       <GridBox>
-        {data.map(item => {
-          return <OverviewStaking amount={item.value} time={item.time} hash={item.txHash} onClick={onSelect} />;
-        })}
+        {loading &&
+          [...new Array(12)].map((i, ii) => (
+            <Skeleton style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
+          ))}
+        {!loading &&
+          data.map(item => {
+            return (
+              <OverviewStaking amount={item.value} item={item} time={item.time} hash={item.txHash} onClick={onSelect} />
+            );
+          })}
       </GridBox>
     </Box>
   );

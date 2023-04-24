@@ -1,4 +1,4 @@
-import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui, alpha } from "@mui/material";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -70,4 +70,22 @@ export const InfoText = styled(Box)(({ theme }) => ({
   marginLeft: theme.spacing(1),
   fontWeight: 600,
   fontSize: "14px",
+}));
+export const Price = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  marginLeft: theme.spacing(1),
+  fontSize: "14px",
+  color: theme.palette.common.white,
+}));
+
+export const WalletButton = styled(IconButton)(({ theme }) => ({
+  background: alpha(theme.palette.common.white, 0.1),
+}));
+export const WalletBox = styled(Box)(({ theme }) => ({
+  transform: "translateX(-50%)",
+  position: "absolute",
+  bottom: 50,
+  left: "50%",
+  display: "flex",
 }));
