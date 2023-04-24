@@ -106,7 +106,8 @@ const DeregistrationTimeline = ({
               </FeeBox>
             </Box>
           </Box>
-          <Box ref={cadarnoSystemRef} width={190} height={215}>
+          <Box ref={cadarnoSystemRef}>
+            {/* <CadarnoSystemIcon /> */}
             <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
           </Box>
 
@@ -194,11 +195,11 @@ const DeregistrationTimeline = ({
           </svg>
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
-          <Box ref={fake1Ref} width={"190px"} height={220}></Box>
-          <Box ref={registrationRef} width={220} height={220}>
+          <Box ref={fake1Ref} width={"190px"}></Box>
+          <Box ref={registrationRef}>
             <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
           </Box>
-          <Box ref={fake2Ref} width={"190px"} height={220}></Box>
+          <Box ref={fake2Ref} width={"190px"}></Box>
         </Box>
       </Box>
     </Box>
