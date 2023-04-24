@@ -323,6 +323,7 @@ const Table: React.FC<TableProps> = ({
   fliterOptions,
   onFilterChange,
   isShowingResult,
+  maxHeight
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange,
@@ -352,7 +353,7 @@ const Table: React.FC<TableProps> = ({
         selectedItems={selectedItems}
         isSelectAll={isSelectAll}
       />
-      <Wrapper>
+      <Wrapper maxHeight={maxHeight}>
         <TableFullWidth>
           <TableHeader
             columns={columns}

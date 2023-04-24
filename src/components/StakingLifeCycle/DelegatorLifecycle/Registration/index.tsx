@@ -17,6 +17,7 @@ import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./s
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentRegistrations from "./RecentRegistrations";
+import PopoverStyled from "../../../commons/PopoverStyled";
 
 const Registration = ({
   containerPosition,
@@ -108,17 +109,22 @@ const RegistrationTimeline = ({
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
             <Box display={"flex"} flex={1}>
-              <HoldBox ref={holdRef} ml={1}>
-                <Box>
-                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                    2.0
-                  </Box>
-                  <ADAicon fontSize="18px" />
-                </Box>
-                <IconButton>
-                  <ButtonListIcon />
-                </IconButton>
-              </HoldBox>
+              <PopoverStyled
+                render={({ handleClick }) => (
+                  <HoldBox ref={holdRef} ml={1}>
+                    <Box>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                        2.0
+                      </Box>
+                      <ADAicon fontSize="18px" />
+                    </Box>
+                    <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </HoldBox>
+                )}
+                content={"aabcd"}
+              />
               <FeeBox ref={feeRef}>
                 <Box>
                   <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>

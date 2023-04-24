@@ -2,9 +2,14 @@ import { Box } from "@mui/material";
 import StyledModal from "../commons/StyledModal";
 import { BoxDetails, NormalDescription, NumberParagraph, Watermark } from "./styles";
 
-export function DelegationProcessDescription() {
+interface Props {
+  open: boolean;
+  handleCloseModal: () => void;
+}
+
+export function DelegationProcessDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title="The delegation process" handleCloseModal={() => { }} open>
+    <StyledModal title="The delegation process" handleCloseModal={handleCloseModal} open={open}>
       <Box>
         <NormalDescription>
           When a delegator wants to send ADA to a Staking Pool Operator (SPO) on Cardano, the following steps occur:
