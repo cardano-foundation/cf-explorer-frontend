@@ -62,6 +62,7 @@ const WalletActivity: React.FC = () => {
       <Table
         {...fetchData}
         columns={columns}
+        maxHeight={'calc(70vh - 208px)'}
         total={{ title: "Total Epochs", count: fetchData.total }}
         pagination={{
           ...pageInfo,

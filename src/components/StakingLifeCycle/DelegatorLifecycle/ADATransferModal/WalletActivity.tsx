@@ -66,6 +66,7 @@ const RewardActivity: React.FC = () => {
       <UserInfo total={fetchData.total} />
       <Table
         {...fetchData}
+        maxHeight={'calc(70vh - 208px)'}
         columns={columns}
         total={{ title: "Total Epochs", count: fetchData.total }}
         pagination={{
