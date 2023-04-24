@@ -13,14 +13,30 @@ import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staki
 import { ReactComponent as TableMode } from "../../commons/resources/icons/Staking/TableMode.svg";
 
 const DelegatorLifecycle = () => {
-  const { stakeId = "" } = useParams<{ stakeId: string }>();
-  const [currentStep, setCurrentStep] = useState(0);
-  const [mode, setMode] = useState<"timeline" | "tablular">("timeline");
+  const { stakeId = "", tab = "" } = useParams<{
+    stakeId: string;
+    tab?: "registration" | "delegation" | "rewardsDistribution" | "rewardsWithdrawal" | "deregistration" | "tablular";
+  }>();
+  const tabList = {
+    registration: 0,
+    delegation: 1,
+    rewardsDistribution: 2,
+    rewardsWithdrawal: 3,
+    deregistration: 4,
+    tablular: null,
+  };
+  const [currentStep, setCurrentStep] = useState(tabList[tab || "registration"] || 0);
+  const [mode, setMode] = useState<"timeline" | "tablular">(tab === "tablular" ? "tablular" : "timeline");
   const containerRef = useRef(null);
   const [containerPosition, setContainerPosition] = useState<{ top?: number; left?: number }>({
     top: undefined,
     left: undefined,
   });
+
+  useEffect(() => {
+    setCurrentStep(tabList[tab || "registration"] || 0);
+  }, [tab]);
+
   useEffect(() => {
     if (containerRef.current) {
       const position = (containerRef.current as any)?.getBoundingClientRect();

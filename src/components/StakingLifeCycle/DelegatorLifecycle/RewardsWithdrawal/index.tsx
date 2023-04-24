@@ -68,7 +68,7 @@ const RewardsWithdrawalTimeline = ({
         </IconButtonBack>
         <Box display={"flex"}>
           <Info>
-            <AddressIcon />
+            <AddressIcon  fill="#438F68" />
             <InfoText>e0c5c3d4e5...c3e04c2</InfoText>
           </Info>
           <Info>

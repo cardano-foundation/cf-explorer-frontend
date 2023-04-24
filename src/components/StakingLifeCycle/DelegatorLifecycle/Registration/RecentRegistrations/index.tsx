@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import CustomIcon from "../../../../commons/CustomIcon";
 import { ArrowFromBottomIcon, ArrowFromTopIcon, CalenderIcon, SearchIcon } from "../../../../../commons/resources";
 import { useParams } from "react-router";
@@ -16,15 +16,18 @@ const filterOptions = [
 ];
 
 interface Props {
-  onSelect: (hash: string) => void;
+  onSelect: (registration: RegistrationItem) => void;
 }
 
 const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
-  const { data, total } = useFetchList<RegistrationItem>(stakeId ? API.STAKE_LIFECYCLE.REGISTRATION(stakeId) : "", {
-    page: 0,
-    size: 1000,
-  });
+  const { data, total, loading } = useFetchList<RegistrationItem>(
+    stakeId ? API.STAKE_LIFECYCLE.REGISTRATION(stakeId) : "",
+    {
+      page: 0,
+      size: 1000,
+    }
+  );
 
   const handleFilter = (option: string) => {
     return;
@@ -40,9 +43,23 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
         </Box>
       </Box>
       <GridBox>
-        {data.map(item => {
-          return <OverviewStaking amount={item.deposit} time={item.time} hash={item.txHash} onClick={onSelect} />;
-        })}
+        {loading &&
+          [...new Array(12)].map((i, ii) => (
+            <Skeleton style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
+          ))}
+
+        {!loading &&
+          data.map(item => {
+            return (
+              <OverviewStaking
+                amount={item.deposit}
+                time={item.time}
+                hash={item.txHash}
+                item={item}
+                onClick={onSelect}
+              />
+            );
+          })}
       </GridBox>
     </Box>
   );

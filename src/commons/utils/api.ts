@@ -47,6 +47,7 @@ export const API = {
     WITHDRAW: (stakeKey: string) => `stake-lifecycle/${stakeKey}/withdrawals`,
     DELEGATION_DETAIL: (stakeKey: string, hash: string) => `stake-lifecycle/${stakeKey}/delegations/${hash}`,
     WITHDRAW_DETAIL: (stakeKey: string, hash: string) => `stake-lifecycle/${stakeKey}/withdrawals/${hash}`,
+    DEREGISTRATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/de-registrations`,
   },
   MARKETS: "markets",
 };

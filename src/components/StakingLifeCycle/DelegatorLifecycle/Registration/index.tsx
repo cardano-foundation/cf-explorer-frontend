@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { alpha, Box, Skeleton, styled } from "@mui/material";
 import { useRef, useState, useEffect } from "react";
 
 import {
@@ -18,6 +18,15 @@ import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentRegistrations from "./RecentRegistrations";
 import PopoverStyled from "../../../commons/PopoverStyled";
+import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import moment from "moment";
+import PopupStaking from "../../../commons/PopupStaking";
+import StyledModal from "../../../commons/StyledModal";
+import { Link as LinkDom, useParams } from "react-router-dom";
+import useFetch from "../../../../commons/hooks/useFetch";
+import { API } from "../../../../commons/utils/api";
+import { details } from "../../../../commons/routers";
+import CopyButton from "../../../commons/CopyButton";
 
 const Registration = ({
   containerPosition,
@@ -29,20 +38,23 @@ const Registration = ({
   };
   handleResize: () => void;
 }) => {
-  const [show, setShow] = useState<"list" | "timeline">("list");
-  const [hash, setHash] = useState("");
+  const [selected, setSelected] = useState<RegistrationItem | null>(null);
 
-  const handleSelect = (hash: string) => {
-    setHash(hash);
-    setShow("timeline");
+  const handleSelect = (registration: RegistrationItem) => {
+    setSelected(registration);
   };
 
   return (
     <Box>
-      <Box>{show === "list" && <RecentRegistrations onSelect={handleSelect} />}</Box>
+      <Box>{selected === null && <RecentRegistrations onSelect={handleSelect} />}</Box>
       <Box>
-        {show === "timeline" && (
-          <RegistrationTimeline handleResize={handleResize} setShow={setShow} containerPosition={containerPosition} />
+        {selected && (
+          <RegistrationTimeline
+            handleResize={handleResize}
+            setSelected={setSelected}
+            containerPosition={containerPosition}
+            registration={selected}
+          />
         )}
       </Box>
     </Box>
@@ -52,17 +64,21 @@ export default Registration;
 
 const RegistrationTimeline = ({
   containerPosition,
-  setShow,
+  setSelected,
   handleResize,
+  registration,
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
-  setShow: (show: "list" | "timeline") => void;
+  setSelected: (registration: RegistrationItem | null) => void;
   handleResize: () => void;
+  registration: RegistrationItem;
 }) => {
-  const [loading, setLoading] = useState(true);
+  const { deposit, fee, time, txHash } = registration;
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
+
   const adaHolderRef = useRef(null);
   const holdRef = useRef(null);
   const feeRef = useRef(null);
@@ -71,33 +87,30 @@ const RegistrationTimeline = ({
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
 
+  const [openModal, setOpenModal] = useState(false);
+
   useEffect(() => {
     handleResize();
-    setTimeout(() => setLoading(false), 2000);
-  }, []);
-
-  if (loading) {
-    return <Box>loading</Box>;
-  }
+  }, [registration]);
 
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setShow("list")}>
+        <IconButtonBack onClick={() => setSelected(null)}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>
           <Info>
-            <AddressIcon />
-            <InfoText>e0c5c3d4e5...c3e04c2</InfoText>
+            <AddressIcon fill="#438F68" />
+            <InfoText>{getShortHash(txHash || "")}</InfoText>
           </Info>
           <Info>
             <ADAGreen />
-            <InfoText>2.174433</InfoText>
+            <InfoText>{formatADA(deposit + fee || 0)}</InfoText>
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>10/24/2022 14:09:02</InfoText>
+            <InfoText>{moment(time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
           </Info>
         </Box>
       </Box>
@@ -123,19 +136,24 @@ const RegistrationTimeline = ({
                     </IconButton>
                   </HoldBox>
                 )}
-                content={"aabcd"}
+                content={<PopupStaking hash={txHash} />}
               />
-              <FeeBox ref={feeRef}>
-                <Box>
-                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                    0.174433
-                  </Box>
-                  <ADAicon fontSize="18px" />
-                </Box>
-                <IconButton>
-                  <ButtonListIcon />
-                </IconButton>
-              </FeeBox>
+              <PopoverStyled
+                render={({ handleClick }) => (
+                  <FeeBox ref={feeRef}>
+                    <Box>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                        {formatADA(fee || 0)}
+                      </Box>
+                      <ADAicon fontSize="18px" />
+                    </Box>
+                    <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </FeeBox>
+                )}
+                content={<PopupStaking hash={txHash} />}
+              />
             </Box>
           </Box>
           <Box ref={cadarnoSystemRef} width={190} height={215}>
@@ -212,12 +230,56 @@ const RegistrationTimeline = ({
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
           <Box ref={fake1Ref} width={"190px"}></Box>
-          <Box ref={registrationRef} width={220} height={220}>
+          <Box
+            component={IconButton}
+            bgcolor={"transparent"}
+            onClick={() => setOpenModal(true)}
+            ref={registrationRef}
+            width={220}
+            height={220}
+          >
             <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
           </Box>
           <Box ref={fake2Ref} width={"190px"}></Box>
         </Box>
       </Box>
+      <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
     </Box>
   );
 };
+
+const RegistrationCertificateModal = ({
+  stake,
+  ...props
+}: {
+  stake: string;
+  open: boolean;
+  handleCloseModal: () => void;
+}) => {
+  const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
+
+  return (
+    <StyledModal {...props} title="Registration certificate">
+      <Box>
+        {loading && <Skeleton variant="rectangular" width={500} height={90} />}
+        {!loading && (
+          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+              Stake Key
+            </Box>
+            {data && (
+              <Box>
+                <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link> <CopyButton text={stake} />
+              </Box>
+            )}
+          </Box>
+        )}
+      </Box>
+    </StyledModal>
+  );
+};
+
+const Link = styled(LinkDom)(({ theme }) => ({
+  fontSize: "0.875rem",
+  color: `${theme.palette.blue[800]} !important`,
+}));

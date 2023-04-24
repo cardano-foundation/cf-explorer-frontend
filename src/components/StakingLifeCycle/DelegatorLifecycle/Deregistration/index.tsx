@@ -1,5 +1,6 @@
-import { Box } from "@mui/material";
+import { alpha, Box, Skeleton, styled } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
+import { Link as LinkDom, useParams } from "react-router-dom";
 
 import {
   ADAHolderIcon,
@@ -10,14 +11,22 @@ import {
   TimeIcon,
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
-import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
-import DeregistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
+import DeregistrationCertificate from "../../../../commons/resources/icons/Staking/DeregistrationCertificateIcon.svg";
 
 import Line from "../../../Line";
 import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentDeregistrations from "./RecentDeregistration";
+import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import moment from "moment";
+import PopoverStyled from "../../../commons/PopoverStyled";
+import PopupStaking from "../../../commons/PopupStaking";
+import { details } from "../../../../commons/routers";
+import StyledModal from "../../../commons/StyledModal";
+import useFetch from "../../../../commons/hooks/useFetch";
+import { API } from "../../../../commons/utils/api";
+import CopyButton from "../../../commons/CopyButton";
 
 const Deregistration = ({
   containerPosition,
@@ -29,20 +38,22 @@ const Deregistration = ({
   };
   handleResize: () => void;
 }) => {
-  const [show, setShow] = useState<"list" | "timeline">("list");
-  const [hash, setHash] = useState("");
-
-  const handleSelect = (hash: string) => {
-    setHash(hash);
-    setShow("timeline");
+  const [selected, setSelected] = useState<DeregistrationItem | null>(null);
+  const handleSelect = (deregistration: DeregistrationItem) => {
+    setSelected(deregistration);
   };
 
   return (
     <Box>
-      <Box>{show === "list" && <RecentDeregistrations onSelect={handleSelect} />}</Box>
+      <Box>{selected === null && <RecentDeregistrations onSelect={handleSelect} />}</Box>
       <Box>
-        {show === "timeline" && (
-          <DeregistrationTimeline handleResize={handleResize} setShow={setShow} containerPosition={containerPosition} />
+        {!!selected && (
+          <DeregistrationTimeline
+            handleResize={handleResize}
+            setSelected={setSelected}
+            selected={selected}
+            containerPosition={containerPosition}
+          />
         )}
       </Box>
     </Box>
@@ -52,17 +63,20 @@ export default Deregistration;
 
 const DeregistrationTimeline = ({
   containerPosition,
-  setShow,
+  setSelected,
   handleResize,
+  selected,
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
   handleResize: () => void;
-  setShow: (show: "list" | "timeline") => void;
+  setSelected: (deregistration: DeregistrationItem | null) => void;
+  selected: DeregistrationItem;
 }) => {
-  const [loading, setLoading] = useState(true);
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
+
   const adaHolderRef = useRef(null);
   const holdRef = useRef(null);
   const feeRef = useRef(null);
@@ -71,32 +85,30 @@ const DeregistrationTimeline = ({
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
 
+  const [openModal, setOpenModal] = useState(false);
+
   useEffect(() => {
     handleResize();
-    setTimeout(() => setLoading(false), 2000);
-  }, []);
+  }, [selected]);
 
-  if (loading) {
-    return <Box>loading</Box>;
-  }
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setShow("list")}>
+        <IconButtonBack onClick={() => setSelected(null)}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>
           <Info>
-            <AddressIcon />
-            <InfoText>e0c5c3d4e5...c3e04c2</InfoText>
+            <AddressIcon fill="#438F68" />
+            <InfoText>{getShortHash(selected.txHash || "")}</InfoText>
           </Info>
           <Info>
             <ADAGreen />
-            <InfoText>2.174433</InfoText>
+            <InfoText>{formatADA(selected.deposit + selected.fee || 0)}</InfoText>
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>10/24/2022 14:09:02</InfoText>
+            <InfoText>{moment(selected.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
           </Info>
         </Box>
       </Box>
@@ -108,28 +120,38 @@ const DeregistrationTimeline = ({
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
             <Box display={"flex"} flex={1}>
-              <HoldBox ref={holdRef} ml={1}>
-                <Box>
-                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                    2.0
-                  </Box>
-                  <ADAicon fontSize="18px" />
-                </Box>
-                <IconButton>
-                  <ButtonListIcon />
-                </IconButton>
-              </HoldBox>
-              <FeeBox ref={feeRef}>
-                <Box>
-                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                    0.174433
-                  </Box>
-                  <ADAicon fontSize="18px" />
-                </Box>
-                <IconButton>
-                  <ButtonListIcon />
-                </IconButton>
-              </FeeBox>
+              <PopoverStyled
+                render={({ handleClick }) => (
+                  <HoldBox ref={holdRef} ml={1}>
+                    <Box>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                        {formatADA(selected.deposit || 0)}
+                      </Box>
+                      <ADAicon fontSize="18px" />
+                    </Box>
+                    <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </HoldBox>
+                )}
+                content={<PopupStaking hash={selected.txHash || ""} />}
+              />
+              <PopoverStyled
+                render={({ handleClick }) => (
+                  <FeeBox ref={feeRef}>
+                    <Box>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                        {formatADA(selected.fee || 0)}
+                      </Box>
+                      <ADAicon fontSize="18px" />
+                    </Box>
+                    <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </FeeBox>
+                )}
+                content={<PopupStaking hash={selected.txHash || ""} />}
+              />
             </Box>
           </Box>
           <Box ref={cadarnoSystemRef} height={215} width={190}>
@@ -221,12 +243,57 @@ const DeregistrationTimeline = ({
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
           <Box ref={fake1Ref} width={"190px"} height={220}></Box>
-          <Box ref={registrationRef} width={220} height={220}>
-            <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
+          <Box
+            p={0}
+            component={IconButton}
+            bgcolor={"transparent"}
+            onClick={() => setOpenModal(true)}
+            ref={registrationRef}
+            width={220}
+            height={220}
+          >
+            <img src={DeregistrationCertificate} alt="DeregistrationCertificate" />
           </Box>
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
+      <DeregistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
     </Box>
   );
 };
+
+const DeregistrationCertificateModal = ({
+  stake,
+  ...props
+}: {
+  stake: string;
+  open: boolean;
+  handleCloseModal: () => void;
+}) => {
+  const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
+
+  return (
+    <StyledModal {...props} title="Registration certificate">
+      <Box>
+        {loading && <Skeleton variant="rectangular" width={500} height={90} />}
+        {!loading && (
+          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+              Stake Key
+            </Box>
+            {data && (
+              <Box>
+                <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link> <CopyButton text={stake} />
+              </Box>
+            )}
+          </Box>
+        )}
+      </Box>
+    </StyledModal>
+  );
+};
+
+const Link = styled(LinkDom)(({ theme }) => ({
+  fontSize: "0.875rem",
+  color: `${theme.palette.blue[800]} !important`,
+}));

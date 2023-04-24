@@ -12,6 +12,9 @@ import Line from "../../../Line";
 import { Price, WalletBox, WalletButton } from "./styles";
 import ArrowDiagram from "../../../ArrowDiagram";
 import ADAicon from "../../../commons/ADAIcon";
+import useFetch from "../../../../commons/hooks/useFetch";
+import { API } from "../../../../commons/utils/api";
+import { useParams } from "react-router-dom";
 
 const RewardsDistribution = ({
   containerPosition,
@@ -21,6 +24,8 @@ const RewardsDistribution = ({
     left?: number;
   };
 }) => {
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
+  // const { data, loading } = useFetch(API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stakeId) || "");
   const cadarnoSystemRef = useRef(null);
   const adaIcon1Ref = useRef(null);
   const adaIcon2Ref = useRef(null);
