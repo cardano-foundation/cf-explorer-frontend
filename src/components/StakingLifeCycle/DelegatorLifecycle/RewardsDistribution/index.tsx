@@ -9,6 +9,8 @@ import Line from "../../../Line";
 import { FeeBox, IconButton } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
+import PopoverStyled from "../../../commons/PopoverStyled";
+import TransactionHash from "../../../commons/TransactionHash";
 
 const RewardsDistribution = ({
   containerPosition,
@@ -23,7 +25,8 @@ const RewardsDistribution = ({
   const adaIcon2Ref = useRef(null);
   const adaHolderRef = useRef(null);
   const operatorRewardRef = useRef(null);
-
+  const feeRef = useRef(null);
+  const fee2Ref = useRef(null);
   return (
     <Box mt={3}>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
@@ -41,30 +44,40 @@ const RewardsDistribution = ({
           </Box>
           <Box display={"flex"} py={3} flexDirection={"column"} justifyContent={"space-between"} alignItems={"center"}>
             <Box display={"flex"} ref={adaHolderRef}>
-              <FeeBox>
-                <Box>
-                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                    0.174433
-                  </Box>
-                  <ADAicon fontSize="18px" />
-                </Box>
-                <IconButton>
-                  <ButtonListIcon />
-                </IconButton>
-              </FeeBox>
+              <PopoverStyled
+                render={({ handleClick }: any) => (
+                  <FeeBox ref={feeRef}>
+                    <Box>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                        0.174433
+                      </Box>
+                      <ADAicon fontSize="18px" />
+                    </Box>
+                    <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </FeeBox>
+                )}
+                content={<TransactionHash hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+              />
             </Box>
             <Box display={"flex"} ref={operatorRewardRef}>
-              <FeeBox>
-                <Box>
-                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                    0.174433
-                  </Box>
-                  <ADAicon fontSize="18px" />
-                </Box>
-                <IconButton>
-                  <ButtonListIcon />
-                </IconButton>
-              </FeeBox>
+              <PopoverStyled
+                render={({ handleClick }: any) => (
+                  <FeeBox ref={fee2Ref}>
+                    <Box>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                        0.174433
+                      </Box>
+                      <ADAicon fontSize="18px" />
+                    </Box>
+                    <IconButton onClick={() => fee2Ref?.current && handleClick(fee2Ref.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </FeeBox>
+                )}
+                content={<TransactionHash hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+              />
             </Box>
           </Box>
         </Box>

@@ -16,6 +16,8 @@ import Line from "../../../Line";
 import { FeeBox, IconButton, IconButtonBack, Info, InfoText, NetAmount, Payment, RoundBox, Withdrawn } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
+import PopoverStyled from "../../../commons/PopoverStyled";
+import TransactionHash from "../../../commons/TransactionHash";
 
 const RewardsWithdrawal = ({
   containerPosition,
@@ -59,7 +61,8 @@ const RewardsWithdrawalTimeline = ({
   const feesRef = useRef(null);
   const feesBrigeRef = useRef(null);
   const netAmountRef = useRef(null);
-
+  const netAmountFirstRef = useRef(null);
+  const netAmountSecondRef = useRef(null);
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
@@ -87,67 +90,92 @@ const RewardsWithdrawalTimeline = ({
             <ADAHolderIcon />
           </Box>
           <Payment ref={boxWalletRef}>
-            <NetAmount>
-              <Box>
-                <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                  2.0
-                </Box>
-                <ADAicon fontSize="18px" />
-              </Box>
-              <IconButton>
-                <ButtonListIcon />
-              </IconButton>
-            </NetAmount>
-            <NetAmount>
-              <Box>
-                <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                  2.0
-                </Box>
-                <ADAicon fontSize="18px" />
-              </Box>
-              <IconButton>
-                <ButtonListIcon />
-              </IconButton>
-            </NetAmount>
+            <PopoverStyled
+              render={({ handleClick }: any) => (
+                <NetAmount ref={netAmountFirstRef}>
+                  <Box>
+                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      2.0
+                    </Box>
+                    <ADAicon fontSize="18px" />
+                  </Box>
+                  <IconButton onClick={() => netAmountFirstRef?.current && handleClick(netAmountFirstRef.current)}>
+                    <ButtonListIcon />
+                  </IconButton>
+                </NetAmount>
+              )}
+              content={<TransactionHash hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+            />
+            <PopoverStyled
+              render={({ handleClick }: any) => (
+                <NetAmount ref={netAmountSecondRef}>
+                  <Box>
+                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      2.0
+                    </Box>
+                    <ADAicon fontSize="18px" />
+                  </Box>
+                  <IconButton onClick={() => netAmountSecondRef?.current && handleClick(netAmountSecondRef.current)}>
+                    <ButtonListIcon />
+                  </IconButton>
+                </NetAmount>
+              )}
+              content={<TransactionHash hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+            />
           </Payment>
           <RoundBox>
-            <NetAmount ref={netAmountRef}>
-              <Box>
-                <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                  2.0
-                </Box>
-                <ADAicon fontSize="18px" />
-              </Box>
-              <IconButton>
-                <ButtonListIcon />
-              </IconButton>
-            </NetAmount>
-            <Withdrawn ref={withdrawnRef}>
-              <Box>
-                <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                  2.0
-                </Box>
-                <ADAicon fontSize="18px" />
-              </Box>
-              <IconButton>
-                <ButtonListIcon />
-              </IconButton>
-            </Withdrawn>
+            <PopoverStyled
+              render={({ handleClick }: any) => (
+                <NetAmount ref={netAmountRef}>
+                  <Box>
+                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      2.0
+                    </Box>
+                    <ADAicon fontSize="18px" />
+                  </Box>
+                  <IconButton onClick={() => netAmountRef?.current && handleClick(netAmountRef.current)}>
+                    <ButtonListIcon />
+                  </IconButton>
+                </NetAmount>
+              )}
+              content={<TransactionHash hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+            />
+            <PopoverStyled
+              render={({ handleClick }: any) => (
+                <Withdrawn ref={withdrawnRef}>
+                  <Box>
+                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      2.0
+                    </Box>
+                    <ADAicon fontSize="18px" />
+                  </Box>
+                  <IconButton onClick={() => withdrawnRef?.current && handleClick(withdrawnRef.current)}>
+                    <ButtonListIcon />
+                  </IconButton>
+                </Withdrawn>
+              )}
+              content={<TransactionHash hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+            />
           </RoundBox>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} position={'relative'}>
-            <FeeBox ml={1} ref={feesRef}>
-            <Box ref={feesBrigeRef} width={236} height={71} position={"absolute"} top={"-76px"} left={0}></Box>
-              <Box>
-                <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                  2.0
-                </Box>
-                <ADAicon fontSize="18px" />
-              </Box>
-              <IconButton>
-                <ButtonListIcon />
-              </IconButton>
-            </FeeBox>
+            <PopoverStyled
+              render={({ handleClick }: any) => (
+                <FeeBox ml={1} ref={feesRef}>
+                  <Box ref={feesBrigeRef} width={236} height={71} position={"absolute"} top={"-76px"} left={0}></Box>
+                  <Box>
+                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      2.0
+                    </Box>
+                    <ADAicon fontSize="18px" />
+                  </Box>
+                  <IconButton onClick={() => feesRef?.current && handleClick(feesRef.current)}>
+                    <ButtonListIcon />
+                  </IconButton>
+                </FeeBox>
+              )}
+              content={<TransactionHash hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+            />
           </Box>
 
           <Box>

@@ -18,6 +18,7 @@ import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentRegistrations from "./RecentRegistrations";
 import PopoverStyled from "../../../commons/PopoverStyled";
+import TransactionHash from "../../../commons/TransactionHash";
 
 const Registration = ({
   containerPosition,
@@ -94,7 +95,7 @@ const RegistrationTimeline = ({
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
             <Box display={"flex"} flex={1}>
               <PopoverStyled
-                render={({ handleClick }) => (
+                render={({ handleClick }: any) => (
                   <HoldBox ref={holdRef} ml={1}>
                     <Box>
                       <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
@@ -107,19 +108,24 @@ const RegistrationTimeline = ({
                     </IconButton>
                   </HoldBox>
                 )}
-                content={"aabcd"}
+                content={<TransactionHash hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
               />
-              <FeeBox ref={feeRef}>
-                <Box>
-                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                    0.174433
-                  </Box>
-                  <ADAicon fontSize="18px" />
-                </Box>
-                <IconButton>
-                  <ButtonListIcon />
-                </IconButton>
-              </FeeBox>
+              <PopoverStyled
+                render={({ handleClick }: any) => (
+                  <FeeBox ref={feeRef}>
+                    <Box>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                        0.174433
+                      </Box>
+                      <ADAicon fontSize="18px" />
+                    </Box>
+                    <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </FeeBox>
+                )}
+                content={<TransactionHash hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+              />
             </Box>
           </Box>
           <Box ref={cadarnoSystemRef}>
