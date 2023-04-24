@@ -195,3 +195,4 @@ export { ReactComponent as SearchIcon } from "./icons/header-search.svg";
 export { ReactComponent as TimerIcon } from "./icons/timer.svg";
 export { ReactComponent as BalanceIcon } from "./icons/balance.svg";
 export { ReactComponent as RewardsIcon } from "./icons/rewards.svg";
+export { ReactComponent as CloseLineIcon } from "./icons/close-line.svg";
