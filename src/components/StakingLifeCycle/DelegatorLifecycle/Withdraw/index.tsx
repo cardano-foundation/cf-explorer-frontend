@@ -145,7 +145,7 @@ const WithdrawTimeline = ({
       </Box>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
-          <Box ref={adaHolderRef}>
+          <Box ref={adaHolderRef} width={190} height={215}>
             <ADAHolderIcon />
           </Box>
           <Payment ref={boxWalletRef}>
@@ -233,8 +233,8 @@ const WithdrawTimeline = ({
             />
           </Box>
 
-          <Box>
-            <img ref={cadarnoSystemRef} style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
+          <Box width={190} height={215} ref={cadarnoSystemRef}>
+            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
           </Box>
 
           <svg

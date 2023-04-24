@@ -42,7 +42,7 @@ const DelegatorLifecycle = () => {
       const position = (containerRef.current as any)?.getBoundingClientRect();
       setContainerPosition({ top: position.top, left: position.left });
     }
-  }, [containerRef.current, currentStep, mode]);
+  }, [containerRef.current]);
 
   const handleResize = () => {
     if (containerRef.current) {
@@ -50,10 +50,11 @@ const DelegatorLifecycle = () => {
       setContainerPosition({ top: position.top, left: position.left });
     }
   };
-
   useEffect(() => {
     handleResize();
+
     window.addEventListener("resize", handleResize);
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -61,7 +62,7 @@ const DelegatorLifecycle = () => {
     <StyledContainer ref={containerRef}>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
         <Box>
-          <Box component={"h2"} mb={0} mt={0} fontSize={"2.25rem"}>
+          <Box component={"h2"} mb={0} mt={0}>
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
@@ -89,10 +90,8 @@ const DelegatorLifecycle = () => {
       <Box>
         {mode === "timeline" && (
           <DelegatorLifecycleComponent
-            setCurrentStep={setCurrentStep}
-            currentStep={currentStep}
-            containerPosition={containerPosition}
             handleResize={handleResize}
+            containerPosition={containerPosition}
             setMode={setMode}
           />
         )}

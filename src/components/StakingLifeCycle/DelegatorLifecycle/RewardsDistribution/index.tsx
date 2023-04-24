@@ -1,20 +1,16 @@
 import { Box } from "@mui/material";
 import { useRef } from "react";
 
-import { ADAOrangeIcon } from "../../../../commons/resources";
-import { ReactComponent as CadarnoSystemRewardis } from "../../../../commons/resources/icons/Staking/cadarnoSystemRewardis.svg";
-import AdaHolderLong from "../../../../commons/resources/icons/Staking/AdaHolderLong.svg";
-import orapetorReward from "../../../../commons/resources/icons/Staking/orapetorReward.svg";
-import rewardAccount from "../../../../commons/resources/icons/Staking/RewardAccount.svg";
-import walletIcon from "../../../../commons/resources/icons/Staking/WalletIcon.svg";
+import { ADAHolderIcon, ADAOrangeIcon, ButtonListIcon } from "../../../../commons/resources";
+import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 
 import Line from "../../../Line";
-import { Price, WalletBox, WalletButton } from "./styles";
-import ArrowDiagram from "../../../ArrowDiagram";
+import { FeeBox, IconButton } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
-import useFetch from "../../../../commons/hooks/useFetch";
-import { API } from "../../../../commons/utils/api";
 import { useParams } from "react-router-dom";
+import ArrowDiagram from "../../../ArrowDiagram";
+import PopoverStyled from "../../../commons/PopoverStyled";
+import PopupStaking from "../../../commons/PopupStaking";
 
 const RewardsDistribution = ({
   containerPosition,
@@ -31,58 +27,64 @@ const RewardsDistribution = ({
   const adaIcon2Ref = useRef(null);
   const adaHolderRef = useRef(null);
   const operatorRewardRef = useRef(null);
-
+  const feeRef = useRef(null);
+  const fee2Ref = useRef(null);
   return (
     <Box mt={3}>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
         <Box display={"flex"} flex={3} justifyContent={"space-between"}>
-          <Box display={"flex"} justifyContent={"space-between"} width={"100%"}>
-            <Box ref={cadarnoSystemRef}>
-              <CadarnoSystemRewardis />
+          <Box ref={cadarnoSystemRef}>
+            <ADAHolderIcon />
+          </Box>
+          <Box py={3} display={"flex"} flexDirection={"column"} justifyContent={"space-between"} alignItems={"center"}>
+            <Box>
+              <ADAOrangeIcon ref={adaIcon1Ref} />
             </Box>
-            <Box
-              py={3}
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"space-between"}
-              alignItems={"center"}
-            >
-              <Box ref={adaIcon1Ref} width={60} height={70}>
-                <ADAOrangeIcon />
-              </Box>
-              <Box ref={adaIcon2Ref} width={60} height={70}>
-                <ADAOrangeIcon />
-              </Box>
+            <Box>
+              <ADAOrangeIcon ref={adaIcon2Ref} />
             </Box>
-            <Box
-              display={"flex"}
-              pt={"6px"}
-              pb={1}
-              flexDirection={"column"}
-              justifyContent={"space-between"}
-              alignItems={"center"}
-            >
-              <Box ref={adaHolderRef} width={270} height={105}>
-                <img src={AdaHolderLong} alt="ada holder img" />
-              </Box>
-              <Box ref={operatorRewardRef} width={270} height={100}>
-                <img src={orapetorReward} alt="orapetorReward" />
-              </Box>
+          </Box>
+          <Box display={"flex"} py={3} flexDirection={"column"} justifyContent={"space-between"} alignItems={"center"}>
+            <Box display={"flex"} ref={adaHolderRef}>
+              <PopoverStyled
+                render={({ handleClick }: any) => (
+                  <FeeBox ref={feeRef}>
+                    <Box>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                        0.174433
+                      </Box>
+                      <ADAicon fontSize="18px" />
+                    </Box>
+                    <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </FeeBox>
+                )}
+                content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+              />
+            </Box>
+            <Box display={"flex"} ref={operatorRewardRef}>
+              <PopoverStyled
+                render={({ handleClick }: any) => (
+                  <FeeBox ref={fee2Ref}>
+                    <Box>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                        0.174433
+                      </Box>
+                      <ADAicon fontSize="18px" />
+                    </Box>
+                    <IconButton onClick={() => fee2Ref?.current && handleClick(fee2Ref.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </FeeBox>
+                )}
+                content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+              />
             </Box>
           </Box>
         </Box>
-        <Box flex={1} textAlign={"end"}>
-          <Box component={"span"} display={"inline-block"} position={"relative"} width={225} height={270}>
-            <img src={rewardAccount} alt="rewardAccount" />
-            <WalletBox>
-              <WalletButton>
-                <img src={walletIcon} alt="walletIcon" />
-              </WalletButton>
-              <Price>
-                10,000.0 <ADAicon ml={1} />
-              </Price>
-            </WalletBox>
-          </Box>
+        <Box flex={1} textAlign={"end"} width={190} height={215}>
+          <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
         </Box>
       </Box>
 

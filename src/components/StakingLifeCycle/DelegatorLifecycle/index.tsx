@@ -41,23 +41,20 @@ interface StepperProps {
 const DelegatorLifecycle = ({
   setMode,
   containerPosition,
-  currentStep,
   handleResize,
-  setCurrentStep,
 }: {
   setMode: (mode: "timeline" | "tablular") => void;
-  currentStep: number;
-  setCurrentStep: (index: number) => void;
-  handleResize: () => void;
   containerPosition: {
     top?: number;
     left?: number;
   };
+  handleResize: () => void;
 }) => {
   const history = useHistory();
   const { stakeId = "" } = useParams<{
     stakeId: string;
   }>();
+  const [currentStep, setCurrentStep] = useState(0);
   const [open, setOpen] = useState(false);
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
 
@@ -123,6 +120,7 @@ const DelegatorLifecycle = ({
       key: "deregistration",
     },
   ];
+  console.log(open);
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"}>
@@ -181,7 +179,7 @@ const DelegatorLifecycle = ({
         }}
         variant="contained"
       >
-        Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+        Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
         <NextIcon />
       </NextButton>
       <ADATransferModal open={open} handleCloseModal={() => setOpen(false)} />

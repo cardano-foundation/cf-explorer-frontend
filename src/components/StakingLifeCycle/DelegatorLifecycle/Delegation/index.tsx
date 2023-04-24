@@ -13,7 +13,7 @@ import {
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import DelegationCertificateIcon from "../../../../commons/resources/icons/Staking/DelegationCertificateIcon.svg";
 import Line from "../../../Line";
-import { FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentDelegations from "./RecentDelegations";
@@ -156,7 +156,7 @@ const DelegationTimeline = ({
       </Box>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
-          <Box ref={adaHolderRef}>
+          <Box ref={adaHolderRef} width={190} height={215}>
             <ADAHolderIcon />
           </Box>
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>

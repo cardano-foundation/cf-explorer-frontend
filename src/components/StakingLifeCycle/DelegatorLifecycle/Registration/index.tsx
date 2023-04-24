@@ -116,14 +116,14 @@ const RegistrationTimeline = ({
       </Box>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
-          <Box ref={adaHolderRef}>
+          <Box ref={adaHolderRef} width={190} height={215}>
             <ADAHolderIcon />
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
             <Box display={"flex"} flex={1}>
               <PopoverStyled
-                render={({ handleClick }) => (
+                render={({ handleClick }: any) => (
                   <HoldBox ref={holdRef} ml={1}>
                     <Box>
                       <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
@@ -157,6 +157,7 @@ const RegistrationTimeline = ({
             </Box>
           </Box>
           <Box ref={cadarnoSystemRef} width={190} height={215}>
+            {/* <CadarnoSystemIcon /> */}
             <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
           </Box>
 

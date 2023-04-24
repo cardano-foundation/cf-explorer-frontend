@@ -35,17 +35,14 @@ interface StepperProps {
 const SPOLifecycle = ({
   setMode,
   containerPosition,
-  currentStep,
-  setCurrentStep,
 }: {
   setMode: (mode: "timeline" | "tablular") => void;
   containerPosition: {
     top?: number;
     left?: number;
   };
-  currentStep: number;
-  setCurrentStep: (index: number) => void;
 }) => {
+  const [currentStep, setCurrentStep] = useState(0);
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
   const stepper: StepperProps[] = [
     {
@@ -118,18 +115,18 @@ const SPOLifecycle = ({
         </ADATransfersButton>
       </Box>
       <Box>{stepper[currentStep].description}</Box>
-      <Box minHeight={400}>{stepper[currentStep].component}</Box>
+      <Box>{stepper[currentStep].component}</Box>
       {currentStep > 0 && (
-        <PreviousButton onClick={() => setCurrentStep(currentStep - 1)}>
+        <PreviousButton onClick={() => setCurrentStep(prev => prev - 1)}>
           <PreviousIcon />
           <Box component={"span"}>Previous: {stepper[currentStep - 1]?.title}</Box>
         </PreviousButton>
       )}
       <NextButton
-        onClick={() => (currentStep === stepper.length - 1 ? setMode("tablular") : setCurrentStep(currentStep + 1))}
+        onClick={() => (currentStep === stepper.length - 1 ? setMode("tablular") : setCurrentStep(prev => prev + 1))}
         variant="contained"
       >
-        Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+        Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
         <NextIcon />
       </NextButton>
     </Box>

@@ -114,7 +114,7 @@ const DeregistrationTimeline = ({
       </Box>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
-          <Box ref={adaHolderRef}>
+          <Box ref={adaHolderRef} width={190} height={215}>
             <ADAHolderIcon />
           </Box>
 
@@ -154,9 +154,9 @@ const DeregistrationTimeline = ({
               />
             </Box>
           </Box>
-          <Box ref={cadarnoSystemRef} height={215} width={190}>
+          <Box ref={cadarnoSystemRef}>
             {/* <CadarnoSystemIcon /> */}
-            <img src={cadarnoSystem} alt="carrdano" />
+            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
           </Box>
 
           <svg
