@@ -71,6 +71,7 @@ jobs:
           cd cf-explorer-frontend
           docker-compose up -d
           bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' ${{ env.FRONTEND_URL }})" != "200" ]]; do echo "[+] Waiting for frontend to come up online..."; sleep 1; done'
+          sleep 5m
 
       - name: Run testsuite
         run: |
