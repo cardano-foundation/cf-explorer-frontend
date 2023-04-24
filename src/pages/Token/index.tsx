@@ -7,13 +7,15 @@ import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
 import { details } from "../../commons/routers";
 import { formatDateTimeLocal, getPageInfo, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
+
 import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { AssetName, Logo, StyledContainer, LogoEmpty } from "./styles";
+import { AssetName, Logo, StyledContainer } from "./styles";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 interface ITokenList {}
 
@@ -27,10 +29,12 @@ const Tokens: React.FC<ITokenList> = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const { data, ...fetchData } = useFetchList<ITokenOverview>(API.TOKEN.LIST, {
-    ...pageInfo,
-    sort,
-  });
+  const { data, ...fetchData } = useFetchList<ITokenOverview>(
+    API.TOKEN.LIST,
+    { ...pageInfo, sort },
+    false,
+    REFRESH_TIMES.TOKEN_LIST
+  );
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -42,8 +46,7 @@ const Tokens: React.FC<ITokenList> = () => {
       title: "Icon",
       key: "icon",
       minWidth: "50px",
-      render: r =>
-        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />,
+      render: r => (r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : ""),
     },
     {
       title: "Asset Name",
@@ -130,6 +133,7 @@ const Tokens: React.FC<ITokenList> = () => {
           }}
           onClickRow={openDetail}
           selected={selected}
+          showTabView
         />
         {token && <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />}
       </Card>

@@ -8,16 +8,18 @@ import Table, { Column } from "../../components/commons/Table";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { API } from "../../commons/utils/api";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 import ADAicon from "../../components/commons/ADAIcon";
 interface Props {}
 
 const TopAddresses: React.FC<Props> = () => {
   const [pageSize, setPageSize] = useState("50");
-
-  const { error, data, initialized, loading } = useFetchList<Contracts>(API.ADDRESS.TOP_ADDRESS, {
-    page: 0,
-    size: +pageSize,
-  });
+  const { error, data, initialized, loading } = useFetchList<Contracts>(
+    API.ADDRESS.TOP_ADDRESS,
+    { page: 0, size: +pageSize },
+    false,
+    REFRESH_TIMES.TOP_ADDRESS
+  );
 
   useEffect(() => {
     document.title = `Top Addresses | Cardano Explorer`;
