@@ -1,10 +1,13 @@
 import { Box } from "@mui/material";
 import StyledModal from "../commons/StyledModal";
 import { BoxDetails, NormalDescription, NumberParagraph, Watermark } from "./styles";
-
-export function WithdrawingFundProcessDescription() {
+interface Props {
+  open: boolean;
+  handleCloseModal: () => void;
+}
+export function WithdrawingFundProcessDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title="The withdrawing funds process" handleCloseModal={() => { }} open>
+    <StyledModal title="The withdrawing funds process" handleCloseModal={handleCloseModal} open={open}>
       <Box>
         <NormalDescription>
           When a delegator wants to withdraw their funds from a staking pool on Cardano, the following steps occur:

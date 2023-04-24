@@ -20,11 +20,19 @@ import RewardsDistribution from "./RewardsDistribution";
 import Deregistration from "./Deregistration";
 import RewardsWithdrawal from "./RewardsWithdrawal";
 import ADATransferModal from "./ADATransferModal";
+import {
+  DelegationProcessDescription,
+  DeregistrationProcessDescription,
+  RegistrationProcessDescription,
+  RewardDistributionProcessDescription,
+  WithdrawingFundProcessDescription
+} from "../../ModalDescription";
 
 interface StepperProps {
   icon: React.ReactNode;
   title: string;
   component: React.ReactNode;
+  description: React.ReactNode;
 }
 
 const DelegatorLifecycle = ({
@@ -39,31 +47,37 @@ const DelegatorLifecycle = ({
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [open, setOpen] = useState(false);
+  const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
   const stepper: StepperProps[] = [
     {
       icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
       title: "Registration",
       component: <Registration containerPosition={containerPosition} />,
+      description: <RegistrationProcessDescription open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />
     },
     {
       icon: <DelegationIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
       title: "Delegation",
       component: <Delegation containerPosition={containerPosition} />,
+      description: <DelegationProcessDescription open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />
     },
     {
       icon: <RewardsDistributionIcon width={"25px"} height={"25px"} fill={currentStep >= 2 ? "#fff" : "#98A2B3"} />,
       title: "Rewards Distribution",
       component: <RewardsDistribution containerPosition={containerPosition} />,
+      description: <RewardDistributionProcessDescription open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />
     },
     {
       icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
       title: "Rewards Withdrawal",
       component: <RewardsWithdrawal containerPosition={containerPosition} />,
+      description: <WithdrawingFundProcessDescription open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />
     },
     {
       icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 4 ? "#fff" : "#98A2B3"} />,
       title: "Deregistration",
       component: <Deregistration containerPosition={containerPosition} />,
+      description: <DeregistrationProcessDescription open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />
     },
   ];
   console.log(open);
@@ -90,13 +104,13 @@ const DelegatorLifecycle = ({
 
       <Box mt={3} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
         <Box fontSize={"1.5rem"} fontWeight={"bold"}>
-          {stepper[currentStep].title} <InfoIcon />
+          {stepper[currentStep].title} <InfoIcon style={{ cursor: 'pointer' }} onClick={() => setOpenDescriptionModal(true)} />
         </Box>
         <ADATransfersButton onClick={() => setOpen(true)}>
           <TranferIcon /> ADA Transfers
         </ADATransfersButton>
       </Box>
-
+      <Box>{stepper[currentStep].description}</Box>
       <Box>{stepper[currentStep].component}</Box>
 
       {currentStep > 0 && (

@@ -19,10 +19,17 @@ import PoollUpdates from "./PoollUpdates";
 import { ADATransfersButton } from "../DelegatorLifecycle/styles";
 import OperatorReward from "./OperatorRewards";
 import Deregistration from "./Deregistration";
+import {
+  RegistrationProcessDescription,
+  SPOInvolvementInDelegationDescription,
+  WithdrawingFundProcessDescription,
+  DeregistrationProcessDescription
+} from "../../ModalDescription";
 interface StepperProps {
   icon: React.ReactNode;
   title: string;
   component: React.ReactNode;
+  description: React.ReactNode;
 }
 
 const SPOLifecycle = ({
@@ -36,26 +43,31 @@ const SPOLifecycle = ({
   };
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
   const stepper: StepperProps[] = [
     {
       icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
       title: "Registration",
       component: <Registration containerPosition={containerPosition} />,
+      description: <RegistrationProcessDescription open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />,
     },
     {
       icon: <PoolUpdateIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
       title: "Pool Updates",
       component: <PoollUpdates containerPosition={containerPosition} />,
+      description: <SPOInvolvementInDelegationDescription open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />,
     },
     {
       icon: <OperatorRewardIcon width={"25px"} height={"25px"} fill={currentStep >= 2 ? "#fff" : "#98A2B3"} />,
       title: "Operator Rewards",
       component: <OperatorReward containerPosition={containerPosition} />,
+      description: <WithdrawingFundProcessDescription open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />,
     },
     {
       icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
       title: "Deregistration",
       component: <Deregistration containerPosition={containerPosition} />,
+      description: <DeregistrationProcessDescription open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />,
     },
   ];
 
@@ -75,12 +87,13 @@ const SPOLifecycle = ({
       </Box>
       <Box mt={3} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
         <Box fontSize={"1.5rem"} fontWeight={"bold"}>
-          {stepper[currentStep].title} <InfoIcon />
+          {stepper[currentStep].title} <InfoIcon style={{ cursor: 'pointer' }} onClick={() => setOpenDescriptionModal(true)}/>
         </Box>
         <ADATransfersButton>
           <TranferIcon /> ADA Transfers
         </ADATransfersButton>
       </Box>
+      <Box>{stepper[currentStep].description}</Box>
       <Box>{stepper[currentStep].component}</Box>
       {currentStep > 0 && (
         <PreviousButton onClick={() => setCurrentStep(prev => prev - 1)}>
