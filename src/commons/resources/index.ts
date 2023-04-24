@@ -73,6 +73,7 @@ import YoroiIcon from "./icons/yoroi.svg";
 import TyphonIcon from "./icons/typhon.svg";
 import HeaderBackgroundImage from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
+import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 
 import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
 
@@ -134,10 +135,10 @@ export {
   WithdrawlIcon,
   MintingIcon,
   PolicyWhiteIcon,
-  InfoIcon,
   HighestIcon,
   LowestIcon,
   BrowseIcon,
+  StakingLifecycleIcon,
   ResourcesIcon,
   SeeMoreIcon,
   TickerIcon,
@@ -160,3 +161,37 @@ export { ReactComponent as EndPage } from "./icons/endPagePagination.svg";
 export { ReactComponent as PrevPage } from "./icons/prevPagePagination.svg";
 export { ReactComponent as NextPage } from "./icons/nextPagePagination.svg";
 export { ReactComponent as DownIcon } from "./icons/down.svg";
+export { ReactComponent as DelegationIcon } from "./icons/Staking/DelegationIcon.svg";
+export { ReactComponent as DeredistrationIcon } from "./icons/Staking/DeredistrationIcon.svg";
+export { ReactComponent as RegistrationIcon } from "./icons/Staking/RegistrationIcon.svg";
+export { ReactComponent as RewardsDistributionIcon } from "./icons/Staking/RewardsDistributionIcon.svg";
+export { ReactComponent as RewardsWithdrawalIcon } from "./icons/Staking/RewardsWithdrawalIcon.svg";
+export { ReactComponent as CheckIcon } from "./icons/Staking/Check.svg";
+export { ReactComponent as NextIcon } from "./icons/Staking/nextIcon.svg";
+export { ReactComponent as PreviousIcon } from "./icons/Staking/previousIcon.svg";
+export { ReactComponent as OperatorRewardIcon } from "./icons/Staking/OperatorRewardIcon.svg";
+export { ReactComponent as PoolUpdateIcon } from "./icons/Staking/poolUpdateIcon.svg";
+export { ReactComponent as SearchDelegatorIcon } from "./icons/Staking/searchDelegator.svg";
+export { ReactComponent as SearchSPOIcon } from "./icons/Staking/searchSPO.svg";
+export { ReactComponent as ADAHolderIcon } from "./icons/Staking/ADAHolderIcon.svg";
+export { ReactComponent as CadarnoSystemIcon } from "./icons/Staking/cadarnoSystemIcon.svg";
+export { ReactComponent as RegistrationCertificateIcon } from "./icons/Staking/RegistrationCertificateIcon.svg";
+export { ReactComponent as ButtonListIcon } from "./icons/Staking/buttonList.svg";
+export { ReactComponent as InfoIcon } from "./icons/Staking/infoIcon.svg";
+export { ReactComponent as TranferIcon } from "./icons/Staking/tranfer.svg";
+export { ReactComponent as BackIcon } from "./icons/Staking/BackIcon.svg";
+export { ReactComponent as AddressIcon } from "./icons/Staking/AddressIcon.svg";
+export { ReactComponent as ADAGreen } from "./icons/Staking/ADAGreen.svg";
+export { ReactComponent as TimeIcon } from "./icons/Staking/TimeIcon.svg";
+export { ReactComponent as ADAOrangeIcon } from "./icons/Staking/ADAOrangeIcon.svg";
+export { ReactComponent as SPOStalking } from "./icons/Staking/SPOStalking.svg";
+export { ReactComponent as FilterIC } from "./icons/filter-ic.svg";
+export { ReactComponent as CalenderIcon } from "./icons/calender-pale.svg";
+export { ReactComponent as AIconGreen } from "./icons/AIconGreen.svg";
+export { ReactComponent as ArrowFromTopIcon } from "./icons/arrow-from-top.svg";
+export { ReactComponent as ArrowFromBottomIcon } from "./icons/arrow-from-bottom.svg";
+export { ReactComponent as HashtagIcon } from "./icons/hashtag.svg";
+export { ReactComponent as SearchIcon } from "./icons/header-search.svg";
+export { ReactComponent as TimerIcon } from "./icons/timer.svg";
+export { ReactComponent as BalanceIcon } from "./icons/balance.svg";
+export { ReactComponent as RewardsIcon } from "./icons/rewards.svg";

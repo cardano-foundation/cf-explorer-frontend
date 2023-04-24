@@ -45,11 +45,12 @@ const ToastContainer: React.FC = () => {
               }}
               severity={severity}
               variant="standard"
+              borderColor={color}
               background={background}
               onClose={() => removeToast(id)}
               onClick={() => removeToast(id)}
             >
-              <StyledTitle color={color}>{title}</StyledTitle>
+              <StyledTitle>{title}</StyledTitle>
               {message}
             </StyledAlert>
           );
