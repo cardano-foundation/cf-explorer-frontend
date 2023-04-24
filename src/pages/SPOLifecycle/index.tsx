@@ -13,6 +13,7 @@ import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staki
 import { ReactComponent as TableMode } from "../../commons/resources/icons/Staking/TableMode.svg";
 
 const SPOLifecycle = () => {
+  const [currentStep, setCurrentStep] = useState(0);
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [mode, setMode] = useState<"timeline" | "tablular">("timeline");
   const containerRef = useRef(null);
@@ -26,7 +27,7 @@ const SPOLifecycle = () => {
       const position = (containerRef.current as any)?.getBoundingClientRect();
       setContainerPosition({ top: position.top, left: position.left });
     }
-  }, [containerRef.current]);
+  }, [containerRef.current, currentStep, mode]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -46,7 +47,7 @@ const SPOLifecycle = () => {
     <StyledContainer ref={containerRef}>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
         <Box>
-          <Box component={"h2"} mb={0}>
+          <Box component={"h2"} mb={0} mt={0} fontSize={"2.25rem"}>
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
@@ -72,7 +73,14 @@ const SPOLifecycle = () => {
       </Box>
 
       <Box>
-        {mode === "timeline" && <SPOLifecycleComponent containerPosition={containerPosition} setMode={setMode} />}
+        {mode === "timeline" && (
+          <SPOLifecycleComponent
+            setCurrentStep={setCurrentStep}
+            currentStep={currentStep}
+            containerPosition={containerPosition}
+            setMode={setMode}
+          />
+        )}
         {mode === "tablular" && <Tablular />}
       </Box>
     </StyledContainer>

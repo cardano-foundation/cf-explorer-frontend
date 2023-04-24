@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   ADAHolderIcon,
@@ -23,11 +23,13 @@ import { useParams } from "react-router";
 
 const Withdraw = ({
   containerPosition,
+  handleResize,
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
+  handleResize: () => void;
 }) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [show, setShow] = useState<"list" | "timeline">("list");
@@ -42,7 +44,11 @@ const Withdraw = ({
   return (
     <Box>
       <Box>{show === "list" && <RecentWithdraws onSelect={handleSelect} />}</Box>
-      <Box>{show === "timeline" && <WithdrawTimeline setShow={setShow} containerPosition={containerPosition} />}</Box>
+      <Box>
+        {show === "timeline" && (
+          <WithdrawTimeline handleResize={handleResize} setShow={setShow} containerPosition={containerPosition} />
+        )}
+      </Box>
     </Box>
   );
 };
@@ -51,13 +57,16 @@ export default Withdraw;
 const WithdrawTimeline = ({
   containerPosition,
   setShow,
+  handleResize,
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
+  handleResize: () => void;
   setShow: (show: "list" | "timeline") => void;
 }) => {
+  const [loading, setLoading] = useState(true);
   const adaHolderRef = useRef(null);
   const holdRef = useRef(null);
   const feeRef = useRef(null);
@@ -66,6 +75,14 @@ const WithdrawTimeline = ({
   const fake2Ref = useRef(null);
   const WithdrawRef = useRef(null);
 
+  useEffect(() => {
+    handleResize();
+    setTimeout(() => setLoading(false), 2000);
+  }, []);
+
+  if (loading) {
+    return <Box>loading</Box>;
+  }
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
@@ -119,9 +136,9 @@ const WithdrawTimeline = ({
               </FeeBox>
             </Box>
           </Box>
-          <Box ref={cadarnoSystemRef}>
+          <Box ref={cadarnoSystemRef} width={190} height={215}>
             {/* <CadarnoSystemIcon /> */}
-            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
+            <img src={cadarnoSystem} alt="carrdano" />
           </Box>
 
           <svg
@@ -193,11 +210,11 @@ const WithdrawTimeline = ({
           </svg>
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
-          <Box ref={fake1Ref} width={"190px"}></Box>
-          <Box ref={WithdrawRef}>
+          <Box ref={fake1Ref} width={"190px"} height={220}></Box>
+          <Box ref={WithdrawRef} height={220} width={220}>
             <img style={{ marginLeft: "5px" }} src={WithdrawCertificate} alt="WithdrawCertificateIcon" />
           </Box>
-          <Box ref={fake2Ref} width={"190px"}></Box>
+          <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
     </Box>
