@@ -1,10 +1,13 @@
 import { Box } from "@mui/material";
 import StyledModal from "../commons/StyledModal";
 import { BoxDetails, NormalDescription, NumberParagraph, Watermark } from "./styles";
-
-export function DeregistrationProcessDescription() {
+interface Props {
+  open: boolean;
+  handleCloseModal: () => void;
+}
+export function DeregistrationProcessDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title="The deregistration process" handleCloseModal={() => { }} open>
+    <StyledModal title="The deregistration process" handleCloseModal={handleCloseModal} open={open}>
       <Box>
         <NormalDescription>
           When a delegator wants to deregister from staking on Cardano, the following steps occur:

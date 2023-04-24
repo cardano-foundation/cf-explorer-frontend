@@ -1,10 +1,13 @@
 import { Box } from "@mui/material";
 import StyledModal from "../commons/StyledModal";
 import { BoxDetails, NormalDescription, NumberParagraph, Watermark } from "./styles";
-
-export function RewardDistributionProcessDescription() {
+interface Props {
+  open: boolean;
+  handleCloseModal: () => void;
+}
+export function RewardDistributionProcessDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title="The reward distribution process" handleCloseModal={() => { }} open>
+    <StyledModal title="The reward distribution process" handleCloseModal={handleCloseModal} open={open}>
       <Box>
         <NormalDescription>
           When a delegator receives their rewards from the Cardano protocol, the following steps occur:
