@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Popover } from "@mui/material";
-import { CloseIcon, CloseLineIcon } from "../../../commons/resources";
+import { CloseLineIcon } from "../../../commons/resources";
 import CustomIcon from "../CustomIcon";
 
 type Props = {
