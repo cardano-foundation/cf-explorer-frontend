@@ -27,7 +27,6 @@ import CalenderPaleIcon from "./icons/calender-pale.svg";
 import ArrowDownIcon from "./icons/arrow-down.svg";
 import ArrowDropDownIcon from "./icons/arrow-drop-down.svg";
 import MenuIcon from "./icons/menu.svg";
-import AIcon from "./icons/AIcon.svg";
 import Policy from "./icons/policy.svg";
 import PolicyWhiteIcon from "./icons/policy-white.svg";
 import DIDMenuIcon from "./icons/menus/did.svg";
@@ -109,7 +108,6 @@ export {
   CheckGreenIcon,
   BlankBlueIcon,
   CalenderPaleIcon,
-  AIcon,
   ArrowDownIcon,
   ArrowDropDownIcon,
   Policy,
@@ -155,6 +153,10 @@ export {
   PolicyScriptIcon,
 };
 
+export { ReactComponent as CopySquareIcon } from "./icons/copy_square.svg";
+export { ReactComponent as OptionIcon } from "./icons/option.svg";
+export { ReactComponent as ReloadIcon } from "./icons/reload.svg";
+export { ReactComponent as AIcon } from "./icons/AIcon.svg";
 export { ReactComponent as EyeIcon } from "./icons/eye.svg";
 export { ReactComponent as StartPage } from "./icons/startPagePagination.svg";
 export { ReactComponent as EndPage } from "./icons/endPagePagination.svg";
