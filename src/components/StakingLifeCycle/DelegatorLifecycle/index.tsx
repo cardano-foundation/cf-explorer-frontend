@@ -18,7 +18,7 @@ import Registration from "./Registration";
 import Delegation from "./Delegation";
 import RewardsDistribution from "./RewardsDistribution";
 import Deregistration from "./Deregistration";
-import RewardsWithdrawal from "./RewardsWithdrawal";
+import RewardsWithdrawal from "./Withdraw";
 import ADATransferModal from "./ADATransferModal";
 import {
   DelegationProcessDescription,
@@ -38,27 +38,32 @@ interface StepperProps {
 const DelegatorLifecycle = ({
   setMode,
   containerPosition,
+  currentStep,
+  handleResize,
+  setCurrentStep,
 }: {
   setMode: (mode: "timeline" | "tablular") => void;
+  currentStep: number;
+  setCurrentStep: (index: number) => void;
+  handleResize: () => void;
   containerPosition: {
     top?: number;
     left?: number;
   };
 }) => {
-  const [currentStep, setCurrentStep] = useState(0);
   const [open, setOpen] = useState(false);
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
   const stepper: StepperProps[] = [
     {
       icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
       title: "Registration",
-      component: <Registration containerPosition={containerPosition} />,
+      component: <Registration handleResize={handleResize} containerPosition={containerPosition} />,
       description: <RegistrationProcessDescription open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />
     },
     {
       icon: <DelegationIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
       title: "Delegation",
-      component: <Delegation containerPosition={containerPosition} />,
+      component: <Delegation handleResize={handleResize} containerPosition={containerPosition} />,
       description: <DelegationProcessDescription open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />
     },
     {
@@ -70,17 +75,16 @@ const DelegatorLifecycle = ({
     {
       icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
       title: "Rewards Withdrawal",
-      component: <RewardsWithdrawal containerPosition={containerPosition} />,
+      component: <RewardsWithdrawal handleResize={handleResize} containerPosition={containerPosition} />,
       description: <WithdrawingFundProcessDescription open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />
     },
     {
       icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 4 ? "#fff" : "#98A2B3"} />,
       title: "Deregistration",
-      component: <Deregistration containerPosition={containerPosition} />,
+      component: <Deregistration handleResize={handleResize} containerPosition={containerPosition} />,
       description: <DeregistrationProcessDescription open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />
     },
   ];
-  console.log(open);
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"}>
@@ -111,12 +115,12 @@ const DelegatorLifecycle = ({
         </ADATransfersButton>
       </Box>
       <Box>{stepper[currentStep].description}</Box>
-      <Box>{stepper[currentStep].component}</Box>
+      <Box minHeight={400}>{stepper[currentStep].component}</Box>
 
       {currentStep > 0 && (
         <PreviousButton
           onClick={() => {
-            setCurrentStep(prev => prev - 1);
+            setCurrentStep(currentStep - 1);
           }}
         >
           <PreviousIcon />
@@ -124,10 +128,10 @@ const DelegatorLifecycle = ({
         </PreviousButton>
       )}
       <NextButton
-        onClick={() => (currentStep === stepper.length - 1 ? setMode("tablular") : setCurrentStep(prev => prev + 1))}
+        onClick={() => (currentStep === stepper.length - 1 ? setMode("tablular") : setCurrentStep(currentStep + 1))}
         variant="contained"
       >
-        Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+        Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
         <NextIcon />
       </NextButton>
       <ADATransferModal open={open} handleCloseModal={() => setOpen(false)} />

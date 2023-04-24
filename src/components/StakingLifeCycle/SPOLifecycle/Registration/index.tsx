@@ -1,14 +1,7 @@
 import { Box } from "@mui/material";
 import { useRef, useState } from "react";
 
-import {
-  SPOStalking,
-  ButtonListIcon,
-  BackIcon,
-  AddressIcon,
-  ADAGreen,
-  TimeIcon,
-} from "../../../../commons/resources";
+import { SPOStalking, ButtonListIcon, BackIcon, AddressIcon, ADAGreen, TimeIcon } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 
@@ -187,11 +180,11 @@ const RegistrationTimeline = ({
           </svg>
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
-          <Box ref={fake1Ref} width={"190px"}></Box>
-          <Box ref={registrationRef}>
+          <Box ref={fake1Ref} width={"190px"} height={220}></Box>
+          <Box ref={registrationRef} height={220} width={220}>
             <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
           </Box>
-          <Box ref={fake2Ref} width={"190px"}></Box>
+          <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
     </Box>

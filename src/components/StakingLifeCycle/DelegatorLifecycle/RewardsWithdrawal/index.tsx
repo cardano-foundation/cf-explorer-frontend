@@ -26,7 +26,7 @@ const RewardsWithdrawal = ({
   };
 }) => {
   // To do: chonj default là list sau đó clickdetail nhấn sang timelne. Đổi trong tương lai
-  const [show, setShow] = useState<"list" | "timeline">("timeline");
+  const [show, setShow] = useState<"list" | "timeline">("list");
   return (
     <Box>
       <Box>{show === "list" && <RewardsWithdrawalList />}</Box>

@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import {
   ADAHolderIcon,
@@ -21,11 +21,13 @@ import PopoverStyled from "../../../commons/PopoverStyled";
 
 const Registration = ({
   containerPosition,
+  handleResize,
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
+  handleResize: () => void;
 }) => {
   const [show, setShow] = useState<"list" | "timeline">("list");
   const [hash, setHash] = useState("");
@@ -39,7 +41,9 @@ const Registration = ({
     <Box>
       <Box>{show === "list" && <RecentRegistrations onSelect={handleSelect} />}</Box>
       <Box>
-        {show === "timeline" && <RegistrationTimeline setShow={setShow} containerPosition={containerPosition} />}
+        {show === "timeline" && (
+          <RegistrationTimeline handleResize={handleResize} setShow={setShow} containerPosition={containerPosition} />
+        )}
       </Box>
     </Box>
   );
@@ -49,13 +53,16 @@ export default Registration;
 const RegistrationTimeline = ({
   containerPosition,
   setShow,
+  handleResize,
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
   setShow: (show: "list" | "timeline") => void;
+  handleResize: () => void;
 }) => {
+  const [loading, setLoading] = useState(true);
   const adaHolderRef = useRef(null);
   const holdRef = useRef(null);
   const feeRef = useRef(null);
@@ -63,6 +70,15 @@ const RegistrationTimeline = ({
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
+
+  useEffect(() => {
+    handleResize();
+    setTimeout(() => setLoading(false), 2000);
+  }, []);
+
+  if (loading) {
+    return <Box>loading</Box>;
+  }
 
   return (
     <Box>
@@ -122,8 +138,7 @@ const RegistrationTimeline = ({
               </FeeBox>
             </Box>
           </Box>
-          <Box ref={cadarnoSystemRef}>
-            {/* <CadarnoSystemIcon /> */}
+          <Box ref={cadarnoSystemRef} width={190} height={215}>
             <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
           </Box>
 
@@ -197,7 +212,7 @@ const RegistrationTimeline = ({
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
           <Box ref={fake1Ref} width={"190px"}></Box>
-          <Box ref={registrationRef}>
+          <Box ref={registrationRef} width={220} height={220}>
             <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
           </Box>
           <Box ref={fake2Ref} width={"190px"}></Box>
