@@ -48,10 +48,6 @@ const Delegation = ({
 };
 export default Delegation;
 
-const DelegationList = () => {
-  return <Box>list Delegation</Box>;
-};
-
 const DelegationTimeline = ({
   containerPosition,
   setShow,
@@ -69,7 +65,6 @@ const DelegationTimeline = ({
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
-  const DelegationRef = useRef(null);
 
   return (
     <Box>
@@ -97,20 +92,8 @@ const DelegationTimeline = ({
           <Box ref={adaHolderRef}>
             <ADAHolderIcon />
           </Box>
-
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
             <Box display={"flex"} flex={1}>
-              <HoldBox ref={holdRef} ml={1}>
-                <Box>
-                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                    2.0
-                  </Box>
-                  <ADAicon fontSize="18px" />
-                </Box>
-                <IconButton>
-                  <ButtonListIcon />
-                </IconButton>
-              </HoldBox>
               <FeeBox ref={feeRef}>
                 <Box>
                   <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>

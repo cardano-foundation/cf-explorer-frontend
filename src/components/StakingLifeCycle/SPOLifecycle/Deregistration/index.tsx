@@ -1,14 +1,7 @@
 import { Box } from "@mui/material";
 import { useRef, useState } from "react";
 
-import {
-  SPOStalking,
-  ButtonListIcon,
-  BackIcon,
-  AddressIcon,
-  ADAGreen,
-  TimeIcon,
-} from "../../../../commons/resources";
+import { SPOStalking, ButtonListIcon, BackIcon, AddressIcon, ADAGreen, TimeIcon } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 
@@ -152,6 +145,9 @@ const DeregistrationTimeline = ({
               orient="vertical"
               pointFrom="border"
               pointTo="center"
+              connectToReverse={true}
+              connectFromReverse={true}
+              isCentalVertical={false}
             />
             <ArrowDiagram
               containerPosition={containerPosition}
@@ -161,6 +157,8 @@ const DeregistrationTimeline = ({
               pointFrom="border"
               orient="vertical"
               connectToReverse={true}
+              connectFromReverse={true}
+              isCentalHorizontal={false}
             />
             <Line
               containerPosition={containerPosition}

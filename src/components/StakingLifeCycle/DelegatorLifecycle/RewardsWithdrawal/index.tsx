@@ -57,6 +57,7 @@ const RewardsWithdrawalTimeline = ({
   const boxWalletRef = useRef(null);
   const withdrawnRef = useRef(null);
   const feesRef = useRef(null);
+  const feesBrigeRef = useRef(null);
   const netAmountRef = useRef(null);
 
   return (
@@ -134,8 +135,9 @@ const RewardsWithdrawalTimeline = ({
             </Withdrawn>
           </RoundBox>
 
-          <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
+          <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} position={'relative'}>
             <FeeBox ml={1} ref={feesRef}>
+            <Box ref={feesBrigeRef} width={236} height={71} position={"absolute"} top={"-76px"} left={0}></Box>
               <Box>
                 <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
                   2.0
@@ -148,8 +150,8 @@ const RewardsWithdrawalTimeline = ({
             </FeeBox>
           </Box>
 
-          <Box ref={cadarnoSystemRef}>
-            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
+          <Box>
+            <img ref={cadarnoSystemRef} style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
           </Box>
 
           <svg
@@ -177,6 +179,7 @@ const RewardsWithdrawalTimeline = ({
               pointTo="border"
               pointFrom="border"
               orient="vertical"
+              isCentalVertical={false}
             />
             <ArrowDiagram
               containerPosition={containerPosition}
@@ -184,6 +187,7 @@ const RewardsWithdrawalTimeline = ({
               toRef={cadarnoSystemRef}
               pointTo="border"
               pointFrom="border"
+              isCentalHorizontal={false}
               orient="vertical"
             />
             <ArrowDiagram
@@ -195,13 +199,21 @@ const RewardsWithdrawalTimeline = ({
               orient="vertical"
               connectToReverse={true}
             />
-            <ArrowDiagram
+            <Line
               containerPosition={containerPosition}
               fromRef={feesRef}
+              toRef={feesBrigeRef}
+              pointTo="center"
+              pointFrom="border"
+              orient="horizontal"
+            />
+            <ArrowDiagram
+              containerPosition={containerPosition}
+              fromRef={feesBrigeRef}
               toRef={netAmountRef}
               pointTo="border"
               connectFromReverse={true}
-              pointFrom="border"
+              pointFrom="center"
               connectToReverse={true}
               orient="vertical"
             />
@@ -211,6 +223,7 @@ const RewardsWithdrawalTimeline = ({
               toRef={boxWalletRef}
               pointTo="border"
               pointFrom="border"
+              isCentalHorizontal={false}
               connectToReverse={true}
               connectFromReverse={true}
               orient="vertical"
