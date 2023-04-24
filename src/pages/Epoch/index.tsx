@@ -65,6 +65,17 @@ const Epoch: React.FC = () => {
       render: r => <Blocks>{r.txCount}</Blocks>,
     },
     {
+      title: "Rewards Distributed",
+      key: "rDistributed",
+      minWidth: "100px",
+      render: r => (
+        <Output>
+          {formatADAFull(r.rewardsDistributed)}
+          <ADAicon />
+        </Output>
+      ),
+    },
+    {
       title: "Total Output",
       key: "outSum",
       minWidth: "100px",
