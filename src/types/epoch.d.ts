@@ -32,4 +32,5 @@ interface EpochCurrentType {
   no: number;
   slot: number;
   totalSlot: number;
+  account: number;
 }

@@ -27,6 +27,13 @@ import MyProfile from "./pages/MyProfile";
 import AccountLayout from "./components/commons/Layout/AccountLayout";
 import Bookmark from "./pages/Bookmark";
 import PrivateNotes from "./pages/PrivateNotes";
+import DelegatorLifecycle from "./pages/DelegatorLifecycle";
+import SPOLifecycle from "./pages/SPOLifecycle";
+import SPOSearch from "./pages/SPOSearch";
+import DelegatorSearch from "./pages/DelegatorSearch";
+import Icons from "./pages/Icons";
+import StackingLifecycle from "./pages/StackingLifecycle";
+import ReportGenerated from "./pages/ReportGenerated";
 
 const Routes: React.FC = () => {
   return (
@@ -51,7 +58,17 @@ const Routes: React.FC = () => {
       <Route path={routers.POLICY_DETAIL} exact component={PolicyDetail} />
       <Route path={routers.ADDRESS_LIST} exact component={TopAddresses} />
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
+      <Route path={routers.DELEGATOR_LIFECYCLE} exact component={DelegatorLifecycle} />
+      <Route path={routers.SPO_LIFECYCLE} exact component={SPOLifecycle} />
+      <Route path={routers.DELEGATOR_SEARCH} exact component={DelegatorSearch} />
+      <Route path={routers.SPO_SEARCH} exact component={SPOSearch} />
+      <Route path={routers.STAKING_LIFECYCLE} exact component={StackingLifecycle} />
+      <Route path={routers.REPORT_GENERATED} exact component={ReportGenerated} />
       <Route path={routers.SEARCH} exact component={SearchResult} />
+      <Route path={routers.DELEGATOR_LIFECYCLE} exact component={DelegatorLifecycle} />
+      <Route path={routers.SPO_LIFECYCLE} exact component={SPOLifecycle} />
+      <Route path={routers.SPO_SEARCH} exact component={SPOSearch} />
+      <Route path={routers.DELEGATOR_SEARCH} exact component={DelegatorSearch} />
       <Route path={routers.ACCOUNT}>
         <AccountLayout>
           <Switch>
@@ -63,6 +80,7 @@ const Routes: React.FC = () => {
           </Switch>
         </AccountLayout>
       </Route>
+      <Route path={"/icons"} component={Icons} />
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );

@@ -1,6 +1,13 @@
 import { FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
-import { BlockChainMenuIcon, BrowseIcon, DelegatePoolMenuIcon, MediumIcon, ResourcesIcon } from "./resources";
+import {
+  BlockChainMenuIcon,
+  BrowseIcon,
+  DelegatePoolMenuIcon,
+  MediumIcon,
+  ResourcesIcon,
+  StakingLifecycleIcon,
+} from "./resources";
 import { routers } from "./routers";
 
 interface Menu {
@@ -37,6 +44,17 @@ export const menus: Menu[] = [
       { title: "Stake key registration", href: routers.STAKE_LIST.replace(":poolType?", "registration") },
       { title: "Pool Registration", href: "/registration-pools" },
       { title: "Top Delegators", href: routers.TOP_DELEGATOR },
+    ],
+  },
+  {
+    title: "Staking Lifecycle",
+    icon: StakingLifecycleIcon,
+    children: [
+      // To do
+      { title: "Dashboard", href: "/" },
+      { title: "Timeline Delegator", href: routers.DELEGATOR_SEARCH },
+      { title: "Timeline SPO", href: routers.SPO_SEARCH },
+      { title: "Report", href: "/" },
     ],
   },
 ];
