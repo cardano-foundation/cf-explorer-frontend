@@ -76,6 +76,7 @@ export interface TableProps<T extends ColumnType = any> {
   renderAction?: (items, clearSelection: () => void) => React.ReactElement;
   onFilterChange?: (value: any, option?: Option) => void;
   isShowingResult?: boolean;
+  maxHeight?: number | string; 
 }
 
 export interface FooterTableProps {
