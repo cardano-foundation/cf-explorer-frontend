@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 
 import {
   ADAHolderIcon,
@@ -10,9 +10,10 @@ import {
   TimeIcon,
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
+import DelegationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 import Line from "../../../Line";
-import { FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentDelegations from "./RecentDelegations";
@@ -22,13 +23,11 @@ import { API } from "../../../../commons/utils/api";
 
 const Delegation = ({
   containerPosition,
-  handleResize,
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
-  handleResize: () => void;
 }) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [show, setShow] = useState<"list" | "timeline">("list");
@@ -43,11 +42,7 @@ const Delegation = ({
   return (
     <Box>
       <Box>{show === "list" && <RecentDelegations onSelect={handleSelect} />}</Box>
-      <Box>
-        {show === "timeline" && (
-          <DelegationTimeline handleResize={handleResize} setShow={setShow} containerPosition={containerPosition} />
-        )}
-      </Box>
+      <Box>{show === "timeline" && <DelegationTimeline setShow={setShow} containerPosition={containerPosition} />}</Box>
     </Box>
   );
 };
@@ -56,16 +51,13 @@ export default Delegation;
 const DelegationTimeline = ({
   containerPosition,
   setShow,
-  handleResize,
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
   setShow: (show: "list" | "timeline") => void;
-  handleResize: () => void;
 }) => {
-  const [loading, setLoading] = useState(true);
   const adaHolderRef = useRef(null);
   const holdRef = useRef(null);
   const feeRef = useRef(null);
@@ -73,15 +65,6 @@ const DelegationTimeline = ({
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
-
-  useEffect(() => {
-    handleResize();
-    setTimeout(() => setLoading(false), 2000);
-  }, []);
-
-  if (loading) {
-    return <Box>loading</Box>;
-  }
 
   return (
     <Box>
@@ -124,9 +107,9 @@ const DelegationTimeline = ({
               </FeeBox>
             </Box>
           </Box>
-          <Box ref={cadarnoSystemRef} width={192} height={215}>
+          <Box ref={cadarnoSystemRef}>
             {/* <CadarnoSystemIcon /> */}
-            <img src={cadarnoSystem} alt="carrdano" />
+            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
           </Box>
 
           <svg
@@ -190,11 +173,11 @@ const DelegationTimeline = ({
           </svg>
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
-          <Box ref={fake1Ref} width={"190px"} height={220}></Box>
-          <Box ref={registrationRef} width={220} height={220}>
+          <Box ref={fake1Ref} width={"190px"}></Box>
+          <Box ref={registrationRef}>
             <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
           </Box>
-          <Box ref={fake2Ref} width={"190px"} height={220}></Box>
+          <Box ref={fake2Ref} width={"190px"}></Box>
         </Box>
       </Box>
     </Box>

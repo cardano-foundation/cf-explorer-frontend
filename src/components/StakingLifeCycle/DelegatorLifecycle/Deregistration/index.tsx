@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import {
   ADAHolderIcon,
@@ -21,13 +21,11 @@ import RecentDeregistrations from "./RecentDeregistration";
 
 const Deregistration = ({
   containerPosition,
-  handleResize,
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
-  handleResize: () => void;
 }) => {
   const [show, setShow] = useState<"list" | "timeline">("list");
   const [hash, setHash] = useState("");
@@ -41,9 +39,7 @@ const Deregistration = ({
     <Box>
       <Box>{show === "list" && <RecentDeregistrations onSelect={handleSelect} />}</Box>
       <Box>
-        {show === "timeline" && (
-          <DeregistrationTimeline handleResize={handleResize} setShow={setShow} containerPosition={containerPosition} />
-        )}
+        {show === "timeline" && <DeregistrationTimeline setShow={setShow} containerPosition={containerPosition} />}
       </Box>
     </Box>
   );
@@ -53,16 +49,13 @@ export default Deregistration;
 const DeregistrationTimeline = ({
   containerPosition,
   setShow,
-  handleResize,
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
-  handleResize: () => void;
   setShow: (show: "list" | "timeline") => void;
 }) => {
-  const [loading, setLoading] = useState(true);
   const adaHolderRef = useRef(null);
   const holdRef = useRef(null);
   const feeRef = useRef(null);
@@ -71,14 +64,6 @@ const DeregistrationTimeline = ({
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
 
-  useEffect(() => {
-    handleResize();
-    setTimeout(() => setLoading(false), 2000);
-  }, []);
-
-  if (loading) {
-    return <Box>loading</Box>;
-  }
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
@@ -132,9 +117,9 @@ const DeregistrationTimeline = ({
               </FeeBox>
             </Box>
           </Box>
-          <Box ref={cadarnoSystemRef} height={215} width={190}>
+          <Box ref={cadarnoSystemRef}>
             {/* <CadarnoSystemIcon /> */}
-            <img src={cadarnoSystem} alt="carrdano" />
+            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
           </Box>
 
           <svg
@@ -220,11 +205,11 @@ const DeregistrationTimeline = ({
           </svg>
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
-          <Box ref={fake1Ref} width={"190px"} height={220}></Box>
-          <Box ref={registrationRef} width={220} height={220}>
+          <Box ref={fake1Ref} width={"190px"}></Box>
+          <Box ref={registrationRef}>
             <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
           </Box>
-          <Box ref={fake2Ref} width={"190px"} height={220}></Box>
+          <Box ref={fake2Ref} width={"190px"}></Box>
         </Box>
       </Box>
     </Box>
