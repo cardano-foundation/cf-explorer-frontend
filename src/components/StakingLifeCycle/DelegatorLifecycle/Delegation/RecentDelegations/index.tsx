@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import CustomIcon from "../../../../commons/CustomIcon";
 import { ArrowFromBottomIcon, ArrowFromTopIcon, CalenderIcon, SearchIcon } from "../../../../../commons/resources";
 import { useParams } from "react-router";
@@ -11,6 +11,7 @@ import { useState } from "react";
 import StackingFilter, { FilterParams } from "../../../../StackingFilter";
 import { FilterDateLabel } from "../../RewardsWithdrawal/styles";
 import moment from "moment";
+import { EmptyRecord } from "../../../../commons/Table";
 
 const filterOptions = [
   { label: "Latest - First", icon: <CustomIcon icon={ArrowFromTopIcon} width={20} />, value: "latest" },
@@ -20,7 +21,7 @@ const filterOptions = [
 ];
 
 interface Props {
-  onSelect: (hash: string) => void;
+  onSelect: (registration: DelegationItem) => void;
 }
 
 const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
@@ -31,34 +32,62 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
     toDate: undefined,
     txHash: undefined,
   });
-  
-  const { data, total } = useFetchList<DelegationItem>(stakeId ? API.STAKE_LIFECYCLE.DELEGATION(stakeId) : "", {
-    page: 0,
-    size: 1000,
-    ...params
-  });
 
+  const { data, total, loading, initialized, error } = useFetchList<DelegationItem>(
+    stakeId ? API.STAKE_LIFECYCLE.DELEGATION(stakeId) : "",
+    {
+      page: 0,
+      size: 1000,
+      ...params,
+    }
+  );
 
   return (
     <Box marginTop="32px">
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
         <span>Recent Delegations</span>
         <Box display={"flex"} alignItems={"center"} gap={2}>
-          <WrapFilterDescription>Showing {total} results</WrapFilterDescription>
+          <WrapFilterDescription>
+            Showing {total} {total > 1 ? "results" : "result"}
+          </WrapFilterDescription>
           {params.fromDate && params.toDate && (
             <FilterDateLabel>
-              Date range: {moment(params.fromDate).format("MM/DD/YYYY")} -{" "}
-              {moment(params.toDate).format("MM/DD/YYYY")}
+              Date range: {moment(params.fromDate).format("MM/DD/YYYY")} - {moment(params.toDate).format("MM/DD/YYYY")}
             </FilterDateLabel>
           )}
-          <StackingFilter filterValue={params} onFilterValueChange={(params) => setParams((pre) => ({...pre,...params}))} />
+          <StackingFilter
+            filterValue={params}
+            onFilterValueChange={params =>
+              setParams(pre => ({
+                fromDate: undefined,
+                sort: undefined,
+                toDate: undefined,
+                txHash: undefined,
+                ...params,
+              }))
+            }
+          />
         </Box>
       </Box>
       <GridBox>
-        {data.map((item, index) => {
-          return <OverviewStaking key={index} amount={item.outSum} time={item.time} hash={item.txHash} onClick={onSelect} />;
-        })}
+        {loading &&
+          [...new Array(12)].map((i, ii) => (
+            <Skeleton style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
+          ))}
+        {!loading &&
+          data.map(item => {
+            return (
+              <OverviewStaking
+                amount={item.outSum}
+                time={item.time}
+                hash={item.txHash}
+                item={item}
+                onClick={onSelect}
+              />
+            );
+          })}
       </GridBox>
+      {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
     </Box>
   );
 };

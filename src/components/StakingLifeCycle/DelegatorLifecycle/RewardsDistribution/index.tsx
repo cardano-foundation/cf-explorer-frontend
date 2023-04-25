@@ -3,12 +3,14 @@ import { useRef } from "react";
 
 import { ADAHolderIcon, ADAOrangeIcon, ButtonListIcon } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
-import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 
 import Line from "../../../Line";
 import { FeeBox, IconButton } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
+import { useParams } from "react-router-dom";
 import ArrowDiagram from "../../../ArrowDiagram";
+import PopoverStyled from "../../../commons/PopoverStyled";
+import PopupStaking from "../../../commons/PopupStaking";
 
 const RewardsDistribution = ({
   containerPosition,
@@ -18,12 +20,15 @@ const RewardsDistribution = ({
     left?: number;
   };
 }) => {
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
+  // const { data, loading } = useFetch(API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stakeId) || "");
   const cadarnoSystemRef = useRef(null);
   const adaIcon1Ref = useRef(null);
   const adaIcon2Ref = useRef(null);
   const adaHolderRef = useRef(null);
   const operatorRewardRef = useRef(null);
-
+  const feeRef = useRef(null);
+  const fee2Ref = useRef(null);
   return (
     <Box mt={3}>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
@@ -41,34 +46,44 @@ const RewardsDistribution = ({
           </Box>
           <Box display={"flex"} py={3} flexDirection={"column"} justifyContent={"space-between"} alignItems={"center"}>
             <Box display={"flex"} ref={adaHolderRef}>
-              <FeeBox>
-                <Box>
-                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                    0.174433
-                  </Box>
-                  <ADAicon fontSize="18px" />
-                </Box>
-                <IconButton>
-                  <ButtonListIcon />
-                </IconButton>
-              </FeeBox>
+              <PopoverStyled
+                render={({ handleClick }: any) => (
+                  <FeeBox ref={feeRef}>
+                    <Box>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                        0.174433
+                      </Box>
+                      <ADAicon fontSize="18px" />
+                    </Box>
+                    <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </FeeBox>
+                )}
+                content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+              />
             </Box>
             <Box display={"flex"} ref={operatorRewardRef}>
-              <FeeBox>
-                <Box>
-                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                    0.174433
-                  </Box>
-                  <ADAicon fontSize="18px" />
-                </Box>
-                <IconButton>
-                  <ButtonListIcon />
-                </IconButton>
-              </FeeBox>
+              <PopoverStyled
+                render={({ handleClick }: any) => (
+                  <FeeBox ref={fee2Ref}>
+                    <Box>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                        0.174433
+                      </Box>
+                      <ADAicon fontSize="18px" />
+                    </Box>
+                    <IconButton onClick={() => fee2Ref?.current && handleClick(fee2Ref.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </FeeBox>
+                )}
+                content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+              />
             </Box>
           </Box>
         </Box>
-        <Box flex={1} textAlign={'end'}>
+        <Box flex={1} textAlign={"end"} width={190} height={215}>
           <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
         </Box>
       </Box>

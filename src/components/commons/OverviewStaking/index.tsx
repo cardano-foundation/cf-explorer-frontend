@@ -10,14 +10,15 @@ interface Props {
   hash: string;
   amount: number;
   time: string;
-  onClick: (hash: string) => void;
+  item?: RegistrationItem | DelegationItem | WithdrawItem | DeregistrationItem;
+  onClick: (registration: any) => void;
 }
 
-const OverviewStaking: React.FC<Props> = props => {
+const OverviewStaking: React.FC<Props> = ({ item, ...props }) => {
   const { hash, amount, time, onClick } = props;
 
   return (
-    <WrapContainer onClick={() => onClick(hash)}>
+    <WrapContainer onClick={() => onClick(item)}>
       <Box display={"flex"}>
         <OverviewIcon>
           <CustomIcon icon={HashtagIcon} width={17} fill="currentColor" color={theme => theme.palette.primary.main} />

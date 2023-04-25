@@ -22,6 +22,8 @@ import StackingFilter, { FilterParams } from "../../../StackingFilter";
 import { WrapFilterDescription } from "../../DelegatorLifecycle/Registration/RecentRegistrations/styles";
 import { GridBox } from "../../DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import OverviewStaking from "../../../commons/OverviewStaking";
+import PopoverStyled from "../../../commons/PopoverStyled";
+import TransactionHash from "../../../commons/TransactionHash";
 
 const PoollUpdates = ({
   containerPosition,
@@ -94,7 +96,7 @@ const PoollUpdatesTimeline = ({
         </IconButtonBack>
         <Box display={"flex"}>
           <Info>
-            <AddressIcon />
+            <AddressIcon fill="#438F68" />
             <InfoText>e0c5c3d4e5...c3e04c2</InfoText>
           </Info>
           <Info>
@@ -114,19 +116,24 @@ const PoollUpdatesTimeline = ({
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
-            <Box display={"flex"} flex={1}>
-              <FeeBox ref={feeRef}>
-                <Box>
-                  <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                    0.174433
-                  </Box>
-                  <ADAicon fontSize="18px" />
+            <PopoverStyled
+              render={({ handleClick }) => (
+                <Box display={"flex"} flex={1}>
+                  <FeeBox ref={feeRef}>
+                    <Box>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                        0.174433
+                      </Box>
+                      <ADAicon fontSize="18px" />
+                    </Box>
+                    <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </FeeBox>
                 </Box>
-                <IconButton>
-                  <ButtonListIcon />
-                </IconButton>
-              </FeeBox>
-            </Box>
+              )}
+              content={<TransactionHash hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+            />
           </Box>
           <Box ref={cadarnoSystemRef}>
             {/* <CadarnoSystemIcon /> */}
