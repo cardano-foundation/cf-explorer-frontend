@@ -18,3 +18,7 @@ export const DatePickerFooter = styled(Box)`
     gap: 8px;
     margin-top: 20px;
 `;
+
+export const AdditionContainer = styled(Box)`
+    padding: 0px 16px;
+`;

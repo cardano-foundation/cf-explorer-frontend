@@ -120,7 +120,7 @@ const DelegatorLifecycle = ({
       key: "deregistration",
     },
   ];
-  console.log(open);
+  
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"}>

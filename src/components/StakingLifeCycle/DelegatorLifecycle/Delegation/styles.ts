@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
@@ -72,3 +73,9 @@ export const InfoText = styled(Box)(({ theme }) => ({
   fontWeight: 600,
   fontSize: "14px",
 }));
+
+export const FilterDateLabel = styled(Typography)`
+  font-size: 14px;
+  font-weight: 400;
+  color: ${props => props.theme.palette.grey[400]};
+`;

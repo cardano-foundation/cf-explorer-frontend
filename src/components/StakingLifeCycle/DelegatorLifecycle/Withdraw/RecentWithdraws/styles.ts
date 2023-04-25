@@ -1,4 +1,4 @@
-import { Popover } from "@mui/material";
+import { ListItemIcon, Popover } from "@mui/material";
 import { Button, styled } from "@mui/material";
 
 export const SubmitButton = styled(Button)`
@@ -77,3 +77,6 @@ export const WrapPopoverContent = styled("div")`
   }
 `
 
+export const StyledListItemIcon = styled(ListItemIcon)`
+  color: inherit;
+`;

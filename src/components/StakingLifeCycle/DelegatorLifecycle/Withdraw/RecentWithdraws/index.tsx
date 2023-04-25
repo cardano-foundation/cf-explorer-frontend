@@ -1,17 +1,14 @@
 import { Box, Skeleton } from "@mui/material";
-import CustomIcon from "../../../../commons/CustomIcon";
-import { ArrowFromBottomIcon, ArrowFromTopIcon, CalenderIcon, SearchIcon } from "../../../../../commons/resources";
+import moment from "moment";
+import { useMemo, useState } from "react";
 import { useParams } from "react-router";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
-import { GridBox, WrapFilterDescription } from "./styles";
-import Filter from "../../../../commons/Filter";
+import StackingFilter, { FilterParams } from "../../../../StackingFilter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
 import { EmptyRecord } from "../../../../commons/Table";
-import { useState } from "react";
-import StackingFilter, { FilterParams } from "../../../../StackingFilter";
-import { FilterDateLabel } from "../../RewardsWithdrawal/styles";
-import moment from "moment";
+import { FilterDateLabel } from "../../Delegation/styles";
+import { GridBox, WrapFilterDescription } from "./styles";
 
 interface Props {
   onSelect: (ưithdraw: WithdrawItem) => void;
@@ -30,6 +27,16 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect }) => {
     { page: 0, size: 1000, ...params }
   );
 
+  const filterLabel = useMemo(() => {
+    if (params.fromDate && params.toDate)
+      return ` Filter by: ${moment(params.fromDate).format("MM/DD/YYYY")} - ${moment(params.toDate).format(
+        "MM/DD/YYYY"
+      )}`;
+    if (params.sort && params.sort.length >= 2)
+      return `${params.sort[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
+    if (params.txHash) return `Searching for : ${params.txHash}`;
+  }, [params]);
+
   return (
     <Box marginTop="32px">
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
@@ -38,11 +45,7 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect }) => {
           <WrapFilterDescription>
             Showing {total} {total > 1 ? "results" : "result"}
           </WrapFilterDescription>
-          {params.fromDate && params.toDate && (
-            <FilterDateLabel>
-              Date range: {moment(params.fromDate).format("MM/DD/YYYY")} - {moment(params.toDate).format("MM/DD/YYYY")}
-            </FilterDateLabel>
-          )}
+          {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
           <StackingFilter
             filterValue={params}
             onFilterValueChange={params =>
@@ -65,7 +68,14 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect }) => {
         {!loading &&
           data.map(item => {
             return (
-              <OverviewStaking amount={item.value} item={item} time={item.time} hash={item.txHash} onClick={onSelect} />
+              <OverviewStaking
+                key={item.txHash}
+                amount={item.value}
+                item={item}
+                time={item.time}
+                hash={item.txHash}
+                onClick={onSelect}
+              />
             );
           })}
       </GridBox>
