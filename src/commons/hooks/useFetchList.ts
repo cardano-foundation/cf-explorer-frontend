@@ -6,7 +6,7 @@ import { authAxios, defaultAxios } from "../utils/axios";
 interface Params {
   page?: number;
   size?: number;
-  [key: string]: string | number | undefined;
+  [key: string]: string | number | Date | string[] | undefined;
 }
 
 interface FetchReturnType<T> {
@@ -32,6 +32,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
   const lastFetch = useRef<number>(Date.now());
 
   const getList = useCallback(async () => {
+    console.log('get list', params)
     if (!url) return;
     let service: AxiosInstance = isAuth ? authAxios : defaultAxios;
     if (url.search("http://") === 0 || url.search("https://") === 0) {

@@ -16,6 +16,12 @@ import Line from "../../../Line";
 import { FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
+import useFetchList from "../../../../commons/hooks/useFetchList";
+import { API } from "../../../../commons/utils/api";
+import StackingFilter, { FilterParams } from "../../../StackingFilter";
+import { WrapFilterDescription } from "../../DelegatorLifecycle/Registration/RecentRegistrations/styles";
+import { GridBox } from "../../DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
+import OverviewStaking from "../../../commons/OverviewStaking";
 
 const PoollUpdates = ({
   containerPosition,
@@ -37,7 +43,30 @@ const PoollUpdates = ({
 export default PoollUpdates;
 
 const PoollUpdatesList = () => {
-  return <Box>list PoollUpdates</Box>;
+
+  const [params, setParams] = useState<FilterParams>();
+
+  const { data, total } = useFetchList<PoolUpdateItem>(API.SPO_LIFECYCLE.POOL_UPDATE, {
+    page: 0,
+    size: 1000,
+    ...params,
+  });
+  return (
+    <Box marginTop="32px">
+      <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
+        <span>Recent Withdrawals</span>
+        <Box display={"flex"} alignItems={"center"} gap={2}>
+          <WrapFilterDescription>Showing {total} results</WrapFilterDescription>
+          <StackingFilter filterValue={params} onFilterValueChange={(params) => setParams((pre) => ({...pre,...params}))} />
+        </Box>
+      </Box>
+      <GridBox>
+        {data.map(item => {
+          return <OverviewStaking onClick={() => {}} hash={item.txHash} amount={item.fee} time={item.time}/>;
+        })}
+      </GridBox>
+    </Box>
+  )
 };
 
 const PoollUpdatesTimeline = ({

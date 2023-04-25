@@ -18,7 +18,7 @@ export interface FilterProps {
 
 export interface Option {
   value: any;
-  label: string;
+  label?: string | React.ReactNode;
   icon: React.ReactNode;
 }
 

@@ -1,5 +1,5 @@
-import { Box } from "@mui/material";
-import { useRef, useState } from "react";
+import { Box, Typography } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 
 import {
   ADAHolderIcon,
@@ -13,9 +13,28 @@ import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSy
 import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 
 import Line from "../../../Line";
-import { FeeBox, IconButton, IconButtonBack, Info, InfoText, NetAmount, Payment, RoundBox, Withdrawn } from "./styles";
+import {
+  FeeBox,
+  FilterDateLabel,
+  IconButton,
+  IconButtonBack,
+  Info,
+  InfoText,
+  NetAmount,
+  Payment,
+  RoundBox,
+  Withdrawn,
+} from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
+import useFetchList from "../../../../commons/hooks/useFetchList";
+import { useParams } from "react-router-dom";
+import { API } from "../../../../commons/utils/api";
+import OverviewStaking from "../../../commons/OverviewStaking";
+import { GridBox, WrapFilterDescription } from "../Withdraw/RecentWithdraws/styles";
+import StackingFilter, { FilterParams } from "../../../StackingFilter";
+import moment from "moment";
+import { formatDateTimeLocal } from "../../../../commons/utils/helper";
 
 const RewardsWithdrawal = ({
   containerPosition,
@@ -25,7 +44,8 @@ const RewardsWithdrawal = ({
     left?: number;
   };
 }) => {
-  // To do: chonj default là list sau đó clickdetail nhấn sang timelne. Đổi trong tương lai
+  // To do: chonj default là list sau đó clickdetail nhấn sang timelne. Đổi trong tương la
+
   const [show, setShow] = useState<"list" | "timeline">("timeline");
   return (
     <Box>
@@ -39,7 +59,44 @@ const RewardsWithdrawal = ({
 export default RewardsWithdrawal;
 
 const RewardsWithdrawalList = () => {
-  return <Box>list RewardsWithdrawal</Box>;
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const [params, setParams] = useState<FilterParams>({
+    fromDate: undefined,
+    sort: undefined,
+    toDate: undefined,
+    txHash: undefined,
+  });
+  const { data, total } = useFetchList<WithdrawItem>(stakeId ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "", {
+    page: 0,
+    size: 1000,
+    ...params,
+  });
+
+  return (
+    <Box marginTop="32px">
+      <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
+        <span>Recent Withdrawals</span>
+        <Box display={"flex"} alignItems={"center"} gap={2}>
+          <WrapFilterDescription>Showing {total} results</WrapFilterDescription>
+          {params.fromDate && params.toDate && (
+            <FilterDateLabel>
+              Date range: {moment(params.fromDate).format("MM/DD/YYYY")} -{" "}
+              {moment(params.toDate).format("MM/DD/YYYY")}
+            </FilterDateLabel>
+          )}
+          <StackingFilter
+            filterValue={params}
+            onFilterValueChange={params => setParams(pre => ({ ...pre, ...params }))}
+          />
+        </Box>
+      </Box>
+      <GridBox>
+        {data.map((item, index) => {
+          return <OverviewStaking key={index} onClick={() => {}} hash={item.txHash} amount={item.value} time={item.time} />;
+        })}
+      </GridBox>
+    </Box>
+  );
 };
 
 const RewardsWithdrawalTimeline = ({
@@ -135,9 +192,15 @@ const RewardsWithdrawalTimeline = ({
             </Withdrawn>
           </RoundBox>
 
-          <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} position={'relative'}>
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            position={"relative"}
+          >
             <FeeBox ml={1} ref={feesRef}>
-            <Box ref={feesBrigeRef} width={236} height={71} position={"absolute"} top={"-76px"} left={0}></Box>
+              <Box ref={feesBrigeRef} width={236} height={71} position={"absolute"} top={"-76px"} left={0}></Box>
               <Box>
                 <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
                   2.0
