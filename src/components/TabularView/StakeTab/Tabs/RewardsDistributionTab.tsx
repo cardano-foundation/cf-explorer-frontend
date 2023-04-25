@@ -10,24 +10,24 @@ import { API } from "../../../../commons/utils/api";
 import { AdaValue } from "./StakeRegistrationTab";
 import { GreenWalletIcon } from "../../TabularOverview";
 
-const columns: Column<DelegationHistory>[] = [
+const columns: Column<RewardDistributionItem>[] = [
   {
     title: "Rewards Paid",
     key: "paid",
     minWidth: "120px",
-    render: r => <AdaValue value="234154851.36871" />,
+    render: r => <AdaValue value={r.amount} />,
   },
   {
     title: "Timestamp",
     key: "time",
     minWidth: "120px",
-    render: r => formatDateTimeLocal("10/24/2022 14:09:02"),
+    render: r => formatDateTimeLocal(r.time),
   },
   {
     title: "Epoch",
     key: "epoch",
     minWidth: "120px",
-    render: r => <StyledLink to="/">32434</StyledLink>,
+    render: r => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>,
   },
 ];
 
@@ -37,7 +37,10 @@ const RewardsDistributionTab = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<any>(`${API.STAKE.DETAIL}/${stakeId}/delegation-history`, pageInfo);
+  const fetchData = useFetchList<RewardDistributionItem>(
+    stakeId ? API.STAKE_LIFECYCLE.DELEGATION(stakeId) : "",
+    pageInfo
+  );
 
   return (
     <>
@@ -47,13 +50,12 @@ const RewardsDistributionTab = () => {
           <AdaValue value="234154851.36871" />
         </WrapWalletLabel>
         <Box display="flex" alignItems="center">
-          <TextResult>Showing 10 results</TextResult>
+          <TextResult>Showing {fetchData.total} results</TextResult>
           <ButtonFilter>Filter</ButtonFilter>
         </Box>
       </Box>
       <Table
         {...fetchData}
-        data={[...new Array(10)]}
         columns={columns}
         total={{ title: "Total", count: fetchData.total }}
         pagination={{
@@ -61,7 +63,7 @@ const RewardsDistributionTab = () => {
           total: fetchData.total,
           onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
         }}
-        onClickRow={(e, r: DelegationHistory) => history.push(details.delegation(r.poolId))}
+        onClickRow={(e, r: RewardDistributionItem) => history.push(details.epoch(r.epoch))}
       />
     </>
   );

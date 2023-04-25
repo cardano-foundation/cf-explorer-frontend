@@ -27,7 +27,6 @@ import CalenderPaleIcon from "./icons/calender-pale.svg";
 import ArrowDownIcon from "./icons/arrow-down.svg";
 import ArrowDropDownIcon from "./icons/arrow-drop-down.svg";
 import MenuIcon from "./icons/menu.svg";
-import AIcon from "./icons/AIcon.svg";
 import Policy from "./icons/policy.svg";
 import PolicyWhiteIcon from "./icons/policy-white.svg";
 import DIDMenuIcon from "./icons/menus/did.svg";
@@ -109,7 +108,6 @@ export {
   CheckGreenIcon,
   BlankBlueIcon,
   CalenderPaleIcon,
-  AIcon,
   ArrowDownIcon,
   ArrowDropDownIcon,
   Policy,
@@ -135,7 +133,6 @@ export {
   WithdrawlIcon,
   MintingIcon,
   PolicyWhiteIcon,
-  InfoIcon,
   HighestIcon,
   LowestIcon,
   BrowseIcon,
@@ -156,6 +153,10 @@ export {
   PolicyScriptIcon,
 };
 
+export { ReactComponent as CopySquareIcon } from "./icons/copy_square.svg";
+export { ReactComponent as OptionIcon } from "./icons/option.svg";
+export { ReactComponent as ReloadIcon } from "./icons/reload.svg";
+export { ReactComponent as AIcon } from "./icons/AIcon.svg";
 export { ReactComponent as EyeIcon } from "./icons/eye.svg";
 export { ReactComponent as StartPage } from "./icons/startPagePagination.svg";
 export { ReactComponent as EndPage } from "./icons/endPagePagination.svg";
@@ -182,3 +183,26 @@ export { ReactComponent as BgPink } from "./images/bg-pink.svg";
 export { ReactComponent as BgGreen } from "./images/bg-green.svg";
 export { ReactComponent as PigSave } from "./images/pig-save.svg";
 export { ReactComponent as Diamond } from "./images/diamond.svg";
+export { ReactComponent as ADAHolderIcon } from "./icons/Staking/ADAHolderIcon.svg";
+export { ReactComponent as CadarnoSystemIcon } from "./icons/Staking/cadarnoSystemIcon.svg";
+export { ReactComponent as RegistrationCertificateIcon } from "./icons/Staking/RegistrationCertificateIcon.svg";
+export { ReactComponent as ButtonListIcon } from "./icons/Staking/buttonList.svg";
+export { ReactComponent as InfoIcon } from "./icons/Staking/infoIcon.svg";
+export { ReactComponent as TranferIcon } from "./icons/Staking/tranfer.svg";
+export { ReactComponent as BackIcon } from "./icons/Staking/BackIcon.svg";
+export { ReactComponent as AddressIcon } from "./icons/Staking/AddressIcon.svg";
+export { ReactComponent as ADAGreen } from "./icons/Staking/ADAGreen.svg";
+export { ReactComponent as TimeIcon } from "./icons/Staking/TimeIcon.svg";
+export { ReactComponent as ADAOrangeIcon } from "./icons/Staking/ADAOrangeIcon.svg";
+export { ReactComponent as SPOStalking } from "./icons/Staking/SPOStalking.svg";
+export { ReactComponent as FilterIC } from "./icons/filter-ic.svg";
+export { ReactComponent as CalenderIcon } from "./icons/calender-pale.svg";
+export { ReactComponent as AIconGreen } from "./icons/AIconGreen.svg";
+export { ReactComponent as ArrowFromTopIcon } from "./icons/arrow-from-top.svg";
+export { ReactComponent as ArrowFromBottomIcon } from "./icons/arrow-from-bottom.svg";
+export { ReactComponent as HashtagIcon } from "./icons/hashtag.svg";
+export { ReactComponent as SearchIcon } from "./icons/header-search.svg";
+export { ReactComponent as TimerIcon } from "./icons/timer.svg";
+export { ReactComponent as BalanceIcon } from "./icons/balance.svg";
+export { ReactComponent as RewardsIcon } from "./icons/rewards.svg";
+export { ReactComponent as CloseLineIcon } from "./icons/close-line.svg";

@@ -3,7 +3,7 @@ import { StyledLink, TableSubTitle } from "../styles";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
 import useFetchList from "../../../../commons/hooks/useFetchList";
-import { formatDateTimeLocal, getPageInfo, getShortWallet } from "../../../../commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import Table, { Column } from "../../../commons/Table";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { details } from "../../../../commons/routers";
@@ -11,7 +11,7 @@ import { API } from "../../../../commons/utils/api";
 import { formatADAFull } from "../../../../commons/utils/helper";
 import ADAicon from "../../../commons/ADAIcon";
 
-export const AdaValue = ({ value }: { value: string }) => {
+export const AdaValue = ({ value }: { value: string | number }) => {
   return (
     <Box display="flex" alignItems="center">
       {formatADAFull(value)}
@@ -20,14 +20,14 @@ export const AdaValue = ({ value }: { value: string }) => {
   );
 };
 
-const columns: Column<DelegationHistory>[] = [
+const columns: Column<DeregistrationItem>[] = [
   {
     title: "Transaction Hash",
     key: "hash",
     minWidth: "120px",
     render: r => (
-      <CustomTooltip title={"fghij...76543"}>
-        <StyledLink to="/">{getShortWallet("fghijsdfsdfsdf76543")}</StyledLink>
+      <CustomTooltip title={r.txHash}>
+        <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
       </CustomTooltip>
     ),
   },
@@ -35,7 +35,7 @@ const columns: Column<DelegationHistory>[] = [
     title: "Timestamp",
     key: "time",
     minWidth: "120px",
-    render: r => formatDateTimeLocal("10/24/2022 14:09:02"),
+    render: r => formatDateTimeLocal(r.time),
   },
   {
     title: (
@@ -48,12 +48,12 @@ const columns: Column<DelegationHistory>[] = [
     minWidth: "120px",
     render: r => (
       <Box>
-        <AdaValue value="234154851.36871" />
+        <AdaValue value={r.deposit + r.fee} />
         <TableSubTitle>
           <Box display="flex" mt={1} alignItems="center">
-            <AdaValue value="2.0" />
+            <AdaValue value={r.deposit} />
             <Box mx={1}>/</Box>
-            <AdaValue value="234154851.36871" />
+            <AdaValue value={r.fee} />
           </Box>
         </TableSubTitle>
       </Box>
@@ -67,12 +67,14 @@ const DeregistrationTab = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<any>(`${API.STAKE.DETAIL}/${stakeId}/delegation-history`, pageInfo);
+  const fetchData = useFetchList<DeregistrationItem>(
+    stakeId ? API.STAKE_LIFECYCLE.DEREGISTRATION(stakeId) : "",
+    pageInfo
+  );
 
   return (
     <Table
       {...fetchData}
-      data={[...new Array(10)]}
       columns={columns}
       total={{ title: "Total", count: fetchData.total }}
       pagination={{
@@ -80,7 +82,7 @@ const DeregistrationTab = () => {
         total: fetchData.total,
         onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
       }}
-      onClickRow={(e, r: DelegationHistory) => history.push(details.delegation(r.poolId))}
+      onClickRow={(e, r: DeregistrationItem) => history.push(details.transaction(r.txHash))}
     />
   );
 };

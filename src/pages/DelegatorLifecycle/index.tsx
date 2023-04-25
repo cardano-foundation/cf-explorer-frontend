@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { useParams } from "react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { getShortHash } from "../../commons/utils/helper";
 import CopyButton from "../../components/commons/CopyButton";
@@ -13,14 +13,56 @@ import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staki
 import { ReactComponent as TableMode } from "../../commons/resources/icons/Staking/TableMode.svg";
 
 const DelegatorLifecycle = () => {
-  const { stakeId = "" } = useParams<{ stakeId: string }>();
-  const [mode, setMode] = useState<"timeline" | "tablular">("timeline");
+  const { stakeId = "", tab = "" } = useParams<{
+    stakeId: string;
+    tab?: "registration" | "delegation" | "rewardsDistribution" | "rewardsWithdrawal" | "deregistration" | "tablular";
+  }>();
+  const tabList = {
+    registration: 0,
+    delegation: 1,
+    rewardsDistribution: 2,
+    rewardsWithdrawal: 3,
+    deregistration: 4,
+    tablular: null,
+  };
+  const [currentStep, setCurrentStep] = useState(tabList[tab || "registration"] || 0);
+  const [mode, setMode] = useState<"timeline" | "tablular">(tab === "tablular" ? "tablular" : "timeline");
+  const containerRef = useRef(null);
+  const [containerPosition, setContainerPosition] = useState<{ top?: number; left?: number }>({
+    top: undefined,
+    left: undefined,
+  });
+
+  useEffect(() => {
+    setCurrentStep(tabList[tab || "registration"] || 0);
+  }, [tab]);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const position = (containerRef.current as any)?.getBoundingClientRect();
+      setContainerPosition({ top: position.top, left: position.left });
+    }
+  }, [containerRef.current]);
+
+  const handleResize = () => {
+    if (containerRef.current) {
+      const position = (containerRef.current as any).getBoundingClientRect();
+      setContainerPosition({ top: position.top, left: position.left });
+    }
+  };
+  useEffect(() => {
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <StyledContainer>
+    <StyledContainer ref={containerRef}>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
         <Box>
-          <Box component={"h2"} mb={0}>
+          <Box component={"h2"} mb={0} mt={0}>
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
@@ -46,7 +88,13 @@ const DelegatorLifecycle = () => {
       </Box>
 
       <Box>
-        {mode === "timeline" && <DelegatorLifecycleComponent setMode={setMode} />}
+        {mode === "timeline" && (
+          <DelegatorLifecycleComponent
+            handleResize={handleResize}
+            containerPosition={containerPosition}
+            setMode={setMode}
+          />
+        )}
         {mode === "tablular" && <Tablular />}
       </Box>
     </StyledContainer>

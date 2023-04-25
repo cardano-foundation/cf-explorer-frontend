@@ -30,7 +30,7 @@ export const routers = {
   PRIVATE_NOTES: "/account/notes",
   SPO_SEARCH: "/spo-lifecycle",
   DELEGATOR_SEARCH: "/delegator-lifecycle",
-  DELEGATOR_LIFECYCLE: "/delegator-lifecycle/:stakeId",
+  DELEGATOR_LIFECYCLE: "/delegator-lifecycle/:stakeId/:tab?",
   SPO_LIFECYCLE: "/spo-lifecycle/:poolId",
   NOT_FOUND: "/*",
 } as const;
@@ -51,6 +51,8 @@ export const details = {
   policyDetail: (policyId?: string) => routers.POLICY_DETAIL.replace(":policyId", policyId ?? ""),
   contract: (address?: string, tab = "transaction") =>
     routers.CONTRACT_DETAIL.replace(":address", address ?? "").replace(":tabActive?", tab),
+  staking: (stakeId: string, tab = "registration") =>
+    routers.DELEGATOR_LIFECYCLE.replace(":stakeId", stakeId).replace(":tab?", tab),
 };
 
 export const listRouters = [

@@ -41,6 +41,15 @@ export const API = {
     TOP_DELEGATOR: "stakes/top-delegators",
     REGISTRATION: "stakes/registration",
   },
+  STAKE_LIFECYCLE: {
+    REGISTRATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/registrations`,
+    DELEGATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/delegations`,
+    WITHDRAW: (stakeKey: string) => `stake-lifecycle/${stakeKey}/withdrawals`,
+    DELEGATION_DETAIL: (stakeKey: string, hash: string) => `stake-lifecycle/${stakeKey}/delegations/${hash}`,
+    WITHDRAW_DETAIL: (stakeKey: string, hash: string) => `stake-lifecycle/${stakeKey}/withdrawals/${hash}`,
+    DEREGISTRATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/de-registrations`,
+    SPO_REGISTRATION: (poolId: string) => `pool-lifecycle/registration?poolView=${poolId}       `,
+  },
   MARKETS: "markets",
 };
 
