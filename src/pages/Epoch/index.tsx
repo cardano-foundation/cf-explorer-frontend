@@ -2,7 +2,6 @@ import { stringify } from "qs";
 import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { AIcon } from "../../commons/resources";
 import { EPOCH_STATUS } from "../../commons/utils/constants";
 import { formatADAFull, formatDateTimeLocal, getPageInfo, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
@@ -12,11 +11,12 @@ import { Blocks, StyledContainer, Output, Status, StyledColorBlueDard, Index } f
 import { setOnDetailView } from "../../stores/user";
 import DetailViewEpoch from "../../components/commons/DetailView/DetailViewEpoch";
 import { useWindowSize } from "react-use";
-import { useTheme } from "@mui/material";
+import { ButtonBase, useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
 import Link from "../../components/commons/Link";
 import ADAicon from "../../components/commons/ADAIcon";
+import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -115,8 +115,12 @@ const Epoch: React.FC = () => {
     setEpoch(null);
     setSelected(null);
   };
+  const [open, setOpen] = useState(false);
+
   return (
     <StyledContainer>
+      <ButtonBase onClick={() => setOpen(true)}>Open</ButtonBase>
+      <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
       <Card title={"Epochs"}>
         <Table
           {...fetchData}

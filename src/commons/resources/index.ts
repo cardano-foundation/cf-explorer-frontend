@@ -195,3 +195,5 @@ export { ReactComponent as SearchIcon } from "./icons/header-search.svg";
 export { ReactComponent as TimerIcon } from "./icons/timer.svg";
 export { ReactComponent as BalanceIcon } from "./icons/balance.svg";
 export { ReactComponent as RewardsIcon } from "./icons/rewards.svg";
+export { ReactComponent as DateRangeIcon } from "./icons/daterange.svg";
+export { ReactComponent as PencilIcon } from "./icons/PencirlIcon.svg";
