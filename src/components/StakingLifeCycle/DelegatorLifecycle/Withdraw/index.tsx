@@ -135,7 +135,7 @@ const WithdrawTimeline = ({
           </Info>
           <Info>
             <ADAGreen />
-            <InfoText>{formatADA(data?.stakeTotalAmount || 0)}</InfoText>
+            <InfoText>{data?.amount && data?.fee ? formatADA(data?.amount - data?.fee) : 0}</InfoText>
           </Info>
           <Info>
             <TimeIcon />
@@ -178,7 +178,7 @@ const WithdrawTimeline = ({
                 <NetAmount ref={netAmountRef}>
                   <Box>
                     <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                      {formatADA(data?.amount || 0)}
+                      {data?.amount && data?.fee ? formatADA(data?.amount - data?.fee) : 0}
                     </Box>
                     <ADAicon fontSize="18px" />
                   </Box>
@@ -194,7 +194,7 @@ const WithdrawTimeline = ({
                 <Withdrawn ref={withdrawnRef}>
                   <Box>
                     <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                      {formatADA(data?.stakeTotalAmount || 0)}
+                      {formatADA(data?.amount || 0)}
                     </Box>
                     <ADAicon fontSize="18px" />
                   </Box>
