@@ -1,10 +1,13 @@
 import { Box } from "@mui/material";
 import StyledModal from "../commons/StyledModal";
 import { BoxDetails, NormalDescription, NumberParagraph, Watermark } from "./styles";
-
-export function RegistrationProcessDescription() {
+interface Props {
+  open: boolean;
+  handleCloseModal: () => void;
+}
+export function RegistrationProcessDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title="The registration process" handleCloseModal={() => { }} open>
+    <StyledModal title="The registration process" handleCloseModal={handleCloseModal} open={open}>
       <Box>
         <NormalDescription>
           When a delegator wants to obtain a staking certificate from the Cardano protocol, the following steps occur:

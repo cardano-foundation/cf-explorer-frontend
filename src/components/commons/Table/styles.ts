@@ -34,6 +34,10 @@ export const THeader = styled("th")`
   border-bottom: 1px solid ${props => props.theme.palette.border.main};
   padding: 20px;
   color: ${props => props.theme.palette.grey[300]};
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 2;
 `;
 
 export const TRow = styled("tr")<{ selected?: number }>`
@@ -101,12 +105,15 @@ export const TotalNumber = styled("span")`
   font-weight: 500;
 `;
 
-export const Wrapper = styled(Box)`
-  overflow-x: auto;
-  background-color: #FFF;
-  box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
-  border-radius: 12px;
-`;
+export const Wrapper = styled(Box)<{ maxHeight?: number | string }>(
+  ({maxHeight}) => `
+    overflow-x: auto;
+    background-color: #FFF;
+    box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
+    border-radius: 12px;
+    ${maxHeight ? 'max-height:' + (typeof maxHeight === "number"  ? maxHeight + 'px' : maxHeight) : ''};
+`
+);
 
 export const TableFullWidth = styled("table")`
   border-collapse: separate;

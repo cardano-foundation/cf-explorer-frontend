@@ -90,6 +90,12 @@ interface DelegationItem {
   time: string;
 }
 
+interface RewardDistributionItem {
+  epoch: number;
+  time: string;
+  amount: number;
+}
+
 interface WithdrawItem {
   txHash: string;
   value: number;
