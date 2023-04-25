@@ -18,7 +18,7 @@ import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentRegistrations from "./RecentRegistrations";
 import PopoverStyled from "../../../commons/PopoverStyled";
-import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADA, formatADAFull, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import moment from "moment";
 import PopupStaking from "../../../commons/PopupStaking";
 import StyledModal from "../../../commons/StyledModal";
@@ -106,7 +106,7 @@ const RegistrationTimeline = ({
           </Info>
           <Info>
             <ADAGreen />
-            <InfoText>{formatADA(deposit + fee || 0)}</InfoText>
+            <InfoText>{formatADAFull(deposit + fee || 0)}</InfoText>
           </Info>
           <Info>
             <TimeIcon />
@@ -127,7 +127,7 @@ const RegistrationTimeline = ({
                   <HoldBox ref={holdRef} ml={1}>
                     <Box>
                       <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                        2.0
+                        {formatADAFull(deposit || 0)}
                       </Box>
                       <ADAicon fontSize="18px" />
                     </Box>
@@ -143,7 +143,7 @@ const RegistrationTimeline = ({
                   <FeeBox ref={feeRef}>
                     <Box>
                       <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                        {formatADA(fee || 0)}
+                        {formatADAFull(fee || 0)}
                       </Box>
                       <ADAicon fontSize="18px" />
                     </Box>

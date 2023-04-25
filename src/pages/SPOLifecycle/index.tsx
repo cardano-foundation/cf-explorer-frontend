@@ -13,7 +13,7 @@ import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staki
 import { ReactComponent as TableMode } from "../../commons/resources/icons/Staking/TableMode.svg";
 
 const SPOLifecycle = () => {
-  const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const { poolId = "" } = useParams<{ poolId: string }>();
   const [mode, setMode] = useState<"timeline" | "tablular">("timeline");
   const containerRef = useRef(null);
   const [containerPosition, setContainerPosition] = useState<{ top?: number; left?: number }>({
@@ -50,9 +50,9 @@ const SPOLifecycle = () => {
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
-            <Box component={"span"}>Stake key:</Box>
-            <StakeId>{getShortHash(stakeId)}</StakeId>
-            <CopyButton text={stakeId} />
+            <Box component={"span"}>PoolID:</Box>
+            <StakeId>{getShortHash(poolId)}</StakeId>
+            <CopyButton text={poolId} />
           </Box>
         </Box>
         <Box display={"flex"} alignItems={"center"}>

@@ -1,4 +1,4 @@
-import { Box, Skeleton } from "@mui/material";
+import { Box } from "@mui/material";
 import CustomIcon from "../../../../commons/CustomIcon";
 import { ArrowFromBottomIcon, ArrowFromTopIcon, CalenderIcon, SearchIcon } from "../../../../../commons/resources";
 import { useParams } from "react-router";
@@ -7,7 +7,6 @@ import { API } from "../../../../../commons/utils/api";
 import { GridBox, WrapFilterDescription } from "./styles";
 import Filter from "../../../../commons/Filter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
-import { EmptyRecord } from "../../../../commons/Table";
 
 const filterOptions = [
   { label: "Latest - First", icon: <CustomIcon icon={ArrowFromTopIcon} width={20} />, value: "latest" },
@@ -17,15 +16,15 @@ const filterOptions = [
 ];
 
 interface Props {
-  onSelect: (deregistration: DeregistrationItem) => void;
+  onSelect: (hash: string) => void;
 }
 
-const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
-  const { stakeId = "" } = useParams<{ stakeId: string }>();
-  const { data, total, loading, initialized, error } = useFetchList<DeregistrationItem>(
-    stakeId ? API.STAKE_LIFECYCLE.DEREGISTRATION(stakeId) : "",
-    { page: 0, size: 1000 }
-  );
+const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
+  const { poolId = "" } = useParams<{ poolId: string }>();
+  const { data, total } = useFetchList<RegistrationItem>(poolId ? API.STAKE_LIFECYCLE.REGISTRATION(poolId) : "", {
+    page: 0,
+    size: 1000,
+  });
 
   const handleFilter = (option: string) => {
     return;
@@ -34,33 +33,19 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
   return (
     <Box marginTop="32px">
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
-        <span>Recent Deregistrations</span>
+        <span>Recent Registrations</span>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>Showing {total} results</WrapFilterDescription>
           <Filter options={filterOptions} />
         </Box>
       </Box>
       <GridBox>
-        {loading &&
-          [...new Array(12)].map((i, ii) => (
-            <Skeleton style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
-          ))}
-        {!loading &&
-          data.map(item => {
-            return (
-              <OverviewStaking
-                item={item}
-                amount={item.deposit}
-                time={item.time}
-                hash={item.txHash}
-                onClick={onSelect}
-              />
-            );
-          })}
+        {data.map(item => {
+          return <OverviewStaking amount={item.deposit} time={item.time} hash={item.txHash} onClick={onSelect} />;
+        })}
       </GridBox>
-      {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
     </Box>
   );
 };
 
-export default RecentDeregistrations;
+export default RecentRegistrations;

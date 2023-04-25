@@ -7,6 +7,7 @@ import { API } from "../../../../../commons/utils/api";
 import { GridBox, WrapFilterDescription } from "./styles";
 import Filter from "../../../../commons/Filter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
+import { EmptyRecord } from "../../../../commons/Table";
 
 const filterOptions = [
   { label: "Latest - First", icon: <CustomIcon icon={ArrowFromTopIcon} width={20} />, value: "latest" },
@@ -21,10 +22,10 @@ interface Props {
 
 const RecentWithdraws: React.FC<Props> = ({ onSelect }) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
-  const { data, total, loading } = useFetchList<WithdrawItem>(stakeId ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "", {
-    page: 0,
-    size: 1000,
-  });
+  const { data, total, loading, initialized, error } = useFetchList<WithdrawItem>(
+    stakeId ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "",
+    { page: 0, size: 1000 }
+  );
 
   const handleFilter = (option: string) => {
     return;
@@ -51,6 +52,7 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect }) => {
             );
           })}
       </GridBox>
+      {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
     </Box>
   );
 };

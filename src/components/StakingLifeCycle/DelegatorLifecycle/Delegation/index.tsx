@@ -25,7 +25,7 @@ import PopupStaking from "../../../commons/PopupStaking";
 import { styled } from "@mui/material";
 import StyledModal from "../../../commons/StyledModal";
 import CopyButton from "../../../commons/CopyButton";
-import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADAFull, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import { details } from "../../../../commons/routers";
 import moment from "moment";
 
@@ -146,7 +146,7 @@ const DelegationTimeline = ({
           </Info>
           <Info>
             <ADAGreen />
-            <InfoText>{formatADA(data?.outSum || 0)}</InfoText>
+            <InfoText>{formatADAFull(data?.outSum || 0)}</InfoText>
           </Info>
           <Info>
             <TimeIcon />
@@ -166,7 +166,7 @@ const DelegationTimeline = ({
                   <FeeBox ref={feeRef}>
                     <Box>
                       <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                        {formatADA(data?.outSum || 0)}
+                        {formatADAFull(data?.fee || 0)}
                       </Box>
                       <ADAicon fontSize="18px" />
                     </Box>
