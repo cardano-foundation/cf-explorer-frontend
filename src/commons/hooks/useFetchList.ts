@@ -32,7 +32,6 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
   const lastFetch = useRef<number>(Date.now());
 
   const getList = useCallback(async () => {
-    console.log('get list', params)
     if (!url) return;
     let service: AxiosInstance = isAuth ? authAxios : defaultAxios;
     if (url.search("http://") === 0 || url.search("https://") === 0) {

@@ -15,18 +15,20 @@ import {
 } from "../commons/Filter/styles";
 import { StyledInput } from "../share/styled";
 import DateRangeModal from "./DateRangeModal";
+import { AdditionContainer } from "./styles";
+import { StyledListItemIcon } from "../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 
 interface StakingOption extends Option {
   addition?: React.FC<any>;
 }
 
 const filterOptions: StakingOption[] = [
-  { label: "Latest - First", icon: <CustomIcon icon={ArrowFromTopIcon} width={20} />, value: "latest" },
+  { label: "Latest - First", icon: <CustomIcon icon={ArrowFromTopIcon} fill="currentColor" width={20} />, value: "latest" },
   { label: "First - Latest", icon: <CustomIcon icon={ArrowFromBottomIcon} width={20} />, value: "first" },
   { label: "Date range", icon: <CustomIcon icon={CalenderIcon} width={20} />, value: "dateRange" },
   {
     label: "Search transaction",
-    icon: <CustomIcon icon={SearchIcon} width={20} />,
+    icon: <CustomIcon icon={SearchIcon} stroke="currentColor" width={22} />,
     value: "search",
   },
 ];
@@ -44,62 +46,49 @@ export interface StackingFilterProps {
 }
 const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, filterValue }) => {
   const [open, setOpen] = useState(false);
+  const [isOpenSelectRange, setIsOpenSelectRange] = useState(false);
+  const [openSearchTransaction, setOpenSearchTransaction] = useState(false);
   const [selected, setSelected] = useState("");
   const [textSearch, setTextSearch] = useState("");
+
   const onClickAway = () => {
     setOpen(false);
   };
 
   const onDateRangeModalClose = () => {
-    setSelected("");
+    setIsOpenSelectRange(false);
+    console.log(isOpenSelectRange);
   };
   const onFilterButtonClick = () => setOpen(pre => !pre);
   const onOptionClick = (value: string, option: Option) => {
-    setSelected(pre => (pre === value ? "" : value));
-
-    if (value === "latest") {
-      onFilterValueChange?.({ sort: ["time", "DESC"] });
-      setOpen(pre => !pre);
+    switch (value) {
+      case "latest": {
+        onFilterValueChange?.({ sort: ["time", "DESC"] });
+        setSelected(value);
+        setOpen(false);
+        break;
+      }
+      case "first": {
+        onFilterValueChange?.({ sort: ["time", "ESC"] });
+        setSelected(value);
+        setOpen(false);
+        break;
+      }
+      case "dateRange": {
+        setIsOpenSelectRange(true);
+        break;
+      }
+      case "search": {
+        setOpenSearchTransaction(true);
+        break;
+      }
     }
-    else if (value === "first") {
-      onFilterValueChange?.({ sort: ["time", "ESC"] });
-      setOpen(pre => !pre)
-    } 
-    else onFilterValueChange?.({ sort: undefined });
   };
 
   useEffect(() => {
-    setTextSearch(filterValue?.txHash ?? '');
-    console.timeLog(filterValue?.txHash)
+    setTextSearch(filterValue?.txHash ?? "");
+    console.timeLog(filterValue?.txHash);
   }, [filterValue?.txHash]);
-  
-
-  const addition = useMemo(() => {
-    switch (selected) {
-      case "dateRange":
-        return (
-          <DateRangeModal
-            value={{ fromDate: filterValue?.fromDate, toDate: filterValue?.toDate }}
-            onDateRangeChange={({ fromDate, toDate }) => {
-              onFilterValueChange?.({ fromDate, toDate })
-            }}
-            onClose={onDateRangeModalClose}
-          />
-        );
-      case "search":
-        return (
-          <StyledInput
-            endAdornment={
-              <IconButton onClick={() => onFilterValueChange?.({ txHash: textSearch })}>
-                <CustomIcon icon={SearchIcon} width={20} />
-              </IconButton>
-            }
-            value={textSearch}
-            onChange={({ target: { value } }) => setTextSearch(value)}
-          />
-        );
-    }
-  }, [selected, filterValue, textSearch]);
 
   return (
     <ClickAwayListener onClickAway={onClickAway}>
@@ -118,15 +107,46 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
           <FilterContent>
             <MenuList>
               {filterOptions.map(option => (
-                <FilterMenuItem key={option.value} onClick={() => onOptionClick(option.value, option)}>
-                  <ListItemIcon>
-                    <FilterIconContainer>{option.icon}</FilterIconContainer>
-                  </ListItemIcon>
+                <FilterMenuItem
+                  active={+(option.value === selected)}
+                  key={option.value}
+                  onClick={() => onOptionClick(option.value, option)}
+                >
+                  <StyledListItemIcon>{option.icon}</StyledListItemIcon>
                   <FilterListItemText>{option.label}</FilterListItemText>
                 </FilterMenuItem>
               ))}
             </MenuList>
-            {addition}
+            <AdditionContainer>
+              {openSearchTransaction &&
+              (
+                <StyledInput
+                  endAdornment={
+                    <IconButton onClick={() => {
+                      setSelected("search");
+                      onFilterValueChange?.({ txHash: textSearch });
+                      setOpenSearchTransaction(false);
+                      setOpen(false);
+                    }}>
+                      <CustomIcon icon={SearchIcon} width={20} />
+                    </IconButton>
+                  }
+                  value={textSearch}
+                  onChange={({ target: { value } }) => setTextSearch(value)}
+                />
+              )}
+
+              <DateRangeModal
+                open={isOpenSelectRange}
+                value={{ fromDate: filterValue?.fromDate, toDate: filterValue?.toDate }}
+                onDateRangeChange={({ fromDate, toDate }) => {
+                  setSelected("dateRange");
+                  onFilterValueChange?.({ fromDate, toDate });
+                  setOpen(false);
+                }}
+                onClose={onDateRangeModalClose}
+              />
+            </AdditionContainer>
           </FilterContent>
         )}
       </FilterContainer>
