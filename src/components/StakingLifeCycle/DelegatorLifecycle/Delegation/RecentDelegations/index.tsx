@@ -7,6 +7,8 @@ import { API } from "../../../../../commons/utils/api";
 import { GridBox, WrapFilterDescription } from "./styles";
 import Filter from "../../../../commons/Filter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
+import { useState } from "react";
+import StackingFilter, { FilterParams } from "../../../../StackingFilter";
 
 const filterOptions = [
   { label: "Latest - First", icon: <CustomIcon icon={ArrowFromTopIcon} width={20} />, value: "latest" },
@@ -21,14 +23,13 @@ interface Props {
 
 const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const [params, setParams] = useState<FilterParams>();
   const { data, total } = useFetchList<DelegationItem>(stakeId ? API.STAKE_LIFECYCLE.DELEGATION(stakeId) : "", {
     page: 0,
     size: 1000,
+    ...params
   });
 
-  const handleFilter = (option: string) => {
-    return;
-  };
 
   return (
     <Box marginTop="32px">
@@ -36,7 +37,7 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
         <span>Recent Delegations</span>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>Showing {total} results</WrapFilterDescription>
-          <Filter options={filterOptions} />
+          <StackingFilter filterValue={params} onFilterValueChange={(params) => setParams((pre) => ({...pre,...params}))} />
         </Box>
       </Box>
       <GridBox>

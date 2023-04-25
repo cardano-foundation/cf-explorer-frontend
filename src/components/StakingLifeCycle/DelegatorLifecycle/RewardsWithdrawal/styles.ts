@@ -1,4 +1,4 @@
-import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui, Typography } from "@mui/material";
 
 export const NetAmount = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -117,3 +117,9 @@ export const RoundBox = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
   borderRadius: "25px",
 }));
+
+export const FilterDateLabel = styled(Typography)`
+  font-size: 14px;
+  font-weight: 400;
+  color: ${props => props.theme.palette.grey[400]};
+`;

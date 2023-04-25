@@ -48,6 +48,9 @@ export const API = {
     DELEGATION_DETAIL: (stakeKey: string, hash: string) => `stake-lifecycle/${stakeKey}/delegations/${hash}`,
     WITHDRAW_DETAIL: (stakeKey: string, hash: string) => `stake-lifecycle/${stakeKey}/withdrawals/${hash}`,
   },
+  SPO_LIFECYCLE: {
+    POOL_UPDATE: "pool-lifecycle/pool-update"
+  },
   MARKETS: "markets",
 };
 
