@@ -34,9 +34,8 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
   const { data, total } = useFetchList<RegistrationItem>(stakeId ? API.STAKE_LIFECYCLE.REGISTRATION(stakeId) : "", {
     page: 0,
     size: 1000,
+    ...params
   });
-
-  console.log(params);
 
   return (
     <Box marginTop="32px">
@@ -57,8 +56,8 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
         </Box>
       </Box>
       <GridBox>
-        {data.map(item => {
-          return <OverviewStaking amount={item.deposit} time={item.time} hash={item.txHash} onClick={onSelect} />;
+        {data.map((item, index) => {
+          return <OverviewStaking key={index} amount={item.deposit} time={item.time} hash={item.txHash} onClick={onSelect} />;
         })}
       </GridBox>
     </Box>

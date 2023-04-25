@@ -91,8 +91,8 @@ const RewardsWithdrawalList = () => {
         </Box>
       </Box>
       <GridBox>
-        {data.map(item => {
-          return <OverviewStaking onClick={() => {}} hash={item.txHash} amount={item.value} time={item.time} />;
+        {data.map((item, index) => {
+          return <OverviewStaking key={index} onClick={() => {}} hash={item.txHash} amount={item.value} time={item.time} />;
         })}
       </GridBox>
     </Box>
