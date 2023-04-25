@@ -50,6 +50,9 @@ export const API = {
     DEREGISTRATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/de-registrations`,
     SPO_REGISTRATION: (poolId: string) => `pool-lifecycle/registration?poolView=${poolId}       `,
   },
+  SPO_LIFECYCLE: {
+    POOL_UPDATE: "pool-lifecycle/pool-update"
+  },
   MARKETS: "markets",
 };
 

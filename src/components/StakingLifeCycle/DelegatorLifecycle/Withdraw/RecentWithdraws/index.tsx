@@ -8,13 +8,10 @@ import { GridBox, WrapFilterDescription } from "./styles";
 import Filter from "../../../../commons/Filter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
 import { EmptyRecord } from "../../../../commons/Table";
-
-const filterOptions = [
-  { label: "Latest - First", icon: <CustomIcon icon={ArrowFromTopIcon} width={20} />, value: "latest" },
-  { label: "First - Latest", icon: <CustomIcon icon={ArrowFromBottomIcon} width={20} />, value: "first" },
-  { label: "Date range", icon: <CustomIcon icon={CalenderIcon} width={20} />, value: "dateRange" },
-  { label: "Search transaction", icon: <CustomIcon icon={SearchIcon} width={20} />, value: "search" },
-];
+import { useState } from "react";
+import StackingFilter, { FilterParams } from "../../../../StackingFilter";
+import { FilterDateLabel } from "../../RewardsWithdrawal/styles";
+import moment from "moment";
 
 interface Props {
   onSelect: (ưithdraw: WithdrawItem) => void;
@@ -22,22 +19,42 @@ interface Props {
 
 const RecentWithdraws: React.FC<Props> = ({ onSelect }) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const [params, setParams] = useState<FilterParams>({
+    fromDate: undefined,
+    sort: undefined,
+    toDate: undefined,
+    txHash: undefined,
+  });
   const { data, total, loading, initialized, error } = useFetchList<WithdrawItem>(
     stakeId ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "",
-    { page: 0, size: 1000 }
+    { page: 0, size: 1000, ...params }
   );
-
-  const handleFilter = (option: string) => {
-    return;
-  };
 
   return (
     <Box marginTop="32px">
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
         <span>Recent Withdraws</span>
         <Box display={"flex"} alignItems={"center"} gap={2}>
-          <WrapFilterDescription>Showing {total} results</WrapFilterDescription>
-          <Filter options={filterOptions} />
+          <WrapFilterDescription>
+            Showing {total} {total > 1 ? "results" : "result"}
+          </WrapFilterDescription>
+          {params.fromDate && params.toDate && (
+            <FilterDateLabel>
+              Date range: {moment(params.fromDate).format("MM/DD/YYYY")} - {moment(params.toDate).format("MM/DD/YYYY")}
+            </FilterDateLabel>
+          )}
+          <StackingFilter
+            filterValue={params}
+            onFilterValueChange={params =>
+              setParams(pre => ({
+                fromDate: undefined,
+                sort: undefined,
+                toDate: undefined,
+                txHash: undefined,
+                ...params,
+              }))
+            }
+          />
         </Box>
       </Box>
       <GridBox>
