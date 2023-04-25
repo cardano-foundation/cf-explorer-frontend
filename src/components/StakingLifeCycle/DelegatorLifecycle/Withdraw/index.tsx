@@ -135,7 +135,7 @@ const WithdrawTimeline = ({
           </Info>
           <Info>
             <ADAGreen />
-            <InfoText>{data?.amount && data?.fee ? formatADA(data?.amount - data?.fee) : 0}</InfoText>
+            <InfoText>{formatADA(data?.amount || 0)}</InfoText>
           </Info>
           <Info>
             <TimeIcon />
