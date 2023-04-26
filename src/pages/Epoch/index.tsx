@@ -63,10 +63,16 @@ const Epoch: React.FC = () => {
       key: "rDistributed",
       minWidth: "100px",
       render: r => (
-        <Output>
-          {formatADAFull(r.rewardsDistributed)}
-          <ADAicon />
-        </Output>
+        <>
+          {r.rewardsDistributed ? (
+            <Output>
+              {formatADAFull(r.rewardsDistributed)}
+              <ADAicon />
+            </Output>
+          ) : (
+            "Not available"
+          )}
+        </>
       ),
     },
     {
