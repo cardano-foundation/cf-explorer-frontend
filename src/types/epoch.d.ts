@@ -13,6 +13,7 @@ interface IDataEpoch {
   outSum: number;
   txCount: number;
   epochSlotNo: number;
+  rewardsDistributed?: number;
 }
 
 interface IEpoch {

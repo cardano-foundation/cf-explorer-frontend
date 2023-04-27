@@ -59,10 +59,21 @@ const Epoch: React.FC = () => {
       render: r => <Blocks>{r.txCount}</Blocks>,
     },
     {
-      title: "Transaction Count",
-      key: "transactionCount",
+      title: "Rewards Distributed",
+      key: "rDistributed",
       minWidth: "100px",
-      render: r => <Blocks>{r.txCount}</Blocks>,
+      render: r => (
+        <>
+          {r.rewardsDistributed ? (
+            <Output>
+              {formatADAFull(r.rewardsDistributed)}
+              <ADAicon />
+            </Output>
+          ) : (
+            "Not available"
+          )}
+        </>
+      ),
     },
     {
       title: "Total Output",
