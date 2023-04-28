@@ -1,4 +1,4 @@
-import { Box, Select, styled } from "@mui/material";
+import { Box, Select, alpha, styled } from "@mui/material";
 
 export const Empty = styled(Box)`
   text-align: center;
@@ -103,6 +103,12 @@ export const TotalNumber = styled("span")`
 
 export const Wrapper = styled(Box)`
   overflow-x: auto;
+  background: ${({ theme }) => theme.palette.common.white};
+  padding: ${({ theme }) => theme.spacing(1)};
+  padding-top: 0;
+  border-radius: ${({ theme }) => theme.spacing(3)};
+  box-shadow: 0 0.5rem 1.2rem rgba(82, 85, 92, 0.15);
+  border: 1px solid ${({ theme }) => alpha(theme.palette.common.black, 0.1)};
 `;
 
 export const TableFullWidth = styled("table")`
