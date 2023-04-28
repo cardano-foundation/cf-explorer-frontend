@@ -112,3 +112,10 @@ export const formatDateTime = (date: string) => {
 export const formatDateTimeLocal = (date: string) => {
   return moment(moment(`${date} GMT+0000`).local(true)).format("MM/DD/YYYY HH:mm:ss");
 };
+
+export const getEpochSlotNo = (data: IDataEpoch) => {
+  if (data.status === "FINISHED") {
+    return data.maxSlot;
+  }
+  return moment().diff(moment(data.startTime), "seconds");
+};
