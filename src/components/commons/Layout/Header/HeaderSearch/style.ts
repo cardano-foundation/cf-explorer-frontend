@@ -23,20 +23,23 @@ export const Form = styled("form")<{ home: number }>`
 
 export const StyledSelect = styled(Select)<{ home: number }>`
   font-size: ${props => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
-  min-width: ${props => (props.home ? 150 : 130)}px;
+  width: ${props => (props.home ? 150 : 130)}px;
+  min-width: max-content;
   position: relative;
   @media screen and (max-width: 539px) {
-    min-width: ${props => (props.home ? 130 : 110)}px;
+    width: ${props => (props.home ? 130 : 110)}px;
+    min-width: max-content;
   }
   & > div {
     display: flex;
     justify-content: center;
     align-items: center;
     height: ${props => (props.home ? 50 : 34)}px !important;
-    padding: 5px;
+    padding: 5px 10px;
     font-weight: var(--font-weight-normal);
     border-radius: 0px !important;
-    padding-right: 2em !important;
+    padding-right: 40px !important;
+    min-width: 80px;
     color: ${props => props.theme.palette.text.primary};
   }
   & > fieldset {

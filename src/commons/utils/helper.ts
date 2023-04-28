@@ -2,6 +2,9 @@ import BigNumber from "bignumber.js";
 import moment from "moment";
 import { parse } from "qs";
 import { setUserData } from "../../stores/user";
+import { setUserData as setUser2Data } from "../../stores/user2";
+import { getInfo, signIn } from "./userRequest";
+import { NETWORK, NETWORK_TYPES } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const alphaNumeric = /[^0-9a-zA-Z]/;
@@ -106,9 +109,48 @@ export const removeAuthInfo = () => {
   setUserData(null);
 };
 
+export const handleSignIn = async (username: string, password: string, cbSuccess?: () => void) => {
+  try {
+    const payload = {
+      username,
+      password,
+      type: 0
+    };
+    const response = await signIn(payload);
+    const data = response.data;
+
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("username", data.username);
+    localStorage.setItem("refreshToken", data.refreshToken);
+    localStorage.setItem("walletId", data.walletId);
+    localStorage.setItem("email", data.email);
+    localStorage.setItem("login-type", "normal");
+
+    const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
+    setUserData({...userInfo.data, loginType: "normal"});
+    cbSuccess?.();
+  } catch (error) {
+    removeAuthInfo();
+  }
+};
+
 export const formatDateTime = (date: string) => {
   return moment(date).format("MM/DD/YYYY HH:mm:ss");
 };
 export const formatDateTimeLocal = (date: string) => {
   return moment(moment(`${date} GMT+0000`).local(true)).format("MM/DD/YYYY HH:mm:ss");
 };
+
+export const getEpochSlotNo = (data: IDataEpoch) => {
+  if (data.status === "FINISHED") {
+    return data.maxSlot;
+  }
+  return moment().diff(moment(data.startTime), "seconds");
+};
+
+
+export function formatHash(hash: string): string {
+  const prefix = hash.slice(0, 6);
+  const suffix = hash.slice(-5);
+  return `${prefix}...${suffix}`;
+}

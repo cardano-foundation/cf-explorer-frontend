@@ -1,22 +1,21 @@
 import { stringify } from "qs";
 import { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { AIcon } from "../../commons/resources";
-import { EPOCH_STATUS } from "../../commons/utils/constants";
-import { formatADAFull, formatDateTimeLocal, getPageInfo, numberWithCommas } from "../../commons/utils/helper";
+import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../commons/utils/constants";
+import { formatADAFull, formatDateTimeLocal, getEpochSlotNo, getPageInfo } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
-import { Blocks, StyledContainer, Output, Status, StyledColorBlueDard, Index } from "./styles";
+import { Blocks, StyledContainer, Output, StyledColorBlueDard, Status } from "./styles";
 import { setOnDetailView } from "../../stores/user";
 import DetailViewEpoch from "../../components/commons/DetailView/DetailViewEpoch";
 import { useWindowSize } from "react-use";
-import { useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
-import Link from "../../components/commons/Link";
 import ADAicon from "../../components/commons/ADAIcon";
+import ProgressCircle from "../../components/commons/ProgressCircle";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -27,7 +26,6 @@ const Epoch: React.FC = () => {
   const theme = useTheme();
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
-
   const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo, sort });
 
   const columns: Column<IDataEpoch>[] = [
@@ -35,13 +33,24 @@ const Epoch: React.FC = () => {
       title: "Epoch Number",
       key: "epochNumber",
       minWidth: "50px",
-      render: r => <Link to={details.epoch(r.no || 0)}>{numberWithCommas(r.no)}</Link>,
-    },
-    {
-      title: "Status",
-      key: "status",
-      minWidth: "150px",
-      render: r => <Status status={r.status.toLowerCase()}>{EPOCH_STATUS[r.status]}</Status>,
+      render: r => (
+        <Link to={details.epoch(r.no || 0)}>
+          <Box textAlign="center">
+            <Box width={41} margin="auto">
+              <ProgressCircle
+                size={41}
+                pathWidth={5}
+                trailWidth={5}
+                strokeColor={theme.palette.green[600]}
+                percent={(getEpochSlotNo(r) / MAX_SLOT_EPOCH) * 100}
+              >
+                <div>{r.no || 0}</div>
+              </ProgressCircle>
+            </Box>
+            <Status status={r.status.toLowerCase()}>{EPOCH_STATUS[r.status]}</Status>
+          </Box>
+        </Link>
+      ),
     },
     {
       title: "Blocks",
@@ -126,6 +135,7 @@ const Epoch: React.FC = () => {
     setEpoch(null);
     setSelected(null);
   };
+
   return (
     <StyledContainer>
       <Card title={"Epochs"}>

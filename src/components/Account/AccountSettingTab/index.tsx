@@ -9,6 +9,7 @@ import { regexEmail, removeAuthInfo, alphaNumeric } from "../../../commons/utils
 import { getInfo } from "../../../commons/utils/userRequest";
 import { setUserData } from "../../../stores/user";
 import { NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
+// @ts-ignore
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { routers } from "../../../commons/routers";
 import { useHistory } from "react-router-dom";
@@ -73,8 +74,8 @@ const AccountSettingTab: React.FC = () => {
   const fetchUserInfo = useCallback(async () => {
     try {
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-      setUserData(response.data);
-    } catch (error) {}
+      setUserData({ ...response.data, loginType: userData?.loginType || ""});
+    } catch (error) { }
   }, []);
 
   const onEditInfo = async (field: "email" | "username") => {
@@ -123,7 +124,7 @@ const AccountSettingTab: React.FC = () => {
       disconnect();
       removeAuthInfo();
       history.push(routers.HOME);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (

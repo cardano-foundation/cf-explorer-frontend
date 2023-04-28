@@ -17,6 +17,7 @@ export declare interface UserDataType {
   sizeBookmark: number;
   sizeNote: number;
   lastLogin: string;
+  loginType: string;
 }
 
 export declare interface UserStoreType {

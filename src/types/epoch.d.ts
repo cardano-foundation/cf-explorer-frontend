@@ -13,7 +13,8 @@ interface IDataEpoch {
   outSum: number;
   txCount: number;
   epochSlotNo: number;
-  rewardsDistributed?: number;
+  maxSlot: number;
+  rewardsDistributed: number;
 }
 
 interface IEpoch {
@@ -32,4 +33,5 @@ interface EpochCurrentType {
   no: number;
   slot: number;
   totalSlot: number;
+  account: number;
 }
