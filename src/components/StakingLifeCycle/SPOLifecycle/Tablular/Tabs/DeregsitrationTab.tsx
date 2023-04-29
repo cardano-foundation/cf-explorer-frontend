@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, formatHash } from "../../../../../commons/utils/helper";
+import { formatADAFull, getShortWallet } from "../../../../../commons/utils/helper";
 import Table, { Column } from "../../../../commons/Table";
 import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, ClickAbleLink } from "./styles";
 import CustomIcon from "../../../../commons/CustomIcon";
@@ -23,7 +23,7 @@ const DeregsitrationTab = () => {
       key: "txHash",
       title: "Transaction hash",
       render(data) {
-        return <ClickAbleLink>{formatHash(data.txHash)}</ClickAbleLink>;
+        return <ClickAbleLink>{getShortWallet(data.txHash)}</ClickAbleLink>;
       },
     },
     {
@@ -57,7 +57,7 @@ const DeregsitrationTab = () => {
       key: "owner",
       title: "Owner",
       render(data) {
-        return data.stakeKeys.map((item, index) => <ClickAbleLink key={index}>{formatHash(item)}</ClickAbleLink>);
+        return data.stakeKeys.map((item, index) => <ClickAbleLink key={index}>{getShortWallet(item)}</ClickAbleLink>);
       },
     },
   ];

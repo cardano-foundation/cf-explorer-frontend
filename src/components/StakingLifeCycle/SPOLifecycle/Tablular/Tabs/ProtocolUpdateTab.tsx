@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortWallet } from "../../../../../commons/utils/helper";
 import Table, { Column } from "../../../../commons/Table";
 import { PoolUpdateModal } from "../../PoolUpdates";
 import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, ClickAbleLink } from "./styles";
@@ -25,7 +25,7 @@ const ProtocolUpdateTab = () => {
       key: "txHash",
       title: "Transaction hash",
       render(data) {
-        return <ClickAbleLink>{formatHash(data.txHash)}</ClickAbleLink>;
+        return <ClickAbleLink>{getShortWallet(data.txHash)}</ClickAbleLink>;
       },
     },
     {

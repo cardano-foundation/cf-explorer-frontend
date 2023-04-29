@@ -16,6 +16,7 @@ import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
 import ADAicon from "../../components/commons/ADAIcon";
 import ProgressCircle from "../../components/commons/ProgressCircle";
+import FirstEpoch from "../../components/commons/Epoch/FirstEpoch";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -139,8 +140,10 @@ const Epoch: React.FC = () => {
   return (
     <StyledContainer>
       <Card title={"Epochs"}>
+        {fetchData.currentPage === 0 ? <FirstEpoch data={fetchData.data?.[0] || {}} /> : null}
         <Table
           {...fetchData}
+          data={fetchData.currentPage === 0 ? [...fetchData.data.slice(1)] : fetchData.data}
           columns={columns}
           total={{ title: "Total Epochs", count: fetchData.total }}
           pagination={{
