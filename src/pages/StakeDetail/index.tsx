@@ -12,7 +12,7 @@ import { REFRESH_TIMES } from "../../commons/utils/constants";
 const StakeDetail: React.FC = () => {
   const { stakeId } = useParams<{ stakeId: string }>();
   const { state } = useLocation<{ data?: IStakeKeyDetail }>();
-  const { data, initialized, error } = useFetch<IStakeKeyDetail>(
+  const { data, initialized, error, loading } = useFetch<IStakeKeyDetail>(
     `${API.STAKE.DETAIL}/${stakeId}`,
     state?.data,
     false,
