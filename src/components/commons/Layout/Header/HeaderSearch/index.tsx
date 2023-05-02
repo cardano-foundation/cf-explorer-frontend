@@ -2,7 +2,7 @@ import React, { FormEvent, useState, useEffect } from "react";
 import { Backdrop, Box, Button, SelectChangeEvent } from "@mui/material";
 import { useHistory, useLocation } from "react-router-dom";
 import { HeaderSearchIcon } from "../../../../../commons/resources";
-import { routers } from "../../../../../commons/routers";
+import { details, routers } from "../../../../../commons/routers";
 import { stringify } from "qs";
 import { BiChevronDown } from "react-icons/bi";
 import { GoChevronRight } from "react-icons/go";
@@ -30,7 +30,8 @@ interface FormValues {
 interface Option {
   value: FilterParams;
   label: React.ReactNode;
-  paths?: typeof routers[keyof typeof routers][];
+  paths?: (typeof routers)[keyof typeof routers][];
+  detail?: (typeof details)[keyof typeof details];
 }
 const intitalValue: FormValues = {
   filter: "all",
@@ -77,6 +78,18 @@ const options: Option[] = [
     label: "Pools",
     paths: [routers.DELEGATION_POOLS, routers.REGISTRATION_POOLS],
   },
+  {
+    value: "delegation-lifecycle",
+    label: "Delegation Lifecycle",
+    paths: [routers.DELEGATOR_LIFECYCLE],
+    detail: details.staking,
+  },
+  {
+    value: "spo-lifecycle",
+    label: "SPO Lifecycle",
+    paths: [routers.SPO_LIFECYCLE],
+    detail: details.spo,
+  },
 ];
 
 const HeaderSearch: React.FC<Props> = ({ home }) => {
@@ -104,6 +117,8 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
 
   const handleSearch = (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
+    const detail = options.find(item => item.value === filter)?.detail;
+    if (detail) return history.push(detail(search));
     if (search) {
       history.push(
         `${routers.SEARCH}?${stringify({ search, filter: filterParams || (filter !== "all" ? filter : undefined) })}`
@@ -131,14 +146,21 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
   return (
     <Box position={"relative"} component={Form} onSubmit={handleSearch} home={home ? 1 : 0}>
       <Backdrop sx={{ backgroundColor: "unset" }} open={showOption} onClick={() => setShowOption(false)} />
-      <StyledSelect data-testid='all-filters-dropdown' onChange={handleChangeFilter} value={filter} IconComponent={BiChevronDown} home={home ? 1 : 0}>
+      <StyledSelect
+        data-testid="all-filters-dropdown"
+        onChange={handleChangeFilter}
+        value={filter}
+        IconComponent={BiChevronDown}
+        home={home ? 1 : 0}
+      >
         {options.map(({ value, label }) => (
-          <SelectOption data-testid='filter-options' key={value} value={value} home={home ? 1 : 0}>
+          <SelectOption data-testid="filter-options" key={value} value={value} home={home ? 1 : 0}>
             {label}
           </SelectOption>
         ))}
       </StyledSelect>
-      <StyledInput data-testid='search-bar'
+      <StyledInput
+        data-testid="search-bar"
         home={home ? 1 : 0}
         required
         type="search"

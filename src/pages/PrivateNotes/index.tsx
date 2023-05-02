@@ -161,7 +161,12 @@ const PrivateNotes = () => {
           }}
         />
       </Box>
-      <AddPrivateNoteModal currentNote={currentNote} open={openModal} handleCloseModal={onCloseModal} refresh={refresh} />
+      <AddPrivateNoteModal
+        currentNote={currentNote}
+        open={openModal}
+        handleCloseModal={onCloseModal}
+        refresh={refresh}
+      />
       <Dialog
         open={!!selected}
         PaperProps={{

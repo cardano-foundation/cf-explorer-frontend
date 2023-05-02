@@ -33,6 +33,7 @@ type TGetInfo = {
 
 type TGetNonce = {
   address: string;
+  walletName: string;
 };
 
 type TCheckExistEmail = {
@@ -59,14 +60,36 @@ type TTransferWallet = {
 };
 
 type TSignIn = {
-  address: string;
-  signature: string;
+  address?: string;
+  signature?: string;
+  username?: string;
+  password?: string;
+  type: number;
 };
 
 type TSignOut = {
   refreshJwt: string;
   username: string;
 };
+
+type TSignUp = {
+  username: string;
+  email: string;
+  password: string;
+  role: string;
+}
+
+type TVerifyActive = {
+  code: string;
+}
+
+type TForgotPassword = {
+  email: string;
+}
+type TResetPassword = {
+  code: string;
+  password: string;
+}
 
 interface NonceObject {
   message: "SS_0" | "SS_1";
