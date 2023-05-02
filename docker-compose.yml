@@ -15,4 +15,4 @@ services:
       - REACT_APP_MAINNET_API_URL=${REACT_APP_MAINNET_API_URL}
       - REACT_APP_AUTH_API_URL=${REACT_APP_AUTH_API_URL}
     ports:
-      - "${PORT}:80"
+      - "7276:${PORT:-1102}"

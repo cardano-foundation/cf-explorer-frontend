@@ -1,26 +1,11 @@
-FROM node:16 as build
+FROM node:16
 
 WORKDIR /app
 
 COPY package*.json /app/
-COPY yarn.lock .
 RUN grep version package.json | sed 's|.*version...*"\(.*\)".*|REACT_APP_VERSION=\1|g' > .env
-RUN yarn install
+RUN npm i
 COPY . .
-
-RUN yarn build
-
-
-FROM nginx:1.19.6-alpine
-
-COPY --from=build /app/build /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
-
-
-
-
-
+ 
+# start app
+CMD ["npm", "start"]
