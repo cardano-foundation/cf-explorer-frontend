@@ -1,4 +1,4 @@
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Grid, Box, useTheme } from "@mui/material";
 import { exchangeADAToUSD, formatADAFull, getShortWallet } from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
@@ -12,8 +12,6 @@ import { useEffect, useState } from "react";
 import { API } from "../../../commons/utils/api";
 import BookmarkButton from "../../commons/BookmarkIcon";
 import TokenAutocomplete from "../../TokenAutocomplete";
-import { HiArrowLongLeft } from "react-icons/hi2";
-import { BackButton, BackText } from "./styles";
 import ADAicon from "../../commons/ADAIcon";
 
 interface Props {
@@ -28,7 +26,6 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   const { adaRate } = useSelector(({ system }: RootState) => system);
   const theme = useTheme();
 
-  const history = useHistory();
   useEffect(() => {
     setStakeKey(data?.stakeAddress || "");
   }, [data]);
@@ -87,19 +84,14 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   ];
 
   return (
-    <Card>
-      <Box display={"flex"} alignItems={"flex-start"} flexDirection={"column"}>
-        <Box>
-          <BackButton onClick={history.goBack}>
-            <HiArrowLongLeft fontSize="16px" />
-            <BackText>Back</BackText>
-          </BackButton>
-        </Box>
-        <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
+    <Card
+      title={
+        <Box display={"flex"}>
           <Box>Address Detail</Box>
           <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
         </Box>
-      </Box>
+      }
+    >
       <Grid container columnSpacing={2}>
         <Grid item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={10} height={"100%"}>

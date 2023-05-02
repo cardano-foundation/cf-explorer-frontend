@@ -60,8 +60,6 @@ export const StyledTextField = styled(TextField)`
     border: 1.5px solid ${props => props.theme.palette.border.main};
     border-radius: 8px;
   }
-  .MuiFormControl-root {
-  }
   .MuiInputBase-input {
     font-size: 14px;
   }

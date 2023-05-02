@@ -15,19 +15,15 @@ import {
   WrapContent,
 } from "./style";
 import { SupportedWallets, Wallet } from "../../../types/user";
-// @ts-ignore
 import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet";
 import { MdOutlineFileDownload } from "react-icons/md";
 import useToast from "../../../commons/hooks/useToast";
-import StyledModal from "../StyledModal";
 
 interface IProps {
   connect: (name: string, onSuccess: () => void, onError: (error: Error) => void) => Promise<any>;
   onTriggerSignMessage: () => void;
-  isModal?: boolean;
 }
-
-const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, isModal }) => {
+const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage }) => {
   const [walletConnecting, setWalletConnecting] = useState<SupportedWallets | null>(null);
 
   const toast = useToast();
@@ -42,7 +38,8 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
   const onError = (error: Error) => {
     if (error.name === "EnablementFailedError") {
       toast.error(
-        `You are currently connect to ${NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()
+        `You are currently connect to ${
+          NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()
         }, please switch to  ${NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()}!`
       );
     } else if (error.name === "WalletExtensionNotFoundError") {
@@ -56,33 +53,17 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
     setWallet(walletName);
     connect(walletName, () => onSuccess(), onError);
   };
-  const WrapContainer: React.FC<
-    { children: React.ReactNode }
-  > = ({ children }) => {
-    return isModal ? (
-      <StyledModal open title="Connect to a wallet" handleCloseModal={walletConnecting ? () => { } : handleClose}>
-        <WrapContent>
-          {children}
-        </WrapContent>
-      </StyledModal>
-    ) : (
-      <ConnectOption>
-        <WrapContent>
-          <Title>Connect to a wallet</Title>
-          <CloseButton connecting={walletConnecting ? 1 : 0} onClick={walletConnecting ? undefined : handleClose}>
-            <IoMdClose />
-          </CloseButton>
-          {children}
-        </WrapContent>
-      </ConnectOption>
-    );
-  };
+
   const handleOpenLink = (wallet: Wallet) => {
     window.open(wallet.link, "_blank");
   };
   return (
-    <WrapContainer>
-      <>
+    <ConnectOption>
+      <WrapContent>
+        <Title>Connect to a wallet</Title>
+        <CloseButton connecting={walletConnecting ? 1 : 0} onClick={walletConnecting ? undefined : handleClose}>
+          <IoMdClose />
+        </CloseButton>
         {SUPPORTED_WALLETS.map(wallet => {
           const active = walletConnecting === wallet.name;
           return (
@@ -109,8 +90,8 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
             </WalletItem>
           );
         })}
-      </>
-    </WrapContainer>
+      </WrapContent>
+    </ConnectOption>
   );
 };
 

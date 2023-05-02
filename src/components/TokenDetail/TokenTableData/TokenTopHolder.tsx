@@ -10,11 +10,12 @@ import { PriceValue, SmallText, StyledLink } from "./styles";
 import { API } from "../../../commons/utils/api";
 
 interface ITokenTopHolder {
+  active: boolean;
   tokenId: string;
   totalSupply?: number;
 }
 
-const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply }) => {
+const TokenTopHolder: React.FC<ITokenTopHolder> = ({ active, tokenId, totalSupply }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);

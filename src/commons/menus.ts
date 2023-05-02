@@ -1,14 +1,6 @@
-import { FaDiscord, FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
-import {
-  BlockChainMenuIcon,
-  BrowseIcon,
-  DelegatePoolMenuIcon,
-  MediumIcon,
-  ResourcesIcon,
-  StakingLifecycleIcon,
-  ProtocolParameterIcon,
-} from "./resources";
+import { BlockChainMenuIcon, BrowseIcon, DelegatePoolMenuIcon, MediumIcon, ResourcesIcon } from "./resources";
 import { routers } from "./routers";
 
 interface Menu {
@@ -47,27 +39,11 @@ export const menus: Menu[] = [
       { title: "Top Delegators", href: routers.TOP_DELEGATOR },
     ],
   },
-  {
-    title: "Protocol Parameter",
-    icon: ProtocolParameterIcon,
-    href: "/protocol-parameter",
-    children: [],
-  },
-  {
-    title: "Staking Lifecycle",
-    icon: StakingLifecycleIcon,
-    children: [
-      { title: "Dashboard", href: routers.STAKING_LIFECYCLE },
-      { title: "Timeline Delegator", href: routers.DELEGATOR_SEARCH },
-      { title: "Timeline SPO", href: routers.SPO_SEARCH },
-      { title: "Report", href: routers.REPORT_GENERATED },
-    ],
-  },
 ];
 
 export const socials: Social[] = [
   { href: "https://www.linkedin.com/company/cardano-foundation/", title: "LinkedIn", icon: FaLinkedinIn },
-  { href: "#", title: "Discord", icon: FaDiscord },
+  { href: "https://medium.com/@cardano.foundation", title: "Medium", icon: MediumIcon },
   { href: "https://t.me/CardanoAnnouncements", title: "Telegram", icon: FaTelegramPlane },
   { href: "https://twitter.com/Cardano_CF", title: "Twitter", icon: FaTwitter },
   { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube", icon: FaYoutube },

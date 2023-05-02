@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { Backdrop, Box } from "@mui/material";
-// @ts-ignore
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { useSelector } from "react-redux";
 import { WalletIcon } from "../../../../../commons/resources";
@@ -24,22 +23,21 @@ import SyncBookmarkModal from "../SyncBookmarkModal";
 import { useLocalStorage } from "react-use";
 import { removeAuthInfo } from "../../../../../commons/utils/helper";
 import useToast from "../../../../../commons/hooks/useToast";
-interface Props {
-  customButton?: ({ handleClick }: { handleClick: () => void }) => React.ReactNode;
-  onSuccess?: () => void;
-}
+interface Props {}
 
-const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
+const ConnectWallet: React.FC<Props> = () => {
   const { openModal, modalRegister, modalSignMessage, nonce } = useSelector(({ user }: RootState) => user);
-  const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect, enabledWallet } = useCardano({
+  const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
   });
   const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
+
   const [openSyncBookmark, setOpenSyncBookmark] = useState(false);
   const [signature, setSignature] = React.useState("");
   const [submitting, setSubmitting] = useState(false);
   const [isSign, setIsSign] = useState(isConnected);
   const toast = useToast();
+
   useEffect(() => {
     window.onbeforeunload = function () {
       if (!localStorage.getItem("token")) {
@@ -55,7 +53,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
 
   const getNonceValue = useCallback(async () => {
     try {
-      const response = await getNonce({ address: stakeAddress || "", walletName: enabledWallet?.toUpperCase() || "" });
+      const response = await getNonce({ address: stakeAddress || "" });
       return response.data;
     } catch (error: any) {
       toast.error(error.data?.errorMessage || "Something went wrong!");
@@ -70,7 +68,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         const payload = {
           address: stakeAddress || "",
           signature,
-          type: 1,
         };
         const response = await signIn(payload);
 
@@ -82,9 +79,9 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         localStorage.setItem("refreshToken", data.refreshToken);
         localStorage.setItem("walletId", data.walletId);
         localStorage.setItem("email", data.email);
-        localStorage.setItem("loginType", "connectWallet");
+
         const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-        setUserData({ ...userInfo.data, loginType: "connectWallet" });
+        setUserData(userInfo.data);
         if ((((JSON.parse(localStorage?.bookmark) as Bookmark[]) || [])?.filter(r => !r.id) || []).length > 0) {
           setOpenSyncBookmark(true);
         } else {
@@ -97,8 +94,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         setAddress(stakeAddress);
         setModalRegister(true);
       }
-      onSuccess?.();
-      window.location.reload();
     } catch (error) {
       disconnect();
       removeAuthInfo();
@@ -115,7 +110,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         setNonce(nonceValue);
         await signMessage(
           nonceValue.nonce,
-          (signature: any) => handleSignIn(signature, nonceValue),
+          signature => handleSignIn(signature, nonceValue),
           (error: Error) => {
             toast.error("User rejected the request!");
             setModalSignMessage(false);
@@ -159,21 +154,11 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
   return (
     <Box position="relative">
       <Backdrop sx={{ backgroundColor: "unset" }} open={openModal} onClick={() => setOpenModal(false)} />
-      {customButton ? (
-        customButton({ handleClick })
-      ) : (
-        <StyledButton type="button" onClick={handleClick}>
-          <Image src={WalletIcon} alt="wallet" />
-          <Span>Connect Wallet</Span>
-        </StyledButton>
-      )}
-      {openModal && (
-        <ConnectWalletModal
-          isModal={!!customButton}
-          connect={connect}
-          onTriggerSignMessage={() => setModalSignMessage(true)}
-        />
-      )}
+      <StyledButton type="button" onClick={handleClick}>
+        <Image src={WalletIcon} alt="wallet" />
+        <Span>Connect Wallet</Span>
+      </StyledButton>
+      {openModal && <ConnectWalletModal connect={connect} onTriggerSignMessage={() => setModalSignMessage(true)} />}
       <SignMessageModal
         open={modalSignMessage}
         handleCloseModal={() => {

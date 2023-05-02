@@ -5,8 +5,8 @@ import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import StakeKeyOverview from "../../components/StakeDetail/StakeOverview";
 import StakeTab from "../../components/StakeDetail/StakeTab";
-import StakeAnalytics from "../../components/StakeDetail/StakeAnalytics";
 import { StyledContainer } from "./styles";
+import StakeAnalytics from "../../components/StakeDetail/StakeAnalystics";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const StakeDetail: React.FC = () => {

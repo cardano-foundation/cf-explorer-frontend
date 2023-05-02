@@ -1,15 +1,14 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { useWindowSize } from "react-use";
+import ConnectWallet from "./ConnectWallet";
 import HeaderSearch from "./HeaderSearch";
-import LoginButton from "./LoginButton";
 import SelectNetwork from "./SelectNetwork";
 import { HeaderBox, HeaderContainer, HeaderMain, HeaderTop, Title } from "./styles";
+import { useWindowSize } from "react-use";
+import { useSelector } from "react-redux";
 
 const Header: React.FC<RouteComponentProps> = props => {
   const { history } = props;
-
   const home = history.location.pathname === "/";
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const { width } = useWindowSize();
@@ -21,7 +20,7 @@ const Header: React.FC<RouteComponentProps> = props => {
     return (
       <HeaderTop>
         <SelectNetwork />
-        <LoginButton />
+        <ConnectWallet />
       </HeaderTop>
     );
   };

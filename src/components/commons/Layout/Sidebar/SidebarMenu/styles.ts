@@ -63,7 +63,7 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
       active
         ? text
           ? theme.palette.text.primary
-          : theme.palette.common.white
+          : theme.palette.grey[400]
         : disable
         ? theme.palette.text.disabled
         : theme.palette.grey[400]};

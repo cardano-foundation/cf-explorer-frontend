@@ -36,7 +36,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       icon: timeIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Created At </TitleCard>
+          <TitleCard mr={1}>Created at </TitleCard>
         </Box>
       ),
       value: formatDateTimeLocal(data?.time || ""),
@@ -81,7 +81,8 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       icon: outputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Total Output in ADA</TitleCard>
+          <TitleCard mr={1}>Total Out in ADA</TitleCard>
+          <img src={infoIcon} alt="info icon" width={18} />
         </Box>
       ),
       value: (

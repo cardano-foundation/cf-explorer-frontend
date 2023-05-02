@@ -9,9 +9,9 @@ import { AIcon } from "../../../commons/resources";
 import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer, StyledLink } from "./styles";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { API } from "../../../commons/utils/api";
+import { REFRESH_TIMES } from "../../../commons/utils/constants";
 import { Box } from "@mui/material";
 import ADAicon from "../../commons/ADAIcon";
-import { REFRESH_TIMES } from "../../../commons/utils/constants";
 
 interface IEpochBlockList {
   epochId: string;
@@ -45,7 +45,9 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       key: "block",
       minWidth: "100px",
       render: r => (
-        <StyledLink to={details.block(r.blockNo || r.hash)}>{r.blockNo || getShortHash(r.hash || "")}</StyledLink>
+        <StyledLink to={details.block(r.blockNo || r.hash)}>
+          {r.blockNo || getShortHash(r.hash || "")}
+        </StyledLink>
       ),
     },
     {

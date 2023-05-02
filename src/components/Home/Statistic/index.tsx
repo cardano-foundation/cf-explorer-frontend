@@ -118,12 +118,7 @@ const HomeStatistic: React.FC<Props> = () => {
                 <XValue data-testid='current-slot-number'>
                   <b>{numberWithCommas(currentEpoch?.slot % MAX_SLOT_EPOCH)}</b>
                 </XValue>
-                <XSmall> / {numberWithCommas(MAX_SLOT_EPOCH)}</XSmall>
-                <br />
-                <XSmall>Unique accounts: </XSmall>
-                <XValue>
-                  <b>{numberWithCommas(currentEpoch?.account)}</b>
-                </XValue>
+                <XSmall data-testid='total-slots'> / {numberWithCommas(MAX_SLOT_EPOCH)}</XSmall>
               </Content>
             </Item>
           </Link>

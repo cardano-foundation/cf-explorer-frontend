@@ -1,10 +1,5 @@
 export const routers = {
   HOME: "/",
-  SIGN_IN: "/sign-in",
-  SIGN_UP: "/sign-up",
-  VERIFY_EMAIL: "/verify-email",
-  FORGOT_PASSWORD: "/forgot-password",
-  RESET_PASSWORD: "/reset-password",
   BLOCK_LIST: "/blocks",
   BLOCK_DETAIL: "/block/:blockId",
   TRANSACTION_LIST: "/transactions",
@@ -33,13 +28,6 @@ export const routers = {
   MY_PROFILE: "/account/profile",
   BOOKMARK: "/account/bookmark",
   PRIVATE_NOTES: "/account/notes",
-  PROTOCOL_PARAMETER: "/protocol-parameter",
-  SPO_SEARCH: "/spo-lifecycle",
-  DELEGATOR_SEARCH: "/delegator-lifecycle",
-  DELEGATOR_LIFECYCLE: "/delegator-lifecycle/:stakeId/:tab?",
-  SPO_LIFECYCLE: "/spo-lifecycle/:poolId",
-  STAKING_LIFECYCLE: "/stacking-lifecycle",
-  REPORT_GENERATED: "/report-generated",
   NOT_FOUND: "/*",
 } as const;
 
@@ -59,10 +47,6 @@ export const details = {
   policyDetail: (policyId?: string) => routers.POLICY_DETAIL.replace(":policyId", policyId ?? ""),
   contract: (address?: string, tab = "transaction") =>
     routers.CONTRACT_DETAIL.replace(":address", address ?? "").replace(":tabActive?", tab),
-  staking: (stakeId: string, tab = "registration") =>
-  routers.DELEGATOR_LIFECYCLE.replace(":stakeId", stakeId).replace(":tab?", tab),
-  spo: (poolId: string, tab = "registration") =>
-  routers.SPO_LIFECYCLE.replace(":poolId", poolId).replace(":tab?", tab),
 };
 
 export const listRouters = [

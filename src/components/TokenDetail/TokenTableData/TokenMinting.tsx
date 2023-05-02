@@ -10,10 +10,11 @@ import Table, { Column } from "../../commons/Table";
 import { PriceValue, SmallText, StyledLink } from "./styles";
 
 interface ITokenMinting {
+  active: boolean;
   tokenId: string;
 }
 
-const TokenMinting: React.FC<ITokenMinting> = ({ tokenId }) => {
+const TokenMinting: React.FC<ITokenMinting> = ({ active, tokenId }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);

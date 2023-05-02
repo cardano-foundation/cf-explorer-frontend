@@ -32,9 +32,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
 
   const getActive = () => {
     const active = menus.findIndex(menu => {
-        return menu?.children?.find(r => {
-          return pathname.split("/").length > 2 ? r.href?.includes(pathname.split("/")[1]) : r.href === pathname;
-        });
+      return menu?.children?.find(r => {
+        return pathname.split("/").length > 2 ? r.href?.includes(pathname.split("/")[1]) : r.href === pathname;
+      });
     });
 
     if (active !== -1) {
@@ -102,11 +102,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           active={pathname === href ? 1 : 0}
                         />
                       ) : null}
-                      <MenuText
-                        primary={title}
-                        open={sidebar ? 1 : 0}
-                        active={pathname === href ? 1 : 0}
-                      />
+                      <MenuText primary={title} open={sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
                     </ListItem>
                   )
                 ) : (

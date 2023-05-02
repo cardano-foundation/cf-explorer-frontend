@@ -49,8 +49,8 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
     {
       title: (
         <Box display={"flex"} alignItems="center">
-          <Box component={"span"} mr={1} width={"max-content"}>
-            Total Transactions
+          <Box component={"span"} mr={1}>
+            Transactions
           </Box>
         </Box>
       ),
@@ -61,18 +61,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
-            Volume 24H
-          </Box>
-        </Box>
-      ),
-      icon: exchageIcon,
-      value: numberWithCommas(data?.volumeIn24h),
-    },
-    {
-      title: (
-        <Box display={"flex"} alignItems="center">
-          <Box component={"span"} mr={1}>
-            Created
+            Created at
           </Box>
         </Box>
       ),
@@ -83,7 +72,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
 
   return (
     <Box textAlign={"left"}>
-      <BackButton onClick={history.goBack}>
+    <BackButton onClick={history.goBack}>
         <HiArrowLongLeft />
         <BackText>Back</BackText>
       </BackButton>

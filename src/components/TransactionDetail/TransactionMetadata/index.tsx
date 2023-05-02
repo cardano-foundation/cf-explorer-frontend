@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import "./index.css";
@@ -19,10 +19,7 @@ import { ReactComponent as MintingIcon } from "../../../commons/resources/images
 import { ReactComponent as DelegationIcon } from "../../../commons/resources/images/DelegationIcon.svg";
 import { useHistory, useParams } from "react-router-dom";
 import { details } from "../../../commons/routers";
-import { TitleTab } from "./styles";
-import PoolCertificate from "./PoolCertificate";
-import { ProtocolParameterIcon, ProtocolUpdateIcon } from "../../../commons/resources";
-import ProtocolUpdate from "./ProtocolUpdate";
+import { Title, TitleTab } from "./styles";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
@@ -39,22 +36,6 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
   const handleChange = (event: React.SyntheticEvent, tab: keyof Transaction) => {
     history.push(details.transaction(data?.tx?.hash, tab));
   };
-
-  const protocolsMergeData: TProtocolMerge[] = useMemo(() => {
-    const result = [];
-    const protocols = data?.protocols;
-    const previousProtocols: any = data?.previousProtocols;
-    for (let [key, value] of Object.entries(protocols || {})) {
-      const oldValue = previousProtocols[key];
-      const pItem: TProtocolMerge = {
-        protocol: key,
-        oldValue,
-        value,
-      };
-      result.push(pItem);
-    }
-    return result;
-  }, [data?.protocols, data?.previousProtocols]);
 
   const tabs: {
     key: keyof Transaction;
@@ -113,18 +94,6 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
       icon: MintingIcon,
       label: "Minting",
       children: <Minting data={data?.mints} />,
-    },
-    {
-      key: "mints",
-      icon: MintingIcon,
-      label: "Pool certificate",
-      children: <PoolCertificate data={data?.mints} />,
-    },
-    {
-      key: "protocols",
-      icon: ProtocolUpdateIcon,
-      label: "Protocol Update",
-      children: <ProtocolUpdate data={protocolsMergeData} />,
     },
   ];
 

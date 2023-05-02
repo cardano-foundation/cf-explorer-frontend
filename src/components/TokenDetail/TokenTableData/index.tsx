@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
+import Card from "../../commons/Card";
 import TokenTransaction from "./TokenTransaction";
 
-import { TitleTab } from "./styles";
+import { StyledSelect, TitleTab } from "./styles";
 import TokenTopHolder from "./TokenTopHolder";
 import TokenMinting from "./TokenMinting";
-import { Box, Tab } from "@mui/material";
+import { Box, MenuItem, Tab } from "@mui/material";
+import { BiChevronDown } from "react-icons/bi";
+import { stringify } from "qs";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { details } from "../../../commons/routers";
 
@@ -14,7 +17,15 @@ interface ITokenTableData {
   totalSupply?: number;
 }
 
+interface IMappingvalue {
+  [key: string]: {
+    title: string;
+    component: React.ReactNode;
+  };
+}
+
 const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
+  const [type, setType] = useState<string>("transactions");
   const history = useHistory();
   let { tabActive = "transactions", tokenId } = useParams<{ tabActive: keyof Transaction; tokenId: string }>();
 
@@ -26,17 +37,17 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
     {
       key: "transactions",
       label: "Transactions",
-      children: <TokenTransaction tokenId={tokenId} />,
+      children: <TokenTransaction tokenId={tokenId} active={type === "transactions"} />,
     },
     {
       key: "topHolders",
       label: "Top Holders",
-      children: <TokenTopHolder tokenId={tokenId} totalSupply={totalSupply} />,
+      children: <TokenTopHolder tokenId={tokenId} active={type === "topHolders"} totalSupply={totalSupply} />,
     },
     {
       key: "tokenMint",
-      label: "Minting",
-      children: <TokenMinting tokenId={tokenId} />,
+      label: "Token Mint",
+      children: <TokenMinting tokenId={tokenId} active={type === "minting"} />,
     },
   ];
 

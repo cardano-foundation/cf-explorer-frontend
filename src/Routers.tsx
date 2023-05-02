@@ -27,33 +27,10 @@ import MyProfile from "./pages/MyProfile";
 import AccountLayout from "./components/commons/Layout/AccountLayout";
 import Bookmark from "./pages/Bookmark";
 import PrivateNotes from "./pages/PrivateNotes";
-import ProtocolParameter from "./pages/ProtocolParameter";
-import DelegatorLifecycle from "./pages/DelegatorLifecycle";
-import SPOLifecycle from "./pages/SPOLifecycle";
-import SPOSearch from "./pages/SPOSearch";
-import DelegatorSearch from "./pages/DelegatorSearch";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
-import StackingLifecycle from "./pages/StackingLifecycle";
-import ReportGenerated from "./pages/ReportGenerated";
-import VerifyEmail from "./pages/VerifyEmail";
-import { Box } from "@mui/material";
-import { details } from "./commons/routers";
 
 const Routes: React.FC = () => {
-  console.log(localStorage.getItem("username"));
-  //TODO: lấy stake key thay vì username trong tương lai
-  const stakeKey = localStorage.getItem("username");
-  //TODO: lấy SPO
   return (
     <Switch>
-      <Route path={routers.SIGN_IN} exact component={SignIn} />
-      <Route path={routers.SIGN_UP} exact component={SignUp} />
-      <Route path={routers.VERIFY_EMAIL} exact component={VerifyEmail} />
-      <Route path={routers.FORGOT_PASSWORD} exact component={ForgotPassword} />
-      <Route path={routers.RESET_PASSWORD} exact component={ResetPassword} />
       <Route path={routers.HOME} exact component={Home} />
       <Route path={routers.BLOCK_LIST} exact component={BlockList} />
       <Route path={routers.BLOCK_DETAIL} component={BlockDetail} />
@@ -74,23 +51,7 @@ const Routes: React.FC = () => {
       <Route path={routers.POLICY_DETAIL} exact component={PolicyDetail} />
       <Route path={routers.ADDRESS_LIST} exact component={TopAddresses} />
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
-      <Route path={routers.STAKING_LIFECYCLE} exact component={StackingLifecycle} />
-      <Route path={routers.REPORT_GENERATED} exact component={ReportGenerated} />
-      <Route path={routers.PROTOCOL_PARAMETER} exact component={ProtocolParameter} />
       <Route path={routers.SEARCH} exact component={SearchResult} />
-      <Route path={routers.DELEGATOR_LIFECYCLE} exact component={DelegatorLifecycle} />
-      <Route path={routers.SPO_LIFECYCLE} exact component={SPOLifecycle} />
-      <Route path={routers.SPO_SEARCH} exact component={SPOSearch} />
-      <Route
-        path={routers.DELEGATOR_SEARCH}
-        exact
-        component={() => {
-          if (stakeKey) {
-            return <Redirect to={details.staking(stakeKey)} />;
-          }
-          return <DelegatorSearch />;
-        }}
-      />
       <Route path={routers.ACCOUNT}>
         <AccountLayout>
           <Switch>

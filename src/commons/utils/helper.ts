@@ -2,9 +2,6 @@ import BigNumber from "bignumber.js";
 import moment from "moment";
 import { parse } from "qs";
 import { setUserData } from "../../stores/user";
-import { setUserData as setUser2Data } from "../../stores/user2";
-import { getInfo, signIn } from "./userRequest";
-import { NETWORK, NETWORK_TYPES } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const alphaNumeric = /[^0-9a-zA-Z]/;
@@ -107,31 +104,6 @@ export const removeAuthInfo = () => {
   localStorage.setItem("cf-wallet-connected", "false");
   localStorage.removeItem("cf-last-connected-wallet");
   setUserData(null);
-};
-
-export const handleSignIn = async (username: string, password: string, cbSuccess?: () => void) => {
-  try {
-    const payload = {
-      username,
-      password,
-      type: 0,
-    };
-    const response = await signIn(payload);
-    const data = response.data;
-
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("username", data.username);
-    localStorage.setItem("refreshToken", data.refreshToken);
-    localStorage.setItem("walletId", data.walletId);
-    localStorage.setItem("email", data.email);
-    localStorage.setItem("login-type", "normal");
-
-    const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-    setUserData({ ...userInfo.data, loginType: "normal" });
-    cbSuccess?.();
-  } catch (error) {
-    removeAuthInfo();
-  }
 };
 
 export const formatDateTime = (date: string) => {

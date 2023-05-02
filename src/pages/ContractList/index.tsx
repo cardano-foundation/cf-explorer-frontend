@@ -20,8 +20,8 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useSelector } from "react-redux";
 import { RootState } from "../../stores/types";
 import { API } from "../../commons/utils/api";
-import ADAicon from "../../components/commons/ADAIcon";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
+import ADAicon from "../../components/commons/ADAIcon";
 
 const Transactions: React.FC = () => {
   const { search } = useLocation();

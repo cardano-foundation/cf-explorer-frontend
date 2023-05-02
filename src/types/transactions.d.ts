@@ -35,38 +35,6 @@ interface CurrentTransactions {
   epochSlotNo: number;
 }
 
-type TProtocol = {
-  minFeeA?: number;
-  minFeeB?: number;
-  maxBlockSize?: number;
-  maxTxSize?: number;
-  maxBhSize?: number;
-  keyDeposit?: number;
-  poolDeposit?: number;
-  maxEpoch?: number;
-  optimalPoolCount?: number;
-  influence?: number;
-  monetaryExpandRate?: number;
-  treasuryGrowthRate?: number;
-  decentralisation?: number;
-  entropy?: number;
-  protocolMajor?: number;
-  protocolMinor?: number;
-  minUtxoValue?: number;
-  minPoolCost?: number;
-  costModel?: number;
-  priceMem?: number;
-  priceStep?: number;
-  maxTxExMem?: number;
-  maxTxExSteps?: number;
-  maxBlockExMem?: number;
-  maxBlockExSteps?: number;
-  maxValSize?: number;
-  collateralPercent?: number;
-  maxCollateralInputs?: number;
-  coinsPerUtxoSize?: number;
-};
-
 interface Transaction {
   tx: {
     hash: string;
@@ -170,8 +138,6 @@ interface Transaction {
       url: string;
     };
   }[];
-  protocols?: TProtocol;
-  previousProtocols?: TProtocol;
   delegations?: {
     address: string;
     poolId: string;
@@ -181,9 +147,6 @@ interface Transaction {
     addressTo: string[];
     amount: 0;
   }[];
-  poolCertificate?: {
-    test: string;
-  };
 }
 
 interface CollateralResponses {
@@ -203,9 +166,3 @@ interface CollateralResponses {
     };
   }[];
 }
-
-type TProtocolMerge = {
-  oldValue?: number;
-  value?: number;
-  protocol: string;
-};

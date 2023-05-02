@@ -1,8 +1,6 @@
-// @ts-ignore
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
 import React, { useEffect } from "react";
-// @ts-ignore
 import { BiChevronDown } from "react-icons/bi";
 import { useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
