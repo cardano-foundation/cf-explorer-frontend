@@ -6,6 +6,7 @@ import NoRecord from "../../components/commons/NoRecord";
 import StakeKeyOverview from "../../components/StakeDetail/StakeOverview";
 import StakeTab from "../../components/StakeDetail/StakeTab";
 import { StyledContainer } from "./styles";
+import StakeAnalytics from "../../components/StakeDetail/StakeAnalystics";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const StakeDetail: React.FC = () => {
@@ -27,7 +28,8 @@ const StakeDetail: React.FC = () => {
 
   return (
     <StyledContainer>
-      <StakeKeyOverview data={data} loading={!initialized} />
+      <StakeKeyOverview data={data} loading={loading} />
+      <StakeAnalytics />
       <StakeTab />
     </StyledContainer>
   );

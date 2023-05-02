@@ -36,10 +36,13 @@ export const API = {
   },
   STAKE: {
     ANALYTICS: "stakes/analytics",
+    ANALYTICS_BALANCE: "stakes/analytics-balance",
+    ANALYTICS_REWARD: "stakes/analytics-reward",
     DETAIL: "stakes",
     DE_REGISTRATION: "stakes/de-registration",
     TOP_DELEGATOR: "stakes/top-delegators",
     REGISTRATION: "stakes/registration",
+    MIN_MAX_BALANCE: "stakes/min-max-balance",
   },
   MARKETS: "markets",
 };
