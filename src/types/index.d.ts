@@ -7,7 +7,9 @@ type FilterParams =
   | "stakes"
   | "addresses"
   | "contract"
-  | "delegations/pool-detail-header";
+  | "delegations/pool-detail-header"
+  | "delegation-lifecycle"
+  | "spo-lifecycle";
 
 interface SearchParams {
   filter?: FilterParams;
@@ -18,4 +20,4 @@ type NETWORKS = import("../commons/utils/constants").NETWORKS;
 
 type ACCOUNT_ERROR = import("../commons/utils/constants").ACCOUNT_ERROR;
 
-type RootState = import("../stores/types").RootState
+type RootState = import("../stores/types").RootState;

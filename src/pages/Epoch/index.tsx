@@ -136,6 +136,7 @@ const Epoch: React.FC = () => {
     setEpoch(null);
     setSelected(null);
   };
+
   return (
     <StyledContainer>
       <Card title={"Epochs"}>

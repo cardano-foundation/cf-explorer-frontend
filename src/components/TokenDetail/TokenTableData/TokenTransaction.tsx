@@ -19,11 +19,10 @@ import { API } from "../../../commons/utils/api";
 import ADAicon from "../../commons/ADAIcon";
 
 interface ITokenTransaction {
-  active: boolean;
   tokenId: string;
 }
 
-const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
+const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -41,7 +40,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       ),
     },
     {
-      title: "Trx Hash",
+      title: "Tx Hash",
       key: "trxhash",
       minWidth: "200px",
 
@@ -56,7 +55,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ active, tokenId }) => {
       ),
     },
     {
-      title: "Block",
+      title: "Block/ Epoch/ Slot",
       key: "block",
       minWidth: "200px",
       render: r => (

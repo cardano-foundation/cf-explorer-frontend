@@ -1,4 +1,4 @@
-import { Box, Select, alpha, styled } from "@mui/material";
+import { Box, Checkbox, Select, Typography, alpha, styled } from "@mui/material";
 
 export const Empty = styled(Box)`
   text-align: center;
@@ -34,6 +34,10 @@ export const THeader = styled("th")`
   border-bottom: 1px solid ${props => props.theme.palette.border.main};
   padding: 20px;
   color: ${props => props.theme.palette.grey[300]};
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 2;
 `;
 
 export const TRow = styled("tr")<{ selected?: number }>`
@@ -153,3 +157,35 @@ export const SelectMui = styled(Select)(({ theme }) => ({
     paddingLeft: "0px !important",
   },
 }));
+
+export const TableCheckBox = styled(Checkbox)`
+  padding: 0px;
+  margin: 0px;
+`;
+export const TableHeaderContainer = styled(Box)`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 16px;
+`;
+
+export const TableTitle = styled(Typography)`
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 37px;
+  color: #000;
+  flex: 1;
+  text-align: left;
+`;
+
+export const ShowedResults = styled(Typography)`
+  font-size: 14px;
+  line-height: 16px;
+  color: rgba(102, 112, 133, 1);
+`;
+
+export const TableCustomTitle = styled(Box)`
+  flex: 1;
+  text-align: left;
+`;

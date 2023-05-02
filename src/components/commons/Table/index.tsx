@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Box,
   Pagination,
@@ -27,11 +27,24 @@ import {
   InputNumber,
   SelectMui,
   LoadingWrapper,
+  TableCheckBox,
+  TableHeaderContainer,
+  TableTitle,
+  ShowedResults,
+  TableCustomTitle,
 } from "./styles";
-import { ColumnType, FooterTableProps, TableHeaderProps, TableProps, TableRowProps } from "../../../types/table";
+import {
+  ColumnType,
+  FooterTableProps,
+  TableHeaderProps,
+  TableProps,
+  TableRowProps,
+  TableTopHeaderProps,
+} from "../../../types/table";
 import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
 import { TbArrowsDownUp, TbArrowUp, TbArrowDown } from "react-icons/tb";
+import Filter from "../Filter";
 
 type TEmptyRecord = {
   className?: string;
@@ -48,13 +61,16 @@ const TableHeader = <T extends ColumnType>({
   defaultSort,
   showTabView,
   selected = null,
+  selectable,
+  toggleSelectAll,
+  isSelectAll,
 }: TableHeaderProps<T>) => {
   const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
     columnKey: defaultSort ? defaultSort.split(",")[0] : "",
     sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : "",
   });
   const sortValue = ({ key, sort }: { key: string; sort: "" | "DESC" | "ASC" }) => {
-    if (key === columnKey)
+    if (key === columnKey) {
       switch (sort) {
         case "DESC":
           setSort({ columnKey: key, sort: "ASC" });
@@ -67,6 +83,7 @@ const TableHeader = <T extends ColumnType>({
           return { columnKey: key, sortValue: "DESC" };
         }
       }
+    }
     setSort({ columnKey: key, sort: "DESC" });
     return { columnKey: key, sortValue: "DESC" };
   };
@@ -86,6 +103,11 @@ const TableHeader = <T extends ColumnType>({
   return (
     <THead>
       <tr>
+        {selectable && (
+          <THeader>
+            <TableCheckBox checked={isSelectAll} onChange={e => toggleSelectAll?.(e.target.checked)} />
+          </THeader>
+        )}
         {columns.map((column, idx) => (
           <THeader key={idx}>
             {column.title}
@@ -114,9 +136,17 @@ const TableRow = <T extends ColumnType>({
   selectedProps,
   selected = null,
   dataLength,
+  selectable,
+  toggleSelection,
+  isSelected,
 }: TableRowProps<T>) => {
   return (
     <TRow onClick={e => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
+      {selectable && (
+        <TCol>
+          <TableCheckBox checked={isSelected?.(row)} onChange={e => toggleSelection?.(row)} />
+        </TCol>
+      )}
       {columns.map((column, idx) => {
         return (
           <TCol
@@ -147,6 +177,9 @@ const TableBody = <T extends ColumnType>({
   selectedProps,
   loading,
   initialized,
+  selectable,
+  toggleSelection,
+  isSelected,
 }: TableProps<T>) => {
   return (
     <TBody>
@@ -179,6 +212,9 @@ const TableBody = <T extends ColumnType>({
             showTabView={showTabView}
             selected={selected}
             selectedProps={selected === index ? selectedProps : undefined}
+            selectable={selectable}
+            toggleSelection={toggleSelection}
+            isSelected={isSelected}
           />
         ))}
     </TBody>
@@ -195,7 +231,7 @@ const TableSekeleton = () => {
   );
 };
 
-const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading }) => {
+const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, clearSelection }) => {
   const [page, setPage] = useState(pagination?.page || 1);
   const [size, setSize] = useState(pagination?.size || 50);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
@@ -207,6 +243,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading })
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
     pagination && pagination.onChange && pagination.onChange(page, size);
     setPage(page);
+    clearSelection?.();
   };
 
   return (
@@ -220,6 +257,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading })
                 setSize(+e.target.value);
                 setPage(1);
                 pagination?.onChange && pagination.onChange(1, +e.target.value);
+                clearSelection?.();
               }}
               value={size}
               IconComponent={DownIcon}
@@ -278,10 +316,45 @@ const Table: React.FC<TableProps> = ({
   selected,
   selectedProps,
   defaultSort,
+  showPagination = true,
+  selectable,
+  onSelectionChange,
+  tableTitle,
+  renderAction,
+  fliterOptions,
+  onFilterChange,
+  isShowingResult,
+  maxHeight,
 }) => {
+  const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
+    onSelectionChange,
+  });
+
+  const toggleSelectAll = (isChecked: boolean) => {
+    if (data && isChecked) {
+      selectAll(data);
+      return;
+    }
+    clearSelection();
+  };
+
+  useEffect(() => {
+    clearSelection();
+  }, [data]);
+
+  const isSelectAll = useMemo(() => data?.length === selectedItems.length, [data, selectedItems]);
   return (
     <Box className={className || ""} style={style}>
-      <Wrapper>
+      <TableTopHeader
+        onFilterChange={onFilterChange}
+        renderAction={items => renderAction?.(items, clearSelection)}
+        title={tableTitle}
+        totalShowingResult={isShowingResult && data?.length}
+        fliterOptions={fliterOptions}
+        selectedItems={selectedItems}
+        isSelectAll={isSelectAll}
+      />
+      <Wrapper maxHeight={maxHeight}>
         <TableFullWidth>
           <TableHeader
             columns={columns}
@@ -289,6 +362,9 @@ const Table: React.FC<TableProps> = ({
             defaultSort={defaultSort}
             showTabView={showTabView}
             selected={selected}
+            selectable={selectable}
+            toggleSelectAll={toggleSelectAll}
+            isSelectAll={isSelectAll}
           />
           <TableBody
             columns={columns}
@@ -299,15 +375,38 @@ const Table: React.FC<TableProps> = ({
             selectedProps={selectedProps}
             initialized={initialized}
             loading={loading}
+            selectable={selectable}
+            toggleSelection={toggleSelection}
+            isSelected={isSelected}
           />
         </TableFullWidth>
         {loading && !initialized && <TableSekeleton />}
         {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord className={emptyClassName} />}
       </Wrapper>
-      <FooterTable total={total} pagination={pagination} loading={loading || false} />
+      {showPagination && (
+        <FooterTable total={total} clearSelection={clearSelection} pagination={pagination} loading={loading || false} />
+      )}
     </Box>
   );
 };
+
+const TableTopHeader: React.FC<TableTopHeaderProps> = ({
+  fliterOptions,
+  renderAction,
+  selectedItems,
+  title,
+  isSelectAll,
+  totalShowingResult = 0,
+  onFilterChange,
+}) => (
+  <TableHeaderContainer>
+    {typeof title === "string" ? <TableTitle>{title}</TableTitle> : <TableCustomTitle>{title}</TableCustomTitle>}
+    {Boolean(totalShowingResult) && <ShowedResults>Showing {totalShowingResult} results</ShowedResults>}
+    {fliterOptions && <Filter onOptionChange={onFilterChange} options={fliterOptions} />}
+
+    {isSelectAll && renderAction?.(selectedItems)}
+  </TableHeaderContainer>
+);
 
 export * from "../../../types/table.d";
 
@@ -448,3 +547,35 @@ const NextPageIcon = styled(NextPage)<{ disabled: boolean }>(({ disabled, theme 
 const PrevPageIcon = styled(PrevPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
   stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
 }));
+
+function useSelection<T>({ onSelectionChange }: { onSelectionChange?: (items: T[]) => void }) {
+  const [selectedItems, setSelectedItems] = useState<T[]>([]);
+  const toggleSelection = (item: T) => {
+    setSelectedItems(prevSelectedItems => {
+      const itemIndex = prevSelectedItems.indexOf(item);
+      if (itemIndex >= 0) {
+        onSelectionChange?.(prevSelectedItems.filter(i => i !== item));
+        return prevSelectedItems.filter(i => i !== item);
+      }
+      onSelectionChange?.([...prevSelectedItems, item]);
+      return [...prevSelectedItems, item];
+    });
+  };
+
+  const selectAll = (items: T[]) => {
+    if (!items) return;
+    setSelectedItems(items);
+    onSelectionChange?.(items);
+  };
+
+  const clearSelection = () => {
+    setSelectedItems([]);
+    onSelectionChange?.([]);
+  };
+
+  const isSelected = (item: T) => {
+    return selectedItems.includes(item);
+  };
+
+  return { selectedItems, toggleSelection, clearSelection, isSelected, selectAll };
+}

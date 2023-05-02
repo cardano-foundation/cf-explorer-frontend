@@ -36,12 +36,45 @@ export const API = {
   },
   STAKE: {
     ANALYTICS: "stakes/analytics",
+    ANALYTICS_BALANCE: "stakes/analytics-balance",
+    ANALYTICS_REWARD: "stakes/analytics-reward",
     DETAIL: "stakes",
     DE_REGISTRATION: "stakes/de-registration",
     TOP_DELEGATOR: "stakes/top-delegators",
     REGISTRATION: "stakes/registration",
+    MIN_MAX_BALANCE: "stakes/min-max-balance",
+  },
+  STAKE_LIFECYCLE: {
+    REGISTRATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/registrations`,
+    DELEGATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/delegations`,
+    WITHDRAW: (stakeKey: string) => `stake-lifecycle/${stakeKey}/withdrawals`,
+    DELEGATION_DETAIL: (stakeKey: string, hash: string) => `stake-lifecycle/${stakeKey}/delegations/${hash}`,
+    WITHDRAW_DETAIL: (stakeKey: string, hash: string) => `stake-lifecycle/${stakeKey}/withdrawals/${hash}`,
+    DEREGISTRATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/de-registrations`,
+    RECEIVED_REWARD: (stakeKey: string) => `stake-lifecycle/${stakeKey}/rewards`,
+    WALLET_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/wallet-activity`,
+    REWARDS_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/reward-activity`,
+  },
+  SPO_LIFECYCLE: {
+    SPO_REGISTRATION: (poolId: string) => `pool-lifecycle/registration?poolView=${poolId}`,
+    SPO_REGISTRATION_LIST: (poolId: string) => `pool-lifecycle/registration-list?poolView=${poolId}`,
+    SPO_REGISTRATION_DETAIl: (poolView: string, poolId: number) =>
+      `pool-lifecycle/registration-detail?poolView=${poolView}&id=${poolId}`,
+    POOL_UPDATE: (poolId: string) => `pool-lifecycle/pool-update?poolView=${poolId}`,
+    POOL_UPDATE_LIST: (poolId: string) => `pool-lifecycle/pool-update-list?poolView=${poolId}`,
+    POOL_UPDATE_DETAIL: (poolId: number) => `pool-lifecycle/pool-update-detail?id=${poolId}`,
+    POOL_INFO: (poolId: string) => `pool-lifecycle/pool-info?poolView=${poolId}`,
+    REWARD: (poolId: string) => `pool-lifecycle/reward?poolView=${poolId}`,
+    SPO_DEREGISTRATION: (poolId: string) => `pool-lifecycle/de-registration?poolView=${poolId}`,
+    SPO_POOL_INFO: (poolId: string) => `pool-lifecycle/pool-info?poolView=${poolId}`,
+    SPO_DEREGISTRATION_DETAIl: (poolView: string, poolId: number) =>
+      `pool-lifecycle/de-registration-detail?poolView=${poolView}&id=${poolId}`,
   },
   MARKETS: "markets",
+  PROTOCOL_PARAMETER: {
+    CURRENT: "protocol/current",
+    HISTORY: "protocol/:type/history",
+  },
 };
 
 export const USER_API = {
