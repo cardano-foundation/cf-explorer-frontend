@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
 import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import "./index.css";
@@ -33,10 +33,11 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
   let { tabActive = "summary" } = useParams<{ tabActive: keyof Transaction }>();
   const history = useHistory();
   const theme = useTheme();
-
+  const tabRef = useRef(null);
   if (!data?.[tabActive]) tabActive = "summary";
 
   const handleChange = (event: React.SyntheticEvent, tab: keyof Transaction) => {
+    (tabRef as any)?.current.scrollIntoView();
     history.push(details.transaction(data?.tx?.hash, tab));
   };
 
@@ -131,7 +132,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
   const items = tabs.filter(item => data?.[item.key]);
 
   return (
-    <Box mt={4}>
+    <Box mt={4} ref={tabRef}>
       <TabContext value={tabActive}>
         <Box sx={{ borderBottom: theme => `1px solid ${theme.palette.border.secondary}` }}>
           <TabList

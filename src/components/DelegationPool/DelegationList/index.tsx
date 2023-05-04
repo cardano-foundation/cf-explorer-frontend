@@ -1,11 +1,12 @@
 import { useHistory } from "react-router-dom";
+import { useState, useRef } from "react";
+
 import Table, { Column } from "../../commons/Table";
 import { formatADAFull, formatPercent, getShortWallet } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 import { HeaderSearchIcon } from "../../../commons/resources";
 import useFetchList from "../../../commons/hooks/useFetchList";
-import { useState } from "react";
 import { Box } from "@mui/material";
 import CustomTooltip from "../../commons/CustomTooltip";
 import RateWithIcon from "../../commons/RateWithIcon";
@@ -18,7 +19,7 @@ const DelegationLists: React.FC = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(50);
   const [sort, setSort] = useState<string>("");
-
+  const tableRef = useRef(null);
   const fetchData = useFetchList<Delegators>(API.DELEGATION.POOL_LIST, {
     page: page - 1,
     size,
@@ -92,7 +93,7 @@ const DelegationLists: React.FC = () => {
 
   return (
     <>
-      <SearchContainer>
+      <SearchContainer ref={tableRef}>
         <StyledInput
           placeholder="Search Pools"
           onChange={e => setValue(e.target.value)}
@@ -120,6 +121,7 @@ const DelegationLists: React.FC = () => {
           onChange: (page, size) => {
             setPage(page);
             setSize(size);
+            (tableRef.current as any)?.scrollIntoView();
           },
         }}
       />

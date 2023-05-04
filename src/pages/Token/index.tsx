@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { useWindowSize } from "react-use";
@@ -28,7 +28,7 @@ const Tokens: React.FC<ITokenList> = () => {
   const theme = useTheme();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-
+  const mainRef = useRef(document.querySelector("#main"));
   const { data, ...fetchData } = useFetchList<ITokenOverview>(
     API.TOKEN.LIST,
     { ...pageInfo, sort },
@@ -128,7 +128,10 @@ const Tokens: React.FC<ITokenList> = () => {
           pagination={{
             ...pageInfo,
             total: fetchData.total,
-            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+            onChange: (page, size) => {
+              mainRef.current?.scrollTo(0, 0);
+              history.push({ search: stringify({ page, size }) });
+            },
             handleCloseDetailView: handleClose,
           }}
           onClickRow={openDetail}

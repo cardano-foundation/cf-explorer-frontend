@@ -1,5 +1,5 @@
 import { stringify } from "qs";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useWindowSize } from "react-use";
@@ -26,12 +26,14 @@ enum POOL_TYPE {
 }
 
 const Stake: React.FC<IStake> = () => {
+  const mainRef = useRef(document.querySelector("#main"));
   const [stake, setStake] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
   const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
+
   const theme = useTheme();
   const pageInfo = getPageInfo(search);
 
@@ -129,7 +131,10 @@ const Stake: React.FC<IStake> = () => {
           pagination={{
             ...pageInfo,
             total: fetchData.total,
-            onChange: (page, size) => history.push({ search: stringify({ page, size, poolType }) }),
+            onChange: (page, size) => {
+              mainRef.current?.scrollTo(0, 0);
+              history.push({ search: stringify({ page, size, poolType }) });
+            },
             handleCloseDetailView: handleClose,
           }}
           onClickRow={openDetail}
