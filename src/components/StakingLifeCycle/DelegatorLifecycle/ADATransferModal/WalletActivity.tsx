@@ -74,7 +74,7 @@ const WalletActivity: React.FC = () => {
 
   return (
     <Box>
-      <UserInfo total={fetchData.total} reward={data?.rewardAvailable || 0} stake={stakeId} />
+      <UserInfo acitve="wallet" total={fetchData.total} reward={data?.totalStake || 0} stake={stakeId} />
       <StyledTable
         {...fetchData}
         maxHeight={"calc(70vh - 208px)"}

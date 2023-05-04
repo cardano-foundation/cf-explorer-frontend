@@ -35,7 +35,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
   };
 
   return (
-    <StyledModal open={open} handleCloseModal={handleCloseModal} width={1200}>
+    <StyledModal open={open} handleCloseModal={handleCloseModal} width={1200} height={'72vh'}>
       <TabContext value={activityType}>
         <ModalTitle>ADA Transfers</ModalTitle>
         <Box overflow={"auto"} maxHeight={"70vh"}>

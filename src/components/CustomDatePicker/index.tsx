@@ -19,6 +19,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
   return (
     <Box position={"relative"}>
       <StyledDatePicker
+        placeholderText="dd/mm/yyyy"
         selectsRange={true}
         startDate={startDate}
         endDate={endDate}

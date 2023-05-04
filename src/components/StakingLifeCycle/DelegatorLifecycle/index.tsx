@@ -42,6 +42,8 @@ const DelegatorLifecycle = ({
   setMode,
   containerPosition,
   handleResize,
+  currentStep,
+  setCurrentStep,
 }: {
   setMode: (mode: "timeline" | "tablular") => void;
   containerPosition: {
@@ -49,12 +51,13 @@ const DelegatorLifecycle = ({
     left?: number;
   };
   handleResize: () => void;
+  currentStep: number;
+  setCurrentStep: (step: number) => void;
 }) => {
   const history = useHistory();
   const { stakeId = "" } = useParams<{
     stakeId: string;
   }>();
-  const [currentStep, setCurrentStep] = useState(0);
   const [open, setOpen] = useState(false);
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
 

@@ -14,6 +14,8 @@ import PopupStaking from "../../../commons/PopupStaking";
 import ReceivedRewardsModal from "../../../ReceivedRewardsModal";
 import ADAHolderVertical from "../../../../commons/resources/icons/Staking/ADAHolderVertical.svg";
 import SPOOpearatorVertical from "../../../../commons/resources/icons/Staking/SPOOpearatorVertical.svg";
+import SPOdisnable from "../../../../commons/resources/icons/Staking/SPOdisnable.svg";
+import { ReactComponent as ADADisnableIcon } from "../../../../commons/resources/icons/Staking/ADADisnableIcon.svg";
 import CardarnoSystemReward from "../../../../commons/resources/icons/Staking/CardarnoSystemReward.svg";
 import RewardsAccount from "../../../../commons/resources/icons/Staking/RewardsAccount.svg";
 import { ReactComponent as WalletIconReward } from "../../../../commons/resources/icons/Staking/walletIconReward.svg";
@@ -71,7 +73,7 @@ const RewardsDistribution = ({
               <ADAOrangeIcon />
             </Box>
             <Box width={60} height={70} ref={adaIcon2Ref}>
-              <ADAOrangeIcon />
+              {(data?.rewardPools || []).length === 0 ? <ADADisnableIcon /> : <ADAOrangeIcon />}
             </Box>
           </Box>
           <Box
@@ -96,7 +98,10 @@ const RewardsDistribution = ({
               <PopoverStyled
                 render={({ handleClick }: any) => (
                   <Box ref={fee2Ref} width={270} height={100}>
-                    <img src={SPOOpearatorVertical} alt="SPOOpearatorVertical" />
+                    <img
+                      src={(data?.rewardPools || []).length === 0 ? SPOdisnable : SPOOpearatorVertical}
+                      alt="SPOOpearatorVertical"
+                    />
                   </Box>
                 )}
                 content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
@@ -154,6 +159,7 @@ const RewardsDistribution = ({
           pointFrom="border"
           isCentalVertical={false}
           orient="vertical"
+          dashed={(data?.rewardPools || []).length === 0}
         />
         <ArrowDiagram
           containerPosition={containerPosition}
@@ -170,6 +176,7 @@ const RewardsDistribution = ({
           pointTo="border"
           pointFrom="border"
           orient="vertical"
+          dashed={(data?.rewardPools || []).length === 0}
         />
       </svg>
     </Box>

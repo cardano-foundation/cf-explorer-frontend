@@ -21,8 +21,9 @@ import { useHistory, useParams } from "react-router-dom";
 import { details } from "../../../commons/routers";
 import { TitleTab } from "./styles";
 import PoolCertificate from "./PoolCertificate";
-import { ProtocolParameterIcon, ProtocolUpdateIcon } from "../../../commons/resources";
+import { ProtocolUpdateIcon, RewardsDistributionIcon, StakeCertificates } from "../../../commons/resources";
 import ProtocolUpdate from "./ProtocolUpdate";
+import StakeCertificate from "./StakeCertificate";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
@@ -115,10 +116,16 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
       children: <Minting data={data?.mints} />,
     },
     {
-      key: "mints",
-      icon: MintingIcon,
+      key: "poolCertificates",
+      icon: RewardsDistributionIcon,
       label: "Pool certificate",
-      children: <PoolCertificate data={data?.mints} />,
+      children: <PoolCertificate data={data?.poolCertificates} />,
+    },
+    {
+      key: "stakeCertificates",
+      icon: StakeCertificates,
+      label: "Stake Certificate",
+      children: <StakeCertificate data={data?.stakeCertificates} />,
     },
     {
       key: "protocols",

@@ -3,50 +3,56 @@ import CopyButton from "../../../commons/CopyButton";
 import { TextLabel, TextNormal, TextRightValue, TextValue } from "./styles";
 import { LinkIcon } from "../../../../commons/resources";
 import Link from "../../../commons/Link";
+import { getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { AdaValue } from "../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
 
-const StakeKeyBox = () => {
+type TProps = {
+  data: TPoolCertificated;
+};
+
+const StakeKeyBox = ({ data }: TProps) => {
   const leftRow = [
     {
       label: "Pool ID",
-      value: "d043...42506dd307",
+      value: getShortHash(data.poolId),
     },
     {
       label: "VRF Key",
-      value: "d043...42506sdd307",
+      value: getShortHash(data?.vrfKey),
     },
     {
       label: "Reward Account",
-      value: "d043...4250dd6307",
+      value: getShortWallet(data.rewardAccount),
     },
     {
       label: "Pool Operator",
-      value: "d043...4250ddd6307",
+      value: getShortWallet(data.poolOwners[0]),
     },
     {
       label: "Metadata Hash",
-      value: "d043...425ddddd06307",
+      value: getShortHash(data.metadataHash),
     },
   ];
 
   const rightRow = [
     {
       label: "Margin",
-      value: "10%",
+      value: `${data.margin}%`,
     },
     {
       label: "Cost",
-      value: "10%",
+      value: <AdaValue value={data.cost} />,
     },
     {
       label: "Pledge",
-      value: "4851.36871 ADA",
+      value: <AdaValue value={data.pledge} />,
     },
     {
       label: "Relay nNode",
       value: (
         <TextNormal>
-          IPv4: <TextRightValue>82.15.218.244</TextRightValue> | Port:
-          <TextRightValue>3000</TextRightValue> | Valency: <TextRightValue>5</TextRightValue>
+          IPv4: <TextRightValue>{data.relays.ipv4}</TextRightValue> | Port:
+          <TextRightValue>{data.relays.port}</TextRightValue>
         </TextNormal>
       ),
     },
@@ -54,8 +60,8 @@ const StakeKeyBox = () => {
       label: "Metadata URL",
       value: (
         <Box display="flex">
-          <TextValue>https://raw.githubusercontent.com</TextValue>&nbsp;
-          <Link to="https://raw.githubusercontent.com">
+          <TextValue>{getShortHash(data?.metadataHash)}</TextValue>&nbsp;
+          <Link to={data?.metadataUrl}>
             <LinkIcon />
           </Link>
         </Box>

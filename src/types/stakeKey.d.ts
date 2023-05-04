@@ -18,6 +18,7 @@ interface IStakeKeyDetail {
   totalStake: number;
   rewardAvailable: number;
   rewardWithdrawn: number;
+  rewardPools: string[];
   pool: {
     tickerName: string;
     poolName: string;
@@ -101,6 +102,7 @@ interface WithdrawItem {
   txHash: string;
   value: number;
   time: string;
+  fee: number;
 }
 
 interface WithdrawalHistoryItem {
