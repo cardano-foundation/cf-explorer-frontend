@@ -347,11 +347,11 @@ export default function SignUp() {
                         checked={checkedAgree}
                         onChange={handleChangeAgree}
                         sx={{
-                        opacity: "0.15",
-                        "&.Mui-checked": {
-                          opacity: "1",
-                        }
-                      }}
+                          opacity: "0.15",
+                          "&.Mui-checked": {
+                            opacity: "1",
+                          }
+                        }}
                         size="medium"
                       />
                     }
@@ -368,11 +368,11 @@ export default function SignUp() {
                         checked={checkedSubcribe}
                         onChange={handleChangeSubcribe}
                         sx={{
-                        opacity: "0.15",
-                        "&.Mui-checked": {
-                          opacity: "1",
-                        }
-                      }}
+                          opacity: "0.15",
+                          "&.Mui-checked": {
+                            opacity: "1",
+                          }
+                        }}
                         size="medium"
                       />
                     }

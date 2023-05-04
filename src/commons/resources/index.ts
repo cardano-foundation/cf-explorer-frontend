@@ -257,4 +257,3 @@ export { ReactComponent as ReewardAvalible } from "./images/reward-avalible.svg"
 export { ReactComponent as OwnerAccIC } from "./images/owner-acc-ic.svg";
 export { ReactComponent as HideIcon } from "./icons/hide.svg";
 export { ReactComponent as ShowIcon } from "./icons/show.svg";
-
