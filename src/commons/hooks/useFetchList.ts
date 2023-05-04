@@ -31,32 +31,35 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
   const [total, setTotal] = useState(0);
   const lastFetch = useRef<number>(Date.now());
 
-  const getList = useCallback(async () => {
-    if (!url) return;
-    let service: AxiosInstance = isAuth ? authAxios : defaultAxios;
-    if (url.search("http://") === 0 || url.search("https://") === 0) {
-      service = axios;
-    }
-    setLoading(true);
-    try {
-      const baseURL = url.split("?")[0];
-      const lastURL = url.split("?")[1];
-      const res = await service.get(`${baseURL}?${lastURL ? `${lastURL}&` : ""}${qs.stringify(params)}`);
-      setData(res.data.data as T[]);
-      setError(null);
-      setCurrentPage(res.data.currentPage);
-      setTotalPage(res.data.totalPages);
-      setTotal(res.data.totalItems);
-      setInitialized(true);
-    } catch (error: any) {
-      setData([]);
-      setError(error?.response?.data?.message || error?.message);
-    }
-    setLoading(false);
+  const getList = useCallback(
+    async (needLoading?: boolean) => {
+      if (!url) return;
+      let service: AxiosInstance = isAuth ? authAxios : defaultAxios;
+      if (url.search("http://") === 0 || url.search("https://") === 0) {
+        service = axios;
+      }
+      needLoading && setLoading(true);
+      try {
+        const baseURL = url.split("?")[0];
+        const lastURL = url.split("?")[1];
+        const res = await service.get(`${baseURL}?${lastURL ? `${lastURL}&` : ""}${qs.stringify(params)}`);
+        setData(res.data.data as T[]);
+        setError(null);
+        setCurrentPage(res.data.currentPage);
+        setTotalPage(res.data.totalPages);
+        setTotal(res.data.totalItems);
+        setInitialized(true);
+      } catch (error: any) {
+        setData([]);
+        setError(error?.response?.data?.message || error?.message);
+      }
+      needLoading && setLoading(false);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, ...Object.values(params || {})]);
-  
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [url, ...Object.values(params || {})]
+  );
+
   useEffect(() => {
     if (timeout) {
       const interval = setInterval(() => {
@@ -76,7 +79,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
   }, [getList, timeout]);
 
   useEffect(() => {
-    getList();
+    getList(true);
   }, [getList]);
 
   return {
