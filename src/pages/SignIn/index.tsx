@@ -182,7 +182,7 @@ export default function SignIn() {
       setUserData({...userInfo.data, loginType: "normal"});
       handleLoginSuccess();
     } catch (error) {
-      setInvalidInfomation(true)
+      setInvalidInfomation(true);
       removeAuthInfo();
     } finally {
       setLoading(false);
