@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import useFetch from "../../commons/hooks/useFetch";
 import { API } from "../../commons/utils/api";
@@ -9,6 +9,7 @@ import TokenAnalytics from "../../components/TokenDetail/TokenAnalytics";
 import { StyledContainer } from "./styles";
 
 const TokenDetail: React.FC = () => {
+  const mainRef = useRef(document.querySelector("#main"));
   const { tokenId } = useParams<{ tokenId: string }>();
   const { state } = useLocation<{ data?: IToken }>();
   const { data, loading, initialized, error } = useFetch<IToken>(
@@ -19,6 +20,7 @@ const TokenDetail: React.FC = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Token ${tokenId} | Cardano Explorer`;
+    mainRef.current?.scrollTo(0, 0);
   }, [tokenId]);
 
   if ((initialized && !data) || error) return <NoRecord />;

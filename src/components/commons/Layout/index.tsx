@@ -16,14 +16,12 @@ interface Props {
 }
 const CustomLayout: React.FC<Props> = ({ children }) => {
   const { sidebar, onDetailView } = useSelector(({ user }: RootState) => user);
-  const scrollElement = React.useRef<HTMLElement | null>(null);
   const history = useHistory();
   const lastPath = React.useRef<string>(history.location.pathname);
 
   React.useEffect(() => {
     const unlisten = history.listen(() => {
       lastPath.current = history.location.pathname;
-      scrollElement.current?.scrollTo(0, 0);
       setOnDetailView(false);
     });
     return () => {
@@ -45,7 +43,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
         <Sidebar />
       </Drawer>
       <MainContainer>
-        <Main ref={scrollElement} component="main" open={onDetailView ? 1 : 0} sidebar={sidebar ? 1 : 0}>
+        <Main id="main" component="main" open={onDetailView ? 1 : 0} sidebar={sidebar ? 1 : 0}>
           <Header />
           {children}
         </Main>
