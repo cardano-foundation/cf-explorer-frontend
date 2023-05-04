@@ -1,5 +1,5 @@
 import { Box, Grid, Skeleton } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
@@ -26,6 +26,7 @@ import {
 } from "./style";
 import useFetch from "../../../commons/hooks/useFetch";
 import { TRANSACTION_STATUS } from "../../../commons/utils/constants";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 const LatestTransactions: React.FC = () => {
   const { data, initialized } = useFetch<CurrentTransactions[]>(
@@ -36,7 +37,7 @@ const LatestTransactions: React.FC = () => {
   );
 
   const history = useHistory();
-
+  const { isMobile } = useScreen();
   return (
     <TransactionContainer>
       <Header>
@@ -44,7 +45,7 @@ const LatestTransactions: React.FC = () => {
         <ViewAllButton to={routers.TRANSACTION_LIST} />
       </Header>
       {
-        <Grid container spacing={2}>
+        <Grid container spacing={{ sm: 2 }}>
           {!initialized
             ? new Array(4).fill(0).map((_, index) => {
                 return (
@@ -65,26 +66,29 @@ const LatestTransactions: React.FC = () => {
               })
             : data?.map(item => {
                 const { hash, fromAddress, toAddress, blockNo, amount, status, time, epochNo, epochSlotNo } = item;
-                
+
                 return (
-                  <Grid item xl lg={3} xs={6} key={hash}>
+                  <Grid item xl lg={3} xs={12} key={hash}>
                     <Item onClick={e => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
                       <ItemHeader>
                         <PriceImage src={ADAIcon} alt="check green" />
                         <Box display={"flex"} flexDirection={"column"} rowGap={"4px"} alignItems={"end"}>
-                          <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>
+                          {!isMobile && <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>}
                           <PriveValue>{formatADAFull(amount)}</PriveValue>
                         </Box>
                       </ItemHeader>
                       <ItemDetail>
-                        <RowItem>
-                          <small>Transaction hash: </small>
-                          <CustomTooltip title={hash}>
-                            <Link to={details.transaction(hash)}>
-                              <Hash>{getShortHash(hash)}</Hash>
-                            </Link>
-                          </CustomTooltip>
-                        </RowItem>
+                        <Box display="flex" alignItems="center">
+                          <RowItem>
+                            <small>Transaction hash: </small>
+                            <CustomTooltip title={hash}>
+                              <Link to={details.transaction(hash)}>
+                                <Hash>{getShortHash(hash)}</Hash>
+                              </Link>
+                            </CustomTooltip>
+                          </RowItem>
+                          {isMobile && <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>}
+                        </Box>
                         <RowItem>
                           <small>Block: </small>
                           <Link to={details.block(blockNo)}>
