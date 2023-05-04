@@ -42,6 +42,9 @@ export default function SignIn() {
   const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [invalidInfomation, setInvalidInfomation] = useState(false);
+  const [error, setError] = useState(false);
   const [formData, setFormData] = useReducer(formReducer, {
     username: {
       value: '',
@@ -50,18 +53,61 @@ export default function SignIn() {
       value: '',
     },
   });
+
   const handleTogglePassword = () => {
     setShowPassword((prevState) => !prevState);
   };
+
+  function handleRememberMeChange(event: any) {
+    setRememberMe(event.target.checked);
+  }
+
   const handleLoginSuccess = () => {
     toast.success("Login success");
     history.push(routers.HOME);
   }
-  const [invalidInfomation, setInvalidInfomation] = useState(false);
-  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const { username, password } = getSavedPasswordFromLocalStorage();
+    if (username && password) {
+      setFormData({
+        name: 'username',
+        value: username,
+        touched: true,
+        error: getError('username', username),
+      });
+      setFormData({
+        name: 'password',
+        value: password,
+        touched: true,
+        error: getError('password', password),
+      });
+      setRememberMe(true);
+    }
+  }, []);
+
+  function getSavedPasswordFromLocalStorage() {
+    return { username: localStorage.getItem('usernameStore') || "", password: localStorage.getItem('passwordStore') || "" };
+  }
+
+  async function saveAuthToLocalStorage(username: string, password: string) {
+    try {
+      localStorage.setItem('usernameStore', username);
+      localStorage.setItem('passwordStore', password);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  function removeAuthInfoFromLocalStorage() {
+    localStorage.removeItem('usernameStore');
+    localStorage.removeItem('passwordStore');
+  }
+
+
   const getError = (name: string, value: string) => {
     let error = "";
-    switch(name) {
+    switch (name) {
       case 'username':
         if (!value) {
           error = "Please enter Username";
@@ -84,9 +130,11 @@ export default function SignIn() {
       error: getError(event.target.name, event.target.value),
     });
   }
+
   useEffect(() => {
     setError(Boolean(formData.username.error || formData.password.error));
-  }, [formData])
+  }, [formData]);
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const errorUsername = getError('username', formData.username.value);
@@ -116,6 +164,11 @@ export default function SignIn() {
         password,
         type: 0
       };
+      if (rememberMe) {
+        await saveAuthToLocalStorage(username, password);
+      } else {
+        removeAuthInfoFromLocalStorage();
+      }
       const response = await signIn(payload);
       const data = response.data;
 
@@ -146,7 +199,7 @@ export default function SignIn() {
         </WrapHintText>
         <FormGroup>
           <WrapForm>
-            {invalidInfomation ? <AlertCustom severity="error">Incorrect Username or Password</AlertCustom> : null}
+            {invalidInfomation ? <AlertCustom severity="error">Invalid login information</AlertCustom> : null}
             <WrapInput>
               <Label>
                 Username
@@ -156,6 +209,7 @@ export default function SignIn() {
                   <UserCustomIcon />
                 </Box>}
                 name="username"
+                value={formData.username.value}
                 onChange={handleChange}
                 fullWidth
                 placeholder="Username"
@@ -175,6 +229,7 @@ export default function SignIn() {
                 </Box>}
                 fullWidth
                 name="password"
+                value={formData.password.value}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -203,6 +258,8 @@ export default function SignIn() {
                   }
                 }}
                   size="medium"
+                  checked={rememberMe}
+                  onChange={handleRememberMeChange}
                 />
               }
                 label={
