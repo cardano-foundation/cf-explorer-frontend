@@ -73,6 +73,18 @@ const Tokens: React.FC<ITokenList> = () => {
       },
     },
     {
+      title: "Number of Holders",
+      key: "numberOfHolders",
+      minWidth: "150px",
+      render: r => numberWithCommas(r?.numberOfHolders),
+    },
+    {
+      title: "Total Volume",
+      key: "TotalVolume",
+      minWidth: "150px",
+      render: r => numberWithCommas(r?.totalVolume),
+    },
+    {
       title: "Volume 24H",
       key: "volumeIn24h",
       minWidth: "150px",

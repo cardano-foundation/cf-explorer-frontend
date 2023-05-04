@@ -68,8 +68,8 @@ const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
 
 const TabularOverview: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const { poolId } = useParams<{ poolId: string }>();
-  const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${poolId}`, undefined, false);
+  const { stakeId } = useParams<{ stakeId: string }>();
+  const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
 
   return (
     <Grid container spacing={2}>

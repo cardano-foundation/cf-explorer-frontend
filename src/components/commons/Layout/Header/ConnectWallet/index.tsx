@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { Backdrop, Box } from "@mui/material";
-// @ts-ignore
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { useSelector } from "react-redux";
 import { WalletIcon } from "../../../../../commons/resources";
@@ -84,7 +83,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         localStorage.setItem("email", data.email);
         localStorage.setItem("loginType", "connectWallet");
         const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-        setUserData({ ...userInfo.data, loginType: "connectWallet" });
+        setUserData({...userInfo.data, loginType: "connectWallet"});
         if ((((JSON.parse(localStorage?.bookmark) as Bookmark[]) || [])?.filter(r => !r.id) || []).length > 0) {
           setOpenSyncBookmark(true);
         } else {
@@ -115,7 +114,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         setNonce(nonceValue);
         await signMessage(
           nonceValue.nonce,
-          (signature: any) => handleSignIn(signature, nonceValue),
+          signature => handleSignIn(signature, nonceValue),
           (error: Error) => {
             toast.error("User rejected the request!");
             setModalSignMessage(false);

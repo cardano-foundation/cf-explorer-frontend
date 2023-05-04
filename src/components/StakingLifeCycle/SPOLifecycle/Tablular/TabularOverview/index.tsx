@@ -14,7 +14,7 @@ import {
   WalletGreenIcon,
 } from "../../../../../commons/resources";
 import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, getShortWallet } from "../../../../../commons/utils/helper";
+import { formatADAFull, formatHash } from "../../../../../commons/utils/helper";
 import { CardOverview, CardTitle, CardValue, ClickAbleLink, ViewMoreButton, WrapIcon, WrapWalletIcon } from "./styles";
 import { DotsIcon } from "../../../../PoolRegistrationCertificate/styles";
 import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
@@ -120,7 +120,7 @@ const TabularOverview: React.FC = () => {
           value={
             <Box display="flex" alignItems="center">
               <CardValue>
-                <ClickAbleLink>{data?.stakeKeys && data?.stakeKeys.length && getShortWallet(data.stakeKeys[0])}</ClickAbleLink>
+                <ClickAbleLink>{data?.stakeKeys && data?.stakeKeys.length && formatHash(data.stakeKeys[0])}</ClickAbleLink>
               </CardValue>
             </Box>
           }
@@ -134,7 +134,7 @@ const TabularOverview: React.FC = () => {
           }
         />
       </Grid>
-      <ViewMoreAddressModal onItemClick={onOwnerItemClick} title="Pool Owner" open={open} items={data?.stakeKeys} onClose={() => setOpen(false)} />
+      <ViewMoreAddressModal showFullHash={true} onItemClick={onOwnerItemClick} title="Pool Owner" open={open} items={data?.stakeKeys} onClose={() => setOpen(false)} />
     </Box>
   );
 };

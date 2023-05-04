@@ -19,7 +19,7 @@ const Header: React.FC<RouteComponentProps> = props => {
       return <></>;
     }
     return (
-      <HeaderTop>
+      <HeaderTop sx={{ zIndex: 20 }}>
         <SelectNetwork />
         <LoginButton />
       </HeaderTop>

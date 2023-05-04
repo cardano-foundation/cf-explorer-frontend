@@ -67,6 +67,30 @@ type TProtocol = {
   coinsPerUtxoSize?: number;
 };
 
+type TPoolCertificated = {
+  cost: number;
+  margin: number;
+  metadataHash: string;
+  metadataUrl: string;
+  pledge: number;
+  poolId: string;
+  poolOwners: string[];
+  relays: {
+    dnsName: string;
+    dnsSrvName: string;
+    ipv4: string;
+    ipv6: string;
+    port: number;
+  };
+  rewardAccount: string;
+  type: string;
+  vrfKey: string;
+};
+
+type TStakeCertificated = {
+  stakeAddress: string;
+}
+
 interface Transaction {
   tx: {
     hash: string;
@@ -181,9 +205,8 @@ interface Transaction {
     addressTo: string[];
     amount: 0;
   }[];
-  poolCertificate?: {
-    test: string;
-  };
+  poolCertificates?: TPoolCertificated[];
+  stakeCertificates?: TStakeCertificated[];
 }
 
 interface CollateralResponses {

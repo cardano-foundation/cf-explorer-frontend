@@ -27,3 +27,9 @@ export const ADAValueSubLabel = styled("span")`
     gap: 4px;
     align-items: center;
 `;
+
+export const VerticalRow = styled(Box)`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+`;

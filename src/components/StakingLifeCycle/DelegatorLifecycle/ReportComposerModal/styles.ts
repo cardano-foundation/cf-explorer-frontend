@@ -1,4 +1,4 @@
-import { styled, Stack, Box, Button } from "@mui/material";
+import { styled, Stack, Box, Button, TextField } from "@mui/material";
 import { SelectMui } from "../../../commons/Table/styles";
 
 export const StyledLabel = styled("div")`
@@ -137,4 +137,20 @@ export const TextOverFlow = styled("div")`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+`;
+
+export const StyledGroupField = styled(TextField)`
+  .MuiInputBase-root {
+    padding: 0 9px;
+    height: 40px;
+    border-radius: 8px;
+  }
+  .MuiFormControl-root {
+  }
+  .MuiInputBase-input {
+    font-size: 14px;
+  }
+  .MuiOutlinedInput-notchedOutline {
+    border: none;
+  }
 `;

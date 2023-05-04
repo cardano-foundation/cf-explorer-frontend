@@ -2,21 +2,10 @@ import React, { useState } from "react";
 import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import { StyledTabList, TabHead, TitleTab } from "./styles";
-import WithdrawalHistoryTab from "./Tabs/WithdrawalHistoryTab";
-import StakeRegistrationTab from "./Tabs/StakeRegistrationTab";
-import DelegationTab from "./Tabs/DelegationTab";
-import RewardsDistributionTab from "./Tabs/RewardsDistributionTab";
-import DeregistrationTab from "./Tabs/DeregistrationTab";
-import {
-  RegistrationIcon,
-  RewardsWithdrawalIcon,
-  DelegationIcon,
-  DeredistrationIcon,
-  RewardsDistributionIcon,
-} from "../../../commons/resources";
+import CustomIcon from "../../commons/CustomIcon";
 
 export interface StakeTabItem {
-  icon: React.ReactNode;
+  icon: React.FC;
   label: React.ReactNode;
   key: string;
   component: React.ReactNode;
@@ -29,11 +18,11 @@ export interface StackTabProps {
 const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration" }) => {
   const [tabActive, setTabActive] = useState<string>(initTab);
   const theme = useTheme();
-  
+
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
     setTabActive(tab);
   };
-  
+
   return (
     <Box mt={4}>
       <TabContext value={tabActive}>
@@ -49,7 +38,7 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration" }) =
                 style={{ padding: "12px 0px", marginRight: 40 }}
                 label={
                   <TabHead active={+(key === tabActive)} display={"flex"} alignItems="center">
-                    {Icon}
+                    <CustomIcon icon={Icon} fill="currentColor" width={25} />
                     <TitleTab pl={1} active={+(key === tabActive)}>
                       {label}
                     </TitleTab>

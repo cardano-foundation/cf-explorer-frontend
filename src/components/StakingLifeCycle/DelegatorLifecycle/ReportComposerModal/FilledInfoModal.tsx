@@ -1,5 +1,6 @@
 import { Container } from "../../../Account/ActivityLogModal/styles";
 import { StyledTextField } from "../../../TokenAutocomplete/styles";
+import { StyledGroupField } from "./styles";
 import StyledModal from "../../../commons/StyledModal";
 import {
   ModalTitle,
@@ -102,7 +103,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
         </StyledStack>
         <Box sx={{ marginBottom: "20px" }}>
           <StyledLabel>Address details</StyledLabel>
-          <StyledAddressSelect>
+          <StyledAddressSelect display={"flex"}>
             <StyledSelect size="small" onChange={onChangeReportType} value={reportType} IconComponent={DownIcon}>
               {options.map(option => (
                 <MenuItem key={option.value} value={option.value}>
@@ -110,10 +111,15 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
                 </MenuItem>
               ))}
             </StyledSelect>
-            <StyledTextField onChange={onChangeAddress} value={address} />
+            <StyledGroupField
+              onChange={onChangeAddress}
+              value={address}
+              sx={{ flexGrow: 1 }}
+              placeholder="Address details"
+            />
           </StyledAddressSelect>
         </Box>
-        {address && reportType === ReportType.StakeKeyReport && (
+        {reportType === ReportType.StakeKeyReport && (
           <Container>
             <StyledStack>
               <StyledLabel>Select a date range</StyledLabel>
@@ -121,7 +127,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             </StyledStack>
           </Container>
         )}
-        {address && reportType === ReportType.PoolReport && (
+        {reportType === ReportType.PoolReport && (
           <Box sx={{ marginBottom: "20px" }}>
             <StyledLabel>Select a epoch range</StyledLabel>
             <Slider

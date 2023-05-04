@@ -15,7 +15,6 @@ import {
   WrapContent,
 } from "./style";
 import { SupportedWallets, Wallet } from "../../../types/user";
-// @ts-ignore
 import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet";
 import { MdOutlineFileDownload } from "react-icons/md";
 import useToast from "../../../commons/hooks/useToast";

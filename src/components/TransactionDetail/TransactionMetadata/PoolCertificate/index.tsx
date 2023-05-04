@@ -4,18 +4,18 @@ import { Column } from "../../../commons/Table";
 import { TableMinting } from "./styles";
 import StakeKeyBox from "./StakeKeyBox";
 
-interface MintingProps {
-  data: Transaction["mints"] | null;
+interface IProps {
+  data: Transaction["poolCertificates"] | null;
 }
 
-const PoolCertificate: React.FC<MintingProps> = ({ data }) => {
-  const columns: Column<Required<Transaction>["mints"][number]>[] = [
+const PoolCertificate: React.FC<IProps> = ({ data }) => {
+  const columns: Column<Required<Transaction>["poolCertificates"][number]>[] = [
     {
       title: "Stake Key Registration",
       isHiddenBorder: true,
-      key: "asd",
+      key: "stakeKey",
       render: (r, index) => {
-        return <StakeKeyBox />;
+        return <StakeKeyBox data={r} />;
       },
     },
   ];

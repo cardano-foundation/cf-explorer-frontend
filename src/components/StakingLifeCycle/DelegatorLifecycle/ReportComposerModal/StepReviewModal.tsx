@@ -18,10 +18,14 @@ import { PencilIcon } from "../../../../commons/resources";
 import { ReportType } from "./FilledInfoModal";
 import { generateStakeKeyReport, generateStakePoolReport } from "../../../../commons/utils/userRequest";
 import useToast from "../../../../commons/hooks/useToast";
+import { useHistory } from "react-router-dom";
+import { routers } from "../../../../commons/routers";
 
 const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaultParams, gotoStep }) => {
   const toast = useToast();
   const [step1, step2, step3] = defaultParams || [];
+
+  const history = useHistory();
   const handleGenerateReport = async () => {
     try {
       const [step1, step2, step3] = defaultParams || {};
@@ -57,9 +61,12 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
 
       toast.success("Generate report success");
       handleCloseModal();
+      setTimeout(() => {
+        history.push(`${routers.REPORT_GENERATED}`);
+      }, 2000);
     } catch (err: any) {
       console.error(err);
-      toast.error(String(err));
+      toast.error("This stake key has no transaction history");
     }
   };
 

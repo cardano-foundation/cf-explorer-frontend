@@ -24,7 +24,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
       key: "previousValue",
       minWidth: "40px",
       render: (r, index) => {
-        return <div>{r?.oldValue || ""}</div>;
+        return <div>{r?.oldValue}</div>;
       },
     },
     {
@@ -33,14 +33,14 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
       minWidth: "40px",
       isHiddenBorder: true,
       render: (r, index) => {
-        return <div>{r?.value || ""}</div>;
+        return <div>{r?.value}</div>;
       },
     },
   ];
 
   return (
     <Box bgcolor={"white"} px={2}>
-      <TableProtocol columns={columns} data={data.filter(item => item.value)} />
+      <TableProtocol columns={columns} data={data.filter(item => item.value !== null)} />
     </Box>
   );
 };
