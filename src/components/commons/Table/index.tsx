@@ -10,7 +10,18 @@ import {
   alpha,
 } from "@mui/material";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
-import { DownIcon, EmptyIcon, EndPage, EyeIcon, NextPage, PrevPage, StartPage } from "../../../commons/resources";
+import {
+  DownIcon,
+  EmptyIcon,
+  EndPage,
+  EyeIcon,
+  NextPage,
+  PrevPage,
+  StartPage,
+  SortTableDown,
+  SortTableUp,
+  SortTableUpDown,
+} from "../../../commons/resources";
 import {
   Empty,
   EmtyImage,
@@ -91,14 +102,14 @@ const TableHeader = <T extends ColumnType>({
     if (key === columnKey)
       switch (sort) {
         case "DESC":
-          return <TbArrowDown color={"#98A2B3"} size={"18px"} />;
+          return <SortTableDown />;
         case "ASC":
-          return <TbArrowUp color={"#98A2B3"} size={"18px"} />;
+          return <SortTableUp />;
         default: {
-          return <TbArrowsDownUp color={"#98A2B3"} size={"18px"} />;
+          return <SortTableUpDown />;
         }
       }
-    return <TbArrowsDownUp color={"#98A2B3"} size={"18px"} />;
+    return <SortTableUpDown />;
   };
   return (
     <THead>
@@ -195,7 +206,7 @@ const TableBody = <T extends ColumnType>({
               justifyContent="center"
               alignItems="self-start"
             >
-              <Box pt={'20%'}>
+              <Box pt={"20%"}>
                 <CircularProgress />
               </Box>
             </LoadingWrapper>

@@ -257,3 +257,6 @@ export { ReactComponent as DelegationHistoryIcon } from "./icons/delegationHisto
 export { ReactComponent as StakeKeyHistoryIcon } from "./icons/stateKeyHistory.svg";
 export { ReactComponent as WithdrawHistoryIcon } from "./icons/withdrawHistory.svg";
 export { ReactComponent as InstantaneousHistoryIcon } from "./icons/instantaneousHistory.svg";
+export { ReactComponent as SortTableUpDown } from "./icons/SortTableUpDown.svg";
+export { ReactComponent as SortTableUp } from "./icons/SortTableUp.svg";
+export { ReactComponent as SortTableDown } from "./icons/SortTableDown.svg";

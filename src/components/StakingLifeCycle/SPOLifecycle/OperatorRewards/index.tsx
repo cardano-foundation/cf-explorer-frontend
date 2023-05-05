@@ -3,10 +3,6 @@ import { useEffect, useRef, useState } from "react";
 
 import {
   SPOStalking,
-  BackIcon,
-  AddressIcon,
-  ADAGreen,
-  TimeIcon,
   ADAOrangeIcon,
   SPOInfo,
   SPOKey,
@@ -14,13 +10,12 @@ import {
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 
 import Line from "../../../Line";
-import { IconButtonBack, Info, InfoText } from "./styles";
 import ArrowDiagram from "../../../ArrowDiagram";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { ButtonSPO, PoolName, PoolNamePopup } from "../Registration/styles";
 import PopoverStyled from "../../../commons/PopoverStyled";
 import { details } from "../../../../commons/routers";
-import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import CopyButton from "../../../commons/CopyButton";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { Link, useParams } from "react-router-dom";
@@ -94,9 +89,9 @@ const OperatorReward = ({
                       Pool ID:
                     </Box>
                     <PoolNamePopup to={details.delegation(data?.poolView)}>
-                      {getShortWallet(data?.poolId || "")}
+                      {getShortHash(data?.poolView || "")}
                     </PoolNamePopup>
-                    <CopyButton text={data?.poolId} />
+                    <CopyButton text={data?.poolView} />
                   </Box>
                   <Box display={"flex"} alignItems={"center"}>
                     <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>

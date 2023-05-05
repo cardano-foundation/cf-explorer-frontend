@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 
-import { getShortWallet } from "../../commons/utils/helper";
+import { getShortHash } from "../../commons/utils/helper";
 import CopyButton from "../../components/commons/CopyButton";
 import SPOLifecycleComponent from "../../components/StakingLifeCycle/SPOLifecycle";
 
@@ -73,7 +73,7 @@ const SPOLifecycle = () => {
           </Box>
           <Box display={"flex"} alignItems={"center"}>
             <Box component={"span"}>Pool ID:</Box>
-            <StakeId>{getShortWallet(poolId)}</StakeId>
+            <StakeId>{getShortHash(poolId)}</StakeId>
             <CopyButton text={poolId} />
           </Box>
         </Box>

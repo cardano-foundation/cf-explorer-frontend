@@ -50,11 +50,8 @@ export const StyledAddressSelect = styled(Box)`
   }
 `;
 
-export const StyledButton = styled(Button)<{ isDisabled: boolean }>`
+export const StyledButton = styled(Button)`
   background: #13152f;
-  opacity: ${props => {
-    return props.isDisabled ? 0.3 : 1;
-  }};
   width: 100%;
   border-radius: 8px;
   height: 44px;
@@ -62,10 +59,16 @@ export const StyledButton = styled(Button)<{ isDisabled: boolean }>`
   text-align: center;
   color: #fff;
   font-weight: 700;
-  line-height: 19px;
-  pointer-events: ${props => {
-    return props.isDisabled ? "none" : "auto";
-  }};
+  line-height: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  &:disabled {
+    background: #13152f;
+    opacity: 0.3;
+    color: #fff;
+  }
   &:hover {
     background: #13152f;
     opacity: 0.8;
@@ -103,17 +106,17 @@ export const TextRequired = styled("div")`
   line-height: 22px;
 `;
 
-export const ButtonEvent = styled(Button)<{ isSelected: boolean }>`
-  background: ${props => (props.isSelected ? "#667085" : "#f2f2f2")};
-  color: ${props => (props.isSelected ? "#fff" : "#667085")};
+export const ButtonEvent = styled(Button)<{ active: number }>`
+  background: ${props => (props.active ? "#667085" : "#f2f2f2")};
+  color: ${props => (props.active ? "#fff" : "#667085")};
   border-radius: 6px;
   height: 44px;
   align-items: center;
   padding: 13px 20px;
   gap: 10px;
   &:hover {
-    background: ${props => (props.isSelected ? "#f2f2f2" : "#667085")};
-    color: ${props => (props.isSelected ? "#667085" : "#fff")};
+    background: ${props => (props.active ? "#f2f2f2" : "#667085")};
+    color: ${props => (props.active ? "#667085" : "#fff")};
   }
 `;
 

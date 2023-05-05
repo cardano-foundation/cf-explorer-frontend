@@ -35,16 +35,20 @@ export const WrapHintText = styled(Box)`
   gap: 5px;
 `;
 
-export const WrapForm = styled(Box)`
-  margin-top: 15px;
-  background: ${({ theme }) => theme.palette.common.white};
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  width: 420px;
-  padding: 35px 40px 40px;
-`;
+export const WrapForm = styled(Box)(({ theme }) => ({
+  margin: "10px 30px 0 30px",
+  background: theme.palette.common.white,
+  borderRadius: "12px",
+  display: "flex",
+  flexDirection: "column",
+  gap: "25px",
+  width: "min(80vw,420px)",
+  padding: "35px 40px 40px",
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+    padding: "20px 15px",
+    gap: "15px",
+  }
+}));
 
 export const WrapInput = styled(Box)`
   padding: 10px 0;
@@ -55,19 +59,20 @@ export const WrapInput = styled(Box)`
   align-items: flex-start;
 `;
 
-export const InputCustom = styled(Input)`
-  border-radius: 8px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: ${({ theme }) => theme.palette.grey[300]};
-  &::before {
-    display: none;
-  }
-  &::after {
-    display: none;
-  }
-  padding: 5px 10px;
-`;
+export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !== "error" })<{ error?: boolean }>(({ theme, error }) => ({
+  borderRadius: "8px",
+  borderWidth: "1px",
+  borderStyle: "solid",
+  borderColor: error ? "#DD4343" : theme.palette.grey[300],
+  "&::before": {
+    display: "none",
+  },
+  "&::after": {
+    display: "none",
+  },
+  padding: "5px 10px",
+  backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : "",
+}));
 
 export const FormHelperTextCustom = styled(FormHelperText)`
   font-size: 14px

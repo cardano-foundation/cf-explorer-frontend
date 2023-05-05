@@ -14,10 +14,13 @@ export const ConnectOption = styled(Paper)`
   width: 480px;
 `;
 
-export const WrapContent = styled(Box)`
-  padding: 30px 40px;
-  position: relative;
-`;
+export const WrapContent = styled(Box)(({ theme }) => ({
+  padding: "30px 40px",
+  position: "relative",
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+    padding: "0",
+  }
+}));
 
 export const Title = styled("h3")`
   margin: 0;
