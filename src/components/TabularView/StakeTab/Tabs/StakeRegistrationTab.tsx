@@ -28,9 +28,13 @@ const StakeRegistrationTab = () => {
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
+  const [sort, setSort] = useState<string>("");
   const [pageInfo, setPageInfo] = useState(getPageInfo(search));
 
-  const fetchData = useFetchList<RegistrationItem>(stakeId ? API.STAKE_LIFECYCLE.REGISTRATION(stakeId) : "", pageInfo);
+  const fetchData = useFetchList<RegistrationItem>(stakeId ? API.STAKE_LIFECYCLE.REGISTRATION(stakeId) : "", {
+    ...pageInfo,
+    sort,
+  });
 
   const columns: Column<RegistrationItem>[] = [
     {
@@ -48,6 +52,9 @@ const StakeRegistrationTab = () => {
       key: "time",
       minWidth: "120px",
       render: r => formatDateTimeLocal(r.time),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
     {
       title: (
