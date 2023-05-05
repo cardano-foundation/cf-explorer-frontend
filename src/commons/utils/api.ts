@@ -78,6 +78,7 @@ export const API = {
   REPORT: {
     STAKE_KEY_SUMMARY: `staking-lifecycle/report/stake-key/history`,
     DOWNLOAD_STAKE_KEY_SUMMARY: (reportId: number) => `staking-lifecycle/report/stake-key/${reportId}/export`,
+    DOWNLOAD_POOL_SUMMARY: (reportId: number) => `pool-report/detail/${reportId}/export`,
     POOL_REPORT_SUMMARY: `pool-report/list`,
     DASHBOARD: `staking-lifecycle/report/dashboard`,
   },

@@ -10,7 +10,7 @@ import {
   WatchlistIC,
   DownloadBlueIC,
 } from "../../commons/resources";
-import { Box, Container, Grid, IconButton } from "@mui/material";
+import { Box, CircularProgress, Container, Grid, IconButton } from "@mui/material";
 import { routers } from "../../commons/routers";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { API } from "../../commons/utils/api";
@@ -74,6 +74,7 @@ export interface SavedReport {
 }
 
 const Dashboard: React.FC = () => {
+  const [onDownload, setOnDownload] = useState<number | false>(false);
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>({
     page: 0,
     size: 10,
@@ -92,14 +93,20 @@ const Dashboard: React.FC = () => {
   });
 
   const downloadReportDashboard = useCallback(async (reportId: number, fileName: string) => {
-    defaultAxiosDownload.get(API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId)).then(response => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `${fileName}.csv`);
-      document.body.appendChild(link);
-      link.click();
-    });
+    setOnDownload(reportId);
+    defaultAxiosDownload
+      .get(API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId))
+      .then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `${fileName}.csv`);
+        document.body.appendChild(link);
+        link.click();
+      })
+      .finally(() => {
+        setOnDownload(false);
+      });
   }, []);
 
   const columns: Column<IDashboardResponse>[] = [
@@ -130,7 +137,9 @@ const Dashboard: React.FC = () => {
     {
       key: "downloadUrl",
       render(data) {
-        return (
+        return onDownload === data.id ? (
+          <CircularProgress size={22} color="primary" />
+        ) : (
           <IconButton onClick={() => downloadReportDashboard(data.id, data.reportName)}>
             <DownloadBlueIC />
           </IconButton>
