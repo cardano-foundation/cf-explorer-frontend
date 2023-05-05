@@ -12,6 +12,7 @@ import { ButtonGroup, ButtonReport, ButtonSwitch, StakeId, StyledContainer } fro
 import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staking/ChartMode.svg";
 import { ReactComponent as TableMode } from "../../commons/resources/icons/Staking/TableMode.svg";
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
+import CustomTooltip from "../../components/commons/CustomTooltip";
 
 const DelegatorLifecycle = () => {
   const { stakeId = "", tab = "" } = useParams<{
@@ -72,7 +73,9 @@ const DelegatorLifecycle = () => {
           </Box>
           <Box display={"flex"} alignItems={"center"}>
             <Box component={"span"}>Stake key:</Box>
-            <StakeId>{getShortHash(stakeId)}</StakeId>
+            <CustomTooltip title={stakeId}>
+              <StakeId>{getShortHash(stakeId)}</StakeId>
+            </CustomTooltip>
             <CopyButton text={stakeId} />
           </Box>
         </Box>
