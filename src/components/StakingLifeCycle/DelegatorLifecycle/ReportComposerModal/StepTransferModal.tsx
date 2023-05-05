@@ -134,7 +134,7 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
         </Container>
         <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={3}>
           <StyledBackButton onClick={() => gotoStep?.(STEPS.step1)}>Previous</StyledBackButton>
-          <StyledButton isDisabled={isDisabled} onClick={handleSubmit}>
+          <StyledButton disabled={isDisabled} onClick={handleSubmit}>
             Next
           </StyledButton>
         </StyledStack>
