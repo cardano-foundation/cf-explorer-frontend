@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CgArrowsExchange, CgClose } from "react-icons/cg";
+import { CgClose } from "react-icons/cg";
 import { FileEditIcon, LightningIcon } from "../../../commons/resources";
 import {
   CloseButton,
@@ -7,7 +7,6 @@ import {
   DetailsInfoItem,
   DetailLabel,
   DetailValue,
-  InfoIcon,
   DetailLabelSkeleton,
   DetailValueSkeleton,
   IconSkeleton,

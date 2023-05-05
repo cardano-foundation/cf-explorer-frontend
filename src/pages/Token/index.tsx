@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
-import { useWindowSize } from "react-use";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
@@ -12,7 +11,6 @@ import DetailViewToken from "../../components/commons/DetailView/DetailViewToken
 import useFetchList from "../../commons/hooks/useFetchList";
 import { AssetName, Logo, StyledContainer } from "./styles";
 import CustomTooltip from "../../components/commons/CustomTooltip";
-import { useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
@@ -23,9 +21,7 @@ const Tokens: React.FC<ITokenList> = () => {
   const [token, setToken] = useState<IToken | null>(null);
   const [sort, setSort] = useState<string>("txCount,DESC");
   const [selected, setSelected] = useState<number | null>(null);
-  const { width } = useWindowSize();
   const { search } = useLocation();
-  const theme = useTheme();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const mainRef = useRef(document.querySelector("#main"));
@@ -115,11 +111,9 @@ const Tokens: React.FC<ITokenList> = () => {
   ];
 
   const openDetail = (_: any, r: IToken, index: number) => {
-    if (width >= theme.breakpoints.values.md) {
-      setOnDetailView(true);
-      setToken(r || null);
-      setSelected(index);
-    } else history.push(details.token(r?.fingerprint ?? ""));
+    setOnDetailView(true);
+    setToken(r || null);
+    setSelected(index);
   };
 
   const handleClose = () => {
@@ -150,8 +144,8 @@ const Tokens: React.FC<ITokenList> = () => {
           selected={selected}
           showTabView
         />
-        {token && <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />}
       </Card>
+      {token && <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />}
     </StyledContainer>
   );
 };

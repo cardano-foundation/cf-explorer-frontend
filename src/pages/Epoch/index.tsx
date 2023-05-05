@@ -10,7 +10,6 @@ import Table, { Column } from "../../components/commons/Table";
 import { Blocks, StyledContainer, Output, StyledColorBlueDard, Status } from "./styles";
 import { setOnDetailView } from "../../stores/user";
 import DetailViewEpoch from "../../components/commons/DetailView/DetailViewEpoch";
-import { useWindowSize } from "react-use";
 import { Box, useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
@@ -21,7 +20,6 @@ import FirstEpoch from "../../components/commons/Epoch/FirstEpoch";
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
-  const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
   const theme = useTheme();
@@ -124,11 +122,9 @@ const Epoch: React.FC = () => {
   }, []);
 
   const openDetail = (_: any, r: IDataEpoch, index: number) => {
-    if (width >= theme.breakpoints.values.md) {
-      setOnDetailView(true);
-      setEpoch(r.no);
-      setSelected(index);
-    } else history.push(details.epoch(r.no));
+    setOnDetailView(true);
+    setEpoch(r.no);
+    setSelected(index);
   };
 
   const handleClose = () => {
