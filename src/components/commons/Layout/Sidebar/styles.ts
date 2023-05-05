@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { MenuIcon } from "../../../../commons/resources";
 import { NETWORKS } from "../../../../commons/utils/constants";
-import { Button } from "@mui/material";
+import { Button, Box } from "@mui/material";
 
 export const NavbarContainer = styled.nav`
   position: relative;
@@ -88,3 +88,9 @@ export const SearchButton = styled(Button)(() => ({
   minWidth: 0,
   marginInline: 16,
 }));
+export const HumburgerArea = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+`;

@@ -205,6 +205,7 @@ export default function SignIn() {
                 Username
               </Label>
               <InputCustom
+                error={Boolean(formData.username.error && formData.username.touched)}
                 startAdornment={<Box paddingRight={"10px"} paddingTop={"3px"}>
                   <UserCustomIcon />
                 </Box>}
@@ -213,9 +214,6 @@ export default function SignIn() {
                 onChange={handleChange}
                 fullWidth
                 placeholder="Username"
-                style={{
-                  borderColor: (formData.username.error && formData.username.touched) ? "#DD4343" : ""
-                }}
               />
               {(formData.username.error && formData.username.touched) ? <FormHelperTextCustom error>{formData.username.error}</FormHelperTextCustom> : null}
             </WrapInput>
@@ -243,9 +241,7 @@ export default function SignIn() {
                 onChange={handleChange}
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
-                style={{
-                  borderColor: (formData.password.error && formData.password.touched) ? "#DD4343" : ""
-                }}
+                error={Boolean(formData.password.error && formData.password.touched)}
               />
               {(formData.password.error && formData.password.touched) ? <FormHelperText error>{formData.password.error}</FormHelperText> : null}
             </WrapInput>
@@ -263,7 +259,7 @@ export default function SignIn() {
                 />
               }
                 label={
-                  <Box fontSize={"14px"} fontWeight={400}>
+                  <Box fontSize={"14px"} fontWeight={400} textAlign={"left"}>
                     Remember & Auto Login
                   </Box>
                 }

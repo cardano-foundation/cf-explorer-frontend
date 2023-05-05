@@ -168,9 +168,7 @@ export default function ResetPassword() {
                     fullWidth
                     type={showPassword ? "text" : "password"}
                     placeholder="New Password"
-                    style={{
-                      borderColor: (formData.password.error && formData.password.touched) ? "#DD4343" : ""
-                    }}
+                    error={Boolean(formData.password.error && formData.password.touched)}
                   />
                   {(formData.password.error && formData.password.touched) ? <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom> : null}
                 </WrapInput>
@@ -197,9 +195,7 @@ export default function ResetPassword() {
                       </InputAdornment>
                     }
                     placeholder="Confirm Password"
-                    style={{
-                      borderColor: (formData.confirmPassword.error && formData.confirmPassword.touched) ? "#DD4343" : ""
-                    }}
+                    error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
                   />
                   {(formData.confirmPassword.error && formData.confirmPassword.touched) ? <FormHelperText error>{formData.confirmPassword.error}</FormHelperText> : null}
                 </WrapInput>

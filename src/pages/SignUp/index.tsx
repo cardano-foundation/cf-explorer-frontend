@@ -230,9 +230,7 @@ export default function SignUp() {
                       fullWidth
                       name="username"
                       onChange={handleChange}
-                      style={{
-                        borderColor: (formData.username.error && formData.username.touched) ? "#DD4343" : ""
-                      }}
+                      error={Boolean(formData.username.error && formData.username.touched)}
                       placeholder="Username"
                     />
                     {(formData.username.error && formData.username.touched) ? <FormHelperTextCustom error>{formData.username.error}</FormHelperTextCustom> : null}
@@ -250,9 +248,7 @@ export default function SignUp() {
                       fullWidth
                       name="email"
                       onChange={handleChange}
-                      style={{
-                        borderColor: (formData.email.error && formData.email.touched) ? "#DD4343" : ""
-                      }}
+                      error={Boolean(formData.email.error && formData.email.touched)}
                       placeholder="A confirmation code will be sent to this address"
                     />
                     {(formData.email.error && formData.email.touched) ? <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom> : null}
@@ -270,9 +266,7 @@ export default function SignUp() {
                       fullWidth
                       name="confirmEmail"
                       onChange={handleChange}
-                      style={{
-                        borderColor: (formData.confirmEmail.error && formData.confirmEmail.touched) ? "#DD4343" : ""
-                      }}
+                      error={Boolean(formData.confirmEmail.error && formData.confirmEmail.touched)}
                       placeholder="Re-enter Your email address"
                     />
                     {(formData.confirmEmail.error && formData.confirmEmail.touched) ? <FormHelperTextCustom error>
@@ -303,9 +297,7 @@ export default function SignUp() {
                       }
                       name="password"
                       onChange={handleChange}
-                      style={{
-                        borderColor: (formData.password.error && formData.password.touched) ? "#DD4343" : ""
-                      }}
+                      error={Boolean(formData.password.error && formData.password.touched)}
                       placeholder="Password"
                     />
                     {(formData.password.error && formData.password.touched) ? <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom> : null}
@@ -334,9 +326,7 @@ export default function SignUp() {
                       }
                       name="confirmPassword"
                       onChange={handleChange}
-                      style={{
-                        borderColor: (formData.confirmPassword.error && formData.confirmPassword.touched) ? "#DD4343" : ""
-                      }}
+                      error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
                       placeholder="Confirm Password"
                     />
                     {(formData.confirmPassword.error && formData.confirmPassword.touched) ? <FormHelperTextCustom error>{formData.confirmPassword.error}</FormHelperTextCustom> : null}

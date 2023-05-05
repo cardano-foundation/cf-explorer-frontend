@@ -9,22 +9,23 @@ import { NavbarContainer, NavBarLogo, LogoLink, NetworkName, HeaderTop, Toggle, 
 import ConnectWallet from "../Header/ConnectWallet";
 import { useScreen } from "../../../../commons/hooks/useScreen";
 import { setSidebar } from "../../../../stores/user";
+import LoginButton from "../Header/LoginButton";
 
 const Sidebar: React.FC = () => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const handleToggle = () => setSidebar(!sidebar);
-  const { isMobile } = useScreen();
-
+  const { isMobile, isTablet } = useScreen();
+  const isMd = isMobile || isTablet;
   return (
     <NavbarContainer>
       <HeaderTop>
         <LogoLink to="/" open={sidebar ? 1 : 0}>
           <NavBarLogo src={!isMobile && sidebar ? LogoFullIcon : LogoIcon} alt="logo desktop" />
-          {!isMobile && sidebar && <NetworkName network={NETWORK}>{NETWORK_NAMES[NETWORK]}</NetworkName>}
+          {!isMd && sidebar && <NetworkName network={NETWORK}>{NETWORK_NAMES[NETWORK]}</NetworkName>}
         </LogoLink>
-        {isMobile && (
+        {isMd && (
           <Box display="flex" alignItems="center">
-            <ConnectWallet />
+            <LoginButton />
             <SearchButton>
               <SearchIcon />
             </SearchButton>
