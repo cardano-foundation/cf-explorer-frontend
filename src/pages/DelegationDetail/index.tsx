@@ -1,5 +1,5 @@
-import { Container } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import { Box, Container, Tab, useTheme } from "@mui/material";
+import React, { useEffect, useRef } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { parse, stringify } from "qs";
 import { BiChevronDown } from "react-icons/bi";
@@ -7,7 +7,7 @@ import useFetch from "../../commons/hooks/useFetch";
 import DelegationDetailInfo from "../../components/DelegationDetail/DelegationDetailInfo";
 import DelegationDetailOverview from "../../components/DelegationDetail/DelegationDetailOverview";
 import DelegationDetailChart from "../../components/DelegationDetail/DelegationDetailChart";
-import { OptionSelect, StyledSelect, Title } from "./styles";
+import { OptionSelect, TabSelect, TabsContainer, Title, TitleTab } from "./styles";
 import {
   DelegationEpochList,
   DelegationStakingDelegatorsList,
@@ -15,6 +15,9 @@ import {
 import useFetchList from "../../commons/hooks/useFetchList";
 import NoRecord from "../../components/commons/NoRecord";
 import { API } from "../../commons/utils/api";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { DelegationHistoryIcon, StakeKeyHistoryIcon } from "../../commons/resources";
+import CustomSelect from "../../components/commons/CustomSelect";
 
 const titles = {
   epochs: "Epoch",
@@ -25,9 +28,10 @@ const DelegationDetail: React.FC = () => {
   const { search, state } = useLocation<{ data?: DelegationOverview }>();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
-  const tab = (query.tab as "epochs" | "delegators") || "epochs";
+  const tab = (query.tab as TabPoolDetail) || "epochs";
   const mainRef = useRef(document.querySelector("#main"));
   const tableRef = useRef(null);
+  const theme = useTheme();
 
   const scrollEffect = () => {
     tableRef !== null &&
@@ -66,9 +70,17 @@ const DelegationDetail: React.FC = () => {
 
   if ((initialized && !data) || error) return <NoRecord />;
 
-  const render = () => {
-    if (tab === "epochs") {
-      return (
+  const tabs: {
+    icon: React.FC<React.SVGProps<SVGSVGElement>>;
+    label: React.ReactNode;
+    key: TabPoolDetail;
+    component: React.ReactNode;
+  }[] = [
+    {
+      icon: DelegationHistoryIcon,
+      label: "Epoch",
+      key: "epochs",
+      component: (
         <div ref={tableRef}>
           <DelegationEpochList
             data={dataTable as DelegationEpoch[]}
@@ -78,10 +90,13 @@ const DelegationDetail: React.FC = () => {
             scrollEffect={scrollEffect}
           />
         </div>
-      );
-    }
-    if (tab === "delegators") {
-      return (
+      ),
+    },
+    {
+      icon: StakeKeyHistoryIcon,
+      label: "Staking Delegators",
+      key: "delegators",
+      component: (
         <div ref={tableRef}>
           <DelegationStakingDelegatorsList
             data={dataTable as StakingDelegators[]}
@@ -91,9 +106,9 @@ const DelegationDetail: React.FC = () => {
             scrollEffect={scrollEffect}
           />
         </div>
-      );
-    }
-  };
+      ),
+    },
+  ];
 
   return (
     <Container>
@@ -101,9 +116,8 @@ const DelegationDetail: React.FC = () => {
       <DelegationDetailOverview data={data} loading={loading} />
       <DelegationDetailChart poolId={poolId} />
 
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <Title>{titles[tab]}</Title>
-        <StyledSelect
+      <TabSelect>
+        <CustomSelect
           value={tab}
           onChange={e => {
             setQuery({ tab: e.target.value, page: 1, size: 50 });
@@ -113,9 +127,43 @@ const DelegationDetail: React.FC = () => {
         >
           <OptionSelect value="epochs">Epoch</OptionSelect>
           <OptionSelect value="delegators">Staking Delegators</OptionSelect>
-        </StyledSelect>
-      </div>
-      {render()}
+        </CustomSelect>
+        <Title>{titles[tab]}</Title>
+      </TabSelect>
+      <Box mt={4}>
+        <TabContext value={tab}>
+          <TabsContainer>
+            <TabList
+              onChange={(e, value) => {
+                setQuery({ tab: value, page: 1, size: 50 });
+                scrollEffect();
+              }}
+              TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
+            >
+              {tabs.map(({ icon: Icon, key, label }) => (
+                <Tab
+                  key={key}
+                  value={key}
+                  style={{ padding: "12px 0px", marginRight: 40 }}
+                  label={
+                    <Box display={"flex"} alignItems="center">
+                      <Icon fill={key === tab ? theme.palette.primary.main : theme.palette.text.hint} />
+                      <TitleTab pl={1} active={key === tab}>
+                        {label}
+                      </TitleTab>
+                    </Box>
+                  }
+                />
+              ))}
+            </TabList>
+          </TabsContainer>
+          {tabs.map(item => (
+            <TabPanel key={item.key} value={item.key} style={{ padding: 0 }}>
+              {item.component}
+            </TabPanel>
+          ))}
+        </TabContext>
+      </Box>
     </Container>
   );
 };

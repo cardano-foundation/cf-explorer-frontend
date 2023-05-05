@@ -1,11 +1,13 @@
 import React from "react";
 import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
-import { ReactComponent as DelegationHistoryIcon } from "../../../commons/resources/icons/delegationHistory.svg";
-import { ReactComponent as StakeKeyHistoryIcon } from "../../../commons/resources/icons/stateKeyHistory.svg";
-import { ReactComponent as WithdrawHistoryIcon } from "../../../commons/resources/icons/withdrawHistory.svg";
-import { ReactComponent as InstantaneousHistoryIcon } from "../../../commons/resources/icons/instantaneousHistory.svg";
-import { ReactComponent as TransactionIcon } from "../../../commons/resources/icons/transactionIcon.svg";
+import {
+  DelegationHistoryIcon,
+  StakeKeyHistoryIcon,
+  WithdrawHistoryIcon,
+  InstantaneousHistoryIcon,
+  TransactionIcon,
+} from "../../../commons/resources";
 import { StyledTabList, TitleTab } from "./styles";
 import { useHistory, useParams } from "react-router-dom";
 import DelegationHistoryTab from "./Tabs/DelegationHistoryTab";
