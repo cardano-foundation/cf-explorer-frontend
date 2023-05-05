@@ -214,9 +214,9 @@ const PoollUpdatesTimeline = ({
                       Pool ID:
                     </Box>
                     <PoolNamePopup to={details.delegation(data?.poolView)}>
-                      {getShortWallet(data?.poolId || "")}
+                      {getShortHash(data?.poolView || "")}
                     </PoolNamePopup>
-                    <CopyButton text={data?.poolId} />
+                    <CopyButton text={data?.poolView} />
                   </Box>
                   <Box display={"flex"} alignItems={"center"}>
                     <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
@@ -405,8 +405,8 @@ export const PoolUpdateModal = ({
             </Box>
             {data && (
               <Box>
-                <Link to={details.delegation(data?.poolView || "")}>{getShortWallet(data?.poolId || "")}</Link>{" "}
-                <CopyButton text={data?.poolId || ""} />
+                <Link to={details.delegation(data?.poolView || "")}>{getShortHash(data?.poolView || "")}</Link>{" "}
+                <CopyButton text={data?.poolView || ""} />
               </Box>
             )}
           </Box>
