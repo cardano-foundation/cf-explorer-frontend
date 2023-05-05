@@ -46,7 +46,12 @@ const PoolRegistrationTab = () => {
     },
     {
       key: "fee",
-      title: "ADA Value",
+      title: (
+        <Box>
+          ADA Value
+          <Box fontSize={"0.75rem"} fontWeight={'normal'}>Hold/Fees</Box>
+        </Box>
+      ),
       render(data) {
         return (
           <ADAValueFieldContainer>

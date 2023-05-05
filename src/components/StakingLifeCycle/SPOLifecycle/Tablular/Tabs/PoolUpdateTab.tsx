@@ -6,14 +6,14 @@ import { API } from "../../../../../commons/utils/api";
 import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../../../commons/utils/helper";
 import Table, { Column } from "../../../../commons/Table";
 import { PoolUpdateModal } from "../../PoolUpdates";
-import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, ClickAbleLink } from "./styles";
+import { ADAValueLabel, ClickAbleLink } from "./styles";
 import CustomIcon from "../../../../commons/CustomIcon";
 import { ADAsigntIC } from "../../../../../commons/resources";
 import { details } from "../../../../../commons/routers";
 import CustomTooltip from "../../../../commons/CustomTooltip";
 import { StyledLink } from "../../../../share/styled";
 
-const ProtocolUpdateTab = () => {
+const PoolUpdateTab = () => {
   const { poolId = "" } = useParams<{ poolId: string }>();
   const history = useHistory();
   const [selectedValue, setSelectedValue] = useState<PoolUpdateDetail | null>(null);
@@ -97,4 +97,4 @@ const ProtocolUpdateTab = () => {
   );
 };
 
-export default ProtocolUpdateTab;
+export default PoolUpdateTab;
