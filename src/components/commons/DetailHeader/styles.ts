@@ -3,9 +3,18 @@ import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import CopyButton from "../CopyButton";
+import breakpoints from "../../../themes/breakpoints";
 
 export const HeaderDetailContainer = styled(Box)`
   text-align: left;
+`;
+
+export const EpochDetail = styled(Box)`
+  @media screen and (max-width: ${breakpoints.values.sm}px) {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
 `;
 
 export const BackButton = styled(Box)`
@@ -312,7 +321,7 @@ export const CardItem = styled(Grid)<{ items_length: number }>(({ theme, items_l
       },
     },
   },
-  [theme.breakpoints.between(theme.breakpoints.values.sm, theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
     paddingTop: 20,
     paddingBottom: 20,
     borderBottomWidth: 1,
@@ -338,14 +347,6 @@ export const CardItem = styled(Grid)<{ items_length: number }>(({ theme, items_l
           borderBottomWidth: 0,
         },
       },
-    },
-  },
-  [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
-    padding: "20px 0px",
-    borderBottomWidth: 1,
-    borderLeftWidth: 0,
-    ":last-of-type": {
-      borderBottomWidth: 0,
     },
   },
 }));
@@ -391,5 +392,5 @@ export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   justifyContent: "space-between",
   "&:hover": {
     backgroundColor: "rgba(67, 143, 104, 0.1)",
-  }
+  },
 }));

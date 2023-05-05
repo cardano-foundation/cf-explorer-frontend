@@ -1,4 +1,4 @@
-import { styled, Container, Select, Box, alpha, Avatar } from "@mui/material";
+import { styled, Container, Select } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`

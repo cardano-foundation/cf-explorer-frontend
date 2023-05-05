@@ -195,7 +195,7 @@ const TableBody = <T extends ColumnType>({
               justifyContent="center"
               alignItems="self-start"
             >
-              <Box pt={'20%'}>
+              <Box pt={"20%"}>
                 <CircularProgress />
               </Box>
             </LoadingWrapper>

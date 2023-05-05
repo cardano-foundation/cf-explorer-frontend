@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Backdrop, Box, MenuItem, OutlinedInput, useTheme } from "@mui/material";
+import { Backdrop, Box, useTheme } from "@mui/material";
 
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
@@ -28,8 +28,9 @@ import {
   AllowSearchButton,
   StyledSelect,
   StyledMenuItem,
+  EpochDetail,
 } from "./styles";
-import { details, routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import Bookmark from "../BookmarkIcon";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
@@ -135,7 +136,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           )}
         </Box>
         {epoch ? (
-          <Box>
+          <EpochDetail class-name="123">
             <ProgressCircle
               size={100}
               pathWidth={8}
@@ -148,7 +149,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
               </EpochNumber>
               <EpochText>Epoch</EpochText>
             </ProgressCircle>
-          </Box>
+          </EpochDetail>
         ) : (
           ""
         )}
@@ -158,7 +159,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           return (
             <CardItem
               item
-              xs={12}
+              xs={6}
               sm={6}
               md={listItem.length === 4 ? 3 : 4}
               lg={numberOfItems > 6 ? 3 : true}

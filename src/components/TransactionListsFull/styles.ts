@@ -1,8 +1,21 @@
-import { styled, Container, Box } from "@mui/material";
+import { styled, Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import breakpoints from "../../themes/breakpoints";
 
-export const StyledContainer = styled(Container)`
-  margin-top: 18px;
+export const StyledContainer = styled(Box)`
+  @media screen and (max-width: ${breakpoints.values.sm}px) {
+    .transactions-table > div {
+      border: none;
+      box-shadow: none;
+      background-color: inherit;
+    }
+    .block-list-table > div table {
+    }
+    .block-list-table > div tr,
+    th {
+      background-color: inherit;
+    }
+  }
 `;
 
 export const StyledLink = styled(Link)`

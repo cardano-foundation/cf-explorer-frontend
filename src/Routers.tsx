@@ -39,7 +39,6 @@ import ResetPassword from "./pages/ResetPassword";
 import StackingLifecycle from "./pages/StackingLifecycle";
 import ReportGenerated from "./pages/ReportGenerated";
 import VerifyEmail from "./pages/VerifyEmail";
-import { Box } from "@mui/material";
 import { details } from "./commons/routers";
 
 const Routes: React.FC = () => {
