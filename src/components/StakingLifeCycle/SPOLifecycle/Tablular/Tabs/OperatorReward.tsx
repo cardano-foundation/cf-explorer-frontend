@@ -12,7 +12,7 @@ import { details } from "../../../../../commons/routers";
 import { StyledLink } from "../../../../share/styled";
 import CustomTooltip from "../../../../commons/CustomTooltip";
 
-const RewardsDistributionTab = () => {
+const OperatorRewardTab = () => {
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [params, setParams] = useState({
     page: 0,
@@ -87,4 +87,4 @@ const RewardsDistributionTab = () => {
   );
 };
 
-export default RewardsDistributionTab;
+export default OperatorRewardTab;
