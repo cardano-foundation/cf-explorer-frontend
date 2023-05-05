@@ -1,6 +1,8 @@
 import React from "react";
-import { styled, Box, Container } from "@mui/material";
+import { styled, Container } from "@mui/material";
 import { APP_VERSION } from "../../../../commons/utils/constants";
+import FooterMenu from "../Sidebar/FooterMenu";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
 const StyledFooter = styled("footer")`
   height: 60px;
@@ -38,35 +40,16 @@ const Copyright = styled("small")`
   }
 `;
 
-const Hyperlink = styled(Box)`
-  text-align: right;
-  @media screen and (max-width: 1023px) {
-    width: 100%;
-    text-align: center;
-  }
-`;
-
-const ExternalLink = styled("a")`
-  color: ${props => props.theme.palette.primary.dark}!important;
-  &:hover {
-    text-decoration: underline !important;
-  }
-`;
-
-const Dot = styled("a")`
-  display: inline-block;
-  margin: 0.1rem 10px;
-  width: 4px;
-  height: 4px;
-  background-color: ${props => props.theme.palette.grey[400]};
-  border-radius: 50%;
-`;
-
 const Footer: React.FC = () => {
+  const { isMobile } = useScreen();
   return (
     <StyledFooter>
       <FooterContainer>
-        <Copyright> &copy; {new Date().getFullYear()} Cardano Blockchain Explorer. All rights reserved. Version: {APP_VERSION}</Copyright>
+        {isMobile && <FooterMenu forceShow={true} />}
+        <Copyright>
+          {" "}
+          &copy; {new Date().getFullYear()} Cardano Blockchain Explorer. All rights reserved. Version: {APP_VERSION}
+        </Copyright>
       </FooterContainer>
     </StyledFooter>
   );
