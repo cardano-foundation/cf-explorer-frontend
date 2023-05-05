@@ -16,46 +16,12 @@ import moment from "moment";
 import { DATETIME_PARTTEN } from "../../../StackingFilter/DateRangeModal";
 import { FilterDateLabel } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles";
 
-const columns: Column<DelegationItem>[] = [
-  {
-    title: "Transaction Hash",
-    key: "hash",
-    minWidth: "120px",
-    render: r => (
-      <CustomTooltip title={r.txHash}>
-        <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
-      </CustomTooltip>
-    ),
-  },
-  {
-    title: "Timestamp",
-    key: "time",
-    minWidth: "120px",
-    render: r => formatDateTimeLocal(r.time),
-  },
-  {
-    title: "Fees",
-    key: "block",
-    minWidth: "120px",
-    render: r => <AdaValue value={r.outSum} />,
-  },
-  {
-    title: "Certificate",
-    key: "poolId",
-    minWidth: "120px",
-    render: r => (
-      <CustomTooltip title={r.txHash}>
-        <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
-      </CustomTooltip>
-    ),
-  },
-];
-
 const DelegationTab = () => {
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
+  const [sort, setSort] = useState<string>("");
   const [params, setParams] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
@@ -65,8 +31,49 @@ const DelegationTab = () => {
   const fetchData = useFetchList<DelegationItem>(stakeId ? API.STAKE_LIFECYCLE.DELEGATION(stakeId) : "", {
     ...pageInfo,
     ...params,
+    sort,
   });
+
+  const columns: Column<DelegationItem>[] = [
+    {
+      title: "Transaction Hash",
+      key: "hash",
+      minWidth: "120px",
+      render: r => (
+        <CustomTooltip title={r.txHash}>
+          <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
+        </CustomTooltip>
+      ),
+    },
+    {
+      title: "Timestamp",
+      key: "time",
+      minWidth: "120px",
+      render: r => formatDateTimeLocal(r.time),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
+    },
+    {
+      title: "Fees",
+      key: "block",
+      minWidth: "120px",
+      render: r => <AdaValue value={r.outSum} />,
+    },
+    {
+      title: "Certificate",
+      key: "poolId",
+      minWidth: "120px",
+      render: r => (
+        <CustomTooltip title={r.txHash}>
+          <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
+        </CustomTooltip>
+      ),
+    },
+  ];
+
   const { total, data } = fetchData;
+
   const filterLabel = useMemo(() => {
     if (params.fromDate && params.toDate)
       return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
@@ -77,11 +84,13 @@ const DelegationTab = () => {
       return `${params.sort[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
     if (params.txHash) return `Searching for : ${params.txHash}`;
   }, [params]);
+
   return (
     <>
       <Box display="flex" alignItems="center" justifyContent="space-between" mt={3}>
         <WrapWalletLabel>
           <GreenWalletIcon mr={1} />
+          <Box mr={1}>Wallet balance:</Box>
           <AdaValue value={data.reduce((current, item) => current + item.outSum, 0)} />
         </WrapWalletLabel>
         <Box display={"flex"} alignItems={"center"} gap={2}>
