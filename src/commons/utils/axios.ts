@@ -12,6 +12,13 @@ const defaultAxios = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
+const defaultAxiosDownload = axios.create({
+  baseURL: API_URL,
+  headers: { "Content-Type": "*/*" },
+  maxBodyLength: Infinity,
+  responseType: "blob",
+});
+
 const getToken = () => {
   try {
     const token = localStorage.getItem("token");
@@ -101,6 +108,7 @@ uploadAxios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-export { authAxios, uploadAxios, defaultAxios };
+
+export { authAxios, uploadAxios, defaultAxios, defaultAxiosDownload };
 
 export default defaultAxios;

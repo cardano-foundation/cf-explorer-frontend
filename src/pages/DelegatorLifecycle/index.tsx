@@ -37,6 +37,9 @@ const DelegatorLifecycle = () => {
 
   useEffect(() => {
     setCurrentStep(tabList[tab || "registration"] || 0);
+    if (tab === "tablular") {
+      setMode("tablular");
+    }
   }, [tab]);
 
   useEffect(() => {
@@ -95,6 +98,8 @@ const DelegatorLifecycle = () => {
             handleResize={handleResize}
             containerPosition={containerPosition}
             setMode={setMode}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
           />
         )}
         {mode === "tablular" && <Tablular />}

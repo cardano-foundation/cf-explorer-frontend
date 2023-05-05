@@ -25,16 +25,21 @@ import {
   WithdrawingFundProcessDescription,
   DeregistrationProcessDescription,
 } from "../../ModalDescription";
+import { details } from "../../../commons/routers";
+import { useHistory, useParams } from "react-router";
 interface StepperProps {
   icon: React.ReactNode;
   title: string;
   component: React.ReactNode;
   description: React.ReactNode;
+  key: "registration" | "pool-updates" | "operator-rewards" | "deregistration";
 }
 
 const SPOLifecycle = ({
   setMode,
   containerPosition,
+  currentStep,
+  setCurrentStep,
   handleResize,
 }: {
   setMode: (mode: "timeline" | "tablular") => void;
@@ -43,9 +48,14 @@ const SPOLifecycle = ({
     left?: number;
   };
   handleResize: () => void;
+  currentStep: number;
+  setCurrentStep: (step: number) => void;
 }) => {
-  const [currentStep, setCurrentStep] = useState(0);
+  const { poolId = "" } = useParams<{
+    poolId: string;
+  }>();
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
+  const history = useHistory();
   const stepper: StepperProps[] = [
     {
       icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
@@ -57,6 +67,7 @@ const SPOLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
+      key: "registration",
     },
     {
       icon: <PoolUpdateIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
@@ -68,6 +79,7 @@ const SPOLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
+      key: "pool-updates",
     },
     {
       icon: <OperatorRewardIcon width={"25px"} height={"25px"} fill={currentStep >= 2 ? "#fff" : "#98A2B3"} />,
@@ -79,6 +91,7 @@ const SPOLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
+      key: "operator-rewards",
     },
     {
       icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
@@ -90,6 +103,7 @@ const SPOLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
+      key: "deregistration",
     },
   ];
 
@@ -98,7 +112,13 @@ const SPOLifecycle = ({
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
           <Step component={"span"} key={idx} active={+(currentStep >= idx)}>
-            <StepButton active={+(currentStep >= idx)} onClick={() => setCurrentStep(idx)}>
+            <StepButton
+              active={+(currentStep >= idx)}
+              onClick={() => {
+                history.push(details.spo(poolId, step.key));
+                setCurrentStep(idx);
+              }}
+            >
               {step.icon}
             </StepButton>
             <TitleStep currentStep={currentStep} index={idx}>
@@ -109,25 +129,35 @@ const SPOLifecycle = ({
       </Box>
       <Box mt={3} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
         <Box fontSize={"1.5rem"} fontWeight={"bold"}>
-          {stepper[currentStep].title}{" "}
+          {stepper[currentStep]?.title}{" "}
           <InfoIcon style={{ cursor: "pointer" }} onClick={() => setOpenDescriptionModal(true)} />
         </Box>
-        {/* <ADATransfersButton>
-          <TranferIcon /> ADA Transfers
-        </ADATransfersButton> */}
       </Box>
-      <Box>{stepper[currentStep].description}</Box>
+      <Box>{stepper[currentStep]?.description}</Box>
       <Box minHeight={400} pb={10}>
-        {stepper[currentStep].component}
+        {stepper[currentStep]?.component}
       </Box>
       {currentStep > 0 && (
-        <PreviousButton onClick={() => setCurrentStep(prev => prev - 1)}>
+        <PreviousButton
+          onClick={() => {
+            history.push(details.spo(poolId, stepper[currentStep - 1]?.key));
+            setCurrentStep(currentStep - 1);
+          }}
+        >
           <PreviousIcon />
           <Box component={"span"}>Previous: {stepper[currentStep - 1]?.title}</Box>
         </PreviousButton>
       )}
       <NextButton
-        onClick={() => (currentStep === stepper.length - 1 ? setMode("tablular") : setCurrentStep(prev => prev + 1))}
+        onClick={() => {
+          if (currentStep === stepper.length - 1) {
+            history.push(details.spo(poolId, "tablular"));
+            setMode("tablular");
+          } else {
+            history.push(details.spo(poolId, stepper[currentStep + 1]?.key));
+            setCurrentStep(currentStep + 1);
+          }
+        }}
         variant="contained"
       >
         Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}

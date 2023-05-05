@@ -218,10 +218,14 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
               <DetailLabel>Total Transactions</DetailLabel>
               <DetailValue>{data.txCount}</DetailValue>
             </DetailsInfoItem>
-            {/* <DetailsInfoItem>
+            <DetailsInfoItem>
               <DetailLabel>Number of Holders</DetailLabel>
-              <DetailValue>{numberWithCommas(data.numberHolders || 0)}</DetailValue>
-            </DetailsInfoItem> */}
+              <DetailValue>{numberWithCommas(data.numberOfHolders || 0)}</DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>Total Volume</DetailLabel>
+              <DetailValue>{numberWithCommas(data.totalVolume || 0)}</DetailValue>
+            </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Volume 24H</DetailLabel>
               <DetailValue>{numberWithCommas(data.volumeIn24h || 0)}</DetailValue>

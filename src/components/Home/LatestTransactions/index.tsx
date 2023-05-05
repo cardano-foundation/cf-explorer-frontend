@@ -5,7 +5,7 @@ import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
 import { details, routers } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
 import { REFRESH_TIMES } from "../../../commons/utils/constants";
-import { formatADAFull, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import ViewAllButton from "../../commons/ViewAllButton";
 import {
@@ -136,7 +136,7 @@ const LatestTransactions: React.FC = () => {
 
                         <RowItem>
                           <small>Timestamp: </small>
-                          <small>{time}</small>
+                          <small>{formatDateTimeLocal(time)}</small>
                         </RowItem>
                       </ItemDetail>
                     </Item>

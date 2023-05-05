@@ -3,7 +3,7 @@ import StyledModal from "../commons/StyledModal";
 import { List, ListItem, ListItemText } from "@mui/material";
 import CopyButton from "../commons/CopyButton";
 import { ModalTitle, StyledListItem, StyledListItemText } from "./styles";
-import { getShortWallet } from "../../commons/utils/helper";
+import { formatHash } from "../../commons/utils/helper";
 
 export interface ViewMoreAddressModalProps {
   title?: string;
@@ -11,18 +11,19 @@ export interface ViewMoreAddressModalProps {
   open: boolean;
   onClose?: () => void;
   onItemClick?: (item: string) => void;
+  showFullHash?: boolean;
 }
 
-const ViewMoreAddressModal: React.FC<ViewMoreAddressModalProps> = ({ title, items, open, onClose, onItemClick }) => {
+const ViewMoreAddressModal: React.FC<ViewMoreAddressModalProps> = ({ title, items, open, showFullHash, onClose, onItemClick }) => {
   return (
-    <StyledModal width={280} open={open} handleCloseModal={() => onClose?.()}>
+    <StyledModal width={620} open={open} handleCloseModal={() => onClose?.()}>
       <>
         {title && <ModalTitle>{title}</ModalTitle>}
         <List>
           {items?.length &&
             items.map(text => (
-              <StyledListItem>
-                <StyledListItemText onClick={() => onItemClick?.(text)}>{getShortWallet(text)}</StyledListItemText>
+              <StyledListItem >
+                <StyledListItemText onClick={() => onItemClick?.(text)}>{showFullHash ? text :formatHash(text)}</StyledListItemText>
                 <CopyButton text={text} />
               </StyledListItem>
             ))}

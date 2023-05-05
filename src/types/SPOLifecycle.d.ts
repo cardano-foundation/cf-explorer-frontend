@@ -5,7 +5,6 @@ interface PoolUpdateItem {
   time: string;
 }
 
-
 interface PoolInfo {
   poolId: string;
   poolName: string;
@@ -47,8 +46,6 @@ interface SPORegistrationTabpular {
   stakeKeys: string[];
   deposit: number;
 }
-
-
 
 interface SPODeregistrationTabpular {
   poolId: string;
@@ -117,7 +114,15 @@ interface PoolInfo {
   poolView: string;
   poolSize: number;
   rewardAvailable: number;
-  status: 'ACTIVE' | 'INACTIVE' | 'RETIRING';
+  status: "ACTIVE" | "INACTIVE" | "RETIRING";
   epochNo: number;
   stakeKeys: string[];
+}
+
+interface IDashboardResponse {
+  id: number;
+  createdAt: string;
+  reportName: string;
+  status: string;
+  type: string;
 }

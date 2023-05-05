@@ -1,12 +1,13 @@
 import { AxiosResponse } from "axios";
 import { UserDataType } from "../../types/user";
-import defaultAxios, { authAxios } from "./axios";
+import defaultAxios, { authAxios, defaultAxiosDownload } from "./axios";
 //user
 export const signOut = (payload: TSignOut) => authAxios.post("auth/sign-out", payload);
 export const signIn = (payload: TSignIn) => authAxios.post("auth/sign-in", payload);
 export const signUp = (payload: TSignUp) => authAxios.post("auth/sign-up", payload);
-export const verifyActive = (payload: TVerifyActive) => authAxios.get("verify/active", {params: payload});
-export const forgotPassword = (payload: TForgotPassword) => authAxios.get("verify/forgot-password", {params: payload});
+export const verifyActive = (payload: TVerifyActive) => authAxios.get("verify/active", { params: payload });
+export const forgotPassword = (payload: TForgotPassword) =>
+  authAxios.get("verify/forgot-password", { params: payload });
 export const resetPassword = (payload: TResetPassword) => authAxios.put("verify/reset-password", payload);
 export const transferWallet = (payload: TTransferWallet) => authAxios.post("auth/transfers-wallet", payload);
 export const refreshToken = (payload: TRefreshToken) => authAxios.get("auth/refresh-token", { params: payload });
@@ -39,3 +40,6 @@ export const generateStakeKeyReport = (payload: IBodyReportStakeKey) =>
 
 export const generateStakePoolReport = (payload: IBodyReportStakePool) =>
   defaultAxios.post("pool-report/create", payload);
+
+export const downloadStakeKeyReport = (reportId: number) =>
+  defaultAxiosDownload.get(`staking-lifecycle/report/stake-key/${reportId}/export`, {});

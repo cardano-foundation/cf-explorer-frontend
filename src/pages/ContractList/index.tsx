@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { useHistory } from "react-router-dom";
@@ -28,7 +28,7 @@ const Transactions: React.FC = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
-
+  const mainRef = useRef(document.querySelector("#main"));
   const fetchData = useFetchList<Contracts>(API.CONTRACT, { ...pageInfo, sort }, false, REFRESH_TIMES.CONTRACTS);
   const { adaRate } = useSelector(({ system }: RootState) => system);
 
@@ -107,7 +107,10 @@ const Transactions: React.FC = () => {
           pagination={{
             ...pageInfo,
             total: fetchData.total,
-            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+            onChange: (page, size) => {
+              history.push({ search: stringify({ page, size }) });
+              mainRef.current?.scrollTo(0, 0);
+            },
           }}
         />
       </Card>
