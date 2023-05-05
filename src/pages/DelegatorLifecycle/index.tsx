@@ -67,7 +67,7 @@ const DelegatorLifecycle = () => {
     <StyledContainer ref={containerRef}>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
         <Box>
-          <Box component={"h2"} mb={0} mt={0}>
+          <Box component={"h2"} mb="5px" mt={0} fontSize={36} lineHeight="42px">
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
