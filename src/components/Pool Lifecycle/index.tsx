@@ -2,7 +2,7 @@ import { useState } from "react";
 import Table, { Column } from "../commons/Table";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { API } from "../../commons/utils/api";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { TextOverFlow } from "../StakingLifeCycle/DelegatorLifecycle/ReportComposerModal/styles";
 import { DownloadGreenIcon } from "../../commons/resources";
 import { lowerCase, startCase } from "lodash";
@@ -10,17 +10,23 @@ import { defaultAxiosDownload } from "../../commons/utils/axios";
 
 const PoolLifecycle = () => {
   const [{ page, size }, setPagi] = useState<{ page: number; size: number }>({ page: 0, size: 10 });
-  const [sort, setSort] = useState<string>("");
+  const [onDownload, setOnDownload] = useState<number | false>(false);
 
   const downloadFn = async (reportId: number, fileName: string) => {
-    defaultAxiosDownload.get(API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId)).then(response => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `${fileName}.csv`);
-      document.body.appendChild(link);
-      link.click();
-    });
+    setOnDownload(reportId);
+    defaultAxiosDownload
+      .get(API.REPORT.DOWNLOAD_POOL_SUMMARY(reportId))
+      .then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `${fileName}.csv`);
+        document.body.appendChild(link);
+        link.click();
+      })
+      .finally(() => {
+        setOnDownload(false);
+      });
   };
 
   const columns: Column<IPoolReportList>[] = [
@@ -69,7 +75,11 @@ const PoolLifecycle = () => {
       title: "",
       maxWidth: "30px",
       render(data, index) {
-        return <DownloadGreenIcon onClick={() => downloadFn(data.reportId, data.reportName)} />;
+        return onDownload === data.reportId ? (
+          <CircularProgress size={22} color="primary" />
+        ) : (
+          <DownloadGreenIcon onClick={() => downloadFn(data.reportId, data.reportName)} />
+        );
       },
     },
   ];
@@ -77,7 +87,6 @@ const PoolLifecycle = () => {
   const fetchData = useFetchList<IPoolReportList>(API.REPORT.POOL_REPORT_SUMMARY, {
     page,
     size,
-    sort,
   });
 
   return (
