@@ -1,0 +1,48 @@
+name: Publish Artifacts
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  PRIVATE_DOCKER_REGISTRY_URL: ${{ secrets.GITLAB_DOCKER_REGISTRY_URL }}
+  GITLAB_CONTAINER_REGISTRY_USER_NAME: ${{ secrets.GITLAB_CONTAINER_REGISTRY_USER_NAME }}
+  GITLAB_CONTAINER_REGISTRY_USER_TOKEN: ${{ secrets.GITLAB_CONTAINER_REGISTRY_USER_TOKEN }}
+
+jobs:
+  publish:
+    permissions:
+      contents: read
+      packages: write
+    runs-on: ubuntu-latest
+    if: "contains(github.event.head_commit.message, 'release-please--branches--main')"
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v3
+
+      - name: 🫡 Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: 🐳 Docker Login
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.PRIVATE_DOCKER_REGISTRY_URL }}
+          username: ${{ env.GITLAB_CONTAINER_REGISTRY_USER_NAME }}
+          password: ${{ env.GITLAB_CONTAINER_REGISTRY_USER_TOKEN }}
+
+      - name: 👀 Extract package version
+        run: echo "PACKAGE_VERSION=$(sed -n 's/.*\"version\": *\"\([^\"]*\)\".*/\1/p' package.json)" >> $GITHUB_ENV
+
+      - name: 🔨 Build and Push docker image
+        uses: docker/build-push-action@v4
+        with:
+          file: ./Dockerfile
+          context: .
+          push: true
+          tags: |
+            ${{ env.PRIVATE_DOCKER_REGISTRY_URL }}/cf-explorer-frontend:latest
+            ${{ env.PRIVATE_DOCKER_REGISTRY_URL }}/cf-explorer-frontend:${{ env.PACKAGE_VERSION }}
