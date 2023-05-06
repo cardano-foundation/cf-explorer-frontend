@@ -32,9 +32,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
 
   const getActive = () => {
     const active = menus.findIndex(menu => {
-        return menu?.children?.find(r => {
-          return pathname.split("/").length > 2 ? r.href?.includes(pathname.split("/")[1]) : r.href === pathname;
-        });
+      return menu?.children?.find(r => {
+        return pathname.split("/").length > 2 ? r.href?.includes(pathname.split("/")[1]) : r.href === pathname;
+      });
     });
 
     if (active !== -1) {
@@ -79,13 +79,19 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
               <CustomTooltip key={index} title={tooltipTitle} placement="right">
                 {href ? (
                   isExtenalLink(href) ? (
-                    <ListItem button onClick={e => window.open(href, "_blank")} sx={theme => itemStyle(theme, sidebar)}>
+                    <ListItem
+                      data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
+                      button
+                      onClick={e => window.open(href, "_blank")}
+                      sx={theme => itemStyle(theme, sidebar)}
+                    >
                       {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
                       <MenuText primary={title} open={sidebar ? 1 : 0} />
                     </ListItem>
                   ) : (
                     <ListItem
                       button
+                      data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                       component={Link}
                       to={href}
                       selected={pathname === href}
@@ -102,16 +108,13 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           active={pathname === href ? 1 : 0}
                         />
                       ) : null}
-                      <MenuText
-                        primary={title}
-                        open={sidebar ? 1 : 0}
-                        active={pathname === href ? 1 : 0}
-                      />
+                      <MenuText primary={title} open={sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
                     </ListItem>
                   )
                 ) : (
                   <ListItem
                     button
+                    data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                     onClick={() => children?.length && handleOpen(`menu-${index}`)}
                     sx={theme => ({
                       ...itemStyle(theme, sidebar),

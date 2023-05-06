@@ -25,7 +25,7 @@ const Sidebar: React.FC = () => {
           />
           <NetworkName network={NETWORK}>{NETWORK_NAMES[NETWORK]}</NetworkName>
         </LogoLink>
-        <Toggle onClick={handleToggle} />
+        <Toggle data-testid="toggle-sidebar-icon" onClick={handleToggle} />
       </HeaderTop>
       <SidebarMenu />
     </NavbarContainer>
