@@ -160,6 +160,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       return href ? (
                         isExtenalLink(href) ? (
                           <ListItem
+                            data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                             key={subIndex}
                             button
                             onClick={e => window.open(href, "_blank")}
@@ -176,6 +177,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           </ListItem>
                         ) : (
                           <ListItem
+                            data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                             key={subIndex}
                             button
                             component={Link}
