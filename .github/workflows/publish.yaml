@@ -35,7 +35,8 @@ jobs:
           password: ${{ env.GITLAB_CONTAINER_REGISTRY_USER_TOKEN }}
 
       - name: 👀 Extract package version
-        run: echo "PACKAGE_VERSION=$(sed -n 's/.*\"version\": *\"\([^\"]*\)\".*/\1/p' package.json)" >> $GITHUB_ENV
+        run: |
+          echo "PACKAGE_VERSION=$(sed -n 's/.*\"version\": *\"\([^\"]*\)\".*/\1/p' package.json)" >> $GITHUB_ENV
 
       - name: 🔨 Build and Push docker image
         uses: docker/build-push-action@v4
