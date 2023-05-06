@@ -1,104 +1,35 @@
-
-
-name: Run Explorer FE testcases
-
+name: Run Explorer e2e Tests
 on:
+  push:
+    branches-ignore:
+      - "main"
   pull_request:
-    types: [opened, synchronize, reopened]
+    branches-ignore:
+      - "main"
   workflow_dispatch:
 
-env:
-  FRONTEND_URL: http://localhost:7276
-
 jobs:
-  run-web-test:
+  test:
     runs-on: ubuntu-latest
-
     steps:
-
-      - name: Make some more metadata available as variables
-        id: metadata
-        run: |
-          if [[ "${{ env.FRONTEND_URL }}" =~ .*localhost.* ]]
-          then
-            LOCALHOST_PRIVATE_IP=$(ip -j addr show dev eth0 | jq -r '.[0].addr_info | map(select(.family == "inet"))[0].local')
-            echo "FRONTEND_URL=$(echo $FRONTEND_URL | sed "s|localhost|${LOCALHOST_PRIVATE_IP}|g")" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: 17
-          distribution: 'adopt'
-
-      - name: Start selenoid
-        uses: Xotabu4/selenoid-github-action@v2
-
-      - name: Checkout test code
+      - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
-        with:
-          repository: cardano-foundation/cf-qa-testsuite
-          ssh-key: ${{ secrets.CF_QA_TESTSUITE_DEPLOY_KEY }}   
-          path: 'cf-qa-testsuite'
 
-      - name: Set environment variables
-        env:
-          FRONTEND_URL: ${{ steps.metadata.outputs.FRONTEND_URL }}
+      - name: 🦾 Create .env file
         run: |
-          pwd
-          ls -la
-          cd cf-qa-testsuite
-          echo "SELENIUM_HUB=http://localhost:4444/wd/hub" >> src/main/resources/application-test.properties
-          echo "FE_URL=${{ env.FRONTEND_URL }}" >> src/main/resources/application-test.properties
-          cd ..
+          echo "PORT=3000" > .env
+          echo "REACT_APP_VERSION=$npm_package_version" >> .env
+          echo "REACT_APP_MAINNET_API_URL=${EXPLORER_API_MAINNET_URL}" >> .env
 
-      - name: Checkout frontend code
-        uses: actions/checkout@v3
+      - name: 🫡 Setup node
+        uses: actions/setup-node@v1
         with:
-          # ref: test-1
-          path: cf-explorer-frontend
+          node-version: 16
 
-      - name: Set dev env file
-        run: |
-          cd cf-explorer-frontend
-          touch .env
-          echo ${ENV_SECRETS} >> .env
+      - name: 🧘‍♀️ Download dependencies
+        run: npm ci
 
-      - name: Build frontend
-        env:
-          FRONTEND_URL: ${{ steps.metadata.outputs.FRONTEND_URL }}
-        run: |
-          cd cf-explorer-frontend
-          docker-compose up -d
-          bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' ${{ env.FRONTEND_URL }})" != "200" ]]; do echo "[+] Waiting for frontend to come up online..."; sleep 1; done'
-
-      - name: Run testsuite
-        run: |
-          cd cf-qa-testsuite
-          gradle clean test
-
-      - name: Get allure history
-        uses: actions/checkout@v3
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Allure Report action from marketplace
-        uses: simple-elf/allure-report-action@master
-        if: always()
-        with:
-          allure_results: cf-qa-testsuite/build/allure-results
-          allure_history: allure-history
-
-      - name: Deploy report to Github Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v2
-        env:
-          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history
-
+      - name: 🎳 Run tests
+        run: npm test
     env:
-      DEV_DEPLOYMENT: ${{ secrets.DEVBOXDEPLOYMENT }}
+      EXPLORER_API_MAINNET_URL: ${{ secrets.EXPLORER_API_MAINNET_URL }}

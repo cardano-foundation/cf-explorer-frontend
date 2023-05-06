@@ -55,9 +55,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "selenium-test": "concurrently \"npm start\" \"wait-on http://localhost:1102 && cd .. && cd cf-qa-testsuite && gradle clean test && kill-port 1102\"",
     "eject": "react-scripts eject",
-    "cypress": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test": "start-server-and-test start localhost:3000 cypress:run"
   },
   "eslintConfig": {
     "extends": [
@@ -85,10 +86,8 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
-    "concurrently": "^8.0.1",
     "cypress": "^12.11.0",
-    "kill-port": "^2.0.1",
-    "wait-on": "^7.0.1"
+    "start-server-and-test": "^2.0.0"
   },
   "proxy": "https://tokens.cardano.org"
 }
