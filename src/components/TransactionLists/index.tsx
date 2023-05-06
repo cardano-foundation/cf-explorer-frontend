@@ -88,7 +88,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.fee)}</Box>
-            <ADAicon  />
+          <ADAicon />
         </Box>
       ),
       sort: ({ columnKey, sortValue }) => {
@@ -102,7 +102,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
-            <ADAicon  />
+          <ADAicon />
           {hash === r.hash && <SelectedIcon />}
         </Box>
       ),
@@ -113,7 +113,11 @@ const TransactionList: React.FC<TransactionListProps> = ({
   ];
   const { pathname } = window.location;
   return (
-    <Card title={pathname === "/transactions" ? "Transactions" : ""} underline={underline}>
+    <Card
+      data-testid="transactions-card"
+      title={pathname === "/transactions" ? "Transactions" : ""}
+      underline={underline}
+    >
       <Table
         {...fetchData}
         columns={columns}
