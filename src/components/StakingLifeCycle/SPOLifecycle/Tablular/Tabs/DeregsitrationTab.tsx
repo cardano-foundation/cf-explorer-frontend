@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, formatHash } from "../../../../../commons/utils/helper";
+import { formatADAFull, formatHash, getShortHash } from "../../../../../commons/utils/helper";
 import Table, { Column } from "../../../../commons/Table";
 import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, ClickAbleLink, VerticalRow } from "./styles";
 import CustomIcon from "../../../../commons/CustomIcon";
@@ -28,7 +28,7 @@ const DeregsitrationTab = () => {
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>
-            <StyledLink to={details.transaction(data.txHash)}>{formatHash(data.txHash)}</StyledLink>
+            <StyledLink to={details.transaction(data.txHash)}>{getShortHash(data.txHash)}</StyledLink>
           </CustomTooltip>
         );
       },
