@@ -81,6 +81,21 @@ export const API = {
     DOWNLOAD_POOL_SUMMARY: (reportId: number) => `pool-report/detail/${reportId}/export`,
     POOL_REPORT_SUMMARY: `pool-report/list`,
     DASHBOARD: `staking-lifecycle/report/dashboard`,
+    //report for staking
+    STAKING_REPORTED_DETAIL: (reportId: number | string)  => `staking-lifecycle/report/stake-key/${reportId}/detail`,
+    SREPORT_DETAIL_REGISTRATIONS: (reportId: number | string) => `staking-lifecycle/report/stake-key/${reportId}/registrations`,
+    SREPORT_DETAIL_WITHDRAWALS: (reportId: number | string) => `staking-lifecycle/report/stake-key/${reportId}/withdrawals`,
+    SREPORT_DETAIL_REWARDS: (reportId: number | string) => `staking-lifecycle/report/stake-key/${reportId}/rewards`,
+    SREPORT_DETAIL_DELEGATIONS: (reportId: number | string) => `staking-lifecycle/report/stake-key/${reportId}/delegations`,
+    SREPORT_DETAIL_DEGEGISTRATIONS: (reportId: number | string) => `staking-lifecycle/report/stake-key/${reportId}/de-registrations`,
+    SREPORT_WALLET_ACTIVITY: (reportId: number | string) => `staking-lifecycle/report/stake-key/${reportId}/wallet-activity`,
+    //report for pool
+    POOL_REPORTED_DETAIL: (reportId: number | string) =>  `pool-report/detail/${reportId}`,
+    PREPORT_REGISTRATIONS: (reportId: number | string) => `pool-report/detail/${reportId}/pool-registration`,
+    PREPORT_PROTOCOL_UPDATE: (reportId: number | string) => `pool-report/detail/${reportId}/pool-update`,
+    PREPORT_REWARD_DISTRIBUTIONS: (reportId: number | string) => `pool-report/detail/${reportId}/rewards-distribution`,
+    PREPORT_DEREGSITRATION: (reportId: number | string) => `pool-report/detail/${reportId}/deregistration`,
+    PREPORT_EPOCH_SIZE: (reportId: number | string) => `pool-report/detail/${reportId}/epoch-size`
   },
 };
 
