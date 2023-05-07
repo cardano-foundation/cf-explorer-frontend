@@ -8,7 +8,7 @@ import Table, { Column } from "../../../../commons/Table";
 import { PoolUpdateModal } from "../../PoolUpdates";
 import { ADAValueLabel, ClickAbleLink } from "./styles";
 import CustomIcon from "../../../../commons/CustomIcon";
-import { ADAsigntIC } from "../../../../../commons/resources";
+import { ADAsigntIC, EyeIcon } from "../../../../../commons/resources";
 import { details } from "../../../../../commons/routers";
 import CustomTooltip from "../../../../commons/CustomTooltip";
 import { StyledLink } from "../../../../share/styled";
@@ -58,10 +58,14 @@ const PoolUpdateTab = () => {
       },
     },
     {
-      key: "update",
-      title: "Update",
+      key: "Certificate",
+      title: "Certificate",
       render(data) {
-        return <ClickAbleLink onClick={() => setSelectedValue(data)}>Certificate Update</ClickAbleLink>;
+        return (
+          <ClickAbleLink onClick={() => setSelectedValue(data)}>
+            <EyeIcon style={{ transform: "scale(.8)" }} />
+          </ClickAbleLink>
+        );
       },
     },
   ];

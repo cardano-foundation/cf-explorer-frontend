@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { StyledLink, WrapWalletLabel } from "../styles";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../../../commons/hooks/useFetchList";
@@ -15,6 +15,8 @@ import StackingFilter, { FilterParams } from "../../../StackingFilter";
 import moment from "moment";
 import { DATETIME_PARTTEN } from "../../../StackingFilter/DateRangeModal";
 import { FilterDateLabel } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles";
+import { EyeIcon } from "../../../../commons/resources";
+import { DelegationCertificateModal } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation";
 
 const DelegationTab = () => {
   const { stakeId } = useParams<{ stakeId: string }>();
@@ -22,6 +24,7 @@ const DelegationTab = () => {
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
   const [sort, setSort] = useState<string>("");
+  const [selected, setSelected] = useState<string>("");
   const [params, setParams] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
@@ -65,9 +68,9 @@ const DelegationTab = () => {
       key: "poolId",
       minWidth: "120px",
       render: r => (
-        <CustomTooltip title={r.txHash}>
-          <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
-        </CustomTooltip>
+        <IconButton onClick={() => setSelected(r.txHash)}>
+          <EyeIcon style={{ transform: "scale(.8)" }} />
+        </IconButton>
       ),
     },
   ];
@@ -124,6 +127,12 @@ const DelegationTab = () => {
           onChange: (page, size) => setPageInfo(pre => ({ ...pre, page: page - 1, size })),
         }}
         onClickRow={(e, r: DelegationItem) => history.push(details.transaction(r.txHash))}
+      />
+      <DelegationCertificateModal
+        open={!!selected}
+        stake={stakeId}
+        txHash={selected}
+        handleCloseModal={() => setSelected("")}
       />
     </>
   );

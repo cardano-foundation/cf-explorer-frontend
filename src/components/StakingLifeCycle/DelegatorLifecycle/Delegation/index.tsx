@@ -254,7 +254,7 @@ const DelegationTimeline = ({
         </Box>
       </Box>
       <DelegationCertificateModal
-        data={data}
+        txHash={selected?.txHash || ""}
         open={openModal}
         handleCloseModal={() => setOpenModal(false)}
         stake={stakeId}
@@ -263,16 +263,20 @@ const DelegationTimeline = ({
   );
 };
 
-const DelegationCertificateModal = ({
+export const DelegationCertificateModal = ({
   stake,
-  data,
+  txHash,
   ...props
 }: {
   stake: string;
   open: boolean;
-  data: DelegationDetail | null;
+  txHash: string;
   handleCloseModal: () => void;
 }) => {
+  const { data, loading } = useFetch<DelegationDetail>(
+    (stake && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stake, txHash)) || ""
+  );
+
   return (
     <StyledModal {...props} title="Delegation certificate">
       <Grid container spacing={1}>
@@ -281,7 +285,8 @@ const DelegationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Pool ID
             </Box>
-            {data && (
+            {loading && <Skeleton variant="rectangular" />}
+            {data && !loading && (
               <Box>
                 <Link to={details.delegation(data?.poolId || "")}>{getShortWallet(data?.poolId || "")}</Link>{" "}
                 <CopyButton text={data?.poolId || ""} />
@@ -294,7 +299,8 @@ const DelegationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Pool Name
             </Box>
-            {data && (
+            {loading && <Skeleton variant="rectangular" />}
+            {data && !loading && (
               <Box>
                 <Link to={details.delegation(data?.poolId || "")}>{data?.poolName || ""}</Link>{" "}
               </Box>
@@ -306,7 +312,8 @@ const DelegationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Stake Key
             </Box>
-            {data && (
+            {loading && <Skeleton variant="rectangular" />}
+            {data && !loading && (
               <Box>
                 <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link> <CopyButton text={stake} />
               </Box>

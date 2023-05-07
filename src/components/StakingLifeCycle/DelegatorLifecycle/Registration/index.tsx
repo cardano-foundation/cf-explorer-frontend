@@ -249,7 +249,7 @@ const RegistrationTimeline = ({
   );
 };
 
-const RegistrationCertificateModal = ({
+export const RegistrationCertificateModal = ({
   stake,
   ...props
 }: {
