@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatHash, getShortHash } from "../../../../../commons/utils/helper";
 
 import Table, { Column } from "../../../../commons/Table";
 import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, ClickAbleLink, VerticalRow } from "./styles";
@@ -29,7 +29,7 @@ const PoolRegistrationTab = () => {
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>
-            <StyledLink to={details.transaction(data.txHash)}>{formatHash(data.txHash)}</StyledLink>
+            <StyledLink to={details.transaction(data.txHash)}>{getShortHash(data.txHash)}</StyledLink>
           </CustomTooltip>
         );
       },
@@ -49,7 +49,9 @@ const PoolRegistrationTab = () => {
       title: (
         <Box>
           ADA Value
-          <Box fontSize={"0.75rem"} fontWeight={'normal'}>Hold/Fees</Box>
+          <Box fontSize={"0.75rem"} fontWeight={"normal"}>
+            Hold/Fees
+          </Box>
         </Box>
       ),
       render(data) {
