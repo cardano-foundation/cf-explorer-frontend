@@ -14,6 +14,7 @@ import {
   PoolCert,
   CertUpdate,
   ChangeIcon,
+  EmptyIcon,
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import PoolCertificateIcon from "../../../../commons/resources/icons/Staking/PoolCertificateIcon.svg";
@@ -571,6 +572,13 @@ export const PoolUpdateModal = ({
   );
 
   const renderCertificateUpdates = () => {
+    if (!data?.previousMargin && !data?.previousPledge) {
+      return (
+        <Box textAlign={"center"}>
+          <Box component={"img"} height={215} src={EmptyIcon} alt="no data" />
+        </Box>
+      );
+    }
     return (
       <Box display={"flex"} flexDirection={"column"} gap={1}>
         {data?.previousMargin && (
