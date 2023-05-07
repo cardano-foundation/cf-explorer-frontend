@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
@@ -7,10 +7,11 @@ import { formatADAFull, formatHash, getShortHash } from "../../../../../commons/
 import Table, { Column } from "../../../../commons/Table";
 import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, ClickAbleLink, VerticalRow } from "./styles";
 import CustomIcon from "../../../../commons/CustomIcon";
-import { ADAsigntIC } from "../../../../../commons/resources";
+import { ADAsigntIC, EyeIcon } from "../../../../../commons/resources";
 import { details } from "../../../../../commons/routers";
 import CustomTooltip from "../../../../commons/CustomTooltip";
 import { StyledLink } from "../../../../share/styled";
+import { DeregistrationCertificateModal } from "../../Deregistration";
 
 const DeregsitrationTab = () => {
   const { poolId = "" } = useParams<{ poolId: string }>();
@@ -20,6 +21,7 @@ const DeregsitrationTab = () => {
   });
 
   const [sort, setSort] = useState<string>("");
+  const [selected, setSelected] = useState<SPODeregistration | null>(null);
 
   const columns: Column<SPODeregistrationTabpular>[] = [
     {
@@ -61,19 +63,13 @@ const DeregsitrationTab = () => {
       },
     },
     {
-      key: "owner",
-      title: "Owner",
-      render(data) {
-        return data.stakeKeys.map((item, index) => (
-          <VerticalRow key={index}>
-            <CustomTooltip  title={item}>
-              <StyledLink to={details.stake(item)} key={index}>
-                {formatHash(item)}
-              </StyledLink>
-            </CustomTooltip>
-          </VerticalRow>
-        ));
-      },
+      key: "Certificate",
+      title: "Certificate",
+      render: data => (
+        <IconButton onClick={() => setSelected(data)}>
+          <EyeIcon style={{ transform: "scale(.8)" }} />
+        </IconButton>
+      ),
     },
   ];
 
@@ -100,6 +96,7 @@ const DeregsitrationTab = () => {
           onChange: (page, size) => setParams({ page, size }),
         }}
       />
+      <DeregistrationCertificateModal data={selected} open={!!selected} handleCloseModal={() => setSelected(null)} />
     </Box>
   );
 };

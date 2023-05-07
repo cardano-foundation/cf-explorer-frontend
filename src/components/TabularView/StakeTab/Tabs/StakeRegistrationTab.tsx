@@ -1,4 +1,4 @@
-import { Box, BoxProps } from "@mui/material";
+import { Box, BoxProps, IconButton } from "@mui/material";
 import { StyledLink, TableSubTitle } from "../styles";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../../../commons/hooks/useFetchList";
@@ -10,6 +10,8 @@ import { API } from "../../../../commons/utils/api";
 import { formatADAFull } from "../../../../commons/utils/helper";
 import ADAicon from "../../../commons/ADAIcon";
 import { useState } from "react";
+import { EyeIcon } from "../../../../commons/resources";
+import { RegistrationCertificateModal } from "../../../StakingLifeCycle/DelegatorLifecycle/Registration";
 
 interface IAdaValue extends BoxProps {
   value: number | string;
@@ -30,7 +32,7 @@ const StakeRegistrationTab = () => {
   const history = useHistory();
   const [sort, setSort] = useState<string>("");
   const [pageInfo, setPageInfo] = useState(getPageInfo(search));
-
+  const [openModal, setOpenModal] = useState(false);
   const fetchData = useFetchList<RegistrationItem>(stakeId ? API.STAKE_LIFECYCLE.REGISTRATION(stakeId) : "", {
     ...pageInfo,
     sort,
@@ -83,25 +85,28 @@ const StakeRegistrationTab = () => {
       key: "stakeId",
       minWidth: "120px",
       render: r => (
-        <CustomTooltip title={stakeId}>
-          <StyledLink to={details.stake(stakeId)}>{getShortWallet(stakeId)}</StyledLink>
-        </CustomTooltip>
+        <IconButton onClick={() => setOpenModal(true)}>
+          <EyeIcon style={{ transform: "scale(.8)" }} />
+        </IconButton>
       ),
     },
   ];
 
   return (
-    <Table
-      {...fetchData}
-      columns={columns}
-      total={{ title: "Total", count: fetchData.total }}
-      pagination={{
-        ...pageInfo,
-        total: fetchData.total,
-        onChange: (page, size) => setPageInfo(pre => ({ ...pre, page, size })),
-      }}
-      onClickRow={(e, r: RegistrationItem) => history.push(details.transaction(r.txHash))}
-    />
+    <>
+      <Table
+        {...fetchData}
+        columns={columns}
+        total={{ title: "Total", count: fetchData.total }}
+        pagination={{
+          ...pageInfo,
+          total: fetchData.total,
+          onChange: (page, size) => setPageInfo(pre => ({ ...pre, page, size })),
+        }}
+        onClickRow={(e, r: RegistrationItem) => history.push(details.transaction(r.txHash))}
+      />
+      <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
+    </>
   );
 };
 
