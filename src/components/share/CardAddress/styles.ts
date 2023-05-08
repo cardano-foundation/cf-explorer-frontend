@@ -12,7 +12,7 @@ export const TokenAddress = styled("small")`
   word-wrap: break-word;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
-  color: ${props => props.theme.palette.text.primary} !important;
+  color: ${props => props.theme.palette.secondary.main} !important;
   line-height: 1.5;
 `;
 export const AddressLink = styled(Link)`
@@ -20,7 +20,7 @@ export const AddressLink = styled(Link)`
   word-wrap: break-word;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
-  color: ${props => props.theme.palette.text.primary} !important;
+  color: ${props => props.theme.palette.secondary.main} !important;
   font-size: 14px;
 `;
 
