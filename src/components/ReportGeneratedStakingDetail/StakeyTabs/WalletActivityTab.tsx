@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import Table, { Column } from "../../commons/Table";
 import { Status, TextAmountReward } from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
 import CustomIcon from "../../commons/CustomIcon";
-import { AIconGreen } from "../../../commons/resources";
+import { ADAsigntIC, AIconGreen } from "../../../commons/resources";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../commons/utils/helper";
 import { StyledLink } from "../../share/styled";
 import { details } from "../../../commons/routers";
@@ -13,6 +13,7 @@ import { API } from "../../../commons/utils/api";
 import { useLocation, useParams } from "react-router-dom";
 import { StakingDetailContext } from "..";
 import { TableTittle } from "../styles";
+import { ADAValueLabel } from "../../StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
 
 const trxType = {
   SENT: "ADA sent from wallet",
@@ -56,7 +57,11 @@ const WalletActitityTab = () => {
       title: "Fees Paid",
       key: "fees",
       render(r) {
-        return r.fee;
+        return (
+          <ADAValueLabel>
+            {formatADAFull(r.fee)} <CustomIcon icon={ADAsigntIC} width={12} />
+          </ADAValueLabel>
+        );
       },
     },
     {
