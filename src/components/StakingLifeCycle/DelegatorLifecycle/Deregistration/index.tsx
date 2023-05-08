@@ -27,6 +27,7 @@ import StyledModal from "../../../commons/StyledModal";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
 import CopyButton from "../../../commons/CopyButton";
+import CustomTooltip from "../../../commons/CustomTooltip";
 
 const Deregistration = ({
   containerPosition,
@@ -282,7 +283,7 @@ const DeregistrationCertificateModal = ({
   const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
 
   return (
-    <StyledModal {...props} title="Registration certificate">
+    <StyledModal {...props} title="Deregistration certificate">
       <Box>
         {loading && <Skeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
@@ -292,7 +293,10 @@ const DeregistrationCertificateModal = ({
             </Box>
             {data && (
               <Box>
-                <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link> <CopyButton text={stake} />
+                <CustomTooltip title={stake}>
+                  <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link>
+                </CustomTooltip>
+                <CopyButton text={stake} />
               </Box>
             )}
           </Box>
