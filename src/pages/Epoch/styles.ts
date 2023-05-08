@@ -1,8 +1,17 @@
 import { styled, Container } from "@mui/material";
 
-export const StyledContainer = styled(Container)`
-  padding: 20px 0 40px;
-`;
+export const StyledContainer = styled(Container)(({ theme }) => ({
+  padding: "20px 0 40px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "0 0 40px",
+    "& > div > div:nth-child(2)": {
+      margin: "0 16px",
+    },
+    "& > div > div:last-child": {
+      paddingLeft: "16px",
+    },
+  },
+}));
 
 export const StyledColorBlueDard = styled("span")`
   color: ${props => props.theme.palette.text.primary};

@@ -3,69 +3,70 @@ import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS, STAKE_KEY_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import { BoxRaised } from "../BoxRaised";
-import breakpoints from "../../../themes/breakpoints";
-export const ViewDetailDrawer = styled(Drawer)`
-  & > div {
-    background: ${props => props.theme.palette.background.neutral};
-    border: none;
-    height: calc(100vh - 61px);
-    @media screen and (max-width: ${breakpoints.values.md}px) {
-      display: flex;
-      height: calc(100vh - 80px);
-      top: 80px;
-    }
-    @media screen and (max-width: ${breakpoints.values.sm}px) {
-      right: auto;
-      width: 100%;
-    }
-  }
-`;
 
-export const ViewDetailHeader = styled(Box)`
-  margin: 0px 30px 0px;
-  padding: 15px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)};
-  @media screen and (max-width: ${breakpoints.values.sm}px) {
-    margin: 0;
-    padding: 15px 16px;
-  }
-`;
+export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
+  "& > div": {
+    background: `${theme.palette.background.neutral}`,
+    border: "none",
+    height: "calc(100vh - 61px)",
+    [theme.breakpoints.down("md")]: {
+      display: "flex",
+      height: "calc(100vh - 80px)",
+      top: "80px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      right: "auto",
+      width: "100%",
+    },
+  },
+}));
+
+export const ViewDetailHeader = styled(Box)(({ theme }) => ({
+  margin: "0px 30px 0px",
+  padding: "15px 0",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  [theme.breakpoints.down("sm")]: {
+    margin: "0px",
+    padidng: "15px 16px",
+  },
+}));
 
 export const CloseButton = styled(IconButton)`
   color: ${props => props.theme.palette.text.hint};
   padding: 5.5px;
 `;
 
-export const ViewDetailContainer = styled(Box)`
-  position: relative;
-  width: 430px;
-  height: calc(100vh - 200px);
-  overflow-x: hidden;
-  overflow-y: auto;
-  margin-left: 30px;
-  text-align: center;
-  @media screen and (max-width: ${breakpoints.values.sm}px) {
-    display: flex;
-    width: 100%;
-    margin-left: 0;
-  }
-`;
-export const ViewDetailScroll = styled(Box)`
-  width: 400px;
-  max-width: 400px;
-  margin-right: 16px;
-  overflow-x: hidden;
-  overflow: hidden;
-  padding-top: 15px;
-  @media screen and (max-width: ${breakpoints.values.sm}px) {
-    margin-right: 0px;
-    width: 100%;
-    padding: 15px 16px;
-  }
-`;
+export const ViewDetailContainer = styled(Box)(({ theme }) => ({
+  position: "relative",
+  width: "430px",
+  height: "100%",
+  overflowX: "hidden",
+  overflowY: "auto",
+  marginLeft: "30px",
+  textAlign: "center",
+  [theme.breakpoints.down("sm")]: {
+    display: "flex",
+    width: "100%",
+    marginLeft: "0px",
+  },
+}));
+
+export const ViewDetailScroll = styled(Box)(({ theme }) => ({
+  width: "400px",
+  maxWidth: "400px",
+  marginRight: "16px",
+  overflowX: "hidden",
+  overflow: "hidden",
+  paddingTop: "15px",
+  [theme.breakpoints.down("sm")]: {
+    marginRight: "0px",
+    width: "100%",
+    padding: "15px 16px",
+  },
+}));
 export const HeaderContainer = styled(Box)`
   display: flex;
   justify-content: center;

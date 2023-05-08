@@ -81,18 +81,17 @@ export const LoadingWrapper = styled(Box)`
   transform: translate(-50%, -50%);
 `;
 
-export const TFooter = styled(Box)`
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
-  color: ${props => props.theme.palette.grey[400]};
-  margin-top: 10px;
-
-  @media screen and (max-width: 767px) {
-    justify-content: flex-end;
-  }
-`;
+export const TFooter = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "baseline",
+  flexWrap: "wrap",
+  color: `${theme.palette.grey[400]}`,
+  marginTop: "10px",
+  [theme.breakpoints.down("md")]: {
+    justifyContent: "flex-start",
+  },
+}));
 
 export const Total = styled(Box)`
   @media screen and (max-width: 767px) {
