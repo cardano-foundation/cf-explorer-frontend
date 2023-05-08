@@ -9,12 +9,17 @@ import { NavbarContainer, NavBarLogo, LogoLink, NetworkName, HeaderTop, Toggle, 
 import { useScreen } from "../../../../commons/hooks/useScreen";
 import { setSidebar } from "../../../../stores/user";
 import LoginButton from "../Header/LoginButton";
+import TopSearch from "./TopSearch";
+import { useLocation } from "react-router-dom";
 
 const Sidebar: React.FC = () => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const handleToggle = () => setSidebar(!sidebar);
   const { isMobile, isTablet } = useScreen();
   const isMd = isMobile || isTablet;
+  const [openSearch, setOpenSearch] = React.useState(false);
+  const { pathname } = useLocation();
+
   return (
     <NavbarContainer>
       <HeaderTop>
@@ -25,13 +30,16 @@ const Sidebar: React.FC = () => {
         {isMd && (
           <Box display="flex" alignItems="center">
             <LoginButton />
-            <SearchButton>
-              <SearchIcon />
-            </SearchButton>
+            {pathname !== "/" && (
+              <SearchButton onClick={() => setOpenSearch(prev => !prev)}>
+                <SearchIcon />
+              </SearchButton>
+            )}
             <Toggle onClick={handleToggle} />
           </Box>
         )}
       </HeaderTop>
+      <TopSearch open={openSearch} onClose={setOpenSearch} />
       <SidebarMenu />
     </NavbarContainer>
   );
