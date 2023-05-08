@@ -53,10 +53,10 @@ const AddressAnalytics: React.FC = () => {
       <Wrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={4} sm={6}>
               <ButtonTitle>Balance</ButtonTitle>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={8} sm={6}>
               <Tabs>
                 {options.map(({ value, label }) => (
                   <Tab key={value} active={rangeTime === value ? 1 : 0} onClick={() => setRangeTime(value)}>
@@ -139,7 +139,7 @@ const AddressAnalytics: React.FC = () => {
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={HighestIcon} width={"20%"} alt="heighest icon" />
-                  <Title>Highest Balance</Title>
+                  <Title>Highest Stake</Title>
                   <ValueInfo>
                     {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance)}
                   </ValueInfo>
@@ -150,7 +150,7 @@ const AddressAnalytics: React.FC = () => {
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={LowestIcon} width={"20%"} alt="lowest icon" />
-                  <Title>Lowest Balance</Title>
+                  <Title>Lowest Stake</Title>
                   <ValueInfo>
                     {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance)}
                   </ValueInfo>

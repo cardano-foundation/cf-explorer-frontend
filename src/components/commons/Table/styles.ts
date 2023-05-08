@@ -38,9 +38,13 @@ export const THeader = styled("th")`
   top: 0;
   background-color: #fff;
   z-index: 2;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    background: none;
+  }
 `;
 
-export const TRow = styled("tr") <{ selected?: number }>`
+export const TRow = styled("tr")<{ selected?: number }>`
   width: 100%;
   padding: 10px 0;
   font-size: 14px;
@@ -53,7 +57,7 @@ export const TRow = styled("tr") <{ selected?: number }>`
   }
 `;
 
-export const TCol = styled("td") <{
+export const TCol = styled("td")<{
   width?: number | string;
   minWidth?: number | string;
   maxWidth?: number | string;
@@ -90,13 +94,13 @@ export const TFooter = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(1),
   [theme.breakpoints.down(theme.breakpoints.values.md)]: {
     flexDirection: "column",
-  }
+  },
 }));
 
 export const Total = styled(Box)`
-  @media screen and (max-width: 767px) {
-    display: none;
-  }
+  // @media screen and (max-width: 767px) {
+  //   display: none;
+  // }
 `;
 
 export const TotalNumber = styled("span")`
@@ -114,6 +118,12 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string }>(
   box-shadow: 0 0.5rem 1.2rem rgba(82, 85, 92, 0.15);
   border: 1px solid ${alpha(theme.palette.common.black, 0.1)};
   ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
+
+  @media screen and (max-width: ${theme.breakpoints.values.sm}px) {
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
 `
 );
 
