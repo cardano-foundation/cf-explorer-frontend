@@ -40,7 +40,7 @@ export const THeader = styled("th")`
   z-index: 2;
 `;
 
-export const TRow = styled("tr")<{ selected?: number }>`
+export const TRow = styled("tr") <{ selected?: number }>`
   width: 100%;
   padding: 10px 0;
   font-size: 14px;
@@ -53,7 +53,7 @@ export const TRow = styled("tr")<{ selected?: number }>`
   }
 `;
 
-export const TCol = styled("td")<{
+export const TCol = styled("td") <{
   width?: number | string;
   minWidth?: number | string;
   maxWidth?: number | string;
@@ -88,9 +88,9 @@ export const TFooter = styled(Box)(({ theme }) => ({
   flexWrap: "wrap",
   color: theme.palette.grey[400],
   marginTop: theme.spacing(1),
-  [theme.breakpoints.down("sm")]: {
-    justifyContent: "flex-start",
-  },
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+    flexDirection: "column",
+  }
 }));
 
 export const Total = styled(Box)`
