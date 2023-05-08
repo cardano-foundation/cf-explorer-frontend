@@ -18,7 +18,7 @@ import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./s
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentDeregistrations from "./RecentDeregistration";
-import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADA, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import moment from "moment";
 import PopoverStyled from "../../../commons/PopoverStyled";
 import PopupStaking from "../../../commons/PopupStaking";
@@ -105,11 +105,11 @@ const DeregistrationTimeline = ({
           </Info>
           <Info>
             <ADAGreen />
-            <InfoText>{formatADA(selected.deposit + selected.fee || 0)}</InfoText>
+            <InfoText>{formatADA(Math.abs(selected.deposit) - selected.fee || 0)}</InfoText>
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>{moment(selected.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+            <InfoText>{formatDateTimeLocal(selected.time)}</InfoText>
           </Info>
         </Box>
       </Box>
@@ -133,7 +133,7 @@ const DeregistrationTimeline = ({
                   <HoldBox ref={holdRef} ml={1}>
                     <Box>
                       <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                        {formatADA(selected.deposit || 0)}
+                        {formatADA(Math.abs(selected.deposit) || 0)}
                       </Box>
                       <ADAicon fontSize="18px" />
                     </Box>
