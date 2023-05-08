@@ -11,14 +11,13 @@ import {
   DownloadBlueIC,
 } from "../../commons/resources";
 import { Box, CircularProgress, Container, Grid, IconButton } from "@mui/material";
-import { details, routers } from "../../commons/routers";
+import { routers } from "../../commons/routers";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { API } from "../../commons/utils/api";
 import { defaultAxiosDownload } from "../../commons/utils/axios";
 import moment from "moment";
 import { WrapFilterDescription } from "../../components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import FilterReport from "../../components/FilterReport";
-import { useHistory } from "react-router-dom";
 
 const cardList = [
   {
@@ -75,7 +74,6 @@ export interface SavedReport {
 }
 
 const Dashboard: React.FC = () => {
-  const history = useHistory();
   const [onDownload, setOnDownload] = useState<number | false>(false);
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>({
     page: 0,
@@ -93,11 +91,6 @@ const Dashboard: React.FC = () => {
     size,
     ...params,
   });
-
-  const handleRowClick = (e: React.MouseEvent<Element, MouseEvent>, row: any) => {
-    if(row.stakeKeyReportId) history.push(details.generated_staking_detail(row.stakeKeyReportId));
-    else if(row.poolReportId) history.push(details.generated_pool_detail(row.poolReportId));
-  }
 
   const downloadReportDashboard = useCallback(async (reportId: number, fileName: string) => {
     setOnDownload(reportId);
@@ -203,7 +196,6 @@ const Dashboard: React.FC = () => {
         {...fetchData}
         columns={columns}
         total={{ title: "Dashboard summary", count: fetchData.total }}
-        onClickRow={(e, row) => handleRowClick(e, row)}
         pagination={{
           page,
           size,

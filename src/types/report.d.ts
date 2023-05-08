@@ -27,7 +27,7 @@ interface IStakeKeySummary {
   isADATransfer: boolean;
   isFeesPaid: boolean;
   status: string;
-  stakingLifeCycleEvents: {type: string}[];
+  stakingLifeCycleEvents: any;
 }
 
 interface IPoolReportList {
@@ -38,28 +38,4 @@ interface IPoolReportList {
   isFreePaid: boolean;
   event: string;
   reportId: number;
-}
-
-interface IADATransferReport {
-  txHash: string;
-  amount: number;
-  time: string;
-  fee: number;
-  type: "SENT" | "RECEIVED" | "FEE_PAID" | "CERTIFICATE_FEE_PAID" | "CERTIFICATE_DEPOSIT_PAID";
-  status: "FAIL" | "SUCCESS" | "PENDING";
-}
-
-interface IReportStaking {
-  eventDelegation: boolean;
-  eventDeregistration: boolean;
-  eventRegistration: boolean;
-  eventRewards: boolean;
-  eventWithdrawal: boolean;
-  fromDate: string;
-  id: number;
-}
-
-interface IPoolReportSummary {
-  event: string;
-  reportName: string;
 }

@@ -28,7 +28,7 @@ export const StyledLink = styled(Link)`
 
 export const StyledTabList = styled(TabList)`
   & > div > div {
-    justify-content: flex-start;
+    justify-content: space-between;
   }
 `;
 

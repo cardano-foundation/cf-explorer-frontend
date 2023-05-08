@@ -40,8 +40,6 @@ export const routers = {
   SPO_LIFECYCLE: "/spo-lifecycle/:poolId/:tab?",
   STAKING_LIFECYCLE: "/stacking-lifecycle",
   REPORT_GENERATED: "/report-generated",
-  REPORT_GENERATED_STAKING_DETAIL: "/report-generated/:reportId/staking",
-  REPORT_GENERATED_POOL_DETAIL: "/report-generated/:reportId/pool",
   NOT_FOUND: "/*",
 } as const;
 
@@ -64,9 +62,6 @@ export const details = {
   staking: (stakeId: string, tab = "registration") =>
     routers.DELEGATOR_LIFECYCLE.replace(":stakeId", stakeId).replace(":tab?", tab),
   spo: (poolId: string, tab = "registration") => routers.SPO_LIFECYCLE.replace(":poolId", poolId).replace(":tab?", tab),
-  generated_staking_detail: (reportId: string) =>
-    routers.REPORT_GENERATED_STAKING_DETAIL.replace(":reportId", reportId),
-  generated_pool_detail: (reportId: string) => routers.REPORT_GENERATED_POOL_DETAIL.replace(":reportId", reportId),
 };
 
 export const listRouters = [

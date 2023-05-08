@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
 import ReportGeneratedTabs, { TabsItem } from "../../components/ReportGeneratedTabs";
 import StakekeySummary from "../../components/StakekeySummary";
-import PoolLifecycle from "../../components/PoolLifecycle";
+import PoolLifecycle from "../../components/Pool Lifecycle";
 
 const tabItems: TabsItem[] = [
   {
