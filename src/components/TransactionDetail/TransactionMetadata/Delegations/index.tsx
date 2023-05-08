@@ -6,24 +6,29 @@ import CopyButton from "../../../commons/CopyButton";
 import { Box } from "@mui/material";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { AddressLink, Header, ItemContainer, StatusIcon, StyledItem, Wrapper } from "./styles";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
 interface DelegationProps {
   data: Transaction["delegations"] | null;
 }
 
 const Delegations: React.FC<DelegationProps> = ({ data }) => {
+  const { isTablet } = useScreen();
   return (
     <Wrapper>
       <Header>Wallet Addresses</Header>
       {data?.map(item => (
         <StyledItem key={item.address}>
           <ItemContainer>
-            <Box width={50}>
-              <StatusIcon src={sendImg} alt="wallet icon" />
+            <Box display="flex" alignItems="center">
+              <Box width={50}>
+                <StatusIcon src={sendImg} alt="wallet icon" />
+              </Box>
+              {isTablet ? <span>From: </span> : null}
             </Box>
             <Box width={"100%"}>
               <Box>
-                <span>From: </span>
+                {!isTablet ? <span>From: </span> : null}
                 <CustomTooltip title={item.address}>
                   <AddressLink to={details.stake(item.address)}>{getShortWallet(item.address || "")}</AddressLink>
                 </CustomTooltip>

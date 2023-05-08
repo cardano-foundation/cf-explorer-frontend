@@ -8,8 +8,9 @@ import feeImg from "../../../../commons/resources/images/dola.svg";
 import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { Header, Img, Item, TokenLink } from "./styles";
+import { Header, Img, Item, ItemContent, ItemFooter, TokenLink, WrapToken } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
 interface Props {
   data: Transaction["utxOs"] | null;
@@ -42,6 +43,8 @@ const Card = ({
       return prv + item.value;
     }, 0);
 
+  const { isTablet } = useScreen();
+
   return (
     <Box textAlign={"left"} mb={1} sx={{ background: theme => theme.palette.background.paper }}>
       <Header fontWeight="bold">
@@ -56,15 +59,20 @@ const Card = ({
       <Box fontSize={14}>
         {items?.map((item, index) => (
           <Item key={index}>
-            <Box display={"flex"}>
-              <Box width={50}>
-                <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />
+            <ItemContent>
+              <Box display="flex" alignItems="center">
+                <Box width={50}>
+                  <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />
+                </Box>
+                {isTablet ? <Box>{type === "down" ? "From" : "To"}:</Box> : null}
               </Box>
               <Box width={"100%"} display="flex" flexDirection="column" justifyContent="center" paddingTop="5px">
                 <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
-                  <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1}>
-                    {type === "down" ? "From" : "To"}:
-                  </Box>
+                  {!isTablet ? (
+                    <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1}>
+                      {type === "down" ? "From" : "To"}:
+                    </Box>
+                  ) : null}
                   <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"}>
                     <Box
                       display={"flex"}
@@ -131,24 +139,15 @@ const Card = ({
                   <Box display={"flex"} alignItems="center" justifyContent={"space-between"}>
                     <Box overflow={"hidden"} display="flex" flexWrap={"wrap"} gap={1}>
                       {item.tokens.map((token, idx) => (
-                        <Box
-                          key={idx}
-                          display="flex"
-                          justifyContent={"flex-start"}
-                          alignItems="center"
-                          flexWrap={"nowrap"}
-                          width="auto"
-                        >
-                          <TokenLink to={details.token(token.assetId)}>
-                            {token.assetName || getShortWallet(token.assetId)}
-                          </TokenLink>
-                        </Box>
+                        <TokenLink key={idx} to={details.token(token.assetId)}>
+                          <WrapToken>{token.assetName || getShortWallet(token.assetId)}</WrapToken>
+                        </TokenLink>
                       ))}
                     </Box>
                   </Box>
                 </Box>
               </Box>
-            </Box>
+            </ItemContent>
           </Item>
         ))}
         {type === "up" && (
@@ -172,12 +171,7 @@ const Card = ({
           </Item>
         )}
       </Box>
-      <Box
-        display={"flex"}
-        justifyContent="space-between"
-        padding={"12px 25px"}
-        sx={{ background: theme => theme.palette.green[800_10] }}
-      >
+      <ItemFooter>
         <Box fontWeight={"bold"}>Total {type === "down" ? "Input" : "Output"}</Box>
         <div>
           <Box fontWeight={"bold"} component="span" pr={1}>
@@ -185,7 +179,7 @@ const Card = ({
           </Box>
           <ADAicon />
         </div>
-      </Box>
+      </ItemFooter>
     </Box>
   );
 };

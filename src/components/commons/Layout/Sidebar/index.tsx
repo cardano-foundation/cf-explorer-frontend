@@ -6,7 +6,6 @@ import { NETWORK, NETWORK_NAMES } from "../../../../commons/utils/constants";
 import { RootState } from "../../../../stores/types";
 import SidebarMenu from "./SidebarMenu";
 import { NavbarContainer, NavBarLogo, LogoLink, NetworkName, HeaderTop, Toggle, SearchButton } from "./styles";
-import ConnectWallet from "../Header/ConnectWallet";
 import { useScreen } from "../../../../commons/hooks/useScreen";
 import { setSidebar } from "../../../../stores/user";
 import LoginButton from "../Header/LoginButton";

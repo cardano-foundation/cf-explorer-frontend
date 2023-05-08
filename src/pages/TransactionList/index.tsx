@@ -8,7 +8,7 @@ import styled from "@emotion/styled";
 import { API } from "../../commons/utils/api";
 
 const StyledContainer = styled(Container)`
-  padding: 20px 0 40px;
+  padding: 20px 16px 40px;
 `;
 
 interface Props {}

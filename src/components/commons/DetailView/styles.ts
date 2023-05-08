@@ -15,8 +15,8 @@ export const ViewDetailDrawer = styled(Drawer)`
       top: 80px;
     }
     @media screen and (max-width: ${breakpoints.values.sm}px) {
-      right: auto;
-      width: 100%;
+      position: fixed;
+      left: 0;
     }
   }
 `;
@@ -64,6 +64,7 @@ export const ViewDetailScroll = styled(Box)`
     margin-right: 0px;
     width: 100%;
     padding: 15px 16px;
+    overflow-y: auto;
   }
 `;
 export const HeaderContainer = styled(Box)`

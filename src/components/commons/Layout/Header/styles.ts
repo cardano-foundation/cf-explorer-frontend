@@ -37,20 +37,18 @@ export const HeaderTop = styled("div")`
   }
 `;
 
-export const HeaderMain = styled("div")<{ home: number }>`
-  position: relative;
-  text-align: start;
-
-  padding: ${props => (props.home ? "0px 0px 50px" : "27px 0px")};
-  & > div {
-    padding-top: ${props => (props.home ? "0px" : "30px")};
-    margin-bottom: ${props => (props.home ? "0px" : "calc(-25px - 1.5715rem)")};
-  }
-  @media screen and (max-width: 767px) {
-    padding: 62px 0px 48px;
-    padding: ${props => (props.home ? "62px 0px 48px" : "20px 0px")};
-  }
-`;
+export const HeaderMain = styled("div")<{ home: number }>(({ theme, home }) => ({
+  position: "relative",
+  textAlign: "start",
+  padding: home ? "0px 0px 50px" : "27px 0px",
+  "& > div": {
+    paddingTop: home ? "0px" : "30px",
+    marginBottom: home ? "0px" : "calc(-25px - 1.5715rem)",
+  },
+  [theme.breakpoints.down("sm")]: {
+    padding: home ? "62px 0px 48px" : 0,
+  },
+}));
 
 export const Title = styled("h1")<{ home: number }>`
   display: ${props => (props.home ? "block" : "none")};
