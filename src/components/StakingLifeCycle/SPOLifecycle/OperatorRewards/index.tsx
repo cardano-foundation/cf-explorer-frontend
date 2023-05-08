@@ -62,7 +62,7 @@ const OperatorReward = ({
                 <ADAOrangeIcon />
               </Box>
             </Box>
-            <Box position={"absolute"} width={"max-content"} left={"-50%"} fontWeight={"bold"}>
+            <Box position={"absolute"} width={"max-content"} left={"-64%"} bottom={"-50%"} fontWeight={"bold"}>
               Operator Rewards
             </Box>
           </Box>
