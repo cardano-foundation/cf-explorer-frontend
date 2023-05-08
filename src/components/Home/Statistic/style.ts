@@ -19,7 +19,7 @@ export const Item = styled(Card)`
   }
   @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
     padding: 15px;
-    min-height: 150px;
+    min-height: 160px;
   }
 `;
 
@@ -95,7 +95,7 @@ export const TimeDuration = styled("small")<{ marginTop?: string }>`
   white-space: nowrap;
   display: block;
   @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
-    display: none;
+    white-space: unset;
   }
 `;
 export const XSmall = styled("span")`

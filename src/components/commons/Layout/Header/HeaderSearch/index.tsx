@@ -174,7 +174,7 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
         disableUnderline
         onFocus={() => onFocus()}
       />
-      <OptionsSearch home={home} show={showOption} value={search} handleSearch={handleSearch} />
+      {!isMobile && <OptionsSearch home={home} show={showOption} value={search} handleSearch={handleSearch} />}
       <SubmitButton type="submit" home={home ? 1 : 0} disabled={!search}>
         <Image src={HeaderSearchIcon} alt="search" home={home ? 1 : 0} />
       </SubmitButton>
