@@ -5,7 +5,11 @@ interface IBodyReportStakeKey {
   toDate: string;
   isADATransfer: boolean;
   isFeesPaid: boolean;
-  stakingLifeCycleEvents: string[];
+  eventDelegation: boolean,
+  eventDeregistration: boolean,
+  eventRegistration: boolean,
+  eventRewards: boolean,
+  eventWithdrawal: boolean,
 }
 
 interface IBodyReportStakePool {
@@ -55,8 +59,15 @@ interface IReportStaking {
   eventRegistration: boolean;
   eventRewards: boolean;
   eventWithdrawal: boolean;
-  fromDate: string;
   id: number;
+  stakeKey: string;
+  username: string;
+  reportName: string;
+  fromDate: string;
+  toDate: string;
+  isADATransfer: boolean;
+  isFeesPaid: boolean;
+  status: string;
 }
 
 interface IPoolReportSummary {

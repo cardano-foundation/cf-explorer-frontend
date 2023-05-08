@@ -21,6 +21,7 @@ import useToast from "../../../../commons/hooks/useToast";
 import { useHistory } from "react-router-dom";
 import { routers } from "../../../../commons/routers";
 import { useState } from "react";
+import { getEventType } from "../../../StakekeySummary";
 
 const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaultParams, gotoStep }) => {
   const toast = useToast();
@@ -57,7 +58,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           toDate: moment(end).format("yyyy/MM/D hh:mm:ss"),
           isADATransfer: step2.adaTransfers === "YES",
           isFeesPaid: step2.adaTransfers === "YES",
-          stakingLifeCycleEvents: events,
+          ...getEventType(events.map((item: { type: string }) => item.type)),
         };
         await generateStakeKeyReport(paramsStakeKeyReport);
       }
