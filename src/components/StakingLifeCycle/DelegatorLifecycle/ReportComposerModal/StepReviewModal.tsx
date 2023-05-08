@@ -44,7 +44,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           poolId: step1.address,
           reportName: step1.reportName || defaultReportName,
           isPoolSize: step2.poolSize === "YES",
-          isFeesPaid: step2.adaTransfers === "YES",
+          isFeesPaid: step2.feesPaid === "YES",
           event: step3?.eventsKey,
           epochRanges: step1.epochRange,
         };
