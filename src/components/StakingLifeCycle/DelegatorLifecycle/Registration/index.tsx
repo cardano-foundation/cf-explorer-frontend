@@ -27,6 +27,7 @@ import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
 import { details } from "../../../../commons/routers";
 import CopyButton from "../../../commons/CopyButton";
+import CustomTooltip from "../../../commons/CustomTooltip";
 
 const Registration = ({
   containerPosition,
@@ -103,7 +104,9 @@ const RegistrationTimeline = ({
         <Box display={"flex"}>
           <Info>
             <AddressIcon fill="#438F68" />
-            <InfoText>{getShortHash(txHash || "")}</InfoText>
+            <CustomTooltip title={txHash}>
+              <InfoText>{getShortHash(txHash || "")}</InfoText>
+            </CustomTooltip>
           </Info>
           <Info>
             <ADAGreen />

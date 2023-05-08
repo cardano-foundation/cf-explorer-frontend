@@ -39,6 +39,7 @@ import { formatADA, getShortHash } from "../../../../commons/utils/helper";
 import moment from "moment";
 import PopoverStyled from "../../../commons/PopoverStyled";
 import PopupStaking from "../../../commons/PopupStaking";
+import CustomTooltip from "../../../commons/CustomTooltip";
 
 const Withdraw = ({
   containerPosition,
@@ -149,7 +150,9 @@ const WithdrawTimeline = ({
         <Box display={"flex"}>
           <Info>
             <AddressIcon fill="#438F68" />
-            <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            <CustomTooltip title={selected.txHash}>
+              <InfoText>{getShortHash(selected.txHash || "")}</InfoText>
+            </CustomTooltip>
           </Info>
           <Info>
             <ADAGreen />
