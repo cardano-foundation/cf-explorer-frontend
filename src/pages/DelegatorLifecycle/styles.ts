@@ -14,6 +14,10 @@ export const StakeId = styled("span")(({ theme }) => ({
 }));
 
 export const ButtonGroup = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  height: "44px",
+  marginTop: "11px !important",
   background: "#E7E8EA",
   padding: "3px 2px",
   margin: `0 ${theme.spacing(2)}`,
@@ -21,6 +25,9 @@ export const ButtonGroup = styled(Box)(({ theme }) => ({
   borderBottomLeftRadius: "20px",
   borderTopRightRadius: "20px",
   borderBottomRightRadius: "20px",
+  [theme.breakpoints.down("md")]: {
+    width: "90px",
+  },
 }));
 export const ButtonSwitch = styled(IconButton)<{ active: number }>(({ theme, active }) => ({
   margin: "0 2px",
@@ -40,5 +47,43 @@ export const ButtonReport = styled(Button)(({ theme }) => ({
   borderRadius: "8px",
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.8),
+  },
+  [theme.breakpoints.down("md")]: {
+    width: "328px",
+  },
+}));
+export const ButtonReportContainer = styled(Button)(({ theme }) => ({
+  display: "flex",
+  [theme.breakpoints.down("md")]: {
+    justifyContent: "start",
+  },
+}));
+
+export const BoxContainerStyled = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItem: "center",
+  flexDirection: "row",
+  [theme.breakpoints.down("md")]: {
+    display: "flex",
+    alignItems: "flex-start",
+    flexDirection: "column",
+  },
+}));
+export const BoxSwitch = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+}));
+export const BoxItemStyled = styled(Box)(({ theme }) => ({
+  display: "flex",
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+  },
+}));
+export const BoxSwitchContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  [theme.breakpoints.down("md")]: {
+    justifyContent: "space-between",
+    alignItems: "space-between",
   },
 }));

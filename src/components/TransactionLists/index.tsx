@@ -7,7 +7,6 @@ import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import { formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
-import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";

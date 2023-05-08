@@ -10,7 +10,7 @@ import { API } from "../../commons/utils/api";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const StyledContainer = styled(Container)`
-  padding: 30px 0px 40px;
+  padding: 30px 16px 40px;
 `;
 
 const Transaction: React.FC = () => {

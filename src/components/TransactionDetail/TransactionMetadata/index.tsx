@@ -147,6 +147,8 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
             TabIndicatorProps={{
               sx: { background: theme => theme.palette.primary.main, color: theme => theme.palette.primary.main },
             }}
+            variant="scrollable"
+            scrollButtons={false}
           >
             {items?.map(({ key, icon: Icon, label }) => (
               <Tab

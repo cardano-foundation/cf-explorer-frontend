@@ -23,10 +23,14 @@ export const StyledItem = styled(Box)`
   border-bottom: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)};
 `;
 
-export const ItemContainer = styled(Box)`
-  display: flex;
-  align-items: center;
-`;
+export const ItemContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+  }
+}));
 
 export const StatusIcon = styled("img")`
   padding-right: 10px;

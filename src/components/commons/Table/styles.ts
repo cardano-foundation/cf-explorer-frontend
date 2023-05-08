@@ -38,6 +38,10 @@ export const THeader = styled("th")`
   top: 0;
   background-color: #fff;
   z-index: 2;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    background: none;
+  }
 `;
 
 export const TRow = styled("tr")<{ selected?: number }>`
@@ -86,18 +90,14 @@ export const TFooter = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "baseline",
   flexWrap: "wrap",
-  color: `${theme.palette.grey[400]}`,
+  color: theme.palette.grey[400],
   marginTop: "10px",
   [theme.breakpoints.down("md")]: {
     justifyContent: "flex-start",
   },
 }));
 
-export const Total = styled(Box)`
-  @media screen and (max-width: 767px) {
-    display: none;
-  }
-`;
+export const Total = styled(Box)``;
 
 export const TotalNumber = styled("span")`
   color: ${props => props.theme.palette.text.primary};
@@ -114,6 +114,12 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string }>(
   box-shadow: 0 0.5rem 1.2rem rgba(82, 85, 92, 0.15);
   border: 1px solid ${alpha(theme.palette.common.black, 0.1)};
   ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
+
+  @media screen and (max-width: ${theme.breakpoints.values.sm}px) {
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
 `
 );
 
