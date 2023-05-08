@@ -61,7 +61,7 @@ const DelegationTab = () => {
       title: "Fees",
       key: "block",
       minWidth: "120px",
-      render: r => <AdaValue value={r.outSum} />,
+      render: r => <AdaValue value={r.fee} />,
     },
     {
       title: "Certificate",
@@ -116,7 +116,7 @@ const DelegationTab = () => {
           />
         </Box>
       </Box>
-      <Table
+      <Table 
         {...fetchData}
         columns={columns}
         total={{ title: "Total", count: fetchData.total }}
