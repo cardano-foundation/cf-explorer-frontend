@@ -1,5 +1,12 @@
 # Cardano Blockchain Explorer
 
+<p align="left">
+<img alt="Tests" src="https://github.com/cardano-foundation/cf-explorer-frontend/actions/workflows/tests.yaml/badge.svg" />
+<img alt="Release" src="https://github.com/cardano-foundation/cf-explorer-frontend/actions/workflows/release.yaml/badge.svg" />
+<img alt="Publish" src="https://github.com/cardano-foundation/cf-explorer-frontend/actions/workflows/publish.yaml/badge.svg" />
+<a href="https://conventionalcommits.org"><img alt="conventionalcommits" src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits" /></a>
+</p>
+
 Cardano Blockchain Explorer showcases the utility of Cardano by providing descriptive and visual representation of the ledger. It presents the information both in a web application as well as through API services
 
 ### Prerequisites
@@ -7,7 +14,6 @@ Cardano Blockchain Explorer showcases the utility of Cardano by providing descri
 In order to compile and run everything you will need:
 
 - Node installed (^[v16.16.0](https://nodejs.org/en/blog/release/v16.16.0/) recommended)
-
 
 ## Install and Setup
 

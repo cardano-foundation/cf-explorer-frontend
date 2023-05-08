@@ -118,7 +118,7 @@ const BlockList = () => {
 
   return (
     <StyledContainer>
-      <Card title={"Blocks"}>
+      <Card data-testid="blocks-card" title={"Blocks"}>
         <Table
           {...fetchData}
           columns={columns}

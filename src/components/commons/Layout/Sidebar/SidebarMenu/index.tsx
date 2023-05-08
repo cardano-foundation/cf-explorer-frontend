@@ -82,13 +82,19 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
               <CustomTooltip key={index} title={tooltipTitle} placement="right">
                 {href ? (
                   isExtenalLink(href) ? (
-                    <ListItem button onClick={e => window.open(href, "_blank")} sx={theme => itemStyle(theme, sidebar)}>
+                    <ListItem
+                      data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
+                      button
+                      onClick={e => window.open(href, "_blank")}
+                      sx={theme => itemStyle(theme, sidebar)}
+                    >
                       {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
                       <MenuText primary={title} open={sidebar ? 1 : 0} />
                     </ListItem>
                   ) : (
                     <ListItem
                       button
+                      data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                       component={Link}
                       to={href}
                       selected={pathname === href}
@@ -111,6 +117,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 ) : (
                   <ListItem
                     button
+                    data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                     onClick={() => children?.length && handleOpen(`menu-${index}`)}
                     sx={theme => ({
                       ...itemStyle(theme, sidebar),
@@ -156,6 +163,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       return href ? (
                         isExtenalLink(href) ? (
                           <ListItem
+                            data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                             key={subIndex}
                             button
                             onClick={e => window.open(href, "_blank")}
@@ -172,6 +180,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           </ListItem>
                         ) : (
                           <ListItem
+                            data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                             key={subIndex}
                             button
                             component={Link}
