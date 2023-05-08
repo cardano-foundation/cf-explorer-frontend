@@ -28,6 +28,7 @@ import CopyButton from "../../../commons/CopyButton";
 import { formatADAFull, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import { details } from "../../../../commons/routers";
 import moment from "moment";
+import CustomTooltip from "../../../commons/CustomTooltip";
 
 const Delegation = ({
   containerPosition,
@@ -288,7 +289,9 @@ export const DelegationCertificateModal = ({
             {loading && <Skeleton variant="rectangular" />}
             {data && !loading && (
               <Box>
-                <Link to={details.delegation(data?.poolId || "")}>{getShortWallet(data?.poolId || "")}</Link>{" "}
+                <CustomTooltip title={data?.poolId}>
+                  <Link to={details.delegation(data?.poolId || "")}>{getShortWallet(data?.poolId || "")}</Link>
+                </CustomTooltip>
                 <CopyButton text={data?.poolId || ""} />
               </Box>
             )}
@@ -315,7 +318,10 @@ export const DelegationCertificateModal = ({
             {loading && <Skeleton variant="rectangular" />}
             {data && !loading && (
               <Box>
-                <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link> <CopyButton text={stake} />
+                <CustomTooltip title={stake}>
+                  <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link>
+                </CustomTooltip>
+                <CopyButton text={stake} />
               </Box>
             )}
           </Box>
