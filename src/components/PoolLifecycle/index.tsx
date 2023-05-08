@@ -81,7 +81,9 @@ const PoolLifecycle = () => {
         return onDownload === data.reportId ? (
           <CircularProgress size={22} color="primary" />
         ) : (
-          <DownloadGreenIcon onClick={() => downloadFn(data.reportId, data.reportName)} />
+          <a href="#">
+            <DownloadGreenIcon onClick={() => downloadFn(data.reportId, data.reportName)} />
+          </a>
         );
       },
     },

@@ -11,8 +11,7 @@ import { defaultAxiosDownload } from "../../commons/utils/axios";
 import { useHistory } from "react-router-dom";
 import { details } from "../../commons/routers";
 
-
-const EVENTS:{[key in keyof IReportStaking]?: string} = {
+const EVENTS: { [key in keyof IReportStaking]?: string } = {
   eventDelegation: "Delegation",
   eventDeregistration: "Deregistration",
   eventRegistration: "Registration",
@@ -89,7 +88,11 @@ const StakekeySummary = () => {
       title: "",
       maxWidth: "30px",
       render(data, index) {
-        return <DownloadGreenIcon onClick={() => downloadFn(data.id, data.reportName)} />;
+        return (
+          <a href="#">
+            <DownloadGreenIcon onClick={() => downloadFn(data.id, data.reportName)} />
+          </a>
+        );
       },
     },
   ];
