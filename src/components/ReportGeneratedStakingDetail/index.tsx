@@ -72,7 +72,7 @@ const stackeTabs: ITab[] = [
 
 const ReportGeneratedStakingDetailTabs = () => {
   let { reportId } = useParams<{ reportId: string }>();
-  const reportDetail = useFetch<IStakeKeySummary>(API.REPORT.STAKING_REPORTED_DETAIL(reportId));
+  const reportDetail = useFetch<IReportStaking>(API.REPORT.STAKING_REPORTED_DETAIL(reportId));
 
   const events = useMemo(() => {
     const { data } = reportDetail;

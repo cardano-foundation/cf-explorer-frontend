@@ -11,7 +11,7 @@ import { defaultAxiosDownload } from "../../commons/utils/axios";
 import { useHistory } from "react-router-dom";
 import { details } from "../../commons/routers";
 
-const EVENTS: { [key in keyof IReportStaking]?: string } = {
+export const EVENTS: { [key in keyof IReportStaking]?: string } = {
   eventDelegation: "Delegation",
   eventDeregistration: "Deregistration",
   eventRegistration: "Registration",
@@ -19,10 +19,24 @@ const EVENTS: { [key in keyof IReportStaking]?: string } = {
   eventWithdrawal: "Withdrawal",
 };
 
-export function getEventList(data: any) {
+export function getEventList(data: IReportStaking) {
   return Object.entries(EVENTS)
-    .map(([key, value]) => (data[key] ? value : null))
+    .map(([key, value]) => (data[key as keyof typeof data] ? value : null))
     .filter(item => item);
+}
+
+export function getEventType(data: any) {
+  let events = {
+    eventDelegation: false,
+    eventDeregistration: false,
+    eventRegistration: false,
+    eventRewards: false,
+    eventWithdrawal: false,
+  };
+  for (let key in events) {
+    events[key as keyof typeof events] = data.includes(EVENTS[key as keyof typeof EVENTS]?.toUpperCase());
+  }
+  return events;
 }
 
 const StakekeySummary = () => {
@@ -45,7 +59,7 @@ const StakekeySummary = () => {
     });
   };
 
-  const columns: Column<IStakeKeySummary>[] = [
+  const columns: Column<IReportStaking>[] = [
     {
       key: "name",
       title: "Report Name",
