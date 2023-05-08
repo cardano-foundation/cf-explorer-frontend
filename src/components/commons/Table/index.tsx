@@ -54,7 +54,6 @@ import {
 } from "../../../types/table";
 import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
-import { TbArrowsDownUp, TbArrowUp, TbArrowDown } from "react-icons/tb";
 import Filter from "../Filter";
 import { useScreen } from "../../../commons/hooks/useScreen";
 

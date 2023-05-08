@@ -21,22 +21,12 @@ export const PriceWrapper = styled(StyledColorBlueDard)`
   gap: 10px;
 `;
 
-export const StyledContainer = styled(Container)`
-  padding: 20px 0 40px;
-  @media screen and (max-width: ${breakpoints.values.sm}px) {
-    .card-table {
-      padding: 25px 0 25px 16px;
-    }
-    .block-list-table > div {
-      border: none;
-      box-shadow: none;
-      background-color: inherit;
-    }
-    .block-list-table > div table {
-    }
-    .block-list-table > div tr,
-    th {
-      background-color: inherit;
-    }
-  }
-`;
+export const StyledContainer = styled(Container)(({ theme }) => ({
+  padding: "20px 0 40px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "0 0 40px",
+    ".card-table > div:nth-child(2)": {
+      padding: "0 0 25px 16px",
+    },
+  },
+}));

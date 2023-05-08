@@ -91,17 +91,13 @@ export const TFooter = styled(Box)(({ theme }) => ({
   alignItems: "baseline",
   flexWrap: "wrap",
   color: theme.palette.grey[400],
-  marginTop: theme.spacing(1),
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
-    flexDirection: "column",
+  marginTop: "10px",
+  [theme.breakpoints.down("md")]: {
+    justifyContent: "flex-start",
   },
 }));
 
-export const Total = styled(Box)`
-  // @media screen and (max-width: 767px) {
-  //   display: none;
-  // }
-`;
+export const Total = styled(Box)``;
 
 export const TotalNumber = styled("span")`
   color: ${props => props.theme.palette.text.primary};
