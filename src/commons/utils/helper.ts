@@ -154,8 +154,3 @@ export function formatHash(hash: string): string {
   const suffix = hash.slice(-5);
   return `${prefix}...${suffix}`;
 }
-
-export function limitString(s: string, n: number) {
-  if(s.length <= n) return s;
-  return s.substring(0, n) + "...";
-}

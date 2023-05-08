@@ -7,11 +7,8 @@ import { TextOverFlow } from "../StakingLifeCycle/DelegatorLifecycle/ReportCompo
 import { DownloadGreenIcon } from "../../commons/resources";
 import { lowerCase, startCase } from "lodash";
 import { defaultAxiosDownload } from "../../commons/utils/axios";
-import { useHistory } from "react-router-dom";
-import { details } from "../../commons/routers";
 
 const PoolLifecycle = () => {
-  const history = useHistory();
   const [{ page, size }, setPagi] = useState<{ page: number; size: number }>({ page: 0, size: 10 });
   const [onDownload, setOnDownload] = useState<number | false>(false);
 
@@ -98,7 +95,6 @@ const PoolLifecycle = () => {
         {...fetchData}
         columns={columns}
         total={{ title: "Pool life cycle summary", count: fetchData.total }}
-        onClickRow={(e, row) => history.push(details.generated_pool_detail(row.reportId))}
         pagination={{
           page,
           size,

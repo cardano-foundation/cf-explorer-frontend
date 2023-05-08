@@ -40,8 +40,6 @@ import StackingLifecycle from "./pages/StackingLifecycle";
 import ReportGenerated from "./pages/ReportGenerated";
 import VerifyEmail from "./pages/VerifyEmail";
 import { details } from "./commons/routers";
-import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
-import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
 
 const Routes: React.FC = () => {
   console.log(localStorage.getItem("username"));
@@ -77,8 +75,6 @@ const Routes: React.FC = () => {
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
       <Route path={routers.STAKING_LIFECYCLE} exact component={StackingLifecycle} />
       <Route path={routers.REPORT_GENERATED} exact component={ReportGenerated} />
-      <Route path={routers.REPORT_GENERATED_STAKING_DETAIL} exact component={ReportGeneratedStakingDetail} />
-      <Route path={routers.REPORT_GENERATED_POOL_DETAIL} exact component={ReportGeneratedPoolDetail} />
       <Route path={routers.PROTOCOL_PARAMETER} exact component={ProtocolParameter} />
       <Route path={routers.SEARCH} exact component={SearchResult} />
       <Route path={routers.DELEGATOR_LIFECYCLE} exact component={DelegatorLifecycle} />
