@@ -74,7 +74,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
               <OverviewStaking
                 key={item.txHash}
                 item={item}
-                amount={item.deposit}
+                amount={Math.abs(item.deposit)}
                 time={item.time}
                 hash={item.txHash}
                 onClick={onSelect}
