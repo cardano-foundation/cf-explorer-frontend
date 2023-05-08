@@ -1,5 +1,4 @@
 import DetailHeader from "../../commons/DetailHeader";
-import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
 import exchageIcon from "../../../commons/resources/icons/Union.svg";
 import exchageAltIcon from "../../../commons/resources/icons/exchangeArrow.svg";

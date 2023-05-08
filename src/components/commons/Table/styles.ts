@@ -38,6 +38,10 @@ export const THeader = styled("th")`
   top: 0;
   background-color: #fff;
   z-index: 2;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    background: none;
+  }
 `;
 
 export const TRow = styled("tr")<{ selected?: number }>`
@@ -81,24 +85,19 @@ export const LoadingWrapper = styled(Box)`
   transform: translate(-50%, -50%);
 `;
 
-export const TFooter = styled(Box)`
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
-  color: ${props => props.theme.palette.grey[400]};
-  margin-top: 10px;
+export const TFooter = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "baseline",
+  flexWrap: "wrap",
+  color: theme.palette.grey[400],
+  marginTop: "10px",
+  [theme.breakpoints.down("md")]: {
+    justifyContent: "flex-start",
+  },
+}));
 
-  @media screen and (max-width: 767px) {
-    justify-content: flex-end;
-  }
-`;
-
-export const Total = styled(Box)`
-  @media screen and (max-width: 767px) {
-    display: none;
-  }
-`;
+export const Total = styled(Box)``;
 
 export const TotalNumber = styled("span")`
   color: ${props => props.theme.palette.text.primary};
@@ -111,10 +110,16 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string }>(
   background: ${theme.palette.common.white};
   padding: ${theme.spacing(1)};
   padding-top: 0;
-  border-radius: ${theme.spacing(3)};
+  border-radius: ${theme.spacing(1.5)};
   box-shadow: 0 0.5rem 1.2rem rgba(82, 85, 92, 0.15);
   border: 1px solid ${alpha(theme.palette.common.black, 0.1)};
   ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
+
+  @media screen and (max-width: ${theme.breakpoints.values.sm}px) {
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
 `
 );
 

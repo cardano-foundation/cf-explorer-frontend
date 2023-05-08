@@ -1,5 +1,5 @@
 import React from "react";
-import { CgArrowsExchange, CgClose } from "react-icons/cg";
+import { CgClose } from "react-icons/cg";
 import { PolicyWhiteIcon } from "../../../commons/resources";
 import {
   CloseButton,
@@ -7,14 +7,12 @@ import {
   DetailsInfoItem,
   DetailLabel,
   DetailValue,
-  InfoIcon,
   DetailLabelSkeleton,
   DetailValueSkeleton,
   IconSkeleton,
   ViewDetailDrawer,
   Group,
   DetailLink,
-  DetailLinkIcon,
   DetailLinkRight,
   StyledLink,
   DetailLinkName,
@@ -37,7 +35,6 @@ import {
   TokenDetailIcon,
   TokenHeader,
   ViewDetailScroll,
-  LogoEmpty,
   ViewDetailHeader,
 } from "./styles";
 import { BiChevronRight } from "react-icons/bi";

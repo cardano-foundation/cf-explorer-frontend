@@ -2,7 +2,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { alpha, Box, Tab, useTheme } from "@mui/material";
 import React from "react";
 import { ReactComponent as UtxoIcon } from "../../../commons/resources/images/utxoIcon.svg";
-import { TabTitle } from "./styles";
+import { TabListStyled, TabTitle } from "./styles";
 import TokenTransaction from "./TokenTransaction";
 import { useHistory, useParams } from "react-router-dom";
 import { details } from "../../../commons/routers";
@@ -36,18 +36,18 @@ const ContractDetailContent: React.FC = () => {
 
   return (
     <TabContext value={tabActive}>
-      <Box>
-        <TabList
+      <Box >
+        <TabListStyled    
           onChange={handleChange}
           TabIndicatorProps={{ sx: { background: theme => theme.palette.primary.main, height: 3 } }}
         >
           {tabs?.map(item => (
             <Tab key={item.key} label={item.label} value={item.key} />
           ))}
-        </TabList>
+        </TabListStyled>
       </Box>
       {tabs.map(item => (
-        <TabPanel
+        <TabPanel       
           sx={{ padding: 0, borderTop: theme => `1px solid ${alpha(theme.palette.green[800], 0.1)}` }}
           key={item.key}
           value={item.key}

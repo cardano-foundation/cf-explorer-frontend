@@ -10,7 +10,18 @@ import {
   alpha,
 } from "@mui/material";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
-import { DownIcon, EmptyIcon, EndPage, EyeIcon, NextPage, PrevPage, StartPage } from "../../../commons/resources";
+import {
+  DownIcon,
+  EmptyIcon,
+  EndPage,
+  EyeIcon,
+  NextPage,
+  PrevPage,
+  StartPage,
+  SortTableDown,
+  SortTableUp,
+  SortTableUpDown,
+} from "../../../commons/resources";
 import {
   Empty,
   EmtyImage,
@@ -43,8 +54,8 @@ import {
 } from "../../../types/table";
 import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
-import { TbArrowsDownUp, TbArrowUp, TbArrowDown } from "react-icons/tb";
 import Filter from "../Filter";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 type TEmptyRecord = {
   className?: string;
@@ -91,14 +102,14 @@ const TableHeader = <T extends ColumnType>({
     if (key === columnKey)
       switch (sort) {
         case "DESC":
-          return <TbArrowDown color={"#98A2B3"} size={"18px"} />;
+          return <SortTableDown />;
         case "ASC":
-          return <TbArrowUp color={"#98A2B3"} size={"18px"} />;
+          return <SortTableUp />;
         default: {
-          return <TbArrowsDownUp color={"#98A2B3"} size={"18px"} />;
+          return <SortTableUpDown />;
         }
       }
-    return <TbArrowsDownUp color={"#98A2B3"} size={"18px"} />;
+    return <SortTableUpDown />;
   };
   return (
     <THead>
@@ -195,7 +206,7 @@ const TableBody = <T extends ColumnType>({
               justifyContent="center"
               alignItems="self-start"
             >
-              <Box pt={'20%'}>
+              <Box pt={"20%"}>
                 <CircularProgress />
               </Box>
             </LoadingWrapper>
@@ -237,6 +248,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
   const [page, setPage] = useState(pagination?.page || 1);
   const [size, setSize] = useState(pagination?.size || 50);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
+  const { isTablet } = useScreen();
 
   useUpdateEffect(() => {
     setPage(1);
@@ -277,9 +289,9 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
           ""
         )}
         {total?.count ? (
-          <Total ml={"20px"} fontSize="0.875rem" lineHeight={"1 !important"}>
+          <Box ml={"20px"} fontSize="0.875rem" lineHeight={"1 !important"}>
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> {`Result${total.count > 1 ? "s" : ""}`}
-          </Total>
+          </Box>
         ) : (
           ""
         )}

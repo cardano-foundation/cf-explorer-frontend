@@ -1,19 +1,20 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import useFetchList from "../../../../../commons/hooks/useFetchList";
-import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../../../commons/utils/helper";
-import Table, { Column } from "../../../../commons/Table";
-import { ADAValueLabel, ClickAbleLink } from "./styles";
-import CustomIcon from "../../../../commons/CustomIcon";
-import { ADAsigntIC } from "../../../../../commons/resources";
-import { details } from "../../../../../commons/routers";
-import { StyledLink } from "../../../../share/styled";
-import CustomTooltip from "../../../../commons/CustomTooltip";
+import { useParams } from "react-router-dom";
+import Table, { Column } from "../../commons/Table";
+import { StyledLink } from "../../share/styled";
+import { details } from "../../../commons/routers";
+import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../commons/utils/helper";
+import { ADAValueLabel } from "../../StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
+import CustomIcon from "../../commons/CustomIcon";
+import { ADAsigntIC } from "../../../commons/resources";
+import CustomTooltip from "../../commons/CustomTooltip";
+import useFetchList from "../../../commons/hooks/useFetchList";
+import { API } from "../../../commons/utils/api";
+
 
 const RewardsDistributionTab = () => {
-  const { poolId = "" } = useParams<{ poolId: string }>();
+  const { reportId = "" } = useParams<{ reportId: string }>();
   const [params, setParams] = useState({
     page: 0,
     size: 10,
@@ -63,7 +64,7 @@ const RewardsDistributionTab = () => {
     },
   ];
 
-  const fetchData = useFetchList<SPO_REWARD>(poolId ? API.SPO_LIFECYCLE.REWARD(poolId) : "", {
+  const fetchData = useFetchList<SPO_REWARD>(reportId ? API.REPORT.PREPORT_REWARD_DISTRIBUTIONS(reportId) : "", {
     ...params,
     sort,
   });
@@ -80,7 +81,7 @@ const RewardsDistributionTab = () => {
         pagination={{
           ...params,
           total: fetchData.total,
-          onChange: (page, size) => setParams({ page, size }),
+          onChange: (page, size) => setParams({ page: page - 1, size }),
         }}
       />
     </Box>

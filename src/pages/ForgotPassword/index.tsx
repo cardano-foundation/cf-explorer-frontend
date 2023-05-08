@@ -109,9 +109,7 @@ export default function ForgotPassword() {
                     onChange={handleChange}
                     fullWidth
                     placeholder="Email"
-                    style={{
-                      borderColor: (formData.email.error && formData.email.touched) ? "#DD4343" : ""
-                    }}
+                    error={Boolean(formData.email.error && formData.email.touched)}
                   />
                   {(formData.email.error && formData.email.touched) ? <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom> : null}
                 </WrapInput>

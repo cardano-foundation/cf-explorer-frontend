@@ -28,7 +28,7 @@ export const StyledLink = styled(Link)`
 
 export const StyledTabList = styled(TabList)`
   & > div > div {
-    justify-content: space-between;
+    justify-content: flex-start;
   }
 `;
 
@@ -57,9 +57,11 @@ export const WrapWalletLabel = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
   fontSize: "0.875rem",
+  fontWeight: 500,
 }));
 
-export const TabHead = styled(Box)<{active?: number}>(({active, theme}) => `
-  color: ${active ? '#438F68' : '#98A2B3'} !important;
-`)
-
+export const TabHead = styled(Box)<{ active?: number }>(
+  ({ active, theme }) => `
+  color: ${active ? "#438F68" : "#98A2B3"} !important;
+`
+);

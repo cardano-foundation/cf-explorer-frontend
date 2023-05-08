@@ -136,9 +136,9 @@ const DeregistrationTimeline = ({
                       Pool ID:
                     </Box>
                     <PoolNamePopup to={details.delegation(selected?.poolView)}>
-                      {getShortWallet(selected?.poolId || "")}
+                      {getShortHash(selected?.poolView || "")}
                     </PoolNamePopup>
-                    <CopyButton text={selected?.poolId} />
+                    <CopyButton text={selected?.poolView} />
                   </Box>
                   <Box display={"flex"} alignItems={"center"}>
                     <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
@@ -315,12 +315,12 @@ const DeregistrationTimeline = ({
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
-      <RegistrationCertificateModal data={selected} handleCloseModal={() => setOpenModal(false)} open={openModal} />
+      <DeregistrationCertificateModal data={selected} handleCloseModal={() => setOpenModal(false)} open={openModal} />
     </Box>
   );
 };
 
-const RegistrationCertificateModal = ({
+export const DeregistrationCertificateModal = ({
   data,
   ...props
 }: {

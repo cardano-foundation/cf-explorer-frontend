@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Button, styled  } from "@mui/material";
+import { Box, Button, styled } from "@mui/material";
 
 import styles from "./index.module.scss";
 import contractImg from "../../../../commons/resources/images/trx-contract.png";
@@ -7,7 +7,7 @@ import { getShortWallet } from "../../../../commons/utils/helper";
 import CopyButton from "../../../commons/CopyButton";
 import { useCopyToClipboard } from "react-use";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { Img, Wrapper } from "./component";
+import { Img, WrapAddress, Wrapper } from "./component";
 
 interface ContractsProps {
   data: Transaction["contracts"] | null;
@@ -29,15 +29,7 @@ const Contracts: React.FC<ContractsProps> = ({ data }) => {
         <div>
           <Img src={contractImg} alt="contract icon" />
           <Box display={"flex"} alignItems="center" padding={"15px 0 0"} flexDirection="column">
-            <Box
-              color={theme => theme.palette.text.primary}
-              mx={"auto"}
-              display="flex"
-              alignItems={"center"}
-              className={styles.ffTitle}
-            >
-              {data[0].contract}
-            </Box>
+            <WrapAddress>{data[0].contract}</WrapAddress>
             <CopyButtonMui
               className={styles.ffTitle}
               onClick={() => {

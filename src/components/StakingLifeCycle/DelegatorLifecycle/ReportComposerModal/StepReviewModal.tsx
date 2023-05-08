@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Box, CircularProgress, Stack } from "@mui/material";
 import { Container } from "../../../Account/ActivityLogModal/styles";
 import StyledModal from "../../../commons/StyledModal";
 import {
@@ -20,13 +20,17 @@ import { generateStakeKeyReport, generateStakePoolReport } from "../../../../com
 import useToast from "../../../../commons/hooks/useToast";
 import { useHistory } from "react-router-dom";
 import { routers } from "../../../../commons/routers";
+import { useState } from "react";
+import { getEventType } from "../../../StakekeySummary";
 
 const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaultParams, gotoStep }) => {
   const toast = useToast();
+  const [loading, setLoading] = useState(false);
   const [step1, step2, step3] = defaultParams || [];
 
   const history = useHistory();
   const handleGenerateReport = async () => {
+    setLoading(true);
     try {
       const [step1, step2, step3] = defaultParams || {};
       const [start, end] = step1?.dateRange;
@@ -54,7 +58,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           toDate: moment(end).format("yyyy/MM/D hh:mm:ss"),
           isADATransfer: step2.adaTransfers === "YES",
           isFeesPaid: step2.adaTransfers === "YES",
-          stakingLifeCycleEvents: events,
+          ...getEventType(events.map((item: { type: string }) => item.type)),
         };
         await generateStakeKeyReport(paramsStakeKeyReport);
       }
@@ -68,6 +72,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       console.error(err);
       toast.error("This stake key has no transaction history");
     }
+    setLoading(false);
   };
 
   const [start, end] = step1.dateRange || [];
@@ -142,8 +147,8 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
         </Stack>
         <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={"20px"}>
           <StyledBackButton onClick={() => gotoStep?.(STEPS.step1)}>I’d like to double-check</StyledBackButton>
-          <StyledButton isDisabled={false} onClick={handleGenerateReport}>
-            Generate report
+          <StyledButton disabled={loading} onClick={handleGenerateReport}>
+            {loading && <CircularProgress color="info" size={20} />}Generate report
           </StyledButton>
         </StyledStack>
       </Container>

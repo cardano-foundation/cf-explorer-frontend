@@ -6,32 +6,40 @@ import { NETWORK, NETWORK_NAMES } from "../../../../commons/utils/constants";
 import { RootState } from "../../../../stores/types";
 import SidebarMenu from "./SidebarMenu";
 import { NavbarContainer, NavBarLogo, LogoLink, NetworkName, HeaderTop, Toggle, SearchButton } from "./styles";
-import ConnectWallet from "../Header/ConnectWallet";
 import { useScreen } from "../../../../commons/hooks/useScreen";
 import { setSidebar } from "../../../../stores/user";
+import LoginButton from "../Header/LoginButton";
+import TopSearch from "./TopSearch";
+import { useLocation } from "react-router-dom";
 
 const Sidebar: React.FC = () => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const handleToggle = () => setSidebar(!sidebar);
-  const { isMobile } = useScreen();
+  const { isMobile, isTablet } = useScreen();
+  const isMd = isMobile || isTablet;
+  const [openSearch, setOpenSearch] = React.useState(false);
+  const { pathname } = useLocation();
 
   return (
     <NavbarContainer>
       <HeaderTop>
         <LogoLink to="/" open={sidebar ? 1 : 0}>
           <NavBarLogo src={!isMobile && sidebar ? LogoFullIcon : LogoIcon} alt="logo desktop" />
-          {!isMobile && sidebar && <NetworkName network={NETWORK}>{NETWORK_NAMES[NETWORK]}</NetworkName>}
+          {!isMd && sidebar && <NetworkName network={NETWORK}>{NETWORK_NAMES[NETWORK]}</NetworkName>}
         </LogoLink>
-        {isMobile && (
+        {isMd && (
           <Box display="flex" alignItems="center">
-            <ConnectWallet />
-            <SearchButton>
-              <SearchIcon />
-            </SearchButton>
+            <LoginButton />
+            {pathname !== "/" && (
+              <SearchButton onClick={() => setOpenSearch(prev => !prev)}>
+                <SearchIcon />
+              </SearchButton>
+            )}
             <Toggle onClick={handleToggle} />
           </Box>
         )}
       </HeaderTop>
+      <TopSearch open={openSearch} onClose={setOpenSearch} />
       <SidebarMenu />
     </NavbarContainer>
   );

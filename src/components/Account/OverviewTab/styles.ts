@@ -27,6 +27,12 @@ export const StyledRowItem = styled(Box)`
   font-size: var(--font-size-text-small);
 `;
 
+export const WrapInfoItemMobile = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "4px"
+}));
+
 export const StyledAction = styled(Box)`
   cursor: pointer;
 `;

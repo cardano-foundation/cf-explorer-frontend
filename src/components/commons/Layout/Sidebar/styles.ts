@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { MenuIcon } from "../../../../commons/resources";
 import { NETWORKS } from "../../../../commons/utils/constants";
-import { Button } from "@mui/material";
+import { Button, Box } from "@mui/material";
 
 export const NavbarContainer = styled.nav`
   position: relative;
@@ -78,6 +78,7 @@ export const Toggle = styled.i`
   background-repeat: no-repeat;
   background-position: center;
   display: none;
+  margin-left: 16px;
   @media screen and (max-width: 1023px) {
     display: block;
   }
@@ -86,5 +87,11 @@ export const Toggle = styled.i`
 export const SearchButton = styled(Button)(() => ({
   padding: 0,
   minWidth: 0,
-  marginInline: 16,
+  marginLeft: 16,
 }));
+export const HumburgerArea = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+`;

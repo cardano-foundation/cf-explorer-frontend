@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import StakeTab, { StakeTabItem } from "../../../TabularView/StakeTab";
 import PoolRegistrationTab from "./Tabs/PoolRegistrationTab";
-import ProtocolUpdateTab from "./Tabs/ProtocolUpdateTab";
+import PoolUpdateTab from "./Tabs/PoolUpdateTab";
 import DeregsitrationTab from "./Tabs/DeregsitrationTab";
-import RewardsDistributionTab from "./Tabs/RewardsDistributionTab";
+import OperatorRewardTab from "./Tabs/OperatorReward";
 import CustomIcon from "../../../commons/CustomIcon";
 import {
   DeredistrationIcon,
@@ -23,14 +23,14 @@ const tabs: StakeTabItem[] = [
   {
     icon: PoolUpdateIcon,
     label: "Pool Update",
-    key: "protocolUpdate",
-    component: <ProtocolUpdateTab />,
+    key: "poolUpdate",
+    component: <PoolUpdateTab />,
   },
   {
     icon: OperatorRewardIcon,
-    label: "Rewards Distribution",
-    key: "rewardDistribution",
-    component: <RewardsDistributionTab />,
+    label: "Operator Rewards",
+    key: "operatorRewards",
+    component: <OperatorRewardTab />,
   },
   {
     icon: DeredistrationIcon,
