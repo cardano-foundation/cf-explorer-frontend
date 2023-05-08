@@ -20,7 +20,7 @@ import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSy
 import PoolCertificateIcon from "../../../../commons/resources/icons/Staking/PoolCertificateIcon.svg";
 
 import Line from "../../../Line";
-import { FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { CardBox, FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import useFetchList from "../../../../commons/hooks/useFetchList";
@@ -586,25 +586,25 @@ export const PoolUpdateModal = ({
               Margin
             </Box>
             <Box display={"flex"} alignItems={"center"} mt={1}>
-              <Box flex={1}>
+              <CardBox flex={1}>
                 <Box color={theme => theme.palette.grey[400]} fontSize={12}>
                   OLD
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
                   {data?.previousMargin} %
                 </Box>
-              </Box>
+              </CardBox>
               <Box flex={1} textAlign={"center"}>
                 <ChangeIcon />
               </Box>
-              <Box flex={1}>
+              <CardBox flex={1}>
                 <Box color={theme => theme.palette.grey[400]} fontSize={12}>
                   NEW
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
                   {data?.margin} %
                 </Box>
-              </Box>
+              </CardBox>
             </Box>
           </Box>
         )}
@@ -614,25 +614,25 @@ export const PoolUpdateModal = ({
               Pledge
             </Box>
             <Box display={"flex"} alignItems={"center"} mt={1}>
-              <Box flex={1}>
+              <CardBox flex={1}>
                 <Box color={theme => theme.palette.grey[400]} fontSize={12}>
                   OLD
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
                   {formatADA(data?.previousPledge)} <ADAicon />
                 </Box>
-              </Box>
+              </CardBox>
               <Box flex={1} textAlign={"center"}>
                 <ChangeIcon />
               </Box>
-              <Box flex={1}>
+              <CardBox flex={1}>
                 <Box color={theme => theme.palette.grey[400]} fontSize={12}>
                   NEW
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
                   {formatADA(data?.pledge)} <ADAicon />
                 </Box>
-              </Box>
+              </CardBox>
             </Box>
           </Box>
         )}
