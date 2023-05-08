@@ -12,8 +12,7 @@ import {
   numberWithCommas,
 } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
-import { AIcon } from "../../commons/resources";
-import { Label, StyledLink } from "./styles";
+import { Label, StyledLink, StyledContainer } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
 import ADAicon from "../commons/ADAIcon";
@@ -137,7 +136,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.fee)}</Box>
-            <ADAicon />
+          <ADAicon />
         </Box>
       ),
     },
@@ -148,27 +147,30 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
-            <ADAicon />
+          <ADAicon />
         </Box>
       ),
     },
   ];
 
   return (
-    <Card title={showTitle ? "Transactions" : ""} underline={underline}>
-      <Table
-        {...fetchData}
-        columns={columns}
-        total={{ count: fetchData.total, title: "Total Transactions" }}
-        pagination={{
-          ...pageInfo,
-          total: fetchData.total,
-          onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
-        }}
-        onClickRow={onClickRow}
-        selected={selected}
-      />
-    </Card>
+    <StyledContainer>
+      <Card title={showTitle ? "Transactions" : ""} underline={underline}>
+        <Table
+          {...fetchData}
+          columns={columns}
+          total={{ count: fetchData.total, title: "Total Transactions" }}
+          pagination={{
+            ...pageInfo,
+            total: fetchData.total,
+            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+          }}
+          onClickRow={onClickRow}
+          selected={selected}
+          className="transactions-table"
+        />
+      </Card>
+    </StyledContainer>
   );
 };
 

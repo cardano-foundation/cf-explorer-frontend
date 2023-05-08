@@ -1,9 +1,6 @@
 import { stringify } from "qs";
 import React, { useEffect, useRef, useState } from "react";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { useWindowSize } from "react-use";
-import { Box, useTheme } from "@mui/material";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details, routers } from "../../commons/routers";
 import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
@@ -30,11 +27,9 @@ const Stake: React.FC<IStake> = () => {
   const [stake, setStake] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
-  const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
 
-  const theme = useTheme();
   const pageInfo = getPageInfo(search);
 
   const fetchData = useFetchList<IStakeKey>(
@@ -55,11 +50,9 @@ const Stake: React.FC<IStake> = () => {
   };
 
   const openDetail = (_: any, r: IStakeKey, index: number) => {
-    if (width >= theme.breakpoints.values.md) {
-      setOnDetailView(true);
-      setStake(r.stakeKey);
-      setSelected(index);
-    } else history.push(details.stake(r.stakeKey));
+    setOnDetailView(true);
+    setStake(r.stakeKey);
+    setSelected(index);
   };
 
   const handleClose = () => {

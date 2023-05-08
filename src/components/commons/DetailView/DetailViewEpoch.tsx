@@ -14,7 +14,6 @@ import {
   DetailValue,
   Icon,
   BlockDefault,
-  InfoIcon,
   DetailLabelSkeleton,
   DetailValueSkeleton,
   IconSkeleton,

@@ -182,7 +182,7 @@ const DelegatorLifecycle = ({
         }}
         variant="contained"
       >
-        Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+        Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
         <NextIcon />
       </NextButton>
       <ADATransferModal open={open} handleCloseModal={() => setOpen(false)} />

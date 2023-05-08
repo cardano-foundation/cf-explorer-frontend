@@ -1,5 +1,6 @@
 import { styled, Container } from "@mui/material";
 import { Link } from "react-router-dom";
+import breakpoints from "../../themes/breakpoints";
 
 export const StyledColorBlueDard = styled("span")`
   color: ${props => props.theme.palette.text.primary};
@@ -22,4 +23,20 @@ export const PriceWrapper = styled(StyledColorBlueDard)`
 
 export const StyledContainer = styled(Container)`
   padding: 20px 0 40px;
+  @media screen and (max-width: ${breakpoints.values.sm}px) {
+    .card-table {
+      padding: 25px 0 25px 16px;
+    }
+    .block-list-table > div {
+      border: none;
+      box-shadow: none;
+      background-color: inherit;
+    }
+    .block-list-table > div table {
+    }
+    .block-list-table > div tr,
+    th {
+      background-color: inherit;
+    }
+  }
 `;

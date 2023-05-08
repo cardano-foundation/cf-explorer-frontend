@@ -14,7 +14,6 @@ import {
   DetailValue,
   Icon,
   BlockDefault,
-  InfoIcon,
   DetailLabelSkeleton,
   DetailValueSkeleton,
   IconSkeleton,
@@ -30,9 +29,9 @@ import {
   DetailLinkRight,
   StyledLink,
   DetailLinkName,
-  ViewDetailScroll,
   ViewDetailHeader,
   ConfirmStatus,
+  ViewDetailScroll,
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";

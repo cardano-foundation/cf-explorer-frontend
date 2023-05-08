@@ -3,12 +3,12 @@ import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatHash, getShortHash } from "../../../../../commons/utils/helper";
 import Table, { Column } from "../../../../commons/Table";
 import { PoolUpdateModal } from "../../PoolUpdates";
 import { ADAValueLabel, ClickAbleLink } from "./styles";
 import CustomIcon from "../../../../commons/CustomIcon";
-import { ADAsigntIC } from "../../../../../commons/resources";
+import { ADAsigntIC, EyeIcon } from "../../../../../commons/resources";
 import { details } from "../../../../../commons/routers";
 import CustomTooltip from "../../../../commons/CustomTooltip";
 import { StyledLink } from "../../../../share/styled";
@@ -31,7 +31,7 @@ const PoolUpdateTab = () => {
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>
-            <StyledLink to={details.transaction(data.txHash)}>{formatHash(data.txHash)}</StyledLink>
+            <StyledLink to={details.transaction(data.txHash)}>{getShortHash(data.txHash)}</StyledLink>
           </CustomTooltip>
         );
       },
@@ -58,10 +58,14 @@ const PoolUpdateTab = () => {
       },
     },
     {
-      key: "update",
-      title: "Update",
+      key: "Certificate",
+      title: "Certificate",
       render(data) {
-        return <ClickAbleLink onClick={() => setSelectedValue(data)}>Certificate Update</ClickAbleLink>;
+        return (
+          <ClickAbleLink onClick={() => setSelectedValue(data)}>
+            <EyeIcon style={{ transform: "scale(.8)" }} />
+          </ClickAbleLink>
+        );
       },
     },
   ];

@@ -28,6 +28,7 @@ import {
   StyledSelect,
   StyledMenuItem,
   WrapHeader,
+  EpochDetail,
 } from "./styles";
 import { details } from "../../../commons/routers";
 import Bookmark from "../BookmarkIcon";
@@ -136,7 +137,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           )}
         </Box>
         {epoch ? (
-          <Box margin="auto">
+          <EpochDetail class-name="123">
             <ProgressCircle
               size={100}
               pathWidth={8}
@@ -149,7 +150,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
               </EpochNumber>
               <EpochText>Epoch</EpochText>
             </ProgressCircle>
-          </Box>
+          </EpochDetail>
         ) : (
           ""
         )}

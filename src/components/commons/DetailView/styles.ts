@@ -3,14 +3,20 @@ import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS, STAKE_KEY_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import { BoxRaised } from "../BoxRaised";
-
+import breakpoints from "../../../themes/breakpoints";
 export const ViewDetailDrawer = styled(Drawer)`
   & > div {
     background: ${props => props.theme.palette.background.neutral};
     border: none;
     height: calc(100vh - 61px);
-    @media screen and (max-width: 1023px) {
-      display: none;
+    @media screen and (max-width: ${breakpoints.values.md}px) {
+      display: flex;
+      height: calc(100vh - 80px);
+      top: 80px;
+    }
+    @media screen and (max-width: ${breakpoints.values.sm}px) {
+      position: fixed;
+      left: 0;
     }
   }
 `;
@@ -22,6 +28,10 @@ export const ViewDetailHeader = styled(Box)`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)};
+  @media screen and (max-width: ${breakpoints.values.sm}px) {
+    margin: 0;
+    padding: 15px 16px;
+  }
 `;
 
 export const CloseButton = styled(IconButton)`
@@ -37,6 +47,11 @@ export const ViewDetailContainer = styled(Box)`
   overflow-y: auto;
   margin-left: 30px;
   text-align: center;
+  @media screen and (max-width: ${breakpoints.values.sm}px) {
+    display: flex;
+    width: 100%;
+    margin-left: 0;
+  }
 `;
 export const ViewDetailScroll = styled(Box)`
   width: 400px;
@@ -45,6 +60,12 @@ export const ViewDetailScroll = styled(Box)`
   overflow-x: hidden;
   overflow: hidden;
   padding-top: 15px;
+  @media screen and (max-width: ${breakpoints.values.sm}px) {
+    margin-right: 0px;
+    width: 100%;
+    padding: 15px 16px;
+    overflow-y: auto;
+  }
 `;
 export const HeaderContainer = styled(Box)`
   display: flex;

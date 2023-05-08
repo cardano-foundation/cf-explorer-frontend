@@ -315,12 +315,12 @@ const DeregistrationTimeline = ({
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
-      <RegistrationCertificateModal data={selected} handleCloseModal={() => setOpenModal(false)} open={openModal} />
+      <DeregistrationCertificateModal data={selected} handleCloseModal={() => setOpenModal(false)} open={openModal} />
     </Box>
   );
 };
 
-const RegistrationCertificateModal = ({
+export const DeregistrationCertificateModal = ({
   data,
   ...props
 }: {

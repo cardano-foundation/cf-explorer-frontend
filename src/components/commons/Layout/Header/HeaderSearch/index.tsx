@@ -18,6 +18,7 @@ import {
   ValueOption,
 } from "./style";
 import { useSelector } from "react-redux";
+import { useScreen } from "../../../../../commons/hooks/useScreen";
 
 interface Props {
   home: boolean;
@@ -143,6 +144,8 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
     }
   };
 
+  const { isMobile } = useScreen();
+
   return (
     <Box position={"relative"} component={Form} onSubmit={handleSearch} home={home ? 1 : 0}>
       <Backdrop sx={{ backgroundColor: "unset" }} open={showOption} onClick={() => setShowOption(false)} />
@@ -166,7 +169,7 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
         type="search"
         value={search}
         spellCheck={false}
-        placeholder={home ? "Search transactions, address, blocks, epochs, pools..." : "Search ..."}
+        placeholder={home && !isMobile ? "Search transactions, address, blocks, epochs, pools..." : "Search ..."}
         onChange={handleChangeSearch}
         disableUnderline
         onFocus={() => onFocus()}

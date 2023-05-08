@@ -27,6 +27,11 @@ const Title = styled("h2")<{ underline: number }>`
     left: 0;
     bottom: 0;
   }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    padding-left: 18px;
+    font-size: 24px !important;
+  }  
+},
 `;
 
 interface CardProps extends Omit<BoxProps, "title"> {

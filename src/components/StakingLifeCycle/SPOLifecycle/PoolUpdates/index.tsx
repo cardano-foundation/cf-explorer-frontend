@@ -14,6 +14,7 @@ import {
   PoolCert,
   CertUpdate,
   ChangeIcon,
+  EmptyIcon,
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import PoolCertificateIcon from "../../../../commons/resources/icons/Staking/PoolCertificateIcon.svg";
@@ -367,7 +368,6 @@ export const PoolUpdateModal = ({
   handleCloseModal: () => void;
 }) => {
   const [tabActive, setTabActive] = useState("poolCertificate");
-
   const renderPoolCert = () => (
     <Grid container spacing={1}>
       <Grid item xs={6}>
@@ -500,15 +500,15 @@ export const PoolUpdateModal = ({
             {data && (
               <Box display={"inline"} fontSize="0.875rem">
                 {data?.margin}%
-                {data?.previousMargin && (
+                {data?.previousMargin !== null && (
                   <Box fontSize={12} color={theme => theme.palette.grey[400]}>
-                    Previous: {data.previousMargin} %{" "}
+                    Previous: {data?.previousMargin} %{" "}
                   </Box>
                 )}
               </Box>
             )}
           </Box>
-          {data?.previousMargin && (
+          {data?.previousMargin !== null && (
             <Box>
               <ChangeIcon />
             </Box>
@@ -533,13 +533,13 @@ export const PoolUpdateModal = ({
                   {formatADA(data?.pledge)} <ADAicon />
                 </Box>
               )}
-              {data?.previousPledge && (
+              {data?.previousPledge !== null && (
                 <Box fontSize={12} color={theme => theme.palette.grey[400]}>
-                  Previous: {formatADA(data.previousPledge)} <ADAicon />
+                  Previous: {formatADA(data?.previousPledge || 0)} <ADAicon />
                 </Box>
               )}
             </Box>
-            {data?.previousPledge && (
+            {data?.previousPledge !== null && (
               <Box>
                 <ChangeIcon />
               </Box>
@@ -571,9 +571,16 @@ export const PoolUpdateModal = ({
   );
 
   const renderCertificateUpdates = () => {
+    if (!data?.previousMargin === null && !data?.previousPledge === null) {
+      return (
+        <Box textAlign={"center"}>
+          <Box component={"img"} height={215} src={EmptyIcon} alt="no data" />
+        </Box>
+      );
+    }
     return (
       <Box display={"flex"} flexDirection={"column"} gap={1}>
-        {data?.previousMargin && (
+        {data?.previousMargin !== null && (
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
             <Box color={theme => theme.palette.grey[400]} fontWeight={"bold"}>
               Margin
@@ -601,7 +608,7 @@ export const PoolUpdateModal = ({
             </Box>
           </Box>
         )}
-        {data?.previousPledge && (
+        {data?.previousPledge !== null && (
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
             <Box color={theme => theme.palette.grey[400]} fontWeight={"bold"}>
               Pledge
