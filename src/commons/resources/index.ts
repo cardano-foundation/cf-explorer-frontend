@@ -253,3 +253,4 @@ export { ReactComponent as OwnerAccIC } from "./images/owner-acc-ic.svg";
 export { ReactComponent as Hamburger } from "./icons/menus/hamburger.svg";
 export { ReactComponent as HideIcon } from "./icons/hide.svg";
 export { ReactComponent as ShowIcon } from "./icons/show.svg";
+export { ReactComponent as OfficialAdaIcon } from "./icons/ada-logo.svg";

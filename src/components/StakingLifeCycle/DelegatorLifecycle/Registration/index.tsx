@@ -1,4 +1,4 @@
-import { alpha, Box, Skeleton, styled } from "@mui/material";
+import { alpha, Box, Skeleton, styled, useTheme } from "@mui/material";
 import { useRef, useState, useEffect } from "react";
 
 import {
@@ -14,7 +14,7 @@ import RegistrationCertificate from "../../../../commons/resources/icons/Staking
 
 import Line from "../../../Line";
 import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
-import ADAicon from "../../../commons/ADAIcon";
+import ADAicon, { AdaLogoIcon } from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentRegistrations from "./RecentRegistrations";
 import PopoverStyled from "../../../commons/PopoverStyled";
@@ -78,6 +78,7 @@ const RegistrationTimeline = ({
 }) => {
   const { deposit, fee, time, txHash } = registration;
   const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const theme = useTheme();
 
   const adaHolderRef = useRef(null);
   const holdRef = useRef(null);
@@ -124,12 +125,18 @@ const RegistrationTimeline = ({
             <Box display={"flex"} flex={1}>
               <PopoverStyled
                 render={({ handleClick }: any) => (
-                  <HoldBox ref={holdRef} ml={1}>
+                  <HoldBox ref={holdRef} style={{ transform: "translateX(8px)" }}>
                     <Box>
-                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      <Box
+                        component={"span"}
+                        fontSize={"18px"}
+                        fontWeight={"bold"}
+                        mr={1}
+                        color={theme => theme.palette.common.black}
+                      >
                         {formatADAFull(deposit || 0)}
                       </Box>
-                      <ADAicon fontSize="18px" />
+                      <AdaLogoIcon fontSize={14} color={theme.palette.text.secondary} />
                     </Box>
                     <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
                       <ButtonListIcon />
@@ -142,10 +149,16 @@ const RegistrationTimeline = ({
                 render={({ handleClick }) => (
                   <FeeBox ref={feeRef}>
                     <Box>
-                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      <Box
+                        component={"span"}
+                        fontSize={"18px"}
+                        fontWeight={"bold"}
+                        mr={1}
+                        color={theme => theme.palette.common.black}
+                      >
                         {formatADAFull(fee || 0)}
                       </Box>
-                      <ADAicon fontSize="18px" />
+                      <AdaLogoIcon fontSize={14} color={theme.palette.text.secondary} />
                     </Box>
                     <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
                       <ButtonListIcon />
@@ -156,9 +169,8 @@ const RegistrationTimeline = ({
               />
             </Box>
           </Box>
-          <Box ref={cadarnoSystemRef} width={190} height={215}>
-            {/* <CadarnoSystemIcon /> */}
-            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
+          <Box ref={cadarnoSystemRef} width={200} height={220}>
+            <img style={{ margin: "0px 5px", width: 190, height: 215 }} src={cadarnoSystem} alt="carrdano" />
           </Box>
 
           <svg
@@ -241,7 +253,7 @@ const RegistrationTimeline = ({
           >
             <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
           </Box>
-          <Box ref={fake2Ref} width={"190px"}></Box>
+          <Box ref={fake2Ref} width={"200px"}></Box>
         </Box>
       </Box>
       <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />

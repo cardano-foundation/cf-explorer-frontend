@@ -1,4 +1,5 @@
-import { Box } from "@mui/material";
+import { Box, styled } from "@mui/material";
+import { OfficialAdaIcon } from "../../../commons/resources";
 
 const ADAicon = ({ ...props }) => {
   return (
@@ -7,5 +8,12 @@ const ADAicon = ({ ...props }) => {
     </Box>
   );
 };
+
+export const AdaLogoIcon = styled(OfficialAdaIcon)(() => ({
+  display: "inline-block",
+  width: "auto",
+  height: "1em",
+  g: { fill: "currentColor" },
+}));
 
 export default ADAicon;
