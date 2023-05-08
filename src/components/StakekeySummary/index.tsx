@@ -8,8 +8,26 @@ import { TextOverFlow } from "../StakingLifeCycle/DelegatorLifecycle/ReportCompo
 import { DownloadGreenIcon } from "../../commons/resources";
 import { lowerCase, startCase } from "lodash";
 import { defaultAxiosDownload } from "../../commons/utils/axios";
+import { useHistory } from "react-router-dom";
+import { details } from "../../commons/routers";
+
+
+const EVENTS:{[key in keyof IReportStaking]?: string} = {
+  eventDelegation: "Delegation",
+  eventDeregistration: "Deregistration",
+  eventRegistration: "Registration",
+  eventRewards: "Rewards",
+  eventWithdrawal: "Withdrawal",
+};
+
+export function getEventList(data: any) {
+  return Object.entries(EVENTS)
+    .map(([key, value]) => (data[key] ? value : null))
+    .filter(item => item);
+}
 
 const StakekeySummary = () => {
+  const history = useHistory();
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>({
     page: 0,
     size: 10,
@@ -63,7 +81,7 @@ const StakekeySummary = () => {
       title: "Events",
       maxWidth: "200px",
       render(data, index) {
-        return data.stakingLifeCycleEvents.map(({ type }: { type: string }) => startCase(lowerCase(type))).join(", ");
+        return getEventList(data).join(", ");
       },
     },
     {
@@ -88,6 +106,7 @@ const StakekeySummary = () => {
         {...fetchData}
         columns={columns}
         total={{ title: "Stake key summary", count: fetchData.total }}
+        onClickRow={(e, row) => history.push(details.generated_staking_detail(row.id))}
         pagination={{
           page,
           size,
