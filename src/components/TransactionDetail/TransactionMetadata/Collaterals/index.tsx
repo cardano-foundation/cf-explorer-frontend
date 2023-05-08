@@ -1,15 +1,15 @@
-import { alpha, Box, styled } from "@mui/material";
+import { Box } from "@mui/material";
 
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import { formatADAFull, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import { AIcon } from "../../../../commons/resources";
 import { details } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { Header, Img, Item, ItemBox, TokenLink, Wrapper } from "./style";
+import { Header, Img, Item, ItemBox, ItemContent, TokenLink, Wrapper } from "./style";
 import ADAicon from "../../../commons/ADAIcon";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
 interface CollateralProps {
   data: Transaction["collaterals"] | null;
@@ -33,19 +33,25 @@ const Collaterals: React.FC<CollateralProps> = ({ data }) => {
 export default Collaterals;
 
 const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "input" | "output" }) => {
+  const { isTablet } = useScreen();
   return (
     <Box>
       {data?.map(item => (
         <Item key={item.address}>
-          <Box display={"flex"} alignItems="center">
-            <Box width={50}>
-              <Img src={type === "input" ? receiveImg : sendImg} alt="send icon" />
+          <ItemContent>
+            <Box display="flex" alignItems="center">
+              <Box width={50}>
+                <Img src={type === "input" ? receiveImg : sendImg} alt="send icon" />
+              </Box>
+              {isTablet ? <Box>{type === "input" ? "From" : "To"}:</Box> : null}
             </Box>
             <Box width={"100%"}>
               <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
-                <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1}>
-                  {type === "input" ? "From" : "To"}:
-                </Box>
+                {!isTablet ? (
+                  <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1}>
+                    {type === "input" ? "From" : "To"}:
+                  </Box>
+                ) : null}
                 <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"}>
                   <Box
                     display={"flex"}
@@ -128,7 +134,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                 </Box>
               </Box>
             </Box>
-          </Box>
+          </ItemContent>
         </Item>
       ))}
     </Box>

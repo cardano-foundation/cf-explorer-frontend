@@ -41,11 +41,11 @@ const Copyright = styled("small")`
 `;
 
 const Footer: React.FC = () => {
-  const { isMobile } = useScreen();
+  const { isTablet } = useScreen();
   return (
     <StyledFooter>
       <FooterContainer>
-        {isMobile && <FooterMenu forceShow={true} />}
+        {isTablet && <FooterMenu forceShow={true} />}
         <Copyright>
           {" "}
           &copy; {new Date().getFullYear()} Cardano Blockchain Explorer. All rights reserved. Version: {APP_VERSION}
