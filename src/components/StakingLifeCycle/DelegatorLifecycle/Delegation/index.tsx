@@ -25,7 +25,7 @@ import PopupStaking from "../../../commons/PopupStaking";
 import { styled } from "@mui/material";
 import StyledModal from "../../../commons/StyledModal";
 import CopyButton from "../../../commons/CopyButton";
-import { formatADAFull, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import { details } from "../../../../commons/routers";
 import moment from "moment";
 
@@ -146,11 +146,11 @@ const DelegationTimeline = ({
           </Info>
           <Info>
             <ADAGreen />
-            <InfoText>{formatADAFull(data?.outSum || 0)}</InfoText>
+            <InfoText>{formatADAFull(data?.fee || 0)}</InfoText>
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>{moment(data?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+            <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
           </Info>
         </Box>
       </Box>
