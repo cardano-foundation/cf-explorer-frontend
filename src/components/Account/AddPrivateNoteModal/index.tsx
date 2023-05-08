@@ -6,6 +6,7 @@ import { addPrivateNote, editPrivateNote } from "../../../commons/utils/userRequ
 import StyledModal from "../../commons/StyledModal";
 import { StyledDarkLoadingButton, StyledHelperText, StyledInput, StyledLabelInput } from "../../share/styled";
 import { Title, WrapFormInput } from "./styles";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface IProps {
   open: boolean;
@@ -22,6 +23,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
   const [txHash, setTxHash] = useState<TInput | undefined>();
   const [privateNote, setPrivateNote] = useState<TInput | undefined>();
   const [loading, setLoading] = useState(false);
+  const { isTablet } = useScreen();
   const toast = useToast();
 
   useEffect(() => {
@@ -82,7 +84,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
           <StyledHelperText>{txHash?.error}</StyledHelperText>
         </WrapFormInput>
         <WrapFormInput>
-          <StyledLabelInput>{currentNote ? "Update" : "Add"} Private Note</StyledLabelInput>
+          <StyledLabelInput>{currentNote ? "View/ Update" : "Add"} Private Note</StyledLabelInput>
           <br />
           <StyledInput
             value={privateNote?.value}
@@ -99,6 +101,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
           disabled={!privateNote?.value || !txHash?.value}
           loadingPosition="end"
           onClick={handleSubmitData}
+          fullWidth={isTablet}
         >
           {currentNote ? "Update" : "Add"}
         </StyledDarkLoadingButton>
