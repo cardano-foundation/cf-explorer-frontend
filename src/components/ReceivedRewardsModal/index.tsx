@@ -104,7 +104,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
                 ...params,
                 total: fetchData.total,
                 onChange(page, size) {
-                  setParams({ page, size });
+                  setParams({ page: page - 1, size });
                 },
               }}
               maxHeight={"calc(70vh - 100px)"}
