@@ -1,5 +1,5 @@
 import { Box, BoxProps, Grid, Icon } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   WalletGreenIcon,
   BgGray,
@@ -16,6 +16,7 @@ import { formatADAFull } from "../../../commons/utils/helper";
 import ADAicon from "../../commons/ADAIcon";
 import { useState } from "react";
 import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
+import { details } from "../../../commons/routers";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -101,7 +102,7 @@ const TabularOverview: React.FC = () => {
         title="Delegating To"
         mainIcon={<DelegationTo />}
         value={
-          <Box display="flex" alignItems="center">
+          <Box component={Link} to={details.delegation(data?.pool?.poolId)} display="flex" alignItems="center">
             <CardValue>{data?.pool?.poolName}</CardValue>
           </Box>
         }
