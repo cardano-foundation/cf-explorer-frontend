@@ -61,7 +61,7 @@ const WithdrawalHistoryTab = () => {
       minWidth: "120px",
       render: r => (
         <Box>
-          <AdaValue value={r.value + r.fee} />
+          <AdaValue value={r.value - r.fee} />
           <TableSubTitle>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
               <AdaValue value={r.value} gap="3px" fontSize="12px" />
