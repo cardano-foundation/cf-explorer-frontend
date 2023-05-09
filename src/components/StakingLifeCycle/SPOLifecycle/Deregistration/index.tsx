@@ -13,10 +13,10 @@ import {
   SPOKey,
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
-import DelegationCertificateIcon from "../../../../commons/resources/icons/Staking/DelegationCertificateIcon.svg";
+import DeregistrationCertificateIcon from "../../../../commons/resources/icons/Staking/DeregistrationCertificateIcon.svg";
 
 import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { FeeBox, HoldBox, HoldBoxText, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import PopoverStyled from "../../../commons/PopoverStyled";
@@ -185,9 +185,9 @@ const DeregistrationTimeline = ({
                 render={({ handleClick }) => (
                   <HoldBox ref={holdRef} ml={1}>
                     <Box>
-                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      <HoldBoxText mr={1} component={"span"}>
                         {formatADA(selected?.poolHold)}
-                      </Box>
+                      </HoldBoxText>
                       <ADAicon fontSize="18px" />
                     </Box>
                     <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
@@ -313,7 +313,7 @@ const DeregistrationTimeline = ({
             p={0}
             onClick={() => setOpenModal(true)}
           >
-            <img style={{ marginLeft: "5px" }} src={DelegationCertificateIcon} alt="RegistrationCertificateIcon" />
+            <img style={{ marginLeft: "5px" }} src={DeregistrationCertificateIcon} alt="RegistrationCertificateIcon" />
           </Box>
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>

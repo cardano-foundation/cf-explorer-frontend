@@ -3,7 +3,7 @@ import { OfficialAdaIcon } from "../../../commons/resources";
 
 const ADAicon = ({ ...props }) => {
   return (
-    <Box component={"span"} fontSize={"14px"} {...props} lineHeight={1} fontWeight={"regular"}>
+    <Box component={"span"} fontSize={"14px"} {...props} lineHeight={1} fontWeight={"regular"} color={"#000000"}>
       ₳
     </Box>
   );
