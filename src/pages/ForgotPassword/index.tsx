@@ -18,7 +18,7 @@ const formReducer = (state: IForm, event: any) => {
     ...state,
     [event.name]: {
       value: event.value || '',
-      error: !event.value,
+      error: event.error,
       touched: event.touched,
     }
   }
@@ -39,7 +39,7 @@ export default function ForgotPassword() {
       case 'email':
         if (!value) {
           error = "Please enter your Email";
-        } else if (!/^[a-zA-Z0-9]+@+[a-zA-Z0-9]+.+[A-z]/.test(value)) {
+        } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
           error = "Invalid Email";
         }
         break;
@@ -77,7 +77,7 @@ export default function ForgotPassword() {
       setFormData({
         name: 'email',
         touched: true,
-        error: true,
+        error,
       })
       return;
     }
@@ -109,9 +109,7 @@ export default function ForgotPassword() {
                     onChange={handleChange}
                     fullWidth
                     placeholder="Email"
-                    style={{
-                      borderColor: (formData.email.error && formData.email.touched) ? "#DD4343" : ""
-                    }}
+                    error={Boolean(formData.email.error && formData.email.touched)}
                   />
                   {(formData.email.error && formData.email.touched) ? <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom> : null}
                 </WrapInput>

@@ -188,10 +188,11 @@ export const CardInfoOverview = styled(Box)(({ theme }) => ({
   borderRadius: 10,
   marginTop: theme.spacing(2),
   flexWrap: "wrap",
+  gap: theme.spacing(2),
 }));
 
 export const CardItem = styled(Box)(({ theme }) => ({
-  width: "max-content",
+  maxWidth: "max-content",
   borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
   paddingLeft: theme.spacing(2),
   paddingRight: theme.spacing(2),
@@ -203,6 +204,7 @@ export const CardItem = styled(Box)(({ theme }) => ({
 export const TitleCard = styled(Box)(({ theme }) => ({
   color: alpha(theme.palette.common.black, 0.5),
   fontSize: "0.875rem",
+  width: "max-content",
 }));
 export const ValueCard = styled(Box)(({ theme }) => ({
   color: theme.palette.common.black,

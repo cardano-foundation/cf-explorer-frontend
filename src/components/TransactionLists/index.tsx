@@ -1,7 +1,7 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
@@ -38,7 +38,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
   const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort });
-
+  const mainRef = useRef(document.querySelector("#main"));
   const onClickRow = (_: any, r: Transactions, index: number) => {
     if (openDetail) return openDetail(_, r, index);
     history.push(details.transaction(r.hash));
@@ -125,7 +125,10 @@ const TransactionList: React.FC<TransactionListProps> = ({
         pagination={{
           ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+          onChange: (page, size) => {
+            mainRef.current?.scrollTo(0, 0);
+            history.push({ search: stringify({ page, size }) });
+          },
           handleCloseDetailView: handleClose,
         }}
         onClickRow={onClickRow}

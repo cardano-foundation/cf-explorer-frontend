@@ -1,10 +1,11 @@
-import { Box, FormGroup, FormHelperText } from "@mui/material";
+import { Box, FormGroup, FormHelperText, IconButton } from "@mui/material";
 import { useReducer, useState, useEffect } from "react";
 import { useHistory, useLocation } from 'react-router-dom';
-import { LockIcon } from "../../commons/resources";
+import { HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
 import { AlertCustom, Container, FormHelperTextCustom, InputCustom, Label, WrapButton, WrapContent, WrapForm, WrapInput, WrapTitle } from "./styles";
 import { routers } from "../../commons/routers";
 import { resetPassword } from "../../commons/utils/userRequest";
+import { InputAdornment } from "@mui/material";
 
 interface IForm {
   password: {
@@ -32,6 +33,8 @@ const formReducer = (state: IForm, event: any) => {
 export default function ResetPassword() {
   const history = useHistory();
   const path = useLocation();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [code, setCode] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -45,14 +48,20 @@ export default function ResetPassword() {
       value: '',
     },
   });
+  const handleTogglePassword = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+  const handleToggleConfirmPassword = () => {
+    setShowConfirmPassword((prevState) => !prevState);
+  };
   const getError = (name: string, value: string) => {
     let error = "";
     switch (name) {
       case 'password':
         if (!value) {
           error = "Please enter your Password";
-        } else if (value.length < 8 || value.length > 60 || !/^[a-zA-Z0-9!@#$%^&*]+$/.test(value)) {
-          error = "Invalid Password";
+        } else if (value.length < 8 || value.length > 30 || !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/.test(value)) {
+          error = "Password must contain at least 8 characters, including upper lowercase number and special character";
         }
         break;
       case 'confirmPassword':
@@ -145,13 +154,21 @@ export default function ResetPassword() {
                       <LockIcon />
                     </Box>}
                     name="password"
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleTogglePassword}
+                        >
+                          {showPassword ? <ShowIcon /> : <HideIcon />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
                     onChange={handleChange}
                     fullWidth
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="New Password"
-                    style={{
-                      borderColor: (formData.password.error && formData.password.touched) ? "#DD4343" : ""
-                    }}
+                    error={Boolean(formData.password.error && formData.password.touched)}
                   />
                   {(formData.password.error && formData.password.touched) ? <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom> : null}
                 </WrapInput>
@@ -166,11 +183,19 @@ export default function ResetPassword() {
                     fullWidth
                     name="confirmPassword"
                     onChange={handleChange}
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleToggleConfirmPassword}
+                        >
+                          {showConfirmPassword ? <ShowIcon /> : <HideIcon />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
                     placeholder="Confirm Password"
-                    style={{
-                      borderColor: (formData.confirmPassword.error && formData.confirmPassword.touched) ? "#DD4343" : ""
-                    }}
+                    error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
                   />
                   {(formData.confirmPassword.error && formData.confirmPassword.touched) ? <FormHelperText error>{formData.confirmPassword.error}</FormHelperText> : null}
                 </WrapInput>

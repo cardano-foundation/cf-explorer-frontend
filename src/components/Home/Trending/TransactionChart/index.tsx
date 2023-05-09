@@ -5,7 +5,7 @@ import HighchartsReact from "highcharts-react-official";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { Box, Grid, alpha, useTheme } from "@mui/material";
 import { API } from "../../../../commons/utils/api";
-import { BoxInfo, ColorChart, InfoItem, Skeleton, Tab, Tabs, Title, TransactionContainer } from "./styles";
+import { BoxInfo, ColorChart, InfoItem, Skeleton, Tab, Tabs, Title, TransactionContainer, WrapHeader } from "./styles";
 import { formatDateTimeLocal } from "../../../../commons/utils/helper";
 
 interface TransactionChartIF {
@@ -163,7 +163,7 @@ const TransactionChart: React.FC = () => {
   };
   return (
     <TransactionContainer>
-      <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+      <WrapHeader>
         <Title>Transaction {optionsTime[rangeTime].displayName}</Title>
         <Tabs>
           {Object.keys(optionsTime).map(option => {
@@ -178,7 +178,7 @@ const TransactionChart: React.FC = () => {
             );
           })}
         </Tabs>
-      </Box>
+      </WrapHeader>
       {loading && renderLoading()}
       {!loading && (
         <Grid container spacing={2}>

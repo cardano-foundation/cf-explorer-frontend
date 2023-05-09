@@ -6,11 +6,12 @@ interface IProps extends ModalProps {
   handleCloseModal: () => void;
   title?: string;
   width?: number | string;
+  height?: number | string;
 }
-const StyledModal: React.FC<IProps> = ({ open, handleCloseModal, children, title, width }) => {
+const StyledModal: React.FC<IProps> = ({ open, handleCloseModal, children, title, width, height }) => {
   return (
     <Modal open={open}>
-      <ModalContainer width={width}>
+      <ModalContainer width={width} height={height}>
         <CloseButton saving={0} onClick={() => handleCloseModal()}>
           <IoMdClose />
         </CloseButton>

@@ -14,6 +14,9 @@ export const Header = styled(Box)`
   margin-bottom: 1.5rem;
   padding: 0 20px;
   gap: 10px;
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    padding: 0 15px;
+  }
 `;
 
 export const Title = styled("h3")`
@@ -89,6 +92,9 @@ export const Item = styled(BoxRaised)`
   overflow: hidden;
   &:hover {
     box-shadow: ${props => props.theme.shadow.card};
+  }
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px}) {
+    padding: 15px;
   }
 `;
 

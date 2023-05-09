@@ -26,6 +26,7 @@ const DelegationDetail: React.FC = () => {
   const history = useHistory();
   const query = parse(search.split("?")[1]);
   const tab = (query.tab as "epochs" | "delegators") || "epochs";
+  const mainRef = useRef(document.querySelector("#main"));
   const tableRef = useRef(null);
 
   const scrollEffect = () => {
@@ -45,6 +46,7 @@ const DelegationDetail: React.FC = () => {
     state?.data ? "" : `${API.DELEGATION.POOL_DETAIL_HEADER}/${poolId}`,
     state?.data
   );
+
   const {
     data: dataTable,
     loading: loadingTable,
@@ -59,6 +61,7 @@ const DelegationDetail: React.FC = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Delegation Pool ${poolId} | Cardano Explorer`;
+    mainRef.current?.scrollTo(0, 0);
   }, [poolId]);
 
   if ((initialized && !data) || error) return <NoRecord />;
@@ -103,7 +106,7 @@ const DelegationDetail: React.FC = () => {
         <StyledSelect
           value={tab}
           onChange={e => {
-            setQuery({ tab: e.target.value, page: 1, size: 10 });
+            setQuery({ tab: e.target.value, page: 1, size: 50 });
             scrollEffect();
           }}
           IconComponent={() => <BiChevronDown size={30} style={{ paddingRight: 10 }} />}

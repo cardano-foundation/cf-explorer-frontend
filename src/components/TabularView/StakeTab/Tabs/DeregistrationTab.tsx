@@ -7,18 +7,8 @@ import Table, { Column } from "../../../commons/Table";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
-import { formatADAFull } from "../../../../commons/utils/helper";
-import ADAicon from "../../../commons/ADAIcon";
 import { useState } from "react";
-
-export const AdaValue = ({ value }: { value: string | number }) => {
-  return (
-    <Box display="flex" alignItems="center">
-      {formatADAFull(value)}
-      <ADAicon pl={"8px"} />
-    </Box>
-  );
-};
+import { AdaValue } from "./StakeRegistrationTab";
 
 const columns: Column<DeregistrationItem>[] = [
   {
@@ -48,12 +38,12 @@ const columns: Column<DeregistrationItem>[] = [
     minWidth: "120px",
     render: r => (
       <Box>
-        <AdaValue value={r.deposit + r.fee} />
+        <AdaValue value={-r.deposit - r.fee} />
         <TableSubTitle>
-          <Box display="flex" mt={1} alignItems="center">
-            <AdaValue value={r.deposit} />
-            <Box mx={1}>/</Box>
-            <AdaValue value={r.fee} />
+          <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+            <AdaValue value={-r.deposit} gap="3px" fontSize="12px" />
+            <Box mx="3px">/</Box>
+            <AdaValue value={r.fee} gap="3px" fontSize="12px" />
           </Box>
         </TableSubTitle>
       </Box>

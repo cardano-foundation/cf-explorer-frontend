@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, IconButton } from "@mui/material";
+import React, { useState } from "react";
+import { Backdrop, Box, MenuItem, OutlinedInput, useTheme } from "@mui/material";
 
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
@@ -25,35 +25,50 @@ import {
   ValueCard,
   CardItem,
   StakeKeyStatus,
+  AllowSearchButton,
+  StyledSelect,
+  StyledMenuItem,
 } from "./styles";
 import { details, routers } from "../../../commons/routers";
 import Bookmark from "../BookmarkIcon";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { useHistory } from "react-router-dom";
+import { SearchIcon } from "../../../commons/resources";
+import { BiChevronDown } from "react-icons/bi";
+import { numberWithCommas } from "../../../commons/utils/helper";
 
 interface DetailHeaderProps {
   type: Bookmark["type"];
-  bookmarkData: string;
+  bookmarkData?: string;
   loading: boolean;
   title: number | string;
   hash?: string;
   transactionStatus?: keyof typeof TransactionStatus;
   stakeKeyStatus?: StakeStatus;
   epoch?: DetailHeaderBlock | null;
-  listItem: { icon: string; title: React.ReactNode; value?: React.ReactNode }[];
+  listItem: {
+    icon: string;
+    title: React.ReactNode;
+    value?: React.ReactNode;
+    allowSearch?: boolean;
+    dataSearch?: any[];
+    isSent?: boolean;
+  }[];
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = props => {
   const { loading, listItem, epoch, type, title, hash, transactionStatus, bookmarkData, stakeKeyStatus } = props;
   const history = useHistory();
-
+  const theme = useTheme();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const [openBackdrop, setOpenBackdrop] = useState(false);
 
   const getHashLabel = () => {
     if (type === "BLOCK") return "Block Id";
     if (type === "STAKE_KEY") return "Token Id";
     if (type === "POOL") return "Pool Id";
+    if (type === "TOKEN") return "Token ID";
   };
 
   const hashLabel = getHashLabel();
@@ -106,7 +121,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           </BackButton>
           <HeaderContainer>
             <HeaderTitle>{title}</HeaderTitle>
-            <Bookmark type={type} keyword={bookmarkData} />
+            {bookmarkData && <Bookmark type={type} keyword={bookmarkData} />}
             {transactionStatus && <HeaderStatus status={transactionStatus}>{transactionStatus}</HeaderStatus>}
             {epoch?.status && <HeaderStatus status={epoch.status}>{EPOCH_STATUS[epoch.status]}</HeaderStatus>}
             {stakeKeyStatus && <StakeKeyStatus status={stakeKeyStatus}>{stakeKeyStatus}</StakeKeyStatus>}
@@ -150,8 +165,40 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
               items_length={numberOfItems}
               key={index}
             >
-              <Box>
+              <Box position="relative">
                 <img src={item.icon} alt="" height={20} />
+                {item.allowSearch && (
+                  <AllowSearchButton onClick={() => setOpenBackdrop(true)}>
+                    <SearchIcon stroke={theme.palette.grey[400]} />
+                  </AllowSearchButton>
+                )}
+                {item.allowSearch && openBackdrop && (
+                  <StyledSelect
+                    renderValue={() => (item.isSent ? "Received Token" : "Sent Token")}
+                    displayEmpty
+                    value={""}
+                    onChange={() => {}}
+                    IconComponent={BiChevronDown}
+                    MenuProps={{
+                      PaperProps: {
+                        sx: {
+                          borderRadius: 2,
+                          marginTop: 0.5,
+                        },
+                      },
+                    }}
+                  >
+                    {item?.dataSearch?.map((item, index) => (
+                      <StyledMenuItem onClick={() => {}} key={index}>
+                        <Box>{item.assetName}</Box>
+                        <Box fontWeight={600}>
+                          {item.isSent ? "-" : "+"}
+                          {numberWithCommas(item.assetQuantity)}
+                        </Box>
+                      </StyledMenuItem>
+                    ))}
+                  </StyledSelect>
+                )}
               </Box>
               <Box my={1}>{item.title}</Box>
               <ValueCard>{item.value}</ValueCard>
@@ -159,6 +206,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           );
         })}
       </DetailsInfo>
+      <Backdrop sx={{ zIndex: 100 }} onClick={() => setOpenBackdrop(false)} open={openBackdrop} />
     </HeaderDetailContainer>
   );
 };

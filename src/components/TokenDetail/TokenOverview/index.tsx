@@ -28,6 +28,7 @@ import {
 } from "./styles";
 import ScriptModal from "../../ScriptModal";
 import { useHistory } from "react-router";
+import DetailHeader from "../../commons/DetailHeader";
 
 interface ITokenOverview {
   data: IToken | null;
@@ -40,6 +41,68 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   const history = useHistory();
 
   const listItem = [
+    {
+      title: "",
+      value: (
+        <CardItem display={"flex"} gap={2} flex={3}>
+          <Box>
+            <img src={policyIcon} alt="" />
+          </Box>
+          <Box display={"flex"} flexDirection="column" height={"80%"} justifyContent="space-between">
+            <Box
+              color={theme => theme.palette.primary.main}
+              fontWeight="bold"
+              fontFamily={'"Roboto", sans-serif'}
+              fontSize={"1.125rem"}
+              component="button"
+              border={"none"}
+              bgcolor="transparent"
+              padding={0}
+              textAlign="left"
+              onClick={() => {
+                setOpenModal(true);
+                setPolicyId(data?.policy || "");
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              Policy Script
+            </Box>
+            <Box>
+              <Box
+                display={"flex"}
+                alignItems="center"
+                fontWeight={"bold"}
+                mb={1}
+                color={({ palette }) => palette.common.black}
+              >
+                {data?.displayName || ""}
+                {data?.metadata && data?.metadata?.logo ? (
+                  <Box
+                    component={"img"}
+                    width={"auto"}
+                    height={36}
+                    src={`data:image/png;base64,${data.metadata.logo}`}
+                    alt="logo icon"
+                    ml={1}
+                  />
+                ) : (
+                  ""
+                )}
+              </Box>
+              <Box
+                display={"flex"}
+                alignItems="center"
+                fontSize={"0.75rem"}
+                color={theme => alpha(theme.palette.common.black, 0.5)}
+              >
+                {data?.metadata?.description || ""}
+              </Box>
+            </Box>
+          </Box>
+        </CardItem>
+      ),
+      icon: "",
+    },
     {
       title: "Total Supply",
       value: <Box component={"span"}>{numberWithCommas(data?.supply)}</Box>,
@@ -57,6 +120,29 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       icon: exchageIcon,
       value: numberWithCommas(data?.txCount),
     },
+
+    {
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <Box component={"span"} mr={1}>
+            Number of Holders
+          </Box>
+        </Box>
+      ),
+      icon: exchageIcon,
+      value: numberWithCommas(data?.numberOfHolders || ""),
+    },
+    {
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <Box component={"span"} mr={1}>
+            Total Volume
+          </Box>
+        </Box>
+      ),
+      icon: exchageIcon,
+      value: numberWithCommas(data?.totalVolume || ""),
+    },
     {
       title: (
         <Box display={"flex"} alignItems="center">
@@ -66,7 +152,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
         </Box>
       ),
       icon: exchageIcon,
-      value: numberWithCommas(data?.volumeIn24h),
+      value: numberWithCommas(data?.volumeIn24h || ""),
     },
     {
       title: (
@@ -83,106 +169,13 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
 
   return (
     <Box textAlign={"left"}>
-      <BackButton onClick={history.goBack}>
-        <HiArrowLongLeft />
-        <BackText>Back</BackText>
-      </BackButton>
-      <HeaderContainer>
-        <HeaderTitle>
-          {loading && <HeaderTitleSkeleton variant="rectangular" />}
-          {!loading && <>{data?.displayName}</>}
-        </HeaderTitle>
-      </HeaderContainer>
-      <SlotLeaderContainer>
-        {loading ? (
-          <SlotLeaderSkeleton variant="rectangular" />
-        ) : (
-          <>
-            <SlotLeaderTitle>Token ID: </SlotLeaderTitle>
-            <SlotLeader>
-              <Box>{data?.fingerprint}</Box> <CopyButton text={data?.fingerprint} />
-            </SlotLeader>
-          </>
-        )}
-      </SlotLeaderContainer>
-      {loading && (
-        <Box height={150} width="100%" borderRadius={10} overflow="hidden">
-          <Skeleton height={"100%"} width="100%" variant="rectangular" />
-        </Box>
-      )}
-      {!loading && (
-        <CardInfoOverview>
-          <CardItem display={"flex"} gap={2} flex={3}>
-            <Box>
-              <img src={policyIcon} alt="" />
-            </Box>
-            <Box display={"flex"} flexDirection="column" height={"80%"} justifyContent="space-between">
-              <Box
-                color={theme => theme.palette.primary.main}
-                fontWeight="bold"
-                fontFamily={'"Roboto", sans-serif'}
-                fontSize={"1.125rem"}
-                component="button"
-                border={"none"}
-                bgcolor="transparent"
-                padding={0}
-                textAlign="left"
-                onClick={() => {
-                  setOpenModal(true);
-                  setPolicyId(data?.policy || "");
-                }}
-                style={{ cursor: "pointer" }}
-              >
-                Policy Script
-              </Box>
-              <Box>
-                <Box
-                  display={"flex"}
-                  alignItems="center"
-                  fontWeight={"bold"}
-                  mb={1}
-                  color={({ palette }) => palette.common.black}
-                >
-                  {data?.displayName || ""}
-                  {data?.metadata && data?.metadata?.logo ? (
-                    <Box
-                      component={"img"}
-                      width={"auto"}
-                      height={36}
-                      src={`data:image/png;base64,${data.metadata.logo}`}
-                      alt="logo icon"
-                      ml={1}
-                    />
-                  ) : (
-                    ""
-                  )}
-                </Box>
-                <Box
-                  display={"flex"}
-                  alignItems="center"
-                  fontSize={"0.75rem"}
-                  color={theme => alpha(theme.palette.common.black, 0.5)}
-                >
-                  {data?.metadata?.description || ""}
-                </Box>
-              </Box>
-            </Box>
-          </CardItem>
-          {listItem.map((item, idx) => (
-            <CardItem key={idx} flex={1}>
-              <Box>
-                <img src={item.icon} alt="" />
-              </Box>
-              <Box display={"flex"} alignItems="center">
-                <TitleCard my={1} mr={1}>
-                  {item.title}
-                </TitleCard>
-              </Box>
-              <ValueCard>{item.value}</ValueCard>
-            </CardItem>
-          ))}
-        </CardInfoOverview>
-      )}
+      <DetailHeader
+        type="TOKEN"
+        title={data?.displayName || ""}
+        hash={data?.fingerprint}
+        listItem={listItem}
+        loading={loading}
+      />
       <ScriptModal open={openModal} onClose={() => setOpenModal(false)} policy={policyId} />
     </Box>
   );

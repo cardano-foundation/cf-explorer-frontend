@@ -1,5 +1,5 @@
 import { stringify } from "qs";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../commons/utils/constants";
@@ -28,7 +28,7 @@ const Epoch: React.FC = () => {
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
   const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo, sort });
-
+  const mainRef = useRef(document.querySelector("#main"));
   const columns: Column<IDataEpoch>[] = [
     {
       title: "Epoch Number",
@@ -149,7 +149,10 @@ const Epoch: React.FC = () => {
           pagination={{
             ...pageInfo,
             total: fetchData.total,
-            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+            onChange: (page, size) => {
+              history.push({ search: stringify({ page, size }) });
+              mainRef.current?.scrollTo(0, 0);
+            },
             handleCloseDetailView: handleClose,
           }}
           onClickRow={openDetail}

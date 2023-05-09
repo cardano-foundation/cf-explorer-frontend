@@ -1,4 +1,4 @@
-import { alpha, Box, Grid, Skeleton, styled } from "@mui/material";
+import { alpha, Box, Grid, MenuItem, Select, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
@@ -354,4 +354,42 @@ export const ValueCard = styled(Box)(({ theme }) => ({
   color: theme.palette.common.black,
   fontSize: "1rem",
   fontWeight: "bold",
+}));
+
+export const AllowSearchButton = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: 35,
+  height: 35,
+  backgroundColor: theme.palette.grey[100],
+  top: -10,
+  right: 0,
+  borderRadius: 4,
+  cursor: "pointer",
+}));
+
+export const StyledSelect = styled(Select)(({ theme }) => ({
+  position: "absolute",
+  top: -10,
+  left: 0,
+  right: 0,
+  zIndex: 101,
+  backgroundColor: theme.palette.common.white,
+  borderRadius: 8,
+  height: 35,
+  fieldset: {
+    border: "none",
+  },
+}));
+
+export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  height: 40,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  "&:hover": {
+    backgroundColor: "rgba(67, 143, 104, 0.1)",
+  }
 }));

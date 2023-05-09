@@ -3,8 +3,9 @@ import { styled } from "@mui/material";
 
 export const StyledListItem = styled(ListItem)`
   padding: 0px;
-  display: flex;
-  justify-content: flex-start;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  margin: 6px 0px;
 `;
 
 export const StyledListItemText = styled(Typography)`
@@ -13,6 +14,7 @@ export const StyledListItemText = styled(Typography)`
   font-weight: 700;
   color: #108aef;
   cursor: pointer;
+  overflow-wrap: anywhere;
 `;
 
 export const ModalTitle = styled(Typography)`

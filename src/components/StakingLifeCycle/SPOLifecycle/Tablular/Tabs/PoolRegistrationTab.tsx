@@ -1,14 +1,17 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, getShortWallet } from "../../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../../../commons/utils/helper";
 
 import Table, { Column } from "../../../../commons/Table";
-import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, ClickAbleLink } from "./styles";
+import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, ClickAbleLink, VerticalRow } from "./styles";
 import CustomIcon from "../../../../commons/CustomIcon";
 import { ADAsigntIC } from "../../../../../commons/resources";
+import { details } from "../../../../../commons/routers";
+import CustomTooltip from "../../../../commons/CustomTooltip";
+import { StyledLink } from "../../../../share/styled";
 
 const PoolRegistrationTab = () => {
   const { poolId = "" } = useParams<{ poolId: string }>();
@@ -24,7 +27,11 @@ const PoolRegistrationTab = () => {
       key: "txHash",
       title: "Transaction hash",
       render(data) {
-        return <ClickAbleLink>{getShortWallet(data.txHash)}</ClickAbleLink>;
+        return (
+          <CustomTooltip title={data.txHash}>
+            <StyledLink to={details.transaction(data.txHash)}>{formatHash(data.txHash)}</StyledLink>
+          </CustomTooltip>
+        );
       },
     },
     {
@@ -58,7 +65,13 @@ const PoolRegistrationTab = () => {
       key: "stakeKeys",
       title: "Owner",
       render(data) {
-        return data.stakeKeys.map((item, index) => <ClickAbleLink key={index}>{getShortWallet(item)}</ClickAbleLink>);
+        return data.stakeKeys.map((item, index) => (
+          <VerticalRow key={index}>
+            <CustomTooltip title={item}>
+              <StyledLink to={details.stake(item)}>{formatHash(item)}</StyledLink>
+            </CustomTooltip>
+          </VerticalRow>
+        ));
       },
     },
   ];

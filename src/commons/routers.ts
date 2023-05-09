@@ -37,7 +37,7 @@ export const routers = {
   SPO_SEARCH: "/spo-lifecycle",
   DELEGATOR_SEARCH: "/delegator-lifecycle",
   DELEGATOR_LIFECYCLE: "/delegator-lifecycle/:stakeId/:tab?",
-  SPO_LIFECYCLE: "/spo-lifecycle/:poolId",
+  SPO_LIFECYCLE: "/spo-lifecycle/:poolId/:tab?",
   STAKING_LIFECYCLE: "/stacking-lifecycle",
   REPORT_GENERATED: "/report-generated",
   NOT_FOUND: "/*",
@@ -60,9 +60,8 @@ export const details = {
   contract: (address?: string, tab = "transaction") =>
     routers.CONTRACT_DETAIL.replace(":address", address ?? "").replace(":tabActive?", tab),
   staking: (stakeId: string, tab = "registration") =>
-  routers.DELEGATOR_LIFECYCLE.replace(":stakeId", stakeId).replace(":tab?", tab),
-  spo: (poolId: string, tab = "registration") =>
-  routers.SPO_LIFECYCLE.replace(":poolId", poolId).replace(":tab?", tab),
+    routers.DELEGATOR_LIFECYCLE.replace(":stakeId", stakeId).replace(":tab?", tab),
+  spo: (poolId: string, tab = "registration") => routers.SPO_LIFECYCLE.replace(":poolId", poolId).replace(":tab?", tab),
 };
 
 export const listRouters = [

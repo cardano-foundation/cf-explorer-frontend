@@ -193,9 +193,11 @@ const TableBody = <T extends ColumnType>({
               zIndex={1000}
               display="flex"
               justifyContent="center"
-              alignItems="center"
+              alignItems="self-start"
             >
-              <CircularProgress />
+              <Box pt={'20%'}>
+                <CircularProgress />
+              </Box>
             </LoadingWrapper>
           </td>
         </tr>
