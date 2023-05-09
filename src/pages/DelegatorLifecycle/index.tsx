@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
-import { useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router";
 
-import { getShortHash } from "../../commons/utils/helper";
-import CopyButton from "../../components/commons/CopyButton";
-import Tablular from "../../components/StakingLifeCycle/DelegatorLifecycle/Tablular";
+import { getShortWallet } from "../../commons/utils/helper";
 import DelegatorLifecycleComponent from "../../components/StakingLifeCycle/DelegatorLifecycle";
+import Tablular from "../../components/StakingLifeCycle/DelegatorLifecycle/Tablular";
+import CopyButton from "../../components/commons/CopyButton";
 
 import {
   BoxContainerStyled,
@@ -22,9 +22,9 @@ import {
 
 import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staking/ChartMode.svg";
 import { ReactComponent as TableMode } from "../../commons/resources/icons/Staking/TableMode.svg";
+import { details } from "../../commons/routers";
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import CustomTooltip from "../../components/commons/CustomTooltip";
-import { details } from "../../commons/routers";
 
 const DelegatorLifecycle = () => {
   const { stakeId = "", tab = "" } = useParams<{
@@ -88,7 +88,7 @@ const DelegatorLifecycle = () => {
               Stake key:
             </Box>
             <CustomTooltip title={stakeId}>
-              <StakeId to={details.stake(stakeId)}>{getShortHash(stakeId)}</StakeId>
+              <StakeId to={details.stake(stakeId)}>{getShortWallet(stakeId)}</StakeId>
             </CustomTooltip>
             <CopyButton text={stakeId} />
           </Box>
