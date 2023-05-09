@@ -17,8 +17,8 @@ export const TitleStep = styled(Box)<{ currentstep: number; index: number }>(({ 
     currentstep === index
       ? theme.palette.grey[700]
       : currentstep > index
-      ? theme.palette.grey[400]
-      : theme.palette.grey[300],
+        ? theme.palette.grey[400]
+        : theme.palette.grey[300],
   fontWeight: "bold",
   fontSize: "0.875rem",
   marginTop: theme.spacing(1),
@@ -77,6 +77,7 @@ export const StyledBox = styled(Box)`
 `;
 
 export const DescriptionText = styled(Typography)`
+  color: ${({ theme }) => theme.palette.common.black};
   font-size: 18px;
 `;
 

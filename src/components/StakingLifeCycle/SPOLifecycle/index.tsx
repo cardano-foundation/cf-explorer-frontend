@@ -160,7 +160,9 @@ const SPOLifecycle = ({
         }}
         variant="contained"
       >
-        Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+        <Box fontSize={"16px"} component={"span"}>
+          Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+        </Box>
         <NextIcon />
       </NextButton>
     </Box>
