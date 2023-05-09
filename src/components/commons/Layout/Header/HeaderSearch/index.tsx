@@ -106,11 +106,10 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
     }
   }, [search, filter]);
 
+  const currentPath = history.location.pathname.split("/")[1];
+  const checkIncludesPath = (paths: Option["paths"]) => paths?.find(path => path?.split("/")[1] === currentPath);
+
   useEffect(() => {
-    const currentPath = history.location.pathname.split("/")[1];
-
-    const checkIncludesPath = (paths: Option["paths"]) => paths?.find(path => path?.split("/")[1] === currentPath);
-
     const filter: FilterParams = options.find(item => checkIncludesPath(item.paths))?.value || "all";
 
     setValues({ ...intitalValue, filter });
@@ -144,6 +143,8 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
     }
   };
 
+  const isStakingLifecycle = checkIncludesPath([routers.DELEGATOR_LIFECYCLE, routers.SPO_LIFECYCLE]);
+
   const { isMobile } = useScreen();
 
   return (
@@ -169,7 +170,20 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
         type="search"
         value={search}
         spellCheck={false}
-        placeholder={home && !isMobile ? "Search transactions, address, blocks, epochs, pools..." : "Search ..."}
+        placeholder={
+          home && !isMobile
+            ? "Search transactions, address, blocks, epochs, pools..."
+            : isStakingLifecycle && !isMobile
+            ? "Search Stake key, Pool ID or Pool Name"
+            : "Search ..."
+        }
+        title={
+          home && !isMobile
+            ? "Search transactions, address, blocks, epochs, pools..."
+            : isStakingLifecycle && !isMobile
+            ? "Search Stake key, Pool ID or Pool Name"
+            : "Search ..."
+        }
         onChange={handleChangeSearch}
         disableUnderline
         onFocus={() => onFocus()}
