@@ -20,7 +20,7 @@ export const ButtonGroup = styled(Box)(({ theme }) => ({
   marginTop: "11px !important",
   background: "#E7E8EA",
   padding: "3px 2px",
-  margin: `0 ${theme.spacing(2)}`,
+  // margin: `0 ${theme.spacing(2)}`,
   borderTopLeftRadius: "20px",
   borderBottomLeftRadius: "20px",
   borderTopRightRadius: "20px",
@@ -54,6 +54,7 @@ export const ButtonReport = styled(Button)(({ theme }) => ({
 }));
 export const ButtonReportContainer = styled(Button)(({ theme }) => ({
   display: "flex",
+  marginLeft: 20,
   [theme.breakpoints.down("md")]: {
     justifyContent: "start",
   },
@@ -82,6 +83,7 @@ export const BoxItemStyled = styled(Box)(({ theme }) => ({
 }));
 export const BoxSwitchContainer = styled(Box)(({ theme }) => ({
   display: "flex",
+  gap:15,
   [theme.breakpoints.down("md")]: {
     justifyContent: "space-between",
     alignItems: "space-between",

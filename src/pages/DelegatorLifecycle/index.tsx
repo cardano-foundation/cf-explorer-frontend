@@ -104,9 +104,11 @@ const DelegatorLifecycle = () => {
               </ButtonSwitch>
             </ButtonGroup>
           </BoxSwitchContainer>
-          <ButtonReportContainer>
-            {mode === "tablular" && <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>}
-          </ButtonReportContainer>
+          {mode === "tablular" && (
+            <ButtonReportContainer>
+              <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>
+            </ButtonReportContainer>
+          )}
         </BoxItemStyled>
       </BoxContainerStyled>
       <Box>
