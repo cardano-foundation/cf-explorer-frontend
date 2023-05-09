@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, alpha, styled } from "@mui/material";
+import { Box, Button, IconButton, Typography, alpha, styled } from "@mui/material";
 
 export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   width: "100%",
@@ -63,3 +63,24 @@ export const ADATransfersButton = styled(Button)(({ theme }) => ({
     background: alpha(theme.palette.green[600], 0.8),
   },
 }));
+
+export const TabTitle = styled(Typography)(({ theme }) => ({
+  fontSize: "1.5rem",
+  fontWeight: 700,
+  color: theme.palette.common.black,
+}));
+
+export const StyledBox = styled(Box)`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`;
+
+export const DescriptionText = styled(Typography)`
+  font-size: 18px;
+`;
+
+export const ButtonText = styled(Typography)`
+  font-size: 16px;
+  font-weight: 700;
+`;

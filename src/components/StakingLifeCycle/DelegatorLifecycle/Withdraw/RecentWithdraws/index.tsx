@@ -10,6 +10,7 @@ import { EmptyRecord } from "../../../../commons/Table";
 import { FilterDateLabel } from "../../Delegation/styles";
 import { GridBox, WrapFilterDescription } from "./styles";
 import { DATETIME_PARTTEN } from "../../../../StackingFilter/DateRangeModal";
+import { DescriptionText } from "../../styles";
 
 interface Props {
   onSelect: (ưithdraw: WithdrawItem) => void;
@@ -42,7 +43,7 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect }) => {
   return (
     <Box marginTop="32px">
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
-        <span>Recent Withdraws</span>
+        <DescriptionText>Recent Withdraws</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             Showing {total} {total > 1 ? "results" : "result"}

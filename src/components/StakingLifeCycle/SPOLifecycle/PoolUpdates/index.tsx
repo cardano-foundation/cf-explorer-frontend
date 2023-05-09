@@ -43,6 +43,7 @@ import StyledModal from "../../../commons/StyledModal";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Tab } from "@mui/material";
 import { TitleTab } from "../../../TransactionDetail/TransactionMetadata/styles";
+import { DescriptionText } from "../../DelegatorLifecycle/styles";
 
 const PoollUpdates = ({
   containerPosition,
@@ -85,7 +86,7 @@ const PoollUpdatesList = ({ setSelected }: { setSelected: (pool: PoolUpdateItem 
   return (
     <Box marginTop="32px">
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
-        <span>Recent Withdrawals</span>
+        <DescriptionText>Recent Withdrawals</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>Showing {total} results</WrapFilterDescription>
           <StackingFilter
