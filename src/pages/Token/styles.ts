@@ -1,9 +1,15 @@
 import { styled, Container, Select } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const StyledContainer = styled(Container)`
-  padding: 20px 0 40px;
-`;
+export const StyledContainer = styled(Container)(({ theme }) => ({
+  padding: "20px 0 40px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "0 0 40px",
+    "& > div > div:nth-of-type(2)": {
+      paddingLeft: "16px",
+    },
+  },
+}));
 
 export const AssetName = styled(Link)`
   color: ${props => props.theme.palette.secondary.main} !important;
