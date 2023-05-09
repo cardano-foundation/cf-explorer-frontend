@@ -29,6 +29,7 @@ import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from
 import { details } from "../../../../commons/routers";
 import moment from "moment";
 import CustomTooltip from "../../../commons/CustomTooltip";
+import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 
 const Delegation = ({
   containerPosition,
@@ -146,6 +147,7 @@ const DelegationTimeline = ({
             <CustomTooltip title={data?.txHash}>
               <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
             </CustomTooltip>
+            <StyledCopyButton text={data?.txHash} />
           </Info>
           <Info>
             <ADAGreen />

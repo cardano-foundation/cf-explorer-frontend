@@ -26,6 +26,7 @@ import {
   InfoText,
   PoolName,
   PoolNamePopup,
+  StyledCopyButton,
 } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
@@ -144,6 +145,7 @@ const RegistrationTimeline = ({
             <CustomTooltip title={data?.txHash}>
               <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
             </CustomTooltip>
+            <StyledCopyButton text={data?.txHash} />
           </Info>
           <Info>
             <ADAGreen />
