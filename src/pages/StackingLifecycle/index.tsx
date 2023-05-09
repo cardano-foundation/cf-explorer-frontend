@@ -77,6 +77,7 @@ export interface SavedReport {
 const Dashboard: React.FC = () => {
   const history = useHistory();
   const [onDownload, setOnDownload] = useState<number | false>(false);
+  const [sort, setSort] = useState<string>("");
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>({
     page: 0,
     size: 10,
@@ -92,12 +93,13 @@ const Dashboard: React.FC = () => {
     page,
     size,
     ...params,
+    sort,
   });
 
   const handleRowClick = (e: React.MouseEvent<Element, MouseEvent>, row: any) => {
-    if(row.stakeKeyReportId) history.push(details.generated_staking_detail(row.stakeKeyReportId));
-    else if(row.poolReportId) history.push(details.generated_pool_detail(row.poolReportId));
-  }
+    if (row.stakeKeyReportId) history.push(details.generated_staking_detail(row.stakeKeyReportId));
+    else if (row.poolReportId) history.push(details.generated_pool_detail(row.poolReportId));
+  };
 
   const downloadReportDashboard = useCallback(async (reportId: number, fileName: string) => {
     setOnDownload(reportId);
@@ -124,6 +126,9 @@ const Dashboard: React.FC = () => {
       render(data) {
         return data.createdAt;
       },
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
     },
     {
       title: "Report name",
@@ -147,7 +152,14 @@ const Dashboard: React.FC = () => {
         return onDownload === data.id ? (
           <CircularProgress size={22} color="primary" />
         ) : (
-          <IconButton onClick={() => downloadReportDashboard(data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId, data.reportName)}>
+          <IconButton
+            onClick={() =>
+              downloadReportDashboard(
+                data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
+                data.reportName
+              )
+            }
+          >
             <DownloadBlueIC />
           </IconButton>
         );
