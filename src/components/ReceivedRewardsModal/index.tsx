@@ -19,7 +19,7 @@ import StyledModal from "../commons/StyledModal";
 import { useParams } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { API } from "../../commons/utils/api";
-import { formatADA, formatDateTimeLocal } from "../../commons/utils/helper";
+import { formatADA, formatADAFull, formatDateTimeLocal } from "../../commons/utils/helper";
 import ADAicon from "../commons/ADAIcon";
 import { details } from "../../commons/routers";
 
@@ -59,7 +59,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       render(data, index) {
         return (
           <AmountADARow>
-            {formatADA(data.amount)} <ADAicon color="#333333" />
+            {formatADAFull(data.amount)} <ADAicon color="#333333" />
           </AmountADARow>
         );
       },
