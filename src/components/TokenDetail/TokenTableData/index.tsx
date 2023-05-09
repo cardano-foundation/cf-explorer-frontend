@@ -47,6 +47,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
     <TabContext value={tabActive}>
       <TabList
         onChange={handleChange}
+        variant="scrollable"
         TabIndicatorProps={{
           sx: { background: theme => theme.palette.primary.main, color: theme => theme.palette.primary.main },
         }}
