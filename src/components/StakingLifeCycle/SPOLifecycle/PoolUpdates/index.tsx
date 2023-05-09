@@ -20,7 +20,7 @@ import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSy
 import PoolCertificateIcon from "../../../../commons/resources/icons/Staking/PoolCertificateIcon.svg";
 
 import Line from "../../../Line";
-import { CardBox, FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { CardBox, FeeBox, FeeBoxText, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import useFetchList from "../../../../commons/hooks/useFetchList";
@@ -265,9 +265,9 @@ const PoollUpdatesTimeline = ({
               render={({ handleClick }) => (
                 <FeeBox ref={feeRef}>
                   <Box>
-                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                    <FeeBoxText component={"span"} mr={1}>
                       {formatADA(data?.fee || 0)}
-                    </Box>
+                    </FeeBoxText>
                     <ADAicon fontSize="18px" />
                   </Box>
                   <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
