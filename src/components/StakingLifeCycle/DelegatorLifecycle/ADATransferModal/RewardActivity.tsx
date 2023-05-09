@@ -14,7 +14,7 @@ import useFetch from "../../../../commons/hooks/useFetch";
 
 const RewardActivity: React.FC = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
-  const [{ page, size }, setPagi] = useState<{ page: number; size: number }>({ page: 0, size: 50 });
+  const [{ page, size }, setPagi] = useState<{ page: number; size: number }>({ page: 0, size: 10 });
   const [sort, setSort] = useState<string>("");
   const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}` || "");
 
@@ -29,7 +29,7 @@ const RewardActivity: React.FC = () => {
       key: "outSum",
       minWidth: "100px",
       render: r => (
-        <Amount value={r.amount}>
+        <Amount type={r.type}>
           {formatADAFull(r.amount)}
           <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={theme => theme.palette.text.primary} />
         </Amount>
