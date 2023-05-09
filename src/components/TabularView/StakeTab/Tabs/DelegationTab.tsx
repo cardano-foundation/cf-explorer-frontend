@@ -50,7 +50,7 @@ const DelegationTab = () => {
     },
     {
       title: "Timestamp",
-      key: "time",
+      key: "id",
       minWidth: "120px",
       render: r => formatDateTimeLocal(r.time),
       sort: ({ columnKey, sortValue }) => {

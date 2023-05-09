@@ -3,18 +3,22 @@ import React, { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link, useHistory } from "react-router-dom";
 import {
-  AIcon,
   CalendarIcon,
   DelegatorIcon,
   DropIcon,
   HighestIcon,
-  InfoIcon,
   RewardIcon,
   TickerIcon,
   UserIcon,
 } from "../../../commons/resources";
-import { details, routers } from "../../../commons/routers";
-import { formatADAFull, formatDateTimeLocal, formatPercent, getShortWallet } from "../../../commons/utils/helper";
+import { details } from "../../../commons/routers";
+import {
+  formatADAFull,
+  formatDateTimeLocal,
+  formatPercent,
+  getShortHash,
+  getShortWallet,
+} from "../../../commons/utils/helper";
 import BookmarkButton from "../../commons/BookmarkIcon";
 import CopyButton from "../../commons/CopyButton";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -30,7 +34,6 @@ import {
   HeaderDetailContainer,
   HeaderTitle,
   HeaderTitleSkeleton,
-  InfoImg,
   InfoTitle,
   InfoValue,
   Item,
@@ -44,6 +47,7 @@ import {
   StyledTitle,
 } from "./styles";
 import ADAicon from "../../commons/ADAIcon";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface IDelegationDetailInfo {
   data: DelegationOverview | null;
@@ -55,6 +59,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
   const history = useHistory();
   const [isOpenReward, setOpenReward] = useState<boolean>(false);
   const [isOpenOwner, setOpenOwner] = useState<boolean>(false);
+  const { isMobile } = useScreen();
 
   if (loading) {
     return (
@@ -94,7 +99,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <CustomTooltip title={poolId}>
           <Link to={details.delegation(poolId)}>
             <PoolIdLabel>Pool Id: </PoolIdLabel>
-            <PoolIdValue>{poolId}</PoolIdValue>
+            <PoolIdValue>{isMobile ? getShortHash(poolId) : poolId}</PoolIdValue>
           </Link>
         </CustomTooltip>
         <CopyButton text={poolId} />
@@ -212,8 +217,6 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               />
             )}
           </Item>
-        </StyledGrid>
-        <StyledGrid container>
           <Item item xs={6} md={3}>
             <StyledImg src={DropIcon} alt="Drop Icon" />
             <InfoTitle>
