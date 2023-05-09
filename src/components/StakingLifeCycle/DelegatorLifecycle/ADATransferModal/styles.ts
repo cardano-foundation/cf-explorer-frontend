@@ -98,8 +98,8 @@ export const OverviewIcon = styled(Box)`
   align-items: center;
 `;
 
-export const Amount = styled(Box)<{ value: number }>(({ value, theme }) => ({
-  color: value > 0 ? theme.palette.success.main : theme.palette.error.main,
+export const Amount = styled(Box)<{ type: "REWARD_RECEIVED" | "REWARD_WITHDRAWN" }>(({ type, theme }) => ({
+  color: type === "REWARD_RECEIVED" ? theme.palette.success.main : theme.palette.error.main,
   display: "flex",
   alignItems: "center",
   gap: 5,
