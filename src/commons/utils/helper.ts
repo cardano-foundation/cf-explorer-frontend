@@ -42,14 +42,18 @@ export const numberWithCommas = (value?: number | string, decimal: number = 0) =
   return formated.replace(/^-?0*(\d+)/, "$1");
 };
 
-export const formatADA = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
+export const formatADA = (
+  value?: string | number,
+  abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS,
+  numOfUnits: number = 6
+): string => {
   if (!value) return `0${abbreviations[0]}`;
   const realAda = new BigNumber(value).div(10 ** 6);
-  if (realAda.gte(10 ** 6)) {
+  if (realAda.gte(10 ** numOfUnits)) {
     const length = realAda.toFixed(0).length;
     const exponential = Math.floor((length - 1) / 3) * 3;
 
-    if (exponential > 5) {
+    if (exponential > numOfUnits - 1) {
       const newValue = realAda
         .div(10 ** exponential)
         .toFixed(2, 3)
