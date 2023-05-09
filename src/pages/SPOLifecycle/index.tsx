@@ -13,6 +13,7 @@ import { ReactComponent as TableMode } from "../../commons/resources/icons/Staki
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import Tablular from "../../components/StakingLifeCycle/SPOLifecycle/Tablular";
 import CustomTooltip from "../../components/commons/CustomTooltip";
+import { details } from "../../commons/routers";
 
 const SPOLifecycle = () => {
   const { poolId = "", tab } = useParams<{
@@ -73,9 +74,11 @@ const SPOLifecycle = () => {
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
-            <Box component={"span"}>Pool ID:</Box>
+            <Box component={"span"} fontSize={"0.875rem"} lineHeight={1}>
+              Pool ID:
+            </Box>
             <CustomTooltip title={poolId}>
-              <StakeId>{getShortHash(poolId)}</StakeId>
+              <StakeId to={details.delegation(poolId)}>{getShortHash(poolId)}</StakeId>
             </CustomTooltip>
             <CopyButton text={poolId} />
           </Box>

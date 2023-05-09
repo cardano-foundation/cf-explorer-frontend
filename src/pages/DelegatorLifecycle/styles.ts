@@ -1,16 +1,18 @@
 import { Button, alpha } from "@mui/material";
 import { Box, Container, IconButton, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
   padding: 20px 0 40px;
   position: relative;
   min-height: calc(100vh - 170px);
 `;
-export const StakeId = styled("span")(({ theme }) => ({
+export const StakeId = styled(Link)(({ theme }) => ({
   lineHeight: 1,
   fontWeight: "bold",
-  color: theme.palette.blue[800],
+  color: `${theme.palette.blue[800]} !important`,
   margin: `0 ${theme.spacing(1)} `,
+  fontSize: "0.875rem",
 }));
 
 export const ButtonGroup = styled(Box)(({ theme }) => ({

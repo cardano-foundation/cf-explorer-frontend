@@ -13,6 +13,7 @@ import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staki
 import { ReactComponent as TableMode } from "../../commons/resources/icons/Staking/TableMode.svg";
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import CustomTooltip from "../../components/commons/CustomTooltip";
+import { details } from "../../commons/routers";
 
 const DelegatorLifecycle = () => {
   const { stakeId = "", tab = "" } = useParams<{
@@ -72,9 +73,11 @@ const DelegatorLifecycle = () => {
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
-            <Box component={"span"}>Stake key:</Box>
+            <Box component={"span"} fontSize={"0.875rem"} lineHeight={1}>
+              Stake key:
+            </Box>
             <CustomTooltip title={stakeId}>
-              <StakeId>{getShortHash(stakeId)}</StakeId>
+              <StakeId to={details.stake(stakeId)}>{getShortHash(stakeId)}</StakeId>
             </CustomTooltip>
             <CopyButton text={stakeId} />
           </Box>
