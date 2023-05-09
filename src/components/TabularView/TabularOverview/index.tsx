@@ -16,6 +16,7 @@ import { formatADAFull } from "../../../commons/utils/helper";
 import ADAicon from "../../commons/ADAIcon";
 import { useState } from "react";
 import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -70,9 +71,10 @@ const TabularOverview: React.FC = () => {
   const [open, setOpen] = useState(false);
   const { stakeId } = useParams<{ stakeId: string }>();
   const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
+  const { isMobile } = useScreen();
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} marginRight={isMobile ? 2 : 0}>
       <GridItem
         title="Payment Wallet"
         mainIcon={<PaymentWallet />}

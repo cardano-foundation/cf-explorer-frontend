@@ -24,6 +24,7 @@ import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staki
 import { ReactComponent as TableMode } from "../../commons/resources/icons/Staking/TableMode.svg";
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import CustomTooltip from "../../components/commons/CustomTooltip";
+import { useScreen } from "../../commons/hooks/useScreen";
 
 const DelegatorLifecycle = () => {
   const { stakeId = "", tab = "" } = useParams<{
@@ -53,6 +54,8 @@ const DelegatorLifecycle = () => {
       setMode("tablular");
     }
   }, [tab]);
+
+  const { isMobile } = useScreen()
 
   useEffect(() => {
     if (containerRef.current) {
@@ -109,7 +112,7 @@ const DelegatorLifecycle = () => {
           </ButtonReportContainer>
         </BoxItemStyled>
       </BoxContainerStyled>
-      <Box>
+      <Box ml={isMobile ? 2 : 0}>
         {mode === "timeline" && (
           <DelegatorLifecycleComponent
             handleResize={handleResize}

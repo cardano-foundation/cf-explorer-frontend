@@ -49,7 +49,9 @@ export const ButtonReport = styled(Button)(({ theme }) => ({
     background: alpha(theme.palette.grey[700], 0.8),
   },
   [theme.breakpoints.down("md")]: {
-    width: "328px",
+    width: "100%",
+    maxWidth: "328px",
+    minWidth: "225px",
   },
 }));
 export const ButtonReportContainer = styled(Button)(({ theme }) => ({
@@ -68,6 +70,8 @@ export const BoxContainerStyled = styled(Box)(({ theme }) => ({
     display: "flex",
     alignItems: "flex-start",
     flexDirection: "column",
+    marginLeft: "16px",
+    marginRight: "16px",
   },
 }));
 export const BoxSwitch = styled(Box)(({ theme }) => ({
