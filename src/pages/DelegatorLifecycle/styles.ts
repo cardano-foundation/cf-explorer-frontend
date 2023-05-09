@@ -20,7 +20,6 @@ export const ButtonGroup = styled(Box)(({ theme }) => ({
   marginTop: "11px !important",
   background: "#E7E8EA",
   padding: "3px 2px",
-  // margin: `0 ${theme.spacing(2)}`,
   borderTopLeftRadius: "20px",
   borderBottomLeftRadius: "20px",
   borderTopRightRadius: "20px",
