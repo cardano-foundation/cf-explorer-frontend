@@ -24,8 +24,6 @@ import { ReactComponent as TableMode } from "../../commons/resources/icons/Staki
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import Tablular from "../../components/StakingLifeCycle/SPOLifecycle/Tablular";
 import CustomTooltip from "../../components/commons/CustomTooltip";
-import { StyledLink } from "../../components/share/styled";
-import { details } from "../../commons/routers";
 
 const SPOLifecycle = () => {
   const { poolId = "", tab } = useParams<{
@@ -90,9 +88,7 @@ const SPOLifecycle = () => {
               Pool ID:
             </Box>
             <CustomTooltip title={poolId}>
-              <StyledLink to={details.delegation(poolId)}>
-                <StakeId>{getShortHash(poolId)}</StakeId>
-              </StyledLink>
+              <StakeId>{getShortHash(poolId)}</StakeId>
             </CustomTooltip>
             <CopyButton text={poolId} />
           </Box>
@@ -116,7 +112,6 @@ const SPOLifecycle = () => {
           </ButtonReportContainer>
         </BoxItemStyled>
       </BoxContainerStyled>
-
       <Box>
         {mode === "timeline" && (
           <SPOLifecycleComponent
