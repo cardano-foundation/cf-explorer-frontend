@@ -75,7 +75,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       key: "time",
       title: "Date",
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+        sortValue ? setSort(`id,${sortValue}`) : setSort("");
       },
       render(data, index) {
         return <Box>{formatDateTimeLocal(data.time)}</Box>;
