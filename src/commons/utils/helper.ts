@@ -40,14 +40,18 @@ export const numberWithCommas = (value?: number | string, decimal: number = 18) 
   return formated.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 };
 
-export const formatADA = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
+export const formatADA = (
+  value?: string | number,
+  abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS,
+  numOfUnits: number = 6
+): string => {
   if (!value) return `0${abbreviations[0]}`;
   const realAda = new BigNumber(value).div(10 ** 6);
-  if (realAda.gte(10 ** 6)) {
+  if (realAda.gte(10 ** numOfUnits)) {
     const length = realAda.toFixed(0).length;
     const exponential = Math.floor((length - 1) / 3) * 3;
 
-    if (exponential > 5) {
+    if (exponential > numOfUnits - 1) {
       const newValue = realAda
         .div(10 ** exponential)
         .toFixed(2, 3)
@@ -114,7 +118,7 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
     const payload = {
       username,
       password,
-      type: 0
+      type: 0,
     };
     const response = await signIn(payload);
     const data = response.data;
@@ -127,7 +131,7 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
     localStorage.setItem("login-type", "normal");
 
     const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-    setUserData({...userInfo.data, loginType: "normal"});
+    setUserData({ ...userInfo.data, loginType: "normal" });
     cbSuccess?.();
   } catch (error) {
     removeAuthInfo();
@@ -147,7 +151,6 @@ export const getEpochSlotNo = (data: IDataEpoch) => {
   }
   return moment().diff(moment(data.startTime), "seconds");
 };
-
 
 export function formatHash(hash: string): string {
   const prefix = hash.slice(0, 6);

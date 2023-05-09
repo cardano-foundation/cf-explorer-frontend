@@ -15,8 +15,8 @@ export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
       top: "80px",
     },
     [theme.breakpoints.down("sm")]: {
-      right: "auto",
-      width: "100%",
+      position: "fixed",
+      left: 0,
     },
   },
 }));
@@ -30,7 +30,7 @@ export const ViewDetailHeader = styled(Box)(({ theme }) => ({
   borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
   [theme.breakpoints.down("sm")]: {
     margin: "0px",
-    padidng: "15px 16px",
+    padding: "15px 16px",
   },
 }));
 
@@ -63,6 +63,7 @@ export const ViewDetailScroll = styled(Box)(({ theme }) => ({
   paddingTop: "15px",
   [theme.breakpoints.down("sm")]: {
     marginRight: "0px",
+    overflowY: "auto",
     width: "100%",
     padding: "15px 16px",
   },

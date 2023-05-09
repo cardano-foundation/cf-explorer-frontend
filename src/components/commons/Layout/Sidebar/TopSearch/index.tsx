@@ -10,7 +10,7 @@ function TopSearch({ open, onClose }: TProps) {
   return (
     <WrapTopSearch anchor="top" sx={{ zIndex: 10 }} open={open} onClose={() => onClose(false)}>
       <MainContent>
-        <HeaderSearch home={false} />
+        <HeaderSearch home={false} callback={() => onClose(false)} />
       </MainContent>
     </WrapTopSearch>
   );

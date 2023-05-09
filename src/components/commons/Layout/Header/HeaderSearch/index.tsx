@@ -1,6 +1,6 @@
 import React, { FormEvent, useState, useEffect } from "react";
-import { Backdrop, Box, Button, SelectChangeEvent } from "@mui/material";
-import { useHistory, useLocation } from "react-router-dom";
+import { Backdrop, Box, SelectChangeEvent } from "@mui/material";
+import { useHistory } from "react-router-dom";
 import { HeaderSearchIcon } from "../../../../../commons/resources";
 import { details, routers } from "../../../../../commons/routers";
 import { stringify } from "qs";
@@ -22,6 +22,7 @@ import { useScreen } from "../../../../../commons/hooks/useScreen";
 
 interface Props {
   home: boolean;
+  callback?: () => void;
 }
 interface FormValues {
   filter: FilterParams;
@@ -93,7 +94,7 @@ const options: Option[] = [
   },
 ];
 
-const HeaderSearch: React.FC<Props> = ({ home }) => {
+const HeaderSearch: React.FC<Props> = ({ home, callback }) => {
   const history = useHistory();
   const [{ search, filter }, setValues] = useState<FormValues>({ ...intitalValue });
   const [showOption, setShowOption] = useState(false);
@@ -119,6 +120,7 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
   const handleSearch = (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
     const detail = options.find(item => item.value === filter)?.detail;
+    callback?.();
     if (detail) return history.push(detail(search));
     if (search) {
       history.push(
