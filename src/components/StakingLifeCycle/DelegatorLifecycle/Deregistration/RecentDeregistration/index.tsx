@@ -10,6 +10,7 @@ import { EmptyRecord } from "../../../../commons/Table";
 import { FilterDateLabel } from "../../Delegation/styles";
 import { GridBox, WrapFilterDescription } from "./styles";
 import { DATETIME_PARTTEN } from "../../../../StackingFilter/DateRangeModal";
+import { DescriptionText } from "../../styles";
 
 interface Props {
   onSelect: (deregistration: DeregistrationItem) => void;
@@ -43,7 +44,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
   return (
     <Box marginTop="32px">
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
-        <span>Recent Deregistrations</span>
+        <DescriptionText>Recent Deregistrations</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             Showing {total} {total > 1 ? "results" : "result"}

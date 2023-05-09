@@ -1,4 +1,4 @@
-import { Box, Grid, Skeleton, alpha } from "@mui/material";
+import { Box, Grid, Skeleton, alpha, useTheme } from "@mui/material";
 import { useRef, useState, useEffect } from "react";
 import { Link as LinkDom } from "react-router-dom";
 
@@ -14,7 +14,7 @@ import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSy
 import DelegationCertificateIcon from "../../../../commons/resources/icons/Staking/DelegationCertificateIcon.svg";
 import Line from "../../../Line";
 import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
-import ADAicon from "../../../commons/ADAIcon";
+import ADAicon, { AdaLogoIcon } from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentDelegations from "./RecentDelegations";
 import { useParams } from "react-router";
@@ -91,6 +91,7 @@ const DelegationTimeline = ({
   handleResize: () => void;
   selected: DelegationItem | null;
 }) => {
+  const theme = useTheme();
   const [openModal, setOpenModal] = useState(false);
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const { data, loading } = useFetch<DelegationDetail>(
@@ -170,10 +171,16 @@ const DelegationTimeline = ({
                 render={({ handleClick }) => (
                   <FeeBox ref={feeRef}>
                     <Box>
-                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      <Box
+                        component={"span"}
+                        fontSize={"18px"}
+                        fontWeight={"bold"}
+                        mr={1}
+                        color={theme => theme.palette.common.black}
+                      >
                         {formatADAFull(data?.fee || 0)}
                       </Box>
-                      <ADAicon fontSize="18px" />
+                      <AdaLogoIcon fontSize={14} color={theme.palette.text.secondary} />
                     </Box>
                     <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
                       <ButtonListIcon />
