@@ -1,4 +1,5 @@
 import { Box, Button, IconButton, Typography, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const CardOverview = styled(Box)`
   background: white;
@@ -34,11 +35,10 @@ export const CardTitle = styled(Typography)(({ theme }) => ({
   marginBottom: 4,
 }));
 
-export const CardValue = styled(Typography)<{color?: string}>(({ theme ,...rest}) => ({
+export const CardValue = styled(Typography)<{ color?: string }>(({ theme, ...rest }) => ({
   fontWeight: theme.typography.fontWeightBold,
   fontSize: 16,
   color: rest.color ? rest.color : theme.palette.grey[700],
-  
 }));
 
 export const TransferButton = styled(Button)(({ theme }) => ({
@@ -67,12 +67,12 @@ export const WrapWalletIcon = styled(Box)`
   }
 `;
 
-export const ClickAbleLink = styled(Typography)`
-  color: #108AEF;
+export const ClickAbleLink = styled(Link)`
+  color: ${({ theme }) => theme.palette.blue[800]} !important;
   cursor: pointer;
 `;
 
 export const ViewMoreButton = styled(IconButton)`
   padding: 14px;
-  background-color: #E3E5E9;
+  background-color: #e3e5e9;
 `;

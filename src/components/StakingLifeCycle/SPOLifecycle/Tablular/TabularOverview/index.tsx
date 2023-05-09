@@ -18,6 +18,7 @@ import { formatADAFull, formatHash } from "../../../../../commons/utils/helper";
 import { CardOverview, CardTitle, CardValue, ClickAbleLink, ViewMoreButton, WrapIcon, WrapWalletIcon } from "./styles";
 import { DotsIcon } from "../../../../PoolRegistrationCertificate/styles";
 import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
+import { details } from "../../../../../commons/routers";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -77,8 +78,8 @@ const TabularOverview: React.FC = () => {
   const { data } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : "");
   const history = useHistory();
   const onOwnerItemClick = (key: string) => {
-    return history.push(`/stake/${key}/delegation`)
-  }
+    return history.push(`/stake/${key}/delegation`);
+  };
   return (
     <Box>
       <Grid container spacing={2}>
@@ -99,7 +100,7 @@ const TabularOverview: React.FC = () => {
           value={
             <Box display="flex" alignItems="center">
               <CardValue color={STATUS[data?.status ?? "ACTIVE"][1]}>{STATUS[data?.status ?? "ACTIVE"][0]} :</CardValue>
-              <ClickAbleLink>&nbsp; Epoch {data?.epochNo}</ClickAbleLink>
+              <ClickAbleLink to={details.epoch(data?.epochNo)}>&nbsp; Epoch {data?.epochNo}</ClickAbleLink>
             </Box>
           }
         />
@@ -120,7 +121,11 @@ const TabularOverview: React.FC = () => {
           value={
             <Box display="flex" alignItems="center">
               <CardValue>
-                <ClickAbleLink>{data?.stakeKeys && data?.stakeKeys.length && formatHash(data.stakeKeys[0])}</ClickAbleLink>
+                <ClickAbleLink
+                  to={details.stake((data?.stakeKeys && data?.stakeKeys.length && data.stakeKeys[0]) || "#")}
+                >
+                  {data?.stakeKeys && data?.stakeKeys.length && formatHash(data.stakeKeys[0])}
+                </ClickAbleLink>
               </CardValue>
             </Box>
           }
@@ -134,7 +139,14 @@ const TabularOverview: React.FC = () => {
           }
         />
       </Grid>
-      <ViewMoreAddressModal showFullHash={true} onItemClick={onOwnerItemClick} title="Pool Owner" open={open} items={data?.stakeKeys} onClose={() => setOpen(false)} />
+      <ViewMoreAddressModal
+        showFullHash={true}
+        onItemClick={onOwnerItemClick}
+        title="Pool Owner"
+        open={open}
+        items={data?.stakeKeys}
+        onClose={() => setOpen(false)}
+      />
     </Box>
   );
 };
