@@ -125,7 +125,7 @@ const WithdrawalHistoryTab = () => {
         pagination={{
           ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => setPageInfo(pre => ({ ...pre, page, size })),
+          onChange: (page, size) => setPageInfo(pre => ({ ...pre, page: page - 1, size })),
         }}
         onClickRow={(e, r: DeregistrationItem) => history.push(details.transaction(r.txHash))}
       />

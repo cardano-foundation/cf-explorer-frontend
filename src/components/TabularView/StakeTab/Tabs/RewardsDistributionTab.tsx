@@ -102,7 +102,7 @@ const RewardsDistributionTab = () => {
         pagination={{
           ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => setPageInfo(pre => ({ ...pre, page, size })),
+          onChange: (page, size) => setPageInfo(pre => ({ ...pre, page: page - 1, size })),
         }}
         onClickRow={(e, r: RewardDistributionItem) => history.push(details.epoch(r.epoch))}
       />
