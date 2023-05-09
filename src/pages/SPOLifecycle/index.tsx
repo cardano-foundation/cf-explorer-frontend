@@ -86,7 +86,9 @@ const SPOLifecycle = () => {
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
-            <Box component={"span"}>Pool ID:</Box>
+            <Box component={"span"} fontSize={"0.875rem"} lineHeight={1}>
+              Pool ID:
+            </Box>
             <CustomTooltip title={poolId}>
               <StyledLink to={details.delegation(poolId)}>
                 <StakeId>{getShortHash(poolId)}</StakeId>
