@@ -14,12 +14,13 @@ import {
   PoolCert,
   CertUpdate,
   ChangeIcon,
+  EmptyIcon,
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import PoolCertificateIcon from "../../../../commons/resources/icons/Staking/PoolCertificateIcon.svg";
 
 import Line from "../../../Line";
-import { FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { CardBox, FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import useFetchList from "../../../../commons/hooks/useFetchList";
@@ -33,7 +34,7 @@ import { useParams } from "react-router";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { details } from "../../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import { ButtonSPO, PoolName, PoolNamePopup } from "../Registration/styles";
+import { ButtonSPO, PoolName, PoolNamePopup, StyledCopyButton } from "../Registration/styles";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import moment from "moment";
@@ -42,6 +43,7 @@ import StyledModal from "../../../commons/StyledModal";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Tab } from "@mui/material";
 import { TitleTab } from "../../../TransactionDetail/TransactionMetadata/styles";
+import { DescriptionText } from "../../DelegatorLifecycle/styles";
 
 const PoollUpdates = ({
   containerPosition,
@@ -84,7 +86,7 @@ const PoollUpdatesList = ({ setSelected }: { setSelected: (pool: PoolUpdateItem 
   return (
     <Box marginTop="32px">
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
-        <span>Recent Withdrawals</span>
+        <DescriptionText>Recent Withdrawals</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>Showing {total} results</WrapFilterDescription>
           <StackingFilter
@@ -152,6 +154,7 @@ const PoollUpdatesTimeline = ({
             <Info>
               <AddressIcon fill="#438F68" />
               <Box component={Skeleton} ml={1} variant="rectangular" width={145} height={18} />
+              <StyledCopyButton />
             </Info>
             <Info>
               <ADAGreen />
@@ -177,7 +180,10 @@ const PoollUpdatesTimeline = ({
         <Box display={"flex"}>
           <Info>
             <AddressIcon fill="#438F68" />
-            <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            <CustomTooltip title={data?.txHash}>
+              <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            </CustomTooltip>
+            <StyledCopyButton text={data?.txHash} />
           </Info>
           <Info>
             <ADAGreen />
@@ -367,7 +373,6 @@ export const PoolUpdateModal = ({
   handleCloseModal: () => void;
 }) => {
   const [tabActive, setTabActive] = useState("poolCertificate");
-
   const renderPoolCert = () => (
     <Grid container spacing={1}>
       <Grid item xs={6}>
@@ -500,15 +505,15 @@ export const PoolUpdateModal = ({
             {data && (
               <Box display={"inline"} fontSize="0.875rem">
                 {data?.margin}%
-                {data?.previousMargin && (
+                {data?.previousMargin !== null && (
                   <Box fontSize={12} color={theme => theme.palette.grey[400]}>
-                    Previous: {data.previousMargin} %{" "}
+                    Previous: {data?.previousMargin} %{" "}
                   </Box>
                 )}
               </Box>
             )}
           </Box>
-          {data?.previousMargin && (
+          {data?.previousMargin !== null && (
             <Box>
               <ChangeIcon />
             </Box>
@@ -533,13 +538,13 @@ export const PoolUpdateModal = ({
                   {formatADA(data?.pledge)} <ADAicon />
                 </Box>
               )}
-              {data?.previousPledge && (
+              {data?.previousPledge !== null && (
                 <Box fontSize={12} color={theme => theme.palette.grey[400]}>
-                  Previous: {formatADA(data.previousPledge)} <ADAicon />
+                  Previous: {formatADA(data?.previousPledge || 0)} <ADAicon />
                 </Box>
               )}
             </Box>
-            {data?.previousPledge && (
+            {data?.previousPledge !== null && (
               <Box>
                 <ChangeIcon />
               </Box>
@@ -571,61 +576,68 @@ export const PoolUpdateModal = ({
   );
 
   const renderCertificateUpdates = () => {
+    if (!data?.previousMargin === null && !data?.previousPledge === null) {
+      return (
+        <Box textAlign={"center"}>
+          <Box component={"img"} height={215} src={EmptyIcon} alt="no data" />
+        </Box>
+      );
+    }
     return (
       <Box display={"flex"} flexDirection={"column"} gap={1}>
-        {data?.previousMargin && (
+        {data?.previousMargin !== null && (
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
             <Box color={theme => theme.palette.grey[400]} fontWeight={"bold"}>
               Margin
             </Box>
             <Box display={"flex"} alignItems={"center"} mt={1}>
-              <Box flex={1}>
+              <CardBox flex={1}>
                 <Box color={theme => theme.palette.grey[400]} fontSize={12}>
                   OLD
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
                   {data?.previousMargin} %
                 </Box>
-              </Box>
+              </CardBox>
               <Box flex={1} textAlign={"center"}>
                 <ChangeIcon />
               </Box>
-              <Box flex={1}>
+              <CardBox flex={1}>
                 <Box color={theme => theme.palette.grey[400]} fontSize={12}>
                   NEW
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
                   {data?.margin} %
                 </Box>
-              </Box>
+              </CardBox>
             </Box>
           </Box>
         )}
-        {data?.previousPledge && (
+        {data?.previousPledge !== null && (
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
             <Box color={theme => theme.palette.grey[400]} fontWeight={"bold"}>
               Pledge
             </Box>
             <Box display={"flex"} alignItems={"center"} mt={1}>
-              <Box flex={1}>
+              <CardBox flex={1}>
                 <Box color={theme => theme.palette.grey[400]} fontSize={12}>
                   OLD
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
                   {formatADA(data?.previousPledge)} <ADAicon />
                 </Box>
-              </Box>
+              </CardBox>
               <Box flex={1} textAlign={"center"}>
                 <ChangeIcon />
               </Box>
-              <Box flex={1}>
+              <CardBox flex={1}>
                 <Box color={theme => theme.palette.grey[400]} fontSize={12}>
                   NEW
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
                   {formatADA(data?.pledge)} <ADAicon />
                 </Box>
-              </Box>
+              </CardBox>
             </Box>
           </Box>
         )}
@@ -638,19 +650,19 @@ export const PoolUpdateModal = ({
     label: string;
     children: React.ReactNode;
   }[] = [
-    {
-      key: "poolCertificate",
-      icon: PoolCert,
-      label: "Pool certificate",
-      children: <>{renderPoolCert()}</>,
-    },
-    {
-      key: "certificateUpdates",
-      icon: CertUpdate,
-      label: "Certificate updates",
-      children: <Box>{renderCertificateUpdates()}</Box>,
-    },
-  ];
+      {
+        key: "poolCertificate",
+        icon: PoolCert,
+        label: "Pool certificate",
+        children: <>{renderPoolCert()}</>,
+      },
+      {
+        key: "certificateUpdates",
+        icon: CertUpdate,
+        label: "Certificate updates",
+        children: <Box>{renderCertificateUpdates()}</Box>,
+      },
+    ];
 
   const handleChange = (event: React.SyntheticEvent, tab: "poolCertificate" | "certificateUpdates") => {
     setTabActive(tab);

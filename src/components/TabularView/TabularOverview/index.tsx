@@ -50,7 +50,7 @@ type TGridItem = {
 
 const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
   return (
-    <Grid item xs={6}>
+    <Grid item xs={12} md={6}>
       <CardOverview>
         <Icon component={BgGray} />
         <Box display="flex" alignItems="center" gap="12px">

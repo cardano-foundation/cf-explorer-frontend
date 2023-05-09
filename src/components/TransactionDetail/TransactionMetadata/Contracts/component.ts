@@ -16,3 +16,12 @@ export const Img = styled("img")(() => ({
   padding: "15px 0 0",
   margin: "0 auto",
 }));
+
+export const WrapAddress = styled(Box)(({ theme }) => ({
+  color: theme.palette.text.primary,
+  margin: "0 auto",
+  display: "flex",
+  alignItems: "center",
+  width: 197,
+  wordBreak: "break-all",
+}));

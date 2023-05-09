@@ -26,6 +26,7 @@ import {
   InfoText,
   PoolName,
   PoolNamePopup,
+  StyledCopyButton,
 } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
@@ -141,7 +142,10 @@ const RegistrationTimeline = ({
         <Box display={"flex"}>
           <Info>
             <AddressIcon fill="#438F68" />
-            <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            <CustomTooltip title={data?.txHash}>
+              <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            </CustomTooltip>
+            <StyledCopyButton text={data?.txHash} />
           </Info>
           <Info>
             <ADAGreen />
@@ -342,19 +346,30 @@ const RegistrationTimeline = ({
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
-      <RegistrationCertificateModal data={data} handleCloseModal={() => setOpenModal(false)} open={openModal} />
+      <RegistrationCertificateModal
+        poolId={poolId}
+        poolUpdateId={selected?.poolUpdateId || 0}
+        handleCloseModal={() => setOpenModal(false)}
+        open={openModal}
+      />
     </Box>
   );
 };
 
-const RegistrationCertificateModal = ({
-  data,
+export const RegistrationCertificateModal = ({
+  poolId,
+  poolUpdateId,
   ...props
 }: {
   open: boolean;
-  data: SPORegistrationDetail | null;
+  poolId: string;
+  poolUpdateId: number;
   handleCloseModal: () => void;
 }) => {
+  const { data, loading } = useFetch<SPORegistrationDetail>(
+    poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, poolUpdateId) : ""
+  );
+
   return (
     <StyledModal {...props} title="Pool registration certificate">
       <Grid container spacing={1}>
@@ -363,7 +378,8 @@ const RegistrationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Transaction ID
             </Box>
-            {data && (
+            {loading && <Skeleton variant="rectangular" />}
+            {data && !loading && (
               <Box>
                 <Link to={details.transaction(data?.txHash || "")}>{getShortHash(data?.txHash || "")}</Link>{" "}
                 <CopyButton text={data?.txHash || ""} />
@@ -376,7 +392,8 @@ const RegistrationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Pool ID
             </Box>
-            {data && (
+            {loading && <Skeleton variant="rectangular" />}
+            {data && !loading && (
               <Box>
                 <Link to={details.delegation(data?.poolView || "")}>{getShortHash(data?.poolView || "")}</Link>{" "}
                 <CopyButton text={data?.poolView || ""} />
@@ -390,7 +407,8 @@ const RegistrationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               VRF Key
             </Box>
-            {data && (
+            {loading && <Skeleton variant="rectangular" />}
+            {data && !loading && (
               <Box>
                 <Box display={"inline"} fontSize="0.875rem" color={({ palette }) => palette.blue[800]}>
                   {getShortHash(data?.vrfKey || "")}
@@ -405,7 +423,8 @@ const RegistrationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Owners
             </Box>
-            {data && (
+            {loading && <Skeleton variant="rectangular" />}
+            {data && !loading && (
               <>
                 {(data.stakeKeys || []).map(item => (
                   <>
@@ -424,7 +443,8 @@ const RegistrationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Reward Account
             </Box>
-            {data && (
+            {loading && <Skeleton variant="rectangular" />}
+            {data && !loading && (
               <Box>
                 <Link to={details.stake(data?.rewardAccount || "")}>{getShortWallet(data?.rewardAccount || "")}</Link>{" "}
                 <CopyButton text={data?.rewardAccount || ""} />
@@ -437,7 +457,8 @@ const RegistrationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Margin
             </Box>
-            {data && (
+            {loading && <Skeleton variant="rectangular" />}
+            {data && !loading && (
               <Box display={"inline"} fontSize="0.875rem">
                 {data?.margin}%
               </Box>
@@ -449,7 +470,8 @@ const RegistrationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Pledge
             </Box>
-            {data && (
+            {loading && <Skeleton variant="rectangular" />}
+            {data && !loading && (
               <Box display={"inline"} fontSize="0.875rem">
                 {formatADA(data?.pledge)} <ADAicon />
               </Box>
@@ -461,7 +483,8 @@ const RegistrationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Cost
             </Box>
-            {data && (
+            {loading && <Skeleton variant="rectangular" />}
+            {data && !loading && (
               <Box display={"inline"} fontSize="0.875rem">
                 {formatADA(data?.cost)} <ADAicon />
               </Box>

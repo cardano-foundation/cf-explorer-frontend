@@ -12,7 +12,18 @@ import {
   InfoIcon,
   TranferIcon,
 } from "../../../commons/resources";
-import { ADATransfersButton, NextButton, PreviousButton, Step, StepButton, TitleStep } from "./styles";
+import {
+  ADATransfersButton,
+  ButtonText,
+  DescriptionText,
+  NextButton,
+  PreviousButton,
+  Step,
+  StepButton,
+  StyledBox,
+  TabTitle,
+  TitleStep,
+} from "./styles";
 
 import Registration from "./Registration";
 import Delegation from "./Delegation";
@@ -146,10 +157,10 @@ const DelegatorLifecycle = ({
       </Box>
 
       <Box mt={3} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-        <Box fontSize={"1.5rem"} fontWeight={"bold"}>
-          {stepper[currentStep].title}{" "}
+        <StyledBox fontSize={"1.5rem"} fontWeight={"bold"}>
+          <TabTitle>{stepper[currentStep].title}</TabTitle>
           <InfoIcon style={{ cursor: "pointer" }} onClick={() => setOpenDescriptionModal(true)} />
-        </Box>
+        </StyledBox>
         <ADATransfersButton onClick={() => setOpen(true)}>
           <TranferIcon /> ADA Transfers
         </ADATransfersButton>
@@ -167,7 +178,7 @@ const DelegatorLifecycle = ({
           }}
         >
           <PreviousIcon />
-          <Box component={"span"}>Previous: {stepper[currentStep - 1]?.title}</Box>
+          <ButtonText>Previous: {stepper[currentStep - 1]?.title}</ButtonText>
         </PreviousButton>
       )}
       <NextButton
@@ -182,7 +193,9 @@ const DelegatorLifecycle = ({
         }}
         variant="contained"
       >
-        Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+        <ButtonText>
+          Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+        </ButtonText>
         <NextIcon />
       </NextButton>
       <ADATransferModal open={open} handleCloseModal={() => setOpen(false)} />

@@ -13,6 +13,27 @@ export const Header = styled(Box)(({ theme }) => ({
   fontSize: "12px",
   color: theme.palette.text.primary,
   borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  [theme.breakpoints.down("sm")]: {
+    margin: "0 15px",
+  }
+}));
+
+export const ItemContent = styled(Box)(({ theme }) => ({
+  display: "flex",
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+  }
+}));
+
+export const ItemFooter = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  padding: "12px 25px",
+  background: theme.palette.green[800_10],
+  [theme.breakpoints.down("sm")]: {
+    padding: "12px 15px",
+  }
 }));
 
 export const TokenLink = styled(Link)(({ theme }) => ({
@@ -37,4 +58,20 @@ export const Item = styled(Box)(({ theme }) => ({
   "&:last-of-type": {
     borderBottom: "none",
   },
+  [theme.breakpoints.down("sm")]: {
+    margin: "0 15px",
+  }
+}));
+
+export const WrapToken = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-start",
+  flexWrap: "wrap",
+  width: "auto",
+  [theme.breakpoints.down("md")]: {
+    maxWidth: 70,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  }
 }));

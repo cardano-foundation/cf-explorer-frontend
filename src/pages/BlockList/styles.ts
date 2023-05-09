@@ -1,5 +1,6 @@
 import { styled, Container } from "@mui/material";
 import { Link } from "react-router-dom";
+import breakpoints from "../../themes/breakpoints";
 
 export const StyledColorBlueDard = styled("span")`
   color: ${props => props.theme.palette.text.primary};
@@ -20,6 +21,12 @@ export const PriceWrapper = styled(StyledColorBlueDard)`
   gap: 10px;
 `;
 
-export const StyledContainer = styled(Container)`
-  padding: 20px 0 40px;
-`;
+export const StyledContainer = styled(Container)(({ theme }) => ({
+  padding: "20px 0 40px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "0 0 40px",
+    ".card-table > div:nth-child(2)": {
+      padding: "0 0 25px 16px",
+    },
+  },
+}));

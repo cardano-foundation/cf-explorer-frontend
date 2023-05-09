@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import moment from "moment";
 import React from "react";
 import { AIconGreen, HashtagIcon, TimerIcon } from "../../../commons/resources";
-import { formatADAFull, getShortHash } from "../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../commons/utils/helper";
 import { OverviewIcon, OverviewTitle, WrapContainer } from "./styles";
 import CustomIcon from "../CustomIcon";
 
@@ -47,7 +47,7 @@ const OverviewStaking: React.FC<Props> = ({ item, ...props }) => {
           <CustomIcon icon={TimerIcon} width={17} fill="currentColor" color={theme => theme.palette.primary.main} />
         </OverviewIcon>
         <Box marginLeft={"10px"}>
-          <OverviewTitle>{moment(time).format("MM/DD/YYYY HH:mm:ss")}</OverviewTitle>
+          <OverviewTitle>{formatDateTimeLocal(time)}</OverviewTitle>
         </Box>
       </Box>
     </WrapContainer>

@@ -3,9 +3,18 @@ import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import CopyButton from "../CopyButton";
+import breakpoints from "../../../themes/breakpoints";
 
 export const HeaderDetailContainer = styled(Box)`
   text-align: left;
+`;
+
+export const EpochDetail = styled(Box)`
+  @media screen and (max-width: ${breakpoints.values.sm}px) {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
 `;
 
 export const BackButton = styled(Box)`
@@ -21,15 +30,31 @@ export const BackText = styled("small")`
   font-weight: var(--font-weight-bold);
 `;
 
+export const WrapHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+  }
+}));
+
 export const HeaderContainer = styled(Box)`
   display: flex;
   align-items: center;
+  ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.sm)} {
+    justify-content: space-between;
+  }
 `;
 
 export const HeaderTitle = styled("h2")`
   color: ${props => props.theme.palette.common.black};
   font-size: 2.25rem;
   margin: 0.5rem 0;
+  ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.sm)} {
+    font-size: 1.5rem;
+  }
 `;
 
 export const HeaderTitleSkeleton = styled(Skeleton)`
@@ -131,6 +156,9 @@ export const DetailsInfo = styled(Grid)<{ items_length: number }>`
   border-radius: 15px;
   ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.lg)} {
     padding: 30px 25px;
+  }
+  ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.sm)} {
+    padding: 20px 15px;
   }
 `;
 
@@ -312,7 +340,7 @@ export const CardItem = styled(Grid)<{ items_length: number }>(({ theme, items_l
       },
     },
   },
-  [theme.breakpoints.between(theme.breakpoints.values.sm, theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
     paddingTop: 20,
     paddingBottom: 20,
     borderBottomWidth: 1,
@@ -341,11 +369,35 @@ export const CardItem = styled(Grid)<{ items_length: number }>(({ theme, items_l
     },
   },
   [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
-    padding: "20px 0px",
+    paddingTop: 20,
+    paddingBottom: 20,
     borderBottomWidth: 1,
-    borderLeftWidth: 0,
-    ":last-of-type": {
-      borderBottomWidth: 0,
+    ":nth-of-type(2n+1)": {
+      borderLeftWidth: 0,
+      padding: 15,
+      paddingLeft: 0,
+    },
+    ":nth-of-type(2n)": {
+      padding: 15,
+    },
+    ":last-of-type::after": {
+      content: `""`,
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      right: -1,
+      borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+    },
+    ":nth-of-type(2n)::after": {
+      borderRight: 0,
+    },
+    ":nth-last-of-type(-n+2)": {
+      ":nth-of-type(2n+1)": {
+        borderBottomWidth: 0,
+        "&~div": {
+          borderBottomWidth: 0,
+        },
+      },
     },
   },
 }));
@@ -391,5 +443,5 @@ export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   justifyContent: "space-between",
   "&:hover": {
     backgroundColor: "rgba(67, 143, 104, 0.1)",
-  }
+  },
 }));

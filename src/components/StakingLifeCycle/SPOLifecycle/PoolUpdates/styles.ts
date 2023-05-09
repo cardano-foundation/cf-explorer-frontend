@@ -72,3 +72,9 @@ export const InfoText = styled(Box)(({ theme }) => ({
   fontWeight: 600,
   fontSize: "14px",
 }));
+
+export const CardBox = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+`;

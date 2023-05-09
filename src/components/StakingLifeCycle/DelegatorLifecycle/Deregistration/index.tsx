@@ -18,7 +18,7 @@ import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./s
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentDeregistrations from "./RecentDeregistration";
-import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADA, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import moment from "moment";
 import PopoverStyled from "../../../commons/PopoverStyled";
 import PopupStaking from "../../../commons/PopupStaking";
@@ -27,6 +27,8 @@ import StyledModal from "../../../commons/StyledModal";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
 import CopyButton from "../../../commons/CopyButton";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 
 const Deregistration = ({
   containerPosition,
@@ -100,15 +102,18 @@ const DeregistrationTimeline = ({
         <Box display={"flex"}>
           <Info>
             <AddressIcon fill="#438F68" />
-            <InfoText>{getShortHash(selected.txHash || "")}</InfoText>
+            <CustomTooltip title={selected.txHash}>
+              <InfoText>{getShortHash(selected.txHash || "")}</InfoText>
+            </CustomTooltip>
+            <StyledCopyButton text={selected.txHash} />
           </Info>
           <Info>
             <ADAGreen />
-            <InfoText>{formatADA(selected.deposit + selected.fee || 0)}</InfoText>
+            <InfoText>{formatADA(Math.abs(selected.deposit) - selected.fee || 0)}</InfoText>
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>{moment(selected.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+            <InfoText>{formatDateTimeLocal(selected.time)}</InfoText>
           </Info>
         </Box>
       </Box>
@@ -132,7 +137,7 @@ const DeregistrationTimeline = ({
                   <HoldBox ref={holdRef} ml={1}>
                     <Box>
                       <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                        {formatADA(selected.deposit || 0)}
+                        {formatADA(Math.abs(selected.deposit) || 0)}
                       </Box>
                       <ADAicon fontSize="18px" />
                     </Box>
@@ -282,7 +287,7 @@ const DeregistrationCertificateModal = ({
   const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
 
   return (
-    <StyledModal {...props} title="Registration certificate">
+    <StyledModal {...props} title="Deregistration certificate">
       <Box>
         {loading && <Skeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
@@ -292,7 +297,10 @@ const DeregistrationCertificateModal = ({
             </Box>
             {data && (
               <Box>
-                <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link> <CopyButton text={stake} />
+                <CustomTooltip title={stake}>
+                  <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link>
+                </CustomTooltip>
+                <CopyButton text={stake} />
               </Box>
             )}
           </Box>

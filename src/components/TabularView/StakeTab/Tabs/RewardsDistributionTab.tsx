@@ -15,29 +15,9 @@ import moment from "moment";
 import { DATETIME_PARTTEN } from "../../../StackingFilter/DateRangeModal";
 import { FilterDateLabel } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles";
 
-const columns: Column<RewardDistributionItem>[] = [
-  {
-    title: "Rewards Paid",
-    key: "paid",
-    minWidth: "120px",
-    render: r => <AdaValue value={r.amount} />,
-  },
-  {
-    title: "Timestamp",
-    key: "time",
-    minWidth: "120px",
-    render: r => formatDateTimeLocal(r.time),
-  },
-  {
-    title: "Epoch",
-    key: "epoch",
-    minWidth: "120px",
-    render: r => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>,
-  },
-];
-
 const RewardsDistributionTab = () => {
   const { stakeId } = useParams<{ stakeId: string }>();
+  const [sort, setSort] = useState<string>("");
   const { search } = useLocation();
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
@@ -47,9 +27,35 @@ const RewardsDistributionTab = () => {
     toDate: undefined,
     txHash: undefined,
   });
+
+  const columns: Column<RewardDistributionItem>[] = [
+    {
+      title: "Rewards Paid",
+      key: "paid",
+      minWidth: "120px",
+      render: r => <AdaValue value={r.amount} />,
+    },
+    {
+      title: "Timestamp",
+      key: "id",
+      minWidth: "120px",
+      render: r => formatDateTimeLocal(r.time),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
+    },
+    {
+      title: "Epoch",
+      key: "epoch",
+      minWidth: "120px",
+      render: r => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>,
+    },
+  ];
+
   const fetchData = useFetchList<RewardDistributionItem>(stakeId ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) : "", {
     ...pageInfo,
     ...params,
+    sort,
   });
   const { total, data } = fetchData;
   const filterLabel = useMemo(() => {

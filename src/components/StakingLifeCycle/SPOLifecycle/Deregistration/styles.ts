@@ -14,7 +14,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   background: theme.palette.common.white,
   top: "-70px",
   "::after": {
-    content: '"HOLD"',
+    content: '"POOL HOLD"',
     borderRadius: "4px",
     fontWeight: "bold",
     color: theme.palette.common.white,
@@ -72,4 +72,10 @@ export const InfoText = styled(Box)(({ theme }) => ({
   marginLeft: theme.spacing(1),
   fontWeight: 600,
   fontSize: "14px",
+}));
+
+export const HoldBoxText = styled(Box)(({ theme }) => ({
+  fontSize: "18px",
+  fontWeight: "bold",
+  color: theme.palette.common.black,
 }));

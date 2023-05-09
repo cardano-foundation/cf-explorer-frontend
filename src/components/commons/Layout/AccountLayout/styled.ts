@@ -8,6 +8,9 @@ export const ContentBox = styled(Box)(({ theme }) => ({
   minHeight: "calc(100vh - 252px)",
   borderTopLeftRadius: 10,
   borderTopRightRadius: 10,
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+    flexDirection: "column",
+  }
 }));
 export const SideBar = styled(Box)(({ theme }) => ({
   borderRight: `1px solid ${theme.palette.grey[50]}`,
@@ -24,12 +27,24 @@ export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => 
   fontWeight: "bold",
 }));
 
+
+export const NavItemMobile = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
+  textAlign: "center",
+  fontWeight: 700,
+  fontSize: "14px",
+  lineHeight: "16px",
+  color: `${active ? theme.palette.common.white : theme.palette.grey[400]} !important`,
+  backgroundColor: active ? theme.palette.primary.main : "#E7E8EA",
+  padding: "10px 17px",
+  borderRadius: `${active ? "5px" : ""}`,
+}));
+
 export const StyledUsername = styled(Box)`
-  max-width: 200px;
-  padding-left: ${({ theme }) => theme.spacing(1)};
-  padding-right: ${({ theme }) => theme.spacing(1)};
-  overflow: hidden;
-  text-overflow: ellipsis;
+  max- width: 200px;
+padding - left: ${({ theme }) => theme.spacing(1)};
+padding - right: ${({ theme }) => theme.spacing(1)};
+overflow: hidden;
+text - overflow: ellipsis;
 `;
 
 export const StyledButton = styled("span")(({ theme }) => ({
@@ -45,7 +60,7 @@ export const StyledButton = styled("span")(({ theme }) => ({
 
 export const StyledButtonReport = styled(Button)(() => ({ padding: 0 }));
 export const StyledButtonClose = styled(Button)(({ theme }) => ({
-  border: `2px solid ${theme.palette.border.hint}`,
+  border: `2px solid ${theme.palette.border.hint} `,
   textTransform: "capitalize",
   fontWeight: "bold",
   color: "#344054",
@@ -54,11 +69,11 @@ export const StyledButtonClose = styled(Button)(({ theme }) => ({
   height: "44px",
   borderRadius: "8px",
   ":hover": {
-    border: `2px solid ${theme.palette.border.hint}`,
+    border: `2px solid ${theme.palette.border.hint} `,
   },
 }));
 
 export const ModalTitle = styled("h3")`
-  font-family: var(--font-family-title);
-  margin-top: 0px;
+font - family: var(--font - family - title);
+margin - top: 0px;
 `;

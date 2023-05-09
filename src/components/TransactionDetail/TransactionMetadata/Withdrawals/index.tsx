@@ -10,12 +10,14 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import { AddressLink, Amount, ItemContainer, StatusIcon, StyledItem, Wrapper } from "./styles";
 import { Header } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
 interface WithdrawalsProps {
   data: Transaction["withdrawals"] | null;
 }
 
 const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
+  const { isTablet } = useScreen();
   return (
     <Wrapper>
       <Header>
@@ -25,12 +27,15 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
       {data?.map(item => (
         <StyledItem key={item.stakeAddressFrom}>
           <ItemContainer>
-            <Box width={50}>
-              <StatusIcon src={sendImg} alt="wallet icon" />
+            <Box display="flex" alignItems="center">
+              <Box width={50}>
+                <StatusIcon src={sendImg} alt="wallet icon" />
+              </Box>
+              {isTablet ? <span>From: </span> : null}
             </Box>
             <Box flex={1}>
               <Box>
-                <span>From: </span>
+                {!isTablet ? <span>From: </span> : null}
                 <CustomTooltip title={item.stakeAddressFrom}>
                   <AddressLink to={details.address(item.stakeAddressFrom)}>
                     {getShortWallet(item.stakeAddressFrom || "")}
