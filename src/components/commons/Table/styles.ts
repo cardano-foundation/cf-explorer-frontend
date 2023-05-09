@@ -38,10 +38,6 @@ export const THeader = styled("th")`
   top: 0;
   background-color: #fff;
   z-index: 2;
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
-    background: none;
-  }
 `;
 
 export const TRow = styled("tr")<{ selected?: number }>`
@@ -114,12 +110,6 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string }>(
   box-shadow: 0 0.5rem 1.2rem rgba(82, 85, 92, 0.15);
   border: 1px solid ${alpha(theme.palette.common.black, 0.1)};
   ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
-
-  @media screen and (max-width: ${theme.breakpoints.values.sm}px) {
-    background: none;
-    border: none;
-    box-shadow: none;
-  }
 `
 );
 

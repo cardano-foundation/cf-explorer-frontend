@@ -28,6 +28,7 @@ import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
+import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 
 const Deregistration = ({
   containerPosition,
@@ -104,6 +105,7 @@ const DeregistrationTimeline = ({
             <CustomTooltip title={selected.txHash}>
               <InfoText>{getShortHash(selected.txHash || "")}</InfoText>
             </CustomTooltip>
+            <StyledCopyButton text={selected.txHash} />
           </Info>
           <Info>
             <ADAGreen />

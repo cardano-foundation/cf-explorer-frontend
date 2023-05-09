@@ -34,7 +34,7 @@ import { useParams } from "react-router";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { details } from "../../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import { ButtonSPO, PoolName, PoolNamePopup } from "../Registration/styles";
+import { ButtonSPO, PoolName, PoolNamePopup, StyledCopyButton } from "../Registration/styles";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import moment from "moment";
@@ -154,6 +154,7 @@ const PoollUpdatesTimeline = ({
             <Info>
               <AddressIcon fill="#438F68" />
               <Box component={Skeleton} ml={1} variant="rectangular" width={145} height={18} />
+              <StyledCopyButton />
             </Info>
             <Info>
               <ADAGreen />
@@ -182,6 +183,7 @@ const PoollUpdatesTimeline = ({
             <CustomTooltip title={data?.txHash}>
               <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
             </CustomTooltip>
+            <StyledCopyButton text={data?.txHash} />
           </Info>
           <Info>
             <ADAGreen />

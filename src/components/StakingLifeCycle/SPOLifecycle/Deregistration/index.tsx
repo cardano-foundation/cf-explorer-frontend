@@ -24,7 +24,7 @@ import RecentDeregistrations from "./RecentDeregistrations";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import moment from "moment";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { ButtonSPO, PoolName, PoolNamePopup } from "../Registration/styles";
+import { ButtonSPO, PoolName, PoolNamePopup, StyledCopyButton } from "../Registration/styles";
 import { details } from "../../../../commons/routers";
 import CopyButton from "../../../commons/CopyButton";
 import StyledModal from "../../../commons/StyledModal";
@@ -102,6 +102,7 @@ const DeregistrationTimeline = ({
             <CustomTooltip title={selected?.txHash}>
               <InfoText>{getShortHash(selected?.txHash || "")}</InfoText>
             </CustomTooltip>
+            <StyledCopyButton text={selected?.txHash} />
           </Info>
           <Info>
             <ADAGreen />

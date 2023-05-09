@@ -28,6 +28,7 @@ import { API } from "../../../../commons/utils/api";
 import { details } from "../../../../commons/routers";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
+import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 
 const Registration = ({
   containerPosition,
@@ -107,6 +108,7 @@ const RegistrationTimeline = ({
             <CustomTooltip title={txHash}>
               <InfoText>{getShortHash(txHash || "")}</InfoText>
             </CustomTooltip>
+            <StyledCopyButton text={txHash} />
           </Info>
           <Info>
             <ADAGreen />
