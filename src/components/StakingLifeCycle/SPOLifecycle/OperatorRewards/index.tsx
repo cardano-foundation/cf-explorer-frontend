@@ -25,6 +25,7 @@ import Table, { Column } from "../../../commons/Table";
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import moment from "moment";
 import ADAicon from "../../../commons/ADAIcon";
+import { StyledLink } from "./styles";
 
 const OperatorReward = ({
   containerPosition,
@@ -200,11 +201,15 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: ()
       title: "Reward Account",
       key: "RewardAccount",
       minWidth: "50px",
-      render: r => <Link to={details.stake(r.rewardAccount)}>{getShortWallet(r.rewardAccount || "")}</Link>,
+      render: r => (
+        <CustomTooltip title={r.rewardAccount}>
+          <StyledLink to={details.stake(r.rewardAccount)}>{getShortWallet(r.rewardAccount || "")}</StyledLink>
+        </CustomTooltip>
+      ),
     },
   ];
   return (
-    <StyledModal width={600} {...props} title="Pool registration certificate">
+    <StyledModal width={600} {...props} title="Operator rewards received">
       <Box>
         <Box maxHeight={"75vh"} overflow={"auto"}>
           <StyledTable
