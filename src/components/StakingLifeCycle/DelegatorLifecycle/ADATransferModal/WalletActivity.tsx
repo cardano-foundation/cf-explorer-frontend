@@ -16,7 +16,7 @@ import useFetch from "../../../../commons/hooks/useFetch";
 
 const WalletActivity: React.FC = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
-  const [pageInfo, setPageInfo] = useState({ page: 0, size: 10 });
+  const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const [sort, setSort] = useState<string>("");
   const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}` || "");
 
