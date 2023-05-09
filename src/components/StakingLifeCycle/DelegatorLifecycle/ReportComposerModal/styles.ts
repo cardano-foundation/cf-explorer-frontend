@@ -21,15 +21,13 @@ export const StyledSelect = styled(SelectMui)(() => ({
 }));
 
 export const ModalTitle = styled("div")`
-  font-weight: 700;
-  font-size: 24px;
-  color: #13152f;
-  margin-bottom: 25px;
-`;
+font-weight: 700;
+color: #13152f;
+margin-bottom: 25px;
+`
 
 export const StyledStack = styled(Stack)`
   margin-bottom: 20px;
-  margin-top: 40px;
 `;
 
 export const TextWarning = styled("div")`
@@ -74,22 +72,21 @@ export const StyledButton = styled(Button)`
     opacity: 0.8;
   }
 `;
-export const StyledBackButton = styled(Button)`
-  width: 100%;
-  border-radius: 8px;
-  height: 44px;
-  padding: 10px 20px;
-  text-align: center;
-  color: #344054;
-  line-height: 19px;
-  font-weight: 500;
-  font-size: 16px;
-  border: 2px solid #c8cdd8;
-  border-radius: 8px;
-  &:hover {
-    opacity: 0.8;
-  }
-`;
+export const StyledBackButton = styled(Button)<{width?: number | string}>(({width = 100}) => ({
+  width: `${width}%`,
+  borderRadius: "8px",
+  height: "44px",
+  textAlign: "center",
+  color: "#344054",
+  lineHeight: "19px",
+  fontWeight: 500,
+  fontSize: "16px",
+  border: "2px solid #c8cdd8",
+  ":hover": {
+    opacity: 0.8,
+  },
+  textTransform: "none",
+}))
 
 export const SubText = styled("div")`
   color: #000000;

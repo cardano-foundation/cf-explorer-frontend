@@ -115,7 +115,7 @@ const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
 
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
-      <Container>
+      <Container p={"10px 10px 1px 20px"}>
         <ModalTitle>Report composer</ModalTitle>
         <SubText>Staking lifecycle events</SubText>
         <TextRequired>Select as required</TextRequired>
