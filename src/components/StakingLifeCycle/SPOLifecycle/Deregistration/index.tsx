@@ -99,7 +99,9 @@ const DeregistrationTimeline = ({
         <Box display={"flex"}>
           <Info>
             <AddressIcon fill="#438F68" />
-            <InfoText>{getShortHash(selected?.txHash || "")}</InfoText>
+            <CustomTooltip title={selected?.txHash}>
+              <InfoText>{getShortHash(selected?.txHash || "")}</InfoText>
+            </CustomTooltip>
           </Info>
           <Info>
             <ADAGreen />

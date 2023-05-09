@@ -141,7 +141,9 @@ const RegistrationTimeline = ({
         <Box display={"flex"}>
           <Info>
             <AddressIcon fill="#438F68" />
-            <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            <CustomTooltip title={data?.txHash}>
+              <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            </CustomTooltip>
           </Info>
           <Info>
             <ADAGreen />

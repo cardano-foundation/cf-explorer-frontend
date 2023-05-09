@@ -178,7 +178,9 @@ const PoollUpdatesTimeline = ({
         <Box display={"flex"}>
           <Info>
             <AddressIcon fill="#438F68" />
-            <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            <CustomTooltip title={data?.txHash}>
+              <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            </CustomTooltip>
           </Info>
           <Info>
             <ADAGreen />
@@ -645,19 +647,19 @@ export const PoolUpdateModal = ({
     label: string;
     children: React.ReactNode;
   }[] = [
-    {
-      key: "poolCertificate",
-      icon: PoolCert,
-      label: "Pool certificate",
-      children: <>{renderPoolCert()}</>,
-    },
-    {
-      key: "certificateUpdates",
-      icon: CertUpdate,
-      label: "Certificate updates",
-      children: <Box>{renderCertificateUpdates()}</Box>,
-    },
-  ];
+      {
+        key: "poolCertificate",
+        icon: PoolCert,
+        label: "Pool certificate",
+        children: <>{renderPoolCert()}</>,
+      },
+      {
+        key: "certificateUpdates",
+        icon: CertUpdate,
+        label: "Certificate updates",
+        children: <Box>{renderCertificateUpdates()}</Box>,
+      },
+    ];
 
   const handleChange = (event: React.SyntheticEvent, tab: "poolCertificate" | "certificateUpdates") => {
     setTabActive(tab);
