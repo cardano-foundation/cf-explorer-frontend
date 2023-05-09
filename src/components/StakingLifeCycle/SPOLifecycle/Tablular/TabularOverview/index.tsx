@@ -56,7 +56,7 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
   }[bgType];
 
   return (
-    <Grid item xs={6}>
+    <Grid item xs={12} md={12} lg={6}>
       <CardOverview>
         <Icon component={bg} />
         <Box display="flex" alignItems="center" gap="12px">

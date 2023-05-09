@@ -1,4 +1,4 @@
-import { Box, Grid, Skeleton, alpha } from "@mui/material";
+import { Box, Grid, Skeleton, alpha, useTheme } from "@mui/material";
 import { useRef, useState, useEffect } from "react";
 import { Link as LinkDom } from "react-router-dom";
 
@@ -14,7 +14,7 @@ import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSy
 import DelegationCertificateIcon from "../../../../commons/resources/icons/Staking/DelegationCertificateIcon.svg";
 import Line from "../../../Line";
 import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
-import ADAicon from "../../../commons/ADAIcon";
+import ADAicon, { AdaLogoIcon } from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentDelegations from "./RecentDelegations";
 import { useParams } from "react-router";
@@ -25,9 +25,11 @@ import PopupStaking from "../../../commons/PopupStaking";
 import { styled } from "@mui/material";
 import StyledModal from "../../../commons/StyledModal";
 import CopyButton from "../../../commons/CopyButton";
-import { formatADAFull, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import { details } from "../../../../commons/routers";
 import moment from "moment";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 
 const Delegation = ({
   containerPosition,
@@ -89,6 +91,7 @@ const DelegationTimeline = ({
   handleResize: () => void;
   selected: DelegationItem | null;
 }) => {
+  const theme = useTheme();
   const [openModal, setOpenModal] = useState(false);
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const { data, loading } = useFetch<DelegationDetail>(
@@ -142,15 +145,18 @@ const DelegationTimeline = ({
         <Box display={"flex"}>
           <Info>
             <AddressIcon fill="#438F68" />
-            <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            <CustomTooltip title={data?.txHash}>
+              <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            </CustomTooltip>
+            <StyledCopyButton text={data?.txHash} />
           </Info>
           <Info>
             <ADAGreen />
-            <InfoText>{formatADAFull(data?.outSum || 0)}</InfoText>
+            <InfoText>{formatADAFull(data?.fee || 0)}</InfoText>
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>{moment(data?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+            <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
           </Info>
         </Box>
       </Box>
@@ -165,10 +171,16 @@ const DelegationTimeline = ({
                 render={({ handleClick }) => (
                   <FeeBox ref={feeRef}>
                     <Box>
-                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      <Box
+                        component={"span"}
+                        fontSize={"18px"}
+                        fontWeight={"bold"}
+                        mr={1}
+                        color={theme => theme.palette.common.black}
+                      >
                         {formatADAFull(data?.fee || 0)}
                       </Box>
-                      <ADAicon fontSize="18px" />
+                      <AdaLogoIcon fontSize={14} color={theme.palette.text.secondary} />
                     </Box>
                     <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
                       <ButtonListIcon />
@@ -254,7 +266,7 @@ const DelegationTimeline = ({
         </Box>
       </Box>
       <DelegationCertificateModal
-        data={data}
+        txHash={selected?.txHash || ""}
         open={openModal}
         handleCloseModal={() => setOpenModal(false)}
         stake={stakeId}
@@ -263,16 +275,20 @@ const DelegationTimeline = ({
   );
 };
 
-const DelegationCertificateModal = ({
+export const DelegationCertificateModal = ({
   stake,
-  data,
+  txHash,
   ...props
 }: {
   stake: string;
   open: boolean;
-  data: DelegationDetail | null;
+  txHash: string;
   handleCloseModal: () => void;
 }) => {
+  const { data, loading } = useFetch<DelegationDetail>(
+    (stake && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stake, txHash)) || ""
+  );
+
   return (
     <StyledModal {...props} title="Delegation certificate">
       <Grid container spacing={1}>
@@ -281,9 +297,12 @@ const DelegationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Pool ID
             </Box>
-            {data && (
+            {loading && <Skeleton variant="rectangular" />}
+            {data && !loading && (
               <Box>
-                <Link to={details.delegation(data?.poolId || "")}>{getShortWallet(data?.poolId || "")}</Link>{" "}
+                <CustomTooltip title={data?.poolId}>
+                  <Link to={details.delegation(data?.poolId || "")}>{getShortWallet(data?.poolId || "")}</Link>
+                </CustomTooltip>
                 <CopyButton text={data?.poolId || ""} />
               </Box>
             )}
@@ -294,7 +313,8 @@ const DelegationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Pool Name
             </Box>
-            {data && (
+            {loading && <Skeleton variant="rectangular" />}
+            {data && !loading && (
               <Box>
                 <Link to={details.delegation(data?.poolId || "")}>{data?.poolName || ""}</Link>{" "}
               </Box>
@@ -306,9 +326,13 @@ const DelegationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Stake Key
             </Box>
-            {data && (
+            {loading && <Skeleton variant="rectangular" />}
+            {data && !loading && (
               <Box>
-                <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link> <CopyButton text={stake} />
+                <CustomTooltip title={stake}>
+                  <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link>
+                </CustomTooltip>
+                <CopyButton text={stake} />
               </Box>
             )}
           </Box>

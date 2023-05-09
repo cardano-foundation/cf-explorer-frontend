@@ -46,6 +46,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       title: "Policy script",
       key: "Policy",
       minWidth: "40px",
+      maxWidth: "120px",
       isHiddenBorder: true,
       render: (r, index) => {
         return (

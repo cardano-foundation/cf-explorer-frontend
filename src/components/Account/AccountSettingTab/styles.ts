@@ -8,7 +8,6 @@ export const StyledRowItem = styled(Box)`
   display: flex;
   align-items: center;
   height: 40px;
-  margin-bottom: 40px;
   margin-top: 4px;
 `;
 

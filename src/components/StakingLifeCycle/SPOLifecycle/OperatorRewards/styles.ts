@@ -1,4 +1,5 @@
 import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -26,6 +27,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     transform: " translate(0, 60%)",
   },
 }));
+
 export const FeeBox = styled(Box)(({ theme }) => ({
   width: "184px",
   height: "35px",
@@ -56,6 +58,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
 export const IconButton = styled(IconButtonMui)(({ theme }) => ({
   background: theme.palette.grey[100],
 }));
+
 export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
   padding: 0,
 }));
@@ -65,6 +68,7 @@ export const Info = styled(Box)(({ theme }) => ({
   alignItems: "center",
   marginLeft: theme.spacing(2),
 }));
+
 export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -72,3 +76,9 @@ export const InfoText = styled(Box)(({ theme }) => ({
   fontWeight: 600,
   fontSize: "14px",
 }));
+
+export const StyledLink = styled(Link)`
+  color: ${props => props.theme.palette.secondary.main} !important;
+  font-family: var(--font-family-text) !important;
+  text-decoration: underline !important;
+`;

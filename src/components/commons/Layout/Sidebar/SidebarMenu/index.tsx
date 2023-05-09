@@ -28,7 +28,7 @@ import { LogoFullIcon } from "../../../../../commons/resources";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const pathname = history.location.pathname;
-  const { isMobile } = useScreen();
+  const { isTablet } = useScreen();
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { width } = useWindowSize(0);
   const theme = useTheme();
@@ -353,7 +353,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     );
   };
 
-  if (isMobile) {
+  if (isTablet) {
     return (
       <Drawer open={sidebar} onClose={() => setSidebar(false)}>
         <Box position="relative" height="100%">

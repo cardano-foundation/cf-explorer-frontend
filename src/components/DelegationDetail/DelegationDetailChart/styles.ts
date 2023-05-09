@@ -32,40 +32,38 @@ export const ChartContainer = styled("div")`
   padding-top: 20px;
 `;
 
-export const GridRight = styled(Grid)<{ space: number }>`
-  flex: 1;
-  max-height: calc(100% - ${props => props.space}px);
-  background: ${props => props.theme.palette.text.secondary};
-  border-radius: 12px;
-  box-shadow: ${props => props.theme.shadow.card};
-  padding: 0px 20px;
-  @media screen and (min-width: 540px) and (max-width: 1370px) {
-    padding: 25px 0px;
-  }
-  @media screen and (max-width: 1370px) {
-    max-height: unset;
-  }
-`;
+export const GridRight = styled(Grid)<{ space: number }>(({ theme, space }) => ({
+  flex: 1,
+  maxHeight: `calc(100% - ${space}px)`,
+  background: theme.palette.text.secondary,
+  borderRadius: 12,
+  boxShadow: theme.shadow.card,
+  padding: "0px 20px",
+  [theme.breakpoints.down("lg")]: {
+    padding: "25px 0px",
+    maxHeight: "unset",
+  },
+}));
 
-export const Item = styled(Grid)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  padding: 25px 0px;
+export const Item = styled(Grid)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "column",
+  textAlign: "center",
+  padding: "25px 0px",
 
-  &:first-of-type {
-    border-bottom: 1px solid ${props => alpha(props.theme.palette.common.white, 0.06)};
-  }
-  @media screen and (min-width: 540px) and (max-width: 1370px) {
-    padding: 0px 20px;
-    &:first-of-type {
-      border-bottom: none;
-      border-right: 1px solid ${props => alpha(props.theme.palette.common.white, 0.06)};
-    }
-  }
-`;
+  "&:first-of-type": {
+    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.06)}`,
+  },
+  [theme.breakpoints.down("sm")]: {
+    "&:first-of-type": {
+      borderBottom: "none",
+      borderRight: `1px solid ${alpha(theme.palette.common.white, 0.06)}`,
+    },
+  },
+}));
+
 export const AnalyticsTitle = styled("h2")`
   margin: 50px 0 15px;
 `;

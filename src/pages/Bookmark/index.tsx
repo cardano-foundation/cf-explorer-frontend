@@ -16,6 +16,7 @@ import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
 import useToast from "../../commons/hooks/useToast";
 import { ButtonClose } from "../../components/ScriptModal/styles";
 import { CloseIcon } from "../../commons/resources";
+import { useScreen } from "../../commons/hooks/useScreen";
 
 const Bookmark = () => {
   const [bookmarks, setBookmarks] = useLocalStorage<Bookmark[]>("bookmark", []);
@@ -136,7 +137,7 @@ const Bookmark = () => {
           to={details.delegation(data.keyword)}
           color={theme => `${theme.palette.secondary.main} !important`}
         >
-          {data.keyword}
+          {getShortHash(data.keyword)}
         </Box>
       ),
     },
@@ -338,6 +339,8 @@ const Bookmark = () => {
           <TabList
             onChange={handleChange}
             TabIndicatorProps={{ sx: { style: { background: theme => theme.palette.primary.main } } }}
+            sx={{ overflow: "auto" }}
+            variant="scrollable"
           >
             {tabs.map(({ key, label }) => (
               <Tab
@@ -384,7 +387,7 @@ const Bookmark = () => {
           </DialogContentText>
         </Box>
         <DialogActions>
-          <Box flex={1} pt={2} pb={3}>
+          <Box width={"100%"} display={"flex"} pt={2} pb={3} flexDirection={"row"} justifyContent={"center"}>
             <CancelButton disabled={loadingDelete} autoFocus onClick={handleClose} variant="outlined">
               Cancel
             </CancelButton>
