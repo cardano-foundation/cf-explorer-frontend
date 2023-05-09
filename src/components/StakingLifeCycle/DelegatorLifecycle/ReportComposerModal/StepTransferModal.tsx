@@ -6,6 +6,7 @@ import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack
 import { IPropsModal, STEPS } from ".";
 import { ReportType } from "./FilledInfoModal";
 import { get } from "lodash";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
 export enum RatioGroupValue {
   yes = "YES",
@@ -25,6 +26,8 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
   const [poolSize, setPoolSize] = useState<RatioGroupValue>(RatioGroupValue.unTicked);
 
   const reportType = useMemo(() => get(defaultParams, "0.reportType"), [defaultParams]);
+
+  const { isMobile } = useScreen()
 
   const isDisabled = useMemo(() => {
     if (reportType === ReportType.PoolReport) {

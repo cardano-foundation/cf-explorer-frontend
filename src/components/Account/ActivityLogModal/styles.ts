@@ -1,7 +1,9 @@
 import { Box, styled } from "@mui/material";
 import Table from "../../commons/Table";
 
-export const Container = styled(Box)``;
+export const Container = styled(Box)`
+padding: 10px 10px;
+`
 
 export const Title = styled("h3")`
   font-family: var(--font-family-title);

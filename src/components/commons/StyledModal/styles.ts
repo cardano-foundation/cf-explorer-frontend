@@ -1,13 +1,13 @@
 import { styled, Box, IconButton } from "@mui/material";
 
-export const ModalContainer = styled(Box)<{ width?: number | string }>(({ theme, width }) => ({
+export const ModalContainer = styled(Box)<{ width?: number | string, vw?: string | number }>(({ theme, width, paddingX, paddingY, vw }) => ({
   position: "relative",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: `min(70vw, ${typeof width === "string" ? width : `${width || 500}px`})`,
+  width: `min(${vw}vw, ${typeof width === "string" ? width : `${width || 500}px`})`,
   backgroundColor: theme.palette.background.paper,
-  padding: "50px 40px",
+  padding: `${paddingY}px ${paddingX}px`,
   borderRadius: 20,
   textAlign: "left",
 }));

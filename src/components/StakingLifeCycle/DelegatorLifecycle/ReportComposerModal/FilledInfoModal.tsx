@@ -17,6 +17,7 @@ import { Box, MenuItem, Slider } from "@mui/material";
 import CustomDatePicker, { IDateRange } from "../../../CustomDatePicker";
 import { IPropsModal, STEPS } from ".";
 import { useSelector } from "react-redux";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
 export enum ReportType {
   ChooseReport = "CHOOSE_REPORT",
@@ -62,6 +63,8 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     setAddress(e.target.value);
   }, []);
 
+  const { isMobile } = useScreen();
+
   const isDisabledButton = useMemo(() => {
     const [startDate, endDate] = dateRange;
     if (reportType === ReportType.ChooseReport) return true;
@@ -72,6 +75,18 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       return !address?.trim();
     }
   }, [address, dateRange, reportType]);
+
+  let isShowTextWarning = false;
+  switch (reportType) {
+    case "POOL_REPORT":
+      isShowTextWarning = true;
+      break;
+    case "STAKE_KEY_REPORT":
+      isShowTextWarning = true;
+      break;
+    default:
+      isShowTextWarning = false;
+  }
 
   const handleSubmit = () => {
     saveParams?.({
@@ -94,9 +109,15 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   };
 
   return (
-    <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
+    <StyledModal
+      open={open}
+      handleCloseModal={handleCloseModal}
+      width={555}
+      paddingX={isMobile ? 15 : 40}
+      paddingY={isMobile ? 20 : 30}
+    >
       <Container>
-        <ModalTitle>Report composer</ModalTitle>
+        <ModalTitle fontSizeTitle={isMobile ? 20 : 24}>Report composer</ModalTitle>
         <StyledStack>
           <StyledLabel>Report name</StyledLabel>
           <StyledTextField placeholder="Filled report name" value={reportName} onChange={onChangeReportName} />
@@ -104,7 +125,13 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
         <Box sx={{ marginBottom: "20px" }}>
           <StyledLabel>Address details</StyledLabel>
           <StyledAddressSelect display={"flex"}>
-            <StyledSelect size="small" onChange={onChangeReportType} value={reportType} IconComponent={DownIcon}>
+            <StyledSelect
+              size="small"
+              onChange={onChangeReportType}
+              value={reportType}
+              IconComponent={DownIcon}
+              sx={{paddingRight: `${isMobile ? "12px" : "0px"}`}}
+            >
               {options.map(option => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
@@ -141,7 +168,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             />
           </Box>
         )}
-        {!address && (
+        {isShowTextWarning && (
           <TextWarning>The earliest 1,000 transactions within the selected range will be exported</TextWarning>
         )}
         <StyledStack>
