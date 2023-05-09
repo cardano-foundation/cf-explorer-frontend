@@ -576,7 +576,7 @@ export const PoolUpdateModal = ({
   );
 
   const renderCertificateUpdates = () => {
-    if (!data?.previousMargin === null && !data?.previousPledge === null) {
+    if (data?.previousMargin === null && data?.previousPledge === null) {
       return (
         <Box textAlign={"center"}>
           <Box component={"img"} height={215} src={EmptyIcon} alt="no data" />
@@ -650,19 +650,19 @@ export const PoolUpdateModal = ({
     label: string;
     children: React.ReactNode;
   }[] = [
-      {
-        key: "poolCertificate",
-        icon: PoolCert,
-        label: "Pool certificate",
-        children: <>{renderPoolCert()}</>,
-      },
-      {
-        key: "certificateUpdates",
-        icon: CertUpdate,
-        label: "Certificate updates",
-        children: <Box>{renderCertificateUpdates()}</Box>,
-      },
-    ];
+    {
+      key: "poolCertificate",
+      icon: PoolCert,
+      label: "Pool certificate",
+      children: <>{renderPoolCert()}</>,
+    },
+    {
+      key: "certificateUpdates",
+      icon: CertUpdate,
+      label: "Certificate updates",
+      children: <Box>{renderCertificateUpdates()}</Box>,
+    },
+  ];
 
   const handleChange = (event: React.SyntheticEvent, tab: "poolCertificate" | "certificateUpdates") => {
     setTabActive(tab);
