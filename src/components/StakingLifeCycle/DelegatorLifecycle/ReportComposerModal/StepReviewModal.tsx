@@ -22,7 +22,9 @@ import { useHistory } from "react-router-dom";
 import { routers } from "../../../../commons/routers";
 import { useState } from "react";
 import { getEventType } from "../../../StakekeySummary";
+import { getPoolEventType } from "../../../PoolLifecycle";
 import { useScreen } from "../../../../commons/hooks/useScreen";
+
 
 const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaultParams, gotoStep }) => {
   const toast = useToast();
@@ -40,9 +42,9 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       const defaultReportName = `Report_stake_${step1.address}_${step1}_${moment(start).format("MM/DD/yyyy")}_${moment(
         end
       ).format("MM/DD/yyyy")}`;
-
       if (isPoolReport) {
         const paramsStakeKeyReport = {
+          ...getPoolEventType(step3?.eventsKey),
           poolId: step1.address,
           reportName: step1.reportName || defaultReportName,
           isPoolSize: step2.poolSize === "YES",
