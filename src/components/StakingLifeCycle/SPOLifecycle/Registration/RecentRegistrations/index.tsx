@@ -45,7 +45,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
   return (
     <Box marginTop="32px">
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
-        <DescriptionText>Recent Registrations</DescriptionText>
+        <DescriptionText>Recent Updates</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             Showing {total} {total > 1 ? "results" : "result"}
