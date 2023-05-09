@@ -84,7 +84,7 @@ const DelegatorLifecycle = () => {
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
-            <Box component={"span"} fontSize={"0.875rem"} lineHeight={1}>
+            <Box component={"span"} fontSize={"1rem"} lineHeight={1}>
               Stake key:
             </Box>
             <CustomTooltip title={stakeId}>

@@ -90,3 +90,7 @@ export const BoxSwitchContainer = styled(Box)(({ theme }) => ({
     alignItems: "space-between",
   },
 }));
+
+export const StyledStakeId = styled(StakeId)`
+  font-size: 1rem;
+`;
