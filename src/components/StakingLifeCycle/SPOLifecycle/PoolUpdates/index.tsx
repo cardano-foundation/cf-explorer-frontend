@@ -30,7 +30,7 @@ import { WrapFilterDescription } from "../../DelegatorLifecycle/Registration/Rec
 import { GridBox } from "../../DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import OverviewStaking from "../../../commons/OverviewStaking";
 import PopoverStyled from "../../../commons/PopoverStyled";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { details } from "../../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
@@ -55,19 +55,19 @@ const PoollUpdates = ({
   };
   handleResize: () => void;
 }) => {
-  // To do: chonj default là list sau đó clickdetail nhấn sang timelne. Đổi trong tương lai
   const [selected, setSelected] = useState<PoolUpdateItem | null>(null);
+
+  const handleSelect = (pool: PoolUpdateItem | null) => {
+    setSelected(pool);
+  };
   return (
     <Box>
-      <Box>{selected === null && <PoollUpdatesList setSelected={setSelected} />}</Box>
+      <Box>
+        <PoollUpdatesList onSelect={handleSelect} />
+      </Box>
       <Box>
         {!!selected && (
-          <PoollUpdatesTimeline
-            handleResize={handleResize}
-            selected={selected}
-            setSelected={setSelected}
-            containerPosition={containerPosition}
-          />
+          <PoollUpdatesTimeline handleResize={handleResize} selected={selected} containerPosition={containerPosition} />
         )}
       </Box>
     </Box>
@@ -75,14 +75,26 @@ const PoollUpdates = ({
 };
 export default PoollUpdates;
 
-const PoollUpdatesList = ({ setSelected }: { setSelected: (pool: PoolUpdateItem | null) => void }) => {
-  const { poolId = "" } = useParams<{ poolId: string }>();
+const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null) => void }) => {
+  const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
+  const history = useHistory();
   const [params, setParams] = useState<FilterParams>();
   const { data, total } = useFetchList<PoolUpdateItem>(API.SPO_LIFECYCLE.POOL_UPDATE(poolId), {
     page: 0,
     size: 1000,
     ...params,
   });
+  useEffect(() => {
+    const currentItem = data.find(item => item.txHash === txHash);
+    onSelect(currentItem || null);
+  }, [txHash, data]);
+
+  const handleSelect = (poolUpdated: SPODeregistration) => {
+    history.push(details.spo(poolId, "timeline", "pool-updates", poolUpdated.txHash));
+  };
+
+  if (txHash) return null;
+  
   return (
     <Box marginTop="32px">
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
@@ -98,13 +110,7 @@ const PoollUpdatesList = ({ setSelected }: { setSelected: (pool: PoolUpdateItem 
       <GridBox>
         {data.map(item => {
           return (
-            <OverviewStaking
-              item={item}
-              onClick={pool => setSelected(pool)}
-              hash={item.txHash}
-              amount={item.fee}
-              time={item.time}
-            />
+            <OverviewStaking item={item} onClick={handleSelect} hash={item.txHash} amount={item.fee} time={item.time} />
           );
         })}
       </GridBox>
@@ -114,7 +120,6 @@ const PoollUpdatesList = ({ setSelected }: { setSelected: (pool: PoolUpdateItem 
 
 const PoollUpdatesTimeline = ({
   containerPosition,
-  setSelected,
   selected,
   handleResize,
 }: {
@@ -122,10 +127,11 @@ const PoollUpdatesTimeline = ({
     top?: number;
     left?: number;
   };
-  setSelected: (pool: PoolUpdateItem | null) => void;
   handleResize: () => void;
   selected: PoolUpdateItem;
 }) => {
+  const { poolId = "" } = useParams<{ poolId: string }>();
+  const history = useHistory();
   const { data, loading } = useFetch<PoolUpdateDetail>(
     selected?.poolUpdateId ? API.SPO_LIFECYCLE.POOL_UPDATE_DETAIL(selected.poolUpdateId) : ""
   );
@@ -143,11 +149,15 @@ const PoollUpdatesTimeline = ({
     handleResize();
   }, [loading]);
 
+  const handleBack = () => {
+    history.push(details.spo(poolId, "timeline", "pool-updates"));
+  };
+
   if (loading) {
     return (
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-          <IconButtonBack onClick={() => setSelected(null)}>
+          <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
           <Box display={"flex"}>
@@ -174,7 +184,7 @@ const PoollUpdatesTimeline = ({
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>

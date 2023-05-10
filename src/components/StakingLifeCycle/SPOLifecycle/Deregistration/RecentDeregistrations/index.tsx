@@ -1,7 +1,7 @@
 import { Box, Skeleton } from "@mui/material";
 import moment from "moment";
-import { useMemo, useState } from "react";
-import { useParams } from "react-router";
+import { useEffect, useMemo, useState } from "react";
+import { useHistory, useParams } from "react-router";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../../StackingFilter";
@@ -10,13 +10,15 @@ import { EmptyRecord } from "../../../../commons/Table";
 import { GridBox, WrapFilterDescription } from "./styles";
 import { FilterDateLabel } from "../../../DelegatorLifecycle/Delegation/styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
+import { details } from "../../../../../commons/routers";
 
 interface Props {
-  onSelect: (registration: SPODeregistration) => void;
+  onSelect: (registration: SPODeregistration | null) => void;
 }
 
 const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
-  const { poolId = "" } = useParams<{ poolId: string }>();
+  const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
+  const history = useHistory();
   const [params, setParams] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
@@ -32,6 +34,15 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
     }
   );
 
+  useEffect(() => {
+    const currentItem = data.find(item => item.txHash === txHash);
+    onSelect(currentItem || null);
+  }, [txHash, data]);
+
+  const handleSelect = (deregistration: SPODeregistration) => {
+    history.push(details.spo(poolId, "timeline", "deregistration", deregistration.txHash));
+  };
+
   const filterLabel = useMemo(() => {
     if (params.fromDate && params.toDate)
       return ` Filter by: ${moment(params.fromDate).format("MM/DD/YYYY")} - ${moment(params.toDate).format(
@@ -41,6 +52,8 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
       return `${params.sort[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
     if (params.txHash) return `Searching for : ${params.txHash}`;
   }, [params]);
+
+  if (txHash) return null;
 
   return (
     <Box marginTop="32px">
@@ -80,7 +93,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
                 time={item.time}
                 hash={item.txHash}
                 item={item}
-                onClick={onSelect}
+                onClick={handleSelect}
               />
             );
           })}

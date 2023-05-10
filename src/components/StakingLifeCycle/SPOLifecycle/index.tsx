@@ -32,17 +32,15 @@ interface StepperProps {
   title: string;
   component: React.ReactNode;
   description: React.ReactNode;
-  key: "registration" | "pool-updates" | "operator-rewards" | "deregistration";
+  key: SPOStep;
 }
 
 const SPOLifecycle = ({
-  setMode,
   containerPosition,
   currentStep,
   setCurrentStep,
   handleResize,
 }: {
-  setMode: (mode: "timeline" | "tablular") => void;
   containerPosition: {
     top?: number;
     left?: number;
@@ -115,7 +113,7 @@ const SPOLifecycle = ({
             <StepButton
               active={+(currentStep >= idx)}
               onClick={() => {
-                history.push(details.spo(poolId, step.key));
+                history.push(details.spo(poolId, "timeline", step.key));
                 setCurrentStep(idx);
               }}
             >
@@ -140,7 +138,7 @@ const SPOLifecycle = ({
       {currentStep > 0 && (
         <PreviousButton
           onClick={() => {
-            history.push(details.spo(poolId, stepper[currentStep - 1]?.key));
+            history.push(details.spo(poolId, "timeline", stepper[currentStep - 1]?.key));
             setCurrentStep(currentStep - 1);
           }}
         >
@@ -152,16 +150,15 @@ const SPOLifecycle = ({
         onClick={() => {
           if (currentStep === stepper.length - 1) {
             history.push(details.spo(poolId, "tablular"));
-            setMode("tablular");
           } else {
-            history.push(details.spo(poolId, stepper[currentStep + 1]?.key));
+            history.push(details.spo(poolId, "timeline", stepper[currentStep + 1]?.key));
             setCurrentStep(currentStep + 1);
           }
         }}
         variant="contained"
       >
         <Box fontSize={"16px"} component={"span"}>
-          Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+          Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
         </Box>
         <NextIcon />
       </NextButton>

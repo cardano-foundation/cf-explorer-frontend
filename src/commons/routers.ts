@@ -36,8 +36,8 @@ export const routers = {
   PROTOCOL_PARAMETER: "/protocol-parameter",
   SPO_SEARCH: "/spo-lifecycle",
   DELEGATOR_SEARCH: "/delegator-lifecycle",
-  DELEGATOR_LIFECYCLE: "/delegator-lifecycle/:stakeId/:tab?",
-  SPO_LIFECYCLE: "/spo-lifecycle/:poolId/:tab?",
+  DELEGATOR_LIFECYCLE: "/delegator-lifecycle/:stakeId/:mode?/:tab?/:txHash?",
+  SPO_LIFECYCLE: "/spo-lifecycle/:poolId/:mode?/:tab?/:txHash?",
   STAKING_LIFECYCLE: "/stacking-lifecycle",
   REPORT_GENERATED: "/report-generated",
   REPORT_GENERATED_STAKING_DETAIL: "/report-generated/:reportId/staking",
@@ -61,9 +61,16 @@ export const details = {
   policyDetail: (policyId?: string) => routers.POLICY_DETAIL.replace(":policyId", policyId ?? ""),
   contract: (address?: string, tab = "transaction") =>
     routers.CONTRACT_DETAIL.replace(":address", address ?? "").replace(":tabActive?", tab),
-  staking: (stakeId: string, tab = "registration") =>
-    routers.DELEGATOR_LIFECYCLE.replace(":stakeId", stakeId).replace(":tab?", tab),
-  spo: (poolId: string, tab = "registration") => routers.SPO_LIFECYCLE.replace(":poolId", poolId).replace(":tab?", tab),
+  staking: (stakeId: string, mode: ViewMode = "timeline", tab: DelegationStep = "registration", txHash?: string) =>
+    routers.DELEGATOR_LIFECYCLE.replace(":stakeId", stakeId)
+      .replace(":mode?", mode)
+      .replace(":tab?", tab)
+      .replace(":txHash?", txHash ?? ""),
+  spo: (poolId: string, mode: ViewMode = "timeline", tab: SPOStep = "registration", txHash?: string) =>
+    routers.SPO_LIFECYCLE.replace(":poolId", poolId)
+      .replace(":mode?", mode)
+      .replace(":tab?", tab)
+      .replace(":txHash?", txHash ?? ""),
   generated_staking_detail: (reportId: string) =>
     routers.REPORT_GENERATED_STAKING_DETAIL.replace(":reportId", reportId),
   generated_pool_detail: (reportId: string) => routers.REPORT_GENERATED_POOL_DETAIL.replace(":reportId", reportId),

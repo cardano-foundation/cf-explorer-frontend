@@ -12,39 +12,52 @@ import {
   RegistrationIcon,
 } from "../../../../commons/resources";
 import TabularOverview from "./TabularOverview";
+import { useHistory, useParams } from "react-router";
+import { details } from "../../../../commons/routers";
 
-const tabs: StakeTabItem[] = [
+interface SPOTabItem extends StakeTabItem {
+  key: SPOStep;
+}
+
+const tabs: SPOTabItem[] = [
   {
     icon: RegistrationIcon,
     label: "Pool Registration",
-    key: "poolRegistration",
+    key: "registration",
     component: <PoolRegistrationTab />,
   },
   {
     icon: PoolUpdateIcon,
     label: "Pool Update",
-    key: "poolUpdate",
+    key: "pool-updates",
     component: <PoolUpdateTab />,
   },
   {
     icon: OperatorRewardIcon,
     label: "Operator Rewards",
-    key: "operatorRewards",
+    key: "operator-rewards",
     component: <OperatorRewardTab />,
   },
   {
     icon: DeredistrationIcon,
     label: "Deregsitration",
-    key: "deregsitration",
+    key: "deregistration",
     component: <DeregsitrationTab />,
   },
 ];
 
 const Tablular = () => {
+  const { poolId = "", tab = "registration" } = useParams<{ poolId: string; tab: SPOStep }>();
+  const history = useHistory();
+
+  const onChangeTab = (tab: any) => {
+    history.push(details.spo(poolId, "tablular", tab));
+  };
+
   return (
     <Box mt={5}>
       <TabularOverview />
-      <StakeTab tabs={tabs} initTab="poolRegistration" />
+      <StakeTab tabs={tabs} initTab={tab} onChangeTab={onChangeTab} />
     </Box>
   );
 };

@@ -13,14 +13,16 @@ export interface StakeTabItem {
 export interface StackTabProps {
   tabs: StakeTabItem[];
   initTab?: string;
+  onChangeTab?: (tab: TabStakeDetail) => void;
 }
 
-const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration" }) => {
+const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration", onChangeTab }) => {
   const [tabActive, setTabActive] = useState<string>(initTab);
   const theme = useTheme();
 
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
     setTabActive(tab);
+    onChangeTab?.(tab);
   };
 
   return (

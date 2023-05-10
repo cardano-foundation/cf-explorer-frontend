@@ -13,6 +13,8 @@ import DelegationTab from "../../../TabularView/StakeTab/Tabs/DelegationTab";
 import RewardsDistributionTab from "../../../TabularView/StakeTab/Tabs/RewardsDistributionTab";
 import WithdrawalHistoryTab from "../../../TabularView/StakeTab/Tabs/WithdrawalHistoryTab";
 import DeregistrationTab from "../../../TabularView/StakeTab/Tabs/DeregistrationTab";
+import { useHistory, useParams } from "react-router";
+import { details } from "../../../../commons/routers";
 
 const tabs: {
   icon: React.FC;
@@ -52,10 +54,17 @@ const tabs: {
   },
 ];
 const Tablular = () => {
+  const { stakeId = "", tab = "registration" } = useParams<{ stakeId: string; tab: DelegationStep }>();
+  const history = useHistory();
+
+  const onChangeTab = (tab: any) => {
+    history.push(details.staking(stakeId, "tablular", tab));
+  };
+
   return (
     <Box mt={5}>
       <TabularOverview />
-      <StakeTab tabs={tabs} />
+      <StakeTab tabs={tabs} initTab={tab} onChangeTab={onChangeTab} />
     </Box>
   );
 };
