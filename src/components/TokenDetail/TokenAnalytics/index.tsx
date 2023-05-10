@@ -63,10 +63,10 @@ const AddressAnalytics: React.FC = () => {
       <Wrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={4} sm={4}>
               <ButtonTitle>Volume</ButtonTitle>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={8} sm={8}>
               <Tabs>
                 {options.map(({ value, label }) => (
                   <Tab key={value} active={rangeTime === value ? 1 : 0} onClick={() => setRangeTime(value)}>

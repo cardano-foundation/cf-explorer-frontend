@@ -35,7 +35,7 @@ import RecentWithdraws from "./RecentWithdraws";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
 import { useParams } from "react-router";
-import { formatADA, getShortHash } from "../../../../commons/utils/helper";
+import { formatADA, formatDateTimeLocal, getShortHash } from "../../../../commons/utils/helper";
 import moment from "moment";
 import PopoverStyled from "../../../commons/PopoverStyled";
 import PopupStaking from "../../../commons/PopupStaking";
@@ -162,7 +162,7 @@ const WithdrawTimeline = ({
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>{moment(data?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+            <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
           </Info>
         </Box>
       </Box>

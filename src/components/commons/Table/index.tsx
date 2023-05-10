@@ -31,7 +31,6 @@ import {
   THead,
   THeader,
   TRow,
-  Total,
   TotalNumber,
   Wrapper,
   TableFullWidth,
@@ -55,7 +54,6 @@ import {
 import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
 import Filter from "../Filter";
-import { useScreen } from "../../../commons/hooks/useScreen";
 
 type TEmptyRecord = {
   className?: string;
@@ -248,7 +246,6 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
   const [page, setPage] = useState(pagination?.page || 1);
   const [size, setSize] = useState(pagination?.size || 50);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
-  const { isTablet } = useScreen();
 
   useUpdateEffect(() => {
     setPage(1);
