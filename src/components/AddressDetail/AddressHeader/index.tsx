@@ -91,14 +91,12 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   return (
     <Card>
       <Box display={"flex"} alignItems={"flex-start"} flexDirection={"column"}>
-        {!isMobile && (
-          <Box>
-            <BackButton onClick={history.goBack}>
-              <HiArrowLongLeft fontSize="16px" />
-              <BackText>Back</BackText>
-            </BackButton>
-          </Box>
-        )}
+        <Box>
+          <BackButton onClick={history.goBack}>
+            <HiArrowLongLeft fontSize="16px" />
+            <BackText>Back</BackText>
+          </BackButton>
+        </Box>
         <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
           <Box>Address Detail</Box>
           {!isMobile && <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />}

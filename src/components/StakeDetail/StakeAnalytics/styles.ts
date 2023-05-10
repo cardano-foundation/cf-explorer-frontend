@@ -1,7 +1,6 @@
 import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
 
 export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
-  height: `calc(100% - ${space}px)`,
   background: theme.palette.secondary.dark,
   borderRadius: "10px",
   color: theme.palette.primary.contrastText,
@@ -12,7 +11,7 @@ export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
     flexDirection: "row",
   },
   [theme.breakpoints.down("sm")]: {
-    flexDirection: "column",
+    flexDirection: "row",
   },
 }));
 
@@ -28,6 +27,20 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
     minHeight: "200px",
     height: "100%",
     paddingTop: 0,
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "80%",
+    borderRight: "none",
+    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+
+    div: {
+      width: "100%",
+      height: "100px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "space-between",
+    },
   },
 }));
 
@@ -50,6 +63,15 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
     width: "80%",
     borderRight: "none",
     borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+
+    div: {
+      width: "100%",
+      height: "100px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "space-between",
+    },
   },
 }));
 
@@ -82,6 +104,12 @@ export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, activ
   fontFamily: "var(--font-family-title)",
   border: `2px solid ${theme.palette.green[800_20]}`,
   cursor: "pointer",
+  [`@media screen and (max-width: ${theme.breakpoints.values.sm}px)`]: {
+    width: "95px",
+    textAlign: "center",
+    marginRight: 0,
+    padding: "8px 0px",
+  },
 }));
 
 export const ChartBox = styled(Box)(({ theme }) => ({
@@ -101,6 +129,7 @@ export const Tabs = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     display: "flex",
     justifyContent: "space-between",
+    gap: theme.spacing(1),
   },
 }));
 
