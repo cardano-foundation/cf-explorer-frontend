@@ -372,10 +372,27 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   }
 
   return (
-    <StyledCollapse in={width >= theme.breakpoints.values.md ? true : sidebar} timeout="auto" unmountOnExit>
-      <MenuElement />
-      <FooterMenu />
-    </StyledCollapse>
+    <>
+      <Drawer open={isTablet && sidebar} onClose={() => setSidebar(false)}>
+        <Box position="relative" height="100%">
+          <Box p="16px">
+            <LogoLink to="/">
+              <NavBarLogo src={LogoFullIcon} alt="logo desktop" />
+            </LogoLink>
+          </Box>
+          <MenuElement />
+          <WrapNetwork>
+            <SelectNetwork />
+          </WrapNetwork>
+        </Box>
+      </Drawer>
+      {!isTablet && (
+        <StyledCollapse in={width >= theme.breakpoints.values.md ? true : sidebar} timeout="auto" unmountOnExit>
+          <MenuElement />
+          <FooterMenu />
+        </StyledCollapse>
+      )}
+    </>
   );
 };
 
