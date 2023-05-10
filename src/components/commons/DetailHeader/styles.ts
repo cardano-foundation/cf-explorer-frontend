@@ -136,7 +136,6 @@ export const SlotLeaderValue = styled("span")`
   font-family: var(--font-family-text);
   color: ${props => props.theme.palette.secondary.main};
   white-space: pre-wrap;
-  display: inline-block;
   word-break: break-word;
   line-height: 1.5;
   font-weight: bold;
