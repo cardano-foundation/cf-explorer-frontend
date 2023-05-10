@@ -6,10 +6,11 @@ import TokenTransaction from "./TokenTransaction";
 import { TitleTab } from "./styles";
 import TokenTopHolder from "./TokenTopHolder";
 import TokenMinting from "./TokenMinting";
-import { Box, Tab } from "@mui/material";
+import { Box, Tab, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { details } from "../../../commons/routers";
-import { ExchangeIconTransaction, UnionTokenIcon, PeopleIcon } from "../../../commons/resources";
+import { UnionTokenIcon, PeopleIcon, TransactionIcon } from "../../../commons/resources";
+import CustomIcon from "../../commons/CustomIcon";
 
 interface ITokenTableData {
   totalSupply?: number;
@@ -18,7 +19,7 @@ interface ITokenTableData {
 const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
   const history = useHistory();
   let { tabActive = "transactions", tokenId } = useParams<{ tabActive: keyof Transaction; tokenId: string }>();
-
+  const theme = useTheme();
   const tabs: {
     key: string;
     label: string;
@@ -29,7 +30,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
       key: "transactions",
       label: "Transactions",
       children: <TokenTransaction tokenId={tokenId} />,
-      icon: <ExchangeIconTransaction />,
+      icon: <CustomIcon icon={TransactionIcon} width={20} fill={theme.palette.grey[300]} />,
     },
     {
       key: "topHolders",
