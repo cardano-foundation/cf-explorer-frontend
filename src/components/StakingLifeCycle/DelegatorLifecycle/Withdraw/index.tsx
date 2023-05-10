@@ -39,6 +39,8 @@ import { formatADA, getShortHash } from "../../../../commons/utils/helper";
 import moment from "moment";
 import PopoverStyled from "../../../commons/PopoverStyled";
 import PopupStaking from "../../../commons/PopupStaking";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 
 const Withdraw = ({
   containerPosition,
@@ -149,7 +151,10 @@ const WithdrawTimeline = ({
         <Box display={"flex"}>
           <Info>
             <AddressIcon fill="#438F68" />
-            <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            <CustomTooltip title={selected.txHash}>
+              <InfoText>{getShortHash(selected.txHash || "")}</InfoText>
+            </CustomTooltip>
+            <StyledCopyButton text={selected.txHash} />
           </Info>
           <Info>
             <ADAGreen />

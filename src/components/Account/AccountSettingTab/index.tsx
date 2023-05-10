@@ -13,6 +13,7 @@ import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { routers } from "../../../commons/routers";
 import { useHistory } from "react-router-dom";
 import useToast from "../../../commons/hooks/useToast";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 type TRowItem = {
   label: string;
@@ -37,19 +38,40 @@ const RowItem: React.FC<TRowItem> = ({
   disabledButton = false,
   loading = false,
 }) => {
+  const { isTablet } = useScreen();
   return (
     <WrapRowItem>
       <StyledLabel>{label}</StyledLabel>
-      <StyledRowItem>
-        <StyledInput disabled={disabled || loading} value={value} onChange={onChangeValue} placeholder={label} />
-        <StyledButton
-          loading={loading}
-          onClick={action}
-          disabled={(["email", "username"].includes(field) && !value) || disabledButton}
-        >
-          Change
-        </StyledButton>
-      </StyledRowItem>
+      <Box marginBottom={"40px"}>
+        {
+          !isTablet ? (
+            <StyledRowItem>
+              <StyledInput disabled={disabled || loading} value={value} onChange={onChangeValue} placeholder={label} />
+              <StyledButton
+                loading={loading}
+                onClick={action}
+                disabled={(["email", "username"].includes(field) && !value) || disabledButton}
+              >
+                Change
+              </StyledButton>
+            </StyledRowItem>
+          ) : (
+            <>
+              <StyledRowItem>
+                <StyledInput disabled={disabled || loading} value={value} onChange={onChangeValue} placeholder={label} />
+              </StyledRowItem>
+              <StyledButton
+                loading={loading}
+                onClick={action}
+                disabled={(["email", "username"].includes(field) && !value) || disabledButton}
+                sx={{ marginTop: "6px", marginLeft: 0 }}
+              >
+                Change
+              </StyledButton>
+            </>
+          )
+        }
+      </Box>
       <StyledHelper>{errorMsg}</StyledHelper>
     </WrapRowItem>
   );
@@ -73,7 +95,7 @@ const AccountSettingTab: React.FC = () => {
   const fetchUserInfo = useCallback(async () => {
     try {
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-      setUserData({ ...response.data, loginType: userData?.loginType || ""});
+      setUserData({ ...response.data, loginType: userData?.loginType || "" });
     } catch (error) { }
   }, []);
 

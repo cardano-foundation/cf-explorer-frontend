@@ -12,12 +12,81 @@ const defaultAxios = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
+defaultAxios.interceptors.request.use(
+  config => {
+    const token = getToken();
+    config.headers = config.headers ?? {};
+    if (token) config.headers["Authorization"] = "Bearer " + token;
+    return config;
+  },
+  error => {
+    Promise.reject(error);
+  }
+);
+
+
+defaultAxios.interceptors.response.use(
+  response => response,
+  async error => {
+    const originRequest = error.config;
+    if (error.response?.data?.errorCode === "CC_3" && !originRequest._retry) {
+      originRequest._retry = true;
+      const response = await refreshToken({ refreshJwt: localStorage.getItem("refreshToken") || "" });
+      localStorage.setItem("token", response.data?.accessToken);
+      localStorage.setItem("refreshToken", response.data?.refreshToken);
+      axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;
+      return authAxios(originRequest);
+    }
+    if (error.response?.data?.errorCode === "CC_4") {
+      removeAuthInfo();
+      if (window.location.href.includes("/account")) {
+        window.location.href = "/";
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 const defaultAxiosDownload = axios.create({
   baseURL: API_URL,
   headers: { "Content-Type": "*/*" },
   maxBodyLength: Infinity,
   responseType: "blob",
 });
+
+defaultAxiosDownload.interceptors.request.use(
+  config => {
+    const token = getToken();
+    config.headers = config.headers ?? {};
+    if (token) config.headers["Authorization"] = "Bearer " + token;
+    return config;
+  },
+  error => {
+    Promise.reject(error);
+  }
+);
+
+defaultAxiosDownload.interceptors.response.use(
+  response => response,
+  async error => {
+    const originRequest = error.config;
+    if (error.response?.data?.errorCode === "CC_3" && !originRequest._retry) {
+      originRequest._retry = true;
+      const response = await refreshToken({ refreshJwt: localStorage.getItem("refreshToken") || "" });
+      localStorage.setItem("token", response.data?.accessToken);
+      localStorage.setItem("refreshToken", response.data?.refreshToken);
+      axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;
+      return authAxios(originRequest);
+    }
+    if (error.response?.data?.errorCode === "CC_4") {
+      removeAuthInfo();
+      if (window.location.href.includes("/account")) {
+        window.location.href = "/";
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 const getToken = () => {
   try {

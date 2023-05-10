@@ -10,22 +10,25 @@ export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => 
   fontSize: "1.125rem",
   color: active ? theme.palette.common.black : theme.palette.text.hint,
 }));
-export const StyledTable = styled(Table)`
-  & .empty-content-table {
-    top: unset;
+export const StyledTable = styled(Table)(({ theme }) => ({
+  "& .empty-content-table": {
+    top: "unset"
+  },
+  "thead tr th": {
+    padding: "10px 25px",
+    fontSize: "var(--font-size-text-x-small)"
+  },
+  "tbody tr": {
+    padding: 0,
+    height: "60px"
+  },
+  "tbody tr td": {
+    padding: "0 25px"
+  },
+  "& .MuiTablePagination-root": {
+    background: "red"
   }
-  thead tr th {
-    padding: 10px 25px;
-    font-size: var(--font-size-text-x-small);
-  }
-  tbody tr {
-    padding: 0;
-    height: 60px;
-  }
-  tbody tr td {
-    padding: 0 25px;
-  }
-`;
+}));
 
 export const CancelButton = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",

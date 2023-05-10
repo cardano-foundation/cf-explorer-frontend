@@ -3,7 +3,7 @@ import { alpha, Box, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { ReactComponent as SettingIcon } from "../../commons/resources/icons/setting.svg";
 import { ReactComponent as FileSearch } from "../../commons/resources/icons/file-search.svg";
-import { TabTitle, WrapTab } from "./styles";
+import { TabLabel, TabTitle, WrapTab } from "./styles";
 import OverviewTab from "../../components/Account/OverviewTab";
 import AccountSettingTab from "../../components/Account/AccountSettingTab";
 
@@ -23,7 +23,7 @@ const MyProfile: React.FC = () => {
         <TabTitle className={tabActive === "overview" ? "active" : ""}>
           <Box display={"flex"} alignItems="center">
             <FileSearch fill={tabActive === "overview" ? theme.palette.primary.main : theme.palette.text.hint} />
-            <Box pl={1}>Overview</Box>
+            <TabLabel pl={1}>Overview</TabLabel>
           </Box>
         </TabTitle>
       ),
@@ -35,7 +35,7 @@ const MyProfile: React.FC = () => {
         <TabTitle className={tabActive === "setting" ? "active" : ""}>
           <Box display={"flex"} alignItems="center">
             <SettingIcon fill={tabActive === "setting" ? theme.palette.primary.main : theme.palette.text.hint} />
-            <Box pl={1}>Account settings & Profile</Box>
+            <TabLabel pl={1}>Account settings & Profile</TabLabel>
           </Box>
         </TabTitle>
       ),

@@ -8,8 +8,39 @@ import { TextOverFlow } from "../StakingLifeCycle/DelegatorLifecycle/ReportCompo
 import { DownloadGreenIcon } from "../../commons/resources";
 import { lowerCase, startCase } from "lodash";
 import { defaultAxiosDownload } from "../../commons/utils/axios";
+import { useHistory } from "react-router-dom";
+import { details } from "../../commons/routers";
+
+export const EVENTS: { [key in keyof IReportStaking]?: string } = {
+  eventDelegation: "Delegation",
+  eventDeregistration: "Deregistration",
+  eventRegistration: "Registration",
+  eventRewards: "Rewards",
+  eventWithdrawal: "Withdrawal",
+};
+
+export function getEventList(data: IReportStaking) {
+  return Object.entries(EVENTS)
+    .map(([key, value]) => (data[key as keyof typeof data] ? value : null))
+    .filter(item => item);
+}
+
+export function getEventType(data: any) {
+  let events = {
+    eventDelegation: false,
+    eventDeregistration: false,
+    eventRegistration: false,
+    eventRewards: false,
+    eventWithdrawal: false,
+  };
+  for (let key in events) {
+    events[key as keyof typeof events] = data.includes(EVENTS[key as keyof typeof EVENTS]?.toUpperCase());
+  }
+  return events;
+}
 
 const StakekeySummary = () => {
+  const history = useHistory();
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>({
     page: 0,
     size: 10,
@@ -28,7 +59,7 @@ const StakekeySummary = () => {
     });
   };
 
-  const columns: Column<IStakeKeySummary>[] = [
+  const columns: Column<IReportStaking>[] = [
     {
       key: "name",
       title: "Report Name",
@@ -63,7 +94,7 @@ const StakekeySummary = () => {
       title: "Events",
       maxWidth: "200px",
       render(data, index) {
-        return data.stakingLifeCycleEvents.map(({ type }: { type: string }) => startCase(lowerCase(type))).join(", ");
+        return getEventList(data).join(", ");
       },
     },
     {
@@ -71,7 +102,11 @@ const StakekeySummary = () => {
       title: "",
       maxWidth: "30px",
       render(data, index) {
-        return <DownloadGreenIcon onClick={() => downloadFn(data.id, data.reportName)} />;
+        return (
+          <a href="#">
+            <DownloadGreenIcon onClick={() => downloadFn(data.id, data.reportName)} />
+          </a>
+        );
       },
     },
   ];
@@ -88,6 +123,7 @@ const StakekeySummary = () => {
         {...fetchData}
         columns={columns}
         total={{ title: "Stake key summary", count: fetchData.total }}
+        onClickRow={(e, row) => history.push(details.generated_staking_detail(row.id))}
         pagination={{
           page,
           size,

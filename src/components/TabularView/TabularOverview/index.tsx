@@ -50,9 +50,10 @@ type TGridItem = {
 };
 
 const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
+  const { isMobile } = useScreen();
   return (
-    <Grid item xs={12} md={6}>
-      <CardOverview>
+    <Grid item xs={12} md={6} > 
+      <CardOverview mr={isMobile ? 2 : 0} >
         <Icon component={BgGray} />
         <Box display="flex" alignItems="center" gap="12px">
           <WrapIcon>{mainIcon}</WrapIcon>
@@ -71,10 +72,9 @@ const TabularOverview: React.FC = () => {
   const [open, setOpen] = useState(false);
   const { stakeId } = useParams<{ stakeId: string }>();
   const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
-  const { isMobile } = useScreen();
 
   return (
-    <Grid container spacing={2} marginRight={isMobile ? 2 : 0}>
+    <Grid container spacing={2}>
       <GridItem
         title="Payment Wallet"
         mainIcon={<PaymentWallet />}

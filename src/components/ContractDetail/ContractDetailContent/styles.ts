@@ -1,4 +1,6 @@
 import { styled } from "@mui/material";
+import { TabList } from "@mui/lab";
+
 
 export const TabTitle = styled("h3")`
   margin-bottom: 0px;
@@ -10,3 +12,9 @@ export const TabTitle = styled("h3")`
     color: var(--color-black);
   }
 `;
+
+export const TabListStyled = styled(TabList)(({ theme}) => ({
+  [theme.breakpoints.down("lg")]: {
+    paddingLeft: '16px !important',    
+},
+}))

@@ -54,8 +54,8 @@ import {
 } from "../../../types/table";
 import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
-import { TbArrowsDownUp, TbArrowUp, TbArrowDown } from "react-icons/tb";
 import Filter from "../Filter";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 type TEmptyRecord = {
   className?: string;
@@ -248,6 +248,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
   const [page, setPage] = useState(pagination?.page || 1);
   const [size, setSize] = useState(pagination?.size || 50);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
+  const { isTablet } = useScreen();
 
   useUpdateEffect(() => {
     setPage(1);
@@ -288,9 +289,9 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
           ""
         )}
         {total?.count ? (
-          <Total ml={"20px"} fontSize="0.875rem" lineHeight={"1 !important"}>
+          <Box ml={"20px"} fontSize="0.875rem" lineHeight={"1 !important"}>
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> {`Result${total.count > 1 ? "s" : ""}`}
-          </Total>
+          </Box>
         ) : (
           ""
         )}

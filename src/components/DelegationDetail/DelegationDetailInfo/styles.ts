@@ -1,10 +1,12 @@
 import { alpha, Box, Button, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
-import { Link } from "react-router-dom";
 
-export const HeaderDetailContainer = styled(Box)`
-  text-align: left;
-  position: relative;
-`;
+export const HeaderDetailContainer = styled(Box)(({ theme }) => ({
+  textAlign: "left",
+  position: "relative",
+  [theme.breakpoints.down("sm")]: {
+    paddingTop: 32,
+  },
+}));
 
 export const BackButton = styled(Box)`
   display: inline-flex;
@@ -70,36 +72,46 @@ export const PoolIdValue = styled("small")`
   margin-right: 5px;
 `;
 
-export const DataContainer = styled("div")`
-  background: ${props => props.theme.palette.background.paper};
-  display: flex;
-  flex-direction: column;
-  box-shadow: ${props => props.theme.shadow[4]};
-  border-radius: 12px;
-  padding: 30px 25px;
-`;
+export const DataContainer = styled("div")(({ theme }) => ({
+  background: theme.palette.background.paper,
+  display: "flex",
+  flexDirection: "column",
+  boxShadow: theme.shadow[4],
+  borderRadius: 12,
+  padding: "30px 25px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "24px 15px",
+  },
+}));
 
-export const Item = styled(Grid)<{ top?: number }>`
-  position: relative;
-  padding: ${({ top }) => (top ? 0 : 20)}px 25px ${({ top }) => (top ? 20 : 0)}px;
-  border-left: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)};
-  border-bottom: ${({ top, theme }) => (top ? `1px solid ${alpha(theme.palette.common.black, 0.1)}` : "none")};
+export const Item = styled(Grid)<{ top?: number }>(({ top, theme }) => ({
+  position: "relative",
+  padding: top ? "0 25px 20px" : "20px 25px 0",
+  borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  borderBottom: top ? `1px solid ${alpha(theme.palette.common.black, 0.1)}` : "none",
 
-  &:first-of-type {
-    border-left: 0;
-    padding-left: 0;
-  }
+  "&:first-of-type, &:nth-of-type(5)": {
+    borderLeft: 0,
+    paddingLeft: 0,
+  },
 
-  &:last-child {
-    border-right: 0;
-    padding-right: 0;
-  }
-
-  @media (max-width: 1023px) {
-    padding: 20px 25px !important;
-    border: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)} !important;
-  }
-`;
+  [theme.breakpoints.down("sm")]: {
+    borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+    padding: 15,
+    paddingRight: 0,
+    "&:nth-of-type(2n + 1)": {
+      borderLeft: "0 !important",
+      paddingLeft: "0 !important",
+    },
+    "&:nth-of-type(1),&:nth-of-type(2)": {
+      paddingTop: "0 !important",
+    },
+    "&:nth-of-type(7),&:nth-of-type(8)": {
+      borderBottom: "0 !important",
+      paddingBottom: "0 !important",
+    },
+  },
+}));
 
 export const StyledImg = styled("img")`
   margin-right: 8px;

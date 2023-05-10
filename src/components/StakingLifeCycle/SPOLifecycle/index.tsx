@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
 
-import { NextButton, PreviousButton, Step, StepButton, TitleStep } from "./styles";
+import { NextButton, PreviousButton, Step, StepButton, TitleStep, WrapTitle } from "./styles";
 
 import {
   CheckIcon,
@@ -128,10 +128,10 @@ const SPOLifecycle = ({
         ))}
       </Box>
       <Box mt={3} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-        <Box fontSize={"1.5rem"} fontWeight={"bold"}>
+        <WrapTitle>
           {stepper[currentStep]?.title}{" "}
           <InfoIcon style={{ cursor: "pointer" }} onClick={() => setOpenDescriptionModal(true)} />
-        </Box>
+        </WrapTitle>
       </Box>
       <Box>{stepper[currentStep]?.description}</Box>
       <Box minHeight={400} pb={10}>
@@ -145,7 +145,7 @@ const SPOLifecycle = ({
           }}
         >
           <PreviousIcon />
-          <Box component={"span"}>Previous: {stepper[currentStep - 1]?.title}</Box>
+          <Box fontSize={"16px"} component={"span"}>Previous: {stepper[currentStep - 1]?.title}</Box>
         </PreviousButton>
       )}
       <NextButton

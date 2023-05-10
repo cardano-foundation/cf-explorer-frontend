@@ -1,5 +1,6 @@
 import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
 import { Link } from "react-router-dom";
+import CopyButton from "../../../commons/CopyButton";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -103,3 +104,6 @@ export const PoolNamePopup = styled(Link)(({ theme }) => ({
   overflow: "hidden",
   textOverflow: "ellipsis",
 }));
+export const StyledCopyButton = styled(CopyButton)`
+  margin-left: 5px;
+`;

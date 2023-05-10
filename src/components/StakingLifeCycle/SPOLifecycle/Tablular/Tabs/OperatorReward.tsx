@@ -5,18 +5,15 @@ import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
 import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../../../commons/utils/helper";
 import Table, { Column } from "../../../../commons/Table";
-import { PoolUpdateModal } from "../../PoolUpdates";
-import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, ClickAbleLink } from "./styles";
+import { ADAValueLabel, ClickAbleLink } from "./styles";
 import CustomIcon from "../../../../commons/CustomIcon";
 import { ADAsigntIC } from "../../../../../commons/resources";
 import { details } from "../../../../../commons/routers";
-import CustomTooltip from "../../../../commons/CustomTooltip";
 import { StyledLink } from "../../../../share/styled";
+import CustomTooltip from "../../../../commons/CustomTooltip";
 
-const ProtocolUpdateTab = () => {
+const OperatorRewardTab = () => {
   const { poolId = "" } = useParams<{ poolId: string }>();
-  const history = useHistory();
-  const [selectedValue, setSelectedValue] = useState<PoolUpdateDetail | null>(null);
   const [params, setParams] = useState({
     page: 0,
     size: 10,
@@ -24,67 +21,60 @@ const ProtocolUpdateTab = () => {
 
   const [sort, setSort] = useState<string>("");
 
-  const columns: Column<PoolUpdateDetail>[] = [
+  const columns: Column<SPO_REWARD>[] = [
     {
-      key: "txHash",
-      title: "Transaction hash",
+      key: "epochNo",
+      title: "Epoch",
       render(data) {
-        return (
-          <CustomTooltip title={data.txHash}>
-            <StyledLink to={details.transaction(data.txHash)}>{formatHash(data.txHash)}</StyledLink>
-          </CustomTooltip>
-        );
+        return <StyledLink to={details.epoch(data.epochNo)}>{data.epochNo}</StyledLink>;
       },
     },
     {
       key: "time",
       title: "Timestamp",
       sort({ columnKey, sortValue }) {
-        sortValue ? setSort(`bk.${columnKey},${sortValue}`) : setSort("");
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
       render(data) {
         return formatDateTimeLocal(data.time);
       },
     },
     {
-      key: "fee",
-      title: "Fees",
+      key: "amount",
+      title: "Operator Reward ADA",
       render(data) {
         return (
           <ADAValueLabel>
-            {formatADAFull(data.fee)} <CustomIcon icon={ADAsigntIC} width={12} />
+            {formatADAFull(data.amount)} <CustomIcon icon={ADAsigntIC} width={12} />
           </ADAValueLabel>
         );
       },
     },
     {
-      key: "update",
-      title: "Update",
+      key: "owner",
+      title: "Reward Account",
       render(data) {
-        return <ClickAbleLink onClick={() => setSelectedValue(data)}>Certificate Update</ClickAbleLink>;
+        return (
+          <CustomTooltip title={data.rewardAccount}>
+            <StyledLink to={details.stake(data.rewardAccount)}>{formatHash(data.rewardAccount)}</StyledLink>
+          </CustomTooltip>
+        );
       },
     },
   ];
 
-  const fetchData = useFetchList<PoolUpdateDetail>(poolId ? API.SPO_LIFECYCLE.POOL_UPDATE_LIST(poolId) : "", {
+  const fetchData = useFetchList<SPO_REWARD>(poolId ? API.SPO_LIFECYCLE.REWARD(poolId) : "", {
     ...params,
     sort,
   });
 
   return (
     <Box>
-      <PoolUpdateModal
-        data={selectedValue}
-        open={!!selectedValue}
-        handleCloseModal={() => {
-          setSelectedValue(null);
-        }}
-      />
       <Table
         {...fetchData}
         columns={columns}
         total={{
-          title: "Pool update",
+          title: "Pool Registration",
           count: fetchData.total,
         }}
         pagination={{
@@ -97,4 +87,4 @@ const ProtocolUpdateTab = () => {
   );
 };
 
-export default ProtocolUpdateTab;
+export default OperatorRewardTab;

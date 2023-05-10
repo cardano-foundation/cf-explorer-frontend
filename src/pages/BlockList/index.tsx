@@ -3,12 +3,10 @@ import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { PriceWrapper, StyledColorBlueDard, StyledContainer, StyledLink } from "./styles";
-import { useWindowSize } from "react-use";
 import { Column } from "../../types/table";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { details } from "../../commons/routers";
 import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../commons/utils/helper";
-import { useTheme } from "@mui/material";
 import { setOnDetailView } from "../../stores/user";
 import DetailViewBlock from "../../components/commons/DetailView/DetailViewBlock";
 import Card from "../../components/commons/Card";
@@ -18,7 +16,6 @@ import SelectedIcon from "../../components/commons/SelectedIcon";
 import Link from "../../components/commons/Link";
 import ADAicon from "../../components/commons/ADAIcon";
 const BlockList = () => {
-  const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
   const [block, setBlock] = useState<number | string | null>(null);
@@ -26,7 +23,6 @@ const BlockList = () => {
   const [selected, setSelected] = useState<number | null>(null);
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo, sort });
-  const theme = useTheme();
   const mainRef = useRef(document.querySelector("#main"));
 
   useEffect(() => {
@@ -103,11 +99,9 @@ const BlockList = () => {
   ];
 
   const openDetail = (_: any, r: Block, index: number) => {
-    if (width >= theme.breakpoints.values.md) {
-      setOnDetailView(true);
-      setBlock(r.blockNo || r.hash);
-      setSelected(index);
-    } else history.push(details.block(r.blockNo || r.hash));
+    setOnDetailView(true);
+    setBlock(r.blockNo || r.hash);
+    setSelected(index);
   };
 
   const handleClose = () => {
@@ -118,7 +112,7 @@ const BlockList = () => {
 
   return (
     <StyledContainer>
-      <Card title={"Blocks"}>
+      <Card title={"Blocks"} className="card-table">
         <Table
           {...fetchData}
           columns={columns}
@@ -135,9 +129,10 @@ const BlockList = () => {
           onClickRow={openDetail}
           selected={selected}
           showTabView
+          className="block-list-table"
         />
-        {block && <DetailViewBlock blockNo={block} handleClose={handleClose} />}
       </Card>
+      {block && <DetailViewBlock blockNo={block} handleClose={handleClose} />}
     </StyledContainer>
   );
 };

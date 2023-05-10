@@ -1,8 +1,7 @@
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import useFetch from "../../../commons/hooks/useFetch";
-import { AIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
 import { exchangeADAToUSD, formatADAFull, getShortWallet } from "../../../commons/utils/helper";
@@ -10,7 +9,7 @@ import { RootState } from "../../../stores/types";
 import Card from "../../commons/Card";
 import CardAddress from "../../share/CardAddress";
 import TokenAutocomplete from "../../TokenAutocomplete";
-import { Pool, StyledAAmount } from "./styles";
+import { GridContainer, GridItem, Pool, StyledAAmount } from "./styles";
 import ADAicon from "../../commons/ADAIcon";
 
 interface Props {
@@ -77,11 +76,12 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       ),
     },
   ];
+
   return (
     <Card title="Contract Detail">
-      <Grid container columnSpacing={2}>
-        <Grid item xs={12} md={6}>
-          <Box overflow="hidden" borderRadius={10} height={"100%"}>
+      <GridContainer container columnSpacing={2}>
+        <GridItem item xs={12} md={6}>
+          <Box overflow="hidden" borderRadius={3} height={"100%"}>
             <CardAddress
               title={"Wallet address"}
               type="left"
@@ -90,9 +90,9 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
               loading={loading}
             />
           </Box>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Box overflow="hidden" borderRadius={10} height={"100%"}>
+        </GridItem>
+        <GridItem item xs={12} md={6}>
+          <Box overflow="hidden" borderRadius={3} height={"100%"}>
             <CardAddress
               title={"Controlled stake key"}
               type="right"
@@ -102,8 +102,8 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
               addressDestination={details.stake(dataStake?.stakeAddress)}
             />
           </Box>
-        </Grid>
-      </Grid>
+        </GridItem>
+      </GridContainer>
     </Card>
   );
 };

@@ -1,9 +1,8 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
-import { AIcon } from "../../../../commons/resources";
 import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
@@ -18,8 +17,20 @@ const SummaryItems = ({
   item: Transaction["summary"]["stakeAddressTxInputs"][number];
   type?: "up" | "down";
 }) => {
+  const theme = useTheme();
   return (
-    <Box textAlign={"left"} px={3} py={2} sx={{ background: theme => theme.palette.background.paper }} mb={2}>
+    <Box
+      textAlign={"left"}
+      sx={{
+        background: theme => theme.palette.background.paper,
+        px: 3,
+        py: 2,
+        mb: 1,
+        [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
+          px: 2,
+        },
+      }}
+    >
       <Box display={"flex"}>
         <Box width={50}>
           <Icon src={type === "down" ? receiveImg : sendImg} alt="send icon" />
@@ -74,14 +85,24 @@ const SummaryItems = ({
               <Box component={"span"}> {type === "down" ? "Token sent:" : "Token received:"} </Box>
 
               {item.tokens.map((token, idx) => (
-                <Box key={idx} width="auto" component={"span"}>
+                <Box
+                  key={idx}
+                  width="auto"
+                  sx={{
+                    [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+                      maxWidth: 250,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    },
+                  }}
+                  component={"span"}
+                >
                   <TokenLink to={details.token(token.assetId)}>
                     {token.assetName || getShortWallet(token.assetId)}
                     {`(${type === "down" ? "-" : "+"}${token.assetQuantity || ""})`}
                   </TokenLink>
                 </Box>
               ))}
-              {/* </Box> */}
             </Box>
           )}
         </Box>

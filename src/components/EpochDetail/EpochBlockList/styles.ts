@@ -1,7 +1,11 @@
-import { styled, Container, Box } from "@mui/material";
+import { styled, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const StyledContainer = styled(Box)``;
+export const StyledContainer = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    paddingLeft: "16px",
+  },
+}));
 
 export const StyledColorBlueDard = styled("span")`
   color: ${props => props.theme.palette.text.primary};

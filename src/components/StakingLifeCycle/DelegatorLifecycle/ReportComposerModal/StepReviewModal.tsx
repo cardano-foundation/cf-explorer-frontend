@@ -21,6 +21,8 @@ import useToast from "../../../../commons/hooks/useToast";
 import { useHistory } from "react-router-dom";
 import { routers } from "../../../../commons/routers";
 import { useState } from "react";
+import { getEventType } from "../../../StakekeySummary";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
 const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaultParams, gotoStep }) => {
   const toast = useToast();
@@ -28,6 +30,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
   const [step1, step2, step3] = defaultParams || [];
 
   const history = useHistory();
+  const { isMobile } = useScreen()
   const handleGenerateReport = async () => {
     setLoading(true);
     try {
@@ -43,7 +46,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           poolId: step1.address,
           reportName: step1.reportName || defaultReportName,
           isPoolSize: step2.poolSize === "YES",
-          isFeesPaid: step2.adaTransfers === "YES",
+          isFeesPaid: step2.feesPaid === "YES",
           event: step3?.eventsKey,
           epochRanges: step1.epochRange,
         };
@@ -57,7 +60,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           toDate: moment(end).format("yyyy/MM/D hh:mm:ss"),
           isADATransfer: step2.adaTransfers === "YES",
           isFeesPaid: step2.adaTransfers === "YES",
-          stakingLifeCycleEvents: events,
+          ...getEventType(events.map((item: { type: string }) => item.type)),
         };
         await generateStakeKeyReport(paramsStakeKeyReport);
       }
@@ -119,7 +122,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
 
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
-      <Container>
+      <Container p={"10px 10px 1px 20px"}>
         <ModalTitle>Report composer</ModalTitle>
         <TextRequired>
           Before proceeding with your report creation, we just want to double-check and confirm that you’ve filled out
@@ -145,7 +148,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           })}
         </Stack>
         <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={"20px"}>
-          <StyledBackButton onClick={() => gotoStep?.(STEPS.step1)}>I’d like to double-check</StyledBackButton>
+          <StyledBackButton width={isMobile ? 140 : 100} onClick={() => gotoStep?.(STEPS.step1)}>I’d like to double-check</StyledBackButton>
           <StyledButton disabled={loading} onClick={handleGenerateReport}>
             {loading && <CircularProgress color="info" size={20} />}Generate report
           </StyledButton>

@@ -23,6 +23,13 @@ export const TitleStep = styled(Box)<{ currentStep: number; index: number }>(({ 
   fontSize: "0.875rem",
   marginTop: theme.spacing(1),
 }));
+
+export const WrapTitle = styled(Box)(({ theme }) => ({
+  fontSize: "1.5rem",
+  fontWeight: "bold",
+  color: theme.palette.common.black
+}));
+
 export const NextButton = styled(Button)(({ theme }) => ({
   color: theme.palette.common.white,
   background: theme.palette.grey[700],

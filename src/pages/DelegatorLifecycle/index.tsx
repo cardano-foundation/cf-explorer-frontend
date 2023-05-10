@@ -25,6 +25,7 @@ import { ReactComponent as TableMode } from "../../commons/resources/icons/Staki
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useScreen } from "../../commons/hooks/useScreen";
+import { details } from "../../commons/routers";
 
 const DelegatorLifecycle = () => {
   const { stakeId = "", tab = "" } = useParams<{
@@ -82,13 +83,15 @@ const DelegatorLifecycle = () => {
     <StyledContainer ref={containerRef}>
       <BoxContainerStyled>
         <Box>
-          <Box component={"h2"} mb={0} mt={0}>
+          <Box component={"h2"} mb="5px" mt={0} fontSize={36} lineHeight="42px">
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
-            <Box component={"span"}>Stake key:</Box>
+            <Box component={"span"} fontSize={"0.875rem"} lineHeight={1}>
+              Stake key:
+            </Box>
             <CustomTooltip title={stakeId}>
-              <StakeId>{getShortHash(stakeId)}</StakeId>
+              <StakeId to={details.stake(stakeId)}>{getShortHash(stakeId)}</StakeId>
             </CustomTooltip>
             <CopyButton text={stakeId} />
           </Box>
@@ -107,9 +110,11 @@ const DelegatorLifecycle = () => {
               </ButtonSwitch>
             </ButtonGroup>
           </BoxSwitchContainer>
-          <ButtonReportContainer>
-            {mode === "tablular" && <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>}
-          </ButtonReportContainer>
+          {mode === "tablular" && (
+            <ButtonReportContainer>
+              <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport> 
+            </ButtonReportContainer>
+          )}
         </BoxItemStyled>
       </BoxContainerStyled>
       <Box ml={isMobile ? 2 : 0}>
