@@ -139,7 +139,7 @@ const RegistrationTimeline = ({
                         mr={1}
                         color={theme => theme.palette.common.black}
                       >
-                        {formatADAFull(deposit || 0)}
+                        {formatADAFull(deposit || 0, 1)}
                       </Box>
                       <AdaLogoIcon fontSize={14} color={theme.palette.text.secondary} />
                     </Box>
