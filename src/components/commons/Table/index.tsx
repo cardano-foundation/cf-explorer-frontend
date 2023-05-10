@@ -46,6 +46,7 @@ import {
 import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
 import Filter from "../Filter";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 type TEmptyRecord = {
   className?: string;
