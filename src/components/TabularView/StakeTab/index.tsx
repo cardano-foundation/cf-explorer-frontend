@@ -38,7 +38,12 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration" }) =
                 style={{ padding: "12px 0px", marginRight: 40 }}
                 label={
                   <TabHead active={+(key === tabActive)} display={"flex"} alignItems="center">
-                    <CustomIcon icon={Icon} fill="currentColor" width={25} />
+                    <CustomIcon
+                      icon={Icon}
+                      fill={key !== "poolSize" ? "currentColor" : "none"}
+                      stroke={key === "poolSize" ? "currentColor" : "none"}
+                      width={25}
+                    />
                     <TitleTab pl={1} active={+(key === tabActive)}>
                       {label}
                     </TitleTab>

@@ -44,7 +44,6 @@ import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
 
 const Routes: React.FC = () => {
-  console.log(localStorage.getItem("username"));
   //TODO: lấy stake key thay vì username trong tương lai
   const stakeKey = localStorage.getItem("username");
   //TODO: lấy SPO

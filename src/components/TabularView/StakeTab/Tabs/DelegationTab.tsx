@@ -116,13 +116,13 @@ const DelegationTab = () => {
           />
         </Box>
       </Box>
-      <Table 
+      <Table
         {...fetchData}
         columns={columns}
         total={{ title: "Total", count: fetchData.total }}
         pagination={{
           ...pageInfo,
-          page: pageInfo.page + 1,
+          page: pageInfo.page,
           total: fetchData.total,
           onChange: (page, size) => setPageInfo(pre => ({ ...pre, page: page - 1, size })),
         }}

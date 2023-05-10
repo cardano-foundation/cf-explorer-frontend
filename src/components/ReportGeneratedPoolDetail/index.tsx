@@ -1,5 +1,6 @@
 import React, { useMemo, createContext } from "react";
 import { DeredistrationIcon, OperatorRewardIcon, PoolUpdateIcon, RegistrationIcon } from "../../commons/resources";
+import { ReactComponent as WalletIcon } from "../../commons/resources/icons/WalletOutline.svg";
 
 import StakeTab from "../TabularView/StakeTab";
 
@@ -12,6 +13,7 @@ import useFetch from "../../commons/hooks/useFetch";
 import { API } from "../../commons/utils/api";
 import PoolSizeTab from "./PoolTabs/PoolSizeTab";
 import { SkeletonUI } from "../TokenDetail/TokenAnalytics/styles";
+import { getPoolEventList } from "../PoolLifecycle";
 
 interface ITab {
   icon: React.FC;
@@ -56,23 +58,23 @@ const poolTabs: ITab[] = [
 
 const ReportGeneratedPoolDetailTabs = () => {
   const { reportId } = useParams<{ reportId: string }>();
-  const reportDetail = useFetch<IPoolReportSummary>(API.REPORT.POOL_REPORTED_DETAIL(reportId));
+  const reportDetail = useFetch<IPoolReportList>(API.REPORT.POOL_REPORTED_DETAIL(reportId));
 
   const events = useMemo(() => {
     const { data } = reportDetail;
-    if (!data?.event) return [];
-    return data.event.split(",");
+    if (!data) return [];
+
+    return getPoolEventList(data);
   }, [reportDetail]);
 
-  console.log(events, "events");
   const displayedTabs = useMemo(() => {
     const tabs = [
       ...poolTabs,
       {
-        icon: DeredistrationIcon,
+        icon: WalletIcon,
         label: "Pool size",
         key: "poolSize",
-        mappingKey: "",
+        mappingKey: "poolSize",
         component: <PoolSizeTab />,
       },
     ];

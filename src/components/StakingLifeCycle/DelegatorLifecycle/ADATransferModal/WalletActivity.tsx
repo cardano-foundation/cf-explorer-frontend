@@ -52,6 +52,17 @@ const WalletActivity: React.FC = () => {
       },
     },
     {
+      title: "Fees Paid",
+      key: "fee",
+      minWidth: "100px",
+      render: r => (
+        <Box display="flex" alignItems="center">
+          <TextAmountReward>{formatADAFull(r.fee)}</TextAmountReward>
+          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={theme => theme.palette.text.primary} />
+        </Box>
+      ),
+    },
+    {
       title: "Transaction Hash",
       key: "transactionHash",
       minWidth: "100px",
