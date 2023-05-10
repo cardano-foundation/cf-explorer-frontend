@@ -1,14 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import {
-  Box,
-  Pagination,
-  PaginationRenderItemParams,
-  IconButton,
-  MenuItem,
-  styled,
-  CircularProgress,
-  alpha,
-} from "@mui/material";
+import { Box, PaginationRenderItemParams, IconButton, MenuItem, styled, CircularProgress, alpha } from "@mui/material";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
 import {
   DownIcon,
@@ -42,6 +33,7 @@ import {
   TableTitle,
   ShowedResults,
   TableCustomTitle,
+  StyledPagination,
 } from "./styles";
 import {
   ColumnType,
@@ -449,6 +441,8 @@ const PaginationCustom = ({
     setInputPage(1);
   }, [size]);
 
+  const { isGalaxyFoldSmall } = useScreen();
+
   const totalPage = Math.ceil((pagination?.total || 0) / size);
   const renderItem = (item: PaginationRenderItemParams) => {
     if (item.type === "first") {
@@ -510,7 +504,7 @@ const PaginationCustom = ({
     if (item.type === "page") {
       if (item.page === 1) {
         return (
-          <Box>
+          <Box width={isGalaxyFoldSmall ? "100vw" : "auto"} textAlign={isGalaxyFoldSmall ? "left" : "center"}>
             <InputNumber
               type={"number"}
               value={inputPage}
@@ -542,7 +536,13 @@ const PaginationCustom = ({
     }
   };
   return (
-    <Pagination count={total || 0} page={page} showFirstButton={true} showLastButton={true} renderItem={renderItem} />
+    <StyledPagination
+      count={total || 0}
+      page={page}
+      showFirstButton={true}
+      showLastButton={true}
+      renderItem={renderItem}
+    />
   );
 };
 

@@ -28,7 +28,6 @@ const Title = styled("h2")<{ underline: number }>`
     bottom: 0;
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    padding-left: 18px;
     font-size: 24px !important;
   }  
 },

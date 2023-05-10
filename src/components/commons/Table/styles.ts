@@ -1,4 +1,4 @@
-import { Box, Checkbox, alpha, Select, Typography, styled } from "@mui/material";
+import { Box, Checkbox, alpha, Select, Typography, styled, Pagination } from "@mui/material";
 
 export const Empty = styled(Box)`
   text-align: center;
@@ -196,3 +196,11 @@ export const TableCustomTitle = styled(Box)`
   flex: 1;
   text-align: left;
 `;
+
+export const StyledPagination = styled(Pagination)(({ theme }) => ({
+  "ul li > button": {
+    width: 24,
+    height: 24,
+    padding: 0,
+  }
+}));

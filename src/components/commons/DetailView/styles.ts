@@ -30,8 +30,7 @@ export const ViewDetailHeader = styled(Box)(({ theme }) => ({
   alignItems: "center",
   borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
   [theme.breakpoints.down("sm")]: {
-    margin: "0px",
-    padding: "15px 16px",
+    margin: "0px 16px",
   },
 }));
 
