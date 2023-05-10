@@ -85,7 +85,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
     {
       key: "collaterals",
       icon: CollateralIcon,
-      label: `Collaterals(${
+      label: `Collateral(${
         data?.collaterals?.collateralInputResponses?.length === data?.collaterals?.collateralOutputResponses?.length
           ? 1
           : data?.collaterals?.collateralInputResponses?.length
@@ -101,7 +101,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
     {
       key: "withdrawals",
       icon: WithdrawalIcon,
-      label: `Withdrawals(${data?.withdrawals?.length || 0})`,
+      label: `Withdrawal(${data?.withdrawals?.length || 0})`,
       children: <Withdrawals data={data?.withdrawals} />,
     },
     {

@@ -11,26 +11,29 @@ import StorageUtils from "../../../../../commons/utils/storage";
 import { signOut } from "../../../../../commons/utils/userRequest";
 import { useSelector } from "react-redux";
 
-const StyledSelect = styled(Select)`
-  font-family: var(--font-family-title);
-  border: 2px solid ${({ theme }) => theme.palette.border.hint};
-  background: transparent;
-  color: ${({ theme }) => theme.palette.text.secondary};
-  border-radius: 8px;
-  & > div {
-    padding: 6.5px 12px;
-    font-weight: var(--font-weight-bold);
-    cursor: pointer;
+const StyledSelect = styled(Select)(({ theme }) => ({
+  fontFamily: "var(--font-family-title)",
+  border: `2px solid ${theme.palette.border.hint}`,
+  background: "transparent",
+  color: theme.palette.text.secondary,
+  borderRadius: "8px",
+  "& > div": {
+    padding: "6.5px 12px",
+    fontWeight: "var(--font-weight-bold)",
+    cursor: "pointer",
+  },
+  "& > fieldset": {
+    top: 0,
+    border: "none !important",
+  },
+  "& > svg": {
+    color: theme.palette.text.secondary,
+    fontSize: "20px",
+  },
+  [theme.breakpoints.down("md")]: {
+    background: theme.palette.background.paper,
   }
-  & > fieldset {
-    top: 0;
-    border: none !important;
-  }
-  & > svg {
-    color: ${({ theme }) => theme.palette.text.secondary};
-    font-size: 20px;
-  }
-`;
+}));
 
 const SelectNetwork: React.FC = () => {
   const { location } = useHistory();

@@ -10,10 +10,13 @@ export const StyledLink = styled(Link)`
   color: ${props => props.theme.palette.secondary.main} !important;
 `;
 
-export const RegistrationContainer = styled(Container)`
-  padding: 30px 0px 40px;
-  text-align: left;
-`;
+export const RegistrationContainer = styled(Container)(({ theme }) => ({
+  padding: "30px 0px 40px",
+  textAlign: "left",
+  [theme.breakpoints.down("md")]: {
+    padding: "25px 16px 30px"
+  }
+}));
 
 export const StyledTabs = styled(Tabs)`
   .MuiTabs-flexContainer {

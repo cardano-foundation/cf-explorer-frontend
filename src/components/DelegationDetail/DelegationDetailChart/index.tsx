@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Grid, Skeleton, styled, Box, useTheme } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-import { formatADAFull, formatPrice } from "../../../commons/utils/helper";
+import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatADAFull, formatPrice } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import useFetch from "../../../commons/hooks/useFetch";
 import {
@@ -17,6 +17,7 @@ import {
   Value,
 } from "./styles";
 import { API } from "../../../commons/utils/api";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface DelegationDetailChartProps {
   poolId: string;
@@ -29,6 +30,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   const categories = data?.[selected]?.dataByDays?.map(item => item.epochNo) || [];
   const epochs = data?.epochChart?.dataByDays?.map(item => item.totalStake / 10 ** 6) || [];
   const delegators = data?.delegatorChart?.dataByDays?.map(item => item.numberDelegator) || [];
+  const { isMobile } = useScreen();
   return (
     <StyledContainer>
       <AnalyticsTitle>Analytics</AnalyticsTitle>
@@ -114,27 +116,35 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
             columns={12}
             space={categories.length ? (categories.find(item => item > 99) ? 50 : 36) : 16}
           >
-            <Item item xs={12} sm={6} lg={12}>
+            <Item item xs={6} sm={6} lg={12}>
               <img src={HighestIcon} alt="heighest icon" />
               <Title>{selected === "epochChart" ? "Highest stake" : "Highest number of delegators"}</Title>
               <Value>
                 {loading || !data?.[selected] ? (
                   <SkeletonUI variant="rectangular" />
                 ) : selected === "epochChart" ? (
-                  formatADAFull(data[selected].highest)
+                  isMobile ? (
+                    formatADA(data[selected].highest, LARGE_NUMBER_ABBREVIATIONS, 3)
+                  ) : (
+                    formatADAFull(data[selected].highest)
+                  )
                 ) : (
                   data[selected].highest
                 )}
               </Value>
             </Item>
-            <Item item xs={12} sm={6} lg={12}>
+            <Item item xs={6} sm={6} lg={12}>
               <img src={LowestIcon} alt="lowest icon" />
               <Title>{selected === "epochChart" ? "Lowest stake" : "Lowest number of delegators"}</Title>
               <Value>
                 {loading || !data ? (
                   <SkeletonUI variant="rectangular" />
                 ) : selected === "epochChart" ? (
-                  formatADAFull(data[selected].lowest)
+                  isMobile ? (
+                    formatADA(data[selected].lowest, LARGE_NUMBER_ABBREVIATIONS, 3)
+                  ) : (
+                    formatADAFull(data[selected].lowest)
+                  )
                 ) : (
                   data[selected].lowest
                 )}

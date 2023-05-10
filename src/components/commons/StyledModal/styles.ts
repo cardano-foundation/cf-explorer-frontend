@@ -1,13 +1,12 @@
 import { styled, Box, IconButton } from "@mui/material";
 
-export const ModalContainer = styled(Box)<{ width?: number | string }>(({ theme, width }) => ({
+export const ModalContainer = styled(Box)<{ width?: number | string, viewwidth?: string | number }>(({ theme, width, viewwidth }) => ({
   position: "relative",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: `min(70vw, ${typeof width === "string" ? width : `${width || 500}px`})`,
+  width: `min(${viewwidth || 70}vw, ${typeof width === "string" ? width : `${width || 500}px`})`,
   backgroundColor: theme.palette.background.paper,
-  padding: "50px 40px",
   borderRadius: 20,
   textAlign: "left",
 }));
@@ -32,4 +31,6 @@ export const WrapTitle = styled(Box)`
   font-height: 28px;
   font-weight: 700;
   margin-bototm: 20;
+  position: relative;
+  z-index: 2;
 `;

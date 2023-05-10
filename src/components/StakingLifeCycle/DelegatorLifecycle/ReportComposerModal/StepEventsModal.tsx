@@ -111,11 +111,10 @@ const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   });
   const isAll = eventsKey.length === events.length - 1;
 
-  console.log({ eventsKey });
 
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
-      <Container>
+      <Container p={"10px 10px 1px 20px"}>
         <ModalTitle>Report composer</ModalTitle>
         <SubText>Staking lifecycle events</SubText>
         <TextRequired>Select as required</TextRequired>
@@ -132,7 +131,7 @@ const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             );
           })}
         </Box>
-        <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={"20px"}>
+        <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={"20px"} mt={2}>
           <StyledBackButton onClick={() => gotoStep?.(STEPS.step2)}>Previous</StyledBackButton>
           <StyledButton disabled={!eventsKey.length} onClick={handleSubmit}>
             Compose report

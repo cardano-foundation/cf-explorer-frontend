@@ -10,6 +10,34 @@ import { defaultAxiosDownload } from "../../commons/utils/axios";
 import { useHistory } from "react-router-dom";
 import { details } from "../../commons/routers";
 
+// Registration, Deregistration, Protocol Update,...
+export const EVENTS: { [key in keyof IPoolReportList]?: string } = {
+  isDeregistration: "deregistration",
+  isPoolUpdate: "pool_update",
+  isRegistration: "registration",
+  isReward: "reward",
+  isPoolSize: "poolSize",
+};
+
+export function getPoolEventList(data: IPoolReportList) {
+  return Object.entries(EVENTS)
+    .map(([key, value]) => (data[key as keyof typeof data] ? value : null))
+    .filter(item => item);
+}
+
+export function getPoolEventType(data: any) {
+  let events = {
+    isDeregistration: false,
+    isPoolUpdate: false,
+    isRegistration: false,
+    isReward: false,
+  };
+  for (let key in events) {
+    events[key as keyof typeof events] = data.includes(EVENTS[key as keyof typeof EVENTS]);
+  }
+  return events;
+}
+
 const PoolLifecycle = () => {
   const history = useHistory();
   const [{ page, size }, setPagi] = useState<{ page: number; size: number }>({ page: 0, size: 10 });
@@ -67,9 +95,8 @@ const PoolLifecycle = () => {
       title: "Events",
       maxWidth: "200px",
       render(data) {
-        return data.event
-          .split(",")
-          .map((event: string) => startCase(lowerCase(event.replaceAll("_", " "))))
+        return getPoolEventList(data)
+          .map((event: string | null) => startCase(lowerCase(event?.replaceAll("_", " "))))
           .join(", ");
       },
     },

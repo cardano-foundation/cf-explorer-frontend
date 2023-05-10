@@ -6,7 +6,7 @@ import { CurentEpochIcon, LiveStakeIcon, RocketBackground } from "../../../commo
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
-import { formatADAFull, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
 import { StyledCard, StyledImg, StyledLinearProgress, StyledSkeleton } from "./styles";
 
 const OverViews: React.FC = () => {
@@ -72,7 +72,7 @@ const OverViews: React.FC = () => {
         <StyledCard.Container>
           <StyledCard.Content style={{ flex: 1 }}>
             <StyledCard.Title>Live Stake</StyledCard.Title>
-            <StyledCard.Value>{formatADAFull(data?.liveStake)}</StyledCard.Value>
+            <StyledCard.Value>{formatADA(data?.liveStake)}</StyledCard.Value>
           </StyledCard.Content>
           <StyledCard.Content style={{ flex: 1 }}>
             <StyledCard.Title>Delegators</StyledCard.Title>

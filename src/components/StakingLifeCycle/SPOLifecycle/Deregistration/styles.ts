@@ -15,7 +15,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   background: theme.palette.common.white,
   top: "-70px",
   "::after": {
-    content: '"HOLD"',
+    content: '"POOL HOLD"',
     borderRadius: "4px",
     fontWeight: "bold",
     color: theme.palette.common.white,

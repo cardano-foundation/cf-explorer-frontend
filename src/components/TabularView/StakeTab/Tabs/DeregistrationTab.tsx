@@ -74,7 +74,7 @@ const DeregistrationTab = () => {
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => setPageInfo({ ...pageInfo, page, size }),
+        onChange: (page, size) => setPageInfo({ ...pageInfo, page: page - 1, size }),
       }}
       onClickRow={(e, r: DeregistrationItem) => history.push(details.transaction(r.txHash))}
     />
