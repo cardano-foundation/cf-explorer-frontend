@@ -1,6 +1,6 @@
 import { styled, Box, IconButton } from "@mui/material";
 
-export const ModalContainer = styled(Box)<{ width?: number | string, viewwidth?: string | number }>(({ theme, width, viewwidth, padding }) => ({
+export const ModalContainer = styled(Box)<{ width?: number | string, viewwidth?: string | number }>(({ theme, width, viewwidth }) => ({
   position: "relative",
   top: "50%",
   left: "50%",

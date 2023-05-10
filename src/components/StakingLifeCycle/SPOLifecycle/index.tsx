@@ -16,7 +16,7 @@ import {
 } from "../../../commons/resources";
 import Registration from "./Registration";
 import PoolUpdates from "./PoolUpdates";
-import { ADATransfersButton } from "../DelegatorLifecycle/styles";
+import { ADATransfersButton, ButtonText } from "../DelegatorLifecycle/styles";
 import OperatorReward from "./OperatorRewards";
 import Deregistration from "./Deregistration";
 import {
@@ -145,7 +145,9 @@ const SPOLifecycle = ({
           }}
         >
           <PreviousIcon />
-          <Box fontSize={"16px"} component={"span"}>Previous: {stepper[currentStep - 1]?.title}</Box>
+          <Box fontSize={"16px"} component={"span"}>
+            Previous: {stepper[currentStep - 1]?.title}
+          </Box>
         </PreviousButton>
       )}
       <NextButton
@@ -160,9 +162,9 @@ const SPOLifecycle = ({
         }}
         variant="contained"
       >
-        <Box fontSize={"16px"} component={"span"}>
+        <ButtonText>
           Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
-        </Box>
+        </ButtonText>
         <NextIcon />
       </NextButton>
     </Box>

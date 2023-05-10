@@ -150,13 +150,13 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           })}
         </Stack>
         <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={"20px"}>
-          <StyledBackButton width={isMobile ? 140 : 100} onClick={() => gotoStep?.(STEPS.step1)}>I’d like to double-check</StyledBackButton>
+          <StyledBackButton width={isMobile ? 160 : 100} onClick={() => gotoStep?.(STEPS.step1)}>I’d like to double-check</StyledBackButton>
           <StyledButton disabled={loading} onClick={handleGenerateReport}>
             {loading && <CircularProgress color="info" size={20} />}Generate report
           </StyledButton>
         </StyledStack>
       </Container>
-    </StyledModal>
+    </StyledModal> 
   );
 };
 

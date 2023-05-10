@@ -17,6 +17,7 @@ import ADAicon from "../../commons/ADAIcon";
 import { useState } from "react";
 import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
 import { details } from "../../../commons/routers";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -50,9 +51,10 @@ type TGridItem = {
 };
 
 const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
+  const { isMobile } = useScreen();
   return (
-    <Grid item xs={12} md={6}>
-      <CardOverview>
+    <Grid item xs={12} md={6} >
+      <CardOverview mr={isMobile ? 2 : 0} >
         <Icon component={BgGray} />
         <Box display="flex" alignItems="center" gap="12px">
           <WrapIcon>{mainIcon}</WrapIcon>

@@ -50,7 +50,9 @@ export const ButtonReport = styled(Button)(({ theme }) => ({
     background: alpha(theme.palette.grey[700], 0.8),
   },
   [theme.breakpoints.down("md")]: {
-    width: "328px",
+    width: "100%",
+    maxWidth: "328px",
+    minWidth: "225px",
   },
 }));
 export const ButtonReportContainer = styled(Button)(({ theme }) => ({
@@ -58,6 +60,7 @@ export const ButtonReportContainer = styled(Button)(({ theme }) => ({
   marginLeft: 20,
   [theme.breakpoints.down("md")]: {
     justifyContent: "start",
+    marginLeft: 0,
   },
 }));
 
@@ -70,6 +73,8 @@ export const BoxContainerStyled = styled(Box)(({ theme }) => ({
     display: "flex",
     alignItems: "flex-start",
     flexDirection: "column",
+    marginLeft: "16px",
+    marginRight: "16px",
   },
 }));
 export const BoxSwitch = styled(Box)(({ theme }) => ({
@@ -84,9 +89,13 @@ export const BoxItemStyled = styled(Box)(({ theme }) => ({
 }));
 export const BoxSwitchContainer = styled(Box)(({ theme }) => ({
   display: "flex",
-  gap:15,
+  gap: 15,
   [theme.breakpoints.down("md")]: {
     justifyContent: "space-between",
     alignItems: "space-between",
   },
 }));
+
+export const StyledStakeId = styled(StakeId)`
+  font-size: 1rem;
+`;
