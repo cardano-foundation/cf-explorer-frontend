@@ -1,14 +1,14 @@
 import { Alert, Box, Button, Divider, FormHelperText, Input, styled } from "@mui/material";
 import { User2RC } from "../../commons/resources";
-import themes from "../../themes";
 
 export const Container = styled(Box)`
   display: flex;
   background-color: ${({ theme }) => theme.palette.grey[200]};
-  height: 100vh;
-  width: 100vw;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  padding: 30px;
 `;
 
 export const WrapContent = styled(Box)`
