@@ -5,7 +5,7 @@ export const ModalContainer = styled(Box)<{ width?: number | string, viewwidth?:
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: `min(${viewwidth}vw, ${typeof width === "string" ? width : `${width || 500}px`})`,
+  width: `min(${viewwidth || "70"}vw, ${typeof width === "string" ? width : `${width || 500}px`})`,
   backgroundColor: theme.palette.background.paper,
   borderRadius: 20,
   textAlign: "left",
