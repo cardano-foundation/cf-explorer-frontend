@@ -16,6 +16,7 @@ export const EVENTS: { [key in keyof IPoolReportList]?: string } = {
   isPoolUpdate: "pool_update",
   isRegistration: "registration",
   isReward: "reward",
+  isPoolSize: "poolSize",
 };
 
 export function getPoolEventList(data: IPoolReportList) {

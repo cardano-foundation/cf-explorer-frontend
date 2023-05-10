@@ -1,35 +1,21 @@
 import { Box } from "@mui/material";
-import React, { useContext, useState } from "react";
+import { useState } from "react";
 import Table, { Column } from "../../commons/Table";
-import { Status, TextAmountReward } from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
+import { TextAmountReward } from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
 import CustomIcon from "../../commons/CustomIcon";
 import { AIconGreen } from "../../../commons/resources";
-import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../commons/utils/helper";
+import { formatADAFull } from "../../../commons/utils/helper";
 import { StyledLink } from "../../share/styled";
-import { details } from "../../../commons/routers";
 import { styled } from "@mui/material";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { API } from "../../../commons/utils/api";
-import { useLocation, useParams } from "react-router-dom";
-import { ReportGeneratedPoolDetailContext } from "..";
-import { TableTittle } from "../../ReportGeneratedStakingDetail/styles";
-
-const trxType = {
-  SENT: "ADA sent from wallet",
-  RECEIVED: "ADA received from wallet",
-  FEE_PAID: "Transaction fee paid",
-  CERTIFICATE_FEE_PAID: "Certificate fee paid",
-  CERTIFICATE_DEPOSIT_PAID: "Certificate deposit paid",
-};
+import { useParams } from "react-router-dom";
 
 const PoolSizeTab = () => {
-    const { reportName } = useContext<{ reportName: string }>(ReportGeneratedPoolDetailContext);
-  const [sort, setSort] = useState<string>("");
   const { reportId = "" } = useParams<{ reportId: string }>();
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 10 });
   const fetchData = useFetchList<any>(API.REPORT.PREPORT_EPOCH_SIZE(reportId), {
     ...pageInfo,
-    sort,
   });
   const columns: Column<any>[] = [
     {
@@ -47,14 +33,13 @@ const PoolSizeTab = () => {
       title: "Transaction Type",
       key: "epoch",
       minWidth: "150px",
-      render: r => <StyledLink to={''}>{r.epoch}</StyledLink>,
+      render: r => <StyledLink to={""}>{r.epoch}</StyledLink>,
     },
   ];
   return (
-    <Box mt={2}>
+    <Box>
       <StyledTable
         {...fetchData}
-        tableTitle={<TableTittle>{reportName}</TableTittle>}
         columns={columns}
         total={{ title: "Total Epochs", count: fetchData.total }}
         pagination={{

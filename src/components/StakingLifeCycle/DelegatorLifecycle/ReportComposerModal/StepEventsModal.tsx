@@ -111,7 +111,6 @@ const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   });
   const isAll = eventsKey.length === events.length - 1;
 
-  console.log({ eventsKey });
 
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
