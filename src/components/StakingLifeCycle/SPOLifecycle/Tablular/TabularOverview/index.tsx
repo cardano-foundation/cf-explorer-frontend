@@ -18,6 +18,7 @@ import { formatADAFull, formatHash } from "../../../../../commons/utils/helper";
 import { CardOverview, CardTitle, CardValue, ClickAbleLink, ViewMoreButton, WrapIcon, WrapWalletIcon } from "./styles";
 import { DotsIcon } from "../../../../PoolRegistrationCertificate/styles";
 import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
+import { useScreen } from "../../../../../commons/hooks/useScreen";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -77,10 +78,11 @@ const TabularOverview: React.FC = () => {
   const { data } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : "");
   const history = useHistory();
   const onOwnerItemClick = (key: string) => {
-    return history.push(`/stake/${key}/delegation`)
-  }
+    return history.push(`/stake/${key}/delegation`);
+  };
+  const { isMobile } = useScreen();
   return (
-    <Box>
+    <Box mr={isMobile ? 2 : 0}>
       <Grid container spacing={2}>
         <GridItem
           title="Pool Size"
@@ -120,7 +122,9 @@ const TabularOverview: React.FC = () => {
           value={
             <Box display="flex" alignItems="center">
               <CardValue>
-                <ClickAbleLink>{data?.stakeKeys && data?.stakeKeys.length && formatHash(data.stakeKeys[0])}</ClickAbleLink>
+                <ClickAbleLink>
+                  {data?.stakeKeys && data?.stakeKeys.length && formatHash(data.stakeKeys[0])}
+                </ClickAbleLink>
               </CardValue>
             </Box>
           }
@@ -134,7 +138,14 @@ const TabularOverview: React.FC = () => {
           }
         />
       </Grid>
-      <ViewMoreAddressModal showFullHash={true} onItemClick={onOwnerItemClick} title="Pool Owner" open={open} items={data?.stakeKeys} onClose={() => setOpen(false)} />
+      <ViewMoreAddressModal
+        showFullHash={true}
+        onItemClick={onOwnerItemClick}
+        title="Pool Owner"
+        open={open}
+        items={data?.stakeKeys}
+        onClose={() => setOpen(false)}
+      />
     </Box>
   );
 };

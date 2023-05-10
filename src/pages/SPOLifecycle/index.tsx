@@ -24,6 +24,7 @@ import { ReactComponent as TableMode } from "../../commons/resources/icons/Staki
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import Tablular from "../../components/StakingLifeCycle/SPOLifecycle/Tablular";
 import CustomTooltip from "../../components/commons/CustomTooltip";
+import { useScreen } from "../../commons/hooks/useScreen";
 
 const SPOLifecycle = () => {
   const { poolId = "", tab } = useParams<{
@@ -40,6 +41,8 @@ const SPOLifecycle = () => {
   };
 
   const [currentStep, setCurrentStep] = useState(tabList[tab || "registration"] || 0);
+
+  const { isMobile } = useScreen()
 
   useEffect(() => {
     setCurrentStep(tabList[tab || "registration"] || 0);
@@ -78,7 +81,7 @@ const SPOLifecycle = () => {
   }, []);
   return (
     <StyledContainer ref={containerRef}>
-      <BoxContainerStyled>
+      <BoxContainerStyled> 
         <Box>
           <Box component={"h2"} mb={0}>
             Staking Lifecycle For
@@ -111,7 +114,7 @@ const SPOLifecycle = () => {
         </BoxItemStyled>
       </BoxContainerStyled>
 
-      <Box>
+      <Box ml={isMobile ? 2 : 0}>
         {mode === "timeline" && (
           <SPOLifecycleComponent
             handleResize={handleResize}
