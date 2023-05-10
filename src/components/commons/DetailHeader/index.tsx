@@ -94,12 +94,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
             return (
               <CardItem
                 item
-                xs={12}
-                sm={6}
+                xs={isDetailToken && index === 0 ? 12 : 6}
+                sm={isDetailToken && index === 0 ? 12 : 6}
                 md={4}
                 lg={numberOfItems > 6 ? 3 : true}
                 items_length={numberOfItems}
                 key={index}
+                isDetailToken={isDetailToken}
               >
                 <IconSkeleton variant="circular" />
                 <DetailValueSkeleton variant="rectangular" />

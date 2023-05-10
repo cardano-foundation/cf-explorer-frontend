@@ -261,3 +261,6 @@ export { ReactComponent as InstantaneousHistoryIcon } from "./icons/instantaneou
 export { ReactComponent as SortTableUpDown } from "./icons/SortTableUpDown.svg";
 export { ReactComponent as SortTableUp } from "./icons/SortTableUp.svg";
 export { ReactComponent as SortTableDown } from "./icons/SortTableDown.svg";
+export { ReactComponent as ExchangeIconTransaction } from "./icons/transaction.svg";
+export { ReactComponent as UnionTokenIcon } from "./icons/union-token.svg";
+export { ReactComponent as PeopleIcon } from "./icons/people.svg";

@@ -2,6 +2,16 @@ import { Container, styled } from "@mui/material";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
   padding: "30px 0 40px",
+  "& > div:nth-of-type(3)": {
+    svg: {
+      marginRight: "0px",
+    },
+    ".Mui-selected": {
+      "svg path": {
+        fill: "#438F68",
+      },
+    },
+  },
   [theme.breakpoints.down("sm")]: {
     "& > div": {
       padding: "0 16px",

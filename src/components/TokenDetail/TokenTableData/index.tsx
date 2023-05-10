@@ -9,6 +9,7 @@ import TokenMinting from "./TokenMinting";
 import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { details } from "../../../commons/routers";
+import { ExchangeIconTransaction, UnionTokenIcon, PeopleIcon } from "../../../commons/resources";
 
 interface ITokenTableData {
   totalSupply?: number;
@@ -22,21 +23,25 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
     key: string;
     label: string;
     children: React.ReactNode;
+    icon: React.ReactElement;
   }[] = [
     {
       key: "transactions",
       label: "Transactions",
       children: <TokenTransaction tokenId={tokenId} />,
+      icon: <ExchangeIconTransaction />,
     },
     {
       key: "topHolders",
       label: "Top Holders",
       children: <TokenTopHolder tokenId={tokenId} totalSupply={totalSupply} />,
+      icon: <PeopleIcon />,
     },
     {
       key: "tokenMint",
       label: "Minting",
       children: <TokenMinting tokenId={tokenId} />,
+      icon: <UnionTokenIcon />,
     },
   ];
 
@@ -52,11 +57,13 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
           sx: { background: theme => theme.palette.primary.main, color: theme => theme.palette.primary.main },
         }}
       >
-        {tabs?.map(({ key, label }) => (
+        {tabs?.map(({ key, label, icon }) => (
           <Tab
             key={key}
             value={key}
             style={{ padding: "12px 0px", marginRight: 40 }}
+            icon={icon}
+            iconPosition="start"
             label={
               <Box display={"flex"} alignItems="center">
                 <TitleTab pl={1} active={key === tabActive}>
