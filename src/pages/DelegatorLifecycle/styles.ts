@@ -51,7 +51,7 @@ export const ButtonReport = styled(Button)(({ theme }) => ({
   },
   [theme.breakpoints.down("md")]: {
     width: "100%",
-    maxWidth: "328px",
+    maxWidth: "900px",
     minWidth: "225px",
   },
 }));
@@ -85,6 +85,7 @@ export const BoxItemStyled = styled(Box)(({ theme }) => ({
   display: "flex",
   [theme.breakpoints.down("md")]: {
     flexDirection: "column",
+    width: "100%"
   },
 }));
 export const BoxSwitchContainer = styled(Box)(({ theme }) => ({
