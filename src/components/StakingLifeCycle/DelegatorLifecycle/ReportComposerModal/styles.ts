@@ -72,7 +72,7 @@ export const StyledButton = styled(Button)`
     opacity: 0.8;
   }
 `;
-export const StyledBackButton = styled(Button)<{width?: number | string}>(({width = 100}) => ({
+export const StyledBackButton = styled(Button)<{width?: number | string}>(({width = 140}) => ({
   width: `${width}%`,
   borderRadius: "8px",
   height: "44px",
