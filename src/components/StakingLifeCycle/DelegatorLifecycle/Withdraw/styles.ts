@@ -1,4 +1,4 @@
-import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui, Typography } from "@mui/material";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -83,7 +83,7 @@ export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   marginLeft: theme.spacing(1),
-  fontWeight: 600,
+  fontWeight: 500,
   fontSize: "14px",
 }));
 
@@ -159,3 +159,11 @@ export const RoundBox = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
   borderRadius: "25px",
 }));
+
+export const ADAAmountLabel = styled(Typography)`
+  font-size: 18px;
+  font-weight: bold;
+  color: ${({theme}) => theme.palette.common.black};
+  display: inline-block;
+  margin-right: 8px;
+`;

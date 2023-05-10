@@ -6,7 +6,7 @@ import { routers } from "../../commons/routers";
 const DelegatorSearch = () => {
   return (
     <Box>
-      <h2>Welcome to Staking Lifecycle (SPO)</h2>
+      <h2>Welcome to Staking Lifecycle (Delegator)</h2>
       <Box>
         <SearchDelegatorIcon />
       </Box>

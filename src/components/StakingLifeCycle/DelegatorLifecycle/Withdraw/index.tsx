@@ -17,6 +17,7 @@ import { ReactComponent as WalletIconRewardGreen } from "../../../../commons/res
 
 import Line from "../../../Line";
 import {
+  ADAAmountLabel,
   FeeBox,
   IconButton,
   IconButtonBack,
@@ -222,9 +223,9 @@ const WithdrawTimeline = ({
               render={({ handleClick }) => (
                 <NetAmount ref={netAmountRef}>
                   <Box>
-                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                    <ADAAmountLabel>
                       {data?.amount && data?.fee ? formatADA(data?.amount - data?.fee) : 0}
-                    </Box>
+                    </ADAAmountLabel>
                     <ADAicon fontSize="18px" />
                   </Box>
                   <IconButton onClick={() => netAmountRef?.current && handleClick(netAmountRef.current)}>
@@ -238,9 +239,7 @@ const WithdrawTimeline = ({
               render={({ handleClick }) => (
                 <Withdrawn ref={withdrawnRef}>
                   <Box>
-                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                      {formatADA(data?.amount || 0)}
-                    </Box>
+                    <ADAAmountLabel>{formatADA(data?.amount || 0)}</ADAAmountLabel>
                     <ADAicon fontSize="18px" />
                   </Box>
                   <IconButton onClick={() => withdrawnRef?.current && handleClick(withdrawnRef.current)}>
