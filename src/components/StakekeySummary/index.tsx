@@ -70,7 +70,7 @@ const StakekeySummary = () => {
     },
     {
       key: "date",
-      title: "Date range",
+      title: "Date Range",
       render(data, index) {
         return `${moment(data.fromDate).format("MM/DD/yyyy")} - ${moment(data.toDate).format("MM/DD/yyyy")}`;
       },
@@ -84,7 +84,7 @@ const StakekeySummary = () => {
     },
     {
       key: "feePaid",
-      title: "Fee paid",
+      title: "Fees Paid",
       render(data, index) {
         return data.isFeesPaid ? "Yes" : "No";
       },
