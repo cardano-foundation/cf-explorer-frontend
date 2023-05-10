@@ -2,7 +2,6 @@ import BigNumber from "bignumber.js";
 import moment from "moment";
 import { parse } from "qs";
 import { setUserData } from "../../stores/user";
-import { setUserData as setUser2Data } from "../../stores/user2";
 import { getInfo, signIn } from "./userRequest";
 import { NETWORK, NETWORK_TYPES } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
@@ -159,3 +158,7 @@ export function formatHash(hash: string): string {
   const suffix = hash.slice(-5);
   return `${prefix}...${suffix}`;
 }
+
+export const truncateCustom = (text: string, first: number = 4, last: number = 8) => {
+  return `${text.slice(0, first)}...${text.slice(-last)}`;
+};
