@@ -136,7 +136,6 @@ export const SlotLeaderValue = styled("span")`
   font-family: var(--font-family-text);
   color: ${props => props.theme.palette.secondary.main};
   white-space: pre-wrap;
-  display: inline-block;
   word-break: break-word;
   line-height: 1.5;
   font-weight: bold;
@@ -379,6 +378,7 @@ export const CardItem = styled(Grid)<{ items_length: number }>(({ theme, items_l
     },
     ":nth-of-type(2n)": {
       padding: 15,
+      paddingRight: 0,
     },
     ":last-of-type::after": {
       content: `""`,

@@ -21,6 +21,7 @@ import { BiShowAlt } from "react-icons/bi";
 import { RootState } from "../../../stores/types";
 import CustomTooltip from "../../commons/CustomTooltip";
 import ADAicon from "../../commons/ADAIcon";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface Props {
   data: Transaction | null;
@@ -32,6 +33,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   const [openListInput, setOpenListInput] = useState(false);
   const [openListOutput, setOpenListOutput] = useState(false);
   const theme = useTheme();
+  const { isMobile } = useScreen();
 
   const renderConfirmationTag = () => {
     if (data && data.tx && data.tx.confirmation) {
@@ -100,7 +102,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           <CopyButton text={data?.utxOs?.inputs[0]?.address || ""} />
           {openListInput && (
             <DropdownDetail
-              minWidth={200}
+              minWidth={isMobile ? 160 : 200}
               title="Address list"
               value={data?.utxOs?.inputs.map(i => i.address) || []}
               close={() => setOpenListInput(false)}
@@ -142,7 +144,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           <CopyButton text={data?.utxOs?.outputs[0]?.address || ""} />
           {openListOutput && (
             <DropdownDetail
-              minWidth={200}
+              minWidth={isMobile ? 160 : 200}
               title="Address list"
               value={data?.utxOs?.outputs.map(i => i.address) || []}
               close={() => setOpenListOutput(false)}

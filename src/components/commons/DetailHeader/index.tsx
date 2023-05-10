@@ -39,6 +39,7 @@ import { SearchIcon } from "../../../commons/resources";
 import { BiChevronDown } from "react-icons/bi";
 import { getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import { useScreen } from "../../../commons/hooks/useScreen";
+import CustomTooltip from "../CustomTooltip";
 
 interface DetailHeaderProps {
   type: Bookmark["type"];
@@ -131,7 +132,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           {hash && (
             <SlotLeader>
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
-              <SlotLeaderValue>{isTablet ? getShortHash(hash) : hash}</SlotLeaderValue>
+              {isTablet ? (
+                <CustomTooltip title={hash}>
+                  <SlotLeaderValue>{getShortHash(hash)}</SlotLeaderValue>
+                </CustomTooltip>
+              ) : (
+                <SlotLeaderValue>{hash}</SlotLeaderValue>
+              )}
               <SlotLeaderCopy text={hash} />
             </SlotLeader>
           )}
@@ -192,7 +199,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
                   >
                     {item?.dataSearch?.map((item, index) => (
                       <StyledMenuItem onClick={() => {}} key={index}>
-                        <Box>{item.assetName}</Box>
+                        <Box mr={2}>{item.assetName}</Box>
                         <Box fontWeight={600}>
                           {item.isSent ? "-" : "+"}
                           {numberWithCommas(item.assetQuantity)}
