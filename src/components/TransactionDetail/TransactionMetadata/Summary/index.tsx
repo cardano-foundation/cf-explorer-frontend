@@ -2,13 +2,15 @@ import React from "react";
 import { Box, useTheme } from "@mui/material";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
-import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADAFull, getShortWallet, numberWithCommas } from "../../../../commons/utils/helper";
 import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { Icon, TokenLink } from "./styles";
+import { Icon, StyledMenuItem, StyledSelect, TokenLink } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
+import { useScreen } from "../../../../commons/hooks/useScreen";
+import { BiChevronDown } from "react-icons/bi";
 
 const SummaryItems = ({
   item,
@@ -18,6 +20,7 @@ const SummaryItems = ({
   type?: "up" | "down";
 }) => {
   const theme = useTheme();
+  const { isMobile, isTablet } = useScreen();
   return (
     <Box
       textAlign={"left"}
@@ -61,50 +64,60 @@ const SummaryItems = ({
               </Box>
             </Box>
           </Box>
-          <Box display={"flex"} alignItems="center" justifyContent={"space-between"} width="100%" mb={1}>
+          <Box
+            display={"flex"}
+            flexDirection={isMobile ? "column" : "row"}
+            alignItems={isMobile ? "flex-start" : "center"}
+            justifyContent={"space-between"}
+            width="100%"
+            mb={1}
+          >
             <Box display="flex" justifyContent={"space-between"} alignItems="center" pr={1}>
               {type === "down" ? "ADA sent:" : "ADA received:"}{" "}
-            </Box>
-            <Box flex={1} display="flex" justifyContent={"space-between"} alignItems="center">
-              <Box>
-                <Box
-                  component={"span"}
-                  whiteSpace="nowrap"
-                  color={theme => (type === "up" ? theme.palette.success.main : theme.palette.error.main)}
-                  fontWeight="bold"
-                  mr={1}
-                >
-                  {type === "down" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
+              <Box flex={1} display="flex" justifyContent={"space-between"} alignItems="center">
+                <Box>
+                  <Box
+                    component={"span"}
+                    whiteSpace="nowrap"
+                    color={theme => (type === "up" ? theme.palette.success.main : theme.palette.error.main)}
+                    fontWeight="bold"
+                    mr={1}
+                  >
+                    {type === "down" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
+                  </Box>
+                  <ADAicon />
                 </Box>
-                <ADAicon />
               </Box>
             </Box>
-          </Box>
-          {item.tokens && item.tokens.length > 0 && (
-            <Box display={"flex"} alignItems="center" flexWrap={"wrap"}>
-              <Box component={"span"}> {type === "down" ? "Token sent:" : "Token received:"} </Box>
-
-              {item.tokens.map((token, idx) => (
-                <Box
-                  key={idx}
-                  width="auto"
-                  sx={{
-                    [theme.breakpoints.down(theme.breakpoints.values.md)]: {
-                      maxWidth: 250,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
+            {item?.tokens?.length > 0 && (
+              <StyledSelect
+                renderValue={() => (type === "down" ? "Sent Token" : "Received Token")}
+                displayEmpty
+                onChange={() => {}}
+                IconComponent={BiChevronDown}
+                MenuProps={{
+                  PaperProps: {
+                    sx: {
+                      borderRadius: 2,
+                      marginTop: 0.5,
                     },
-                  }}
-                  component={"span"}
-                >
-                  <TokenLink to={details.token(token.assetId)}>
-                    {token.assetName || getShortWallet(token.assetId)}
-                    {`(${type === "down" ? "-" : "+"}${token.assetQuantity || ""})`}
-                  </TokenLink>
-                </Box>
-              ))}
-            </Box>
-          )}
+                  },
+                }}
+              >
+                {item?.tokens?.map((token, index) => (
+                  <StyledMenuItem onClick={() => {}} key={index}>
+                    <Box sx={{ maxWidth: "100px", overflow: "hidden", textOverflow: "ellipsis" }}>
+                      {token.assetName || getShortWallet(token.assetId)}
+                    </Box>
+                    <Box fontWeight={600}>
+                      {type === "down" ? "-" : "+"}
+                      {numberWithCommas(token.assetQuantity)}
+                    </Box>
+                  </StyledMenuItem>
+                ))}
+              </StyledSelect>
+            )}
+          </Box>
         </Box>
       </Box>
     </Box>

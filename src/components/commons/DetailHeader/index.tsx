@@ -161,7 +161,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
             <CardItem
               item
               xs={6}
-              sm={6}
+              sm={4}
               md={listItem.length === 4 ? 3 : 4}
               lg={numberOfItems > 6 ? 3 : true}
               items_length={numberOfItems}

@@ -37,7 +37,7 @@ export const WrapHeader = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     flexDirection: "column",
     alignItems: "flex-start",
-  }
+  },
 }));
 
 export const HeaderContainer = styled(Box)`
@@ -340,13 +340,17 @@ export const CardItem = styled(Grid)<{ items_length: number }>(({ theme, items_l
       },
     },
   },
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down("md")]: {
     paddingTop: 20,
     paddingBottom: 20,
     borderBottomWidth: 1,
-    ":nth-of-type(2n+1)": {
+    ":nth-of-type(4n), :nth-of-type(7n), :first-of-type": {
       borderLeftWidth: 0,
       paddingLeft: 0,
+    },
+    ":nth-of-type(8n)": {
+      borderLeftWidth: 1,
+      paddingLeft: 25,
     },
     ":last-of-type::after": {
       content: `""`,
@@ -355,9 +359,6 @@ export const CardItem = styled(Grid)<{ items_length: number }>(({ theme, items_l
       bottom: 0,
       right: -1,
       borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-    },
-    ":nth-of-type(2n)::after": {
-      borderRight: 0,
     },
     ":nth-last-of-type(-n+2)": {
       ":nth-of-type(2n+1)": {
@@ -368,7 +369,7 @@ export const CardItem = styled(Grid)<{ items_length: number }>(({ theme, items_l
       },
     },
   },
-  [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
+  [theme.breakpoints.down("sm")]: {
     paddingTop: 20,
     paddingBottom: 20,
     borderBottomWidth: 1,

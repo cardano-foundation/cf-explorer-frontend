@@ -54,3 +54,18 @@ export const ItemContent = styled(Box)(({ theme }) => ({
     alignItems: "flex-start",
   }
 }));
+
+export const WrapToken = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-start",
+  flexWrap: "wrap",
+  width: "auto",
+  [theme.breakpoints.down("md")]: {
+    wordBreak: "break-all",
+    "& > a": {
+      whiteSpace: "unset",
+      margin: 0,
+    }
+  },
+}));
