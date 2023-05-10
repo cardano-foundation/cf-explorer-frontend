@@ -5,8 +5,6 @@ export const CardOverview = styled(Box)`
   border-radius: 12px;
   height: 120px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding: 0 25px;
   position: relative;
   overflow: hidden;
