@@ -80,7 +80,7 @@ export const StyledBackButton = styled(Button)<{width?: number | string}>(({widt
   textAlign: "center",
   color: "#344054",
   lineHeight: "19px",
-  fontWeight: 500,
+  fontWeight: 700,
   fontSize: "16px",
   border: "2px solid #c8cdd8",
   ":hover": {
