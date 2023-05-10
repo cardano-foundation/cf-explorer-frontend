@@ -70,21 +70,21 @@ const PoolLifecycle = () => {
     },
     {
       key: "epoch",
-      title: "Epoch range",
+      title: "Epoch Range",
       render(data) {
-        return `Epoch${data.epochRanges[0]} - Epoch ${data.epochRanges[1]}`;
+        return `Epoch ${data.epochRanges[0]} - Epoch ${data.epochRanges[1]}`;
       },
     },
     {
       key: "transfer",
-      title: "Pool size",
+      title: "Pool Size",
       render(data) {
         return data.isPoolSize ? "Yes" : "No";
       },
     },
     {
       key: "feePaid",
-      title: "Fee paid",
+      title: "Fees Paid",
       render(data) {
         return data.isFreePaid ? "Yes" : "No";
       },
