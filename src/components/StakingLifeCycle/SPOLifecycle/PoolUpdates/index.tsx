@@ -653,7 +653,7 @@ export const PoolUpdateModal = ({
       {
         key: "poolCertificate",
         icon: PoolCert,
-        label: "Pool certificate",
+        label: "Pool certificates",
         children: <>{renderPoolCert()}</>,
       },
       {
