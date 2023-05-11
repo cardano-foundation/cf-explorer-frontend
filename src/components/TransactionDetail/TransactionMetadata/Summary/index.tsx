@@ -1,16 +1,16 @@
-import React from "react";
 import { Box, useTheme } from "@mui/material";
-import sendImg from "../../../../commons/resources/images/sendImg.svg";
-import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
-import { formatADAFull, getShortWallet, numberWithCommas } from "../../../../commons/utils/helper";
-import CopyButton from "../../../commons/CopyButton";
-import { details } from "../../../../commons/routers";
+import React from "react";
 import { Link } from "react-router-dom";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import { Icon, StyledMenuItem, StyledSelect, TokenLink } from "./styles";
+import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
+import sendImg from "../../../../commons/resources/images/sendImg.svg";
+import { details } from "../../../../commons/routers";
+import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
 import ADAicon from "../../../commons/ADAIcon";
+import CopyButton from "../../../commons/CopyButton";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import DropdownTokens from "../../../commons/DropdownTokens";
+import { Icon } from "./styles";
 import { useScreen } from "../../../../commons/hooks/useScreen";
-import { BiChevronDown } from "react-icons/bi";
 
 const SummaryItems = ({
   item,
@@ -23,7 +23,8 @@ const SummaryItems = ({
   const { isMobile, isTablet } = useScreen();
   return (
     <Box
-      textAlign={"left"}
+      display={"flex"}
+      justifyContent={"space-between"}
       sx={{
         background: theme => theme.palette.background.paper,
         px: 3,
@@ -51,7 +52,7 @@ const SummaryItems = ({
                   >
                     <CustomTooltip title={item.address}>
                       <Box
-                        color={theme => theme.palette.text.primary}
+                        color={theme => theme.palette.blue[800]}
                         fontWeight="bold"
                         fontFamily={"var(--font-family-text)"}
                       >
@@ -89,37 +90,34 @@ const SummaryItems = ({
                 </Box>
               </Box>
             </Box>
-            {item?.tokens?.length > 0 && (
-              <StyledSelect
-                renderValue={() => (type === "down" ? "Sent Token" : "Received Token")}
-                displayEmpty
-                onChange={() => {}}
-                IconComponent={BiChevronDown}
-                MenuProps={{
-                  PaperProps: {
-                    sx: {
-                      borderRadius: 2,
-                      marginTop: 0.5,
-                    },
-                  },
-                }}
-              >
-                {item?.tokens?.map((token, index) => (
-                  <StyledMenuItem onClick={() => {}} key={index}>
-                    <Box sx={{ maxWidth: "100px", overflow: "hidden", textOverflow: "ellipsis" }}>
-                      {token.assetName || getShortWallet(token.assetId)}
-                    </Box>
-                    <Box fontWeight={600}>
-                      {type === "down" ? "-" : "+"}
-                      {numberWithCommas(token.assetQuantity)}
-                    </Box>
-                  </StyledMenuItem>
-                ))}
-              </StyledSelect>
-            )}
           </Box>
+          {type === "up" ? (
+            <Box display={"flex"} alignItems="center" justifyContent={"space-between"} width="100%" mb={1}>
+              <Box display="flex" justifyContent={"space-between"} alignItems="center" pr={1}>
+                Fee paid
+              </Box>
+              <Box flex={1} display="flex" justifyContent={"space-between"} alignItems="center">
+                <Box>
+                  <Box
+                    component={"span"}
+                    whiteSpace="nowrap"
+                    color={theme => (theme.palette.error.main)}
+                    fontWeight="bold"
+                    mr={1}
+                  >
+                    -{formatADAFull(item.fee) || 0}
+                  </Box>
+                  <ADAicon />
+                </Box>
+              </Box>
+            </Box>
+          ) : null}
         </Box>
       </Box>
+      {item.tokens && item.tokens.length > 0 && (
+        <Box display={"flex"} alignItems={'center'}>
+          <DropdownTokens tokens={item.tokens} type={type} />
+        </Box>)}
     </Box>
   );
 };
