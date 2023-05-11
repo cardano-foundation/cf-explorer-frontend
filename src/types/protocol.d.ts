@@ -1,12 +1,80 @@
 import { PROTOCOL_TYPE } from "../commons/utils/constants";
 
 type TProtocolItem = {
-  oldValue: number;
   time: string;
   transactionHash: string;
-  value: number;
+  value: any;
 };
+export type ProtocolTypeKey = keyof typeof PROTOCOL_TYPE;
 
-export type TProtocolCurrent = {
-  [key in PROTOCOL_TYPE]: TProtocolItem;
-};
+interface TProtocolParam {
+  epochChange: {
+    startEpoch: number;
+    endEpoch: number;
+  };
+  minFeeA: TProtocolItem;
+  minFeeB: TProtocolItem;
+  maxBlockSize: TProtocolItem;
+  maxTxSize: TProtocolItem;
+  maxBhSize: TProtocolItem;
+  keyDeposit: TProtocolItem;
+  poolDeposit: TProtocolItem;
+  maxEpoch: TProtocolItem;
+  optimalPoolCount: TProtocolItem;
+  influence: TProtocolItem;
+  monetaryExpandRate: TProtocolItem;
+  treasuryGrowthRate: TProtocolItem;
+  decentralisation: TProtocolItem;
+  entropy: TProtocolItem;
+  protocolMajor: TProtocolItem;
+  protocolMinor: TProtocolItem;
+  minUtxoValue: TProtocolItem;
+  minPoolCost: TProtocolItem;
+  costModel: TProtocolItem;
+  priceMem: TProtocolItem;
+  priceStep: TProtocolItem;
+  maxTxExMem: TProtocolItem;
+  maxTxExSteps: TProtocolItem;
+  maxBlockExMem: TProtocolItem;
+  maxBlockExSteps: TProtocolItem;
+  maxValSize: TProtocolItem;
+  collateralPercent: TProtocolItem;
+  maxCollateralInputs: TProtocolItem;
+  coinsPerUtxoSize: TProtocolItem;
+}
+
+interface ProtocolHistory {
+  epochChanges: {
+    startEpoch: number;
+    endEpoch: number;
+  }[];
+  minFeeA: TProtocolItem[];
+  minFeeB: TProtocolItem[];
+  maxBlockSize: TProtocolItem[];
+  maxTxSize: TProtocolItem[];
+  maxBhSize: TProtocolItem[];
+  keyDeposit: TProtocolItem[];
+  poolDeposit: TProtocolItem[];
+  maxEpoch: TProtocolItem[];
+  optimalPoolCount: TProtocolItem[];
+  influence: TProtocolItem[];
+  monetaryExpandRate: TProtocolItem[];
+  treasuryGrowthRate: TProtocolItem[];
+  decentralisation: TProtocolItem[];
+  entropy: TProtocolItem[];
+  protocolMajor: TProtocolItem[];
+  protocolMinor: TProtocolItem[];
+  minUtxoValue: TProtocolItem[];
+  minPoolCost: TProtocolItem[];
+  costModel: TProtocolItem[];
+  priceMem: TProtocolItem[];
+  priceStep: TProtocolItem[];
+  maxTxExMem: TProtocolItem[];
+  maxTxExSteps: TProtocolItem[];
+  maxBlockExMem: TProtocolItem[];
+  maxBlockExSteps: TProtocolItem[];
+  maxValSize: TProtocolItem[];
+  collateralPercent: TProtocolItem[];
+  maxCollateralInputs: TProtocolItem[];
+  coinsPerUtxoSize: TProtocolItem[];
+}
