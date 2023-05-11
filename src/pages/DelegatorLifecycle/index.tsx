@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 
 import { getShortWallet } from "../../commons/utils/helper";
 import DelegatorLifecycleComponent from "../../components/StakingLifeCycle/DelegatorLifecycle";
@@ -28,21 +28,22 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useScreen } from "../../commons/hooks/useScreen";
 
 const DelegatorLifecycle = () => {
-  const { stakeId = "", tab = "" } = useParams<{
-    stakeId: string;
-    tab?: "registration" | "delegation" | "rewardsDistribution" | "rewardsWithdrawal" | "deregistration" | "tablular";
-  }>();
-  const tabList = {
+  const {
+    stakeId = "",
+    mode = "timeline",
+    tab = "registration",
+  } = useParams<{ stakeId: string; mode: ViewMode; tab: DelegationStep }>();
+  const tabList: { [key in DelegationStep]: number } & { tablular: null } = {
     registration: 0,
     delegation: 1,
-    rewardsDistribution: 2,
-    rewardsWithdrawal: 3,
+    rewards: 2,
+    "withdrawal-history": 3,
     deregistration: 4,
     tablular: null,
   };
   const [currentStep, setCurrentStep] = useState(tabList[tab || "registration"] || 0);
   const [open, setOpen] = useState(false);
-  const [mode, setMode] = useState<"timeline" | "tablular">(tab === "tablular" ? "tablular" : "timeline");
+  const history = useHistory();
   const containerRef = useRef(null);
   const [containerPosition, setContainerPosition] = useState<{ top?: number; left?: number }>({
     top: undefined,
@@ -51,9 +52,6 @@ const DelegatorLifecycle = () => {
 
   useEffect(() => {
     setCurrentStep(tabList[tab || "registration"] || 0);
-    if (tab === "tablular") {
-      setMode("tablular");
-    }
   }, [tab]);
 
   const { isMobile } = useScreen();
@@ -73,11 +71,13 @@ const DelegatorLifecycle = () => {
   };
   useEffect(() => {
     handleResize();
-
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const changeMode = (mode: ViewMode) => {
+    history.push(details.staking(stakeId, mode, tab));
+  };
 
   return (
     <StyledContainer ref={containerRef}>
@@ -102,10 +102,10 @@ const DelegatorLifecycle = () => {
               <Box>Switch to {mode === "timeline" ? "tablular" : "timeline"} view</Box>
             </BoxSwitch>
             <ButtonGroup>
-              <ButtonSwitch active={+(mode === "timeline")} onClick={() => setMode("timeline")}>
+              <ButtonSwitch active={+(mode === "timeline")} onClick={() => changeMode("timeline")}>
                 <ChartMode fill={mode === "timeline" ? "#fff" : "#344054"} />
               </ButtonSwitch>
-              <ButtonSwitch active={+(mode === "tablular")} onClick={() => setMode("tablular")}>
+              <ButtonSwitch active={+(mode === "tablular")} onClick={() => changeMode("tablular")}>
                 <TableMode fill={mode === "tablular" ? "#fff" : "#344054"} />
               </ButtonSwitch>
             </ButtonGroup>
@@ -122,7 +122,6 @@ const DelegatorLifecycle = () => {
           <DelegatorLifecycleComponent
             handleResize={handleResize}
             containerPosition={containerPosition}
-            setMode={setMode}
             currentStep={currentStep}
             setCurrentStep={setCurrentStep}
           />

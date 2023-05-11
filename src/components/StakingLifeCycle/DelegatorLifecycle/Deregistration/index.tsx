@@ -1,6 +1,6 @@
 import { alpha, Box, Skeleton, styled } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { Link as LinkDom, useParams } from "react-router-dom";
+import { Link as LinkDom, useHistory, useParams } from "react-router-dom";
 
 import {
   ADAHolderIcon,
@@ -41,18 +41,19 @@ const Deregistration = ({
   handleResize: () => void;
 }) => {
   const [selected, setSelected] = useState<DeregistrationItem | null>(null);
-  const handleSelect = (deregistration: DeregistrationItem) => {
+  const handleSelect = (deregistration: DeregistrationItem | null) => {
     setSelected(deregistration);
   };
 
   return (
     <Box>
-      <Box>{selected === null && <RecentDeregistrations onSelect={handleSelect} />}</Box>
+      <Box>
+        <RecentDeregistrations onSelect={handleSelect} />
+      </Box>
       <Box>
         {!!selected && (
           <DeregistrationTimeline
             handleResize={handleResize}
-            setSelected={setSelected}
             selected={selected}
             containerPosition={containerPosition}
           />
@@ -65,7 +66,6 @@ export default Deregistration;
 
 const DeregistrationTimeline = ({
   containerPosition,
-  setSelected,
   handleResize,
   selected,
 }: {
@@ -74,10 +74,10 @@ const DeregistrationTimeline = ({
     left?: number;
   };
   handleResize: () => void;
-  setSelected: (deregistration: DeregistrationItem | null) => void;
   selected: DeregistrationItem;
 }) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const history = useHistory();
 
   const adaHolderRef = useRef(null);
   const holdRef = useRef(null);
@@ -93,10 +93,14 @@ const DeregistrationTimeline = ({
     handleResize();
   }, [selected]);
 
+  const handleBack = () => {
+    history.push(details.staking(stakeId, "timeline", "deregistration"));
+  };
+  
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>

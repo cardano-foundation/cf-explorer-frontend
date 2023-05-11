@@ -1,6 +1,6 @@
 import { alpha, Box, Grid, styled } from "@mui/material";
 import { useRef, useState, useEffect } from "react";
-import { Link as LinkDom } from "react-router-dom";
+import { Link as LinkDom, useHistory, useParams } from "react-router-dom";
 
 import {
   SPOStalking,
@@ -53,16 +53,21 @@ const Deregistration = ({
 }) => {
   const [selected, setSelected] = useState<SPODeregistration | null>(null);
 
+  const handleSelect = (deregistration: SPODeregistration | null) => {
+    setSelected(deregistration);
+  };
+
   return (
     <Box>
-      <Box>{selected === null && <RecentDeregistrations onSelect={registration => setSelected(registration)} />}</Box>
+      <Box>
+        <RecentDeregistrations onSelect={handleSelect} />
+      </Box>
       <Box>
         {!!selected && (
           <DeregistrationTimeline
             handleResize={handleResize}
             selected={selected}
             containerPosition={containerPosition}
-            setSelected={setSelected}
           />
         )}
       </Box>
@@ -73,19 +78,19 @@ export default Deregistration;
 
 const DeregistrationTimeline = ({
   containerPosition,
-  selected,
-  setSelected,
+  selected, 
   handleResize,
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
-  handleResize: () => void;
-  setSelected: (registration: SPODeregistration | null) => void;
+  handleResize: () => void; 
   selected: SPODeregistration | null;
 }) => {
   const [openModal, setOpenModal] = useState(false);
+  const { poolId = "" } = useParams<{ poolId: string }>();
+  const history = useHistory();
 
   const adaHolderRef = useRef(null);
   const holdRef = useRef(null);
@@ -101,10 +106,14 @@ const DeregistrationTimeline = ({
     handleResize();
   }, [adaHolderRef.current]);
 
+  const handleBack = () => {
+    history.push(details.spo(poolId, "timeline", "deregistration"));
+  };
+
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>

@@ -35,7 +35,7 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import RecentRegistrations from "./RecentRegistrations";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import moment from "moment";
 import PopupStaking from "../../../commons/PopupStaking";
@@ -55,17 +55,19 @@ const Registration = ({
   handleResize: () => void;
 }) => {
   const [selected, setSelected] = useState<SPORegistration | null>(null);
+
+  const handleSelect = (registration: SPORegistration | null) => {
+    setSelected(registration);
+  };
+
   return (
     <Box>
-      <Box>{selected === null && <RecentRegistrations onSelect={registration => setSelected(registration)} />}</Box>
+      <Box>
+        <RecentRegistrations onSelect={handleSelect} />
+      </Box>
       <Box>
         {!!selected && (
-          <RegistrationTimeline
-            handleResize={handleResize}
-            setSelected={setSelected}
-            selected={selected}
-            containerPosition={containerPosition}
-          />
+          <RegistrationTimeline handleResize={handleResize} selected={selected} containerPosition={containerPosition} />
         )}
       </Box>
     </Box>
@@ -74,8 +76,7 @@ const Registration = ({
 export default Registration;
 
 const RegistrationTimeline = ({
-  containerPosition,
-  setSelected,
+  containerPosition, 
   handleResize,
   selected,
 }: {
@@ -83,11 +84,11 @@ const RegistrationTimeline = ({
     top?: number;
     left?: number;
   };
-  handleResize: () => void;
-  setSelected: (registration: SPORegistration | null) => void;
+  handleResize: () => void; 
   selected: SPORegistration | null;
 }) => {
   const { poolId = "" } = useParams<{ poolId: string }>();
+  const history = useHistory();
   const { data, loading } = useFetch<SPORegistrationDetail>(
     selected?.poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, selected?.poolUpdateId) : ""
   );
@@ -107,11 +108,17 @@ const RegistrationTimeline = ({
   const SPOInfoRef = useRef(null);
   const SPOKeyRef = useRef(null);
 
+
+  const handleBack = () => {
+    history.push(details.spo(poolId, "timeline", "registration"));
+  };
+
+
   if (loading) {
     return (
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-          <IconButtonBack onClick={() => setSelected(null)}>
+          <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
           <Box display={"flex"}>
@@ -137,7 +144,7 @@ const RegistrationTimeline = ({
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>

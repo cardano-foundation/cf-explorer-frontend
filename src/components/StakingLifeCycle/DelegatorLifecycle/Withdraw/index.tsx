@@ -35,13 +35,13 @@ import ArrowDiagram from "../../../ArrowDiagram";
 import RecentWithdraws from "./RecentWithdraws";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { formatADA, formatDateTimeLocal, getShortHash } from "../../../../commons/utils/helper";
-import moment from "moment";
 import PopoverStyled from "../../../commons/PopoverStyled";
 import PopupStaking from "../../../commons/PopupStaking";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
+import { details } from "../../../../commons/routers";
 
 const Withdraw = ({
   containerPosition,
@@ -55,13 +55,15 @@ const Withdraw = ({
 }) => {
   const [selected, setSelected] = useState<WithdrawItem | null>(null);
 
-  const handleSelect = (withdraw: WithdrawItem) => {
+  const handleSelect = (withdraw: WithdrawItem | null) => {
     setSelected(withdraw);
   };
 
   return (
     <Box>
-      <Box>{selected === null && <RecentWithdraws onSelect={handleSelect} />}</Box>
+      <Box>
+        <RecentWithdraws onSelect={handleSelect} />
+      </Box>
       <Box>
         {!!selected && (
           <WithdrawTimeline
@@ -100,6 +102,7 @@ const WithdrawTimeline = ({
   setSelected: (withdraw: WithdrawItem | null) => void;
 }) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const history = useHistory();
   const { data, loading } = useFetch<WithdrawDetail>(
     selected.txHash && stakeId && API.STAKE_LIFECYCLE.WITHDRAW_DETAIL(stakeId, selected.txHash)
   );
@@ -117,11 +120,15 @@ const WithdrawTimeline = ({
     handleResize();
   }, [loading]);
 
+  const handleBack = () => {
+    history.push(details.staking(stakeId, "timeline", "withdrawal-history"));
+  };
+
   if (loading) {
     return (
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-          <IconButtonBack onClick={() => setSelected(null)}>
+          <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
           <Box display={"flex"}>
@@ -146,7 +153,7 @@ const WithdrawTimeline = ({
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>
