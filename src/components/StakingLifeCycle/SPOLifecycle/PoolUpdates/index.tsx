@@ -95,7 +95,7 @@ const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null
   };
 
   if (txHash) return null;
-  
+
   return (
     <Box marginTop="32px">
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
@@ -488,14 +488,17 @@ export const PoolUpdateModal = ({
             </Box>
             {data && (
               <>
-                {(data.stakeKeys || []).map(item => (
+                {data.stakeKeys && data.stakeKeys.length && (
                   <>
-                    <Box key={item} pt={"7px"} fontWeight={600}>
-                      <Link to={details.stake(item || "")}>{getShortWallet(item)}</Link>{" "}
-                      <CopyButton text={item || ""} />
+                    <Box key={data.stakeKeys[0]} pt={"7px"} fontWeight={600} display={"flex"}>
+                      <Box>
+                        <Link to={details.stake(data.stakeKeys[0] || "")}>{getShortWallet(data.stakeKeys[0])}</Link>{" "}
+                        <CopyButton text={data.stakeKeys[0] || ""} />
+                      </Box>
+                      {data.stakeKeys.length > 1 ? <Box marginLeft={2}>...</Box> : null}
                     </Box>
                   </>
-                ))}
+                )}
               </>
             )}
           </Box>
