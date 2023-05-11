@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import DashboardCard from "../../components/DashboardCard";
-import { Status, GridContainer, TextHeadline, TitleHead, FilterHead } from "./styles";
+import { Status, GridContainer, TextHeadline, TitleHead, FilterHead, WrapReportName } from "./styles";
 import Table, { Column } from "../../components/commons/Table";
 import {
   FilterIC,
@@ -138,7 +138,7 @@ const Dashboard: React.FC = () => {
       key: "entity",
       minWidth: "150px",
       render(data) {
-        return data.reportName;
+        return <WrapReportName>{data.reportName}</WrapReportName>
       },
     },
     {

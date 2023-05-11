@@ -23,7 +23,7 @@ export const GridContainer = styled(Grid)`
   margin-bottom: 35px;
 `;
 
-export const Status = styled("span")<{ status: string }>`
+export const Status = styled("span") <{ status: string }>`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
   padding: 7.5px 11.5px;
@@ -66,4 +66,11 @@ export const FilterHead = styled(Box)`
     width: 100%;
     justify-content: space-between;
   }
+`;
+
+export const WrapReportName = styled(Box)`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20ch;
 `;
