@@ -18,6 +18,7 @@ import { formatADAFull, formatHash } from "../../../../../commons/utils/helper";
 import { CardOverview, CardTitle, CardValue, ClickAbleLink, ViewMoreButton, WrapIcon, WrapWalletIcon } from "./styles";
 import { DotsIcon } from "../../../../PoolRegistrationCertificate/styles";
 import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
+import { useScreen } from "../../../../../commons/hooks/useScreen";
 import { details } from "../../../../../commons/routers";
 
 export const GreenWalletIcon = (props: BoxProps) => {
@@ -80,8 +81,9 @@ const TabularOverview: React.FC = () => {
   const onOwnerItemClick = (key: string) => {
     return history.push(`/stake/${key}/delegation`);
   };
+  const { isMobile } = useScreen();
   return (
-    <Box>
+    <Box mr={isMobile ? 2 : 0}>
       <Grid container spacing={2}>
         <GridItem
           title="Pool Size"
