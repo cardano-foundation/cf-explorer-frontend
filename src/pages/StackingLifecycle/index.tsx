@@ -20,6 +20,7 @@ import { WrapFilterDescription } from "../../components/StakingLifeCycle/Delegat
 import FilterReport from "../../components/FilterReport";
 import { useHistory } from "react-router-dom";
 import { useScreen } from "../../commons/hooks/useScreen";
+import { formatDateTimeLocal } from "../../commons/utils/helper";
 
 const cardList = [
   {
@@ -126,7 +127,7 @@ const Dashboard: React.FC = () => {
       key: "createdAt",
       minWidth: isMobile ? "200px" : "50px",
       render(data) {
-        return data.createdAt;
+        return formatDateTimeLocal(data.createdAt);
       },
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
