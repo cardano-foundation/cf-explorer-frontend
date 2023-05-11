@@ -7,7 +7,7 @@ import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";
 import txConfirm from "../../../commons/resources/icons/txConfirm.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
 import { Box } from "@mui/material";
-import { ConfirmStatus, TitleCard } from "./styles";
+import { ConfirmStatus, TitleCard, WrapConfirmation } from "./styles";
 import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
 import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import ADAicon from "../../commons/ADAIcon";
@@ -48,10 +48,10 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <>
+        <WrapConfirmation>
           {data?.confirmation || 0}
           <ConfirmStatus status={renderConfirmationTag() || "LOW"}>{renderConfirmationTag() || "LOW"}</ConfirmStatus>
-        </>
+        </WrapConfirmation>
       ),
     },
     {

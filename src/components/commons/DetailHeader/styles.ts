@@ -43,9 +43,6 @@ export const WrapHeader = styled(Box)(({ theme }) => ({
 export const HeaderContainer = styled(Box)`
   display: flex;
   align-items: center;
-  ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.sm)} {
-    justify-content: space-between;
-  }
 `;
 
 export const HeaderTitle = styled("h2")`
