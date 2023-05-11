@@ -261,5 +261,9 @@ export { ReactComponent as InstantaneousHistoryIcon } from "./icons/instantaneou
 export { ReactComponent as SortTableUpDown } from "./icons/SortTableUpDown.svg";
 export { ReactComponent as SortTableUp } from "./icons/SortTableUp.svg";
 export { ReactComponent as SortTableDown } from "./icons/SortTableDown.svg";
+export { ReactComponent as LastFirst } from "./icons/lastFirst.svg";
+export { ReactComponent as FirstLast } from "./icons/firstLast.svg";
+export { ReactComponent as ProtocolParam } from "./icons/protocolParam.svg";
+export { ReactComponent as ResetIcon } from "./icons/resetIcon.svg";
 export { ReactComponent as UnionTokenIcon } from "./icons/union-token.svg";
 export { ReactComponent as PeopleIcon } from "./icons/people.svg";
