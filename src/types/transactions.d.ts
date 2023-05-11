@@ -21,6 +21,18 @@ interface Transactions {
   fee: number;
   totalOutput: number;
   time: string;
+  tokens: Token[];
+}
+
+interface Token {
+  assetName: string;
+  assetQuantity: number;
+  assetId: string;
+  policy: {
+    policyId: string;
+    totalToken: number;
+    policyScript: string;
+  };
 }
 interface CurrentTransactions {
   blockNo: number;
@@ -81,7 +93,7 @@ type TPoolCertificated = {
     ipv4: string;
     ipv6: string;
     port: number;
-  };
+  }[];
   rewardAccount: string;
   type: string;
   vrfKey: string;
@@ -108,31 +120,14 @@ interface Transaction {
     stakeAddressTxInputs: {
       address: string;
       value: number;
-      tokens: {
-        assetName: string;
-        assetQuantity: number;
-        assetId: string;
-        policy: {
-          policyId: string;
-          totalToken: number;
-          policyScript: string;
-        };
-      }[];
+      fee?: number;
+      tokens: Token[];
     }[];
 
     stakeAddressTxOutputs: {
       address: string;
       value: number;
-      tokens: {
-        assetName: string;
-        assetQuantity: number;
-        assetId: string;
-        policy: {
-          policyId: string;
-          totalToken: number;
-          policyScript: string;
-        };
-      }[];
+      tokens: Token[];
     }[];
   };
   contracts?: {
@@ -151,35 +146,13 @@ interface Transaction {
       address: string;
       value: number;
       txHash: string;
-      tokens: [
-        {
-          assetName: string;
-          assetQuantity: number;
-          assetId: string;
-          policy: {
-            policyId: string;
-            totalToken: number;
-            policyScript: string;
-          };
-        }
-      ];
+      tokens: Token[];
     }[];
     outputs: {
       address: string;
       value: number;
       txHash: string;
-      tokens: [
-        {
-          assetName: string;
-          assetQuantity: number;
-          assetId: string;
-          policy: {
-            policyId: string;
-            totalToken: number;
-            policyScript: string;
-          };
-        }
-      ];
+      tokens: Token[];
     }[];
   };
   mints?: {
@@ -215,16 +188,7 @@ interface CollateralResponses {
   index: string;
   txHash: string;
   value: number;
-  tokens: {
-    assetName: string;
-    assetQuantity: number;
-    assetId: string;
-    policy: {
-      policyId: string;
-      totalToken: number;
-      policyScript: string;
-    };
-  }[];
+  tokens: Token[];
 }
 
 type TProtocolMerge = {

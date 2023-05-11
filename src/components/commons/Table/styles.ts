@@ -1,4 +1,4 @@
-import { Box, Checkbox, alpha, Select, Typography, styled } from "@mui/material";
+import { Box, Checkbox, alpha, Select, Typography, styled, Pagination } from "@mui/material";
 
 export const Empty = styled(Box)`
   text-align: center;
@@ -22,9 +22,14 @@ export const Error = styled(Box)`
   font-size: var(--font-size-text-x-large);
 `;
 
-export const THead = styled("thead")`
-  padding-bottom: 10px;
-`;
+export const THead = styled("thead")(({ theme }) => ({
+  paddingBottom: "10px",
+  [theme.breakpoints.down("sm")]: {
+    "& tr th": {
+      padding: "15px",
+    },
+  },
+}));
 
 export const THeader = styled("th")`
   text-align: left;
@@ -110,6 +115,10 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string }>(
   box-shadow: 0 0.5rem 1.2rem rgba(82, 85, 92, 0.15);
   border: 1px solid ${alpha(theme.palette.common.black, 0.1)};
   ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
+
+  @media screen and (max-width: ${theme.breakpoints.values.sm}px) {
+    padding: 0;
+  }
 `
 );
 
@@ -187,3 +196,11 @@ export const TableCustomTitle = styled(Box)`
   flex: 1;
   text-align: left;
 `;
+
+export const StyledPagination = styled(Pagination)(({ theme }) => ({
+  "ul li > button": {
+    width: 24,
+    height: 24,
+    padding: 0,
+  }
+}));

@@ -12,10 +12,11 @@ export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
     flexDirection: "row",
   },
   [theme.breakpoints.down("sm")]: {
-    flexDirection: "column",
+    padding: "27px 0",
+    height: "calc(100% - 54px)",
+    flexDirection: "row",
   },
 }));
-
 export const BoxInfoItem = styled(Box)(({ theme }) => ({
   height: "100%",
   paddingTop: theme.spacing(2),
@@ -47,9 +48,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
     paddingTop: 0,
   },
   [theme.breakpoints.down("sm")]: {
-    width: "80%",
-    borderRight: "none",
-    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
   },
 }));
 
@@ -81,6 +80,12 @@ export const ButtonTitle = styled("button")(({ theme }) => ({
   color: theme.palette.primary.contrastText,
   backgroundColor: theme.palette.primary.main,
   fontFamily: "var(--font-family-title)",
+  [theme.breakpoints.down("sm")]: {
+    width: "80px !important",
+    height: "28px !important",
+    padding: 0,
+    borderRadius: "5px",
+  },
 }));
 
 export const ChartBox = styled(Box)(({ theme }) => ({
@@ -100,6 +105,17 @@ export const Tabs = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     display: "flex",
     justifyContent: "space-between",
+  },
+  [theme.breakpoints.down("sm")]: {
+    justifyContent: "flex-end",
+
+    "& button": {
+      width: "40px !important",
+      height: "28px !important",
+      padding: "0px !important",
+      minWidth: "auto",
+      borderRadius: "5px",
+    },
   },
 }));
 

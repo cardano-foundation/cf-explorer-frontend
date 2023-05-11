@@ -13,11 +13,11 @@ import {
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import DelegationCertificateIcon from "../../../../commons/resources/icons/Staking/DelegationCertificateIcon.svg";
 import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
-import ADAicon, { AdaLogoIcon } from "../../../commons/ADAIcon";
+import { FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { AdaLogoIcon } from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentDelegations from "./RecentDelegations";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
 import PopoverStyled from "../../../commons/PopoverStyled";
@@ -27,7 +27,6 @@ import StyledModal from "../../../commons/StyledModal";
 import CopyButton from "../../../commons/CopyButton";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import { details } from "../../../../commons/routers";
-import moment from "moment";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 
@@ -43,21 +42,18 @@ const Delegation = ({
 }) => {
   const [selected, setSelected] = useState<DelegationItem | null>(null);
 
-  const handleSelect = (delegation: DelegationItem) => {
+  const handleSelect = (delegation: DelegationItem | null) => {
     setSelected(delegation);
   };
 
   return (
     <Box>
-      <Box>{selected === null && <RecentDelegations onSelect={handleSelect} />}</Box>
+      <Box>
+        <RecentDelegations onSelect={handleSelect} />
+      </Box>
       <Box>
         {!!selected && (
-          <DelegationTimeline
-            handleResize={handleResize}
-            setSelected={setSelected}
-            containerPosition={containerPosition}
-            selected={selected}
-          />
+          <DelegationTimeline handleResize={handleResize} containerPosition={containerPosition} selected={selected} />
         )}
       </Box>
     </Box>
@@ -79,7 +75,6 @@ interface DelegationDetail {
 
 const DelegationTimeline = ({
   containerPosition,
-  setSelected,
   handleResize,
   selected,
 }: {
@@ -87,13 +82,13 @@ const DelegationTimeline = ({
     top?: number;
     left?: number;
   };
-  setSelected: (item: DelegationItem | null) => void;
   handleResize: () => void;
   selected: DelegationItem | null;
 }) => {
   const theme = useTheme();
   const [openModal, setOpenModal] = useState(false);
   const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const history = useHistory();
   const { data, loading } = useFetch<DelegationDetail>(
     (selected && selected.txHash && stakeId && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stakeId, selected.txHash)) || ""
   );
@@ -109,11 +104,15 @@ const DelegationTimeline = ({
     handleResize();
   }, [loading, registrationRef.current]);
 
+  const handleBack = () => {
+    history.push(details.staking(stakeId, "timeline", "delegation"));
+  };
+
   if (loading) {
     return (
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-          <IconButtonBack onClick={() => setSelected(null)}>
+          <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
           <Box display={"flex"}>
@@ -139,7 +138,7 @@ const DelegationTimeline = ({
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>
@@ -286,7 +285,7 @@ export const DelegationCertificateModal = ({
   handleCloseModal: () => void;
 }) => {
   const { data, loading } = useFetch<DelegationDetail>(
-    (stake && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stake, txHash)) || ""
+    (txHash && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stake, txHash)) || ""
   );
 
   return (

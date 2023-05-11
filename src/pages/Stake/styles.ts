@@ -4,6 +4,12 @@ import { Link } from "react-router-dom";
 export const StyledContainer = styled(Container)`
   padding: 30px 0 40px;
   text-align: left;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    .stake-table {
+      padding-left: 16px;
+    }
+  }
 `;
 
 export const StyledTabs = styled(Tabs)`

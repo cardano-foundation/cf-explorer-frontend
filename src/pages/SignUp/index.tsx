@@ -1,6 +1,7 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, Input, InputAdornment } from "@mui/material";
 import { EmailIcon, HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
 import {
+  CloseButton,
   Container,
   ForgotPassword,
   FormHelperTextCustom,
@@ -20,6 +21,7 @@ import { routers } from "../../commons/routers";
 import { useEffect, useReducer, useState } from "react";
 import { signUp } from "../../commons/utils/userRequest";
 import { handleSignIn } from "../../commons/utils/helper";
+import { IoMdClose } from "react-icons/io";
 
 interface IForm {
   username: {
@@ -100,10 +102,10 @@ export default function SignUp() {
     setError(
       Boolean(
         formData.username.error ||
-          formData.password.error ||
-          formData.email.error ||
-          formData.confirmPassword.error ||
-          formData.confirmEmail.error
+        formData.password.error ||
+        formData.email.error ||
+        formData.confirmPassword.error ||
+        formData.confirmEmail.error
       )
     );
   }, [formData]);
@@ -163,6 +165,11 @@ export default function SignUp() {
       error: getError(event.target.name, event.target.value),
     });
   };
+
+  function handleClose() {
+    history.push(routers.HOME);
+  }
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const errorUsername = getError("username", formData.username.value);
@@ -238,6 +245,9 @@ export default function SignUp() {
         <FormGroup>
           {!success ? (
             <WrapForm>
+              <CloseButton saving={0} onClick={() => handleClose()}>
+                <IoMdClose />
+              </CloseButton>
               <WrapInput>
                 <Label>Username</Label>
                 <InputCustom
@@ -395,6 +405,9 @@ export default function SignUp() {
             </WrapForm>
           ) : (
             <WrapForm>
+              <CloseButton saving={0} onClick={() => handleClose()}>
+                <IoMdClose />
+              </CloseButton>
               <Label>Please check your email to confirm your account</Label>
             </WrapForm>
           )}

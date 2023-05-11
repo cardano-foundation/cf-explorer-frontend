@@ -1,6 +1,7 @@
 import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
 import { Link } from "react-router-dom";
 import CopyButton from "../../../commons/CopyButton";
+import CustomTooltip from "../../../commons/CustomTooltip";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -73,6 +74,7 @@ export const InfoText = styled(Box)(({ theme }) => ({
   marginLeft: theme.spacing(1),
   fontWeight: 600,
   fontSize: "14px",
+  cursor:"pointer"
 }));
 
 export const PoolName = styled(Box)(({ theme }) => ({
@@ -107,3 +109,9 @@ export const PoolNamePopup = styled(Link)(({ theme }) => ({
 export const StyledCopyButton = styled(CopyButton)`
   margin-left: 5px;
 `;
+
+export const CustomPopover = styled(CustomTooltip)(({ theme }) => ({
+  background: theme.palette.common.white,
+  borderRadius: "4px",
+  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+}));

@@ -17,6 +17,7 @@ import { ReactComponent as WalletIconRewardGreen } from "../../../../commons/res
 
 import Line from "../../../Line";
 import {
+  ADAAmountLabel,
   FeeBox,
   IconButton,
   IconButtonBack,
@@ -34,13 +35,13 @@ import ArrowDiagram from "../../../ArrowDiagram";
 import RecentWithdraws from "./RecentWithdraws";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
-import { useParams } from "react-router";
-import { formatADA, getShortHash } from "../../../../commons/utils/helper";
-import moment from "moment";
+import { useHistory, useParams } from "react-router";
+import { formatADA, formatDateTimeLocal, getShortHash } from "../../../../commons/utils/helper";
 import PopoverStyled from "../../../commons/PopoverStyled";
 import PopupStaking from "../../../commons/PopupStaking";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
+import { details } from "../../../../commons/routers";
 
 const Withdraw = ({
   containerPosition,
@@ -54,13 +55,15 @@ const Withdraw = ({
 }) => {
   const [selected, setSelected] = useState<WithdrawItem | null>(null);
 
-  const handleSelect = (withdraw: WithdrawItem) => {
+  const handleSelect = (withdraw: WithdrawItem | null) => {
     setSelected(withdraw);
   };
 
   return (
     <Box>
-      <Box>{selected === null && <RecentWithdraws onSelect={handleSelect} />}</Box>
+      <Box>
+        <RecentWithdraws onSelect={handleSelect} />
+      </Box>
       <Box>
         {!!selected && (
           <WithdrawTimeline
@@ -99,6 +102,7 @@ const WithdrawTimeline = ({
   setSelected: (withdraw: WithdrawItem | null) => void;
 }) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const history = useHistory();
   const { data, loading } = useFetch<WithdrawDetail>(
     selected.txHash && stakeId && API.STAKE_LIFECYCLE.WITHDRAW_DETAIL(stakeId, selected.txHash)
   );
@@ -116,11 +120,15 @@ const WithdrawTimeline = ({
     handleResize();
   }, [loading]);
 
+  const handleBack = () => {
+    history.push(details.staking(stakeId, "timeline", "withdrawal-history"));
+  };
+
   if (loading) {
     return (
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-          <IconButtonBack onClick={() => setSelected(null)}>
+          <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
           <Box display={"flex"}>
@@ -145,7 +153,7 @@ const WithdrawTimeline = ({
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>
@@ -162,7 +170,7 @@ const WithdrawTimeline = ({
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>{moment(data?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+            <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
           </Info>
         </Box>
       </Box>
@@ -172,59 +180,47 @@ const WithdrawTimeline = ({
             <ADAHolderIcon />
           </Box>
           <Payment ref={boxWalletRef}>
-            <PopoverStyled
-              render={({ handleClick }: any) => (
-                <Box position={"relative"} ref={paymentWalletRef}>
-                  <PaymentWallet />
-                  <RewardWallet>
-                    <Box
-                      component={IconButton}
-                      bgcolor={theme => alpha(theme.palette.common.white, 0.1)}
-                      p={0}
-                      onClick={() => paymentWalletRef?.current && handleClick(paymentWalletRef.current)}
-                    >
-                      <WalletIconRewardGreen />
-                    </Box>
-                    <Box mx={1} fontSize={14}>
-                      {formatADA(data?.stakeTotalAmount || 0)}
-                    </Box>
-                    <ADAicon />
-                  </RewardWallet>
+            <Box position={"relative"} ref={paymentWalletRef}>
+              <PaymentWallet />
+              <RewardWallet>
+                <Box
+                  component={IconButton}
+                  bgcolor={theme => alpha(theme.palette.common.white, 0.1)}
+                  p={0}
+                >
+                  <WalletIconRewardGreen />
                 </Box>
-              )}
-              content={<PopupStaking hash={data?.txHash || ""} />}
-            />
-            <PopoverStyled
-              render={({ handleClick }: any) => (
-                <Box position={"relative"} ref={rewardAccountRef}>
-                  <RewardWithdraw />
-                  <RewardAccount>
-                    <Box
-                      component={IconButton}
-                      bgcolor={theme => alpha(theme.palette.common.white, 0.1)}
-                      p={0}
-                      onClick={() => rewardAccountRef?.current && handleClick(rewardAccountRef.current)}
-                    >
-                      <WalletIconReward />
-                    </Box>
-                    <Box mx={1} color={theme => theme.palette.common.white} fontSize={14}>
-                      {formatADA(data?.stakeRewardAvailable || 0)}
-                    </Box>
-                    <ADAicon color={"white"} fontSize={14} />
-                  </RewardAccount>
+                <Box mx={1} fontSize={14}>
+                  {formatADA(data?.stakeTotalAmount || 0)}
                 </Box>
-              )}
-              content={<PopupStaking hash={data?.txHash || ""} />}
-            />
+                <ADAicon />
+              </RewardWallet>
+            </Box>
+            <Box position={"relative"} ref={rewardAccountRef}>
+              <RewardWithdraw />
+              <RewardAccount>
+                <Box
+                  component={IconButton}
+                  bgcolor={theme => alpha(theme.palette.common.white, 0.1)}
+                  p={0}
+                >
+                  <WalletIconReward />
+                </Box>
+                <Box mx={1} color={theme => theme.palette.common.white} fontSize={14}>
+                  {formatADA(data?.stakeRewardAvailable || 0)}
+                </Box>
+                <ADAicon color={"white"} fontSize={14} />
+              </RewardAccount>
+            </Box>
           </Payment>
           <RoundBox>
             <PopoverStyled
               render={({ handleClick }) => (
                 <NetAmount ref={netAmountRef}>
                   <Box>
-                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                    <ADAAmountLabel>
                       {data?.amount && data?.fee ? formatADA(data?.amount - data?.fee) : 0}
-                    </Box>
+                    </ADAAmountLabel>
                     <ADAicon fontSize="18px" />
                   </Box>
                   <IconButton onClick={() => netAmountRef?.current && handleClick(netAmountRef.current)}>
@@ -238,9 +234,7 @@ const WithdrawTimeline = ({
               render={({ handleClick }) => (
                 <Withdrawn ref={withdrawnRef}>
                   <Box>
-                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                      {formatADA(data?.amount || 0)}
-                    </Box>
+                    <ADAAmountLabel>{formatADA(data?.amount || 0)}</ADAAmountLabel>
                     <ADAicon fontSize="18px" />
                   </Box>
                   <IconButton onClick={() => withdrawnRef?.current && handleClick(withdrawnRef.current)}>

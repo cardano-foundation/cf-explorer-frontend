@@ -2,7 +2,6 @@ import BigNumber from "bignumber.js";
 import moment from "moment";
 import { parse } from "qs";
 import { setUserData } from "../../stores/user";
-import { setUserData as setUser2Data } from "../../stores/user2";
 import { getInfo, signIn } from "./userRequest";
 import { NETWORK, NETWORK_TYPES } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
@@ -11,11 +10,11 @@ export const alphaNumeric = /[^0-9a-zA-Z]/;
 
 export const regexEmail = /^[\w\.\+\-]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-export const getShortWallet = (address: string) => {
+export const getShortWallet = (address: string = "") => {
   return `${address.slice(0, 5)}...${address.slice(-5)}`;
 };
 
-export const getShortHash = (address: string) => {
+export const getShortHash = (address: string = "") => {
   return `${address.slice(0, 10)}...${address.slice(-7)}`;
 };
 
@@ -66,10 +65,10 @@ export const formatADA = (
   return numberWithCommas(realAda.toString(), 6);
 };
 
-export const formatADAFull = (value?: string | number): string => {
+export const formatADAFull = (value?: string | number, limit: number = 6): string => {
   if (!value) return `0`;
   const realAda = new BigNumber(value).div(10 ** 6);
-  return numberWithCommas(realAda.toFixed(6).toString(), 6);
+  return numberWithCommas(realAda.toFixed(limit).toString(), limit);
 };
 
 export const exchangeADAToUSD = (value: number | string, rate: number, isFull?: boolean) => {
@@ -159,3 +158,7 @@ export function formatHash(hash: string): string {
   const suffix = hash.slice(-5);
   return `${prefix}...${suffix}`;
 }
+
+export const truncateCustom = (text: string, first: number = 4, last: number = 8) => {
+  return `${text.slice(0, first)}...${text.slice(-last)}`;
+};

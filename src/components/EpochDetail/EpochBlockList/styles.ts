@@ -5,6 +5,9 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     paddingLeft: "16px",
   },
+  "& h2": {
+    paddingLeft: "0px",
+  },
 }));
 
 export const StyledColorBlueDard = styled("span")`

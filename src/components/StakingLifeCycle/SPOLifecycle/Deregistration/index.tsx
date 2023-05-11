@@ -1,6 +1,6 @@
 import { alpha, Box, Grid, styled } from "@mui/material";
 import { useRef, useState, useEffect } from "react";
-import { Link as LinkDom } from "react-router-dom";
+import { Link as LinkDom, useHistory, useParams } from "react-router-dom";
 
 import {
   SPOStalking,
@@ -16,7 +16,17 @@ import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSy
 import DeregistrationCertificateIcon from "../../../../commons/resources/icons/Staking/DeregistrationCertificateIcon.svg";
 
 import Line from "../../../Line";
-import { FeeBox, HoldBox, HoldBoxText, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import {
+  CustomLink,
+  DetailRetirement,
+  FeeBox,
+  HoldBox,
+  HoldBoxText,
+  IconButton,
+  IconButtonBack,
+  Info,
+  InfoText,
+} from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import PopoverStyled from "../../../commons/PopoverStyled";
@@ -29,6 +39,7 @@ import { details } from "../../../../commons/routers";
 import CopyButton from "../../../commons/CopyButton";
 import StyledModal from "../../../commons/StyledModal";
 import PopupStaking from "../../../commons/PopupStaking";
+import { StyledLink } from "../styles";
 
 const Deregistration = ({
   containerPosition,
@@ -42,16 +53,21 @@ const Deregistration = ({
 }) => {
   const [selected, setSelected] = useState<SPODeregistration | null>(null);
 
+  const handleSelect = (deregistration: SPODeregistration | null) => {
+    setSelected(deregistration);
+  };
+
   return (
     <Box>
-      <Box>{selected === null && <RecentDeregistrations onSelect={registration => setSelected(registration)} />}</Box>
+      <Box>
+        <RecentDeregistrations onSelect={handleSelect} />
+      </Box>
       <Box>
         {!!selected && (
           <DeregistrationTimeline
             handleResize={handleResize}
             selected={selected}
             containerPosition={containerPosition}
-            setSelected={setSelected}
           />
         )}
       </Box>
@@ -62,19 +78,19 @@ export default Deregistration;
 
 const DeregistrationTimeline = ({
   containerPosition,
-  selected,
-  setSelected,
+  selected, 
   handleResize,
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
-  handleResize: () => void;
-  setSelected: (registration: SPODeregistration | null) => void;
+  handleResize: () => void; 
   selected: SPODeregistration | null;
 }) => {
   const [openModal, setOpenModal] = useState(false);
+  const { poolId = "" } = useParams<{ poolId: string }>();
+  const history = useHistory();
 
   const adaHolderRef = useRef(null);
   const holdRef = useRef(null);
@@ -90,17 +106,25 @@ const DeregistrationTimeline = ({
     handleResize();
   }, [adaHolderRef.current]);
 
+  const handleBack = () => {
+    history.push(details.spo(poolId, "timeline", "deregistration"));
+  };
+
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>
           <Info>
             <AddressIcon fill="#438F68" />
             <CustomTooltip title={selected?.txHash}>
-              <InfoText>{getShortHash(selected?.txHash || "")}</InfoText>
+              <InfoText>
+                <StyledLink to={details.transaction(selected?.txHash)}>
+                  {getShortHash(selected?.txHash || "")}
+                </StyledLink>
+              </InfoText>
             </CustomTooltip>
             <StyledCopyButton text={selected?.txHash} />
           </Info>
@@ -121,50 +145,63 @@ const DeregistrationTimeline = ({
             <CustomTooltip title={selected?.poolName}>
               <PoolName> {selected?.poolName}</PoolName>
             </CustomTooltip>
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOInfoRef}
-                  component={IconButton}
-                  left={"33%"}
-                  onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
-                >
-                  <SPOInfo />
-                </ButtonSPO>
-              )}
-              content={
-                <Box>
-                  <Box display={"flex"} alignItems={"center"}>
-                    <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
-                      Pool ID:
-                    </Box>
-                    <PoolNamePopup to={details.delegation(selected?.poolView)}>
-                      {getShortHash(selected?.poolView || "")}
-                    </PoolNamePopup>
-                    <CopyButton text={selected?.poolView} />
-                  </Box>
-                  <Box display={"flex"} alignItems={"center"}>
-                    <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
-                      Pool name:
-                    </Box>
-                    <PoolNamePopup to={details.delegation(selected?.poolView)}>{selected?.poolName}</PoolNamePopup>
-                  </Box>
-                </Box>
-              }
-            />
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOKeyRef}
-                  component={IconButton}
-                  left={"52%"}
-                  onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
-                >
-                  <SPOKey fill="#438F68" />
-                </ButtonSPO>
-              )}
-              content={
+            <CustomTooltip
+              wOpacity={false}
+              componentsProps={{
+                transition: {
+                  style: {
+                    backgroundColor: "white",
+                    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                    padding: "10px",
+                  }
+                },
+                arrow: {
+                  style: {
+                    color: "white",
+                  }
+                }
+              }} title={<Box>
                 <Box display={"flex"} alignItems={"center"}>
+                  <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
+                    Pool ID:
+                  </Box>
+                  <PoolNamePopup to={details.delegation(selected?.poolView)}>
+                    {getShortHash(selected?.poolView || "")}
+                  </PoolNamePopup>
+                  <CopyButton text={selected?.poolView} />
+                </Box>
+                <Box display={"flex"} alignItems={"center"}>
+                  <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
+                    Pool name:
+                  </Box>
+                  <PoolNamePopup to={details.delegation(selected?.poolView)}>{selected?.poolName}</PoolNamePopup>
+                </Box>
+              </Box>}>
+              <ButtonSPO
+                ref={SPOInfoRef}
+                component={IconButton}
+                left={"33%"}
+              >
+                <SPOInfo />
+              </ButtonSPO>
+            </CustomTooltip>
+            <Link to={details.stake(selected?.stakeKeys[0] || "")}>
+              <CustomTooltip
+                wOpacity={false}
+                componentsProps={{
+                  transition: {
+                    style: {
+                      backgroundColor: "white",
+                      boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                      padding: "10px",
+                    }
+                  },
+                  arrow: {
+                    style: {
+                      color: "white",
+                    }
+                  }
+                }} title={<Box display={"flex"} alignItems={"center"}>
                   {selected?.stakeKeys && selected.stakeKeys.length > 0 && (
                     <>
                       <SPOKey fill="#108AEF" />
@@ -174,9 +211,16 @@ const DeregistrationTimeline = ({
                       <CopyButton text={selected?.stakeKeys[0]} />
                     </>
                   )}
-                </Box>
-              }
-            />
+                </Box>} >
+                <ButtonSPO
+                  ref={SPOKeyRef}
+                  component={IconButton}
+                  left={"52%"}
+                >
+                  <SPOKey fill="#438F68" />
+                </ButtonSPO>
+              </CustomTooltip>
+            </Link>
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
@@ -332,7 +376,7 @@ export const DeregistrationCertificateModal = ({
   handleCloseModal: () => void;
 }) => {
   return (
-    <StyledModal {...props} title="Pool registration certificate">
+    <StyledModal {...props} title="Deregistration certificate">
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
@@ -341,7 +385,11 @@ export const DeregistrationCertificateModal = ({
             </Box>
             {data && (
               <Box>
-                <Link to={details.delegation(data?.poolView || "")}>{getShortWallet(data?.poolId || "")}</Link>{" "}
+                <CustomTooltip title={data?.poolId || ""}>
+                  <CustomLink to={details.delegation(data?.poolView || "")}>
+                    {getShortWallet(data?.poolId || "")}
+                  </CustomLink>
+                </CustomTooltip>
                 <CopyButton text={data?.poolId || ""} />
               </Box>
             )}
@@ -352,7 +400,11 @@ export const DeregistrationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Retirement in Epoch
             </Box>
-            {data && <Box fontSize={"0.875rem"}>{data?.retiringEpoch}</Box>}
+            {data && (
+              <DetailRetirement pt={"2px"} pb={"6px"}>
+                {data?.retiringEpoch}
+              </DetailRetirement>
+            )}
           </Box>
         </Grid>
       </Grid>

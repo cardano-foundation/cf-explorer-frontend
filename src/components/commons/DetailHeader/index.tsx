@@ -39,6 +39,7 @@ import { SearchIcon } from "../../../commons/resources";
 import { BiChevronDown } from "react-icons/bi";
 import { getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import { useScreen } from "../../../commons/hooks/useScreen";
+import CustomTooltip from "../CustomTooltip";
 
 interface DetailHeaderProps {
   type: Bookmark["type"];
@@ -56,6 +57,7 @@ interface DetailHeaderProps {
     allowSearch?: boolean;
     dataSearch?: any[];
     isSent?: boolean;
+    key?: string;
   }[];
 }
 
@@ -64,7 +66,10 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
   const history = useHistory();
   const theme = useTheme();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-  const [openBackdrop, setOpenBackdrop] = useState(false);
+  const [openBackdrop, setOpenBackdrop] = useState<any>({
+    input: false,
+    output: false,
+  });
   const { isTablet } = useScreen();
   const getHashLabel = () => {
     if (type === "BLOCK") return "Block Id";
@@ -72,6 +77,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
     if (type === "POOL") return "Pool Id";
     if (type === "TOKEN") return "Token ID";
   };
+  const isDetailToken = type === "TOKEN";
 
   const hashLabel = getHashLabel();
 
@@ -93,12 +99,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
             return (
               <CardItem
                 item
-                xs={12}
-                sm={6}
+                xs={isDetailToken && index === 0 ? 12 : 6}
+                sm={isDetailToken && index === 0 ? 12 : 6}
                 md={4}
                 lg={numberOfItems > 6 ? 3 : true}
                 items_length={numberOfItems}
                 key={index}
+                isDetailToken={isDetailToken}
               >
                 <IconSkeleton variant="circular" />
                 <DetailValueSkeleton variant="rectangular" />
@@ -131,7 +138,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           {hash && (
             <SlotLeader>
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
-              <SlotLeaderValue>{isTablet ? getShortHash(hash) : hash}</SlotLeaderValue>
+              {isTablet ? (
+                <CustomTooltip title={hash}>
+                  <SlotLeaderValue>{getShortHash(hash)}</SlotLeaderValue>
+                </CustomTooltip>
+              ) : (
+                <SlotLeaderValue>{hash}</SlotLeaderValue>
+              )}
               <SlotLeaderCopy text={hash} />
             </SlotLeader>
           )}
@@ -157,24 +170,30 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
       </WrapHeader>
       <DetailsInfo container items_length={numberOfItems}>
         {listItem.map((item, index) => {
+          const keyItem = item.key || "";
           return (
             <CardItem
               item
-              xs={6}
-              sm={6}
+              xs={isDetailToken && index === 0 ? 12 : 6}
+              sm={isDetailToken && index === 0 ? 12 : 6}
               md={listItem.length === 4 ? 3 : 4}
               lg={numberOfItems > 6 ? 3 : true}
               items_length={numberOfItems}
               key={index}
+              isDetailToken={isDetailToken}
             >
               <Box position="relative">
                 <img src={item.icon} alt="" height={20} />
-                {item.allowSearch && (
-                  <AllowSearchButton onClick={() => setOpenBackdrop(true)}>
+                {item.allowSearch && keyItem && (
+                  <AllowSearchButton
+                    onClick={() => {
+                      setOpenBackdrop((prev: any) => ({ ...prev, [keyItem]: true }));
+                    }}
+                  >
                     <SearchIcon stroke={theme.palette.grey[400]} />
                   </AllowSearchButton>
                 )}
-                {item.allowSearch && openBackdrop && (
+                {item.allowSearch && keyItem && openBackdrop[keyItem] && (
                   <StyledSelect
                     renderValue={() => (item.isSent ? "Received Token" : "Sent Token")}
                     displayEmpty
@@ -192,7 +211,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
                   >
                     {item?.dataSearch?.map((item, index) => (
                       <StyledMenuItem onClick={() => {}} key={index}>
-                        <Box>{item.assetName}</Box>
+                        <Box mr={2} sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}>
+                          {item.assetName}
+                        </Box>
                         <Box fontWeight={600}>
                           {item.isSent ? "-" : "+"}
                           {numberWithCommas(item.assetQuantity)}
@@ -217,7 +238,11 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           );
         })}
       </DetailsInfo>
-      <Backdrop sx={{ zIndex: 100 }} onClick={() => setOpenBackdrop(false)} open={openBackdrop} />
+      <Backdrop
+        sx={{ zIndex: 100 }}
+        onClick={() => setOpenBackdrop({ input: false, output: false })}
+        open={openBackdrop.input || openBackdrop.output}
+      />
     </HeaderDetailContainer>
   );
 };

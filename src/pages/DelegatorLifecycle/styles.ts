@@ -36,6 +36,9 @@ export const ButtonSwitch = styled(IconButton)<{ active: number }>(({ theme, act
   ":hover": {
     background: active ? theme.palette.green[600] : theme.palette.green[600_10],
   },
+  width: 38,
+  height: 38,
+  boxSizing: "border-box",
 }));
 
 export const ButtonReport = styled(Button)(({ theme }) => ({
@@ -51,7 +54,7 @@ export const ButtonReport = styled(Button)(({ theme }) => ({
   },
   [theme.breakpoints.down("md")]: {
     width: "100%",
-    maxWidth: "328px",
+    maxWidth: "900px",
     minWidth: "225px",
   },
 }));
@@ -62,6 +65,7 @@ export const ButtonReportContainer = styled(Button)(({ theme }) => ({
     justifyContent: "start",
     marginLeft: 0,
   },
+  padding: 0,
 }));
 
 export const BoxContainerStyled = styled(Box)(({ theme }) => ({
@@ -85,6 +89,7 @@ export const BoxItemStyled = styled(Box)(({ theme }) => ({
   display: "flex",
   [theme.breakpoints.down("md")]: {
     flexDirection: "column",
+    width: "100%"
   },
 }));
 export const BoxSwitchContainer = styled(Box)(({ theme }) => ({

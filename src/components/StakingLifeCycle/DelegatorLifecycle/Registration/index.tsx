@@ -22,7 +22,7 @@ import { formatADA, formatADAFull, getShortHash, getShortWallet } from "../../..
 import moment from "moment";
 import PopupStaking from "../../../commons/PopupStaking";
 import StyledModal from "../../../commons/StyledModal";
-import { Link as LinkDom, useParams } from "react-router-dom";
+import { Link as LinkDom, useHistory, useParams } from "react-router-dom";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
 import { details } from "../../../../commons/routers";
@@ -42,18 +42,19 @@ const Registration = ({
 }) => {
   const [selected, setSelected] = useState<RegistrationItem | null>(null);
 
-  const handleSelect = (registration: RegistrationItem) => {
+  const handleSelect = (registration: RegistrationItem | null) => {
     setSelected(registration);
   };
 
   return (
     <Box>
-      <Box>{selected === null && <RecentRegistrations onSelect={handleSelect} />}</Box>
       <Box>
-        {selected && (
+        <RecentRegistrations onSelect={handleSelect} />
+      </Box>
+      <Box>
+        {!!selected && (
           <RegistrationTimeline
             handleResize={handleResize}
-            setSelected={setSelected}
             containerPosition={containerPosition}
             registration={selected}
           />
@@ -66,7 +67,6 @@ export default Registration;
 
 const RegistrationTimeline = ({
   containerPosition,
-  setSelected,
   handleResize,
   registration,
 }: {
@@ -74,12 +74,12 @@ const RegistrationTimeline = ({
     top?: number;
     left?: number;
   };
-  setSelected: (registration: RegistrationItem | null) => void;
   handleResize: () => void;
   registration: RegistrationItem;
 }) => {
   const { deposit, fee, time, txHash } = registration;
   const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const history = useHistory();
   const theme = useTheme();
 
   const adaHolderRef = useRef(null);
@@ -96,10 +96,14 @@ const RegistrationTimeline = ({
     handleResize();
   }, [registration]);
 
+  const handleBack = () => {
+    history.push(details.staking(stakeId, "timeline", "registration"));
+  };
+
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>
@@ -139,7 +143,7 @@ const RegistrationTimeline = ({
                         mr={1}
                         color={theme => theme.palette.common.black}
                       >
-                        {formatADAFull(deposit || 0)}
+                        {formatADAFull(deposit || 0, 1)}
                       </Box>
                       <AdaLogoIcon fontSize={14} color={theme.palette.text.secondary} />
                     </Box>
@@ -281,13 +285,16 @@ export const RegistrationCertificateModal = ({
       <Box>
         {loading && <Skeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
-              Stake Key
+          <Box>
+            <Box fontWeight={"bold"} mb={1} fontSize={"1rem"} color={({ palette }) => palette.grey[400]}>
+              STAKE KEY
             </Box>
             {data && (
               <Box>
-                <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link> <CopyButton text={stake} />
+                <Link style={{ fontSize: "1rem" }} to={details.stake(stake)}>
+                  {stake || ""}
+                </Link>
+                <CopyButton text={stake} />
               </Box>
             )}
           </Box>
