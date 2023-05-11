@@ -1,6 +1,7 @@
 import { Box, Button, Divider, FormHelperText, styled } from "@mui/material";
 import { User2RC } from "../../commons/resources";
 import { Input } from "@mui/material";
+import { IconButton } from "@mui/material";
 
 export const Container = styled(Box)`
   display: flex;
@@ -11,6 +12,21 @@ export const Container = styled(Box)`
   justify-content: center;
   align-items: center;
 `;
+
+export const CloseButton = styled(IconButton)<{ saving: number }>`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid ${props => props.theme.palette.grey["A100"]};
+  cursor: ${props => (props.saving ? `wait` : `pointer`)};
+  &:hover {
+    ${props => (props.saving ? `background: none;` : ``)}
+  }
+`;
+
 
 export const WrapContent = styled(Box)`
   display: flex;
@@ -42,6 +58,7 @@ export const WrapForm = styled(Box)(({ theme }) => ({
   background: theme.palette.common.white,
   borderRadius: "12px",
   display: "flex",
+  position: "relative",
   flexDirection: "column",
   gap: "25px",
   width: "min(80vw,420px)",
