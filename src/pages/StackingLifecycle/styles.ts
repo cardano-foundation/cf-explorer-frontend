@@ -1,4 +1,5 @@
 import { Box, Button, Container, Grid, styled } from "@mui/material";
+import breakpoints from "../../themes/breakpoints";
 
 export const DashboardCardList = styled(Box)`
   display: flex;
@@ -38,4 +39,31 @@ export const TextHeadline = styled("span")`
   line-height: 38px;
   color: #000000;
   margin-bottom: 14px;
+  @media screen and (max-width: ${breakpoints.values.sm}px) {
+    font-size: 24px;
+    line-height: 28.13px;
+  }
+`;
+
+export const TitleHead = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media screen and (max-width: ${breakpoints.values.sm}px) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
+
+export const FilterHead = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  @media screen and (max-width: ${breakpoints.values.sm}px) {
+    width: 100%;
+    justify-content: space-between;
+  }
 `;
