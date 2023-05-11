@@ -12,6 +12,7 @@ export const Tabs = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     marginBottom: theme.spacing(2),
+    overflow: "auto",
   },
 }));
 
