@@ -108,3 +108,6 @@ export const PoolNamePopup = styled(Link)(({ theme }) => ({
 export const StyledCopyButton = styled(CopyButton)`
   margin-left: 5px;
 `;
+export const StyledLink = styled(Link)`
+  font-size: 0.875rem;
+`;

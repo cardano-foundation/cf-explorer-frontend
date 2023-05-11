@@ -13,7 +13,7 @@ import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSy
 import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 
 import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText, StakeLink } from "./styles";
 import ADAicon, { AdaLogoIcon } from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentRegistrations from "./RecentRegistrations";
@@ -277,8 +277,8 @@ export const RegistrationCertificateModal = ({
   const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
 
   return (
-    <StyledModal {...props} title="Registration certificate">
-      <Box>
+    <StyledModal width={530} {...props} title="Registration certificate">
+      <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
         {loading && <Skeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
           <Box>
@@ -287,9 +287,9 @@ export const RegistrationCertificateModal = ({
             </Box>
             {data && (
               <Box>
-                <Link style={{ fontSize: "1rem" }} to={details.stake(stake)}>
+                <StakeLink to={details.stake(stake)}>
                   {stake || ""}
-                </Link>
+                </StakeLink>
                 <CopyButton text={stake} />
               </Box>
             )}
