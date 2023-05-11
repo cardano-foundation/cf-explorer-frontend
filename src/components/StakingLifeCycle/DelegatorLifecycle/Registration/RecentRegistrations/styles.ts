@@ -34,7 +34,7 @@ export const GridBox = styled("div")(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(4, 1fr)',
   gridTemplateRows: 'repeat(2, 1fr)',
-  gridGap: '20px 10px',
+  gridGap: '20px 20px',
   [theme.breakpoints.down('lg')]: {
     gridTemplateColumns: 'repeat(3, 1fr)',
     gridTemplateRows: 'repeat(3, 1fr)',
