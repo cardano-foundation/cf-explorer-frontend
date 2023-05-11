@@ -16,53 +16,55 @@ import WithdrawalHistoryTab from "./Tabs/WithdrawalHistoryTab";
 import InstantaneousTab from "./Tabs/InstantaneousTab";
 import TransactionTab from "./Tabs/TransactionTab";
 import { details } from "../../../commons/routers";
-
-const tabs: {
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  label: React.ReactNode;
-  key: TabStakeDetail;
-  component: React.ReactNode;
-}[] = [
-  {
-    icon: DelegationHistoryIcon,
-    label: "Delegation History",
-    key: "delegation",
-    component: <DelegationHistoryTab />,
-  },
-  {
-    icon: StakeKeyHistoryIcon,
-    label: "Stake Key History",
-    key: "stake-key",
-    component: <StakeHistoryTab />,
-  },
-  {
-    icon: WithdrawHistoryIcon,
-    label: "Withdrawal History",
-    key: "withdrawal",
-    component: <WithdrawalHistoryTab />,
-  },
-  {
-    icon: InstantaneousHistoryIcon,
-    label: "Instantaneous Rewards",
-    key: "instantaneous",
-    component: <InstantaneousTab />,
-  },
-  {
-    icon: TransactionIcon,
-    label: "Transactions",
-    key: "transactions",
-    component: <TransactionTab />,
-  },
-];
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 const StakeTab = () => {
   const { stakeId, tabActive = "delegation" } = useParams<{ stakeId: string; tabActive?: TabStakeDetail }>();
   const history = useHistory();
   const theme = useTheme();
+  const { isMobile } = useScreen();
 
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
     history.push({ pathname: details.stake(stakeId || "", tab) });
   };
+
+  const tabs: {
+    icon: React.FC<React.SVGProps<SVGSVGElement>>;
+    label: React.ReactNode;
+    key: TabStakeDetail;
+    component: React.ReactNode;
+  }[] = [
+    {
+      icon: DelegationHistoryIcon,
+      label: "Delegation History",
+      key: "delegation",
+      component: <DelegationHistoryTab isMobile={isMobile} />,
+    },
+    {
+      icon: StakeKeyHistoryIcon,
+      label: "Stake Key History",
+      key: "stake-key",
+      component: <StakeHistoryTab isMobile={isMobile} />,
+    },
+    {
+      icon: WithdrawHistoryIcon,
+      label: "Withdrawal History",
+      key: "withdrawal",
+      component: <WithdrawalHistoryTab />,
+    },
+    {
+      icon: InstantaneousHistoryIcon,
+      label: "Instantaneous Rewards",
+      key: "instantaneous",
+      component: <InstantaneousTab />,
+    },
+    {
+      icon: TransactionIcon,
+      label: "Transactions",
+      key: "transactions",
+      component: <TransactionTab />,
+    },
+  ];
 
   return (
     <Box mt={4}>

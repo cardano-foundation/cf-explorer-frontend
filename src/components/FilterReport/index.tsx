@@ -68,7 +68,6 @@ const FilterReport: React.FC<StackingFilterProps> = ({ onFilterValueChange, filt
 
   const onDateRangeModalClose = () => {
     setIsOpenSelectRange(false);
-    console.log(isOpenSelectRange);
   };
   const onFilterButtonClick = () => setOpen(pre => !pre);
   const onOptionClick = (value: string, option: Option) => {

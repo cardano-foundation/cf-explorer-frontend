@@ -76,16 +76,16 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     }
   }, [address, dateRange, reportType]);
 
-  let isShowTextWarning = false;
+  let isShowTextWarning = true;
   switch (reportType) {
     case "POOL_REPORT":
-      isShowTextWarning = true;
+      isShowTextWarning = false;
       break;
     case "STAKE_KEY_REPORT":
-      isShowTextWarning = true;
+      isShowTextWarning = false;
       break;
     default:
-      isShowTextWarning = false;
+      isShowTextWarning = true;
   }
 
   const handleSubmit = () => {

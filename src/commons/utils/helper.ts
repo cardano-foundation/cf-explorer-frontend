@@ -66,10 +66,10 @@ export const formatADA = (
   return numberWithCommas(realAda.toString(), 6);
 };
 
-export const formatADAFull = (value?: string | number): string => {
+export const formatADAFull = (value?: string | number, limit: number = 6): string => {
   if (!value) return `0`;
   const realAda = new BigNumber(value).div(10 ** 6);
-  return numberWithCommas(realAda.toFixed(6).toString(), 6);
+  return numberWithCommas(realAda.toFixed(limit).toString(), limit);
 };
 
 export const exchangeADAToUSD = (value: number | string, rate: number, isFull?: boolean) => {

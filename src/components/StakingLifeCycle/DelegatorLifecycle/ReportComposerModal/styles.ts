@@ -62,6 +62,7 @@ export const StyledButton = styled(Button)`
   justify-content: center;
   align-items: center;
   gap: 10px;
+  text-transform: none;
   &:disabled {
     background: #13152f;
     opacity: 0.3;
@@ -72,15 +73,14 @@ export const StyledButton = styled(Button)`
     opacity: 0.8;
   }
 `;
-export const StyledBackButton = styled(Button)<{width?: number | string}>(({width = 100}) => ({
+export const StyledBackButton = styled(Button)<{width?: number | string}>(({width = 140}) => ({
   width: `${width}%`,
   borderRadius: "8px",
   height: "44px",
   textAlign: "center",
   color: "#344054",
   lineHeight: "19px",
-  fontWeight: 500,
-  fontSize: "16px",
+  fontWeight: 700,
   border: "2px solid #c8cdd8",
   ":hover": {
     opacity: 0.8,
@@ -90,7 +90,7 @@ export const StyledBackButton = styled(Button)<{width?: number | string}>(({widt
 
 export const SubText = styled("div")`
   color: #000000;
-  font-weight: 500;
+  font-weight: 700;
   font-size: 16px;
   line-height: 19px;
 `;
@@ -111,6 +111,7 @@ export const ButtonEvent = styled(Button)<{ active: number }>`
   align-items: center;
   padding: 13px 20px;
   gap: 10px;
+  text-transform: Capitalize;
   &:hover {
     background: ${props => (props.active ? "#f2f2f2" : "#667085")};
     color: ${props => (props.active ? "#667085" : "#fff")};
