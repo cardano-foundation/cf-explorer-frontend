@@ -40,6 +40,7 @@ import {
 } from "../../ModalDescription";
 import { useHistory, useParams } from "react-router-dom";
 import { details } from "../../../commons/routers";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface StepperProps {
   icon: React.ReactNode;
@@ -66,6 +67,7 @@ const DelegatorLifecycle = ({
   setCurrentStep: (step: number) => void;
 }) => {
   const history = useHistory();
+  const { isMobile } = useScreen();
   const { stakeId = "" } = useParams<{
     stakeId: string;
   }>();
@@ -136,7 +138,7 @@ const DelegatorLifecycle = ({
   ];
 
   return (
-    <Box>
+    <Box mr={isMobile ? 2 : 0}>
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
           <Step component={"span"} key={idx} active={+(currentStep >= idx)}>
@@ -170,34 +172,41 @@ const DelegatorLifecycle = ({
         {stepper[currentStep].component}
       </Box>
 
-      {currentStep > 0 && (
-        <PreviousButton
-          onClick={() => {
-            history.push(details.staking(stakeId, stepper[currentStep - 1]?.key));
-            setCurrentStep(currentStep - 1);
-          }}
-        >
-          <PreviousIcon />
-          <ButtonText>Previous: {stepper[currentStep - 1]?.title}</ButtonText>
-        </PreviousButton>
-      )}
-      <NextButton
-        onClick={() => {
-          if (currentStep === stepper.length - 1) {
-            history.push(details.staking(stakeId, "tablular"));
-            setMode("tablular");
-          } else {
-            history.push(details.staking(stakeId, stepper[currentStep + 1]?.key));
-            setCurrentStep(currentStep + 1);
-          }
-        }}
-        variant="contained"
+      <Box
+        display="flex"
+        flexDirection={isMobile ? "column" : "row"}
+        justifyContent={isMobile ? "center" : "space-between"}
       >
-        <ButtonText>
-          Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
-        </ButtonText>
-        <NextIcon />
-      </NextButton>
+        {currentStep > 0 && (
+          <PreviousButton
+            sx={{ mb: `${isMobile ? "16px" : "0px"}` }}
+            onClick={() => {
+              history.push(details.staking(stakeId, stepper[currentStep - 1]?.key));
+              setCurrentStep(currentStep - 1);
+            }}
+          >
+            <PreviousIcon />
+            <ButtonText>Previous: {stepper[currentStep - 1]?.title}</ButtonText>
+          </PreviousButton>
+        )}
+        <NextButton
+          onClick={() => {
+            if (currentStep === stepper.length - 1) {
+              history.push(details.staking(stakeId, "tablular"));
+              setMode("tablular");
+            } else {
+              history.push(details.staking(stakeId, stepper[currentStep + 1]?.key));
+              setCurrentStep(currentStep + 1);
+            }
+          }}
+          variant="contained"
+        >
+          <ButtonText fontSize={isMobile ? 14 : 16}>
+            Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+          </ButtonText>
+          <NextIcon />
+        </NextButton>
+      </Box>
       <ADATransferModal open={open} handleCloseModal={() => setOpen(false)} />
     </Box>
   );
