@@ -4,6 +4,11 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
   padding: "20px 0 40px",
   [theme.breakpoints.down("sm")]: {
     padding: "0 0 40px",
+    "& > div:nth-of-type(1)": {
+      "& > div:nth-of-type(1)": {
+        padding: "0 16px",
+      },
+    },
     "& > div > div:nth-of-type(2)": {
       margin: "0 16px",
     },
