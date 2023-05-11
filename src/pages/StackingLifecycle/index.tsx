@@ -155,16 +155,20 @@ const Dashboard: React.FC = () => {
         return onDownload === data.id ? (
           <CircularProgress size={22} color="primary" />
         ) : (
-          <IconButton
-            onClick={() =>
-              downloadReportDashboard(
-                data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
-                data.reportName
-              )
-            }
-          >
-            <DownloadBlueIC />
-          </IconButton>
+          <Box textAlign={"right"}>
+            <IconButton
+              onClick={() =>
+                downloadReportDashboard(
+                  data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
+                  data.reportName
+                )
+              }
+
+            >
+              <DownloadBlueIC />
+            </IconButton>
+          </Box>
+
         );
       },
     },
