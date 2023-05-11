@@ -8,6 +8,11 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
     "& > div > div:nth-of-type(2)": {
       paddingLeft: "16px",
     },
+    "& > div:nth-of-type(1)": {
+      "& > div:nth-of-type(1)": {
+        padding: "0 16px",
+      },
+    },
   },
 }));
 
