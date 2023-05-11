@@ -29,7 +29,7 @@ const RewardActivity: React.FC = () => {
       key: "outSum",
       minWidth: "100px",
       render: r => (
-        <Amount value={r.amount}>
+        <Amount type={r.type}>
           {formatADAFull(r.amount)}
           <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={theme => theme.palette.text.primary} />
         </Amount>

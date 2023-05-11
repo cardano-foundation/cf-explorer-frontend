@@ -1,8 +1,6 @@
-import moment from "moment";
 import React from "react";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import DetailHeader from "../../commons/DetailHeader";
-import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
 import outputIcon from "../../../commons/resources/icons/outputIcon.svg";
 import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";

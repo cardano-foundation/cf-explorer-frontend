@@ -19,7 +19,7 @@ import StyledModal from "../commons/StyledModal";
 import { useParams } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { API } from "../../commons/utils/api";
-import { formatADA } from "../../commons/utils/helper";
+import { formatADA, formatADAFull, formatDateTimeLocal } from "../../commons/utils/helper";
 import ADAicon from "../commons/ADAIcon";
 import { details } from "../../commons/routers";
 
@@ -59,7 +59,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       render(data, index) {
         return (
           <AmountADARow>
-            {formatADA(data.amount)} <ADAicon color="#333333" />
+            {formatADAFull(data.amount)} <ADAicon color="#333333" />
           </AmountADARow>
         );
       },
@@ -75,8 +75,11 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       key: "time",
       title: "Date",
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+        sortValue ? setSort(`id,${sortValue}`) : setSort("");
       },
+      render(data, index) {
+        return <Box>{formatDateTimeLocal(data.time)}</Box>;
+      }
     },
   ];
   return (
@@ -101,7 +104,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
                 ...params,
                 total: fetchData.total,
                 onChange(page, size) {
-                  setParams({ page, size });
+                  setParams({ page: page - 1, size });
                 },
               }}
               maxHeight={"calc(70vh - 100px)"}

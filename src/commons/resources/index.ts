@@ -253,6 +253,7 @@ export { ReactComponent as OwnerAccIC } from "./images/owner-acc-ic.svg";
 export { ReactComponent as Hamburger } from "./icons/menus/hamburger.svg";
 export { ReactComponent as HideIcon } from "./icons/hide.svg";
 export { ReactComponent as ShowIcon } from "./icons/show.svg";
+export { ReactComponent as OfficialAdaIcon } from "./icons/ada-logo.svg";
 export { ReactComponent as DelegationHistoryIcon } from "./icons/delegationHistory.svg";
 export { ReactComponent as StakeKeyHistoryIcon } from "./icons/stateKeyHistory.svg";
 export { ReactComponent as WithdrawHistoryIcon } from "./icons/withdrawHistory.svg";
@@ -260,3 +261,5 @@ export { ReactComponent as InstantaneousHistoryIcon } from "./icons/instantaneou
 export { ReactComponent as SortTableUpDown } from "./icons/SortTableUpDown.svg";
 export { ReactComponent as SortTableUp } from "./icons/SortTableUp.svg";
 export { ReactComponent as SortTableDown } from "./icons/SortTableDown.svg";
+export { ReactComponent as UnionTokenIcon } from "./icons/union-token.svg";
+export { ReactComponent as PeopleIcon } from "./icons/people.svg";

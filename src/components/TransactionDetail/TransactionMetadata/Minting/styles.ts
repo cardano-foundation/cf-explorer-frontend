@@ -22,8 +22,13 @@ export const Amount = styled(Box)`
   color: ${props => props.theme.palette.text.secondary};
 `;
 
-export const TableMinting = styled(Table)({
+export const TableMinting = styled(Table)(({ theme }) => ({
   "& tr th:last-child": {
     width: "120px",
   },
-});
+  [theme.breakpoints.down("sm")]: {
+    "& tr th:last-child": {
+      width: "unset",
+    },
+  },
+}));

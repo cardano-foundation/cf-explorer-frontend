@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Backdrop, Box, useTheme } from "@mui/material";
-
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import ProgressCircle from "../ProgressCircle";
@@ -28,6 +27,7 @@ import {
   AllowSearchButton,
   StyledSelect,
   StyledMenuItem,
+  WrapHeader,
   EpochDetail,
 } from "./styles";
 import { details } from "../../../commons/routers";
@@ -37,7 +37,9 @@ import { RootState } from "../../../stores/types";
 import { useHistory } from "react-router-dom";
 import { SearchIcon } from "../../../commons/resources";
 import { BiChevronDown } from "react-icons/bi";
-import { numberWithCommas } from "../../../commons/utils/helper";
+import { getShortHash, numberWithCommas } from "../../../commons/utils/helper";
+import { useScreen } from "../../../commons/hooks/useScreen";
+import CustomTooltip from "../CustomTooltip";
 
 interface DetailHeaderProps {
   type: Bookmark["type"];
@@ -64,13 +66,14 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
   const theme = useTheme();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const [openBackdrop, setOpenBackdrop] = useState(false);
-
+  const { isTablet } = useScreen();
   const getHashLabel = () => {
     if (type === "BLOCK") return "Block Id";
     if (type === "STAKE_KEY") return "Token Id";
     if (type === "POOL") return "Pool Id";
     if (type === "TOKEN") return "Token ID";
   };
+  const isDetailToken = type === "TOKEN";
 
   const hashLabel = getHashLabel();
 
@@ -92,12 +95,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
             return (
               <CardItem
                 item
-                xs={12}
-                sm={6}
+                xs={isDetailToken && index === 0 ? 12 : 6}
+                sm={isDetailToken && index === 0 ? 12 : 6}
                 md={4}
                 lg={numberOfItems > 6 ? 3 : true}
                 items_length={numberOfItems}
                 key={index}
+                isDetailToken={isDetailToken}
               >
                 <IconSkeleton variant="circular" />
                 <DetailValueSkeleton variant="rectangular" />
@@ -114,8 +118,8 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
 
   return (
     <HeaderDetailContainer>
-      <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap={"wrap"}>
-        <Box>
+      <WrapHeader>
+        <Box width="100%">
           <BackButton onClick={history.goBack}>
             <HiArrowLongLeft />
             <BackText>Back</BackText>
@@ -130,7 +134,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           {hash && (
             <SlotLeader>
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
-              <SlotLeaderValue>{hash}</SlotLeaderValue>
+              {isTablet ? (
+                <CustomTooltip title={hash}>
+                  <SlotLeaderValue>{getShortHash(hash)}</SlotLeaderValue>
+                </CustomTooltip>
+              ) : (
+                <SlotLeaderValue>{hash}</SlotLeaderValue>
+              )}
               <SlotLeaderCopy text={hash} />
             </SlotLeader>
           )}
@@ -153,18 +163,19 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
         ) : (
           ""
         )}
-      </Box>
+      </WrapHeader>
       <DetailsInfo container items_length={numberOfItems}>
         {listItem.map((item, index) => {
           return (
             <CardItem
               item
-              xs={6}
-              sm={6}
+              xs={isDetailToken && index === 0 ? 12 : 6}
+              sm={isDetailToken && index === 0 ? 12 : 6}
               md={listItem.length === 4 ? 3 : 4}
               lg={numberOfItems > 6 ? 3 : true}
               items_length={numberOfItems}
               key={index}
+              isDetailToken={isDetailToken}
             >
               <Box position="relative">
                 <img src={item.icon} alt="" height={20} />
@@ -191,7 +202,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
                   >
                     {item?.dataSearch?.map((item, index) => (
                       <StyledMenuItem onClick={() => {}} key={index}>
-                        <Box>{item.assetName}</Box>
+                        <Box mr={2}>{item.assetName}</Box>
                         <Box fontWeight={600}>
                           {item.isSent ? "-" : "+"}
                           {numberWithCommas(item.assetQuantity)}
@@ -201,7 +212,16 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
                   </StyledSelect>
                 )}
               </Box>
-              <Box my={1}>{item.title}</Box>
+              <Box
+                sx={{
+                  my: 1,
+                  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+                    mb: 0,
+                  },
+                }}
+              >
+                {item.title}
+              </Box>
               <ValueCard>{item.value}</ValueCard>
             </CardItem>
           );

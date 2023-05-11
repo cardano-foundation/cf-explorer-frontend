@@ -13,10 +13,10 @@ import {
   SPOKey,
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
-import DelegationCertificateIcon from "../../../../commons/resources/icons/Staking/DelegationCertificateIcon.svg";
+import DeregistrationCertificateIcon from "../../../../commons/resources/icons/Staking/DeregistrationCertificateIcon.svg";
 
 import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { CustomLink, DetailRetirement, FeeBox, HoldBox, HoldBoxText, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import PopoverStyled from "../../../commons/PopoverStyled";
@@ -24,7 +24,7 @@ import RecentDeregistrations from "./RecentDeregistrations";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import moment from "moment";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { ButtonSPO, PoolName, PoolNamePopup } from "../Registration/styles";
+import { ButtonSPO, PoolName, PoolNamePopup, StyledCopyButton } from "../Registration/styles";
 import { details } from "../../../../commons/routers";
 import CopyButton from "../../../commons/CopyButton";
 import StyledModal from "../../../commons/StyledModal";
@@ -99,7 +99,10 @@ const DeregistrationTimeline = ({
         <Box display={"flex"}>
           <Info>
             <AddressIcon fill="#438F68" />
-            <InfoText>{getShortHash(selected?.txHash || "")}</InfoText>
+            <CustomTooltip title={selected?.txHash}>
+              <InfoText>{getShortHash(selected?.txHash || "")}</InfoText>
+            </CustomTooltip>
+            <StyledCopyButton text={selected?.txHash} />
           </Info>
           <Info>
             <ADAGreen />
@@ -182,9 +185,9 @@ const DeregistrationTimeline = ({
                 render={({ handleClick }) => (
                   <HoldBox ref={holdRef} ml={1}>
                     <Box>
-                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      <HoldBoxText mr={1} component={"span"}>
                         {formatADA(selected?.poolHold)}
-                      </Box>
+                      </HoldBoxText>
                       <ADAicon fontSize="18px" />
                     </Box>
                     <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
@@ -310,7 +313,7 @@ const DeregistrationTimeline = ({
             p={0}
             onClick={() => setOpenModal(true)}
           >
-            <img style={{ marginLeft: "5px" }} src={DelegationCertificateIcon} alt="RegistrationCertificateIcon" />
+            <img style={{ marginLeft: "5px" }} src={DeregistrationCertificateIcon} alt="RegistrationCertificateIcon" />
           </Box>
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
@@ -329,7 +332,7 @@ export const DeregistrationCertificateModal = ({
   handleCloseModal: () => void;
 }) => {
   return (
-    <StyledModal {...props} title="Pool registration certificate">
+    <StyledModal {...props} title="Deregistration certificate">
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
@@ -338,7 +341,9 @@ export const DeregistrationCertificateModal = ({
             </Box>
             {data && (
               <Box>
-                <Link to={details.delegation(data?.poolView || "")}>{getShortWallet(data?.poolId || "")}</Link>{" "}
+                <CustomTooltip title={data?.poolId || ""}>
+                  <CustomLink to={details.delegation(data?.poolView || "")}>{getShortWallet(data?.poolId || "")}</CustomLink>
+                </CustomTooltip>
                 <CopyButton text={data?.poolId || ""} />
               </Box>
             )}
@@ -349,7 +354,7 @@ export const DeregistrationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Retirement in Epoch
             </Box>
-            {data && <Box fontSize={"0.875rem"}>{data?.retiringEpoch}</Box>}
+            {data && <DetailRetirement pt={"2px"} pb={"6px"}>{data?.retiringEpoch}</DetailRetirement>}
           </Box>
         </Grid>
       </Grid>

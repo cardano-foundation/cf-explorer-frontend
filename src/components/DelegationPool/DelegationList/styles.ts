@@ -19,18 +19,21 @@ export const PoolName = styled(Link)`
   color: var(--color-blue) !important;
 `;
 
-export const SearchContainer = styled("div")`
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  width: 100%;
-  max-width: 360px;
-  background: ${props => props.theme.palette.background.paper};
-  padding: 0 12px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  height: 35px;
-`;
+export const SearchContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "start",
+  alignItems: "center",
+  width: "100%",
+  maxWidth: 360,
+  background: theme.palette.background.paper,
+  padding: "0 12px",
+  borderRadius: 8,
+  marginBottom: 15,
+  height: 35,
+  [theme.breakpoints.down("sm")]: {
+    width: "unset",
+  },
+}));
 
 export const StyledInput = styled("input")`
   border: none;

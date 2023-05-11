@@ -11,6 +11,9 @@ const StyledLink = styled(Link)`
   color: ${props => props.theme.palette.primary.contrastText}!important;
   border-radius: 6px;
   font-weight: var(--font-weight-bold);
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    margin: 20px 16px;
+  }
 `;
 
 const ViewMoreButton: React.FC<LinkProps> = ({ children, ...props }) => {

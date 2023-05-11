@@ -58,7 +58,7 @@ const DelegationDetail: React.FC = () => {
     initialized: initalTable,
   } = useFetchList<DelegationEpoch | StakingDelegators>(
     `${API.DELEGATION.POOL_DETAIL}-${tab}?poolView=${poolId}&page=${query.page ? +query.page - 1 : 0}&size=${
-      query.size || 10
+      query.size || 50
     }`
   );
 
@@ -130,7 +130,7 @@ const DelegationDetail: React.FC = () => {
         </CustomSelect>
         <Title>{titles[tab]}</Title>
       </TabSelect>
-      <Box mt={4}>
+      <Box my={4}>
         <TabContext value={tab}>
           <TabsContainer>
             <TabList

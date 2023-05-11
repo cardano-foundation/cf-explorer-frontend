@@ -16,61 +16,68 @@ import { DATETIME_PARTTEN } from "../../../StackingFilter/DateRangeModal";
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import { FilterDateLabel } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles";
 
-const columns: Column<WithdrawItem>[] = [
-  {
-    title: "Transaction Hash",
-    key: "hash",
-    minWidth: "120px",
-    render: r => (
-      <CustomTooltip title={r.txHash}>
-        <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
-      </CustomTooltip>
-    ),
-  },
-  {
-    title: "Timestamp",
-    key: "time",
-    minWidth: "120px",
-    render: r => formatDateTimeLocal(r.time),
-  },
-  {
-    title: (
-      <>
-        <Box>Net Amount</Box>
-        <TableSubTitle>Withdrawn/Fees</TableSubTitle>
-      </>
-    ),
-    key: "epoch",
-    minWidth: "120px",
-    render: r => (
-      <Box>
-        <AdaValue value={r.value + r.fee} />
-        <TableSubTitle>
-          <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-            <AdaValue value={r.value} gap="3px" fontSize="12px" />
-            <Box mx="3px">/</Box>
-            <AdaValue value={r.fee} gap="3px" fontSize="12px" />
-          </Box>
-        </TableSubTitle>
-      </Box>
-    ),
-  },
-];
-
 const WithdrawalHistoryTab = () => {
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
+  const [sort, setSort] = useState<string>("");
+
   const [params, setParams] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
     toDate: undefined,
     txHash: undefined,
   });
+
+  const columns: Column<WithdrawItem>[] = [
+    {
+      title: "Transaction Hash",
+      key: "hash",
+      minWidth: "120px",
+      render: r => (
+        <CustomTooltip title={r.txHash}>
+          <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
+        </CustomTooltip>
+      ),
+    },
+    {
+      title: "Timestamp",
+      key: "time",
+      minWidth: "120px",
+      render: r => formatDateTimeLocal(r.time),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
+    },
+    {
+      title: (
+        <>
+          <Box>Net Amount</Box>
+          <TableSubTitle>Withdrawn/Fees</TableSubTitle>
+        </>
+      ),
+      key: "epoch",
+      minWidth: "120px",
+      render: r => (
+        <Box>
+          <AdaValue value={r.value - r.fee} />
+          <TableSubTitle>
+            <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+              <AdaValue value={r.value} gap="3px" fontSize="12px" />
+              <Box mx="3px">/</Box>
+              <AdaValue value={r.fee} gap="3px" fontSize="12px" />
+            </Box>
+          </TableSubTitle>
+        </Box>
+      ),
+    },
+  ];
+
   const fetchData = useFetchList<WithdrawalHistoryItem>(stakeId ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "", {
     ...pageInfo,
     ...params,
+    sort,
   });
   const { total, data } = fetchData;
   const filterLabel = useMemo(() => {
@@ -118,7 +125,7 @@ const WithdrawalHistoryTab = () => {
         pagination={{
           ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => setPageInfo(pre => ({ ...pre, page, size })),
+          onChange: (page, size) => setPageInfo(pre => ({ ...pre, page: page - 1, size })),
         }}
         onClickRow={(e, r: DeregistrationItem) => history.push(details.transaction(r.txHash))}
       />

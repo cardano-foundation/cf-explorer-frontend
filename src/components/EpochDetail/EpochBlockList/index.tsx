@@ -5,11 +5,9 @@ import Card from "../../commons/Card";
 import Table, { Column } from "../../commons/Table";
 import { formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
-import { AIcon } from "../../../commons/resources";
 import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer, StyledLink } from "./styles";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { API } from "../../../commons/utils/api";
-import { Box } from "@mui/material";
 import ADAicon from "../../commons/ADAIcon";
 import { REFRESH_TIMES } from "../../../commons/utils/constants";
 

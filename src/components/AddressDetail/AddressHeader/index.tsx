@@ -15,6 +15,7 @@ import TokenAutocomplete from "../../TokenAutocomplete";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { BackButton, BackText } from "./styles";
 import ADAicon from "../../commons/ADAIcon";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface Props {
   data: WalletAddress | null;
@@ -27,6 +28,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   );
   const { adaRate } = useSelector(({ system }: RootState) => system);
   const theme = useTheme();
+  const { isMobile } = useScreen();
 
   const history = useHistory();
   useEffect(() => {
@@ -97,10 +99,10 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
         </Box>
         <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
           <Box>Address Detail</Box>
-          <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
+          {!isMobile && <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />}
         </Box>
       </Box>
-      <Grid container columnSpacing={2}>
+      <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={10} height={"100%"}>
             <CardAddress

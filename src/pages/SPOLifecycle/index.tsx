@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 
-import { getShortHash } from "../../commons/utils/helper";
+import { getShortHash, getShortWallet } from "../../commons/utils/helper";
 import CopyButton from "../../components/commons/CopyButton";
 import SPOLifecycleComponent from "../../components/StakingLifeCycle/SPOLifecycle";
 
@@ -25,6 +25,8 @@ import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLife
 import Tablular from "../../components/StakingLifeCycle/SPOLifecycle/Tablular";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useScreen } from "../../commons/hooks/useScreen";
+import { StyledStakeId } from "../DelegatorLifecycle/styles";
+import { details } from "../../commons/routers";
 
 const SPOLifecycle = () => {
   const { poolId = "", tab } = useParams<{
@@ -83,13 +85,15 @@ const SPOLifecycle = () => {
     <StyledContainer ref={containerRef}>
       <BoxContainerStyled> 
         <Box>
-          <Box component={"h2"} mb={0}>
+          <Box component={"h2"} mb="5px" mt={0} fontSize={36} lineHeight="42px">
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
-            <Box component={"span"}>Pool ID:</Box>
+            <Box component={"span"} fontSize={"1rem"} lineHeight={1}>
+              Pool ID:
+            </Box>
             <CustomTooltip title={poolId}>
-              <StakeId>{getShortHash(poolId)}</StakeId>
+              <StyledStakeId to={details.delegation(poolId)}>{getShortHash(poolId)}</StyledStakeId>
             </CustomTooltip>
             <CopyButton text={poolId} />
           </Box>

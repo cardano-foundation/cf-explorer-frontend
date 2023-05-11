@@ -23,6 +23,13 @@ export const TitleStep = styled(Box)<{ currentStep: number; index: number }>(({ 
   fontSize: "0.875rem",
   marginTop: theme.spacing(1),
 }));
+
+export const WrapTitle = styled(Box)(({ theme }) => ({
+  fontSize: "1.5rem",
+  fontWeight: "bold",
+  color: theme.palette.common.black
+}));
+
 export const NextButton = styled(Button)(({ theme }) => ({
   color: theme.palette.common.white,
   background: theme.palette.grey[700],
@@ -36,6 +43,9 @@ export const NextButton = styled(Button)(({ theme }) => ({
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.8),
   },
+  display: "flex",
+  gap: 12,
+  alignItems: "center"
 }));
 export const PreviousButton = styled(Button)(({ theme }) => ({
   color: theme.palette.grey[500],
@@ -51,4 +61,6 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.1),
   },
+  display: "flex",
+  alignItems: "center"
 }));

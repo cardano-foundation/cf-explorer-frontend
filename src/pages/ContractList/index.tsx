@@ -88,7 +88,7 @@ const Transactions: React.FC = () => {
       key: "txCount",
       render: r => (
         <Box display="flex" alignItems="center">
-          {r.txCount}
+          {numberWithCommas(r.txCount)}
         </Box>
       ),
       sort: ({ columnKey, sortValue }) => {

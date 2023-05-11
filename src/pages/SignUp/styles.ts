@@ -5,8 +5,9 @@ import { Input } from "@mui/material";
 export const Container = styled(Box)`
   display: flex;
   background-color: ${({ theme }) => theme.palette.grey[200]};
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  min-width: 100vw;
+  padding: 30px;
   justify-content: center;
   align-items: center;
 `;

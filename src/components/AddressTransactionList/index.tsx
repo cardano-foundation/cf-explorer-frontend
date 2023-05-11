@@ -19,6 +19,7 @@ import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { SmallText } from "../share/styled";
 import ADAicon from "../commons/ADAIcon";
+import { useScreen } from "../../commons/hooks/useScreen";
 
 interface AddressTransactionListProps {
   underline?: boolean;
@@ -45,6 +46,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
     if (openDetail) return openDetail(_, transaction, index);
     history.push(details.transaction(transaction.hash));
   };
+  const { isMobile } = useScreen();
 
   const columns: Column<Transactions>[] = [
     {
@@ -56,7 +58,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
     {
       title: "Trx Hash",
       key: "trxhash",
-      minWidth: 120,
+      minWidth: isMobile ? 190 : 120,
 
       render: transaction => (
         <div>

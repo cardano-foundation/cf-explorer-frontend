@@ -50,7 +50,7 @@ const DelegationTab = () => {
     },
     {
       title: "Timestamp",
-      key: "time",
+      key: "id",
       minWidth: "120px",
       render: r => formatDateTimeLocal(r.time),
       sort: ({ columnKey, sortValue }) => {
@@ -61,7 +61,7 @@ const DelegationTab = () => {
       title: "Fees",
       key: "block",
       minWidth: "120px",
-      render: r => <AdaValue value={r.outSum} />,
+      render: r => <AdaValue value={r.fee} />,
     },
     {
       title: "Certificate",
@@ -122,7 +122,7 @@ const DelegationTab = () => {
         total={{ title: "Total", count: fetchData.total }}
         pagination={{
           ...pageInfo,
-          page: pageInfo.page + 1,
+          page: pageInfo.page,
           total: fetchData.total,
           onChange: (page, size) => setPageInfo(pre => ({ ...pre, page: page - 1, size })),
         }}

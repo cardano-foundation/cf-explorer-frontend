@@ -45,3 +45,12 @@ export const ItemBox = styled(Box)(({ theme }) => ({
     borderBottom: "none",
   },
 }));
+
+export const ItemContent = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+  }
+}));

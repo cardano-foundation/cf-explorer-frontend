@@ -20,7 +20,7 @@ import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSy
 import PoolCertificateIcon from "../../../../commons/resources/icons/Staking/PoolCertificateIcon.svg";
 
 import Line from "../../../Line";
-import { FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { CardBox, FeeBox, FeeBoxText, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import useFetchList from "../../../../commons/hooks/useFetchList";
@@ -34,7 +34,7 @@ import { useParams } from "react-router";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { details } from "../../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import { ButtonSPO, PoolName, PoolNamePopup } from "../Registration/styles";
+import { ButtonSPO, PoolName, PoolNamePopup, StyledCopyButton } from "../Registration/styles";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import moment from "moment";
@@ -43,6 +43,7 @@ import StyledModal from "../../../commons/StyledModal";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Tab } from "@mui/material";
 import { TitleTab } from "../../../TransactionDetail/TransactionMetadata/styles";
+import { DescriptionText } from "../../DelegatorLifecycle/styles";
 
 const PoollUpdates = ({
   containerPosition,
@@ -85,7 +86,7 @@ const PoollUpdatesList = ({ setSelected }: { setSelected: (pool: PoolUpdateItem 
   return (
     <Box marginTop="32px">
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
-        <span>Recent Withdrawals</span>
+        <DescriptionText>Recent Withdrawals</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>Showing {total} results</WrapFilterDescription>
           <StackingFilter
@@ -153,6 +154,7 @@ const PoollUpdatesTimeline = ({
             <Info>
               <AddressIcon fill="#438F68" />
               <Box component={Skeleton} ml={1} variant="rectangular" width={145} height={18} />
+              <StyledCopyButton />
             </Info>
             <Info>
               <ADAGreen />
@@ -178,7 +180,10 @@ const PoollUpdatesTimeline = ({
         <Box display={"flex"}>
           <Info>
             <AddressIcon fill="#438F68" />
-            <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            <CustomTooltip title={data?.txHash}>
+              <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            </CustomTooltip>
+            <StyledCopyButton text={data?.txHash} />
           </Info>
           <Info>
             <ADAGreen />
@@ -260,9 +265,9 @@ const PoollUpdatesTimeline = ({
               render={({ handleClick }) => (
                 <FeeBox ref={feeRef}>
                   <Box>
-                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                    <FeeBoxText component={"span"} mr={1}>
                       {formatADA(data?.fee || 0)}
-                    </Box>
+                    </FeeBoxText>
                     <ADAicon fontSize="18px" />
                   </Box>
                   <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
@@ -369,7 +374,7 @@ export const PoolUpdateModal = ({
 }) => {
   const [tabActive, setTabActive] = useState("poolCertificate");
   const renderPoolCert = () => (
-    <Grid container spacing={1}>
+    <Grid container rowSpacing={1} columnSpacing={2}>
       <Grid item xs={6}>
         <Box
           minHeight={50}
@@ -379,11 +384,11 @@ export const PoolUpdateModal = ({
           alignItems={"center"}
         >
           <Box>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]} >
               Transaction ID
             </Box>
             {data && (
-              <Box>
+              <Box pt={"7px"} fontWeight={600}>
                 <Link to={details.transaction(data?.txHash || "")}>{getShortHash(data?.txHash || "")}</Link>{" "}
                 <CopyButton text={data?.txHash || ""} />
               </Box>
@@ -404,7 +409,7 @@ export const PoolUpdateModal = ({
               Pool ID
             </Box>
             {data && (
-              <Box>
+              <Box pt={"7px"} fontWeight={600}>
                 <Link to={details.delegation(data?.poolView || "")}>{getShortHash(data?.poolView || "")}</Link>{" "}
                 <CopyButton text={data?.poolView || ""} />
               </Box>
@@ -426,8 +431,8 @@ export const PoolUpdateModal = ({
               VRF Key
             </Box>
             {data && (
-              <Box>
-                <Box display={"inline"} fontSize="0.875rem" color={({ palette }) => palette.blue[800]}>
+              <Box pt={"7px"}>
+                <Box display={"inline"} fontWeight={600} fontSize="0.875rem" color={({ palette }) => palette.blue[800]}>
                   {getShortHash(data?.vrfKey || "")}
                 </Box>{" "}
                 <CopyButton text={data?.vrfKey || ""} />
@@ -452,7 +457,7 @@ export const PoolUpdateModal = ({
               <>
                 {(data.stakeKeys || []).map(item => (
                   <>
-                    <Box key={item}>
+                    <Box key={item} pt={"7px"} fontWeight={600}>
                       <Link to={details.stake(item || "")}>{getShortWallet(item)}</Link>{" "}
                       <CopyButton text={item || ""} />
                     </Box>
@@ -476,7 +481,7 @@ export const PoolUpdateModal = ({
               Reward Account
             </Box>
             {data && (
-              <Box>
+              <Box pt={"7px"} fontWeight={600}>
                 <Link to={details.stake(data?.rewardAccount || "")}>{getShortWallet(data?.rewardAccount || "")}</Link>{" "}
                 <CopyButton text={data?.rewardAccount || ""} />
               </Box>
@@ -498,10 +503,10 @@ export const PoolUpdateModal = ({
               Margin
             </Box>
             {data && (
-              <Box display={"inline"} fontSize="0.875rem">
+              <Box fontSize="0.875rem" pt={"7px"} fontWeight={600}>
                 {data?.margin}%
                 {data?.previousMargin !== null && (
-                  <Box fontSize={12} color={theme => theme.palette.grey[400]}>
+                  <Box fontSize={12} pt={"7px"} color={theme => theme.palette.grey[400]}>
                     Previous: {data?.previousMargin} %{" "}
                   </Box>
                 )}
@@ -529,12 +534,12 @@ export const PoolUpdateModal = ({
                 Pledge
               </Box>
               {data && (
-                <Box display={"inline"} fontSize="0.875rem">
+                <Box fontSize="0.875rem" pt={"7px"} fontWeight={600}>
                   {formatADA(data?.pledge)} <ADAicon />
                 </Box>
               )}
               {data?.previousPledge !== null && (
-                <Box fontSize={12} color={theme => theme.palette.grey[400]}>
+                <Box fontSize={12} pt={"7px"} color={theme => theme.palette.grey[400]}>
                   Previous: {formatADA(data?.previousPledge || 0)} <ADAicon />
                 </Box>
               )}
@@ -560,7 +565,7 @@ export const PoolUpdateModal = ({
               Cost
             </Box>
             {data && (
-              <Box display={"inline"} fontSize="0.875rem">
+              <Box pt={"7px"} fontWeight={600} fontSize="0.875rem">
                 {formatADA(data?.cost)} <ADAicon />
               </Box>
             )}
@@ -571,7 +576,7 @@ export const PoolUpdateModal = ({
   );
 
   const renderCertificateUpdates = () => {
-    if (!data?.previousMargin === null && !data?.previousPledge === null) {
+    if (data?.previousMargin === null && data?.previousPledge === null) {
       return (
         <Box textAlign={"center"}>
           <Box component={"img"} height={215} src={EmptyIcon} alt="no data" />
@@ -586,25 +591,25 @@ export const PoolUpdateModal = ({
               Margin
             </Box>
             <Box display={"flex"} alignItems={"center"} mt={1}>
-              <Box flex={1}>
+              <CardBox flex={1}>
                 <Box color={theme => theme.palette.grey[400]} fontSize={12}>
                   OLD
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
                   {data?.previousMargin} %
                 </Box>
-              </Box>
+              </CardBox>
               <Box flex={1} textAlign={"center"}>
                 <ChangeIcon />
               </Box>
-              <Box flex={1}>
+              <CardBox flex={1}>
                 <Box color={theme => theme.palette.grey[400]} fontSize={12}>
                   NEW
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
                   {data?.margin} %
                 </Box>
-              </Box>
+              </CardBox>
             </Box>
           </Box>
         )}
@@ -614,25 +619,25 @@ export const PoolUpdateModal = ({
               Pledge
             </Box>
             <Box display={"flex"} alignItems={"center"} mt={1}>
-              <Box flex={1}>
+              <CardBox flex={1}>
                 <Box color={theme => theme.palette.grey[400]} fontSize={12}>
                   OLD
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
                   {formatADA(data?.previousPledge)} <ADAicon />
                 </Box>
-              </Box>
+              </CardBox>
               <Box flex={1} textAlign={"center"}>
                 <ChangeIcon />
               </Box>
-              <Box flex={1}>
+              <CardBox flex={1}>
                 <Box color={theme => theme.palette.grey[400]} fontSize={12}>
                   NEW
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
                   {formatADA(data?.pledge)} <ADAicon />
                 </Box>
-              </Box>
+              </CardBox>
             </Box>
           </Box>
         )}
@@ -645,19 +650,19 @@ export const PoolUpdateModal = ({
     label: string;
     children: React.ReactNode;
   }[] = [
-    {
-      key: "poolCertificate",
-      icon: PoolCert,
-      label: "Pool certificate",
-      children: <>{renderPoolCert()}</>,
-    },
-    {
-      key: "certificateUpdates",
-      icon: CertUpdate,
-      label: "Certificate updates",
-      children: <Box>{renderCertificateUpdates()}</Box>,
-    },
-  ];
+      {
+        key: "poolCertificate",
+        icon: PoolCert,
+        label: "Pool certificate",
+        children: <>{renderPoolCert()}</>,
+      },
+      {
+        key: "certificateUpdates",
+        icon: CertUpdate,
+        label: "Certificate updates",
+        children: <Box>{renderCertificateUpdates()}</Box>,
+      },
+    ];
 
   const handleChange = (event: React.SyntheticEvent, tab: "poolCertificate" | "certificateUpdates") => {
     setTabActive(tab);

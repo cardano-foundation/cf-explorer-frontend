@@ -16,7 +16,7 @@ import useFetch from "../../../../commons/hooks/useFetch";
 
 const WalletActivity: React.FC = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
-  const [pageInfo, setPageInfo] = useState({ page: 0, size: 10 });
+  const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const [sort, setSort] = useState<string>("");
   const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}` || "");
 
@@ -50,6 +50,17 @@ const WalletActivity: React.FC = () => {
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
+    },
+    {
+      title: "Fees Paid",
+      key: "fee",
+      minWidth: "100px",
+      render: r => (
+        <Box display="flex" alignItems="center">
+          <TextAmountReward>{formatADAFull(r.fee)}</TextAmountReward>
+          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={theme => theme.palette.text.primary} />
+        </Box>
+      ),
     },
     {
       title: "Transaction Hash",

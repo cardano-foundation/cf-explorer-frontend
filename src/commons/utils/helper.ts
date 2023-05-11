@@ -34,20 +34,26 @@ export const formatPrice = (value?: string | number, abbreviations: string[] = L
   return `${newValue && newValue[0]}${syntax ?? `x 10^${exponential}`}`;
 };
 
-export const numberWithCommas = (value?: number | string, decimal: number = 18) => {
+export const numberWithCommas = (value?: number | string, decimal: number = 0) => {
   if (!value) return "0";
-  const formated = value.toString().match(new RegExp(`^-?\\d+(?:\\.\\d{0,${decimal}})?`))?.[0] || "0";
-  return formated.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  const formated = Number(value)
+    .toFixed(decimal)
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  return formated.replace(/^-?0*(\d+)/, "$1");
 };
 
-export const formatADA = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
+export const formatADA = (
+  value?: string | number,
+  abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS,
+  numOfUnits: number = 6
+): string => {
   if (!value) return `0${abbreviations[0]}`;
   const realAda = new BigNumber(value).div(10 ** 6);
-  if (realAda.gte(10 ** 6)) {
+  if (realAda.gte(10 ** numOfUnits)) {
     const length = realAda.toFixed(0).length;
     const exponential = Math.floor((length - 1) / 3) * 3;
 
-    if (exponential > 5) {
+    if (exponential > numOfUnits - 1) {
       const newValue = realAda
         .div(10 ** exponential)
         .toFixed(2, 3)
@@ -57,13 +63,13 @@ export const formatADA = (value?: string | number, abbreviations: string[] = LAR
       return `${newValue}${syntax ?? `x 10^${exponential}`}`;
     }
   }
-  return numberWithCommas(realAda.toString());
+  return numberWithCommas(realAda.toString(), 6);
 };
 
-export const formatADAFull = (value?: string | number): string => {
+export const formatADAFull = (value?: string | number, limit: number = 6): string => {
   if (!value) return `0`;
   const realAda = new BigNumber(value).div(10 ** 6);
-  return numberWithCommas(realAda.toFixed(6).toString());
+  return numberWithCommas(realAda.toFixed(limit).toString(), limit);
 };
 
 export const exchangeADAToUSD = (value: number | string, rate: number, isFull?: boolean) => {
@@ -114,7 +120,7 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
     const payload = {
       username,
       password,
-      type: 0
+      type: 0,
     };
     const response = await signIn(payload);
     const data = response.data;
@@ -127,7 +133,7 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
     localStorage.setItem("login-type", "normal");
 
     const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-    setUserData({...userInfo.data, loginType: "normal"});
+    setUserData({ ...userInfo.data, loginType: "normal" });
     cbSuccess?.();
   } catch (error) {
     removeAuthInfo();
@@ -147,7 +153,6 @@ export const getEpochSlotNo = (data: IDataEpoch) => {
   }
   return moment().diff(moment(data.startTime), "seconds");
 };
-
 
 export function formatHash(hash: string): string {
   const prefix = hash.slice(0, 6);

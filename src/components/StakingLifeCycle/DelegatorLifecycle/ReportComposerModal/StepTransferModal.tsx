@@ -6,6 +6,7 @@ import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack
 import { IPropsModal, STEPS } from ".";
 import { ReportType } from "./FilledInfoModal";
 import { get } from "lodash";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
 export enum RatioGroupValue {
   yes = "YES",
@@ -25,6 +26,8 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
   const [poolSize, setPoolSize] = useState<RatioGroupValue>(RatioGroupValue.unTicked);
 
   const reportType = useMemo(() => get(defaultParams, "0.reportType"), [defaultParams]);
+
+  const { isMobile } = useScreen()
 
   const isDisabled = useMemo(() => {
     if (reportType === ReportType.PoolReport) {
@@ -98,13 +101,13 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
 
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={450}>
-      <Container>
+      <Container p={"10px 10px 1px 20px"}>
         <ModalTitle>Report composer</ModalTitle>
-        <Container sx={{ marginBottom: 2 }}>
+        <Container >
           {OPTIONS_TRANSFER.filter(({ type }) => type.includes(reportType)).map(({ key, label, value }) => {
             return (
               <Box key={key}>
-                <FormControl sx={{ width: "100%", marginBottom: 1 }}>
+                <FormControl sx={{ width: "100%" }}>
                   <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <FormLabel id="demo-controlled-radio-buttons-group">{label}</FormLabel>
                     <RadioGroup

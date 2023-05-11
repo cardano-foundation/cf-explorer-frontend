@@ -19,6 +19,7 @@ import { CardOverview, CardTitle, CardValue, ClickAbleLink, ViewMoreButton, Wrap
 import { DotsIcon } from "../../../../PoolRegistrationCertificate/styles";
 import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
 import { useScreen } from "../../../../../commons/hooks/useScreen";
+import { details } from "../../../../../commons/routers";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -101,7 +102,7 @@ const TabularOverview: React.FC = () => {
           value={
             <Box display="flex" alignItems="center">
               <CardValue color={STATUS[data?.status ?? "ACTIVE"][1]}>{STATUS[data?.status ?? "ACTIVE"][0]} :</CardValue>
-              <ClickAbleLink>&nbsp; Epoch {data?.epochNo}</ClickAbleLink>
+              <ClickAbleLink to={details.epoch(data?.epochNo)}>&nbsp; Epoch {data?.epochNo}</ClickAbleLink>
             </Box>
           }
         />
@@ -122,7 +123,9 @@ const TabularOverview: React.FC = () => {
           value={
             <Box display="flex" alignItems="center">
               <CardValue>
-                <ClickAbleLink>
+                <ClickAbleLink
+                  to={details.stake((data?.stakeKeys && data?.stakeKeys.length && data.stakeKeys[0]) || "#")}
+                >
                   {data?.stakeKeys && data?.stakeKeys.length && formatHash(data.stakeKeys[0])}
                 </ClickAbleLink>
               </CardValue>

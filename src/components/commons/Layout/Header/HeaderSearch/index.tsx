@@ -1,6 +1,6 @@
 import React, { FormEvent, useState, useEffect } from "react";
-import { Backdrop, Box, Button, SelectChangeEvent } from "@mui/material";
-import { useHistory, useLocation } from "react-router-dom";
+import { Backdrop, Box, SelectChangeEvent } from "@mui/material";
+import { useHistory } from "react-router-dom";
 import { HeaderSearchIcon } from "../../../../../commons/resources";
 import { details, routers } from "../../../../../commons/routers";
 import { stringify } from "qs";
@@ -18,9 +18,11 @@ import {
   ValueOption,
 } from "./style";
 import { useSelector } from "react-redux";
+import { useScreen } from "../../../../../commons/hooks/useScreen";
 
 interface Props {
   home: boolean;
+  callback?: () => void;
 }
 interface FormValues {
   filter: FilterParams;
@@ -92,7 +94,7 @@ const options: Option[] = [
   },
 ];
 
-const HeaderSearch: React.FC<Props> = ({ home }) => {
+const HeaderSearch: React.FC<Props> = ({ home, callback }) => {
   const history = useHistory();
   const [{ search, filter }, setValues] = useState<FormValues>({ ...intitalValue });
   const [showOption, setShowOption] = useState(false);
@@ -105,11 +107,10 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
     }
   }, [search, filter]);
 
+  const currentPath = history.location.pathname.split("/")[1];
+  const checkIncludesPath = (paths: Option["paths"]) => paths?.find(path => path?.split("/")[1] === currentPath);
+
   useEffect(() => {
-    const currentPath = history.location.pathname.split("/")[1];
-
-    const checkIncludesPath = (paths: Option["paths"]) => paths?.find(path => path?.split("/")[1] === currentPath);
-
     const filter: FilterParams = options.find(item => checkIncludesPath(item.paths))?.value || "all";
 
     setValues({ ...intitalValue, filter });
@@ -118,6 +119,7 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
   const handleSearch = (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
     const detail = options.find(item => item.value === filter)?.detail;
+    callback?.();
     if (detail) return history.push(detail(search));
     if (search) {
       history.push(
@@ -143,6 +145,10 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
     }
   };
 
+  const isStakingLifecycle = checkIncludesPath([routers.DELEGATOR_LIFECYCLE, routers.SPO_LIFECYCLE]);
+
+  const { isMobile } = useScreen();
+
   return (
     <Box position={"relative"} component={Form} onSubmit={handleSearch} home={home ? 1 : 0}>
       <Backdrop sx={{ backgroundColor: "unset" }} open={showOption} onClick={() => setShowOption(false)} />
@@ -166,12 +172,25 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
         type="search"
         value={search}
         spellCheck={false}
-        placeholder={home ? "Search transactions, address, blocks, epochs, pools..." : "Search ..."}
+        placeholder={
+          home && !isMobile
+            ? "Search transactions, address, blocks, epochs, pools..."
+            : isStakingLifecycle && !isMobile
+            ? "Search Stake key, Pool ID or Pool Name"
+            : "Search ..."
+        }
+        title={
+          home && !isMobile
+            ? "Search transactions, address, blocks, epochs, pools..."
+            : isStakingLifecycle && !isMobile
+            ? "Search Stake key, Pool ID or Pool Name"
+            : "Search ..."
+        }
         onChange={handleChangeSearch}
         disableUnderline
         onFocus={() => onFocus()}
       />
-      <OptionsSearch home={home} show={showOption} value={search} handleSearch={handleSearch} />
+      {!isMobile && <OptionsSearch home={home} show={showOption} value={search} handleSearch={handleSearch} />}
       <SubmitButton type="submit" home={home ? 1 : 0} disabled={!search}>
         <Image src={HeaderSearchIcon} alt="search" home={home ? 1 : 0} />
       </SubmitButton>

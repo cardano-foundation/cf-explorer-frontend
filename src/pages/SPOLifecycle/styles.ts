@@ -9,8 +9,9 @@ export const StyledContainer = styled(Container)`
 export const StakeId = styled("span")(({ theme }) => ({
   lineHeight: 1,
   fontWeight: "bold",
-  color: theme.palette.blue[800],
+  color: `${theme.palette.blue[800]} !important`,
   margin: `0 ${theme.spacing(1)} `,
+  fontSize: "0.875rem",
 }));
 
 export const ButtonGroup = styled(Box)(({ theme }) => ({
