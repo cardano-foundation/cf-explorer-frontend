@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import DashboardCard from "../../components/DashboardCard";
-import { Status, GridContainer, TextHeadline } from "./styles";
+import { Status, GridContainer, TextHeadline, TitleHead, FilterHead } from "./styles";
 import Table, { Column } from "../../components/commons/Table";
 import {
   FilterIC,
@@ -19,6 +19,7 @@ import moment from "moment";
 import { WrapFilterDescription } from "../../components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import FilterReport from "../../components/FilterReport";
 import { useHistory } from "react-router-dom";
+import { useScreen } from "../../commons/hooks/useScreen";
 
 const cardList = [
   {
@@ -95,6 +96,7 @@ const Dashboard: React.FC = () => {
     ...params,
     sort,
   });
+  const { isMobile } = useScreen();
 
   const handleRowClick = (e: React.MouseEvent<Element, MouseEvent>, row: any) => {
     if (row.stakeKeyReportId) history.push(details.generated_staking_detail(row.stakeKeyReportId));
@@ -122,7 +124,7 @@ const Dashboard: React.FC = () => {
     {
       title: "Timestamp",
       key: "createdAt",
-      minWidth: "50px",
+      minWidth: isMobile ? "200px" : "50px",
       render(data) {
         return data.createdAt;
       },
@@ -171,7 +173,7 @@ const Dashboard: React.FC = () => {
     <Container>
       <GridContainer container spacing={2} columns={12}>
         {cardList.map(card => (
-          <Grid item xs={12} md={6} lg={3}>
+          <Grid item xs={6} md={6} lg={3}>
             <DashboardCard
               key={card.title}
               leftIcon={card.icon}
@@ -182,9 +184,9 @@ const Dashboard: React.FC = () => {
           </Grid>
         ))}
       </GridContainer>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <TitleHead>
         <TextHeadline>Saved Reports</TextHeadline>
-        <Box display={"flex"} alignItems={"center"} gap={2}>
+        <FilterHead>
           <WrapFilterDescription>
             Showing {fetchData.total} {fetchData.total > 1 ? "results" : "result"}
           </WrapFilterDescription>
@@ -208,8 +210,8 @@ const Dashboard: React.FC = () => {
               setParams(body);
             }}
           />
-        </Box>
-      </Box>
+        </FilterHead>
+      </TitleHead>
       <Table
         isShowingResult={false}
         {...fetchData}
