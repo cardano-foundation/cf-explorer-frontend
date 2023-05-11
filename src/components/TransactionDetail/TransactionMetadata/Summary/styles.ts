@@ -1,4 +1,4 @@
-import { alpha, styled } from "@mui/material";
+import { MenuItem, Select, alpha, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Img = styled("img")(() => ({
@@ -23,4 +23,25 @@ export const TokenLink = styled(Link)(({ theme }) => ({
   fontWeight: "bold",
   display: "inline",
   whiteSpace: "nowrap",
+}));
+
+export const StyledSelect = styled(Select)(({ theme }) => ({
+  backgroundColor: theme.palette.common.white,
+  borderRadius: 8,
+  height: 35,
+  width: "100%",
+  maxWidth: 280,
+  [theme.breakpoints.down("sm")]: {
+    marginTop: 15,
+  }
+}));
+
+export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  height: 40,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  "&.Mui-selected": {
+    backgroundColor: theme.palette.background.paper,
+  },
 }));

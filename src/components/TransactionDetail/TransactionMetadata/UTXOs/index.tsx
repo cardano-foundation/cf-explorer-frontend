@@ -137,11 +137,13 @@ const Card = ({
                     )}
                   </Box>
                   <Box display={"flex"} alignItems="center" justifyContent={"space-between"}>
-                    <Box overflow={"hidden"} display="flex" flexWrap={"wrap"} gap={1}>
+                    <Box overflow={"hidden"} display="flex" flexWrap={"wrap"} justifyContent="flex-end" gap={1}>
                       {item.tokens.map((token, idx) => (
-                        <TokenLink key={idx} to={details.token(token.assetId)}>
-                          <WrapToken>{token.assetName || getShortWallet(token.assetId)}</WrapToken>
-                        </TokenLink>
+                        <WrapToken>
+                          <TokenLink key={idx} to={details.token(token.assetId)}>
+                            {token.assetName || getShortWallet(token.assetId)}
+                          </TokenLink>
+                        </WrapToken>
                       ))}
                     </Box>
                   </Box>

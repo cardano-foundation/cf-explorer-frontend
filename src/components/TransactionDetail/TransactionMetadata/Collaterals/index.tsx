@@ -7,7 +7,7 @@ import { details } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { Header, Img, Item, ItemBox, ItemContent, TokenLink, Wrapper } from "./style";
+import { Header, Img, Item, ItemBox, ItemContent, TokenLink, WrapToken, Wrapper } from "./style";
 import ADAicon from "../../../commons/ADAIcon";
 import { useScreen } from "../../../../commons/hooks/useScreen";
 
@@ -33,7 +33,7 @@ const Collaterals: React.FC<CollateralProps> = ({ data }) => {
 export default Collaterals;
 
 const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "input" | "output" }) => {
-  const { isTablet } = useScreen();
+  const { isTablet, isMobile } = useScreen();
   return (
     <Box>
       {data?.map(item => (
@@ -93,7 +93,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                   </Box>
                 </Box>
               </Box>
-              <Box justifyContent={"space-between"} alignItems="center" width={"100%"} display="flex">
+              <Box justifyContent={"space-between"} alignItems={"flex-start"} width={"100%"} display="flex">
                 <Box mr={3}>
                   {type === "input" && (
                     <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
@@ -115,20 +115,13 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                   )}
                 </Box>
                 <Box display={"flex"} alignItems="center" justifyContent={"space-between"}>
-                  <Box overflow={"hidden"} display="flex" flexWrap={"wrap"} gap={1}>
+                  <Box overflow={"hidden"} display="flex" justifyContent={"flex-end"} flexWrap={"wrap"} gap={1}>
                     {(item?.tokens || []).map((token, idx) => (
-                      <Box
-                        key={idx}
-                        display="flex"
-                        justifyContent={"flex-start"}
-                        alignItems="center"
-                        flexWrap={"nowrap"}
-                        width="auto"
-                      >
-                        <TokenLink to={details.token(token.assetId)}>
+                      <WrapToken>
+                        <TokenLink key={idx} to={details.token(token.assetId)}>
                           {token.assetName || getShortWallet(token.assetId)}
                         </TokenLink>
-                      </Box>
+                      </WrapToken>
                     ))}
                   </Box>
                 </Box>
