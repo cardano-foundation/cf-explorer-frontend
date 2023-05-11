@@ -115,3 +115,9 @@ export const CustomPopover = styled(CustomTooltip)(({ theme }) => ({
   borderRadius: "4px",
   boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
 }));
+
+export const HoldBoxText = styled(Box)(({ theme }) => ({
+  fontSize: "18px",
+  fontWeight: "bold",
+  color: theme.palette.common.black,
+}));
