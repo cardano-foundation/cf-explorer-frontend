@@ -94,7 +94,7 @@ const PoolUpdateTab = () => {
         pagination={{
           ...params,
           total: fetchData.total,
-          onChange: (page, size) => setParams({ page, size }),
+          onChange: (page, size) => setParams({ page: page - 1, size }),
         }}
       />
     </Box>

@@ -60,7 +60,7 @@ export const ButtonReportContainer = styled(Button)(({ theme }) => ({
   marginLeft: 20,
   [theme.breakpoints.down("md")]: {
     justifyContent: "start",
-     marginLeft: 0
+    marginLeft: 0,
   },
 }));
 
@@ -90,9 +90,13 @@ export const BoxItemStyled = styled(Box)(({ theme }) => ({
 }));
 export const BoxSwitchContainer = styled(Box)(({ theme }) => ({
   display: "flex",
-  gap:15,
+  gap: 15,
   [theme.breakpoints.down("md")]: {
     justifyContent: "space-between",
     alignItems: "space-between",
   },
 }));
+
+export const StyledStakeId = styled(StakeId)`
+  font-size: 1rem;
+`;

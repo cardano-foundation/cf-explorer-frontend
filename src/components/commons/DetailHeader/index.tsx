@@ -72,6 +72,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
     if (type === "POOL") return "Pool Id";
     if (type === "TOKEN") return "Token ID";
   };
+  const isDetailToken = type === "TOKEN";
 
   const hashLabel = getHashLabel();
 
@@ -93,12 +94,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
             return (
               <CardItem
                 item
-                xs={12}
-                sm={6}
+                xs={isDetailToken && index === 0 ? 12 : 6}
+                sm={isDetailToken && index === 0 ? 12 : 6}
                 md={4}
                 lg={numberOfItems > 6 ? 3 : true}
                 items_length={numberOfItems}
                 key={index}
+                isDetailToken={isDetailToken}
               >
                 <IconSkeleton variant="circular" />
                 <DetailValueSkeleton variant="rectangular" />
@@ -160,12 +162,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           return (
             <CardItem
               item
-              xs={6}
-              sm={6}
+              xs={isDetailToken && index === 0 ? 12 : 6}
+              sm={isDetailToken && index === 0 ? 12 : 6}
               md={listItem.length === 4 ? 3 : 4}
               lg={numberOfItems > 6 ? 3 : true}
               items_length={numberOfItems}
               key={index}
+              isDetailToken={isDetailToken}
             >
               <Box position="relative">
                 <img src={item.icon} alt="" height={20} />

@@ -1,6 +1,5 @@
 import { styled, Container } from "@mui/material";
 import { Link } from "react-router-dom";
-import breakpoints from "../../themes/breakpoints";
 
 export const StyledColorBlueDard = styled("span")`
   color: ${props => props.theme.palette.text.primary};

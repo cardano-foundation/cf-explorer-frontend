@@ -61,7 +61,7 @@ const WithdrawalHistoryTab = () => {
       minWidth: "120px",
       render: r => (
         <Box>
-          <AdaValue value={r.value + r.fee} />
+          <AdaValue value={r.value - r.fee} />
           <TableSubTitle>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
               <AdaValue value={r.value} gap="3px" fontSize="12px" />
@@ -125,7 +125,7 @@ const WithdrawalHistoryTab = () => {
         pagination={{
           ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => setPageInfo(pre => ({ ...pre, page, size })),
+          onChange: (page, size) => setPageInfo(pre => ({ ...pre, page: page - 1, size })),
         }}
         onClickRow={(e, r: DeregistrationItem) => history.push(details.transaction(r.txHash))}
       />

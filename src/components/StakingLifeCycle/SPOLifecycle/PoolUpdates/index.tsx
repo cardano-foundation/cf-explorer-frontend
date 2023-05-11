@@ -20,7 +20,7 @@ import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSy
 import PoolCertificateIcon from "../../../../commons/resources/icons/Staking/PoolCertificateIcon.svg";
 
 import Line from "../../../Line";
-import { CardBox, FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { CardBox, FeeBox, FeeBoxText, IconButton, IconButtonBack, Info, InfoText } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import useFetchList from "../../../../commons/hooks/useFetchList";
@@ -265,9 +265,9 @@ const PoollUpdatesTimeline = ({
               render={({ handleClick }) => (
                 <FeeBox ref={feeRef}>
                   <Box>
-                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                    <FeeBoxText component={"span"} mr={1}>
                       {formatADA(data?.fee || 0)}
-                    </Box>
+                    </FeeBoxText>
                     <ADAicon fontSize="18px" />
                   </Box>
                   <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
@@ -576,7 +576,7 @@ export const PoolUpdateModal = ({
   );
 
   const renderCertificateUpdates = () => {
-    if (!data?.previousMargin === null && !data?.previousPledge === null) {
+    if (data?.previousMargin === null && data?.previousPledge === null) {
       return (
         <Box textAlign={"center"}>
           <Box component={"img"} height={215} src={EmptyIcon} alt="no data" />
@@ -650,19 +650,19 @@ export const PoolUpdateModal = ({
     label: string;
     children: React.ReactNode;
   }[] = [
-      {
-        key: "poolCertificate",
-        icon: PoolCert,
-        label: "Pool certificate",
-        children: <>{renderPoolCert()}</>,
-      },
-      {
-        key: "certificateUpdates",
-        icon: CertUpdate,
-        label: "Certificate updates",
-        children: <Box>{renderCertificateUpdates()}</Box>,
-      },
-    ];
+    {
+      key: "poolCertificate",
+      icon: PoolCert,
+      label: "Pool certificate",
+      children: <>{renderPoolCert()}</>,
+    },
+    {
+      key: "certificateUpdates",
+      icon: CertUpdate,
+      label: "Certificate updates",
+      children: <Box>{renderCertificateUpdates()}</Box>,
+    },
+  ];
 
   const handleChange = (event: React.SyntheticEvent, tab: "poolCertificate" | "certificateUpdates") => {
     setTabActive(tab);

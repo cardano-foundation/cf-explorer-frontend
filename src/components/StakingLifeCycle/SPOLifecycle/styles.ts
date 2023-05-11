@@ -43,6 +43,9 @@ export const NextButton = styled(Button)(({ theme }) => ({
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.8),
   },
+  display: "flex",
+  gap: 12,
+  alignItems: "center"
 }));
 export const PreviousButton = styled(Button)(({ theme }) => ({
   color: theme.palette.grey[500],
@@ -58,4 +61,6 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.1),
   },
+  display: "flex",
+  alignItems: "center"
 }));

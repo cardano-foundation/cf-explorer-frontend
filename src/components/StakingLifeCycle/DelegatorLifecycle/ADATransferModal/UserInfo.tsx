@@ -4,6 +4,7 @@ import { OverviewIcon, TextTx, TextUserInfo } from "./styles";
 import { AIconGreen, BalanceIcon, HashtagIcon } from "../../../../commons/resources";
 import CustomIcon from "../../../commons/CustomIcon";
 import { formatADA, formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
+import CustomTooltip from "../../../commons/CustomTooltip";
 
 const UserInfo = ({
   total,
@@ -23,7 +24,10 @@ const UserInfo = ({
           <OverviewIcon>
             <CustomIcon icon={HashtagIcon} width={17} color={theme => theme.palette.primary.main} fill="currentColor" />
           </OverviewIcon>
-          &nbsp;<TextUserInfo>{getShortWallet(stake || "")}</TextUserInfo>
+          &nbsp;
+          <CustomTooltip title={stake}>
+            <TextUserInfo>{getShortWallet(stake || "")}</TextUserInfo>
+          </CustomTooltip>
           <CopyButton text={stake || ""} />
         </Box>
         <Box display={"flex"} alignItems="center">

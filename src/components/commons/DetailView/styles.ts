@@ -15,8 +15,9 @@ export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
       top: "80px",
     },
     [theme.breakpoints.down("sm")]: {
-      position: "fixed",
-      left: 0,
+      right: "auto",
+      width: "100%",
+      overflowY: "hidden",
     },
   },
 }));

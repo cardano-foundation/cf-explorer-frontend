@@ -31,4 +31,6 @@ export const WrapTitle = styled(Box)`
   font-height: 28px;
   font-weight: 700;
   margin-bototm: 20;
+  position: relative;
+  z-index: 2;
 `;
