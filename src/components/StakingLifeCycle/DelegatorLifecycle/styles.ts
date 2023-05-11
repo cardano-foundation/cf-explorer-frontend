@@ -82,6 +82,5 @@ export const DescriptionText = styled(Typography)`
 `;
 
 export const ButtonText = styled(Typography)`
-  font-size: 16px;
   font-weight: 700;
 `;

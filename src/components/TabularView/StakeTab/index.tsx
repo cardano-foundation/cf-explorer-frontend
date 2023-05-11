@@ -3,6 +3,7 @@ import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import { StyledTabList, TabHead, TitleTab } from "./styles";
 import CustomIcon from "../../commons/CustomIcon";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 export interface StakeTabItem {
   icon: React.FC;
@@ -18,18 +19,21 @@ export interface StackTabProps {
 const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration" }) => {
   const [tabActive, setTabActive] = useState<string>(initTab);
   const theme = useTheme();
+  const { isMobile } = useScreen()
 
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
     setTabActive(tab);
   };
 
   return (
-    <Box mt={4}>
+    <Box mt={4} mr={isMobile ? 2 : 0}>
       <TabContext value={tabActive}>
         <Box sx={{ borderBottom: theme => `1px solid ${theme.palette.border.secondary}` }}>
           <StyledTabList
             onChange={handleChange}
             TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
+            scrollButtons="auto"
+            variant="scrollable"
           >
             {tabs.map(({ icon: Icon, key, label }) => (
               <Tab
