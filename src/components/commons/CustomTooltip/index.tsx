@@ -1,7 +1,12 @@
 import { Tooltip, TooltipProps, useTheme } from "@mui/material";
 
-export const CustomTooltip = (props: TooltipProps) => {
-  const { componentsProps, placement, ...otherProps } = props;
+interface Props extends TooltipProps {
+  wOpacity?: boolean;
+}
+
+
+export const CustomTooltip = (props: Props) => {
+  const { componentsProps, placement, wOpacity = true, ...otherProps } = props;
   const theme = useTheme();
   return (
     <Tooltip
@@ -25,7 +30,7 @@ export const CustomTooltip = (props: TooltipProps) => {
             padding: "6px 8px",
             lineHeight: 1.5,
             backgroundColor: theme.palette.common.black,
-            opacity: 0.78,
+            opacity: wOpacity ? 0.78 : 1,
             borderRadius: 2,
             ...(componentsProps?.transition?.style || {}),
           },

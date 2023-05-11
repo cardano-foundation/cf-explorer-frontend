@@ -205,50 +205,63 @@ const PoollUpdatesTimeline = ({
             <CustomTooltip title={data?.poolName}>
               <PoolName> {data?.poolName}</PoolName>
             </CustomTooltip>
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOInfoRef}
-                  component={IconButton}
-                  left={"33%"}
-                  onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
-                >
-                  <SPOInfo />
-                </ButtonSPO>
-              )}
-              content={
-                <Box>
-                  <Box display={"flex"} alignItems={"center"}>
-                    <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
-                      Pool ID:
-                    </Box>
-                    <PoolNamePopup to={details.delegation(data?.poolView)}>
-                      {getShortHash(data?.poolView || "")}
-                    </PoolNamePopup>
-                    <CopyButton text={data?.poolView} />
-                  </Box>
-                  <Box display={"flex"} alignItems={"center"}>
-                    <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
-                      Pool name:
-                    </Box>
-                    <PoolNamePopup to={details.delegation(data?.poolView)}>{data?.poolName}</PoolNamePopup>
-                  </Box>
-                </Box>
-              }
-            />
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOKeyRef}
-                  component={IconButton}
-                  left={"52%"}
-                  onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
-                >
-                  <SPOKey fill="#438F68" />
-                </ButtonSPO>
-              )}
-              content={
+            <CustomTooltip
+              wOpacity={false}
+              componentsProps={{
+                transition: {
+                  style: {
+                    backgroundColor: "white",
+                    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                    padding: "10px",
+                  }
+                },
+                arrow: {
+                  style: {
+                    color: "white",
+                  }
+                }
+              }} title={<Box>
                 <Box display={"flex"} alignItems={"center"}>
+                  <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
+                    Pool ID:
+                  </Box>
+                  <PoolNamePopup to={details.delegation(data?.poolView)}>
+                    {getShortHash(data?.poolView || "")}
+                  </PoolNamePopup>
+                  <CopyButton text={data?.poolView} />
+                </Box>
+                <Box display={"flex"} alignItems={"center"}>
+                  <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
+                    Pool name:
+                  </Box>
+                  <PoolNamePopup to={details.delegation(data?.poolView)}>{data?.poolName}</PoolNamePopup>
+                </Box>
+              </Box>}>
+              <ButtonSPO
+                ref={SPOInfoRef}
+                component={IconButton}
+                left={"33%"}
+              >
+                <SPOInfo />
+              </ButtonSPO>
+            </CustomTooltip>
+            <Link to={details.stake(data?.stakeKeys[0] || "")}>
+              <CustomTooltip
+                wOpacity={false}
+                componentsProps={{
+                  transition: {
+                    style: {
+                      backgroundColor: "white",
+                      boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                      padding: "10px",
+                    }
+                  },
+                  arrow: {
+                    style: {
+                      color: "white",
+                    }
+                  }
+                }} title={<Box display={"flex"} alignItems={"center"}>
                   {data?.stakeKeys && data.stakeKeys.length > 0 && (
                     <>
                       <SPOKey fill="#108AEF" />
@@ -258,9 +271,16 @@ const PoollUpdatesTimeline = ({
                       <CopyButton text={data?.stakeKeys[0]} />
                     </>
                   )}
-                </Box>
-              }
-            />
+                </Box>} >
+                <ButtonSPO
+                  ref={SPOKeyRef}
+                  component={IconButton}
+                  left={"52%"}
+                >
+                  <SPOKey fill="#438F68" />
+                </ButtonSPO>
+              </CustomTooltip>
+            </Link>
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
@@ -653,19 +673,19 @@ export const PoolUpdateModal = ({
     label: string;
     children: React.ReactNode;
   }[] = [
-    {
-      key: "poolCertificate",
-      icon: PoolCert,
-      label: "Pool certificate",
-      children: <>{renderPoolCert()}</>,
-    },
-    {
-      key: "certificateUpdates",
-      icon: CertUpdate,
-      label: "Certificate updates",
-      children: <Box>{renderCertificateUpdates()}</Box>,
-    },
-  ];
+      {
+        key: "poolCertificate",
+        icon: PoolCert,
+        label: "Pool certificate",
+        children: <>{renderPoolCert()}</>,
+      },
+      {
+        key: "certificateUpdates",
+        icon: CertUpdate,
+        label: "Certificate updates",
+        children: <Box>{renderCertificateUpdates()}</Box>,
+      },
+    ];
 
   const handleChange = (event: React.SyntheticEvent, tab: "poolCertificate" | "certificateUpdates") => {
     setTabActive(tab);
