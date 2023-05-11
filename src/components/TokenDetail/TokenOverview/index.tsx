@@ -1,33 +1,13 @@
 import React, { useState } from "react";
-import { alpha, Box, Skeleton } from "@mui/material";
-import { HiArrowLongLeft } from "react-icons/hi2";
-import { routers } from "../../../commons/routers";
-import { formatADAFull, formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/helper";
-import CopyButton from "../../commons/CopyButton";
+import { alpha, Box } from "@mui/material";
+import { formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/helper";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
-import infoIcon from "../../../commons/resources/icons/info.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
 import exchageIcon from "../../../commons/resources/icons/Union.svg";
 import decimalIcon from "../../../commons/resources/icons/decimal.svg";
-import {
-  BackButton,
-  BackText,
-  CardInfoOverview,
-  CardItem,
-  HeaderContainer,
-  HeaderTitle,
-  HeaderTitleSkeleton,
-  LogoEmpty,
-  SlotLeader,
-  SlotLeaderContainer,
-  SlotLeaderSkeleton,
-  SlotLeaderTitle,
-  TitleCard,
-  ValueCard,
-} from "./styles";
+import { CardItem } from "./styles";
 import ScriptModal from "../../ScriptModal";
-import { useHistory } from "react-router";
 import DetailHeader from "../../commons/DetailHeader";
 
 interface ITokenOverview {
@@ -38,7 +18,6 @@ interface ITokenOverview {
 const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
-  const history = useHistory();
 
   const listItem = [
     {

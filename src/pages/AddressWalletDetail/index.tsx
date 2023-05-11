@@ -28,7 +28,7 @@ const AddressWalletDetail = () => {
     <ContainerBox>
       <AddressHeader data={data} loading={loading} />
       <AddressAnalytics />
-      <AddressTransactionList url={`${API.ADDRESS.DETAIL}/${address}/txs`} />
+      <AddressTransactionList address={address} />
     </ContainerBox>
   );
 };

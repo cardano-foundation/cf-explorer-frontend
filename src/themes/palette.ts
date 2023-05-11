@@ -1,4 +1,4 @@
-import { alpha, createTheme, PaletteMode } from "@mui/material";
+import { alpha } from "@mui/material";
 import { ThemeType } from "../types/user";
 
 export const createGradient = (
@@ -185,15 +185,15 @@ const customPalette = {
 };
 
 export type CustomPalette = {
-  [Key in keyof typeof customPalette]: typeof customPalette[Key];
+  [Key in keyof typeof customPalette]: (typeof customPalette)[Key];
 };
 
 export type CustomTypeText = {
-  [Key in keyof typeof text]: typeof text[Key];
+  [Key in keyof typeof text]: (typeof text)[Key];
 };
 
 export type CustomTypeBackground = {
-  [Key in keyof typeof background]: typeof background[Key];
+  [Key in keyof typeof background]: (typeof background)[Key];
 };
 
 declare module "@mui/material" {

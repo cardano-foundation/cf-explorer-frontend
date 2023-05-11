@@ -1,5 +1,6 @@
 import React, { useMemo, createContext } from "react";
 import { DeredistrationIcon, OperatorRewardIcon, PoolUpdateIcon, RegistrationIcon } from "../../commons/resources";
+import { ReactComponent as WalletIcon } from "../../commons/resources/icons/WalletOutline.svg";
 
 import StakeTab from "../TabularView/StakeTab";
 
@@ -70,10 +71,10 @@ const ReportGeneratedPoolDetailTabs = () => {
     const tabs = [
       ...poolTabs,
       {
-        icon: DeredistrationIcon,
+        icon: WalletIcon,
         label: "Pool size",
         key: "poolSize",
-        mappingKey: "",
+        mappingKey: "poolSize",
         component: <PoolSizeTab />,
       },
     ];

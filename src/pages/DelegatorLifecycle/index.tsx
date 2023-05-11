@@ -25,6 +25,7 @@ import { ReactComponent as TableMode } from "../../commons/resources/icons/Staki
 import { details } from "../../commons/routers";
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import CustomTooltip from "../../components/commons/CustomTooltip";
+import { useScreen } from "../../commons/hooks/useScreen";
 
 const DelegatorLifecycle = () => {
   const {
@@ -53,6 +54,8 @@ const DelegatorLifecycle = () => {
     setCurrentStep(tabList[tab || "registration"] || 0);
   }, [tab]);
 
+  const { isMobile } = useScreen();
+
   useEffect(() => {
     if (containerRef.current) {
       const position = (containerRef.current as any)?.getBoundingClientRect();
@@ -80,11 +83,11 @@ const DelegatorLifecycle = () => {
     <StyledContainer ref={containerRef}>
       <BoxContainerStyled>
         <Box>
-          <Box component={"h2"} mb="5px" mt={0} fontSize={36} lineHeight="42px">
+          <Box component={"h2"} mb="5px" mt={0} fontSize={isMobile ? 24 : 36} lineHeight="42px">
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
-            <Box component={"span"} fontSize={"0.875rem"} lineHeight={1}>
+            <Box component={"span"} fontSize={"1rem"} lineHeight={1}>
               Stake key:
             </Box>
             <CustomTooltip title={stakeId}>
@@ -114,7 +117,7 @@ const DelegatorLifecycle = () => {
           )}
         </BoxItemStyled>
       </BoxContainerStyled>
-      <Box>
+      <Box ml={isMobile ? 2 : 0}>
         {mode === "timeline" && (
           <DelegatorLifecycleComponent
             handleResize={handleResize}

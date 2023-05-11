@@ -143,7 +143,7 @@ const RegistrationTimeline = ({
                         mr={1}
                         color={theme => theme.palette.common.black}
                       >
-                        {formatADAFull(deposit || 0)}
+                        {formatADAFull(deposit || 0, 1)}
                       </Box>
                       <AdaLogoIcon fontSize={14} color={theme.palette.text.secondary} />
                     </Box>
@@ -285,13 +285,16 @@ export const RegistrationCertificateModal = ({
       <Box>
         {loading && <Skeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
-              Stake Key
+          <Box>
+            <Box fontWeight={"bold"} mb={1} fontSize={"1rem"} color={({ palette }) => palette.grey[400]}>
+              STAKE KEY
             </Box>
             {data && (
               <Box>
-                <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link> <CopyButton text={stake} />
+                <Link style={{ fontSize: "1rem" }} to={details.stake(stake)}>
+                  {stake || ""}
+                </Link>
+                <CopyButton text={stake} />
               </Box>
             )}
           </Box>

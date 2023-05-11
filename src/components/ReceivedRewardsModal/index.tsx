@@ -43,7 +43,7 @@ export interface ReceivedRewardsModalProps {
   reward: number;
 }
 const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = false, onClose, reward = 0 }) => {
-  const [params, setParams] = useState({ page: 0, size: 10 });
+  const [params, setParams] = useState({ page: 0, size: 50 });
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [sort, setSort] = useState<string>("");
 
@@ -93,7 +93,6 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
               <RewardBalanceTitle>Reward Balance: {formatADA(reward)}</RewardBalanceTitle>
               <ADAicon />
             </RewardBalance>
-            {/* <TotalTransaction>100 Transactions</TotalTransaction> */}
           </RewardBalanceHeader>
           <TableContainer>
             <Table

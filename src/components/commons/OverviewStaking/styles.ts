@@ -6,7 +6,6 @@ export const WrapContainer = styled("div")`
   justify-content: center;
   align-items: flex-start;
   gap: 10px;
-  max-width: 265px;
   max-height: 150px;
   background: ${props => props.theme.palette.background.paper};
   padding: 20px;
@@ -26,7 +25,7 @@ export const OverviewIcon = styled("div")`
   gap: 10px;
 `;
 export const OverviewTitle = styled("p")`
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
   line-height: 17px;
   color: ${props => props.theme.palette.text.primary};

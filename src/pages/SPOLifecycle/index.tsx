@@ -24,6 +24,8 @@ import { ReactComponent as TableMode } from "../../commons/resources/icons/Staki
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import Tablular from "../../components/StakingLifeCycle/SPOLifecycle/Tablular";
 import CustomTooltip from "../../components/commons/CustomTooltip";
+import { useScreen } from "../../commons/hooks/useScreen";
+import { StyledStakeId } from "../DelegatorLifecycle/styles";
 import { details } from "../../commons/routers";
 
 const SPOLifecycle = () => {
@@ -42,6 +44,8 @@ const SPOLifecycle = () => {
   };
 
   const [currentStep, setCurrentStep] = useState(tabList[tab || "registration"] || 0);
+
+  const { isMobile } = useScreen()
 
   useEffect(() => {
     setCurrentStep(tabList[tab || "registration"] || 0);
@@ -80,17 +84,17 @@ const SPOLifecycle = () => {
 
   return (
     <StyledContainer ref={containerRef}>
-      <BoxContainerStyled>
+      <BoxContainerStyled> 
         <Box>
-          <Box component={"h2"} mb={0}>
+          <Box component={"h2"} mb="5px" mt={0} fontSize={isMobile ? 24 : 36} lineHeight="42px">
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
-            <Box component={"span"} fontSize={"0.875rem"} lineHeight={1}>
+            <Box component={"span"} fontSize={"1rem"} lineHeight={1}>
               Pool ID:
             </Box>
             <CustomTooltip title={poolId}>
-              <StakeId>{getShortWallet(poolId)}</StakeId>
+              <StyledStakeId to={details.delegation(poolId)}>{getShortHash(poolId)}</StyledStakeId>
             </CustomTooltip>
             <CopyButton text={poolId} />
           </Box>
@@ -114,7 +118,8 @@ const SPOLifecycle = () => {
           </ButtonReportContainer>
         </BoxItemStyled>
       </BoxContainerStyled>
-      <Box>
+
+      <Box ml={isMobile ? 2 : 0}>
         {mode === "timeline" && (
           <SPOLifecycleComponent
             handleResize={handleResize}

@@ -14,6 +14,7 @@ import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import SelectedIcon from "../../components/commons/SelectedIcon";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
+import { useScreen } from "../../commons/hooks/useScreen";
 
 interface IStake {}
 
@@ -31,6 +32,7 @@ const Stake: React.FC<IStake> = () => {
   const history = useHistory();
 
   const pageInfo = getPageInfo(search);
+  const { isMobile } = useScreen();
 
   const fetchData = useFetchList<IStakeKey>(
     `${API.STAKE.DETAIL}/${poolType}`,
@@ -65,6 +67,7 @@ const Stake: React.FC<IStake> = () => {
     {
       title: "Trx Hash",
       key: "trxHash",
+      minWidth: isMobile ? 245 : 80,
       render: r => (
         <CustomTooltip title={r.txHash}>
           <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
@@ -107,7 +110,7 @@ const Stake: React.FC<IStake> = () => {
 
   return (
     <StyledContainer>
-      <Card>
+      <Card className="stake-table">
         <StyledTabs
           value={poolType}
           onChange={onChangeTab}

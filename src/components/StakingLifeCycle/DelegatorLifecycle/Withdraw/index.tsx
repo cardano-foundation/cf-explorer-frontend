@@ -17,6 +17,7 @@ import { ReactComponent as WalletIconRewardGreen } from "../../../../commons/res
 
 import Line from "../../../Line";
 import {
+  ADAAmountLabel,
   FeeBox,
   IconButton,
   IconButtonBack,
@@ -35,8 +36,7 @@ import RecentWithdraws from "./RecentWithdraws";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
 import { useHistory, useParams } from "react-router";
-import { formatADA, getShortHash } from "../../../../commons/utils/helper";
-import moment from "moment";
+import { formatADA, formatDateTimeLocal, getShortHash } from "../../../../commons/utils/helper";
 import PopoverStyled from "../../../commons/PopoverStyled";
 import PopupStaking from "../../../commons/PopupStaking";
 import CustomTooltip from "../../../commons/CustomTooltip";
@@ -170,7 +170,7 @@ const WithdrawTimeline = ({
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>{moment(data?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+            <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
           </Info>
         </Box>
       </Box>
@@ -230,9 +230,9 @@ const WithdrawTimeline = ({
               render={({ handleClick }) => (
                 <NetAmount ref={netAmountRef}>
                   <Box>
-                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                    <ADAAmountLabel>
                       {data?.amount && data?.fee ? formatADA(data?.amount - data?.fee) : 0}
-                    </Box>
+                    </ADAAmountLabel>
                     <ADAicon fontSize="18px" />
                   </Box>
                   <IconButton onClick={() => netAmountRef?.current && handleClick(netAmountRef.current)}>
@@ -246,9 +246,7 @@ const WithdrawTimeline = ({
               render={({ handleClick }) => (
                 <Withdrawn ref={withdrawnRef}>
                   <Box>
-                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                      {formatADA(data?.amount || 0)}
-                    </Box>
+                    <ADAAmountLabel>{formatADA(data?.amount || 0)}</ADAAmountLabel>
                     <ADAicon fontSize="18px" />
                   </Box>
                   <IconButton onClick={() => withdrawnRef?.current && handleClick(withdrawnRef.current)}>

@@ -10,8 +10,9 @@ import ConnectWallet from "../../components/commons/Layout/Header/ConnectWallet"
 import {
   setUserData
 } from "../../stores/user";
-import { AlertCustom, Container, ForgotPassword, FormHelperTextCustom, InputCustom, Label, UserCustomIcon, WrapButton, WrapButtonConnectWallet, WrapContent, WrapDivider, WrapForm, WrapHintText, WrapInput, WrapOr, WrapSignUp, WrapTitle } from "./styles";
+import { AlertCustom, CloseButton, Container, ForgotPassword, FormHelperTextCustom, InputCustom, Label, UserCustomIcon, WrapButton, WrapButtonConnectWallet, WrapContent, WrapDivider, WrapForm, WrapHintText, WrapInput, WrapOr, WrapSignUp, WrapTitle } from "./styles";
 import useToast from "../../commons/hooks/useToast";
+import { IoMdClose } from "react-icons/io";
 
 interface IForm {
   username: {
@@ -104,6 +105,9 @@ export default function SignIn() {
     localStorage.removeItem('passwordStore');
   }
 
+  function handleClose() {
+    history.push(routers.HOME);
+  }
 
   const getError = (name: string, value: string) => {
     let error = "";
@@ -179,7 +183,7 @@ export default function SignIn() {
       localStorage.setItem("email", data.email);
       localStorage.setItem("loginType", "normal");
       const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-      setUserData({...userInfo.data, loginType: "normal"});
+      setUserData({ ...userInfo.data, loginType: "normal" });
       handleLoginSuccess();
     } catch (error) {
       setInvalidInfomation(true);
@@ -199,6 +203,9 @@ export default function SignIn() {
         </WrapHintText>
         <FormGroup>
           <WrapForm>
+            <CloseButton saving={0} onClick={() => handleClose()}>
+              <IoMdClose />
+            </CloseButton>
             {invalidInfomation ? <AlertCustom severity="error">Invalid login information</AlertCustom> : null}
             <WrapInput>
               <Label>

@@ -1,4 +1,5 @@
 import { Box, Button, IconButton, alpha, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   width: "100%",
@@ -35,14 +36,17 @@ export const NextButton = styled(Button)(({ theme }) => ({
   background: theme.palette.grey[700],
   textTransform: "capitalize",
   fontWeight: "bold",
-  padding: "8px 20px",
   borderRadius: "8px",
-  position: "absolute",
+  position: "unset",
+  padding: "10px 20px",
   right: 20,
   bottom: 30,
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.8),
   },
+  display: "flex",
+  gap: 12,
+  alignItems: "center"
 }));
 export const PreviousButton = styled(Button)(({ theme }) => ({
   color: theme.palette.grey[500],
@@ -50,12 +54,20 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
   fontWeight: "bold",
   padding: "8px 20px",
+  position: "unset",
   borderRadius: "8px",
-  position: "absolute",
   left: 20,
   bottom: 30,
   border: `2px solid ${theme.palette.border.hint}`,
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.1),
   },
+  display: "flex",
+  alignItems: "center"
 }));
+
+export const StyledLink = styled(Link)`
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+`;
