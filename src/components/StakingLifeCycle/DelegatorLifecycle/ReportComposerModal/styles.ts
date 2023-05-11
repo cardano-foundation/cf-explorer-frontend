@@ -81,7 +81,6 @@ export const StyledBackButton = styled(Button)<{width?: number | string}>(({widt
   color: "#344054",
   lineHeight: "19px",
   fontWeight: 700,
-  fontSize: "16px",
   border: "2px solid #c8cdd8",
   ":hover": {
     opacity: 0.8,
