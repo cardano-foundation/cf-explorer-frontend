@@ -85,7 +85,7 @@ const SPOLifecycle = () => {
     <StyledContainer ref={containerRef}>
       <BoxContainerStyled> 
         <Box>
-          <Box component={"h2"} mb="5px" mt={0} fontSize={36} lineHeight="42px">
+          <Box component={"h2"} mb="5px" mt={0} fontSize={isMobile ? 24 : 36} lineHeight="42px">
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
