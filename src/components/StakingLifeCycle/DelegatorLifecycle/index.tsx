@@ -40,6 +40,7 @@ import {
 } from "../../ModalDescription";
 import { useHistory, useParams } from "react-router-dom";
 import { details } from "../../../commons/routers";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface StepperProps {
   icon: React.ReactNode;
@@ -66,6 +67,7 @@ const DelegatorLifecycle = ({
   setCurrentStep: (step: number) => void;
 }) => {
   const history = useHistory();
+  const { isMobile } = useScreen()
   const { stakeId = "" } = useParams<{
     stakeId: string;
   }>();
@@ -136,7 +138,7 @@ const DelegatorLifecycle = ({
   ];
 
   return (
-    <Box>
+    <Box mr={isMobile ? 2 : 0}>
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
           <Step component={"span"} key={idx} active={+(currentStep >= idx)}>
@@ -172,6 +174,7 @@ const DelegatorLifecycle = ({
 
       {currentStep > 0 && (
         <PreviousButton
+        sx={{width: `${isMobile ? "120px" : "240px"}`}}
           onClick={() => {
             history.push(details.staking(stakeId, stepper[currentStep - 1]?.key));
             setCurrentStep(currentStep - 1);
@@ -182,6 +185,7 @@ const DelegatorLifecycle = ({
         </PreviousButton>
       )}
       <NextButton
+       sx={{width: `${isMobile ? "170px" : "280px"}`}}
         onClick={() => {
           if (currentStep === stepper.length - 1) {
             history.push(details.staking(stakeId, "tablular"));
@@ -193,7 +197,7 @@ const DelegatorLifecycle = ({
         }}
         variant="contained"
       >
-        <ButtonText>
+        <ButtonText fontSize={isMobile ? 14 : 16}>
           Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
         </ButtonText>
         <NextIcon />
