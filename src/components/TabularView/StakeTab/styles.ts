@@ -38,6 +38,12 @@ export const TableSubTitle = styled("span")(({ theme }) => ({
   fontWeight: "var(--font-weight-normal)",
 }));
 
+export const TableSubContent = styled("span")(({ theme }) => ({
+  color: theme.palette.grey[400],
+  fontSize: "0.75rem",
+  fontWeight: "var(--font-weight-normal)",
+}));
+
 export const ButtonFilter = styled(Button)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "0.875rem",

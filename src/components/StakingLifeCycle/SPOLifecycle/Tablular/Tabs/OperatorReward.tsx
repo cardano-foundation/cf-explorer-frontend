@@ -1,16 +1,14 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
-import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../../../commons/utils/helper";
-import Table, { Column } from "../../../../commons/Table";
-import { ADAValueLabel, ClickAbleLink } from "./styles";
-import CustomIcon from "../../../../commons/CustomIcon";
-import { ADAsigntIC } from "../../../../../commons/resources";
 import { details } from "../../../../../commons/routers";
-import { StyledLink } from "../../../../share/styled";
+import { API } from "../../../../../commons/utils/api";
+import { formatDateTimeLocal, formatHash } from "../../../../../commons/utils/helper";
+import { AdaValue } from "../../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
 import CustomTooltip from "../../../../commons/CustomTooltip";
+import Table, { Column } from "../../../../commons/Table";
+import { StyledLink } from "../../../../share/styled";
 
 const OperatorRewardTab = () => {
   const { poolId = "" } = useParams<{ poolId: string }>();
@@ -43,11 +41,7 @@ const OperatorRewardTab = () => {
       key: "amount",
       title: "Operator Reward ADA",
       render(data) {
-        return (
-          <ADAValueLabel>
-            {formatADAFull(data.amount)} <CustomIcon icon={ADAsigntIC} width={12} />
-          </ADAValueLabel>
-        );
+        return <AdaValue value={data.amount} />;
       },
     },
     {
