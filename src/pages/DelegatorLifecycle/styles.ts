@@ -36,6 +36,9 @@ export const ButtonSwitch = styled(IconButton)<{ active: number }>(({ theme, act
   ":hover": {
     background: active ? theme.palette.green[600] : theme.palette.green[600_10],
   },
+  width: 38,
+  height: 38,
+  boxSizing: "border-box",
 }));
 
 export const ButtonReport = styled(Button)(({ theme }) => ({
