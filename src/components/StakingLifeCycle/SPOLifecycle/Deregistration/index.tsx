@@ -16,7 +16,17 @@ import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSy
 import DeregistrationCertificateIcon from "../../../../commons/resources/icons/Staking/DeregistrationCertificateIcon.svg";
 
 import Line from "../../../Line";
-import { CustomLink, DetailRetirement, FeeBox, HoldBox, HoldBoxText, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import {
+  CustomLink,
+  DetailRetirement,
+  FeeBox,
+  HoldBox,
+  HoldBoxText,
+  IconButton,
+  IconButtonBack,
+  Info,
+  InfoText,
+} from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import PopoverStyled from "../../../commons/PopoverStyled";
@@ -29,6 +39,7 @@ import { details } from "../../../../commons/routers";
 import CopyButton from "../../../commons/CopyButton";
 import StyledModal from "../../../commons/StyledModal";
 import PopupStaking from "../../../commons/PopupStaking";
+import { StyledLink } from "../styles";
 
 const Deregistration = ({
   containerPosition,
@@ -100,7 +111,11 @@ const DeregistrationTimeline = ({
           <Info>
             <AddressIcon fill="#438F68" />
             <CustomTooltip title={selected?.txHash}>
-              <InfoText>{getShortHash(selected?.txHash || "")}</InfoText>
+              <InfoText>
+                <StyledLink to={details.transaction(selected?.txHash)}>
+                  {getShortHash(selected?.txHash || "")}
+                </StyledLink>
+              </InfoText>
             </CustomTooltip>
             <StyledCopyButton text={selected?.txHash} />
           </Info>
@@ -342,7 +357,9 @@ export const DeregistrationCertificateModal = ({
             {data && (
               <Box>
                 <CustomTooltip title={data?.poolId || ""}>
-                  <CustomLink to={details.delegation(data?.poolView || "")}>{getShortWallet(data?.poolId || "")}</CustomLink>
+                  <CustomLink to={details.delegation(data?.poolView || "")}>
+                    {getShortWallet(data?.poolId || "")}
+                  </CustomLink>
                 </CustomTooltip>
                 <CopyButton text={data?.poolId || ""} />
               </Box>
@@ -354,7 +371,11 @@ export const DeregistrationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Retirement in Epoch
             </Box>
-            {data && <DetailRetirement pt={"2px"} pb={"6px"}>{data?.retiringEpoch}</DetailRetirement>}
+            {data && (
+              <DetailRetirement pt={"2px"} pb={"6px"}>
+                {data?.retiringEpoch}
+              </DetailRetirement>
+            )}
           </Box>
         </Grid>
       </Grid>

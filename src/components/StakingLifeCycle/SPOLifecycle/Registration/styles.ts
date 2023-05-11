@@ -73,6 +73,7 @@ export const InfoText = styled(Box)(({ theme }) => ({
   marginLeft: theme.spacing(1),
   fontWeight: 600,
   fontSize: "14px",
+  cursor:"pointer"
 }));
 
 export const PoolName = styled(Box)(({ theme }) => ({
