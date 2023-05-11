@@ -128,10 +128,10 @@ interface SummaryProps {
 const Summary: React.FC<SummaryProps> = ({ data }) => {
   return (
     <Box>
-      {data?.stakeAddressTxInputs.map((tx, key) => (
+      {data?.stakeAddressTxInputs?.map((tx, key) => (
         <SummaryItems key={key} item={tx} type="down" />
       ))}
-      {data?.stakeAddressTxOutputs.map((tx, key) => (
+      {data?.stakeAddressTxOutputs?.map((tx, key) => (
         <SummaryItems key={key} item={tx} type="up" />
       ))}
     </Box>
