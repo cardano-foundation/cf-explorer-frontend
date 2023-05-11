@@ -1,37 +1,37 @@
-import { useHistory, useLocation } from "react-router-dom";
-import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { useState } from "react";
+import { stringify } from "qs";
+import { useHistory, useLocation } from "react-router-dom";
 
-import Card from "../commons/Card";
-import Table, { Column } from "../commons/Table";
+import useFetchList from "../../commons/hooks/useFetchList";
+import { useScreen } from "../../commons/hooks/useScreen";
+import { details } from "../../commons/routers";
+import { API } from "../../commons/utils/api";
 import {
   formatADAFull,
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
-  getShortWallet,
-  numberWithCommas,
+  numberWithCommas
 } from "../../commons/utils/helper";
-import { details } from "../../commons/routers";
-import { StyledLink } from "./styles";
-import CustomTooltip from "../commons/CustomTooltip";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { SmallText } from "../share/styled";
 import ADAicon from "../commons/ADAIcon";
-import { useScreen } from "../../commons/hooks/useScreen";
+import Card from "../commons/Card";
+import CustomTooltip from "../commons/CustomTooltip";
+import DropdownTokens from "../commons/DropdownTokens";
+import Table, { Column } from "../commons/Table";
+import { SmallText } from "../share/styled";
+import { StyledLink } from "./styles";
 
 interface AddressTransactionListProps {
   underline?: boolean;
-  url: string;
   openDetail?: (_: any, transaction: Transactions, index: number) => void;
   selected?: number | null;
   showTabView?: boolean;
+  address: string
 }
 
 const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   underline = false,
-  url,
+  address,
   openDetail,
   selected,
   showTabView,
@@ -39,9 +39,8 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-
+  const url = `${API.ADDRESS.DETAIL}/${address}/txs`;
   const fetchData = useFetchList<Transactions>(url, { ...pageInfo });
-
   const onClickRow = (_: any, transaction: Transactions, index: number) => {
     if (openDetail) return openDetail(_, transaction, index);
     history.push(details.transaction(transaction.hash));
@@ -61,18 +60,13 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       minWidth: isMobile ? 190 : 120,
 
       render: transaction => (
-        <div>
+        <Box display={"grid"}>
           <CustomTooltip title={transaction.hash}>
             <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
           </CustomTooltip>
-        </div>
+          <SmallText>{formatDateTimeLocal(transaction.time || "")}</SmallText>
+        </Box>
       ),
-    },
-    {
-      title: "Time",
-      key: "time",
-      minWidth: "180px",
-      render: r => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>,
     },
     {
       title: "Block",
@@ -88,51 +82,6 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       ),
     },
     {
-      title: "Addresses",
-      key: "address",
-      minWidth: 120,
-      render(transaction, index) {
-        return (
-          <div>
-            <Box display={"flex"}>
-              <Box width="50px"> Input: </Box>
-              <div>
-                {transaction.addressesInput.slice(0, 1).map((tx, key) => {
-                  return (
-                    <CustomTooltip key={key} title={tx}>
-                      <StyledLink to={details.address(tx)}>{getShortWallet(tx)}</StyledLink>
-                    </CustomTooltip>
-                  );
-                })}
-                <Box>
-                  {transaction.addressesInput.length > 1 && (
-                    <StyledLink to={details.transaction(transaction.hash)}> ...</StyledLink>
-                  )}
-                </Box>
-              </div>
-            </Box>
-            <Box display={"flex"} mt={1}>
-              <Box width="50px">Output: </Box>
-              <div>
-                {transaction.addressesOutput.slice(0, 1).map((tx, key) => {
-                  return (
-                    <CustomTooltip key={key} title={tx}>
-                      <StyledLink to={details.address(tx)}>{getShortWallet(tx)}</StyledLink>
-                    </CustomTooltip>
-                  );
-                })}
-                <Box>
-                  {transaction.addressesOutput.length > 1 && (
-                    <StyledLink to={details.transaction(transaction.hash)}> ...</StyledLink>
-                  )}
-                </Box>
-              </div>
-            </Box>
-          </div>
-        );
-      },
-    },
-    {
       title: "Fees",
       key: "fee",
       minWidth: 120,
@@ -144,15 +93,35 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       ),
     },
     {
-      title: "Output",
+      title: "ADA amount",
       minWidth: 120,
-      key: "outSum",
-      render: transaction => (
-        <Box display="inline-flex" alignItems="center">
-          <Box mr={1}>{formatADAFull(transaction.totalOutput)}</Box>
-          <ADAicon />
-        </Box>
-      ),
+      key: "totalOutput",
+      render: transaction => {
+        const isUp = transaction.addressesOutput.includes(address);
+        return (
+          <Box display="inline-flex" alignItems="center">
+            <Box mr={1} color={
+              isUp ? "success.main" : "error.main"
+            }>{!isUp ? `- ` : `+ `}{formatADAFull(transaction.totalOutput)}</Box>
+            <ADAicon />
+          </Box>
+        )
+      },
+    },
+    {
+      title: "Token",
+      minWidth: 120,
+      key: "totalOutput",
+      render: transaction => {
+        const type = transaction.addressesOutput.includes(address) ? "up" : "down";
+        return (
+          <Box display={"flex"} alignItems={'center'}>
+            {transaction.tokens && transaction.tokens.length > 0 && (
+              <DropdownTokens tokens={transaction.tokens} type={type} />
+            )}
+          </Box>
+        )
+      },
     },
   ];
 

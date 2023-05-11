@@ -26,7 +26,7 @@ export const OverviewIcon = styled("div")`
   gap: 10px;
 `;
 export const OverviewTitle = styled("p")`
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
   line-height: 17px;
   color: ${props => props.theme.palette.text.primary};

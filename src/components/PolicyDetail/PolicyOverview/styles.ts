@@ -179,3 +179,23 @@ export const ViewJson = styled(Box)(({ theme }) => ({
     display: "none !important",
   },
 }));
+export const OverViewContainer = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    "& > *": {
+      width: "100%",
+    },
+    "& h2": {
+      fontSize: "24px",
+      marginBottom: "0px",
+    },
+    "& > button": {
+      height: "100px",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    "& > button > div": {
+      height: "auto",
+    },
+  },
+}));

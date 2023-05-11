@@ -55,7 +55,7 @@ const Tablular = () => {
   return (
     <Box mt={5}>
       <TabularOverview />
-      <StakeTab tabs={tabs} />
+      <StakeTab tabs={tabs}/>
     </Box>
   );
 };

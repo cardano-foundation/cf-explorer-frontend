@@ -27,6 +27,7 @@ import {
 } from "../../ModalDescription";
 import { details } from "../../../commons/routers";
 import { useHistory, useParams } from "react-router";
+import { useScreen } from "../../../commons/hooks/useScreen";
 interface StepperProps {
   icon: React.ReactNode;
   title: string;
@@ -56,6 +57,7 @@ const SPOLifecycle = ({
   }>();
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
   const history = useHistory();
+  const { isMobile } = useScreen();
   const stepper: StepperProps[] = [
     {
       icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
@@ -108,7 +110,7 @@ const SPOLifecycle = ({
   ];
 
   return (
-    <Box>
+    <Box mr={isMobile ? 2 : 0}>
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
           <Step component={"span"} key={idx} active={+(currentStep >= idx)}>
@@ -137,36 +139,43 @@ const SPOLifecycle = ({
       <Box minHeight={400} pb={10}>
         {stepper[currentStep]?.component}
       </Box>
-      {currentStep > 0 && (
-        <PreviousButton
-          onClick={() => {
-            history.push(details.spo(poolId, stepper[currentStep - 1]?.key));
-            setCurrentStep(currentStep - 1);
-          }}
-        >
-          <PreviousIcon />
-          <Box fontSize={"16px"} component={"span"}>
-            Previous: {stepper[currentStep - 1]?.title}
-          </Box>
-        </PreviousButton>
-      )}
-      <NextButton
-        onClick={() => {
-          if (currentStep === stepper.length - 1) {
-            history.push(details.spo(poolId, "tablular"));
-            setMode("tablular");
-          } else {
-            history.push(details.spo(poolId, stepper[currentStep + 1]?.key));
-            setCurrentStep(currentStep + 1);
-          }
-        }}
-        variant="contained"
+      <Box
+        display="flex"
+        flexDirection={isMobile ? "column" : "row"}
+        justifyContent={isMobile ? "center" : "space-between"}
       >
-        <ButtonText>
-          Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
-        </ButtonText>
-        <NextIcon />
-      </NextButton>
+        {currentStep > 0 && (
+          <PreviousButton
+            sx={{ mb: `${isMobile ? "16px" : "0px"}` }}
+            onClick={() => {
+              history.push(details.spo(poolId, stepper[currentStep - 1]?.key));
+              setCurrentStep(currentStep - 1);
+            }}
+          >
+            <PreviousIcon />
+            <Box fontSize={isMobile ? 14 : 16} component={"span"}>
+              Previous: {stepper[currentStep - 1]?.title}
+            </Box>
+          </PreviousButton>
+        )}
+        <NextButton
+          onClick={() => {
+            if (currentStep === stepper.length - 1) {
+              history.push(details.spo(poolId, "tablular"));
+              setMode("tablular");
+            } else {
+              history.push(details.spo(poolId, stepper[currentStep + 1]?.key));
+              setCurrentStep(currentStep + 1);
+            }
+          }}
+          variant="contained"
+        >
+          <ButtonText fontSize={isMobile ? 14 : 16}>
+            Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+          </ButtonText>
+          <NextIcon />
+        </NextButton>
+      </Box>
     </Box>
   );
 };

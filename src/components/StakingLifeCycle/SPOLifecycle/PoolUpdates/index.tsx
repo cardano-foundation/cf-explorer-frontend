@@ -44,6 +44,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Tab } from "@mui/material";
 import { TitleTab } from "../../../TransactionDetail/TransactionMetadata/styles";
 import { DescriptionText } from "../../DelegatorLifecycle/styles";
+import { StyledLink } from "../styles";
 
 const PoollUpdates = ({
   containerPosition,
@@ -181,7 +182,9 @@ const PoollUpdatesTimeline = ({
           <Info>
             <AddressIcon fill="#438F68" />
             <CustomTooltip title={data?.txHash}>
-              <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+              <InfoText>
+                <StyledLink to={details.transaction(data?.txHash)}>{getShortHash(data?.txHash || "")}</StyledLink>
+              </InfoText>
             </CustomTooltip>
             <StyledCopyButton text={data?.txHash} />
           </Info>
@@ -384,7 +387,7 @@ export const PoolUpdateModal = ({
           alignItems={"center"}
         >
           <Box>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]} >
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Transaction ID
             </Box>
             {data && (
@@ -650,19 +653,19 @@ export const PoolUpdateModal = ({
     label: string;
     children: React.ReactNode;
   }[] = [
-      {
-        key: "poolCertificate",
-        icon: PoolCert,
-        label: "Pool certificates",
-        children: <>{renderPoolCert()}</>,
-      },
-      {
-        key: "certificateUpdates",
-        icon: CertUpdate,
-        label: "Certificate updates",
-        children: <Box>{renderCertificateUpdates()}</Box>,
-      },
-    ];
+    {
+      key: "poolCertificate",
+      icon: PoolCert,
+      label: "Pool certificate",
+      children: <>{renderPoolCert()}</>,
+    },
+    {
+      key: "certificateUpdates",
+      icon: CertUpdate,
+      label: "Certificate updates",
+      children: <Box>{renderCertificateUpdates()}</Box>,
+    },
+  ];
 
   const handleChange = (event: React.SyntheticEvent, tab: "poolCertificate" | "certificateUpdates") => {
     setTabActive(tab);
