@@ -10,6 +10,7 @@ import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import DropdownTokens from "../../../commons/DropdownTokens";
 import { Icon } from "./styles";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
 const SummaryItems = ({
   item,
@@ -19,7 +20,7 @@ const SummaryItems = ({
   type?: "up" | "down";
 }) => {
   const theme = useTheme();
-
+  const { isMobile, isTablet } = useScreen();
   return (
     <Box
       display={"flex"}
@@ -64,22 +65,29 @@ const SummaryItems = ({
               </Box>
             </Box>
           </Box>
-          <Box display={"flex"} alignItems="center" justifyContent={"space-between"} width="100%" mb={1}>
+          <Box
+            display={"flex"}
+            flexDirection={isMobile ? "column" : "row"}
+            alignItems={isMobile ? "flex-start" : "center"}
+            justifyContent={"space-between"}
+            width="100%"
+            mb={1}
+          >
             <Box display="flex" justifyContent={"space-between"} alignItems="center" pr={1}>
               {type === "down" ? "ADA sent:" : "ADA received:"}{" "}
-            </Box>
-            <Box flex={1} display="flex" justifyContent={"space-between"} alignItems="center">
-              <Box>
-                <Box
-                  component={"span"}
-                  whiteSpace="nowrap"
-                  color={theme => (type === "up" ? theme.palette.success.main : theme.palette.error.main)}
-                  fontWeight="bold"
-                  mr={1}
-                >
-                  {type === "down" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
+              <Box flex={1} display="flex" justifyContent={"space-between"} alignItems="center">
+                <Box>
+                  <Box
+                    component={"span"}
+                    whiteSpace="nowrap"
+                    color={theme => (type === "up" ? theme.palette.success.main : theme.palette.error.main)}
+                    fontWeight="bold"
+                    mr={1}
+                  >
+                    {type === "down" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
+                  </Box>
+                  <ADAicon />
                 </Box>
-                <ADAicon />
               </Box>
             </Box>
           </Box>

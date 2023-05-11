@@ -1,10 +1,10 @@
+import { Box } from '@mui/material';
 import { useState } from 'react';
-import { CustomSelect, OptionSelect } from './styles';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import { useHistory } from 'react-router-dom';
 import { details } from '../../../commons/routers';
-import { formatADAFull, getShortWallet } from '../../../commons/utils/helper';
-import { Box } from '@mui/material';
+import { getShortWallet, numberWithCommas } from '../../../commons/utils/helper';
+import { CustomSelect, OptionSelect } from './styles';
 
 interface IDropdownTokens {
   tokens: Token[];
@@ -40,7 +40,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down" }) =>
       {tokens.map((token, idx) => (
         <OptionSelect onClick={() => handleClickItem(details.token(token.assetId))}>
           <Box>{token.assetName || getShortWallet(token.assetId)}</Box>
-          <Box fontWeight={"bold"} fontSize={"14px"}>{`${type === "down" ? "-" : "+"}${formatADAFull(token.assetQuantity) || ""}`}</Box>
+          <Box fontWeight={"bold"} fontSize={"14px"}>{`${type === "down" ? "-" : "+"}${numberWithCommas(token.assetQuantity) || ""}`}</Box>
         </OptionSelect>))}
     </CustomSelect>
   );

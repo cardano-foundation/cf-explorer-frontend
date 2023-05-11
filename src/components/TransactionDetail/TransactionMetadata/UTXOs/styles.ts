@@ -72,9 +72,11 @@ export const WrapToken = styled(Box)(({ theme }) => ({
   flexWrap: "wrap",
   width: "auto",
   [theme.breakpoints.down("md")]: {
-    maxWidth: 70,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
+    wordBreak: "break-all",
+    "& > a": {
+      whiteSpace: "unset",
+      margin: 0,
+    }
   }
 }));
 

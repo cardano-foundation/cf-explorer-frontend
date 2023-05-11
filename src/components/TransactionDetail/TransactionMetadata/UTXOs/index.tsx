@@ -12,6 +12,7 @@ import { CustomSelect, Header, Img, Item, ItemContent, ItemFooter, OptionSelect,
 import ADAicon from "../../../commons/ADAIcon";
 import { useScreen } from "../../../../commons/hooks/useScreen";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import DropdownTokens from "../../../commons/DropdownTokens";
 
 interface Props {
   data: Transaction["utxOs"] | null;
@@ -146,22 +147,8 @@ const Card = ({
                   </Box>
                   <Box display={"flex"} alignItems={'center'}>
                     {item.tokens && item.tokens.length > 0 && (
-                      <CustomSelect
-                        onOpen={() => setOpenDropdown(true)}
-                        onClose={() => setOpenDropdown(false)}
-                        value={"default"}
-                        IconComponent={() => (
-                          openDropdown ?
-                            <BiChevronUp size={30} style={{ paddingRight: 10, fontSize: "20px" }} /> :
-                            <BiChevronDown size={30} style={{ paddingRight: 10, fontSize: "20px" }} />
-                        )}>
-                        <OptionSelect sx={{ display: 'none' }} value="default"> {type === "down" ? "Sent" : "Received"} Token</OptionSelect>
-                        {item.tokens.map((token, idx) => (
-                          <OptionSelect onClick={() => handleClickItem(details.token(token.assetId))}>
-                            <Box>{token.assetName || getShortWallet(token.assetId)}</Box>
-                            <Box fontWeight={"bold"} fontSize={"14px"}>{`${type === "down" ? "-" : "+"}${formatADAFull(token.assetQuantity) || ""}`}</Box>
-                          </OptionSelect>))}
-                      </CustomSelect>)}
+                      <DropdownTokens tokens={item.tokens} type={type} />
+                    )}
                   </Box>
                 </Box>
               </Box>
