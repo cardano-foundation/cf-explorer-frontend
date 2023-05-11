@@ -7,19 +7,11 @@ import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
 import { ReactComponent as TokenIcon } from "../../../commons/resources/icons/tokenIcon.svg";
 import { ReactComponent as AssetHolderIcon } from "../../../commons/resources/icons/assetHolder.svg";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortHash,
-  getShortWallet,
-  numberWithCommas,
-} from "../../../commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
 import { LinkComponent, TitleTab } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { API } from "../../../commons/utils/api";
-import BigNumber from "bignumber.js";
 
 enum TABS {
   TOKENS = "tokens",
@@ -39,7 +31,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     minWidth: "100px",
     render: r => (
       <CustomTooltip title={r.fingerprint}>
-        <LinkComponent to={details.token(r.fingerprint)}>{getShortWallet(r.fingerprint)}</LinkComponent>
+        <LinkComponent to={details.token(r.fingerprint)}>{getShortWallet(r.fingerprint || "")}</LinkComponent>
       </CustomTooltip>
     ),
   },

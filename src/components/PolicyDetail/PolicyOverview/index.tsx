@@ -8,6 +8,7 @@ import {
   CardItem,
   HeaderContainer,
   HeaderTitle,
+  OverViewContainer,
   SlotLeader,
   SlotLeaderContainer,
   SlotLeaderSkeleton,
@@ -16,6 +17,8 @@ import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 
 import ScriptModal from "../../ScriptModal";
+import { truncateCustom } from "../../../commons/utils/helper";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface Props {
   data: PolicyDetail | null;
@@ -25,10 +28,11 @@ interface Props {
 const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
+  const { isMobile } = useScreen();
 
   return (
     <Box>
-      <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
+      <OverViewContainer display={"flex"} justifyContent="space-between" alignItems={"center"}>
         <Box>
           <BackButton onClick={history.goBack}>
             <HiArrowLongLeft />
@@ -46,7 +50,8 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
                   <Box fontWeight={400} color={theme => theme.palette.text.secondary}>
                     Policy ID:{" "}
                   </Box>{" "}
-                  <Box ml={2}>{data?.policyId}</Box> <CopyButton text={data?.policyId} />
+                  <Box ml={2}>{isMobile ? truncateCustom(data?.policyId ?? "", 4, 8) : data?.policyId}</Box>{" "}
+                  <CopyButton text={data?.policyId} />
                 </SlotLeader>
               </Box>
             )}
@@ -71,7 +76,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
             <Box>Policy Script</Box>
           </Box>
         </CardItem>
-      </Box>
+      </OverViewContainer>
 
       <ScriptModal open={openModal} onClose={() => setOpenModal(false)} policy={data?.policyId || ""} />
     </Box>
