@@ -1,4 +1,5 @@
 import { Box, Button, IconButton, alpha, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   width: "100%",
@@ -64,3 +65,9 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   display: "flex",
   alignItems: "center"
 }));
+
+export const StyledLink = styled(Link)`
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+`;
