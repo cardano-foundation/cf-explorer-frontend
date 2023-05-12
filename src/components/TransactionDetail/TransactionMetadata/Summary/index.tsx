@@ -16,14 +16,15 @@ const SummaryItems = ({
   item,
   type,
 }: {
-  item: Transaction["summary"]["stakeAddressTxInputs"][number];
+  item: Transaction["summary"]["stakeAddress"][number];
   type?: "up" | "down";
 }) => {
   const theme = useTheme();
-  const { isMobile, isTablet } = useScreen();
+  const { isMobile, isGalaxyFoldSmall } = useScreen();
   return (
     <Box
       display={"flex"}
+      flexDirection={isMobile ? "column" : "row"}
       justifyContent={"space-between"}
       sx={{
         background: theme => theme.palette.background.paper,
@@ -73,51 +74,61 @@ const SummaryItems = ({
             width="100%"
             mb={1}
           >
-            <Box display="flex" justifyContent={"space-between"} alignItems="center" pr={1}>
-              {type === "down" ? "ADA sent:" : "ADA received:"}{" "}
+            <Box
+              display="flex"
+              justifyContent={"space-between"}
+              alignItems={isGalaxyFoldSmall ? "flex-start" : "center"}
+              pr={1}
+              flexDirection={isGalaxyFoldSmall ? "column" : "row"}
+            >
+              <Box pr={1}>{type === "down" ? "ADA sent:" : "ADA received:"} </Box>
               <Box flex={1} display="flex" justifyContent={"space-between"} alignItems="center">
-                <Box>
-                  <Box
-                    component={"span"}
-                    whiteSpace="nowrap"
-                    color={theme => (type === "up" ? theme.palette.success.main : theme.palette.error.main)}
-                    fontWeight="bold"
-                    mr={1}
-                  >
-                    {type === "down" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
-                  </Box>
-                  <ADAicon />
+                <Box
+                  component={"span"}
+                  whiteSpace="nowrap"
+                  color={theme => (type === "up" ? theme.palette.success.main : theme.palette.error.main)}
+                  fontWeight="bold"
+                  mr={1}
+                >
+                  {type === "down" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
                 </Box>
+                <ADAicon />
               </Box>
             </Box>
           </Box>
           {type === "up" ? (
-            <Box display={"flex"} alignItems="center" justifyContent={"space-between"} width="100%" mb={1}>
+            <Box
+              display={"flex"}
+              alignItems={isGalaxyFoldSmall ? "flex-start" : "center"}
+              flexDirection={isGalaxyFoldSmall ? "column" : "row"}
+              justifyContent={"space-between"}
+              width="100%"
+              mb={1}
+            >
               <Box display="flex" justifyContent={"space-between"} alignItems="center" pr={1}>
-                Fee paid
+                Fee paid:
               </Box>
-              <Box flex={1} display="flex" justifyContent={"space-between"} alignItems="center">
-                <Box>
-                  <Box
-                    component={"span"}
-                    whiteSpace="nowrap"
-                    color={theme => (theme.palette.error.main)}
-                    fontWeight="bold"
-                    mr={1}
-                  >
-                    -{formatADAFull(item.fee) || 0}
-                  </Box>
-                  <ADAicon />
+              <Box flex={1} display="flex" alignItems="center">
+                <Box
+                  component={"span"}
+                  whiteSpace="nowrap"
+                  color={theme => theme.palette.error.main}
+                  fontWeight="bold"
+                  mr={1}
+                >
+                  -{formatADAFull(item.fee) || 0}
                 </Box>
+                <ADAicon />
               </Box>
             </Box>
           ) : null}
         </Box>
       </Box>
       {item.tokens && item.tokens.length > 0 && (
-        <Box display={"flex"} alignItems={'center'}>
+        <Box display={"flex"} alignItems={"center"} ml={isMobile ? "50px" : 0}>
           <DropdownTokens tokens={item.tokens} type={type} />
-        </Box>)}
+        </Box>
+      )}
     </Box>
   );
 };
@@ -128,12 +139,12 @@ interface SummaryProps {
 const Summary: React.FC<SummaryProps> = ({ data }) => {
   return (
     <Box>
-      {data?.stakeAddressTxInputs.map((tx, key) => (
-        <SummaryItems key={key} item={tx} type="down" />
-      ))}
-      {data?.stakeAddressTxOutputs.map((tx, key) => (
-        <SummaryItems key={key} item={tx} type="up" />
-      ))}
+      {data?.stakeAddress?.map((tx, key) => {
+        const type = tx.value >= 0 ? "up" : "down";
+        return (
+          <SummaryItems key={key} item={tx} type={type} />
+        )
+      })}
     </Box>
   );
 };

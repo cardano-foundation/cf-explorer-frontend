@@ -1,20 +1,22 @@
 import { Box, IconButton } from "@mui/material";
 import { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, formatHash, getShortHash } from "../../../../../commons/utils/helper";
+import { formatDateTimeLocal, getShortHash } from "../../../../../commons/utils/helper";
 
-import Table, { Column } from "../../../../commons/Table";
-import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, ClickAbleLink, VerticalRow } from "./styles";
-import CustomIcon from "../../../../commons/CustomIcon";
-import { ADAsigntIC, EyeIcon } from "../../../../../commons/resources";
+import { useTheme } from "@mui/material";
+import { EyeIcon } from "../../../../../commons/resources";
 import { details } from "../../../../../commons/routers";
+import { AdaValue } from "../../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import { TableSubTitle } from "../../../../TabularView/StakeTab/styles";
 import CustomTooltip from "../../../../commons/CustomTooltip";
+import Table, { Column } from "../../../../commons/Table";
 import { StyledLink } from "../../../../share/styled";
 import { RegistrationCertificateModal } from "../../Registration";
 
 const PoolRegistrationTab = () => {
+  const theme = useTheme();
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [params, setParams] = useState({
     page: 0,
@@ -58,15 +60,16 @@ const PoolRegistrationTab = () => {
       ),
       render(data) {
         return (
-          <ADAValueFieldContainer>
-            <ADAValueLabel>
-              {formatADAFull(data.totalFee)} <CustomIcon icon={ADAsigntIC} width={12} />{" "}
-            </ADAValueLabel>
-            <ADAValueSubLabel>
-              {formatADAFull(data.deposit)} <CustomIcon icon={ADAsigntIC} width={11} /> / {formatADAFull(data.fee)}
-              <CustomIcon icon={ADAsigntIC} width={11} />{" "}
-            </ADAValueSubLabel>
-          </ADAValueFieldContainer>
+          <Box>
+            <AdaValue value={data.totalFee} />
+            <TableSubTitle>
+              <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+                <AdaValue color={theme.palette.grey[400]} value={data.deposit} gap="3px" fontSize="12px" />
+                <Box mx="3px">/</Box>
+                <AdaValue color={theme.palette.grey[400]} value={data.fee} gap="3px" fontSize="12px" />
+              </Box>
+            </TableSubTitle>
+          </Box>
         );
       },
     },

@@ -11,7 +11,7 @@ const StyledContainer = styled(Container)`
   padding: 20px 16px 40px;
 `;
 
-interface Props {}
+interface Props { }
 
 const Transactions: React.FC<Props> = () => {
   const [hash, setHash] = useState<string | null>(null);
@@ -34,17 +34,19 @@ const Transactions: React.FC<Props> = () => {
     setSelected(null);
   };
   return (
-    <StyledContainer>
-      <TransactionList
-        url={API.TRANSACTION.LIST}
-        openDetail={openDetail}
-        selected={selected}
-        showTabView
-        hash={hash}
-        handleClose={handleClose}
-      />
+    <>
+      <StyledContainer>
+        <TransactionList
+          url={API.TRANSACTION.LIST}
+          openDetail={openDetail}
+          selected={selected}
+          showTabView
+          hash={hash}
+          handleClose={handleClose}
+        />
+      </StyledContainer>
       {hash && <DetailViewTransaction hash={hash} handleClose={handleClose} />}
-    </StyledContainer>
+    </>
   );
 };
 

@@ -78,3 +78,10 @@ export const StackingLifecycleTable = styled(Table)`
     background-color: transparent !important;
   }
 `
+
+export const WrapReportName = styled(Box)`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20ch;
+`;

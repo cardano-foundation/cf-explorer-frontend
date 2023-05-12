@@ -8,7 +8,6 @@ export const CustomSelect = styled(Select)`
   color: ${props => props.theme.palette.text.secondary};
   border-radius: 8px;
   border: 1px solid rgba(152, 162, 179, 0.5);
-  min-width: 250px;
   height: 35px;
   & > div {
     padding: 7.5px 14px;

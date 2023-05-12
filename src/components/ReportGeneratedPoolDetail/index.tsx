@@ -23,7 +23,7 @@ interface ITab {
   component: React.ReactNode;
 }
 
-export const ReportGeneratedPoolDetailContext = createContext({ reportName: "" });
+export const ReportGeneratedPoolDetailContext = createContext({ reportName: "",poolId: "" });
 
 const poolTabs: ITab[] = [
   {
@@ -86,7 +86,9 @@ const ReportGeneratedPoolDetailTabs = () => {
   const initTab = useMemo(() => (displayedTabs.length ? displayedTabs[0].key : undefined), [displayedTabs]);
 
   return (
-    <ReportGeneratedPoolDetailContext.Provider value={{ reportName: reportDetail.data?.reportName ?? "" }}>
+    <ReportGeneratedPoolDetailContext.Provider
+      value={{ reportName: reportDetail.data?.reportName ?? "", poolId: reportDetail.data?.poolView ?? "" }}
+    >
       {reportDetail.loading ? (
         <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
       ) : (

@@ -15,7 +15,7 @@ export const Header = styled(Box)`
   margin-bottom: 1.5rem;
   padding: 0 20px;
   gap: 10px;
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.md}px) {
     padding: 0 15px;
   }
 `;
@@ -49,7 +49,7 @@ export const Item = styled(BoxRaised)`
   &:hover {
     box-shadow: ${props => props.theme.shadow.card};
   }
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.md}px) {
     padding: 20px 15px;
   }
 `;
@@ -59,14 +59,14 @@ export const ItemHeader = styled(Box)`
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.md}px) {
     justify-content: flex-start;
   }
 `;
 export const RowItem = styled(Box)`
   line-height: 1;
   margin-top: ${props => props.theme.spacing(1)};
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.md}px) {
     margin-top: 0;
     margin-right: 10px;
   }
@@ -160,7 +160,7 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
   font-size: 0.8125rem;
   line-height: 1;
   width: min-content;
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px}) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.md}px}) {
     padding: 3px 3px;
     font-size: 0.75rem;
   }

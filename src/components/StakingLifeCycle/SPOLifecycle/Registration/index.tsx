@@ -1,4 +1,4 @@
-import { alpha, Box, Grid, Skeleton, styled } from "@mui/material";
+import { alpha, Box, Grid, Skeleton, styled, Tooltip } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { Link as LinkDom } from "react-router-dom";
 
@@ -20,6 +20,7 @@ import {
   ButtonSPO,
   FeeBox,
   HoldBox,
+  HoldBoxText,
   IconButton,
   IconButtonBack,
   Info,
@@ -35,7 +36,7 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import RecentRegistrations from "./RecentRegistrations";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import moment from "moment";
 import PopupStaking from "../../../commons/PopupStaking";
@@ -55,17 +56,19 @@ const Registration = ({
   handleResize: () => void;
 }) => {
   const [selected, setSelected] = useState<SPORegistration | null>(null);
+
+  const handleSelect = (registration: SPORegistration | null) => {
+    setSelected(registration);
+  };
+
   return (
     <Box>
-      <Box>{selected === null && <RecentRegistrations onSelect={registration => setSelected(registration)} />}</Box>
+      <Box>
+        <RecentRegistrations onSelect={handleSelect} />
+      </Box>
       <Box>
         {!!selected && (
-          <RegistrationTimeline
-            handleResize={handleResize}
-            setSelected={setSelected}
-            selected={selected}
-            containerPosition={containerPosition}
-          />
+          <RegistrationTimeline handleResize={handleResize} selected={selected} containerPosition={containerPosition} />
         )}
       </Box>
     </Box>
@@ -75,7 +78,6 @@ export default Registration;
 
 const RegistrationTimeline = ({
   containerPosition,
-  setSelected,
   handleResize,
   selected,
 }: {
@@ -84,10 +86,10 @@ const RegistrationTimeline = ({
     left?: number;
   };
   handleResize: () => void;
-  setSelected: (registration: SPORegistration | null) => void;
   selected: SPORegistration | null;
 }) => {
   const { poolId = "" } = useParams<{ poolId: string }>();
+  const history = useHistory();
   const { data, loading } = useFetch<SPORegistrationDetail>(
     selected?.poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, selected?.poolUpdateId) : ""
   );
@@ -107,11 +109,15 @@ const RegistrationTimeline = ({
   const SPOInfoRef = useRef(null);
   const SPOKeyRef = useRef(null);
 
+  const handleBack = () => {
+    history.push(details.spo(poolId, "timeline", "registration"));
+  };
+
   if (loading) {
     return (
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-          <IconButtonBack onClick={() => setSelected(null)}>
+          <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
           <Box display={"flex"}>
@@ -137,7 +143,7 @@ const RegistrationTimeline = ({
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>
@@ -167,18 +173,23 @@ const RegistrationTimeline = ({
             <CustomTooltip title={data?.poolName}>
               <PoolName> {data?.poolName}</PoolName>
             </CustomTooltip>
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOInfoRef}
-                  component={IconButton}
-                  left={"33%"}
-                  onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
-                >
-                  <SPOInfo />
-                </ButtonSPO>
-              )}
-              content={
+            <CustomTooltip
+              wOpacity={false}
+              componentsProps={{
+                transition: {
+                  style: {
+                    backgroundColor: "white",
+                    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                    padding: "10px",
+                  },
+                },
+                arrow: {
+                  style: {
+                    color: "white",
+                  },
+                },
+              }}
+              title={
                 <Box>
                   <Box display={"flex"} alignItems={"center"}>
                     <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
@@ -197,32 +208,47 @@ const RegistrationTimeline = ({
                   </Box>
                 </Box>
               }
-            />
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOKeyRef}
-                  component={IconButton}
-                  left={"52%"}
-                  onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
-                >
+            >
+              <ButtonSPO ref={SPOInfoRef} component={IconButton} left={"33%"}>
+                <SPOInfo />
+              </ButtonSPO>
+            </CustomTooltip>
+            <Link to={details.stake(data?.stakeKeys[0] || "")}>
+              <CustomTooltip
+                wOpacity={false}
+                componentsProps={{
+                  transition: {
+                    style: {
+                      backgroundColor: "white",
+                      boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                      padding: "10px",
+                    },
+                  },
+                  arrow: {
+                    style: {
+                      color: "white",
+                    },
+                  },
+                }}
+                title={
+                  <Box display={"flex"} alignItems={"center"}>
+                    {data?.stakeKeys && data.stakeKeys.length > 0 && (
+                      <>
+                        <SPOKey fill="#108AEF" />
+                        <PoolNamePopup to={details.stake(data?.stakeKeys[0] || "")}>
+                          {getShortWallet(data?.stakeKeys[0] || "")}
+                        </PoolNamePopup>
+                        <CopyButton text={data?.stakeKeys[0]} />
+                      </>
+                    )}
+                  </Box>
+                }
+              >
+                <ButtonSPO ref={SPOKeyRef} component={IconButton} left={"52%"}>
                   <SPOKey fill="#438F68" />
                 </ButtonSPO>
-              )}
-              content={
-                <Box display={"flex"} alignItems={"center"}>
-                  {data?.stakeKeys && data.stakeKeys.length > 0 && (
-                    <>
-                      <SPOKey fill="#108AEF" />
-                      <PoolNamePopup to={details.stake(data?.stakeKeys[0] || "")}>
-                        {getShortWallet(data?.stakeKeys[0] || "")}
-                      </PoolNamePopup>
-                      <CopyButton text={data?.stakeKeys[0]} />
-                    </>
-                  )}
-                </Box>
-              }
-            />
+              </CustomTooltip>
+            </Link>
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
@@ -231,9 +257,9 @@ const RegistrationTimeline = ({
                 render={({ handleClick }) => (
                   <HoldBox ref={holdRef} ml={1}>
                     <Box>
-                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      <HoldBoxText component={"span"} mr={1}>
                         {formatADA(data?.deposit || 0)}
-                      </Box>
+                      </HoldBoxText>
                       <ADAicon fontSize="18px" />
                     </Box>
                     <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
@@ -247,9 +273,9 @@ const RegistrationTimeline = ({
                 render={({ handleClick }) => (
                   <FeeBox ref={feeRef}>
                     <Box>
-                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      <HoldBoxText component={"span"} mr={1}>
                         {formatADA(data?.fee || 0)}
-                      </Box>
+                      </HoldBoxText>
                       <ADAicon fontSize="18px" />
                     </Box>
                     <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
@@ -344,7 +370,12 @@ const RegistrationTimeline = ({
             p={0}
             onClick={() => setOpenModal(true)}
           >
-            <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
+            <Box
+              component={"img"}
+              style={{ marginLeft: "5px" }}
+              src={RegistrationCertificate}
+              alt="RegistrationCertificateIcon"
+            />
           </Box>
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>

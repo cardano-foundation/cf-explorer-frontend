@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 
 import { getShortHash, getShortWallet } from "../../commons/utils/helper";
@@ -29,10 +29,11 @@ import { StyledStakeId } from "../DelegatorLifecycle/styles";
 import { details } from "../../commons/routers";
 
 const SPOLifecycle = () => {
-  const { poolId = "", tab } = useParams<{
-    poolId: string;
-    tab?: "registration" | "pool-updates" | "operator-rewards" | "deregistration" | "tablular";
-  }>();
+  const {
+    poolId = "",
+    mode = "timeline",
+    tab = "registration",
+  } = useParams<{ poolId: string; mode: ViewMode; tab: SPOStep }>();
 
   const tabList = {
     registration: 0,
@@ -44,18 +45,15 @@ const SPOLifecycle = () => {
 
   const [currentStep, setCurrentStep] = useState(tabList[tab || "registration"] || 0);
 
-  const { isMobile } = useScreen()
+  const { isMobile } = useScreen();
 
   useEffect(() => {
     setCurrentStep(tabList[tab || "registration"] || 0);
-    if (tab === "tablular") {
-      setMode("tablular");
-    }
   }, [tab]);
 
-  const [mode, setMode] = useState<"timeline" | "tablular">("timeline");
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
+  const history = useHistory();
   const [containerPosition, setContainerPosition] = useState<{ top?: number; left?: number }>({
     top: undefined,
     left: undefined,
@@ -76,14 +74,17 @@ const SPOLifecycle = () => {
   };
   useEffect(() => {
     handleResize();
-
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const changeMode = (mode: ViewMode) => {
+    history.push(details.spo(poolId, mode, tab));
+  };
+
   return (
     <StyledContainer ref={containerRef}>
-      <BoxContainerStyled> 
+      <BoxContainerStyled>
         <Box>
           <Box component={"h2"} mb="5px" mt={0} fontSize={isMobile ? 24 : 36} lineHeight="42px">
             Staking Lifecycle For
@@ -104,17 +105,20 @@ const SPOLifecycle = () => {
               Switch to {mode === "timeline" ? "tablular" : "timeline"} view
             </BoxSwitch>
             <ButtonGroup>
-              <ButtonSwitch active={+(mode === "timeline")} onClick={() => setMode("timeline")}>
+              <ButtonSwitch active={+(mode === "timeline")} onClick={() => changeMode("timeline")}>
                 <ChartMode fill={mode === "timeline" ? "#fff" : "#344054"} />
               </ButtonSwitch>
-              <ButtonSwitch active={+(mode === "tablular")} onClick={() => setMode("tablular")}>
+              <ButtonSwitch active={+(mode === "tablular")} onClick={() => changeMode("tablular")}>
                 <TableMode fill={mode === "tablular" ? "#fff" : "#344054"} />
               </ButtonSwitch>
             </ButtonGroup>
           </BoxSwitchContainer>
-          <ButtonReportContainer>
-            {mode === "tablular" && <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>}
-          </ButtonReportContainer>
+
+          {mode === "tablular" && (
+            <ButtonReportContainer>
+              <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>
+            </ButtonReportContainer>
+          )}
         </BoxItemStyled>
       </BoxContainerStyled>
 
@@ -123,7 +127,6 @@ const SPOLifecycle = () => {
           <SPOLifecycleComponent
             handleResize={handleResize}
             containerPosition={containerPosition}
-            setMode={setMode}
             currentStep={currentStep}
             setCurrentStep={setCurrentStep}
           />

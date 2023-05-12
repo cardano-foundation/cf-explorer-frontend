@@ -119,13 +119,13 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
     {
       key: "poolCertificates",
       icon: RewardsDistributionIcon,
-      label: "Pool certificate",
+      label: `Pool certificates (${data?.poolCertificates?.length || 0})`,
       children: <PoolCertificate data={data?.poolCertificates} />,
     },
     {
       key: "stakeCertificates",
       icon: StakeCertificates,
-      label: "Stake Certificate",
+      label: `Stake Certificates (${data?.stakeCertificates?.length || 0})`,
       children: <StakeCertificate data={data?.stakeCertificates} />,
     },
     {

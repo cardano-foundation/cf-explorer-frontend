@@ -47,17 +47,15 @@ interface StepperProps {
   title: string;
   component: React.ReactNode;
   description: React.ReactNode;
-  key: string;
+  key: DelegationStep;
 }
 
 const DelegatorLifecycle = ({
-  setMode,
   containerPosition,
   handleResize,
   currentStep,
   setCurrentStep,
 }: {
-  setMode: (mode: "timeline" | "tablular") => void;
   containerPosition: {
     top?: number;
     left?: number;
@@ -109,7 +107,7 @@ const DelegatorLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "rewardsDistribution",
+      key: "rewards",
     },
     {
       icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
@@ -121,7 +119,7 @@ const DelegatorLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "rewardsWithdrawal",
+      key: "withdrawal-history",
     },
     {
       icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 4 ? "#fff" : "#98A2B3"} />,
@@ -141,12 +139,12 @@ const DelegatorLifecycle = ({
     <Box mr={isMobile ? 2 : 0}>
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
-          <Step component={"span"} key={idx} active={+(currentStep >= idx)}>
+          <Step component={"span"} key={idx} active={+(currentStep === idx)}>
             <StepButton
-              active={+(currentStep >= idx)}
+              active={+(currentStep === idx)}
               onClick={() => {
                 setCurrentStep(idx);
-                history.push(details.staking(stakeId, step.key));
+                history.push(details.staking(stakeId, "timeline", step.key));
               }}
             >
               {step.icon}
@@ -181,7 +179,7 @@ const DelegatorLifecycle = ({
           <PreviousButton
             sx={{ mb: `${isMobile ? "16px" : "0px"}` }}
             onClick={() => {
-              history.push(details.staking(stakeId, stepper[currentStep - 1]?.key));
+              history.push(details.staking(stakeId, "timeline", stepper[currentStep - 1]?.key));
               setCurrentStep(currentStep - 1);
             }}
           >
@@ -193,9 +191,8 @@ const DelegatorLifecycle = ({
           onClick={() => {
             if (currentStep === stepper.length - 1) {
               history.push(details.staking(stakeId, "tablular"));
-              setMode("tablular");
             } else {
-              history.push(details.staking(stakeId, stepper[currentStep + 1]?.key));
+              history.push(details.staking(stakeId, "timeline", stepper[currentStep + 1]?.key));
               setCurrentStep(currentStep + 1);
             }
           }}

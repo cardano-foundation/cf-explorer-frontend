@@ -1,4 +1,5 @@
 import { Box, Checkbox, alpha, Select, Typography, styled, Pagination } from "@mui/material";
+import CustomSelect from "../CustomSelect";
 
 export const Empty = styled(Box)`
   text-align: center;
@@ -92,7 +93,6 @@ export const TFooter = styled(Box)(({ theme }) => ({
   alignItems: "baseline",
   flexWrap: "wrap",
   color: theme.palette.grey[400],
-  marginTop: "10px",
   [theme.breakpoints.down("md")]: {
     justifyContent: "flex-start",
   },
@@ -141,29 +141,28 @@ export const InputNumber = styled("input")<{ length: number }>(({ theme, length 
     appearance: "none",
     margin: 0,
   },
+  background: "transparent"
 }));
 
-export const SelectMui = styled(Select)(({ theme }) => ({
-  fontWeight: "bold",
-  width: 60,
-  height: 42,
-  padding: 0,
-  textAlign: "center",
-  ".MuiOutlinedInput-notchedOutline": {
-    borderColor: theme.palette.border.main,
-    height: 40,
+export const SelectMui = styled(CustomSelect)(({ theme }) => ({
+
+  borderRadius: "4px",
+  fontSize: 14,
+  minWidth: 50,
+  border: "1px solid #E3E5E9",
+  '& > div': {
+    padding: "2.45px 14px",
   },
-  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: theme.palette.border.main,
+  "& > fieldset": {
+    top: 2,
   },
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: theme.palette.border.main,
-  },
-  ".MuiSelect-select": {
-    paddingRight: "10px !important",
-    paddingLeft: "0px !important",
-  },
+  background: "transparent",
+  "& >svg":{
+    top: "calc(50% - 9px)",
+  }
 }));
+
+
 
 export const TableCheckBox = styled(Checkbox)`
   padding: 0px;

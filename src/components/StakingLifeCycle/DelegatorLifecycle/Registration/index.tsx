@@ -13,16 +13,16 @@ import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSy
 import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
 
 import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
-import ADAicon, { AdaLogoIcon } from "../../../commons/ADAIcon";
+import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText, StakeLink } from "./styles";
+import { AdaLogoIcon } from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentRegistrations from "./RecentRegistrations";
 import PopoverStyled from "../../../commons/PopoverStyled";
-import { formatADA, formatADAFull, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADAFull, getShortHash } from "../../../../commons/utils/helper";
 import moment from "moment";
 import PopupStaking from "../../../commons/PopupStaking";
 import StyledModal from "../../../commons/StyledModal";
-import { Link as LinkDom, useParams } from "react-router-dom";
+import { Link as LinkDom, useHistory, useParams } from "react-router-dom";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
 import { details } from "../../../../commons/routers";
@@ -42,18 +42,19 @@ const Registration = ({
 }) => {
   const [selected, setSelected] = useState<RegistrationItem | null>(null);
 
-  const handleSelect = (registration: RegistrationItem) => {
+  const handleSelect = (registration: RegistrationItem | null) => {
     setSelected(registration);
   };
 
   return (
     <Box>
-      <Box>{selected === null && <RecentRegistrations onSelect={handleSelect} />}</Box>
       <Box>
-        {selected && (
+        <RecentRegistrations onSelect={handleSelect} />
+      </Box>
+      <Box>
+        {!!selected && (
           <RegistrationTimeline
             handleResize={handleResize}
-            setSelected={setSelected}
             containerPosition={containerPosition}
             registration={selected}
           />
@@ -66,7 +67,6 @@ export default Registration;
 
 const RegistrationTimeline = ({
   containerPosition,
-  setSelected,
   handleResize,
   registration,
 }: {
@@ -74,12 +74,12 @@ const RegistrationTimeline = ({
     top?: number;
     left?: number;
   };
-  setSelected: (registration: RegistrationItem | null) => void;
   handleResize: () => void;
   registration: RegistrationItem;
 }) => {
   const { deposit, fee, time, txHash } = registration;
   const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const history = useHistory();
   const theme = useTheme();
 
   const adaHolderRef = useRef(null);
@@ -96,10 +96,14 @@ const RegistrationTimeline = ({
     handleResize();
   }, [registration]);
 
+  const handleBack = () => {
+    history.push(details.staking(stakeId, "timeline", "registration"));
+  };
+
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>
@@ -256,7 +260,12 @@ const RegistrationTimeline = ({
             width={220}
             height={220}
           >
-            <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
+            <Box
+              component={"img"}
+              style={{ marginLeft: "5px" }}
+              src={RegistrationCertificate}
+              alt="RegistrationCertificateIcon"
+            />
           </Box>
           <Box ref={fake2Ref} width={"200px"}></Box>
         </Box>
@@ -277,8 +286,8 @@ export const RegistrationCertificateModal = ({
   const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
 
   return (
-    <StyledModal {...props} title="Registration certificate">
-      <Box>
+    <StyledModal width={530} {...props} title="Registration certificate">
+      <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
         {loading && <Skeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
           <Box>
@@ -287,9 +296,7 @@ export const RegistrationCertificateModal = ({
             </Box>
             {data && (
               <Box>
-                <Link style={{ fontSize: "1rem" }} to={details.stake(stake)}>
-                  {stake || ""}
-                </Link>
+                <StakeLink to={details.stake(stake)}>{stake || ""}</StakeLink>
                 <CopyButton text={stake} />
               </Box>
             )}

@@ -113,6 +113,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       allowSearch: true,
       isSent: true,
       dataSearch: inputTransaction,
+      key: "input",
     },
     {
       icon: txOutputIcon,
@@ -154,6 +155,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
       allowSearch: true,
       dataSearch: outputTransaction,
+      key: "output",
     },
     {
       icon: timeIcon,

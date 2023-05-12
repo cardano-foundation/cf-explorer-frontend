@@ -165,7 +165,7 @@ const TransactionChart: React.FC = () => {
     <TransactionContainer>
       <WrapHeader>
         <Title>Transaction {optionsTime[rangeTime].displayName}</Title>
-        <Tabs>
+        <Tabs width="100%">
           {Object.keys(optionsTime).map(option => {
             return (
               <Tab

@@ -1,22 +1,23 @@
-import { Box } from "@mui/material";
-import { StyledLink, TableSubTitle, WrapWalletLabel } from "../styles";
+import { Box, useTheme } from "@mui/material";
+import moment from "moment";
+import { useMemo, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../../../commons/hooks/useFetchList";
-import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
-import Table, { Column } from "../../../commons/Table";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
-import { AdaValue } from "./StakeRegistrationTab";
-import { GreenWalletIcon } from "../../TabularOverview";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import { useMemo, useState } from "react";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
 import StackingFilter, { FilterParams } from "../../../StackingFilter";
-import moment from "moment";
 import { DATETIME_PARTTEN } from "../../../StackingFilter/DateRangeModal";
-import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import { FilterDateLabel } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles";
+import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import Table, { Column } from "../../../commons/Table";
+import { GreenWalletIcon } from "../../TabularOverview";
+import { StyledLink, TableSubTitle, WrapWalletLabel } from "../styles";
+import { AdaValue } from "./StakeRegistrationTab";
 
 const WithdrawalHistoryTab = () => {
+  const theme = useTheme();
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
@@ -64,9 +65,9 @@ const WithdrawalHistoryTab = () => {
           <AdaValue value={r.value - r.fee} />
           <TableSubTitle>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-              <AdaValue value={r.value} gap="3px" fontSize="12px" />
+              <AdaValue color={theme.palette.grey[400]} value={r.value} gap="3px" fontSize="12px" />
               <Box mx="3px">/</Box>
-              <AdaValue value={r.fee} gap="3px" fontSize="12px" />
+              <AdaValue color={theme.palette.grey[400]} value={r.fee} gap="3px" fontSize="12px" />
             </Box>
           </TableSubTitle>
         </Box>

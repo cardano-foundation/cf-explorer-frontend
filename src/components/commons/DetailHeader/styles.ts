@@ -43,9 +43,6 @@ export const WrapHeader = styled(Box)(({ theme }) => ({
 export const HeaderContainer = styled(Box)`
   display: flex;
   align-items: center;
-  ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.sm)} {
-    justify-content: space-between;
-  }
 `;
 
 export const HeaderTitle = styled("h2")`
@@ -393,6 +390,7 @@ export const CardItem = styled(Grid)<{ items_length: number; isDetailToken?: boo
         padding: 15,
         borderRight: `${isDetailToken ? `1px solid ${alpha(theme.palette.common.black, 0.1)}` : `none`}`,
         paddingLeft: `${isDetailToken ? `0` : `none`}`,
+        paddingRight: `${isDetailToken ? `none` : `0`}`,
       },
       ":last-of-type::after": {
         content: `""`,
@@ -435,6 +433,9 @@ export const AllowSearchButton = styled(Box)(({ theme }) => ({
   right: 0,
   borderRadius: 4,
   cursor: "pointer",
+  "& path": {
+    stroke: theme.palette.grey[400],
+  }
 }));
 
 export const StyledSelect = styled(Select)(({ theme }) => ({

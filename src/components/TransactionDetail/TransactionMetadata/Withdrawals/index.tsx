@@ -17,7 +17,7 @@ interface WithdrawalsProps {
 }
 
 const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
-  const { isTablet } = useScreen();
+  const { isMobile } = useScreen();
   return (
     <Wrapper>
       <Header>
@@ -31,19 +31,29 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
               <Box width={50}>
                 <StatusIcon src={sendImg} alt="wallet icon" />
               </Box>
-              {isTablet ? <span>From: </span> : null}
+              {isMobile ? <span>From: </span> : null}
             </Box>
-            <Box flex={1}>
-              <Box>
-                {!isTablet ? <span>From: </span> : null}
-                <CustomTooltip title={item.stakeAddressFrom}>
-                  <AddressLink to={details.address(item.stakeAddressFrom)}>
-                    {getShortWallet(item.stakeAddressFrom || "")}
-                  </AddressLink>
-                </CustomTooltip>
-                <CopyButton text={item.stakeAddressFrom || ""} />
+            <Box width="100%">
+              <Box flex={1} display="flex" justifyContent="space-between">
+                <Box>
+                  {!isMobile ? <span>From: </span> : null}
+                  <CustomTooltip title={item.stakeAddressFrom}>
+                    <AddressLink to={details.address(item.stakeAddressFrom)}>
+                      {getShortWallet(item.stakeAddressFrom || "")}
+                    </AddressLink>
+                  </CustomTooltip>
+                  <CopyButton text={item.stakeAddressFrom || ""} />
+                </Box>
+                <Box minWidth="max-content" maxWidth="50%">
+                  <Amount>+ {formatADAFull(item?.amount)}</Amount>
+                  <ADAicon ml={"3px"} />
+                </Box>
               </Box>
-              <Box display={"flex"}>
+              <Box
+                display={"flex"}
+                alignItems={isMobile ? "flex-start" : "center"}
+                flexDirection={isMobile ? "column" : "row"}
+              >
                 <Box minWidth="1.75rem">To:</Box>
                 <Box flex={1}>
                   {item?.addressTo.map(address => {
@@ -58,10 +68,6 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                   })}
                 </Box>
               </Box>
-            </Box>
-            <Box minWidth="max-content">
-              <Amount>+ {formatADAFull(item?.amount)}</Amount>
-              <ADAicon ml={"3px"} />
             </Box>
           </ItemContainer>
         </StyledItem>

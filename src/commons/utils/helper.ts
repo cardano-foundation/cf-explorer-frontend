@@ -3,18 +3,18 @@ import moment from "moment";
 import { parse } from "qs";
 import { setUserData } from "../../stores/user";
 import { getInfo, signIn } from "./userRequest";
-import { NETWORK, NETWORK_TYPES } from "./constants";
+import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const alphaNumeric = /[^0-9a-zA-Z]/;
 
 export const regexEmail = /^[\w\.\+\-]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-export const getShortWallet = (address: string) => {
+export const getShortWallet = (address: string = "") => {
   return `${address.slice(0, 5)}...${address.slice(-5)}`;
 };
 
-export const getShortHash = (address: string) => {
+export const getShortHash = (address: string = "") => {
   return `${address.slice(0, 10)}...${address.slice(-7)}`;
 };
 
@@ -148,7 +148,7 @@ export const formatDateTimeLocal = (date: string) => {
 
 export const getEpochSlotNo = (data: IDataEpoch) => {
   if (data.status === "FINISHED") {
-    return data.maxSlot;
+    return MAX_SLOT_EPOCH;
   }
   return moment().diff(moment(data.startTime), "seconds");
 };

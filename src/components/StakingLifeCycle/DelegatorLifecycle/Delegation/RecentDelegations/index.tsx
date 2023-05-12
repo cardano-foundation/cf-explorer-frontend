@@ -1,6 +1,6 @@
 import { Box, Skeleton } from "@mui/material";
-import { useMemo, useState } from "react";
-import { useParams } from "react-router";
+import { useEffect, useMemo, useState } from "react";
+import { useHistory, useParams } from "react-router";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../../StackingFilter";
@@ -12,13 +12,16 @@ import { EmptyRecord } from "../../../../commons/Table";
 import { FilterDateLabel } from "../styles";
 import { DATETIME_PARTTEN } from "../../../../StackingFilter/DateRangeModal";
 import { DescriptionText } from "../../styles";
+import { details } from "../../../../../commons/routers";
+import { useUpdateEffect } from "react-use";
 
 interface Props {
-  onSelect: (registration: DelegationItem) => void;
+  onSelect: (delegation: DelegationItem | null) => void;
 }
 
 const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
-  const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
+  const history = useHistory();
   const [params, setParams] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
@@ -35,6 +38,21 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
     }
   );
 
+  useEffect(() => {
+    const currentItem = data.find(item => item.txHash === txHash);
+    onSelect(currentItem || null);
+  }, [txHash, data]);
+
+  const handleSelect = (delegation: DelegationItem) => {
+    history.push(details.staking(stakeId, "timeline", "delegation", delegation.txHash));
+  };
+
+  useUpdateEffect(() => {
+    if (data && data.length && data.length === 1) {
+      handleSelect(data[0]);
+    }
+  }, [JSON.stringify(data)]);
+
   const filterLabel = useMemo(() => {
     if (params.fromDate && params.toDate)
       return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
@@ -45,6 +63,8 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
       return `${params.sort[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
     if (params.txHash) return `Searching for : ${params.txHash}`;
   }, [params]);
+
+  if (txHash) return null;
 
   return (
     <Box marginTop="32px">
@@ -83,7 +103,7 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
                 time={item.time}
                 hash={item.txHash}
                 item={item}
-                onClick={onSelect}
+                onClick={handleSelect}
               />
             );
           })}

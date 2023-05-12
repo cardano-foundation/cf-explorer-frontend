@@ -64,7 +64,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
   ];
 
   return (
-    <Box bgcolor={"white"} px={2}>
+    <Box>
       <TableMinting columns={columns} data={data || []} />
       <ScriptModal open={open} policy={selectedItem || ""} onClose={() => setOpen(false)} />
     </Box>

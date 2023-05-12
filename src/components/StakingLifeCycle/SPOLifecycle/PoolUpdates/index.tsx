@@ -30,7 +30,7 @@ import { WrapFilterDescription } from "../../DelegatorLifecycle/Registration/Rec
 import { GridBox } from "../../DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import OverviewStaking from "../../../commons/OverviewStaking";
 import PopoverStyled from "../../../commons/PopoverStyled";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { details } from "../../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
@@ -45,6 +45,7 @@ import { Tab } from "@mui/material";
 import { TitleTab } from "../../../TransactionDetail/TransactionMetadata/styles";
 import { DescriptionText } from "../../DelegatorLifecycle/styles";
 import { StyledLink } from "../styles";
+import { useUpdateEffect } from "react-use";
 
 const PoollUpdates = ({
   containerPosition,
@@ -56,19 +57,19 @@ const PoollUpdates = ({
   };
   handleResize: () => void;
 }) => {
-  // To do: chonj default là list sau đó clickdetail nhấn sang timelne. Đổi trong tương lai
   const [selected, setSelected] = useState<PoolUpdateItem | null>(null);
+
+  const handleSelect = (pool: PoolUpdateItem | null) => {
+    setSelected(pool);
+  };
   return (
     <Box>
-      <Box>{selected === null && <PoollUpdatesList setSelected={setSelected} />}</Box>
+      <Box>
+        <PoollUpdatesList onSelect={handleSelect} />
+      </Box>
       <Box>
         {!!selected && (
-          <PoollUpdatesTimeline
-            handleResize={handleResize}
-            selected={selected}
-            setSelected={setSelected}
-            containerPosition={containerPosition}
-          />
+          <PoollUpdatesTimeline handleResize={handleResize} selected={selected} containerPosition={containerPosition} />
         )}
       </Box>
     </Box>
@@ -76,14 +77,32 @@ const PoollUpdates = ({
 };
 export default PoollUpdates;
 
-const PoollUpdatesList = ({ setSelected }: { setSelected: (pool: PoolUpdateItem | null) => void }) => {
-  const { poolId = "" } = useParams<{ poolId: string }>();
+const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null) => void }) => {
+  const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
+  const history = useHistory();
   const [params, setParams] = useState<FilterParams>();
   const { data, total } = useFetchList<PoolUpdateItem>(API.SPO_LIFECYCLE.POOL_UPDATE(poolId), {
     page: 0,
     size: 1000,
     ...params,
   });
+  useEffect(() => {
+    const currentItem = data.find(item => item.txHash === txHash);
+    onSelect(currentItem || null);
+  }, [txHash, data]);
+
+  const handleSelect = (poolUpdated: PoolUpdateItem) => {
+    history.push(details.spo(poolId, "timeline", "pool-updates", poolUpdated.txHash));
+  };
+
+  useUpdateEffect(() => {
+    if (data && data.length && data.length === 1) {
+      handleSelect(data[0]);
+    }
+  }, [JSON.stringify(data)]);
+
+  if (txHash) return null;
+
   return (
     <Box marginTop="32px">
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
@@ -99,13 +118,7 @@ const PoollUpdatesList = ({ setSelected }: { setSelected: (pool: PoolUpdateItem 
       <GridBox>
         {data.map(item => {
           return (
-            <OverviewStaking
-              item={item}
-              onClick={pool => setSelected(pool)}
-              hash={item.txHash}
-              amount={item.fee}
-              time={item.time}
-            />
+            <OverviewStaking item={item} onClick={handleSelect} hash={item.txHash} amount={item.fee} time={item.time} />
           );
         })}
       </GridBox>
@@ -115,7 +128,6 @@ const PoollUpdatesList = ({ setSelected }: { setSelected: (pool: PoolUpdateItem 
 
 const PoollUpdatesTimeline = ({
   containerPosition,
-  setSelected,
   selected,
   handleResize,
 }: {
@@ -123,10 +135,11 @@ const PoollUpdatesTimeline = ({
     top?: number;
     left?: number;
   };
-  setSelected: (pool: PoolUpdateItem | null) => void;
   handleResize: () => void;
   selected: PoolUpdateItem;
 }) => {
+  const { poolId = "" } = useParams<{ poolId: string }>();
+  const history = useHistory();
   const { data, loading } = useFetch<PoolUpdateDetail>(
     selected?.poolUpdateId ? API.SPO_LIFECYCLE.POOL_UPDATE_DETAIL(selected.poolUpdateId) : ""
   );
@@ -144,11 +157,15 @@ const PoollUpdatesTimeline = ({
     handleResize();
   }, [loading]);
 
+  const handleBack = () => {
+    history.push(details.spo(poolId, "timeline", "pool-updates"));
+  };
+
   if (loading) {
     return (
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-          <IconButtonBack onClick={() => setSelected(null)}>
+          <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
           <Box display={"flex"}>
@@ -175,7 +192,7 @@ const PoollUpdatesTimeline = ({
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>
@@ -205,18 +222,23 @@ const PoollUpdatesTimeline = ({
             <CustomTooltip title={data?.poolName}>
               <PoolName> {data?.poolName}</PoolName>
             </CustomTooltip>
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOInfoRef}
-                  component={IconButton}
-                  left={"33%"}
-                  onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
-                >
-                  <SPOInfo />
-                </ButtonSPO>
-              )}
-              content={
+            <CustomTooltip
+              wOpacity={false}
+              componentsProps={{
+                transition: {
+                  style: {
+                    backgroundColor: "white",
+                    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                    padding: "10px",
+                  },
+                },
+                arrow: {
+                  style: {
+                    color: "white",
+                  },
+                },
+              }}
+              title={
                 <Box>
                   <Box display={"flex"} alignItems={"center"}>
                     <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
@@ -235,32 +257,47 @@ const PoollUpdatesTimeline = ({
                   </Box>
                 </Box>
               }
-            />
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOKeyRef}
-                  component={IconButton}
-                  left={"52%"}
-                  onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
-                >
+            >
+              <ButtonSPO ref={SPOInfoRef} component={IconButton} left={"33%"}>
+                <SPOInfo />
+              </ButtonSPO>
+            </CustomTooltip>
+            <Link to={details.stake(data?.stakeKeys[0] || "")}>
+              <CustomTooltip
+                wOpacity={false}
+                componentsProps={{
+                  transition: {
+                    style: {
+                      backgroundColor: "white",
+                      boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                      padding: "10px",
+                    },
+                  },
+                  arrow: {
+                    style: {
+                      color: "white",
+                    },
+                  },
+                }}
+                title={
+                  <Box display={"flex"} alignItems={"center"}>
+                    {data?.stakeKeys && data.stakeKeys.length > 0 && (
+                      <>
+                        <SPOKey fill="#108AEF" />
+                        <PoolNamePopup to={details.stake(data?.stakeKeys[0] || "")}>
+                          {getShortWallet(data?.stakeKeys[0] || "")}
+                        </PoolNamePopup>
+                        <CopyButton text={data?.stakeKeys[0]} />
+                      </>
+                    )}
+                  </Box>
+                }
+              >
+                <ButtonSPO ref={SPOKeyRef} component={IconButton} left={"52%"}>
                   <SPOKey fill="#438F68" />
                 </ButtonSPO>
-              )}
-              content={
-                <Box display={"flex"} alignItems={"center"}>
-                  {data?.stakeKeys && data.stakeKeys.length > 0 && (
-                    <>
-                      <SPOKey fill="#108AEF" />
-                      <PoolNamePopup to={details.stake(data?.stakeKeys[0] || "")}>
-                        {getShortWallet(data?.stakeKeys[0] || "")}
-                      </PoolNamePopup>
-                      <CopyButton text={data?.stakeKeys[0]} />
-                    </>
-                  )}
-                </Box>
-              }
-            />
+              </CustomTooltip>
+            </Link>
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
@@ -357,7 +394,12 @@ const PoollUpdatesTimeline = ({
             p={0}
             onClick={() => setOpenModal(true)}
           >
-            <img style={{ marginLeft: "5px" }} src={PoolCertificateIcon} alt="RegistrationCertificateIcon" />
+            <Box
+              component={"img"}
+              style={{ marginLeft: "5px" }}
+              src={PoolCertificateIcon}
+              alt="RegistrationCertificateIcon"
+            />
           </Box>
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
@@ -458,14 +500,17 @@ export const PoolUpdateModal = ({
             </Box>
             {data && (
               <>
-                {(data.stakeKeys || []).map(item => (
+                {data.stakeKeys && data.stakeKeys.length && (
                   <>
-                    <Box key={item} pt={"7px"} fontWeight={600}>
-                      <Link to={details.stake(item || "")}>{getShortWallet(item)}</Link>{" "}
-                      <CopyButton text={item || ""} />
+                    <Box key={data.stakeKeys[0]} pt={"7px"} fontWeight={600} display={"flex"}>
+                      <Box>
+                        <Link to={details.stake(data.stakeKeys[0] || "")}>{getShortWallet(data.stakeKeys[0])}</Link>{" "}
+                        <CopyButton text={data.stakeKeys[0] || ""} />
+                      </Box>
+                      {data.stakeKeys.length > 1 ? <Box marginLeft={2}>...</Box> : null}
                     </Box>
                   </>
-                ))}
+                )}
               </>
             )}
           </Box>

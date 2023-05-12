@@ -33,17 +33,15 @@ interface StepperProps {
   title: string;
   component: React.ReactNode;
   description: React.ReactNode;
-  key: "registration" | "pool-updates" | "operator-rewards" | "deregistration";
+  key: SPOStep;
 }
 
 const SPOLifecycle = ({
-  setMode,
   containerPosition,
   currentStep,
   setCurrentStep,
   handleResize,
 }: {
-  setMode: (mode: "timeline" | "tablular") => void;
   containerPosition: {
     top?: number;
     left?: number;
@@ -113,11 +111,11 @@ const SPOLifecycle = ({
     <Box mr={isMobile ? 2 : 0}>
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
-          <Step component={"span"} key={idx} active={+(currentStep >= idx)}>
+          <Step component={"span"} key={idx} active={+(currentStep === idx)}>
             <StepButton
-              active={+(currentStep >= idx)}
+              active={+(currentStep === idx)}
               onClick={() => {
-                history.push(details.spo(poolId, step.key));
+                history.push(details.spo(poolId, "timeline", step.key));
                 setCurrentStep(idx);
               }}
             >
@@ -148,7 +146,7 @@ const SPOLifecycle = ({
           <PreviousButton
             sx={{ mb: `${isMobile ? "16px" : "0px"}` }}
             onClick={() => {
-              history.push(details.spo(poolId, stepper[currentStep - 1]?.key));
+              history.push(details.spo(poolId, "timeline", stepper[currentStep - 1]?.key));
               setCurrentStep(currentStep - 1);
             }}
           >
@@ -162,9 +160,8 @@ const SPOLifecycle = ({
           onClick={() => {
             if (currentStep === stepper.length - 1) {
               history.push(details.spo(poolId, "tablular"));
-              setMode("tablular");
             } else {
-              history.push(details.spo(poolId, stepper[currentStep + 1]?.key));
+              history.push(details.spo(poolId, "timeline", stepper[currentStep + 1]?.key));
               setCurrentStep(currentStep + 1);
             }
           }}

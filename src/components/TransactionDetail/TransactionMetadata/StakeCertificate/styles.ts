@@ -1,11 +1,4 @@
 import { styled } from "@mui/material";
-import Table from "../../../commons/Table";
-
-export const TableMinting = styled(Table)({
-  "& tr th:last-child": {
-    width: "120px",
-  },
-});
 
 export const TextLabel = styled("div")`
   display: inline-block;
