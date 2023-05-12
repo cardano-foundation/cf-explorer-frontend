@@ -21,10 +21,10 @@ export const StyledSelect = styled(SelectMui)(() => ({
 }));
 
 export const ModalTitle = styled("div")`
-font-weight: 700;
-color: #13152f;
-margin-bottom: 25px;
-`
+  font-weight: 700;
+  color: #13152f;
+  margin-bottom: 25px;
+`;
 
 export const StyledStack = styled(Stack)`
   margin-bottom: 20px;
@@ -35,6 +35,11 @@ export const TextWarning = styled("div")`
   font-size: 14px;
   line-height: 16px;
   color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
+`;
+export const TextError = styled(TextWarning)`
+  color: ${({ theme }) => theme.palette.error.main};
+  margin-top: -10px;
   margin-bottom: 20px;
 `;
 
@@ -73,7 +78,7 @@ export const StyledButton = styled(Button)`
     opacity: 0.8;
   }
 `;
-export const StyledBackButton = styled(Button)<{width?: number | string}>(({width = 140}) => ({
+export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ width = 140 }) => ({
   width: `${width}%`,
   borderRadius: "8px",
   height: "44px",
@@ -86,7 +91,7 @@ export const StyledBackButton = styled(Button)<{width?: number | string}>(({widt
     opacity: 0.8,
   },
   textTransform: "none",
-}))
+}));
 
 export const SubText = styled("div")`
   color: #000000;
@@ -145,6 +150,7 @@ export const StyledGroupField = styled(TextField)`
     padding: 0 9px;
     height: 40px;
     border-radius: 8px;
+    width: calc(100% - 23px);
   }
   .MuiFormControl-root {
   }

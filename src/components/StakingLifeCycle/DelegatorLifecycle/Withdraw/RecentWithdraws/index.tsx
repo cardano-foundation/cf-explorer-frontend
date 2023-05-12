@@ -12,6 +12,7 @@ import { GridBox, WrapFilterDescription } from "./styles";
 import { DATETIME_PARTTEN } from "../../../../StackingFilter/DateRangeModal";
 import { DescriptionText } from "../../styles";
 import { details } from "../../../../../commons/routers";
+import { useUpdateEffect } from "react-use";
 
 interface Props {
   onSelect: (ưithdraw: WithdrawItem | null) => void;
@@ -50,6 +51,12 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect }) => {
   const handleSelect = (withdraw: WithdrawItem) => {
     history.push(details.staking(stakeId, "timeline", "withdrawal-history", withdraw.txHash));
   };
+
+  useUpdateEffect(() => {
+    if (data && data.length && data.length === 1) {
+      handleSelect(data[0]);
+    }
+  }, [JSON.stringify(data)]);
 
   if (txHash) return null;
 

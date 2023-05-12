@@ -10,6 +10,7 @@ import {
   StyledSelect,
   StyledStack,
   TextWarning,
+  TextError,
 } from "./styles";
 import { DownIcon } from "../../../../commons/resources";
 import { useCallback, useMemo, useState } from "react";
@@ -18,6 +19,8 @@ import CustomDatePicker, { IDateRange } from "../../../CustomDatePicker";
 import { IPropsModal, STEPS } from ".";
 import { useSelector } from "react-redux";
 import { useScreen } from "../../../../commons/hooks/useScreen";
+import defaultAxios from "../../../../commons/utils/axios";
+import { API } from "../../../../commons/utils/api";
 
 export enum ReportType {
   ChooseReport = "CHOOSE_REPORT",
@@ -50,9 +53,12 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   const [dateRange, setDateRange] = useState<IDateRange>([null, null]);
   const [reportName, setReportName] = useState<string>("");
   const [epochRange, setEpochRange] = useState<IEpochRange>([30, 50]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const onChangeReportType = useCallback((e: any) => {
     setReportType(e.target.value as ReportType);
+    setError("");
   }, []);
 
   const onChangeReportName = useCallback((e: any) => {
@@ -61,11 +67,13 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
 
   const onChangeAddress = useCallback((e: any) => {
     setAddress(e.target.value);
+    setError("");
   }, []);
 
   const { isMobile } = useScreen();
 
   const isDisabledButton = useMemo(() => {
+    if (error || loading) return true;
     const [startDate, endDate] = dateRange;
     if (reportType === ReportType.ChooseReport) return true;
 
@@ -74,7 +82,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     } else {
       return !address?.trim();
     }
-  }, [address, dateRange, reportType]);
+  }, [address, dateRange, reportType, error]);
 
   let isShowTextWarning = true;
   let placeholderAddress = "Address details";
@@ -90,7 +98,27 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       isShowTextWarning = true;
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setLoading(true);
+    if (reportType === ReportType.PoolReport) {
+      try {
+        const res = await defaultAxios.get(`${API.DELEGATION.POOL_DETAIL_HEADER}/${address}`);
+        if (!res.data) throw {};
+      } catch (error) {
+        setError("No pool found");
+        return setLoading(false);
+      }
+    }
+    if (reportType === ReportType.StakeKeyReport) {
+      try {
+        const res = await defaultAxios.get(`${API.STAKE.DETAIL}/${address}`);
+        if (!res.data) throw {};
+      } catch (error) {
+        setError("No stake key found");
+        return setLoading(false);
+      }
+    }
+    setLoading(false);
     saveParams?.({
       reportType,
       address,
@@ -115,12 +143,12 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       open={open}
       handleCloseModal={handleCloseModal}
       width={555}
-      paddingX={isMobile ? '10px' : '40px'}
-      paddingY={isMobile ? '20px' : '30px'}
+      paddingX={isMobile ? "10px" : "40px"}
+      paddingY={isMobile ? "20px" : "30px"}
     >
       <Container>
         <ModalTitle>
-          <Box sx={{fontSize: `${isMobile ? "20px" : '24px'}`}}>Report composer</Box>
+          <Box sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</Box>
         </ModalTitle>
         <StyledStack>
           <StyledLabel>Report name</StyledLabel>
@@ -150,6 +178,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             />
           </StyledAddressSelect>
         </Box>
+        {error && <TextError>{error}</TextError>}
         {reportType === ReportType.StakeKeyReport && (
           <Container>
             <StyledStack>
@@ -159,7 +188,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
           </Container>
         )}
         {reportType === ReportType.PoolReport && (
-          <Box sx={{ marginBottom: "20px"}}>
+          <Box sx={{ marginBottom: "20px" }}>
             <StyledLabel>Select a epoch range</StyledLabel>
             <Slider
               getAriaLabel={() => "Minimum distance"}

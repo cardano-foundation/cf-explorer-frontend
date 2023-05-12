@@ -21,14 +21,25 @@ interface Transactions {
   fee: number;
   totalOutput: number;
   time: string;
-  tokens: Token[];
+  balance: number;
+  tokens: TransactionToken[];
+}
+
+interface TransactionToken {
+  address: string;
+  addressId: number;
+  displayName: string;
+  fingerprint: string;
+  name: string;
+  policy: string;
+  quantity: number;
 }
 
 interface Token {
   assetName: string;
   assetQuantity: number;
   assetId: string;
-  policy: {
+  policy?: {
     policyId: string;
     totalToken: number;
     policyScript: string;
@@ -95,13 +106,15 @@ type TPoolCertificated = {
     port: number;
   }[];
   rewardAccount: string;
-  type: string;
+  type: "POOL_REGISTRATION" | "POOL_DEREGISTRATION";
   vrfKey: string;
+  epoch: number;
 };
 
 type TStakeCertificated = {
   stakeAddress: string;
-}
+  type: "STAKE_REGISTRATION" | "STAKE_DEREGISTRATION";
+};
 
 interface Transaction {
   tx: {
@@ -117,16 +130,10 @@ interface Transaction {
     maxEpochSlot: number;
   };
   summary: {
-    stakeAddressTxInputs: {
+    stakeAddress: {
       address: string;
       value: number;
       fee?: number;
-      tokens: Token[];
-    }[];
-
-    stakeAddressTxOutputs: {
-      address: string;
-      value: number;
       tokens: Token[];
     }[];
   };
@@ -147,12 +154,14 @@ interface Transaction {
       value: number;
       txHash: string;
       tokens: Token[];
+      stakeAddress?: string;
     }[];
     outputs: {
       address: string;
       value: number;
       txHash: string;
       tokens: Token[];
+      stakeAddress?: string;
     }[];
   };
   mints?: {

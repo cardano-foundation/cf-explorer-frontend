@@ -109,11 +109,9 @@ const RegistrationTimeline = ({
   const SPOInfoRef = useRef(null);
   const SPOKeyRef = useRef(null);
 
-
   const handleBack = () => {
     history.push(details.spo(poolId, "timeline", "registration"));
   };
-
 
   if (loading) {
     return (
@@ -183,14 +181,15 @@ const RegistrationTimeline = ({
                     backgroundColor: "white",
                     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
                     padding: "10px",
-                  }
+                  },
                 },
                 arrow: {
                   style: {
                     color: "white",
-                  }
-                }
-              }} title={
+                  },
+                },
+              }}
+              title={
                 <Box>
                   <Box display={"flex"} alignItems={"center"}>
                     <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
@@ -207,13 +206,10 @@ const RegistrationTimeline = ({
                     </Box>
                     <PoolNamePopup to={details.delegation(data?.poolView)}>{data?.poolName}</PoolNamePopup>
                   </Box>
-                </Box>}
+                </Box>
+              }
             >
-              <ButtonSPO
-                ref={SPOInfoRef}
-                component={IconButton}
-                left={"33%"}
-              >
+              <ButtonSPO ref={SPOInfoRef} component={IconButton} left={"33%"}>
                 <SPOInfo />
               </ButtonSPO>
             </CustomTooltip>
@@ -226,29 +222,29 @@ const RegistrationTimeline = ({
                       backgroundColor: "white",
                       boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
                       padding: "10px",
-                    }
+                    },
                   },
                   arrow: {
                     style: {
                       color: "white",
-                    }
-                  }
-                }} title={<Box display={"flex"} alignItems={"center"}>
-                  {data?.stakeKeys && data.stakeKeys.length > 0 && (
-                    <>
-                      <SPOKey fill="#108AEF" />
-                      <PoolNamePopup to={details.stake(data?.stakeKeys[0] || "")}>
-                        {getShortWallet(data?.stakeKeys[0] || "")}
-                      </PoolNamePopup>
-                      <CopyButton text={data?.stakeKeys[0]} />
-                    </>
-                  )}
-                </Box>}>
-                <ButtonSPO
-                  ref={SPOKeyRef}
-                  component={IconButton}
-                  left={"52%"}
-                >
+                    },
+                  },
+                }}
+                title={
+                  <Box display={"flex"} alignItems={"center"}>
+                    {data?.stakeKeys && data.stakeKeys.length > 0 && (
+                      <>
+                        <SPOKey fill="#108AEF" />
+                        <PoolNamePopup to={details.stake(data?.stakeKeys[0] || "")}>
+                          {getShortWallet(data?.stakeKeys[0] || "")}
+                        </PoolNamePopup>
+                        <CopyButton text={data?.stakeKeys[0]} />
+                      </>
+                    )}
+                  </Box>
+                }
+              >
+                <ButtonSPO ref={SPOKeyRef} component={IconButton} left={"52%"}>
                   <SPOKey fill="#438F68" />
                 </ButtonSPO>
               </CustomTooltip>
@@ -374,7 +370,12 @@ const RegistrationTimeline = ({
             p={0}
             onClick={() => setOpenModal(true)}
           >
-            <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
+            <Box
+              component={"img"}
+              style={{ marginLeft: "5px" }}
+              src={RegistrationCertificate}
+              alt="RegistrationCertificateIcon"
+            />
           </Box>
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>

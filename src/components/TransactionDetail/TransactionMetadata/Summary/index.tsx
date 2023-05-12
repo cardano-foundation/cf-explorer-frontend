@@ -16,7 +16,7 @@ const SummaryItems = ({
   item,
   type,
 }: {
-  item: Transaction["summary"]["stakeAddressTxInputs"][number];
+  item: Transaction["summary"]["stakeAddress"][number];
   type?: "up" | "down";
 }) => {
   const theme = useTheme();
@@ -96,7 +96,7 @@ const SummaryItems = ({
               </Box>
             </Box>
           </Box>
-          {type === "up" ? (
+          {/* {type === "up" ? (
             <Box
               display={"flex"}
               alignItems={isGalaxyFoldSmall ? "flex-start" : "center"}
@@ -121,7 +121,7 @@ const SummaryItems = ({
                 <ADAicon />
               </Box>
             </Box>
-          ) : null}
+          ) : null} */}
         </Box>
       </Box>
       {item.tokens && item.tokens.length > 0 && (
@@ -139,12 +139,12 @@ interface SummaryProps {
 const Summary: React.FC<SummaryProps> = ({ data }) => {
   return (
     <Box>
-      {data?.stakeAddressTxInputs?.map((tx, key) => (
-        <SummaryItems key={key} item={tx} type="down" />
-      ))}
-      {data?.stakeAddressTxOutputs?.map((tx, key) => (
-        <SummaryItems key={key} item={tx} type="up" />
-      ))}
+      {data?.stakeAddress?.map((tx, key) => {
+        const type = tx.value >= 0 ? "up" : "down";
+        return (
+          <SummaryItems key={key} item={tx} type={type} />
+        )
+      })}
     </Box>
   );
 };

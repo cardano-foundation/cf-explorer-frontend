@@ -1,25 +1,26 @@
+import { Box, IconButton, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import CustomTooltip from "../../commons/CustomTooltip";
-import { StyledLink } from "../../share/styled";
-import { details } from "../../../commons/routers";
-import { formatADAFull, formatHash } from "../../../commons/utils/helper";
-import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, VerticalRow } from "../../StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
-import CustomIcon from "../../commons/CustomIcon";
-import { ADAsigntIC } from "../../../commons/resources";
-import Table, { Column } from "../../commons/Table";
 import useFetchList from "../../../commons/hooks/useFetchList";
+import { EyeIcon } from "../../../commons/resources";
+import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
-import { Box } from "@mui/material";
-
+import { formatHash } from "../../../commons/utils/helper";
+import { DeregistrationCertificateModal } from "../../StakingLifeCycle/SPOLifecycle/Deregistration";
+import { AdaValue } from "../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import { TableSubTitle } from "../../TabularView/StakeTab/styles";
+import CustomTooltip from "../../commons/CustomTooltip";
+import Table, { Column } from "../../commons/Table";
+import { StyledLink } from "../../share/styled";
 
 const DeregsitrationTab = () => {
+  const theme = useTheme();
   const { reportId = "" } = useParams<{ reportId: string }>();
   const [params, setParams] = useState({
     page: 0,
     size: 10,
   });
-
+  const [selected, setSelected] = useState<SPODeregistration | null>(null);
   const [sort, setSort] = useState<string>("");
 
   const columns: Column<SPODeregistrationTabpular>[] = [
@@ -49,32 +50,24 @@ const DeregsitrationTab = () => {
       title: "ADA Value",
       render(data) {
         return (
-          <ADAValueFieldContainer>
-            <ADAValueLabel>
-              {formatADAFull(data.totalFee)} <CustomIcon icon={ADAsigntIC} width={12} />{" "}
-            </ADAValueLabel>
-            <ADAValueSubLabel>
-              {formatADAFull(data.poolHold)} <CustomIcon icon={ADAsigntIC} width={11} /> / {formatADAFull(data.fee)}{" "}
-              <CustomIcon icon={ADAsigntIC} width={11} />{" "}
-            </ADAValueSubLabel>
-          </ADAValueFieldContainer>
+          <TableSubTitle>
+            <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+              <AdaValue color={theme.palette.grey[400]} value={data.poolHold} gap="3px" fontSize="12px" />
+              <Box mx="3px">/</Box>
+              <AdaValue color={theme.palette.grey[400]} value={data.fee} gap="3px" fontSize="12px" />
+            </Box>
+          </TableSubTitle>
         );
       },
     },
     {
-      key: "owner",
-      title: "Owner",
-      render(data) {
-        return data.stakeKeys.map((item, index) => (
-          <VerticalRow key={index}>
-            <CustomTooltip  title={item}>
-              <StyledLink to={details.stake(item)} key={index}>
-                {formatHash(item)}
-              </StyledLink>
-            </CustomTooltip>
-          </VerticalRow>
-        ));
-      },
+      key: "Certificate",
+      title: "Certificate",
+      render: data => (
+        <IconButton onClick={() => setSelected(data)}>
+          <EyeIcon style={{ transform: "scale(.8)" }} />
+        </IconButton>
+      ),
     },
   ];
 
@@ -101,6 +94,7 @@ const DeregsitrationTab = () => {
           onChange: (page, size) => setParams({ page: page - 1, size }),
         }}
       />
+       <DeregistrationCertificateModal data={selected} open={!!selected} handleCloseModal={() => setSelected(null)} />
     </Box>
   );
 };

@@ -18,7 +18,6 @@ export const ButtonGroup = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   height: "44px",
-  marginTop: "23px !important",
   background: "#E7E8EA",
   padding: "3px 2px",
   margin: `0 ${theme.spacing(2)}`,
@@ -77,7 +76,7 @@ export const BoxContainerStyled = styled(Box)(({ theme }) => ({
 export const BoxSwitchContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "space-between",
+  alignItems: "center",
 }));
 
 export const BoxItemStyled = styled(Box)(({ theme }) => ({

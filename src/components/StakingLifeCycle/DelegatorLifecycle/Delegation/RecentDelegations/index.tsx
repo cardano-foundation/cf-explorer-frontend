@@ -13,6 +13,7 @@ import { FilterDateLabel } from "../styles";
 import { DATETIME_PARTTEN } from "../../../../StackingFilter/DateRangeModal";
 import { DescriptionText } from "../../styles";
 import { details } from "../../../../../commons/routers";
+import { useUpdateEffect } from "react-use";
 
 interface Props {
   onSelect: (delegation: DelegationItem | null) => void;
@@ -45,6 +46,12 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
   const handleSelect = (delegation: DelegationItem) => {
     history.push(details.staking(stakeId, "timeline", "delegation", delegation.txHash));
   };
+
+  useUpdateEffect(() => {
+    if (data && data.length && data.length === 1) {
+      handleSelect(data[0]);
+    }
+  }, [JSON.stringify(data)]);
 
   const filterLabel = useMemo(() => {
     if (params.fromDate && params.toDate)

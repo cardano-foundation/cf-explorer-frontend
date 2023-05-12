@@ -2,7 +2,7 @@ import { useState } from "react";
 import Table, { Column } from "../commons/Table";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { API } from "../../commons/utils/api";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import moment from "moment";
 import { TextOverFlow } from "../StakingLifeCycle/DelegatorLifecycle/ReportComposerModal/styles";
 import { DownloadGreenIcon } from "../../commons/resources";
@@ -48,15 +48,17 @@ const StakekeySummary = () => {
   });
   const [sort, setSort] = useState<string>("id,desc");
 
-  const downloadFn = async (reportId: number, fileName: string) => {
-    defaultAxiosDownload.get(API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId)).then(response => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `${fileName}.csv`);
-      document.body.appendChild(link);
-      link.click();
-    });
+  const downloadFn = async (reportId: number, fileName: string, typeExport: "CSV" | "EXCEL" = "CSV") => {
+    defaultAxiosDownload
+      .get(`${API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId)}?exportType=${typeExport}`)
+      .then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `${fileName}.${typeExport === "CSV" ? "csv" : "xlsx"}`);
+        document.body.appendChild(link);
+        link.click();
+      });
   };
 
   const columns: Column<IReportStaking>[] = [
@@ -100,12 +102,29 @@ const StakekeySummary = () => {
     {
       key: "download",
       title: "",
-      maxWidth: "30px",
       render(data, index) {
         return (
-          <a href="#">
-            <DownloadGreenIcon onClick={() => downloadFn(data.id, data.reportName)} />
-          </a>
+          <Box textAlign={"right"} key={index} display={"flex"}>
+            <Box
+              component={Button}
+              display={"block"}
+              textTransform={"capitalize"}
+              onClick={() => {
+                downloadFn(data.id, data.reportName, "CSV");
+              }}
+            >
+              Export CSV
+            </Box>
+            <Box
+              ml={2}
+              component={Button}
+              display={"block"}
+              textTransform={"capitalize"}
+              onClick={() => downloadFn(data.id, data.reportName, "EXCEL")}
+            >
+              Export Excel
+            </Box>
+          </Box>
         );
       },
     },

@@ -127,7 +127,7 @@ interface IDashboardResponse {
   createdAt: string;
   reportName: string;
   status: string;
-  type: string;
+  type: "STAKE_KEY" | "POOL_ID";
 }
 
 declare type SPOStep = "registration" | "pool-updates" | "operator-rewards" | "deregistration";
