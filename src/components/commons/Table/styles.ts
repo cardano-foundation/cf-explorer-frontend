@@ -93,8 +93,9 @@ export const TFooter = styled(Box)(({ theme }) => ({
   alignItems: "baseline",
   flexWrap: "wrap",
   color: theme.palette.grey[400],
-  [theme.breakpoints.down("md")]: {
+  [theme.breakpoints.down("sm")]: {
     justifyContent: "flex-start",
+    flexDirection: "column",
   },
 }));
 
@@ -141,28 +142,25 @@ export const InputNumber = styled("input")<{ length: number }>(({ theme, length 
     appearance: "none",
     margin: 0,
   },
-  background: "transparent"
+  background: "transparent",
 }));
 
 export const SelectMui = styled(CustomSelect)(({ theme }) => ({
-
   borderRadius: "4px",
   fontSize: 14,
   minWidth: 50,
   border: "1px solid #E3E5E9",
-  '& > div': {
+  "& > div": {
     padding: "2.45px 14px",
   },
   "& > fieldset": {
     top: 2,
   },
   background: "transparent",
-  "& >svg":{
+  "& >svg": {
     top: "calc(50% - 9px)",
-  }
+  },
 }));
-
-
 
 export const TableCheckBox = styled(Checkbox)`
   padding: 0px;
@@ -201,5 +199,5 @@ export const StyledPagination = styled(Pagination)(({ theme }) => ({
     width: 24,
     height: 24,
     padding: 0,
-  }
+  },
 }));

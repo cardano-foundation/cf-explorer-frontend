@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import DatePicker from "react-datepicker";
 
 export const StyledDatePicker = styled(DatePicker)`
@@ -8,3 +8,11 @@ export const StyledDatePicker = styled(DatePicker)`
   padding-left: 20px;
   width: calc(100% - 20px);
 `;
+
+export const SelectDateButton = styled(Box)(() => ({
+  position: "absolute",
+  right: "10px",
+  top: "50%",
+  transform: "translateY(-50%)",
+  pointerEvents: "none",
+}));
