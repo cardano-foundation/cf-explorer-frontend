@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { styled, Card as CardMui } from "@mui/material";
 
 export const WrapContainer = styled("div")`
   display: flex;
@@ -30,3 +30,12 @@ export const OverviewTitle = styled("p")`
   line-height: 17px;
   color: ${props => props.theme.palette.text.primary};
 `;
+
+export const Card = styled(CardMui)(() => ({
+  padding: "20px",
+  display: "flex",
+  alignItems: "flex-start",
+  gap: 10,
+  flexDirection: "column",
+  justifyContent: "center",
+}));

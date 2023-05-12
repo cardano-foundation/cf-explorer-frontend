@@ -11,6 +11,7 @@ import { GridBox, WrapFilterDescription } from "./styles";
 import { FilterDateLabel } from "../../../DelegatorLifecycle/Delegation/styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
 import { details } from "../../../../../commons/routers";
+import { useUpdateEffect } from "react-use";
 
 interface Props {
   onSelect: (registration: SPODeregistration | null) => void;
@@ -42,6 +43,12 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
   const handleSelect = (deregistration: SPODeregistration) => {
     history.push(details.spo(poolId, "timeline", "deregistration", deregistration.txHash));
   };
+
+  useUpdateEffect(() => {
+    if (data && data.length && data.length === 1) {
+      handleSelect(data[0]);
+    }
+  }, [JSON.stringify(data)]);
 
   const filterLabel = useMemo(() => {
     if (params.fromDate && params.toDate)

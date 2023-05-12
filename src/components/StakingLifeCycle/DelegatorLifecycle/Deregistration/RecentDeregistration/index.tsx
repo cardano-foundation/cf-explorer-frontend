@@ -12,6 +12,7 @@ import { GridBox, WrapFilterDescription } from "./styles";
 import { DATETIME_PARTTEN } from "../../../../StackingFilter/DateRangeModal";
 import { DescriptionText } from "../../styles";
 import { details } from "../../../../../commons/routers";
+import { useUpdateEffect } from "react-use";
 
 interface Props {
   onSelect: (deregistration: DeregistrationItem | null) => void;
@@ -40,7 +41,11 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
   const handleSelect = (deregistration: DeregistrationItem) => {
     history.push(details.staking(stakeId, "timeline", "deregistration", deregistration.txHash));
   };
-  
+  useUpdateEffect(() => {
+    if (data && data.length && data.length === 1) {
+      handleSelect(data[0]);
+    }
+  }, [JSON.stringify(data)]);
   const filterLabel = useMemo(() => {
     if (params.fromDate && params.toDate)
       return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment

@@ -11,6 +11,7 @@ import { GridBox, WrapFilterDescription } from "./styles";
 import { FilterDateLabel } from "../../../DelegatorLifecycle/Delegation/styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
 import { details } from "../../../../../commons/routers";
+import { useUpdateEffect } from "react-use";
 
 interface Props {
   onSelect: (registration: SPORegistration | null) => void;
@@ -42,7 +43,11 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
   const handleSelect = (registration: SPORegistration) => {
     history.push(details.spo(poolId, "timeline", "registration", registration.txHash));
   };
-
+  useUpdateEffect(() => {
+    if (data && data.length && data.length === 1) {
+      handleSelect(data[0]);
+    }
+  }, [JSON.stringify(data)]);
   const filterLabel = useMemo(() => {
     if (params.fromDate && params.toDate)
       return ` Filter by: ${moment(params.fromDate).format("MM/DD/YYYY")} - ${moment(params.toDate).format(

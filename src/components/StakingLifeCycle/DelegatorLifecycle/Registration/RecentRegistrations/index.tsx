@@ -12,6 +12,7 @@ import { GridBox, WrapFilterDescription } from "./styles";
 import { DATETIME_PARTTEN } from "../../../../StackingFilter/DateRangeModal";
 import { DescriptionText } from "../../styles";
 import { details } from "../../../../../commons/routers";
+import { useUpdateEffect } from "react-use";
 
 interface Props {
   onSelect: (registration: RegistrationItem | null) => void;
@@ -34,15 +35,19 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
       ...params,
     }
   );
-
+  const handleSelect = (registration: RegistrationItem) => {
+    history.push(details.staking(stakeId, "timeline", "registration", registration.txHash));
+  };
   useEffect(() => {
     const currentItem = data.find(item => item.txHash === txHash);
     onSelect(currentItem || null);
   }, [txHash, data]);
 
-  const handleSelect = (registration: RegistrationItem) => {
-    history.push(details.staking(stakeId, "timeline", "registration", registration.txHash));
-  };
+  useUpdateEffect(() => {
+    if (data && data.length && data.length === 1) {
+      handleSelect(data[0]);
+    }
+  }, [JSON.stringify(data)]);
 
   const filterLabel = useMemo(() => {
     if (params.fromDate && params.toDate)

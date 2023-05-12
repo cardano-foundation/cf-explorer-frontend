@@ -45,7 +45,7 @@ const SPOLifecycle = () => {
 
   const [currentStep, setCurrentStep] = useState(tabList[tab || "registration"] || 0);
 
-  const { isMobile } = useScreen()
+  const { isMobile } = useScreen();
 
   useEffect(() => {
     setCurrentStep(tabList[tab || "registration"] || 0);
@@ -84,7 +84,7 @@ const SPOLifecycle = () => {
 
   return (
     <StyledContainer ref={containerRef}>
-      <BoxContainerStyled> 
+      <BoxContainerStyled>
         <Box>
           <Box component={"h2"} mb="5px" mt={0} fontSize={isMobile ? 24 : 36} lineHeight="42px">
             Staking Lifecycle For
@@ -113,9 +113,12 @@ const SPOLifecycle = () => {
               </ButtonSwitch>
             </ButtonGroup>
           </BoxSwitchContainer>
-          <ButtonReportContainer>
-            {mode === "tablular" && <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>}
-          </ButtonReportContainer>
+
+          {mode === "tablular" && (
+            <ButtonReportContainer>
+              <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>
+            </ButtonReportContainer>
+          )}
         </BoxItemStyled>
       </BoxContainerStyled>
 
