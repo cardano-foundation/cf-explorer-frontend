@@ -1,16 +1,17 @@
-import { Box } from "@mui/material";
-import { StyledLink, TableSubTitle } from "../styles";
+import { Box, useTheme } from "@mui/material";
+import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../../../commons/hooks/useFetchList";
-import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
-import Table, { Column } from "../../../commons/Table";
-import CustomTooltip from "../../../commons/CustomTooltip";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
-import { useState } from "react";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import Table, { Column } from "../../../commons/Table";
+import { StyledLink, TableSubTitle } from "../styles";
 import { AdaValue } from "./StakeRegistrationTab";
 
 const DeregistrationTab = () => {
+  const theme = useTheme();
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const [sort, setSort] = useState<string>("");
@@ -56,9 +57,9 @@ const DeregistrationTab = () => {
           <AdaValue value={-r.deposit - r.fee} />
           <TableSubTitle>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-              <AdaValue value={-r.deposit} gap="3px" fontSize="12px" />
+              <AdaValue color={theme.palette.grey[400]} value={-r.deposit} gap="3px" fontSize="12px" />
               <Box mx="3px">/</Box>
-              <AdaValue value={r.fee} gap="3px" fontSize="12px" />
+              <AdaValue color={theme.palette.grey[400]} value={r.fee} gap="3px" fontSize="12px" />
             </Box>
           </TableSubTitle>
         </Box>

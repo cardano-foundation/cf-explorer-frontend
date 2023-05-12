@@ -2,16 +2,16 @@ import { Box } from "@mui/material";
 import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
-import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, formatHash, getShortHash } from "../../../../../commons/utils/helper";
-import Table, { Column } from "../../../../commons/Table";
-import { PoolUpdateModal } from "../../PoolUpdates";
-import { ADAValueLabel, ClickAbleLink } from "./styles";
-import CustomIcon from "../../../../commons/CustomIcon";
-import { ADAsigntIC, EyeIcon } from "../../../../../commons/resources";
+import { EyeIcon } from "../../../../../commons/resources";
 import { details } from "../../../../../commons/routers";
+import { API } from "../../../../../commons/utils/api";
+import { formatDateTimeLocal, getShortHash } from "../../../../../commons/utils/helper";
+import { AdaValue } from "../../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
 import CustomTooltip from "../../../../commons/CustomTooltip";
+import Table, { Column } from "../../../../commons/Table";
 import { StyledLink } from "../../../../share/styled";
+import { PoolUpdateModal } from "../../PoolUpdates";
+import { ClickAbleLink } from "./styles";
 
 const PoolUpdateTab = () => {
   const { poolId = "" } = useParams<{ poolId: string }>();
@@ -51,9 +51,7 @@ const PoolUpdateTab = () => {
       title: "Fees",
       render(data) {
         return (
-          <ADAValueLabel>
-            {formatADAFull(data.fee)} <CustomIcon icon={ADAsigntIC} width={12} />
-          </ADAValueLabel>
+          <AdaValue value={data.fee} />
         );
       },
     },
