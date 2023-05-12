@@ -16,7 +16,7 @@ const SummaryItems = ({
   item,
   type,
 }: {
-  item: Transaction["summary"]["stakeAddressTxInputs"][number];
+  item: Transaction["summary"]["stakeAddress"][number];
   type?: "up" | "down";
 }) => {
   const theme = useTheme();
@@ -139,12 +139,12 @@ interface SummaryProps {
 const Summary: React.FC<SummaryProps> = ({ data }) => {
   return (
     <Box>
-      {data?.stakeAddressTxInputs?.map((tx, key) => (
-        <SummaryItems key={key} item={tx} type="down" />
-      ))}
-      {data?.stakeAddressTxOutputs?.map((tx, key) => (
-        <SummaryItems key={key} item={tx} type="up" />
-      ))}
+      {data?.stakeAddress?.map((tx, key) => {
+        const type = tx.value >= 0 ? "up" : "down";
+        return (
+          <SummaryItems key={key} item={tx} type={type} />
+        )
+      })}
     </Box>
   );
 };
