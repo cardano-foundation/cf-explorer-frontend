@@ -204,10 +204,10 @@ const Dashboard: React.FC = () => {
                 body.sort = params?.sort?.replace("time", "id");
               }
               if (toDate) {
-                body.toDate = moment(params?.toDate).format("yyyy/MM/DD");
+                body.toDate = params?.toDate;
               }
               if (fromDate) {
-                body.fromDate = moment(params?.fromDate).format("yyyy/MM/DD");
+                body.fromDate = params?.fromDate;
               }
               if (txHash) {
                 body.reportName = txHash;
