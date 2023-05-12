@@ -45,7 +45,8 @@ interface IPoolReportList {
   isDeregistration: boolean,
   isPoolUpdate: boolean,
   isRegistration: boolean,
-  isReward: boolean
+  isReward: boolean,
+  poolView: string;
 }
 
 interface IADATransferReport {

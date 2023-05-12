@@ -7,12 +7,11 @@ import { StyledLink } from "../../share/styled";
 import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../commons/utils/helper";
 import { ADAValueLabel, ClickAbleLink } from "../../StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
 import CustomIcon from "../../commons/CustomIcon";
-import { ADAsigntIC } from "../../../commons/resources";
+import { ADAsigntIC, EyeIcon } from "../../../commons/resources";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { PoolUpdateModal } from "../../StakingLifeCycle/SPOLifecycle/PoolUpdates";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
-
 
 const ProtocolUpdateTab = () => {
   const { reportId = "" } = useParams<{ reportId: string }>();
@@ -58,10 +57,14 @@ const ProtocolUpdateTab = () => {
       },
     },
     {
-      key: "update",
-      title: "Update",
+      key: "Certificate",
+      title: "Certificate",
       render(data) {
-        return <ClickAbleLink onClick={() => setSelectedValue(data)}>Certificate Update</ClickAbleLink>;
+        return (
+          <ClickAbleLink onClick={() => setSelectedValue(data)}>
+            <EyeIcon style={{ transform: "scale(.8)" }} />
+          </ClickAbleLink>
+        );
       },
     },
   ];
