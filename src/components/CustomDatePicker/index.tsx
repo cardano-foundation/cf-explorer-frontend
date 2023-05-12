@@ -1,6 +1,6 @@
 import "react-datepicker/dist/react-datepicker.css";
 import { Box } from "@mui/material";
-import { StyledDatePicker } from "./styles";
+import { SelectDateButton, StyledDatePicker } from "./styles";
 import { DateRangeIcon } from "../../commons/resources";
 
 export type IDate = Date | null;
@@ -27,9 +27,9 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
           setDateRange(update);
         }}
       />
-      <Box position={"absolute"} right="0" top="10px">
+      <SelectDateButton>
         <DateRangeIcon />
-      </Box>
+      </SelectDateButton>
     </Box>
   );
 };
