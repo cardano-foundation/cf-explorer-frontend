@@ -40,7 +40,12 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
     onClose?.();
   };
 
-  const isValid = useMemo(() => !(value?.fromDate && value?.toDate), [value])
+  const isValid = useMemo(() => {
+    if(!(value?.fromDate && value?.toDate)){
+      return true;
+    }
+    return moment(value.fromDate).diff(moment(value.toDate).toDate()) > 0
+  }, [value])
   return (
     <StyledModal open={open} handleCloseModal={() => onClose?.()}>
       <LocalizationProvider dateAdapter={AdapterMoment}>
