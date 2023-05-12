@@ -85,10 +85,7 @@ export const HoldBoxText = styled(Box)(({ theme }) => ({
 export const CustomLink = styled(Link)(({ theme }) => ({
   fontWeight: 600,
   fontSize: "0.875rem",
-  color: theme.palette.blue[800],
-  "&:hover": {
-    color: theme.palette.blue[800],
-  }
+  color: theme.palette.blue[800] + " !important",
 }));
 
 export const DetailRetirement = styled(Box)(({ theme }) => ({

@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { details } from '../../../commons/routers';
 import { getShortWallet, numberWithCommas } from '../../../commons/utils/helper';
 import { CustomSelect, OptionSelect } from './styles';
+import { useScreen } from '../../../commons/hooks/useScreen';
 
 interface IDropdownTokens {
   tokens: Token[];
@@ -17,8 +18,12 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down" }) =>
   const handleClickItem = (link: string) => {
     history.push(link);
   }
+  const { isMobile } = useScreen();
   return (
     <CustomSelect
+      sx={{
+        minWidth: isMobile ? "100%" : "250px",
+      }}
       onOpen={() => setOpenDropdown(true)}
       onClose={() => setOpenDropdown(false)}
       value={"default"}

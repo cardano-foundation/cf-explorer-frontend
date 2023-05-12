@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import DashboardCard from "../../components/DashboardCard";
-import { Status, GridContainer, TextHeadline, TitleHead, FilterHead } from "./styles";
+import { Status, GridContainer, TextHeadline, TitleHead, FilterHead, WrapReportName } from "./styles";
 import Table, { Column } from "../../components/commons/Table";
 import {
   FilterIC,
@@ -138,7 +138,7 @@ const Dashboard: React.FC = () => {
       key: "entity",
       minWidth: "150px",
       render(data) {
-        return data.reportName;
+        return <WrapReportName>{data.reportName}</WrapReportName>
       },
     },
     {
@@ -155,16 +155,20 @@ const Dashboard: React.FC = () => {
         return onDownload === data.id ? (
           <CircularProgress size={22} color="primary" />
         ) : (
-          <IconButton
-            onClick={() =>
-              downloadReportDashboard(
-                data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
-                data.reportName
-              )
-            }
-          >
-            <DownloadBlueIC />
-          </IconButton>
+          <Box textAlign={"right"}>
+            <IconButton
+              onClick={() =>
+                downloadReportDashboard(
+                  data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
+                  data.reportName
+                )
+              }
+
+            >
+              <DownloadBlueIC />
+            </IconButton>
+          </Box>
+
         );
       },
     },

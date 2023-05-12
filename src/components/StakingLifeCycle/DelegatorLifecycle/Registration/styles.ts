@@ -1,4 +1,5 @@
 import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -72,3 +73,8 @@ export const InfoText = styled(Box)(({ theme }) => ({
   fontWeight: 600,
   fontSize: "14px",
 }));
+export const StakeLink = styled(Link)`
+  font-size: 0.875rem;
+  color: ${({theme}) => theme.palette.blue[800]} !important;
+  margin-right: 6px;
+`;

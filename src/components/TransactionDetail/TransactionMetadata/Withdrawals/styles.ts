@@ -26,7 +26,7 @@ export const StyledItem = styled(Box)`
 export const ItemContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  [theme.breakpoints.down("md")]: {
+  [theme.breakpoints.down("sm")]: {
     flexDirection: "column",
     alignItems: "flex-start",
   }

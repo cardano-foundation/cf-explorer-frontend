@@ -43,14 +43,14 @@ const Card = ({
   const [openDropdown, setOpenDropdown] = React.useState(false);
   const handleClickItem = (link: string) => {
     history.push(link);
-  }
+  };
   const totalADA =
     items &&
     items.reduce((prv, item) => {
       return prv + item.value;
     }, 0);
 
-  const { isTablet } = useScreen();
+  const { isTablet, isMobile } = useScreen();
   return (
     <Box textAlign={"left"} mb={1} sx={{ background: theme => theme.palette.background.paper }}>
       <Header fontWeight="bold">
@@ -121,13 +121,17 @@ const Card = ({
                     </Box>
                   </Box>
                 </Box>
-                <Box justifyContent={"space-between"} width={"100%"} display="flex" paddingTop="5px">
+                <Box
+                  justifyContent={"space-between"}
+                  width={"100%"}
+                  display="flex"
+                  flexDirection={isMobile ? "column" : "row"}
+                  paddingTop="5px"
+                >
                   <Box mr={3} minWidth={200}>
                     {type === "down" && (
                       <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
-                        <Box pr={1}>
-                          UTXO:
-                        </Box>
+                        <Box pr={1}>UTXO:</Box>
                         <Link to={details.transaction(item.txHash)}>
                           <CustomTooltip title={item.txHash}>
                             <Box
@@ -145,40 +149,35 @@ const Card = ({
                       </Box>
                     )}
                   </Box>
-                  <Box display={"flex"} alignItems={'center'}>
-                    {item.tokens && item.tokens.length > 0 && (
-                      <DropdownTokens tokens={item.tokens} type={type} />
-                    )}
+                  <Box display={"flex"} alignItems={"center"}>
+                    {item.tokens && item.tokens.length > 0 && <DropdownTokens tokens={item.tokens} type={type} />}
                   </Box>
                 </Box>
               </Box>
             </ItemContent>
-          </Item >
-        ))
-        }
-        {
-          type === "up" && (
-            <Item>
-              <Box width={"100%"} display="flex" justifyContent={"space-between"} alignItems="center">
-                <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
-                  <Box display={"flex"} alignItems="center">
-                    <Img src={feeImg} alt="wallet icon" />
-                    <Box>Fee</Box>
-                  </Box>
-                </Box>
+          </Item>
+        ))}
+        {type === "up" && (
+          <Item>
+            <Box width={"100%"} display="flex" justifyContent={"space-between"} alignItems="center">
+              <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
                 <Box display={"flex"} alignItems="center">
-                  <Box mr="8px" fontWeight={"bold"} fontFamily={"var(--font-family-text)"} color="red">
-                    {formatADAFull(fee)}
-                  </Box>
-                  <Box>
-                    <ADAicon />
-                  </Box>
+                  <Img src={feeImg} alt="wallet icon" />
+                  <Box>Fee</Box>
                 </Box>
               </Box>
-            </Item>
-          )
-        }
-      </Box >
+              <Box display={"flex"} alignItems="center">
+                <Box mr="8px" fontWeight={"bold"} fontFamily={"var(--font-family-text)"} color="red">
+                  {formatADAFull(fee)}
+                </Box>
+                <Box>
+                  <ADAicon />
+                </Box>
+              </Box>
+            </Box>
+          </Item>
+        )}
+      </Box>
       <ItemFooter>
         <Box fontWeight={"bold"}>Total {type === "down" ? "Input" : "Output"}</Box>
         <div>
@@ -188,6 +187,6 @@ const Card = ({
           <ADAicon />
         </div>
       </ItemFooter>
-    </Box >
+    </Box>
   );
 };
