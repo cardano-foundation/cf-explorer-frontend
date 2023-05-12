@@ -239,7 +239,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
   const [page, setPage] = useState(pagination?.page || 1);
   const [size, setSize] = useState(pagination?.size || 50);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
-
+  const { isMobile } = useScreen();
   useUpdateEffect(() => {
     setPage(1);
   }, [poolType]);
@@ -252,9 +252,9 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
 
   return (
     <TFooter>
-      <Box display={"flex"} alignItems="center">
+      <Box display={"flex"} alignItems="center" margin="15px 0px">
         {pagination?.total && pagination.total > 10 ? (
-          <Box marginTop="10px">
+          <Box display="flex" alignItems="center">
             <SelectMui
               size="small"
               onChange={(e: any) => {
@@ -279,15 +279,13 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
           ""
         )}
         {total?.count ? (
-          <Box ml={"20px"} fontSize="0.875rem" lineHeight={"1 !important"}>
+          <Box ml={"20px"} fontSize="0.875rem">
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> {`Result${total.count > 1 ? "s" : ""}`}
           </Box>
         ) : (
           ""
         )}
       </Box>
-
-      <Box />
       {pagination?.total && pagination.total > 10 ? (
         <PaginationCustom
           pagination={pagination}
