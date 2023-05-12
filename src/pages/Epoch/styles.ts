@@ -24,19 +24,18 @@ export const StyledColorBlueDard = styled("span")`
 
 export const Index = styled(StyledColorBlueDard)``;
 
-export const Status = styled("span")<{ status: string }>`
-  font-family: var(--font-family-title);
-  font-weight: var(--font-weight-bold);
-  border-radius: 2px;
-  text-transform: uppercase;
-  font-size: 10px;
-  color: ${({ status, theme }) =>
-    status === "finished"
-      ? theme.palette.info.main
-      : status === "rewarding"
-      ? theme.palette.success.main
-      : theme.palette.warning.main};
-`;
+
+export const Status = styled("span")<{ status: string }>(({ status, theme }) => ({
+  fontFamily: "var(--font-family-title)",
+  fontWeight: "var(--font-weight-bold)",
+  borderRadius: "2px",
+  textTransform: "uppercase",
+  fontSize: "10px",
+  color: status === "finished" ? theme.palette.info.main : status === "rewarding" ? theme.palette.success.main : theme.palette.warning.main,
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+    fontSize: "7px",
+  }
+}))
 
 export const Blocks = styled(StyledColorBlueDard)``;
 

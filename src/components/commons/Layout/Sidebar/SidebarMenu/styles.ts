@@ -121,4 +121,8 @@ export const WrapNetwork = styled(Box)`
   & > div {
     width: 100%;
   }
+  margin-top: auto;
+  @media screen and (max-height: 780px) {
+    position: relative !important;
+  }
 `

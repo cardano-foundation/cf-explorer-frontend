@@ -1,4 +1,4 @@
-import { Box, Grid, styled } from "@mui/material";
+import { Box, Grid, alpha, styled } from "@mui/material";
 
 export const EpochCard = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -17,15 +17,24 @@ export const EpochNumber = styled(Box)(({ theme }) => ({
   marginBottom: 8,
 }));
 
+export const TitleCard = styled(Box)(({ theme }) => ({
+  color: alpha(theme.palette.common.black, 0.5),
+  fontSize: "0.875rem",
+}));
+
 export const EpochText = styled("span")`
   color: ${props => props.theme.palette.grey[400]};
   text-transform: uppercase;
 `;
 
-export const EpochProgress = styled("h3")`
-  color: ${props => props.theme.palette.primary.main};
-  margin: 0;
-`;
+export const EpochProgress = styled("h3")(({ theme }) => ({
+  color: theme.palette.primary.main,
+  margin: 0,
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+    fontSize: 14,
+  }
+}));
+
 
 export const EpochValue = styled(Box)(({ theme }) => ({
   color: theme.palette.common.black,

@@ -58,6 +58,7 @@ interface DetailHeaderProps {
     dataSearch?: any[];
     isSent?: boolean;
     key?: string;
+    hideHeader?: boolean;
   }[];
 }
 
@@ -182,7 +183,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
               key={index}
               isDetailToken={isDetailToken}
             >
-              <Box position="relative">
+              <Box position="relative" display={item.hideHeader ? "none" : ""}>
                 <img src={item.icon} alt="" height={20} />
                 {item.allowSearch && keyItem && (
                   <AllowSearchButton

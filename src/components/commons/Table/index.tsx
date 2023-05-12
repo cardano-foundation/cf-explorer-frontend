@@ -254,7 +254,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
     <TFooter>
       <Box display={"flex"} alignItems="center">
         {pagination?.total && pagination.total > 10 ? (
-          <Box>
+          <Box marginTop="10px">
             <SelectMui
               size="small"
               onChange={(e: any) => {

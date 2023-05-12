@@ -356,7 +356,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   if (isTablet) {
     return (
       <Drawer open={sidebar} onClose={() => setSidebar(false)}>
-        <Box position="relative" height="100%">
+        <Box position="relative" height="100vh" display={"flex"} flexDirection={"column"}>
           <Box p="16px">
             <LogoLink to="/">
               <NavBarLogo src={LogoFullIcon} alt="logo desktop" />

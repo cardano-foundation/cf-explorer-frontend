@@ -14,6 +14,7 @@ import {
   Title,
   ValueInfo,
   Wrapper,
+  CustomButton,
 } from "./styles";
 import moment from "moment";
 import { useParams } from "react-router-dom";
@@ -24,6 +25,7 @@ import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { BigNumber } from "bignumber.js";
 import { API } from "../../../commons/utils/api";
 import CustomTooltip from "../../commons/CustomTooltip";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 type AnalyticsBalance = { date: string; value: number };
 type AnalyticsReward = {
@@ -43,7 +45,7 @@ const StakeAnalytics: React.FC = () => {
   const [tab, setTab] = useState<"BALANCE" | "REWARD">("BALANCE");
   const { stakeId } = useParams<{ stakeId: string }>();
   const theme = useTheme();
-
+  const { isMobile } = useScreen();
   const { data, loading } = useFetch<AnalyticsBalance[]>(`${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`);
   const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
     `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
@@ -67,33 +69,47 @@ const StakeAnalytics: React.FC = () => {
 
   const minReward = dataReward
     ? dataReward.reduce(
-        function (prev, current) {
-          return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
-        },
-        { epoch: 0, value: 0 }
-      )
+      function (prev, current) {
+        return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
+      },
+      { epoch: 0, value: 0 }
+    )
     : { epoch: 0, value: 0 };
   const maxReward = dataReward
     ? dataReward.reduce(
-        function (prev, current) {
-          return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
-        },
-        { epoch: 0, value: 0 }
-      )
+      function (prev, current) {
+        return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
+      },
+      { epoch: 0, value: 0 }
+    )
     : { epoch: 0, value: 0 };
   return (
     <Card title="Analytics" pt={5}>
       <Wrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
-            <Grid item xs={12} sm={6}>
-              <ButtonTitle active={tab === "BALANCE"} onClick={() => setTab("BALANCE")}>
-                Balance
-              </ButtonTitle>
-              <ButtonTitle active={tab === "REWARD"} onClick={() => setTab("REWARD")}>
-                Reward
-              </ButtonTitle>
+            {isMobile ? <Grid item xs={12} sm={6}>
+              <Box>
+                <CustomButton
+                  active={tab === "BALANCE" ? 1 : 0}
+                  style={{ marginRight: "2px" }}
+                  onClick={() => setTab("BALANCE")}
+                >
+                  Balance
+                </CustomButton>
+                <CustomButton active={tab === "REWARD" ? 1 : 0} onClick={() => setTab("REWARD")}>
+                  Reward
+                </CustomButton>
+              </Box>
             </Grid>
+              : <Grid item xs={12} sm={6}>
+                <ButtonTitle active={tab === "BALANCE"} onClick={() => setTab("BALANCE")}>
+                  Balance
+                </ButtonTitle>
+                <ButtonTitle active={tab === "REWARD"} onClick={() => setTab("REWARD")}>
+                  Reward
+                </ButtonTitle>
+              </Grid>}
             <Grid item xs={12} sm={6}>
               {tab === "BALANCE" && (
                 <Tabs>
@@ -216,7 +232,7 @@ const StakeAnalytics: React.FC = () => {
           </BoxInfo>
         </Grid>
       </Wrapper>
-    </Card>
+    </Card >
   );
 };
 

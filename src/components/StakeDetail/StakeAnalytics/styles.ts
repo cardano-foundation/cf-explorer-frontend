@@ -15,6 +15,20 @@ export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
   },
 }));
 
+export const CustomButton = styled("button")<{ active: number }>`
+  width: 115px;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 0;
+  font-weight: var(--font-weight-bold);
+  color: ${({ theme, active }) => (active ? theme.palette.primary.contrastText : theme.palette.grey[400])};
+  background-color: ${({ theme, active }) => (active ? theme.palette.primary.main : theme.palette.background.neutral)};
+  cursor: pointer;
+  font-family: var(--font-family-title);
+  font-size: 16px;
+  line-height: 24px;
+`;
+
 export const BoxInfoItem = styled(Box)(({ theme }) => ({
   height: "100%",
   paddingTop: theme.spacing(2),
