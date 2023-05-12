@@ -9,7 +9,7 @@ interface Props {
 
 export function DelegationProcessDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title="The delegation process" handleCloseModal={handleCloseModal} open={open}>
+    <StyledModal title="The delegation process" handleCloseModal={handleCloseModal} open={open} >
       <WrapContent>
         <NormalDescription>
           When a delegator wants to send ADA to a Staking Pool Operator (SPO) on Cardano, the following steps occur:

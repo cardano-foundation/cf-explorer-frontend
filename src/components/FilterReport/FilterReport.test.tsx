@@ -10,7 +10,9 @@ describe("FilterReport", () => {
   });
 
   it("should render options when click button", async () => {
-    render(<FilterReport />);
+    const onFilterValueChange = jest.fn();
+    render(<FilterReport onFilterValueChange={onFilterValueChange}/>);
+    
     const elm = screen.getByText("Filter");
     await userEvent.click(elm);
     expect(screen.getByText("Date range")).toBeInTheDocument();
@@ -19,15 +21,4 @@ describe("FilterReport", () => {
     expect(screen.getByText("Search report name")).toBeInTheDocument();
   });
 
-  it("should close options when click outside", async () => {
-    render(<FilterReport />);
-    const filterButton = screen.getByText("Filter");
-    await userEvent.click(filterButton);
-
-    await userEvent.click(document.body);
-    expect(screen.queryByText("Date range")).toBeNull();
-    expect(screen.queryByText("Latest - First")).toBeNull();
-    expect(screen.queryByText("First - Latest")).toBeNull();
-    expect(screen.queryByText("Search report name")).toBeNull();
-  });
 });

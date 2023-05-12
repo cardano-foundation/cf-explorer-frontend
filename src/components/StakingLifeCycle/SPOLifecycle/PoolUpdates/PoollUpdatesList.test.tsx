@@ -15,8 +15,8 @@ describe("Pool Updates", () => {
   it("should render SPO PoollUpdatesList coponents", async () => {
     const setSelected = jest.fn();
     jest.spyOn(Router, "useParams").mockReturnValue({ useParams: "1" });
-    render(<PoollUpdatesList setSelected={setSelected} />);
-    expect(screen.getByText("Recent Withdrawals")).toBeInTheDocument();
+    render(<PoollUpdatesList onSelect={setSelected} />);
+    expect(screen.getByText("Recent Updates")).toBeInTheDocument();
     const elm = screen.getByTestId("showing");
     expect(elm).toHaveTextContent("Showing");
   });
@@ -28,8 +28,8 @@ describe("Pool Updates", () => {
         return [];
       },
     }));
-    render(<PoollUpdatesList setSelected={jest.fn()} />);
-    expect(screen.getByText("Recent Withdrawals")).toBeInTheDocument();
+    render(<PoollUpdatesList onSelect={jest.fn()} />);
+    expect(screen.getByText("Recent Updates")).toBeInTheDocument();
 
     const elm = screen.getByTestId("showing");
     expect(elm).toHaveTextContent("Showing 0 results");

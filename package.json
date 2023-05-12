@@ -56,7 +56,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "selenium-test": "concurrently \"npm start\" \"wait-on http://localhost:1102 && cd .. && cd cf-qa-testsuite && gradle clean test && kill-port 1102\"",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test-all": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watch"
   },
   "eslintConfig": {
     "extends": [

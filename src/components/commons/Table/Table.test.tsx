@@ -1,7 +1,8 @@
-import {  render, screen } from "@testing-library/react";
+import {   screen } from "@testing-library/react";
 import Router from "react-router";
 
 import Table from ".";
+import { render } from "../../../test-utils";
 
 const columnsMock = [
   {

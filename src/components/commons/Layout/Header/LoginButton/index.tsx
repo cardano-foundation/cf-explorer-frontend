@@ -1,4 +1,3 @@
-import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -16,18 +15,7 @@ interface Props {}
 const LoginButton: React.FC<Props> = () => {
   const { userData } = useSelector(({ user }: RootState) => user);
   const history = useHistory();
-  const { disconnect } = useCardano({
-    limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
-  });
 
-  // useEffect(() => {
-  //   window.onbeforeunload = function () {
-  //     if (!localStorage.getItem("token")) {
-  //       disconnect();
-  //       removeAuthInfo();
-  //     }
-  //   };
-  // }, []);
   const handleClick = () => {
     history.push(routers.SIGN_IN);
   };

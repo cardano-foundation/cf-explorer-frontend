@@ -41,7 +41,7 @@ const ReportComposerModal = ({ open, handleCloseModal }: IPropsModal) => {
   const defaultParams = [paramsStep1, paramsStep2, paramsStep3];
 
   return (
-    <Box>
+    <Box data-testid="steps-modal">
       <FilledInfoModal
         open={currentStep === STEPS.step1}
         handleCloseModal={handleCloseModal}

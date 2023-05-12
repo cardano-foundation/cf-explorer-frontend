@@ -16,7 +16,7 @@ const StyledModal: React.FC<IProps> = ({ open, handleCloseModal, children, title
   return (
     <Modal open={open}>
       <ModalContainer width={width} height={height} p={`${paddingY || "50px"} ${paddingX || "40px"}`} viewwidth={isMobile ? 92 : 70}>
-        <CloseButton saving={0} onClick={() => handleCloseModal()}>
+        <CloseButton saving={0} onClick={() => handleCloseModal()} data-testid="close-modal-button">
           <IoMdClose />
         </CloseButton>
         {title && (

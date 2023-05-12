@@ -81,7 +81,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
       <GridBox>
         {loading &&
           [...new Array(12)].map((i, ii) => (
-            <Skeleton style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
+            <Skeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
           ))}
 
         {!loading &&

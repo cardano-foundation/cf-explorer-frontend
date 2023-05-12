@@ -8,5 +8,5 @@ test("should render SPO RecentRegistrations call mock api", async () => {
   });
   const onSelect = jest.fn();
   render(<RecentRegistrations onSelect={onSelect} />);
-  expect(screen.getByText("Recent Registrations")).toBeInTheDocument();
+  expect(screen.getByText("Registration List")).toBeInTheDocument();
 });

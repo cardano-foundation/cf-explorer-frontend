@@ -10,7 +10,7 @@ describe("RecentDeregistrations", () => {
 
     render(<RecentDeregistration onSelect={onSelect} />);
 
-    expect(screen.getByText("Recent Deregistrations")).toBeInTheDocument();
+    expect(screen.getByText("Deregistration List")).toBeInTheDocument();
   });
 
   test("should render 0 data", async () => {
