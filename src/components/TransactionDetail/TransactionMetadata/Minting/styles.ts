@@ -23,6 +23,9 @@ export const Amount = styled(Box)`
 `;
 
 export const TableMinting = styled(Table)(({ theme }) => ({
+  "& > div:first-of-type": {
+    margin: 0,
+  },
   "& tr th:last-child": {
     width: "120px",
   },
