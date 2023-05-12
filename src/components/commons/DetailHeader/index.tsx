@@ -35,11 +35,12 @@ import Bookmark from "../BookmarkIcon";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { useHistory } from "react-router-dom";
-import { SearchIcon } from "../../../commons/resources";
+import { EmptyIcon, SearchIcon } from "../../../commons/resources";
 import { BiChevronDown } from "react-icons/bi";
 import { getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import { useScreen } from "../../../commons/hooks/useScreen";
 import CustomTooltip from "../CustomTooltip";
+import NoRecord from "../NoRecord";
 
 interface DetailHeaderProps {
   type: Bookmark["type"];
@@ -210,17 +211,21 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
                       },
                     }}
                   >
-                    {item?.dataSearch?.map((item, index) => (
-                      <StyledMenuItem onClick={() => {}} key={index}>
-                        <Box mr={2} sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}>
-                          {item.assetName}
-                        </Box>
-                        <Box fontWeight={600}>
-                          {item.isSent ? "-" : "+"}
-                          {numberWithCommas(item.assetQuantity)}
-                        </Box>
-                      </StyledMenuItem>
-                    ))}
+                    {!item?.dataSearch ||
+                      (item?.dataSearch?.length === 0 && <Box height={"200px"} component={"img"} src={EmptyIcon} />)}
+                    {item?.dataSearch &&
+                      item?.dataSearch?.length > 0 &&
+                      item?.dataSearch?.map((item, index) => (
+                        <StyledMenuItem onClick={() => {}} key={index}>
+                          <Box mr={2} sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}>
+                            {item.assetName}
+                          </Box>
+                          <Box fontWeight={600}>
+                            {item.isSent ? "-" : "+"}
+                            {numberWithCommas(item.assetQuantity)}
+                          </Box>
+                        </StyledMenuItem>
+                      ))}
                   </StyledSelect>
                 )}
               </Box>
