@@ -3,14 +3,16 @@ import ReportGeneratedTabs, { TabsItem } from "../../components/ReportGeneratedT
 import StakekeySummary from "../../components/StakekeySummary";
 import PoolLifecycle from "../../components/PoolLifecycle";
 
+export const defaultReportTab = "stake";
+
 const tabItems: TabsItem[] = [
   {
-    value: "1",
+    value: "stake",
     label: "Stake Key summary",
     component: <StakekeySummary />,
   },
   {
-    value: "2",
+    value: "pool",
     label: "Pool lifecycle",
     component: <PoolLifecycle />,
   },
@@ -18,7 +20,7 @@ const tabItems: TabsItem[] = [
 const ReportGenerated = () => {
   return (
     <Container>
-      <ReportGeneratedTabs tabsItem={tabItems} />
+      <ReportGeneratedTabs defaultTab={defaultReportTab} tabsItem={tabItems} />
     </Container>
   );
 };

@@ -1,9 +1,10 @@
 import { TabContext, TabList } from "@mui/lab";
 import { Box, Tab, Tabs } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TabContent, TabHeader, TabLabel } from "./styles";
 import { DownloadButtonAll } from "../../pages/StackingLifecycle/styles";
 import { DownloadWhiteIC } from "../../commons/resources";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 
 export interface TabsItem {
   value: string;
@@ -13,15 +14,24 @@ export interface TabsItem {
 
 interface ReportGeneratedProps {
   tabsItem: TabsItem[];
+  defaultTab: string;
 }
 
-const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
-  const [value, setValue] = useState("1");
+const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem, defaultTab }) => {
+  const { search } = useLocation();
+  const history = useHistory();
+  const tab = new URLSearchParams(search).get("tab");
+  const [value, setValue] = useState(tab ?? defaultTab);
 
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
+    history.replace("/report-generated?tab=" + newValue);
   };
 
+  useEffect(() => {
+    setValue(tab ?? defaultTab);
+  }, [tab]);
+  
   return (
     <Box>
       <TabContext value={value}>
