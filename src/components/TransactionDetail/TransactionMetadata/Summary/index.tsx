@@ -96,7 +96,7 @@ const SummaryItems = ({
               </Box>
             </Box>
           </Box>
-          {type === "up" ? (
+          {/* {type === "up" ? (
             <Box
               display={"flex"}
               alignItems={isGalaxyFoldSmall ? "flex-start" : "center"}
@@ -121,7 +121,7 @@ const SummaryItems = ({
                 <ADAicon />
               </Box>
             </Box>
-          ) : null}
+          ) : null} */}
         </Box>
       </Box>
       {item.tokens && item.tokens.length > 0 && (

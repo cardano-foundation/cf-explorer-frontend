@@ -106,13 +106,15 @@ type TPoolCertificated = {
     port: number;
   }[];
   rewardAccount: string;
-  type: string;
+  type: "POOL_REGISTRATION" | "POOL_DEREGISTRATION";
   vrfKey: string;
+  epoch: number;
 };
 
 type TStakeCertificated = {
   stakeAddress: string;
-}
+  type: "STAKE_REGISTRATION" | "STAKE_DEREGISTRATION";
+};
 
 interface Transaction {
   tx: {
