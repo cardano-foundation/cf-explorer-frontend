@@ -77,12 +77,14 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   }, [address, dateRange, reportType]);
 
   let isShowTextWarning = true;
+  let placeholderAddress = "Address details";
   switch (reportType) {
     case "POOL_REPORT":
       isShowTextWarning = false;
       break;
     case "STAKE_KEY_REPORT":
       isShowTextWarning = false;
+      placeholderAddress = "Stake key";
       break;
     default:
       isShowTextWarning = true;
@@ -144,7 +146,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
               onChange={onChangeAddress}
               value={address}
               sx={{ flexGrow: 1 }}
-              placeholder="Address details"
+              placeholder={placeholderAddress}
             />
           </StyledAddressSelect>
         </Box>
