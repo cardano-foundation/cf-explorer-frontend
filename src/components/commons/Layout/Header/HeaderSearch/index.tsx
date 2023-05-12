@@ -19,6 +19,9 @@ import {
 } from "./style";
 import { useSelector } from "react-redux";
 import { useScreen } from "../../../../../commons/hooks/useScreen";
+import defaultAxios from "../../../../../commons/utils/axios";
+import { API } from "../../../../../commons/utils/api";
+import qs from "qs";
 
 interface Props {
   home: boolean;
@@ -116,11 +119,18 @@ const HeaderSearch: React.FC<Props> = ({ home, callback }) => {
     setValues({ ...intitalValue, filter });
   }, [history.location.pathname]);
 
-  const handleSearch = (e?: FormEvent, filterParams?: FilterParams) => {
+  const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
-    const detail = options.find(item => item.value === filter)?.detail;
+    const option = options.find(item => item.value === filter);
+
     callback?.();
-    if (detail) return history.push(detail(search));
+    if (option?.value === "spo-lifecycle" && option?.detail) {
+      const data = await defaultAxios
+        .get(`${API.DELEGATION.POOL_LIST}?${qs.stringify({ search })}`)
+        .then(res => res.data.data);
+      if (data && data.length) return history.push(option?.detail(data[0].poolId));
+    }
+    if (option?.detail) return history.push(option?.detail(search));
     if (search) {
       history.push(
         `${routers.SEARCH}?${stringify({ search, filter: filterParams || (filter !== "all" ? filter : undefined) })}`
