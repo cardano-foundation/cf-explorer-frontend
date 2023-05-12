@@ -153,7 +153,7 @@ export enum REFRESH_TIMES {
   TOP_DELEGATORS = 60,
 }
 
-export const PROTOCOL_TYPE: any = {
+export const PROTOCOL_TYPE = {
   minFeeA: "MIN_FEE_A ",
   minFeeB: "MIN_FEE_B ",
   maxBlockSize: "MAX_BLOCK_SIZE ",

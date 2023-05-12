@@ -93,7 +93,7 @@ type TPoolCertificated = {
     ipv4: string;
     ipv6: string;
     port: number;
-  };
+  }[];
   rewardAccount: string;
   type: string;
   vrfKey: string;

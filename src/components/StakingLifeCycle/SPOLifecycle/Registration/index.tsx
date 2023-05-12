@@ -1,4 +1,4 @@
-import { alpha, Box, Grid, Skeleton, styled } from "@mui/material";
+import { alpha, Box, Grid, Skeleton, styled, Tooltip } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { Link as LinkDom } from "react-router-dom";
 
@@ -35,7 +35,7 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import RecentRegistrations from "./RecentRegistrations";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import moment from "moment";
 import PopupStaking from "../../../commons/PopupStaking";
@@ -55,17 +55,19 @@ const Registration = ({
   handleResize: () => void;
 }) => {
   const [selected, setSelected] = useState<SPORegistration | null>(null);
+
+  const handleSelect = (registration: SPORegistration | null) => {
+    setSelected(registration);
+  };
+
   return (
     <Box>
-      <Box>{selected === null && <RecentRegistrations onSelect={registration => setSelected(registration)} />}</Box>
+      <Box>
+        <RecentRegistrations onSelect={handleSelect} />
+      </Box>
       <Box>
         {!!selected && (
-          <RegistrationTimeline
-            handleResize={handleResize}
-            setSelected={setSelected}
-            selected={selected}
-            containerPosition={containerPosition}
-          />
+          <RegistrationTimeline handleResize={handleResize} selected={selected} containerPosition={containerPosition} />
         )}
       </Box>
     </Box>
@@ -74,8 +76,7 @@ const Registration = ({
 export default Registration;
 
 const RegistrationTimeline = ({
-  containerPosition,
-  setSelected,
+  containerPosition, 
   handleResize,
   selected,
 }: {
@@ -83,11 +84,11 @@ const RegistrationTimeline = ({
     top?: number;
     left?: number;
   };
-  handleResize: () => void;
-  setSelected: (registration: SPORegistration | null) => void;
+  handleResize: () => void; 
   selected: SPORegistration | null;
 }) => {
   const { poolId = "" } = useParams<{ poolId: string }>();
+  const history = useHistory();
   const { data, loading } = useFetch<SPORegistrationDetail>(
     selected?.poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, selected?.poolUpdateId) : ""
   );
@@ -107,11 +108,17 @@ const RegistrationTimeline = ({
   const SPOInfoRef = useRef(null);
   const SPOKeyRef = useRef(null);
 
+
+  const handleBack = () => {
+    history.push(details.spo(poolId, "timeline", "registration"));
+  };
+
+
   if (loading) {
     return (
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-          <IconButtonBack onClick={() => setSelected(null)}>
+          <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
           <Box display={"flex"}>
@@ -137,7 +144,7 @@ const RegistrationTimeline = ({
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>
@@ -167,18 +174,22 @@ const RegistrationTimeline = ({
             <CustomTooltip title={data?.poolName}>
               <PoolName> {data?.poolName}</PoolName>
             </CustomTooltip>
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOInfoRef}
-                  component={IconButton}
-                  left={"33%"}
-                  onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
-                >
-                  <SPOInfo />
-                </ButtonSPO>
-              )}
-              content={
+            <CustomTooltip
+              wOpacity={false}
+              componentsProps={{
+                transition: {
+                  style: {
+                    backgroundColor: "white",
+                    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                    padding: "10px",
+                  }
+                },
+                arrow: {
+                  style: {
+                    color: "white",
+                  }
+                }
+              }} title={
                 <Box>
                   <Box display={"flex"} alignItems={"center"}>
                     <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
@@ -195,22 +206,33 @@ const RegistrationTimeline = ({
                     </Box>
                     <PoolNamePopup to={details.delegation(data?.poolView)}>{data?.poolName}</PoolNamePopup>
                   </Box>
-                </Box>
-              }
-            />
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOKeyRef}
-                  component={IconButton}
-                  left={"52%"}
-                  onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
-                >
-                  <SPOKey fill="#438F68" />
-                </ButtonSPO>
-              )}
-              content={
-                <Box display={"flex"} alignItems={"center"}>
+                </Box>}
+            >
+              <ButtonSPO
+                ref={SPOInfoRef}
+                component={IconButton}
+                left={"33%"}
+              >
+                <SPOInfo />
+              </ButtonSPO>
+            </CustomTooltip>
+            <Link to={details.stake(data?.stakeKeys[0] || "")}>
+              <CustomTooltip
+                wOpacity={false}
+                componentsProps={{
+                  transition: {
+                    style: {
+                      backgroundColor: "white",
+                      boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                      padding: "10px",
+                    }
+                  },
+                  arrow: {
+                    style: {
+                      color: "white",
+                    }
+                  }
+                }} title={<Box display={"flex"} alignItems={"center"}>
                   {data?.stakeKeys && data.stakeKeys.length > 0 && (
                     <>
                       <SPOKey fill="#108AEF" />
@@ -220,9 +242,16 @@ const RegistrationTimeline = ({
                       <CopyButton text={data?.stakeKeys[0]} />
                     </>
                   )}
-                </Box>
-              }
-            />
+                </Box>}>
+                <ButtonSPO
+                  ref={SPOKeyRef}
+                  component={IconButton}
+                  left={"52%"}
+                >
+                  <SPOKey fill="#438F68" />
+                </ButtonSPO>
+              </CustomTooltip>
+            </Link>
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>

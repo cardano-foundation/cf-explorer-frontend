@@ -1,7 +1,7 @@
 import { Box, Skeleton } from "@mui/material";
 import moment from "moment";
-import { useMemo, useState } from "react";
-import { useParams } from "react-router";
+import { useEffect, useMemo, useState } from "react";
+import { useHistory, useParams } from "react-router";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../../StackingFilter";
@@ -11,13 +11,15 @@ import { FilterDateLabel } from "../../Delegation/styles";
 import { GridBox, WrapFilterDescription } from "./styles";
 import { DATETIME_PARTTEN } from "../../../../StackingFilter/DateRangeModal";
 import { DescriptionText } from "../../styles";
+import { details } from "../../../../../commons/routers";
 
 interface Props {
-  onSelect: (deregistration: DeregistrationItem) => void;
+  onSelect: (deregistration: DeregistrationItem | null) => void;
 }
 
 const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
-  const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
+  const history = useHistory();
 
   const [params, setParams] = useState<FilterParams>({
     fromDate: undefined,
@@ -30,6 +32,15 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
     { page: 0, size: 1000, ...params }
   );
 
+  useEffect(() => {
+    const currentItem = data.find(item => item.txHash === txHash);
+    onSelect(currentItem || null);
+  }, [txHash, data]);
+
+  const handleSelect = (deregistration: DeregistrationItem) => {
+    history.push(details.staking(stakeId, "timeline", "deregistration", deregistration.txHash));
+  };
+  
   const filterLabel = useMemo(() => {
     if (params.fromDate && params.toDate)
       return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
@@ -41,10 +52,12 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
     if (params.txHash) return `Searching for : ${params.txHash}`;
   }, [params]);
 
+  if (txHash) return null;
+
   return (
     <Box marginTop="32px">
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
-        <DescriptionText>Recent Deregistrations</DescriptionText>
+        <DescriptionText>Deregistration List</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             Showing {total} {total > 1 ? "results" : "result"}
@@ -78,7 +91,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
                 amount={Math.abs(item.deposit)}
                 time={item.time}
                 hash={item.txHash}
-                onClick={onSelect}
+                onClick={handleSelect}
               />
             );
           })}

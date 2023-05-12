@@ -28,9 +28,9 @@ export const NextButton = styled(Button)(({ theme }) => ({
   background: theme.palette.grey[700],
   textTransform: "capitalize",
   fontWeight: "bold",
-  padding: "8px 20px",
+  padding: "10px 20px",
   borderRadius: "8px",
-  position: "absolute",
+  position: "unset",
   right: 20,
   bottom: 30,
   ":hover": {
@@ -42,9 +42,9 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   background: "transparent",
   textTransform: "capitalize",
   fontWeight: "bold",
-  padding: "8px 20px",
   borderRadius: "8px",
-  position: "absolute",
+  position: "unset",
+  padding: "10px 20px",
   left: 20,
   bottom: 30,
   border: `2px solid ${theme.palette.border.hint}`,
@@ -82,6 +82,5 @@ export const DescriptionText = styled(Typography)`
 `;
 
 export const ButtonText = styled(Typography)`
-  font-size: 16px;
   font-weight: 700;
 `;

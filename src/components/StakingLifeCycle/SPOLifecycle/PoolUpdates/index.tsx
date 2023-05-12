@@ -30,7 +30,7 @@ import { WrapFilterDescription } from "../../DelegatorLifecycle/Registration/Rec
 import { GridBox } from "../../DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import OverviewStaking from "../../../commons/OverviewStaking";
 import PopoverStyled from "../../../commons/PopoverStyled";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { details } from "../../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
@@ -56,19 +56,19 @@ const PoollUpdates = ({
   };
   handleResize: () => void;
 }) => {
-  // To do: chonj default là list sau đó clickdetail nhấn sang timelne. Đổi trong tương lai
   const [selected, setSelected] = useState<PoolUpdateItem | null>(null);
+
+  const handleSelect = (pool: PoolUpdateItem | null) => {
+    setSelected(pool);
+  };
   return (
     <Box>
-      <Box>{selected === null && <PoollUpdatesList setSelected={setSelected} />}</Box>
+      <Box>
+        <PoollUpdatesList onSelect={handleSelect} />
+      </Box>
       <Box>
         {!!selected && (
-          <PoollUpdatesTimeline
-            handleResize={handleResize}
-            selected={selected}
-            setSelected={setSelected}
-            containerPosition={containerPosition}
-          />
+          <PoollUpdatesTimeline handleResize={handleResize} selected={selected} containerPosition={containerPosition} />
         )}
       </Box>
     </Box>
@@ -76,18 +76,30 @@ const PoollUpdates = ({
 };
 export default PoollUpdates;
 
-const PoollUpdatesList = ({ setSelected }: { setSelected: (pool: PoolUpdateItem | null) => void }) => {
-  const { poolId = "" } = useParams<{ poolId: string }>();
+const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null) => void }) => {
+  const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
+  const history = useHistory();
   const [params, setParams] = useState<FilterParams>();
   const { data, total } = useFetchList<PoolUpdateItem>(API.SPO_LIFECYCLE.POOL_UPDATE(poolId), {
     page: 0,
     size: 1000,
     ...params,
   });
+  useEffect(() => {
+    const currentItem = data.find(item => item.txHash === txHash);
+    onSelect(currentItem || null);
+  }, [txHash, data]);
+
+  const handleSelect = (poolUpdated: SPODeregistration) => {
+    history.push(details.spo(poolId, "timeline", "pool-updates", poolUpdated.txHash));
+  };
+
+  if (txHash) return null;
+  
   return (
     <Box marginTop="32px">
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
-        <DescriptionText>Recent Withdrawals</DescriptionText>
+        <DescriptionText>Recent Updates</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>Showing {total} results</WrapFilterDescription>
           <StackingFilter
@@ -99,13 +111,7 @@ const PoollUpdatesList = ({ setSelected }: { setSelected: (pool: PoolUpdateItem 
       <GridBox>
         {data.map(item => {
           return (
-            <OverviewStaking
-              item={item}
-              onClick={pool => setSelected(pool)}
-              hash={item.txHash}
-              amount={item.fee}
-              time={item.time}
-            />
+            <OverviewStaking item={item} onClick={handleSelect} hash={item.txHash} amount={item.fee} time={item.time} />
           );
         })}
       </GridBox>
@@ -115,7 +121,6 @@ const PoollUpdatesList = ({ setSelected }: { setSelected: (pool: PoolUpdateItem 
 
 const PoollUpdatesTimeline = ({
   containerPosition,
-  setSelected,
   selected,
   handleResize,
 }: {
@@ -123,10 +128,11 @@ const PoollUpdatesTimeline = ({
     top?: number;
     left?: number;
   };
-  setSelected: (pool: PoolUpdateItem | null) => void;
   handleResize: () => void;
   selected: PoolUpdateItem;
 }) => {
+  const { poolId = "" } = useParams<{ poolId: string }>();
+  const history = useHistory();
   const { data, loading } = useFetch<PoolUpdateDetail>(
     selected?.poolUpdateId ? API.SPO_LIFECYCLE.POOL_UPDATE_DETAIL(selected.poolUpdateId) : ""
   );
@@ -144,11 +150,15 @@ const PoollUpdatesTimeline = ({
     handleResize();
   }, [loading]);
 
+  const handleBack = () => {
+    history.push(details.spo(poolId, "timeline", "pool-updates"));
+  };
+
   if (loading) {
     return (
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-          <IconButtonBack onClick={() => setSelected(null)}>
+          <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
           <Box display={"flex"}>
@@ -175,7 +185,7 @@ const PoollUpdatesTimeline = ({
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>
@@ -205,50 +215,63 @@ const PoollUpdatesTimeline = ({
             <CustomTooltip title={data?.poolName}>
               <PoolName> {data?.poolName}</PoolName>
             </CustomTooltip>
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOInfoRef}
-                  component={IconButton}
-                  left={"33%"}
-                  onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
-                >
-                  <SPOInfo />
-                </ButtonSPO>
-              )}
-              content={
-                <Box>
-                  <Box display={"flex"} alignItems={"center"}>
-                    <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
-                      Pool ID:
-                    </Box>
-                    <PoolNamePopup to={details.delegation(data?.poolView)}>
-                      {getShortHash(data?.poolView || "")}
-                    </PoolNamePopup>
-                    <CopyButton text={data?.poolView} />
-                  </Box>
-                  <Box display={"flex"} alignItems={"center"}>
-                    <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
-                      Pool name:
-                    </Box>
-                    <PoolNamePopup to={details.delegation(data?.poolView)}>{data?.poolName}</PoolNamePopup>
-                  </Box>
-                </Box>
-              }
-            />
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOKeyRef}
-                  component={IconButton}
-                  left={"52%"}
-                  onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
-                >
-                  <SPOKey fill="#438F68" />
-                </ButtonSPO>
-              )}
-              content={
+            <CustomTooltip
+              wOpacity={false}
+              componentsProps={{
+                transition: {
+                  style: {
+                    backgroundColor: "white",
+                    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                    padding: "10px",
+                  }
+                },
+                arrow: {
+                  style: {
+                    color: "white",
+                  }
+                }
+              }} title={<Box>
                 <Box display={"flex"} alignItems={"center"}>
+                  <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
+                    Pool ID:
+                  </Box>
+                  <PoolNamePopup to={details.delegation(data?.poolView)}>
+                    {getShortHash(data?.poolView || "")}
+                  </PoolNamePopup>
+                  <CopyButton text={data?.poolView} />
+                </Box>
+                <Box display={"flex"} alignItems={"center"}>
+                  <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
+                    Pool name:
+                  </Box>
+                  <PoolNamePopup to={details.delegation(data?.poolView)}>{data?.poolName}</PoolNamePopup>
+                </Box>
+              </Box>}>
+              <ButtonSPO
+                ref={SPOInfoRef}
+                component={IconButton}
+                left={"33%"}
+              >
+                <SPOInfo />
+              </ButtonSPO>
+            </CustomTooltip>
+            <Link to={details.stake(data?.stakeKeys[0] || "")}>
+              <CustomTooltip
+                wOpacity={false}
+                componentsProps={{
+                  transition: {
+                    style: {
+                      backgroundColor: "white",
+                      boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                      padding: "10px",
+                    }
+                  },
+                  arrow: {
+                    style: {
+                      color: "white",
+                    }
+                  }
+                }} title={<Box display={"flex"} alignItems={"center"}>
                   {data?.stakeKeys && data.stakeKeys.length > 0 && (
                     <>
                       <SPOKey fill="#108AEF" />
@@ -258,9 +281,16 @@ const PoollUpdatesTimeline = ({
                       <CopyButton text={data?.stakeKeys[0]} />
                     </>
                   )}
-                </Box>
-              }
-            />
+                </Box>} >
+                <ButtonSPO
+                  ref={SPOKeyRef}
+                  component={IconButton}
+                  left={"52%"}
+                >
+                  <SPOKey fill="#438F68" />
+                </ButtonSPO>
+              </CustomTooltip>
+            </Link>
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
@@ -653,19 +683,19 @@ export const PoolUpdateModal = ({
     label: string;
     children: React.ReactNode;
   }[] = [
-    {
-      key: "poolCertificate",
-      icon: PoolCert,
-      label: "Pool certificate",
-      children: <>{renderPoolCert()}</>,
-    },
-    {
-      key: "certificateUpdates",
-      icon: CertUpdate,
-      label: "Certificate updates",
-      children: <Box>{renderCertificateUpdates()}</Box>,
-    },
-  ];
+      {
+        key: "poolCertificate",
+        icon: PoolCert,
+        label: "Pool certificate",
+        children: <>{renderPoolCert()}</>,
+      },
+      {
+        key: "certificateUpdates",
+        icon: CertUpdate,
+        label: "Certificate updates",
+        children: <Box>{renderCertificateUpdates()}</Box>,
+      },
+    ];
 
   const handleChange = (event: React.SyntheticEvent, tab: "poolCertificate" | "certificateUpdates") => {
     setTabActive(tab);

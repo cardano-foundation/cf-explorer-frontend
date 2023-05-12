@@ -123,9 +123,11 @@ interface PoolInfo {
 interface IDashboardResponse {
   id: number;
   poolReportId: number;
-  stakeKeyReportId:number;
+  stakeKeyReportId: number;
   createdAt: string;
   reportName: string;
   status: string;
   type: string;
 }
+
+declare type SPOStep = "registration" | "pool-updates" | "operator-rewards" | "deregistration";

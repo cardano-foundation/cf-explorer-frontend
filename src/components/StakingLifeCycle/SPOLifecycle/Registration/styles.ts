@@ -1,6 +1,7 @@
 import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
 import { Link } from "react-router-dom";
 import CopyButton from "../../../commons/CopyButton";
+import CustomTooltip from "../../../commons/CustomTooltip";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -111,3 +112,9 @@ export const StyledCopyButton = styled(CopyButton)`
 export const StyledLink = styled(Link)`
   font-size: 0.875rem;
 `;
+
+export const CustomPopover = styled(CustomTooltip)(({ theme }) => ({
+  background: theme.palette.common.white,
+  borderRadius: "4px",
+  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+}));

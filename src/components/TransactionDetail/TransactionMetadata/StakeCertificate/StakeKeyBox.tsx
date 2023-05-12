@@ -12,19 +12,20 @@ const StakeKeyBox = ({ data }: TProps) => {
     {
       label: "Address Stake Key",
       value: getShortWallet(data.stakeAddress),
+      originValue: data.stakeAddress,
     },
   ];
 
   return (
-    <Box>
+    <Box pt={"15px"}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          {leftRow.map(({ label, value }) => {
+          {leftRow.map(({ label, value, originValue }) => {
             return (
               <Box key={label} sx={{ marginBottom: "15px" }}>
                 <TextLabel>{label}: </TextLabel>
                 <TextValue>
-                  {value} <CopyButton text={value} />
+                  {value} <CopyButton text={originValue} />
                 </TextValue>
               </Box>
             );

@@ -6,7 +6,6 @@ export const WrapContainer = styled("div")`
   justify-content: center;
   align-items: flex-start;
   gap: 10px;
-  max-width: 265px;
   max-height: 150px;
   background: ${props => props.theme.palette.background.paper};
   padding: 20px;

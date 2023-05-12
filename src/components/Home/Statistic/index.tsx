@@ -67,11 +67,11 @@ const HomeStatistic: React.FC<Props> = () => {
   const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
   const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
 
-  const { isMobile } = useScreen();
+  const { isMobile, isGalaxyFoldSmall } = useScreen();
 
   return (
     <StatisticContainer container spacing={2}>
-      <Grid item xl lg={3} sm={6} xs={6}>
+      <Grid item xl lg={3} sm={6} xs={isGalaxyFoldSmall ? 12 : 6}>
         {!usdMarket || !btcMarket?.[0] ? (
           <SkeletonBox />
         ) : (
@@ -90,7 +90,7 @@ const HomeStatistic: React.FC<Props> = () => {
           </Item>
         )}
       </Grid>
-      <Grid item xl lg={3} sm={6} xs={6}>
+      <Grid item xl lg={3} sm={6} xs={isGalaxyFoldSmall ? 12 : 6}>
         {!usdMarket ? (
           <SkeletonBox />
         ) : (
@@ -104,7 +104,7 @@ const HomeStatistic: React.FC<Props> = () => {
           </Item>
         )}
       </Grid>
-      <Grid item xl lg={3} sm={6} xs={6}>
+      <Grid item xl lg={3} sm={6} xs={isGalaxyFoldSmall ? 12 : 6}>
         {!currentEpoch ? (
           <SkeletonBox />
         ) : (
@@ -136,7 +136,7 @@ const HomeStatistic: React.FC<Props> = () => {
           </Link>
         )}
       </Grid>
-      <Grid item xl lg={3} sm={6} xs={6}>
+      <Grid item xl lg={3} sm={6} xs={isGalaxyFoldSmall ? 12 : 6}>
         {!data || !usdMarket ? (
           <SkeletonBox />
         ) : (

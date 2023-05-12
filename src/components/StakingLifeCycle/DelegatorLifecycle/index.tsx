@@ -40,23 +40,22 @@ import {
 } from "../../ModalDescription";
 import { useHistory, useParams } from "react-router-dom";
 import { details } from "../../../commons/routers";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface StepperProps {
   icon: React.ReactNode;
   title: string;
   component: React.ReactNode;
   description: React.ReactNode;
-  key: string;
+  key: DelegationStep;
 }
 
 const DelegatorLifecycle = ({
-  setMode,
   containerPosition,
   handleResize,
   currentStep,
   setCurrentStep,
 }: {
-  setMode: (mode: "timeline" | "tablular") => void;
   containerPosition: {
     top?: number;
     left?: number;
@@ -66,6 +65,7 @@ const DelegatorLifecycle = ({
   setCurrentStep: (step: number) => void;
 }) => {
   const history = useHistory();
+  const { isMobile } = useScreen();
   const { stakeId = "" } = useParams<{
     stakeId: string;
   }>();
@@ -107,7 +107,7 @@ const DelegatorLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "rewardsDistribution",
+      key: "rewards",
     },
     {
       icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
@@ -119,7 +119,7 @@ const DelegatorLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "rewardsWithdrawal",
+      key: "withdrawal-history",
     },
     {
       icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 4 ? "#fff" : "#98A2B3"} />,
@@ -136,7 +136,7 @@ const DelegatorLifecycle = ({
   ];
 
   return (
-    <Box>
+    <Box mr={isMobile ? 2 : 0}>
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
           <Step component={"span"} key={idx} active={+(currentStep >= idx)}>
@@ -144,7 +144,7 @@ const DelegatorLifecycle = ({
               active={+(currentStep >= idx)}
               onClick={() => {
                 setCurrentStep(idx);
-                history.push(details.staking(stakeId, step.key));
+                history.push(details.staking(stakeId, "timeline", step.key));
               }}
             >
               {step.icon}
@@ -170,34 +170,40 @@ const DelegatorLifecycle = ({
         {stepper[currentStep].component}
       </Box>
 
-      {currentStep > 0 && (
-        <PreviousButton
-          onClick={() => {
-            history.push(details.staking(stakeId, stepper[currentStep - 1]?.key));
-            setCurrentStep(currentStep - 1);
-          }}
-        >
-          <PreviousIcon />
-          <ButtonText>Previous: {stepper[currentStep - 1]?.title}</ButtonText>
-        </PreviousButton>
-      )}
-      <NextButton
-        onClick={() => {
-          if (currentStep === stepper.length - 1) {
-            history.push(details.staking(stakeId, "tablular"));
-            setMode("tablular");
-          } else {
-            history.push(details.staking(stakeId, stepper[currentStep + 1]?.key));
-            setCurrentStep(currentStep + 1);
-          }
-        }}
-        variant="contained"
+      <Box
+        display="flex"
+        flexDirection={isMobile ? "column" : "row"}
+        justifyContent={isMobile ? "center" : "space-between"}
       >
-        <ButtonText>
-          Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
-        </ButtonText>
-        <NextIcon />
-      </NextButton>
+        {currentStep > 0 && (
+          <PreviousButton
+            sx={{ mb: `${isMobile ? "16px" : "0px"}` }}
+            onClick={() => {
+              history.push(details.staking(stakeId, "timeline", stepper[currentStep - 1]?.key));
+              setCurrentStep(currentStep - 1);
+            }}
+          >
+            <PreviousIcon />
+            <ButtonText>Previous: {stepper[currentStep - 1]?.title}</ButtonText>
+          </PreviousButton>
+        )}
+        <NextButton
+          onClick={() => {
+            if (currentStep === stepper.length - 1) {
+              history.push(details.staking(stakeId, "tablular"));
+            } else {
+              history.push(details.staking(stakeId, "timeline", stepper[currentStep + 1]?.key));
+              setCurrentStep(currentStep + 1);
+            }
+          }}
+          variant="contained"
+        >
+          <ButtonText fontSize={isMobile ? 14 : 16}>
+            Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+          </ButtonText>
+          <NextIcon />
+        </NextButton>
+      </Box>
       <ADATransferModal open={open} handleCloseModal={() => setOpen(false)} />
     </Box>
   );
