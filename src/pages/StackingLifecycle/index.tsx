@@ -104,10 +104,11 @@ const Dashboard: React.FC = () => {
     else if (row.poolReportId) history.push(details.generated_pool_detail(row.poolReportId));
   };
 
-  const downloadReportDashboard = useCallback(async (reportId: number, fileName: string) => {
+  const downloadReportDashboard = useCallback(async (reportId: number, fileName: string, isStake: boolean) => {
     setOnDownload(reportId);
+
     defaultAxiosDownload
-      .get(API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId))
+      .get(isStake ? API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId) : API.REPORT.DOWNLOAD_POOL_SUMMARY(reportId))
       .then(response => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
@@ -138,7 +139,7 @@ const Dashboard: React.FC = () => {
       key: "entity",
       minWidth: "150px",
       render(data) {
-        return <WrapReportName>{data.reportName}</WrapReportName>
+        return <WrapReportName>{data.reportName}</WrapReportName>;
       },
     },
     {
@@ -160,15 +161,14 @@ const Dashboard: React.FC = () => {
               onClick={() =>
                 downloadReportDashboard(
                   data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
-                  data.reportName
+                  data.reportName,
+                  !!data.stakeKeyReportId
                 )
               }
-
             >
               <DownloadBlueIC />
             </IconButton>
           </Box>
-
         );
       },
     },
