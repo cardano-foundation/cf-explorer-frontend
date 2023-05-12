@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import DashboardCard from "../../components/DashboardCard";
-import { Status, GridContainer, TextHeadline, TitleHead, FilterHead } from "./styles";
+import { Status, GridContainer, TextHeadline, TitleHead, FilterHead, StackingLifecycleTable } from "./styles";
 import Table, { Column } from "../../components/commons/Table";
 import {
   FilterIC,
@@ -213,7 +213,7 @@ const Dashboard: React.FC = () => {
           />
         </FilterHead>
       </TitleHead>
-      <Table
+      <StackingLifecycleTable
         isShowingResult={false}
         {...fetchData}
         columns={columns}

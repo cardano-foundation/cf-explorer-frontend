@@ -1,5 +1,6 @@
 import { Box, Button, Container, Grid, styled } from "@mui/material";
 import breakpoints from "../../themes/breakpoints";
+import Table from "../../components/commons/Table";
 
 export const DashboardCardList = styled(Box)`
   display: flex;
@@ -23,7 +24,7 @@ export const GridContainer = styled(Grid)`
   margin-bottom: 35px;
 `;
 
-export const Status = styled("span")<{ status: string }>`
+export const Status = styled("span") <{ status: string }>`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
   padding: 7.5px 11.5px;
@@ -67,3 +68,13 @@ export const FilterHead = styled(Box)`
     justify-content: space-between;
   }
 `;
+export const StackingLifecycleTable = styled(Table)`
+  & > div {
+    padding: 0;
+    border: none;
+  }
+  * {
+    box-shadow: none !important;
+    background-color: transparent !important;
+  }
+`
