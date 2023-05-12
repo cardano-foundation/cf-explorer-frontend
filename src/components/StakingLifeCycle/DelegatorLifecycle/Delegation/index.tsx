@@ -258,7 +258,13 @@ const DelegationTimeline = ({
           <Box ref={fake1Ref} width={"190px"} height={220}></Box>
           <Box component={IconButton} p={0} onClick={() => setOpenModal(true)}>
             <Box ref={registrationRef} width={220} height={220}>
-              <img src={DelegationCertificateIcon} alt="RegistrationCertificateIcon" />
+              <Box
+                component={"img"}
+                borderRadius={2}
+                border={({ palette }) => `2px solid ${palette.green[600]}`}
+                src={DelegationCertificateIcon}
+                alt="RegistrationCertificateIcon"
+              />
             </Box>
           </Box>
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>

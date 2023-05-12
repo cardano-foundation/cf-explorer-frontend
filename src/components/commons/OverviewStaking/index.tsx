@@ -1,9 +1,8 @@
 import { Box } from "@mui/material";
-import moment from "moment";
 import React from "react";
 import { AIconGreen, HashtagIcon, TimerIcon } from "../../../commons/resources";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../commons/utils/helper";
-import { OverviewIcon, OverviewTitle, WrapContainer } from "./styles";
+import { OverviewIcon, OverviewTitle, Card } from "./styles";
 import CustomIcon from "../CustomIcon";
 
 interface Props {
@@ -25,7 +24,7 @@ const OverviewStaking: React.FC<Props> = ({ item, ...props }) => {
   const { hash, amount, time, onClick } = props;
 
   return (
-    <WrapContainer onClick={() => onClick(item)}>
+    <Card onClick={() => onClick(item)}>
       <Box display={"flex"}>
         <OverviewIcon>
           <CustomIcon icon={HashtagIcon} width={17} fill="currentColor" color={theme => theme.palette.primary.main} />
@@ -50,7 +49,7 @@ const OverviewStaking: React.FC<Props> = ({ item, ...props }) => {
           <OverviewTitle>{formatDateTimeLocal(time)}</OverviewTitle>
         </Box>
       </Box>
-    </WrapContainer>
+    </Card>
   );
 };
 

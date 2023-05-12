@@ -14,11 +14,11 @@ import RegistrationCertificate from "../../../../commons/resources/icons/Staking
 
 import Line from "../../../Line";
 import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText, StakeLink } from "./styles";
-import ADAicon, { AdaLogoIcon } from "../../../commons/ADAIcon";
+import { AdaLogoIcon } from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentRegistrations from "./RecentRegistrations";
 import PopoverStyled from "../../../commons/PopoverStyled";
-import { formatADA, formatADAFull, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADAFull, getShortHash } from "../../../../commons/utils/helper";
 import moment from "moment";
 import PopupStaking from "../../../commons/PopupStaking";
 import StyledModal from "../../../commons/StyledModal";
@@ -260,7 +260,12 @@ const RegistrationTimeline = ({
             width={220}
             height={220}
           >
-            <img style={{ marginLeft: "5px" }} src={RegistrationCertificate} alt="RegistrationCertificateIcon" />
+            <Box
+              component={"img"}
+              style={{ marginLeft: "5px" }}
+              src={RegistrationCertificate}
+              alt="RegistrationCertificateIcon"
+            />
           </Box>
           <Box ref={fake2Ref} width={"200px"}></Box>
         </Box>
@@ -291,9 +296,7 @@ export const RegistrationCertificateModal = ({
             </Box>
             {data && (
               <Box>
-                <StakeLink to={details.stake(stake)}>
-                  {stake || ""}
-                </StakeLink>
+                <StakeLink to={details.stake(stake)}>{stake || ""}</StakeLink>
                 <CopyButton text={stake} />
               </Box>
             )}

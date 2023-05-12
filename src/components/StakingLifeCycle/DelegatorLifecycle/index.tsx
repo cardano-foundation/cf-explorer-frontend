@@ -139,9 +139,9 @@ const DelegatorLifecycle = ({
     <Box mr={isMobile ? 2 : 0}>
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
-          <Step component={"span"} key={idx} active={+(currentStep >= idx)}>
+          <Step component={"span"} key={idx} active={+(currentStep === idx)}>
             <StepButton
-              active={+(currentStep >= idx)}
+              active={+(currentStep === idx)}
               onClick={() => {
                 setCurrentStep(idx);
                 history.push(details.staking(stakeId, "timeline", step.key));

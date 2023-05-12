@@ -10,7 +10,18 @@ import {
   WatchlistIC,
   DownloadBlueIC,
 } from "../../commons/resources";
-import { Box, CircularProgress, Container, Grid, IconButton } from "@mui/material";
+import {
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Grid,
+  IconButton,
+  Popper,
+  alpha,
+  useTheme,
+} from "@mui/material";
 import { details, routers } from "../../commons/routers";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { API } from "../../commons/utils/api";
@@ -80,6 +91,7 @@ const Dashboard: React.FC = () => {
   const history = useHistory();
   const [onDownload, setOnDownload] = useState<number | false>(false);
   const [sort, setSort] = useState<string>("");
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>({
     page: 0,
     size: 10,
@@ -90,37 +102,50 @@ const Dashboard: React.FC = () => {
     fromDate: undefined,
     reportName: undefined,
   });
-
-  const fetchData = useFetchList<IStakeKeySummary>(API.REPORT.DASHBOARD, {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+  const theme = useTheme();
+  const open = Boolean(anchorEl);
+  const { data, ...fetchData } = useFetchList<IStakeKeySummary>(API.REPORT.DASHBOARD, {
     page,
     size,
     ...params,
     sort,
   });
   const { isMobile } = useScreen();
-
+  console.log("data,data", data);
   const handleRowClick = (e: React.MouseEvent<Element, MouseEvent>, row: any) => {
     if (row.stakeKeyReportId) history.push(details.generated_staking_detail(row.stakeKeyReportId));
     else if (row.poolReportId) history.push(details.generated_pool_detail(row.poolReportId));
   };
 
-  const downloadReportDashboard = useCallback(async (reportId: number, fileName: string, isStake: boolean) => {
+  const downloadReportDashboard = async (
+    reportId: number,
+    fileName: string,
+    type: "POOL_ID" | "STAKE_KEY",
+    typeExport: "CSV" | "EXCEL" = "CSV"
+  ) => {
     setOnDownload(reportId);
 
     defaultAxiosDownload
-      .get(isStake ? API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId) : API.REPORT.DOWNLOAD_POOL_SUMMARY(reportId))
+      .get(
+        type === "STAKE_KEY"
+          ? `${API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId)}?exportType=${typeExport}`
+          : `${API.REPORT.DOWNLOAD_POOL_SUMMARY(reportId)}?exportType=${typeExport}`
+      )
       .then(response => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", `${fileName}.csv`);
+        link.setAttribute("download", `${fileName}.${typeExport === "CSV" ? "csv" : "xlsx"}`);
         document.body.appendChild(link);
         link.click();
       })
       .finally(() => {
         setOnDownload(false);
       });
-  }, []);
+  };
 
   const columns: Column<IDashboardResponse>[] = [
     {
@@ -152,22 +177,40 @@ const Dashboard: React.FC = () => {
     },
     {
       key: "downloadUrl",
-      render(data) {
+      render(data, idx) {
         return onDownload === data.id ? (
           <CircularProgress size={22} color="primary" />
         ) : (
-          <Box textAlign={"right"}>
-            <IconButton
+          <Box textAlign={"right"} key={idx}>
+            <Box
+              component={Button}
+              textTransform={"capitalize"}
+              onClick={() => {
+                downloadReportDashboard(
+                  data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
+                  data.reportName,
+                  data.type,
+                  "CSV"
+                );
+              }}
+            >
+              Export CSV
+            </Box>
+            <Box
+              ml={2}
+              component={Button}
+              textTransform={"capitalize"}
               onClick={() =>
                 downloadReportDashboard(
                   data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
                   data.reportName,
-                  !!data.stakeKeyReportId
+                  data.type,
+                  "EXCEL"
                 )
               }
             >
-              <DownloadBlueIC />
-            </IconButton>
+              Export Excel
+            </Box>
           </Box>
         );
       },
@@ -220,6 +263,7 @@ const Dashboard: React.FC = () => {
       <Table
         isShowingResult={false}
         {...fetchData}
+        data={data || []}
         columns={columns}
         total={{ title: "Dashboard summary", count: fetchData.total }}
         onClickRow={(e, row) => handleRowClick(e, row)}

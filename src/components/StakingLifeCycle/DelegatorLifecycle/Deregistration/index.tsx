@@ -96,7 +96,7 @@ const DeregistrationTimeline = ({
   const handleBack = () => {
     history.push(details.staking(stakeId, "timeline", "deregistration"));
   };
-  
+
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
@@ -270,7 +270,7 @@ const DeregistrationTimeline = ({
             width={220}
             height={220}
           >
-            <img src={DeregistrationCertificate} alt="DeregistrationCertificate" />
+            <Box component={"img"} borderRadius={2} src={DeregistrationCertificate} alt="DeregistrationCertificate" />
           </Box>
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
