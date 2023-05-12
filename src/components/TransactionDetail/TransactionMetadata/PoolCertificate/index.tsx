@@ -4,6 +4,9 @@ import StakeKeyBox from "./StakeKeyBox";
 import { Box, Grid, useTheme } from "@mui/material";
 import CopyButton from "../../../commons/CopyButton";
 import { getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { details } from "../../../../commons/routers";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import { Link } from "react-router-dom";
 
 interface IProps {
   data: Transaction["poolCertificates"] | null;
@@ -35,7 +38,14 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
                   <Box display="flex" flexDirection="column" gap="15px">
                     <Box display="flex" alignItems="center">
                       <TextLabel>Pool Id: </TextLabel>
-                      <TextValue>{getShortHash(item.poolId)}</TextValue>
+                      <TextValue>
+                        <CustomTooltip title={item.poolId}>
+                          <Box color={"#108aef !important"} component={Link} to={details.delegation(item.poolId)}>
+                            {getShortHash(item.poolId)}
+                          </Box>
+                        </CustomTooltip>
+                        <CopyButton text={item.poolId} />
+                      </TextValue>
                     </Box>
                     <Box display="flex" alignItems="center">
                       <TextLabel>Epoch: </TextLabel>

@@ -38,7 +38,6 @@ const Card = ({
   items?: Required<Transaction>["utxOs"]["inputs"];
   fee?: number;
 }) => {
-
   const totalADA =
     items &&
     items.reduce((prv, item) => {
@@ -129,33 +128,35 @@ const Card = ({
                       </Box>
                     </Box>
                   )}
-                  <Box
-                    justifyContent={"space-between"}
-                    width={"100%"}
-                    display="flex"
-                    flexDirection={isMobile ? "column" : "row"}
-                    paddingTop="5px"
-                  >
-                    <Box mr={3} minWidth={200}>
-                      <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
-                        <Box pr={1}>Stake Address: </Box>
-                        <Link to={details.stake(item?.stakeAddress)}>
-                          <CustomTooltip title={item?.stakeAddress}>
-                            <Box
-                              component={"span"}
-                              fontWeight="bold"
-                              fontFamily={"var(--font-family-text)"}
-                              color={theme => theme.palette.secondary.main}
-                              mr={1}
-                            >
-                              {getShortHash(item?.stakeAddress)}
-                            </Box>
-                          </CustomTooltip>
-                        </Link>
-                        <CopyButton text={item?.stakeAddress} />
+                  {item?.stakeAddress && (
+                    <Box
+                      justifyContent={"space-between"}
+                      width={"100%"}
+                      display="flex"
+                      flexDirection={isMobile ? "column" : "row"}
+                      paddingTop="5px"
+                    >
+                      <Box mr={3} minWidth={200}>
+                        <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
+                          <Box pr={1}>Stake Address: </Box>
+                          <Link to={details.stake(item?.stakeAddress)}>
+                            <CustomTooltip title={item?.stakeAddress}>
+                              <Box
+                                component={"span"}
+                                fontWeight="bold"
+                                fontFamily={"var(--font-family-text)"}
+                                color={theme => theme.palette.secondary.main}
+                                mr={1}
+                              >
+                                {getShortHash(item?.stakeAddress)}
+                              </Box>
+                            </CustomTooltip>
+                          </Link>
+                          <CopyButton text={item?.stakeAddress} />
+                        </Box>
                       </Box>
                     </Box>
-                  </Box>
+                  )}
                 </Box>
                 <Box display={"flex"} alignItems={"end"} flexDirection={"column"}>
                   <Box
@@ -177,7 +178,11 @@ const Card = ({
                     <ADAicon />
                   </Box>
                   <Box display={"flex"} alignItems={"center"}>
-                    {item.tokens && item.tokens.length > 0 && <Box mt={2}><DropdownTokens tokens={item.tokens} type={type} /></Box>}
+                    {item.tokens && item.tokens.length > 0 && (
+                      <Box mt={2}>
+                        <DropdownTokens tokens={item.tokens} type={type} />
+                      </Box>
+                    )}
                   </Box>
                 </Box>
               </Box>
