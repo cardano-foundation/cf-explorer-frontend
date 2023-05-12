@@ -92,7 +92,6 @@ export const TFooter = styled(Box)(({ theme }) => ({
   alignItems: "baseline",
   flexWrap: "wrap",
   color: theme.palette.grey[400],
-  marginTop: "10px",
   [theme.breakpoints.down("md")]: {
     justifyContent: "flex-start",
   },

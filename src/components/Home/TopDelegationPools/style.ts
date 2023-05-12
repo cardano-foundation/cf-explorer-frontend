@@ -38,7 +38,13 @@ export const Title = styled("h3")`
 `;
 
 export const DelegateTable = styled(Table)`
-  overflow-x: auto;
+  & > div {
+    padding: 0;
+    border: none;
+  }
+  * {
+    box-shadow: none !important;
+  }
   table {
     tr {
       th {
