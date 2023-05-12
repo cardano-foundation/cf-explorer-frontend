@@ -78,14 +78,14 @@ export default Deregistration;
 
 const DeregistrationTimeline = ({
   containerPosition,
-  selected, 
+  selected,
   handleResize,
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
-  handleResize: () => void; 
+  handleResize: () => void;
   selected: SPODeregistration | null;
 }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -401,7 +401,7 @@ export const DeregistrationCertificateModal = ({
               Retirement in Epoch
             </Box>
             {data && (
-              <DetailRetirement pt={"2px"} pb={"6px"}>
+              <DetailRetirement pt={"3px"} pb={"5px"}>
                 {data?.retiringEpoch}
               </DetailRetirement>
             )}
