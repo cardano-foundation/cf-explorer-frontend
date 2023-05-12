@@ -9,7 +9,7 @@ export const Container = styled(Box)`
   align-items: center;
   min-height: 100vh;
   min-width: 100vw;
-  padding: 30px;
+  padding: 30px 0;
 `;
 
 export const CloseButton = styled(IconButton)<{ saving: number }>`
@@ -52,7 +52,7 @@ export const WrapHintText = styled(Box)`
 `;
 
 export const WrapForm = styled(Box)(({ theme }) => ({
-  margin: "10px 30px 0 30px",
+  margin: "10px 0 0 0",
   position: "relative",
   background: theme.palette.common.white,
   borderRadius: "12px",

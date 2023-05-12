@@ -133,6 +133,7 @@ export default function SignIn() {
       touched: true,
       error: getError(event.target.name, event.target.value),
     });
+    setInvalidInfomation(false);
   }
 
   useEffect(() => {
@@ -157,7 +158,7 @@ export default function SignIn() {
         error: errorPassword,
       })
     }
-    if (error) return;
+    if (errorUsername || errorPassword) return;
     handleSignIn(formData.username.value, formData.password.value);
   }
   const handleSignIn = async (username: string, password: string) => {
@@ -206,7 +207,7 @@ export default function SignIn() {
             <CloseButton saving={0} onClick={() => handleClose()}>
               <IoMdClose />
             </CloseButton>
-            {invalidInfomation ? <AlertCustom severity="error">Invalid login information</AlertCustom> : null}
+            {invalidInfomation ? <AlertCustom severity="error">Incorrect Username or Password</AlertCustom> : null}
             <WrapInput>
               <Label>
                 Username
