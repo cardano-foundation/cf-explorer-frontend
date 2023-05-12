@@ -25,24 +25,26 @@ import { getEventType } from "../../../StakekeySummary";
 import { getPoolEventType } from "../../../PoolLifecycle";
 import { useScreen } from "../../../../commons/hooks/useScreen";
 
-
 const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaultParams, gotoStep }) => {
   const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [step1, step2, step3] = defaultParams || [];
 
   const history = useHistory();
-  const { isMobile } = useScreen()
+  const { isMobile } = useScreen();
   const handleGenerateReport = async () => {
     setLoading(true);
     try {
       const [step1, step2, step3] = defaultParams || {};
       const [start, end] = step1?.dateRange;
 
-      const defaultReportName = `Report_stake_${step1.address}_${step1}_${moment(start).format("MM/DD/yyyy")}_${moment(
+      let defaultReportName = `Report_stake_${step1.address}_${step1}_${moment(start).format("MM/DD/yyyy")}_${moment(
         end
       ).format("MM/DD/yyyy")}`;
       if (isPoolReport) {
+        defaultReportName = `Report_pool_${step1.address}_${step1}_${moment(start).format("MM/DD/yyyy")}_${moment(
+          end
+        ).format("MM/DD/yyyy")}`;
         const paramsStakeKeyReport = {
           ...getPoolEventType(step3?.eventsKey),
           poolId: step1.address,
@@ -150,13 +152,23 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           })}
         </Stack>
         <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={"20px"}>
-          <StyledBackButton sx={{fontSize: `${isMobile ? "14px" : "16px"}`}} width={isMobile ? 160 : 100} onClick={() => gotoStep?.(STEPS.step1)}>I’d like to double-check</StyledBackButton>
-          <StyledButton disabled={loading} onClick={handleGenerateReport} sx={{fontSize: `${isMobile ? "14px" : "16px"}`}}>
+          <StyledBackButton
+            sx={{ fontSize: `${isMobile ? "14px" : "16px"}` }}
+            width={isMobile ? 160 : 100}
+            onClick={() => gotoStep?.(STEPS.step1)}
+          >
+            I’d like to double-check
+          </StyledBackButton>
+          <StyledButton
+            disabled={loading}
+            onClick={handleGenerateReport}
+            sx={{ fontSize: `${isMobile ? "14px" : "16px"}` }}
+          >
             {loading && <CircularProgress color="info" size={20} />}Generate report
           </StyledButton>
         </StyledStack>
       </Container>
-    </StyledModal> 
+    </StyledModal>
   );
 };
 
