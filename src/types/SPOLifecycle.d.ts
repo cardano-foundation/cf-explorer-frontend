@@ -98,14 +98,14 @@ interface WalletActivityIF {
   txHash: string;
   amount: number;
   time: string;
-  type: "SENT" | "RECEIVED" | "FEE_PAID" | "CERTIFICATE_FEE_PAID" | "CERTIFICATE_DEPOSIT_PAID";
-  status: "FAIL" | "SUCCESS" | "PENDING";
+  type: 'SENT' | 'RECEIVED' | 'FEE_PAID' | 'CERTIFICATE_FEE_PAID' | 'CERTIFICATE_DEPOSIT_PAID';
+  status: 'FAIL' | 'SUCCESS' | 'PENDING';
 }
 interface RewardActivityIF {
   epochNo: number;
   amount: number;
   time: string;
-  type: "REWARD_WITHDRAWN" | "REWARD_RECEIVED";
+  type: 'REWARD_WITHDRAWN' | 'REWARD_RECEIVED';
 }
 
 interface PoolInfo {
@@ -114,7 +114,7 @@ interface PoolInfo {
   poolView: string;
   poolSize: number;
   rewardAvailable: number;
-  status: "ACTIVE" | "INACTIVE" | "RETIRING";
+  status: 'ACTIVE' | 'INACTIVE' | 'RETIRING';
   epochNo: number;
   stakeKeys: string[];
 }

@@ -1,8 +1,8 @@
-import { Box } from "@mui/material";
+import { Box } from '@mui/material';
 
 const ADAicon = ({ ...props }) => {
   return (
-    <Box component={"span"} fontSize={"14px"} {...props} lineHeight={1} fontWeight={"regular"}>
+    <Box component={'span'} fontSize={'14px'} {...props} lineHeight={1} fontWeight={'regular'}>
       ₳
     </Box>
   );

@@ -1,4 +1,4 @@
-import { PROTOCOL_TYPE } from "../commons/utils/constants";
+import { PROTOCOL_TYPE } from '../commons/utils/constants';
 
 type TProtocolItem = {
   oldValue: number;

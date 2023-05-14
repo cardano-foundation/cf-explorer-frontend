@@ -1,19 +1,19 @@
-import { Container } from "@mui/material";
-import ReportGeneratedTabs, { TabsItem } from "../../components/ReportGeneratedTabs";
-import StakekeySummary from "../../components/StakekeySummary";
-import PoolLifecycle from "../../components/Pool Lifecycle";
+import { Container } from '@mui/material';
+import ReportGeneratedTabs, { TabsItem } from '../../components/ReportGeneratedTabs';
+import StakekeySummary from '../../components/StakekeySummary';
+import PoolLifecycle from '../../components/Pool Lifecycle';
 
 const tabItems: TabsItem[] = [
   {
-    value: "1",
-    label: "Stake Key summary",
-    component: <StakekeySummary />,
+    value: '1',
+    label: 'Stake Key summary',
+    component: <StakekeySummary />
   },
   {
-    value: "2",
-    label: "Pool lifecycle",
-    component: <PoolLifecycle />,
-  },
+    value: '2',
+    label: 'Pool lifecycle',
+    component: <PoolLifecycle />
+  }
 ];
 const ReportGenerated = () => {
   return (

@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Autocomplete, Box, Button, Modal } from "@mui/material";
-import { BiChevronDown } from "react-icons/bi";
+import { useState } from 'react';
+import { Autocomplete, Box, Button, Modal } from '@mui/material';
+import { BiChevronDown } from 'react-icons/bi';
 
-import { CloseIcon, EmptyIcon, HeaderSearchIcon } from "../../commons/resources";
-import { getShortWallet, numberWithCommas } from "../../commons/utils/helper";
-import CustomTooltip from "../commons/CustomTooltip";
+import { CloseIcon, EmptyIcon, HeaderSearchIcon } from '../../commons/resources';
+import { getShortWallet, numberWithCommas } from '../../commons/utils/helper';
+import CustomTooltip from '../commons/CustomTooltip';
 import {
   ButtonClose,
   Image,
@@ -15,59 +15,59 @@ import {
   SearchContainer,
   StyledInput,
   StyledTextField,
-  SubmitButton,
-} from "./styles";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { API } from "../../commons/utils/api";
-import Table, { Column } from "../commons/Table";
-import { AssetName } from "../../pages/Token/styles";
-import { details } from "../../commons/routers";
-import { debounce } from "lodash";
+  SubmitButton
+} from './styles';
+import useFetchList from '../../commons/hooks/useFetchList';
+import { API } from '../../commons/utils/api';
+import Table, { Column } from '../commons/Table';
+import { AssetName } from '../../pages/Token/styles';
+import { details } from '../../commons/routers';
+import { debounce } from 'lodash';
 
 const TokenAutocomplete = ({ address }: { address: string }) => {
   const [openModalToken, setOpenModalToken] = useState(false);
-  const [selected, setSelected] = useState("");
-  const [search, setSearch] = useState("");
-  const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
-  const { data, loading, total } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
+  const [selected, setSelected] = useState('');
+  const [search, setSearch] = useState('');
+  const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(':address', address);
+  const { data, loading, total } = useFetchList<WalletAddress['tokens'][number]>(address && urlFetch, {
     page: 0,
-    size: 10,
+    size: 10
   });
 
   return (
     <Box>
       <Autocomplete
-        options={total > 10 ? [...data, "more"] : data}
+        options={total > 10 ? [...data, 'more'] : data}
         componentsProps={{ paper: { elevation: 2 } }}
         loading={loading}
-        getOptionLabel={option =>
-          typeof option === "string" ? "more" : option.displayName || option.name || option.fingerprint
+        getOptionLabel={(option) =>
+          typeof option === 'string' ? 'more' : option.displayName || option.name || option.fingerprint
         }
         onInputChange={debounce((e, value) => setSearch(value), 500)}
-        onChange={(e, value) => typeof value !== "string" && setSelected(value?.fingerprint || "")}
+        onChange={(e, value) => typeof value !== 'string' && setSelected(value?.fingerprint || '')}
         noOptionsText={
           <Box>
-            <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
+            <Box maxHeight='200px' component={'img'} src={EmptyIcon}></Box>
           </Box>
         }
-        renderOption={(propss, option: WalletAddress["tokens"][number] | string) => {
-          if (typeof option === "string") {
+        renderOption={(propss, option: WalletAddress['tokens'][number] | string) => {
+          if (typeof option === 'string') {
             return (
-              <Option key={"more"} {...propss} onClick={() => null} active={0}>
+              <Option key={'more'} {...propss} onClick={() => null} active={0}>
                 <Box
-                  display="flex"
-                  alignItems={"center"}
-                  justifyContent="center"
-                  width={"100%"}
-                  fontSize={"14px"}
+                  display='flex'
+                  alignItems={'center'}
+                  justifyContent='center'
+                  width={'100%'}
+                  fontSize={'14px'}
                   padding={0}
-                  gap="10px"
-                  minHeight="34px"
+                  gap='10px'
+                  minHeight='34px'
                 >
                   <Box
                     component={Button}
-                    width="100%"
-                    textTransform={"inherit"}
+                    width='100%'
+                    textTransform={'inherit'}
                     onClick={() => setOpenModalToken(true)}
                   >
                     See more
@@ -79,37 +79,37 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
           return (
             <Option key={option.fingerprint} {...propss} active={selected === option.fingerprint ? 1 : 0}>
               <Box
-                display="flex"
-                alignItems={"center"}
-                justifyContent="space-between"
-                width={"100%"}
-                fontSize={"14px"}
+                display='flex'
+                alignItems={'center'}
+                justifyContent='space-between'
+                width={'100%'}
+                fontSize={'14px'}
                 padding={0}
-                gap="10px"
-                minHeight="34px"
+                gap='10px'
+                minHeight='34px'
               >
-                <Box display="flex" alignItems={"center"} overflow="hidden" gap="10px">
+                <Box display='flex' alignItems={'center'} overflow='hidden' gap='10px'>
                   <Box>
                     {option?.metadata?.logo ? (
-                      <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt="icon" />
+                      <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt='icon' />
                     ) : (
                       <LogoEmpty />
                     )}
                   </Box>
-                  <CustomTooltip title={`${option.displayName || ""} #${option.name || option.fingerprint}`}>
-                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="150px">
-                      {option.displayName || ""} #{option.name || option.fingerprint}
+                  <CustomTooltip title={`${option.displayName || ''} #${option.name || option.fingerprint}`}>
+                    <Box textAlign={'left'} overflow={'hidden'} textOverflow={'ellipsis'} maxWidth='150px'>
+                      {option.displayName || ''} #{option.name || option.fingerprint}
                     </Box>
                   </CustomTooltip>
                 </Box>
-                <Box fontWeight={"bold"} flex={1} textAlign="right">
+                <Box fontWeight={'bold'} flex={1} textAlign='right'>
                   {numberWithCommas(option.quantity)}
                 </Box>
               </Box>
             </Option>
           );
         }}
-        renderInput={params => <StyledTextField {...params} placeholder="Search Token" />}
+        renderInput={(params) => <StyledTextField {...params} placeholder='Search Token' />}
         popupIcon={<BiChevronDown />}
       />
       <ModalToken address={address} open={openModalToken} onClose={() => setOpenModalToken(false)} />
@@ -121,73 +121,73 @@ export default TokenAutocomplete;
 
 const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => void; address: string }) => {
   const [{ page, size }, setPagination] = useState({ page: 1, size: 10 });
-  const [value, setValue] = useState("");
-  const [search, setSearch] = useState("");
-  const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
-  const { data, ...fetchData } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
+  const [value, setValue] = useState('');
+  const [search, setSearch] = useState('');
+  const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(':address', address);
+  const { data, ...fetchData } = useFetchList<WalletAddress['tokens'][number]>(address && urlFetch, {
     page: page - 1,
-    size,
+    size
   });
 
-  const columns: Column<WalletAddress["tokens"][number]>[] = [
+  const columns: Column<WalletAddress['tokens'][number]>[] = [
     {
-      title: "#",
-      key: "#",
-      minWidth: "50px",
-      render: (r, index) => numberWithCommas((page - 1) * size + index + 1),
+      title: '#',
+      key: '#',
+      minWidth: '50px',
+      render: (r, index) => numberWithCommas((page - 1) * size + index + 1)
     },
     {
-      title: "Icon",
-      key: "icon",
-      minWidth: "50px",
-      render: r =>
-        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />,
+      title: 'Icon',
+      key: 'icon',
+      minWidth: '50px',
+      render: (r) =>
+        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt='icon' /> : <LogoEmpty />
     },
     {
-      title: "Name",
-      key: "name",
-      minWidth: "50px",
-      render: r =>
+      title: 'Name',
+      key: 'name',
+      minWidth: '50px',
+      render: (r) =>
         r.displayName && r.displayName.length > 20 ? (
-          <CustomTooltip placement={"top"} title={r.displayName}>
-            <AssetName to={details.token(r?.fingerprint ?? "")}>{getShortWallet(r.displayName || "")}</AssetName>
+          <CustomTooltip placement={'top'} title={r.displayName}>
+            <AssetName to={details.token(r?.fingerprint ?? '')}>{getShortWallet(r.displayName || '')}</AssetName>
           </CustomTooltip>
         ) : (
-          <AssetName to={details.token(r?.fingerprint ?? "")}>
-            {r.displayName || getShortWallet(r.fingerprint || "")}
+          <AssetName to={details.token(r?.fingerprint ?? '')}>
+            {r.displayName || getShortWallet(r.fingerprint || '')}
           </AssetName>
-        ),
+        )
     },
     {
-      title: "Balance",
-      key: "balance",
-      minWidth: "50px",
-      render: r => numberWithCommas(r.quantity || 0),
-    },
+      title: 'Balance',
+      key: 'balance',
+      minWidth: '50px',
+      render: (r) => numberWithCommas(r.quantity || 0)
+    }
   ];
   return (
     <Modal open={open} onClose={onClose}>
       <ModalContainer>
         <ButtonClose onClick={onClose}>
-          <img src={CloseIcon} alt="icon close" />
+          <img src={CloseIcon} alt='icon close' />
         </ButtonClose>
-        <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Roboto", sans-serif '}>
+        <Box textAlign={'left'} fontSize='1.5rem' fontWeight='bold' fontFamily={'"Roboto", sans-serif '}>
           Token List
         </Box>
         <SearchContainer mt={2} mb={1}>
           <StyledInput
-            placeholder="Search tokens"
-            onChange={e => setValue(e.target.value)}
+            placeholder='Search tokens'
+            onChange={(e) => setValue(e.target.value)}
             value={value}
-            onKeyUp={e => {
-              if (e.key === "Enter") {
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') {
                 setSearch(value);
                 setPagination({ page: 1, size: 10 });
               }
             }}
           />
           <SubmitButton onClick={() => setSearch(value)}>
-            <Image src={HeaderSearchIcon} alt="Search" />
+            <Image src={HeaderSearchIcon} alt='Search' />
           </SubmitButton>
         </SearchContainer>
         <Box>
@@ -195,12 +195,12 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             {...fetchData}
             data={data || []}
             columns={columns}
-            total={{ title: "Total", count: fetchData.total }}
+            total={{ title: 'Total', count: fetchData.total }}
             pagination={{
               page,
               size,
               total: fetchData.total,
-              onChange: (page, size) => setPagination({ page, size }),
+              onChange: (page, size) => setPagination({ page, size })
             }}
           />
         </Box>

@@ -1,6 +1,6 @@
-import axios, { AxiosInstance } from "axios";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { defaultAxios, authAxios } from "../utils/axios";
+import axios, { AxiosInstance } from 'axios';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { defaultAxios, authAxios } from '../utils/axios';
 
 interface FetchReturnType<T> {
   data: T | null;
@@ -20,7 +20,7 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, timeout?: numbe
   const fetch = useCallback(async () => {
     if (!url) return;
     let service: AxiosInstance = isAuth ? authAxios : defaultAxios;
-    if (url.search("http://") === 0 || url.search("https://") === 0) {
+    if (url.search('http://') === 0 || url.search('https://') === 0) {
       service = axios;
     }
     setLoading(true);
@@ -45,11 +45,11 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, timeout?: numbe
 
       const onFocus = () => lastFetch.current + timeout * 1000 <= Date.now() && fetch();
 
-      window.addEventListener("focus", onFocus);
+      window.addEventListener('focus', onFocus);
 
       return () => {
         clearInterval(interval);
-        window.removeEventListener("focus", onFocus);
+        window.removeEventListener('focus', onFocus);
       };
     }
   }, [fetch, timeout]);

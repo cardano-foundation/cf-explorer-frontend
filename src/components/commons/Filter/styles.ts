@@ -1,4 +1,4 @@
-import { Box, Button, ListItemText, MenuItem, styled } from "@mui/material";
+import { Box, Button, ListItemText, MenuItem, styled } from '@mui/material';
 
 export const FilterButton = styled(Button)`
   border: none;
@@ -42,5 +42,5 @@ export const FilterListItemText = styled(ListItemText)`
 `;
 export const FilterMenuItem = styled(MenuItem)<{ active?: number }>`
   padding: 8px 16px;
-  color: ${({ theme, active }) => (active ? theme.palette.primary.main : "inherit")};
+  color: ${({ theme, active }) => (active ? theme.palette.primary.main : 'inherit')};
 `;

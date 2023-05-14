@@ -1,6 +1,6 @@
-import { alpha, LinearProgress, styled } from "@mui/material";
+import { alpha, LinearProgress, styled } from '@mui/material';
 
-export const StyledSpan = styled("span")`
+export const StyledSpan = styled('span')`
   display: flex;
   align-items: center;
 
@@ -10,13 +10,13 @@ export const StyledSpan = styled("span")`
   }
 `;
 
-export const HorizonDiv = styled("div")`
+export const HorizonDiv = styled('div')`
   width: 100%;
-  border: 1px solid ${props => props.theme.palette.common.black};
+  border: 1px solid ${(props) => props.theme.palette.common.black};
   opacity: 0.1;
 `;
 
-export const ProcessDiv = styled("div")`
+export const ProcessDiv = styled('div')`
   width: 100%;
 `;
 
@@ -25,23 +25,23 @@ export const StyledLinearProgress = styled(LinearProgress)`
   width: 100%;
   height: 12px;
   border-radius: 34px;
-  background: ${props => alpha(props.theme.palette.common.black, 0.1)};
+  background: ${(props) => alpha(props.theme.palette.common.black, 0.1)};
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${props => props.theme.palette.gradient[0]};
+    background: ${(props) => (props.theme.palette as any).gradient[0]};
   }
 `;
 
-export const ProgressInfoDiv = styled("div")`
+export const ProgressInfoDiv = styled('div')`
   display: flex;
   justify-content: space-between;
 `;
 
-export const ProgressStatus = styled("h4")`
+export const ProgressStatus = styled('h4')`
   font-weight: var(--font-weight-normal);
 `;
 
-export const ProgressPercent = styled("h4")`
-  color: ${props => props.theme.palette.primary.main};
+export const ProgressPercent = styled('h4')`
+  color: ${(props) => props.theme.palette.primary.main};
 `;

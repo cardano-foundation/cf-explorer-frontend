@@ -1,26 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Box } from "@mui/material";
-import { getShortWallet, formatADAFull, getShortHash } from "../../../../commons/utils/helper";
-import sendImg from "../../../../commons/resources/images/sendImg.svg";
-import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
-import feeImg from "../../../../commons/resources/images/dola.svg";
-import CopyButton from "../../../commons/CopyButton";
-import { details } from "../../../../commons/routers";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import { Header, Img, Item, TokenLink } from "./styles";
-import ADAicon from "../../../commons/ADAIcon";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Box } from '@mui/material';
+import { getShortWallet, formatADAFull, getShortHash } from '../../../../commons/utils/helper';
+import sendImg from '../../../../commons/resources/images/sendImg.svg';
+import receiveImg from '../../../../commons/resources/images/receiveImg.svg';
+import feeImg from '../../../../commons/resources/images/dola.svg';
+import CopyButton from '../../../commons/CopyButton';
+import { details } from '../../../../commons/routers';
+import CustomTooltip from '../../../commons/CustomTooltip';
+import { Header, Img, Item, TokenLink } from './styles';
+import ADAicon from '../../../commons/ADAIcon';
 
 interface Props {
-  data: Transaction["utxOs"] | null;
+  data: Transaction['utxOs'] | null;
   fee: number;
 }
 
 const UTXO: React.FC<Props> = ({ data, fee }) => {
   return (
     <div>
-      <Card type="down" items={data?.inputs} />
-      <Card type="up" items={data?.outputs} fee={fee} />
+      <Card type='down' items={data?.inputs} />
+      <Card type='up' items={data?.outputs} fee={fee} />
     </div>
   );
 };
@@ -30,10 +30,10 @@ export default UTXO;
 const Card = ({
   type,
   items,
-  fee,
+  fee
 }: {
-  type: "up" | "down";
-  items?: Required<Transaction>["utxOs"]["inputs"];
+  type: 'up' | 'down';
+  items?: Required<Transaction>['utxOs']['inputs'];
   fee?: number;
 }) => {
   const totalADA =
@@ -43,12 +43,12 @@ const Card = ({
     }, 0);
 
   return (
-    <Box textAlign={"left"} mb={1} sx={{ background: theme => theme.palette.background.paper }}>
-      <Header fontWeight="bold">
-        <Box color={theme => theme.palette.text.dark} fontSize={"1rem"} lineHeight="19px" mb="2px">
-          {type === "down" ? "Input" : "Output"}
+    <Box textAlign={'left'} mb={1} sx={{ background: (theme) => theme.palette.background.paper }}>
+      <Header fontWeight='bold'>
+        <Box color={(theme) => theme.palette.text.dark} fontSize={'1rem'} lineHeight='19px' mb='2px'>
+          {type === 'down' ? 'Input' : 'Output'}
         </Box>
-        <Box color={theme => theme.palette.text.hint} display="flex" justifyContent="space-between">
+        <Box color={(theme) => theme.palette.text.hint} display='flex' justifyContent='space-between'>
           <Box>Wallet Addresses</Box>
           <Box>Amount</Box>
         </Box>
@@ -56,29 +56,29 @@ const Card = ({
       <Box fontSize={14}>
         {items?.map((item, index) => (
           <Item key={index}>
-            <Box display={"flex"}>
+            <Box display={'flex'}>
               <Box width={50}>
-                <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />
+                <Img src={type === 'down' ? receiveImg : sendImg} alt='send icon' />
               </Box>
-              <Box width={"100%"} display="flex" flexDirection="column" justifyContent="center" paddingTop="5px">
-                <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
-                  <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1}>
-                    {type === "down" ? "From" : "To"}:
+              <Box width={'100%'} display='flex' flexDirection='column' justifyContent='center' paddingTop='5px'>
+                <Box display={'flex'} justifyContent='space-between' alignItems={'center'}>
+                  <Box display={'flex'} alignItems='center' justifyContent={'flex-start'} pr={1}>
+                    {type === 'down' ? 'From' : 'To'}:
                   </Box>
-                  <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"}>
+                  <Box display={'flex'} justifyContent='space-between' flex={'1'} alignItems={'center'}>
                     <Box
-                      display={"flex"}
-                      justifyContent="flex-start"
-                      alignItems={"center"}
-                      flexWrap="nowrap"
-                      width={"auto"}
+                      display={'flex'}
+                      justifyContent='flex-start'
+                      alignItems={'center'}
+                      flexWrap='nowrap'
+                      width={'auto'}
                     >
                       <Link to={details.address(item.address)}>
                         <CustomTooltip title={item.address}>
                           <Box
-                            color={theme => theme.palette.secondary.main}
-                            fontWeight="bold"
-                            fontFamily={"var(--font-family-text)"}
+                            color={(theme) => theme.palette.secondary.main}
+                            fontWeight='bold'
+                            fontFamily={'var(--font-family-text)'}
                             mr={1}
                           >
                             {getShortWallet(item.address)}
@@ -88,36 +88,36 @@ const Card = ({
                       <CopyButton text={item.address} />
                     </Box>
                     <Box
-                      display={"flex"}
-                      justifyContent="flex-start"
-                      alignItems={"center"}
-                      flexWrap="nowrap"
-                      width={"auto"}
+                      display={'flex'}
+                      justifyContent='flex-start'
+                      alignItems={'center'}
+                      flexWrap='nowrap'
+                      width={'auto'}
                     >
                       <Box
-                        component={"span"}
-                        whiteSpace="nowrap"
-                        color={theme => (type === "up" ? theme.palette.primary.main : theme.palette.error.main)}
-                        fontWeight="bold"
+                        component={'span'}
+                        whiteSpace='nowrap'
+                        color={(theme) => (type === 'up' ? theme.palette.primary.main : theme.palette.error.main)}
+                        fontWeight='bold'
                         mr={1}
                       >
-                        {type === "down" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
+                        {type === 'down' ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
                       </Box>
                       <ADAicon />
                     </Box>
                   </Box>
                 </Box>
-                <Box justifyContent={"space-between"} width={"100%"} display="flex" paddingTop="5px">
+                <Box justifyContent={'space-between'} width={'100%'} display='flex' paddingTop='5px'>
                   <Box mr={3} minWidth={200}>
-                    {type === "down" && (
-                      <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
+                    {type === 'down' && (
+                      <Box display={'flex'} justifyContent='flex-start' alignItems={'center'}>
                         <Link to={details.transaction(item.txHash)}>
                           <CustomTooltip title={item.txHash}>
                             <Box
-                              component={"span"}
-                              fontWeight="bold"
-                              fontFamily={"var(--font-family-text)"}
-                              color={theme => theme.palette.secondary.main}
+                              component={'span'}
+                              fontWeight='bold'
+                              fontFamily={'var(--font-family-text)'}
+                              color={(theme) => theme.palette.secondary.main}
                               mr={1}
                             >
                               {getShortHash(item.txHash)}
@@ -128,16 +128,16 @@ const Card = ({
                       </Box>
                     )}
                   </Box>
-                  <Box display={"flex"} alignItems="center" justifyContent={"space-between"}>
-                    <Box overflow={"hidden"} display="flex" flexWrap={"wrap"} gap={1}>
+                  <Box display={'flex'} alignItems='center' justifyContent={'space-between'}>
+                    <Box overflow={'hidden'} display='flex' flexWrap={'wrap'} gap={1}>
                       {item.tokens.map((token, idx) => (
                         <Box
                           key={idx}
-                          display="flex"
-                          justifyContent={"flex-start"}
-                          alignItems="center"
-                          flexWrap={"nowrap"}
-                          width="auto"
+                          display='flex'
+                          justifyContent={'flex-start'}
+                          alignItems='center'
+                          flexWrap={'nowrap'}
+                          width='auto'
                         >
                           <TokenLink to={details.token(token.assetId)}>
                             {token.assetName || getShortWallet(token.assetId)}
@@ -151,17 +151,17 @@ const Card = ({
             </Box>
           </Item>
         ))}
-        {type === "up" && (
+        {type === 'up' && (
           <Item>
-            <Box width={"100%"} display="flex" justifyContent={"space-between"} alignItems="center">
-              <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
-                <Box display={"flex"} alignItems="center">
-                  <Img src={feeImg} alt="wallet icon" />
+            <Box width={'100%'} display='flex' justifyContent={'space-between'} alignItems='center'>
+              <Box display={'flex'} justifyContent='space-between' alignItems={'center'}>
+                <Box display={'flex'} alignItems='center'>
+                  <Img src={feeImg} alt='wallet icon' />
                   <Box>Fee</Box>
                 </Box>
               </Box>
-              <Box display={"flex"} alignItems="center">
-                <Box mr="8px" fontWeight={"bold"} fontFamily={"var(--font-family-text)"} color="red">
+              <Box display={'flex'} alignItems='center'>
+                <Box mr='8px' fontWeight={'bold'} fontFamily={'var(--font-family-text)'} color='red'>
                   {formatADAFull(fee)}
                 </Box>
                 <Box>
@@ -173,15 +173,15 @@ const Card = ({
         )}
       </Box>
       <Box
-        display={"flex"}
-        justifyContent="space-between"
-        padding={"12px 25px"}
-        sx={{ background: theme => theme.palette.green[800_10] }}
+        display={'flex'}
+        justifyContent='space-between'
+        padding={'12px 25px'}
+        sx={{ background: (theme) => theme.palette.green[800_10] }}
       >
-        <Box fontWeight={"bold"}>Total {type === "down" ? "Input" : "Output"}</Box>
+        <Box fontWeight={'bold'}>Total {type === 'down' ? 'Input' : 'Output'}</Box>
         <div>
-          <Box fontWeight={"bold"} component="span" pr={1}>
-            {type === "down" ? `${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}
+          <Box fontWeight={'bold'} component='span' pr={1}>
+            {type === 'down' ? `${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}
           </Box>
           <ADAicon />
         </div>

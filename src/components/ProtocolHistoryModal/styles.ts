@@ -1,29 +1,29 @@
-import { Box, TableCell, styled } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, TableCell, styled } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export const LinkComponent = styled(Link)(({ theme }) => ({
-  color: `${theme.palette.secondary.main} !important`,
+  color: `${theme.palette.secondary.main} !important`
 }));
 
-export const ModalTitle = styled(Box)(({ theme }) => ({
-  fontSize: "var(--font-size-title)",
+export const ModalTitle = styled(Box)(() => ({
+  fontSize: 'var(--font-size-title)',
   fontWeight: 700,
-  marginTop: "-24px",
-  marginBottom: "30px",
+  marginTop: '-24px',
+  marginBottom: '30px'
 }));
 
 export const StyledTableCell: any = styled(TableCell)(() => ({
-  borderColor: "transparent",
+  borderColor: 'transparent',
   paddingLeft: 0,
-  paddingRight: 0,
+  paddingRight: 0
 }));
 
 export const StyledTableHeadCell = styled(TableCell)(({ theme }) => ({
-  border: "transparent",
+  border: 'transparent',
   background: theme.palette.background.paper,
   paddingLeft: 0,
   paddingRight: 0,
-  fontWeight: "bold",
+  fontWeight: 'bold',
   color: theme.palette.grey[300],
-  top: "-1px",
+  top: '-1px'
 }));

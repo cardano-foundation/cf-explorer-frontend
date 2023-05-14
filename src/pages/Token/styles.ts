@@ -1,16 +1,16 @@
-import { styled, Container, Select, Box, alpha, Avatar } from "@mui/material";
-import { Link } from "react-router-dom";
+import { styled, Container, Select } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export const StyledContainer = styled(Container)`
   padding: 20px 0 40px;
 `;
 
 export const AssetName = styled(Link)`
-  color: ${props => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
   font-family: var(--font-family-text) !important;
 `;
 
-export const Logo = styled("img")`
+export const Logo = styled('img')`
   width: 36px;
   height: 36px;
   object-fit: cover;
@@ -18,8 +18,8 @@ export const Logo = styled("img")`
 
 export const StyledSelect = styled(Select)`
   font-family: var(--font-family-text);
-  background: ${props => props.theme.palette.background.paper};
-  color: ${props => props.theme.palette.text.secondary};
+  background: ${(props) => props.theme.palette.background.paper};
+  color: ${(props) => props.theme.palette.text.secondary};
   border-radius: 8px;
   min-width: 250px;
   & > div {
@@ -33,7 +33,7 @@ export const StyledSelect = styled(Select)`
     border: none !important;
   }
   & > svg {
-    color: ${props => props.theme.palette.text.secondary};
+    color: ${(props) => props.theme.palette.text.secondary};
     font-size: 20px;
   }
 `;

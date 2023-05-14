@@ -1,7 +1,7 @@
-import React from "react";
-import { Box } from "@mui/material";
-import { Column } from "../../../commons/Table";
-import { TableProtocol } from "./styles";
+import React from 'react';
+import { Box } from '@mui/material';
+import { Column } from '../../../commons/Table';
+import { TableProtocol } from './styles';
 
 interface IProps {
   data: TProtocolMerge[];
@@ -10,37 +10,37 @@ interface IProps {
 const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
   const columns: Column<TProtocolMerge>[] = [
     {
-      title: "Parameter Name",
+      title: 'Parameter Name',
       isHiddenBorder: true,
-      key: "paramName",
-      minWidth: "40px",
-      render: (r, index) => {
+      key: 'paramName',
+      minWidth: '40px',
+      render: (r) => {
         return <div>{r.protocol}</div>;
-      },
+      }
     },
     {
-      title: "Previous Value",
+      title: 'Previous Value',
       isHiddenBorder: true,
-      key: "previousValue",
-      minWidth: "40px",
-      render: (r, index) => {
+      key: 'previousValue',
+      minWidth: '40px',
+      render: (r) => {
         return <div>{r?.oldValue}</div>;
-      },
+      }
     },
     {
-      title: "Updated Value",
-      key: "updatedValue",
-      minWidth: "40px",
+      title: 'Updated Value',
+      key: 'updatedValue',
+      minWidth: '40px',
       isHiddenBorder: true,
-      render: (r, index) => {
+      render: (r) => {
         return <div>{r?.value}</div>;
-      },
-    },
+      }
+    }
   ];
 
   return (
-    <Box bgcolor={"white"} px={2}>
-      <TableProtocol columns={columns} data={data.filter(item => item.value !== null)} />
+    <Box bgcolor={'white'} px={2}>
+      <TableProtocol columns={columns} data={data.filter((item) => item.value !== null)} />
     </Box>
   );
 };

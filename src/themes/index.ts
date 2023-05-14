@@ -1,12 +1,11 @@
-import { alpha, Breakpoints, createTheme, Shadows } from "@mui/material";
-import { Typography } from "@mui/material/styles/createTypography";
-import { ThemeType } from "../types/user";
-import breakpoints from "./breakpoints";
-import palette, { CustomPalette } from "./palette";
-import shadows from "./shadows";
-import typography from "./typography";
+import { createTheme } from '@mui/material';
+import { ThemeType } from '../types/user';
+import breakpoints from './breakpoints';
+import palette, { CustomPalette } from './palette';
+import shadows from './shadows';
+import typography from './typography';
 
-type CustomTheme = {
+export type CustomTheme = {
   palette: CustomPalette;
   shadow: typeof shadows.light;
   typography: typeof typography;
@@ -20,8 +19,8 @@ const lightTheme: CustomTheme = {
   shadow: shadows.light,
   typography: typography,
   breakpoints: breakpoints,
-  mode: "light",
-  isDark: false,
+  mode: 'light',
+  isDark: false
 };
 
 const darkTheme: CustomTheme = {
@@ -29,16 +28,24 @@ const darkTheme: CustomTheme = {
   shadow: shadows.light,
   typography: typography,
   breakpoints: breakpoints,
-  mode: "dark",
-  isDark: false,
+  mode: 'dark',
+  isDark: false
 };
 
-declare module "@mui/material" {
-  interface Theme extends CustomTheme {}
+declare module '@mui/material' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface Theme extends CustomTheme {
+    palette: CustomPalette;
+    shadow: typeof shadows.light;
+    typography: typeof typography;
+    mode: ThemeType;
+    isDark: boolean;
+  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface ThemeOptions extends CustomTheme {}
 }
-
-declare module "@emotion/react" {
+/* eslint-disable @typescript-eslint/no-empty-interface */
+declare module '@emotion/react' {
   interface Theme extends CustomTheme {}
   interface ThemeOptions extends CustomTheme {}
 }
@@ -48,7 +55,7 @@ const dark = createTheme(darkTheme);
 
 const themes: { [key in ThemeType]: typeof light } = {
   light,
-  dark,
+  dark
 };
 
 export default themes;

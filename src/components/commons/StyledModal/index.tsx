@@ -1,6 +1,6 @@
-import { Box, Modal, ModalProps } from "@mui/material";
-import { IoMdClose } from "react-icons/io";
-import { CloseButton, ModalContainer, WrapTitle } from "./styles";
+import { Box, Modal, ModalProps } from '@mui/material';
+import { IoMdClose } from 'react-icons/io';
+import { CloseButton, ModalContainer, WrapTitle } from './styles';
 
 interface IProps extends ModalProps {
   handleCloseModal: () => void;
@@ -16,7 +16,7 @@ const StyledModal: React.FC<IProps> = ({ open, handleCloseModal, children, title
           <IoMdClose />
         </CloseButton>
         {title && (
-          <Box marginBottom={"20px"}>
+          <Box marginBottom={'20px'}>
             <WrapTitle>{title}</WrapTitle>
           </Box>
         )}

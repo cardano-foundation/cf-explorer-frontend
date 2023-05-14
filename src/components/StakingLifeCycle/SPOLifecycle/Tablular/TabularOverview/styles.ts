@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Typography, styled } from "@mui/material";
+import { Box, Button, IconButton, Typography, styled } from '@mui/material';
 
 export const CardOverview = styled(Box)`
   background: white;
@@ -22,35 +22,34 @@ export const CardOverview = styled(Box)`
 export const WrapIcon = styled(Box)(() => ({
   width: 95,
   marginRight: 12,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-start",
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-start'
 }));
 
 export const CardTitle = styled(Typography)(({ theme }) => ({
   fontWeight: theme.typography.fontWeightBold,
   fontSize: 14,
   color: theme.palette.grey[500],
-  marginBottom: 4,
+  marginBottom: 4
 }));
 
-export const CardValue = styled(Typography)<{color?: string}>(({ theme ,...rest}) => ({
+export const CardValue = styled(Typography)<{ color?: string }>(({ theme, ...rest }) => ({
   fontWeight: theme.typography.fontWeightBold,
   fontSize: 16,
-  color: rest.color ? rest.color : theme.palette.grey[700],
-  
+  color: rest.color ? rest.color : theme.palette.grey[700]
 }));
 
 export const TransferButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.main,
-  color: "var(--text-color-reverse)",
+  color: 'var(--text-color-reverse)',
   fontSize: 14,
   fontWeight: theme.typography.fontWeightBold,
-  padding: "0 16px",
+  padding: '0 16px',
   height: 38,
   borderRadius: 8,
-  textTransform: "unset",
-  boxShadow: "none",
+  textTransform: 'unset',
+  boxShadow: 'none'
 }));
 
 export const WrapWalletIcon = styled(Box)`
@@ -68,11 +67,11 @@ export const WrapWalletIcon = styled(Box)`
 `;
 
 export const ClickAbleLink = styled(Typography)`
-  color: #108AEF;
+  color: #108aef;
   cursor: pointer;
 `;
 
 export const ViewMoreButton = styled(IconButton)`
   padding: 14px;
-  background-color: #E3E5E9;
+  background-color: #e3e5e9;
 `;

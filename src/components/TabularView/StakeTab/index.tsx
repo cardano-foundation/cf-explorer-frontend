@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Tab, Box, useTheme } from "@mui/material";
-import { TabContext, TabPanel } from "@mui/lab";
-import { StyledTabList, TabHead, TitleTab } from "./styles";
-import CustomIcon from "../../commons/CustomIcon";
+import React, { useState } from 'react';
+import { Tab, Box, useTheme } from '@mui/material';
+import { TabContext, TabPanel } from '@mui/lab';
+import { StyledTabList, TabHead, TitleTab } from './styles';
+import CustomIcon from '../../commons/CustomIcon';
 
 export interface StakeTabItem {
   icon: React.FC;
@@ -15,7 +15,7 @@ export interface StackTabProps {
   initTab?: string;
 }
 
-const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration" }) => {
+const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = 'registration' }) => {
   const [tabActive, setTabActive] = useState<string>(initTab);
   const theme = useTheme();
 
@@ -26,7 +26,7 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration" }) =
   return (
     <Box mt={4}>
       <TabContext value={tabActive}>
-        <Box sx={{ borderBottom: theme => `1px solid ${theme.palette.border.secondary}` }}>
+        <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.secondary}` }}>
           <StyledTabList
             onChange={handleChange}
             TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
@@ -35,10 +35,10 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration" }) =
               <Tab
                 key={key}
                 value={key}
-                style={{ padding: "12px 0px", marginRight: 40 }}
+                style={{ padding: '12px 0px', marginRight: 40 }}
                 label={
-                  <TabHead active={+(key === tabActive)} display={"flex"} alignItems="center">
-                    <CustomIcon icon={Icon} fill="currentColor" width={25} />
+                  <TabHead active={+(key === tabActive)} display={'flex'} alignItems='center'>
+                    <CustomIcon icon={Icon} fill='currentColor' width={25} />
                     <TitleTab pl={1} active={+(key === tabActive)}>
                       {label}
                     </TitleTab>
@@ -48,7 +48,7 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration" }) =
             ))}
           </StyledTabList>
         </Box>
-        {tabs.map(item => (
+        {tabs.map((item) => (
           <TabPanel key={item.key} value={item.key} style={{ padding: 0 }}>
             {item.component}
           </TabPanel>

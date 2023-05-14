@@ -1,5 +1,4 @@
-import { ListItem, Typography } from "@mui/material";
-import { styled } from "@mui/material";
+import { ListItem, Typography, styled } from '@mui/material';
 
 export const StyledListItem = styled(ListItem)`
   padding: 0px;

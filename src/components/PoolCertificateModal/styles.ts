@@ -1,13 +1,13 @@
-import { styled } from "@mui/material";
+import { styled } from '@mui/material';
 
-export const BoxTitle = styled("div")`
+export const BoxTitle = styled('div')`
   color: var(--text-color-pale);
   font-weight: 700;
   font-size: 14px;
   line-height: 16px;
 `;
 
-export const TextNote = styled("div")`
+export const TextNote = styled('div')`
   color: var(--text-color-pale);
   font-weight: 400;
   font-size: 12px;
@@ -15,7 +15,7 @@ export const TextNote = styled("div")`
   padding-top: 5px;
 `;
 
-export const TitleModal = styled("div")`
+export const TitleModal = styled('div')`
   font-weight: 700;
   font-size: 24px;
   line-height: 28px;

@@ -1,8 +1,8 @@
-import { alpha, styled } from "@mui/material";
-import { BiChevronDown } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { alpha, styled } from '@mui/material';
+import { BiChevronDown } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
 
-export const Menu = styled("ul")`
+export const Menu = styled('ul')`
   @include flex-center-start;
   display: flex;
   justify-content: center;
@@ -18,11 +18,11 @@ export const SubMenu = styled(Menu)<{ isActive: boolean }>`
   position: absolute;
   z-index: 1;
   top: 100%;
-  background: ${props => alpha(props.theme.palette.common.white, 0.9)};
-  box-shadow: ${props => props.theme.shadow.dialog};
+  background: ${(props) => alpha(props.theme.palette.common.white, 0.9)};
+  box-shadow: ${(props) => props.theme.shadow.dialog};
   backdrop-filter: blur(2px);
   border-radius: 10px;
-  color: ${props => props.theme.palette.common.black};
+  color: ${(props) => props.theme.palette.common.black};
   visibility: hidden;
   padding: 20px 0px;
   @media screen and (max-width: 1023px) {
@@ -33,23 +33,23 @@ export const SubMenu = styled(Menu)<{ isActive: boolean }>`
     box-shadow: none;
     padding: 10px 0px;
     display: none;
-    ${props => (props.isActive ? `display: block;` : ``)}
+    ${(props) => (props.isActive ? `display: block;` : ``)}
   }
 `;
 
-export const MenuItem = styled("li")<{ hasChild: boolean }>`
+export const MenuItem = styled('li')<{ hasChild: boolean }>`
   text-align: left;
   cursor: pointer;
-  ${props => (props.hasChild ? `padding-right: 22px;` : ``)}
+  ${(props) => (props.hasChild ? `padding-right: 22px;` : ``)}
 `;
 
-export const ArrowIcon = styled(BiChevronDown)<{ isActive: boolean }>`  
+export const ArrowIcon = styled(BiChevronDown)<{ isActive: boolean }>`
   position: absolute;
   top: 50%;
   right: 5px;
-  width: 
-  transform: rotate(0deg) translateY(-50%); 
-  transition: all 0.3s; 
+  width:
+  transform: rotate(0deg) translateY(-50%);
+  transition: all 0.3s;
 }
 `;
 
@@ -63,35 +63,35 @@ export const InternalLink = styled(Link)<{ isSubMenu: boolean }>`
   color: inherit;
   font-family: var(--font-family-title);
   white-space: nowrap;
-  line-height: ${props => (props.isSubMenu ? 1 : 1.5)};
-  ${props => (props.isSubMenu ? `padding: 0.25rem 48px 0.25rem 20px;` : ``)}
-  font-weight: ${props => (props.isSubMenu ? `var(--font-weight-bold)` : `var(--font-weight-normal)`)};
+  line-height: ${(props) => (props.isSubMenu ? 1 : 1.5)};
+  ${(props) => (props.isSubMenu ? `padding: 0.25rem 48px 0.25rem 20px;` : ``)}
+  font-weight: ${(props) => (props.isSubMenu ? `var(--font-weight-bold)` : `var(--font-weight-normal)`)};
   &:visited {
     color: inherit;
   }
   &:hover {
-    color: ${props => props.theme.palette.primary.contrastText};
-    text-shadow: 1px 1px 5px ${props => props.theme.palette.primary.contrastText};
+    color: ${(props) => props.theme.palette.primary.contrastText};
+    text-shadow: 1px 1px 5px ${(props) => props.theme.palette.primary.contrastText};
     @media screen and (max-width: 1023px) {
       color: inherit;
     }
   }
 `;
 
-export const ExternalLink = styled("a")<{ isSubMenu: boolean }>`
+export const ExternalLink = styled('a')<{ isSubMenu: boolean }>`
   display: block;
   color: inherit;
   font-family: var(--font-family-title);
   white-space: nowrap;
-  line-height: ${props => (props.isSubMenu ? 1 : 1.5)};
-  ${props => (props.isSubMenu ? `padding: 0.25rem 48px 0.25rem 20px;` : ``)}
-  font-weight: ${props => (props.isSubMenu ? `var(--font-weight-bold)` : `var(--font-weight-normal)`)};
+  line-height: ${(props) => (props.isSubMenu ? 1 : 1.5)};
+  ${(props) => (props.isSubMenu ? `padding: 0.25rem 48px 0.25rem 20px;` : ``)}
+  font-weight: ${(props) => (props.isSubMenu ? `var(--font-weight-bold)` : `var(--font-weight-normal)`)};
   &:visited {
     color: inherit;
   }
   &:hover {
-    color: ${props => props.theme.palette.primary.contrastText};
-    text-shadow: 1px 1px 5px ${props => props.theme.palette.primary.contrastText};
+    color: ${(props) => props.theme.palette.primary.contrastText};
+    text-shadow: 1px 1px 5px ${(props) => props.theme.palette.primary.contrastText};
     @media screen and (max-width: 1023px) {
       color: inherit;
     }

@@ -1,5 +1,5 @@
-import { styled, Container, Tabs, Tab } from "@mui/material";
-import { Link } from "react-router-dom";
+import { styled, Container, Tabs, Tab } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export const StyledContainer = styled(Container)`
   padding: 30px 0 40px;
@@ -16,19 +16,19 @@ export const StyledTabs = styled(Tabs)`
 `;
 
 export const StyledTab = styled(Tab)`
-  color: ${props => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[400]};
   padding: 0;
   &.Mui-selected {
-    color: ${props => props.theme.palette.text.primary};
+    color: ${(props) => props.theme.palette.text.primary};
   }
 `;
 
-export const TabLabel = styled("h3")`
+export const TabLabel = styled('h3')`
   text-transform: none;
   color: inherit;
 `;
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
 `;

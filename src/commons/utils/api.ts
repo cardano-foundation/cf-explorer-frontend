@@ -1,48 +1,48 @@
 export const API = {
   ADDRESS: {
-    ANALYTICS: "addresses/analytics",
-    DETAIL: "addresses",
-    MIN_MAX_BALANCE: "addresses/min-max-balance",
-    TOP_ADDRESS: "addresses/top-addresses",
-    TOKENS: "addresses/:address/tokens",
+    ANALYTICS: 'addresses/analytics',
+    DETAIL: 'addresses',
+    MIN_MAX_BALANCE: 'addresses/min-max-balance',
+    TOP_ADDRESS: 'addresses/top-addresses',
+    TOKENS: 'addresses/:address/tokens'
   },
   BLOCK: {
-    DETAIL: "blocks",
-    LIST: "blocks",
+    DETAIL: 'blocks',
+    LIST: 'blocks'
   },
-  CONTRACT: "contracts",
+  CONTRACT: 'contracts',
   DELEGATION: {
-    HEADER: "delegations/header",
-    POOL_ANALYTICS: "delegations/pool-detail-analytics",
-    POOL_DETAIL_HEADER: "delegations/pool-detail-header",
-    POOL_DETAIL: "delegations/pool-detail",
-    POOL_LIST: "delegations/pool-list",
-    TOP: "delegations/top",
+    HEADER: 'delegations/header',
+    POOL_ANALYTICS: 'delegations/pool-detail-analytics',
+    POOL_DETAIL_HEADER: 'delegations/pool-detail-header',
+    POOL_DETAIL: 'delegations/pool-detail',
+    POOL_LIST: 'delegations/pool-list',
+    TOP: 'delegations/top'
   },
   EPOCH: {
-    CURRENT_EPOCH: "epochs/current",
-    DETAIL: "epochs",
-    LIST: "epochs",
+    CURRENT_EPOCH: 'epochs/current',
+    DETAIL: 'epochs',
+    LIST: 'epochs'
   },
-  POLICY: "policies",
-  POOL: "pools",
+  POLICY: 'policies',
+  POOL: 'pools',
 
-  TOKEN: { LIST: "tokens", TOKEN_TRX: "tokens/:tokenId/txs", ANALYTICS: "tokens/analytics" },
+  TOKEN: { LIST: 'tokens', TOKEN_TRX: 'tokens/:tokenId/txs', ANALYTICS: 'tokens/analytics' },
   TRANSACTION: {
-    CURRENT: "txs/current",
-    DETAIL: "txs",
-    LIST: "txs",
-    GRAPH: "txs/graph",
+    CURRENT: 'txs/current',
+    DETAIL: 'txs',
+    LIST: 'txs',
+    GRAPH: 'txs/graph'
   },
   STAKE: {
-    ANALYTICS: "stakes/analytics",
-    ANALYTICS_BALANCE: "stakes/analytics-balance",
-    ANALYTICS_REWARD: "stakes/analytics-reward",
-    DETAIL: "stakes",
-    DE_REGISTRATION: "stakes/de-registration",
-    TOP_DELEGATOR: "stakes/top-delegators",
-    REGISTRATION: "stakes/registration",
-    MIN_MAX_BALANCE: "stakes/min-max-balance",
+    ANALYTICS: 'stakes/analytics',
+    ANALYTICS_BALANCE: 'stakes/analytics-balance',
+    ANALYTICS_REWARD: 'stakes/analytics-reward',
+    DETAIL: 'stakes',
+    DE_REGISTRATION: 'stakes/de-registration',
+    TOP_DELEGATOR: 'stakes/top-delegators',
+    REGISTRATION: 'stakes/registration',
+    MIN_MAX_BALANCE: 'stakes/min-max-balance'
   },
   STAKE_LIFECYCLE: {
     REGISTRATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/registrations`,
@@ -53,7 +53,7 @@ export const API = {
     DEREGISTRATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/de-registrations`,
     RECEIVED_REWARD: (stakeKey: string) => `stake-lifecycle/${stakeKey}/rewards`,
     WALLET_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/wallet-activity`,
-    REWARDS_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/reward-activity`,
+    REWARDS_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/reward-activity`
   },
   SPO_LIFECYCLE: {
     SPO_REGISTRATION: (poolId: string) => `pool-lifecycle/registration?poolView=${poolId}`,
@@ -68,24 +68,24 @@ export const API = {
     SPO_DEREGISTRATION: (poolId: string) => `pool-lifecycle/de-registration?poolView=${poolId}`,
     SPO_POOL_INFO: (poolId: string) => `pool-lifecycle/pool-info?poolView=${poolId}`,
     SPO_DEREGISTRATION_DETAIl: (poolView: string, poolId: number) =>
-      `pool-lifecycle/de-registration-detail?poolView=${poolView}&id=${poolId}`,
+      `pool-lifecycle/de-registration-detail?poolView=${poolView}&id=${poolId}`
   },
-  MARKETS: "markets",
+  MARKETS: 'markets',
   PROTOCOL_PARAMETER: {
-    CURRENT: "protocol/current",
-    HISTORY: "protocol/:type/history",
+    CURRENT: 'protocol/current',
+    HISTORY: 'protocol/:type/history'
   },
   REPORT: {
     STAKE_KEY_SUMMARY: `staking-lifecycle/report/stake-key/history`,
     DOWNLOAD_STAKE_KEY_SUMMARY: (reportId: number) => `staking-lifecycle/report/stake-key/${reportId}/export`,
     DOWNLOAD_POOL_SUMMARY: (reportId: number) => `pool-report/detail/${reportId}/export`,
     POOL_REPORT_SUMMARY: `pool-report/list`,
-    DASHBOARD: `staking-lifecycle/report/dashboard`,
-  },
+    DASHBOARD: `staking-lifecycle/report/dashboard`
+  }
 };
 
 export const USER_API = {
-  ACTIVITY_LOG: "user/activities-log",
-  INFO: "user/info",
-  BOOKMARK: "find-all-key",
+  ACTIVITY_LOG: 'user/activities-log',
+  INFO: 'user/info',
+  BOOKMARK: 'find-all-key'
 };

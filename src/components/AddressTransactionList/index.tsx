@@ -1,24 +1,23 @@
-import { useHistory, useLocation } from "react-router-dom";
-import { stringify } from "qs";
-import { Box } from "@mui/material";
-import { useState } from "react";
+import { useHistory, useLocation } from 'react-router-dom';
+import { stringify } from 'qs';
+import { Box } from '@mui/material';
 
-import Card from "../commons/Card";
-import Table, { Column } from "../commons/Table";
+import Card from '../commons/Card';
+import Table, { Column } from '../commons/Table';
 import {
   formatADAFull,
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
   getShortWallet,
-  numberWithCommas,
-} from "../../commons/utils/helper";
-import { details } from "../../commons/routers";
-import { StyledLink } from "./styles";
-import CustomTooltip from "../commons/CustomTooltip";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { SmallText } from "../share/styled";
-import ADAicon from "../commons/ADAIcon";
+  numberWithCommas
+} from '../../commons/utils/helper';
+import { details } from '../../commons/routers';
+import { StyledLink } from './styles';
+import CustomTooltip from '../commons/CustomTooltip';
+import useFetchList from '../../commons/hooks/useFetchList';
+import { SmallText } from '../share/styled';
+import ADAicon from '../commons/ADAIcon';
 
 interface AddressTransactionListProps {
   underline?: boolean;
@@ -33,7 +32,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   url,
   openDetail,
   selected,
-  showTabView,
+  showTabView
 }) => {
   const { search } = useLocation();
   const history = useHistory();
@@ -48,52 +47,52 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
 
   const columns: Column<Transactions>[] = [
     {
-      title: "#",
-      key: "id",
+      title: '#',
+      key: 'id',
       minWidth: 30,
-      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1),
+      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1)
     },
     {
-      title: "Trx Hash",
-      key: "trxhash",
+      title: 'Trx Hash',
+      key: 'trxhash',
       minWidth: 120,
 
-      render: transaction => (
+      render: (transaction) => (
         <div>
           <CustomTooltip title={transaction.hash}>
             <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
           </CustomTooltip>
         </div>
-      ),
+      )
     },
     {
-      title: "Time",
-      key: "time",
-      minWidth: "180px",
-      render: r => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>,
+      title: 'Time',
+      key: 'time',
+      minWidth: '180px',
+      render: (r) => <SmallText>{formatDateTimeLocal(r.time || '')}</SmallText>
     },
     {
-      title: "Block",
-      key: "block",
+      title: 'Block',
+      key: 'block',
       minWidth: 120,
-      render: transaction => (
+      render: (transaction) => (
         <>
           <StyledLink to={details.block(transaction.blockNo)}>{transaction.blockNo}</StyledLink>
           <br />
           <StyledLink to={details.epoch(transaction.epochNo)}>{transaction.epochNo}</StyledLink>/
           <SmallText>{transaction.epochSlotNo} </SmallText>
         </>
-      ),
+      )
     },
     {
-      title: "Addresses",
-      key: "address",
+      title: 'Addresses',
+      key: 'address',
       minWidth: 120,
-      render(transaction, index) {
+      render(transaction) {
         return (
           <div>
-            <Box display={"flex"}>
-              <Box width="50px"> Input: </Box>
+            <Box display={'flex'}>
+              <Box width='50px'> Input: </Box>
               <div>
                 {transaction.addressesInput.slice(0, 1).map((tx, key) => {
                   return (
@@ -109,8 +108,8 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
                 </Box>
               </div>
             </Box>
-            <Box display={"flex"} mt={1}>
-              <Box width="50px">Output: </Box>
+            <Box display={'flex'} mt={1}>
+              <Box width='50px'>Output: </Box>
               <div>
                 {transaction.addressesOutput.slice(0, 1).map((tx, key) => {
                   return (
@@ -128,42 +127,42 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
             </Box>
           </div>
         );
-      },
+      }
     },
     {
-      title: "Fees",
-      key: "fee",
+      title: 'Fees',
+      key: 'fee',
       minWidth: 120,
-      render: transaction => (
-        <Box display="inline-flex" alignItems="center">
+      render: (transaction) => (
+        <Box display='inline-flex' alignItems='center'>
           <Box mr={1}>{formatADAFull(transaction.fee)}</Box>
           <ADAicon />
         </Box>
-      ),
+      )
     },
     {
-      title: "Output",
+      title: 'Output',
       minWidth: 120,
-      key: "outSum",
-      render: transaction => (
-        <Box display="inline-flex" alignItems="center">
+      key: 'outSum',
+      render: (transaction) => (
+        <Box display='inline-flex' alignItems='center'>
           <Box mr={1}>{formatADAFull(transaction.totalOutput)}</Box>
           <ADAicon />
         </Box>
-      ),
-    },
+      )
+    }
   ];
 
   return (
-    <Card title={"Transactions"} underline={underline}>
+    <Card title={'Transactions'} underline={underline}>
       <Table
         {...fetchData}
         columns={columns}
-        total={{ count: fetchData.total, title: "Total Transactions" }}
+        total={{ count: fetchData.total, title: 'Total Transactions' }}
         pagination={{
           ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+          onChange: (page, size) => history.push({ search: stringify({ page, size }) })
         }}
         onClickRow={onClickRow}
         selected={selected}

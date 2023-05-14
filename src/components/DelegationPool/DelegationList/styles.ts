@@ -1,16 +1,16 @@
-import { styled, Button, LinearProgress, alpha } from "@mui/material";
-import { Link } from "react-router-dom";
+import { styled, Button, LinearProgress, alpha } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export const StyledLinearProgress = styled(LinearProgress)`
   display: inline-block;
   width: 100%;
   height: 8px;
   border-radius: 34px;
-  background: ${props => alpha(props.theme.palette.common.black, 0.1)};
+  background: ${(props) => alpha(props.theme.palette.common.black, 0.1)};
   margin-left: 8px;
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${props => props.theme.palette.gradient[0]};
+    background: ${(props) => (props.theme.palette as any).gradient[0]};
   }
 `;
 
@@ -19,20 +19,20 @@ export const PoolName = styled(Link)`
   color: var(--color-blue) !important;
 `;
 
-export const SearchContainer = styled("div")`
+export const SearchContainer = styled('div')`
   display: flex;
   justify-content: start;
   align-items: center;
   width: 100%;
   max-width: 360px;
-  background: ${props => props.theme.palette.background.paper};
+  background: ${(props) => props.theme.palette.background.paper};
   padding: 0 12px;
   border-radius: 8px;
   margin-bottom: 15px;
   height: 35px;
 `;
 
-export const StyledInput = styled("input")`
+export const StyledInput = styled('input')`
   border: none;
   width: 100%;
   font-size: var(--font-size-text-small);
@@ -50,7 +50,7 @@ export const SubmitButton = styled(Button)`
   width: 35px;
   height: 35px;
 `;
-export const Image = styled("img")`
+export const Image = styled('img')`
   width: 20px;
   height: 20px;
 `;

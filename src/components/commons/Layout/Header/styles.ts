@@ -1,7 +1,7 @@
-import { Container, styled } from "@mui/material";
+import { Container, styled } from '@mui/material';
 
-export const HeaderContainer = styled("header")`
-  color: ${props => props.theme.palette.text.primary};
+export const HeaderContainer = styled('header')`
+  color: ${(props) => props.theme.palette.text.primary};
   position: relative;
   @media (max-width: 1023px) {
     padding-top: 78px;
@@ -12,7 +12,7 @@ export const HeaderBox = styled(Container)<{ home: number }>`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  ${props =>
+  ${(props) =>
     props.home
       ? `flex-direction: column-reverse;`
       : `
@@ -21,11 +21,11 @@ export const HeaderBox = styled(Container)<{ home: number }>`
         align-items:center;
       `}
   @media (max-width: 1023px) {
-    ${props => (props.home ? `` : `justify-content: flex-end;`)}
+    ${(props) => (props.home ? `` : `justify-content: flex-end;`)}
   }
 `;
 
-export const HeaderTop = styled("div")`
+export const HeaderTop = styled('div')`
   z-index: 1300;
   display: flex;
   justify-content: flex-end;
@@ -37,23 +37,23 @@ export const HeaderTop = styled("div")`
   }
 `;
 
-export const HeaderMain = styled("div")<{ home: number }>`
+export const HeaderMain = styled('div')<{ home: number }>`
   position: relative;
   text-align: start;
 
-  padding: ${props => (props.home ? "0px 0px 50px" : "27px 0px")};
+  padding: ${(props) => (props.home ? '0px 0px 50px' : '27px 0px')};
   & > div {
-    padding-top: ${props => (props.home ? "0px" : "30px")};
-    margin-bottom: ${props => (props.home ? "0px" : "calc(-25px - 1.5715rem)")};
+    padding-top: ${(props) => (props.home ? '0px' : '30px')};
+    margin-bottom: ${(props) => (props.home ? '0px' : 'calc(-25px - 1.5715rem)')};
   }
   @media screen and (max-width: 767px) {
     padding: 62px 0px 48px;
-    padding: ${props => (props.home ? "62px 0px 48px" : "20px 0px")};
+    padding: ${(props) => (props.home ? '62px 0px 48px' : '20px 0px')};
   }
 `;
 
-export const Title = styled("h1")<{ home: number }>`
-  display: ${props => (props.home ? "block" : "none")};
+export const Title = styled('h1')<{ home: number }>`
+  display: ${(props) => (props.home ? 'block' : 'none')};
   text-align: center;
   @media screen and (max-width: 767px) {
     font-size: 30px;

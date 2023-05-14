@@ -1,12 +1,13 @@
 enum TransactionStatus {
-  FAIL = "FAIL",
-  SUCCESS = "SUCCESS",
-  PENDDING = "PENDDING",
+  FAIL = 'FAIL',
+  SUCCESS = 'SUCCESS',
+  PENDDING = 'PENDDING'
 }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 enum ConfirmationStatus {
-  MEDIUM = "MEDIUM",
-  LOW = "LOW",
-  HIGH = "HIGH",
+  MEDIUM = 'MEDIUM',
+  LOW = 'LOW',
+  HIGH = 'HIGH'
 }
 
 interface Transactions {
@@ -28,7 +29,7 @@ interface CurrentTransactions {
   toAddress: string[];
   amount: number;
   hash: string;
-  status: "FAIL" | "SUCCESS" | "PENDING";
+  status: 'FAIL' | 'SUCCESS' | 'PENDING';
   time: string;
   slot: number;
   epochNo: number;
@@ -89,7 +90,7 @@ type TPoolCertificated = {
 
 type TStakeCertificated = {
   stakeAddress: string;
-}
+};
 
 interface Transaction {
   tx: {

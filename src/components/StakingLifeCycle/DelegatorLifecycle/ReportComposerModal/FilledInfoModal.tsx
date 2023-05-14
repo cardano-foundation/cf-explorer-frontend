@@ -1,42 +1,43 @@
-import { Container } from "../../../Account/ActivityLogModal/styles";
-import { StyledTextField } from "../../../TokenAutocomplete/styles";
-import { StyledGroupField } from "./styles";
-import StyledModal from "../../../commons/StyledModal";
+import { Container } from '../../../Account/ActivityLogModal/styles';
+import { StyledTextField } from '../../../TokenAutocomplete/styles';
 import {
+  StyledGroupField,
   ModalTitle,
   StyledAddressSelect,
   StyledButton,
   StyledLabel,
   StyledSelect,
   StyledStack,
-  TextWarning,
-} from "./styles";
-import { DownIcon } from "../../../../commons/resources";
-import { useCallback, useMemo, useState } from "react";
-import { Box, MenuItem, Slider } from "@mui/material";
-import CustomDatePicker, { IDateRange } from "../../../CustomDatePicker";
-import { IPropsModal, STEPS } from ".";
-import { useSelector } from "react-redux";
+  TextWarning
+} from './styles';
+import StyledModal from '../../../commons/StyledModal';
+
+import { DownIcon } from '../../../../commons/resources';
+import { useCallback, useMemo, useState } from 'react';
+import { Box, MenuItem, Slider } from '@mui/material';
+import CustomDatePicker, { IDateRange } from '../../../CustomDatePicker';
+import { IPropsModal, STEPS } from '.';
+import { useSelector } from 'react-redux';
 
 export enum ReportType {
-  ChooseReport = "CHOOSE_REPORT",
-  PoolReport = "POOL_REPORT",
-  StakeKeyReport = "STAKE_KEY_REPORT",
+  ChooseReport = 'CHOOSE_REPORT',
+  PoolReport = 'POOL_REPORT',
+  StakeKeyReport = 'STAKE_KEY_REPORT'
 }
 
 const options = [
   {
     value: ReportType.ChooseReport,
-    label: "Choose report",
+    label: 'Choose report'
   },
   {
     value: ReportType.PoolReport,
-    label: "Pool report",
+    label: 'Pool report'
   },
   {
     value: ReportType.StakeKeyReport,
-    label: "Stake key report",
-  },
+    label: 'Stake key report'
+  }
 ];
 
 type IEpochRange = [number, number];
@@ -45,9 +46,9 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
 
   const [reportType, setReportType] = useState<ReportType>(ReportType.ChooseReport);
-  const [address, setAddress] = useState<string>("");
+  const [address, setAddress] = useState<string>('');
   const [dateRange, setDateRange] = useState<IDateRange>([null, null]);
-  const [reportName, setReportName] = useState<string>("");
+  const [reportName, setReportName] = useState<string>('');
   const [epochRange, setEpochRange] = useState<IEpochRange>([30, 50]);
 
   const onChangeReportType = useCallback((e: any) => {
@@ -79,12 +80,12 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       address,
       dateRange,
       reportName,
-      epochRange,
+      epochRange
     });
     gotoStep?.(STEPS.step2);
   };
 
-  const handleChangeEpochRange = (event: Event, newValue: number | number[], activeThumb: number) => {
+  const handleChangeEpochRange = (event: Event, newValue: number | number[]) => {
     if (!Array.isArray(newValue)) {
       return;
     }
@@ -99,13 +100,13 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
         <ModalTitle>Report composer</ModalTitle>
         <StyledStack>
           <StyledLabel>Report name</StyledLabel>
-          <StyledTextField placeholder="Filled report name" value={reportName} onChange={onChangeReportName} />
+          <StyledTextField placeholder='Filled report name' value={reportName} onChange={onChangeReportName} />
         </StyledStack>
-        <Box sx={{ marginBottom: "20px" }}>
+        <Box sx={{ marginBottom: '20px' }}>
           <StyledLabel>Address details</StyledLabel>
-          <StyledAddressSelect display={"flex"}>
-            <StyledSelect size="small" onChange={onChangeReportType} value={reportType} IconComponent={DownIcon}>
-              {options.map(option => (
+          <StyledAddressSelect display={'flex'}>
+            <StyledSelect size='small' onChange={onChangeReportType} value={reportType} IconComponent={DownIcon}>
+              {options.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
@@ -115,7 +116,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
               onChange={onChangeAddress}
               value={address}
               sx={{ flexGrow: 1 }}
-              placeholder="Address details"
+              placeholder='Address details'
             />
           </StyledAddressSelect>
         </Box>
@@ -128,13 +129,13 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
           </Container>
         )}
         {reportType === ReportType.PoolReport && (
-          <Box sx={{ marginBottom: "20px" }}>
+          <Box sx={{ marginBottom: '20px' }}>
             <StyledLabel>Select a epoch range</StyledLabel>
             <Slider
-              getAriaLabel={() => "Minimum distance"}
+              getAriaLabel={() => 'Minimum distance'}
               value={epochRange}
               onChange={handleChangeEpochRange}
-              valueLabelDisplay="on"
+              valueLabelDisplay='on'
               disableSwap
               min={0}
               max={currentEpoch?.no || 0}

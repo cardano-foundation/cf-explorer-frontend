@@ -1,5 +1,5 @@
-import { styled, Box } from "@mui/material";
-import { Link } from "react-router-dom";
+import { styled, Box } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export const TitleDetail = styled(Box)`
   font-size: var(--font-size-title);
@@ -7,12 +7,12 @@ export const TitleDetail = styled(Box)`
   font-family: var(--font-family-title);
 `;
 
-export const TokenAddress = styled("small")`
+export const TokenAddress = styled('small')`
   max-width: 90%;
   word-wrap: break-word;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
-  color: ${props => props.theme.palette.text.primary} !important;
+  color: ${(props) => props.theme.palette.text.primary} !important;
   line-height: 1.5;
 `;
 export const AddressLink = styled(Link)`
@@ -20,14 +20,14 @@ export const AddressLink = styled(Link)`
   word-wrap: break-word;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
-  color: ${props => props.theme.palette.text.primary} !important;
+  color: ${(props) => props.theme.palette.text.primary} !important;
   font-size: 14px;
 `;
 
 export const AddressGroup = styled(Box)`
   margin-top: 15px;
   margin-bottom: 24px;
-  background: ${props => props.theme.palette.secondary.light};
+  background: ${(props) => props.theme.palette.secondary.light};
   border-radius: 8px;
   padding: 12px 20px;
   display: flex;
@@ -45,7 +45,7 @@ export const ItemDetail = styled(Box)`
 
 export const LabelItem = styled(Box)`
   margin-left: 10px;
-  color: ${props => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.text.secondary};
   font-size: 14px;
 `;
 
@@ -61,11 +61,11 @@ export const RowItem = styled(Box)`
 `;
 
 export const CardItem = styled(Box)`
-  background-color: ${props => props.theme.palette.background.paper};
+  background-color: ${(props) => props.theme.palette.background.paper};
   min-height: 200px;
   height: 100%;
   border-radius: 10px;
   overflow: hidden;
   text-align: left;
-  box-shadow: ${props => props.theme.shadow.card};
+  box-shadow: ${(props) => props.theme.shadow.card};
 `;

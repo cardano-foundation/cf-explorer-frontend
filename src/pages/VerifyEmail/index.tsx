@@ -1,10 +1,9 @@
-import { Box, CircularProgress, FormGroup } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Box, CircularProgress, FormGroup } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { routers } from "../../commons/routers";
-import { verifyActive } from "../../commons/utils/userRequest";
-import { Container, Label, WrapButton, WrapContent, WrapForm } from "./styles";
-
+import { routers } from '../../commons/routers';
+import { verifyActive } from '../../commons/utils/userRequest';
+import { Container, Label, WrapButton, WrapContent, WrapForm } from './styles';
 
 export default function VerifyEmail() {
   const history = useHistory();
@@ -15,49 +14,47 @@ export default function VerifyEmail() {
     try {
       const response = await verifyActive({ code });
       setLoading(false);
-      setSuccess(response.data.code === "SS_0");
+      setSuccess(response.data.code === 'SS_0');
     } catch (error) {
       setLoading(false);
       setSuccess(false);
     }
-  }
+  };
   useEffect(() => {
     const params = new URLSearchParams(path.search);
     const code = params.get('code');
     if (code) {
       handleVerify(code);
     }
-  }, [path.search])
+  }, [path.search]);
   return (
     <Container>
       <WrapContent>
         <FormGroup>
-          {
-            loading ? (<WrapForm>
+          {loading ? (
+            <WrapForm>
               <Box textAlign={'center'}>
-                <CircularProgress sx={{
-                  color: 'grey',
-                }}/>
+                <CircularProgress
+                  sx={{
+                    color: 'grey'
+                  }}
+                />
               </Box>
-            </WrapForm>) :
-              success ?
-                (<WrapForm>
-                  <Label mb={3}>
-                    Success
-                  </Label>
-                  <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
-                    Sign In
-                  </WrapButton>
-                </WrapForm>)
-                : (
-                  <WrapForm>
-                    <Label>
-                      Something went wrong
-                    </Label>
-                  </WrapForm>
-                )}
+            </WrapForm>
+          ) : success ? (
+            <WrapForm>
+              <Label mb={3}>Success</Label>
+              <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.SIGN_IN)}>
+                Sign In
+              </WrapButton>
+            </WrapForm>
+          ) : (
+            <WrapForm>
+              <Label>Something went wrong</Label>
+            </WrapForm>
+          )}
         </FormGroup>
       </WrapContent>
-    </Container >
-  )
+    </Container>
+  );
 }

@@ -1,14 +1,13 @@
-import { ReactNode } from "react";
-import { BoxTitle, TextNote, TitleModal } from "./styles";
+import React, { ReactNode } from 'react';
+import { BoxTitle, TextNote, TitleModal } from './styles';
 
-import React from "react";
-import { Container } from "../Account/ActivityLogModal/styles";
-import { Box, Grid } from "@mui/material";
-import StyledModal from "../commons/StyledModal";
-import CopyButton from "../commons/CopyButton";
-import { StyledLink } from "../share/styled";
-import ADAIcon from "../commons/ADAIcon";
-import { IconRefresh, IconThreeDot } from "../../commons/resources";
+import { Container } from '../Account/ActivityLogModal/styles';
+import { Box, Grid } from '@mui/material';
+import StyledModal from '../commons/StyledModal';
+import CopyButton from '../commons/CopyButton';
+import { StyledLink } from '../share/styled';
+import ADAIcon from '../commons/ADAIcon';
+import { IconRefresh, IconThreeDot } from '../../commons/resources';
 
 interface IProps {
   open: boolean;
@@ -22,30 +21,30 @@ const PoolCertificateModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
         <TitleModal>Pool certificate</TitleModal>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <BoxCertificate name="Transaction ID">
-              <ItemCopy text="66c41...b36ca" />
+            <BoxCertificate name='Transaction ID'>
+              <ItemCopy text='66c41...b36ca' />
             </BoxCertificate>
           </Grid>
           <Grid item xs={12} md={6}>
-            <BoxCertificate name="Pool ID">
-              <ItemCopy text="66c41...b36ca" />
+            <BoxCertificate name='Pool ID'>
+              <ItemCopy text='66c41...b36ca' />
             </BoxCertificate>
           </Grid>
           <Grid item xs={12} md={6}>
-            <BoxCertificate name="Pool ID">
-              <ItemCopy text="66c41...b36ca" />
+            <BoxCertificate name='Pool ID'>
+              <ItemCopy text='66c41...b36ca' />
             </BoxCertificate>
           </Grid>
           <Grid item xs={12} md={6}>
-            <BoxCertificate name="Owners">
-              <ItemCopy text="66c41...b36ca" />
+            <BoxCertificate name='Owners'>
+              <ItemCopy text='66c41...b36ca' />
             </BoxCertificate>
           </Grid>
           <Grid item xs={12} md={6}>
-            <BoxCertificate name="Reward Account" iconRight={<IconThreeDot />}>
-              <Box display={"flex"} justifyContent={"space-between"}>
+            <BoxCertificate name='Reward Account' iconRight={<IconThreeDot />}>
+              <Box display={'flex'} justifyContent={'space-between'}>
                 <Box>
-                  <Box display={"flex"} alignItems={"center"} gap={1}>
+                  <Box display={'flex'} alignItems={'center'} gap={1}>
                     2.174433 <ADAIcon fontSize={16} />
                   </Box>
                 </Box>
@@ -53,21 +52,23 @@ const PoolCertificateModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
             </BoxCertificate>
           </Grid>
           <Grid item xs={12} md={6}>
-            <BoxCertificate name="Margin">2%</BoxCertificate>
+            <BoxCertificate name='Margin'>2%</BoxCertificate>
           </Grid>
           <Grid item xs={12} md={6}>
-            <BoxCertificate name="Pledge" iconRight={<IconRefresh />}>
+            <BoxCertificate name='Pledge' iconRight={<IconRefresh />}>
               <Box>
-                <Box display={"flex"} alignItems={"center"} gap={1}>
+                <Box display={'flex'} alignItems={'center'} gap={1}>
                   2.174433 <ADAIcon fontSize={16} />
                 </Box>
-                <TextNote>Previous: 1,000.0 <ADAIcon fontSize={12} /></TextNote>
+                <TextNote>
+                  Previous: 1,000.0 <ADAIcon fontSize={12} />
+                </TextNote>
               </Box>
             </BoxCertificate>
           </Grid>
           <Grid item xs={12} md={6}>
-            <BoxCertificate name="Cost">
-              <Box display={"flex"} alignItems={"center"} gap={1}>
+            <BoxCertificate name='Cost'>
+              <Box display={'flex'} alignItems={'center'} gap={1}>
                 2.174433 <ADAIcon fontSize={16} />
               </Box>
             </BoxCertificate>
@@ -88,18 +89,18 @@ const BoxCertificate = (props: IBoxCertificate) => {
   return (
     <Container
       sx={{
-        backgroundColor: "rgba(152, 162, 179, 0.1)",
+        backgroundColor: 'rgba(152, 162, 179, 0.1)',
         height: 80,
-        display: "flex",
-        alignItems: "center",
+        display: 'flex',
+        alignItems: 'center'
       }}
     >
       <Box
-        width="100%"
-        display={"flex"}
-        alignItems={"center"}
-        justifyContent={"space-between"}
-        sx={{ padding: "0px 20px" }}
+        width='100%'
+        display={'flex'}
+        alignItems={'center'}
+        justifyContent={'space-between'}
+        sx={{ padding: '0px 20px' }}
       >
         <Box>
           <BoxTitle>{props.name}</BoxTitle>
@@ -114,7 +115,7 @@ const BoxCertificate = (props: IBoxCertificate) => {
 const ItemCopy = ({ text }: { text: string }) => {
   return (
     <>
-      <StyledLink to="#">{text}</StyledLink>&nbsp;
+      <StyledLink to='#'>{text}</StyledLink>&nbsp;
       <CopyButton />
     </>
   );

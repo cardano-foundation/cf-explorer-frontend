@@ -1,6 +1,5 @@
-import { Box, Modal, Typography, styled } from "@mui/material";
-import StyledModal from "../commons/StyledModal";
-import { Link } from "react-router-dom";
+import { Box, Modal, Typography, styled } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export const Container = styled(Box);
 

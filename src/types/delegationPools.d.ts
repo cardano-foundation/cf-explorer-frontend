@@ -15,7 +15,7 @@ interface Delegators {
   feeAmount: number;
   pledge: number;
   saturation: number;
-  stakeLimit
+  stakeLimit;
 }
 
 interface DelegationOverview {

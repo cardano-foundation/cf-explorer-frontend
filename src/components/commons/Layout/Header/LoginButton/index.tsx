@@ -1,24 +1,21 @@
-import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
-import { Box } from "@mui/material";
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { WalletIcon } from "../../../../../commons/resources";
-import { routers } from "../../../../../commons/routers";
-import { NETWORK, NETWORKS } from "../../../../../commons/utils/constants";
-import { removeAuthInfo } from "../../../../../commons/utils/helper";
-import { RootState } from "../../../../../stores/types";
-import ConnectedProfileOptionNormalLogin from "../../../ConnectedProfileOptionNormalLogin";
-import ConnectWallet from "../ConnectWallet";
-import { Image, Span, StyledButton } from "./styles";
-interface Props {
-}
+import { NetworkType, useCardano } from '@cardano-foundation/cardano-connect-with-wallet';
+import { Box } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { WalletIcon } from '../../../../../commons/resources';
+import { routers } from '../../../../../commons/routers';
+import { NETWORK, NETWORKS } from '../../../../../commons/utils/constants';
+import { RootState } from '../../../../../stores/types';
+import ConnectedProfileOptionNormalLogin from '../../../ConnectedProfileOptionNormalLogin';
+import ConnectWallet from '../ConnectWallet';
+import { Image, Span, StyledButton } from './styles';
 
-const LoginButton: React.FC<Props> = () => {
+const LoginButton = () => {
   const { userData } = useSelector(({ user }: RootState) => user);
   const history = useHistory();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { disconnect } = useCardano({
-    limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
+    limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
 
   // useEffect(() => {
@@ -29,12 +26,12 @@ const LoginButton: React.FC<Props> = () => {
   //     }
   //   };
   // }, []);
-  console.log(userData)
+  console.log(userData);
   const handleClick = () => {
     history.push(routers.SIGN_IN);
   };
 
-  if (userData?.loginType === "connectWallet") {
+  if (userData?.loginType === 'connectWallet') {
     return (
       <>
         <ConnectWallet />
@@ -42,7 +39,7 @@ const LoginButton: React.FC<Props> = () => {
     );
   }
 
-  if (userData?.loginType === "normal") {
+  if (userData?.loginType === 'normal') {
     return (
       <>
         <ConnectedProfileOptionNormalLogin userData={userData} />
@@ -50,11 +47,10 @@ const LoginButton: React.FC<Props> = () => {
     );
   }
 
-
   return (
-    <Box position="relative">
-      <StyledButton type="button" onClick={handleClick}>
-        <Image src={WalletIcon} alt="wallet" />
+    <Box position='relative'>
+      <StyledButton type='button' onClick={handleClick}>
+        <Image src={WalletIcon} alt='wallet' />
         <Span>Sign In</Span>
       </StyledButton>
     </Box>

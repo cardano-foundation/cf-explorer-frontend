@@ -1,11 +1,11 @@
-import { MenuItem, Select, styled, Box } from "@mui/material";
+import { MenuItem, Select, styled, Box } from '@mui/material';
 
-export const Title = styled("h2")``;
+export const Title = styled('h2')``;
 
 export const StyledSelect = styled(Select)`
   font-family: var(--font-family-text);
-  background: ${props => props.theme.palette.background.paper};
-  color: ${props => props.theme.palette.text.secondary};
+  background: ${(props) => props.theme.palette.background.paper};
+  color: ${(props) => props.theme.palette.text.secondary};
   border-radius: 8px;
   min-width: 250px;
   & > div {
@@ -19,15 +19,15 @@ export const StyledSelect = styled(Select)`
     border: none !important;
   }
   & > svg {
-    color: ${props => props.theme.palette.text.secondary};
+    color: ${(props) => props.theme.palette.text.secondary};
     font-size: 20px;
   }
 `;
 
-export const OptionSelect = styled(MenuItem)(({ theme }) => ({
-  padding: "6px 20px",
-  textAlign: "center",
-  height: "40px",
+export const OptionSelect = styled(MenuItem)(() => ({
+  padding: '6px 20px',
+  textAlign: 'center',
+  height: '40px'
 }));
 
 export const DelegationData = styled(Box)`

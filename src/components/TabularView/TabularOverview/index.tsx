@@ -1,5 +1,5 @@
-import { Box, BoxProps, Grid, Icon } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Box, BoxProps, Grid, Icon } from '@mui/material';
+import { useParams } from 'react-router-dom';
 import {
   WalletGreenIcon,
   BgGray,
@@ -7,15 +7,15 @@ import {
   RewardWithdrawn,
   DelegationTo,
   RewardAccount,
-  TransactionIcon,
-} from "../../../commons/resources/index";
-import { CardOverview, CardTitle, CardValue, TransferButton, WrapIcon, WrapWalletIcon } from "./styles";
-import { API } from "../../../commons/utils/api";
-import useFetch from "../../../commons/hooks/useFetch";
-import { formatADAFull } from "../../../commons/utils/helper";
-import ADAicon from "../../commons/ADAIcon";
-import { useState } from "react";
-import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
+  TransactionIcon
+} from '../../../commons/resources/index';
+import { CardOverview, CardTitle, CardValue, TransferButton, WrapIcon, WrapWalletIcon } from './styles';
+import { API } from '../../../commons/utils/api';
+import useFetch from '../../../commons/hooks/useFetch';
+import { formatADAFull } from '../../../commons/utils/helper';
+import ADAicon from '../../commons/ADAIcon';
+import { useState } from 'react';
+import ADATransferModal from '../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal';
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -31,11 +31,11 @@ type TCardAmount = {
 
 const CardAmount = ({ amount }: TCardAmount) => {
   return (
-    <Box display="flex" alignItems="center">
+    <Box display='flex' alignItems='center'>
       <GreenWalletIcon mr={2} />
       <CardValue>
         {formatADAFull(amount)}
-        <ADAicon pl={"8px"} />
+        <ADAicon pl={'8px'} />
       </CardValue>
     </Box>
   );
@@ -53,9 +53,9 @@ const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
     <Grid item xs={6}>
       <CardOverview>
         <Icon component={BgGray} />
-        <Box display="flex" alignItems="center" gap="12px">
+        <Box display='flex' alignItems='center' gap='12px'>
           <WrapIcon>{mainIcon}</WrapIcon>
-          <Box textAlign="start">
+          <Box textAlign='start'>
             <CardTitle>{title}</CardTitle>
             {value}
           </Box>
@@ -74,34 +74,34 @@ const TabularOverview: React.FC = () => {
   return (
     <Grid container spacing={2}>
       <GridItem
-        title="Payment Wallet"
+        title='Payment Wallet'
         mainIcon={<PaymentWallet />}
         value={<CardAmount amount={data?.totalStake} />}
         action={
           <TransferButton
             onClick={() => setOpen(true)}
-            variant="contained"
-            startIcon={<Icon fill="white" component={TransactionIcon} />}
+            variant='contained'
+            startIcon={<Icon fill='white' component={TransactionIcon} />}
           >
             ADA Transfers
           </TransferButton>
         }
       />
       <GridItem
-        title="Reward Account"
+        title='Reward Account'
         mainIcon={<RewardAccount />}
         value={<CardAmount amount={data?.rewardAvailable} />}
       />
       <GridItem
-        title="Rewards Withdrawn"
+        title='Rewards Withdrawn'
         mainIcon={<RewardWithdrawn />}
         value={<CardAmount amount={data?.rewardWithdrawn} />}
       />
       <GridItem
-        title="Delegating To"
+        title='Delegating To'
         mainIcon={<DelegationTo />}
         value={
-          <Box display="flex" alignItems="center">
+          <Box display='flex' alignItems='center'>
             <CardValue>{data?.pool?.poolName}</CardValue>
           </Box>
         }

@@ -1,22 +1,22 @@
-import { Container } from "../../../Account/ActivityLogModal/styles";
-import StyledModal from "../../../commons/StyledModal";
-import { ModalTitle, StyledBackButton, StyledButton, StyledStack } from "./styles";
-import { useMemo, useState } from "react";
-import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack } from "@mui/material";
-import { IPropsModal, STEPS } from ".";
-import { ReportType } from "./FilledInfoModal";
-import { get } from "lodash";
+import { Container } from '../../../Account/ActivityLogModal/styles';
+import StyledModal from '../../../commons/StyledModal';
+import { ModalTitle, StyledBackButton, StyledButton, StyledStack } from './styles';
+import { useMemo, useState } from 'react';
+import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack } from '@mui/material';
+import { IPropsModal, STEPS } from '.';
+import { ReportType } from './FilledInfoModal';
+import { get } from 'lodash';
 
 export enum RatioGroupValue {
-  yes = "YES",
-  no = "NO",
-  unTicked = "UN_TICKED",
+  yes = 'YES',
+  no = 'NO',
+  unTicked = 'UN_TICKED'
 }
 
 export enum OptionTransfer {
-  adaTransfer = "ADA_TRANSFER",
-  feesPaid = "FEES_PAID",
-  poolSize = "POOL_SIZE",
+  adaTransfer = 'ADA_TRANSFER',
+  feesPaid = 'FEES_PAID',
+  poolSize = 'POOL_SIZE'
 }
 
 const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaultParams, saveParams, gotoStep }) => {
@@ -24,7 +24,7 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
   const [feesPaid, setFeesPaid] = useState<RatioGroupValue>(RatioGroupValue.unTicked);
   const [poolSize, setPoolSize] = useState<RatioGroupValue>(RatioGroupValue.unTicked);
 
-  const reportType = useMemo(() => get(defaultParams, "0.reportType"), [defaultParams]);
+  const reportType = useMemo(() => get(defaultParams, '0.reportType'), [defaultParams]);
 
   const isDisabled = useMemo(() => {
     if (reportType === ReportType.PoolReport) {
@@ -69,29 +69,29 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
   const OPTIONS_TRANSFER = [
     {
       key: OptionTransfer.adaTransfer,
-      label: "ADA transfers",
+      label: 'ADA transfers',
       value: adaTransfers,
-      type: [ReportType.StakeKeyReport],
+      type: [ReportType.StakeKeyReport]
     },
     {
       key: OptionTransfer.poolSize,
-      label: "Pool size",
+      label: 'Pool size',
       value: poolSize,
-      type: [ReportType.PoolReport],
+      type: [ReportType.PoolReport]
     },
     {
-      label: "Fees paid",
+      label: 'Fees paid',
       key: OptionTransfer.feesPaid,
       value: feesPaid,
-      type: [ReportType.PoolReport, ReportType.StakeKeyReport],
-    },
+      type: [ReportType.PoolReport, ReportType.StakeKeyReport]
+    }
   ];
 
   const handleSubmit = () => {
     saveParams?.({
       adaTransfers,
       feesPaid,
-      poolSize,
+      poolSize
     });
     gotoStep?.(STEPS.step3);
   };
@@ -104,25 +104,25 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
           {OPTIONS_TRANSFER.filter(({ type }) => type.includes(reportType)).map(({ key, label, value }) => {
             return (
               <Box key={key}>
-                <FormControl sx={{ width: "100%", marginBottom: 1 }}>
-                  <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                    <FormLabel id="demo-controlled-radio-buttons-group">{label}</FormLabel>
+                <FormControl sx={{ width: '100%', marginBottom: 1 }}>
+                  <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
+                    <FormLabel id='demo-controlled-radio-buttons-group'>{label}</FormLabel>
                     <RadioGroup
                       aria-labelledby={key}
                       name={key}
                       value={value}
                       onChange={(e: any) => handleChange(e, key)}
                     >
-                      <Stack direction={"row"}>
+                      <Stack direction={'row'}>
                         <FormControlLabel
                           value={RatioGroupValue.yes}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
-                          label="Yes"
+                          label='Yes'
                         />
                         <FormControlLabel
                           value={RatioGroupValue.no}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
-                          label="No"
+                          label='No'
                         />
                       </Stack>
                     </RadioGroup>
@@ -132,7 +132,7 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
             );
           })}
         </Container>
-        <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={3}>
+        <StyledStack direction={'row'} display={'flex'} alignContent={'space-between'} gap={3}>
           <StyledBackButton onClick={() => gotoStep?.(STEPS.step1)}>Previous</StyledBackButton>
           <StyledButton isDisabled={isDisabled} onClick={handleSubmit}>
             Next

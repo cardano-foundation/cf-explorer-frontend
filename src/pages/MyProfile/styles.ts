@@ -1,6 +1,6 @@
-import { styled, Tab } from "@mui/material";
+import { styled, Tab } from '@mui/material';
 
-export const TabTitle = styled("h3")`
+export const TabTitle = styled('h3')`
   margin: 0px;
   color: var(--title-color);
   text-align: left;
@@ -13,4 +13,4 @@ export const TabTitle = styled("h3")`
 
 export const WrapTab = styled(Tab)`
   max-width: unset;
-`
+`;

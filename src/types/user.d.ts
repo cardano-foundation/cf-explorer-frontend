@@ -1,13 +1,14 @@
-import { NETWORKS } from "../commons/utils/constants";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { NETWORKS } from '../commons/utils/constants';
 
-export declare type SupportedWallets = "Flint" | "Nami" | "Eternl" | "Yoroi" | "Typhon";
+export declare type SupportedWallets = 'Flint' | 'Nami' | 'Eternl' | 'Yoroi' | 'Typhon';
 
 export type Wallet = {
   name: SupportedWallets;
   icon: string;
   link: string;
 };
-export declare type ThemeType = "dark" | "light";
+export declare type ThemeType = 'dark' | 'light';
 
 export declare interface UserDataType {
   avatar: string;

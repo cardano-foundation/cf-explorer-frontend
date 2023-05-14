@@ -1,8 +1,8 @@
-import { alpha, Box, Button, Dialog, IconButton, Paper, styled } from "@mui/material";
+import { alpha, Box, Button, Dialog, IconButton, Paper, styled } from '@mui/material';
 
 export const ConnectDialog = styled(Dialog)<{ connecting: number }>`
   * {
-    ${props => (props.connecting ? `cursor: wait;` : ``)}
+    ${(props) => (props.connecting ? `cursor: wait;` : ``)}
   }
 `;
 
@@ -15,14 +15,14 @@ export const ConnectOption = styled(Paper)`
 `;
 
 export const WrapContent = styled(Box)(({ theme }) => ({
-  padding: "30px 40px",
-  position: "relative",
+  padding: '30px 40px',
+  position: 'relative',
   [theme.breakpoints.down(theme.breakpoints.values.md)]: {
-    padding: "0",
+    padding: '0'
   }
 }));
 
-export const Title = styled("h3")`
+export const Title = styled('h3')`
   margin: 0;
   text-align: left;
 `;
@@ -34,10 +34,10 @@ export const CloseButton = styled(IconButton)<{ connecting: number }>`
   width: 30px;
   height: 30px;
   padding: 0;
-  border: 1px solid ${props => props.theme.palette.grey["A100"]};
-  cursor: ${props => (props.connecting ? `wait` : `pointer`)};
+  border: 1px solid ${(props) => props.theme.palette.grey['A100']};
+  cursor: ${(props) => (props.connecting ? `wait` : `pointer`)};
   &:hover {
-    ${props => (props.connecting ? `background: none;` : ``)}
+    ${(props) => (props.connecting ? `background: none;` : ``)}
   }
 `;
 
@@ -52,12 +52,12 @@ export const WalletItem = styled(Box)<{ active: number; connecting: number }>`
   margin-top: 10px;
   box-sizing: border-box;
   border-radius: 10px;
-  cursor: ${props => (props.connecting ? `wait` : `pointer`)};
-  box-shadow: ${props => (props.active ? props.theme.shadow.card : "none")};
-  background-color: ${props =>
+  cursor: ${(props) => (props.connecting ? `wait` : `pointer`)};
+  box-shadow: ${(props) => (props.active ? props.theme.shadow.card : 'none')};
+  background-color: ${(props) =>
     props.active ? props.theme.palette.background.default : alpha(props.theme.palette.grey[300], 0.1)};
   &:hover {
-    background-color: ${props => props.theme.palette.background.default};
+    background-color: ${(props) => props.theme.palette.background.default};
   }
 `;
 
@@ -70,9 +70,9 @@ export const GroupFlex = styled(Box)`
   gap: 15px;
 `;
 
-export const WalletName = styled("h4")`
+export const WalletName = styled('h4')`
   margin: 0px;
-  color: ${props => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[400]};
 `;
 
 export const InstallButton = styled(Button)`
@@ -80,17 +80,17 @@ export const InstallButton = styled(Button)`
   justify-content: space-between;
   align-items: center;
   gap: 5px;
-  background: ${props => props.theme.palette.purple[200]};
+  background: ${(props) => props.theme.palette.purple[200]};
   border-radius: 5px;
   padding: 4px 10px;
   height: 29px;
-  color: ${props => props.theme.palette.purple[500]};
+  color: ${(props) => props.theme.palette.purple[500]};
   text-transform: none;
   font-size: var(--font-size-text-x-small);
   font-weight: var(--font-weight-bold);
 `;
 
-export const WalletIcon = styled("img")`
+export const WalletIcon = styled('img')`
   width: 29px;
   height: 29px;
 `;

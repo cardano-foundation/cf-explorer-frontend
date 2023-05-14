@@ -1,13 +1,13 @@
-import { styled } from "@mui/material";
-import Table from "../../../commons/Table";
+import { styled } from '@mui/material';
+import Table from '../../../commons/Table';
 
 export const TableMinting = styled(Table)({
-  "& tr th:last-child": {
-    width: "120px",
-  },
+  '& tr th:last-child': {
+    width: '120px'
+  }
 });
 
-export const TextLabel = styled("div")`
+export const TextLabel = styled('div')`
   display: inline-block;
   font-weight: 400;
   font-size: 14px;
@@ -16,7 +16,7 @@ export const TextLabel = styled("div")`
   width: 130px;
 `;
 
-export const TextValue = styled("div")`
+export const TextValue = styled('div')`
   display: inline-block;
   font-weight: 700;
   font-size: 14px;
@@ -24,7 +24,7 @@ export const TextValue = styled("div")`
   color: #108aef;
 `;
 
-export const TextRightValue = styled("div")`
+export const TextRightValue = styled('div')`
   display: inline-block;
   font-weight: 700;
   font-size: 14px;

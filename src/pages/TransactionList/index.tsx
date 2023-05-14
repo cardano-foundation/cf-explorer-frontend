@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
-import TransactionList from "../../components/TransactionLists";
-import { Container, useTheme } from "@mui/material";
-import { useWindowSize } from "react-use";
-import { setOnDetailView } from "../../stores/user";
-import { details } from "../../commons/routers";
-import DetailViewTransaction from "../../components/commons/DetailView/DetailViewTransaction";
-import styled from "@emotion/styled";
-import { API } from "../../commons/utils/api";
+import TransactionList from '../../components/TransactionLists';
+import { Container, useTheme } from '@mui/material';
+import { useWindowSize } from 'react-use';
+import { setOnDetailView } from '../../stores/user';
+import { details } from '../../commons/routers';
+import DetailViewTransaction from '../../components/commons/DetailView/DetailViewTransaction';
+import styled from '@emotion/styled';
+import { API } from '../../commons/utils/api';
 
 const StyledContainer = styled(Container)`
   padding: 20px 0 40px;
 `;
 
-interface Props {}
-
-const Transactions: React.FC<Props> = () => {
+const Transactions = () => {
   const [hash, setHash] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();

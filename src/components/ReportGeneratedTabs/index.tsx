@@ -1,9 +1,7 @@
-import { TabContext, TabList } from "@mui/lab";
-import { Box, Tab, Tabs } from "@mui/material";
-import React, { useState } from "react";
-import { TabContent, TabHeader, TabLabel } from "./styles";
-import { DownloadButtonAll } from "../../pages/StackingLifecycle/styles";
-import { DownloadWhiteIC } from "../../commons/resources";
+import { TabContext, TabList } from '@mui/lab';
+import { Box, Tab, Tabs } from '@mui/material';
+import React, { useState } from 'react';
+import { TabContent, TabHeader, TabLabel } from './styles';
 
 export interface TabsItem {
   value: string;
@@ -16,7 +14,7 @@ interface ReportGeneratedProps {
 }
 
 const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
-  const [value, setValue] = useState("1");
+  const [value, setValue] = useState('1');
 
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -28,8 +26,8 @@ const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
         <TabHeader>
           <Tabs>
             <Box>
-              <TabList onChange={handleChange} aria-label="lab API tabs example">
-                {tabsItem.map(item => (
+              <TabList onChange={handleChange} aria-label='lab API tabs example'>
+                {tabsItem.map((item) => (
                   <Tab
                     key={item.value}
                     value={item.value}
@@ -41,7 +39,7 @@ const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
           </Tabs>
         </TabHeader>
 
-        {tabsItem.map(item => (
+        {tabsItem.map((item) => (
           <TabContent key={item.value} value={item.value}>
             {item.component}
           </TabContent>

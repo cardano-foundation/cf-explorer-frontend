@@ -1,29 +1,29 @@
-import { Tab, Tabs, styled, alpha } from "@mui/material";
-import { Box } from "@mui/system";
-import { Link } from "react-router-dom";
+import { Tab, Tabs, styled, alpha } from '@mui/material';
+import { Box } from '@mui/system';
+import { Link } from 'react-router-dom';
 
-export const ModalTitle = styled("div")({
-  fontWeight: "var(--font-weight-bold)",
-  fontSize: "var(--font-size-title)",
-  color: "var(--text-color)",
-  marginBottom: 30,
+export const ModalTitle = styled('div')({
+  fontWeight: 'var(--font-weight-bold)',
+  fontSize: 'var(--font-size-title)',
+  color: 'var(--text-color)',
+  marginBottom: 30
 });
 
-export const TextUserInfo = styled("span")({
+export const TextUserInfo = styled('span')({
   fontWeight: 500,
-  fontSize: "var(--font-size-text)",
-  color: "var(--text-color)",
-  margin: "0px 3px",
-  display: "inline-block",
+  fontSize: 'var(--font-size-text)',
+  color: 'var(--text-color)',
+  margin: '0px 3px',
+  display: 'inline-block'
 });
 
-export const TextTx = styled("span")`
+export const TextTx = styled('span')`
   font-weight: 400;
   font-size: 14px;
   color: #667085;
 `;
 
-export const CustomTab = styled("span")`
+export const CustomTab = styled('span')`
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
@@ -31,7 +31,7 @@ export const CustomTab = styled("span")`
   margin-left: 5px;
 `;
 
-export const TextAmountReward = styled("span")`
+export const TextAmountReward = styled('span')`
   margin-right: 5px;
 `;
 
@@ -45,34 +45,34 @@ export const StyledTabs = styled(Tabs)`
 `;
 
 export const StyledTab = styled(Tab)`
-  color: ${props => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[400]};
   padding: 0;
   &.Mui-selected {
-    color: ${props => props.theme.palette.text.primary};
+    color: ${(props) => props.theme.palette.text.primary};
   }
 `;
 
-export const TabLabel = styled("h3")`
+export const TabLabel = styled('h3')`
   text-transform: none;
   color: inherit;
 `;
 
-export const Status = styled("span")<{ status: WalletActivityIF["status"] }>`
+export const Status = styled('span')<{ status: WalletActivityIF['status'] }>`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
   padding: 7.5px 11.5px;
   border-radius: 2px;
   text-transform: uppercase;
   color: ${({ status, theme }) =>
-    status === "SUCCESS"
+    status === 'SUCCESS'
       ? theme.palette.success.main
-      : status === "FAIL"
+      : status === 'FAIL'
       ? theme.palette.error.main
       : theme.palette.warning.main};
   background-color: ${({ status, theme }) =>
-    status === "SUCCESS"
+    status === 'SUCCESS'
       ? alpha(theme.palette.success.main, 0.1)
-      : status === "FAIL"
+      : status === 'FAIL'
       ? alpha(theme.palette.error.main, 0.1)
       : alpha(theme.palette.warning.main, 0.1)};
 `;
@@ -80,17 +80,17 @@ export const Status = styled("span")<{ status: WalletActivityIF["status"] }>`
 export const StyledLink = styled(Link)`
   text-decoration: none;
   font-family: var(--font-family-text);
-  color: ${props => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
   font-weight: var(--font-weight-normal);
   &:hover {
     font-family: var(--font-family-text);
-    color: ${props => props.theme.palette.secondary.main};
+    color: ${(props) => props.theme.palette.secondary.main};
   }
 `;
 
 export const OverviewIcon = styled(Box)`
   border-radius: 49px;
-  background: ${props => props.theme.palette.green[600_10]};
+  background: ${(props) => props.theme.palette.green[600_10]};
   width: 29px;
   height: 29px;
   display: flex;
@@ -100,7 +100,7 @@ export const OverviewIcon = styled(Box)`
 
 export const Amount = styled(Box)<{ value: number }>(({ value, theme }) => ({
   color: value > 0 ? theme.palette.success.main : theme.palette.error.main,
-  display: "flex",
-  alignItems: "center",
-  gap: 5,
+  display: 'flex',
+  alignItems: 'center',
+  gap: 5
 }));

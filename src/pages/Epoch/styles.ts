@@ -1,25 +1,25 @@
-import { styled, Container } from "@mui/material";
+import { styled, Container } from '@mui/material';
 
 export const StyledContainer = styled(Container)`
   padding: 20px 0 40px;
 `;
 
-export const StyledColorBlueDard = styled("span")`
-  color: ${props => props.theme.palette.text.primary};
+export const StyledColorBlueDard = styled('span')`
+  color: ${(props) => props.theme.palette.text.primary};
 `;
 
 export const Index = styled(StyledColorBlueDard)``;
 
-export const Status = styled("span")<{ status: string }>`
+export const Status = styled('span')<{ status: string }>`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
   border-radius: 2px;
   text-transform: uppercase;
   font-size: 10px;
   color: ${({ status, theme }) =>
-    status === "finished"
+    status === 'finished'
       ? theme.palette.info.main
-      : status === "rewarding"
+      : status === 'rewarding'
       ? theme.palette.success.main
       : theme.palette.warning.main};
 `;
