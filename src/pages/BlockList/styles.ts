@@ -1,16 +1,16 @@
-import { styled, Container } from "@mui/material";
-import { Link } from "react-router-dom";
+import { styled, Container } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-export const StyledColorBlueDard = styled("span")`
-  color: ${props => props.theme.palette.text.primary};
+export const StyledColorBlueDard = styled('span')`
+  color: ${(props) => props.theme.palette.text.primary};
 `;
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
 `;
 
-export const StyledImage = styled("img")`
+export const StyledImage = styled('img')`
   margin-right: 8px;
 `;
 
@@ -21,16 +21,16 @@ export const PriceWrapper = styled(StyledColorBlueDard)`
 `;
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
-  padding: "20px 0 40px",
-  [theme.breakpoints.down("sm")]: {
-    "& > div:nth-of-type(1)": {
-      "& > div:nth-of-type(1)": {
-        padding: "0 16px",
-      },
+  padding: '20px 0 40px',
+  [theme.breakpoints.down('sm')]: {
+    '& > div:nth-of-type(1)': {
+      '& > div:nth-of-type(1)': {
+        padding: '0 16px'
+      }
     },
-    padding: "0 0 40px",
-    ".card-table > div:nth-child(2)": {
-      padding: "0 0 25px 16px",
-    },
-  },
+    padding: '0 0 40px',
+    '.card-table > div:nth-child(2)': {
+      padding: '0 0 25px 16px'
+    }
+  }
 }));

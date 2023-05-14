@@ -1,7 +1,7 @@
-import { Box, styled } from "@mui/material";
-import { DownRedIcon, UpGreenIcon } from "../../../commons/resources";
-import CustomTooltip from "../CustomTooltip";
-import { BigNumber } from "bignumber.js";
+import { Box, styled } from '@mui/material';
+import { DownRedIcon, UpGreenIcon } from '../../../commons/resources';
+import CustomTooltip from '../CustomTooltip';
+import { BigNumber } from 'bignumber.js';
 
 const PriceRate = styled(Box)<{ size?: string | number }>`
   display: inline-flex;
@@ -9,24 +9,24 @@ const PriceRate = styled(Box)<{ size?: string | number }>`
   align-items: center;
   gap: 10px;
   font-size: ${({ size }) => {
-    if (typeof size === "number") return `${size}px`;
-    if (typeof size === "string") return size;
-    return "var(--font-size-text-small)";
+    if (typeof size === 'number') return `${size}px`;
+    if (typeof size === 'string') return size;
+    return 'var(--font-size-text-small)';
   }};
 `;
 
-const ImageRate = styled("img")<{ sign: number }>`
+const ImageRate = styled('img')<{ sign: number }>`
   width: 10px;
   height: 10px;
 `;
 
-const PriceValue = styled("span")<{ sign: number }>`
+const PriceValue = styled('span')<{ sign: number }>`
   color: ${({ theme, sign }) => (sign > 0 ? theme.palette.primary.main : theme.palette.error.main)};
   font-weight: var(--font-weight-bold);
 `;
 
-const PriceNoValue = styled("span")`
-  color: ${props => props.theme.palette.text.primary};
+const PriceNoValue = styled('span')`
+  color: ${(props) => props.theme.palette.text.primary};
   margin-left: 28px;
   font-weight: var(--font-weight-bold);
 `;
@@ -43,12 +43,12 @@ const RateWithIcon = ({ value, size, multiple = 1 }: Props) => {
   const sign = Math.sign(multiplied.toNumber());
 
   return (
-    <CustomTooltip title={`${sign > 0 ? "+" : ""}${multiplied.toNumber()}`}>
+    <CustomTooltip title={`${sign > 0 ? '+' : ''}${multiplied.toNumber()}`}>
       <PriceRate size={size}>
-        <ImageRate sign={sign} src={sign > 0 ? UpGreenIcon : DownRedIcon} alt="rate" />
+        <ImageRate sign={sign} src={sign > 0 ? UpGreenIcon : DownRedIcon} alt='rate' />
         <PriceValue sign={sign}>
-          {sign > 0 ? "+" : ""}
-          {multiplied.toFixed(2, BigNumber.ROUND_DOWN).toString().replace(".", ",")} %
+          {sign > 0 ? '+' : ''}
+          {multiplied.toFixed(2, BigNumber.ROUND_DOWN).toString().replace('.', ',')} %
         </PriceValue>
       </PriceRate>
     </CustomTooltip>

@@ -1,11 +1,21 @@
-import { Box, FormGroup, FormHelperText, IconButton } from "@mui/material";
-import { useReducer, useState, useEffect } from "react";
+import { Box, FormGroup, FormHelperText, IconButton, InputAdornment } from '@mui/material';
+import { useReducer, useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
-import { AlertCustom, Container, FormHelperTextCustom, InputCustom, Label, WrapButton, WrapContent, WrapForm, WrapInput, WrapTitle } from "./styles";
-import { routers } from "../../commons/routers";
-import { resetPassword } from "../../commons/utils/userRequest";
-import { InputAdornment } from "@mui/material";
+import { HideIcon, LockIcon, ShowIcon } from '../../commons/resources';
+import {
+  AlertCustom,
+  Container,
+  FormHelperTextCustom,
+  InputCustom,
+  Label,
+  WrapButton,
+  WrapContent,
+  WrapForm,
+  WrapInput,
+  WrapTitle
+} from './styles';
+import { routers } from '../../commons/routers';
+import { resetPassword } from '../../commons/utils/userRequest';
 
 interface IForm {
   password: {
@@ -17,8 +27,7 @@ interface IForm {
     value: string;
     error?: string;
     touched?: boolean;
-  }
-
+  };
 }
 const formReducer = (state: IForm, event: any) => {
   return {
@@ -26,10 +35,10 @@ const formReducer = (state: IForm, event: any) => {
     [event.name]: {
       value: event.value || '',
       error: event.error || !event.value,
-      touched: event.touched,
+      touched: event.touched
     }
-  }
-}
+  };
+};
 export default function ResetPassword() {
   const history = useHistory();
   const path = useLocation();
@@ -42,11 +51,11 @@ export default function ResetPassword() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useReducer(formReducer, {
     confirmPassword: {
-      value: '',
+      value: ''
     },
     password: {
-      value: '',
-    },
+      value: ''
+    }
   });
   const handleTogglePassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -55,26 +64,30 @@ export default function ResetPassword() {
     setShowConfirmPassword((prevState) => !prevState);
   };
   const getError = (name: string, value: string) => {
-    let error = "";
+    let error = '';
     switch (name) {
       case 'password':
         if (!value) {
-          error = "Please enter your Password";
-        } else if (value.length < 8 || value.length > 30 || !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/.test(value)) {
-          error = "Password must contain at least 8 characters, including upper lowercase number and special character";
+          error = 'Please enter your Password';
+        } else if (
+          value.length < 8 ||
+          value.length > 30 ||
+          !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/.test(value)
+        ) {
+          error = 'Password must contain at least 8 characters, including upper lowercase number and special character';
         }
         break;
       case 'confirmPassword':
         if (!value) {
-          error = "Please enter your Confirm Password";
+          error = 'Please enter your Confirm Password';
         } else if (value !== formData.password.value) {
-          error = "Confirm Password does not match";
+          error = 'Confirm Password does not match';
         }
         break;
       default:
     }
     return error;
-  }
+  };
   useEffect(() => {
     const params = new URLSearchParams(path.search);
     const code = params.get('code');
@@ -96,7 +109,7 @@ export default function ResetPassword() {
       touched: true,
       error: getError(event.target.name, event.target.value)
     });
-  }
+  };
   const handleResetPassword = async (password: string) => {
     try {
       setLoading(true);
@@ -111,7 +124,7 @@ export default function ResetPassword() {
     } finally {
       setLoading(false);
     }
-  }
+  };
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const errorPassword = getError('password', formData.password.value);
@@ -120,101 +133,94 @@ export default function ResetPassword() {
       setFormData({
         name: 'confirmPassword',
         touched: true,
-        error: errorConfirmPassword,
-      })
+        error: errorConfirmPassword
+      });
     }
     if (errorPassword) {
       setFormData({
         name: 'password',
         touched: true,
-        error: errorPassword,
-      })
+        error: errorPassword
+      });
     }
     if (!hasErrorField) {
       handleResetPassword(formData.password.value);
     }
-  }
+  };
   return (
     <Container>
       <WrapContent>
-        <WrapTitle>
-          Reset Password
-        </WrapTitle>
+        <WrapTitle>Reset Password</WrapTitle>
         <FormGroup>
-          {
-            !success ?
-              (<WrapForm>
-                {error ? <AlertCustom severity="error">Something was wrong!</AlertCustom> : null}
-                <WrapInput>
-                  <Label>
-                    New Password
-                  </Label>
-                  <InputCustom
-                    startAdornment={<Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
+          {!success ? (
+            <WrapForm>
+              {error ? <AlertCustom severity='error'>Something was wrong!</AlertCustom> : null}
+              <WrapInput>
+                <Label>New Password</Label>
+                <InputCustom
+                  startAdornment={
+                    <Box paddingRight={'10px'} paddingTop={'5px'} paddingBottom={'2px'}>
                       <LockIcon />
-                    </Box>}
-                    name="password"
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleTogglePassword}
-                        >
-                          {showPassword ? <ShowIcon /> : <HideIcon />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    onChange={handleChange}
-                    fullWidth
-                    type={showPassword ? "text" : "password"}
-                    placeholder="New Password"
-                    error={Boolean(formData.password.error && formData.password.touched)}
-                  />
-                  {(formData.password.error && formData.password.touched) ? <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom> : null}
-                </WrapInput>
-                <WrapInput>
-                  <Label>
-                    Confirm New Password
-                  </Label>
-                  <InputCustom
-                    startAdornment={<Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
+                    </Box>
+                  }
+                  name='password'
+                  endAdornment={
+                    <InputAdornment position='end'>
+                      <IconButton aria-label='toggle password visibility' onClick={handleTogglePassword}>
+                        {showPassword ? <ShowIcon /> : <HideIcon />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  onChange={handleChange}
+                  fullWidth
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder='New Password'
+                  error={Boolean(formData.password.error && formData.password.touched)}
+                />
+                {formData.password.error && formData.password.touched ? (
+                  <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom>
+                ) : null}
+              </WrapInput>
+              <WrapInput>
+                <Label>Confirm New Password</Label>
+                <InputCustom
+                  startAdornment={
+                    <Box paddingRight={'10px'} paddingTop={'5px'} paddingBottom={'2px'}>
                       <LockIcon />
-                    </Box>}
-                    fullWidth
-                    name="confirmPassword"
-                    onChange={handleChange}
-                    type={showConfirmPassword ? "text" : "password"}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleToggleConfirmPassword}
-                        >
-                          {showConfirmPassword ? <ShowIcon /> : <HideIcon />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    placeholder="Confirm Password"
-                    error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
-                  />
-                  {(formData.confirmPassword.error && formData.confirmPassword.touched) ? <FormHelperText error>{formData.confirmPassword.error}</FormHelperText> : null}
-                </WrapInput>
-                <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={loading}>
-                  Submit
-                </WrapButton>
-              </WrapForm>)
-              : (
-                <WrapForm>
-                  <Label>
-                    Your password has been reset successfully
-                  </Label>
-                  <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
-                    Sign In
-                  </WrapButton>
-                </WrapForm>
-              )}
+                    </Box>
+                  }
+                  fullWidth
+                  name='confirmPassword'
+                  onChange={handleChange}
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  endAdornment={
+                    <InputAdornment position='end'>
+                      <IconButton aria-label='toggle password visibility' onClick={handleToggleConfirmPassword}>
+                        {showConfirmPassword ? <ShowIcon /> : <HideIcon />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  placeholder='Confirm Password'
+                  error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
+                />
+                {formData.confirmPassword.error && formData.confirmPassword.touched ? (
+                  <FormHelperText error>{formData.confirmPassword.error}</FormHelperText>
+                ) : null}
+              </WrapInput>
+              <WrapButton variant='contained' fullWidth onClick={handleSubmit} disabled={loading}>
+                Submit
+              </WrapButton>
+            </WrapForm>
+          ) : (
+            <WrapForm>
+              <Label>Your password has been reset successfully</Label>
+              <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.SIGN_IN)}>
+                Sign In
+              </WrapButton>
+            </WrapForm>
+          )}
         </FormGroup>
       </WrapContent>
-    </Container >
-  )
+    </Container>
+  );
 }

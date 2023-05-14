@@ -1,15 +1,15 @@
-import { Container, Input, Modal, TextareaAutosize, Theme, styled, useTheme } from "@mui/material";
-import * as icons from "../../commons/resources";
-import CustomIcon from "../../components/commons/CustomIcon";
-import { Box } from "@mui/system";
-import { useEffect, useRef, useState } from "react";
+import { Container, Modal, TextareaAutosize, Theme, styled, useTheme } from '@mui/material';
+import * as icons from '../../commons/resources';
+import CustomIcon from '../../components/commons/CustomIcon';
+import { Box } from '@mui/system';
+import { useState } from 'react';
 
 const StyledContainer = styled(Container)`
   padding: 20px 0 40px;
   background: #dfdfdf;
 `;
 
-const StyledImage = styled("img")`
+const StyledImage = styled('img')`
   width: auto;
   height: auto;
   max-width: 60px;
@@ -23,7 +23,7 @@ const Group = styled(Box)`
   text-align: left;
 `;
 
-const Title = styled("h3")`
+const Title = styled('h3')`
   border-bottom: 1px solid #444;
   width: max-content;
 `;
@@ -45,43 +45,43 @@ const IconBox = styled(Box)`
 
 interface StyleItem {
   width: number;
-  color?: "primary" | "secondary" | string;
-  fill?: "currentColor" | "primary" | "secondary" | string;
-  stroke?: "currentColor" | "primary" | "secondary" | string;
+  color?: 'primary' | 'secondary' | string;
+  fill?: 'currentColor' | 'primary' | 'secondary' | string;
+  stroke?: 'currentColor' | 'primary' | 'secondary' | string;
 }
 
 const styleList: StyleItem[] = [
   { width: 20 },
   { width: 40 },
   { width: 60 },
-  { width: 60, fill: "currentColor" },
-  { width: 60, color: "primary", fill: "currentColor" },
-  { width: 60, color: "secondary", fill: "currentColor" },
-  { width: 60, fill: "secondary" },
-  { width: 60, fill: "primary" },
-  { width: 60, fill: "red" },
-  { width: 60, color: "secondary", stroke: "currentColor" },
-  { width: 60, stroke: "currentColor" },
-  { width: 60, stroke: "secondary" },
-  { width: 60, stroke: "primary" },
-  { width: 60, stroke: "red" },
+  { width: 60, fill: 'currentColor' },
+  { width: 60, color: 'primary', fill: 'currentColor' },
+  { width: 60, color: 'secondary', fill: 'currentColor' },
+  { width: 60, fill: 'secondary' },
+  { width: 60, fill: 'primary' },
+  { width: 60, fill: 'red' },
+  { width: 60, color: 'secondary', stroke: 'currentColor' },
+  { width: 60, stroke: 'currentColor' },
+  { width: 60, stroke: 'secondary' },
+  { width: 60, stroke: 'primary' },
+  { width: 60, stroke: 'red' }
 ];
 
 const Item = ({ name, Icon }: { name: string; Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>> }) => {
   const [open, setOpen] = useState(false);
   const [props, setProps] = useState<StyleItem>({
-    width: 60,
+    width: 60
   });
   const theme = useTheme();
   const importTheme = `const theme = useTheme();\n`;
 
   let stringify = `<CustomIcon icon={${name}} width={${props.width}}`;
   switch (props.fill) {
-    case "primary":
+    case 'primary':
       if (!stringify.includes(importTheme)) stringify = importTheme + stringify;
       stringify += ` fill={theme.palette.primary.main}`;
       break;
-    case "secondary":
+    case 'secondary':
       if (!stringify.includes(importTheme)) stringify = importTheme + stringify;
       stringify += ` fill={theme.palette.secondary.main}`;
       break;
@@ -91,11 +91,11 @@ const Item = ({ name, Icon }: { name: string; Icon: React.FunctionComponent<Reac
       stringify += ` fill="${props.fill}"`;
   }
   switch (props.stroke) {
-    case "primary":
+    case 'primary':
       if (!stringify.includes(importTheme)) stringify = importTheme + stringify;
       stringify += ` stroke={theme.palette.primary.main}`;
       break;
-    case "secondary":
+    case 'secondary':
       if (!stringify.includes(importTheme)) stringify = importTheme + stringify;
       stringify += ` stroke={theme.palette.secondary.main}`;
       break;
@@ -105,10 +105,10 @@ const Item = ({ name, Icon }: { name: string; Icon: React.FunctionComponent<Reac
       stringify += ` stroke="${props.stroke}"`;
   }
   switch (props.color) {
-    case "primary":
+    case 'primary':
       stringify += ` color={theme=>theme.palette.primary.main}`;
       break;
-    case "secondary":
+    case 'secondary':
       stringify += ` color={theme=>theme.palette.secondary.main}`;
       break;
     case undefined:
@@ -120,61 +120,62 @@ const Item = ({ name, Icon }: { name: string; Icon: React.FunctionComponent<Reac
 
   return (
     <IconBox>
-      <CustomIcon icon={Icon} title={name} width={60} onClick={() => setOpen(!open)} style={{ cursor: "pointer" }} />
+      <CustomIcon icon={Icon} title={name} width={60} onClick={() => setOpen(!open)} style={{ cursor: 'pointer' }} />
       <Modal
         open={open}
         onClose={() => setOpen(!open)}
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
       >
         <Box>
-          <Box width={700} sx={{ background: "#FFF", padding: "30px" }}>
+          <Box width={700} sx={{ background: '#FFF', padding: '30px' }}>
             <TextareaAutosize
               value={stringify}
               style={{
-                width: "calc(100% - 30px)",
-                marginBottom: "20px",
+                width: 'calc(100% - 30px)',
+                marginBottom: '20px',
                 fontSize: 14,
                 padding: 15,
-                resize: "vertical",
+                resize: 'vertical'
               }}
               minRows={3}
             />
-            <Box display={"flex"} flexWrap={"wrap"} gap={"20px"} sx={{ background: "#dfdfdf", padding: "30px" }}>
-              {styleList.map(item => {
+            <Box display={'flex'} flexWrap={'wrap'} gap={'20px'} sx={{ background: '#dfdfdf', padding: '30px' }}>
+              {styleList.map((item, idx) => {
                 let color: string | ((theme: Theme) => string) | undefined = item.color;
                 switch (item.color) {
-                  case "primary":
+                  case 'primary':
                     color = (theme: Theme) => theme.palette.primary.main;
                     break;
-                  case "secondary":
+                  case 'secondary':
                     color = (theme: Theme) => theme.palette.secondary.main;
                     break;
                   default:
                 }
                 let fill: string | undefined = item.fill;
                 switch (item.fill) {
-                  case "primary":
+                  case 'primary':
                     fill = theme.palette.primary.main;
                     break;
-                  case "secondary":
+                  case 'secondary':
                     fill = theme.palette.secondary.main;
                     break;
                   default:
                 }
                 let stroke: string | undefined = item.stroke;
                 switch (item.stroke) {
-                  case "primary":
+                  case 'primary':
                     stroke = theme.palette.primary.main;
                     break;
-                  case "secondary":
+                  case 'secondary':
                     stroke = theme.palette.secondary.main;
                     break;
                   default:
                 }
                 return (
                   <IconBox
-                    border={`1px solid ${Object.is(props, item) ? "blue" : "none"}`}
-                    title="Click to view code"
+                    key={idx}
+                    border={`1px solid ${Object.is(props, item) ? 'blue' : 'none'}`}
+                    title='Click to view code'
                     onClick={() => setProps(item)}
                   >
                     <CustomIcon icon={Icon} width={item.width} color={color} fill={fill} stroke={stroke} />
@@ -191,28 +192,28 @@ const Item = ({ name, Icon }: { name: string; Icon: React.FunctionComponent<Reac
 
 const ItemConvert = ({ name, Icon }: { name: string; Icon: string }) => {
   const [open, setOpen] = useState(false);
-  const svgName = Icon.split("/").slice(-1)[0];
-  const svgNameArray = svgName.split(".");
-  const svgOriginName = svgNameArray[0] + "." + svgNameArray[2];
+  const svgName = Icon.split('/').slice(-1)[0];
+  const svgNameArray = svgName.split('.');
+  const svgOriginName = svgNameArray[0] + '.' + svgNameArray[2];
   const stringify = `export { ReactComponent as ${name} } from "./icons/${svgOriginName}";`;
   return (
     <IconBox key={name}>
-      <StyledImage width={60} src={Icon} title={"svg " + name + ": " + Icon} onClick={() => setOpen(!open)} />
+      <StyledImage width={60} src={Icon} title={'svg ' + name + ': ' + Icon} onClick={() => setOpen(!open)} />
       <Modal
         open={open}
         onClose={() => setOpen(!open)}
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
       >
         <Box>
-          <Box width={700} sx={{ background: "#FFF", padding: "30px" }}>
+          <Box width={700} sx={{ background: '#FFF', padding: '30px' }}>
             <TextareaAutosize
               value={stringify}
               style={{
-                width: "calc(100% - 30px)",
-                marginBottom: "20px",
+                width: 'calc(100% - 30px)',
+                marginBottom: '20px',
                 fontSize: 14,
                 padding: 15,
-                resize: "vertical",
+                resize: 'vertical'
               }}
               minRows={3}
             />
@@ -228,7 +229,7 @@ const Icons = () => {
     <StyledContainer>
       <Group>
         <Title>Introduction CustomIcon</Title>
-        <p style={{ color: "red" }}>
+        <p style={{ color: 'red' }}>
           Chỉ nên áp dụng với icon đơn giản, 1-2 màu (2 màu gồm cả stroke và fill), các Icon có kích thước lớn nhiều màu
           thì sử dụng luôn ảnh gốc
         </p>
@@ -240,14 +241,14 @@ const Icons = () => {
           render, nếu không sẽ phải chờ sau lần render để kiểm tra size ảnh mới hiển thị.
         </p>
         <p>+ Sử dụng fill hoặc stroke (tùy vào svg) = "currentColor" để lấy màu theo color của parent</p>
-        <p>+ Sử dụng fill hoặc stroke = {"{color}"} để hiển thị màu, có thể sử dụng useTheme() để lấy màu theo theme</p>
-        <p>+ Có thể sử dụng fill | stroke "currentColor" color={"{theme=> string}"} để hiển thị màu theo theme.</p>
+        <p>+ Sử dụng fill hoặc stroke = {'{color}'} để hiển thị màu, có thể sử dụng useTheme() để lấy màu theo theme</p>
+        <p>+ Có thể sử dụng fill | stroke "currentColor" color={'{theme=> string}'} để hiển thị màu theo theme.</p>
       </Group>
       <Group>
         <Title>SVG active</Title>
         <IconList>
           {Object.entries(icons).map(([name, Icon]) => {
-            if (typeof Icon !== "string") return <Item key={name} name={name} Icon={Icon} />;
+            if (typeof Icon !== 'string') return <Item key={name} name={name} Icon={Icon} />;
             return null;
           })}
         </IconList>
@@ -256,8 +257,8 @@ const Icons = () => {
         <Title>SVG pending</Title>
         <IconList>
           {Object.entries(icons).map(([name, Icon]) => {
-            if (typeof Icon === "string")
-              if (Icon.includes(".svg")) return <ItemConvert key={name} name={name} Icon={Icon} />;
+            if (typeof Icon === 'string')
+              if (Icon.includes('.svg')) return <ItemConvert key={name} name={name} Icon={Icon} />;
             return null;
           })}
         </IconList>
@@ -266,11 +267,11 @@ const Icons = () => {
         <Title>Image</Title>
         <IconList>
           {Object.entries(icons).map(([name, Icon]) => {
-            if (typeof Icon === "string")
-              if (!Icon.includes(".svg"))
+            if (typeof Icon === 'string')
+              if (!Icon.includes('.svg'))
                 return (
                   <IconBox key={name}>
-                    <StyledImage width={60} src={Icon} title={"img " + name + ": " + Icon} />{" "}
+                    <StyledImage width={60} src={Icon} title={'img ' + name + ': ' + Icon} />{' '}
                   </IconBox>
                 );
             return null;
