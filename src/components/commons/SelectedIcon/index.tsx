@@ -1,5 +1,5 @@
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { Wrapper } from "./styled";
+import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
+import { Wrapper } from './styled';
 
 const SelectedIcon = () => {
   return (

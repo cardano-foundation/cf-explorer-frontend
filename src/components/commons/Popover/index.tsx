@@ -1,4 +1,4 @@
-import { useState, cloneElement, ReactNode, MouseEvent, ReactElement } from 'react'
+import { useState, cloneElement, ReactNode, MouseEvent, ReactElement } from 'react';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -27,10 +27,10 @@ export default function BasicPopover({ button, content }: PopoverProps) {
       {button ? (
         cloneElement(button as ReactElement<any>, {
           'aria-describedby': id,
-          onClick: handleClick,
+          onClick: handleClick
         })
       ) : (
-        <Button aria-describedby={id} variant="contained" onClick={handleClick}>
+        <Button aria-describedby={id} variant='contained' onClick={handleClick}>
           Open Popover
         </Button>
       )}
@@ -41,7 +41,7 @@ export default function BasicPopover({ button, content }: PopoverProps) {
         onClose={handleClose}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left',
+          horizontal: 'left'
         }}
       >
         {content || <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>}
@@ -49,9 +49,3 @@ export default function BasicPopover({ button, content }: PopoverProps) {
     </div>
   );
 }
-
-
-
-
-
-

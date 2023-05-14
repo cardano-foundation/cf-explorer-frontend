@@ -1,6 +1,6 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled } from '@mui/material';
 
-export const TextLabel = styled("div")`
+export const TextLabel = styled('div')`
   display: inline-block;
   font-weight: 400;
   font-size: 14px;
@@ -9,7 +9,7 @@ export const TextLabel = styled("div")`
   width: 130px;
 `;
 
-export const TextValue = styled("div")`
+export const TextValue = styled('div')`
   display: inline-block;
   font-weight: 700;
   font-size: 14px;
@@ -17,7 +17,7 @@ export const TextValue = styled("div")`
   word-break: break-all;
 `;
 
-export const TextRightValue = styled("div")`
+export const TextRightValue = styled('div')`
   display: inline-block;
   font-weight: 700;
   font-size: 14px;
@@ -31,8 +31,8 @@ export const TextNormal = styled(TextRightValue)`
 `;
 
 export const CardHeader = styled(Box)(({ theme }) => ({
-  padding: "15px 0px",
-  fontWeight: "bold",
+  padding: '15px 0px',
+  fontWeight: 'bold',
   color: theme.palette.grey[300],
-  borderBottom: `1px solid ${theme.palette.border.main}`,
+  borderBottom: `1px solid ${theme.palette.border.main}`
 }));
