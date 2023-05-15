@@ -100,8 +100,8 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       label: isPoolReport ? 'Epoch range' : 'Date range',
       value: isPoolReport
         ? `Epoch ${epochStart} -  Epoch ${epochEnd}`
-        : `${moment(start).format('d MM yy')} - ${moment(end).format('d MM yy')}`,
-      step: STEPS.step1
+        : `${moment(start).format("DD MM yy")} - ${moment(end).format("DD MM yy")}`,
+      step: STEPS.step1,
     },
     {
       label: 'Address details',
@@ -124,7 +124,6 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       step: STEPS.step3
     }
   ];
-
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
       <Container p={'10px 10px 1px 20px'}>
