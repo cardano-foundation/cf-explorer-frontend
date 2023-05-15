@@ -1,72 +1,72 @@
-import React, { useState } from "react";
-import { Box } from "@mui/material";
-import { Column } from "../../../commons/Table";
-import ScriptModal from "../../../ScriptModal";
-import { Amount, AssetName, LogoEmpty, TableMinting } from "./styles";
-import { PolicyScriptIcon } from "../../../../commons/resources";
-import { Logo } from "../../../../pages/Token/styles";
+import React, { useState } from 'react';
+import { Box } from '@mui/material';
+import { Column } from '../../../commons/Table';
+import ScriptModal from '../../../ScriptModal';
+import { Amount, AssetName, LogoEmpty, TableMinting } from './styles';
+import { PolicyScriptIcon } from '../../../../commons/resources';
+import { Logo } from '../../../../pages/Token/styles';
 
 interface MintingProps {
-  data: Transaction["mints"] | null;
+  data: Transaction['mints'] | null;
 }
 
 const Minting: React.FC<MintingProps> = ({ data }) => {
   const [open, setOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<string>("");
+  const [selectedItem, setSelectedItem] = useState<string>('');
 
-  const columns: Column<Required<Transaction>["mints"][number]>[] = [
+  const columns: Column<Required<Transaction>['mints'][number]>[] = [
     {
-      title: "Asset name",
+      title: 'Asset name',
       isHiddenBorder: true,
-      key: "Assetname",
-      minWidth: "40px",
+      key: 'Assetname',
+      minWidth: '40px',
       render: (r, index) => {
         return (
           <AssetName>
             {r?.metadata?.logo ? (
-              <Logo src={`data:/image/png;base64,${r?.metadata?.logo}`} alt="icon" />
+              <Logo src={`data:/image/png;base64,${r?.metadata?.logo}`} alt='icon' />
             ) : (
               <LogoEmpty />
             )}
             {r.assetName}
           </AssetName>
         );
-      },
+      }
     },
     {
-      title: "Amount minted",
+      title: 'Amount minted',
       isHiddenBorder: true,
-      key: "Amount",
-      minWidth: "40px",
+      key: 'Amount',
+      minWidth: '40px',
       render: (r, index) => {
         return <Amount>{r.assetQuantity}</Amount>;
-      },
+      }
     },
     {
-      title: "Policy script",
-      key: "Policy",
-      minWidth: "40px",
-      maxWidth: "120px",
+      title: 'Policy script',
+      key: 'Policy',
+      minWidth: '40px',
+      maxWidth: '120px',
       isHiddenBorder: true,
-      render: (r, index) => {
+      render: (r) => {
         return (
-          <div
+          <Box
             onClick={() => {
               setOpen(true);
-              setSelectedItem(r.policy || "");
+              setSelectedItem(r.policy || '');
             }}
           >
             <PolicyScriptIcon />
-          </div>
+          </Box>
         );
-      },
-    },
+      }
+    }
   ];
 
   return (
     <Box>
       <TableMinting columns={columns} data={data || []} />
-      <ScriptModal open={open} policy={selectedItem || ""} onClose={() => setOpen(false)} />
+      <ScriptModal open={open} policy={selectedItem || ''} onClose={() => setOpen(false)} />
     </Box>
   );
 };

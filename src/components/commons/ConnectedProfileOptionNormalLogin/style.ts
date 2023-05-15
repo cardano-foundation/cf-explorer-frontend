@@ -1,4 +1,4 @@
-import { Box, ButtonBase, Popover, styled } from "@mui/material";
+import { Box, ButtonBase, Popover, styled } from '@mui/material';
 
 export const WrapContent = styled(Popover)`
   .MuiPaper-root {
@@ -28,17 +28,17 @@ export const Disconnect = styled(Box)`
   align-items: center;
   margin-top: 26px;
   h4 {
-    color: ${props => props.theme.palette.red[700]};
+    color: ${(props) => props.theme.palette.red[700]};
   }
 `;
 
-export const Icon = styled("img")`
+export const Icon = styled('img')`
   width: 24px;
   height: 24px;
   margin-right: 10px;
 `;
 
-export const Name = styled("h4")`
+export const Name = styled('h4')`
   margin: 0px;
 `;
 
@@ -48,7 +48,7 @@ export const StyledButton = styled(ButtonBase)`
   align-items: center;
   padding: 12px 20px;
   gap: 8px;
-  background: ${props => props.theme.palette.grey[700]};
+  background: ${(props) => props.theme.palette.grey[700]};
   border-radius: 8px;
   cursor: pointer;
   height: auto;
@@ -58,10 +58,10 @@ export const StyledButton = styled(ButtonBase)`
   height: 40px;
 `;
 
-export const Span = styled("span")`
+export const Span = styled('span')`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.palette.primary.contrastText};
+  color: ${(props) => props.theme.palette.primary.contrastText};
   white-space: nowrap;
   line-height: 1;
 `;

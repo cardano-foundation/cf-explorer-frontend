@@ -1,6 +1,6 @@
-import React from "react";
-import { CardContent, SubTitle, Title, TitleGroup, Card, IconContainer } from "./styles";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { CardContent, SubTitle, Title, TitleGroup, Card, IconContainer } from './styles';
+import { Link } from 'react-router-dom';
 
 export interface DashboardCardProps {
   leftIcon?: React.ReactNode;
@@ -11,7 +11,7 @@ export interface DashboardCardProps {
 const DashboardCard: React.FC<DashboardCardProps> = ({ leftIcon, title, subtitle, to }) => {
   return (
     <Card>
-      <Link to={to || "#"}>
+      <Link to={to || '#'}>
         <CardContent>
           <IconContainer>{leftIcon}</IconContainer>
           <TitleGroup>

@@ -1,6 +1,6 @@
 declare interface ToastItem {
   id: number;
-  severity: AlertProps["severity"];
+  severity: AlertProps['severity'];
   message: React.ReactNode;
   duration?: number;
 }

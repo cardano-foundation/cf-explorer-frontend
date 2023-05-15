@@ -1,14 +1,14 @@
-import React from "react";
-import StyledModal from "../commons/StyledModal";
-import { Card, CardTitle, Container, Title, CardSubTitle, DotsIcon, ShowMoreButton } from "./styles";
-import { Grid } from "@mui/material";
-import CopyButton from "../commons/CopyButton";
+import React from 'react';
+import StyledModal from '../commons/StyledModal';
+import { Card, CardTitle, Container, Title, CardSubTitle, DotsIcon, ShowMoreButton } from './styles';
+import { Grid } from '@mui/material';
+import CopyButton from '../commons/CopyButton';
 
 export interface PoolRegistrationCertificateProps {
-  open?: boolean; 
+  open?: boolean;
   onModalClosed?: () => void;
 }
-const PoolRegistrationCertificate: React.FC<PoolRegistrationCertificateProps>  = ({ open, onModalClosed}) => {
+const PoolRegistrationCertificate: React.FC<PoolRegistrationCertificateProps> = ({ open, onModalClosed }) => {
   return (
     <StyledModal open={!!open} handleCloseModal={() => onModalClosed?.()}>
       <Container>
@@ -17,40 +17,40 @@ const PoolRegistrationCertificate: React.FC<PoolRegistrationCertificateProps>  =
           <Grid item md={6} xs={12}>
             <Card>
               <CardTitle>Transaction ID</CardTitle>
-              <CardSubTitle color="#108AEF">
-                66c41...b36ca <CopyButton text="66c41...b36ca" />
+              <CardSubTitle color='#108AEF'>
+                66c41...b36ca <CopyButton text='66c41...b36ca' />
               </CardSubTitle>
             </Card>
           </Grid>
           <Grid item md={6} xs={12}>
             <Card>
               <CardTitle>Pool ID</CardTitle>
-              <CardSubTitle color="#108AEF">
-                66c41...b36ca <CopyButton text="66c41...b36ca" />
+              <CardSubTitle color='#108AEF'>
+                66c41...b36ca <CopyButton text='66c41...b36ca' />
               </CardSubTitle>
             </Card>
           </Grid>
           <Grid item md={6} xs={12}>
             <Card>
               <CardTitle>VRF Key</CardTitle>
-              <CardSubTitle color="#108AEF">
-                66c41...b36ca <CopyButton text="66c41...b36ca" />
+              <CardSubTitle color='#108AEF'>
+                66c41...b36ca <CopyButton text='66c41...b36ca' />
               </CardSubTitle>
             </Card>
           </Grid>
           <Grid item md={6} xs={12}>
             <Card>
               <CardTitle>Owners</CardTitle>
-              <CardSubTitle color="#108AEF">
-                66c41...b36ca <CopyButton text="66c41...b36ca" />
+              <CardSubTitle color='#108AEF'>
+                66c41...b36ca <CopyButton text='66c41...b36ca' />
               </CardSubTitle>
             </Card>
           </Grid>
           <Grid item md={6} xs={12}>
             <Card>
               <CardTitle>Reward Account</CardTitle>
-              <CardSubTitle color="#108AEF">
-                66c41...b36ca <CopyButton text="66c41...b36ca" />
+              <CardSubTitle color='#108AEF'>
+                66c41...b36ca <CopyButton text='66c41...b36ca' />
               </CardSubTitle>
               <ShowMoreButton>
                 <DotsIcon />

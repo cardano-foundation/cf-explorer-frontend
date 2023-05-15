@@ -1,12 +1,12 @@
 enum TransactionStatus {
-  FAIL = "FAIL",
-  SUCCESS = "SUCCESS",
-  PENDDING = "PENDDING",
+  FAIL = 'FAIL',
+  SUCCESS = 'SUCCESS',
+  PENDDING = 'PENDDING'
 }
 enum ConfirmationStatus {
-  MEDIUM = "MEDIUM",
-  LOW = "LOW",
-  HIGH = "HIGH",
+  MEDIUM = 'MEDIUM',
+  LOW = 'LOW',
+  HIGH = 'HIGH'
 }
 
 interface Transactions {
@@ -51,7 +51,7 @@ interface CurrentTransactions {
   toAddress: string[];
   amount: number;
   hash: string;
-  status: "FAIL" | "SUCCESS" | "PENDING";
+  status: 'FAIL' | 'SUCCESS' | 'PENDING';
   time: string;
   slot: number;
   epochNo: number;
@@ -106,13 +106,15 @@ type TPoolCertificated = {
     port: number;
   }[];
   rewardAccount: string;
-  type: string;
+  type: 'POOL_REGISTRATION' | 'POOL_DEREGISTRATION';
   vrfKey: string;
+  epoch: number;
 };
 
 type TStakeCertificated = {
   stakeAddress: string;
-}
+  type: 'STAKE_REGISTRATION' | 'STAKE_DEREGISTRATION';
+};
 
 interface Transaction {
   tx: {

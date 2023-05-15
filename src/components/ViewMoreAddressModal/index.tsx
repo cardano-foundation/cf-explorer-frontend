@@ -1,9 +1,9 @@
-import React from "react";
-import StyledModal from "../commons/StyledModal";
-import { List, ListItem, ListItemText } from "@mui/material";
-import CopyButton from "../commons/CopyButton";
-import { ModalTitle, StyledListItem, StyledListItemText } from "./styles";
-import { formatHash } from "../../commons/utils/helper";
+import React from 'react';
+import StyledModal from '../commons/StyledModal';
+import { List, ListItem, ListItemText } from '@mui/material';
+import CopyButton from '../commons/CopyButton';
+import { ModalTitle, StyledListItem, StyledListItemText } from './styles';
+import { formatHash } from '../../commons/utils/helper';
 
 export interface ViewMoreAddressModalProps {
   title?: string;
@@ -14,16 +14,25 @@ export interface ViewMoreAddressModalProps {
   showFullHash?: boolean;
 }
 
-const ViewMoreAddressModal: React.FC<ViewMoreAddressModalProps> = ({ title, items, open, showFullHash, onClose, onItemClick }) => {
+const ViewMoreAddressModal: React.FC<ViewMoreAddressModalProps> = ({
+  title,
+  items,
+  open,
+  showFullHash,
+  onClose,
+  onItemClick
+}) => {
   return (
     <StyledModal width={620} open={open} handleCloseModal={() => onClose?.()}>
       <>
         {title && <ModalTitle>{title}</ModalTitle>}
         <List>
           {items?.length &&
-            items.map(text => (
-              <StyledListItem >
-                <StyledListItemText onClick={() => onItemClick?.(text)}>{showFullHash ? text :formatHash(text)}</StyledListItemText>
+            items.map((text, idx) => (
+              <StyledListItem key={idx}>
+                <StyledListItemText onClick={() => onItemClick?.(text)}>
+                  {showFullHash ? text : formatHash(text)}
+                </StyledListItemText>
                 <CopyButton text={text} />
               </StyledListItem>
             ))}
