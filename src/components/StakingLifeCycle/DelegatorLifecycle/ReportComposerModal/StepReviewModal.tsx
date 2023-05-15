@@ -39,10 +39,13 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       // eslint-disable-next-line no-unsafe-optional-chaining
       const [start, end] = step1?.dateRange;
 
-      const defaultReportName = `Report_stake_${step1.address}_${step1}_${moment(start).format('MM/DD/yyyy')}_${moment(
+      let defaultReportName = `Report_stake_${step1.address}_${step1}_${moment(start).format("MM/DD/yyyy")}_${moment(
         end
       ).format('MM/DD/yyyy')}`;
       if (isPoolReport) {
+        defaultReportName = `Report_pool_${step1.address}_${step1}_${moment(start).format("MM/DD/yyyy")}_${moment(
+          end
+        ).format("MM/DD/yyyy")}`;
         const paramsStakeKeyReport = {
           ...getPoolEventType(step3?.eventsKey),
           poolId: step1.address,
