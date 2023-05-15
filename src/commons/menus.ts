@@ -7,9 +7,10 @@ import {
   MediumIcon,
   ResourcesIcon,
   StakingLifecycleIcon,
-  ProtocolParameterIcon
-} from './resources';
-import { routers } from './routers';
+  ProtocolParameterIcon,
+} from "./resources";
+import { routers } from "./routers";
+import { defaultReportTab } from "../pages/ReportGenerated";
 
 interface Menu {
   title: string;
@@ -57,12 +58,12 @@ export const menus: Menu[] = [
     title: 'Staking Lifecycle',
     icon: StakingLifecycleIcon,
     children: [
-      { title: 'Dashboard', href: routers.STAKING_LIFECYCLE },
-      { title: 'Timeline Delegator', href: routers.DELEGATOR_SEARCH },
-      { title: 'Timeline SPO', href: routers.SPO_SEARCH },
-      { title: 'Report', href: routers.REPORT_GENERATED }
-    ]
-  }
+      { title: "Dashboard", href: routers.STAKING_LIFECYCLE },
+      { title: "Timeline Delegator", href: routers.DELEGATOR_SEARCH },
+      { title: "Timeline SPO", href: routers.SPO_SEARCH },
+      { title: "Report", href: `${routers.REPORT_GENERATED}?tab=${defaultReportTab}` },
+    ],
+  },
 ];
 
 export const socials: Social[] = [

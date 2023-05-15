@@ -56,6 +56,9 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           epochRanges: step1.epochRange
         };
         await generateStakePoolReport(paramsStakeKeyReport);
+        setTimeout(() => {
+          history.push(`${routers.REPORT_GENERATED}?tab=pool`);
+        }, 2000);
       } else {
         const events = step3?.eventsKey?.map((event: string) => ({ type: event }));
         const paramsStakeKeyReport = {
@@ -67,14 +70,15 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           isFeesPaid: step2.adaTransfers === 'YES',
           ...getEventType(events.map((item: { type: string }) => item.type))
         };
+        setTimeout(() => {
+          history.push(`${routers.REPORT_GENERATED}?tab=stake`);
+        }, 2000);
         await generateStakeKeyReport(paramsStakeKeyReport);
       }
 
       toast.success('Generate report success');
       handleCloseModal();
-      setTimeout(() => {
-        history.push(`${routers.REPORT_GENERATED}`);
-      }, 2000);
+     
     } catch (err: any) {
       console.error(err);
       toast.error('This stake key has no transaction history');
