@@ -1,10 +1,10 @@
-import { TabContext, TabList } from "@mui/lab";
-import { Box, Tab, Tabs } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { TabContent, TabHeader, TabLabel } from "./styles";
-import { DownloadButtonAll } from "../../pages/StackingLifecycle/styles";
-import { DownloadWhiteIC } from "../../commons/resources";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { TabContext, TabList } from '@mui/lab';
+import { Box, Tab, Tabs } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { TabContent, TabHeader, TabLabel } from './styles';
+import { DownloadButtonAll } from '../../pages/StackingLifecycle/styles';
+import { DownloadWhiteIC } from '../../commons/resources';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 export interface TabsItem {
   value: string;
@@ -14,26 +14,25 @@ export interface TabsItem {
 
 interface ReportGeneratedProps {
   tabsItem: TabsItem[];
-  defaultTab: string;
 }
 
-const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem, defaultTab }) => {
+const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
   const { search } = useLocation();
   const history = useHistory();
-  const tab = new URLSearchParams(search).get("tab");
-  const [value, setValue] = useState(tab ?? defaultTab);
+  const tab = new URLSearchParams(search).get('tab');
+  const [value, setValue] = useState(tab ?? tabsItem[0]?.value);
 
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
-    history.push("/report-generated?tab=" + newValue);
+    history.push('/report-generated?tab=' + newValue);
   };
 
   useEffect(() => {
-    setValue(tab ?? defaultTab);
+    setValue(tab ?? tabsItem[0]?.value);
   }, [tab]);
-  
+
   return (
-    <Box data-testid="report-generated-tabs">
+    <Box data-testid='report-generated-tabs'>
       <TabContext value={value}>
         <TabHeader>
           <Tabs>
@@ -43,7 +42,7 @@ const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem, default
                   <Tab
                     key={item.value}
                     value={item.value}
-                    label={<TabLabel active={value === item.value}>{item.label}</TabLabel>}
+                    label={<TabLabel active={+(value === item.value)}>{item.label}</TabLabel>}
                   />
                 ))}
               </TabList>
