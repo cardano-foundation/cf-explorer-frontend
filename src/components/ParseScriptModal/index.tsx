@@ -1,5 +1,4 @@
 import { Box, useTheme, Modal } from '@mui/material';
-
 import { JsonViewer } from '@textea/json-viewer';
 import { ButtonClose, ModalContainer, ViewJson } from './styles';
 import closeIcon from '../../commons/resources/icons/closeIcon.svg';
