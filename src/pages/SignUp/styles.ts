@@ -1,5 +1,5 @@
-import { Box, Button, Divider, FormHelperText, IconButton, Input, styled } from '@mui/material';
-import { User2RC } from '../../commons/resources';
+import { Box, Button, Divider, FormHelperText, IconButton, Input, styled } from "@mui/material";
+import { User2RC } from "../../commons/resources";
 
 export const Container = styled(Box)`
   display: flex;
@@ -53,13 +53,13 @@ export const WrapHintText = styled(Box)`
 export const WrapForm = styled(Box)(({ theme }) => ({
   margin: "10px 30px 0 30px",
   background: theme.palette.common.white,
-  borderRadius: '12px',
-  display: 'flex',
-  position: 'relative',
-  flexDirection: 'column',
-  gap: '10px',
-  width: 'min(80vw,420px)',
-  padding: '35px 40px 40px',
+  borderRadius: "12px",
+  display: "flex",
+  position: "relative",
+  flexDirection: "column",
+  gap: "10px",
+  width: "min(80vw,420px)",
+  padding: "35px 40px 40px",
   [theme.breakpoints.down(theme.breakpoints.values.md)]: {
     padding: "20px 15px",
     gap: "15px"

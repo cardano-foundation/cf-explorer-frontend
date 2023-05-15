@@ -1,10 +1,10 @@
-import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment } from '@mui/material';
-import { useEffect, useReducer, useState } from 'react';
-import { IoMdClose } from 'react-icons/io';
-import { useHistory } from 'react-router-dom';
-import { EmailIcon, HideIcon, LockIcon, ShowIcon } from '../../commons/resources';
-import { routers } from '../../commons/routers';
-import { signUp } from '../../commons/utils/userRequest';
+import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment } from "@mui/material";
+import { useEffect, useReducer, useState } from "react";
+import { IoMdClose } from "react-icons/io";
+import { useHistory } from "react-router-dom";
+import { EmailIcon, HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
+import { routers } from "../../commons/routers";
+import { signUp } from "../../commons/utils/userRequest";
 import {
   CloseButton,
   Container,
@@ -19,7 +19,7 @@ import {
   WrapInput,
   WrapSignUp,
   WrapTitle
-} from './styles';
+} from "./styles";
 
 interface IForm {
   password: {
@@ -87,10 +87,7 @@ export default function SignUp() {
   useEffect(() => {
     setError(
       Boolean(
-        formData.password.error ||
-        formData.email.error ||
-        formData.confirmPassword.error ||
-        formData.confirmEmail.error
+        formData.password.error || formData.email.error || formData.confirmPassword.error || formData.confirmEmail.error
       )
     );
   }, [formData]);
@@ -98,7 +95,7 @@ export default function SignUp() {
   const getError = (name: string, value: string) => {
     let error = "";
     switch (name) {
-      case 'password':
+      case "password":
         if (!value) {
           error = "Please enter your Password";
         } else if (
@@ -151,10 +148,10 @@ export default function SignUp() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    const errorPassword = getError('password', formData.password.value);
-    const errorEmail = getError('email', formData.email.value);
-    const errorConfirmPassword = getError('confirmPassword', formData.confirmPassword.value);
-    const errorConfirmEmail = getError('confirmEmail', formData.confirmEmail.value);
+    const errorPassword = getError("password", formData.password.value);
+    const errorEmail = getError("email", formData.email.value);
+    const errorConfirmPassword = getError("confirmPassword", formData.confirmPassword.value);
+    const errorConfirmEmail = getError("confirmEmail", formData.confirmEmail.value);
     if (errorPassword) {
       setFormData({
         name: "password",

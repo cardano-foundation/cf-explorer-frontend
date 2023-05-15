@@ -132,7 +132,7 @@ export default function SignIn() {
     switch (name) {
       case "username":
         if (!value) {
-          error = 'Please enter Email Address';
+          error = "Please enter Email Address";
         }
         break;
       case "password":
@@ -223,7 +223,9 @@ export default function SignIn() {
             <CloseButton saving={0} onClick={() => handleClose()}>
               <IoMdClose />
             </CloseButton>
-            {invalidInfomation ? <AlertCustom severity="error">Incorrect Emaill Address or Password</AlertCustom> : null}
+            {invalidInfomation ? (
+              <AlertCustom severity='error'>Incorrect Emaill Address or Password</AlertCustom>
+            ) : null}
             <WrapInput>
               <Label>Email Address</Label>
               <InputCustom
