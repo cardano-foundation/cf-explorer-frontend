@@ -1,6 +1,8 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, FormHelperText, IconButton, InputAdornment } from '@mui/material';
 import { useEffect, useReducer, useState } from 'react';
+import { IoMdClose } from 'react-icons/io';
 import { useHistory } from 'react-router-dom';
+import useToast from '../../commons/hooks/useToast';
 import { HideIcon, LockIcon, ShowIcon } from '../../commons/resources';
 import { routers } from '../../commons/routers';
 import { NETWORK, NETWORK_TYPES } from '../../commons/utils/constants';
@@ -28,8 +30,6 @@ import {
   WrapSignUp,
   WrapTitle
 } from './styles';
-import useToast from '../../commons/hooks/useToast';
-import { IoMdClose } from 'react-icons/io';
 
 interface IForm {
   username: {
