@@ -3,7 +3,7 @@ interface Story {
   title: string;
   image: string;
   author: string;
-  createdDate: string; 
+  createdDate: string;
 }
 
 type StoryDetail = Story & {

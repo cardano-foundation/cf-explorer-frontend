@@ -1,13 +1,13 @@
-import { styled, Box, FormHelperText, FormLabel } from "@mui/material";
+import { styled, Box, FormHelperText, FormLabel } from '@mui/material';
 
-export const StyledTitle = styled("h3")`
+export const StyledTitle = styled('h3')`
   margin-top: 0;
 `;
 
-export const Span = styled("span")`
+export const Span = styled('span')`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.palette.primary.contrastText};
+  color: ${(props) => props.theme.palette.primary.contrastText};
   white-space: nowrap;
   line-height: 1;
 `;
@@ -28,7 +28,7 @@ export const Label = styled(FormLabel)`
 
 export const TextError = styled(FormHelperText)`
   margin-top: 0px;
-  color: ${props => props.theme.palette.error.main};
+  color: ${(props) => props.theme.palette.error.main};
   font-size: 14px;
 `;
 

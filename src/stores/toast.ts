@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Store } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, Store } from '@reduxjs/toolkit';
 
 let toastStore: Store | undefined;
 
@@ -7,22 +7,22 @@ export const setStoreToast = (store: Store) => {
 };
 
 const initialState: ToastStoreType = {
-  toasts: [],
+  toasts: []
 };
 
 const storeWallet = createSlice({
-  name: "storeToast",
+  name: 'storeToast',
   initialState,
   reducers: {
     addToast: (state, action: PayloadAction<Required<ToastItem>>) => ({
       ...state,
-      toasts: [action.payload, ...state.toasts],
+      toasts: [action.payload, ...state.toasts]
     }),
     removeToast: (state, action: PayloadAction<number>) => ({
       ...state,
-      toasts: state.toasts.filter(item => item.id !== action.payload),
-    }),
-  },
+      toasts: state.toasts.filter((item) => item.id !== action.payload)
+    })
+  }
 });
 
 export const addToast = (toast: Required<ToastItem>) => {

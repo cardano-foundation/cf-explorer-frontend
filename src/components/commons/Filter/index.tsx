@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   FilterButton,
   FilterContainer,
   FilterContent,
   FilterIconContainer,
   FilterListItemText,
-  FilterMenuItem,
-} from "./styles";
-import { FilterIC } from "../../../commons/resources";
-import { ClickAwayListener, ListItemIcon, MenuList } from "@mui/material";
-import CustomIcon from "../CustomIcon";
+  FilterMenuItem
+} from './styles';
+import { FilterIC } from '../../../commons/resources';
+import { ClickAwayListener, ListItemIcon, MenuList } from '@mui/material';
+import CustomIcon from '../CustomIcon';
 
 export interface FilterProps {
   options?: Option[];
@@ -29,7 +29,7 @@ const Filter: React.FC<FilterProps> = ({ options, onOptionChange }) => {
     setOpen(false);
   };
 
-  const onFilterButtonClick = () => setOpen(pre => !pre);
+  const onFilterButtonClick = () => setOpen((pre) => !pre);
   const onOptionClick = (value: string, option: Option) => {
     onFilterButtonClick();
     onOptionChange?.(option.value, option);
@@ -41,7 +41,12 @@ const Filter: React.FC<FilterProps> = ({ options, onOptionChange }) => {
           onClick={onFilterButtonClick}
           startIcon={
             <FilterIconContainer>
-              <CustomIcon icon={FilterIC} width={18} color={theme => theme.palette.primary.main} fill="currentColor" />
+              <CustomIcon
+                icon={FilterIC}
+                width={18}
+                color={(theme) => theme.palette.primary.main}
+                fill='currentColor'
+              />
             </FilterIconContainer>
           }
         >
@@ -50,7 +55,7 @@ const Filter: React.FC<FilterProps> = ({ options, onOptionChange }) => {
         {open && options && (
           <FilterContent>
             <MenuList>
-              {options.map(option => (
+              {options.map((option) => (
                 <FilterMenuItem key={option.value} onClick={() => onOptionClick(option.value, option)}>
                   <ListItemIcon>
                     <FilterIconContainer>{option.icon}</FilterIconContainer>
