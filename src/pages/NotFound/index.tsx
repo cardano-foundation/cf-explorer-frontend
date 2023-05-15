@@ -1,8 +1,8 @@
-import { Container, styled } from "@mui/material";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { NotFoundIcon } from "../../commons/resources";
-import { routers } from "../../commons/routers";
+import { Container, styled } from '@mui/material';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { NotFoundIcon } from '../../commons/resources';
+import { routers } from '../../commons/routers';
 
 const NotFoundContainer = styled(Container)`
   display: flex;
@@ -12,14 +12,14 @@ const NotFoundContainer = styled(Container)`
   padding: 120px 0px;
 `;
 
-const Image = styled("img")`
+const Image = styled('img')`
   width: 100%;
   max-width: 250px;
   margin-bottom: 2rem;
 `;
 
-const Title = styled("h3")`
-  color: ${props => props.theme.palette.grey[400]};
+const Title = styled('h3')`
+  color: ${(props) => props.theme.palette.grey[400]};
   margin-bottom: 2rem;
   font-weight: var(--font-weight-normal);
 `;
@@ -29,29 +29,28 @@ const BackToHome = styled(Link)`
   width: max-content;
   margin: auto;
   padding: 6.5px 20px;
-  border: 2px solid ${props => props.theme.palette.primary.main};
+  border: 2px solid ${(props) => props.theme.palette.primary.main};
   border-radius: 5px;
-  color: ${props => props.theme.palette.primary.main};
+  color: ${(props) => props.theme.palette.primary.main};
   font-weight: var(--font-weight-bold);
   &:link,
   &:visited {
-    color: ${props => props.theme.palette.primary.main};
+    color: ${(props) => props.theme.palette.primary.main};
   }
   &:hover {
-    border: 2px solid ${props => props.theme.palette.primary.dark};
-    color: ${props => props.theme.palette.primary.dark};
+    border: 2px solid ${(props) => props.theme.palette.primary.dark};
+    color: ${(props) => props.theme.palette.primary.dark};
   }
 `;
 
 const NotFound = () => {
-
-  useEffect(() => { 
+  useEffect(() => {
     document.title = `Page Not Found | Cardano Explorer`;
   }, []);
-  
+
   return (
     <NotFoundContainer>
-      <Image src={NotFoundIcon} alt="404" />
+      <Image src={NotFoundIcon} alt='404' />
       <Title>Sorry! The page you’re looking for cannot be found.</Title>
       <BackToHome to={routers.HOME}>Back to home</BackToHome>
     </NotFoundContainer>

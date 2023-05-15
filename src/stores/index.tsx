@@ -1,13 +1,13 @@
-import { Store } from "@reduxjs/toolkit";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { applyMiddleware, combineReducers, createStore } from "redux";
-import { persistReducer, persistStore } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import { RootState } from "./types";
-import userReducer, { setStoreUser } from "./user";
-import userReducer2, { setStoreUser2 } from "./user2";
-import systemReducer, { setStoreSystem } from "./system";
-import toastReducer, { setStoreToast } from "./toast";
+import { Store } from '@reduxjs/toolkit';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { RootState } from './types';
+import userReducer, { setStoreUser } from './user';
+import userReducer2, { setStoreUser2 } from './user2';
+import systemReducer, { setStoreSystem } from './system';
+import toastReducer, { setStoreToast } from './toast';
 
 let customStore: Store | undefined;
 
@@ -16,20 +16,20 @@ const setStore = (store: Store) => {
 };
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage: storage,
-  whitelist: [],
+  whitelist: []
 };
 
 const userPersistConfig = {
-  key: "user",
+  key: 'user',
   storage: storage,
-  blacklist: ["onDetailView", "openModal", "modalSignMessage", "modalRegister"],
+  blacklist: ['onDetailView', 'openModal', 'modalSignMessage', 'modalRegister']
 };
 
 export const getStore = (): Store<RootState> => {
   if (!customStore) {
-    throw new Error("Please implement setStore before using this function");
+    throw new Error('Please implement setStore before using this function');
   }
   return customStore;
 };
@@ -38,7 +38,7 @@ const appReducer = combineReducers({
   user: persistReducer(userPersistConfig, userReducer),
   user2: userReducer2,
   system: systemReducer,
-  toast: toastReducer,
+  toast: toastReducer
 });
 
 const rootReducer = (state: any, action: any) => appReducer(state, action);

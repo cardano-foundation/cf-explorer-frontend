@@ -1,32 +1,32 @@
-import { Box } from "@mui/material";
-import { details } from "../../../commons/routers";
-import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../commons/utils/helper";
-import CustomTooltip from "../../commons/CustomTooltip";
-import Table, { Column } from "../../commons/Table";
-import { StyledLink } from "../../share/styled";
-import { TableSubTitle } from "../../TabularView/StakeTab/styles";
-import { AdaValue } from "./StakingRegistrationTab";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import { useState } from "react";
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { API } from "../../../commons/utils/api";
+import { Box } from '@mui/material';
+import { details } from '../../../commons/routers';
+import { formatDateTimeLocal, getPageInfo, getShortHash } from '../../../commons/utils/helper';
+import CustomTooltip from '../../commons/CustomTooltip';
+import Table, { Column } from '../../commons/Table';
+import { StyledLink } from '../../share/styled';
+import { TableSubTitle } from '../../TabularView/StakeTab/styles';
+import { AdaValue } from './StakingRegistrationTab';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import useFetchList from '../../../commons/hooks/useFetchList';
+import { API } from '../../../commons/utils/api';
 
 const columns: Column<DeregistrationItem>[] = [
   {
-    title: "Transaction Hash",
-    key: "hash",
-    minWidth: "120px",
-    render: r => (
+    title: 'Transaction Hash',
+    key: 'hash',
+    minWidth: '120px',
+    render: (r) => (
       <CustomTooltip title={r.txHash}>
         <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
       </CustomTooltip>
-    ),
+    )
   },
   {
-    title: "Timestamp",
-    key: "time",
-    minWidth: "120px",
-    render: r => formatDateTimeLocal(r.time),
+    title: 'Timestamp',
+    key: 'time',
+    minWidth: '120px',
+    render: (r) => formatDateTimeLocal(r.time)
   },
   {
     title: (
@@ -35,21 +35,21 @@ const columns: Column<DeregistrationItem>[] = [
         <TableSubTitle>Hold/Fees</TableSubTitle>
       </>
     ),
-    key: "block",
-    minWidth: "120px",
-    render: r => (
+    key: 'block',
+    minWidth: '120px',
+    render: (r) => (
       <Box>
         <AdaValue value={-r.deposit - r.fee} />
         <TableSubTitle>
-          <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-            <AdaValue value={-r.deposit} gap="3px" fontSize="12px" />
-            <Box mx="3px">/</Box>
-            <AdaValue value={r.fee} gap="3px" fontSize="12px" />
+          <Box display='flex' mt={1} alignItems='center' lineHeight='1'>
+            <AdaValue value={-r.deposit} gap='3px' fontSize='12px' />
+            <Box mx='3px'>/</Box>
+            <AdaValue value={r.fee} gap='3px' fontSize='12px' />
           </Box>
         </TableSubTitle>
       </Box>
-    ),
-  },
+    )
+  }
 ];
 
 const DeregistrationTab = () => {
@@ -58,19 +58,22 @@ const DeregistrationTab = () => {
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
 
-  const fetchData = useFetchList<DeregistrationItem>(reportId ? API.REPORT.SREPORT_DETAIL_DEGEGISTRATIONS(reportId) : "", {
-    ...pageInfo,
-  });
+  const fetchData = useFetchList<DeregistrationItem>(
+    reportId ? API.REPORT.SREPORT_DETAIL_DEGEGISTRATIONS(reportId) : '',
+    {
+      ...pageInfo
+    }
+  );
 
   return (
     <Table
       {...fetchData}
       columns={columns}
-      total={{ title: "Total", count: fetchData.total }}
+      total={{ title: 'Total', count: fetchData.total }}
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => setPageInfo({ ...pageInfo, page: page - 1, size }),
+        onChange: (page, size) => setPageInfo({ ...pageInfo, page: page - 1, size })
       }}
       onClickRow={(e, r: DeregistrationItem) => history.push(details.transaction(r.txHash))}
     />

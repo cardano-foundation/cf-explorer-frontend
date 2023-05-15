@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Box, Grid, useTheme } from "@mui/material";
-import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts";
+import React, { useState } from 'react';
+import { Box, Grid, useTheme } from '@mui/material';
+import HighchartsReact from 'highcharts-react-official';
+import Highcharts from 'highcharts';
 import {
   BoxInfo,
   BoxInfoItem,
@@ -13,56 +13,57 @@ import {
   SkeletonUI,
   Title,
   ValueInfo,
-  Wrapper,
-} from "./styles";
-import moment from "moment";
-import { useParams } from "react-router-dom";
-import useFetch from "../../../commons/hooks/useFetch";
-import Card from "../../commons/Card";
-import { formatPrice, numberWithCommas } from "../../../commons/utils/helper";
-import { HighestIcon, LowestIcon } from "../../../commons/resources";
-import { BigNumber } from "bignumber.js";
-import { API } from "../../../commons/utils/api";
-import CustomTooltip from "../../commons/CustomTooltip";
+  Wrapper
+} from './styles';
+import moment from 'moment';
+import { useParams } from 'react-router-dom';
+import useFetch from '../../../commons/hooks/useFetch';
+import Card from '../../commons/Card';
+import { formatPrice, numberWithCommas } from '../../../commons/utils/helper';
+import { HighestIcon, LowestIcon } from '../../../commons/resources';
+import { BigNumber } from 'bignumber.js';
+import { API } from '../../../commons/utils/api';
+import CustomTooltip from '../../commons/CustomTooltip';
 
 type AnalyticsData = { date: string; value: number };
 
 const options = [
-  { value: "ONE_DAY", label: "1d" },
-  { value: "ONE_WEEK", label: "1w" },
-  { value: "ONE_MONTH", label: "1m" },
-  { value: "THREE_MONTH", label: "3m" },
+  { value: 'ONE_DAY', label: '1d' },
+  { value: 'ONE_WEEK', label: '1w' },
+  { value: 'ONE_MONTH', label: '1m' },
+  { value: 'THREE_MONTH', label: '3m' }
 ];
 
 const AddressAnalytics: React.FC = () => {
-  const [rangeTime, setRangeTime] = useState("ONE_DAY");
+  const [rangeTime, setRangeTime] = useState('ONE_DAY');
   const { tokenId } = useParams<{ tokenId: string }>();
   const theme = useTheme();
   // Change path API
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
   // const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${tokenId}`);
-  const dataChart = data?.map(i => {
+  const dataChart = data?.map((i) => {
     const value = BigNumber(i.value);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
   });
 
-  const categories = data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
+  const categories =
+    data?.map((i) => moment(i.date).format(`DD MMM ${rangeTime === 'THREE_MONTH' ? 'YYYY' : ''}`)) || [];
   const minBalance = data
     ? data.reduce(function (prev, current) {
         return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
       })
-    : { date: "", value: 0 };
+    : { date: '', value: 0 };
   const maxBalance = data
     ? data.reduce(function (prev, current) {
         return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
       })
-    : { date: "", value: 0 };
+    : { date: '', value: 0 };
 
   return (
-    <Card title="Analytics" py={4}>
-      <Wrapper container columns={24} spacing="35px">
+    <Card title='Analytics' py={4}>
+      <Wrapper container columns={24} spacing='35px'>
         <Grid item xs={24} lg={18}>
-          <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
+          <Grid spacing={2} container alignItems='center' justifyContent={'space-between'}>
             <Grid item xs={4} sm={4}>
               <ButtonTitle>Volume</ButtonTitle>
             </Grid>
@@ -78,31 +79,31 @@ const AddressAnalytics: React.FC = () => {
           </Grid>
           <ChartBox>
             {loading ? (
-              <SkeletonUI variant="rectangular" style={{ height: "375px", display: "block" }} />
+              <SkeletonUI variant='rectangular' style={{ height: '375px', display: 'block' }} />
             ) : (
-              <Box position={"relative"}>
+              <Box position={'relative'}>
                 <HighchartsReact
                   highcharts={Highcharts}
                   options={{
                     chart: {
-                      type: "areaspline",
-                      backgroundColor: "transparent",
-                      style: { fontFamily: "Helvetica, monospace" },
+                      type: 'areaspline',
+                      backgroundColor: 'transparent',
+                      style: { fontFamily: 'Helvetica, monospace' }
                     },
-                    title: { text: "" },
+                    title: { text: '' },
                     yAxis: {
                       title: { text: null },
                       lineWidth: 2,
                       lineColor: theme.palette.border.main,
-                      className: "y-axis-lable",
+                      className: 'y-axis-lable',
                       gridLineWidth: 1,
                       minorGridLineWidth: 1,
                       labels: {
                         style: { fontSize: 12 },
                         formatter: (e: { value: string }) => {
                           return formatPrice(e.value);
-                        },
-                      },
+                        }
+                      }
                     },
                     xAxis: {
                       categories,
@@ -112,18 +113,18 @@ const AddressAnalytics: React.FC = () => {
                       angle: 0,
                       labels: {
                         style: {
-                          fontSize: 12,
-                        },
-                      },
+                          fontSize: 12
+                        }
+                      }
                     },
                     legend: { enabled: false },
                     tooltip: { shared: true },
                     credits: { enabled: false },
                     series: [
                       {
-                        name: "",
-                        pointPlacement: "on",
-                        type: "areaspline",
+                        name: '',
+                        pointPlacement: 'on',
+                        type: 'areaspline',
                         marker: { enabled: false },
                         lineWidth: 4,
                         color: theme.palette.primary.main,
@@ -131,12 +132,12 @@ const AddressAnalytics: React.FC = () => {
                           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                           stops: [
                             [0, theme.palette.success.light],
-                            [1, "transparent"],
-                          ],
+                            [1, 'transparent']
+                          ]
                         },
-                        data: dataChart,
-                      },
-                    ],
+                        data: dataChart
+                      }
+                    ]
                   }}
                 />
               </Box>
@@ -146,26 +147,26 @@ const AddressAnalytics: React.FC = () => {
         <Grid item xs={24} lg={6}>
           <BoxInfo space={0}>
             <Box flex={1}>
-              <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
+              <BoxInfoItemRight display={'flex'} alignItems='center' justifyContent={'center'}>
                 <Box>
-                  <img src={HighestIcon} width={"20%"} alt="heighest icon" />
+                  <img src={HighestIcon} width={'20%'} alt='heighest icon' />
                   <Title>Highest Volume</Title>
                   <CustomTooltip title={numberWithCommas(maxBalance.value || 0)}>
                     <ValueInfo>
-                      {loading ? <SkeletonUI variant="rectangular" /> : formatPrice(maxBalance.value)}
+                      {loading ? <SkeletonUI variant='rectangular' /> : formatPrice(maxBalance.value)}
                     </ValueInfo>
                   </CustomTooltip>
                 </Box>
               </BoxInfoItemRight>
             </Box>
             <Box flex={1}>
-              <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
+              <BoxInfoItem display={'flex'} alignItems='center' justifyContent={'center'}>
                 <Box>
-                  <img src={LowestIcon} width={"20%"} alt="lowest icon" />
+                  <img src={LowestIcon} width={'20%'} alt='lowest icon' />
                   <Title>Lowest Volume</Title>
                   <CustomTooltip title={numberWithCommas(minBalance.value || 0)}>
                     <ValueInfo>
-                      {loading ? <SkeletonUI variant="rectangular" /> : formatPrice(minBalance.value)}
+                      {loading ? <SkeletonUI variant='rectangular' /> : formatPrice(minBalance.value)}
                     </ValueInfo>
                   </CustomTooltip>
                 </Box>
