@@ -1,6 +1,6 @@
-import { Box, Grid, Skeleton, alpha, useTheme } from "@mui/material";
-import { useRef, useState, useEffect } from "react";
-import { Link as LinkDom } from "react-router-dom";
+import { Box, Grid, Skeleton, alpha, useTheme, styled } from '@mui/material';
+import { useRef, useState, useEffect } from 'react';
+import { Link as LinkDom } from 'react-router-dom';
 
 import {
   ADAHolderIcon,
@@ -17,12 +17,11 @@ import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./s
 import ADAicon, { AdaLogoIcon } from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentDelegations from "./RecentDelegations";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
 import PopoverStyled from "../../../commons/PopoverStyled";
 import PopupStaking from "../../../commons/PopupStaking";
-import { styled } from "@mui/material";
 import StyledModal from "../../../commons/StyledModal";
 import CopyButton from "../../../commons/CopyButton";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
@@ -34,7 +33,7 @@ import { useScreen } from "../../../../commons/hooks/useScreen";
 
 const Delegation = ({
   containerPosition,
-  handleResize,
+  handleResize
 }: {
   containerPosition: {
     top?: number;
@@ -44,7 +43,7 @@ const Delegation = ({
 }) => {
   const [selected, setSelected] = useState<DelegationItem | null>(null);
 
-  const handleSelect = (delegation: DelegationItem) => {
+  const handleSelect = (delegation: DelegationItem | null) => {
     setSelected(delegation);
   };
 
@@ -52,7 +51,9 @@ const Delegation = ({
 
   return (
     <Box>
-      <Box>{selected === null && <RecentDelegations onSelect={handleSelect} />}</Box>
+      <Box>
+        <RecentDelegations onSelect={handleSelect} />
+      </Box>
       <Box>
         {!!selected && isMobile ? (
           <DelegationTimelineMobile
@@ -89,23 +90,22 @@ interface DelegationDetail {
 
 const DelegationTimeline = ({
   containerPosition,
-  setSelected,
   handleResize,
-  selected,
+  selected
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
-  setSelected: (item: DelegationItem | null) => void;
   handleResize: () => void;
   selected: DelegationItem | null;
 }) => {
   const theme = useTheme();
   const [openModal, setOpenModal] = useState(false);
-  const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const { stakeId = '' } = useParams<{ stakeId: string }>();
+  const history = useHistory();
   const { data, loading } = useFetch<DelegationDetail>(
-    (selected && selected.txHash && stakeId && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stakeId, selected.txHash)) || ""
+    (selected && selected.txHash && stakeId && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stakeId, selected.txHash)) || ''
   );
 
   const adaHolderRef = useRef(null);
@@ -121,44 +121,48 @@ const DelegationTimeline = ({
     handleResize();
   }, [loading, registrationRef.current]);
 
+  const handleBack = () => {
+    history.push(details.staking(stakeId, 'timeline', 'delegation'));
+  };
+
   if (loading) {
     return (
       <Box>
-        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-          <IconButtonBack onClick={() => setSelected(null)}>
+        <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} mt={1} mb={2}>
+          <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
-          <Box display={"flex"}>
+          <Box display={'flex'}>
             <Info>
-              <AddressIcon fill="#438F68" />
-              <Box component={Skeleton} ml={1} variant="rectangular" width={145} height={18} />
+              <AddressIcon fill='#438F68' />
+              <Box component={Skeleton} ml={1} variant='rectangular' width={145} height={18} />
             </Info>
             <Info>
               <ADAGreen />
-              <Box component={Skeleton} ml={1} variant="rectangular" width={60} height={18} />
+              <Box component={Skeleton} ml={1} variant='rectangular' width={60} height={18} />
             </Info>
             <Info>
               <TimeIcon />
-              <Box component={Skeleton} ml={1} variant="rectangular" width={130} height={18} />
+              <Box component={Skeleton} ml={1} variant='rectangular' width={130} height={18} />
             </Info>
           </Box>
         </Box>
-        <Box component={Skeleton} width={"100%"} height={400} variant="rectangular" borderRadius={12} />
+        <Box component={Skeleton} width={'100%'} height={400} variant='rectangular' borderRadius={12} />
       </Box>
     );
   }
 
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} mt={1} mb={2}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"}>
+        <Box display={'flex'}>
           <Info>
-            <AddressIcon fill="#438F68" />
+            <AddressIcon fill='#438F68' />
             <CustomTooltip title={data?.txHash}>
-              <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+              <InfoText>{getShortHash(data?.txHash || '')}</InfoText>
             </CustomTooltip>
             <StyledCopyButton text={data?.txHash} />
           </Info>
@@ -168,27 +172,27 @@ const DelegationTimeline = ({
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
+            <InfoText>{formatDateTimeLocal(data?.time || '')}</InfoText>
           </Info>
         </Box>
       </Box>
       <Box>
-        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
+        <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} flexWrap={'wrap'}>
           <Box ref={adaHolderRef} width={190} height={215}>
             <ADAHolderIcon />
           </Box>
-          <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
-            <Box display={"flex"} flex={1}>
+          <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
+            <Box display={'flex'} flex={1}>
               <PopoverStyled
                 render={({ handleClick }) => (
                   <FeeBox ref={feeRef} width={184} height={35}>
                     <Box>
                       <Box
-                        component={"span"}
-                        fontSize={"18px"}
-                        fontWeight={"bold"}
+                        component={'span'}
+                        fontSize={'18px'}
+                        fontWeight={'bold'}
                         mr={1}
-                        color={theme => theme.palette.common.black}
+                        color={(theme) => theme.palette.common.black}
                       >
                         {formatADAFull(data?.fee || 0)}
                       </Box>
@@ -199,86 +203,92 @@ const DelegationTimeline = ({
                     </IconButton>
                   </FeeBox>
                 )}
-                content={<PopupStaking hash={data?.txHash || ""} />}
+                content={<PopupStaking hash={data?.txHash || ''} />}
               />
             </Box>
           </Box>
           <Box ref={cadarnoSystemRef} width={192} height={215}>
-            <img src={cadarnoSystem} alt="carrdano" />
+            <img src={cadarnoSystem} alt='carrdano' />
           </Box>
 
           <svg
             style={{
-              position: "absolute",
+              position: 'absolute',
               top: 0,
               left: 0,
-              height: "100vh",
-              width: "100vw",
-              zIndex: "-1",
+              height: '100vh',
+              width: '100vw',
+              zIndex: '-1'
             }}
           >
             <Line
               containerPosition={containerPosition}
               fromRef={adaHolderRef}
               toRef={feeRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
+              pointTo='border'
+              pointFrom='border'
+              orient='vertical'
             />
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={feeRef}
               toRef={cadarnoSystemRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
+              pointTo='border'
+              pointFrom='border'
+              orient='vertical'
             />
             <Line
               containerPosition={containerPosition}
               fromRef={adaHolderRef}
               toRef={fake1Ref}
-              orient="horizontal"
-              pointFrom="border"
-              pointTo="center"
+              orient='horizontal'
+              pointFrom='border'
+              pointTo='center'
             />
             <Line
               containerPosition={containerPosition}
               fromRef={fake1Ref}
               toRef={registrationRef}
-              pointTo="border"
-              pointFrom="center"
-              orient="vertical"
+              pointTo='border'
+              pointFrom='center'
+              orient='vertical'
             />
             <Line
               containerPosition={containerPosition}
               fromRef={registrationRef}
               toRef={fake2Ref}
-              orient="vertical"
-              pointFrom="border"
-              pointTo="center"
+              orient='vertical'
+              pointFrom='border'
+              pointTo='center'
             />
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={fake2Ref}
               toRef={cadarnoSystemRef}
-              orient="horizontal"
-              pointFrom="center"
-              pointTo="border"
+              orient='horizontal'
+              pointFrom='center'
+              pointTo='border'
             />
           </svg>
         </Box>
-        <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
-          <Box ref={fake1Ref} width={"190px"} height={220}></Box>
+        <Box display={'flex'} justifyContent={'space-between'} position={'relative'} top={'-60px'}>
+          <Box ref={fake1Ref} width={'190px'} height={220}></Box>
           <Box component={IconButton} p={0} onClick={() => setOpenModal(true)}>
             <Box ref={registrationRef} width={220} height={220}>
-              <img src={DelegationCertificateIcon} alt="RegistrationCertificateIcon" />
+              <Box
+                component={'img'}
+                borderRadius={2}
+                border={({ palette }) => `2px solid ${palette.green[600]}`}
+                src={DelegationCertificateIcon}
+                alt='RegistrationCertificateIcon'
+              />
             </Box>
           </Box>
-          <Box ref={fake2Ref} width={"190px"} height={220}></Box>
+          <Box ref={fake2Ref} width={'190px'} height={220}></Box>
         </Box>
       </Box>
       <DelegationCertificateModal
-        txHash={selected?.txHash || ""}
+        txHash={selected?.txHash || ''}
         open={openModal}
         handleCloseModal={() => setOpenModal(false)}
         stake={stakeId}
@@ -483,51 +493,51 @@ export const DelegationCertificateModal = ({
   handleCloseModal: () => void;
 }) => {
   const { data, loading } = useFetch<DelegationDetail>(
-    (stake && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stake, txHash)) || ""
+    (txHash && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stake, txHash)) || ''
   );
 
   return (
-    <StyledModal {...props} title="Delegation certificate">
+    <StyledModal {...props} title='Delegation certificate'>
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+            <Box fontWeight={'bold'} fontSize={'0.875rem'} color={({ palette }) => palette.grey[400]}>
               Pool ID
             </Box>
-            {loading && <Skeleton variant="rectangular" />}
+            {loading && <Skeleton variant='rectangular' />}
             {data && !loading && (
               <Box>
                 <CustomTooltip title={data?.poolId}>
-                  <Link to={details.delegation(data?.poolId || "")}>{getShortWallet(data?.poolId || "")}</Link>
+                  <Link to={details.delegation(data?.poolId || '')}>{getShortWallet(data?.poolId || '')}</Link>
                 </CustomTooltip>
-                <CopyButton text={data?.poolId || ""} />
+                <CopyButton text={data?.poolId || ''} />
               </Box>
             )}
           </Box>
         </Grid>
         <Grid item xs={6}>
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+            <Box fontWeight={'bold'} fontSize={'0.875rem'} color={({ palette }) => palette.grey[400]}>
               Pool Name
             </Box>
-            {loading && <Skeleton variant="rectangular" />}
+            {loading && <Skeleton variant='rectangular' />}
             {data && !loading && (
               <Box>
-                <Link to={details.delegation(data?.poolId || "")}>{data?.poolName || ""}</Link>{" "}
+                <Link to={details.delegation(data?.poolId || '')}>{data?.poolName || ''}</Link>{' '}
               </Box>
             )}
           </Box>
         </Grid>
         <Grid item xs={6}>
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+            <Box fontWeight={'bold'} fontSize={'0.875rem'} color={({ palette }) => palette.grey[400]}>
               Stake Key
             </Box>
-            {loading && <Skeleton variant="rectangular" />}
+            {loading && <Skeleton variant='rectangular' />}
             {data && !loading && (
               <Box>
                 <CustomTooltip title={stake}>
-                  <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link>
+                  <Link to={details.stake(stake)}>{getShortWallet(stake || '')}</Link>
                 </CustomTooltip>
                 <CopyButton text={stake} />
               </Box>
@@ -540,6 +550,6 @@ export const DelegationCertificateModal = ({
 };
 
 const Link = styled(LinkDom)(({ theme }) => ({
-  fontSize: "0.875rem",
-  color: `${theme.palette.blue[800]} !important`,
+  fontSize: '0.875rem',
+  color: `${theme.palette.blue[800]} !important`
 }));

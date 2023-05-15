@@ -1,48 +1,45 @@
-import { useState } from "react";
-import { Box } from "@mui/material";
+import { useState } from 'react';
+import { Box } from '@mui/material';
 
-import { NextButton, PreviousButton, Step, StepButton, TitleStep, WrapTitle } from "./styles";
+import { NextButton, PreviousButton, Step, StepButton, TitleStep, WrapTitle } from './styles';
 
 import {
-  CheckIcon,
   InfoIcon,
   NextIcon,
   OperatorRewardIcon,
   PoolUpdateIcon,
   PreviousIcon,
   RegistrationIcon,
-  RewardsWithdrawalIcon,
-  TranferIcon,
-} from "../../../commons/resources";
-import Registration from "./Registration";
-import PoolUpdates from "./PoolUpdates";
-import { ADATransfersButton, ButtonText } from "../DelegatorLifecycle/styles";
-import OperatorReward from "./OperatorRewards";
-import Deregistration from "./Deregistration";
+  RewardsWithdrawalIcon
+} from '../../../commons/resources';
+import Registration from './Registration';
+import PoolUpdates from './PoolUpdates';
+import { ButtonText } from '../DelegatorLifecycle/styles';
+import OperatorReward from './OperatorRewards';
+import Deregistration from './Deregistration';
 import {
   RegistrationProcessDescription,
   SPOInvolvementInDelegationDescription,
   WithdrawingFundProcessDescription,
-  DeregistrationProcessDescription,
-} from "../../ModalDescription";
-import { details } from "../../../commons/routers";
-import { useHistory, useParams } from "react-router";
+  DeregistrationProcessDescription
+} from '../../ModalDescription';
+import { details } from '../../../commons/routers';
+import { useHistory, useParams } from 'react-router';
+import { useScreen } from '../../../commons/hooks/useScreen';
 interface StepperProps {
   icon: React.ReactNode;
   title: string;
   component: React.ReactNode;
   description: React.ReactNode;
-  key: "registration" | "pool-updates" | "operator-rewards" | "deregistration";
+  key: SPOStep;
 }
 
 const SPOLifecycle = ({
-  setMode,
   containerPosition,
   currentStep,
   setCurrentStep,
-  handleResize,
+  handleResize
 }: {
-  setMode: (mode: "timeline" | "tablular") => void;
   containerPosition: {
     top?: number;
     left?: number;
@@ -51,15 +48,16 @@ const SPOLifecycle = ({
   currentStep: number;
   setCurrentStep: (step: number) => void;
 }) => {
-  const { poolId = "" } = useParams<{
+  const { poolId = '' } = useParams<{
     poolId: string;
   }>();
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
   const history = useHistory();
+  const { isMobile } = useScreen();
   const stepper: StepperProps[] = [
     {
-      icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
-      title: "Registration",
+      icon: <RegistrationIcon width={'25px'} height={'25px'} fill={currentStep >= 0 ? '#fff' : '#98A2B3'} />,
+      title: 'Registration',
       component: <Registration handleResize={handleResize} containerPosition={containerPosition} />,
       description: (
         <RegistrationProcessDescription
@@ -67,11 +65,11 @@ const SPOLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "registration",
+      key: 'registration'
     },
     {
-      icon: <PoolUpdateIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
-      title: "Pool Updates",
+      icon: <PoolUpdateIcon width={'25px'} height={'25px'} fill={currentStep >= 1 ? '#fff' : '#98A2B3'} />,
+      title: 'Pool Updates',
       component: <PoolUpdates handleResize={handleResize} containerPosition={containerPosition} />,
       description: (
         <SPOInvolvementInDelegationDescription
@@ -79,11 +77,11 @@ const SPOLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "pool-updates",
+      key: 'pool-updates'
     },
     {
-      icon: <OperatorRewardIcon width={"25px"} height={"25px"} fill={currentStep >= 2 ? "#fff" : "#98A2B3"} />,
-      title: "Operator Rewards",
+      icon: <OperatorRewardIcon width={'25px'} height={'25px'} fill={currentStep >= 2 ? '#fff' : '#98A2B3'} />,
+      title: 'Operator Rewards',
       component: <OperatorReward handleResize={handleResize} containerPosition={containerPosition} />,
       description: (
         <WithdrawingFundProcessDescription
@@ -91,11 +89,11 @@ const SPOLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "operator-rewards",
+      key: 'operator-rewards'
     },
     {
-      icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
-      title: "Deregistration",
+      icon: <RewardsWithdrawalIcon width={'25px'} height={'25px'} fill={currentStep >= 3 ? '#fff' : '#98A2B3'} />,
+      title: 'Deregistration',
       component: <Deregistration handleResize={handleResize} containerPosition={containerPosition} />,
       description: (
         <DeregistrationProcessDescription
@@ -103,19 +101,19 @@ const SPOLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "deregistration",
-    },
+      key: 'deregistration'
+    }
   ];
 
   return (
-    <Box>
-      <Box display={"flex"} justifyContent={"space-between"}>
+    <Box mr={isMobile ? 2 : 0}>
+      <Box display={'flex'} justifyContent={'space-between'}>
         {stepper.map((step, idx) => (
-          <Step component={"span"} key={idx} active={+(currentStep >= idx)}>
+          <Step component={'span'} key={idx} active={+(currentStep === idx)}>
             <StepButton
-              active={+(currentStep >= idx)}
+              active={+(currentStep === idx)}
               onClick={() => {
-                history.push(details.spo(poolId, step.key));
+                history.push(details.spo(poolId, 'timeline', step.key));
                 setCurrentStep(idx);
               }}
             >
@@ -127,46 +125,52 @@ const SPOLifecycle = ({
           </Step>
         ))}
       </Box>
-      <Box mt={3} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+      <Box mt={3} display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
         <WrapTitle>
-          {stepper[currentStep]?.title}{" "}
-          <InfoIcon style={{ cursor: "pointer" }} onClick={() => setOpenDescriptionModal(true)} />
+          {stepper[currentStep]?.title}{' '}
+          <InfoIcon style={{ cursor: 'pointer' }} onClick={() => setOpenDescriptionModal(true)} />
         </WrapTitle>
       </Box>
       <Box>{stepper[currentStep]?.description}</Box>
       <Box minHeight={400} pb={10}>
         {stepper[currentStep]?.component}
       </Box>
-      {currentStep > 0 && (
-        <PreviousButton
-          onClick={() => {
-            history.push(details.spo(poolId, stepper[currentStep - 1]?.key));
-            setCurrentStep(currentStep - 1);
-          }}
-        >
-          <PreviousIcon />
-          <Box fontSize={"16px"} component={"span"}>
-            Previous: {stepper[currentStep - 1]?.title}
-          </Box>
-        </PreviousButton>
-      )}
-      <NextButton
-        onClick={() => {
-          if (currentStep === stepper.length - 1) {
-            history.push(details.spo(poolId, "tablular"));
-            setMode("tablular");
-          } else {
-            history.push(details.spo(poolId, stepper[currentStep + 1]?.key));
-            setCurrentStep(currentStep + 1);
-          }
-        }}
-        variant="contained"
+      <Box
+        display='flex'
+        flexDirection={isMobile ? 'column' : 'row'}
+        justifyContent={isMobile ? 'center' : 'space-between'}
       >
-        <ButtonText>
-          Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
-        </ButtonText>
-        <NextIcon />
-      </NextButton>
+        {currentStep > 0 && (
+          <PreviousButton
+            sx={{ mb: `${isMobile ? '16px' : '0px'}` }}
+            onClick={() => {
+              history.push(details.spo(poolId, 'timeline', stepper[currentStep - 1]?.key));
+              setCurrentStep(currentStep - 1);
+            }}
+          >
+            <PreviousIcon />
+            <Box fontSize={isMobile ? 14 : 16} component={'span'}>
+              Previous: {stepper[currentStep - 1]?.title}
+            </Box>
+          </PreviousButton>
+        )}
+        <NextButton
+          onClick={() => {
+            if (currentStep === stepper.length - 1) {
+              history.push(details.spo(poolId, 'tablular'));
+            } else {
+              history.push(details.spo(poolId, 'timeline', stepper[currentStep + 1]?.key));
+              setCurrentStep(currentStep + 1);
+            }
+          }}
+          variant='contained'
+        >
+          <ButtonText fontSize={isMobile ? 14 : 16}>
+            Next Step: {currentStep === stepper.length - 1 ? 'View in tabular' : stepper[currentStep + 1]?.title}
+          </ButtonText>
+          <NextIcon />
+        </NextButton>
+      </Box>
     </Box>
   );
 };

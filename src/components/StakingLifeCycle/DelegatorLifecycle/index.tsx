@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Box } from "@mui/material";
+import { useState } from 'react';
+import { Box } from '@mui/material';
 
 import {
   DelegationIcon,
@@ -10,8 +10,8 @@ import {
   NextIcon,
   PreviousIcon,
   InfoIcon,
-  TranferIcon,
-} from "../../../commons/resources";
+  TranferIcon
+} from '../../../commons/resources';
 import {
   ADATransfersButton,
   ButtonText,
@@ -22,42 +22,40 @@ import {
   StepButton,
   StyledBox,
   TabTitle,
-  TitleStep,
-} from "./styles";
+  TitleStep
+} from './styles';
 
-import Registration from "./Registration";
-import Delegation from "./Delegation";
-import RewardsDistribution from "./RewardsDistribution";
-import Deregistration from "./Deregistration";
-import RewardsWithdrawal from "./Withdraw";
-import ADATransferModal from "./ADATransferModal";
+import Registration from './Registration';
+import Delegation from './Delegation';
+import RewardsDistribution from './RewardsDistribution';
+import Deregistration from './Deregistration';
+import RewardsWithdrawal from './Withdraw';
+import ADATransferModal from './ADATransferModal';
 import {
   DelegationProcessDescription,
   DeregistrationProcessDescription,
   RegistrationProcessDescription,
   RewardDistributionProcessDescription,
-  WithdrawingFundProcessDescription,
-} from "../../ModalDescription";
-import { useHistory, useParams } from "react-router-dom";
-import { details } from "../../../commons/routers";
-import { useScreen } from "../../../commons/hooks/useScreen";
+  WithdrawingFundProcessDescription
+} from '../../ModalDescription';
+import { useHistory, useParams } from 'react-router-dom';
+import { details } from '../../../commons/routers';
+import { useScreen } from '../../../commons/hooks/useScreen';
 
 interface StepperProps {
   icon: React.ReactNode;
   title: string;
   component: React.ReactNode;
   description: React.ReactNode;
-  key: string;
+  key: DelegationStep;
 }
 
 const DelegatorLifecycle = ({
-  setMode,
   containerPosition,
   handleResize,
   currentStep,
-  setCurrentStep,
+  setCurrentStep
 }: {
-  setMode: (mode: "timeline" | "tablular") => void;
   containerPosition: {
     top?: number;
     left?: number;
@@ -68,7 +66,7 @@ const DelegatorLifecycle = ({
 }) => {
   const history = useHistory();
   const { isMobile } = useScreen();
-  const { stakeId = "" } = useParams<{
+  const { stakeId = '' } = useParams<{
     stakeId: string;
   }>();
   const [open, setOpen] = useState(false);
@@ -76,8 +74,8 @@ const DelegatorLifecycle = ({
 
   const stepper: StepperProps[] = [
     {
-      icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
-      title: "Registration",
+      icon: <RegistrationIcon width={'25px'} height={'25px'} fill={currentStep >= 0 ? '#fff' : '#98A2B3'} />,
+      title: 'Registration',
       component: <Registration handleResize={handleResize} containerPosition={containerPosition} />,
       description: (
         <RegistrationProcessDescription
@@ -85,11 +83,11 @@ const DelegatorLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "registration",
+      key: 'registration'
     },
     {
-      icon: <DelegationIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
-      title: "Delegation",
+      icon: <DelegationIcon width={'25px'} height={'25px'} fill={currentStep >= 1 ? '#fff' : '#98A2B3'} />,
+      title: 'Delegation',
       component: <Delegation handleResize={handleResize} containerPosition={containerPosition} />,
       description: (
         <DelegationProcessDescription
@@ -97,11 +95,11 @@ const DelegatorLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "delegation",
+      key: 'delegation'
     },
     {
-      icon: <RewardsDistributionIcon width={"25px"} height={"25px"} fill={currentStep >= 2 ? "#fff" : "#98A2B3"} />,
-      title: "Rewards Distribution",
+      icon: <RewardsDistributionIcon width={'25px'} height={'25px'} fill={currentStep >= 2 ? '#fff' : '#98A2B3'} />,
+      title: 'Rewards Distribution',
       component: <RewardsDistribution handleResize={handleResize} containerPosition={containerPosition} />,
       description: (
         <RewardDistributionProcessDescription
@@ -109,11 +107,11 @@ const DelegatorLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "rewardsDistribution",
+      key: 'rewards'
     },
     {
-      icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
-      title: "Rewards Withdrawal",
+      icon: <RewardsWithdrawalIcon width={'25px'} height={'25px'} fill={currentStep >= 3 ? '#fff' : '#98A2B3'} />,
+      title: 'Rewards Withdrawal',
       component: <RewardsWithdrawal handleResize={handleResize} containerPosition={containerPosition} />,
       description: (
         <WithdrawingFundProcessDescription
@@ -121,11 +119,11 @@ const DelegatorLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "rewardsWithdrawal",
+      key: 'withdrawal-history'
     },
     {
-      icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 4 ? "#fff" : "#98A2B3"} />,
-      title: "Deregistration",
+      icon: <DeredistrationIcon width={'25px'} height={'25px'} fill={currentStep >= 4 ? '#fff' : '#98A2B3'} />,
+      title: 'Deregistration',
       component: <Deregistration handleResize={handleResize} containerPosition={containerPosition} />,
       description: (
         <DeregistrationProcessDescription
@@ -133,20 +131,20 @@ const DelegatorLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "deregistration",
-    },
+      key: 'deregistration'
+    }
   ];
 
   return (
     <Box mr={isMobile ? 2 : 0}>
-      <Box display={"flex"} justifyContent={"space-between"}>
+      <Box display={'flex'} justifyContent={'space-between'}>
         {stepper.map((step, idx) => (
-          <Step component={"span"} key={idx} active={+(currentStep >= idx)}>
+          <Step component={'span'} key={idx} active={+(currentStep === idx)}>
             <StepButton
-              active={+(currentStep >= idx)}
+              active={+(currentStep === idx)}
               onClick={() => {
                 setCurrentStep(idx);
-                history.push(details.staking(stakeId, step.key));
+                history.push(details.staking(stakeId, 'timeline', step.key));
               }}
             >
               {step.icon}
@@ -158,10 +156,10 @@ const DelegatorLifecycle = ({
         ))}
       </Box>
 
-      <Box mt={3} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-        <StyledBox fontSize={"1.5rem"} fontWeight={"bold"}>
+      <Box mt={3} display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+        <StyledBox fontSize={'1.5rem'} fontWeight={'bold'}>
           <TabTitle>{stepper[currentStep].title}</TabTitle>
-          <InfoIcon style={{ cursor: "pointer" }} onClick={() => setOpenDescriptionModal(true)} />
+          <InfoIcon style={{ cursor: 'pointer' }} onClick={() => setOpenDescriptionModal(true)} />
         </StyledBox>
         <ADATransfersButton onClick={() => setOpen(true)}>
           <TranferIcon /> ADA Transfers
@@ -173,15 +171,15 @@ const DelegatorLifecycle = ({
       </Box>
 
       <Box
-        display="flex"
-        flexDirection={isMobile ? "column" : "row"}
-        justifyContent={isMobile ? "center" : "space-between"}
+        display='flex'
+        flexDirection={isMobile ? 'column' : 'row'}
+        justifyContent={isMobile ? 'center' : 'space-between'}
       >
         {currentStep > 0 && (
           <PreviousButton
-            sx={{ mb: `${isMobile ? "16px" : "0px"}` }}
+            sx={{ mb: `${isMobile ? '16px' : '0px'}` }}
             onClick={() => {
-              history.push(details.staking(stakeId, stepper[currentStep - 1]?.key));
+              history.push(details.staking(stakeId, 'timeline', stepper[currentStep - 1]?.key));
               setCurrentStep(currentStep - 1);
             }}
           >
@@ -192,17 +190,16 @@ const DelegatorLifecycle = ({
         <NextButton
           onClick={() => {
             if (currentStep === stepper.length - 1) {
-              history.push(details.staking(stakeId, "tablular"));
-              setMode("tablular");
+              history.push(details.staking(stakeId, 'tablular'));
             } else {
-              history.push(details.staking(stakeId, stepper[currentStep + 1]?.key));
+              history.push(details.staking(stakeId, 'timeline', stepper[currentStep + 1]?.key));
               setCurrentStep(currentStep + 1);
             }
           }}
-          variant="contained"
+          variant='contained'
         >
           <ButtonText fontSize={isMobile ? 14 : 16}>
-            Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+            Next: {currentStep === stepper.length - 1 ? 'View in tabular' : stepper[currentStep + 1]?.title}
           </ButtonText>
           <NextIcon />
         </NextButton>

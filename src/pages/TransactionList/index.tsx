@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import TransactionList from "../../components/TransactionLists";
-import { Container } from "@mui/material";
-import { setOnDetailView } from "../../stores/user";
-import DetailViewTransaction from "../../components/commons/DetailView/DetailViewTransaction";
-import styled from "@emotion/styled";
-import { API } from "../../commons/utils/api";
+import TransactionList from '../../components/TransactionLists';
+import { Container } from '@mui/material';
+import { setOnDetailView } from '../../stores/user';
+import DetailViewTransaction from '../../components/commons/DetailView/DetailViewTransaction';
+import styled from '@emotion/styled';
+import { API } from '../../commons/utils/api';
 
 const StyledContainer = styled(Container)`
   padding: 20px 16px 40px;
 `;
 
-interface Props {}
-
-const Transactions: React.FC<Props> = () => {
+const Transactions = () => {
   const [hash, setHash] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
 
@@ -34,17 +32,19 @@ const Transactions: React.FC<Props> = () => {
     setSelected(null);
   };
   return (
-    <StyledContainer>
-      <TransactionList
-        url={API.TRANSACTION.LIST}
-        openDetail={openDetail}
-        selected={selected}
-        showTabView
-        hash={hash}
-        handleClose={handleClose}
-      />
+    <>
+      <StyledContainer>
+        <TransactionList
+          url={API.TRANSACTION.LIST}
+          openDetail={openDetail}
+          selected={selected}
+          showTabView
+          hash={hash}
+          handleClose={handleClose}
+        />
+      </StyledContainer>
       {hash && <DetailViewTransaction hash={hash} handleClose={handleClose} />}
-    </StyledContainer>
+    </>
   );
 };
 

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import moment from "moment";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import useFetch from "../../../../commons/hooks/useFetch";
-import { Box, Grid, alpha, useTheme } from "@mui/material";
-import { API } from "../../../../commons/utils/api";
-import { BoxInfo, ColorChart, InfoItem, Skeleton, Tab, Tabs, Title, TransactionContainer, WrapHeader } from "./styles";
-import { formatDateTimeLocal } from "../../../../commons/utils/helper";
+import React, { useState } from 'react';
+import moment from 'moment';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import useFetch from '../../../../commons/hooks/useFetch';
+import { Box, Grid, alpha, useTheme } from '@mui/material';
+import { API } from '../../../../commons/utils/api';
+import { BoxInfo, ColorChart, InfoItem, Skeleton, Tab, Tabs, Title, TransactionContainer, WrapHeader } from './styles';
+import { formatDateTimeLocal } from '../../../../commons/utils/helper';
 
 interface TransactionChartIF {
   date: string;
@@ -15,67 +15,67 @@ interface TransactionChartIF {
   complexTxs: number;
 }
 
-type Time = "ONE_DAY" | "ONE_WEEK" | "TWO_WEEK" | "ONE_MONTH";
-export type TypeChart = "trx" | "simple" | "complex";
+type Time = 'ONE_DAY' | 'ONE_WEEK' | 'TWO_WEEK' | 'ONE_MONTH';
+export type TypeChart = 'trx' | 'simple' | 'complex';
 
 const TransactionChart: React.FC = () => {
-  const [rangeTime, setRangeTime] = useState<Time>("ONE_DAY");
+  const [rangeTime, setRangeTime] = useState<Time>('ONE_DAY');
 
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     ONE_DAY: {
-      label: "1d",
-      displayName: "today",
+      label: '1d',
+      displayName: 'today'
     },
     ONE_WEEK: {
-      label: "1w",
-      displayName: "in week",
+      label: '1w',
+      displayName: 'in week'
     },
     TWO_WEEK: {
-      label: "2w",
-      displayName: "in two week",
+      label: '2w',
+      displayName: 'in two week'
     },
     ONE_MONTH: {
-      label: "1m",
-      displayName: "in month",
-    },
+      label: '1m',
+      displayName: 'in month'
+    }
   };
 
   const formatTime = (type: Time) => {
     switch (type) {
-      case "ONE_DAY":
-        return "HH:mm";
+      case 'ONE_DAY':
+        return 'HH:mm';
       default:
-        return "DD/MM";
+        return 'DD/MM';
     }
   };
 
   const { data, loading } = useFetch<TransactionChartIF[]>(`${API.TRANSACTION.GRAPH}/${rangeTime}`);
-  const categories = (data || []).map(item => moment(formatDateTimeLocal(item.date)).format(formatTime(rangeTime)));
+  const categories = (data || []).map((item) => moment(formatDateTimeLocal(item.date)).format(formatTime(rangeTime)));
 
-  const dataTxs = (data || []).map(item => [formatDateTimeLocal(item.date), item.txs]);
-  const dataComplexTxs = (data || []).map(item => [formatDateTimeLocal(item.date), item.complexTxs]);
-  const dataSimpleTxs = (data || []).map(item => [formatDateTimeLocal(item.date), item.simpleTxs]);
+  const dataTxs = (data || []).map((item) => [formatDateTimeLocal(item.date), item.txs]);
+  const dataComplexTxs = (data || []).map((item) => [formatDateTimeLocal(item.date), item.complexTxs]);
+  const dataSimpleTxs = (data || []).map((item) => [formatDateTimeLocal(item.date), item.simpleTxs]);
 
   const sumTxs = (data || []).reduce((prev, item) => prev + item.txs, 0);
   const sumComplexTxs = (data || []).reduce((prev, item) => prev + item.complexTxs, 0);
   const sumSimpleTxs = (data || []).reduce((prev, item) => prev + item.simpleTxs, 0);
 
   const dataOverview = [
-    { key: "trx", title: "Total  transaction", value: sumTxs },
-    { key: "simple", title: "Simple transaction", value: sumSimpleTxs },
-    { key: "complex", title: "Complex transaction", value: sumComplexTxs },
+    { key: 'trx', title: 'Total  transaction', value: sumTxs },
+    { key: 'simple', title: 'Simple transaction', value: sumSimpleTxs },
+    { key: 'complex', title: 'Complex transaction', value: sumComplexTxs }
   ];
 
   const theme = useTheme();
 
   const options: Highcharts.Options = {
-    chart: { type: "areaspline", height: 300, style: { fontFamily: "Roboto, sans-serif" } },
-    title: { text: "" },
+    chart: { type: 'areaspline', height: 300, style: { fontFamily: 'Roboto, sans-serif' } },
+    title: { text: '' },
     yAxis: {
       title: { text: null },
       lineWidth: 2,
       lineColor: theme.palette.border.main,
-      gridLineWidth: 0,
+      gridLineWidth: 0
     },
     xAxis: {
       categories,
@@ -83,80 +83,80 @@ const TransactionChart: React.FC = () => {
       lineColor: theme.palette.border.main,
       plotLines: [],
       angle: 0,
-      type: "datetime",
+      type: 'datetime',
       labels: {
-        overflow: "allow",
+        overflow: 'allow',
         rotation: 0,
-        align: "left",
-        format: "{value:%Y}",
-        step: 1,
-      },
+        align: 'left',
+        format: '{value:%Y}',
+        step: 1
+      }
     },
     legend: { enabled: false },
     credits: { enabled: false },
     series: [
       {
-        name: "",
-        pointPlacement: "on",
-        type: "areaspline",
+        name: '',
+        pointPlacement: 'on',
+        type: 'areaspline',
         marker: { enabled: false },
         lineWidth: 2,
         color: theme.palette.yellow[600],
-        tooltip: { valuePrefix: "Total transaction: " },
+        tooltip: { valuePrefix: 'Total transaction: ' },
         fillColor: {
           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
           stops: [
             [0, alpha(theme.palette.yellow[600], 0.5)],
-            [1, alpha(theme.palette.green[600], 0)],
-          ],
+            [1, alpha(theme.palette.green[600], 0)]
+          ]
         },
-        data: dataTxs,
+        data: dataTxs
       },
       {
-        name: "",
-        pointPlacement: "on",
-        type: "areaspline",
+        name: '',
+        pointPlacement: 'on',
+        type: 'areaspline',
         marker: { enabled: false },
         lineWidth: 1.5,
         color: theme.palette.green[600],
-        tooltip: { valuePrefix: "Complex transaction: " },
+        tooltip: { valuePrefix: 'Complex transaction: ' },
         fillColor: {
           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
           stops: [
             [0, alpha(theme.palette.green[600], 0.5)],
-            [1, alpha(theme.palette.green[600], 0)],
-          ],
+            [1, alpha(theme.palette.green[600], 0)]
+          ]
         },
-        data: dataComplexTxs,
+        data: dataComplexTxs
       },
       {
-        name: "",
-        pointPlacement: "on",
-        type: "areaspline",
+        name: '',
+        pointPlacement: 'on',
+        type: 'areaspline',
         marker: { enabled: false },
         lineWidth: 2,
-        tooltip: { valuePrefix: "Simple transaction: " },
+        tooltip: { valuePrefix: 'Simple transaction: ' },
         color: theme.palette.blue[800],
         fillColor: {
           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
           stops: [
             [0, alpha(theme.palette.blue[800], 0.5)],
-            [1, alpha(theme.palette.green[800], 0)],
-          ],
+            [1, alpha(theme.palette.green[800], 0)]
+          ]
         },
-        data: dataSimpleTxs,
-      },
-    ],
+        data: dataSimpleTxs
+      }
+    ]
   };
 
   const renderLoading = () => {
     return (
       <Grid container spacing={2}>
         <Grid item xs={12} lg={9}>
-          <Skeleton variant="rectangular" height={"300px"} style={{ borderRadius: 10 }} />
+          <Skeleton variant='rectangular' height={'300px'} style={{ borderRadius: 10 }} />
         </Grid>
         <Grid item xs={12} lg={3}>
-          <Skeleton variant="rectangular" height={"300px"} />
+          <Skeleton variant='rectangular' height={'300px'} />
         </Grid>
       </Grid>
     );
@@ -165,8 +165,8 @@ const TransactionChart: React.FC = () => {
     <TransactionContainer>
       <WrapHeader>
         <Title>Transaction {optionsTime[rangeTime].displayName}</Title>
-        <Tabs>
-          {Object.keys(optionsTime).map(option => {
+        <Tabs width='100%'>
+          {Object.keys(optionsTime).map((option) => {
             return (
               <Tab
                 key={optionsTime[option as Time].label}
@@ -187,12 +187,12 @@ const TransactionChart: React.FC = () => {
           </Grid>
           <Grid item xs={12} lg={3}>
             <BoxInfo>
-              {dataOverview.map(item => (
+              {dataOverview.map((item) => (
                 <InfoItem key={item.key}>
                   <ColorChart type={item.key as TypeChart} />
                   <Box>
                     <Box color={({ palette }) => palette.grey[400]}>{item.title}</Box>
-                    <Box textAlign={"left"} color={({ palette }) => palette.green[700]} fontWeight={"bold"}>
+                    <Box textAlign={'left'} color={({ palette }) => palette.green[700]} fontWeight={'bold'}>
                       {item.value}
                     </Box>
                   </Box>

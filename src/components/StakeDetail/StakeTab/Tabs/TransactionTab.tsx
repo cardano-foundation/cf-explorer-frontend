@@ -1,6 +1,6 @@
-import { useParams } from "react-router-dom";
-import { API } from "../../../../commons/utils/api";
-import TransactionListFull from "../../../TransactionListsFull";
+import { useParams } from 'react-router-dom';
+import { API } from '../../../../commons/utils/api';
+import TransactionListFull from '../../../TransactionListsFull';
 
 const TransactionTab = () => {
   const { stakeId } = useParams<{ stakeId: string }>();

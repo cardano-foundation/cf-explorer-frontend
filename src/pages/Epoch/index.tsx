@@ -1,21 +1,22 @@
-import { stringify } from "qs";
-import { useEffect, useState, useRef } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../commons/utils/constants";
-import { formatADAFull, formatDateTimeLocal, getEpochSlotNo, getPageInfo } from "../../commons/utils/helper";
-import { details } from "../../commons/routers";
-import Card from "../../components/commons/Card";
-import Table, { Column } from "../../components/commons/Table";
-import { Blocks, StyledContainer, Output, StyledColorBlueDard, Status } from "./styles";
-import { setOnDetailView } from "../../stores/user";
-import DetailViewEpoch from "../../components/commons/DetailView/DetailViewEpoch";
-import { Box, useTheme } from "@mui/material";
-import { API } from "../../commons/utils/api";
-import SelectedIcon from "../../components/commons/SelectedIcon";
-import ADAicon from "../../components/commons/ADAIcon";
-import ProgressCircle from "../../components/commons/ProgressCircle";
-import FirstEpoch from "../../components/commons/Epoch/FirstEpoch";
+import { stringify } from 'qs';
+import { useEffect, useState, useRef } from 'react';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import useFetchList from '../../commons/hooks/useFetchList';
+import { EPOCH_STATUS, MAX_SLOT_EPOCH } from '../../commons/utils/constants';
+import { formatADAFull, formatDateTimeLocal, getEpochSlotNo, getPageInfo } from '../../commons/utils/helper';
+import { details } from '../../commons/routers';
+import Card from '../../components/commons/Card';
+import Table, { Column } from '../../components/commons/Table';
+import { Blocks, StyledContainer, Output, StyledColorBlueDard, Status } from './styles';
+import { setOnDetailView } from '../../stores/user';
+import DetailViewEpoch from '../../components/commons/DetailView/DetailViewEpoch';
+import { Box, useTheme } from '@mui/material';
+import { API } from '../../commons/utils/api';
+import SelectedIcon from '../../components/commons/SelectedIcon';
+import ADAicon from '../../components/commons/ADAIcon';
+import ProgressCircle from '../../components/commons/ProgressCircle';
+import FirstEpoch from '../../components/commons/Epoch/FirstEpoch';
+import { useSelector } from 'react-redux';
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -24,18 +25,18 @@ const Epoch: React.FC = () => {
   const history = useHistory();
   const theme = useTheme();
   const pageInfo = getPageInfo(search);
-  const [sort, setSort] = useState<string>("");
+  const [sort, setSort] = useState<string>('');
   const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo, sort });
-  const mainRef = useRef(document.querySelector("#main"));
+  const mainRef = useRef(document.querySelector('#main'));
   const columns: Column<IDataEpoch>[] = [
     {
-      title: "Epoch Number",
-      key: "epochNumber",
-      minWidth: "50px",
-      render: r => (
+      title: 'Epoch Number',
+      key: 'epochNumber',
+      minWidth: '50px',
+      render: (r) => (
         <Link to={details.epoch(r.no || 0)}>
-          <Box textAlign="center">
-            <Box width={41} margin="auto">
+          <Box textAlign='center'>
+            <Box width={41} margin='auto'>
               <ProgressCircle
                 size={41}
                 pathWidth={5}
@@ -49,28 +50,28 @@ const Epoch: React.FC = () => {
             <Status status={r.status.toLowerCase()}>{EPOCH_STATUS[r.status]}</Status>
           </Box>
         </Link>
-      ),
+      )
     },
     {
-      title: "Blocks",
-      key: "blkCount",
-      minWidth: "100px",
-      render: r => <Blocks>{r.blkCount}</Blocks>,
+      title: 'Blocks',
+      key: 'blkCount',
+      minWidth: '100px',
+      render: (r) => <Blocks>{r.blkCount}</Blocks>,
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort('');
+      }
     },
     {
-      title: "Transaction Count",
-      key: "transactionCount",
-      minWidth: "100px",
-      render: r => <Blocks>{r.txCount}</Blocks>,
+      title: 'Transaction Count',
+      key: 'transactionCount',
+      minWidth: '100px',
+      render: (r) => <Blocks>{r.txCount}</Blocks>
     },
     {
-      title: "Rewards Distributed",
-      key: "rDistributed",
-      minWidth: "100px",
-      render: r => (
+      title: 'Rewards Distributed',
+      key: 'rDistributed',
+      minWidth: '100px',
+      render: (r) => (
         <>
           {r.rewardsDistributed ? (
             <Output>
@@ -78,42 +79,42 @@ const Epoch: React.FC = () => {
               <ADAicon />
             </Output>
           ) : (
-            "Not available"
+            'Not available'
           )}
         </>
-      ),
+      )
     },
     {
-      title: "Total Output",
-      key: "outSum",
-      minWidth: "100px",
-      render: r => (
+      title: 'Total Output',
+      key: 'outSum',
+      minWidth: '100px',
+      render: (r) => (
         <Output>
           {formatADAFull(r.outSum)}
           <ADAicon />
         </Output>
       ),
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort('');
+      }
     },
     {
-      title: "Start Timestamp",
-      key: "startTime",
-      minWidth: "100px",
-      render: r => <StyledColorBlueDard>{formatDateTimeLocal(r.startTime || "")}</StyledColorBlueDard>,
+      title: 'Start Timestamp',
+      key: 'startTime',
+      minWidth: '100px',
+      render: (r) => <StyledColorBlueDard>{formatDateTimeLocal(r.startTime || '')}</StyledColorBlueDard>
     },
     {
-      title: "End Timestamp",
-      key: "endTime",
-      minWidth: "100px",
-      render: r => (
+      title: 'End Timestamp',
+      key: 'endTime',
+      minWidth: '100px',
+      render: (r) => (
         <StyledColorBlueDard>
-          {formatDateTimeLocal(r.endTime || "")}
+          {formatDateTimeLocal(r.endTime || '')}
           {epoch === r.no && <SelectedIcon />}
         </StyledColorBlueDard>
-      ),
-    },
+      )
+    }
   ];
 
   useEffect(() => {
@@ -135,13 +136,13 @@ const Epoch: React.FC = () => {
 
   return (
     <StyledContainer>
-      <Card title={"Epochs"}>
-        {fetchData.currentPage === 0 ? <FirstEpoch data={fetchData.data?.[0] || {}} /> : null}
+      <Card title={'Epochs'}>
+        <FirstEpoch />
         <Table
           {...fetchData}
           data={fetchData.currentPage === 0 ? [...fetchData.data.slice(1)] : fetchData.data}
           columns={columns}
-          total={{ title: "Total Epochs", count: fetchData.total }}
+          total={{ title: 'Total Epochs', count: fetchData.total }}
           pagination={{
             ...pageInfo,
             total: fetchData.total,
@@ -149,7 +150,7 @@ const Epoch: React.FC = () => {
               history.push({ search: stringify({ page, size }) });
               mainRef.current?.scrollTo(0, 0);
             },
-            handleCloseDetailView: handleClose,
+            handleCloseDetailView: handleClose
           }}
           onClickRow={openDetail}
           selected={selected}

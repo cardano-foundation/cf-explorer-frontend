@@ -1,10 +1,10 @@
-import { Box, Grid } from "@mui/material";
-import CopyButton from "../../../commons/CopyButton";
-import { TextLabel, TextNormal, TextRightValue, TextValue } from "./styles";
-import { LinkIcon } from "../../../../commons/resources";
-import Link from "../../../commons/Link";
-import { getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import { AdaValue } from "../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import { Box, Grid } from '@mui/material';
+import CopyButton from '../../../commons/CopyButton';
+import { TextLabel, TextNormal, TextRightValue, TextValue } from './styles';
+import Link from '../../../commons/Link';
+import { getShortHash, getShortWallet } from '../../../../commons/utils/helper';
+import { AdaValue } from '../../../TabularView/StakeTab/Tabs/StakeRegistrationTab';
+import { details, routers } from '../../../../commons/routers';
 
 type TProps = {
   data: TPoolCertificated;
@@ -13,86 +13,106 @@ type TProps = {
 const StakeKeyBox = ({ data }: TProps) => {
   const leftRow = [
     {
-      label: "Pool ID",
+      label: 'Pool Id',
       value: getShortHash(data.poolId),
+      isHyperLink: true,
+      originValue: data.poolId,
+      linkTo: details.delegation(data.poolId)
     },
     {
-      label: "VRF Key",
-      value: getShortHash(data?.vrfKey),
+      label: 'VRF Key',
+      value: data?.vrfKey ? getShortHash(data?.vrfKey) : '',
+      isHyperLink: false,
+      originValue: data.vrfKey
     },
     {
-      label: "Reward Account",
-      value: getShortWallet(data.rewardAccount),
+      label: 'Reward Account',
+      value: data.rewardAccount ? getShortWallet(data.rewardAccount) : '',
+      isHyperLink: true,
+      originValue: data.rewardAccount,
+      linkTo: routers.REGISTRATION_POOLS.replace(':poolType', '')
     },
     {
-      label: "Pool Operator",
-      value: getShortWallet(data.poolOwners[0]),
+      label: 'Pool Operator',
+      value: data.poolOwners && data.poolOwners.length > 0 ? getShortWallet(data.poolOwners[0]) : '',
+      isHyperLink: true,
+      originValue: data.poolOwners && data.poolOwners.length > 0 ? data.poolOwners[0] : '',
+      linkTo: routers.REGISTRATION_POOLS.replace(':poolType', '')
     },
     {
-      label: "Metadata Hash",
-      value: getShortHash(data.metadataHash),
-    },
+      label: 'Metadata Hash',
+      value: data.metadataHash ? getShortHash(data.metadataHash) : '',
+      isHyperLink: false,
+      originValue: data.metadataHash
+    }
   ];
 
   const rightRow = [
     {
-      label: "Margin",
-      value: `${data.margin}%`,
+      label: 'Margin',
+      value: data.margin ? `${data.margin * 100}%` : 0
     },
     {
-      label: "Cost",
-      value: <AdaValue value={data.cost} />,
+      label: 'Cost',
+      value: <AdaValue value={data.cost} />
     },
     {
-      label: "Pledge",
-      value: <AdaValue value={data.pledge} />,
+      label: 'Pledge',
+      value: <AdaValue value={data.pledge} />
     },
     {
-      label: "Relay nNode",
+      label: 'Relay nNode',
       value: (
-        <TextNormal>
-          IPv4: <TextRightValue>{data.relays.ipv4}</TextRightValue> | Port:
-          <TextRightValue>{data.relays.port}</TextRightValue>
-        </TextNormal>
-      ),
-    },
-    {
-      label: "Metadata URL",
-      value: (
-        <Box display="flex">
-          <TextValue>{getShortHash(data?.metadataHash)}</TextValue>&nbsp;
-          <Link to={data?.metadataUrl}>
-            <LinkIcon />
-          </Link>
+        <Box display='flex' flexDirection='column'>
+          {(data?.relays || []).map((relay, index) => (
+            <TextNormal key={index}>
+              IPv4: <TextRightValue>{relay.ipv4}</TextRightValue> | Port:
+              <TextRightValue>{relay.port}</TextRightValue>
+            </TextNormal>
+          ))}
         </Box>
-      ),
+      )
     },
+    {
+      label: 'Metadata URL',
+      value: (
+        <div>
+          {data?.metadataUrl}
+          {data?.metadataUrl && <CopyButton text={data?.metadataUrl} sx={{ height: 16 }} />}
+        </div>
+      )
+    }
   ];
 
   return (
-    <Box>
+    <Box py={'15px'}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          {leftRow.map(({ label, value }) => {
-            return (
-              <Box key={label} sx={{ marginBottom: "15px" }}>
-                <TextLabel>{label}: </TextLabel>
-                <TextValue>
-                  {value} <CopyButton text={value} />
-                </TextValue>
-              </Box>
-            );
-          })}
+          <Box display='flex' flexDirection='column' gap='15px'>
+            {(leftRow || []).map(({ label, value, isHyperLink, originValue, linkTo }) => {
+              return (
+                <Box key={label} display='flex' alignItems='center'>
+                  <TextLabel>{label}: </TextLabel>
+                  <TextValue>
+                    {isHyperLink && linkTo ? <Link to={linkTo}>{value}</Link> : value}
+                    {value && <CopyButton sx={{ marginLeft: 1, height: 16 }} text={originValue} />}
+                  </TextValue>
+                </Box>
+              );
+            })}
+          </Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          {rightRow.map(({ label, value }) => {
-            return (
-              <Box key={label} sx={{ marginBottom: "15px" }}>
-                <TextLabel>{label}: </TextLabel>
-                <TextRightValue>{value}</TextRightValue>
-              </Box>
-            );
-          })}
+          <Box display='flex' flexDirection='column' gap='15px'>
+            {(rightRow || []).map(({ label, value }) => {
+              return (
+                <Box key={label}>
+                  <TextLabel>{label}: </TextLabel>
+                  <TextRightValue>{value}</TextRightValue>
+                </Box>
+              );
+            })}
+          </Box>
         </Grid>
       </Grid>
     </Box>

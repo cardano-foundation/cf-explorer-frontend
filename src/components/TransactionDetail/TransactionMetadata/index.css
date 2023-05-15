@@ -1,19 +1,19 @@
 .ant-tabs-tab {
-    font-family: var(--font-family-title);
-    font-weight: var(--font-weight-bold);
-    color: #98A2B3;
-    font-size: var(--font-size-text)
+  font-family: var(--font-family-title);
+  font-weight: var(--font-weight-bold);
+  color: #98a2b3;
+  font-size: var(--font-size-text);
 }
 
 .ant-tabs-tab:hover {
-    color: #000000;
+  color: #000000;
 }
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: #000000;
-    text-shadow: none;
+  color: #000000;
+  text-shadow: none;
 }
 
 .ant-tabs-ink-bar {
-    background: #438F68;
+  background: #438f68;
 }

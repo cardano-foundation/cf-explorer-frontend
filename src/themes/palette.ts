@@ -1,106 +1,100 @@
-import { alpha } from "@mui/material";
-import { ThemeType } from "../types/user";
+import { alpha } from '@mui/material';
+import { ThemeType } from '../types/user';
 
-export const createGradient = (
-  deg: number,
-  startColor: string,
-  endColor: string,
-  start: number = 0,
-  end: number = 100
-): string => {
+export const createGradient = (deg: number, startColor: string, endColor: string, start = 0, end = 100): string => {
   return `linear-gradient(${deg}deg, ${startColor} ${start}%, ${endColor} ${end}%)`;
 };
 
 const GREEN = {
-  100: "#B9FFDB",
-  200: "#9EEFC5",
-  300: "#7ED4A8",
-  400: "#65B98E",
-  450: "#5A9C56",
-  500: "#53A57B",
-  600: "#438F68",
-  600_10: alpha("#438F68", 0.1),
-  600_20: alpha("#438F68", 0.2),
-  600_30: alpha("#438F68", 0.3),
-  700: "#29744D",
-  700_20: alpha("#29744D", 0.2),
-  800: "#184c78",
-  800_10: alpha("#184c78", 0.1),
-  800_20: alpha("#184c78", 0.2),
+  100: '#B9FFDB',
+  200: '#9EEFC5',
+  300: '#7ED4A8',
+  400: '#65B98E',
+  450: '#5A9C56',
+  500: '#53A57B',
+  600: '#438F68',
+  600_10: alpha('#438F68', 0.1),
+  600_20: alpha('#438F68', 0.2),
+  600_30: alpha('#438F68', 0.3),
+  700: '#29744D',
+  700_20: alpha('#29744D', 0.2),
+  800: '#184c78',
+  800_10: alpha('#184c78', 0.1),
+  800_20: alpha('#184c78', 0.2)
 };
 
 const COMMON = {
-  black: "#000000",
-  white: "#FFFFFF",
+  black: '#000000',
+  white: '#FFFFFF'
 };
 
 const GREY = {
-  50: "#F7F7F7",
-  100: "#F2F2F2",
-  200: "#E3E5E9",
-  300: "#98A2B3",
-  400: "#667085",
-  500: "#344054",
-  600: "#1F213A",
-  700: "#13152F",
-  A100: "#A3A3A3",
-  A200: "#ECECEC",
-  A400: "#B7B7B7",
+  50: '#F7F7F7',
+  100: '#F2F2F2',
+  200: '#E3E5E9',
+  300: '#98A2B3',
+  400: '#667085',
+  500: '#344054',
+  600: '#1F213A',
+  700: '#13152F',
+  A100: '#A3A3A3',
+  A200: '#ECECEC',
+  A400: '#B7B7B7'
 };
 
 const RED = {
-  100: "#FFE2E2",
-  200: "#FFC6C6",
-  300: "#FFACAC",
-  400: "#FF8D8D",
-  500: "#FF7474",
-  600: "#F75E5E",
-  700: "#DD4343",
-  700_10: alpha("#DD4343", 0.1),
-  700_20: alpha("#DD4343", 0.2),
+  100: '#FFE2E2',
+  200: '#FFC6C6',
+  300: '#FFACAC',
+  400: '#FF8D8D',
+  500: '#FF7474',
+  600: '#F75E5E',
+  700: '#DD4343',
+  700_10: alpha('#DD4343', 0.1),
+  700_20: alpha('#DD4343', 0.2)
 };
 
 const YELLOW = {
-  100: "#FFF2DA",
-  200: "#FFE8BA",
-  300: "#FFDD9B",
-  400: "#FFD37E",
-  500: "#FFC75A",
-  600: "#F9B736",
-  700: "#FFA800",
-  700_20: alpha("#FFA800", 0.2),
+  100: '#FFF2DA',
+  200: '#FFE8BA',
+  300: '#FFDD9B',
+  400: '#FFD37E',
+  500: '#FFC75A',
+  600: '#F9B736',
+  700: '#FFA800',
+  700_20: alpha('#FFA800', 0.2)
 };
 
 const BLUE = {
-  100: "#A3D5FF",
-  200: "#78BBF2",
-  300: "#5DA2DC",
-  400: "#4084BD",
-  500: "#3272A8",
-  600: "#256289",
-  700: "#154666",
-  800: "#108AEF",
-  800_7: alpha("#108AEF", 0.07),
-  800_20: alpha("#108AEF", 0.2),
+  100: '#A3D5FF',
+  200: '#78BBF2',
+  300: '#5DA2DC',
+  400: '#4084BD',
+  500: '#3272A8',
+  600: '#256289',
+  700: '#154666',
+  800: '#108AEF',
+  800_7: alpha('#108AEF', 0.07),
+  800_20: alpha('#108AEF', 0.2)
 };
 
 const PURPLE = {
-  200: "#E3E2FC",
-  500: "#6866D4",
+  200: '#E3E2FC',
+  500: '#6866D4'
 };
 
 const primary = {
   light: GREEN[500],
   main: GREEN[600],
   dark: GREEN[700],
-  contrastText: COMMON.white,
+  contrastText: COMMON.white
 };
 
 const secondary = {
   light: BLUE[800_7],
   main: BLUE[800],
   dark: GREY[500],
-  contrastText: COMMON.white,
+  contrastText: COMMON.white
 };
 
 const text = {
@@ -108,60 +102,60 @@ const text = {
   secondary: GREY[500],
   disabled: alpha(GREY[400], 0.4),
   hint: GREY[300],
-  dark: COMMON.black,
+  dark: COMMON.black
 };
 
 const border = {
-  primary: "#ECECEC",
+  primary: '#ECECEC',
   secondary: GREEN[800_10],
   main: GREY[200],
   disabled: GREY[400],
-  hint: "#C8CDD8",
+  hint: '#C8CDD8'
 };
 const background = {
   paper: COMMON.white,
   default: GREY[50],
-  neutral: GREY["A200"],
+  neutral: GREY['A200']
 };
 
 const error = {
   light: RED[700_10],
   main: RED[700],
   dark: RED[700],
-  contrastText: COMMON.white,
+  contrastText: COMMON.white
 };
 const warning = {
   light: YELLOW[700_20],
   main: YELLOW[700],
   dark: YELLOW[700],
-  contrastText: COMMON.white,
+  contrastText: COMMON.white
 };
 
 const info = {
   light: BLUE[800_20],
   main: BLUE[800],
   dark: BLUE[800],
-  contrastText: COMMON.white,
+  contrastText: COMMON.white
 };
 
 const success = {
   light: GREEN[600_20],
   main: GREEN[600],
   dark: GREEN[700],
-  contrastText: COMMON.white,
+  contrastText: COMMON.white
 };
 
 const GRADIENTS = {
-  0: "linear-gradient(263.55deg, #5A9C56 0%, #184C78 100%)",
-  1: "linear-gradient(0deg, #5A9C56 0%, #184C78 100%)",
-  2: "linear-gradient(90deg, #2193B0 0%, #6DD5ED 100%)",
-  3: "linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)",
-  4: "linear-gradient(90deg, #E65C00 0%, #F9D423 100%)",
-  5: "linear-gradient(90deg, #A770EF 0%, #CF8BF3 37.85%, #FDB99B 100%)",
-  6: "linear-gradient(90deg, #F2709C 0%, #FF9472 100%)",
-  7: "linear-gradient(90deg, #8E9EAB 0%, #EEF2F3 100%)",
-  8: "linear-gradient(0deg, #FFFFFF00 0%, #FFFFFF40 50%, #FFFFFF00 100%)",
-  9: "linear-gradient(52.78deg, #5A9C56 20.64%, #184C78 73.83%)",
+  0: 'linear-gradient(263.55deg, #5A9C56 0%, #184C78 100%)',
+  1: 'linear-gradient(0deg, #5A9C56 0%, #184C78 100%)',
+  2: 'linear-gradient(90deg, #2193B0 0%, #6DD5ED 100%)',
+  3: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)',
+  4: 'linear-gradient(90deg, #E65C00 0%, #F9D423 100%)',
+  5: 'linear-gradient(90deg, #A770EF 0%, #CF8BF3 37.85%, #FDB99B 100%)',
+  6: 'linear-gradient(90deg, #F2709C 0%, #FF9472 100%)',
+  7: 'linear-gradient(90deg, #8E9EAB 0%, #EEF2F3 100%)',
+  8: 'linear-gradient(0deg, #FFFFFF00 0%, #FFFFFF40 50%, #FFFFFF00 100%)',
+  9: 'linear-gradient(52.78deg, #5A9C56 20.64%, #184C78 73.83%)'
 };
 
 const customPalette = {
@@ -181,7 +175,7 @@ const customPalette = {
   yellow: YELLOW,
   purple: PURPLE,
   gradient: GRADIENTS,
-  border,
+  border
 };
 
 export type CustomPalette = {
@@ -196,31 +190,31 @@ export type CustomTypeBackground = {
   [Key in keyof typeof background]: (typeof background)[Key];
 };
 
-declare module "@mui/material" {
-  interface Palette extends CustomPalette {}
-  interface PaletteOptions extends CustomPalette {}
-  interface TypeText extends CustomTypeText {}
-  interface TypeBackground extends CustomTypeBackground {}
+declare module '@mui/material' {
+  type Palette = CustomPalette;
+  type PaletteOptions = CustomPalette;
+  type TypeText = CustomTypeText;
+  type TypeBackground = CustomTypeBackground;
 }
 
-declare module "@emotion/react" {
-  interface Palette extends CustomPalette {}
-  interface PaletteOptions extends CustomPalette {}
-  interface TypeText extends CustomTypeText {}
-  interface TypeBackground extends CustomTypeBackground {}
+declare module '@emotion/react' {
+  type Palette = CustomPalette;
+  type PaletteOptions = CustomPalette;
+  type TypeText = CustomTypeText;
+  type TypeBackground = CustomTypeBackground;
 }
 
 const light: CustomPalette = {
-  ...customPalette,
+  ...customPalette
 };
 
 const dark: CustomPalette = {
-  ...customPalette,
+  ...customPalette
 };
 
 const palette: { [key in ThemeType]: CustomPalette } = {
   light,
-  dark,
+  dark
 };
 
 export default palette;

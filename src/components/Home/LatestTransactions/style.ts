@@ -1,6 +1,6 @@
-import { Box, styled } from "@mui/material";
-import { BoxRaised } from "../../commons/BoxRaised";
-import { TRANSACTION_STATUS } from "../../../commons/utils/constants";
+import { Box, styled } from '@mui/material';
+import { BoxRaised } from '../../commons/BoxRaised';
+import { TRANSACTION_STATUS } from '../../../commons/utils/constants';
 
 export const TransactionContainer = styled(Box)`
   margin-bottom: 24px;
@@ -15,12 +15,12 @@ export const Header = styled(Box)`
   margin-bottom: 1.5rem;
   padding: 0 20px;
   gap: 10px;
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.md}px) {
     padding: 0 15px;
   }
 `;
 
-export const Title = styled("h3")`
+export const Title = styled('h3')`
   position: relative;
   text-align: left;
   margin: 0px;
@@ -30,7 +30,7 @@ export const Title = styled("h3")`
     position: absolute;
     top: 100%;
     left: 0;
-    content: "";
+    content: '';
     width: 50px;
     height: 4px;
     background: var(--color-green-light);
@@ -47,9 +47,9 @@ export const Item = styled(BoxRaised)`
   cursor: pointer;
   height: calc(100% - 56px);
   &:hover {
-    box-shadow: ${props => props.theme.shadow.card};
+    box-shadow: ${(props) => props.theme.shadow.card};
   }
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.md}px) {
     padding: 20px 15px;
   }
 `;
@@ -59,60 +59,60 @@ export const ItemHeader = styled(Box)`
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.md}px) {
     justify-content: flex-start;
   }
 `;
 export const RowItem = styled(Box)`
   line-height: 1;
-  margin-top: ${props => props.theme.spacing(1)};
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+  margin-top: ${(props) => props.theme.spacing(1)};
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.md}px) {
     margin-top: 0;
     margin-right: 10px;
   }
 }
 `;
 
-export const PriceImage = styled("img")`
+export const PriceImage = styled('img')`
   height: 45px;
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
     height: 30px;
   }
 `;
 
-export const PriveValue = styled("span")`
+export const PriveValue = styled('span')`
   font-size: var(--font-size-text-x-large);
   font-weight: var(--font-weight-bold);
   line-height: 1;
 `;
 
-export const ItemDetail = styled("div")`
+export const ItemDetail = styled('div')`
   color: var(--text-color-pale);
   display: flex;
   flex-direction: column;
   gap: 4px;
 `;
 
-export const Hash = styled("small")`
+export const Hash = styled('small')`
   font-style: normal;
   font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.main};
   font-family: var(--font-family-text);
 `;
 
-export const BlockNo = styled("small")`
+export const BlockNo = styled('small')`
   font-style: normal;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
 `;
 
-export const WalletAddress = styled("small")`
-  color: ${props => props.theme.palette.secondary.main};
+export const WalletAddress = styled('small')`
+  color: ${(props) => props.theme.palette.secondary.main};
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-bold);
 `;
 
-export const BlankImage = styled("img")`
+export const BlankImage = styled('img')`
   margin-left: 6px;
   margin-bottom: -1px;
   width: 14px;
@@ -120,7 +120,7 @@ export const BlankImage = styled("img")`
   vertical-align: baseline;
 `;
 
-export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
+export const HeaderStatus = styled('small')<{ status?: keyof typeof TransactionStatus | IDataEpoch['status'] }>`
   color: ${({ status, theme }) => {
     switch (status) {
       case TRANSACTION_STATUS.FAIL:
@@ -129,9 +129,9 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
         return theme.palette.warning.main;
       case TRANSACTION_STATUS.SUCCESS:
         return theme.palette.success.main;
-      case "IN_PROGRESS":
+      case 'IN_PROGRESS':
         return theme.palette.warning.main;
-      case "FINISHED":
+      case 'FINISHED':
         return theme.palette.info.main;
       default:
         return theme.palette.success.main;
@@ -145,9 +145,9 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
         return theme.palette.warning.light;
       case TRANSACTION_STATUS.SUCCESS:
         return theme.palette.success.light;
-      case "IN_PROGRESS":
+      case 'IN_PROGRESS':
         return theme.palette.warning.light;
-      case "FINISHED":
+      case 'FINISHED':
         return theme.palette.info.light;
       default:
         return theme.palette.success.light;
@@ -160,7 +160,7 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
   font-size: 0.8125rem;
   line-height: 1;
   width: min-content;
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px}) {
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.md}px}) {
     padding: 3px 3px;
     font-size: 0.75rem;
   }
