@@ -1,4 +1,4 @@
-import { styled, Stack, Box, Button, TextField } from "@mui/material";
+import { styled, Stack, Box, Button, TextField, Slider } from "@mui/material";
 import { SelectMui } from "../../../commons/Table/styles";
 
 export const StyledLabel = styled("div")`
@@ -160,4 +160,13 @@ export const StyledGroupField = styled(TextField)`
   .MuiOutlinedInput-notchedOutline {
     border: none;
   }
+`;
+export const StyledSlider = styled(Slider)`
+  & .MuiSlider-valueLabelOpen.MuiSlider-valueLabel {
+    transform: translateY(160%) scale(1);
+    &::before {
+      top: -8px;
+    }
+  }
+  margin-bottom: 12px;
 `;
