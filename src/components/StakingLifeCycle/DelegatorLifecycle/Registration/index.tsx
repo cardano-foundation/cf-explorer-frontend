@@ -11,6 +11,7 @@ import {
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
+import RegistrationCertificateMobile from "../../../../commons/resources/icons/Staking/RegistrationCertificateMobile.svg";
 
 import Line from "../../../Line";
 import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText, StakeLink } from "./styles";
@@ -29,6 +30,7 @@ import { details } from "../../../../commons/routers";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 const Registration = ({
   containerPosition,
@@ -46,19 +48,23 @@ const Registration = ({
     setSelected(registration);
   };
 
+  const { isTablet } = useScreen();
+
   return (
     <Box>
       <Box>
-        <RecentRegistrations onSelect={handleSelect} />
-      </Box>
-      <Box>
-        {!!selected && (
-          <RegistrationTimeline
+        {selected && (isTablet ? (
+          <RegistrationTimelineMobile
             handleResize={handleResize}
+            setSelected={setSelected}
             containerPosition={containerPosition}
             registration={selected}
           />
-        )}
+        ) : (<RegistrationTimeline
+          handleResize={handleResize}
+          containerPosition={containerPosition}
+          registration={selected}
+        />))}
       </Box>
     </Box>
   );
@@ -134,7 +140,7 @@ const RegistrationTimeline = ({
             <Box display={"flex"} flex={1}>
               <PopoverStyled
                 render={({ handleClick }: any) => (
-                  <HoldBox ref={holdRef} style={{ transform: "translateX(8px)" }}>
+                  <HoldBox ref={holdRef} style={{ transform: "translateX(8px)" }} height={35}>
                     <Box>
                       <Box
                         component={"span"}
@@ -156,7 +162,7 @@ const RegistrationTimeline = ({
               />
               <PopoverStyled
                 render={({ handleClick }) => (
-                  <FeeBox ref={feeRef}>
+                  <FeeBox ref={feeRef} height={35}>
                     <Box>
                       <Box
                         component={"span"}
@@ -269,6 +275,202 @@ const RegistrationTimeline = ({
           </Box>
           <Box ref={fake2Ref} width={"200px"}></Box>
         </Box>
+      </Box>
+      <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
+    </Box>
+  );
+};
+const RegistrationTimelineMobile = ({
+  containerPosition,
+  setSelected,
+  handleResize,
+  registration
+}: {
+  containerPosition: {
+    top?: number;
+    left?: number;
+  };
+  setSelected: (registration: RegistrationItem | null) => void;
+  handleResize: () => void;
+  registration: RegistrationItem;
+}) => {
+  const { deposit, fee, time, txHash } = registration;
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const theme = useTheme();
+
+  const adaHolderRef = useRef(null);
+  const holdRef = useRef(null);
+  const feeRef = useRef(null);
+  const cadarnoSystemRef = useRef(null);
+  const registrationRef = useRef(null);
+
+  const [openModal, setOpenModal] = useState(false);
+
+  useEffect(() => {
+    handleResize();
+  }, [registration]);
+
+  return (
+    <Box>
+      <Box display='flex' alignItems='flex-start' justifyContent='space-between' mt={1}>
+        <IconButtonBack onClick={() => setSelected(null)}>
+          <BackIcon />
+        </IconButtonBack>
+        <Box display={"flex"} flexDirection='column'>
+          <Info>
+            <AddressIcon fill='#438F68' />
+            <CustomTooltip title={txHash}>
+              <InfoText>{getShortHash(txHash || "")}</InfoText>
+            </CustomTooltip>
+            <StyledCopyButton text={txHash} />
+          </Info>
+          <Info>
+            <ADAGreen />
+            <InfoText>{formatADAFull(deposit + fee || 0)}</InfoText>
+          </Info>
+          <Info>
+            <TimeIcon />
+            <InfoText>{moment(time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+          </Info>
+        </Box>
+      </Box>
+      <Box margin="0 auto" width={"350px"}>
+        <Box>
+          <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={3} pl={3}>
+            <ADAHolderIcon />
+          </Box>
+          <Box display='flex' mt={5}>
+            <Box>
+              <Box
+                component={IconButton}
+                bgcolor={"transparent"}
+                onClick={() => setOpenModal(true)}
+                ref={registrationRef}
+                width={140}
+                height={210}
+              >
+                <img
+                  style={{ marginLeft: "5px" }}
+                  src={RegistrationCertificateMobile}
+                  alt='RegistrationCertificateMobile'
+                />
+              </Box>
+              <Box width={"200px"}></Box>
+            </Box>
+            <Box display='flex' flexDirection='column' justifyContent='space-between' mb={2}>
+              <PopoverStyled
+                render={({ handleClick }: any) => (
+                  <HoldBox ref={holdRef} style={{ transform: "translateX(8px)" }} height={25}>
+                    <Box>
+                      <Box
+                        component={"span"}
+                        fontSize={"18px"}
+                        fontWeight={"bold"}
+                        mr={1}
+                        color={(theme) => theme.palette.common.black}
+                      >
+                        {formatADAFull(deposit || 0, 1)}
+                      </Box>
+                      <AdaLogoIcon fontSize={14} color={theme.palette.text.secondary} />
+                    </Box>
+                    <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </HoldBox>
+                )}
+                content={<PopupStaking hash={txHash} />}
+              />
+              <PopoverStyled
+                render={({ handleClick }) => (
+                  <FeeBox ref={feeRef} height={25}>
+                    <Box>
+                      <Box
+                        component={"span"}
+                        fontSize={"18px"}
+                        fontWeight={"bold"}
+                        mr={1}
+                        color={(theme) => theme.palette.common.black}
+                      >
+                        {formatADAFull(fee || 0)}
+                      </Box>
+                      <AdaLogoIcon fontSize={14} color={theme.palette.text.secondary} />
+                    </Box>
+                    <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </FeeBox>
+                )}
+                content={<PopupStaking hash={txHash} />}
+              />
+            </Box>
+          </Box>
+
+          <Box position={"relative"} mb={15}>
+            <Box ref={cadarnoSystemRef} width={190} height={70} margin='0 auto' mt={5}>
+              <img style={{ width: 190, height: 215 }} src={cadarnoSystem} alt='carrdano' />
+            </Box>
+          </Box>
+        </Box>
+        <svg
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: "150vh",
+            width: "100vw",
+            zIndex: "-1"
+          }}
+        >
+          <Line
+            containerPosition={containerPosition}
+            fromRef={adaHolderRef}
+            toRef={registrationRef}
+            orient='vertical'
+            pointFrom='center'
+            pointTo='center'
+            isCentalHorizontalFrom={true}
+          />
+          <ArrowDiagram
+            containerPosition={containerPosition}
+            fromRef={adaHolderRef}
+            toRef={holdRef}
+            orient='horizontal'
+            pointFrom='center'
+            pointTo='border'
+            connectToReverse
+            isCentalHorizontalFrom={true}
+          />
+          <Line
+            containerPosition={containerPosition}
+            fromRef={holdRef}
+            toRef={feeRef}
+            orient='vertical'
+            pointFrom='center'
+            pointTo='center'
+            isCentalHorizontalFrom
+            connectFromReverse
+          />
+          <ArrowDiagram
+            containerPosition={containerPosition}
+            fromRef={registrationRef}
+            toRef={cadarnoSystemRef}
+            orient='vertical'
+            pointFrom='center'
+            pointTo='border'
+            isCentalHorizontalFrom
+            connectFromReverse
+          />
+          <ArrowDiagram
+            containerPosition={containerPosition}
+            fromRef={feeRef}
+            toRef={cadarnoSystemRef}
+            orient='vertical'
+            pointFrom='center'
+            pointTo='border'
+            isCentalHorizontalFrom
+            connectToReverse
+          />
+        </svg>
       </Box>
       <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
     </Box>
