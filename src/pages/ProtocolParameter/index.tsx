@@ -1,26 +1,4 @@
 import { useEffect, useState } from "react";
-import Card from "../../components/commons/Card";
-import {
-  AccordionDetails,
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  Skeleton,
-  Typography,
-  alpha,
-  useTheme
-} from "@mui/material";
-import { Column } from "../../types/table";
-import { PROTOCOL_TYPE } from "../../commons/utils/constants";
-import Table from "../../components/commons/Table";
-
-import useFetch from "../../commons/hooks/useFetch";
-import { API } from "../../commons/utils/api";
-import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "../../types/protocol";
-import { useList, useUpdateEffect } from "react-use";
-import ParseScriptModal from "../../components/ParseScriptModal";
-import { HiArrowLongLeft } from "react-icons/hi2";
 import {
   AccordionContainer,
   AccordionSummary,
@@ -31,11 +9,23 @@ import {
   FilterContainer
 } from "./styles";
 import styled from "@emotion/styled";
-import { DateRangeIcon, FilterIcon, FirstLast, LastFirst, ProtocolParam, ResetIcon } from "../../commons/resources";
-import DateRangeModal from "../../components/FilterReport/DateRangeModal";
-import moment from "moment";
-import { BsFillCheckCircleFill } from "react-icons/bs";
 import _ from "lodash";
+import { AccordionDetails, Box, Button, Checkbox, Container, Skeleton, alpha, useTheme } from "@mui/material";
+import { useList, useUpdateEffect } from "react-use";
+import { BsFillCheckCircleFill } from "react-icons/bs";
+import { HiArrowLongLeft } from "react-icons/hi2";
+import moment from "moment";
+
+import Card from "~/components/commons/Card";
+import Table from "~/components/commons/Table";
+import { Column } from "~/types/table";
+import { PROTOCOL_TYPE } from "~/commons/utils/constants";
+import useFetch from "~/commons/hooks/useFetch";
+import { API } from "~/commons/utils/api";
+import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "~/types/protocol";
+import ParseScriptModal from "~/components/ParseScriptModal";
+import { DateRangeIcon, FilterIcon, FirstLast, LastFirst, ProtocolParam, ResetIcon } from "~/commons/resources";
+import DateRangeModal from "~/components/FilterReport/DateRangeModal";
 
 const ProtocolParameter: React.FC = () => {
   const [fixedColumnList, { push: pushFixedColumn }] = useList<string>([]);
@@ -150,7 +140,7 @@ const ProtocolParameter: React.FC = () => {
               </Box>
               <Box pt={"30px"}>
                 <Box>
-                  <Box textAlign={'left'} fontWeight={"bold"} fontSize={"1.25rem"}>
+                  <Box textAlign={"left"} fontWeight={"bold"} fontSize={"1.25rem"}>
                     Fixed Parameters
                   </Box>
                   {loadingFixed && (
