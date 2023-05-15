@@ -1,8 +1,8 @@
-import { Box, styled } from '@mui/material';
+import { Box, styled } from "@mui/material";
 
 export const Wrapper = styled(Box)(() => ({
-  position: 'absolute',
-  right: '-10px',
-  top: '50%',
-  transform: 'translateY(-50%)'
+  position: "absolute",
+  right: "-10px",
+  top: "50%",
+  transform: "translateY(-50%)"
 }));

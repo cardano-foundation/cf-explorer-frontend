@@ -1,7 +1,7 @@
-import { Box, FormGroup, FormHelperText, IconButton, InputAdornment } from '@mui/material';
-import { useReducer, useState, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { HideIcon, LockIcon, ShowIcon } from '../../commons/resources';
+import { Box, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
+import { useReducer, useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
 import {
   AlertCustom,
   Container,
@@ -13,9 +13,9 @@ import {
   WrapForm,
   WrapInput,
   WrapTitle
-} from './styles';
-import { routers } from '../../commons/routers';
-import { resetPassword } from '../../commons/utils/userRequest';
+} from "./styles";
+import { routers } from "../../commons/routers";
+import { resetPassword } from "../../commons/utils/userRequest";
 
 interface IForm {
   password: {
@@ -33,7 +33,7 @@ const formReducer = (state: IForm, event: any) => {
   return {
     ...state,
     [event.name]: {
-      value: event.value || '',
+      value: event.value || "",
       error: event.error || !event.value,
       touched: event.touched
     }
@@ -44,17 +44,17 @@ export default function ResetPassword() {
   const path = useLocation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [hasErrorField, setHasErrorField] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useReducer(formReducer, {
     confirmPassword: {
-      value: ''
+      value: ""
     },
     password: {
-      value: ''
+      value: ""
     }
   });
   const handleTogglePassword = () => {
@@ -64,24 +64,24 @@ export default function ResetPassword() {
     setShowConfirmPassword((prevState) => !prevState);
   };
   const getError = (name: string, value: string) => {
-    let error = '';
+    let error = "";
     switch (name) {
-      case 'password':
+      case "password":
         if (!value) {
-          error = 'Please enter your Password';
+          error = "Please enter your Password";
         } else if (
           value.length < 8 ||
           value.length > 30 ||
           !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/.test(value)
         ) {
-          error = 'Password must contain at least 8 characters, including upper lowercase number and special character';
+          error = "Password must contain at least 8 characters, including upper lowercase number and special character";
         }
         break;
-      case 'confirmPassword':
+      case "confirmPassword":
         if (!value) {
-          error = 'Please enter your Confirm Password';
+          error = "Please enter your Confirm Password";
         } else if (value !== formData.password.value) {
-          error = 'Confirm Password does not match';
+          error = "Confirm Password does not match";
         }
         break;
       default:
@@ -90,7 +90,7 @@ export default function ResetPassword() {
   };
   useEffect(() => {
     const params = new URLSearchParams(path.search);
-    const code = params.get('code');
+    const code = params.get("code");
     if (code) {
       setCode(code);
     } else {
@@ -114,7 +114,7 @@ export default function ResetPassword() {
     try {
       setLoading(true);
       const { data } = await resetPassword({ code, password });
-      if (data.code === 'SS_0') {
+      if (data.code === "SS_0") {
         setSuccess(true);
       } else {
         setError(true);
@@ -127,18 +127,18 @@ export default function ResetPassword() {
   };
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    const errorPassword = getError('password', formData.password.value);
-    const errorConfirmPassword = getError('confirmPassword', formData.confirmPassword.value);
+    const errorPassword = getError("password", formData.password.value);
+    const errorConfirmPassword = getError("confirmPassword", formData.confirmPassword.value);
     if (errorConfirmPassword) {
       setFormData({
-        name: 'confirmPassword',
+        name: "confirmPassword",
         touched: true,
         error: errorConfirmPassword
       });
     }
     if (errorPassword) {
       setFormData({
-        name: 'password',
+        name: "password",
         touched: true,
         error: errorPassword
       });
@@ -159,7 +159,7 @@ export default function ResetPassword() {
                 <Label>New Password</Label>
                 <InputCustom
                   startAdornment={
-                    <Box paddingRight={'10px'} paddingTop={'5px'} paddingBottom={'2px'}>
+                    <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
                       <LockIcon />
                     </Box>
                   }
@@ -173,7 +173,7 @@ export default function ResetPassword() {
                   }
                   onChange={handleChange}
                   fullWidth
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   placeholder='New Password'
                   error={Boolean(formData.password.error && formData.password.touched)}
                 />
@@ -185,14 +185,14 @@ export default function ResetPassword() {
                 <Label>Confirm New Password</Label>
                 <InputCustom
                   startAdornment={
-                    <Box paddingRight={'10px'} paddingTop={'5px'} paddingBottom={'2px'}>
+                    <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
                       <LockIcon />
                     </Box>
                   }
                   fullWidth
                   name='confirmPassword'
                   onChange={handleChange}
-                  type={showConfirmPassword ? 'text' : 'password'}
+                  type={showConfirmPassword ? "text" : "password"}
                   endAdornment={
                     <InputAdornment position='end'>
                       <IconButton aria-label='toggle password visibility' onClick={handleToggleConfirmPassword}>

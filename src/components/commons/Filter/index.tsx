@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   FilterButton,
   FilterContainer,
@@ -6,10 +6,10 @@ import {
   FilterIconContainer,
   FilterListItemText,
   FilterMenuItem
-} from './styles';
-import { FilterIC } from '../../../commons/resources';
-import { ClickAwayListener, ListItemIcon, MenuList } from '@mui/material';
-import CustomIcon from '../CustomIcon';
+} from "./styles";
+import { FilterIC } from "../../../commons/resources";
+import { ClickAwayListener, ListItemIcon, MenuList } from "@mui/material";
+import CustomIcon from "../CustomIcon";
 
 export interface FilterProps {
   options?: Option[];

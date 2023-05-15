@@ -1,12 +1,12 @@
-import { TabPanel } from '@mui/lab';
-import { Box, Typography, styled } from '@mui/material';
+import { TabPanel } from "@mui/lab";
+import { Box, Typography, styled } from "@mui/material";
 
 export const TabLabel = styled(Typography)<{ active: boolean }>(
   (props) => `
  font-size: 24px;
     font-weight: 700;
     text-transform: capitalize;
-    color: ${props.active ? '#000' : '#98A2B3'};
+    color: ${props.active ? "#000" : "#98A2B3"};
 `
 );
 

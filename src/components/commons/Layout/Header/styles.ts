@@ -1,6 +1,6 @@
-import { Container, styled } from '@mui/material';
+import { Container, styled } from "@mui/material";
 
-export const HeaderContainer = styled('header')`
+export const HeaderContainer = styled("header")`
   color: ${(props) => props.theme.palette.text.primary};
   position: relative;
   @media (max-width: 1023px) {
@@ -25,7 +25,7 @@ export const HeaderBox = styled(Container)<{ home: number }>`
   }
 `;
 
-export const HeaderTop = styled('div')`
+export const HeaderTop = styled("div")`
   z-index: 1300;
   display: flex;
   justify-content: flex-end;
@@ -37,21 +37,21 @@ export const HeaderTop = styled('div')`
   }
 `;
 
-export const HeaderMain = styled('div')<{ home: number }>(({ theme, home }) => ({
-  position: 'relative',
-  textAlign: 'start',
-  padding: home ? '0px 0px 50px' : '27px 0px',
-  '& > div': {
-    paddingTop: home ? '0px' : '30px',
-    marginBottom: home ? '0px' : 'calc(-25px - 1.5715rem)'
+export const HeaderMain = styled("div")<{ home: number }>(({ theme, home }) => ({
+  position: "relative",
+  textAlign: "start",
+  padding: home ? "0px 0px 50px" : "27px 0px",
+  "& > div": {
+    paddingTop: home ? "0px" : "30px",
+    marginBottom: home ? "0px" : "calc(-25px - 1.5715rem)"
   },
-  [theme.breakpoints.down('sm')]: {
-    padding: home ? '62px 0px 48px' : 0
+  [theme.breakpoints.down("sm")]: {
+    padding: home ? "62px 0px 48px" : 0
   }
 }));
 
-export const Title = styled('h1')<{ home: number }>`
-  display: ${(props) => (props.home ? 'block' : 'none')};
+export const Title = styled("h1")<{ home: number }>`
+  display: ${(props) => (props.home ? "block" : "none")};
   text-align: center;
   @media screen and (max-width: 767px) {
     font-size: 30px;

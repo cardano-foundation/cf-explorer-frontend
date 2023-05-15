@@ -1,6 +1,6 @@
-import { alpha, Button, TextField, styled, Box } from '@mui/material';
+import { alpha, Button, TextField, styled, Box } from "@mui/material";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export const TitleDetail = styled(Box)`
   font-size: var(--font-size-title);
@@ -70,11 +70,11 @@ export const StyledTextField = styled(TextField)`
   }
 `;
 
-export const Option = styled('li')<{ active: number }>(({ theme, active }) => ({
+export const Option = styled("li")<{ active: number }>(({ theme, active }) => ({
   background: active ? theme.palette.green[600_10] : theme.palette.background.paper
 }));
 
-export const Logo = styled('img')`
+export const Logo = styled("img")`
   width: 25px;
   height: 25px;
   object-fit: cover;
@@ -88,29 +88,29 @@ export const LogoEmpty = styled(Box)`
 `;
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
-  maxHeight: '80vh',
-  overflow: 'hidden',
-  position: 'relative',
-  top: '50%',
-  left: '50%',
-  display: 'flex',
-  flexDirection: 'column',
-  transform: 'translate(-50%, -50%)',
-  width: 'min(80vw, 650px)',
+  maxHeight: "80vh",
+  overflow: "hidden",
+  position: "relative",
+  top: "50%",
+  left: "50%",
+  display: "flex",
+  flexDirection: "column",
+  transform: "translate(-50%, -50%)",
+  width: "min(80vw, 650px)",
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
   borderRadius: 10,
-  textAlign: 'left',
-  overflowY: 'auto'
+  textAlign: "left",
+  overflowY: "auto"
 }));
 
 export const ButtonClose = styled(Button)(({ theme }) => ({
-  position: 'absolute',
+  position: "absolute",
   top: theme.spacing(2),
   right: theme.spacing(2),
   width: 30,
   height: 30,
-  borderRadius: '50%',
+  borderRadius: "50%",
   padding: 0,
   minWidth: 0
 }));
@@ -128,7 +128,7 @@ export const SearchContainer = styled(Box)`
   border: 1px solid ${(props) => alpha(props.theme.palette.primary.main, 0.2)};
 `;
 
-export const StyledInput = styled('input')`
+export const StyledInput = styled("input")`
   border: none;
   width: 100%;
   font-size: var(--font-size-text-small);
@@ -146,7 +146,7 @@ export const SubmitButton = styled(Button)`
   width: 35px;
   height: 35px;
 `;
-export const Image = styled('img')`
+export const Image = styled("img")`
   width: 20px;
   height: 20px;
 `;

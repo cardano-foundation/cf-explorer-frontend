@@ -1,26 +1,26 @@
-import { Box, Skeleton } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
-import { useHistory, useParams } from 'react-router';
-import useFetchList from '../../../../../commons/hooks/useFetchList';
-import { API } from '../../../../../commons/utils/api';
-import StackingFilter, { FilterParams } from '../../../../StackingFilter';
-import OverviewStaking from '../../../../commons/OverviewStaking';
-import { GridBox, WrapFilterDescription } from './styles';
+import { Box, Skeleton } from "@mui/material";
+import { useEffect, useMemo, useState } from "react";
+import { useHistory, useParams } from "react-router";
+import useFetchList from "../../../../../commons/hooks/useFetchList";
+import { API } from "../../../../../commons/utils/api";
+import StackingFilter, { FilterParams } from "../../../../StackingFilter";
+import OverviewStaking from "../../../../commons/OverviewStaking";
+import { GridBox, WrapFilterDescription } from "./styles";
 
-import moment from 'moment';
-import { EmptyRecord } from '../../../../commons/Table';
-import { FilterDateLabel } from '../styles';
-import { DATETIME_PARTTEN } from '../../../../StackingFilter/DateRangeModal';
-import { DescriptionText } from '../../styles';
-import { details } from '../../../../../commons/routers';
-import { useUpdateEffect } from 'react-use';
+import moment from "moment";
+import { EmptyRecord } from "../../../../commons/Table";
+import { FilterDateLabel } from "../styles";
+import { DATETIME_PARTTEN } from "../../../../StackingFilter/DateRangeModal";
+import { DescriptionText } from "../../styles";
+import { details } from "../../../../../commons/routers";
+import { useUpdateEffect } from "react-use";
 
 interface Props {
   onSelect: (delegation: DelegationItem | null) => void;
 }
 
 const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
-  const { stakeId = '', txHash = '' } = useParams<{ stakeId: string; txHash?: string }>();
+  const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
   const history = useHistory();
   const [params, setParams] = useState<FilterParams>({
     fromDate: undefined,
@@ -30,7 +30,7 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
   });
 
   const { data, total, loading, initialized, error } = useFetchList<DelegationItem>(
-    stakeId ? API.STAKE_LIFECYCLE.DELEGATION(stakeId) : '',
+    stakeId ? API.STAKE_LIFECYCLE.DELEGATION(stakeId) : "",
     {
       page: 0,
       size: 1000,
@@ -44,7 +44,7 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
   }, [txHash, data]);
 
   const handleSelect = (delegation: DelegationItem) => {
-    history.push(details.staking(stakeId, 'timeline', 'delegation', delegation.txHash));
+    history.push(details.staking(stakeId, "timeline", "delegation", delegation.txHash));
   };
 
   useUpdateEffect(() => {
@@ -55,12 +55,12 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
 
   const filterLabel = useMemo(() => {
     if (params.fromDate && params.toDate)
-      return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format('MM/DD/YYYY')} - ${moment
+      return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
         .utc(params.toDate, DATETIME_PARTTEN)
         .local()
-        .format('MM/DD/YYYY')}`;
+        .format("MM/DD/YYYY")}`;
     if (params.sort && params.sort.length >= 2)
-      return `${params.sort[1] === 'DESC' ? 'Sort by: Latest - First' : 'Sort by: First - Latest'}`;
+      return `${params.sort[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
     if (params.txHash) return `Searching for : ${params.txHash}`;
   }, [params]);
 
@@ -68,11 +68,11 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
 
   return (
     <Box marginTop='32px'>
-      <Box display={'flex'} justifyContent={'space-between'} marginBottom={'10px'}>
+      <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
         <DescriptionText>Recent Delegations</DescriptionText>
-        <Box display={'flex'} alignItems={'center'} gap={2}>
+        <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
-            Showing {total} {total > 1 ? 'results' : 'result'}
+            Showing {total} {total > 1 ? "results" : "result"}
           </WrapFilterDescription>
           {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
           <StackingFilter

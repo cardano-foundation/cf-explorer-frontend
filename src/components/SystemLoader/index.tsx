@@ -1,18 +1,18 @@
-import { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { useLocalStorage } from 'react-use';
-import useFetch from '../../commons/hooks/useFetch';
-import { API, USER_API } from '../../commons/utils/api';
-import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES, REFRESH_TIMES } from '../../commons/utils/constants';
-import { getInfo } from '../../commons/utils/userRequest';
-import { setCurrentEpoch, setUsdMarket } from '../../stores/system';
-import { RootState } from '../../stores/types';
-import { setUserData } from '../../stores/user';
+import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import { useLocalStorage } from "react-use";
+import useFetch from "../../commons/hooks/useFetch";
+import { API, USER_API } from "../../commons/utils/api";
+import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES, REFRESH_TIMES } from "../../commons/utils/constants";
+import { getInfo } from "../../commons/utils/userRequest";
+import { setCurrentEpoch, setUsdMarket } from "../../stores/system";
+import { RootState } from "../../stores/types";
+import { setUserData } from "../../stores/user";
 
 export const SystemLoader = () => {
   const { userData } = useSelector(({ user }: RootState) => user);
   const isLogin = !!userData?.username;
-  const [, setBookmark] = useLocalStorage<string[]>('bookmark', []);
+  const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
   const { data: currentEpoch } = useFetch<EpochCurrentType>(
     `${API.EPOCH.CURRENT_EPOCH}`,
     undefined,
@@ -26,7 +26,7 @@ export const SystemLoader = () => {
     REFRESH_TIMES.CURRENT_PRICE_USD
   );
 
-  const { data: dataBookmark } = useFetch<string[]>(isLogin ? USER_API.BOOKMARK : '', undefined, true);
+  const { data: dataBookmark } = useFetch<string[]>(isLogin ? USER_API.BOOKMARK : "", undefined, true);
   const startTime = useRef(Date.now());
 
   useEffect(() => {

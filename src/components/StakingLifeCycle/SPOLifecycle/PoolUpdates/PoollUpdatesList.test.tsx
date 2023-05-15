@@ -26,7 +26,7 @@ describe("Pool Updates", () => {
     jest.mock("module", () => ({
       useFetchList: () => {
         return [];
-      },
+      }
     }));
     render(<PoollUpdatesList onSelect={jest.fn()} />);
     expect(screen.getByText("Recent Updates")).toBeInTheDocument();

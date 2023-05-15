@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { CgClose } from 'react-icons/cg';
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from '../../../commons/utils/constants';
-import { CubeIcon, RocketIcon } from '../../../commons/resources';
-import ProgressCircle from '../ProgressCircle';
+import React, { useEffect } from "react";
+import { CgClose } from "react-icons/cg";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
+import { CubeIcon, RocketIcon } from "../../../commons/resources";
+import ProgressCircle from "../ProgressCircle";
 import {
   CloseButton,
   EpochNumber,
@@ -29,18 +29,18 @@ import {
   DetailLinkRight,
   ViewDetailScroll,
   ViewDetailHeader
-} from './styles';
-import useFetch from '../../../commons/hooks/useFetch';
-import { HiOutlineCube } from 'react-icons/hi2';
-import { BiChevronRight } from 'react-icons/bi';
-import { details } from '../../../commons/routers';
-import { formatADAFull, formatDateTimeLocal } from '../../../commons/utils/helper';
-import ViewMoreButton from '../ViewMoreButton';
-import CustomTooltip from '../CustomTooltip';
-import { API } from '../../../commons/utils/api';
-import { useSelector } from 'react-redux';
-import ViewAllButton from '../ViewAllButton';
-import ADAicon from '../ADAIcon';
+} from "./styles";
+import useFetch from "../../../commons/hooks/useFetch";
+import { HiOutlineCube } from "react-icons/hi2";
+import { BiChevronRight } from "react-icons/bi";
+import { details } from "../../../commons/routers";
+import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
+import ViewMoreButton from "../ViewMoreButton";
+import CustomTooltip from "../CustomTooltip";
+import { API } from "../../../commons/utils/api";
+import { useSelector } from "react-redux";
+import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
 
 type DetailViewEpochProps = {
   epochNo: number;
@@ -183,11 +183,11 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           <Group>
             <DetailsInfoItem>
               <DetailLabel>Start time</DetailLabel>
-              <DetailValue>{formatDateTimeLocal(data.startTime || '')}</DetailValue>
+              <DetailValue>{formatDateTimeLocal(data.startTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>End time</DetailLabel>
-              <DetailValue>{formatDateTimeLocal(data.endTime || '')}</DetailValue>
+              <DetailValue>{formatDateTimeLocal(data.endTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Blocks</DetailLabel>

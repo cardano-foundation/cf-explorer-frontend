@@ -1,6 +1,6 @@
-import { Box, styled } from '@mui/material';
+import { Box, styled } from "@mui/material";
 
-export const TextLabel = styled('div')`
+export const TextLabel = styled("div")`
   display: inline-block;
   font-weight: 400;
   font-size: 14px;
@@ -17,7 +17,7 @@ export const TextValue = styled(Box)`
   color: #108aef;
 `;
 
-export const TextRightValue = styled('div')`
+export const TextRightValue = styled("div")`
   display: inline-block;
   font-weight: 700;
   font-size: 14px;

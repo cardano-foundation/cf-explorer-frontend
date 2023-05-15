@@ -17,19 +17,19 @@ const fakeUserResponse: SPODeregistration[] = [
     stakeKeys: [],
     totalFee: 1,
     poolHold: 1,
-    retiringEpoch: 1,
-  },
+    retiringEpoch: 1
+  }
 ];
 
 afterEach(() => {
-  cleanup()
-})
+  cleanup();
+});
 
 test("check RecentDeregistrations call mock api", async () => {
   const onSelect = jest.fn();
   const mockFetchData = jest.spyOn(defaultAxios, "get").mockImplementation(async () => {
     return Promise.resolve({
-      json: () => Promise.resolve(fakeUserResponse),
+      json: () => Promise.resolve(fakeUserResponse)
     });
   });
 

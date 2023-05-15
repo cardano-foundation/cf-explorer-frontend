@@ -1,13 +1,13 @@
-import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { stringify } from 'qs';
-import useFetchList from '../../../commons/hooks/useFetchList';
-import { details } from '../../../commons/routers';
-import { getPageInfo, getShortWallet, numberWithCommas } from '../../../commons/utils/helper';
-import CustomTooltip from '../../commons/CustomTooltip';
-import Table, { Column } from '../../commons/Table';
-import { PriceValue, SmallText, StyledLink } from './styles';
-import { API } from '../../../commons/utils/api';
+import React from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { stringify } from "qs";
+import useFetchList from "../../../commons/hooks/useFetchList";
+import { details } from "../../../commons/routers";
+import { getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import CustomTooltip from "../../commons/CustomTooltip";
+import Table, { Column } from "../../commons/Table";
+import { PriceValue, SmallText, StyledLink } from "./styles";
+import { API } from "../../../commons/utils/api";
 
 interface ITokenTopHolder {
   tokenId: string;
@@ -26,15 +26,15 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply }) => 
 
   const columns: Column<ITokenTopHolderTable>[] = [
     {
-      title: '#',
-      key: 'id',
-      minWidth: '40px',
+      title: "#",
+      key: "id",
+      minWidth: "40px",
       render: (data, index) => <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
     },
     {
-      title: 'Address',
-      key: 'address',
-      minWidth: '200px',
+      title: "Address",
+      key: "address",
+      minWidth: "200px",
       render: (r) => (
         <CustomTooltip title={r.address}>
           <StyledLink to={details.address(r.address)}>{getShortWallet(r.address)}</StyledLink>
@@ -42,9 +42,9 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply }) => 
       )
     },
     {
-      title: 'Balance',
-      key: 'balance',
-      minWidth: '200px',
+      title: "Balance",
+      key: "balance",
+      minWidth: "200px",
       render: (r) => (
         <PriceValue>
           <SmallText>{numberWithCommas(r?.quantity)}</SmallText>
@@ -52,9 +52,9 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply }) => 
       )
     },
     {
-      title: 'Share',
-      key: 'share',
-      minWidth: '200px',
+      title: "Share",
+      key: "share",
+      minWidth: "200px",
       render: (r) => (
         <SmallText>{r.quantity && totalSupply ? ((r.quantity / totalSupply) * 100).toFixed(2) : 0}%</SmallText>
       )
@@ -65,7 +65,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply }) => 
     <Table
       {...fetchData}
       columns={columns}
-      total={{ title: 'Total', count: fetchData.total }}
+      total={{ title: "Total", count: fetchData.total }}
       pagination={{
         ...pageInfo,
         total: fetchData.total,

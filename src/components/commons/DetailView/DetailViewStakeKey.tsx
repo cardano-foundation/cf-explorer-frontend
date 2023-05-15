@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { CgClose } from 'react-icons/cg';
-import { FileEditIcon, LightningIcon } from '../../../commons/resources';
+import React, { useState } from "react";
+import { CgClose } from "react-icons/cg";
+import { FileEditIcon, LightningIcon } from "../../../commons/resources";
 import {
   CloseButton,
   ViewDetailContainer,
@@ -32,43 +32,43 @@ import {
   DelegatedDetail,
   ButtonModal,
   ViewDetailHeader
-} from './styles';
-import useFetch from '../../../commons/hooks/useFetch';
-import { BiChevronRight } from 'react-icons/bi';
-import { details } from '../../../commons/routers';
-import { formatADAFull, getShortWallet } from '../../../commons/utils/helper';
-import ViewMoreButton from '../ViewMoreButton';
-import { ReactComponent as StakeKeyHistoryIcon } from '../../../commons/resources/icons/stateKeyHistory.svg';
-import { ReactComponent as TransactionIcon } from '../../../commons/resources/icons/exchangeArrow.svg';
-import CustomTooltip from '../CustomTooltip';
-import { TbFileCheck } from 'react-icons/tb';
-import CopyButton from '../CopyButton';
-import { Link } from 'react-router-dom';
-import { Box } from '@mui/material';
-import ModalAllAddress from '../../StakeDetail/ModalAllAddress';
-import { API } from '../../../commons/utils/api';
-import ViewAllButton from '../ViewAllButton';
-import ADAicon from '../ADAIcon';
+} from "./styles";
+import useFetch from "../../../commons/hooks/useFetch";
+import { BiChevronRight } from "react-icons/bi";
+import { details } from "../../../commons/routers";
+import { formatADAFull, getShortWallet } from "../../../commons/utils/helper";
+import ViewMoreButton from "../ViewMoreButton";
+import { ReactComponent as StakeKeyHistoryIcon } from "../../../commons/resources/icons/stateKeyHistory.svg";
+import { ReactComponent as TransactionIcon } from "../../../commons/resources/icons/exchangeArrow.svg";
+import CustomTooltip from "../CustomTooltip";
+import { TbFileCheck } from "react-icons/tb";
+import CopyButton from "../CopyButton";
+import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
+import ModalAllAddress from "../../StakeDetail/ModalAllAddress";
+import { API } from "../../../commons/utils/api";
+import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
 
 type DetailViewStakeKeyProps = {
   stakeId: string;
   handleClose: () => void;
 };
 const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
-  { key: 'delegation', label: 'Delegation History', icon: <TbFileCheck /> },
+  { key: "delegation", label: "Delegation History", icon: <TbFileCheck /> },
   {
-    key: 'stake-key',
-    label: 'Stake Key History',
+    key: "stake-key",
+    label: "Stake Key History",
     icon: (
-      <StakeKeyHistoryIcon fill='#438F68' width={'20px'} height={'20px'} style={{ padding: '2px' }} display={'block'} />
+      <StakeKeyHistoryIcon fill='#438F68' width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
     )
   },
-  { key: 'withdrawal', label: 'Withdrawal History', icon: <DetailLinkImage src={FileEditIcon} alt='withdrawal' /> },
-  { key: 'instantaneous', label: 'Instantaneous Rewards', icon: <DetailLinkImage src={LightningIcon} alt='rewards' /> },
+  { key: "withdrawal", label: "Withdrawal History", icon: <DetailLinkImage src={FileEditIcon} alt='withdrawal' /> },
+  { key: "instantaneous", label: "Instantaneous Rewards", icon: <DetailLinkImage src={LightningIcon} alt='rewards' /> },
   {
-    key: 'transactions',
-    label: 'Transactions',
-    icon: <TransactionIcon width={'20px'} height={'20px'} style={{ padding: '2px' }} display={'block'} />
+    key: "transactions",
+    label: "Transactions",
+    icon: <TransactionIcon width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
   }
 ];
 
@@ -147,10 +147,10 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
       </ViewDetailDrawer>
     );
   const poolName = data.pool?.poolName
-    ? `${data.pool.tickerName || ''} - ${data.pool.poolName}`
+    ? `${data.pool.tickerName || ""} - ${data.pool.poolName}`
     : data.pool?.poolId
     ? `Pool [${getShortWallet(data.pool.poolId)}]`
-    : '-';
+    : "-";
 
   return (
     <ViewDetailDrawer anchor='right' open={!!stakeId} hideBackdrop variant='permanent'>
@@ -204,7 +204,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
                 <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
-            <Box textAlign={'right'}>
+            <Box textAlign={"right"}>
               <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>
             </Box>
             <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={stakeId} />

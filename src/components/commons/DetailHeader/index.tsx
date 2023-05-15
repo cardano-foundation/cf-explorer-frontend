@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Backdrop, Box, useTheme } from '@mui/material';
-import { HiArrowLongLeft } from 'react-icons/hi2';
-import { EPOCH_STATUS, MAX_SLOT_EPOCH } from '../../../commons/utils/constants';
-import ProgressCircle from '../ProgressCircle';
+import React, { useState } from "react";
+import { Backdrop, Box, useTheme } from "@mui/material";
+import { HiArrowLongLeft } from "react-icons/hi2";
+import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import ProgressCircle from "../ProgressCircle";
 import {
   BackButton,
   BackText,
@@ -29,20 +29,20 @@ import {
   StyledMenuItem,
   WrapHeader,
   EpochDetail
-} from './styles';
-import { details } from '../../../commons/routers';
-import Bookmark from '../BookmarkIcon';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../stores/types';
-import { useHistory } from 'react-router-dom';
-import { EmptyIcon, SearchIcon } from '../../../commons/resources';
-import { BiChevronDown } from 'react-icons/bi';
-import { getShortHash, numberWithCommas } from '../../../commons/utils/helper';
-import { useScreen } from '../../../commons/hooks/useScreen';
-import CustomTooltip from '../CustomTooltip';
+} from "./styles";
+import { details } from "../../../commons/routers";
+import Bookmark from "../BookmarkIcon";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../stores/types";
+import { useHistory } from "react-router-dom";
+import { EmptyIcon, SearchIcon } from "../../../commons/resources";
+import { BiChevronDown } from "react-icons/bi";
+import { getShortHash, numberWithCommas } from "../../../commons/utils/helper";
+import { useScreen } from "../../../commons/hooks/useScreen";
+import CustomTooltip from "../CustomTooltip";
 
 interface DetailHeaderProps {
-  type: Bookmark['type'];
+  type: Bookmark["type"];
   bookmarkData?: string;
   loading: boolean;
   title: number | string;
@@ -73,12 +73,12 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
   });
   const { isTablet } = useScreen();
   const getHashLabel = () => {
-    if (type === 'BLOCK') return 'Block Id';
-    if (type === 'STAKE_KEY') return 'Token Id';
-    if (type === 'POOL') return 'Pool Id';
-    if (type === 'TOKEN') return 'Token ID';
+    if (type === "BLOCK") return "Block Id";
+    if (type === "STAKE_KEY") return "Token Id";
+    if (type === "POOL") return "Pool Id";
+    if (type === "TOKEN") return "Token ID";
   };
-  const isDetailToken = type === 'TOKEN';
+  const isDetailToken = type === "TOKEN";
 
   const hashLabel = getHashLabel();
 
@@ -138,7 +138,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           </HeaderContainer>
           {hash && (
             <SlotLeader>
-              {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ''}
+              {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
               {isTablet ? (
                 <CustomTooltip title={hash}>
                   <SlotLeaderValue>{getShortHash(hash)}</SlotLeaderValue>
@@ -159,19 +159,19 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                 currentEpoch && (epoch?.no || 0) < currentEpoch?.no ? 100 : ((epoch?.slot || 0) / MAX_SLOT_EPOCH) * 100
               }
             >
-              <EpochNumber is_epoch={+(type === 'EPOCH')} to={details.epoch(epoch.no || 0)}>
+              <EpochNumber is_epoch={+(type === "EPOCH")} to={details.epoch(epoch.no || 0)}>
                 {epoch?.no}
               </EpochNumber>
               <EpochText>Epoch</EpochText>
             </ProgressCircle>
           </EpochDetail>
         ) : (
-          ''
+          ""
         )}
       </WrapHeader>
       <DetailsInfo container items_length={numberOfItems}>
         {listItem.map((item, index) => {
-          const keyItem = item.key || '';
+          const keyItem = item.key || "";
           return (
             <CardItem
               item
@@ -183,7 +183,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               key={index}
               isDetailToken={isDetailToken}
             >
-              <Box position='relative' display={item.hideHeader ? 'none' : ''}>
+              <Box position='relative' display={item.hideHeader ? "none" : ""}>
                 <img src={item.icon} alt='' height={20} />
                 {item.allowSearch && keyItem && (
                   <AllowSearchButton
@@ -196,9 +196,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                 )}
                 {item.allowSearch && keyItem && openBackdrop[keyItem] && (
                   <StyledSelect
-                    renderValue={() => (item.isSent ? 'Received Token' : 'Sent Token')}
+                    renderValue={() => (item.isSent ? "Received Token" : "Sent Token")}
                     displayEmpty
-                    value={''}
+                    value={""}
                     onChange={() => {
                       //To do
                     }}
@@ -213,7 +213,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                     }}
                   >
                     {!item?.dataSearch ||
-                      (item?.dataSearch?.length === 0 && <Box height={'200px'} component={'img'} src={EmptyIcon} />)}
+                      (item?.dataSearch?.length === 0 && <Box height={"200px"} component={"img"} src={EmptyIcon} />)}
                     {item?.dataSearch &&
                       item?.dataSearch?.length > 0 &&
                       item?.dataSearch?.map((item, index) => (
@@ -223,11 +223,11 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                           }}
                           key={index}
                         >
-                          <Box mr={2} sx={{ maxWidth: '120px', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                          <Box mr={2} sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}>
                             {item.assetName}
                           </Box>
                           <Box fontWeight={600}>
-                            {item.isSent ? '-' : '+'}
+                            {item.isSent ? "-" : "+"}
                             {numberWithCommas(item.assetQuantity)}
                           </Box>
                         </StyledMenuItem>

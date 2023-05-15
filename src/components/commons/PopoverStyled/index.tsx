@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Box, Popover } from '@mui/material';
-import { CloseLineIcon } from '../../../commons/resources';
-import CustomIcon from '../CustomIcon';
+import React, { useState } from "react";
+import { Box, Popover } from "@mui/material";
+import { CloseLineIcon } from "../../../commons/resources";
+import CustomIcon from "../CustomIcon";
 
 type Props = {
   render: ({ handleClick }: { handleClick: (e: HTMLElement) => void }) => React.ReactNode;
@@ -31,29 +31,29 @@ const PopoverStyled = (props: Props) => {
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center'
+          vertical: "top",
+          horizontal: "center"
         }}
         disableScrollLock={true}
         transformOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center'
+          vertical: "bottom",
+          horizontal: "center"
         }}
         sx={{
-          '& .MuiPopover-paper': {
-            padding: '10px',
-            overflow: 'visible',
-            transform: 'translateY(-20px)!important',
-            '&::before': {
-              backgroundColor: 'white',
+          "& .MuiPopover-paper": {
+            padding: "10px",
+            overflow: "visible",
+            transform: "translateY(-20px)!important",
+            "&::before": {
+              backgroundColor: "white",
               content: '""',
-              display: 'block',
-              position: 'absolute',
+              display: "block",
+              position: "absolute",
               width: 12,
               height: 12,
               bottom: -6,
-              transform: 'rotate(45deg)',
-              left: 'calc(50% - 6px)'
+              transform: "rotate(45deg)",
+              left: "calc(50% - 6px)"
             }
           }
         }}
@@ -67,13 +67,13 @@ const PopoverStyled = (props: Props) => {
             width={20}
             height={20}
             sx={{
-              transform: 'translateX(50%) translateY(-50%)',
-              cursor: 'pointer',
+              transform: "translateX(50%) translateY(-50%)",
+              cursor: "pointer",
               background: (theme) => theme.palette.grey[200],
-              borderRadius: '50%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
+              borderRadius: "50%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
             }}
           >
             <CustomIcon icon={CloseLineIcon} width={14} fill='black' />

@@ -1,5 +1,5 @@
-import { styled, Button, LinearProgress, alpha } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { styled, Button, LinearProgress, alpha } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const StyledLinearProgress = styled(LinearProgress)`
   display: inline-block;
@@ -19,23 +19,23 @@ export const PoolName = styled(Link)`
   color: var(--color-blue) !important;
 `;
 
-export const SearchContainer = styled('div')(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'start',
-  alignItems: 'center',
-  width: '100%',
+export const SearchContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "start",
+  alignItems: "center",
+  width: "100%",
   maxWidth: 360,
   background: theme.palette.background.paper,
-  padding: '0 12px',
+  padding: "0 12px",
   borderRadius: 8,
   marginBottom: 15,
   height: 35,
-  [theme.breakpoints.down('sm')]: {
-    width: 'unset'
+  [theme.breakpoints.down("sm")]: {
+    width: "unset"
   }
 }));
 
-export const StyledInput = styled('input')`
+export const StyledInput = styled("input")`
   border: none;
   width: 100%;
   font-size: var(--font-size-text-small);
@@ -53,7 +53,7 @@ export const SubmitButton = styled(Button)`
   width: 35px;
   height: 35px;
 `;
-export const Image = styled('img')`
+export const Image = styled("img")`
   width: 20px;
   height: 20px;
 `;

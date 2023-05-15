@@ -1,4 +1,4 @@
-import { NETWORKS, STORAGE_KEYS } from './constants';
+import { NETWORKS, STORAGE_KEYS } from "./constants";
 
 export default class StorageUtils {
   static getItem(key: string, defaultValue?: string): string | undefined {

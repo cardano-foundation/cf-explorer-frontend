@@ -1,12 +1,12 @@
-import { Box, Skeleton, useTheme, Modal } from '@mui/material';
+import { Box, Skeleton, useTheme, Modal } from "@mui/material";
 
-import { JsonViewer } from '@textea/json-viewer';
-import { ButtonClose, ButtonLink, ModalContainer, ViewJson } from './styles';
-import closeIcon from '../../commons/resources/icons/closeIcon.svg';
-import CopyButton from '../commons/CopyButton';
-import useFetch from '../../commons/hooks/useFetch';
-import { details } from '../../commons/routers';
-import { API } from '../../commons/utils/api';
+import { JsonViewer } from "@textea/json-viewer";
+import { ButtonClose, ButtonLink, ModalContainer, ViewJson } from "./styles";
+import closeIcon from "../../commons/resources/icons/closeIcon.svg";
+import CopyButton from "../commons/CopyButton";
+import useFetch from "../../commons/hooks/useFetch";
+import { details } from "../../commons/routers";
+import { API } from "../../commons/utils/api";
 
 interface ScriptModalProps {
   open: boolean;
@@ -23,7 +23,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
           <img src={closeIcon} alt='icon close' />
         </ButtonClose>
         <Box
-          textAlign={'left'}
+          textAlign={"left"}
           color={({ palette }) => palette.grey[700]}
           fontSize='1.5rem'
           fontWeight='bold'
@@ -33,26 +33,26 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
         </Box>
         {loading && (
           <Box height={40} width='100%' borderRadius={10} overflow='hidden'>
-            <Skeleton height={'100%'} width='100%' variant='rectangular' />
+            <Skeleton height={"100%"} width='100%' variant='rectangular' />
           </Box>
         )}
         {!loading && (
           <Box mt={2}>
-            <ButtonLink to={details.policyDetail(data?.policyId || '')}>{data?.policyId || ''}</ButtonLink>
-            <CopyButton text={data?.policyId || ''} />
+            <ButtonLink to={details.policyDetail(data?.policyId || "")}>{data?.policyId || ""}</ButtonLink>
+            <CopyButton text={data?.policyId || ""} />
           </Box>
         )}
         {loading && (
           <Box height={20} my={1} width='100%' borderRadius={10} overflow='hidden'>
-            <Skeleton height={'100%'} width='100%' variant='rectangular' />
+            <Skeleton height={"100%"} width='100%' variant='rectangular' />
           </Box>
         )}
         {!loading && (
           <Box mt={2}>
-            <Box component={'span'} color={({ palette }) => palette.grey[500]}>
+            <Box component={"span"} color={({ palette }) => palette.grey[500]}>
               Total Token:
             </Box>
-            <Box component={'span'} ml={2} fontWeight='bold' color={({ palette }) => palette.common.black}>
+            <Box component={"span"} ml={2} fontWeight='bold' color={({ palette }) => palette.common.black}>
               {data?.totalToken || 0}
             </Box>
           </Box>
@@ -60,7 +60,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
 
         {loading && (
           <Box height={150} width='100%' borderRadius={10} overflow='hidden'>
-            <Skeleton height={'100%'} width='100%' variant='rectangular' />
+            <Skeleton height={"100%"} width='100%' variant='rectangular' />
           </Box>
         )}
         {!loading && (
@@ -71,17 +71,17 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
             <ViewJson>
               {!loading && data?.policyScript && (
                 <JsonViewer
-                  value={JSON.parse(data.policyScript || '')}
+                  value={JSON.parse(data.policyScript || "")}
                   displayObjectSize={false}
                   displayDataTypes={false}
                   enableClipboard={false}
                   collapseStringsAfterLength={false}
-                  style={{ padding: 0, background: 'none', color: theme.palette.text.secondary }}
+                  style={{ padding: 0, background: "none", color: theme.palette.text.secondary }}
                   rootName={false}
                 />
               )}
               {!loading && !data?.policyScript && (
-                <Box textAlign={'center'} py={2} color={({ palette }) => palette.grey[300]}>
+                <Box textAlign={"center"} py={2} color={({ palette }) => palette.grey[300]}>
                   Script not found
                 </Box>
               )}

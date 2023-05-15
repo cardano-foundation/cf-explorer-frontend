@@ -1,5 +1,5 @@
-import StyledModal from '../commons/StyledModal';
-import { BoxDescription, NormalDescription, Watermark, WrapContent } from './styles';
+import StyledModal from "../commons/StyledModal";
+import { BoxDescription, NormalDescription, Watermark, WrapContent } from "./styles";
 interface Props {
   open: boolean;
   handleCloseModal: () => void;
@@ -12,8 +12,8 @@ export function SPOInvolvementInDelegationDescription({ open, handleCloseModal }
         <BoxDescription>
           <Watermark
             sx={{
-              top: '75px',
-              left: '-60px'
+              top: "75px",
+              left: "-60px"
             }}
           >
             foR illustration only

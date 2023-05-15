@@ -1,5 +1,5 @@
-import { Box, BoxProps, Grid, Icon } from '@mui/material';
-import { Link, useParams } from 'react-router-dom';
+import { Box, BoxProps, Grid, Icon } from "@mui/material";
+import { Link, useParams } from "react-router-dom";
 import {
   WalletGreenIcon,
   BgGray,
@@ -8,16 +8,16 @@ import {
   DelegationTo,
   RewardAccount,
   TransactionIcon
-} from '../../../commons/resources/index';
-import { CardOverview, CardTitle, CardValue, TransferButton, WrapIcon, WrapWalletIcon } from './styles';
-import { API } from '../../../commons/utils/api';
-import useFetch from '../../../commons/hooks/useFetch';
-import { formatADAFull } from '../../../commons/utils/helper';
-import ADAicon from '../../commons/ADAIcon';
-import { useState } from 'react';
-import ADATransferModal from '../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal';
-import { details } from '../../../commons/routers';
-import { useScreen } from '../../../commons/hooks/useScreen';
+} from "../../../commons/resources/index";
+import { CardOverview, CardTitle, CardValue, TransferButton, WrapIcon, WrapWalletIcon } from "./styles";
+import { API } from "../../../commons/utils/api";
+import useFetch from "../../../commons/hooks/useFetch";
+import { formatADAFull } from "../../../commons/utils/helper";
+import ADAicon from "../../commons/ADAIcon";
+import { useState } from "react";
+import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
+import { details } from "../../../commons/routers";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -37,7 +37,7 @@ const CardAmount = ({ amount }: TCardAmount) => {
       <GreenWalletIcon mr={2} />
       <CardValue>
         {formatADAFull(amount)}
-        <ADAicon pl={'8px'} />
+        <ADAicon pl={"8px"} />
       </CardValue>
     </Box>
   );
@@ -56,20 +56,20 @@ const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
     <Grid item xs={12} md={6}>
       <CardOverview
         mr={isMobile ? 2 : 0}
-        flexDirection={isMobile ? 'column' : 'row'}
-        alignItems={isMobile ? 'flex-start' : 'center'}
-        justifyContent={`${isMobile ? 'center' : 'space-between'}`}
+        flexDirection={isMobile ? "column" : "row"}
+        alignItems={isMobile ? "flex-start" : "center"}
+        justifyContent={`${isMobile ? "center" : "space-between"}`}
       >
         <Icon component={BgGray} />
         <Box display='flex' alignItems='center' gap='12px'>
-          <WrapIcon pt={`${isMobile ? '30px' : '0px'}`}>{mainIcon}</WrapIcon>
+          <WrapIcon pt={`${isMobile ? "30px" : "0px"}`}>{mainIcon}</WrapIcon>
           <Box textAlign='start'>
             <CardTitle>{title}</CardTitle>
             {value}
           </Box>
         </Box>
-        <Box display='flex' margin='0 auto' ml='120px' mt={`${isMobile ? '-10px' : '0px'}`}>
-          {' '}
+        <Box display='flex' margin='0 auto' ml='120px' mt={`${isMobile ? "-10px" : "0px"}`}>
+          {" "}
           {action}
         </Box>
       </CardOverview>

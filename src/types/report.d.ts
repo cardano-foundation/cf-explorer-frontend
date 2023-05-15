@@ -54,8 +54,8 @@ interface IADATransferReport {
   amount: number;
   time: string;
   fee: number;
-  type: 'SENT' | 'RECEIVED' | 'FEE_PAID' | 'CERTIFICATE_FEE_PAID' | 'CERTIFICATE_DEPOSIT_PAID';
-  status: 'FAIL' | 'SUCCESS' | 'PENDING';
+  type: "SENT" | "RECEIVED" | "FEE_PAID" | "CERTIFICATE_FEE_PAID" | "CERTIFICATE_DEPOSIT_PAID";
+  status: "FAIL" | "SUCCESS" | "PENDING";
 }
 
 interface IReportStaking {

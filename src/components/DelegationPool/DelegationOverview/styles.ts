@@ -1,5 +1,5 @@
-import { alpha, LinearProgress, Skeleton, styled } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { alpha, LinearProgress, Skeleton, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const StyledSkeleton = styled(Skeleton)`
   border-radius: var(--border-radius);
@@ -19,7 +19,7 @@ export const StyledLinearProgress = styled(LinearProgress)`
   }
 `;
 
-export const StyledImg = styled('img')`
+export const StyledImg = styled("img")`
   width: 35px;
   height: 35px;
   position: absolute;
@@ -28,7 +28,7 @@ export const StyledImg = styled('img')`
 `;
 
 export const StyledCard = {
-  Container: styled('div')`
+  Container: styled("div")`
     height: 100%;
     background: ${(props) => props.theme.palette.background.paper};
     border-radius: 12px;
@@ -36,18 +36,18 @@ export const StyledCard = {
     position: relative;
     display: flex;
   `,
-  Content: styled('div')`
+  Content: styled("div")`
     padding: 30px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   `,
-  Title: styled('span')`
+  Title: styled("span")`
     color: ${(props) => props.theme.palette.text.secondary};
     font-weight: var(--font-weight-bold);
     margin-bottom: 15px;
   `,
-  Value: styled('span')`
+  Value: styled("span")`
     font-weight: var(--font-weight-bold);
     font-size: var(--font-size-title);
     margin-bottom: 8px;
@@ -58,7 +58,7 @@ export const StyledCard = {
     margin-bottom: 8px;
     font-family: var(--font-family-text) !important;
   `,
-  Comment: styled('span')`
+  Comment: styled("span")`
     font-weight: var(--font-weight-bold);
     color: ${(props) => props.theme.palette.primary.main};
   `

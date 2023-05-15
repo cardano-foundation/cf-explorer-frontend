@@ -7,7 +7,7 @@ import { render } from "../../test-utils";
 const props = {
   to: "/mock-new-page",
   title: "mock dashboard card",
-  subtitle: "mock subtitle",
+  subtitle: "mock subtitle"
 };
 
 describe("DashboardCard", () => {
@@ -19,10 +19,10 @@ describe("DashboardCard", () => {
 
   it("should redirect page when click on a card", async () => {
     const history = createMemoryHistory();
-    history.push(props.to)
+    history.push(props.to);
     render(<DashboardCard {...props} />);
     const card = screen.getByText("mock dashboard card");
     await userEvent.click(card);
-    expect(history.location.pathname).toBe(props.to)
+    expect(history.location.pathname).toBe(props.to);
   });
 });

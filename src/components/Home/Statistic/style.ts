@@ -1,4 +1,4 @@
-import { Box, Card, Grid, Skeleton, styled } from '@mui/material';
+import { Box, Card, Grid, Skeleton, styled } from "@mui/material";
 
 export const StatisticContainer = styled(Grid)`
   margin-bottom: 24px;
@@ -28,7 +28,7 @@ export const ItemSkeleton = styled(Skeleton)`
   margin-top: 0.5rem;
 `;
 
-export const ItemIcon = styled('img')`
+export const ItemIcon = styled("img")`
   position: absolute;
   top: 15px;
   right: 20px;
@@ -47,7 +47,7 @@ export const Content = styled(Box)`
   overflow: hidden;
 `;
 
-export const Name = styled('h4')`
+export const Name = styled("h4")`
   width: calc(100% - 60px);
   margin-bottom: 0.75rem;
   color: ${(props) => props.theme.palette.text.secondary};
@@ -60,7 +60,7 @@ export const Name = styled('h4')`
   }
 `;
 
-export const Title = styled('h3')`
+export const Title = styled("h3")`
   display: inline-block;
   font-family: var(--font-family-text);
   margin-top: 0;
@@ -73,7 +73,7 @@ export const Title = styled('h3')`
   }
 `;
 
-export const Small = styled('small')`
+export const Small = styled("small")`
   color: ${(props) => props.theme.palette.grey[400]};
   white-space: nowrap;
   @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
@@ -81,7 +81,7 @@ export const Small = styled('small')`
   }
 `;
 
-export const AdaPrice = styled('small')`
+export const AdaPrice = styled("small")`
   color: ${(props) => props.theme.palette.grey[400]};
   white-space: nowrap;
   margin-left: 15px;
@@ -89,7 +89,7 @@ export const AdaPrice = styled('small')`
     margin-left: 0px;
   }
 `;
-export const TimeDuration = styled('small')<{ marginTop?: string }>`
+export const TimeDuration = styled("small")<{ marginTop?: string }>`
   color: ${(props) => props.theme.palette.grey[400]};
   margin-top: ${(props) => props.marginTop || 0};
   white-space: nowrap;
@@ -98,7 +98,7 @@ export const TimeDuration = styled('small')<{ marginTop?: string }>`
     white-space: unset;
   }
 `;
-export const XSmall = styled('span')`
+export const XSmall = styled("span")`
   font-size: var(--font-size-text-x-small);
   color: ${(props) => props.theme.palette.grey[400]};
   white-space: nowrap;
@@ -111,7 +111,7 @@ export const XValue = styled(XSmall)<{ down?: number }>`
   color: ${(props) => (props.down ? props.theme.palette.error.main : props.theme.palette.success.dark)};
 `;
 
-export const Progress = styled('div')`
+export const Progress = styled("div")`
   display: flex;
   width: 100%;
   height: 12px;
@@ -124,7 +124,7 @@ export const Progress = styled('div')`
   margin-bottom: 0.5rem;
 `;
 
-export const ProcessActive = styled('div')<{ rate: number }>`
+export const ProcessActive = styled("div")<{ rate: number }>`
   display: flex;
   justify-content: center;
   align-items: center;

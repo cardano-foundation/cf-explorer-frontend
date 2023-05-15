@@ -1,7 +1,7 @@
-import { alpha, Box, Button, Skeleton, styled } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { alpha, Box, Button, Skeleton, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
-export const Status = styled('span')`
+export const Status = styled("span")`
   font-family: var(--font-family-text);
   font-size: var(--font-size-text);
   margin-left: 25px;
@@ -19,23 +19,23 @@ export const Deactive = styled(Status)`
   color: ${(props) => props.theme.palette.grey[400]};
 `;
 
-export const Title = styled('div')`
+export const Title = styled("div")`
   display: flex;
   align-items: center;
 `;
 
-export const Flex = styled('div')`
+export const Flex = styled("div")`
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-export const StyledLink = styled('span')`
+export const StyledLink = styled("span")`
   font-family: var(--font-family-text) !important;
   color: ${(props) => props.theme.palette.secondary.main} !important;
 `;
 
-export const BackButton = styled('button')`
+export const BackButton = styled("button")`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -44,9 +44,9 @@ export const BackButton = styled('button')`
   background: transparent;
   cursor: pointer;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 `;
-export const BackText = styled('small')`
+export const BackText = styled("small")`
   color: ${(props) => props.theme.palette.text.secondary};
   font-weight: var(--font-weight-bold);
 `;
@@ -56,7 +56,7 @@ export const HeaderContainer = styled(Box)`
   align-items: center;
 `;
 
-export const HeaderTitle = styled('h2')`
+export const HeaderTitle = styled("h2")`
   color: ${(props) => props.theme.palette.common.black};
   font-size: 2.25rem;
   margin: 0.5rem 0;
@@ -95,24 +95,24 @@ export const ViewMetaData = styled(Link)`
 `;
 export const LabelStatus = styled(Box)(({ theme }) => ({
   marginLeft: theme.spacing(2),
-  textTransform: 'uppercase',
+  textTransform: "uppercase",
   padding: `${theme.spacing(1)} ${theme.spacing(3)}`,
   fontFamily: '"Roboto", sans-serif',
-  fontWeight: 'bold',
-  fontSize: '0.875rem',
+  fontWeight: "bold",
+  fontSize: "0.875rem",
   borderRadius: 4,
-  height: '60%'
+  height: "60%"
 }));
 
 export const CardInfoOverview = styled(Box)(({ theme }) => ({
   padding: `${theme.spacing(3)} ${theme.spacing(5)}`,
   backgroundColor: theme.palette.background.paper,
-  display: 'flex',
-  textAlign: 'left',
+  display: "flex",
+  textAlign: "left",
   boxShadow: theme.shadow.card,
   borderRadius: 10,
   marginTop: theme.spacing(2),
-  flexWrap: 'wrap'
+  flexWrap: "wrap"
 }));
 
 export const CardItem = styled(Box)(({ theme }) => ({
@@ -123,79 +123,79 @@ export const CardItem = styled(Box)(({ theme }) => ({
 
 export const TitleCard = styled(Box)(({ theme }) => ({
   color: `${alpha(theme.palette.common.black, 0.5)}`,
-  fontSize: '0.875rem'
+  fontSize: "0.875rem"
 }));
 export const ValueCard = styled(Box)(({ theme }) => ({
   color: theme.palette.common.black,
-  fontSize: '1rem',
-  fontWeight: 'bold'
+  fontSize: "1rem",
+  fontWeight: "bold"
 }));
 
 export const ButtonView = styled(Link)(({ theme }) => ({
-  background: 'transperant',
+  background: "transperant",
   padding: 0,
   minWidth: 0,
-  fontWeight: 'bold',
-  textTransform: 'capitalize',
+  fontWeight: "bold",
+  textTransform: "capitalize",
   color: `${theme.palette.secondary.main} !important`,
-  fontFamily: 'Roboto, sans-serif'
+  fontFamily: "Roboto, sans-serif"
 }));
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
-  maxHeight: '80vh',
-  overflow: 'hidden',
-  display: 'flex',
-  flexDirection: 'column',
-  position: 'relative',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 'min(80vw, 600px)',
+  maxHeight: "80vh",
+  overflow: "hidden",
+  display: "flex",
+  flexDirection: "column",
+  position: "relative",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "min(80vw, 600px)",
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
   borderRadius: 10
 }));
 
 export const ButtonClose = styled(Button)(({ theme }) => ({
-  position: 'absolute',
+  position: "absolute",
   top: theme.spacing(2),
   right: theme.spacing(2),
   width: 30,
   height: 30,
-  borderRadius: '50%',
+  borderRadius: "50%",
   padding: 0,
   minWidth: 0
 }));
 
 export const ViewJson = styled(Box)(({ theme }) => ({
-  textAlign: 'left',
-  overflowY: 'auto',
+  textAlign: "left",
+  overflowY: "auto",
   backgroundColor: alpha(theme.palette.grey[300], 0.1),
   borderRadius: 10,
   padding: theme.spacing(2),
   marginTop: theme.spacing(2),
 
-  '& .MuiSvgIcon-root': {
-    display: 'none !important'
+  "& .MuiSvgIcon-root": {
+    display: "none !important"
   }
 }));
 export const OverViewContainer = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: {
-    flexDirection: 'column',
-    '& > *': {
-      width: '100%'
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    "& > *": {
+      width: "100%"
     },
-    '& h2': {
-      fontSize: '24px',
-      marginBottom: '0px'
+    "& h2": {
+      fontSize: "24px",
+      marginBottom: "0px"
     },
-    '& > button': {
-      height: '100px',
-      flexDirection: 'column',
-      alignItems: 'center'
+    "& > button": {
+      height: "100px",
+      flexDirection: "column",
+      alignItems: "center"
     },
-    '& > button > div': {
-      height: 'auto'
+    "& > button > div": {
+      height: "auto"
     }
   }
 }));

@@ -1,25 +1,25 @@
-import { useState, useEffect } from 'react';
-import { Box, Button, styled } from '@mui/material';
+import { useState, useEffect } from "react";
+import { Box, Button, styled } from "@mui/material";
 
-import styles from './index.module.scss';
-import contractImg from '../../../../commons/resources/images/trx-contract.png';
-import { getShortWallet } from '../../../../commons/utils/helper';
-import CopyButton from '../../../commons/CopyButton';
-import { useCopyToClipboard } from 'react-use';
-import CustomTooltip from '../../../commons/CustomTooltip';
-import { Img, WrapAddress, Wrapper } from './component';
+import styles from "./index.module.scss";
+import contractImg from "../../../../commons/resources/images/trx-contract.png";
+import { getShortWallet } from "../../../../commons/utils/helper";
+import CopyButton from "../../../commons/CopyButton";
+import { useCopyToClipboard } from "react-use";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import { Img, WrapAddress, Wrapper } from "./component";
 
 interface ContractsProps {
-  data: Transaction['contracts'] | null;
+  data: Transaction["contracts"] | null;
 }
 
 const Contracts: React.FC<ContractsProps> = ({ data }) => {
-  const [textCopy, setTextCopy] = useState('');
+  const [textCopy, setTextCopy] = useState("");
   const [, copyToClipboard] = useCopyToClipboard();
   useEffect(() => {
     if (textCopy) {
       setTimeout(() => {
-        setTextCopy('');
+        setTextCopy("");
       }, 2000);
     }
   }, [textCopy]);
@@ -28,7 +28,7 @@ const Contracts: React.FC<ContractsProps> = ({ data }) => {
       <Wrapper>
         <div>
           <Img src={contractImg} alt='contract icon' />
-          <Box display={'flex'} alignItems='center' padding={'15px 0 0'} flexDirection='column'>
+          <Box display={"flex"} alignItems='center' padding={"15px 0 0"} flexDirection='column'>
             <WrapAddress>{data[0].contract}</WrapAddress>
             <CopyButtonMui
               className={styles.ffTitle}
@@ -37,7 +37,7 @@ const Contracts: React.FC<ContractsProps> = ({ data }) => {
                 setTextCopy(data[0].contract);
               }}
             >
-              {textCopy === data[0].contract ? 'Copied' : 'Copy'}
+              {textCopy === data[0].contract ? "Copied" : "Copy"}
             </CopyButtonMui>
           </Box>
         </div>
@@ -51,8 +51,8 @@ const Contracts: React.FC<ContractsProps> = ({ data }) => {
         {data &&
           data.map((ct, key) => {
             return (
-              <Box display={'flex'} alignItems='center' padding={'15px 0 0'} key={key}>
-                <Box mx={'auto'} display='flex' alignItems={'center'} className={styles.ffTitle}>
+              <Box display={"flex"} alignItems='center' padding={"15px 0 0"} key={key}>
+                <Box mx={"auto"} display='flex' alignItems={"center"} className={styles.ffTitle}>
                   <CustomTooltip title={ct.contract}>
                     <div>{getShortWallet(ct.contract)}</div>
                   </CustomTooltip>
@@ -70,13 +70,13 @@ export default Contracts;
 
 const CopyButtonMui = styled(Button)(({ theme }) => {
   return {
-    display: 'block',
+    display: "block",
     color: theme.palette.primary.main,
     border: `2px solid ${theme.palette.primary.main}`,
     borderRadius: 10,
     padding: `${theme.spacing(1)} ${theme.spacing(4)}`,
     marginTop: theme.spacing(2),
-    textTransform: 'capitalize',
-    fontWeight: 'bold'
+    textTransform: "capitalize",
+    fontWeight: "bold"
   };
 });

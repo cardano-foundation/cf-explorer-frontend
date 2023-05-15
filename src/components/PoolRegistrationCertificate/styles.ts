@@ -1,4 +1,4 @@
-import { Box, Grid, IconButton, Typography, styled } from '@mui/material';
+import { Box, Grid, IconButton, Typography, styled } from "@mui/material";
 
 export const Title = styled(Typography)`
   font-weight: 700;
@@ -46,7 +46,7 @@ export const CardSubTitle = styled(Typography)<{ color?: string }>(
   (props) => `
     font-size: 14px;
     font-weight: 500;
-    color: ${props.color ? props.color : '#000'};
+    color: ${props.color ? props.color : "#000"};
     `
 );
 
@@ -67,7 +67,7 @@ export const DotsIcon = styled(Box)`
   height: 3.6px;
   position: relative;
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     display: block;
     width: 3.6px;
@@ -78,7 +78,7 @@ export const DotsIcon = styled(Box)`
     background-color: #667085;
   }
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     display: block;
     width: 3.6px;

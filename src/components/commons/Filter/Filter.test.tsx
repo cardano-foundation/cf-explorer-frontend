@@ -6,8 +6,8 @@ export const filterOtions: Option[] = [
   {
     value: "id,desc",
     icon: <i />,
-    label: "Latest - First",
-  },
+    label: "Latest - First"
+  }
 ];
 
 test("Render filter", async () => {
@@ -18,7 +18,7 @@ test("Render filter", async () => {
 
 test("Test click filter button", async () => {
   render(<Filter options={filterOtions} />);
- await userEvent.click(screen.getByText("Filter"));
+  await userEvent.click(screen.getByText("Filter"));
   const element = screen.getByText(/Latest - First/i);
   expect(element).toBeInTheDocument();
 });

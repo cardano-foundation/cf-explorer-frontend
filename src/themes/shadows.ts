@@ -1,6 +1,6 @@
-import { alpha, createTheme } from '@mui/material';
-import { ThemeType } from '../types/user';
-import palette from './palette';
+import { alpha, createTheme } from "@mui/material";
+import { ThemeType } from "../types/user";
+import palette from "./palette";
 
 export const createShadow = (color: string) => {
   return {

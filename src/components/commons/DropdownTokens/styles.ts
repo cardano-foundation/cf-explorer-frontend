@@ -1,6 +1,6 @@
-import { MenuItem, Select, styled } from '@mui/material';
+import { MenuItem, Select, styled } from "@mui/material";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export const CustomSelect = styled(Select)`
   font-family: var(--font-family-text);
@@ -30,27 +30,27 @@ export const CustomSelect = styled(Select)`
 `;
 
 export const OptionSelect = styled(MenuItem)(({ theme }) => ({
-  textAlign: 'center',
-  alignItems: 'center',
-  display: 'flex',
-  padding: '12px 16px',
-  justifyContent: 'space-between',
-  height: '40px',
-  cursor: 'pointer',
-  '&:hover': {
+  textAlign: "center",
+  alignItems: "center",
+  display: "flex",
+  padding: "12px 16px",
+  justifyContent: "space-between",
+  height: "40px",
+  cursor: "pointer",
+  "&:hover": {
     background: theme.palette.green[60010]
   }
 }));
 
 export const CustomLink = styled(Link)(({ theme }) => ({
-  textAlign: 'center',
-  alignItems: 'center',
-  display: 'flex',
-  padding: '12px 16px',
-  justifyContent: 'space-between',
-  height: '40px',
-  cursor: 'pointer',
-  '&:hover': {
+  textAlign: "center",
+  alignItems: "center",
+  display: "flex",
+  padding: "12px 16px",
+  justifyContent: "space-between",
+  height: "40px",
+  cursor: "pointer",
+  "&:hover": {
     background: theme.palette.green[60010]
   }
 }));

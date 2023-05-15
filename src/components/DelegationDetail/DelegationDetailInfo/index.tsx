@@ -1,7 +1,7 @@
-import { Box, Skeleton } from '@mui/material';
-import React, { useState } from 'react';
-import { HiArrowLongLeft } from 'react-icons/hi2';
-import { Link, useHistory } from 'react-router-dom';
+import { Box, Skeleton } from "@mui/material";
+import React, { useState } from "react";
+import { HiArrowLongLeft } from "react-icons/hi2";
+import { Link, useHistory } from "react-router-dom";
 import {
   CalendarIcon,
   DelegatorIcon,
@@ -10,8 +10,8 @@ import {
   RewardIcon,
   TickerIcon,
   UserIcon
-} from '../../../commons/resources';
-import { details } from '../../../commons/routers';
+} from "../../../commons/resources";
+import { details } from "../../../commons/routers";
 import {
   formatADA,
   formatADAFull,
@@ -19,11 +19,11 @@ import {
   formatPercent,
   getShortHash,
   getShortWallet
-} from '../../../commons/utils/helper';
-import BookmarkButton from '../../commons/BookmarkIcon';
-import CopyButton from '../../commons/CopyButton';
-import CustomTooltip from '../../commons/CustomTooltip';
-import DropdownDetail from '../../commons/DropdownDetail';
+} from "../../../commons/utils/helper";
+import BookmarkButton from "../../commons/BookmarkIcon";
+import CopyButton from "../../commons/CopyButton";
+import CustomTooltip from "../../commons/CustomTooltip";
+import DropdownDetail from "../../commons/DropdownDetail";
 
 import {
   BackButton,
@@ -46,9 +46,9 @@ import {
   StyledImg,
   StyledLinearProgress,
   StyledTitle
-} from './styles';
-import ADAicon from '../../commons/ADAIcon';
-import { useScreen } from '../../../commons/hooks/useScreen';
+} from "./styles";
+import ADAicon from "../../commons/ADAIcon";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface IDelegationDetailInfo {
   data: DelegationOverview | null;
@@ -112,37 +112,37 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoTitle>
               <StyledTitle>Ticker</StyledTitle>
             </InfoTitle>
-            <InfoValue>{data?.tickerName || ''}</InfoValue>
+            <InfoValue>{data?.tickerName || ""}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={CalendarIcon} alt='Calendar Icon' />
             <InfoTitle>
               <StyledTitle>Created date</StyledTitle>
             </InfoTitle>
-            <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || '')}</InfoValue>
+            <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={RewardIcon} alt='Reward Icon' />
             <InfoTitle>
               <Box>
                 <StyledTitle>Reward Account</StyledTitle>
-                <InfoValue mt={'4px'}>
+                <InfoValue mt={"4px"}>
                   {data?.rewardAccounts ? (
                     <>
-                      <CustomTooltip title={data?.rewardAccounts[0] || ''}>
+                      <CustomTooltip title={data?.rewardAccounts[0] || ""}>
                         <Box
                           component={Link}
-                          to={details.stake(data?.rewardAccounts[0] || '')}
-                          style={{ fontFamily: 'var(--font-family-text)' }}
+                          to={details.stake(data?.rewardAccounts[0] || "")}
+                          style={{ fontFamily: "var(--font-family-text)" }}
                           color={(theme) => `${theme.palette.secondary.main} !important`}
                         >
-                          {getShortWallet(data?.rewardAccounts[0] || '')}
+                          {getShortWallet(data?.rewardAccounts[0] || "")}
                         </Box>
                       </CustomTooltip>
-                      <CopyButton text={data?.rewardAccounts[0] || ''} />
+                      <CopyButton text={data?.rewardAccounts[0] || ""} />
                     </>
                   ) : (
-                    ''
+                    ""
                   )}
                 </InfoValue>
               </Box>
@@ -176,24 +176,24 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               }}
             >
               <Box>
-                <StyledTitle>Owner Account</StyledTitle>{' '}
-                <InfoValue mt={'4px'}>
+                <StyledTitle>Owner Account</StyledTitle>{" "}
+                <InfoValue mt={"4px"}>
                   {data?.ownerAccounts ? (
                     <>
-                      <CustomTooltip title={data?.ownerAccounts[0] || ''}>
+                      <CustomTooltip title={data?.ownerAccounts[0] || ""}>
                         <Box
                           component={Link}
                           color={(theme) => `${theme.palette.blue[800]} !important`}
-                          to={details.stake(data?.ownerAccounts[0] || '')}
-                          style={{ fontFamily: 'var(--font-family-text)' }}
+                          to={details.stake(data?.ownerAccounts[0] || "")}
+                          style={{ fontFamily: "var(--font-family-text)" }}
                         >
-                          {getShortWallet(data?.ownerAccounts[0] || '')}
+                          {getShortWallet(data?.ownerAccounts[0] || "")}
                         </Box>
                       </CustomTooltip>
-                      <CopyButton text={data?.ownerAccounts[0] || ''} />
+                      <CopyButton text={data?.ownerAccounts[0] || ""} />
                     </>
                   ) : (
-                    ''
+                    ""
                   )}
                 </InfoValue>
               </Box>
@@ -247,16 +247,16 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoTitle>
               <StyledTitle>Delegators</StyledTitle>
             </InfoTitle>
-            <InfoValue>{data?.delegators || ''}</InfoValue>
+            <InfoValue>{data?.delegators || ""}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
             <InfoValue>
               <StyledLinearProgress variant='determinate' value={data?.saturation || 0} />
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '9px' }}>
-                <Box component={'span'} mt={1} style={{ fontSize: '14px', fontWeight: '400', opacity: '0.5' }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginTop: "9px" }}>
+                <Box component={"span"} mt={1} style={{ fontSize: "14px", fontWeight: "400", opacity: "0.5" }}>
                   Saturation
                 </Box>
-                <span style={{ fontSize: '16px' }}>{formatPercent(data?.saturation || 0)}</span>
+                <span style={{ fontSize: "16px" }}>{formatPercent(data?.saturation || 0)}</span>
               </div>
             </InfoValue>
           </Item>
