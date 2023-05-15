@@ -405,7 +405,7 @@ export const RegistrationCertificateModal = ({
   );
 
   return (
-    <StyledModal {...props} title='Pool registration certificate'>
+    <StyledModal {...props} title='Pool Registration certificate'>
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
