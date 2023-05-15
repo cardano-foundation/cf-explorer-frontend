@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { Box, MenuItem, Select } from "@mui/material";
-import { formatADAFull, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
-import { details } from "../../commons/routers";
-import { PerPage, StyledContainer, StyledLink } from "./styles";
-import Table, { Column } from "../../components/commons/Table";
-import Card from "../../components/commons/Card";
-import CustomTooltip from "../../components/commons/CustomTooltip";
-import { API } from "../../commons/utils/api";
-import ADAicon from "../../components/commons/ADAIcon";
-import { REFRESH_TIMES } from "../../commons/utils/constants";
+import React, { useEffect, useState } from 'react';
+import useFetchList from '../../commons/hooks/useFetchList';
+import { Box, MenuItem, Select } from '@mui/material';
+import { formatADAFull, getShortWallet, numberWithCommas } from '../../commons/utils/helper';
+import { details } from '../../commons/routers';
+import { PerPage, StyledContainer, StyledLink } from './styles';
+import Table, { Column } from '../../components/commons/Table';
+import Card from '../../components/commons/Card';
+import CustomTooltip from '../../components/commons/CustomTooltip';
+import { API } from '../../commons/utils/api';
+import ADAicon from '../../components/commons/ADAIcon';
+import { REFRESH_TIMES } from '../../commons/utils/constants';
 
-interface Props {}
-
-const TopAddresses: React.FC<Props> = () => {
-  const [pageSize, setPageSize] = useState("50");
+const TopAddresses = () => {
+  const [pageSize, setPageSize] = useState('50');
 
   const { error, data, initialized, loading } = useFetchList<Contracts>(
     API.ADDRESS.TOP_ADDRESS,
@@ -29,59 +27,59 @@ const TopAddresses: React.FC<Props> = () => {
 
   const columns: Column<Address>[] = [
     {
-      title: "#",
-      key: "id",
+      title: '#',
+      key: 'id',
       minWidth: 30,
-      render: (_, index) => numberWithCommas(index + 1),
+      render: (_, index) => numberWithCommas(index + 1)
     },
     {
-      title: "Addresses",
-      key: "address",
+      title: 'Addresses',
+      key: 'address',
       minWidth: 120,
 
-      render: r => (
+      render: (r) => (
         <div>
           <CustomTooltip title={r.address}>
             <StyledLink to={details.address(r.address)}>{getShortWallet(r.address)}</StyledLink>
           </CustomTooltip>
         </div>
-      ),
+      )
     },
     {
-      title: "Balance",
-      key: "balance",
+      title: 'Balance',
+      key: 'balance',
       minWidth: 60,
-      render: r => (
-        <Box display="inline-flex" alignItems="center">
+      render: (r) => (
+        <Box display='inline-flex' alignItems='center'>
           <Box mr={1}>{formatADAFull(r.balance)}</Box>
           <ADAicon />
         </Box>
-      ),
+      )
     },
     {
-      title: "Transaction Count",
+      title: 'Transaction Count',
       minWidth: 120,
-      key: "transaction_count",
-      render: r => (
-        <Box display="flex" alignItems="center">
+      key: 'transaction_count',
+      render: (r) => (
+        <Box display='flex' alignItems='center'>
           {r.txCount || 0}
         </Box>
-      ),
-    },
+      )
+    }
   ];
 
   return (
     <StyledContainer>
       <Card
-        title={"Top addresses"}
+        title={'Top addresses'}
         underline={false}
         extra={
-          <Box display="flex" alignItems="center">
+          <Box display='flex' alignItems='center'>
             <Select
               value={pageSize}
-              onChange={event => setPageSize(event.target.value)}
+              onChange={(event) => setPageSize(event.target.value)}
               displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
+              inputProps={{ 'aria-label': 'Without label' }}
             >
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>

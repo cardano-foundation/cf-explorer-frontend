@@ -1,11 +1,11 @@
-import { MenuItem, Select } from "@mui/material";
-import { styled } from "@mui/material";
-import { Link } from "react-router-dom";
+import { MenuItem, Select, styled } from '@mui/material';
+
+import { Link } from 'react-router-dom';
 
 export const CustomSelect = styled(Select)`
   font-family: var(--font-family-text);
-  background: ${props => props.theme.palette.background.paper};
-  color: ${props => props.theme.palette.text.secondary};
+  background: ${(props) => props.theme.palette.background.paper};
+  color: ${(props) => props.theme.palette.text.secondary};
   border-radius: 8px;
   border: 1px solid rgba(152, 162, 179, 0.5);
   height: 35px;
@@ -21,7 +21,7 @@ export const CustomSelect = styled(Select)`
     border: none !important;
   }
   & > svg {
-    color: ${props => props.theme.palette.text.secondary};
+    color: ${(props) => props.theme.palette.text.secondary};
     font-size: 20px;
   }
   & .MuiList-root {
@@ -30,27 +30,27 @@ export const CustomSelect = styled(Select)`
 `;
 
 export const OptionSelect = styled(MenuItem)(({ theme }) => ({
-  textAlign: "center",
-  alignItems: "center",
-  display: "flex",
-  padding: "12px 16px",
-  justifyContent: "space-between",
-  height: "40px",
-  cursor: "pointer",
-  "&:hover": {
+  textAlign: 'center',
+  alignItems: 'center',
+  display: 'flex',
+  padding: '12px 16px',
+  justifyContent: 'space-between',
+  height: '40px',
+  cursor: 'pointer',
+  '&:hover': {
     background: theme.palette.green[60010]
   }
 }));
 
 export const CustomLink = styled(Link)(({ theme }) => ({
-  textAlign: "center",
-  alignItems: "center",
-  display: "flex",
-  padding: "12px 16px",
-  justifyContent: "space-between",
-  height: "40px",
-  cursor: "pointer",
-  "&:hover": {
+  textAlign: 'center',
+  alignItems: 'center',
+  display: 'flex',
+  padding: '12px 16px',
+  justifyContent: 'space-between',
+  height: '40px',
+  cursor: 'pointer',
+  '&:hover': {
     background: theme.palette.green[60010]
   }
 }));

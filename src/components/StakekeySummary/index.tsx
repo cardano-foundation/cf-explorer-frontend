@@ -1,39 +1,39 @@
-import { useState } from "react";
-import Table, { Column } from "../commons/Table";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { API } from "../../commons/utils/api";
-import { Box } from "@mui/material";
-import moment from "moment";
-import { TextOverFlow } from "../StakingLifeCycle/DelegatorLifecycle/ReportComposerModal/styles";
-import { DownloadGreenIcon } from "../../commons/resources";
-import { lowerCase, startCase } from "lodash";
-import { defaultAxiosDownload } from "../../commons/utils/axios";
-import { useHistory } from "react-router-dom";
-import { details } from "../../commons/routers";
+import { useState } from 'react';
+import Table, { Column } from '../commons/Table';
+import useFetchList from '../../commons/hooks/useFetchList';
+import { API } from '../../commons/utils/api';
+import { Box, Button } from '@mui/material';
+import moment from 'moment';
+import { TextOverFlow } from '../StakingLifeCycle/DelegatorLifecycle/ReportComposerModal/styles';
+import { DownloadGreenIcon } from '../../commons/resources';
+import { lowerCase, startCase } from 'lodash';
+import { defaultAxiosDownload } from '../../commons/utils/axios';
+import { useHistory } from 'react-router-dom';
+import { details } from '../../commons/routers';
 
 export const EVENTS: { [key in keyof IReportStaking]?: string } = {
-  eventDelegation: "Delegation",
-  eventDeregistration: "Deregistration",
-  eventRegistration: "Registration",
-  eventRewards: "Rewards",
-  eventWithdrawal: "Withdrawal",
+  eventDelegation: 'Delegation',
+  eventDeregistration: 'Deregistration',
+  eventRegistration: 'Registration',
+  eventRewards: 'Rewards',
+  eventWithdrawal: 'Withdrawal'
 };
 
 export function getEventList(data: IReportStaking) {
   return Object.entries(EVENTS)
     .map(([key, value]) => (data[key as keyof typeof data] ? value : null))
-    .filter(item => item);
+    .filter((item) => item);
 }
 
 export function getEventType(data: any) {
-  let events = {
+  const events = {
     eventDelegation: false,
     eventDeregistration: false,
     eventRegistration: false,
     eventRewards: false,
-    eventWithdrawal: false,
+    eventWithdrawal: false
   };
-  for (let key in events) {
+  for (const key in events) {
     events[key as keyof typeof events] = data.includes(EVENTS[key as keyof typeof EVENTS]?.toUpperCase());
   }
   return events;
@@ -44,77 +44,96 @@ const StakekeySummary = () => {
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>({
     page: 0,
     size: 10,
-    sort: "id,desc",
+    sort: 'id,desc'
   });
-  const [sort, setSort] = useState<string>("id,desc");
+  const [sort, setSort] = useState<string>('id,desc');
 
-  const downloadFn = async (reportId: number, fileName: string) => {
-    defaultAxiosDownload.get(API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId)).then(response => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `${fileName}.csv`);
-      document.body.appendChild(link);
-      link.click();
-    });
+  const downloadFn = async (reportId: number, fileName: string, typeExport: 'CSV' | 'EXCEL' = 'CSV') => {
+    defaultAxiosDownload
+      .get(`${API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId)}?exportType=${typeExport}`)
+      .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `${fileName}.${typeExport === 'CSV' ? 'csv' : 'xlsx'}`);
+        document.body.appendChild(link);
+        link.click();
+      });
   };
 
   const columns: Column<IReportStaking>[] = [
     {
-      key: "name",
-      title: "Report Name",
-      maxWidth: "300px",
+      key: 'name',
+      title: 'Report Name',
+      maxWidth: '300px',
       render(data, index) {
         return <TextOverFlow>{data.reportName}</TextOverFlow>;
-      },
+      }
     },
     {
-      key: "date",
-      title: "Date Range",
+      key: 'date',
+      title: 'Date Range',
       render(data, index) {
-        return `${moment(data.fromDate).format("MM/DD/yyyy")} - ${moment(data.toDate).format("MM/DD/yyyy")}`;
-      },
+        return `${moment(data.fromDate).format('MM/DD/yyyy')} - ${moment(data.toDate).format('MM/DD/yyyy')}`;
+      }
     },
     {
-      key: "transfer",
-      title: "ADA Transfer",
+      key: 'transfer',
+      title: 'ADA Transfer',
       render(data, index) {
-        return data.isADATransfer ? "Yes" : "No";
-      },
+        return data.isADATransfer ? 'Yes' : 'No';
+      }
     },
     {
-      key: "feePaid",
-      title: "Fees Paid",
+      key: 'feePaid',
+      title: 'Fees Paid',
       render(data, index) {
-        return data.isFeesPaid ? "Yes" : "No";
-      },
+        return data.isFeesPaid ? 'Yes' : 'No';
+      }
     },
     {
-      key: "event",
-      title: "Events",
-      maxWidth: "200px",
+      key: 'event',
+      title: 'Events',
+      maxWidth: '200px',
       render(data, index) {
-        return getEventList(data).join(", ");
-      },
+        return getEventList(data).join(', ');
+      }
     },
     {
-      key: "download",
-      title: "",
-      maxWidth: "30px",
+      key: 'download',
+      title: '',
       render(data, index) {
         return (
-          <a href="#">
-            <DownloadGreenIcon onClick={() => downloadFn(data.id, data.reportName)} />
-          </a>
+          <Box textAlign={'right'} key={index} display={'flex'}>
+            <Box
+              component={Button}
+              display={'block'}
+              textTransform={'capitalize'}
+              onClick={() => {
+                downloadFn(data.id, data.reportName, 'CSV');
+              }}
+            >
+              Export CSV
+            </Box>
+            <Box
+              ml={2}
+              component={Button}
+              display={'block'}
+              textTransform={'capitalize'}
+              onClick={() => downloadFn(data.id, data.reportName, 'EXCEL')}
+            >
+              Export Excel
+            </Box>
+          </Box>
         );
-      },
-    },
+      }
+    }
   ];
 
   const fetchData = useFetchList<IStakeKeySummary>(API.REPORT.STAKE_KEY_SUMMARY, {
     page,
     size,
-    sort,
+    sort
   });
 
   return (
@@ -122,13 +141,13 @@ const StakekeySummary = () => {
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: "Stake key summary", count: fetchData.total }}
+        total={{ title: 'Stake key summary', count: fetchData.total }}
         onClickRow={(e, row) => history.push(details.generated_staking_detail(row.id))}
         pagination={{
           page,
           size,
           total: fetchData.total,
-          onChange: (page, size) => setPagi({ page: page - 1, size }),
+          onChange: (page, size) => setPagi({ page: page - 1, size })
         }}
       />
     </Box>

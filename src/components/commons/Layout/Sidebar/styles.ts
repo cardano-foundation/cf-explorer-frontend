@@ -1,8 +1,8 @@
-import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
-import { MenuIcon } from "../../../../commons/resources";
-import { NETWORKS } from "../../../../commons/utils/constants";
-import { Button, Box } from "@mui/material";
+import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
+import { MenuIcon } from '../../../../commons/resources';
+import { NETWORKS } from '../../../../commons/utils/constants';
+import { Button, Box } from '@mui/material';
 
 export const NavbarContainer = styled.nav`
   position: relative;
@@ -13,12 +13,12 @@ export const NavbarContainer = styled.nav`
   text-align: left;
   @media screen and (max-width: 1023px) {
     height: auto;
-    background-color: ${props => props.theme.palette.background.paper};
+    background-color: ${(props) => props.theme.palette.background.paper};
     padding: 0px;
   }
 `;
 
-export const HeaderTop = styled("div")`
+export const HeaderTop = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -31,7 +31,7 @@ export const HeaderTop = styled("div")`
 export const LogoLink = styled(Link)<{ open?: number }>`
   position: relative;
   display: block;
-  margin-left: ${props => (props.open ? 30 : 15)}px;
+  margin-left: ${(props) => (props.open ? 30 : 15)}px;
   margin-bottom: 30px;
   width: max-content;
   height: 50px;
@@ -52,7 +52,7 @@ export const NetworkName = styled.small<{ network: keyof typeof NETWORKS }>`
   transform: translateY(50%);
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-title);
-  color: ${props => {
+  color: ${(props) => {
     switch (props.network) {
       case NETWORKS.mainnet: {
         return props.theme.palette.primary.main;
@@ -87,7 +87,7 @@ export const Toggle = styled.i`
 export const SearchButton = styled(Button)(() => ({
   padding: 0,
   minWidth: 0,
-  marginLeft: 16,
+  marginLeft: 16
 }));
 export const HumburgerArea = styled(Box)`
   display: flex;

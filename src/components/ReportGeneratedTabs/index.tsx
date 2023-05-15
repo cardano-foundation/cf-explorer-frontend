@@ -25,7 +25,7 @@ const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem, default
 
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
-    history.replace("/report-generated?tab=" + newValue);
+    history.push("/report-generated?tab=" + newValue);
   };
 
   useEffect(() => {
@@ -33,13 +33,13 @@ const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem, default
   }, [tab]);
   
   return (
-    <Box>
+    <Box data-testid="report-generated-tabs">
       <TabContext value={value}>
         <TabHeader>
           <Tabs>
             <Box>
-              <TabList onChange={handleChange} aria-label="lab API tabs example">
-                {tabsItem.map(item => (
+              <TabList onChange={handleChange} aria-label='lab API tabs example'>
+                {tabsItem.map((item) => (
                   <Tab
                     key={item.value}
                     value={item.value}
@@ -51,7 +51,7 @@ const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem, default
           </Tabs>
         </TabHeader>
 
-        {tabsItem.map(item => (
+        {tabsItem.map((item) => (
           <TabContent key={item.value} value={item.value}>
             {item.component}
           </TabContent>
