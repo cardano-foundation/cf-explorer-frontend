@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
-import { AIcon } from "../../../../commons/resources";
+import Alert from '@mui/material/Alert';
 import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
@@ -94,14 +94,25 @@ interface SummaryProps {
   data: Transaction["summary"] | null;
 }
 const Summary: React.FC<SummaryProps> = ({ data }) => {
+  const txInputs = data?.stakeAddressTxInputs;
+  const txOutputs = data?.stakeAddressTxOutputs;
   return (
     <Box>
-      {data?.stakeAddressTxInputs.map((tx, key) => (
-        <SummaryItems key={key} item={tx} type="down" />
-      ))}
-      {data?.stakeAddressTxOutputs.map((tx, key) => (
-        <SummaryItems key={key} item={tx} type="up" />
-      ))}
+      {!txInputs ? (
+        <Alert variant="outlined" severity="error" sx={{ marginBottom: 1, color: '#13152f !important' }}>
+          No data found on Input transactions!
+        </Alert>
+      ) : (
+        txInputs?.map((tx, key) => <SummaryItems key={key} item={tx} type="down" />)
+      )}
+
+      {!txOutputs ? (
+        <Alert variant="outlined" severity="error" sx={{ color: '#13152f !important' }}>
+          No data found on Output transactions!
+        </Alert>
+      ) : (
+        txOutputs?.map((tx, key) => <SummaryItems key={key} item={tx} type="up" />)
+      )}
     </Box>
   );
 };
