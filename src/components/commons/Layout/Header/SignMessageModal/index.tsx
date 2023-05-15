@@ -1,8 +1,8 @@
-import { Box } from '@mui/material';
-import StyledModal from '../../../StyledModal';
-import signMessage from '../../../../../commons/resources/images/sign-message.svg';
-import { Description, ModalTitle } from './styles';
-import { StyledDarkLoadingButton } from '../../../../share/styled';
+import { Box } from "@mui/material";
+import StyledModal from "../../../StyledModal";
+import signMessage from "../../../../../commons/resources/images/sign-message.svg";
+import { Description, ModalTitle } from "./styles";
+import { StyledDarkLoadingButton } from "../../../../share/styled";
 type TProps = {
   open: boolean;
   loadingSubmit: boolean;

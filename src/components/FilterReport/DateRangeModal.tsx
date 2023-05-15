@@ -1,11 +1,11 @@
-import { Box, Button } from '@mui/material';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import moment from 'moment';
-import React, { useEffect, useMemo, useState } from 'react';
-import StyledModal from '../commons/StyledModal';
-import { DatePickerFooter, DateRangePickerContainer } from './styles';
+import { Box, Button } from "@mui/material";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import moment from "moment";
+import React, { useEffect, useMemo, useState } from "react";
+import StyledModal from "../commons/StyledModal";
+import { DatePickerFooter, DateRangePickerContainer } from "./styles";
 
 export interface DateRange {
   fromDate?: string;
@@ -54,14 +54,14 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
             value={toMoment(value?.fromDate)}
             onChange={(mDate) =>
               setValue((pre) => {
-                return { ...pre, fromDate: mDate?.format('YYYY/MM/DD HH:mm:ss') };
+                return { ...pre, fromDate: mDate?.format("YYYY/MM/DD HH:mm:ss") };
               })
             }
           />
           <Box>-</Box>
           <DatePicker
             value={toMoment(value?.toDate)}
-            onChange={(mDate) => setValue((pre) => ({ ...pre, toDate: mDate?.format('YYYY/MM/DD 23:59:59') }))}
+            onChange={(mDate) => setValue((pre) => ({ ...pre, toDate: mDate?.format("YYYY/MM/DD 23:59:59") }))}
           />
         </DateRangePickerContainer>
         <DatePickerFooter>

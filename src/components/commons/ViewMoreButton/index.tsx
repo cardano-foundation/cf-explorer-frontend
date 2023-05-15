@@ -1,6 +1,6 @@
-import React from 'react';
-import { styled } from '@mui/material';
-import { Link, LinkProps } from 'react-router-dom';
+import React from "react";
+import { styled } from "@mui/material";
+import { Link, LinkProps } from "react-router-dom";
 
 const StyledLink = styled(Link)`
   display: block;
@@ -11,13 +11,13 @@ const StyledLink = styled(Link)`
   color: ${(props) => props.theme.palette.primary.contrastText}!important;
   border-radius: 6px;
   font-weight: var(--font-weight-bold);
-  ${({ theme }) => theme.breakpoints.down('sm')} {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     margin: 20px 16px;
   }
 `;
 
 const ViewMoreButton: React.FC<LinkProps> = ({ children, ...props }) => {
-  return <StyledLink {...props}>{children || 'View Details'}</StyledLink>;
+  return <StyledLink {...props}>{children || "View Details"}</StyledLink>;
 };
 
 export default ViewMoreButton;

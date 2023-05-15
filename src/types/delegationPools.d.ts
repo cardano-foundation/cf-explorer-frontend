@@ -76,4 +76,4 @@ interface AnalyticsDelegators {
   };
 }
 
-type TabPoolDetail = 'epochs' | 'delegators';
+type TabPoolDetail = "epochs" | "delegators";

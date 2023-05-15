@@ -1,4 +1,4 @@
-import { Box, styled } from '@mui/material';
+import { Box, styled } from "@mui/material";
 
 export const TextNote = styled(Box)`
   color: var(--color-black);
@@ -28,9 +28,9 @@ export const StyledRowItem = styled(Box)`
 `;
 
 export const WrapInfoItemMobile = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '4px'
+  display: "flex",
+  flexDirection: "column",
+  gap: "4px"
 }));
 
 export const StyledAction = styled(Box)`

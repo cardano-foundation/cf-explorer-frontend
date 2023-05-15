@@ -1,5 +1,5 @@
-import { styled, Box } from '@mui/material';
-import breakpoints from '../../themes/breakpoints';
+import { styled, Box } from "@mui/material";
+import breakpoints from "../../themes/breakpoints";
 
 export const CardContent = styled(Box)(`
     display: flex;
@@ -21,7 +21,7 @@ export const TitleGroup = styled(Box)(`
     justify-content: flex-start;
 `);
 
-export const Title = styled('span')(`
+export const Title = styled("span")(`
     font-size: 16px;
     font-weight: 700;
     color: #344054;
@@ -29,7 +29,7 @@ export const Title = styled('span')(`
     text-align: left;
 `);
 
-export const SubTitle = styled('span')`
+export const SubTitle = styled("span")`
   font-size: 14px;
   line-height: 16px;
   color: #667085;

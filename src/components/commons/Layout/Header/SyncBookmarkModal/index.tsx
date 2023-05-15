@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { Box } from '@mui/material';
-import StyledModal from '../../../StyledModal';
-import { Description, ModalTitle, StyledButton } from './styles';
-import { StyledDarkLoadingButton } from '../../../../share/styled';
+import { useState } from "react";
+import { Box } from "@mui/material";
+import StyledModal from "../../../StyledModal";
+import { Description, ModalTitle, StyledButton } from "./styles";
+import { StyledDarkLoadingButton } from "../../../../share/styled";
 
-import { useLocalStorage } from 'react-use';
-import { addListBookmark, getAllBookmarks } from '../../../../../commons/utils/userRequest';
-import { NETWORK, NETWORK_TYPES } from '../../../../../commons/utils/constants';
+import { useLocalStorage } from "react-use";
+import { addListBookmark, getAllBookmarks } from "../../../../../commons/utils/userRequest";
+import { NETWORK, NETWORK_TYPES } from "../../../../../commons/utils/constants";
 
 interface SyncBookmarkModalProps {
   open: boolean;
@@ -16,21 +16,21 @@ interface SyncBookmarkModalProps {
 const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, loadingSubmit, handleCloseModal }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<{ passNumber: number; failNumber: number }>();
-  const [message, setMessage] = useState('');
-  const [bookmarks, setBookmark] = useLocalStorage<Bookmark[]>('bookmark', []);
+  const [message, setMessage] = useState("");
+  const [bookmarks, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
   const bookmark = bookmarks?.filter((r) => !r.id).length;
   const hanldeSyncBookmark = async () => {
     try {
       setLoading(true);
       const { data } = await addListBookmark(bookmarks || []);
-      setMessage('Successfully!');
+      setMessage("Successfully!");
       setData(data);
       const { data: dataBookmarks } = await getAllBookmarks(NETWORK_TYPES[NETWORK]);
       if (data) {
         setBookmark(dataBookmarks);
       }
     } catch (error) {
-      setMessage('Something went wrong!');
+      setMessage("Something went wrong!");
     } finally {
       setLoading(false);
     }
@@ -54,7 +54,7 @@ const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, loadingSubm
             <></>
           )}
         </Description>
-        <Box display={'flex'} justifyContent='center' gap={2}>
+        <Box display={"flex"} justifyContent='center' gap={2}>
           <StyledButton onClick={handleCloseModal}>Close</StyledButton>
           {!message && (
             <StyledDarkLoadingButton loading={loading} loadingPosition='end' onClick={hanldeSyncBookmark}>

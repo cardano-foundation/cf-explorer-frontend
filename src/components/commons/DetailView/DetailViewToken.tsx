@@ -1,6 +1,6 @@
-import React from 'react';
-import { CgClose } from 'react-icons/cg';
-import { PolicyWhiteIcon } from '../../../commons/resources';
+import React from "react";
+import { CgClose } from "react-icons/cg";
+import { PolicyWhiteIcon } from "../../../commons/resources";
 import {
   CloseButton,
   ViewDetailContainer,
@@ -36,15 +36,15 @@ import {
   TokenHeader,
   ViewDetailScroll,
   ViewDetailHeader
-} from './styles';
-import { BiChevronRight } from 'react-icons/bi';
-import { details } from '../../../commons/routers';
-import { formatDateTimeLocal, getShortWallet, numberWithCommas } from '../../../commons/utils/helper';
-import ViewMoreButton from '../ViewMoreButton';
-import CustomTooltip from '../CustomTooltip';
-import CopyButton from '../CopyButton';
-import { Box } from '@mui/material';
-import ViewAllButton from '../ViewAllButton';
+} from "./styles";
+import { BiChevronRight } from "react-icons/bi";
+import { details } from "../../../commons/routers";
+import { formatDateTimeLocal, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import ViewMoreButton from "../ViewMoreButton";
+import CustomTooltip from "../CustomTooltip";
+import CopyButton from "../CopyButton";
+import { Box } from "@mui/material";
+import ViewAllButton from "../ViewAllButton";
 
 type DetailViewTokenProps = {
   token: IToken | null;
@@ -159,15 +159,15 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                   {data?.metadata?.logo ? (
                     <TokenIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt='token logo' />
                   ) : (
-                    ''
+                    ""
                   )}
                 </TokenInfo>
                 <Box pb={2}>
-                  <MetaData>{data?.metadata?.description || ''}</MetaData>
+                  <MetaData>{data?.metadata?.description || ""}</MetaData>
                 </Box>
               </TokenMetaData>
             ) : (
-              ''
+              ""
             )}
             <TokenHeaderInfo>
               <TokenTotalSupply>
@@ -185,7 +185,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
               <DetailLabel>Token ID</DetailLabel>
               <DetailValue>
                 <CustomTooltip title={tokenId}>
-                  <StyledLink to={details.token(tokenId)}>{getShortWallet(tokenId || '')}</StyledLink>
+                  <StyledLink to={details.token(tokenId)}>{getShortWallet(tokenId || "")}</StyledLink>
                 </CustomTooltip>
                 <CopyButton text={tokenId} />
               </DetailValue>
@@ -206,7 +206,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                   {data.metadata?.logo ? (
                     <TokenDetailIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt='token logo' />
                   ) : (
-                    ''
+                    ""
                   )}
                 </TokenDetailInfo>
               </DetailValue>
@@ -229,7 +229,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Created</DetailLabel>
-              <DetailValue>{formatDateTimeLocal(data.createdOn || '')}</DetailValue>
+              <DetailValue>{formatDateTimeLocal(data.createdOn || "")}</DetailValue>
             </DetailsInfoItem>
           </Group>
           <Group>
@@ -245,10 +245,10 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                   <BiChevronRight size={24} />
                 </DetailLinkRight>
               </DetailValue>
-            </DetailLink>{' '}
+            </DetailLink>{" "}
           </Group>
           <Group>
-            <DetailLink to={details.token(tokenId, 'topHolders')}>
+            <DetailLink to={details.token(tokenId, "topHolders")}>
               <DetailLabel>
                 {/* <DetailLinkIcon>
                   <CgArrowsExchange />
@@ -263,7 +263,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             </DetailLink>
           </Group>
           <Group>
-            <DetailLink to={details.token(tokenId, 'tokenMint')}>
+            <DetailLink to={details.token(tokenId, "tokenMint")}>
               <DetailLabel>
                 {/* <DetailLinkIcon>
                   <CgArrowsExchange />

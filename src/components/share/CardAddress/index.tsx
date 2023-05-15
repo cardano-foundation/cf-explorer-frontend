@@ -1,9 +1,9 @@
-import React from 'react';
-import CopyButton from '../../commons/CopyButton';
-import infoIcon from '../../../commons/resources/images/infoIcon.svg';
-import { Box, Skeleton } from '@mui/material';
-import { EmptyIcon } from '../../../commons/resources';
-import { details } from '../../../commons/routers';
+import React from "react";
+import CopyButton from "../../commons/CopyButton";
+import infoIcon from "../../../commons/resources/images/infoIcon.svg";
+import { Box, Skeleton } from "@mui/material";
+import { EmptyIcon } from "../../../commons/resources";
+import { details } from "../../../commons/routers";
 import {
   AddressGroup,
   AddressLink,
@@ -14,13 +14,13 @@ import {
   TitleDetail,
   TokenAddress,
   ValueItem
-} from './styles';
+} from "./styles";
 
 interface DetailCardProps {
   title: string;
   address: string;
   item: { title?: string; value: React.ReactNode }[];
-  type: 'left' | 'right';
+  type: "left" | "right";
   loading: boolean;
   addressDestination?: string;
 }
@@ -28,15 +28,15 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
   if (loading) {
     return (
       <CardItem padding={0}>
-        <Skeleton variant='rectangular' height={'100%'} width='100%' />
+        <Skeleton variant='rectangular' height={"100%"} width='100%' />
       </CardItem>
     );
   }
-  if (type === 'right' && !address) {
+  if (type === "right" && !address) {
     return (
       <CardItem padding={(props) => props.spacing(4)}>
         <TitleDetail paddingBottom={(props) => props.spacing(2)}>{title}</TitleDetail>
-        <Box width={'100%'} display='flex' alignItems='center' justifyContent='center'>
+        <Box width={"100%"} display='flex' alignItems='center' justifyContent='center'>
           <img alt='icon' src={EmptyIcon} />
         </Box>
       </CardItem>
@@ -46,7 +46,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
     <CardItem padding={(props) => props.spacing(4)}>
       <TitleDetail>{title}</TitleDetail>
       <AddressGroup>
-        {type === 'left' ? (
+        {type === "left" ? (
           <TokenAddress>{address}</TokenAddress>
         ) : (
           <AddressLink to={addressDestination || details.address(address)}>{address}</AddressLink>
@@ -63,7 +63,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
                   <LabelItem>{i.title}</LabelItem>
                 </RowItem>
               )}
-              <ValueItem style={{ width: `${i.title ? 'auto' : '100%'}` }}>{i.value}</ValueItem>
+              <ValueItem style={{ width: `${i.title ? "auto" : "100%"}` }}>{i.value}</ValueItem>
             </ItemDetail>
           );
         })}

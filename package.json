@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@cardano-foundation/cardano-connect-with-wallet": "^0.1.57",
+    "@craco/craco": "^7.1.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/lab": "^5.0.0-alpha.111",
@@ -53,10 +54,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "craco start",
+    "build": "craco build",
     "selenium-test": "concurrently \"npm start\" \"wait-on http://localhost:1102 && cd .. && cd cf-qa-testsuite && gradle clean test && kill-port 1102\"",
-    "eject": "react-scripts eject",
+    "eject": "craco eject",
     "test-all": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watch",
     "lint": "eslint --ext ts,tsx src/",

@@ -1,6 +1,6 @@
-import { LoadingButton } from '@mui/lab';
-import { alpha, FormHelperText, FormLabel, InputBase, styled } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { LoadingButton } from "@mui/lab";
+import { alpha, FormHelperText, FormLabel, InputBase, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
@@ -13,7 +13,7 @@ export const StyledLink = styled(Link)`
   }
 `;
 
-export const SmallText = styled('small')`
+export const SmallText = styled("small")`
   white-space: nowrap;
 `;
 

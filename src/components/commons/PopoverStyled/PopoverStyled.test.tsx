@@ -6,12 +6,12 @@ import React, { useRef } from "react";
 test("Render popover button", async () => {
   const buttonRef = {
     current: null
-  }
+  };
 
   render(
-  <PopoverStyled
+    <PopoverStyled
       render={({ handleClick }) => (
-        <button ref={buttonRef} onClick={e => buttonRef.current && handleClick(buttonRef.current)}>
+        <button ref={buttonRef} onClick={(e) => buttonRef.current && handleClick(buttonRef.current)}>
           Button
         </button>
       )}
@@ -21,21 +21,20 @@ test("Render popover button", async () => {
   expect(screen.getByText(/Button/i)).toBeInTheDocument();
 });
 
-
 test("ATest click popover button", async () => {
   const buttonRef = {
     current: null
-  }
+  };
   render(
     <PopoverStyled
       render={({ handleClick }) => (
-        <button ref={buttonRef} onClick={e => buttonRef.current && handleClick(buttonRef.current)}>
+        <button ref={buttonRef} onClick={(e) => buttonRef.current && handleClick(buttonRef.current)}>
           Button
         </button>
       )}
       content={<div>Content</div>}
     />
   );
- await userEvent.click(screen.getByText(/Button/i));
+  await userEvent.click(screen.getByText(/Button/i));
   expect(screen.getByText(/Content/i)).toBeInTheDocument();
 });

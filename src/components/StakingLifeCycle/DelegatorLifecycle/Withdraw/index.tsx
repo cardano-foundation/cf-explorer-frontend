@@ -1,5 +1,5 @@
-import { Box, Skeleton, alpha } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
+import { Box, Skeleton, alpha } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 
 import {
   ADAHolderIcon,
@@ -8,14 +8,14 @@ import {
   AddressIcon,
   ADAGreen,
   TimeIcon
-} from '../../../../commons/resources';
-import cadarnoSystem from '../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg';
-import { ReactComponent as PaymentWallet } from '../../../../commons/resources/icons/Staking/paymentWallet.svg';
-import { ReactComponent as RewardWithdraw } from '../../../../commons/resources/icons/Staking/rewardWithdraw.svg';
-import { ReactComponent as WalletIconReward } from '../../../../commons/resources/icons/Staking/walletIconReward.svg';
-import { ReactComponent as WalletIconRewardGreen } from '../../../../commons/resources/icons/Staking/walletIconRewardGreen.svg';
+} from "../../../../commons/resources";
+import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
+import { ReactComponent as PaymentWallet } from "../../../../commons/resources/icons/Staking/paymentWallet.svg";
+import { ReactComponent as RewardWithdraw } from "../../../../commons/resources/icons/Staking/rewardWithdraw.svg";
+import { ReactComponent as WalletIconReward } from "../../../../commons/resources/icons/Staking/walletIconReward.svg";
+import { ReactComponent as WalletIconRewardGreen } from "../../../../commons/resources/icons/Staking/walletIconRewardGreen.svg";
 
-import Line from '../../../Line';
+import Line from "../../../Line";
 import {
   ADAAmountLabel,
   FeeBox,
@@ -111,7 +111,7 @@ const WithdrawTimeline = ({
   selected: WithdrawItem;
   setSelected: (withdraw: WithdrawItem | null) => void;
 }) => {
-  const { stakeId = '' } = useParams<{ stakeId: string }>();
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
   const history = useHistory();
   const { data, loading } = useFetch<WithdrawDetail>(
     selected.txHash && stakeId && API.STAKE_LIFECYCLE.WITHDRAW_DETAIL(stakeId, selected.txHash)
@@ -131,17 +131,17 @@ const WithdrawTimeline = ({
   }, [loading]);
 
   const handleBack = () => {
-    history.push(details.staking(stakeId, 'timeline', 'withdrawal-history'));
+    history.push(details.staking(stakeId, "timeline", "withdrawal-history"));
   };
 
   if (loading) {
     return (
       <Box>
-        <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} mt={1} mb={2}>
+        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
           <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
-          <Box display={'flex'}>
+          <Box display={"flex"}>
             <Info>
               <AddressIcon fill='#438F68' />
               <Box component={Skeleton} ml={1} variant='rectangular' width={145} height={18} />
@@ -156,21 +156,21 @@ const WithdrawTimeline = ({
             </Info>
           </Box>
         </Box>
-        <Box component={Skeleton} width={'100%'} height={400} variant='rectangular' borderRadius={12} />
+        <Box component={Skeleton} width={"100%"} height={400} variant='rectangular' borderRadius={12} />
       </Box>
     );
   }
   return (
     <Box>
-      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} mt={1} mb={2}>
+      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={'flex'}>
+        <Box display={"flex"}>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected.txHash}>
-              <InfoText>{getShortHash(selected.txHash || '')}</InfoText>
+              <InfoText>{getShortHash(selected.txHash || "")}</InfoText>
             </CustomTooltip>
             <StyledCopyButton text={selected.txHash} />
           </Info>
@@ -180,17 +180,17 @@ const WithdrawTimeline = ({
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>{formatDateTimeLocal(data?.time || '')}</InfoText>
+            <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
           </Info>
         </Box>
       </Box>
       <Box>
-        <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} flexWrap={'wrap'}>
+        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef} width={190} height={215}>
             <ADAHolderIcon />
           </Box>
           <Payment ref={boxWalletRef}>
-            <Box position={'relative'} ref={paymentWalletRef}>
+            <Box position={"relative"} ref={paymentWalletRef}>
               <PaymentWallet />
               <RewardWallet>
                 <Box component={IconButton} bgcolor={(theme) => alpha(theme.palette.common.white, 0.1)} p={0}>
@@ -202,7 +202,7 @@ const WithdrawTimeline = ({
                 <ADAicon />
               </RewardWallet>
             </Box>
-            <Box position={'relative'} ref={rewardAccountRef}>
+            <Box position={"relative"} ref={rewardAccountRef}>
               <RewardWithdraw />
               <RewardAccount>
                 <Box component={IconButton} bgcolor={(theme) => alpha(theme.palette.common.white, 0.1)} p={0}>
@@ -211,7 +211,7 @@ const WithdrawTimeline = ({
                 <Box mx={1} color={(theme) => theme.palette.common.white} fontSize={14}>
                   {formatADA(data?.stakeRewardAvailable || 0)}
                 </Box>
-                <ADAicon color={'white'} fontSize={14} />
+                <ADAicon color={"white"} fontSize={14} />
               </RewardAccount>
             </Box>
           </Payment>
@@ -230,7 +230,7 @@ const WithdrawTimeline = ({
                   </IconButton>
                 </NetAmount>
               )}
-              content={<PopupStaking hash={data?.txHash || ''} />}
+              content={<PopupStaking hash={data?.txHash || ""} />}
             />
             <PopoverStyled
               render={({ handleClick }) => (
@@ -244,23 +244,23 @@ const WithdrawTimeline = ({
                   </IconButton>
                 </Withdrawn>
               )}
-              content={<PopupStaking hash={data?.txHash || ''} />}
+              content={<PopupStaking hash={data?.txHash || ""} />}
             />
           </RoundBox>
 
           <Box
-            display={'flex'}
-            flexDirection={'column'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            position={'relative'}
+            display={"flex"}
+            flexDirection={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            position={"relative"}
           >
             <PopoverStyled
               render={({ handleClick }) => (
                 <FeeBox ml={1} ref={feesRef} width={200}>
                   <Box ref={feesBrigeRef} width={236} height={71} position={"absolute"} top={"-76px"} left={0}></Box>
                   <Box>
-                    <Box component={'span'} fontSize={'18px'} fontWeight={'bold'} mr={1}>
+                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
                       {formatADA(data?.fee || 0)}
                     </Box>
                     <ADAicon fontSize='18px' />
@@ -270,22 +270,22 @@ const WithdrawTimeline = ({
                   </IconButton>
                 </FeeBox>
               )}
-              content={<PopupStaking hash={data?.txHash || ''} />}
+              content={<PopupStaking hash={data?.txHash || ""} />}
             />
           </Box>
 
           <Box width={190} height={215} ref={cadarnoSystemRef}>
-            <img style={{ marginLeft: '5px' }} src={cadarnoSystem} alt='carrdano' />
+            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt='carrdano' />
           </Box>
 
           <svg
             style={{
-              position: 'absolute',
+              position: "absolute",
               top: 0,
               left: 0,
-              height: '100vh',
-              width: '100vw',
-              zIndex: '-1'
+              height: "100vh",
+              width: "100vw",
+              zIndex: "-1"
             }}
           >
             <ArrowDiagram

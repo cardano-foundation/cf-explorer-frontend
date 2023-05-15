@@ -1,7 +1,7 @@
-import { Box, alpha } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
+import { Box, alpha } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 
-import { ADAOrangeIcon } from '../../../../commons/resources';
+import { ADAOrangeIcon } from "../../../../commons/resources";
 
 import Line from "../../../Line";
 import { FeeBox, IconButton, RewarWallet } from "./styles";
@@ -37,8 +37,8 @@ const RewardsDistribution = ({
 }) => {
   const [openReceivedRewardsModal, setOpenReceivedRewardsModal] = useState(false);
 
-  const { stakeId = '' } = useParams<{ stakeId: string }>();
-  const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}` || '');
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}` || "");
 
   const cadarnoSystemRef = useRef(null);
   const adaIcon1Ref = useRef(null);
@@ -62,17 +62,17 @@ const RewardsDistribution = ({
         open={openReceivedRewardsModal}
         onClose={() => setOpenReceivedRewardsModal(false)}
       />
-      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} flexWrap={'wrap'}>
-        <Box display={'flex'} flex={3} justifyContent={'space-between'}>
+      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
+        <Box display={"flex"} flex={3} justifyContent={"space-between"}>
           <Box ref={cadarnoSystemRef} width={240} height={300}>
             <img src={CardarnoSystemReward} alt='CardarnoSystemReward' />
           </Box>
           <Box
-            py={'50px'}
-            display={'flex'}
-            flexDirection={'column'}
-            justifyContent={'space-between'}
-            alignItems={'center'}
+            py={"50px"}
+            display={"flex"}
+            flexDirection={"column"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
           >
             <Box width={60} height={70} ref={adaIcon1Ref}>
               <ADAOrangeIcon />
@@ -82,24 +82,24 @@ const RewardsDistribution = ({
             </Box>
           </Box>
           <Box
-            display={'flex'}
-            pt={'32px'}
-            pb={'35px'}
-            flexDirection={'column'}
-            justifyContent={'space-between'}
-            alignItems={'center'}
+            display={"flex"}
+            pt={"32px"}
+            pb={"35px"}
+            flexDirection={"column"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
           >
-            <Box display={'flex'} ref={adaHolderRef}>
+            <Box display={"flex"} ref={adaHolderRef}>
               <PopoverStyled
                 render={() => (
                   <Box ref={feeRef} width={270} height={100}>
                     <img src={ADAHolderVertical} alt='ADAHolderVertical' />
                   </Box>
                 )}
-                content={<PopupStaking hash={'1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy'} />}
+                content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
               />
             </Box>
-            <Box display={'flex'} ref={operatorRewardRef}>
+            <Box display={"flex"} ref={operatorRewardRef}>
               <PopoverStyled
                 render={() => (
                   <Box ref={fee2Ref} width={270} height={100}>
@@ -109,7 +109,7 @@ const RewardsDistribution = ({
                     />
                   </Box>
                 )}
-                content={<PopupStaking hash={'1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy'} />}
+                content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
               />
             </Box>
           </Box>
@@ -117,13 +117,13 @@ const RewardsDistribution = ({
         <Box
           onClick={() => setOpenReceivedRewardsModal(true)}
           flex={1}
-          display={'flex'}
-          justifyContent={'flex-end'}
+          display={"flex"}
+          justifyContent={"flex-end"}
           width={225}
           height={266}
         >
-          <Box position={'relative'} width={225} height={266}>
-            <img style={{ marginLeft: '5px' }} src={RewardsAccount} alt='carrdano' />
+          <Box position={"relative"} width={225} height={266}>
+            <img style={{ marginLeft: "5px" }} src={RewardsAccount} alt='carrdano' />
             <RewarWallet>
               <Box component={IconButton} bgcolor={(theme) => alpha(theme.palette.common.white, 0.1)} p={0}>
                 <WalletIconReward />
@@ -131,7 +131,7 @@ const RewardsDistribution = ({
               <Box color={(theme) => theme.palette.common.white} mx={1}>
                 {formatADA(data?.rewardAvailable || 0)}
               </Box>
-              <ADAicon color={'white'} />
+              <ADAicon color={"white"} />
             </RewarWallet>
           </Box>
         </Box>
@@ -139,12 +139,12 @@ const RewardsDistribution = ({
 
       <svg
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
-          height: '100vh',
-          width: '100vw',
-          zIndex: '-1'
+          height: "100vh",
+          width: "100vw",
+          zIndex: "-1"
         }}
       >
         <Line

@@ -11,8 +11,8 @@ describe("FilterReport", () => {
 
   it("should render options when click button", async () => {
     const onFilterValueChange = jest.fn();
-    render(<FilterReport onFilterValueChange={onFilterValueChange}/>);
-    
+    render(<FilterReport onFilterValueChange={onFilterValueChange} />);
+
     const elm = screen.getByText("Filter");
     await userEvent.click(elm);
     expect(screen.getByText("Date range")).toBeInTheDocument();
@@ -20,5 +20,4 @@ describe("FilterReport", () => {
     expect(screen.getByText("First - Latest")).toBeInTheDocument();
     expect(screen.getByText("Search report name")).toBeInTheDocument();
   });
-
 });

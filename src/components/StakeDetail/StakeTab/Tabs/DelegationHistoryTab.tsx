@@ -1,13 +1,13 @@
-import { Box } from '@mui/material';
-import { StyledLink } from '../styles';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { stringify } from 'qs';
-import useFetchList from '../../../../commons/hooks/useFetchList';
-import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from '../../../../commons/utils/helper';
-import Table, { Column } from '../../../commons/Table';
-import CustomTooltip from '../../../commons/CustomTooltip';
-import { details } from '../../../../commons/routers';
-import { API } from '../../../../commons/utils/api';
+import { Box } from "@mui/material";
+import { StyledLink } from "../styles";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import { stringify } from "qs";
+import useFetchList from "../../../../commons/hooks/useFetchList";
+import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import Table, { Column } from "../../../commons/Table";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import { details } from "../../../../commons/routers";
+import { API } from "../../../../commons/utils/api";
 
 const DelegationHistoryTab = ({ isMobile = false }) => {
   const { stakeId } = useParams<{ stakeId: string }>();
@@ -18,25 +18,25 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
 
   const columns: Column<DelegationHistory>[] = [
     {
-      title: 'Trx Hash',
-      key: 'hash',
-      minWidth: isMobile ? '245px' : '120px',
+      title: "Trx Hash",
+      key: "hash",
+      minWidth: isMobile ? "245px" : "120px",
       render: (r) => (
-        <CustomTooltip title={r.txHash || ''}>
-          <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash || '')}</StyledLink>
+        <CustomTooltip title={r.txHash || ""}>
+          <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash || "")}</StyledLink>
         </CustomTooltip>
       )
     },
     {
-      title: 'Time',
-      key: 'time',
-      minWidth: '120px',
-      render: (r) => formatDateTimeLocal(r.time || '')
+      title: "Time",
+      key: "time",
+      minWidth: "120px",
+      render: (r) => formatDateTimeLocal(r.time || "")
     },
     {
-      title: 'Block',
-      key: 'block',
-      minWidth: '120px',
+      title: "Block",
+      key: "block",
+      minWidth: "120px",
       render: (r) => (
         <Box>
           <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
@@ -47,22 +47,22 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
       )
     },
     {
-      title: 'Pool ID',
-      key: 'poolId',
-      minWidth: '120px',
+      title: "Pool ID",
+      key: "poolId",
+      minWidth: "120px",
       render: (r) => (
-        <CustomTooltip title={r.poolId || ''}>
-          <StyledLink to={details.delegation(r.poolId)}>{getShortHash(r.poolId || '')}</StyledLink>
+        <CustomTooltip title={r.poolId || ""}>
+          <StyledLink to={details.delegation(r.poolId)}>{getShortHash(r.poolId || "")}</StyledLink>
         </CustomTooltip>
       )
     },
     {
-      title: 'Pool Name',
-      key: 'poolName',
-      minWidth: '120px',
-      maxWidth: '200px',
+      title: "Pool Name",
+      key: "poolName",
+      minWidth: "120px",
+      maxWidth: "200px",
       render: (r) => {
-        let poolData: { name: string } = { name: '' };
+        let poolData: { name: string } = { name: "" };
         try {
           if (r.poolData) poolData = JSON.parse(r.poolData);
         } catch {
@@ -82,7 +82,7 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
     <Table
       {...fetchData}
       columns={columns}
-      total={{ title: 'Total', count: fetchData.total }}
+      total={{ title: "Total", count: fetchData.total }}
       pagination={{
         ...pageInfo,
         total: fetchData.total,

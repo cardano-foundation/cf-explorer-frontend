@@ -1,6 +1,6 @@
-import { Box, Grid, Skeleton, alpha, useTheme, styled } from '@mui/material';
-import { useRef, useState, useEffect } from 'react';
-import { Link as LinkDom } from 'react-router-dom';
+import { Box, Grid, Skeleton, alpha, useTheme, styled } from "@mui/material";
+import { useRef, useState, useEffect } from "react";
+import { Link as LinkDom } from "react-router-dom";
 
 import {
   ADAHolderIcon,
@@ -8,13 +8,13 @@ import {
   BackIcon,
   AddressIcon,
   ADAGreen,
-  TimeIcon,
+  TimeIcon
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import DelegationCertificateIcon from "../../../../commons/resources/icons/Staking/DelegationCertificateIcon.svg";
 import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
-import ADAicon, { AdaLogoIcon } from "../../../commons/ADAIcon";
+import { FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { AdaLogoIcon } from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentDelegations from "./RecentDelegations";
 import { useHistory, useParams } from "react-router";
@@ -26,10 +26,9 @@ import StyledModal from "../../../commons/StyledModal";
 import CopyButton from "../../../commons/CopyButton";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import { details } from "../../../../commons/routers";
-import moment from "moment";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
-import { useScreen } from "../../../../commons/hooks/useScreen";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 const Delegation = ({
   containerPosition,
@@ -97,15 +96,16 @@ const DelegationTimeline = ({
     top?: number;
     left?: number;
   };
+  setSelected: (item: DelegationItem | null) => void;
   handleResize: () => void;
   selected: DelegationItem | null;
 }) => {
   const theme = useTheme();
   const [openModal, setOpenModal] = useState(false);
-  const { stakeId = '' } = useParams<{ stakeId: string }>();
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
   const history = useHistory();
   const { data, loading } = useFetch<DelegationDetail>(
-    (selected && selected.txHash && stakeId && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stakeId, selected.txHash)) || ''
+    (selected && selected.txHash && stakeId && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stakeId, selected.txHash)) || ""
   );
 
   const adaHolderRef = useRef(null);
@@ -122,17 +122,17 @@ const DelegationTimeline = ({
   }, [loading, registrationRef.current]);
 
   const handleBack = () => {
-    history.push(details.staking(stakeId, 'timeline', 'delegation'));
+    history.push(details.staking(stakeId, "timeline", "delegation"));
   };
 
   if (loading) {
     return (
       <Box>
-        <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} mt={1} mb={2}>
+        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
           <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
-          <Box display={'flex'}>
+          <Box display={"flex"}>
             <Info>
               <AddressIcon fill='#438F68' />
               <Box component={Skeleton} ml={1} variant='rectangular' width={145} height={18} />
@@ -147,22 +147,22 @@ const DelegationTimeline = ({
             </Info>
           </Box>
         </Box>
-        <Box component={Skeleton} width={'100%'} height={400} variant='rectangular' borderRadius={12} />
+        <Box component={Skeleton} width={"100%"} height={400} variant='rectangular' borderRadius={12} />
       </Box>
     );
   }
 
   return (
     <Box>
-      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} mt={1} mb={2}>
+      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={'flex'}>
+        <Box display={"flex"}>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={data?.txHash}>
-              <InfoText>{getShortHash(data?.txHash || '')}</InfoText>
+              <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
             </CustomTooltip>
             <StyledCopyButton text={data?.txHash} />
           </Info>
@@ -172,25 +172,25 @@ const DelegationTimeline = ({
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>{formatDateTimeLocal(data?.time || '')}</InfoText>
+            <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
           </Info>
         </Box>
       </Box>
       <Box>
-        <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} flexWrap={'wrap'}>
+        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef} width={190} height={215}>
             <ADAHolderIcon />
           </Box>
-          <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
-            <Box display={'flex'} flex={1}>
+          <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
+            <Box display={"flex"} flex={1}>
               <PopoverStyled
                 render={({ handleClick }) => (
                   <FeeBox ref={feeRef} width={184} height={35}>
                     <Box>
                       <Box
-                        component={'span'}
-                        fontSize={'18px'}
-                        fontWeight={'bold'}
+                        component={"span"}
+                        fontSize={"18px"}
+                        fontWeight={"bold"}
                         mr={1}
                         color={(theme) => theme.palette.common.black}
                       >
@@ -203,7 +203,7 @@ const DelegationTimeline = ({
                     </IconButton>
                   </FeeBox>
                 )}
-                content={<PopupStaking hash={data?.txHash || ''} />}
+                content={<PopupStaking hash={data?.txHash || ""} />}
               />
             </Box>
           </Box>
@@ -213,12 +213,12 @@ const DelegationTimeline = ({
 
           <svg
             style={{
-              position: 'absolute',
+              position: "absolute",
               top: 0,
               left: 0,
-              height: '100vh',
-              width: '100vw',
-              zIndex: '-1'
+              height: "100vh",
+              width: "100vw",
+              zIndex: "-1"
             }}
           >
             <Line
@@ -271,12 +271,12 @@ const DelegationTimeline = ({
             />
           </svg>
         </Box>
-        <Box display={'flex'} justifyContent={'space-between'} position={'relative'} top={'-60px'}>
-          <Box ref={fake1Ref} width={'190px'} height={220}></Box>
+        <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
+          <Box ref={fake1Ref} width={"190px"} height={220}></Box>
           <Box component={IconButton} p={0} onClick={() => setOpenModal(true)}>
             <Box ref={registrationRef} width={220} height={220}>
               <Box
-                component={'img'}
+                component={"img"}
                 borderRadius={2}
                 border={({ palette }) => `2px solid ${palette.green[600]}`}
                 src={DelegationCertificateIcon}
@@ -284,11 +284,11 @@ const DelegationTimeline = ({
               />
             </Box>
           </Box>
-          <Box ref={fake2Ref} width={'190px'} height={220}></Box>
+          <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
       <DelegationCertificateModal
-        txHash={selected?.txHash || ''}
+        txHash={selected?.txHash || ""}
         open={openModal}
         handleCloseModal={() => setOpenModal(false)}
         stake={stakeId}
@@ -493,7 +493,7 @@ export const DelegationCertificateModal = ({
   handleCloseModal: () => void;
 }) => {
   const { data, loading } = useFetch<DelegationDetail>(
-    (txHash && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stake, txHash)) || ''
+    (txHash && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stake, txHash)) || ""
   );
 
   return (
@@ -501,43 +501,43 @@ export const DelegationCertificateModal = ({
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={'bold'} fontSize={'0.875rem'} color={({ palette }) => palette.grey[400]}>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Pool ID
             </Box>
             {loading && <Skeleton variant='rectangular' />}
             {data && !loading && (
               <Box>
                 <CustomTooltip title={data?.poolId}>
-                  <Link to={details.delegation(data?.poolId || '')}>{getShortWallet(data?.poolId || '')}</Link>
+                  <Link to={details.delegation(data?.poolId || "")}>{getShortWallet(data?.poolId || "")}</Link>
                 </CustomTooltip>
-                <CopyButton text={data?.poolId || ''} />
+                <CopyButton text={data?.poolId || ""} />
               </Box>
             )}
           </Box>
         </Grid>
         <Grid item xs={6}>
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={'bold'} fontSize={'0.875rem'} color={({ palette }) => palette.grey[400]}>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Pool Name
             </Box>
             {loading && <Skeleton variant='rectangular' />}
             {data && !loading && (
               <Box>
-                <Link to={details.delegation(data?.poolId || '')}>{data?.poolName || ''}</Link>{' '}
+                <Link to={details.delegation(data?.poolId || "")}>{data?.poolName || ""}</Link>{" "}
               </Box>
             )}
           </Box>
         </Grid>
         <Grid item xs={6}>
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={'bold'} fontSize={'0.875rem'} color={({ palette }) => palette.grey[400]}>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Stake Key
             </Box>
             {loading && <Skeleton variant='rectangular' />}
             {data && !loading && (
               <Box>
                 <CustomTooltip title={stake}>
-                  <Link to={details.stake(stake)}>{getShortWallet(stake || '')}</Link>
+                  <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link>
                 </CustomTooltip>
                 <CopyButton text={stake} />
               </Box>
@@ -550,6 +550,6 @@ export const DelegationCertificateModal = ({
 };
 
 const Link = styled(LinkDom)(({ theme }) => ({
-  fontSize: '0.875rem',
+  fontSize: "0.875rem",
   color: `${theme.palette.blue[800]} !important`
 }));

@@ -1,6 +1,6 @@
-import { Box, alpha, styled } from '@mui/material';
+import { Box, alpha, styled } from "@mui/material";
 
-export const NormalDescription = styled('span')`
+export const NormalDescription = styled("span")`
   position: relative;
   font-weight: 400;
   line-height: 21px;
@@ -18,7 +18,7 @@ export const WrapContent = styled(Box)`
   overflow-y: auto;
 `;
 
-export const Watermark = styled('span')`
+export const Watermark = styled("span")`
   position: absolute;
   top: 185px;
   z-index: 1;

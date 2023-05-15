@@ -1,4 +1,4 @@
-import { alpha, Box, Button, styled } from '@mui/material';
+import { alpha, Box, Button, styled } from "@mui/material";
 
 export const InfoValue = styled(Box)`
   font-weight: var(--font-weight-bold);
@@ -31,11 +31,11 @@ export const ButtonClose = styled(Button)`
   right: 10px;
 `;
 
-export const DropdownTitle = styled('h4')`
+export const DropdownTitle = styled("h4")`
   margin: 20px;
 `;
 
-export const DropdownList = styled('div')`
+export const DropdownList = styled("div")`
   margin: 20px;
   overflow-y: auto;
   max-height: 220px;

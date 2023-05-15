@@ -1,15 +1,15 @@
-import { styled, Box, IconButton } from '@mui/material';
+import { styled, Box, IconButton } from "@mui/material";
 
 export const ModalContainer = styled(Box)<{ width?: number | string; viewwidth?: string | number }>(
   ({ theme, width, viewwidth }) => ({
-    position: 'relative',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: `min(${viewwidth || '70'}vw, ${typeof width === 'string' ? width : `${width || 500}px`})`,
+    position: "relative",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: `min(${viewwidth || "70"}vw, ${typeof width === "string" ? width : `${width || 500}px`})`,
     backgroundColor: theme.palette.background.paper,
     borderRadius: 20,
-    textAlign: 'left'
+    textAlign: "left"
   })
 );
 
@@ -20,7 +20,7 @@ export const CloseButton = styled(IconButton)<{ saving: number }>`
   width: 30px;
   height: 30px;
   padding: 0;
-  border: 1px solid ${(props) => props.theme.palette.grey['A100']};
+  border: 1px solid ${(props) => props.theme.palette.grey["A100"]};
   cursor: ${(props) => (props.saving ? `wait` : `pointer`)};
   &:hover {
     ${(props) => (props.saving ? `background: none;` : ``)}

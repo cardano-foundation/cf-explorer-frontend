@@ -1,5 +1,5 @@
-import { AlertProps } from '@mui/material';
-import { addToast, removeToast } from '../../stores/toast';
+import { AlertProps } from "@mui/material";
+import { addToast, removeToast } from "../../stores/toast";
 
 type ToastFn = (message: React.ReactNode) => void;
 
@@ -12,7 +12,7 @@ interface FetchReturnType {
 
 const useToast = (): FetchReturnType => {
   const createToast =
-    (severity: AlertProps['severity']): ToastFn =>
+    (severity: AlertProps["severity"]): ToastFn =>
     (message: React.ReactNode, duration = 3000) => {
       const id = performance.now();
       addToast({ id, severity, message, duration });
@@ -20,10 +20,10 @@ const useToast = (): FetchReturnType => {
     };
 
   return {
-    error: createToast('error'),
-    success: createToast('success'),
-    warning: createToast('warning'),
-    info: createToast('info')
+    error: createToast("error"),
+    success: createToast("success"),
+    warning: createToast("warning"),
+    info: createToast("info")
   };
 };
 

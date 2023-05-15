@@ -1,12 +1,12 @@
-import { Box } from '@mui/system';
-import { useEffect, useState } from 'react';
-import useToast from '../../../commons/hooks/useToast';
-import { ACCOUNT_ERROR, NETWORK, NETWORK_TYPES } from '../../../commons/utils/constants';
-import { addPrivateNote, editPrivateNote } from '../../../commons/utils/userRequest';
-import StyledModal from '../../commons/StyledModal';
-import { StyledDarkLoadingButton, StyledHelperText, StyledInput, StyledLabelInput } from '../../share/styled';
-import { Title, WrapFormInput } from './styles';
-import { useScreen } from '../../../commons/hooks/useScreen';
+import { Box } from "@mui/system";
+import { useEffect, useState } from "react";
+import useToast from "../../../commons/hooks/useToast";
+import { ACCOUNT_ERROR, NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
+import { addPrivateNote, editPrivateNote } from "../../../commons/utils/userRequest";
+import StyledModal from "../../commons/StyledModal";
+import { StyledDarkLoadingButton, StyledHelperText, StyledInput, StyledLabelInput } from "../../share/styled";
+import { Title, WrapFormInput } from "./styles";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface IProps {
   open: boolean;
@@ -33,22 +33,22 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
 
   const handleSubmitData = async () => {
     if (txHash?.value && txHash.value?.length > 70) {
-      toast.error('Maximum reached!');
+      toast.error("Maximum reached!");
     } else
       try {
         setLoading(true);
         if (!currentNote) {
           const payload = {
-            note: privateNote?.value || '',
-            txHash: txHash?.value || '',
+            note: privateNote?.value || "",
+            txHash: txHash?.value || "",
             network: NETWORK_TYPES[NETWORK]
           };
           await addPrivateNote(payload);
         } else {
-          const payload = { note: privateNote?.value || '', noteId: currentNote.id };
+          const payload = { note: privateNote?.value || "", noteId: currentNote.id };
           await editPrivateNote(payload);
         }
-        toast.success(`${!currentNote ? 'Add' : 'Update'} transaction private note successfully!`);
+        toast.success(`${!currentNote ? "Add" : "Update"} transaction private note successfully!`);
         setTxHash(undefined);
         setPrivateNote(undefined);
         setLoading(false);
@@ -65,7 +65,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal}>
       <Box>
-        <Title>{currentNote ? 'View/Update' : 'Add'} My Transasaction Private Note</Title>
+        <Title>{currentNote ? "View/Update" : "Add"} My Transasaction Private Note</Title>
         <WrapFormInput>
           <StyledLabelInput>Transaction Hash</StyledLabelInput>
           <br />
@@ -75,7 +75,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
             onChange={(e) =>
               setTxHash({
                 value: e.target.value.slice(0, 70),
-                error: e.target.value.length > 70 ? 'Maximum reached!' : ''
+                error: e.target.value.length > 70 ? "Maximum reached!" : ""
               })
             }
             fullWidth={true}
@@ -84,7 +84,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
           <StyledHelperText>{txHash?.error}</StyledHelperText>
         </WrapFormInput>
         <WrapFormInput>
-          <StyledLabelInput>{currentNote ? 'View/ Update' : 'Add'} Private Note</StyledLabelInput>
+          <StyledLabelInput>{currentNote ? "View/ Update" : "Add"} Private Note</StyledLabelInput>
           <br />
           <StyledInput
             value={privateNote?.value}
@@ -103,7 +103,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
           onClick={handleSubmitData}
           fullWidth={isTablet}
         >
-          {currentNote ? 'Update' : 'Add'}
+          {currentNote ? "Update" : "Add"}
         </StyledDarkLoadingButton>
       </Box>
     </StyledModal>

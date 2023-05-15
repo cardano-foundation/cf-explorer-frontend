@@ -92,7 +92,7 @@ type TResetPassword = {
 };
 
 interface NonceObject {
-  message: 'SS_0' | 'SS_1';
+  message: "SS_0" | "SS_1";
   nonce: string;
   userId: number;
   walletId: number;

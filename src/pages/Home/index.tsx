@@ -1,10 +1,10 @@
-import { Container, styled } from '@mui/material';
-import React, { useEffect } from 'react';
-import LatestStories from '../../components/Home/LatestStories';
-import LatestTransactions from '../../components/Home/LatestTransactions';
-import HomeStatistic from '../../components/Home/Statistic';
-import TopDelegationPools from '../../components/Home/TopDelegationPools';
-import HomeTrending from '../../components/Home/Trending';
+import { Container, styled } from "@mui/material";
+import React, { useEffect } from "react";
+import LatestStories from "../../components/Home/LatestStories";
+import LatestTransactions from "../../components/Home/LatestTransactions";
+import HomeStatistic from "../../components/Home/Statistic";
+import TopDelegationPools from "../../components/Home/TopDelegationPools";
+import HomeTrending from "../../components/Home/Trending";
 
 const HomeContainer = styled(Container)`
   padding-top: 30px;

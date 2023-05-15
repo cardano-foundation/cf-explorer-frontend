@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { footerMenus, menus } from '../../../../../commons/menus';
+import React, { useState, useEffect } from "react";
+import { footerMenus, menus } from "../../../../../commons/menus";
 import {
   Menu,
   MenuIcon,
@@ -10,21 +10,21 @@ import {
   StyledCollapse,
   IconMenu,
   WrapNetwork
-} from './styles';
-import { Box, Collapse, Divider, Drawer, ListItem, useTheme } from '@mui/material';
-import { isExtenalLink } from '../../../../../commons/utils/helper';
-import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
-import SelectNetwork from '../../Header/SelectNetwork';
-import { useWindowSize } from 'react-use';
-import { setSidebar } from '../../../../../stores/user';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../../stores/types';
-import FooterMenu from '../FooterMenu';
-import CustomTooltip from '../../../CustomTooltip';
-import { useScreen } from '../../../../../commons/hooks/useScreen';
-import { LogoLink, NavBarLogo } from '../styles';
-import { LogoFullIcon } from '../../../../../commons/resources';
+} from "./styles";
+import { Box, Collapse, Divider, Drawer, ListItem, useTheme } from "@mui/material";
+import { isExtenalLink } from "../../../../../commons/utils/helper";
+import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+import SelectNetwork from "../../Header/SelectNetwork";
+import { useWindowSize } from "react-use";
+import { setSidebar } from "../../../../../stores/user";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../stores/types";
+import FooterMenu from "../FooterMenu";
+import CustomTooltip from "../../../CustomTooltip";
+import { useScreen } from "../../../../../commons/hooks/useScreen";
+import { LogoLink, NavBarLogo } from "../styles";
+import { LogoFullIcon } from "../../../../../commons/resources";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const pathname = history.location.pathname;
@@ -36,7 +36,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const getActive = () => {
     const active = menus.findIndex((menu) => {
       return menu?.children?.find((r) => {
-        return pathname.split('/').length > 2 ? r.href?.includes(pathname.split('/')[1]) : r.href === pathname;
+        return pathname.split("/").length > 2 ? r.href?.includes(pathname.split("/")[1]) : r.href === pathname;
       });
     });
 
@@ -44,7 +44,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
       return `menu-${active}`;
     }
 
-    return '';
+    return "";
   };
 
   const [active, setActive] = useState<string | null>(getActive());
@@ -52,7 +52,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     if (!sidebar) setActive(null);
   }, [sidebar]);
   useEffect(() => {
-    if (pathname === '/') setActive(null);
+    if (pathname === "/") setActive(null);
   }, [pathname]);
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   isExtenalLink(href) ? (
                     <ListItem
                       button
-                      onClick={(e) => window.open(href, '_blank')}
+                      onClick={(e) => window.open(href, "_blank")}
                       sx={(theme) => itemStyle(theme, sidebar)}
                     >
                       {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
@@ -145,7 +145,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
 
                     {sidebar &&
                       (children?.length ? (
-                        <IconMenu component={'span'}>
+                        <IconMenu component={"span"}>
                           {`menu-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
                         </IconMenu>
                       ) : null)}
@@ -162,12 +162,12 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           <ListItem
                             key={subIndex}
                             button
-                            onClick={(e) => window.open(href, '_blank')}
+                            onClick={(e) => window.open(href, "_blank")}
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
-                              paddingLeft: '70px',
+                              paddingLeft: "70px",
                               [theme.breakpoints.down(theme.breakpoints.values.md)]: {
-                                paddingLeft: '60px'
+                                paddingLeft: "60px"
                               }
                             })}
                           >
@@ -184,12 +184,12 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               ...(pathname === href ||
-                              (pathname.split('/').length > 2 && href.includes(pathname.split('/')[1]))
+                              (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1]))
                                 ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
                                 : {}),
-                              paddingLeft: '70px',
+                              paddingLeft: "70px",
                               [theme.breakpoints.down(theme.breakpoints.values.md)]: {
-                                paddingLeft: '60px'
+                                paddingLeft: "60px"
                               }
                             })}
                           >
@@ -206,7 +206,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                               open={sidebar ? 1 : 0}
                               active={
                                 pathname === href ||
-                                (pathname.split('/').length > 2 && href.includes(pathname.split('/')[1]))
+                                (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1]))
                                   ? 1
                                   : 0
                               }
@@ -223,9 +223,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
         })}
         <Divider
           sx={{
-            margin: '10px 0px 10px 30px',
+            margin: "10px 0px 10px 30px",
             width: sidebar ? 200 : 25,
-            transition: 'width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms'
+            transition: "width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms"
           }}
         />
         {footerMenus.map((item, index) => {
@@ -236,7 +236,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 isExtenalLink(href) ? (
                   <ListItem
                     button
-                    onClick={(e) => window.open(href, '_blank')}
+                    onClick={(e) => window.open(href, "_blank")}
                     sx={(theme) => itemStyle(theme, sidebar)}
                   >
                     {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
@@ -292,7 +292,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   />
                   {sidebar &&
                     (children?.length ? (
-                      <IconMenu component={'span'}>
+                      <IconMenu component={"span"}>
                         {`menu-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
                       </IconMenu>
                     ) : null)}
@@ -308,12 +308,12 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           <ListItem
                             key={subIndex}
                             button
-                            onClick={(e) => window.open(href, '_blank')}
+                            onClick={(e) => window.open(href, "_blank")}
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
-                              paddingLeft: '70px',
+                              paddingLeft: "70px",
                               [theme.breakpoints.down(theme.breakpoints.values.md)]: {
-                                paddingLeft: '60px'
+                                paddingLeft: "60px"
                               }
                             })}
                           >
@@ -332,9 +332,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                               ...(pathname === href
                                 ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
                                 : {}),
-                              paddingLeft: '70px',
+                              paddingLeft: "70px",
                               [theme.breakpoints.down(theme.breakpoints.values.md)]: {
-                                paddingLeft: '60px'
+                                paddingLeft: "60px"
                               }
                             })}
                           >
@@ -364,7 +364,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   if (isTablet) {
     return (
       <Drawer open={sidebar} onClose={() => setSidebar(false)}>
-        <Box position='relative' height='100vh' display={'flex'} flexDirection={'column'}>
+        <Box position='relative' height='100vh' display={"flex"} flexDirection={"column"}>
           <Box p='16px'>
             <LogoLink to='/'>
               <NavBarLogo src={LogoFullIcon} alt='logo desktop' />

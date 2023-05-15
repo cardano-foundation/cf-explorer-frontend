@@ -1,4 +1,4 @@
-import { Typography, styled } from '@mui/material';
+import { Typography, styled } from "@mui/material";
 
 export const TabLabel = styled(Typography)`
   font-size: 24px;

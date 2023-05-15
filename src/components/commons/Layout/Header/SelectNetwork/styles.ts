@@ -1,8 +1,8 @@
-import { alpha, styled } from '@mui/material';
-import { BiChevronDown } from 'react-icons/bi';
-import { Link } from 'react-router-dom';
+import { alpha, styled } from "@mui/material";
+import { BiChevronDown } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
-export const Menu = styled('ul')`
+export const Menu = styled("ul")`
   @include flex-center-start;
   display: flex;
   justify-content: center;
@@ -37,7 +37,7 @@ export const SubMenu = styled(Menu)<{ isActive: boolean }>`
   }
 `;
 
-export const MenuItem = styled('li')<{ hasChild: boolean }>`
+export const MenuItem = styled("li")<{ hasChild: boolean }>`
   text-align: left;
   cursor: pointer;
   ${(props) => (props.hasChild ? `padding-right: 22px;` : ``)}
@@ -78,7 +78,7 @@ export const InternalLink = styled(Link)<{ isSubMenu: boolean }>`
   }
 `;
 
-export const ExternalLink = styled('a')<{ isSubMenu: boolean }>`
+export const ExternalLink = styled("a")<{ isSubMenu: boolean }>`
   display: block;
   color: inherit;
   font-family: var(--font-family-title);

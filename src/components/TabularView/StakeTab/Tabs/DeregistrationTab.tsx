@@ -1,33 +1,33 @@
-import { Box, useTheme } from '@mui/material';
-import { useState } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
-import useFetchList from '../../../../commons/hooks/useFetchList';
-import { details } from '../../../../commons/routers';
-import { API } from '../../../../commons/utils/api';
-import { formatDateTimeLocal, getPageInfo, getShortHash } from '../../../../commons/utils/helper';
-import CustomTooltip from '../../../commons/CustomTooltip';
-import Table, { Column } from '../../../commons/Table';
-import { StyledLink, TableSubTitle } from '../styles';
-import { AdaValue } from './StakeRegistrationTab';
+import { Box, useTheme } from "@mui/material";
+import { useState } from "react";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import useFetchList from "../../../../commons/hooks/useFetchList";
+import { details } from "../../../../commons/routers";
+import { API } from "../../../../commons/utils/api";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import Table, { Column } from "../../../commons/Table";
+import { StyledLink, TableSubTitle } from "../styles";
+import { AdaValue } from "./StakeRegistrationTab";
 
 const DeregistrationTab = () => {
   const theme = useTheme();
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
-  const [sort, setSort] = useState<string>('');
+  const [sort, setSort] = useState<string>("");
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
 
-  const fetchData = useFetchList<DeregistrationItem>(stakeId ? API.STAKE_LIFECYCLE.DEREGISTRATION(stakeId) : '', {
+  const fetchData = useFetchList<DeregistrationItem>(stakeId ? API.STAKE_LIFECYCLE.DEREGISTRATION(stakeId) : "", {
     ...pageInfo,
     sort
   });
 
   const columns: Column<DeregistrationItem>[] = [
     {
-      title: 'Transaction Hash',
-      key: 'hash',
-      minWidth: '120px',
+      title: "Transaction Hash",
+      key: "hash",
+      minWidth: "120px",
       render: (r) => (
         <CustomTooltip title={r.txHash}>
           <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
@@ -35,12 +35,12 @@ const DeregistrationTab = () => {
       )
     },
     {
-      title: 'Timestamp',
-      key: 'time',
-      minWidth: '120px',
+      title: "Timestamp",
+      key: "time",
+      minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort('');
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
@@ -50,8 +50,8 @@ const DeregistrationTab = () => {
           <TableSubTitle>Hold/Fees</TableSubTitle>
         </>
       ),
-      key: 'block',
-      minWidth: '120px',
+      key: "block",
+      minWidth: "120px",
       render: (r) => (
         <Box>
           <AdaValue value={-r.deposit - r.fee} />
@@ -71,7 +71,7 @@ const DeregistrationTab = () => {
     <Table
       {...fetchData}
       columns={columns}
-      total={{ title: 'Total', count: fetchData.total }}
+      total={{ title: "Total", count: fetchData.total }}
       pagination={{
         ...pageInfo,
         total: fetchData.total,

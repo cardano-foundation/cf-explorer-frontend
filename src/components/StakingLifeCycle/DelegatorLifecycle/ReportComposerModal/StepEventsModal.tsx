@@ -1,74 +1,74 @@
-import { Box } from '@mui/material';
-import { Container } from '../../../Account/ActivityLogModal/styles';
-import StyledModal from '../../../commons/StyledModal';
-import { ButtonEvent, ModalTitle, StyledBackButton, StyledButton, StyledStack, SubText, TextRequired } from './styles';
-import { useState } from 'react';
-import { IPropsModal, STEPS } from '.';
-import { ReportType } from './FilledInfoModal';
-import { get } from 'lodash';
+import { Box } from "@mui/material";
+import { Container } from "../../../Account/ActivityLogModal/styles";
+import StyledModal from "../../../commons/StyledModal";
+import { ButtonEvent, ModalTitle, StyledBackButton, StyledButton, StyledStack, SubText, TextRequired } from "./styles";
+import { useState } from "react";
+import { IPropsModal, STEPS } from ".";
+import { ReportType } from "./FilledInfoModal";
+import { get } from "lodash";
 
 export enum RatioGroupValue {
-  yes = 'YES',
-  no = 'NO',
-  unTicked = 'UN_TICKED'
+  yes = "YES",
+  no = "NO",
+  unTicked = "UN_TICKED"
 }
 
 export enum OptionTransfer {
-  adaTransfer = 'ADA_TRANSFER',
-  feesPaid = 'FEES_PAID'
+  adaTransfer = "ADA_TRANSFER",
+  feesPaid = "FEES_PAID"
 }
 
-const SELECT_ALL = 'SELECT_ALL';
+const SELECT_ALL = "SELECT_ALL";
 
 export const EVENTS_NAME = [
   {
-    label: 'All',
+    label: "All",
     value: SELECT_ALL
   },
   {
-    label: 'Registration',
-    value: 'REGISTRATION',
+    label: "Registration",
+    value: "REGISTRATION",
     type: ReportType.StakeKeyReport
   },
 
   {
-    label: 'Rewards',
-    value: 'REWARDS',
+    label: "Rewards",
+    value: "REWARDS",
     type: ReportType.StakeKeyReport
   },
   {
-    label: 'Delegation',
-    value: 'DELEGATION',
+    label: "Delegation",
+    value: "DELEGATION",
     type: ReportType.StakeKeyReport
   },
   {
-    label: 'Withdraw funds',
-    value: 'WITHDRAWAL',
+    label: "Withdraw funds",
+    value: "WITHDRAWAL",
     type: ReportType.StakeKeyReport
   },
   {
-    label: 'Deregistration',
-    value: 'DEREGISTRATION',
+    label: "Deregistration",
+    value: "DEREGISTRATION",
     type: ReportType.StakeKeyReport
   },
   {
-    label: 'Registration',
-    value: 'registration',
+    label: "Registration",
+    value: "registration",
     type: ReportType.PoolReport
   },
   {
-    label: 'Pool Update',
-    value: 'pool_update',
+    label: "Pool Update",
+    value: "pool_update",
     type: ReportType.PoolReport
   },
   {
-    label: 'Reward',
-    value: 'reward',
+    label: "Reward",
+    value: "reward",
     type: ReportType.PoolReport
   },
   {
-    label: 'Deregistration',
-    value: 'deregistration',
+    label: "Deregistration",
+    value: "deregistration",
     type: ReportType.PoolReport
   }
 ];
@@ -78,7 +78,7 @@ const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   const [step1] = defaultParams || [];
 
   const handleSelectEvent = (id: string) => {
-    const allEventByType = EVENTS_NAME.filter(({ type }) => type === get(defaultParams, '0.reportType'));
+    const allEventByType = EVENTS_NAME.filter(({ type }) => type === get(defaultParams, "0.reportType"));
 
     if (id === SELECT_ALL) {
       if (eventsKey.length === allEventByType.length) {
@@ -113,11 +113,11 @@ const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
 
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
-      <Container p={'10px 10px 1px 20px'}>
+      <Container p={"10px 10px 1px 20px"}>
         <ModalTitle>Report composer</ModalTitle>
         <SubText>Staking lifecycle events</SubText>
         <TextRequired>Select as required</TextRequired>
-        <Box display={'flex'} flexWrap={'wrap'} gap='10px' marginTop={'20px'}>
+        <Box display={"flex"} flexWrap={"wrap"} gap='10px' marginTop={"20px"}>
           {events.map(({ label, value }) => {
             return (
               <ButtonEvent
@@ -130,7 +130,7 @@ const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             );
           })}
         </Box>
-        <StyledStack direction={'row'} display={'flex'} alignContent={'space-between'} gap={'20px'} mt={2}>
+        <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={"20px"} mt={2}>
           <StyledBackButton onClick={() => gotoStep?.(STEPS.step2)}>Previous</StyledBackButton>
           <StyledButton disabled={!eventsKey.length} onClick={handleSubmit}>
             Compose report

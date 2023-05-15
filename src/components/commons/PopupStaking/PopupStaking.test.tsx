@@ -27,9 +27,9 @@ test("run click popup staking navigate", async () => {
   const history = createMemoryHistory();
   render(
     <ThemeProvider theme={themes.light}>
-    <Router history={history}>
-      <PopupStaking hash={hash} />
-    </Router>
+      <Router history={history}>
+        <PopupStaking hash={hash} />
+      </Router>
     </ThemeProvider>
   );
   const aboutItem = screen.getByText(getShortHash(hash));

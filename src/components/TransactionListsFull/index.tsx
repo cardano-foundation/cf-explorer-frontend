@@ -1,8 +1,8 @@
-import { useHistory, useLocation } from 'react-router-dom';
-import { stringify } from 'qs';
-import { Box } from '@mui/material';
-import Card from '../commons/Card';
-import Table, { Column } from '../commons/Table';
+import { useHistory, useLocation } from "react-router-dom";
+import { stringify } from "qs";
+import { Box } from "@mui/material";
+import Card from "../commons/Card";
+import Table, { Column } from "../commons/Table";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -10,12 +10,12 @@ import {
   getShortHash,
   getShortWallet,
   numberWithCommas
-} from '../../commons/utils/helper';
-import { details } from '../../commons/routers';
-import { Label, StyledLink, StyledContainer } from './styles';
-import CustomTooltip from '../commons/CustomTooltip';
-import useFetchList from '../../commons/hooks/useFetchList';
-import ADAicon from '../commons/ADAIcon';
+} from "../../commons/utils/helper";
+import { details } from "../../commons/routers";
+import { Label, StyledLink, StyledContainer } from "./styles";
+import CustomTooltip from "../commons/CustomTooltip";
+import useFetchList from "../../commons/hooks/useFetchList";
+import ADAicon from "../commons/ADAIcon";
 
 interface TransactionListFullProps {
   underline?: boolean;
@@ -44,14 +44,14 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
 
   const columns: Column<Transactions>[] = [
     {
-      title: '#',
-      key: 'id',
+      title: "#",
+      key: "id",
       minWidth: 30,
       render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)
     },
     {
-      title: 'Tx Hash',
-      key: 'txhash',
+      title: "Tx Hash",
+      key: "txhash",
       minWidth: 120,
 
       render: (r) => (
@@ -59,13 +59,13 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
           <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
-          <Box mt={1}>{formatDateTimeLocal(r.time || '')}</Box>
+          <Box mt={1}>{formatDateTimeLocal(r.time || "")}</Box>
         </div>
       )
     },
     {
-      title: 'Block',
-      key: 'block',
+      title: "Block",
+      key: "block",
       minWidth: 120,
       render: (r) => (
         <Box>
@@ -81,13 +81,13 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: 'Addresses',
-      key: 'address',
+      title: "Addresses",
+      key: "address",
       minWidth: 120,
       render(r, index) {
         return (
           <div>
-            <Box display={'flex'}>
+            <Box display={"flex"}>
               <Label> Input: </Label>
               <div>
                 {r.addressesInput.slice(0, 1).map((tx, key) => {
@@ -106,7 +106,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
                 )}
               </div>
             </Box>
-            <Box display={'flex'} mt={1}>
+            <Box display={"flex"} mt={1}>
               <Label>Output: </Label>
               <div>
                 {r.addressesOutput.slice(0, 1).map((tx, key) => {
@@ -130,8 +130,8 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       }
     },
     {
-      title: 'Fee',
-      key: 'fee',
+      title: "Fee",
+      key: "fee",
       minWidth: 120,
       render: (r) => (
         <Box display='inline-flex' alignItems='center'>
@@ -141,9 +141,9 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: 'Output in ADA',
+      title: "Output in ADA",
       minWidth: 120,
-      key: 'ouput',
+      key: "ouput",
       render: (r) => (
         <Box display='inline-flex' alignItems='center'>
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
@@ -155,11 +155,11 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
 
   return (
     <StyledContainer>
-      <Card title={showTitle ? 'Transactions' : ''} underline={underline}>
+      <Card title={showTitle ? "Transactions" : ""} underline={underline}>
         <Table
           {...fetchData}
           columns={columns}
-          total={{ count: fetchData.total, title: 'Total Transactions' }}
+          total={{ count: fetchData.total, title: "Total Transactions" }}
           pagination={{
             ...pageInfo,
             total: fetchData.total,

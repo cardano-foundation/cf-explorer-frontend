@@ -1,19 +1,19 @@
-import { Box } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { useCallback, useState } from 'react';
+import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useCallback, useState } from "react";
 
-import { RootState } from '../../../stores/types';
-import { StyledButton, StyledHelper, StyledInput, StyledLabel, StyledRowItem, WrapRowItem } from './styles';
-import { editInfo, existEmail, existUserName, getInfo } from '../../../commons/utils/userRequest';
-import { regexEmail, removeAuthInfo, alphaNumeric } from '../../../commons/utils/helper';
+import { RootState } from "../../../stores/types";
+import { StyledButton, StyledHelper, StyledInput, StyledLabel, StyledRowItem, WrapRowItem } from "./styles";
+import { editInfo, existEmail, existUserName, getInfo } from "../../../commons/utils/userRequest";
+import { regexEmail, removeAuthInfo, alphaNumeric } from "../../../commons/utils/helper";
 
-import { setUserData } from '../../../stores/user';
-import { NETWORK, NETWORK_TYPES } from '../../../commons/utils/constants';
-import { useCardano } from '@cardano-foundation/cardano-connect-with-wallet';
-import { routers } from '../../../commons/routers';
-import { useHistory } from 'react-router-dom';
-import useToast from '../../../commons/hooks/useToast';
-import { useScreen } from '../../../commons/hooks/useScreen';
+import { setUserData } from "../../../stores/user";
+import { NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
+import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { routers } from "../../../commons/routers";
+import { useHistory } from "react-router-dom";
+import useToast from "../../../commons/hooks/useToast";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 type TRowItem = {
   label: string;
@@ -23,7 +23,7 @@ type TRowItem = {
   onChangeValue: (event: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   disabledButton?: boolean;
-  field: 'email' | 'username' | 'wallet';
+  field: "email" | "username" | "wallet";
   loading?: boolean;
 };
 
@@ -42,14 +42,14 @@ const RowItem: React.FC<TRowItem> = ({
   return (
     <WrapRowItem>
       <StyledLabel>{label}</StyledLabel>
-      <Box marginBottom={'40px'}>
+      <Box marginBottom={"40px"}>
         {!isTablet ? (
           <StyledRowItem>
             <StyledInput disabled={disabled || loading} value={value} onChange={onChangeValue} placeholder={label} />
             <StyledButton
               loading={loading}
               onClick={action}
-              disabled={(['email', 'username'].includes(field) && !value) || disabledButton}
+              disabled={(["email", "username"].includes(field) && !value) || disabledButton}
             >
               Change
             </StyledButton>
@@ -62,8 +62,8 @@ const RowItem: React.FC<TRowItem> = ({
             <StyledButton
               loading={loading}
               onClick={action}
-              disabled={(['email', 'username'].includes(field) && !value) || disabledButton}
-              sx={{ marginTop: '6px', marginLeft: 0 }}
+              disabled={(["email", "username"].includes(field) && !value) || disabledButton}
+              sx={{ marginTop: "6px", marginLeft: 0 }}
             >
               Change
             </StyledButton>
@@ -87,56 +87,56 @@ const AccountSettingTab: React.FC = () => {
   const [username, setUsername] = useState<TFieldInput>({ value: userData?.username });
   const [email, setEmail] = useState<TFieldInput>({ value: userData?.email });
   const [wallet, setWallet] = useState<TFieldInput>({ value: userData?.wallet });
-  const [loading, setLoading] = useState<'email' | 'username' | ''>('');
+  const [loading, setLoading] = useState<"email" | "username" | "">("");
   const toast = useToast();
 
   const fetchUserInfo = useCallback(async () => {
     try {
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-      setUserData({ ...response.data, loginType: userData?.loginType || '' });
+      setUserData({ ...response.data, loginType: userData?.loginType || "" });
     } catch (error) {
       //To do
     }
   }, []);
 
-  const onEditInfo = async (field: 'email' | 'username') => {
+  const onEditInfo = async (field: "email" | "username") => {
     try {
       let payload = {};
-      if (field === 'email') {
+      if (field === "email") {
         const checkEmail = (email?.value && regexEmail.test(email.value)) || !email.value;
         if (!checkEmail) {
-          return toast.error('Please enter a valid email Address e.g: abcxyz@gmail.com');
+          return toast.error("Please enter a valid email Address e.g: abcxyz@gmail.com");
         }
-        const checkExistEmail = await existEmail({ email: email.value || '' });
+        const checkExistEmail = await existEmail({ email: email.value || "" });
         if (checkExistEmail.data) {
-          return toast.error('Email existed, Please try another!');
+          return toast.error("Email existed, Please try another!");
         }
         payload = { email: email.value };
       } else {
         if ((username.value?.length || 0) < 5 || (username?.value?.length || 0) > 30)
           return toast.error(
-            'Username has to be from 5 to 30 characters in length, only alphanumeric characters allowed'
+            "Username has to be from 5 to 30 characters in length, only alphanumeric characters allowed"
           );
-        const checkExistUsername = await existUserName({ username: username.value || '' });
+        const checkExistUsername = await existUserName({ username: username.value || "" });
         if (checkExistUsername.data) {
-          return toast.error('This username existed, please enter another!');
+          return toast.error("This username existed, please enter another!");
         }
         payload = { username: username.value };
       }
       setLoading(field);
       const { data } = await editInfo(payload);
       if (data.userName || data.id) {
-        if (field === 'username') {
-          localStorage.setItem('token', data?.jwtToken);
-          localStorage.setItem('username', data?.username);
-          localStorage.setItem('email', data?.email);
+        if (field === "username") {
+          localStorage.setItem("token", data?.jwtToken);
+          localStorage.setItem("username", data?.username);
+          localStorage.setItem("email", data?.email);
         }
         await fetchUserInfo();
-        setLoading('');
+        setLoading("");
         return toast.success(`Your ${field} has been changed.`);
       }
     } catch (error) {
-      return toast.error((error as Error).message || 'Something went wrong!');
+      return toast.error((error as Error).message || "Something went wrong!");
     }
   };
 
@@ -157,16 +157,16 @@ const AccountSettingTab: React.FC = () => {
         value={username.value}
         errorMsg={username.errorMsg}
         onChangeValue={(event) => {
-          if (alphaNumeric.test(event.target.value || '')) return event.preventDefault();
+          if (alphaNumeric.test(event.target.value || "")) return event.preventDefault();
           if (event.target.value) {
-            setUsername({ value: event.target.value, errorMsg: '' });
+            setUsername({ value: event.target.value, errorMsg: "" });
           } else {
-            setUsername({ value: event.target.value, errorMsg: 'Username is required!' });
+            setUsername({ value: event.target.value, errorMsg: "Username is required!" });
           }
         }}
         field='username'
-        action={() => onEditInfo('username')}
-        loading={loading === 'username'}
+        action={() => onEditInfo("username")}
+        loading={loading === "username"}
       />
       <RowItem
         label='Your email address '
@@ -174,21 +174,21 @@ const AccountSettingTab: React.FC = () => {
         errorMsg={email.errorMsg}
         onChangeValue={(event) => {
           if (event.target.value) {
-            setEmail({ value: event.target.value, errorMsg: '' });
+            setEmail({ value: event.target.value, errorMsg: "" });
           } else {
-            setEmail({ value: event.target.value, errorMsg: 'Email is required!' });
+            setEmail({ value: event.target.value, errorMsg: "Email is required!" });
           }
         }}
         field='email'
         disabledButton={!email.value}
-        loading={loading === 'email'}
-        action={() => onEditInfo('email')}
+        loading={loading === "email"}
+        action={() => onEditInfo("email")}
       />
       <RowItem
         label='Connected Wallet '
         value={wallet.value}
         errorMsg={wallet.errorMsg}
-        onChangeValue={(event) => setWallet({ value: event.target.value, errorMsg: '' })}
+        onChangeValue={(event) => setWallet({ value: event.target.value, errorMsg: "" })}
         action={onTransferWallet}
         field='wallet'
       />

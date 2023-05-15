@@ -1,7 +1,7 @@
-import 'react-datepicker/dist/react-datepicker.css';
-import { Box } from '@mui/material';
-import { SelectDateButton, StyledDatePicker } from './styles';
-import { DateRangeIcon } from '../../commons/resources';
+import "react-datepicker/dist/react-datepicker.css";
+import { Box } from "@mui/material";
+import { SelectDateButton, StyledDatePicker } from "./styles";
+import { DateRangeIcon } from "../../commons/resources";
 
 export type IDate = Date | null;
 
@@ -17,7 +17,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
   const [startDate, endDate] = dateRange;
 
   return (
-    <Box position={'relative'}>
+    <Box position={"relative"}>
       <StyledDatePicker
         placeholderText='dd/mm/yyyy'
         selectsRange={true}

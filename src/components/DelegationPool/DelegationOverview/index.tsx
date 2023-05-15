@@ -1,13 +1,13 @@
-import { Box, Grid } from '@mui/material';
-import moment from 'moment';
-import React from 'react';
-import useFetch from '../../../commons/hooks/useFetch';
-import { CurentEpochIcon, LiveStakeIcon, RocketBackground } from '../../../commons/resources';
-import { details } from '../../../commons/routers';
-import { API } from '../../../commons/utils/api';
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from '../../../commons/utils/constants';
-import { formatADA, numberWithCommas } from '../../../commons/utils/helper';
-import { StyledCard, StyledImg, StyledLinearProgress, StyledSkeleton } from './styles';
+import { Box, Grid } from "@mui/material";
+import moment from "moment";
+import React from "react";
+import useFetch from "../../../commons/hooks/useFetch";
+import { CurentEpochIcon, LiveStakeIcon, RocketBackground } from "../../../commons/resources";
+import { details } from "../../../commons/routers";
+import { API } from "../../../commons/utils/api";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
+import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
+import { StyledCard, StyledImg, StyledLinearProgress, StyledSkeleton } from "./styles";
 
 const OverViews: React.FC = () => {
   const { data, loading } = useFetch<OverViewDelegation>(API.DELEGATION.HEADER, undefined, false, REFRESH_TIMES.POOLS);
@@ -28,7 +28,7 @@ const OverViews: React.FC = () => {
     );
   }
 
-  const duration = moment.duration(data?.countDownEndTime || 0, 'seconds');
+  const duration = moment.duration(data?.countDownEndTime || 0, "seconds");
 
   return (
     <Grid container spacing={2}>
@@ -38,7 +38,7 @@ const OverViews: React.FC = () => {
             <StyledCard.Title>Epoch</StyledCard.Title>
             <StyledCard.Link to={details.epoch(data?.epochNo)}>{data?.epochNo}</StyledCard.Link>
             <Box component='span' sx={{ color: (theme) => theme.palette.grey[400] }}>
-              End in:{' '}
+              End in:{" "}
               <StyledCard.Comment>
                 {duration.days()} day {duration.hours()} hours {duration.minutes()} minutes
               </StyledCard.Comment>
@@ -54,19 +54,19 @@ const OverViews: React.FC = () => {
             boxShadow={(theme) => theme.shadow.card}
             borderRadius='12px'
           >
-            <StyledCard.Container style={{ boxShadow: 'none' }}>
+            <StyledCard.Container style={{ boxShadow: "none" }}>
               <StyledCard.Content>
                 <StyledCard.Title>Slot</StyledCard.Title>
                 <StyledCard.Value>
                   {data?.epochSlotNo}
-                  <Box component='span' sx={{ color: (theme) => theme.palette.text.hint, fontWeight: '400' }}>
+                  <Box component='span' sx={{ color: (theme) => theme.palette.text.hint, fontWeight: "400" }}>
                     / {MAX_SLOT_EPOCH}
                   </Box>
                 </StyledCard.Value>
               </StyledCard.Content>
               <StyledImg src={RocketBackground} alt='Rocket' />
             </StyledCard.Container>
-            <Box position={'relative'} top={-30} px={4}>
+            <Box position={"relative"} top={-30} px={4}>
               <StyledLinearProgress variant='determinate' value={((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100} />
             </Box>
           </Box>
@@ -82,7 +82,7 @@ const OverViews: React.FC = () => {
             <StyledCard.Title>Delegators</StyledCard.Title>
             <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
           </StyledCard.Content>
-          <Box flex={'1'}>
+          <Box flex={"1"}>
             <StyledImg src={LiveStakeIcon} alt='Rocket' />
           </Box>
         </StyledCard.Container>

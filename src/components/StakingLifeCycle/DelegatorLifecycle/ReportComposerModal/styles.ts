@@ -1,7 +1,7 @@
-import { styled, Stack, Box, Button, TextField } from '@mui/material';
-import { SelectMui } from '../../../commons/Table/styles';
+import { styled, Stack, Box, Button, TextField } from "@mui/material";
+import { SelectMui } from "../../../commons/Table/styles";
 
-export const StyledLabel = styled('div')`
+export const StyledLabel = styled("div")`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
@@ -11,16 +11,16 @@ export const StyledLabel = styled('div')`
 
 export const StyledSelect = styled(SelectMui)(() => ({
   width: 200,
-  textAlign: 'left',
+  textAlign: "left",
   paddingLeft: 14,
-  '.MuiOutlinedInput-notchedOutline': {
+  ".MuiOutlinedInput-notchedOutline": {
     border: 0,
     borderRadius: 0,
-    borderRight: '1px solid #E3E5E9'
+    borderRight: "1px solid #E3E5E9"
   }
 }));
 
-export const ModalTitle = styled('div')`
+export const ModalTitle = styled("div")`
   font-weight: 700;
   color: #13152f;
   margin-bottom: 25px;
@@ -30,7 +30,7 @@ export const StyledStack = styled(Stack)`
   margin-bottom: 20px;
 `;
 
-export const TextWarning = styled('div')`
+export const TextWarning = styled("div")`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
@@ -80,27 +80,27 @@ export const StyledButton = styled(Button)`
 `;
 export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ width = 140 }) => ({
   width: `${width}%`,
-  borderRadius: '8px',
-  height: '44px',
-  textAlign: 'center',
-  color: '#344054',
-  lineHeight: '19px',
+  borderRadius: "8px",
+  height: "44px",
+  textAlign: "center",
+  color: "#344054",
+  lineHeight: "19px",
   fontWeight: 700,
-  border: '2px solid #c8cdd8',
-  ':hover': {
+  border: "2px solid #c8cdd8",
+  ":hover": {
     opacity: 0.8
   },
-  textTransform: 'none'
+  textTransform: "none"
 }));
 
-export const SubText = styled('div')`
+export const SubText = styled("div")`
   color: #000000;
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
 `;
 
-export const TextRequired = styled('div')`
+export const TextRequired = styled("div")`
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
@@ -109,8 +109,8 @@ export const TextRequired = styled('div')`
 `;
 
 export const ButtonEvent = styled(Button)<{ active: number }>`
-  background: ${(props) => (props.active ? '#667085' : '#f2f2f2')};
-  color: ${(props) => (props.active ? '#fff' : '#667085')};
+  background: ${(props) => (props.active ? "#667085" : "#f2f2f2")};
+  color: ${(props) => (props.active ? "#fff" : "#667085")};
   border-radius: 6px;
   height: 44px;
   align-items: center;
@@ -118,12 +118,12 @@ export const ButtonEvent = styled(Button)<{ active: number }>`
   gap: 10px;
   text-transform: Capitalize;
   &:hover {
-    background: ${(props) => (props.active ? '#f2f2f2' : '#667085')};
-    color: ${(props) => (props.active ? '#667085' : '#fff')};
+    background: ${(props) => (props.active ? "#f2f2f2" : "#667085")};
+    color: ${(props) => (props.active ? "#667085" : "#fff")};
   }
 `;
 
-export const TextLabelReview = styled('div')`
+export const TextLabelReview = styled("div")`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
@@ -131,7 +131,7 @@ export const TextLabelReview = styled('div')`
   opacity: 0.6;
 `;
 
-export const TextValueReview = styled('div')`
+export const TextValueReview = styled("div")`
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
@@ -139,7 +139,7 @@ export const TextValueReview = styled('div')`
   color: #000000;
 `;
 
-export const TextOverFlow = styled('div')`
+export const TextOverFlow = styled("div")`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

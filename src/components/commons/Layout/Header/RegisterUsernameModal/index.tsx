@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { authAxios } from '../../../../../commons/utils/axios';
-import { NETWORK, NETWORKS, NETWORK_TYPES } from '../../../../../commons/utils/constants';
-import { alphaNumeric, removeAuthInfo } from '../../../../../commons/utils/helper';
-import { RootState } from '../../../../../stores/types';
-import { setModalRegister } from '../../../../../stores/user';
-import StyledModal from '../../../StyledModal';
-import { Label, StyledTitle, TextError, TextNote, WrapButton } from './styles';
-import { StyledInput, StyledDarkLoadingButton } from '../../../../share/styled';
-import { FormHelperText } from '@mui/material';
-import { NetworkType, useCardano } from '@cardano-foundation/cardano-connect-with-wallet';
-import { existUserName } from '../../../../../commons/utils/userRequest';
-import useToast from '../../../../../commons/hooks/useToast';
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { authAxios } from "../../../../../commons/utils/axios";
+import { NETWORK, NETWORKS, NETWORK_TYPES } from "../../../../../commons/utils/constants";
+import { alphaNumeric, removeAuthInfo } from "../../../../../commons/utils/helper";
+import { RootState } from "../../../../../stores/types";
+import { setModalRegister } from "../../../../../stores/user";
+import StyledModal from "../../../StyledModal";
+import { Label, StyledTitle, TextError, TextNote, WrapButton } from "./styles";
+import { StyledInput, StyledDarkLoadingButton } from "../../../../share/styled";
+import { FormHelperText } from "@mui/material";
+import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { existUserName } from "../../../../../commons/utils/userRequest";
+import useToast from "../../../../../commons/hooks/useToast";
 interface IProps {
   nonce: NonceObject | null;
   signature: string;
@@ -23,8 +23,8 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIs
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
   const { wallet, address } = useSelector(({ user }: RootState) => user);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [value, setValue] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
+  const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
@@ -46,20 +46,20 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIs
       };
       const { data: isExistUsername } = await existUserName({ username: value });
       if (!isExistUsername) {
-        const { data } = await authAxios.post('auth/sign-up', payload);
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('username', data.username);
-        localStorage.setItem('refreshToken', data.refreshToken);
-        localStorage.setItem('walletId', data.walletId);
-        localStorage.setItem('email', data.email);
+        const { data } = await authAxios.post("auth/sign-up", payload);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("refreshToken", data.refreshToken);
+        localStorage.setItem("walletId", data.walletId);
+        localStorage.setItem("email", data.email);
         setIsSign(true);
         setModalRegister(false);
       } else {
-        setErrorMessage('This username is already taken, please choose another name');
+        setErrorMessage("This username is already taken, please choose another name");
       }
     } catch (error: any) {
       setErrorMessage(error.response?.data.errorMessage);
-      toast.error(error.response?.data.errorMessage || '');
+      toast.error(error.response?.data.errorMessage || "");
       disconnect();
       removeAuthInfo();
     } finally {
@@ -84,13 +84,13 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIs
         <StyledInput
           placeholder='Username'
           value={value}
-          style={{ width: '100%' }}
+          style={{ width: "100%" }}
           onChange={(e) => {
             const val = e.target.value;
             if (alphaNumeric.test(val) || val.length < 5 || val.length > 30) {
-              setErrorMessage('Please enter a valid username');
+              setErrorMessage("Please enter a valid username");
             } else {
-              setErrorMessage('');
+              setErrorMessage("");
             }
             setValue(val);
           }}

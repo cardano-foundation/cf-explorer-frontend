@@ -48,7 +48,6 @@ describe("DelegatorLifecycle timeline view", () => {
     expect(screen.getByText("Next: Rewards Withdrawal")).toBeInTheDocument();
   });
 
-
   it("should render Rewards Withdrawal", () => {
     render(
       <DelegatorLifecycle

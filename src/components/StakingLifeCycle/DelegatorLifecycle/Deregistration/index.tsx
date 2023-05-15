@@ -1,6 +1,6 @@
-import { alpha, Box, Skeleton, styled } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
-import { Link as LinkDom, useHistory, useParams } from 'react-router-dom';
+import { alpha, Box, Skeleton, styled } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
+import { Link as LinkDom, useHistory, useParams } from "react-router-dom";
 
 import {
   ADAHolderIcon,
@@ -87,7 +87,7 @@ const DeregistrationTimeline = ({
   handleResize: () => void;
   selected: DeregistrationItem;
 }) => {
-  const { stakeId = '' } = useParams<{ stakeId: string }>();
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
   const history = useHistory();
 
   const adaHolderRef = useRef(null);
@@ -105,20 +105,20 @@ const DeregistrationTimeline = ({
   }, [selected]);
 
   const handleBack = () => {
-    history.push(details.staking(stakeId, 'timeline', 'deregistration'));
+    history.push(details.staking(stakeId, "timeline", "deregistration"));
   };
 
   return (
     <Box>
-      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} mt={1} mb={2}>
+      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={'flex'}>
+        <Box display={"flex"}>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected.txHash}>
-              <InfoText>{getShortHash(selected.txHash || '')}</InfoText>
+              <InfoText>{getShortHash(selected.txHash || "")}</InfoText>
             </CustomTooltip>
             <StyledCopyButton text={selected.txHash} />
           </Info>
@@ -133,25 +133,25 @@ const DeregistrationTimeline = ({
         </Box>
       </Box>
       <Box>
-        <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} flexWrap={'wrap'}>
+        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef} width={190} height={215}>
             <ADAHolderIcon />
           </Box>
 
           <Box
-            display={'flex'}
-            flexDirection={'column'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            position={'relative'}
-            bottom={'-20px'}
+            display={"flex"}
+            flexDirection={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            position={"relative"}
+            bottom={"-20px"}
           >
-            <Box display={'flex'} flex={1}>
+            <Box display={"flex"} flex={1}>
               <PopoverStyled
                 render={({ handleClick }) => (
                   <HoldBox ref={holdRef} ml={1} width={200}>
                     <Box>
-                      <Box component={'span'} fontSize={'18px'} fontWeight={'bold'} mr={1}>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
                         {formatADA(Math.abs(selected.deposit) || 0)}
                       </Box>
                       <ADAicon fontSize='18px' />
@@ -161,13 +161,13 @@ const DeregistrationTimeline = ({
                     </IconButton>
                   </HoldBox>
                 )}
-                content={<PopupStaking hash={selected.txHash || ''} />}
+                content={<PopupStaking hash={selected.txHash || ""} />}
               />
               <PopoverStyled
                 render={({ handleClick }) => (
                   <FeeBox ref={feeRef} width={200}>
                     <Box>
-                      <Box component={'span'} fontSize={'18px'} fontWeight={'bold'} mr={1}>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
                         {formatADA(selected.fee || 0)}
                       </Box>
                       <ADAicon fontSize='18px' />
@@ -177,7 +177,7 @@ const DeregistrationTimeline = ({
                     </IconButton>
                   </FeeBox>
                 )}
-                content={<PopupStaking hash={selected.txHash || ''} />}
+                content={<PopupStaking hash={selected.txHash || ""} />}
               />
             </Box>
           </Box>
@@ -188,12 +188,12 @@ const DeregistrationTimeline = ({
 
           <svg
             style={{
-              position: 'absolute',
+              position: "absolute",
               top: 0,
               left: 0,
-              height: '100vh',
-              width: '100vw',
-              zIndex: '-1'
+              height: "100vh",
+              width: "100vw",
+              zIndex: "-1"
             }}
           >
             <Line
@@ -270,20 +270,20 @@ const DeregistrationTimeline = ({
             />
           </svg>
         </Box>
-        <Box display={'flex'} justifyContent={'space-between'} position={'relative'} top={'-20px'}>
-          <Box ref={fake1Ref} width={'190px'} height={220}></Box>
+        <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-20px"}>
+          <Box ref={fake1Ref} width={"190px"} height={220}></Box>
           <Box
             p={0}
             component={IconButton}
-            bgcolor={'transparent'}
+            bgcolor={"transparent"}
             onClick={() => setOpenModal(true)}
             ref={registrationRef}
             width={220}
             height={220}
           >
-            <Box component={'img'} borderRadius={2} src={DeregistrationCertificate} alt='DeregistrationCertificate' />
+            <Box component={"img"} borderRadius={2} src={DeregistrationCertificate} alt='DeregistrationCertificate' />
           </Box>
-          <Box ref={fake2Ref} width={'190px'} height={220}></Box>
+          <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
       <DeregistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
@@ -514,13 +514,13 @@ const DeregistrationCertificateModal = ({
         {loading && <Skeleton variant='rectangular' width={500} height={90} />}
         {!loading && (
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={'bold'} fontSize={'0.875rem'} color={({ palette }) => palette.grey[400]}>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Stake Key
             </Box>
             {data && (
               <Box>
                 <CustomTooltip title={stake}>
-                  <Link to={details.stake(stake)}>{getShortWallet(stake || '')}</Link>
+                  <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link>
                 </CustomTooltip>
                 <CopyButton text={stake} />
               </Box>
@@ -533,6 +533,6 @@ const DeregistrationCertificateModal = ({
 };
 
 const Link = styled(LinkDom)(({ theme }) => ({
-  fontSize: '0.875rem',
+  fontSize: "0.875rem",
   color: `${theme.palette.blue[800]} !important`
 }));
