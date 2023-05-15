@@ -1,5 +1,5 @@
-import { alpha, Box, styled } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { alpha, Box, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const Wrapper = styled(Box)`
   background: ${(props) => props.theme.palette.common.white};
@@ -28,15 +28,15 @@ export const StyledItem = styled(Box)`
 `;
 
 export const ItemContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  [theme.breakpoints.down('md')]: {
-    flexDirection: 'column',
-    alignItems: 'flex-start'
+  display: "flex",
+  alignItems: "center",
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+    alignItems: "flex-start"
   }
 }));
 
-export const StatusIcon = styled('img')`
+export const StatusIcon = styled("img")`
   padding-right: 10px;
   width: 35px;
 `;

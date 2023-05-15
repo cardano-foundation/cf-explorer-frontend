@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   AmountADARow,
   CustomModal,
@@ -11,17 +11,17 @@ import {
   RewardBalanceTitle,
   TableContainer,
   TotalTransaction
-} from './styles';
-import Table, { Column, ColumnType } from '../commons/Table';
-import { Box } from '@mui/material';
-import { ReceidvedRewardsIC, ADAsigntIC } from '../../commons/resources';
-import StyledModal from '../commons/StyledModal';
-import { useParams } from 'react-router-dom';
-import useFetchList from '../../commons/hooks/useFetchList';
-import { API } from '../../commons/utils/api';
-import { formatADA, formatADAFull, formatDateTimeLocal } from '../../commons/utils/helper';
-import ADAicon from '../commons/ADAIcon';
-import { details } from '../../commons/routers';
+} from "./styles";
+import Table, { Column, ColumnType } from "../commons/Table";
+import { Box } from "@mui/material";
+import { ReceidvedRewardsIC, ADAsigntIC } from "../../commons/resources";
+import StyledModal from "../commons/StyledModal";
+import { useParams } from "react-router-dom";
+import useFetchList from "../../commons/hooks/useFetchList";
+import { API } from "../../commons/utils/api";
+import { formatADA, formatADAFull, formatDateTimeLocal } from "../../commons/utils/helper";
+import ADAicon from "../commons/ADAIcon";
+import { details } from "../../commons/routers";
 
 interface ReceivedReward {
   amount: string;
@@ -31,9 +31,9 @@ interface ReceivedReward {
 
 export function getDumyData(n: number) {
   return Array.from(Array(10)).map((item, i) => ({
-    amountADA: '234154851.36871',
+    amountADA: "234154851.36871",
     epoch: 76543 + i,
-    date: '10/24/2022 14:09:02'
+    date: "10/24/2022 14:09:02"
   }));
 }
 
@@ -44,18 +44,18 @@ export interface ReceivedRewardsModalProps {
 }
 const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = false, onClose, reward = 0 }) => {
   const [params, setParams] = useState({ page: 0, size: 50 });
-  const { stakeId = '' } = useParams<{ stakeId: string }>();
-  const [sort, setSort] = useState<string>('');
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const [sort, setSort] = useState<string>("");
 
-  const fetchData = useFetchList<RewardDistributionItem>(stakeId ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) : '', {
+  const fetchData = useFetchList<RewardDistributionItem>(stakeId ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) : "", {
     ...params,
     sort
   });
 
   const columns: Column<ReceivedReward>[] = [
     {
-      key: 'amount',
-      title: 'Amount ADA',
+      key: "amount",
+      title: "Amount ADA",
       render(data, index) {
         return (
           <AmountADARow>
@@ -65,17 +65,17 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       }
     },
     {
-      key: 'epoch',
-      title: 'Epoch',
+      key: "epoch",
+      title: "Epoch",
       render(data, index) {
         return <EpochRow to={details.epoch(data.epoch)}>{data.epoch}</EpochRow>;
       }
     },
     {
-      key: 'time',
-      title: 'Date',
+      key: "time",
+      title: "Date",
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`id,${sortValue}`) : setSort('');
+        sortValue ? setSort(`id,${sortValue}`) : setSort("");
       },
       render(data, index) {
         return <Box>{formatDateTimeLocal(data.time)}</Box>;
@@ -98,7 +98,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
             <Table
               {...fetchData}
               columns={columns}
-              total={{ count: fetchData.total, title: 'Total Transactions' }}
+              total={{ count: fetchData.total, title: "Total Transactions" }}
               pagination={{
                 ...params,
                 total: fetchData.total,
@@ -106,7 +106,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
                   setParams({ page: page - 1, size });
                 }
               }}
-              maxHeight={'calc(70vh - 100px)'}
+              maxHeight={"calc(70vh - 100px)"}
             />
           </TableContainer>
         </ModalContent>

@@ -1,15 +1,15 @@
-import { Box } from '@mui/material';
-import { ReactElement } from 'react';
-import { Label, StyledAction, StyledRowItem, TextNote, Value, WalletAddress, WrapInfoItemMobile } from './styles';
-import { ReactComponent as Edit } from '../../../commons/resources/icons/pen.svg';
-import { ReactComponent as Search } from '../../../commons/resources/icons/search.svg';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../stores/types';
-import moment from 'moment';
-import CopyButton from '../../commons/CopyButton';
-import { useHistory } from 'react-router-dom';
-import { routers } from '../../../commons/routers';
-import { useScreen } from '../../../commons/hooks/useScreen';
+import { Box } from "@mui/material";
+import { ReactElement } from "react";
+import { Label, StyledAction, StyledRowItem, TextNote, Value, WalletAddress, WrapInfoItemMobile } from "./styles";
+import { ReactComponent as Edit } from "../../../commons/resources/icons/pen.svg";
+import { ReactComponent as Search } from "../../../commons/resources/icons/search.svg";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../stores/types";
+import moment from "moment";
+import CopyButton from "../../commons/CopyButton";
+import { useHistory } from "react-router-dom";
+import { routers } from "../../../commons/routers";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 type TRowItem = {
   label: string;
@@ -20,7 +20,7 @@ type TRowItem = {
 
 const RowItem: React.FC<TRowItem> = ({ label, value, action, isTablet }) => {
   return isTablet ? (
-    <StyledRowItem justifyContent={'space-between'}>
+    <StyledRowItem justifyContent={"space-between"}>
       <WrapInfoItemMobile>
         <Label>{label}</Label>
         <Value>{value}</Value>
@@ -37,7 +37,7 @@ const RowItem: React.FC<TRowItem> = ({ label, value, action, isTablet }) => {
 };
 
 interface IProps {
-  handleChangeTab: (value: 'overview' | 'setting') => void;
+  handleChangeTab: (value: "overview" | "setting") => void;
 }
 
 const OverviewTab: React.FC<IProps> = ({ handleChangeTab }) => {
@@ -52,7 +52,7 @@ const OverviewTab: React.FC<IProps> = ({ handleChangeTab }) => {
       <RowItem
         label='Your email address '
         value={userData?.email}
-        action={<Edit onClick={() => handleChangeTab('setting')} />}
+        action={<Edit onClick={() => handleChangeTab("setting")} />}
         isTablet={isTablet}
       />
       <RowItem
@@ -76,11 +76,11 @@ const OverviewTab: React.FC<IProps> = ({ handleChangeTab }) => {
           </Box>
         }
         isTablet={isTablet}
-        action={<Edit onClick={() => handleChangeTab('setting')} />}
+        action={<Edit onClick={() => handleChangeTab("setting")} />}
       />
       <RowItem
         label='Last Login'
-        value={moment(userData?.lastLogin).format('MM/DD/YYYY hh:mm:ss')}
+        value={moment(userData?.lastLogin).format("MM/DD/YYYY hh:mm:ss")}
         isTablet={isTablet}
       />
     </Box>

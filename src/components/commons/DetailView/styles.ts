@@ -1,36 +1,36 @@
-import { alpha, Box, Button, Drawer, IconButton, Skeleton, styled } from '@mui/material';
-import { FiInfo } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
-import { CONFIRMATION_STATUS, STAKE_KEY_STATUS, TRANSACTION_STATUS } from '../../../commons/utils/constants';
-import { BoxRaised } from '../BoxRaised';
+import { alpha, Box, Button, Drawer, IconButton, Skeleton, styled } from "@mui/material";
+import { FiInfo } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { CONFIRMATION_STATUS, STAKE_KEY_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
+import { BoxRaised } from "../BoxRaised";
 
 export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
-  '& > div': {
+  "& > div": {
     background: `${theme.palette.background.neutral}`,
-    border: 'none',
-    height: 'calc(100vh - 61px)',
-    [theme.breakpoints.down('md')]: {
-      display: 'flex',
-      height: 'calc(100vh - 80px)',
-      top: '80px'
+    border: "none",
+    height: "calc(100vh - 61px)",
+    [theme.breakpoints.down("md")]: {
+      display: "flex",
+      height: "calc(100vh - 80px)",
+      top: "80px"
     },
-    [theme.breakpoints.down('sm')]: {
-      right: 'auto',
-      width: '100%',
-      overflowY: 'hidden'
+    [theme.breakpoints.down("sm")]: {
+      right: "auto",
+      width: "100%",
+      overflowY: "hidden"
     }
   }
 }));
 
 export const ViewDetailHeader = styled(Box)(({ theme }) => ({
-  margin: '0px 30px 0px',
-  padding: '15px 0',
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
+  margin: "0px 30px 0px",
+  padding: "15px 0",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
   borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-  [theme.breakpoints.down('sm')]: {
-    margin: '0px 16px'
+  [theme.breakpoints.down("sm")]: {
+    margin: "0px 16px"
   }
 }));
 
@@ -40,32 +40,32 @@ export const CloseButton = styled(IconButton)`
 `;
 
 export const ViewDetailContainer = styled(Box)(({ theme }) => ({
-  position: 'relative',
-  width: '430px',
-  height: '100%',
-  overflowX: 'hidden',
-  overflowY: 'auto',
-  marginLeft: '30px',
-  textAlign: 'center',
-  [theme.breakpoints.down('sm')]: {
-    display: 'flex',
-    width: '100%',
-    marginLeft: '0px'
+  position: "relative",
+  width: "430px",
+  height: "100%",
+  overflowX: "hidden",
+  overflowY: "auto",
+  marginLeft: "30px",
+  textAlign: "center",
+  [theme.breakpoints.down("sm")]: {
+    display: "flex",
+    width: "100%",
+    marginLeft: "0px"
   }
 }));
 
 export const ViewDetailScroll = styled(Box)(({ theme }) => ({
-  width: '400px',
-  maxWidth: '400px',
-  marginRight: '16px',
-  overflowX: 'hidden',
-  overflow: 'hidden',
-  paddingTop: '15px',
-  [theme.breakpoints.down('sm')]: {
-    marginRight: '0px',
-    overflowY: 'auto',
-    width: '100%',
-    padding: '15px 16px'
+  width: "400px",
+  maxWidth: "400px",
+  marginRight: "16px",
+  overflowX: "hidden",
+  overflow: "hidden",
+  paddingTop: "15px",
+  [theme.breakpoints.down("sm")]: {
+    marginRight: "0px",
+    overflowY: "auto",
+    width: "100%",
+    padding: "15px 16px"
   }
 }));
 export const HeaderContainer = styled(Box)`
@@ -94,12 +94,12 @@ export const TokenHeader = styled(Box)`
   margin-bottom: 1rem;
 `;
 
-export const TokenTitleIcon = styled('img')`
+export const TokenTitleIcon = styled("img")`
   width: auto;
   min-width: 28px;
   height: 33px;
 `;
-export const TokenTitle = styled('h3')`
+export const TokenTitle = styled("h3")`
   color: ${(props) => props.theme.palette.primary.contrastText};
   margin: 0px;
 `;
@@ -117,18 +117,18 @@ export const TokenInfo = styled(Box)`
   margin-bottom: 10px;
 `;
 
-export const TokenName = styled('h4')`
+export const TokenName = styled("h4")`
   font-size: var(--font-size-text-large);
   color: ${(props) => props.theme.palette.primary.contrastText};
   margin: 0;
 `;
 
-export const TokenIcon = styled('img')`
+export const TokenIcon = styled("img")`
   width: auto;
   height: 36px;
 `;
 
-export const MetaData = styled('small')`
+export const MetaData = styled("small")`
   color: ${(props) => alpha(props.theme.palette.common.white, 0.5)};
   font-size: var(--font-size-text-x-small);
 `;
@@ -149,7 +149,7 @@ export const TokenDecimal = styled(Box)`
   border-left: 1px solid ${(props) => alpha(props.theme.palette.common.white, 0.1)};
 `;
 
-export const TokenInfoLabel = styled('small')`
+export const TokenInfoLabel = styled("small")`
   display: block;
   color: ${(props) => props.theme.palette.primary.contrastText};
   font-size: var(--font-size-text-x-small);
@@ -157,19 +157,19 @@ export const TokenInfoLabel = styled('small')`
   opacity: 0.5;
 `;
 
-export const TokenInfoValue = styled('span')`
+export const TokenInfoValue = styled("span")`
   display: block;
   width: 100%;
   color: ${(props) => props.theme.palette.primary.contrastText};
   font-weight: var(--font-weight-bold);
 `;
 
-export const EpochNumber = styled('h1')`
+export const EpochNumber = styled("h1")`
   color: ${(props) => props.theme.palette.primary.main};
   margin: 0;
 `;
 
-export const EpochText = styled('span')`
+export const EpochText = styled("span")`
   color: ${(props) => props.theme.palette.grey[400]};
   text-transform: uppercase;
 `;
@@ -194,13 +194,13 @@ export const Item = styled(Box)`
   padding: 15px;
 `;
 
-export const Icon = styled('img')`
+export const Icon = styled("img")`
   width: 24px;
   height: 24px;
   margin-bottom: 10px;
 `;
 
-export const ItemName = styled('small')`
+export const ItemName = styled("small")`
   font-size: var(--font-size-text-x-small);
   font-weight: var(--font-weight-bold);
   color: ${(props) => props.theme.palette.primary.contrastText};
@@ -208,7 +208,7 @@ export const ItemName = styled('small')`
   margin-bottom: 5px;
   opacity: 0.8;
 `;
-export const ItemValue = styled('h4')`
+export const ItemValue = styled("h4")`
   font-family: var(--font-family-text);
   font-size: var(--font-size-text-large);
   color: ${(props) => props.theme.palette.primary.contrastText};
@@ -217,7 +217,7 @@ export const ItemValue = styled('h4')`
   margin-bottom: 5px;
 `;
 
-export const BlockDefault = styled('small')`
+export const BlockDefault = styled("small")`
   color: ${(props) => props.theme.palette.primary.contrastText};
   font-weight: var(--font-weight-normal);
   opacity: 0.5;
@@ -231,7 +231,7 @@ export const DetailsInfoItem = styled(Box)`
   margin-bottom: 15px;
 `;
 
-export const DetailLabel = styled('small')`
+export const DetailLabel = styled("small")`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -244,7 +244,7 @@ export const InfoIcon = styled(FiInfo)`
   color: ${(props) => props.theme.palette.text.hint};
 `;
 
-export const DetailValue = styled('small')`
+export const DetailValue = styled("small")`
   color: ${(props) => props.theme.palette.common.black};
   font-weight: var(--font-weight-bold);
   display: flex;
@@ -252,7 +252,7 @@ export const DetailValue = styled('small')`
   align-items: center;
   gap: 5px;
 `;
-export const DelegatedDetail = styled('small')`
+export const DelegatedDetail = styled("small")`
   display: block;
   color: ${(props) => props.theme.palette.secondary.main};
   overflow: hidden;
@@ -281,7 +281,7 @@ export const Group = styled(Box)`
   border-bottom: 1px solid ${(props) => alpha(props.theme.palette.common.black, 0.1)};
 `;
 
-export const ProgressLiner = styled('div')<{ progress: number }>`
+export const ProgressLiner = styled("div")<{ progress: number }>`
   position: relative;
   width: 100%;
   background: ${(props) => alpha(props.theme.palette.common.black, 0.2)};
@@ -289,7 +289,7 @@ export const ProgressLiner = styled('div')<{ progress: number }>`
   margin-bottom: 10px;
   border-radius: 12px;
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -300,13 +300,13 @@ export const ProgressLiner = styled('div')<{ progress: number }>`
   }
 `;
 
-export const ProgressStatusText = styled('h4')`
+export const ProgressStatusText = styled("h4")`
   color: ${(props) => props.theme.palette.text.secondary};
   font-weight: var(--font-weight-normal);
   margin: 0;
 `;
 
-export const ProgressPercent = styled('h4')`
+export const ProgressPercent = styled("h4")`
   color: ${(props) => props.theme.palette.warning.main};
   font-weight: var(--font-weight-normal);
   margin: 0;
@@ -320,27 +320,27 @@ export const DetailLink = styled(Link)`
   font-family: var(--font-family-normal);
 `;
 
-export const DetailLinkIcon = styled('h3')`
+export const DetailLinkIcon = styled("h3")`
   color: ${(props) => props.theme.palette.primary.main};
   margin: 0;
   line-height: 1;
   margin-right: 10px;
 `;
 
-export const DetailLinkImage = styled('img')`
+export const DetailLinkImage = styled("img")`
   width: 1.5rem;
   height: 1.5rem;
 `;
 
-export const DetailLinkName = styled('h4')`
+export const DetailLinkName = styled("h4")`
   margin: 0;
   font-size: var(--font-size-text-large);
 `;
-export const DetailLinkRight = styled('span')`
+export const DetailLinkRight = styled("span")`
   color: ${(props) => props.theme.palette.grey[400]};
 `;
 
-export const TxStatus = styled('small')<{ status?: keyof typeof TransactionStatus }>`
+export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
   color: ${({ status, theme }) => {
     switch (status) {
       case TRANSACTION_STATUS.FAIL:
@@ -367,7 +367,7 @@ export const TxStatus = styled('small')<{ status?: keyof typeof TransactionStatu
   padding: 5px 10px;
   border-radius: 2px;
 `;
-export const ConfirmStatus = styled('small')<{ status?: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
   color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.HIGH:
@@ -402,12 +402,12 @@ export const TokenDetailInfo = styled(Box)`
   gap: 5px;
 `;
 
-export const TokenDetailName = styled('small')`
+export const TokenDetailName = styled("small")`
   color: ${(props) => props.theme.palette.common.black};
 `;
 
-export const TokenDetailIcon = styled('img')`
-  width: 'auto';
+export const TokenDetailIcon = styled("img")`
+  width: "auto";
   height: 30px;
 `;
 
@@ -428,7 +428,7 @@ export const SeemoreButton = styled(Link)`
   }
 `;
 
-export const SeemoreText = styled('span')`
+export const SeemoreText = styled("span")`
   color: ${(props) => props.theme.palette.primary.main};
   font-weight: var(--font-weight-bold);
 `;
@@ -469,7 +469,7 @@ export const StakeKeyLink = styled(StyledLink)`
   line-height: 1.575;
 `;
 
-export const StakeKeyStatus = styled('small')<{ status: StakeStatus }>`
+export const StakeKeyStatus = styled("small")<{ status: StakeStatus }>`
   color: ${(props) => {
     switch (props.status) {
       case STAKE_KEY_STATUS.ACTIVE:
@@ -499,10 +499,10 @@ export const LogoEmpty = styled(Box)`
   padding:3px: 10px;
 `;
 export const ButtonModal = styled(Button)(({ theme }) => ({
-  textTransform: 'capitalize',
+  textTransform: "capitalize",
   padding: 0,
-  textDecoration: 'underline',
-  ':hover': {
-    textDecoration: 'underline'
+  textDecoration: "underline",
+  ":hover": {
+    textDecoration: "underline"
   }
 }));

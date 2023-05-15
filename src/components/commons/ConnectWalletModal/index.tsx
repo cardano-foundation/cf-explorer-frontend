@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { setOpenModal, setWallet } from '../../../stores/user';
-import { NETWORK, SUPPORTED_WALLETS } from '../../../commons/utils/constants';
-import { CircularProgress } from '@mui/material';
-import { IoMdClose } from 'react-icons/io';
+import React, { useState } from "react";
+import { setOpenModal, setWallet } from "../../../stores/user";
+import { NETWORK, SUPPORTED_WALLETS } from "../../../commons/utils/constants";
+import { CircularProgress } from "@mui/material";
+import { IoMdClose } from "react-icons/io";
 import {
   CloseButton,
   ConnectOption,
@@ -13,12 +13,12 @@ import {
   WalletItem,
   WalletName,
   WrapContent
-} from './style';
-import { SupportedWallets, Wallet } from '../../../types/user';
-import { isWalletInstalled } from '@cardano-foundation/cardano-connect-with-wallet';
-import { MdOutlineFileDownload } from 'react-icons/md';
-import useToast from '../../../commons/hooks/useToast';
-import StyledModal from '../StyledModal';
+} from "./style";
+import { SupportedWallets, Wallet } from "../../../types/user";
+import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet";
+import { MdOutlineFileDownload } from "react-icons/md";
+import useToast from "../../../commons/hooks/useToast";
+import StyledModal from "../StyledModal";
 
 interface IProps {
   connect: (name: string, onSuccess: () => void, onError: (error: Error) => void) => Promise<any>;
@@ -39,16 +39,16 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
     onTriggerSignMessage();
   };
   const onError = (error: Error) => {
-    if (error.name === 'EnablementFailedError') {
+    if (error.name === "EnablementFailedError") {
       toast.error(
         `You are currently connect to ${
           NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()
         }, please switch to  ${NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()}!`
       );
-    } else if (error.name === 'WalletExtensionNotFoundError') {
+    } else if (error.name === "WalletExtensionNotFoundError") {
       //To Do
     } else {
-      toast.error('Something went wrong!');
+      toast.error("Something went wrong!");
     }
     setWalletConnecting(null);
   };
@@ -85,7 +85,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
     );
   };
   const handleOpenLink = (wallet: Wallet) => {
-    window.open(wallet.link, '_blank');
+    window.open(wallet.link, "_blank");
   };
   return (
     <WrapContainer>
@@ -101,7 +101,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
             >
               <GroupFlex>
                 <WalletName>{wallet.name}</WalletName>
-                {active ? <CircularProgress size={30} /> : ''}
+                {active ? <CircularProgress size={30} /> : ""}
               </GroupFlex>
               <GroupFlex>
                 {!isWalletInstalled(wallet.name.toLocaleLowerCase()) ? (

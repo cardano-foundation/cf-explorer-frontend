@@ -1,9 +1,9 @@
-import BigNumber from 'bignumber.js';
-import moment from 'moment';
-import { parse } from 'qs';
-import { setUserData } from '../../stores/user';
-import { getInfo, signIn } from './userRequest';
-import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES } from './constants';
+import BigNumber from "bignumber.js";
+import moment from "moment";
+import { parse } from "qs";
+import { setUserData } from "../../stores/user";
+import { getInfo, signIn } from "./userRequest";
+import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const alphaNumeric = /[^0-9a-zA-Z]/;
@@ -11,15 +11,15 @@ export const alphaNumeric = /[^0-9a-zA-Z]/;
 // eslint-disable-next-line no-useless-escape
 export const regexEmail = /^[\w\.\+\-]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-export const getShortWallet = (address = '') => {
+export const getShortWallet = (address = "") => {
   return `${address.slice(0, 5)}...${address.slice(-5)}`;
 };
 
-export const getShortHash = (address = '') => {
+export const getShortHash = (address = "") => {
   return `${address.slice(0, 10)}...${address.slice(-7)}`;
 };
 
-export const LARGE_NUMBER_ABBREVIATIONS = ['', 'K', 'M', 'B', 'T', 'q', 'Q', 's', 'S'];
+export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "T", "q", "Q", "s", "S"];
 
 export const formatPrice = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
   if (!value) return `0${abbreviations[0]}`;
@@ -35,11 +35,11 @@ export const formatPrice = (value?: string | number, abbreviations: string[] = L
 };
 
 export const numberWithCommas = (value?: number | string, decimal = 0) => {
-  if (!value) return '0';
+  if (!value) return "0";
   const formated = Number(value)
     .toFixed(decimal)
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-  return formated.replace(/^-?0*(\d+)/, '$1');
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  return formated.replace(/^-?0*(\d+)/, "$1");
 };
 
 export const formatADA = (
@@ -84,7 +84,7 @@ export const exchangeADAToUSD = (value: number | string, rate: number, isFull?: 
 
 export const handleClicktWithoutAnchor = (e: React.MouseEvent, fn: (e: React.MouseEvent) => void): void => {
   let parent: Element | null = e.target as Element;
-  while (parent !== null && parent?.tagName !== 'A' && parent?.tagName !== 'BUTTON') {
+  while (parent !== null && parent?.tagName !== "A" && parent?.tagName !== "BUTTON") {
     parent = parent?.parentElement;
   }
   if (parent) {
@@ -93,25 +93,25 @@ export const handleClicktWithoutAnchor = (e: React.MouseEvent, fn: (e: React.Mou
   fn(e);
 };
 
-export const isExtenalLink = (href?: string) => href && (href.search('http://') >= 0 || href.search('https://') >= 0);
+export const isExtenalLink = (href?: string) => href && (href.search("http://") >= 0 || href.search("https://") >= 0);
 export const formatPercent = (percent?: number) => `${Math.round((percent || 0) * 100 * 100) / 100}%`;
 
 export const getPageInfo = (search: string): { page: number; size: number } => {
-  const query = parse(search.split('?')[1]);
+  const query = parse(search.split("?")[1]);
   const page = Number(query.page) > 0 ? Number(query.page) - 1 : 0;
   const size = Number(query.size) > 0 ? Number(query.size) : 50;
   return { page, size };
 };
 
 export const removeAuthInfo = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('username');
-  localStorage.removeItem('refreshToken');
-  localStorage.removeItem('walletId');
-  localStorage.removeItem('email');
-  localStorage.removeItem('persist:user');
-  localStorage.setItem('cf-wallet-connected', 'false');
-  localStorage.removeItem('cf-last-connected-wallet');
+  localStorage.removeItem("token");
+  localStorage.removeItem("username");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("walletId");
+  localStorage.removeItem("email");
+  localStorage.removeItem("persist:user");
+  localStorage.setItem("cf-wallet-connected", "false");
+  localStorage.removeItem("cf-last-connected-wallet");
   setUserData(null);
 };
 
@@ -125,15 +125,15 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
     const response = await signIn(payload);
     const data = response.data;
 
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('username', data.username);
-    localStorage.setItem('refreshToken', data.refreshToken);
-    localStorage.setItem('walletId', data.walletId);
-    localStorage.setItem('email', data.email);
-    localStorage.setItem('login-type', 'normal');
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("username", data.username);
+    localStorage.setItem("refreshToken", data.refreshToken);
+    localStorage.setItem("walletId", data.walletId);
+    localStorage.setItem("email", data.email);
+    localStorage.setItem("login-type", "normal");
 
     const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-    setUserData({ ...userInfo.data, loginType: 'normal' });
+    setUserData({ ...userInfo.data, loginType: "normal" });
     cbSuccess?.();
   } catch (error) {
     removeAuthInfo();
@@ -141,17 +141,17 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
 };
 
 export const formatDateTime = (date: string) => {
-  return moment(date).format('MM/DD/YYYY HH:mm:ss');
+  return moment(date).format("MM/DD/YYYY HH:mm:ss");
 };
 export const formatDateTimeLocal = (date: string) => {
-  return moment(moment(`${date} GMT+0000`).local(true)).format('MM/DD/YYYY HH:mm:ss');
+  return moment(moment(`${date} GMT+0000`).local(true)).format("MM/DD/YYYY HH:mm:ss");
 };
 
 export const getEpochSlotNo = (data: IDataEpoch) => {
-  if (data.status === 'FINISHED') {
+  if (data.status === "FINISHED") {
     return MAX_SLOT_EPOCH;
   }
-  return moment().diff(moment(data.startTime), 'seconds');
+  return moment().diff(moment(data.startTime), "seconds");
 };
 
 export function formatHash(hash: string): string {

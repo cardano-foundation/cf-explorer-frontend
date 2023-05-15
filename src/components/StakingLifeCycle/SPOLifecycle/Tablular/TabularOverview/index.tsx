@@ -1,7 +1,7 @@
-import { Box, BoxProps, Grid, Icon, IconButton, Typography } from '@mui/material';
-import { useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import useFetch from '../../../../../commons/hooks/useFetch';
+import { Box, BoxProps, Grid, Icon, IconButton, Typography } from "@mui/material";
+import { useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import useFetch from "../../../../../commons/hooks/useFetch";
 import {
   BgBlue,
   BgCardWhite,
@@ -12,14 +12,14 @@ import {
   ReewardAvalible,
   StatusIC,
   WalletGreenIcon
-} from '../../../../../commons/resources';
-import { API } from '../../../../../commons/utils/api';
-import { formatADAFull, formatHash } from '../../../../../commons/utils/helper';
-import { CardOverview, CardTitle, CardValue, ClickAbleLink, ViewMoreButton, WrapIcon, WrapWalletIcon } from './styles';
-import { DotsIcon } from '../../../../PoolRegistrationCertificate/styles';
-import ViewMoreAddressModal from '../../../../ViewMoreAddressModal';
-import { useScreen } from '../../../../../commons/hooks/useScreen';
-import { details } from '../../../../../commons/routers';
+} from "../../../../../commons/resources";
+import { API } from "../../../../../commons/utils/api";
+import { formatADAFull, formatHash } from "../../../../../commons/utils/helper";
+import { CardOverview, CardTitle, CardValue, ClickAbleLink, ViewMoreButton, WrapIcon, WrapWalletIcon } from "./styles";
+import { DotsIcon } from "../../../../PoolRegistrationCertificate/styles";
+import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
+import { useScreen } from "../../../../../commons/hooks/useScreen";
+import { details } from "../../../../../commons/routers";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -34,16 +34,16 @@ export interface OverviewCardProps {
 }
 
 const STATUS = {
-  ACTIVE: ['Active', 'rgb(0,128,0)'],
-  INACTIVE: ['Inactive', 'rgb(255,0,0)'],
-  RETIRING: ['Retiring ', 'rgb(255,153,0)']
+  ACTIVE: ["Active", "rgb(0,128,0)"],
+  INACTIVE: ["Inactive", "rgb(255,0,0)"],
+  RETIRING: ["Retiring ", "rgb(255,153,0)"]
 };
 
 type TGridItem = {
   action?: React.ReactNode;
   title: string;
   value: React.ReactNode;
-  bgType: 'blue' | 'green' | 'red' | 'white';
+  bgType: "blue" | "green" | "red" | "white";
   mainIcon: React.ReactNode;
 };
 
@@ -75,8 +75,8 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
 
 const TabularOverview: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const { poolId = '' } = useParams<{ poolId: string }>();
-  const { data } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : '');
+  const { poolId = "" } = useParams<{ poolId: string }>();
+  const { data } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : "");
   const history = useHistory();
   const onOwnerItemClick = (key: string) => {
     return history.push(`/stake/${key}/delegation`);
@@ -101,7 +101,7 @@ const TabularOverview: React.FC = () => {
           mainIcon={<StatusIC />}
           value={
             <Box display='flex' alignItems='center'>
-              <CardValue color={STATUS[data?.status ?? 'ACTIVE'][1]}>{STATUS[data?.status ?? 'ACTIVE'][0]} :</CardValue>
+              <CardValue color={STATUS[data?.status ?? "ACTIVE"][1]}>{STATUS[data?.status ?? "ACTIVE"][0]} :</CardValue>
               <ClickAbleLink to={details.epoch(data?.epochNo)}>&nbsp; Epoch {data?.epochNo}</ClickAbleLink>
             </Box>
           }
@@ -124,7 +124,7 @@ const TabularOverview: React.FC = () => {
             <Box display='flex' alignItems='center'>
               <CardValue>
                 <ClickAbleLink
-                  to={details.stake((data?.stakeKeys && data?.stakeKeys.length && data.stakeKeys[0]) || '#')}
+                  to={details.stake((data?.stakeKeys && data?.stakeKeys.length && data.stakeKeys[0]) || "#")}
                 >
                   {data?.stakeKeys && data?.stakeKeys.length && formatHash(data.stakeKeys[0])}
                 </ClickAbleLink>

@@ -1,20 +1,20 @@
-import { Box } from '@mui/material';
-import TabularOverview from '../../../TabularView/TabularOverview';
-import StakeTab from '../../../TabularView/StakeTab';
+import { Box } from "@mui/material";
+import TabularOverview from "../../../TabularView/TabularOverview";
+import StakeTab from "../../../TabularView/StakeTab";
 import {
   DelegationIcon,
   DeredistrationIcon,
   RegistrationIcon,
   RewardsDistributionIcon,
   RewardsWithdrawalIcon
-} from '../../../../commons/resources';
-import StakeRegistrationTab from '../../../TabularView/StakeTab/Tabs/StakeRegistrationTab';
-import DelegationTab from '../../../TabularView/StakeTab/Tabs/DelegationTab';
-import RewardsDistributionTab from '../../../TabularView/StakeTab/Tabs/RewardsDistributionTab';
-import WithdrawalHistoryTab from '../../../TabularView/StakeTab/Tabs/WithdrawalHistoryTab';
-import DeregistrationTab from '../../../TabularView/StakeTab/Tabs/DeregistrationTab';
-import { useHistory, useParams } from 'react-router';
-import { details } from '../../../../commons/routers';
+} from "../../../../commons/resources";
+import StakeRegistrationTab from "../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import DelegationTab from "../../../TabularView/StakeTab/Tabs/DelegationTab";
+import RewardsDistributionTab from "../../../TabularView/StakeTab/Tabs/RewardsDistributionTab";
+import WithdrawalHistoryTab from "../../../TabularView/StakeTab/Tabs/WithdrawalHistoryTab";
+import DeregistrationTab from "../../../TabularView/StakeTab/Tabs/DeregistrationTab";
+import { useHistory, useParams } from "react-router";
+import { details } from "../../../../commons/routers";
 
 const tabs: {
   icon: React.FC;
@@ -24,41 +24,41 @@ const tabs: {
 }[] = [
   {
     icon: RegistrationIcon,
-    label: 'Stake Key Registration',
-    key: 'registration',
+    label: "Stake Key Registration",
+    key: "registration",
     component: <StakeRegistrationTab />
   },
   {
     icon: DelegationIcon,
-    label: 'Delegation History',
-    key: 'delegation',
+    label: "Delegation History",
+    key: "delegation",
     component: <DelegationTab />
   },
   {
     icon: RewardsDistributionIcon,
-    label: 'Rewards Distribution',
-    key: 'rewards',
+    label: "Rewards Distribution",
+    key: "rewards",
     component: <RewardsDistributionTab />
   },
   {
     icon: RewardsWithdrawalIcon,
-    label: 'Withdrawal History',
-    key: 'withdrawal-history',
+    label: "Withdrawal History",
+    key: "withdrawal-history",
     component: <WithdrawalHistoryTab />
   },
   {
     icon: DeredistrationIcon,
-    label: 'Deregistration',
-    key: 'deregistration',
+    label: "Deregistration",
+    key: "deregistration",
     component: <DeregistrationTab />
   }
 ];
 const Tablular = () => {
-  const { stakeId = '', tab = 'registration' } = useParams<{ stakeId: string; tab: DelegationStep }>();
+  const { stakeId = "", tab = "registration" } = useParams<{ stakeId: string; tab: DelegationStep }>();
   const history = useHistory();
 
   const onChangeTab = (tab: any) => {
-    history.push(details.staking(stakeId, 'tablular', tab));
+    history.push(details.staking(stakeId, "tablular", tab));
   };
 
   return (

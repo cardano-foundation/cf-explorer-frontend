@@ -1,5 +1,5 @@
-import { MainContent, WrapTopSearch } from './styles';
-import HeaderSearch from '../../Header/HeaderSearch';
+import { MainContent, WrapTopSearch } from "./styles";
+import HeaderSearch from "../../Header/HeaderSearch";
 
 type TProps = {
   open: boolean;

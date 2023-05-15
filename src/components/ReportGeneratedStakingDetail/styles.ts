@@ -1,4 +1,4 @@
-import { Typography, styled } from '@mui/material';
+import { Typography, styled } from "@mui/material";
 
 export const TableTittle = styled(Typography)`
   text-align: left;

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Option } from '../components/commons/Filter';
+import React from "react";
+import { Option } from "../components/commons/Filter";
 export interface ColumnType {
   [key: string | number | symbol]: any;
 }
@@ -17,14 +17,14 @@ export interface Column<T extends ColumnType = any> {
 
 export type TableHeaderProps<T extends ColumnType> = Pick<
   TableProps<T>,
-  'columns' | 'loading' | 'defaultSort' | 'showTabView' | 'selected'
+  "columns" | "loading" | "defaultSort" | "showTabView" | "selected"
 > & {
   selectable?: boolean;
   toggleSelectAll?: (checked: boolean) => void;
   isSelectAll?: boolean;
 };
 
-export type TableRowProps<T extends ColumnType> = Pick<TableProps, 'columns'> & {
+export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
   row: T;
   dataLength?: number;
   index: number;
@@ -84,8 +84,8 @@ export interface TableProps<T extends ColumnType = any> {
 }
 
 export interface FooterTableProps {
-  total: TableProps['total'];
-  pagination: TableProps['pagination'];
+  total: TableProps["total"];
+  pagination: TableProps["pagination"];
   loading: boolean;
   clearSelection?: () => void;
 }

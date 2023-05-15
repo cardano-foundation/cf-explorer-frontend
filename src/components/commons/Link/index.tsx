@@ -1,5 +1,5 @@
-import { styled } from '@mui/material';
-import { Link as LinkDom, LinkProps } from 'react-router-dom';
+import { styled } from "@mui/material";
+import { Link as LinkDom, LinkProps } from "react-router-dom";
 
 const Link: React.FC<LinkProps & { children: React.ReactNode }> = ({ children, ...props }) => {
   return <LinkStyled {...props}>{children}</LinkStyled>;

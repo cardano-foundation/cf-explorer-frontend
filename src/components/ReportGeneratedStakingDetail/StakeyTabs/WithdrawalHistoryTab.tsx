@@ -1,27 +1,27 @@
-import { Box } from '@mui/material';
-import { formatDateTimeLocal, getPageInfo, getShortHash } from '../../../commons/utils/helper';
-import { TableSubTitle, WrapWalletLabel } from '../../TabularView/StakeTab/styles';
-import CustomTooltip from '../../commons/CustomTooltip';
-import Table, { Column } from '../../commons/Table';
-import { StyledLink } from '../../share/styled';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMemo, useState } from 'react';
-import useFetchList from '../../../commons/hooks/useFetchList';
-import { API } from '../../../commons/utils/api';
-import { DATETIME_PARTTEN } from '../../StackingFilter/DateRangeModal';
-import StackingFilter, { FilterParams } from '../../StackingFilter';
-import moment from 'moment';
-import { GreenWalletIcon } from '../../TabularView/TabularOverview';
-import { WrapFilterDescription } from '../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles';
-import { FilterDateLabel } from '../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles';
-import { details } from '../../../commons/routers';
-import { AdaValue } from '../../TabularView/StakeTab/Tabs/StakeRegistrationTab';
+import { Box } from "@mui/material";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../commons/utils/helper";
+import { TableSubTitle, WrapWalletLabel } from "../../TabularView/StakeTab/styles";
+import CustomTooltip from "../../commons/CustomTooltip";
+import Table, { Column } from "../../commons/Table";
+import { StyledLink } from "../../share/styled";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useMemo, useState } from "react";
+import useFetchList from "../../../commons/hooks/useFetchList";
+import { API } from "../../../commons/utils/api";
+import { DATETIME_PARTTEN } from "../../StackingFilter/DateRangeModal";
+import StackingFilter, { FilterParams } from "../../StackingFilter";
+import moment from "moment";
+import { GreenWalletIcon } from "../../TabularView/TabularOverview";
+import { WrapFilterDescription } from "../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
+import { FilterDateLabel } from "../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles";
+import { details } from "../../../commons/routers";
+import { AdaValue } from "../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
 
 const columns: Column<WithdrawItem>[] = [
   {
-    title: 'Transaction Hash',
-    key: 'hash',
-    minWidth: '120px',
+    title: "Transaction Hash",
+    key: "hash",
+    minWidth: "120px",
     render: (r) => (
       <CustomTooltip title={r.txHash}>
         <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
@@ -29,9 +29,9 @@ const columns: Column<WithdrawItem>[] = [
     )
   },
   {
-    title: 'Timestamp',
-    key: 'time',
-    minWidth: '120px',
+    title: "Timestamp",
+    key: "time",
+    minWidth: "120px",
     render: (r) => formatDateTimeLocal(r.time)
   },
   {
@@ -41,8 +41,8 @@ const columns: Column<WithdrawItem>[] = [
         <TableSubTitle>Withdrawn/Fees</TableSubTitle>
       </>
     ),
-    key: 'epoch',
-    minWidth: '120px',
+    key: "epoch",
+    minWidth: "120px",
     render: (r) => (
       <Box>
         <AdaValue value={r.value + r.fee} />
@@ -70,7 +70,7 @@ const WithdrawalHistoryTab = () => {
     txHash: undefined
   });
   const fetchData = useFetchList<WithdrawalHistoryItem>(
-    reportId ? API.REPORT.SREPORT_DETAIL_WITHDRAWALS(reportId) : '',
+    reportId ? API.REPORT.SREPORT_DETAIL_WITHDRAWALS(reportId) : "",
     {
       ...pageInfo,
       ...params
@@ -85,16 +85,16 @@ const WithdrawalHistoryTab = () => {
           <GreenWalletIcon mr={1} />
           <AdaValue value={data.reduce((current, item) => current + item.fee, 0)} />
         </WrapWalletLabel>
-        <Box display={'flex'} alignItems={'center'} gap={2}>
+        <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
-            Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? 'results' : 'result'}
+            Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}
           </WrapFilterDescription>
         </Box>
       </Box>
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: 'Total', count: fetchData.total }}
+        total={{ title: "Total", count: fetchData.total }}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

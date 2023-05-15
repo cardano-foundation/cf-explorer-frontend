@@ -1,4 +1,4 @@
-import { Box, ButtonBase, Popover, styled } from '@mui/material';
+import { Box, ButtonBase, Popover, styled } from "@mui/material";
 
 export const WrapContent = styled(Popover)`
   .MuiPaper-root {
@@ -32,13 +32,13 @@ export const Disconnect = styled(Box)`
   }
 `;
 
-export const Icon = styled('img')`
+export const Icon = styled("img")`
   width: 24px;
   height: 24px;
   margin-right: 10px;
 `;
 
-export const Name = styled('h4')`
+export const Name = styled("h4")`
   margin: 0px;
 `;
 
@@ -58,7 +58,7 @@ export const StyledButton = styled(ButtonBase)`
   height: 40px;
 `;
 
-export const Span = styled('span')`
+export const Span = styled("span")`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
   color: ${(props) => props.theme.palette.primary.contrastText};

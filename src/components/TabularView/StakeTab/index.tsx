@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Tab, Box, useTheme } from '@mui/material';
-import { TabContext, TabPanel } from '@mui/lab';
-import { StyledTabList, TabHead, TitleTab } from './styles';
-import CustomIcon from '../../commons/CustomIcon';
-import { useScreen } from '../../../commons/hooks/useScreen';
+import React, { useState } from "react";
+import { Tab, Box, useTheme } from "@mui/material";
+import { TabContext, TabPanel } from "@mui/lab";
+import { StyledTabList, TabHead, TitleTab } from "./styles";
+import CustomIcon from "../../commons/CustomIcon";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 export interface StakeTabItem {
   icon: React.FC;
@@ -17,7 +17,7 @@ export interface StackTabProps {
   onChangeTab?: (tab: TabStakeDetail) => void;
 }
 
-const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = 'registration', onChangeTab }) => {
+const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration", onChangeTab }) => {
   const [tabActive, setTabActive] = useState<string>(initTab);
   const theme = useTheme();
   const { isMobile } = useScreen();
@@ -41,13 +41,13 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = 'registration', onC
               <Tab
                 key={key}
                 value={key}
-                style={{ padding: '12px 0px', marginRight: 40 }}
+                style={{ padding: "12px 0px", marginRight: 40 }}
                 label={
-                  <TabHead active={+(key === tabActive)} display={'flex'} alignItems='center'>
+                  <TabHead active={+(key === tabActive)} display={"flex"} alignItems='center'>
                     <CustomIcon
                       icon={Icon}
-                      fill={key !== 'poolSize' ? 'currentColor' : 'none'}
-                      stroke={key === 'poolSize' ? 'currentColor' : 'none'}
+                      fill={key !== "poolSize" ? "currentColor" : "none"}
+                      stroke={key === "poolSize" ? "currentColor" : "none"}
                       width={25}
                     />
                     <TitleTab pl={1} active={+(key === tabActive)}>

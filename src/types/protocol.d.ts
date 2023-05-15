@@ -1,10 +1,10 @@
-import { PROTOCOL_TYPE } from '../commons/utils/constants';
+import { PROTOCOL_TYPE } from "../commons/utils/constants";
 
 type TProtocolItem = {
   time: string;
   transactionHash: string;
   value: any;
-  status: 'UPDATED' | 'ADDED' | 'NOT_EXIST' | 'NOT_CHANGE';
+  status: "UPDATED" | "ADDED" | "NOT_EXIST" | "NOT_CHANGE";
 };
 export type ProtocolTypeKey = keyof typeof PROTOCOL_TYPE;
 

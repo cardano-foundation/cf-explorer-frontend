@@ -1,5 +1,5 @@
-import { styled, Box } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { styled, Box } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const TitleDetail = styled(Box)`
   font-size: var(--font-size-title);
@@ -7,7 +7,7 @@ export const TitleDetail = styled(Box)`
   font-family: var(--font-family-title);
 `;
 
-export const TokenAddress = styled('small')`
+export const TokenAddress = styled("small")`
   max-width: 90%;
   word-wrap: break-word;
   font-weight: var(--font-weight-bold);

@@ -1,8 +1,8 @@
 enum EpochStatus {
-  FINISHED = 'Finish',
-  REWARDING = 'Rewarding',
-  IN_PROGRESS = 'In Progress',
-  SYNCING = 'Syncing'
+  FINISHED = "Finish",
+  REWARDING = "Rewarding",
+  IN_PROGRESS = "In Progress",
+  SYNCING = "Syncing"
 }
 interface IDataEpoch {
   no: number;

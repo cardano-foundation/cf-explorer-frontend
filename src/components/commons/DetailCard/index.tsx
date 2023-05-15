@@ -1,15 +1,15 @@
-import React from 'react';
-import { alpha, Grid, LinearProgress, Skeleton, styled } from '@mui/material';
-import { Link } from 'react-router-dom';
-import styles from './index.module.scss';
-import infoIcon from '../../../commons/resources/images/infoIcon.svg';
-import blockImg from '../../../commons/resources/images/block.png';
-import slotImg from '../../../commons/resources/images/slot.png';
-import { details } from '../../../commons/routers';
-import { MAX_SLOT_EPOCH } from '../../../commons/utils/constants';
-import { Policy } from '../../../commons/resources';
-import { numberWithCommas } from '../../../commons/utils/helper';
-import ProgressCircle from '../ProgressCircle';
+import React from "react";
+import { alpha, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
+import { Link } from "react-router-dom";
+import styles from "./index.module.scss";
+import infoIcon from "../../../commons/resources/images/infoIcon.svg";
+import blockImg from "../../../commons/resources/images/block.png";
+import slotImg from "../../../commons/resources/images/slot.png";
+import { details } from "../../../commons/routers";
+import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { Policy } from "../../../commons/resources";
+import { numberWithCommas } from "../../../commons/utils/helper";
+import ProgressCircle from "../ProgressCircle";
 import {
   CardInfo,
   CardInfoItem,
@@ -30,7 +30,7 @@ import {
   TokenDetailTitle,
   TokenWrapper,
   Wrapper
-} from './styles';
+} from "./styles";
 
 interface DetailCardProps {
   listDetails: { title?: string; value: React.ReactNode }[];
@@ -119,10 +119,10 @@ const DetailCard: React.FC<DetailCardProps> = ({
                 </div>
                 <div className={styles.row}>
                   <div style={{ minWidth: 100 }}>
-                    {delegationPoolsTitle[k as keyof Required<DetailCardProps>['delegationPools']] || 0}:
+                    {delegationPoolsTitle[k as keyof Required<DetailCardProps>["delegationPools"]] || 0}:
                   </div>
                   <div className={` ${styles.fwBold} ${styles.value}`}>
-                    {delegationPools[k as keyof Required<DetailCardProps>['delegationPools']] || 0}
+                    {delegationPools[k as keyof Required<DetailCardProps>["delegationPools"]] || 0}
                   </div>
                 </div>
               </div>
@@ -195,10 +195,10 @@ const DetailCard: React.FC<DetailCardProps> = ({
 export default DetailCard;
 
 const delegationPoolsTitle = {
-  poolSize: 'Pool size',
-  stakeLimit: 'Stake limit',
-  delegators: 'Delegators',
-  satulation: 'Saturation'
+  poolSize: "Pool size",
+  stakeLimit: "Stake limit",
+  delegators: "Delegators",
+  satulation: "Saturation"
 };
 
 const StyledLinearProgress = styled(LinearProgress)`

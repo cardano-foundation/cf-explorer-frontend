@@ -1,9 +1,9 @@
-import { Box } from '@mui/material';
-import FilledInfoModal from './FilledInfoModal';
-import StepTransferModal from './StepTransferModal';
-import StepEventsModal from './StepEventsModal';
-import StepReviewModal from './StepReviewModal';
-import { useCallback, useEffect, useState } from 'react';
+import { Box } from "@mui/material";
+import FilledInfoModal from "./FilledInfoModal";
+import StepTransferModal from "./StepTransferModal";
+import StepEventsModal from "./StepEventsModal";
+import StepReviewModal from "./StepReviewModal";
+import { useCallback, useEffect, useState } from "react";
 
 export interface IPropsModal {
   open: boolean;
@@ -41,7 +41,7 @@ const ReportComposerModal = ({ open, handleCloseModal }: IPropsModal) => {
   const defaultParams = [paramsStep1, paramsStep2, paramsStep3];
 
   return (
-    <Box>
+    <Box data-testid='report-compose-modal'>
       <FilledInfoModal
         open={currentStep === STEPS.step1}
         handleCloseModal={handleCloseModal}

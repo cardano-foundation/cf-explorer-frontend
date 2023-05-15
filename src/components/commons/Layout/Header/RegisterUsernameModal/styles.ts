@@ -1,10 +1,10 @@
-import { styled, Box, FormHelperText, FormLabel } from '@mui/material';
+import { styled, Box, FormHelperText, FormLabel } from "@mui/material";
 
-export const StyledTitle = styled('h3')`
+export const StyledTitle = styled("h3")`
   margin-top: 0;
 `;
 
-export const Span = styled('span')`
+export const Span = styled("span")`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
   color: ${(props) => props.theme.palette.primary.contrastText};

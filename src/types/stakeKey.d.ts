@@ -10,7 +10,7 @@ interface IStakeKey {
   poolNames: string[];
 }
 
-type StakeStatus = 'ACTIVE' | 'DEACTIVATED';
+type StakeStatus = "ACTIVE" | "DEACTIVATED";
 
 interface IStakeKeyDetail {
   status: StakeStatus;
@@ -26,7 +26,7 @@ interface IStakeKeyDetail {
   };
 }
 
-type TabStakeDetail = 'delegation' | 'stake-key' | 'withdrawal' | 'instantaneous' | 'transactions';
+type TabStakeDetail = "delegation" | "stake-key" | "withdrawal" | "instantaneous" | "transactions";
 
 interface DelegationHistory {
   time: string;
@@ -53,7 +53,7 @@ interface StakeHistory {
   blockNo: number;
   epochSlotNo: number;
   txHash: string;
-  action: 'Registered' | 'De Registered';
+  action: "Registered" | "De Registered";
 }
 
 interface WithdrawalHistory {

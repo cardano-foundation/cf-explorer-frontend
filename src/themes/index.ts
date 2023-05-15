@@ -1,10 +1,10 @@
-import { alpha, Breakpoints, createTheme, Shadows } from '@mui/material';
-import { Typography } from '@mui/material/styles/createTypography';
-import { ThemeType } from '../types/user';
-import breakpoints from './breakpoints';
-import palette, { CustomPalette } from './palette';
-import shadows from './shadows';
-import typography from './typography';
+import { alpha, Breakpoints, createTheme, Shadows } from "@mui/material";
+import { Typography } from "@mui/material/styles/createTypography";
+import { ThemeType } from "../types/user";
+import breakpoints from "./breakpoints";
+import palette, { CustomPalette } from "./palette";
+import shadows from "./shadows";
+import typography from "./typography";
 
 type CustomTheme = {
   palette: CustomPalette;
@@ -20,7 +20,7 @@ const lightTheme: CustomTheme = {
   shadow: shadows.light,
   typography: typography,
   breakpoints: breakpoints,
-  mode: 'light',
+  mode: "light",
   isDark: false
 };
 
@@ -29,10 +29,10 @@ const darkTheme: CustomTheme = {
   shadow: shadows.light,
   typography: typography,
   breakpoints: breakpoints,
-  mode: 'dark',
+  mode: "dark",
   isDark: false
 };
-declare module '@mui/material' {
+declare module "@mui/material" {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface Theme extends CustomTheme {
     palette: CustomPalette;
@@ -45,7 +45,7 @@ declare module '@mui/material' {
   interface ThemeOptions extends CustomTheme {}
 }
 
-declare module '@emotion/react' {
+declare module "@emotion/react" {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface Theme extends CustomTheme {}
   // eslint-disable-next-line @typescript-eslint/no-empty-interface

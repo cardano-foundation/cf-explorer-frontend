@@ -1,15 +1,15 @@
-import React from 'react';
-import { CardHeader, TextLabel, TextValue } from './styles';
-import StakeKeyBox from './StakeKeyBox';
-import { Box, Grid, useTheme } from '@mui/material';
-import CopyButton from '../../../commons/CopyButton';
-import { getShortHash, getShortWallet } from '../../../../commons/utils/helper';
-import { details } from '../../../../commons/routers';
-import CustomTooltip from '../../../commons/CustomTooltip';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { CardHeader, TextLabel, TextValue } from "./styles";
+import StakeKeyBox from "./StakeKeyBox";
+import { Box, Grid, useTheme } from "@mui/material";
+import CopyButton from "../../../commons/CopyButton";
+import { getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { details } from "../../../../commons/routers";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import { Link } from "react-router-dom";
 
 interface IProps {
-  data: Transaction['poolCertificates'] | null;
+  data: Transaction["poolCertificates"] | null;
 }
 
 const PoolCertificate: React.FC<IProps> = ({ data }) => {
@@ -18,7 +18,7 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
   return (
     <>
       {data
-        ?.filter((d) => d.type === 'POOL_REGISTRATION')
+        ?.filter((d) => d.type === "POOL_REGISTRATION")
         ?.map((item, index) => {
           return (
             <Box px='15px' key={index} mb='15px' bgcolor={theme.palette.background.paper} textAlign='left'>
@@ -28,7 +28,7 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
           );
         })}
       {data
-        ?.filter((d) => d.type === 'POOL_DEREGISTRATION')
+        ?.filter((d) => d.type === "POOL_DEREGISTRATION")
         ?.map((item, index) => {
           return (
             <Box px='15px' key={index} mb='15px' bgcolor={theme.palette.background.paper} textAlign='left'>
@@ -40,7 +40,7 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
                       <TextLabel>Pool Id: </TextLabel>
                       <TextValue>
                         <CustomTooltip title={item.poolId}>
-                          <Box color={'#108aef !important'} component={Link} to={details.delegation(item.poolId)}>
+                          <Box color={"#108aef !important"} component={Link} to={details.delegation(item.poolId)}>
                             {getShortHash(item.poolId)}
                           </Box>
                         </CustomTooltip>

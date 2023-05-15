@@ -1,6 +1,6 @@
-import React from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { stringify } from 'qs';
+import React from "react";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import { stringify } from "qs";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -8,27 +8,27 @@ import {
   getShortHash,
   getShortWallet,
   numberWithCommas
-} from '../../../../commons/utils/helper';
-import Table, { Column } from '../../../commons/Table';
-import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from './styles';
-import CustomTooltip from '../../../commons/CustomTooltip';
-import useFetchList from '../../../../commons/hooks/useFetchList';
-import { details } from '../../../../commons/routers';
-import { AIcon } from '../../../../commons/resources';
-import { API } from '../../../../commons/utils/api';
-import ADAicon from '../../../commons/ADAIcon';
+} from "../../../../commons/utils/helper";
+import Table, { Column } from "../../../commons/Table";
+import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import useFetchList from "../../../../commons/hooks/useFetchList";
+import { details } from "../../../../commons/routers";
+import { AIcon } from "../../../../commons/resources";
+import { API } from "../../../../commons/utils/api";
+import ADAicon from "../../../commons/ADAIcon";
 
 const columns: Column<Transactions>[] = [
   {
-    title: '#',
-    key: 'id',
-    minWidth: '40px',
+    title: "#",
+    key: "id",
+    minWidth: "40px",
     render: (data, index) => <SmallText>{numberWithCommas(index + 1)}</SmallText>
   },
   {
-    title: 'Trx Hash',
-    key: 'trxhash',
-    minWidth: '200px',
+    title: "Trx Hash",
+    key: "trxhash",
+    minWidth: "200px",
 
     render: (r) => (
       <>
@@ -39,16 +39,16 @@ const columns: Column<Transactions>[] = [
     )
   },
   {
-    title: 'Time',
-    key: 'time',
-    minWidth: '180px',
+    title: "Time",
+    key: "time",
+    minWidth: "180px",
 
-    render: (r) => <SmallText>{formatDateTimeLocal(r.time || '')}</SmallText>
+    render: (r) => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
   },
   {
-    title: 'Block',
-    key: 'block',
-    minWidth: '120px',
+    title: "Block",
+    key: "block",
+    minWidth: "120px",
     render: (r) => (
       <>
         <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
@@ -58,9 +58,9 @@ const columns: Column<Transactions>[] = [
     )
   },
   {
-    title: 'Addresses',
-    key: 'addresses',
-    minWidth: '200px',
+    title: "Addresses",
+    key: "addresses",
+    minWidth: "200px",
     render(r, index) {
       return (
         <>
@@ -91,24 +91,24 @@ const columns: Column<Transactions>[] = [
     }
   },
   {
-    title: 'Fees',
-    key: 'fee',
-    minWidth: '120px',
+    title: "Fees",
+    key: "fee",
+    minWidth: "120px",
     render: (r) => (
       <PriceValue>
         <SmallText>{formatADAFull(r.fee)}</SmallText>
-        <ADAicon mb={'5px'} pl={'8px'} />
+        <ADAicon mb={"5px"} pl={"8px"} />
       </PriceValue>
     )
   },
   {
-    title: 'Output',
-    minWidth: '120px',
-    key: 'ouput',
+    title: "Output",
+    minWidth: "120px",
+    key: "ouput",
     render: (r) => (
       <PriceValue>
         <SmallText>{formatADAFull(r.totalOutput)}</SmallText>
-        <ADAicon mb={'5px'} pl={'8px'} />
+        <ADAicon mb={"5px"} pl={"8px"} />
       </PriceValue>
     )
   }
@@ -125,7 +125,7 @@ const TokenTransaction: React.FC = () => {
     <Table
       {...fetchData}
       columns={columns}
-      total={{ count: fetchData.total, title: 'Total Transactions' }}
+      total={{ count: fetchData.total, title: "Total Transactions" }}
       onClickRow={(_, r: Transactions) => history.push(details.transaction(r.hash))}
       pagination={{
         ...pageInfo,

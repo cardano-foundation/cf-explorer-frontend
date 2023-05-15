@@ -1,8 +1,8 @@
-import React from 'react';
-import StyledModal from '../commons/StyledModal';
-import { Card, CardTitle, Container, Title, CardSubTitle, DotsIcon, ShowMoreButton } from './styles';
-import { Grid } from '@mui/material';
-import CopyButton from '../commons/CopyButton';
+import React from "react";
+import StyledModal from "../commons/StyledModal";
+import { Card, CardTitle, Container, Title, CardSubTitle, DotsIcon, ShowMoreButton } from "./styles";
+import { Grid } from "@mui/material";
+import CopyButton from "../commons/CopyButton";
 
 export interface PoolRegistrationCertificateProps {
   open?: boolean;

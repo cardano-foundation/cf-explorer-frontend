@@ -1,6 +1,6 @@
-import { Box, styled } from '@mui/material';
-import Slider from 'react-slick';
-import { BoxRaised } from '../../commons/BoxRaised';
+import { Box, styled } from "@mui/material";
+import Slider from "react-slick";
+import { BoxRaised } from "../../commons/BoxRaised";
 
 export const LatestStoriesContainer = styled(Box)`
   text-align: center;
@@ -19,7 +19,7 @@ export const Header = styled(Box)`
   }
 `;
 
-export const Title = styled('h3')`
+export const Title = styled("h3")`
   position: relative;
   text-align: left;
   margin: 0px;
@@ -29,7 +29,7 @@ export const Title = styled('h3')`
     position: absolute;
     top: 100%;
     left: 0;
-    content: '';
+    content: "";
     width: 50px;
     height: 4px;
     background: var(--color-green-light);
@@ -40,14 +40,14 @@ export const StyledSlider = styled(Slider)`
   @media screen and (max-width: 539px) {
     margin-bottom: 40px;
   }
-  div[class*='slick-list'] {
+  div[class*="slick-list"] {
     margin: 0 -10px;
 
-    div[class*='slick-slide'] > div {
+    div[class*="slick-slide"] > div {
       padding: 0 10px;
     }
   }
-  ul[class*='slick-dots'] {
+  ul[class*="slick-dots"] {
     li {
       margin: 0;
       width: 16px;
@@ -60,7 +60,7 @@ export const StyledSlider = styled(Slider)`
         padding: 5px;
 
         &::before {
-          content: '';
+          content: "";
           position: absolute;
           width: 6px;
           height: 6px;
@@ -72,7 +72,7 @@ export const StyledSlider = styled(Slider)`
           transform: translateY(-50%) translateX(-50%);
         }
       }
-      &[class*='slick-active'] {
+      &[class*="slick-active"] {
         button::before {
           width: 8px;
           height: 8px;
@@ -98,7 +98,7 @@ export const Item = styled(BoxRaised)`
   }
 `;
 
-export const Image = styled('img')`
+export const Image = styled("img")`
   aspect-ratio: 80/80;
   width: 80px;
   height: 80px;
@@ -113,7 +113,7 @@ export const Detail = styled(Box)`
   justify-content: space-between;
 `;
 
-export const Author = styled('h6')`
+export const Author = styled("h6")`
   display: -webkit-box;
   width: max-content;
   max-width: 100%;
@@ -131,7 +131,7 @@ export const Author = styled('h6')`
   margin-top: 0;
   margin-bottom: 5px;
 `;
-export const ItemTitle = styled('h5')`
+export const ItemTitle = styled("h5")`
   display: -webkit-box;
   width: 100%;
   max-height: 3.6em;
@@ -144,7 +144,7 @@ export const ItemTitle = styled('h5')`
   margin-bottom: 5px;
 `;
 
-export const Time = styled('h5')`
+export const Time = styled("h5")`
   font-size: var(--font-size-text-x-small);
   display: flex;
   line-height: 1;
@@ -156,7 +156,7 @@ export const Time = styled('h5')`
   color: ${(props) => props.theme.palette.grey[400]};
   margin: 0;
 `;
-export const TimeIcon = styled('img')`
+export const TimeIcon = styled("img")`
   width: 12px;
   height: 12px;
 `;

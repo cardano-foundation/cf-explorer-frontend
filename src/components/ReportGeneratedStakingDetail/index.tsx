@@ -1,25 +1,25 @@
-import React, { useMemo, createContext } from 'react';
+import React, { useMemo, createContext } from "react";
 import {
   DelegationIcon,
   DeredistrationIcon,
   RegistrationIcon,
   RewardsDistributionIcon,
   RewardsWithdrawalIcon
-} from '../../commons/resources';
+} from "../../commons/resources";
 
-import { useParams } from 'react-router-dom';
-import StakeTab from '../TabularView/StakeTab';
-import DelegationTab from './StakeyTabs/DelegationTab';
-import DeregistrationTab from './StakeyTabs/DeregistrationTab';
-import RewardsDistributionTab from './StakeyTabs/RewardsDistributionTab';
-import StakingRegistrationTab from './StakeyTabs/StakingRegistrationTab';
-import WithdrawalHistoryTab from './StakeyTabs/WithdrawalHistoryTab';
+import { useParams } from "react-router-dom";
+import StakeTab from "../TabularView/StakeTab";
+import DelegationTab from "./StakeyTabs/DelegationTab";
+import DeregistrationTab from "./StakeyTabs/DeregistrationTab";
+import RewardsDistributionTab from "./StakeyTabs/RewardsDistributionTab";
+import StakingRegistrationTab from "./StakeyTabs/StakingRegistrationTab";
+import WithdrawalHistoryTab from "./StakeyTabs/WithdrawalHistoryTab";
 
-import useFetch from '../../commons/hooks/useFetch';
-import { API } from '../../commons/utils/api';
-import WalletActitityTab from './StakeyTabs/WalletActivityTab';
-import { getEventList } from '../StakekeySummary';
-import { SkeletonUI } from '../TokenDetail/TokenAnalytics/styles';
+import useFetch from "../../commons/hooks/useFetch";
+import { API } from "../../commons/utils/api";
+import WalletActitityTab from "./StakeyTabs/WalletActivityTab";
+import { getEventList } from "../StakekeySummary";
+import { SkeletonUI } from "../TokenDetail/TokenAnalytics/styles";
 
 interface ITab {
   icon: React.FC;
@@ -29,42 +29,42 @@ interface ITab {
   component: React.ReactNode;
 }
 
-export const StakingDetailContext = createContext({ stakeKey: '', reportName: '' });
+export const StakingDetailContext = createContext({ stakeKey: "", reportName: "" });
 
 const stackeTabs: ITab[] = [
   {
     icon: RegistrationIcon,
-    label: 'Stake Key Registration',
-    key: 'registration',
-    mappingKey: 'Registration',
+    label: "Stake Key Registration",
+    key: "registration",
+    mappingKey: "Registration",
     component: <StakingRegistrationTab />
   },
   {
     icon: DelegationIcon,
-    label: 'Delegation History',
-    key: 'delegation',
-    mappingKey: 'Delegation',
+    label: "Delegation History",
+    key: "delegation",
+    mappingKey: "Delegation",
     component: <DelegationTab />
   },
   {
     icon: RewardsDistributionIcon,
-    label: 'Rewards Distribution',
-    key: 'rewards',
-    mappingKey: 'Rewards',
+    label: "Rewards Distribution",
+    key: "rewards",
+    mappingKey: "Rewards",
     component: <RewardsDistributionTab />
   },
   {
     icon: RewardsWithdrawalIcon,
-    label: 'Withdrawal History',
-    key: 'withdrawal-history',
-    mappingKey: 'Withdrawal',
+    label: "Withdrawal History",
+    key: "withdrawal-history",
+    mappingKey: "Withdrawal",
     component: <WithdrawalHistoryTab />
   },
   {
     icon: DeredistrationIcon,
-    label: 'Deregistration',
-    key: 'deregistration',
-    mappingKey: 'Deregistration',
+    label: "Deregistration",
+    key: "deregistration",
+    mappingKey: "Deregistration",
     component: <DeregistrationTab />
   }
 ];
@@ -87,9 +87,9 @@ const ReportGeneratedStakingDetailTabs = () => {
         ...tabs,
         {
           icon: DeredistrationIcon,
-          label: 'ADA Transfer',
-          key: 'walletActivity',
-          mappingKey: '',
+          label: "ADA Transfer",
+          key: "walletActivity",
+          mappingKey: "",
           component: <WalletActitityTab />
         }
       ];
@@ -100,10 +100,10 @@ const ReportGeneratedStakingDetailTabs = () => {
 
   return (
     <StakingDetailContext.Provider
-      value={{ stakeKey: reportDetail.data?.stakeKey ?? '', reportName: reportDetail.data?.reportName ?? '' }}
+      value={{ stakeKey: reportDetail.data?.stakeKey ?? "", reportName: reportDetail.data?.reportName ?? "" }}
     >
       {reportDetail.loading ? (
-        <SkeletonUI variant='rectangular' style={{ height: '400px' }} />
+        <SkeletonUI variant='rectangular' style={{ height: "400px" }} />
       ) : (
         <StakeTab tabs={displayedTabs} initTab={initTab} />
       )}

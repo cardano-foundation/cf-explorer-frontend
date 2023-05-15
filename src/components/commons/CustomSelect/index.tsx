@@ -1,4 +1,4 @@
-import { Select, styled } from '@mui/material';
+import { Select, styled } from "@mui/material";
 
 const CustomSelect = styled(Select)`
   font-family: var(--font-family-text);

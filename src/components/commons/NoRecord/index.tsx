@@ -1,5 +1,5 @@
-import { Container, styled } from '@mui/material';
-import { EmptyIcon } from '../../../commons/resources';
+import { Container, styled } from "@mui/material";
+import { EmptyIcon } from "../../../commons/resources";
 
 const NoRecordContainer = styled(Container)`
   display: flex;
@@ -9,7 +9,7 @@ const NoRecordContainer = styled(Container)`
   padding: 120px 0px;
 `;
 
-const Image = styled('img')`
+const Image = styled("img")`
   width: auto;
   height: 214px;
 `;

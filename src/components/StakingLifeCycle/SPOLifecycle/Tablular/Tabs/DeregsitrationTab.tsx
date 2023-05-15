@@ -1,33 +1,33 @@
-import { Box, IconButton, useTheme } from '@mui/material';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import useFetchList from '../../../../../commons/hooks/useFetchList';
-import { EyeIcon } from '../../../../../commons/resources';
-import { details } from '../../../../../commons/routers';
-import { API } from '../../../../../commons/utils/api';
-import { getShortHash } from '../../../../../commons/utils/helper';
-import { AdaValue } from '../../../../TabularView/StakeTab/Tabs/StakeRegistrationTab';
-import { TableSubTitle } from '../../../../TabularView/StakeTab/styles';
-import CustomTooltip from '../../../../commons/CustomTooltip';
-import Table, { Column } from '../../../../commons/Table';
-import { StyledLink } from '../../../../share/styled';
-import { DeregistrationCertificateModal } from '../../Deregistration';
+import { Box, IconButton, useTheme } from "@mui/material";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import useFetchList from "../../../../../commons/hooks/useFetchList";
+import { EyeIcon } from "../../../../../commons/resources";
+import { details } from "../../../../../commons/routers";
+import { API } from "../../../../../commons/utils/api";
+import { getShortHash } from "../../../../../commons/utils/helper";
+import { AdaValue } from "../../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import { TableSubTitle } from "../../../../TabularView/StakeTab/styles";
+import CustomTooltip from "../../../../commons/CustomTooltip";
+import Table, { Column } from "../../../../commons/Table";
+import { StyledLink } from "../../../../share/styled";
+import { DeregistrationCertificateModal } from "../../Deregistration";
 
 const DeregsitrationTab = () => {
   const theme = useTheme();
-  const { poolId = '' } = useParams<{ poolId: string }>();
+  const { poolId = "" } = useParams<{ poolId: string }>();
   const [params, setParams] = useState({
     page: 0,
     size: 10
   });
 
-  const [sort, setSort] = useState<string>('');
+  const [sort, setSort] = useState<string>("");
   const [selected, setSelected] = useState<SPODeregistration | null>(null);
 
   const columns: Column<SPODeregistrationTabpular>[] = [
     {
-      key: 'txHash',
-      title: 'Transaction hash',
+      key: "txHash",
+      title: "Transaction hash",
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>
@@ -37,18 +37,18 @@ const DeregsitrationTab = () => {
       }
     },
     {
-      key: 'time',
-      title: 'Timestamp',
+      key: "time",
+      title: "Timestamp",
       sort({ columnKey, sortValue }) {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort('');
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
       render(data) {
         return data.time;
       }
     },
     {
-      key: 'fee',
-      title: 'ADA Value',
+      key: "fee",
+      title: "ADA Value",
       render(data) {
         return (
           <Box>
@@ -65,18 +65,18 @@ const DeregsitrationTab = () => {
       }
     },
     {
-      key: 'Certificate',
-      title: 'Certificate',
+      key: "Certificate",
+      title: "Certificate",
       render: (data) => (
         <IconButton onClick={() => setSelected(data)}>
-          <EyeIcon style={{ transform: 'scale(.8)' }} />
+          <EyeIcon style={{ transform: "scale(.8)" }} />
         </IconButton>
       )
     }
   ];
 
   const fetchData = useFetchList<SPODeregistrationTabpular>(
-    poolId ? API.SPO_LIFECYCLE.SPO_DEREGISTRATION(poolId) : '',
+    poolId ? API.SPO_LIFECYCLE.SPO_DEREGISTRATION(poolId) : "",
     {
       ...params,
       sort
@@ -89,7 +89,7 @@ const DeregsitrationTab = () => {
         {...fetchData}
         columns={columns}
         total={{
-          title: 'Pool Registration',
+          title: "Pool Registration",
           count: fetchData.total
         }}
         pagination={{

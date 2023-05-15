@@ -1,4 +1,4 @@
-import { Popover, Button, styled } from '@mui/material';
+import { Popover, Button, styled } from "@mui/material";
 
 export const SubmitButton = styled(Button)`
   display: flex;
@@ -29,26 +29,26 @@ export const OutlineButton = styled(Button)`
   text-transform: none;
 `;
 
-export const GridBox = styled('div')(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(4, 1fr)',
-  gridTemplateRows: 'repeat(2, 1fr)',
-  gridGap: '20px 10px',
-  [theme.breakpoints.down('lg')]: {
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gridTemplateRows: 'repeat(3, 1fr)'
+export const GridBox = styled("div")(({ theme }) => ({
+  display: "grid",
+  gridTemplateColumns: "repeat(4, 1fr)",
+  gridTemplateRows: "repeat(2, 1fr)",
+  gridGap: "20px 10px",
+  [theme.breakpoints.down("lg")]: {
+    gridTemplateColumns: "repeat(3, 1fr)",
+    gridTemplateRows: "repeat(3, 1fr)"
   },
-  [theme.breakpoints.down('md')]: {
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    gridTemplateRows: 'repeat(4, 1fr)'
+  [theme.breakpoints.down("md")]: {
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gridTemplateRows: "repeat(4, 1fr)"
   },
-  [theme.breakpoints.down('sm')]: {
-    gridTemplateColumns: '1fr',
-    gridTemplateRows: 'auto'
+  [theme.breakpoints.down("sm")]: {
+    gridTemplateColumns: "1fr",
+    gridTemplateRows: "auto"
   }
 }));
 
-export const WrapFilterDescription = styled('span')`
+export const WrapFilterDescription = styled("span")`
   font-size: 14px;
   font-weight: 400;
   color: ${(props) => props.theme.palette.grey[400]};
@@ -65,7 +65,7 @@ export const WrapPopover = styled(Popover)`
   }
 `;
 
-export const WrapPopoverContent = styled('div')`
+export const WrapPopoverContent = styled("div")`
   display: flex;
   align-items: center;
   gap: 10px;

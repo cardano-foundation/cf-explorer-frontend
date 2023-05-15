@@ -1,17 +1,17 @@
-import { Grid } from '@mui/material';
-import BigNumber from 'bignumber.js';
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import useFetch from '../../../commons/hooks/useFetch';
-import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from '../../../commons/resources';
-import { details } from '../../../commons/routers';
-import { API } from '../../../commons/utils/api';
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from '../../../commons/utils/constants';
-import { formatADA, formatADAFull, numberWithCommas } from '../../../commons/utils/helper';
-import { RootState } from '../../../stores/types';
-import CustomTooltip from '../../commons/CustomTooltip';
-import RateWithIcon from '../../commons/RateWithIcon';
+import { Grid } from "@mui/material";
+import BigNumber from "bignumber.js";
+import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import useFetch from "../../../commons/hooks/useFetch";
+import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "../../../commons/resources";
+import { details } from "../../../commons/routers";
+import { API } from "../../../commons/utils/api";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
+import { formatADA, formatADAFull, numberWithCommas } from "../../../commons/utils/helper";
+import { RootState } from "../../../stores/types";
+import CustomTooltip from "../../commons/CustomTooltip";
+import RateWithIcon from "../../commons/RateWithIcon";
 import {
   AdaPrice,
   Content,
@@ -29,9 +29,9 @@ import {
   Value,
   XSmall,
   XValue
-} from './style';
-import moment from 'moment';
-import { useScreen } from '../../../commons/hooks/useScreen';
+} from "./style";
+import moment from "moment";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 const SkeletonBox = () => (
   <Item>
@@ -81,8 +81,8 @@ const HomeStatistic = () => {
               <br />
               <RateWithIcon data-testid='ada-24Hr-price-change' value={usdMarket.price_change_percentage_24h} />
               <AdaPrice data-testid='ada-price-in-BTC'>{btcMarket[0]?.current_price} BTC</AdaPrice>
-              <TimeDuration marginTop={'8px'}>
-                Last updated {moment(btcMarket[0]?.last_updated).fromNow()}{' '}
+              <TimeDuration marginTop={"8px"}>
+                Last updated {moment(btcMarket[0]?.last_updated).fromNow()}{" "}
               </TimeDuration>
             </Content>
           </Item>

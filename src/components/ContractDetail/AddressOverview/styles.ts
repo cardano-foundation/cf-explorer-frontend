@@ -1,6 +1,6 @@
-import { alpha, Paper, TextField, styled, Box, Grid } from '@mui/material';
+import { alpha, Paper, TextField, styled, Box, Grid } from "@mui/material";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export const StyledAAmount = styled(Box)`
   display: flex;
@@ -40,7 +40,7 @@ export const Pool = styled(Link)`
     text-decoration: underline;
   }
 `;
-export const Logo = styled('img')`
+export const Logo = styled("img")`
   width: 25px;
   height: 25px;
   object-fit: cover;
@@ -54,16 +54,16 @@ export const LogoEmpty = styled(Box)`
 `;
 
 export const GridContainer = styled(Grid)(({ theme }) => ({
-  [theme.breakpoints.down('lg')]: {
-    paddingLeft: '16px !important',
-    paddingRight: '16px !important'
+  [theme.breakpoints.down("lg")]: {
+    paddingLeft: "16px !important",
+    paddingRight: "16px !important"
   }
 }));
 export const GridItem = styled(Grid)(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: {
-    marginBottom: '20px !important'
+  [theme.breakpoints.down("sm")]: {
+    marginBottom: "20px !important"
   },
-  [theme.breakpoints.down('lg')]: {
-    marginBottom: '20px !important'
+  [theme.breakpoints.down("lg")]: {
+    marginBottom: "20px !important"
   }
 }));

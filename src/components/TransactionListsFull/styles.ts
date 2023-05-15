@@ -1,11 +1,11 @@
-import { styled, Box } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { styled, Box } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: {
-    paddingLeft: '16px',
-    '& h2': {
-      paddingLeft: '0px'
+  [theme.breakpoints.down("sm")]: {
+    paddingLeft: "16px",
+    "& h2": {
+      paddingLeft: "0px"
     }
   }
 }));

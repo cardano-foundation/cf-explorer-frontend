@@ -1,10 +1,10 @@
-import React from 'react';
-import { styled, Container } from '@mui/material';
-import { APP_VERSION } from '../../../../commons/utils/constants';
-import FooterMenu from '../Sidebar/FooterMenu';
-import { useScreen } from '../../../../commons/hooks/useScreen';
+import React from "react";
+import { styled, Container } from "@mui/material";
+import { APP_VERSION } from "../../../../commons/utils/constants";
+import FooterMenu from "../Sidebar/FooterMenu";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
-const StyledFooter = styled('footer')`
+const StyledFooter = styled("footer")`
   height: 60px;
   padding: 0px 10px;
   border-top: 1px solid ${(props) => props.theme.palette.border.main};
@@ -26,7 +26,7 @@ const FooterContainer = styled(Container)`
   }
 `;
 
-const Copyright = styled('small')`
+const Copyright = styled("small")`
   color: ${(props) => props.theme.palette.grey[400]};
   font-family: var(--font-family-title);
   ::first-letter {
@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
       <FooterContainer>
         {isTablet && <FooterMenu forceShow={true} />}
         <Copyright>
-          {' '}
+          {" "}
           &copy; {new Date().getFullYear()} Cardano Blockchain Explorer. All rights reserved. Version: {APP_VERSION}
         </Copyright>
       </FooterContainer>

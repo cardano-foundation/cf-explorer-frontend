@@ -1,11 +1,11 @@
-import { Container, styled } from '@mui/material';
-import { parse } from 'qs';
-import { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { details } from '../../commons/routers';
-import CircularProgress from '@mui/material/CircularProgress';
-import defaultAxios from '../../commons/utils/axios';
-import NoRecord from '../../components/commons/NoRecord';
+import { Container, styled } from "@mui/material";
+import { parse } from "qs";
+import { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { details } from "../../commons/routers";
+import CircularProgress from "@mui/material/CircularProgress";
+import defaultAxios from "../../commons/utils/axios";
+import NoRecord from "../../components/commons/NoRecord";
 
 const SearchResultContainer = styled(Container)`
   display: flex;
@@ -15,39 +15,39 @@ const SearchResultContainer = styled(Container)`
   padding: 120px 0px;
 `;
 
-const Title = styled('h3')`
+const Title = styled("h3")`
   color: ${(props) => props.theme.palette.grey[400]};
   margin-bottom: 2rem;
   font-weight: var(--font-weight-normal);
 `;
 
-const getUrl = (filter?: FilterParams | 'all', value?: string): FilterParams | null => {
-  if (filter && filter !== 'all') return filter;
+const getUrl = (filter?: FilterParams | "all", value?: string): FilterParams | null => {
+  if (filter && filter !== "all") return filter;
   if (value) {
-    if (value.search('stake') === 0) return 'stakes';
-    if (value.search('pool') === 0) return 'delegations/pool-detail-header';
-    if (value.search('asset') === 0) return 'tokens';
+    if (value.search("stake") === 0) return "stakes";
+    if (value.search("pool") === 0) return "delegations/pool-detail-header";
+    if (value.search("asset") === 0) return "tokens";
   }
   return null;
 };
 
 const createNavigator = (filter?: FilterParams) => {
   switch (filter) {
-    case 'epochs':
+    case "epochs":
       return details.epoch;
-    case 'blocks':
+    case "blocks":
       return details.block;
-    case 'txs':
+    case "txs":
       return details.transaction;
-    case 'tokens':
+    case "tokens":
       return details.token;
-    case 'stakes':
+    case "stakes":
       return details.stake;
-    case 'addresses':
+    case "addresses":
       return details.address;
-    case 'delegations/pool-detail-header':
+    case "delegations/pool-detail-header":
       return details.delegation;
-    case 'contract':
+    case "contract":
       return details.contract;
     default:
       return null;
@@ -55,15 +55,15 @@ const createNavigator = (filter?: FilterParams) => {
 };
 
 const filterURLS = (value: string): FilterParams[] => {
-  if (!Number.isNaN(Number(value))) return ['epochs', 'blocks'];
-  else return ['blocks', 'txs', 'tokens', 'stakes', 'addresses', 'delegations/pool-detail-header'];
+  if (!Number.isNaN(Number(value))) return ["epochs", "blocks"];
+  else return ["blocks", "txs", "tokens", "stakes", "addresses", "delegations/pool-detail-header"];
 };
 
 const SearchResult = () => {
   const [loading, setLoading] = useState(true);
   const { search } = useLocation();
   const history = useHistory();
-  const { filter, search: value }: SearchParams = parse(search.split('?')[1]);
+  const { filter, search: value }: SearchParams = parse(search.split("?")[1]);
 
   useEffect(() => {
     document.title = loading ? `Search For ${value}...` : `No Record Found: ${value} | Cardano Explorer`;
@@ -91,8 +91,8 @@ const SearchResult = () => {
           urls.map(async (url): Promise<{ url: FilterParams; data: any }> => {
             try {
               const res = await defaultAxios.get(`${url}/${value}`);
-              if (url === 'addresses' && (res.data as WalletAddress)?.isContract)
-                return Promise.resolve({ url: 'contract', data: res.data });
+              if (url === "addresses" && (res.data as WalletAddress)?.isContract)
+                return Promise.resolve({ url: "contract", data: res.data });
               if (res.data) return Promise.resolve({ url, data: res.data });
             } catch {
               //To do
