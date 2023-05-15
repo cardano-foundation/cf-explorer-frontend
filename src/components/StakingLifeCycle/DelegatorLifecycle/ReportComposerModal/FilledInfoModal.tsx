@@ -1,27 +1,27 @@
 import { Container } from "../../../Account/ActivityLogModal/styles";
 import { StyledTextField } from "../../../TokenAutocomplete/styles";
+import StyledModal from "../../../commons/StyledModal";
 import {
-  StyledGroupField,
   ModalTitle,
   StyledAddressSelect,
   StyledButton,
+  StyledGroupField,
   StyledLabel,
   StyledSelect,
   StyledStack,
-  TextWarning,
-  TextError
+  TextError,
+  TextWarning
 } from "./styles";
-import StyledModal from "../../../commons/StyledModal";
 
-import { DownIcon } from "../../../../commons/resources";
-import { useCallback, useMemo, useState } from "react";
 import { Box, MenuItem, Slider } from "@mui/material";
-import CustomDatePicker, { IDateRange } from "../../../CustomDatePicker";
-import { IPropsModal, STEPS } from ".";
+import { useCallback, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
+import { IPropsModal, STEPS } from ".";
 import { useScreen } from "../../../../commons/hooks/useScreen";
-import defaultAxios from "../../../../commons/utils/axios";
+import { DownIcon } from "../../../../commons/resources";
 import { API } from "../../../../commons/utils/api";
+import defaultAxios from "../../../../commons/utils/axios";
+import CustomDatePicker, { IDateRange } from "../../../CustomDatePicker";
 
 export enum ReportType {
   PoolReport = "POOL_REPORT",
@@ -62,6 +62,8 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   }, []);
 
   const onChangeAddress = useCallback((e: any) => {
+    const regex = /^[a-zA-Z0-9]*$/;
+    if (!regex.test(e.target.value)) return;
     setAddress(e.target.value);
     setError("");
   }, []);
@@ -136,7 +138,6 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     <StyledModal
       open={open}
       handleCloseModal={handleCloseModal}
-      width={555}
       paddingX={isMobile ? "10px" : "40px"}
       paddingY={isMobile ? "20px" : "30px"}
     >

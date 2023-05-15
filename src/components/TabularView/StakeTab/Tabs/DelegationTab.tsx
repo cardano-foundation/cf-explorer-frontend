@@ -34,7 +34,7 @@ const DelegationTab = () => {
   const fetchData = useFetchList<DelegationItem>(stakeId ? API.STAKE_LIFECYCLE.DELEGATION(stakeId) : "", {
     ...pageInfo,
     ...params,
-    sort
+    sort: sort || params.sort
   });
 
   const columns: Column<DelegationItem>[] = [
