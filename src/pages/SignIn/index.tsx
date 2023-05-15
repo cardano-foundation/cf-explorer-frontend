@@ -1,6 +1,8 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, FormHelperText, IconButton, InputAdornment } from '@mui/material';
 import { useEffect, useReducer, useState } from 'react';
+import { IoMdClose } from 'react-icons/io';
 import { useHistory } from 'react-router-dom';
+import useToast from '../../commons/hooks/useToast';
 import { HideIcon, LockIcon, ShowIcon } from '../../commons/resources';
 import { routers } from '../../commons/routers';
 import { NETWORK, NETWORK_TYPES } from '../../commons/utils/constants';
@@ -28,8 +30,6 @@ import {
   WrapSignUp,
   WrapTitle
 } from './styles';
-import useToast from '../../commons/hooks/useToast';
-import { IoMdClose } from 'react-icons/io';
 
 interface IForm {
   username: {
@@ -152,6 +152,7 @@ export default function SignIn() {
       touched: true,
       error: getError(event.target.name, event.target.value)
     });
+    setInvalidInfomation(false);
   };
 
   useEffect(() => {
@@ -176,7 +177,7 @@ export default function SignIn() {
         error: errorPassword
       });
     }
-    if (error) return;
+    if (errorUsername || errorPassword) return;
     handleSignIn(formData.username.value, formData.password.value);
   };
   const handleSignIn = async (username: string, password: string) => {
@@ -223,7 +224,7 @@ export default function SignIn() {
             <CloseButton saving={0} onClick={() => handleClose()}>
               <IoMdClose />
             </CloseButton>
-            {invalidInfomation ? <AlertCustom severity='error'>Invalid login information</AlertCustom> : null}
+            {invalidInfomation ? <AlertCustom severity="error">Incorrect Username or Password</AlertCustom> : null}
             <WrapInput>
               <Label>Username</Label>
               <InputCustom

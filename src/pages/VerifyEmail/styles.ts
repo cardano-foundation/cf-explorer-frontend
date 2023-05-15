@@ -6,9 +6,9 @@ export const Container = styled(Box)`
   background-color: ${({ theme }) => theme.palette.grey[200]};
   min-height: 100vh;
   min-width: 100vw;
-  padding: 30px;
   justify-content: center;
   align-items: center;
+  padding: 30px 0;
 `;
 
 export const WrapContent = styled(Box)`
