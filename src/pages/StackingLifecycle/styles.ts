@@ -1,5 +1,6 @@
-import { Box, Button, Container, Grid, styled } from '@mui/material';
-import breakpoints from '../../themes/breakpoints';
+import { Box, Button, Container, Grid, styled } from "@mui/material";
+import breakpoints from "../../themes/breakpoints";
+import Table from "../../components/commons/Table";
 
 export const DashboardCardList = styled(Box)`
   display: flex;
@@ -67,6 +68,16 @@ export const FilterHead = styled(Box)`
     justify-content: space-between;
   }
 `;
+export const StackingLifecycleTable = styled(Table)`
+  & > div {
+    padding: 0;
+    border: none;
+  }
+  * {
+    box-shadow: none !important;
+    background-color: transparent !important;
+  }
+`
 
 export const WrapReportName = styled(Box)`
   white-space: nowrap;

@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import DashboardCard from '../../components/DashboardCard';
-import { Status, GridContainer, TextHeadline, TitleHead, FilterHead, WrapReportName } from './styles';
-import Table, { Column } from '../../components/commons/Table';
-import { FilterIC, PersionalSettingIC, ScanQRCodeIC, ListOfReportsIC, WatchlistIC } from '../../commons/resources';
 import { Box, Button, CircularProgress, Container, Grid } from '@mui/material';
-import { details, routers } from '../../commons/routers';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import useFetchList from '../../commons/hooks/useFetchList';
+import { useScreen } from '../../commons/hooks/useScreen';
+import { FilterIC, ListOfReportsIC, PersionalSettingIC, ScanQRCodeIC, WatchlistIC } from '../../commons/resources';
+import { details, routers } from '../../commons/routers';
 import { API } from '../../commons/utils/api';
 import { defaultAxiosDownload } from '../../commons/utils/axios';
-import { WrapFilterDescription } from '../../components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles';
-import FilterReport from '../../components/FilterReport';
-import { useHistory } from 'react-router-dom';
-import { useScreen } from '../../commons/hooks/useScreen';
 import { formatDateTimeLocal } from '../../commons/utils/helper';
+import DashboardCard from '../../components/DashboardCard';
+import FilterReport from '../../components/FilterReport';
+import { WrapFilterDescription } from '../../components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles';
+import { Column } from '../../components/commons/Table';
+import { FilterHead, GridContainer, StackingLifecycleTable, Status, TextHeadline, TitleHead, WrapReportName } from './styles';
 
 const cardList = [
   {
@@ -235,7 +235,7 @@ const Dashboard: React.FC = () => {
           />
         </FilterHead>
       </TitleHead>
-      <Table
+      <StackingLifecycleTable
         isShowingResult={false}
         {...fetchData}
         data={data || []}
