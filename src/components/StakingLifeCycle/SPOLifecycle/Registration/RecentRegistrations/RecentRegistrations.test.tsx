@@ -4,7 +4,7 @@ import Router from "react-router";
 
 test("should render SPO RecentRegistrations call mock api", async () => {
   jest.spyOn(Router, "useParams").mockReturnValue({
-    stakeId: "1",
+    stakeId: "1"
   });
   const onSelect = jest.fn();
   render(<RecentRegistrations onSelect={onSelect} />);

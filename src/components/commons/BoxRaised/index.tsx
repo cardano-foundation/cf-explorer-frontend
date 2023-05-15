@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 export const BoxRaised = styled.div`
   background: ${(props) => props.theme.palette.background.paper};

@@ -1,9 +1,9 @@
-import { Box, FormGroup } from '@mui/material';
-import { useReducer, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { EmailIcon } from '../../commons/resources';
-import { routers } from '../../commons/routers';
-import { forgotPassword } from '../../commons/utils/userRequest';
+import { Box, FormGroup } from "@mui/material";
+import { useReducer, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { EmailIcon } from "../../commons/resources";
+import { routers } from "../../commons/routers";
+import { forgotPassword } from "../../commons/utils/userRequest";
 import {
   AlertCustom,
   Container,
@@ -17,7 +17,7 @@ import {
   WrapInput,
   WrapSignUp,
   WrapTitle
-} from './styles';
+} from "./styles";
 
 interface IForm {
   email: {
@@ -30,7 +30,7 @@ const formReducer = (state: IForm, event: any) => {
   return {
     ...state,
     [event.name]: {
-      value: event.value || '',
+      value: event.value || "",
       error: event.error,
       touched: event.touched
     }
@@ -41,20 +41,20 @@ export default function ForgotPassword() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useReducer(formReducer, {
     email: {
-      value: ''
+      value: ""
     }
   });
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const getError = (name: string, value: string) => {
-    let error = '';
+    let error = "";
     switch (name) {
-      case 'email':
+      case "email":
         if (!value) {
-          error = 'Please enter your Email';
+          error = "Please enter your Email";
           // eslint-disable-next-line no-useless-escape
         } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
-          error = 'Invalid Email';
+          error = "Invalid Email";
         }
         break;
       default:
@@ -73,7 +73,7 @@ export default function ForgotPassword() {
     try {
       setLoading(true);
       const { data } = await forgotPassword({ email });
-      if (data.code === 'SS_0') {
+      if (data.code === "SS_0") {
         setSuccess(true);
       } else {
         setError(true);
@@ -89,7 +89,7 @@ export default function ForgotPassword() {
     const error = getError(formData.email.value, formData.email.value);
     if (error) {
       setFormData({
-        name: 'email',
+        name: "email",
         touched: true,
         error
       });
@@ -112,7 +112,7 @@ export default function ForgotPassword() {
                 <Label>Email</Label>
                 <InputCustom
                   startAdornment={
-                    <Box paddingRight={'10px'} paddingTop={'7px'} paddingBottom={'2px'}>
+                    <Box paddingRight={"10px"} paddingTop={"7px"} paddingBottom={"2px"}>
                       <EmailIcon />
                     </Box>
                   }

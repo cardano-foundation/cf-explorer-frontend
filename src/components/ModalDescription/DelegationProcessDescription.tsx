@@ -1,6 +1,6 @@
-import { Box } from '@mui/material';
-import StyledModal from '../commons/StyledModal';
-import { BoxDetails, NormalDescription, NumberParagraph, Watermark, WrapContent } from './styles';
+import { Box } from "@mui/material";
+import StyledModal from "../commons/StyledModal";
+import { BoxDetails, NormalDescription, NumberParagraph, Watermark, WrapContent } from "./styles";
 
 interface Props {
   open: boolean;
@@ -9,7 +9,12 @@ interface Props {
 
 export function DelegationProcessDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title='The delegation process' handleCloseModal={handleCloseModal} open={open} data-testid="close-modal-button">
+    <StyledModal
+      title='The delegation process'
+      handleCloseModal={handleCloseModal}
+      open={open}
+      data-testid='close-modal-button'
+    >
       <WrapContent>
         <NormalDescription>
           When a delegator wants to send ADA to a Staking Pool Operator (SPO) on Cardano, the following steps occur:
@@ -45,7 +50,7 @@ export function DelegationProcessDescription({ open, handleCloseModal }: Props) 
         </BoxDetails>
         <NormalDescription>
           In summary, sending ADA to a SPO on Cardano is the first step in the staking process. The delegator's funds
-          are added to the staking pool's balance and a staking certificate is generated as proof of delegation.{' '}
+          are added to the staking pool's balance and a staking certificate is generated as proof of delegation.{" "}
         </NormalDescription>
       </WrapContent>
     </StyledModal>

@@ -1,14 +1,14 @@
-import { Box, Grid, alpha, styled } from '@mui/material';
+import { Box, Grid, alpha, styled } from "@mui/material";
 
 export const EpochCard = styled(Box)(({ theme }) => ({
-  display: 'flex',
+  display: "flex",
   backgroundColor: theme.palette.common.white,
   borderRadius: 12,
   padding: 24,
   marginBottom: 24,
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-  overflowX: 'scroll'
+  flexDirection: "column",
+  alignItems: "flex-start",
+  overflowX: "scroll"
 }));
 
 export const EpochNumber = styled(Box)(({ theme }) => ({
@@ -19,15 +19,15 @@ export const EpochNumber = styled(Box)(({ theme }) => ({
 
 export const TitleCard = styled(Box)(({ theme }) => ({
   color: alpha(theme.palette.common.black, 0.5),
-  fontSize: '0.875rem'
+  fontSize: "0.875rem"
 }));
 
-export const EpochText = styled('span')`
+export const EpochText = styled("span")`
   color: ${(props) => props.theme.palette.grey[400]};
   text-transform: uppercase;
 `;
 
-export const EpochProgress = styled('h3')(({ theme }) => ({
+export const EpochProgress = styled("h3")(({ theme }) => ({
   color: theme.palette.primary.main,
   margin: 0,
   [theme.breakpoints.down(theme.breakpoints.values.md)]: {
@@ -43,13 +43,13 @@ export const EpochValue = styled(Box)(({ theme }) => ({
 }));
 
 export const CardItem = styled(Grid)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
   paddingLeft: 16,
   borderLeft: `1px solid ${theme.palette.grey[200]}`,
   minWidth: 250,
-  margin: '8px 0'
+  margin: "8px 0"
 }));
 
 export const CardItemTitle = styled(Box)(({ theme }) => ({
@@ -57,18 +57,18 @@ export const CardItemTitle = styled(Box)(({ theme }) => ({
   marginLeft: 8
 }));
 
-export const MaxSlot = styled('span')`
+export const MaxSlot = styled("span")`
   color: ${(props) => props.theme.palette.grey[400]};
   font-size: 20px;
 `;
 
-export const Date = styled('div')`
+export const Date = styled("div")`
   font-size: 1.25rem;
   margin-top: 8px;
   font-weight: 600;
 `;
 
-export const Time = styled('div')`
+export const Time = styled("div")`
   font-size: 1.25rem;
   color: ${(props) => props.theme.palette.grey[400]};
 `;

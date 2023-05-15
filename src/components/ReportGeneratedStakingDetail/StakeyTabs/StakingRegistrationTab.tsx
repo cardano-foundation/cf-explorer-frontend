@@ -1,31 +1,31 @@
-import { BoxProps, IconButton, Box } from '@mui/material';
+import { BoxProps, IconButton, Box } from "@mui/material";
 import {
   formatADAFull,
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
   getShortWallet
-} from '../../../commons/utils/helper';
-import ADAicon from '../../commons/ADAIcon';
+} from "../../../commons/utils/helper";
+import ADAicon from "../../commons/ADAIcon";
 
-import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useContext, useState } from 'react';
-import CustomTooltip from '../../commons/CustomTooltip';
-import { StyledLink } from '../../share/styled';
-import { TableSubTitle } from '../../TabularView/StakeTab/styles';
-import { details } from '../../../commons/routers';
-import useFetchList from '../../../commons/hooks/useFetchList';
-import Table, { Column } from '../../commons/Table';
-import { API } from '../../../commons/utils/api';
-import { StakingDetailContext } from '..';
-import { EyeIcon } from '../../../commons/resources';
-import { RegistrationCertificateModal } from '../../StakingLifeCycle/DelegatorLifecycle/Registration';
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useContext, useState } from "react";
+import CustomTooltip from "../../commons/CustomTooltip";
+import { StyledLink } from "../../share/styled";
+import { TableSubTitle } from "../../TabularView/StakeTab/styles";
+import { details } from "../../../commons/routers";
+import useFetchList from "../../../commons/hooks/useFetchList";
+import Table, { Column } from "../../commons/Table";
+import { API } from "../../../commons/utils/api";
+import { StakingDetailContext } from "..";
+import { EyeIcon } from "../../../commons/resources";
+import { RegistrationCertificateModal } from "../../StakingLifeCycle/DelegatorLifecycle/Registration";
 
 interface IAdaValue extends BoxProps {
   value: number | string;
 }
 
-export const AdaValue = ({ value, gap = '8px', fontSize, ...props }: IAdaValue) => {
+export const AdaValue = ({ value, gap = "8px", fontSize, ...props }: IAdaValue) => {
   return (
     <Box {...props} display='flex' alignItems='center' gap={gap} fontSize={fontSize}>
       {formatADAFull(value)}
@@ -41,15 +41,15 @@ const StakingRegistrationTab = () => {
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(getPageInfo(search));
   const { stakeKey } = useContext(StakingDetailContext);
-  const fetchData = useFetchList<RegistrationItem>(reportId ? API.REPORT.SREPORT_DETAIL_REGISTRATIONS(reportId) : '', {
+  const fetchData = useFetchList<RegistrationItem>(reportId ? API.REPORT.SREPORT_DETAIL_REGISTRATIONS(reportId) : "", {
     ...pageInfo
   });
 
   const columns: Column<RegistrationItem>[] = [
     {
-      title: 'Transaction Hash',
-      key: 'hash',
-      minWidth: '120px',
+      title: "Transaction Hash",
+      key: "hash",
+      minWidth: "120px",
       render: (r) => (
         <CustomTooltip title={r.txHash}>
           <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
@@ -57,9 +57,9 @@ const StakingRegistrationTab = () => {
       )
     },
     {
-      title: 'Timestamp',
-      key: 'time',
-      minWidth: '120px',
+      title: "Timestamp",
+      key: "time",
+      minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time)
     },
     {
@@ -69,8 +69,8 @@ const StakingRegistrationTab = () => {
           <TableSubTitle>Hold/Fees</TableSubTitle>
         </>
       ),
-      key: 'block',
-      minWidth: '120px',
+      key: "block",
+      minWidth: "120px",
       render: (r) => (
         <Box>
           <AdaValue value={r.deposit + r.fee} />
@@ -85,12 +85,12 @@ const StakingRegistrationTab = () => {
       )
     },
     {
-      title: 'Certificate',
-      key: 'stakeId',
-      minWidth: '120px',
+      title: "Certificate",
+      key: "stakeId",
+      minWidth: "120px",
       render: (r) => (
         <IconButton onClick={() => setOpenModal(true)}>
-          <EyeIcon style={{ transform: 'scale(.8)' }} />
+          <EyeIcon style={{ transform: "scale(.8)" }} />
         </IconButton>
       )
     }
@@ -101,7 +101,7 @@ const StakingRegistrationTab = () => {
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: 'Total', count: fetchData.total }}
+        total={{ title: "Total", count: fetchData.total }}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

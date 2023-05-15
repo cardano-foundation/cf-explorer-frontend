@@ -1,26 +1,4 @@
-import { useEffect, useState } from 'react';
-import Card from '../../components/commons/Card';
-import {
-  AccordionDetails,
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  Skeleton,
-  Typography,
-  alpha,
-  useTheme
-} from '@mui/material';
-import { Column } from '../../types/table';
-import { PROTOCOL_TYPE } from '../../commons/utils/constants';
-import Table from '../../components/commons/Table';
-
-import useFetch from '../../commons/hooks/useFetch';
-import { API } from '../../commons/utils/api';
-import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from '../../types/protocol';
-import { useList, useUpdateEffect } from 'react-use';
-import ParseScriptModal from '../../components/ParseScriptModal';
-import { HiArrowLongLeft } from 'react-icons/hi2';
+import { useEffect, useState } from "react";
 import {
   AccordionContainer,
   AccordionSummary,
@@ -29,18 +7,30 @@ import {
   BackText,
   ButtonFilter,
   FilterContainer
-} from './styles';
-import styled from '@emotion/styled';
-import { DateRangeIcon, FilterIcon, FirstLast, LastFirst, ProtocolParam, ResetIcon } from '../../commons/resources';
-import DateRangeModal from '../../components/FilterReport/DateRangeModal';
-import moment from 'moment';
-import { BsFillCheckCircleFill } from 'react-icons/bs';
-import _ from 'lodash';
+} from "./styles";
+import styled from "@emotion/styled";
+import _ from "lodash";
+import { AccordionDetails, Box, Button, Checkbox, Container, Skeleton, alpha, useTheme } from "@mui/material";
+import { useList, useUpdateEffect } from "react-use";
+import { BsFillCheckCircleFill } from "react-icons/bs";
+import { HiArrowLongLeft } from "react-icons/hi2";
+import moment from "moment";
+
+import Card from "~/components/commons/Card";
+import Table from "~/components/commons/Table";
+import { Column } from "~/types/table";
+import { PROTOCOL_TYPE } from "~/commons/utils/constants";
+import useFetch from "~/commons/hooks/useFetch";
+import { API } from "~/commons/utils/api";
+import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "~/types/protocol";
+import ParseScriptModal from "~/components/ParseScriptModal";
+import { DateRangeIcon, FilterIcon, FirstLast, LastFirst, ProtocolParam, ResetIcon } from "~/commons/resources";
+import DateRangeModal from "~/components/FilterReport/DateRangeModal";
 
 const ProtocolParameter: React.FC = () => {
   const [fixedColumnList, { push: pushFixedColumn }] = useList<string>([]);
   const [variableColumnList, { push: pushVariableColumn }] = useList<string>([]);
-  const [costModelScript, setCostModelScript] = useState('');
+  const [costModelScript, setCostModelScript] = useState("");
   const [showHistory, setShowHistory] = useState(false);
 
   const { data: dataFixed, loading: loadingFixed } = useFetch<TProtocolParam>(API.PROTOCOL_PARAMETER.FIXED);
@@ -48,15 +38,15 @@ const ProtocolParameter: React.FC = () => {
 
   useUpdateEffect(() => {
     dataFixed &&
-      [...Object.keys(PROTOCOL_TYPE), 'startEpoch', 'endEpoch'].map((k) =>
-        dataFixed[k as ProtocolTypeKey] !== null ? pushFixedColumn(k) : ''
+      [...Object.keys(PROTOCOL_TYPE), "startEpoch", "endEpoch"].map((k) =>
+        dataFixed[k as ProtocolTypeKey] !== null ? pushFixedColumn(k) : ""
       );
 
     dataLastest &&
-      [...Object.keys(PROTOCOL_TYPE), 'startEpoch', 'endEpoch'].map((k) =>
+      [...Object.keys(PROTOCOL_TYPE), "startEpoch", "endEpoch"].map((k) =>
         dataLastest[k as ProtocolTypeKey] !== null && dataLastest[k as ProtocolTypeKey]?.transactionHash !== null
           ? pushVariableColumn(k)
-          : ''
+          : ""
       );
   }, [dataFixed, dataLastest]);
 
@@ -73,19 +63,19 @@ const ProtocolParameter: React.FC = () => {
     render: (r: TProtocolParam) => {
       return (
         <Box
-          component={k === 'costModel' ? Button : Box}
-          onClick={() => k === 'costModel' && setCostModelScript(r['costModel'] !== null ? r['costModel'].value : '')}
-          justifyItems={'flex-start'}
-          textTransform={'capitalize'}
+          component={k === "costModel" ? Button : Box}
+          onClick={() => k === "costModel" && setCostModelScript(r["costModel"] !== null ? r["costModel"].value : "")}
+          justifyItems={"flex-start"}
+          textTransform={"capitalize"}
         >
           <Box
             maxWidth={300}
-            overflow={'hidden'}
-            whiteSpace={'nowrap'}
-            textOverflow={'ellipsis'}
-            color={({ palette }) => (k === 'costModel' ? palette.blue[800] : 'unset')}
+            overflow={"hidden"}
+            whiteSpace={"nowrap"}
+            textOverflow={"ellipsis"}
+            color={({ palette }) => (k === "costModel" ? palette.blue[800] : "unset")}
           >
-            {r[k as ProtocolTypeKey] !== null ? r[k as ProtocolTypeKey].value : ''}
+            {r[k as ProtocolTypeKey] !== null ? r[k as ProtocolTypeKey].value : ""}
           </Box>
         </Box>
       );
@@ -94,8 +84,8 @@ const ProtocolParameter: React.FC = () => {
 
   const columnsFull: Column<TProtocolParam>[] = [
     {
-      title: 'Epoch',
-      key: 'startEpoch',
+      title: "Epoch",
+      key: "startEpoch",
       render: (r: TProtocolParam) => {
         return r?.epochChange?.startEpoch || 0;
       }
@@ -109,7 +99,7 @@ const ProtocolParameter: React.FC = () => {
   return (
     <Container>
       {showHistory && (
-        <Box textAlign={'left'}>
+        <Box textAlign={"left"}>
           <BackButton onClick={() => setShowHistory(false)}>
             <HiArrowLongLeft />
             <BackText>Back</BackText>
@@ -118,20 +108,20 @@ const ProtocolParameter: React.FC = () => {
       )}
       {showHistory && <ProtocolParameterHistory />}
       {!showHistory && (
-        <Card marginTitle='0px' title={'Protocol parameters'} textAlign={'left'}>
+        <Card marginTitle='0px' title={"Protocol parameters"} textAlign={"left"}>
           <Box pt={2}>
             <>
-              <Box pb={'30px'} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
-                <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
-                  <Box fontWeight={'bold'} fontSize={'1.25rem'}>
+              <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
+                <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                  <Box fontWeight={"bold"} fontSize={"1.25rem"}>
                     Variable Parameters
                   </Box>
                   <Box
                     component={Button}
                     variant='contained'
-                    textTransform={'capitalize'}
-                    fontWeight={'bold'}
-                    fontSize={'0.875rem'}
+                    textTransform={"capitalize"}
+                    fontWeight={"bold"}
+                    fontSize={"0.875rem"}
                     onClick={() => setShowHistory(true)}
                   >
                     View update history
@@ -148,9 +138,9 @@ const ProtocolParameter: React.FC = () => {
                 )}
                 {!loadingLastest && <Table columns={variableColumn} data={dataLastest !== null ? [dataLastest] : []} />}
               </Box>
-              <Box pt={'30px'}>
+              <Box pt={"30px"}>
                 <Box>
-                  <Box fontWeight={'bold'} fontSize={'1.25rem'}>
+                  <Box textAlign={"left"} fontWeight={"bold"} fontSize={"1.25rem"}>
                     Fixed Parameters
                   </Box>
                   {loadingFixed && (
@@ -171,7 +161,7 @@ const ProtocolParameter: React.FC = () => {
       )}
       <ParseScriptModal
         open={!!costModelScript}
-        onClose={() => setCostModelScript('')}
+        onClose={() => setCostModelScript("")}
         script={costModelScript}
         title='CostModel'
       />
@@ -194,7 +184,7 @@ const ProtocolParameterHistory = () => {
   const [showFilter, setShowFiter] = useState(false);
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [resetFilter, setResetFilter] = useState<boolean>(false);
-  const [sortTimeFilter, setSortTimeFilter] = useState<'FirstLast' | 'LastFirst' | ''>('');
+  const [sortTimeFilter, setSortTimeFilter] = useState<"FirstLast" | "LastFirst" | "">("");
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
 
   const getTitleColumn = (data: ProtocolHistory | null) => {
@@ -225,14 +215,14 @@ const ProtocolParameterHistory = () => {
 
   const filterDataByTime = (data: { [key: string]: any }[], start: string, end: string) => {
     const column: string[] = [];
-    const startDate = moment(start, 'YYYY/MM/DD hh:mm:ss');
-    const endDate = moment(end, 'YYYY/MM/DD hh:mm:ss');
+    const startDate = moment(start, "YYYY/MM/DD hh:mm:ss");
+    const endDate = moment(end, "YYYY/MM/DD hh:mm:ss");
     data.filter((d) => {
       for (const key in d) {
         if (
           d[key] &&
           d[key]?.time &&
-          moment(d[key]?.time, 'YYYY/MM/DD hh:mm:ss').isBetween(startDate, endDate, null, '[]')
+          moment(d[key]?.time, "YYYY/MM/DD hh:mm:ss").isBetween(startDate, endDate, null, "[]")
         ) {
           if (!column.includes(key)) {
             column.push(key);
@@ -248,18 +238,36 @@ const ProtocolParameterHistory = () => {
     title: t,
     key: t,
     render: (r: any) => (
-      <Box p={'24px 20px'} maxWidth={200} overflow={'hidden'} whiteSpace={'nowrap'} textOverflow={'ellipsis'}>
-        {r[t] ? r[t]?.value : ''}
+      <Box
+        p={"24px 20px"}
+        maxWidth={200}
+        overflow={"hidden"}
+        whiteSpace={"nowrap"}
+        minHeight={"16px"}
+        textOverflow={"ellipsis"}
+        bgcolor={({ palette }) =>
+          r[t as ProtocolTypeKey] !== null
+            ? r[t as ProtocolTypeKey].status === "UPDATED"
+              ? palette.yellow[100]
+              : r[t as ProtocolTypeKey].status === "ADDED"
+              ? alpha(palette.green[600], 0.1)
+              : r[t as ProtocolTypeKey].status === "NOT_EXIST"
+              ? palette.red[100]
+              : "transparent"
+            : "transparent"
+        }
+      >
+        {r[t] ? r[t]?.value : ""}
       </Box>
     )
   }));
 
   const columnsFull: Column<TProtocolParam & { params: string }>[] = [
     {
-      title: 'Parameter Name',
-      key: 'ParameterName',
+      title: "Parameter Name",
+      key: "ParameterName",
       render: (r: TProtocolParam & { params: string }) => {
-        return <Box p={'24px 20px'}>{r?.params}</Box>;
+        return <Box p={"24px 20px"}>{r?.params}</Box>;
       }
     },
     ...columnsMap
@@ -280,7 +288,7 @@ const ProtocolParameterHistory = () => {
 
   useUpdateEffect(() => {
     if (!_.isEmpty(dateRangeFilter)) {
-      filterDataByTime(dataHistoryMapping, dateRangeFilter.fromDate || '', dateRangeFilter.toDate || '');
+      filterDataByTime(dataHistoryMapping, dateRangeFilter.fromDate || "", dateRangeFilter.toDate || "");
     } else {
       setColumnsTable([...columnsFull]);
     }
@@ -294,7 +302,7 @@ const ProtocolParameterHistory = () => {
   useUpdateEffect(() => {
     if (resetFilter) {
       setFilterParams([]);
-      setSortTimeFilter('');
+      setSortTimeFilter("");
       setDateRangeFilter({});
       setResetFilter(false);
     }
@@ -310,10 +318,10 @@ const ProtocolParameterHistory = () => {
 
   useUpdateEffect(() => {
     if (_.isEmpty(dateRangeFilter)) {
-      if (sortTimeFilter === 'FirstLast') {
+      if (sortTimeFilter === "FirstLast") {
         setColumnsTable([columnsFull[0], ...columnsFull.slice(1).reverse()]);
       }
-      if (sortTimeFilter === 'LastFirst' || sortTimeFilter === '') {
+      if (sortTimeFilter === "LastFirst" || sortTimeFilter === "") {
         setColumnsTable([...columnsFull]);
       }
     } else {
@@ -331,20 +339,20 @@ const ProtocolParameterHistory = () => {
     <Box>
       <Card
         marginTitle='0px'
-        title={'Protocol parameters update history'}
-        textAlign={'left'}
+        title={"Protocol parameters update history"}
+        textAlign={"left"}
         extra={
-          <Box position={'relative'}>
+          <Box position={"relative"}>
             <Box
               component={Button}
               variant='text'
-              textTransform={'capitalize'}
+              textTransform={"capitalize"}
               bgcolor={({ palette }) => alpha(palette.green[600], 0.1)}
               px={2}
               onClick={() => setShowFiter(!showFilter)}
             >
               <FilterIcon />
-              <Box ml={1} fontWeight={'bold'}>
+              <Box ml={1} fontWeight={"bold"}>
                 Filter
               </Box>
             </Box>
@@ -377,11 +385,11 @@ const TableStyled = styled(Table)(() => ({
 
 interface FilterComponentProps {
   filterParams: string[];
-  sortTimeFilter: 'FirstLast' | 'LastFirst' | '';
+  sortTimeFilter: "FirstLast" | "LastFirst" | "";
   setFilterParams: (feild: string[]) => void;
   setResetFilter: (reset: boolean) => void;
   setShowFiter: (show: boolean) => void;
-  setSortTimeFilter: (sortTime: 'FirstLast' | 'LastFirst' | '') => void;
+  setSortTimeFilter: (sortTime: "FirstLast" | "LastFirst" | "") => void;
   dateRangeFilter: {
     fromDate?: string;
     toDate?: string;
@@ -407,9 +415,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   const [filterOption, { push: pushFilterOption, removeAt: removeAtFilterOption, clear }] =
     useList<string>(filterParams);
 
-  const [expanded, setExpanded] = useState<string | false>('');
+  const [expanded, setExpanded] = useState<string | false>("");
   const [showDaterange, setShowDaterange] = useState<boolean>(false);
-  const [sort, setSort] = useState<'FirstLast' | 'LastFirst' | ''>(sortTimeFilter);
+  const [sort, setSort] = useState<"FirstLast" | "LastFirst" | "">(sortTimeFilter);
   const [dateRange, setDateRange] = useState<{
     fromDate?: string;
     toDate?: string;
@@ -426,52 +434,52 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   };
   return (
     <FilterContainer padding={2}>
-      <Box display={'flex'} flexDirection={'column'}>
-        <ButtonFilter onClick={() => setSort('LastFirst')}>
-          <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
-            <Box display={'flex'} alignItems={'center'}>
+      <Box display={"flex"} flexDirection={"column"}>
+        <ButtonFilter onClick={() => setSort("LastFirst")}>
+          <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+            <Box display={"flex"} alignItems={"center"}>
               <LastFirst />
               <Box ml={1}>Latest - First</Box>
             </Box>
-            {sort === 'LastFirst' && <BsFillCheckCircleFill size={16} style={{ color: '#108AEF !important' }} />}
+            {sort === "LastFirst" && <BsFillCheckCircleFill size={16} style={{ color: "#108AEF !important" }} />}
           </Box>
         </ButtonFilter>
-        <ButtonFilter onClick={() => setSort('FirstLast')}>
-          <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
-            <Box display={'flex'} alignItems={'center'}>
+        <ButtonFilter onClick={() => setSort("FirstLast")}>
+          <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+            <Box display={"flex"} alignItems={"center"}>
               <FirstLast />
               <Box ml={1}>First - Latest</Box>
             </Box>
-            {sort === 'FirstLast' && <BsFillCheckCircleFill size={16} style={{ color: '#108AEF !important' }} />}
+            {sort === "FirstLast" && <BsFillCheckCircleFill size={16} style={{ color: "#108AEF !important" }} />}
           </Box>
         </ButtonFilter>
         <ButtonFilter onClick={() => setShowDaterange(true)}>
-          <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
-            <Box display={'flex'} alignItems={'center'}>
+          <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+            <Box display={"flex"} alignItems={"center"}>
               <DateRangeIcon />
               <Box ml={1}> Date range</Box>
             </Box>
-            {!_.isEmpty(dateRange) && <BsFillCheckCircleFill size={16} style={{ color: '#108AEF !important' }} />}
+            {!_.isEmpty(dateRange) && <BsFillCheckCircleFill size={16} style={{ color: "#108AEF !important" }} />}
           </Box>
         </ButtonFilter>
 
-        <AccordionContainer expanded={expanded === 'params'} onChange={handleChange('params')}>
+        <AccordionContainer expanded={expanded === "params"} onChange={handleChange("params")}>
           <AccordionSummary>
-            <Box fontSize={'0.875rem'}>
-              <Box display={'flex'} alignItems={'center'}>
+            <Box fontSize={"0.875rem"}>
+              <Box display={"flex"} alignItems={"center"}>
                 <ProtocolParam />
-                <Box ml={1}>Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ''}</Box>
+                <Box ml={1}>Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ""}</Box>
               </Box>
             </Box>
           </AccordionSummary>
           <AccordionDetails>
-            <Box height={170} overflow={'auto'} bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
+            <Box height={170} overflow={"auto"} bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
               <Checkbox
                 checked={filterOption.length === Object.keys(PROTOCOL_TYPE).length}
-                id={'all'}
+                id={"all"}
                 sx={{
                   color: ({ palette }) => alpha(palette.common.black, 0.15),
-                  '&.Mui-checked': {
+                  "&.Mui-checked": {
                     color: `#108AEF !important`
                   }
                 }}
@@ -484,7 +492,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                   }
                 }}
               />
-              <Box component={'label'} htmlFor={'all'} style={{ cursor: 'pointer' }}>
+              <Box component={"label"} htmlFor={"all"} style={{ cursor: "pointer" }}>
                 All parameters
               </Box>
 
@@ -500,12 +508,12 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }
                     sx={{
                       color: ({ palette }) => alpha(palette.common.black, 0.15),
-                      '&.Mui-checked': {
+                      "&.Mui-checked": {
                         color: `#108AEF !important`
                       }
                     }}
                   />
-                  <Box component={'label'} htmlFor={k} style={{ cursor: 'pointer' }}>
+                  <Box component={"label"} htmlFor={k} style={{ cursor: "pointer" }}>
                     {k}
                   </Box>
                 </Box>
@@ -524,14 +532,14 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
         </Box>
         <Box
           component={Button}
-          width={'100%'}
-          textTransform={'capitalize'}
+          width={"100%"}
+          textTransform={"capitalize"}
           onClick={() => {
             setResetFilter(true);
             setShowFiter(false);
           }}
-          display={'flex'}
-          alignItems={'center'}
+          display={"flex"}
+          alignItems={"center"}
           mt={2}
           color={`#108AEF !important`}
         >
@@ -551,24 +559,24 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 
 const inputData = [
   {
-    params: 'minFeeA',
-    'Epoch 393': {
-      time: '10/2/2023',
+    params: "minFeeA",
+    "Epoch 393": {
+      time: "10/2/2023",
       value: 10
     },
-    'Epoch 366 - 392': {
-      time: '13/2/2023',
+    "Epoch 366 - 392": {
+      time: "13/2/2023",
       value: 10
     }
   },
   {
-    params: 'minFeeB',
-    'Epoch 393': {
+    params: "minFeeB",
+    "Epoch 393": {
       time: null,
       value: 10
     },
-    'Epoch 366 - 392': {
-      time: '18/2/2023',
+    "Epoch 366 - 392": {
+      time: "18/2/2023",
       value: 10
     }
   }

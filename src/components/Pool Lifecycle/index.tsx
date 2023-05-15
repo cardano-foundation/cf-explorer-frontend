@@ -13,7 +13,7 @@ const PoolLifecycle = () => {
   const [sort, setSort] = useState<string>("");
 
   const downloadFn = async (reportId: number, fileName: string) => {
-    defaultAxiosDownload.get(API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId)).then(response => {
+    defaultAxiosDownload.get(API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId)).then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -30,28 +30,28 @@ const PoolLifecycle = () => {
       maxWidth: "300px",
       render(data) {
         return <TextOverFlow>{data.reportName}</TextOverFlow>;
-      },
+      }
     },
     {
       key: "epoch",
       title: "Epoch range",
       render(data) {
         return `Epoch${data.epochRanges[0]} - Epoch ${data.epochRanges[1]}`;
-      },
+      }
     },
     {
       key: "transfer",
       title: "Pool size",
       render(data) {
         return data.isPoolSize ? "Yes" : "No";
-      },
+      }
     },
     {
       key: "feePaid",
       title: "Fee paid",
       render(data) {
         return data.isFreePaid ? "Yes" : "No";
-      },
+      }
     },
     {
       key: "event",
@@ -62,7 +62,7 @@ const PoolLifecycle = () => {
           .split(",")
           .map((event: string) => startCase(lowerCase(event.replaceAll("_", " "))))
           .join(", ");
-      },
+      }
     },
     {
       key: "download",
@@ -70,14 +70,14 @@ const PoolLifecycle = () => {
       maxWidth: "30px",
       render(data, index) {
         return <DownloadGreenIcon onClick={() => downloadFn(data.reportId, data.reportName)} />;
-      },
-    },
+      }
+    }
   ];
 
   const fetchData = useFetchList<IPoolReportList>(API.REPORT.POOL_REPORT_SUMMARY, {
     page,
     size,
-    sort,
+    sort
   });
 
   return (
@@ -90,7 +90,7 @@ const PoolLifecycle = () => {
           page,
           size,
           total: fetchData.total,
-          onChange: (page, size) => setPagi({ page: page - 1, size }),
+          onChange: (page, size) => setPagi({ page: page - 1, size })
         }}
       />
     </Box>

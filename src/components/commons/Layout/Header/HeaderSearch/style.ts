@@ -1,6 +1,6 @@
-import { Box, Button, Input, MenuItem, Select, styled } from '@mui/material';
+import { Box, Button, Input, MenuItem, Select, styled } from "@mui/material";
 
-export const Form = styled('form')<{ home: number }>`
+export const Form = styled("form")<{ home: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,33 +84,33 @@ export const SubmitButton = styled(Button)<{ home: number }>`
   width: ${(props) => (props.home ? 60 : 44)}px;
   height: ${(props) => (props.home ? 60 : 44)}px;
 `;
-export const Image = styled('img')<{ home: number }>`
+export const Image = styled("img")<{ home: number }>`
   width: ${(props) => (props.home ? 24 : 20)}px;
   height: ${(props) => (props.home ? 24 : 20)}px;
 `;
 
 export const OptionsWrapper = styled(Box)<{ home: number }>(({ theme, home }) => ({
-  position: 'absolute',
-  top: home ? '61px' : '44px',
-  left: home ? '175px' : '0',
-  width: home ? 'calc(100% - 370px)' : '380px',
+  position: "absolute",
+  top: home ? "61px" : "44px",
+  left: home ? "175px" : "0",
+  width: home ? "calc(100% - 370px)" : "380px",
   backgroundColor: theme.palette.common.white,
-  textAlign: 'left',
-  padding: '0 10px',
+  textAlign: "left",
+  padding: "0 10px",
   borderBottomLeftRadius: 10,
   borderBottomRightRadius: 10,
   zIndex: 10
 }));
 
 export const Option = styled(Button)(({ theme }) => ({
-  textTransform: 'inherit',
+  textTransform: "inherit",
   color: theme.palette.common.black,
-  width: '100%',
-  justifyContent: 'space-between',
-  margin: '4px 0'
+  width: "100%",
+  justifyContent: "space-between",
+  margin: "4px 0"
 }));
 
-export const ValueOption = styled('span')(({ theme }) => ({
+export const ValueOption = styled("span")(({ theme }) => ({
   color: theme.palette.primary.main,
-  fontWeight: '500'
+  fontWeight: "500"
 }));

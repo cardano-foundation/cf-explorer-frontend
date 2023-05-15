@@ -1,22 +1,22 @@
-import { Box, BoxProps, IconButton, useTheme } from '@mui/material';
-import { useState } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
-import useFetchList from '../../../../commons/hooks/useFetchList';
-import { EyeIcon } from '../../../../commons/resources';
-import { details } from '../../../../commons/routers';
-import { API } from '../../../../commons/utils/api';
-import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from '../../../../commons/utils/helper';
-import { RegistrationCertificateModal } from '../../../StakingLifeCycle/DelegatorLifecycle/Registration';
-import ADAicon from '../../../commons/ADAIcon';
-import CustomTooltip from '../../../commons/CustomTooltip';
-import Table, { Column } from '../../../commons/Table';
-import { StyledLink, TableSubTitle } from '../styles';
+import { Box, BoxProps, IconButton, useTheme } from "@mui/material";
+import { useState } from "react";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import useFetchList from "../../../../commons/hooks/useFetchList";
+import { EyeIcon } from "../../../../commons/resources";
+import { details } from "../../../../commons/routers";
+import { API } from "../../../../commons/utils/api";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
+import { RegistrationCertificateModal } from "../../../StakingLifeCycle/DelegatorLifecycle/Registration";
+import ADAicon from "../../../commons/ADAIcon";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import Table, { Column } from "../../../commons/Table";
+import { StyledLink, TableSubTitle } from "../styles";
 
 interface IAdaValue extends BoxProps {
   value: number | string;
 }
 
-export const AdaValue = ({ value, gap = '8px', fontSize, color, ...props }: IAdaValue) => {
+export const AdaValue = ({ value, gap = "8px", fontSize, color, ...props }: IAdaValue) => {
   return (
     <Box {...props} color={color} display='flex' alignItems='center' gap={gap} fontSize={fontSize}>
       {formatADAFull(value)}
@@ -30,19 +30,19 @@ const StakeRegistrationTab = () => {
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
-  const [sort, setSort] = useState<string>('');
+  const [sort, setSort] = useState<string>("");
   const [pageInfo, setPageInfo] = useState(getPageInfo(search));
   const [openModal, setOpenModal] = useState(false);
-  const fetchData = useFetchList<RegistrationItem>(stakeId ? API.STAKE_LIFECYCLE.REGISTRATION(stakeId) : '', {
+  const fetchData = useFetchList<RegistrationItem>(stakeId ? API.STAKE_LIFECYCLE.REGISTRATION(stakeId) : "", {
     ...pageInfo,
     sort
   });
 
   const columns: Column<RegistrationItem>[] = [
     {
-      title: 'Transaction Hash',
-      key: 'hash',
-      minWidth: '120px',
+      title: "Transaction Hash",
+      key: "hash",
+      minWidth: "120px",
       render: (r) => (
         <CustomTooltip title={r.txHash}>
           <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
@@ -50,12 +50,12 @@ const StakeRegistrationTab = () => {
       )
     },
     {
-      title: 'Timestamp',
-      key: 'id',
-      minWidth: '120px',
+      title: "Timestamp",
+      key: "id",
+      minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort('');
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
@@ -65,8 +65,8 @@ const StakeRegistrationTab = () => {
           <TableSubTitle>Hold/Fees</TableSubTitle>
         </>
       ),
-      key: 'block',
-      minWidth: '120px',
+      key: "block",
+      minWidth: "120px",
       render: (r) => (
         <Box>
           <AdaValue value={r.deposit + r.fee} />
@@ -81,12 +81,12 @@ const StakeRegistrationTab = () => {
       )
     },
     {
-      title: 'Certificate',
-      key: 'stakeId',
-      minWidth: '120px',
+      title: "Certificate",
+      key: "stakeId",
+      minWidth: "120px",
       render: (r) => (
         <IconButton onClick={() => setOpenModal(true)}>
-          <EyeIcon style={{ transform: 'scale(.8)' }} />
+          <EyeIcon style={{ transform: "scale(.8)" }} />
         </IconButton>
       )
     }
@@ -97,7 +97,7 @@ const StakeRegistrationTab = () => {
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: 'Total', count: fetchData.total }}
+        total={{ title: "Total", count: fetchData.total }}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

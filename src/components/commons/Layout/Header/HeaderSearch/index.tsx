@@ -1,11 +1,11 @@
-import React, { FormEvent, useState, useEffect } from 'react';
-import { Backdrop, Box, SelectChangeEvent } from '@mui/material';
-import { useHistory } from 'react-router-dom';
-import { HeaderSearchIcon } from '../../../../../commons/resources';
-import { details, routers } from '../../../../../commons/routers';
-import { stringify } from 'qs';
-import { BiChevronDown } from 'react-icons/bi';
-import { GoChevronRight } from 'react-icons/go';
+import React, { FormEvent, useState, useEffect } from "react";
+import { Backdrop, Box, SelectChangeEvent } from "@mui/material";
+import { useHistory } from "react-router-dom";
+import { HeaderSearchIcon } from "../../../../../commons/resources";
+import { details, routers } from "../../../../../commons/routers";
+import qs, { stringify } from "qs";
+import { BiChevronDown } from "react-icons/bi";
+import { GoChevronRight } from "react-icons/go";
 import {
   Form,
   Image,
@@ -15,13 +15,12 @@ import {
   StyledInput,
   StyledSelect,
   SubmitButton,
-  ValueOption,
+  ValueOption
 } from "./style";
 import { useSelector } from "react-redux";
 import { useScreen } from "../../../../../commons/hooks/useScreen";
 import defaultAxios from "../../../../../commons/utils/axios";
 import { API } from "../../../../../commons/utils/api";
-import qs from "qs";
 
 interface Props {
   home: boolean;
@@ -39,59 +38,59 @@ interface Option {
   detail?: (typeof details)[keyof typeof details];
 }
 const intitalValue: FormValues = {
-  filter: 'all',
-  search: ''
+  filter: "all",
+  search: ""
 };
 
 const options: Option[] = [
   {
-    value: 'all',
-    label: 'All Filters'
+    value: "all",
+    label: "All Filters"
   },
   {
-    value: 'epochs',
-    label: 'Epochs',
+    value: "epochs",
+    label: "Epochs",
     paths: [routers.EPOCH_LIST]
   },
   {
-    value: 'blocks',
-    label: 'Blocks',
+    value: "blocks",
+    label: "Blocks",
     paths: [routers.BLOCK_LIST]
   },
   {
-    value: 'txs',
-    label: 'Transactions',
+    value: "txs",
+    label: "Transactions",
     paths: [routers.TRANSACTION_LIST]
   },
   {
-    value: 'tokens',
-    label: 'Tokens',
+    value: "tokens",
+    label: "Tokens",
     paths: [routers.TOKEN_LIST]
   },
   {
-    value: 'stakes',
-    label: 'Stake keys',
+    value: "stakes",
+    label: "Stake keys",
     paths: [routers.STAKE_LIST, routers.TOP_DELEGATOR]
   },
   {
-    value: 'addresses',
-    label: 'Addresses',
+    value: "addresses",
+    label: "Addresses",
     paths: [routers.ADDRESS_LIST, routers.CONTRACT_LIST]
   },
   {
-    value: 'delegations/pool-detail-header',
-    label: 'Pools',
+    value: "delegations/pool-detail-header",
+    label: "Pools",
     paths: [routers.DELEGATION_POOLS, routers.REGISTRATION_POOLS]
   },
   {
-    value: 'delegation-lifecycle',
-    label: 'Delegation Lifecycle',
+    value: "delegation-lifecycle",
+    label: "Delegation Lifecycle",
     paths: [routers.DELEGATOR_LIFECYCLE],
     detail: details.staking
   },
   {
-    value: 'spo-lifecycle',
-    label: 'SPO Lifecycle',
+    value: "spo-lifecycle",
+    label: "SPO Lifecycle",
     paths: [routers.SPO_LIFECYCLE],
     detail: details.spo
   }
@@ -105,42 +104,42 @@ const HeaderSearch: React.FC<Props> = ({ home, callback }) => {
     if (!search) {
       setShowOption(false);
     }
-    if (filter !== 'all') {
+    if (filter !== "all") {
       setShowOption(false);
     }
   }, [search, filter]);
 
-  const currentPath = history.location.pathname.split('/')[1];
-  const checkIncludesPath = (paths: Option['paths']) => paths?.find((path) => path?.split('/')[1] === currentPath);
+  const currentPath = history.location.pathname.split("/")[1];
+  const checkIncludesPath = (paths: Option["paths"]) => paths?.find((path) => path?.split("/")[1] === currentPath);
 
   useEffect(() => {
-    const filter: FilterParams = options.find((item) => checkIncludesPath(item.paths))?.value || 'all';
+    const filter: FilterParams = options.find((item) => checkIncludesPath(item.paths))?.value || "all";
 
     setValues({ ...intitalValue, filter });
   }, [history.location.pathname]);
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
-    const option = options.find(item => item.value === filter);
+    const option = options.find((item) => item.value === filter);
 
     callback?.();
     if (option?.value === "spo-lifecycle" && option?.detail) {
       const data = await defaultAxios
         .get(`${API.DELEGATION.POOL_LIST}?${qs.stringify({ search })}`)
-        .then(res => res.data.data);
+        .then((res) => res.data.data);
       if (data && data.length) return history.push(option?.detail(data[0].poolId));
     }
     if (option?.detail) return history.push(option?.detail(search));
     if (search) {
       history.push(
-        `${routers.SEARCH}?${stringify({ search, filter: filterParams || (filter !== 'all' ? filter : undefined) })}`
+        `${routers.SEARCH}?${stringify({ search, filter: filterParams || (filter !== "all" ? filter : undefined) })}`
       );
       setValues({ ...intitalValue });
     }
   };
 
   const handleChangeFilter = (e: SelectChangeEvent<unknown>) => {
-    setValues({ search, filter: e.target.value as Option['value'] });
+    setValues({ search, filter: e.target.value as Option["value"] });
   };
 
   const handleChangeSearch = (e?: React.ChangeEvent) => {
@@ -148,7 +147,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback }) => {
     onFocus((e?.target as HTMLInputElement)?.value);
   };
   const onFocus = (newValue?: string) => {
-    if (!isNaN(+(newValue ?? search)) && (newValue ?? search) && filter === 'all') {
+    if (!isNaN(+(newValue ?? search)) && (newValue ?? search) && filter === "all") {
       setShowOption(true);
     } else {
       setShowOption(false);
@@ -160,8 +159,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback }) => {
   const { isMobile } = useScreen();
 
   return (
-    <Box position={'relative'} component={Form} onSubmit={handleSearch} home={home ? 1 : 0}>
-      <Backdrop sx={{ backgroundColor: 'unset' }} open={showOption} onClick={() => setShowOption(false)} />
+    <Box position={"relative"} component={Form} onSubmit={handleSearch} home={home ? 1 : 0}>
+      <Backdrop sx={{ backgroundColor: "unset" }} open={showOption} onClick={() => setShowOption(false)} />
       <StyledSelect
         data-testid='all-filters-dropdown'
         onChange={handleChangeFilter}
@@ -184,17 +183,17 @@ const HeaderSearch: React.FC<Props> = ({ home, callback }) => {
         spellCheck={false}
         placeholder={
           home && !isMobile
-            ? 'Search transactions, address, blocks, epochs, pools...'
+            ? "Search transactions, address, blocks, epochs, pools..."
             : isStakingLifecycle && !isMobile
-            ? 'Search Stake key, Pool ID or Pool Name'
-            : 'Search ...'
+            ? "Search Stake key, Pool ID or Pool Name"
+            : "Search ..."
         }
         title={
           home && !isMobile
-            ? 'Search transactions, address, blocks, epochs, pools...'
+            ? "Search transactions, address, blocks, epochs, pools..."
             : isStakingLifecycle && !isMobile
-            ? 'Search Stake key, Pool ID or Pool Name'
-            : 'Search ...'
+            ? "Search Stake key, Pool ID or Pool Name"
+            : "Search ..."
         }
         onChange={handleChangeSearch}
         disableUnderline
@@ -227,16 +226,16 @@ export const OptionsSearch = ({
   };
 
   return (
-    <OptionsWrapper display={show ? 'block' : 'none'} home={+home}>
+    <OptionsWrapper display={show ? "block" : "none"} home={+home}>
       {+value <= (currentEpoch?.no || 0) && (
-        <Option onClick={() => submitSearch('epochs')}>
+        <Option onClick={() => submitSearch("epochs")}>
           <Box>
             Search for an epoch <ValueOption> {value}</ValueOption>
           </Box>
           <GoChevronRight />
         </Option>
       )}
-      <Option onClick={() => submitSearch('blocks')}>
+      <Option onClick={() => submitSearch("blocks")}>
         <Box>
           Search for a block by number <ValueOption>{value}</ValueOption>
         </Box>

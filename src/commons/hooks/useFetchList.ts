@@ -1,7 +1,7 @@
-import axios, { AxiosInstance } from 'axios';
-import qs from 'qs';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { authAxios, defaultAxios } from '../utils/axios';
+import axios, { AxiosInstance } from "axios";
+import qs from "qs";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { authAxios, defaultAxios } from "../utils/axios";
 
 interface Params {
   page?: number;
@@ -34,14 +34,14 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
   const getList = useCallback(async () => {
     if (!url) return;
     let service: AxiosInstance = isAuth ? authAxios : defaultAxios;
-    if (url.search('http://') === 0 || url.search('https://') === 0) {
+    if (url.search("http://") === 0 || url.search("https://") === 0) {
       service = axios;
     }
     setLoading(true);
     try {
-      const baseURL = url.split('?')[0];
-      const lastURL = url.split('?')[1];
-      const res = await service.get(`${baseURL}?${lastURL ? `${lastURL}&` : ''}${qs.stringify(params)}`);
+      const baseURL = url.split("?")[0];
+      const lastURL = url.split("?")[1];
+      const res = await service.get(`${baseURL}?${lastURL ? `${lastURL}&` : ""}${qs.stringify(params)}`);
       setData(res.data.data as T[]);
       setError(null);
       setCurrentPage(res.data.currentPage);
@@ -66,11 +66,11 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
 
       const onFocus = () => lastFetch.current + timeout * 1000 <= Date.now() && getList();
 
-      window.addEventListener('focus', onFocus);
+      window.addEventListener("focus", onFocus);
 
       return () => {
         clearInterval(interval);
-        window.removeEventListener('focus', onFocus);
+        window.removeEventListener("focus", onFocus);
       };
     }
   }, [getList, timeout]);

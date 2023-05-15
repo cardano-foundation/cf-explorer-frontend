@@ -9,7 +9,7 @@ const item: RegistrationItem = {
   txHash: "f0cc0767ea4cf06ce45a85db8f17f930576af1b06f327b8d9d5d25c17f962166",
   fee: 1,
   deposit: 1,
-  time: 'Fri May 12 2023 11:58:04 GMT+0000',
+  time: "Fri May 12 2023 11:58:04 GMT+0000"
 };
 
 describe("overview staking", () => {

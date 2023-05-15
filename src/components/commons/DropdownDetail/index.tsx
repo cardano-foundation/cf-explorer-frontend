@@ -1,15 +1,15 @@
-import React from 'react';
-import { useUpdateEffect } from 'react-use';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useUpdateEffect } from "react-use";
+import { Link } from "react-router-dom";
 
-import { CloseIcon } from '../../../commons/resources';
-import { details } from '../../../commons/routers';
-import { getShortWallet } from '../../../commons/utils/helper';
+import { CloseIcon } from "../../../commons/resources";
+import { details } from "../../../commons/routers";
+import { getShortWallet } from "../../../commons/utils/helper";
 
-import CopyButton from '../CopyButton';
-import CustomTooltip from '../CustomTooltip';
+import CopyButton from "../CopyButton";
+import CustomTooltip from "../CustomTooltip";
 
-import { ButtonClose, DropdownList, DropdownTitle, InfoValue, ListDropdownContainer } from './styles';
+import { ButtonClose, DropdownList, DropdownTitle, InfoValue, ListDropdownContainer } from "./styles";
 
 interface IDropdownDetailProps {
   title: string;
@@ -32,7 +32,7 @@ const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, m
             <CustomTooltip title={item}>
               <Link
                 to={details.address(item)}
-                style={{ fontFamily: 'var(--font-family-text)', color: 'var(--color-blue)' }}
+                style={{ fontFamily: "var(--font-family-text)", color: "var(--color-blue)" }}
               >
                 {getShortWallet(item)}
               </Link>
@@ -57,10 +57,10 @@ const useOutsideClick = (callback?: () => void) => {
       }
     };
 
-    document.addEventListener('click', handleClick, true);
+    document.addEventListener("click", handleClick, true);
 
     return () => {
-      document.removeEventListener('click', handleClick, true);
+      document.removeEventListener("click", handleClick, true);
     };
   }, [ref]);
 

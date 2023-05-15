@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Box, BoxProps, styled } from '@mui/material';
+import React, { useEffect, useRef, useState } from "react";
+import { Box, BoxProps, styled } from "@mui/material";
 
 const IconBox = styled(Box)(() => ({
-  display: 'inline-flex',
-  justifyContent: 'center',
-  alignItems: 'center'
+  display: "inline-flex",
+  justifyContent: "center",
+  alignItems: "center"
 }));
 
 interface DefaultProps extends BoxProps {
@@ -31,11 +31,11 @@ interface DefaultProps extends BoxProps {
   /**
    * Apply color for fill of path. If fill = undefiend, fill color is svg origin color
    */
-  fill?: 'currentColor' | string;
+  fill?: "currentColor" | string;
   /**
    * Apply color for stroke of path. If stroke = undefiend, stroke color is svg origin color
    */
-  stroke?: 'currentColor' | string;
+  stroke?: "currentColor" | string;
 }
 type Props = DefaultProps & Required<{ width: number } | { height: number }>;
 
@@ -56,9 +56,9 @@ const CustomIcon: React.FC<Props> = React.forwardRef((props: Props, boxRef) => {
   const scaleX = svgWidth && (width || 0) / svgWidth;
   const scaleY = svgHeight && (height || 0) / svgHeight;
 
-  const StyledIcon = styled(icon, { shouldForwardProp: (props) => props !== 'ref' })<{ ref?: React.Ref<unknown> }>(
+  const StyledIcon = styled(icon, { shouldForwardProp: (props) => props !== "ref" })<{ ref?: React.Ref<unknown> }>(
     () => ({
-      transform: scaleX || scaleY ? `scale(${scaleX || scaleY},${scaleY || scaleX})` : 'none',
+      transform: scaleX || scaleY ? `scale(${scaleX || scaleY},${scaleY || scaleX})` : "none",
       path: { fill, stroke }
     })
   );
@@ -68,11 +68,11 @@ const CustomIcon: React.FC<Props> = React.forwardRef((props: Props, boxRef) => {
       height={height || width}
       ref={boxRef}
       {...otherProps}
-      visibility={mounted ? 'visible' : 'hidden'}
+      visibility={mounted ? "visible" : "hidden"}
     >
       <StyledIcon ref={ref} />
     </IconBox>
   );
 });
-CustomIcon.displayName = 'CustomIcon';
+CustomIcon.displayName = "CustomIcon";
 export default CustomIcon;

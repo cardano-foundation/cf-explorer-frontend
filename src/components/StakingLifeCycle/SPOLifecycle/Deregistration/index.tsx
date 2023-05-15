@@ -1,6 +1,6 @@
-import { alpha, Box, Grid, styled } from '@mui/material';
-import { useRef, useState, useEffect } from 'react';
-import { Link as LinkDom, useHistory, useParams } from 'react-router-dom';
+import { alpha, Box, Grid, styled } from "@mui/material";
+import { useRef, useState, useEffect } from "react";
+import { Link as LinkDom, useHistory, useParams } from "react-router-dom";
 
 import {
   SPOStalking,
@@ -11,11 +11,11 @@ import {
   TimeIcon,
   SPOInfo,
   SPOKey
-} from '../../../../commons/resources';
-import cadarnoSystem from '../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg';
-import DeregistrationCertificateIcon from '../../../../commons/resources/icons/Staking/DeregistrationCertificateIcon.svg';
+} from "../../../../commons/resources";
+import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
+import DeregistrationCertificateIcon from "../../../../commons/resources/icons/Staking/DeregistrationCertificateIcon.svg";
 
-import Line from '../../../Line';
+import Line from "../../../Line";
 import {
   CustomLink,
   DetailRetirement,
@@ -26,20 +26,20 @@ import {
   IconButtonBack,
   Info,
   InfoText
-} from './styles';
-import ADAicon from '../../../commons/ADAIcon';
-import ArrowDiagram from '../../../ArrowDiagram';
-import PopoverStyled from '../../../commons/PopoverStyled';
-import RecentDeregistrations from './RecentDeregistrations';
-import { formatADA, getShortHash, getShortWallet } from '../../../../commons/utils/helper';
-import moment from 'moment';
-import CustomTooltip from '../../../commons/CustomTooltip';
-import { ButtonSPO, PoolName, PoolNamePopup, StyledCopyButton } from '../Registration/styles';
-import { details } from '../../../../commons/routers';
-import CopyButton from '../../../commons/CopyButton';
-import StyledModal from '../../../commons/StyledModal';
-import PopupStaking from '../../../commons/PopupStaking';
-import { StyledLink } from '../styles';
+} from "./styles";
+import ADAicon from "../../../commons/ADAIcon";
+import ArrowDiagram from "../../../ArrowDiagram";
+import PopoverStyled from "../../../commons/PopoverStyled";
+import RecentDeregistrations from "./RecentDeregistrations";
+import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import moment from "moment";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import { ButtonSPO, PoolName, PoolNamePopup, StyledCopyButton } from "../Registration/styles";
+import { details } from "../../../../commons/routers";
+import CopyButton from "../../../commons/CopyButton";
+import StyledModal from "../../../commons/StyledModal";
+import PopupStaking from "../../../commons/PopupStaking";
+import { StyledLink } from "../styles";
 
 const Deregistration = ({
   containerPosition,
@@ -89,7 +89,7 @@ const DeregistrationTimeline = ({
   selected: SPODeregistration | null;
 }) => {
   const [openModal, setOpenModal] = useState(false);
-  const { poolId = '' } = useParams<{ poolId: string }>();
+  const { poolId = "" } = useParams<{ poolId: string }>();
   const history = useHistory();
 
   const adaHolderRef = useRef(null);
@@ -107,22 +107,22 @@ const DeregistrationTimeline = ({
   }, [adaHolderRef.current]);
 
   const handleBack = () => {
-    history.push(details.spo(poolId, 'timeline', 'deregistration'));
+    history.push(details.spo(poolId, "timeline", "deregistration"));
   };
 
   return (
     <Box>
-      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} mt={1} mb={2}>
+      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={'flex'}>
+        <Box display={"flex"}>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected?.txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(selected?.txHash)}>
-                  {getShortHash(selected?.txHash || '')}
+                  {getShortHash(selected?.txHash || "")}
                 </StyledLink>
               </InfoText>
             </CustomTooltip>
@@ -134,13 +134,13 @@ const DeregistrationTimeline = ({
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>{moment(selected?.time).format('MM/DD/yyyy HH:mm:ss')}</InfoText>
+            <InfoText>{moment(selected?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
           </Info>
         </Box>
       </Box>
       <Box>
-        <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} flexWrap={'wrap'}>
-          <Box ref={adaHolderRef} width={190} height={245} position={'relative'}>
+        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
+          <Box ref={adaHolderRef} width={190} height={245} position={"relative"}>
             <SPOStalking />
             <CustomTooltip title={selected?.poolName}>
               <PoolName> {selected?.poolName}</PoolName>
@@ -150,29 +150,29 @@ const DeregistrationTimeline = ({
               componentsProps={{
                 transition: {
                   style: {
-                    backgroundColor: 'white',
-                    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.25)',
-                    padding: '10px'
+                    backgroundColor: "white",
+                    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                    padding: "10px"
                   }
                 },
                 arrow: {
                   style: {
-                    color: 'white'
+                    color: "white"
                   }
                 }
               }}
               title={
                 <Box>
-                  <Box display={'flex'} alignItems={'center'}>
+                  <Box display={"flex"} alignItems={"center"}>
                     <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
                       Pool ID:
                     </Box>
                     <PoolNamePopup to={details.delegation(selected?.poolView)}>
-                      {getShortHash(selected?.poolView || '')}
+                      {getShortHash(selected?.poolView || "")}
                     </PoolNamePopup>
                     <CopyButton text={selected?.poolView} />
                   </Box>
-                  <Box display={'flex'} alignItems={'center'}>
+                  <Box display={"flex"} alignItems={"center"}>
                     <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
                       Pool name:
                     </Box>
@@ -181,34 +181,34 @@ const DeregistrationTimeline = ({
                 </Box>
               }
             >
-              <ButtonSPO ref={SPOInfoRef} component={IconButton} left={'33%'}>
+              <ButtonSPO ref={SPOInfoRef} component={IconButton} left={"33%"}>
                 <SPOInfo />
               </ButtonSPO>
             </CustomTooltip>
-            <Link to={details.stake(selected?.stakeKeys[0] || '')}>
+            <Link to={details.stake(selected?.stakeKeys[0] || "")}>
               <CustomTooltip
                 wOpacity={false}
                 componentsProps={{
                   transition: {
                     style: {
-                      backgroundColor: 'white',
-                      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.25)',
-                      padding: '10px'
+                      backgroundColor: "white",
+                      boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                      padding: "10px"
                     }
                   },
                   arrow: {
                     style: {
-                      color: 'white'
+                      color: "white"
                     }
                   }
                 }}
                 title={
-                  <Box display={'flex'} alignItems={'center'}>
+                  <Box display={"flex"} alignItems={"center"}>
                     {selected?.stakeKeys && selected.stakeKeys.length > 0 && (
                       <>
                         <SPOKey fill='#108AEF' />
-                        <PoolNamePopup to={details.stake(selected?.stakeKeys[0] || '')}>
-                          {getShortWallet(selected?.stakeKeys[0] || '')}
+                        <PoolNamePopup to={details.stake(selected?.stakeKeys[0] || "")}>
+                          {getShortWallet(selected?.stakeKeys[0] || "")}
                         </PoolNamePopup>
                         <CopyButton text={selected?.stakeKeys[0]} />
                       </>
@@ -216,20 +216,20 @@ const DeregistrationTimeline = ({
                   </Box>
                 }
               >
-                <ButtonSPO ref={SPOKeyRef} component={IconButton} left={'52%'}>
+                <ButtonSPO ref={SPOKeyRef} component={IconButton} left={"52%"}>
                   <SPOKey fill='#438F68' />
                 </ButtonSPO>
               </CustomTooltip>
             </Link>
           </Box>
 
-          <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
-            <Box display={'flex'} flex={1}>
+          <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
+            <Box display={"flex"} flex={1}>
               <PopoverStyled
                 render={({ handleClick }) => (
                   <HoldBox ref={holdRef} ml={1}>
                     <Box>
-                      <HoldBoxText mr={1} component={'span'}>
+                      <HoldBoxText mr={1} component={"span"}>
                         {formatADA(selected?.poolHold)}
                       </HoldBoxText>
                       <ADAicon fontSize='18px' />
@@ -239,13 +239,13 @@ const DeregistrationTimeline = ({
                     </IconButton>
                   </HoldBox>
                 )}
-                content={<PopupStaking hash={selected?.txHash || ''} />}
+                content={<PopupStaking hash={selected?.txHash || ""} />}
               />
               <PopoverStyled
                 render={({ handleClick }) => (
                   <FeeBox ref={feeRef}>
                     <Box>
-                      <Box component={'span'} fontSize={'18px'} fontWeight={'bold'} mr={1}>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
                         {formatADA(selected?.fee)}
                       </Box>
                       <ADAicon fontSize='18px' />
@@ -255,23 +255,23 @@ const DeregistrationTimeline = ({
                     </IconButton>
                   </FeeBox>
                 )}
-                content={<PopupStaking hash={selected?.txHash || ''} />}
+                content={<PopupStaking hash={selected?.txHash || ""} />}
               />
             </Box>
           </Box>
           <Box ref={cadarnoSystemRef}>
             {/* <CadarnoSystemIcon /> */}
-            <img style={{ marginLeft: '5px' }} src={cadarnoSystem} alt='carrdano' />
+            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt='carrdano' />
           </Box>
 
           <svg
             style={{
-              position: 'absolute',
+              position: "absolute",
               top: 0,
               left: 0,
-              height: '100vh',
-              width: '100vw',
-              zIndex: '-1'
+              height: "100vh",
+              width: "100vw",
+              zIndex: "-1"
             }}
           >
             <Line
@@ -347,8 +347,8 @@ const DeregistrationTimeline = ({
             />
           </svg>
         </Box>
-        <Box display={'flex'} justifyContent={'space-between'} position={'relative'} top={'-60px'}>
-          <Box ref={fake1Ref} width={'190px'} height={220}></Box>
+        <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
+          <Box ref={fake1Ref} width={"190px"} height={220}></Box>
           <Box
             ref={registrationRef}
             width={220}
@@ -357,9 +357,9 @@ const DeregistrationTimeline = ({
             p={0}
             onClick={() => setOpenModal(true)}
           >
-            <img style={{ marginLeft: '5px' }} src={DeregistrationCertificateIcon} alt='RegistrationCertificateIcon' />
+            <img style={{ marginLeft: "5px" }} src={DeregistrationCertificateIcon} alt='RegistrationCertificateIcon' />
           </Box>
-          <Box ref={fake2Ref} width={'190px'} height={220}></Box>
+          <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
       <DeregistrationCertificateModal data={selected} handleCloseModal={() => setOpenModal(false)} open={openModal} />
@@ -380,28 +380,28 @@ export const DeregistrationCertificateModal = ({
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={'bold'} fontSize={'0.875rem'} color={({ palette }) => palette.grey[400]}>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Pool ID
             </Box>
             {data && (
               <Box>
-                <CustomTooltip title={data?.poolId || ''}>
-                  <CustomLink to={details.delegation(data?.poolView || '')}>
-                    {getShortWallet(data?.poolId || '')}
+                <CustomTooltip title={data?.poolId || ""}>
+                  <CustomLink to={details.delegation(data?.poolView || "")}>
+                    {getShortWallet(data?.poolId || "")}
                   </CustomLink>
                 </CustomTooltip>
-                <CopyButton text={data?.poolId || ''} />
+                <CopyButton text={data?.poolId || ""} />
               </Box>
             )}
           </Box>
         </Grid>
         <Grid item xs={6}>
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={'bold'} fontSize={'0.875rem'} color={({ palette }) => palette.grey[400]}>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Retirement in Epoch
             </Box>
             {data && (
-              <DetailRetirement pt={'3px'} pb={'5px'}>
+              <DetailRetirement pt={"3px"} pb={"5px"}>
                 {data?.retiringEpoch}
               </DetailRetirement>
             )}
@@ -413,6 +413,6 @@ export const DeregistrationCertificateModal = ({
 };
 
 const Link = styled(LinkDom)(({ theme }) => ({
-  fontSize: '0.875rem',
+  fontSize: "0.875rem",
   color: `${theme.palette.blue[800]} !important`
 }));

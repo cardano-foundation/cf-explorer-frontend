@@ -14,12 +14,12 @@ test("should render ADATransferModal modal", async () => {
   const walletActivity = screen.getByText("Wallet Activity");
   expect(walletActivity).toBeInTheDocument();
 
-  const rewardActivity = screen.getByText("Rewards Activity")
+  const rewardActivity = screen.getByText("Rewards Activity");
   expect(rewardActivity).toBeInTheDocument();
 
   await userEvent.click(rewardActivity);
   expect(screen.getByText("Epoch")).toBeInTheDocument();
-  
+
   await userEvent.click(walletActivity);
   expect(screen.getByText("Transaction Hash")).toBeInTheDocument();
 });

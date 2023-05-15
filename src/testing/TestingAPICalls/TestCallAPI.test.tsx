@@ -7,13 +7,13 @@ import TestingAPICalls from ".";
 test("setup api call mock api", async () => {
   const fakeUserResponse = [
     {
-      name: "kunal",
-    },
+      name: "kunal"
+    }
   ];
 
   const mockFetchData = jest.spyOn(services, "FetchData").mockImplementation(async () => {
     return Promise.resolve({
-      json: () => Promise.resolve(fakeUserResponse),
+      json: () => Promise.resolve(fakeUserResponse)
     });
   });
 

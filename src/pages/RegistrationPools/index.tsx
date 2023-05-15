@@ -1,8 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
-import { stringify } from 'qs';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
-import useFetchList from '../../commons/hooks/useFetchList';
-import { details, routers } from '../../commons/routers';
+import { useEffect, useState, useRef } from "react";
+import { stringify } from "qs";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import useFetchList from "../../commons/hooks/useFetchList";
+import { details, routers } from "../../commons/routers";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -10,26 +10,26 @@ import {
   getPageInfo,
   getShortHash,
   getShortWallet
-} from '../../commons/utils/helper';
-import CustomTooltip from '../../components/commons/CustomTooltip';
-import Table, { Column } from '../../components/commons/Table';
-import { RegistrationContainer, StakeKey, StyledLink, StyledTab, StyledTabs, TabLabel } from './styles';
-import { API } from '../../commons/utils/api';
-import NoRecord from '../../components/commons/NoRecord';
-import { Box } from '@mui/material';
-import { REFRESH_TIMES } from '../../commons/utils/constants';
+} from "../../commons/utils/helper";
+import CustomTooltip from "../../components/commons/CustomTooltip";
+import Table, { Column } from "../../components/commons/Table";
+import { RegistrationContainer, StakeKey, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
+import { API } from "../../commons/utils/api";
+import NoRecord from "../../components/commons/NoRecord";
+import { Box } from "@mui/material";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 enum POOL_TYPE {
-  REGISTRATION = 'registration',
-  DEREREGISTRATION = 'de-registration'
+  REGISTRATION = "registration",
+  DEREREGISTRATION = "de-registration"
 }
 
 const RegistrationPools = () => {
   const history = useHistory();
   const { search } = useLocation();
   const pageInfo = getPageInfo(search);
-  const [sort, setSort] = useState<string>('');
-  const mainRef = useRef(document.querySelector('#main'));
+  const [sort, setSort] = useState<string>("");
+  const mainRef = useRef(document.querySelector("#main"));
   const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
 
   const fetchData = useFetchList<Registration>(
@@ -40,35 +40,35 @@ const RegistrationPools = () => {
   );
 
   useEffect(() => {
-    const title = poolType === POOL_TYPE.REGISTRATION ? 'Registration' : 'Deregistration';
+    const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";
     document.title = `${title} Pools | Cardano Explorer`;
   }, [poolType]);
 
   const onChangeTab = (e: React.SyntheticEvent, poolType: POOL_TYPE) => {
-    history.push(routers.REGISTRATION_POOLS.replace(':poolType', poolType));
+    history.push(routers.REGISTRATION_POOLS.replace(":poolType", poolType));
   };
 
   const columns: Column<Registration>[] = [
     {
-      title: 'Trx Hash',
-      key: 'bk.time',
+      title: "Trx Hash",
+      key: "bk.time",
       render: (pool) => {
         return (
           <>
             <CustomTooltip title={pool.txHash}>
-              <StyledLink to={details.transaction(pool.txHash)}>{getShortHash(pool.txHash || '')}</StyledLink>
+              <StyledLink to={details.transaction(pool.txHash)}>{getShortHash(pool.txHash || "")}</StyledLink>
             </CustomTooltip>
-            <div>{formatDateTimeLocal(pool.txTime || '')}</div>
+            <div>{formatDateTimeLocal(pool.txTime || "")}</div>
           </>
         );
       },
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort('');
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
-      title: 'Block',
-      key: 'block',
+      title: "Block",
+      key: "block",
       render: (pool) => (
         <>
           <StyledLink to={details.block(pool.block)}>{pool.block}</StyledLink>
@@ -78,43 +78,43 @@ const RegistrationPools = () => {
       )
     },
     {
-      title: 'Pool',
-      key: 'pool',
+      title: "Pool",
+      key: "pool",
       render: (pool) => (
-        <StyledLink to={details.delegation(pool.poolView || '')}>
-          <CustomTooltip title={pool.poolName || `Pool[${pool.poolView}]` || ''}>
-            <Box component={'span'}>{pool.poolName || `Pool[${getShortHash(pool.poolView)}]`}</Box>
+        <StyledLink to={details.delegation(pool.poolView || "")}>
+          <CustomTooltip title={pool.poolName || `Pool[${pool.poolView}]` || ""}>
+            <Box component={"span"}>{pool.poolName || `Pool[${getShortHash(pool.poolView)}]`}</Box>
           </CustomTooltip>
         </StyledLink>
       )
     },
     {
-      title: 'Pledge (A)',
-      key: poolType === POOL_TYPE.REGISTRATION ? 'pledge' : 'pu.pledge',
+      title: "Pledge (A)",
+      key: poolType === POOL_TYPE.REGISTRATION ? "pledge" : "pu.pledge",
       render: (pool) => <>{formatADAFull(pool.pledge)}</>,
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort('');
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
-      title: 'Cost (A)',
-      key: poolType === POOL_TYPE.REGISTRATION ? 'fixedCost' : 'pu.fixedCost',
+      title: "Cost (A)",
+      key: poolType === POOL_TYPE.REGISTRATION ? "fixedCost" : "pu.fixedCost",
       render: (pool) => <>{formatADAFull(pool.cost)}</>,
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort('');
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
-      title: 'Fee',
-      key: poolType === POOL_TYPE.REGISTRATION ? 'margin' : 'pu.margin',
+      title: "Fee",
+      key: poolType === POOL_TYPE.REGISTRATION ? "margin" : "pu.margin",
       render: (pool) => formatPercent(pool.margin),
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort('');
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
-      title: 'Stake Key',
-      key: 'stakeKey',
+      title: "Stake Key",
+      key: "stakeKey",
       render: (pool) => (
         <>
           {pool.stakeKey?.map((stakeKey) => (
@@ -124,7 +124,7 @@ const RegistrationPools = () => {
               </CustomTooltip>
             </StakeKey>
           ))}
-          {pool.stakeKey?.length > 2 ? <StyledLink to={details.delegation(pool.poolView || '')}>...</StyledLink> : ''}
+          {pool.stakeKey?.length > 2 ? <StyledLink to={details.delegation(pool.poolView || "")}>...</StyledLink> : ""}
         </>
       )
     }
@@ -146,7 +146,7 @@ const RegistrationPools = () => {
         <Table
           {...fetchData}
           columns={columns}
-          total={{ title: 'Total Transactions', count: fetchData.total }}
+          total={{ title: "Total Transactions", count: fetchData.total }}
           pagination={{
             ...pageInfo,
             onChange: (page, size) => {

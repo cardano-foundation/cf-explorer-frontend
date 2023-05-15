@@ -1,8 +1,8 @@
-import { alpha, Avatar, Box, CircularProgress, IconButton, useTheme } from '@mui/material';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { routers } from '../../../../commons/routers';
-import { RootState } from '../../../../stores/types';
+import { alpha, Avatar, Box, CircularProgress, IconButton, useTheme } from "@mui/material";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { routers } from "../../../../commons/routers";
+import { RootState } from "../../../../stores/types";
 import {
   ContentBox,
   ModalTitle,
@@ -14,20 +14,20 @@ import {
   StyledButtonReport,
   StyledUsername,
   Wrapper
-} from './styled';
-import editAva from '../../../../commons/resources/icons/editAva.svg';
-import { Redirect, useLocation } from 'react-router-dom';
-import { MdChevronRight } from 'react-icons/md';
-import { setUserData } from '../../../../stores/user';
-import { getInfo } from '../../../../commons/utils/userRequest';
-import { NETWORK_TYPES, NETWORK } from '../../../../commons/utils/constants';
-import { uploadAxios } from '../../../../commons/utils/axios';
-import { ReactComponent as ReportDiscord } from '../../../../commons/resources/icons/reportDiscord.svg';
-import { ReactComponent as ReportMail } from '../../../../commons/resources/icons/reportMail.svg';
-import CustomTooltip from '../../CustomTooltip';
-import useToast from '../../../../commons/hooks/useToast';
-import StyledModal from '../../StyledModal';
-import { useScreen } from '../../../../commons/hooks/useScreen';
+} from "./styled";
+import editAva from "../../../../commons/resources/icons/editAva.svg";
+import { Redirect, useLocation } from "react-router-dom";
+import { MdChevronRight } from "react-icons/md";
+import { setUserData } from "../../../../stores/user";
+import { getInfo } from "../../../../commons/utils/userRequest";
+import { NETWORK_TYPES, NETWORK } from "../../../../commons/utils/constants";
+import { uploadAxios } from "../../../../commons/utils/axios";
+import { ReactComponent as ReportDiscord } from "../../../../commons/resources/icons/reportDiscord.svg";
+import { ReactComponent as ReportMail } from "../../../../commons/resources/icons/reportMail.svg";
+import CustomTooltip from "../../CustomTooltip";
+import useToast from "../../../../commons/hooks/useToast";
+import StyledModal from "../../StyledModal";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 interface Props {
   children: React.ReactNode;
 }
@@ -43,7 +43,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
     try {
       setFirstLoad(true);
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-      setUserData({ ...response.data, loginType: userData?.loginType || '' });
+      setUserData({ ...response.data, loginType: userData?.loginType || "" });
     } catch (error) {
       //To do
     } finally {
@@ -61,17 +61,17 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
       if (e.target && e.target.files && e.target.files.length > 0) {
         setIsUploadAvatar(true);
         const formData = new FormData();
-        formData.append('avatar', e.target.files[0]);
-        const { data } = await uploadAxios.put('/user/edit-avatar', formData, {
+        formData.append("avatar", e.target.files[0]);
+        const { data } = await uploadAxios.put("/user/edit-avatar", formData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            "Content-Type": "multipart/form-data"
           }
         });
 
         if (data && data.id && data.avatar) {
           await fetchUserInfo();
         }
-        toast.success('Your avatar has been changed.');
+        toast.success("Your avatar has been changed.");
       }
     } catch (error) {
       //To do
@@ -81,7 +81,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem("token")) {
       fetchUserInfo();
     }
   }, [fetchUserInfo]);
@@ -96,24 +96,24 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
     </Box>
   );
   const renderListTabs = () => (
-    <SideBar width={isMobile || isTablet ? '100%' : '20%'}>
+    <SideBar width={isMobile || isTablet ? "100%" : "20%"}>
       <Box>
         <Box>
-          <Box pt={4} textAlign='center' display={'flex'} justifyContent='center'>
-            <Box position={'relative'}>
+          <Box pt={4} textAlign='center' display={"flex"} justifyContent='center'>
+            <Box position={"relative"}>
               {!isUploadAvatar && (
                 <Avatar
                   src={userData?.avatar}
                   alt='avatar'
-                  sx={{ height: '100px', width: '100px', textAlign: 'center' }}
+                  sx={{ height: "100px", width: "100px", textAlign: "center" }}
                 />
               )}
               {isUploadAvatar && (
                 <Box
-                  height={'100px'}
-                  width={'100px'}
+                  height={"100px"}
+                  width={"100px"}
                   bgcolor={alpha(theme.palette.common.black, 0.1)}
-                  borderRadius={'50%'}
+                  borderRadius={"50%"}
                   display='flex'
                   alignItems='center'
                   justifyContent='center'
@@ -129,19 +129,19 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                 p={0}
                 onClick={() => uploadImgRef.current && (uploadImgRef.current as any).click()}
               >
-                <Box component={'img'} src={editAva} alt='editava' />
+                <Box component={"img"} src={editAva} alt='editava' />
                 <input
                   accept='image/*'
                   type='file'
                   ref={uploadImgRef}
                   onChange={hanldeUploadImage}
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                 />
               </Box>
             </Box>
           </Box>
-          <CustomTooltip title={userData?.username || ''} placement='bottom'>
-            <StyledUsername component={'h4'} pt={1} m='auto'>
+          <CustomTooltip title={userData?.username || ""} placement='bottom'>
+            <StyledUsername component={"h4"} pt={1} m='auto'>
               {userData?.username}
             </StyledUsername>
           </CustomTooltip>
@@ -156,7 +156,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
               <NavItem to={route.to} active={route.to === pathname} key={index}>
                 <Box
                   display='flex'
-                  alignItems={'center'}
+                  alignItems={"center"}
                   justifyContent='space-between'
                   py={2}
                   mx={4}
@@ -178,12 +178,12 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   );
   return (
     <Wrapper>
-      <Box component={'h2'} textAlign='left'>
+      <Box component={"h2"} textAlign='left'>
         Account Overview
       </Box>
       <ContentBox>
         {renderListTabs()}
-        <Box px={3} py={2} flex={1} overflow={'auto'}>
+        <Box px={3} py={2} flex={1} overflow={"auto"}>
           {children}
         </Box>
       </ContentBox>
@@ -199,7 +199,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
             <br />
             Contact us via these channels
           </ModalTitle>
-          <Box display={'flex'} gap={2} justifyContent='center'>
+          <Box display={"flex"} gap={2} justifyContent='center'>
             <StyledButtonReport>
               <ReportDiscord />
             </StyledButtonReport>
@@ -226,7 +226,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
 export default AccountLayout;
 
 const router = [
-  { title: 'My Profile', to: routers.MY_PROFILE },
-  { title: 'Bookmark', to: routers.BOOKMARK },
-  { title: 'Private Notes', to: routers.PRIVATE_NOTES }
+  { title: "My Profile", to: routers.MY_PROFILE },
+  { title: "Bookmark", to: routers.BOOKMARK },
+  { title: "Private Notes", to: routers.PRIVATE_NOTES }
 ];

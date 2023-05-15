@@ -1,7 +1,7 @@
-import { Box, styled } from '@mui/material';
-import { SearchDelegatorIcon } from '../../commons/resources';
-import { Link } from 'react-router-dom';
-import { routers } from '../../commons/routers';
+import { Box, styled } from "@mui/material";
+import { SearchDelegatorIcon } from "../../commons/resources";
+import { Link } from "react-router-dom";
+import { routers } from "../../commons/routers";
 
 const DelegatorSearch = () => {
   return (
@@ -19,7 +19,7 @@ const DelegatorSearch = () => {
 export default DelegatorSearch;
 
 const LoginBtn = styled(Link)(() => ({
-  fontSize: '1.875rem',
-  textDecoration: 'underline !important',
-  cursor: 'pointer'
+  fontSize: "1.875rem",
+  textDecoration: "underline !important",
+  cursor: "pointer"
 }));

@@ -1,16 +1,16 @@
-import DetailHeader from '../../commons/DetailHeader';
-import timeIcon from '../../../commons/resources/icons/time.svg';
-import exchageIcon from '../../../commons/resources/icons/Union.svg';
-import exchageAltIcon from '../../../commons/resources/icons/exchangeArrow.svg';
-import outputIcon from '../../../commons/resources/icons/outputIcon.svg';
-import cubeIcon from '../../../commons/resources/icons/blockIcon.svg';
-import txConfirm from '../../../commons/resources/icons/txConfirm.svg';
-import slotIcon from '../../../commons/resources/icons/slot.svg';
-import { Box } from '@mui/material';
-import { ConfirmStatus, TitleCard, WrapConfirmation } from './styles';
-import { formatADAFull, formatDateTimeLocal } from '../../../commons/utils/helper';
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from '../../../commons/utils/constants';
-import ADAicon from '../../commons/ADAIcon';
+import DetailHeader from "../../commons/DetailHeader";
+import timeIcon from "../../../commons/resources/icons/time.svg";
+import exchageIcon from "../../../commons/resources/icons/Union.svg";
+import exchageAltIcon from "../../../commons/resources/icons/exchangeArrow.svg";
+import outputIcon from "../../../commons/resources/icons/outputIcon.svg";
+import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";
+import txConfirm from "../../../commons/resources/icons/txConfirm.svg";
+import slotIcon from "../../../commons/resources/icons/slot.svg";
+import { Box } from "@mui/material";
+import { ConfirmStatus, TitleCard, WrapConfirmation } from "./styles";
+import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import ADAicon from "../../commons/ADAIcon";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
@@ -34,30 +34,30 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
     {
       icon: timeIcon,
       title: (
-        <Box display={'flex'} alignItems='center'>
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}>Created At </TitleCard>
         </Box>
       ),
-      value: formatDateTimeLocal(data?.time || '')
+      value: formatDateTimeLocal(data?.time || "")
     },
     {
       icon: txConfirm,
       title: (
-        <Box display={'flex'} alignItems='center'>
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}>Confirmation</TitleCard>
         </Box>
       ),
       value: (
         <WrapConfirmation>
           {data?.confirmation || 0}
-          <ConfirmStatus status={renderConfirmationTag() || 'LOW'}>{renderConfirmationTag() || 'LOW'}</ConfirmStatus>
+          <ConfirmStatus status={renderConfirmationTag() || "LOW"}>{renderConfirmationTag() || "LOW"}</ConfirmStatus>
         </WrapConfirmation>
       )
     },
     {
       icon: exchageIcon,
       title: (
-        <Box display={'flex'} alignItems='center'>
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}>Transaction</TitleCard>
         </Box>
       ),
@@ -66,12 +66,12 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
     {
       icon: exchageAltIcon,
       title: (
-        <Box display={'flex'} alignItems='center'>
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}>Transaction Fees </TitleCard>
         </Box>
       ),
       value: (
-        <Box component={'span'}>
+        <Box component={"span"}>
           {formatADAFull(data?.totalFees)} <ADAicon />
         </Box>
       )
@@ -79,12 +79,12 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
     {
       icon: outputIcon,
       title: (
-        <Box display={'flex'} alignItems='center'>
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}> Total Output in ADA</TitleCard>
         </Box>
       ),
       value: (
-        <Box component={'span'}>
+        <Box component={"span"}>
           {formatADAFull(data?.totalOutput)} <ADAicon />
         </Box>
       )
@@ -92,7 +92,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
     {
       icon: cubeIcon,
       title: (
-        <Box display={'flex'} alignItems='center'>
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}> Block</TitleCard>
         </Box>
       ),
@@ -101,14 +101,14 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
     {
       icon: slotIcon,
       title: (
-        <Box display={'flex'} alignItems='center'>
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}> Slot</TitleCard>
         </Box>
       ),
       value: (
         <>
           {data?.epochSlotNo || 0}
-          <Box component={'span'} fontWeight='400'>
+          <Box component={"span"} fontWeight='400'>
             /{MAX_SLOT_EPOCH}
           </Box>
         </>
@@ -121,8 +121,8 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       listItem={listOverview}
       type='BLOCK'
       hash={data?.hash}
-      bookmarkData={`${data?.blockNo || ''}`}
-      title={'Block detail'}
+      bookmarkData={`${data?.blockNo || ""}`}
+      title={"Block detail"}
       epoch={
         data && {
           no: data.epochNo,

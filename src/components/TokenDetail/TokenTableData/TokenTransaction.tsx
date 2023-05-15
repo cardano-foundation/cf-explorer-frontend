@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { stringify } from 'qs';
-import useFetchList from '../../../commons/hooks/useFetchList';
-import { details } from '../../../commons/routers';
-import { AIcon } from '../../../commons/resources';
+import React, { useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { stringify } from "qs";
+import useFetchList from "../../../commons/hooks/useFetchList";
+import { details } from "../../../commons/routers";
+import { AIcon } from "../../../commons/resources";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -11,12 +11,12 @@ import {
   getShortHash,
   getShortWallet,
   numberWithCommas
-} from '../../../commons/utils/helper';
-import Table, { Column } from '../../commons/Table';
-import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from './styles';
-import CustomTooltip from '../../commons/CustomTooltip';
-import { API } from '../../../commons/utils/api';
-import ADAicon from '../../commons/ADAIcon';
+} from "../../../commons/utils/helper";
+import Table, { Column } from "../../commons/Table";
+import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
+import CustomTooltip from "../../commons/CustomTooltip";
+import { API } from "../../../commons/utils/api";
+import ADAicon from "../../commons/ADAIcon";
 
 interface ITokenTransaction {
   tokenId: string;
@@ -26,21 +26,21 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const [sort, setSort] = useState<string>('');
+  const [sort, setSort] = useState<string>("");
 
-  const fetchData = useFetchList<Transactions>(API.TOKEN.TOKEN_TRX.replace(':tokenId', tokenId), { ...pageInfo, sort });
+  const fetchData = useFetchList<Transactions>(API.TOKEN.TOKEN_TRX.replace(":tokenId", tokenId), { ...pageInfo, sort });
 
   const columns: Column<Transactions>[] = [
     {
-      title: '#',
-      key: 'id',
-      minWidth: '40px',
+      title: "#",
+      key: "id",
+      minWidth: "40px",
       render: (data, index) => <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
     },
     {
-      title: 'Tx Hash',
-      key: 'trxhash',
-      minWidth: '200px',
+      title: "Tx Hash",
+      key: "trxhash",
+      minWidth: "200px",
 
       render: (r) => (
         <>
@@ -48,14 +48,14 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
           <br />
-          <SmallText>{formatDateTimeLocal(r.time || '')}</SmallText>
+          <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
         </>
       )
     },
     {
-      title: 'Block/ Epoch/ Slot',
-      key: 'block',
-      minWidth: '200px',
+      title: "Block/ Epoch/ Slot",
+      key: "block",
+      minWidth: "200px",
       render: (r) => (
         <>
           <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
@@ -65,9 +65,9 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       )
     },
     {
-      title: 'Addresses',
-      key: 'addresses',
-      minWidth: '200px',
+      title: "Addresses",
+      key: "addresses",
+      minWidth: "200px",
       render(r, index) {
         return (
           <>
@@ -100,31 +100,31 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       }
     },
     {
-      title: 'Fees',
-      key: 'fee',
-      minWidth: '120px',
+      title: "Fees",
+      key: "fee",
+      minWidth: "120px",
       render: (r) => (
         <PriceValue>
           <SmallText>{formatADAFull(r.fee)}</SmallText>
-          <ADAicon mb={'5px'} ml={'8px'} />
+          <ADAicon mb={"5px"} ml={"8px"} />
         </PriceValue>
       ),
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort('');
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
-      title: 'Output',
-      minWidth: '120px',
-      key: 'outSum',
+      title: "Output",
+      minWidth: "120px",
+      key: "outSum",
       render: (r) => (
         <PriceValue>
           <SmallText>{formatADAFull(r.totalOutput)}</SmallText>
-          <ADAicon mb={'5px'} ml={'8px'} />
+          <ADAicon mb={"5px"} ml={"8px"} />
         </PriceValue>
       ),
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort('');
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     }
   ];
@@ -133,7 +133,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
     <Table
       {...fetchData}
       columns={columns}
-      total={{ title: 'Total', count: fetchData.total }}
+      total={{ title: "Total", count: fetchData.total }}
       pagination={{
         ...pageInfo,
         total: fetchData.total,

@@ -1,9 +1,9 @@
-import React from 'react';
-import StyledModal from '../commons/StyledModal';
-import { List, ListItem, ListItemText } from '@mui/material';
-import CopyButton from '../commons/CopyButton';
-import { ModalTitle, StyledListItem, StyledListItemText } from './styles';
-import { formatHash } from '../../commons/utils/helper';
+import React from "react";
+import StyledModal from "../commons/StyledModal";
+import { List, ListItem, ListItemText } from "@mui/material";
+import CopyButton from "../commons/CopyButton";
+import { ModalTitle, StyledListItem, StyledListItemText } from "./styles";
+import { formatHash } from "../../commons/utils/helper";
 
 export interface ViewMoreAddressModalProps {
   title?: string;

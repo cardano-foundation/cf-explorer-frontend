@@ -1,8 +1,8 @@
-import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
-import { MenuIcon } from '../../../../commons/resources';
-import { NETWORKS } from '../../../../commons/utils/constants';
-import { Button, Box } from '@mui/material';
+import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
+import { MenuIcon } from "../../../../commons/resources";
+import { NETWORKS } from "../../../../commons/utils/constants";
+import { Button, Box } from "@mui/material";
 
 export const NavbarContainer = styled.nav`
   position: relative;
@@ -18,7 +18,7 @@ export const NavbarContainer = styled.nav`
   }
 `;
 
-export const HeaderTop = styled('div')`
+export const HeaderTop = styled("div")`
   display: flex;
   justify-content: space-between;
   align-items: center;

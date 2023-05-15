@@ -1,12 +1,12 @@
-import { API } from '../../commons/utils/api';
-import StyledModal from '../commons/StyledModal';
-import useFetch from '../../commons/hooks/useFetch';
-import { TProtocolItem } from '../../types/protocol';
-import { formatDateTime, getShortHash } from '../../commons/utils/helper';
-import { details } from '../../commons/routers';
-import { LinkComponent, ModalTitle, StyledTableCell, StyledTableHeadCell } from './styles';
-import { Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { API } from "../../commons/utils/api";
+import StyledModal from "../commons/StyledModal";
+import useFetch from "../../commons/hooks/useFetch";
+import { TProtocolItem } from "../../types/protocol";
+import { formatDateTime, getShortHash } from "../../commons/utils/helper";
+import { details } from "../../commons/routers";
+import { LinkComponent, ModalTitle, StyledTableCell, StyledTableHeadCell } from "./styles";
+import { Table, TableBody, TableContainer, TableHead, TableRow } from "@mui/material";
+import { useEffect, useState } from "react";
 interface IProps {
   open: boolean;
   handleCloseModal: () => void;
@@ -14,7 +14,7 @@ interface IProps {
 }
 
 export default function ProtocolHistoryModal({ open, protocolType, handleCloseModal }: IProps) {
-  const fetchedData = useFetch<TProtocolItem[]>(API.PROTOCOL_PARAMETER.HISTORY.replace(':type', protocolType));
+  const fetchedData = useFetch<TProtocolItem[]>(API.PROTOCOL_PARAMETER.HISTORY.replace(":type", protocolType));
   const [data, setData] = useState<TProtocolItem[]>([]);
 
   useEffect(() => {

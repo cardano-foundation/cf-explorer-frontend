@@ -1,5 +1,5 @@
-import { styled, Container } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { styled, Container } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
   margin-top: 18px;

@@ -1,6 +1,6 @@
-import { Box, styled, Tab } from '@mui/material';
+import { Box, styled, Tab } from "@mui/material";
 
-export const TabTitle = styled('h3')`
+export const TabTitle = styled("h3")`
   margin: 0px;
   color: var(--title-color);
   text-align: left;
@@ -17,7 +17,7 @@ export const WrapTab = styled(Tab)`
 
 export const TabLabel = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down(theme.breakpoints.values.md)]: {
-    fontSize: '14px',
-    lineHeight: '16px'
+    fontSize: "14px",
+    lineHeight: "16px"
   }
 }));

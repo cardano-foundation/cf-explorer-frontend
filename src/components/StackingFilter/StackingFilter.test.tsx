@@ -11,7 +11,7 @@ test("Render StackingFilter", async () => {
         fromDate: undefined,
         sort: undefined,
         toDate: undefined,
-        txHash: undefined,
+        txHash: undefined
       }}
     />
   );

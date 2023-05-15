@@ -1,11 +1,11 @@
-import React from 'react';
-import { socials } from '../../../../../commons/menus';
-import { List, styled, ListItem, SxProps, Theme } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../../stores/types';
-import { RiShareLine } from 'react-icons/ri';
-import { setSidebar } from '../../../../../stores/user';
-import CustomTooltip from '../../../CustomTooltip';
+import React from "react";
+import { socials } from "../../../../../commons/menus";
+import { List, styled, ListItem, SxProps, Theme } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../stores/types";
+import { RiShareLine } from "react-icons/ri";
+import { setSidebar } from "../../../../../stores/user";
+import CustomTooltip from "../../../CustomTooltip";
 
 export const Menu = styled(List)<{ open: number }>`
   position: absolute;
@@ -29,40 +29,40 @@ export const Menu = styled(List)<{ open: number }>`
   }
 `;
 
-export const MenuIcon = styled('img')`
+export const MenuIcon = styled("img")`
   width: 16px;
   height: auto;
 `;
 
 const itemStyle: SxProps<Theme> = (theme) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   width: 30,
   height: 30,
-  cursor: 'pointer',
+  cursor: "pointer",
   borderRadius: 30,
   padding: 0,
   color: `${theme.palette.text.hint} !important`,
   background: theme.palette.green[800_10],
-  '&:hover': {
+  "&:hover": {
     background: theme.palette.green[800_20],
     color: `${theme.palette.common.black} !important`,
     img: {
-      filter: 'brightness(0.75)'
+      filter: "brightness(0.75)"
     }
   }
 });
 
 const expandStyle: SxProps<Theme> = (theme) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   color: `${theme.palette.primary.main} !important`,
   fontSize: 30,
   width: 40,
   height: 40,
-  cursor: 'pointer',
+  cursor: "pointer",
   borderRadius: 40,
   padding: 0
 });
@@ -89,7 +89,7 @@ const FooterMenu = ({ forceShow = false }: TProps) => {
               title={title}
               sx={itemStyle}
             >
-              {typeof Icon === 'string' ? <MenuIcon src={Icon} alt={title} /> : <Icon size={16} />}
+              {typeof Icon === "string" ? <MenuIcon src={Icon} alt={title} /> : <Icon size={16} />}
             </ListItem>
           );
         })

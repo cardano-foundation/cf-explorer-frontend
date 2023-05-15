@@ -1,5 +1,5 @@
-import { alpha, Box, styled } from '@mui/material';
-import Table from '../../../commons/Table';
+import { alpha, Box, styled } from "@mui/material";
+import Table from "../../../commons/Table";
 
 export const AssetName = styled(Box)`
   display: flex;
@@ -23,15 +23,15 @@ export const Amount = styled(Box)`
 `;
 
 export const TableMinting = styled(Table)(({ theme }) => ({
-  '& > div:first-of-type': {
+  "& > div:first-of-type": {
     margin: 0
   },
-  '& tr th:last-child': {
-    width: '120px'
+  "& tr th:last-child": {
+    width: "120px"
   },
-  [theme.breakpoints.down('sm')]: {
-    '& tr th:last-child': {
-      width: 'unset'
+  [theme.breakpoints.down("sm")]: {
+    "& tr th:last-child": {
+      width: "unset"
     }
   }
 }));

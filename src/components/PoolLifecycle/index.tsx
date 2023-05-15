@@ -1,22 +1,22 @@
-import { useState } from 'react';
-import Table, { Column } from '../commons/Table';
-import useFetchList from '../../commons/hooks/useFetchList';
-import { API } from '../../commons/utils/api';
-import { Box, Button, CircularProgress } from '@mui/material';
-import { TextOverFlow } from '../StakingLifeCycle/DelegatorLifecycle/ReportComposerModal/styles';
-import { DownloadGreenIcon } from '../../commons/resources';
-import { lowerCase, startCase } from 'lodash';
-import { defaultAxiosDownload } from '../../commons/utils/axios';
-import { useHistory } from 'react-router-dom';
-import { details } from '../../commons/routers';
+import { useState } from "react";
+import Table, { Column } from "../commons/Table";
+import useFetchList from "../../commons/hooks/useFetchList";
+import { API } from "../../commons/utils/api";
+import { Box, Button, CircularProgress } from "@mui/material";
+import { TextOverFlow } from "../StakingLifeCycle/DelegatorLifecycle/ReportComposerModal/styles";
+import { DownloadGreenIcon } from "../../commons/resources";
+import { lowerCase, startCase } from "lodash";
+import { defaultAxiosDownload } from "../../commons/utils/axios";
+import { useHistory } from "react-router-dom";
+import { details } from "../../commons/routers";
 
 // Registration, Deregistration, Protocol Update,...
 export const EVENTS: { [key in keyof IPoolReportList]?: string } = {
-  isDeregistration: 'deregistration',
-  isPoolUpdate: 'pool_update',
-  isRegistration: 'registration',
-  isReward: 'reward',
-  isPoolSize: 'poolSize'
+  isDeregistration: "deregistration",
+  isPoolUpdate: "pool_update",
+  isRegistration: "registration",
+  isReward: "reward",
+  isPoolSize: "poolSize"
 };
 
 export function getPoolEventList(data: IPoolReportList) {
@@ -43,15 +43,15 @@ const PoolLifecycle = () => {
   const [{ page, size }, setPagi] = useState<{ page: number; size: number }>({ page: 0, size: 10 });
   const [onDownload, setOnDownload] = useState<number | false>(false);
 
-  const downloadFn = async (reportId: number, fileName: string, typeExport: 'CSV' | 'EXCEL' = 'CSV') => {
+  const downloadFn = async (reportId: number, fileName: string, typeExport: "CSV" | "EXCEL" = "CSV") => {
     setOnDownload(reportId);
     defaultAxiosDownload
       .get(`${API.REPORT.DOWNLOAD_POOL_SUMMARY(reportId)}?exportType=${typeExport}`)
       .then((response) => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
+        const link = document.createElement("a");
         link.href = url;
-        link.setAttribute('download', `${fileName}.${typeExport === 'CSV' ? 'csv' : 'xlsx'}`);
+        link.setAttribute("download", `${fileName}.${typeExport === "CSV" ? "csv" : "xlsx"}`);
         document.body.appendChild(link);
         link.click();
       })
@@ -62,58 +62,58 @@ const PoolLifecycle = () => {
 
   const columns: Column<IPoolReportList>[] = [
     {
-      key: 'name',
-      title: 'Report Name',
-      maxWidth: '300px',
+      key: "name",
+      title: "Report Name",
+      maxWidth: "300px",
       render(data) {
         return <TextOverFlow>{data.reportName}</TextOverFlow>;
       }
     },
     {
-      key: 'epoch',
-      title: 'Epoch Range',
+      key: "epoch",
+      title: "Epoch Range",
       render(data) {
         return `Epoch ${data.epochRanges[0]} - Epoch ${data.epochRanges[1]}`;
       }
     },
     {
-      key: 'transfer',
-      title: 'Pool Size',
+      key: "transfer",
+      title: "Pool Size",
       render(data) {
-        return data.isPoolSize ? 'Yes' : 'No';
+        return data.isPoolSize ? "Yes" : "No";
       }
     },
     {
-      key: 'feePaid',
-      title: 'Fees Paid',
+      key: "feePaid",
+      title: "Fees Paid",
       render(data) {
-        return data.isFreePaid ? 'Yes' : 'No';
+        return data.isFreePaid ? "Yes" : "No";
       }
     },
     {
-      key: 'event',
-      title: 'Events',
-      maxWidth: '200px',
+      key: "event",
+      title: "Events",
+      maxWidth: "200px",
       render(data) {
         return getPoolEventList(data)
-          .map((event: string | null) => startCase(lowerCase(event?.replaceAll('_', ' '))))
-          .join(', ');
+          .map((event: string | null) => startCase(lowerCase(event?.replaceAll("_", " "))))
+          .join(", ");
       }
     },
     {
-      key: 'download',
-      title: '',
+      key: "download",
+      title: "",
       render(data, index) {
         return onDownload === data.reportId ? (
           <CircularProgress size={22} color='primary' />
         ) : (
-          <Box textAlign={'right'} key={index} display={'flex'}>
+          <Box textAlign={"right"} key={index} display={"flex"}>
             <Box
               component={Button}
-              display={'block'}
-              textTransform={'capitalize'}
+              display={"block"}
+              textTransform={"capitalize"}
               onClick={() => {
-                downloadFn(data.reportId, data.reportName, 'CSV');
+                downloadFn(data.reportId, data.reportName, "CSV");
               }}
             >
               Export CSV
@@ -121,9 +121,9 @@ const PoolLifecycle = () => {
             <Box
               ml={2}
               component={Button}
-              display={'block'}
-              textTransform={'capitalize'}
-              onClick={() => downloadFn(data.reportId, data.reportName, 'EXCEL')}
+              display={"block"}
+              textTransform={"capitalize"}
+              onClick={() => downloadFn(data.reportId, data.reportName, "EXCEL")}
             >
               Export Excel
             </Box>
@@ -143,7 +143,7 @@ const PoolLifecycle = () => {
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: 'Pool life cycle summary', count: fetchData.total }}
+        total={{ title: "Pool life cycle summary", count: fetchData.total }}
         onClickRow={(e, row) => history.push(details.generated_pool_detail(row.reportId))}
         pagination={{
           page,

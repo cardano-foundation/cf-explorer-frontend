@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Grid, Skeleton, styled, Box, useTheme } from '@mui/material';
-import HighchartsReact from 'highcharts-react-official';
-import Highcharts from 'highcharts';
-import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatADAFull, formatPrice } from '../../../commons/utils/helper';
-import { HighestIcon, LowestIcon } from '../../../commons/resources';
-import useFetch from '../../../commons/hooks/useFetch';
+import React, { useState } from "react";
+import { Grid, Skeleton, styled, Box, useTheme } from "@mui/material";
+import HighchartsReact from "highcharts-react-official";
+import Highcharts from "highcharts";
+import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatADAFull, formatPrice } from "../../../commons/utils/helper";
+import { HighestIcon, LowestIcon } from "../../../commons/resources";
+import useFetch from "../../../commons/hooks/useFetch";
 import {
   AnalyticsTitle,
   Button,
@@ -15,16 +15,16 @@ import {
   StyledContainer,
   Title,
   Value
-} from './styles';
-import { API } from '../../../commons/utils/api';
-import { useScreen } from '../../../commons/hooks/useScreen';
+} from "./styles";
+import { API } from "../../../commons/utils/api";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface DelegationDetailChartProps {
   poolId: string;
 }
 
 const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId }) => {
-  const [selected, setSelected] = useState<'epochChart' | 'delegatorChart'>('epochChart');
+  const [selected, setSelected] = useState<"epochChart" | "delegatorChart">("epochChart");
   const { data, loading } = useFetch<AnalyticsDelegators>(`${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`);
   const theme = useTheme();
   const categories = data?.[selected]?.dataByDays?.map((item) => item.epochNo) || [];
@@ -38,13 +38,13 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
         <Grid item xs={12} lg={9}>
           <Box>
             <Button
-              active={selected === 'epochChart' ? 1 : 0}
-              style={{ marginRight: '2px' }}
-              onClick={() => setSelected('epochChart')}
+              active={selected === "epochChart" ? 1 : 0}
+              style={{ marginRight: "2px" }}
+              onClick={() => setSelected("epochChart")}
             >
               Stake
             </Button>
-            <Button active={selected === 'delegatorChart' ? 1 : 0} onClick={() => setSelected('delegatorChart')}>
+            <Button active={selected === "delegatorChart" ? 1 : 0} onClick={() => setSelected("delegatorChart")}>
               Delegator
             </Button>
           </Box>
@@ -52,22 +52,22 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
             {loading ? (
               <SkeletonUI variant='rectangular' height={280} />
             ) : (
-              <Box position={'relative'}>
+              <Box position={"relative"}>
                 <HighchartsReact
                   key={selected}
                   highcharts={Highcharts}
                   options={{
                     chart: {
-                      type: 'areaspline',
-                      backgroundColor: 'transparent',
-                      style: { fontFamily: 'Roboto, sans-serif' }
+                      type: "areaspline",
+                      backgroundColor: "transparent",
+                      style: { fontFamily: "Roboto, sans-serif" }
                     },
-                    title: { text: '' },
+                    title: { text: "" },
                     yAxis: {
                       title: { text: null },
                       lineWidth: 2,
                       lineColor: theme.palette.border.main,
-                      className: 'y-axis-lable',
+                      className: "y-axis-lable",
                       gridLineWidth: 1,
                       labels: {
                         style: { fontSize: 12 },
@@ -88,9 +88,9 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                     credits: { enabled: false },
                     series: [
                       {
-                        name: '',
-                        pointPlacement: 'on',
-                        type: 'areaspline',
+                        name: "",
+                        pointPlacement: "on",
+                        type: "areaspline",
                         marker: { enabled: false },
                         lineWidth: 4,
                         color: theme.palette.primary.main,
@@ -98,14 +98,14 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                           stops: [
                             [0, theme.palette.success.light],
-                            [1, 'transparent']
+                            [1, "transparent"]
                           ]
                         },
-                        data: selected === 'epochChart' ? epochs : delegators
+                        data: selected === "epochChart" ? epochs : delegators
                       }
                     ]
                   }}
-                />{' '}
+                />{" "}
               </Box>
             )}
           </ChartContainer>
@@ -118,11 +118,11 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
           >
             <Item item xs={6} sm={6} lg={12}>
               <img src={HighestIcon} alt='heighest icon' />
-              <Title>{selected === 'epochChart' ? 'Highest stake' : 'Highest number of delegators'}</Title>
+              <Title>{selected === "epochChart" ? "Highest stake" : "Highest number of delegators"}</Title>
               <Value>
                 {loading || !data?.[selected] ? (
                   <SkeletonUI variant='rectangular' />
-                ) : selected === 'epochChart' ? (
+                ) : selected === "epochChart" ? (
                   isMobile ? (
                     formatADA(data[selected].highest, LARGE_NUMBER_ABBREVIATIONS, 3)
                   ) : (
@@ -135,11 +135,11 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
             </Item>
             <Item item xs={6} sm={6} lg={12}>
               <img src={LowestIcon} alt='lowest icon' />
-              <Title>{selected === 'epochChart' ? 'Lowest stake' : 'Lowest number of delegators'}</Title>
+              <Title>{selected === "epochChart" ? "Lowest stake" : "Lowest number of delegators"}</Title>
               <Value>
                 {loading || !data ? (
                   <SkeletonUI variant='rectangular' />
-                ) : selected === 'epochChart' ? (
+                ) : selected === "epochChart" ? (
                   isMobile ? (
                     formatADA(data[selected].lowest, LARGE_NUMBER_ABBREVIATIONS, 3)
                   ) : (

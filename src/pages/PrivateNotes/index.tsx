@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   ActionButton,
   AddButton,
@@ -10,25 +10,25 @@ import {
   StyledLink,
   StyledTable,
   Title
-} from './styles';
-import { ReactComponent as QuestionConfirm } from '../../commons/resources/icons/questionConfirm.svg';
-import { ReactComponent as Plus } from '../../commons/resources/icons/plus.svg';
-import { formatDateTime, getPageInfo, getShortHash } from '../../commons/utils/helper';
-import useFetchList from '../../commons/hooks/useFetchList';
-import AddPrivateNoteModal from '../../components/Account/AddPrivateNoteModal';
-import { Column } from '../../types/table';
-import { useLocation } from 'react-router-dom';
-import CustomTooltip from '../../components/commons/CustomTooltip';
-import { ReactComponent as Expand } from '../../commons/resources/icons/expand.svg';
-import { ReactComponent as Warning } from '../../commons/resources/icons/warning.svg';
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@mui/material';
-import { removePrivateNote } from '../../commons/utils/userRequest';
-import { NETWORK, NETWORK_TYPES } from '../../commons/utils/constants';
-import { details } from '../../commons/routers';
+} from "./styles";
+import { ReactComponent as QuestionConfirm } from "../../commons/resources/icons/questionConfirm.svg";
+import { ReactComponent as Plus } from "../../commons/resources/icons/plus.svg";
+import { formatDateTime, getPageInfo, getShortHash } from "../../commons/utils/helper";
+import useFetchList from "../../commons/hooks/useFetchList";
+import AddPrivateNoteModal from "../../components/Account/AddPrivateNoteModal";
+import { Column } from "../../types/table";
+import { useLocation } from "react-router-dom";
+import CustomTooltip from "../../components/commons/CustomTooltip";
+import { ReactComponent as Expand } from "../../commons/resources/icons/expand.svg";
+import { ReactComponent as Warning } from "../../commons/resources/icons/warning.svg";
+import { Box, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from "@mui/material";
+import { removePrivateNote } from "../../commons/utils/userRequest";
+import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
+import { details } from "../../commons/routers";
 
-import { ButtonClose } from '../../components/ScriptModal/styles';
-import { CloseIcon } from '../../commons/resources';
-import useToast from '../../commons/hooks/useToast';
+import { ButtonClose } from "../../components/ScriptModal/styles";
+import { CloseIcon } from "../../commons/resources";
+import useToast from "../../commons/hooks/useToast";
 
 type TAction = {
   onClick: () => void;
@@ -68,7 +68,7 @@ const PrivateNotes = () => {
   const [currentNote, setCurrentNote] = useState<TCurrentNote | undefined>();
   const toast = useToast();
 
-  const { data, total, refresh } = useFetchList('note/find-all', { network: NETWORK_TYPES[NETWORK], page, size }, true);
+  const { data, total, refresh } = useFetchList("note/find-all", { network: NETWORK_TYPES[NETWORK], page, size }, true);
   const { search } = useLocation();
   const pageInfo = getPageInfo(search);
 
@@ -85,11 +85,11 @@ const PrivateNotes = () => {
     setLoadingDelete(true);
     try {
       await removePrivateNote(note.id);
-      toast.success(`Delete transaction private note ${getShortHash(note.txHash || '')} successfully`);
+      toast.success(`Delete transaction private note ${getShortHash(note.txHash || "")} successfully`);
       setSelected(null);
       refresh();
     } catch (error) {
-      toast.error('Something went wrong!');
+      toast.error("Something went wrong!");
     } finally {
       setLoadingDelete(false);
     }
@@ -102,10 +102,10 @@ const PrivateNotes = () => {
 
   const columns: Column<TPrivateNote>[] = [
     {
-      title: 'Transaction Private Note',
-      key: 'privateNote',
-      minWidth: '40px',
-      maxWidth: '300px',
+      title: "Transaction Private Note",
+      key: "privateNote",
+      minWidth: "40px",
+      maxWidth: "300px",
       render: (item) => (
         <>
           <CustomTooltip title={item.txHash}>
@@ -118,18 +118,18 @@ const PrivateNotes = () => {
       )
     },
     {
-      title: 'Added On',
-      key: 'addedOn',
-      minWidth: '40px',
-      maxWidth: '250px',
+      title: "Added On",
+      key: "addedOn",
+      minWidth: "40px",
+      maxWidth: "250px",
       render: (item) => formatDateTime(item.createdDate)
     },
     {
-      title: <Box textAlign={'right'}>Action</Box>,
-      key: 'action',
-      minWidth: '40px',
+      title: <Box textAlign={"right"}>Action</Box>,
+      key: "action",
+      minWidth: "40px",
       render: (item) => (
-        <Box display='flex' justifyContent={'flex-end'}>
+        <Box display='flex' justifyContent={"flex-end"}>
           <ViewButton onClick={() => handleClickViewDetail(item)} />
           <RemoveButton onClick={() => setSelected(item)} />
         </Box>
@@ -138,16 +138,16 @@ const PrivateNotes = () => {
   ];
 
   return (
-    <Container overflow={'auto'}>
+    <Container overflow={"auto"}>
       <Header>
         <Title>My Transaction Private Notes</Title>
         <AddButton onClick={() => setOpenModal(true)} endIcon={<Plus />}>
           Add
         </AddButton>
       </Header>
-      <Box overflow={'auto'} height='100%'>
+      <Box overflow={"auto"} height='100%'>
         <StyledTable
-          style={{ overflow: 'auto' }}
+          style={{ overflow: "auto" }}
           emptyClassName='empty-content-table'
           columns={columns}
           data={data ?? []}
@@ -173,18 +173,18 @@ const PrivateNotes = () => {
           style: { borderRadius: 20, width: 550 }
         }}
       >
-        <Box textAlign={'center'} pt={5} pb={2}>
+        <Box textAlign={"center"} pt={5} pb={2}>
           <QuestionConfirm />
         </Box>
-        <Box component={'h2'} textAlign={'center'} fontWeight={'bold'} fontSize={'1.125rem'} paddingBottom={'0px'}>
+        <Box component={"h2"} textAlign={"center"} fontWeight={"bold"} fontSize={"1.125rem"} paddingBottom={"0px"}>
           Confirmation Required
         </Box>
         <ButtonClose disabled={loadingDelete} onClick={() => setSelected(null)}>
           <img src={CloseIcon} alt='icon close' />
         </ButtonClose>
         <Box>
-          <DialogContentText color={(theme) => theme.palette.text.secondary} fontSize={'1.125rem'}>
-            Are you sure to remove transaction private note {getShortHash(selected?.txHash || '')} ?
+          <DialogContentText color={(theme) => theme.palette.text.secondary} fontSize={"1.125rem"}>
+            Are you sure to remove transaction private note {getShortHash(selected?.txHash || "")} ?
           </DialogContentText>
         </Box>
         <DialogActions>

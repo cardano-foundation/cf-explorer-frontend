@@ -1,24 +1,24 @@
-import { Box, Skeleton } from '@mui/material';
-import moment from 'moment';
-import { useEffect, useMemo, useState } from 'react';
-import { useHistory, useParams } from 'react-router';
-import useFetchList from '../../../../../commons/hooks/useFetchList';
-import { API } from '../../../../../commons/utils/api';
-import StackingFilter, { FilterParams } from '../../../../StackingFilter';
-import OverviewStaking from '../../../../commons/OverviewStaking';
-import { EmptyRecord } from '../../../../commons/Table';
-import { GridBox, WrapFilterDescription } from './styles';
-import { FilterDateLabel } from '../../../DelegatorLifecycle/Delegation/styles';
-import { DescriptionText } from '../../../DelegatorLifecycle/styles';
-import { details } from '../../../../../commons/routers';
-import { useUpdateEffect } from 'react-use';
+import { Box, Skeleton } from "@mui/material";
+import moment from "moment";
+import { useEffect, useMemo, useState } from "react";
+import { useHistory, useParams } from "react-router";
+import useFetchList from "../../../../../commons/hooks/useFetchList";
+import { API } from "../../../../../commons/utils/api";
+import StackingFilter, { FilterParams } from "../../../../StackingFilter";
+import OverviewStaking from "../../../../commons/OverviewStaking";
+import { EmptyRecord } from "../../../../commons/Table";
+import { GridBox, WrapFilterDescription } from "./styles";
+import { FilterDateLabel } from "../../../DelegatorLifecycle/Delegation/styles";
+import { DescriptionText } from "../../../DelegatorLifecycle/styles";
+import { details } from "../../../../../commons/routers";
+import { useUpdateEffect } from "react-use";
 
 interface Props {
   onSelect: (registration: SPODeregistration | null) => void;
 }
 
 const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
-  const { poolId = '', txHash = '' } = useParams<{ poolId: string; txHash?: string }>();
+  const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
   const [params, setParams] = useState<FilterParams>({
     fromDate: undefined,
@@ -27,7 +27,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
     txHash: undefined
   });
   const { data, total, loading, initialized, error } = useFetchList<SPODeregistration>(
-    poolId ? API.SPO_LIFECYCLE.SPO_DEREGISTRATION(poolId) : '',
+    poolId ? API.SPO_LIFECYCLE.SPO_DEREGISTRATION(poolId) : "",
     {
       page: 0,
       size: 1000,
@@ -41,7 +41,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
   }, [txHash, data]);
 
   const handleSelect = (deregistration: SPODeregistration) => {
-    history.push(details.spo(poolId, 'timeline', 'deregistration', deregistration.txHash));
+    history.push(details.spo(poolId, "timeline", "deregistration", deregistration.txHash));
   };
 
   useUpdateEffect(() => {
@@ -52,11 +52,11 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
 
   const filterLabel = useMemo(() => {
     if (params.fromDate && params.toDate)
-      return ` Filter by: ${moment(params.fromDate).format('MM/DD/YYYY')} - ${moment(params.toDate).format(
-        'MM/DD/YYYY'
+      return ` Filter by: ${moment(params.fromDate).format("MM/DD/YYYY")} - ${moment(params.toDate).format(
+        "MM/DD/YYYY"
       )}`;
     if (params.sort && params.sort.length >= 2)
-      return `${params.sort[1] === 'DESC' ? 'Sort by: Latest - First' : 'Sort by: First - Latest'}`;
+      return `${params.sort[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
     if (params.txHash) return `Searching for : ${params.txHash}`;
   }, [params]);
 
@@ -64,11 +64,11 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
 
   return (
     <Box marginTop='32px'>
-      <Box display={'flex'} justifyContent={'space-between'} marginBottom={'10px'}>
+      <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
         <DescriptionText>Recent Deregistration</DescriptionText>
-        <Box display={'flex'} alignItems={'center'} gap={2}>
+        <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
-            Showing {total} {total > 1 ? 'results' : 'result'}
+            Showing {total} {total > 1 ? "results" : "result"}
           </WrapFilterDescription>
           {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
           <StackingFilter

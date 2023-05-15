@@ -1,34 +1,34 @@
-import { Box, IconButton, useTheme } from '@mui/material';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import useFetchList from '../../../../../commons/hooks/useFetchList';
-import { API } from '../../../../../commons/utils/api';
-import { formatDateTimeLocal, getShortHash } from '../../../../../commons/utils/helper';
+import { Box, IconButton, useTheme } from "@mui/material";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import useFetchList from "../../../../../commons/hooks/useFetchList";
+import { API } from "../../../../../commons/utils/api";
+import { formatDateTimeLocal, getShortHash } from "../../../../../commons/utils/helper";
 
-import { EyeIcon } from '../../../../../commons/resources';
-import { details } from '../../../../../commons/routers';
-import { AdaValue } from '../../../../TabularView/StakeTab/Tabs/StakeRegistrationTab';
-import { TableSubTitle } from '../../../../TabularView/StakeTab/styles';
-import CustomTooltip from '../../../../commons/CustomTooltip';
-import Table, { Column } from '../../../../commons/Table';
-import { StyledLink } from '../../../../share/styled';
-import { RegistrationCertificateModal } from '../../Registration';
+import { EyeIcon } from "../../../../../commons/resources";
+import { details } from "../../../../../commons/routers";
+import { AdaValue } from "../../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import { TableSubTitle } from "../../../../TabularView/StakeTab/styles";
+import CustomTooltip from "../../../../commons/CustomTooltip";
+import Table, { Column } from "../../../../commons/Table";
+import { StyledLink } from "../../../../share/styled";
+import { RegistrationCertificateModal } from "../../Registration";
 
 const PoolRegistrationTab = () => {
   const theme = useTheme();
-  const { poolId = '' } = useParams<{ poolId: string }>();
+  const { poolId = "" } = useParams<{ poolId: string }>();
   const [params, setParams] = useState({
     page: 0,
     size: 10
   });
 
-  const [sort, setSort] = useState<string>('');
+  const [sort, setSort] = useState<string>("");
   const [selected, setSelected] = useState<number | null>(null);
 
   const columns: Column<SPORegistrationTabpular>[] = [
     {
-      key: 'txHash',
-      title: 'Transaction hash',
+      key: "txHash",
+      title: "Transaction hash",
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>
@@ -38,21 +38,21 @@ const PoolRegistrationTab = () => {
       }
     },
     {
-      key: 'time',
-      title: 'Timestamp',
+      key: "time",
+      title: "Timestamp",
       sort({ columnKey, sortValue }) {
-        sortValue ? setSort(`bk.${columnKey},${sortValue}`) : setSort('');
+        sortValue ? setSort(`bk.${columnKey},${sortValue}`) : setSort("");
       },
       render(data) {
         return formatDateTimeLocal(data.time);
       }
     },
     {
-      key: 'fee',
+      key: "fee",
       title: (
         <Box>
           ADA Value
-          <Box fontSize={'0.75rem'} fontWeight={'normal'}>
+          <Box fontSize={"0.75rem"} fontWeight={"normal"}>
             Hold/Fees
           </Box>
         </Box>
@@ -73,18 +73,18 @@ const PoolRegistrationTab = () => {
       }
     },
     {
-      key: 'Certificate',
-      title: 'Certificate',
+      key: "Certificate",
+      title: "Certificate",
       render: (data) => (
         <IconButton onClick={() => setSelected(data?.poolUpdateId || 0)}>
-          <EyeIcon style={{ transform: 'scale(.8)' }} />
+          <EyeIcon style={{ transform: "scale(.8)" }} />
         </IconButton>
       )
     }
   ];
 
   const fetchData = useFetchList<SPORegistrationTabpular>(
-    poolId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_LIST(poolId) : '',
+    poolId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_LIST(poolId) : "",
     {
       ...params,
       sort
@@ -97,7 +97,7 @@ const PoolRegistrationTab = () => {
         {...fetchData}
         columns={columns}
         total={{
-          title: 'Pool Registration',
+          title: "Pool Registration",
           count: fetchData.total
         }}
         pagination={{

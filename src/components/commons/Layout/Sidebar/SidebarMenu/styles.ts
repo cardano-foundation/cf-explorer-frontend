@@ -1,5 +1,5 @@
-import { Box, Collapse, List, ListItemText, styled, Theme } from '@mui/material';
-import { SystemStyleObject } from '@mui/system';
+import { Box, Collapse, List, ListItemText, styled, Theme } from "@mui/material";
+import { SystemStyleObject } from "@mui/system";
 
 export const StyledCollapse = styled(Collapse)`
   @media screen and (max-width: 1023px) {
@@ -37,17 +37,17 @@ export const Menu = styled(List)<{ open: number }>`
 export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<Theme> => ({
   minHeight: 48,
   padding: `8px ${sidebar ? 20 : 8}px 8px 30px`,
-  cursor: 'pointer',
-  position: 'relative',
-  marginBottom: '5px',
-  justifyContent: sidebar ? 'initial' : 'center',
+  cursor: "pointer",
+  position: "relative",
+  marginBottom: "5px",
+  justifyContent: sidebar ? "initial" : "center",
   [theme.breakpoints.down(theme.breakpoints.values.md)]: {
-    padding: '8px 20px 8px 30px',
+    padding: "8px 20px 8px 30px",
     marginBottom: 0
   }
 });
 
-export const MenuIcon = styled('img')<{ iconOnly?: number; active?: number; text?: number; disable?: number }>`
+export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; text?: number; disable?: number }>`
   width: 24px;
   height: 24px;
   min-width: 24px;
@@ -64,7 +64,7 @@ export const SubMenu = styled(List)<{ isActive?: number }>`
 
 export const MenuText = styled(ListItemText)<{ open?: number; active?: number; text?: number; disable?: number }>`
   opacity: ${(props) => (props.open ? 1 : 0)};
-  width: ${(props) => (props.open ? 'unset' : 0)};
+  width: ${(props) => (props.open ? "unset" : 0)};
   * {
     font-family: var(--font-family-title) !important;
     font-weight: var(--font-weight-bold) !important;
@@ -92,7 +92,7 @@ export const SubMenuText = styled(MenuText)`
   }
 `;
 
-export const NavbarMenuBottom = styled('div')`
+export const NavbarMenuBottom = styled("div")`
   display: none;
   @media screen and (max-width: 1023px) {
     display: flex;
@@ -105,11 +105,11 @@ export const NavbarMenuBottom = styled('div')`
 `;
 
 export const IconMenu = styled(Box)(({ theme }) => ({
-  position: 'absolute',
+  position: "absolute",
   zIndex: 10,
-  top: '50%',
-  left: '210px',
-  transform: 'translate(0, -50%)'
+  top: "50%",
+  left: "210px",
+  transform: "translate(0, -50%)"
 }));
 
 export const WrapNetwork = styled(Box)`

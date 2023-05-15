@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Store } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, Store } from "@reduxjs/toolkit";
 
 let toastStore: Store | undefined;
 
@@ -11,7 +11,7 @@ const initialState: ToastStoreType = {
 };
 
 const storeWallet = createSlice({
-  name: 'storeToast',
+  name: "storeToast",
   initialState,
   reducers: {
     addToast: (state, action: PayloadAction<Required<ToastItem>>) => ({

@@ -1,4 +1,4 @@
-import { CircularProgress, ButtonBase, styled } from '@mui/material';
+import { CircularProgress, ButtonBase, styled } from "@mui/material";
 
 export const StyledButton = styled(ButtonBase)`
   display: flex;
@@ -16,7 +16,7 @@ export const StyledButton = styled(ButtonBase)`
   height: 40px;
 `;
 
-export const Span = styled('span')`
+export const Span = styled("span")`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
   color: ${(props) => props.theme.palette.primary.contrastText};
@@ -24,7 +24,7 @@ export const Span = styled('span')`
   line-height: 1;
 `;
 
-export const Image = styled('img')`
+export const Image = styled("img")`
   width: 24px;
   height: 24px;
 `;

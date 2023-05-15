@@ -1,14 +1,14 @@
-import { NetworkType, useCardano } from '@cardano-foundation/cardano-connect-with-wallet';
-import { Box } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { WalletIcon } from '../../../../../commons/resources';
-import { routers } from '../../../../../commons/routers';
-import { NETWORK, NETWORKS } from '../../../../../commons/utils/constants';
-import { RootState } from '../../../../../stores/types';
-import ConnectedProfileOptionNormalLogin from '../../../ConnectedProfileOptionNormalLogin';
-import ConnectWallet from '../ConnectWallet';
-import { Image, Span, StyledButton } from './styles';
+import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { WalletIcon } from "../../../../../commons/resources";
+import { routers } from "../../../../../commons/routers";
+import { NETWORK, NETWORKS } from "../../../../../commons/utils/constants";
+import { RootState } from "../../../../../stores/types";
+import ConnectedProfileOptionNormalLogin from "../../../ConnectedProfileOptionNormalLogin";
+import ConnectWallet from "../ConnectWallet";
+import { Image, Span, StyledButton } from "./styles";
 
 const LoginButton = () => {
   const { userData } = useSelector(({ user }: RootState) => user);
@@ -21,7 +21,7 @@ const LoginButton = () => {
     history.push(routers.SIGN_IN);
   };
 
-  if (userData?.loginType === 'connectWallet') {
+  if (userData?.loginType === "connectWallet") {
     return (
       <>
         <ConnectWallet />
@@ -29,7 +29,7 @@ const LoginButton = () => {
     );
   }
 
-  if (userData?.loginType === 'normal') {
+  if (userData?.loginType === "normal") {
     return (
       <>
         <ConnectedProfileOptionNormalLogin userData={userData} />

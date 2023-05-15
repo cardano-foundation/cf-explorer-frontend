@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import Popover from '@mui/material/Popover';
-import List from '@mui/material/List';
-import { Box } from '@mui/material';
-import { OutlineButton, WrapPopoverContent } from './styles';
-import { FilterIcon } from '../../../commons/resources';
+import { useState } from "react";
+import Popover from "@mui/material/Popover";
+import List from "@mui/material/List";
+import { Box } from "@mui/material";
+import { OutlineButton, WrapPopoverContent } from "./styles";
+import { FilterIcon } from "../../../commons/resources";
 
 interface FilterItem {
   label: string;
@@ -41,7 +41,7 @@ export default function FilterButton(props: FilterButtonProps) {
   return (
     <>
       <OutlineButton onClick={handleClick}>
-        <Box marginRight={'5px'} display={'flex'} alignItems={'center'}>
+        <Box marginRight={"5px"} display={"flex"} alignItems={"center"}>
           <FilterIcon />
         </Box>
         Filter
@@ -53,23 +53,23 @@ export default function FilterButton(props: FilterButtonProps) {
         anchorReference='anchorPosition'
         anchorPosition={{ top: 260, left: 1510 }}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left'
+          vertical: "bottom",
+          horizontal: "left"
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left'
+          vertical: "top",
+          horizontal: "left"
         }}
         sx={{
-          '& .MuiPopover-paper': {
-            borderRadius: '12px'
+          "& .MuiPopover-paper": {
+            borderRadius: "12px"
           }
         }}
       >
         <List>
           {options.map((option: FilterItem, idx) => (
             <WrapPopoverContent onClick={() => handleOptionClick(option.value)} key={idx}>
-              <Box marginRight={'5px'} display={'flex'} alignItems={'center'}>
+              <Box marginRight={"5px"} display={"flex"} alignItems={"center"}>
                 {option.icon}
               </Box>
               <span>{option.label}</span>

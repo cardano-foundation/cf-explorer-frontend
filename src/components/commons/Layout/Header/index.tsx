@@ -1,17 +1,17 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { useWindowSize } from 'react-use';
-import HeaderSearch from './HeaderSearch';
-import LoginButton from './LoginButton';
-import SelectNetwork from './SelectNetwork';
-import { HeaderBox, HeaderContainer, HeaderMain, HeaderTop, Title } from './styles';
-import { useScreen } from '../../../../commons/hooks/useScreen';
+import React from "react";
+import { useSelector } from "react-redux";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import { useWindowSize } from "react-use";
+import HeaderSearch from "./HeaderSearch";
+import LoginButton from "./LoginButton";
+import SelectNetwork from "./SelectNetwork";
+import { HeaderBox, HeaderContainer, HeaderMain, HeaderTop, Title } from "./styles";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
 const Header: React.FC<RouteComponentProps> = (props) => {
   const { history } = props;
 
-  const home = history.location.pathname === '/';
+  const home = history.location.pathname === "/";
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const { width } = useWindowSize();
   const { isTablet } = useScreen();
