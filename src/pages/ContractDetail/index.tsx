@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import useFetch from "../../commons/hooks/useFetch";
-import { API } from "../../commons/utils/api";
-import NoRecord from "../../components/commons/NoRecord";
-import AddressOverview from "../../components/ContractDetail/AddressOverview";
-import ContractDetailContent from "../../components/ContractDetail/ContractDetailContent";
-import { StyledContainer } from "./styles";
+import React, { useEffect } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import useFetch from '../../commons/hooks/useFetch';
+import { API } from '../../commons/utils/api';
+import NoRecord from '../../components/commons/NoRecord';
+import AddressOverview from '../../components/ContractDetail/AddressOverview';
+import ContractDetailContent from '../../components/ContractDetail/ContractDetailContent';
+import { StyledContainer } from './styles';
 
 const ContractDetail: React.FC = () => {
   const { address } = useParams<{ address: string }>();
   const { state } = useLocation<{ data?: WalletAddress }>();
   const { data, loading, initialized, error } = useFetch<WalletAddress>(
-    state?.data ? "" : `${API.ADDRESS.DETAIL}/${address}`,
+    state?.data ? '' : `${API.ADDRESS.DETAIL}/${address}`,
     state?.data
   );
 

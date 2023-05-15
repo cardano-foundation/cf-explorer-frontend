@@ -1,7 +1,7 @@
-import { alpha, Box, Grid, styled } from "@mui/material";
-import Card from "../Card";
+import { alpha, Box, Grid, styled } from '@mui/material';
+import Card from '../Card';
 
-export const TokenWrapper = styled("div")`
+export const TokenWrapper = styled('div')`
   width: 100%;
   height: 100%;
   text-align: left;
@@ -10,7 +10,7 @@ export const TokenWrapper = styled("div")`
   overflow-x: auto;
 `;
 
-export const PolicyHeader = styled("div")`
+export const PolicyHeader = styled('div')`
   display: inline-flex;
   align-items: center;
 
@@ -20,12 +20,12 @@ export const PolicyHeader = styled("div")`
   }
 `;
 
-export const PolicyBody = styled("div")`
+export const PolicyBody = styled('div')`
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  background: ${props => props.theme.palette.border.secondary};
+  background: ${(props) => props.theme.palette.border.secondary};
   border-radius: 5px;
   margin-top: 15px;
   padding: 13px 15px;
@@ -37,23 +37,23 @@ export const PolicyBody = styled("div")`
   }
 `;
 
-export const PolicyBodyTitle = styled("span")`
+export const PolicyBodyTitle = styled('span')`
   font-weight: var(--font-weight-bold);
   font-size: 18px;
 `;
 
-export const PolicyBodyDetail = styled("span")`
-  color: ${props => props.theme.palette.grey[400]};
+export const PolicyBodyDetail = styled('span')`
+  color: ${(props) => props.theme.palette.grey[400]};
   font-size: 12px;
   margin-top: 5px;
 `;
 
-export const TokenDetail = styled("div")`
+export const TokenDetail = styled('div')`
   margin-top: 20px;
   display: flex;
 `;
 
-export const TokenDetailSupply = styled("div")`
+export const TokenDetailSupply = styled('div')`
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -63,15 +63,15 @@ export const TokenDetailSupply = styled("div")`
 export const TokenDetailDecimal = styled(TokenDetailSupply)`
   padding: 0;
   padding-left: 15px;
-  border-left: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)};
+  border-left: 1px solid ${(props) => alpha(props.theme.palette.common.black, 0.1)};
 `;
 
-export const TokenDetailTitle = styled("span")`
-  color: ${props => props.theme.palette.grey[400]};
+export const TokenDetailTitle = styled('span')`
+  color: ${(props) => props.theme.palette.grey[400]};
   font-size: 14px;
 `;
 
-export const TokenDetailDetail = styled("span")`
+export const TokenDetailDetail = styled('span')`
   font-weight: var(--font-weight-bold);
   margin-top: 8px;
   font-size: 18px;
@@ -87,8 +87,8 @@ export const CardInfo = styled(Card)`
   padding-left: 40px;
   padding-right: 40px;
   text-align: left;
-  background-color: ${props => props.theme.palette.background.paper};
-  box-shadow: ${props => props.theme.shadow.card};
+  background-color: ${(props) => props.theme.palette.background.paper};
+  box-shadow: ${(props) => props.theme.shadow.card};
 
   @media screen and (max-width: 1023px) {
     height: auto;
@@ -104,7 +104,7 @@ export const CardInfoItem = styled(Box)`
   margin-bottom: 1rem;
 `;
 
-export const InfoIcon = styled("img")`
+export const InfoIcon = styled('img')`
   margin-right: 8px;
   display: block;
   width: 24px;
@@ -124,8 +124,8 @@ export const CardProgress = styled(Card)`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  box-shadow: ${props => props.theme.shadow.card};
-  background-color: ${props => props.theme.palette.background.paper};
+  box-shadow: ${(props) => props.theme.shadow.card};
+  background-color: ${(props) => props.theme.palette.background.paper};
   height: 100%;
   overflow-x: auto;
   padding: 25px 30px;
@@ -140,14 +140,14 @@ export const CardProgress = styled(Card)`
   }
 `;
 
-export const EpochNumber = styled("h1")`
+export const EpochNumber = styled('h1')`
   font-size: 56px;
-  color: ${props => props.theme.palette.primary.dark};
+  color: ${(props) => props.theme.palette.primary.dark};
   margin: 0;
 `;
 
-export const EpochText = styled("span")`
-  color: ${props => props.theme.palette.grey[400]};
+export const EpochText = styled('span')`
+  color: ${(props) => props.theme.palette.grey[400]};
 `;
 
 export const ProgressData = styled(Box)`

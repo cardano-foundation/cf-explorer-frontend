@@ -1,6 +1,6 @@
-import { Box, styled } from "@mui/material";
-import { BoxProps } from "@mui/system";
-import React, { ReactNode } from "react";
+import { Box, styled } from '@mui/material';
+import { BoxProps } from '@mui/system';
+import React, { ReactNode } from 'react';
 
 const CardContainer = styled(Box)`
   background-color: transparent;
@@ -13,29 +13,29 @@ const Header = styled(Box)`
   align-items: center;
 `;
 
-const Title = styled("h2")<{ underline: number; marginTitle?: string }>`
+const Title = styled('h2')<{ underline: number; marginTitle?: string }>`
   text-align: left;
   padding-bottom: 8px;
   position: relative;
-  ${props => (props.underline ? `font-size: 1.25rem;` : "")};
-  margin: ${({ marginTitle }) => (marginTitle ? marginTitle : "unset")};
+  ${(props) => (props.underline ? `font-size: 1.25rem;` : '')};
+  margin: ${({ marginTitle }) => (marginTitle ? marginTitle : 'unset')};
   &::after {
     content: "";
     position: absolute;
     width: 100%;
     height: 4px;
-    background-color: ${props => (props.underline ? props.theme.palette.primary.main : "unset")};
+    background-color: ${(props) => (props.underline ? props.theme.palette.primary.main : 'unset')};
     left: 0;
     bottom: 0;
   }
-  ${({ theme }) => theme.breakpoints.down("sm")} {
+  ${({ theme }) => theme.breakpoints.down('sm')} {
     font-size: 24px !important;
     padding-top: 20px;
   }
 },
 `;
 
-interface CardProps extends Omit<BoxProps, "title"> {
+interface CardProps extends Omit<BoxProps, 'title'> {
   title?: React.ReactNode;
   children?: ReactNode;
   underline?: boolean;
@@ -45,7 +45,8 @@ interface CardProps extends Omit<BoxProps, "title"> {
 
 const Card: React.FC<CardProps> = ({ title, marginTitle, children, underline = false, extra, ...props }) => {
   return (
-    <CardContainer {...props}>
+    // <CardContainer {...props}>
+    <CardContainer>
       <Header>
         {title ? (
           <Title marginTitle={marginTitle} underline={underline ? 1 : 0}>
