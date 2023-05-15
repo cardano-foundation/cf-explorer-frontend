@@ -42,10 +42,10 @@ interface IPoolReportList {
   isFreePaid: boolean;
   event: string;
   reportId: number;
-  isDeregistration: boolean;
-  isPoolUpdate: boolean;
-  isRegistration: boolean;
-  isReward: boolean;
+  eventDeregistration: boolean;
+  eventPoolUpdate: boolean;
+  eventRegistration: boolean;
+  eventReward: boolean;
   poolView: string;
 }
 

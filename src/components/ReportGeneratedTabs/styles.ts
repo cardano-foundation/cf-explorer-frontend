@@ -1,7 +1,7 @@
 import { TabPanel } from "@mui/lab";
 import { Box, Typography, styled } from "@mui/material";
 
-export const TabLabel = styled(Typography)<{ active: boolean }>(
+export const TabLabel = styled(Typography)<{ active: number }>(
   (props) => `
  font-size: 24px;
     font-weight: 700;
@@ -18,4 +18,7 @@ export const TabHeader = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  & .MuiTabs-indicator{
+    height: 4px;
+  }
 `;

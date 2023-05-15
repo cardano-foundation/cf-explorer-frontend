@@ -108,20 +108,26 @@ export const TextRequired = styled("div")`
   line-height: 22px;
 `;
 
-export const ButtonEvent = styled(Button)<{ active: number }>`
-  background: ${(props) => (props.active ? "#667085" : "#f2f2f2")};
-  color: ${(props) => (props.active ? "#fff" : "#667085")};
-  border-radius: 6px;
-  height: 44px;
-  align-items: center;
-  padding: 13px 20px;
-  gap: 10px;
-  text-transform: Capitalize;
-  &:hover {
-    background: ${(props) => (props.active ? "#f2f2f2" : "#667085")};
-    color: ${(props) => (props.active ? "#667085" : "#fff")};
+export const ButtonEvent = styled(Button)<{ active: boolean }>(({ theme, active }) => ({
+  background: active ? "#667085" : "#f2f2f2",
+  color: active ? "#fff" : "#667085",
+  borderRadius: "6px",
+  height: "44px",
+  alignItems: "center",
+  padding: "13px 20px",
+  gap: "10px",
+  textTransform: "capitalize",
+  "&:hover": {
+    background: active ? "#f2f2f2" : "#667085",
+    color: active ? "#667085" : "#fff"
+  },
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+    "&:hover": {
+      background: active ? "#667085" : "#f2f2f2",
+      color: active ? "#fff" : "#667085"
+    }
   }
-`;
+}));
 
 export const TextLabelReview = styled("div")`
   font-weight: 400;
