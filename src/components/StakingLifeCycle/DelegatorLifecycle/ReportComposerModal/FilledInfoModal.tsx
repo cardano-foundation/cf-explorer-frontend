@@ -138,9 +138,8 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     <StyledModal
       open={open}
       handleCloseModal={handleCloseModal}
-      // width={555}
-      paddingX={isMobile ? '10px' : '40px'}
-      paddingY={isMobile ? '20px' : '30px'}
+      paddingX={isMobile ? "10px" : "40px"}
+      paddingY={isMobile ? "20px" : "30px"}
     >
       <Container>
         <ModalTitle>

@@ -110,7 +110,6 @@ const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       : event.type !== ReportType.PoolReport;
   });
   const isAll = eventsKey.length === events.length - 1;
-  console.log({eventsKey})
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
       <Container p={"10px 10px 1px 20px"}>

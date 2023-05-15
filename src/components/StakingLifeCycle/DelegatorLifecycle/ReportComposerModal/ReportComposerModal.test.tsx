@@ -4,5 +4,5 @@ import { render } from "../../../../test-utils";
 
 test("should render ReportComposerModal", async () => {
   render(<ReportComposerModal open={true} handleCloseModal={jest.fn()} />);
-  expect(screen.getByTestId("steps-modal")).toBeInTheDocument();
+  expect(screen.getByTestId("report-compose-modal")).toBeInTheDocument();
 });
