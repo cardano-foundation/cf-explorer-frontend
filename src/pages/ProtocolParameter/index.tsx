@@ -248,7 +248,25 @@ const ProtocolParameterHistory = () => {
     title: t,
     key: t,
     render: (r: any) => (
-      <Box p={"24px 20px"} maxWidth={200} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
+      <Box
+        p={"24px 20px"}
+        maxWidth={200}
+        overflow={"hidden"}
+        whiteSpace={"nowrap"}
+        minHeight={"16px"}
+        textOverflow={"ellipsis"}
+        bgcolor={({ palette }) =>
+          r[t as ProtocolTypeKey] !== null
+            ? r[t as ProtocolTypeKey].status === "UPDATED"
+              ? palette.yellow[100]
+              : r[t as ProtocolTypeKey].status === "ADDED"
+              ? alpha(palette.green[600], 0.1)
+              : r[t as ProtocolTypeKey].status === "NOT_EXIST"
+              ? palette.red[100]
+              : "transparent"
+            : "transparent"
+        }
+      >
         {r[t] ? r[t]?.value : ""}
       </Box>
     )

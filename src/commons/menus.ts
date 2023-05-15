@@ -48,12 +48,6 @@ export const menus: Menu[] = [
     ]
   },
   {
-    title: "Protocol Parameters",
-    icon: ProtocolParameterIcon,
-    href: "/protocol-parameters",
-    children: []
-  },
-  {
     title: "Staking Lifecycle",
     icon: StakingLifecycleIcon,
     children: [
@@ -62,6 +56,12 @@ export const menus: Menu[] = [
       { title: "Timeline SPO", href: routers.SPO_SEARCH },
       { title: "Report", href: routers.REPORT_GENERATED }
     ]
+  },
+  {
+    title: "Protocol Parameters",
+    icon: ProtocolParameterIcon,
+    href: "/protocol-parameters",
+    children: []
   }
 ];
 
