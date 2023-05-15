@@ -1,4 +1,4 @@
-import { Box, Button, Divider, FormHelperText, styled, Input, IconButton } from "@mui/material";
+import { Box, Button, Divider, FormHelperText, IconButton, Input, styled } from "@mui/material";
 import { User2RC } from "../../commons/resources";
 
 export const Container = styled(Box)`
@@ -57,7 +57,7 @@ export const WrapForm = styled(Box)(({ theme }) => ({
   display: "flex",
   position: "relative",
   flexDirection: "column",
-  gap: "25px",
+  gap: "10px",
   width: "min(80vw,420px)",
   padding: "35px 40px 40px",
   [theme.breakpoints.down(theme.breakpoints.values.md)]: {

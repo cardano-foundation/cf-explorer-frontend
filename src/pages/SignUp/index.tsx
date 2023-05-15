@@ -1,5 +1,10 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment } from "@mui/material";
+import { useEffect, useReducer, useState } from "react";
+import { IoMdClose } from "react-icons/io";
+import { useHistory } from "react-router-dom";
 import { EmailIcon, HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
+import { routers } from "../../commons/routers";
+import { signUp } from "../../commons/utils/userRequest";
 import {
   CloseButton,
   Container,
@@ -7,7 +12,6 @@ import {
   FormHelperTextCustom,
   InputCustom,
   Label,
-  UserCustomIcon,
   WrapButton,
   WrapContent,
   WrapForm,
@@ -16,18 +20,8 @@ import {
   WrapSignUp,
   WrapTitle
 } from "./styles";
-import { useHistory } from "react-router-dom";
-import { routers } from "../../commons/routers";
-import { useEffect, useReducer, useState } from "react";
-import { signUp } from "../../commons/utils/userRequest";
-import { IoMdClose } from "react-icons/io";
 
 interface IForm {
-  username: {
-    value: string;
-    error?: string;
-    touched?: boolean;
-  };
   password: {
     value: string;
     error?: string;
@@ -67,12 +61,8 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [checkedAgree, setCheckedAgree] = useState(false);
-  const [checkedSubcribe, setCheckedSubcribe] = useState(false);
   const handleChangeAgree = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCheckedAgree(event.target.checked);
-  };
-  const handleChangeSubcribe = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCheckedSubcribe(event.target.checked);
   };
   const handleTogglePassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -81,9 +71,6 @@ export default function SignUp() {
     setShowConfirmPassword((prevState) => !prevState);
   };
   const [formData, setFormData] = useReducer(formReducer, {
-    username: {
-      value: ""
-    },
     password: {
       value: ""
     },
@@ -100,11 +87,7 @@ export default function SignUp() {
   useEffect(() => {
     setError(
       Boolean(
-        formData.username.error ||
-          formData.password.error ||
-          formData.email.error ||
-          formData.confirmPassword.error ||
-          formData.confirmEmail.error
+        formData.password.error || formData.email.error || formData.confirmPassword.error || formData.confirmEmail.error
       )
     );
   }, [formData]);
@@ -112,13 +95,6 @@ export default function SignUp() {
   const getError = (name: string, value: string) => {
     let error = "";
     switch (name) {
-      case "username":
-        if (!value) {
-          error = "Please enter Username";
-        } else if (value.length < 5 || value.length > 30 || !/^[a-zA-Z0-9]+$/.test(value)) {
-          error = "Username has to be from 5 to 30 characters in length, only alphanumeric characters allowed";
-        }
-        break;
       case "password":
         if (!value) {
           error = "Please enter your Password";
@@ -172,18 +148,10 @@ export default function SignUp() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    const errorUsername = getError("username", formData.username.value);
     const errorPassword = getError("password", formData.password.value);
     const errorEmail = getError("email", formData.email.value);
     const errorConfirmPassword = getError("confirmPassword", formData.confirmPassword.value);
     const errorConfirmEmail = getError("confirmEmail", formData.confirmEmail.value);
-    if (errorUsername) {
-      setFormData({
-        name: "username",
-        touched: true,
-        error: errorUsername
-      });
-    }
     if (errorPassword) {
       setFormData({
         name: "password",
@@ -213,14 +181,13 @@ export default function SignUp() {
       });
     }
     if (error) return;
-    handleSignUp(formData.email.value, formData.password.value, formData.username.value);
+    handleSignUp(formData.email.value, formData.password.value);
   };
 
-  const handleSignUp = async (email: string, password: string, username: string) => {
+  const handleSignUp = async (email: string, password: string) => {
     try {
       setLoading(true);
       const payload = {
-        username,
         password,
         email,
         role: "ROLE_USER"
@@ -249,24 +216,6 @@ export default function SignUp() {
               <CloseButton saving={0} onClick={() => handleClose()}>
                 <IoMdClose />
               </CloseButton>
-              <WrapInput>
-                <Label>Username</Label>
-                <InputCustom
-                  startAdornment={
-                    <Box paddingRight={"10px"} paddingTop={"5px"}>
-                      <UserCustomIcon />
-                    </Box>
-                  }
-                  fullWidth
-                  name='username'
-                  onChange={handleChange}
-                  error={Boolean(formData.username.error && formData.username.touched)}
-                  placeholder='Username'
-                />
-                {formData.username.error && formData.username.touched ? (
-                  <FormHelperTextCustom error>{formData.username.error}</FormHelperTextCustom>
-                ) : null}
-              </WrapInput>
               <WrapInput>
                 <Label>Email Address</Label>
                 <InputCustom
@@ -373,29 +322,6 @@ export default function SignUp() {
                   label={
                     <Box fontSize={"14px"} fontWeight={400} display={"flex"} alignItems={"baseline"} gap={"5px"}>
                       I agree to the <ForgotPassword>Terms of Service</ForgotPassword>
-                    </Box>
-                  }
-                />
-              </Box>
-              <Box display={"flex"} marginBottom={"10px"}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={checkedSubcribe}
-                      onChange={handleChangeSubcribe}
-                      sx={{
-                        opacity: "0.15",
-                        "&.Mui-checked": {
-                          opacity: "1"
-                        }
-                      }}
-                      size='medium'
-                    />
-                  }
-                  label={
-                    <Box fontSize={"14px"} fontWeight={400} textAlign={"left"}>
-                      I would like to receive the Cardano Explorer newsletter and understand that I can{" "}
-                      <ForgotPassword>unsubcribe</ForgotPassword> at any time
                     </Box>
                   }
                 />
