@@ -23,7 +23,7 @@ const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
   };
 
   return (
-    <Box>
+    <Box data-testid="report-generated-tabs">
       <TabContext value={value}>
         <TabHeader>
           <Tabs>

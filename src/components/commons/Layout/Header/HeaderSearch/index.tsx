@@ -200,7 +200,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback }) => {
 
 export default HeaderSearch;
 
-const OptionsSearch = ({
+export const OptionsSearch = ({
   show,
   home,
   value,

@@ -77,7 +77,7 @@ const PoollUpdates = ({
 };
 export default PoollUpdates;
 
-const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null) => void }) => {
+export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null) => void }) => {
   const { poolId = '', txHash = '' } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
   const [params, setParams] = useState<FilterParams>();
@@ -108,7 +108,7 @@ const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null
       <Box display={'flex'} justifyContent={'space-between'} marginBottom={'10px'}>
         <DescriptionText>Recent Updates</DescriptionText>
         <Box display={'flex'} alignItems={'center'} gap={2}>
-          <WrapFilterDescription>Showing {total} results</WrapFilterDescription>
+          <WrapFilterDescription data-testid="showing">Showing {total} results</WrapFilterDescription>
           <StackingFilter
             filterValue={params}
             onFilterValueChange={(params) => setParams((pre) => ({ ...pre, ...params }))}

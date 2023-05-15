@@ -63,7 +63,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
   if (txHash) return null;
 
   return (
-    <Box marginTop='32px'>
+    <Box marginTop='32px' data-testid="recent-registration">
       <Box display={'flex'} justifyContent={'space-between'} marginBottom={'10px'}>
         <DescriptionText>Registration List</DescriptionText>
         <Box display={'flex'} alignItems={'center'} gap={2}>
