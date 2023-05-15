@@ -150,7 +150,7 @@ const ProtocolParameter: React.FC = () => {
               </Box>
               <Box pt={"30px"}>
                 <Box>
-                  <Box fontWeight={"bold"} fontSize={"1.25rem"}>
+                  <Box textAlign={'left'} fontWeight={"bold"} fontSize={"1.25rem"}>
                     Fixed Parameters
                   </Box>
                   {loadingFixed && (
