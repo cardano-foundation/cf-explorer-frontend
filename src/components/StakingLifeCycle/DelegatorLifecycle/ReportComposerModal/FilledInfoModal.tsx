@@ -188,7 +188,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
               getAriaLabel={() => "Minimum distance"}
               value={epochRange}
               onChange={handleChangeEpochRange}
-              valueLabelDisplay='on'
+              valueLabelDisplay='auto'
               disableSwap
               min={0}
               max={currentEpoch?.no || 0}
