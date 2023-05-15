@@ -1,7 +1,7 @@
 import { Box, Modal, ModalProps } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
-import { CloseButton, ModalContainer, WrapTitle } from "./styles";
 import { useScreen } from "../../../commons/hooks/useScreen";
+import { CloseButton, ModalContainer, WrapTitle } from "./styles";
 
 interface IProps extends ModalProps {
   handleCloseModal: () => void;
@@ -27,7 +27,9 @@ const StyledModal: React.FC<IProps> = ({
       <ModalContainer
         width={width}
         height={height}
-        p={`${paddingY || "50px"} ${paddingX || "40px"}`}
+        paddingX={isMobile ? '10px' : '40px'}
+        paddingY={isMobile ? '20px' : '50px'}
+        // p={`${paddingY || '50px'} ${paddingX || '40px'}`}
         viewwidth={isMobile ? 92 : 70}
       >
         <CloseButton saving={0} onClick={() => handleCloseModal()} data-testid='close-modal-button'>
