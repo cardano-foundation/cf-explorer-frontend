@@ -73,7 +73,6 @@ type TSignOut = {
 };
 
 type TSignUp = {
-  username: string;
   email: string;
   password: string;
   role: string;

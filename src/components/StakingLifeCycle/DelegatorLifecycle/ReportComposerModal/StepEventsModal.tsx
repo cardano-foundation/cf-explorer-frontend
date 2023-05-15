@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
-import { Container } from "../../../Account/ActivityLogModal/styles";
-import StyledModal from "../../../commons/StyledModal";
-import { ButtonEvent, ModalTitle, StyledBackButton, StyledButton, StyledStack, SubText, TextRequired } from "./styles";
+import { get } from "lodash";
 import { useState } from "react";
 import { IPropsModal, STEPS } from ".";
+import { Container } from "../../../Account/ActivityLogModal/styles";
+import StyledModal from "../../../commons/StyledModal";
 import { ReportType } from "./FilledInfoModal";
-import { get } from "lodash";
+import { ButtonEvent, ModalTitle, StyledBackButton, StyledButton, StyledStack, SubText, TextRequired } from "./styles";
 
 export enum RatioGroupValue {
   yes = "YES",
@@ -122,7 +122,7 @@ const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             return (
               <ButtonEvent
                 key={`${label}_${value}`}
-                active={+((value === SELECT_ALL && isAll) || eventsKey.includes(value))}
+                active={Boolean((value === SELECT_ALL && isAll) || eventsKey.includes(value))}
                 onClick={() => handleSelectEvent(value)}
               >
                 {label}

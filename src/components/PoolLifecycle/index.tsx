@@ -12,10 +12,10 @@ import { details } from "../../commons/routers";
 
 // Registration, Deregistration, Protocol Update,...
 export const EVENTS: { [key in keyof IPoolReportList]?: string } = {
-  isDeregistration: "deregistration",
-  isPoolUpdate: "pool_update",
-  isRegistration: "registration",
-  isReward: "reward",
+  eventDeregistration: "deregistration",
+  eventPoolUpdate: "pool_update",
+  eventRegistration: "registration",
+  eventReward: "reward",
   isPoolSize: "poolSize"
 };
 
@@ -27,10 +27,10 @@ export function getPoolEventList(data: IPoolReportList) {
 
 export function getPoolEventType(data: any) {
   const events = {
-    isDeregistration: false,
-    isPoolUpdate: false,
-    isRegistration: false,
-    isReward: false
+    eventDeregistration: false,
+    eventPoolUpdate: false,
+    eventRegistration: false,
+    eventReward: false
   };
   for (const key in events) {
     events[key as keyof typeof events] = data.includes(EVENTS[key as keyof typeof EVENTS]);
