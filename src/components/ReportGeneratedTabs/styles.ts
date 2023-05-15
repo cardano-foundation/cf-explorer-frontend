@@ -1,7 +1,7 @@
 import { TabPanel } from "@mui/lab";
 import { Box, Typography, styled } from "@mui/material";
 
-export const TabLabel = styled(Typography)<{ active: boolean }>(
+export const TabLabel = styled(Typography)<{ active: number }>(
   (props) => `
  font-size: 24px;
     font-weight: 700;
