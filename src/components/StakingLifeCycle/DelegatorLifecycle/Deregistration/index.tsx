@@ -279,7 +279,7 @@ const DeregistrationTimeline = ({
   );
 };
 
-const DeregistrationCertificateModal = ({
+export const DeregistrationCertificateModal = ({
   stake,
   ...props
 }: {
