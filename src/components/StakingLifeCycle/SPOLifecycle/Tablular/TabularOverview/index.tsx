@@ -14,7 +14,7 @@ import {
   WalletGreenIcon
 } from "../../../../../commons/resources";
 import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, formatHash } from "../../../../../commons/utils/helper";
+import { formatADAFull, getShortWallet } from "../../../../../commons/utils/helper";
 import { CardOverview, CardTitle, CardValue, ClickAbleLink, ViewMoreButton, WrapIcon, WrapWalletIcon } from "./styles";
 import { DotsIcon } from "../../../../PoolRegistrationCertificate/styles";
 import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
@@ -126,7 +126,7 @@ const TabularOverview: React.FC = () => {
                 <ClickAbleLink
                   to={details.stake((data?.stakeKeys && data?.stakeKeys.length && data.stakeKeys[0]) || "#")}
                 >
-                  {data?.stakeKeys && data?.stakeKeys.length && formatHash(data.stakeKeys[0])}
+                  {data?.stakeKeys && data?.stakeKeys.length && getShortWallet(data.stakeKeys[0])}
                 </ClickAbleLink>
               </CardValue>
             </Box>
