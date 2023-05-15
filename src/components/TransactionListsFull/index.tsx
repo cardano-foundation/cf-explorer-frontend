@@ -1,21 +1,21 @@
-import { useHistory, useLocation } from "react-router-dom";
-import { stringify } from "qs";
-import { Box } from "@mui/material";
-import Card from "../commons/Card";
-import Table, { Column } from "../commons/Table";
+import { useHistory, useLocation } from 'react-router-dom';
+import { stringify } from 'qs';
+import { Box } from '@mui/material';
+import Card from '../commons/Card';
+import Table, { Column } from '../commons/Table';
 import {
   formatADAFull,
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
   getShortWallet,
-  numberWithCommas,
-} from "../../commons/utils/helper";
-import { details } from "../../commons/routers";
-import { Label, StyledLink, StyledContainer } from "./styles";
-import CustomTooltip from "../commons/CustomTooltip";
-import useFetchList from "../../commons/hooks/useFetchList";
-import ADAicon from "../commons/ADAIcon";
+  numberWithCommas
+} from '../../commons/utils/helper';
+import { details } from '../../commons/routers';
+import { Label, StyledLink, StyledContainer } from './styles';
+import CustomTooltip from '../commons/CustomTooltip';
+import useFetchList from '../../commons/hooks/useFetchList';
+import ADAicon from '../commons/ADAIcon';
 
 interface TransactionListFullProps {
   underline?: boolean;
@@ -30,7 +30,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   url,
   openDetail,
   selected,
-  showTitle = true,
+  showTitle = true
 }) => {
   const { search } = useLocation();
   const history = useHistory();
@@ -44,30 +44,30 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
 
   const columns: Column<Transactions>[] = [
     {
-      title: "#",
-      key: "id",
+      title: '#',
+      key: 'id',
       minWidth: 30,
-      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0),
+      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)
     },
     {
-      title: "Tx Hash",
-      key: "txhash",
+      title: 'Tx Hash',
+      key: 'txhash',
       minWidth: 120,
 
-      render: r => (
+      render: (r) => (
         <div>
           <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
-          <Box mt={1}>{formatDateTimeLocal(r.time || "")}</Box>
+          <Box mt={1}>{formatDateTimeLocal(r.time || '')}</Box>
         </div>
-      ),
+      )
     },
     {
-      title: "Block",
-      key: "block",
+      title: 'Block',
+      key: 'block',
       minWidth: 120,
-      render: r => (
+      render: (r) => (
         <Box>
           <Box>
             <StyledLink to={details.block(r.blockNo || r.blockHash)}>
@@ -78,16 +78,16 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
           </Box>
         </Box>
-      ),
+      )
     },
     {
-      title: "Addresses",
-      key: "address",
+      title: 'Addresses',
+      key: 'address',
       minWidth: 120,
       render(r, index) {
         return (
           <div>
-            <Box display={"flex"}>
+            <Box display={'flex'}>
               <Label> Input: </Label>
               <div>
                 {r.addressesInput.slice(0, 1).map((tx, key) => {
@@ -106,7 +106,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
                 )}
               </div>
             </Box>
-            <Box display={"flex"} mt={1}>
+            <Box display={'flex'} mt={1}>
               <Label>Output: </Label>
               <div>
                 {r.addressesOutput.slice(0, 1).map((tx, key) => {
@@ -127,47 +127,47 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             </Box>
           </div>
         );
-      },
+      }
     },
     {
-      title: "Fee",
-      key: "fee",
+      title: 'Fee',
+      key: 'fee',
       minWidth: 120,
-      render: r => (
-        <Box display="inline-flex" alignItems="center">
+      render: (r) => (
+        <Box display='inline-flex' alignItems='center'>
           <Box mr={1}>{formatADAFull(r.fee)}</Box>
           <ADAicon />
         </Box>
-      ),
+      )
     },
     {
-      title: "Output in ADA",
+      title: 'Output in ADA',
       minWidth: 120,
-      key: "ouput",
-      render: r => (
-        <Box display="inline-flex" alignItems="center">
+      key: 'ouput',
+      render: (r) => (
+        <Box display='inline-flex' alignItems='center'>
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
           <ADAicon />
         </Box>
-      ),
-    },
+      )
+    }
   ];
 
   return (
     <StyledContainer>
-      <Card title={showTitle ? "Transactions" : ""} underline={underline}>
+      <Card title={showTitle ? 'Transactions' : ''} underline={underline}>
         <Table
           {...fetchData}
           columns={columns}
-          total={{ count: fetchData.total, title: "Total Transactions" }}
+          total={{ count: fetchData.total, title: 'Total Transactions' }}
           pagination={{
             ...pageInfo,
             total: fetchData.total,
-            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+            onChange: (page, size) => history.push({ search: stringify({ page, size }) })
           }}
           onClickRow={onClickRow}
           selected={selected}
-          className="transactions-table"
+          className='transactions-table'
         />
       </Card>
     </StyledContainer>

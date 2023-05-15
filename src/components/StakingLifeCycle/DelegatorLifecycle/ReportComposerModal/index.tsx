@@ -1,9 +1,9 @@
-import { Box } from "@mui/material";
-import FilledInfoModal from "./FilledInfoModal";
-import StepTransferModal from "./StepTransferModal";
-import StepEventsModal from "./StepEventsModal";
-import StepReviewModal from "./StepReviewModal";
-import { useCallback, useEffect, useState } from "react";
+import { Box } from '@mui/material';
+import FilledInfoModal from './FilledInfoModal';
+import StepTransferModal from './StepTransferModal';
+import StepEventsModal from './StepEventsModal';
+import StepReviewModal from './StepReviewModal';
+import { useCallback, useEffect, useState } from 'react';
 
 export interface IPropsModal {
   open: boolean;
@@ -17,7 +17,7 @@ export enum STEPS {
   step1 = 1,
   step2 = 2,
   step3 = 3,
-  step4 = 4,
+  step4 = 4
 }
 
 const ReportComposerModal = ({ open, handleCloseModal }: IPropsModal) => {

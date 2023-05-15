@@ -1,15 +1,15 @@
-import React from "react";
-import { alpha, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
-import { Link } from "react-router-dom";
-import styles from "./index.module.scss";
-import infoIcon from "../../../commons/resources/images/infoIcon.svg";
-import blockImg from "../../../commons/resources/images/block.png";
-import slotImg from "../../../commons/resources/images/slot.png";
-import { details } from "../../../commons/routers";
-import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import { Policy } from "../../../commons/resources";
-import { numberWithCommas } from "../../../commons/utils/helper";
-import ProgressCircle from "../ProgressCircle";
+import React from 'react';
+import { alpha, Grid, LinearProgress, Skeleton, styled } from '@mui/material';
+import { Link } from 'react-router-dom';
+import styles from './index.module.scss';
+import infoIcon from '../../../commons/resources/images/infoIcon.svg';
+import blockImg from '../../../commons/resources/images/block.png';
+import slotImg from '../../../commons/resources/images/slot.png';
+import { details } from '../../../commons/routers';
+import { MAX_SLOT_EPOCH } from '../../../commons/utils/constants';
+import { Policy } from '../../../commons/resources';
+import { numberWithCommas } from '../../../commons/utils/helper';
+import ProgressCircle from '../ProgressCircle';
 import {
   CardInfo,
   CardInfoItem,
@@ -29,8 +29,8 @@ import {
   TokenDetailSupply,
   TokenDetailTitle,
   TokenWrapper,
-  Wrapper,
-} from "./styles";
+  Wrapper
+} from './styles';
 
 interface DetailCardProps {
   listDetails: { title?: string; value: React.ReactNode }[];
@@ -60,16 +60,16 @@ const DetailCard: React.FC<DetailCardProps> = ({
   loading,
   joinCard = false,
   tokenDetail,
-  delegationPools,
+  delegationPools
 }) => {
   if (loading) {
     return (
       <Wrapper container spacing={2}>
         <Grid item md={7} xs={12}>
-          <Skeleton style={{ height: 250, borderRadius: 10 }} variant="rectangular" />
+          <Skeleton style={{ height: 250, borderRadius: 10 }} variant='rectangular' />
         </Grid>
         <Grid item md={5} xs={12}>
-          <Skeleton style={{ height: 250, borderRadius: 10 }} variant="rectangular" />
+          <Skeleton style={{ height: 250, borderRadius: 10 }} variant='rectangular' />
         </Grid>
       </Wrapper>
     );
@@ -85,7 +85,7 @@ const DetailCard: React.FC<DetailCardProps> = ({
           <div className={styles.data}>
             <div className={styles.progessInfo}>
               <div className={styles.row}>
-                <img className={styles.img} src={blockImg} alt="Block Icon" />
+                <img className={styles.img} src={blockImg} alt='Block Icon' />
                 <div>
                   <div className={styles.title}>Block</div>
                   <Link className={`${styles.fwBold} ${styles.link}`} to={details.block(progress.block)}>
@@ -94,7 +94,7 @@ const DetailCard: React.FC<DetailCardProps> = ({
                 </div>
               </div>
               <div className={styles.row}>
-                <img className={styles.img} src={slotImg} alt="Slot Icon" />
+                <img className={styles.img} src={slotImg} alt='Slot Icon' />
                 <div>
                   <div className={styles.title}>Slot</div>
                   <div>
@@ -115,21 +115,21 @@ const DetailCard: React.FC<DetailCardProps> = ({
             return (
               <div className={styles.detailItem} key={i}>
                 <div>
-                  <img src={infoIcon} alt="info" className={styles.img} />
+                  <img src={infoIcon} alt='info' className={styles.img} />
                 </div>
                 <div className={styles.row}>
                   <div style={{ minWidth: 100 }}>
-                    {delegationPoolsTitle[k as keyof Required<DetailCardProps>["delegationPools"]] || 0}:
+                    {delegationPoolsTitle[k as keyof Required<DetailCardProps>['delegationPools']] || 0}:
                   </div>
                   <div className={` ${styles.fwBold} ${styles.value}`}>
-                    {delegationPools[k as keyof Required<DetailCardProps>["delegationPools"]] || 0}
+                    {delegationPools[k as keyof Required<DetailCardProps>['delegationPools']] || 0}
                   </div>
                 </div>
               </div>
             );
           })}
           <div className={styles.fullWidth}>
-            <StyledLinearProgress variant="determinate" value={+delegationPools.satulation || 0} />
+            <StyledLinearProgress variant='determinate' value={+delegationPools.satulation || 0} />
           </div>
         </div>
       );
@@ -139,7 +139,7 @@ const DetailCard: React.FC<DetailCardProps> = ({
       return (
         <TokenWrapper>
           <PolicyHeader>
-            <img src={Policy} alt="Policy Script Icon" />
+            <img src={Policy} alt='Policy Script Icon' />
             <h3>Policy Script</h3>
           </PolicyHeader>
           <PolicyBody>
@@ -147,7 +147,7 @@ const DetailCard: React.FC<DetailCardProps> = ({
               <PolicyBodyTitle>WETH</PolicyBodyTitle>
               <PolicyBodyDetail>Wrapped ether bridged through Nomda</PolicyBodyDetail>
             </div>
-            <img src={infoIcon} alt="info" />
+            <img src={infoIcon} alt='info' />
           </PolicyBody>
           <TokenDetail>
             <TokenDetailSupply>
@@ -174,7 +174,7 @@ const DetailCard: React.FC<DetailCardProps> = ({
             <CardInfoItem key={idx}>
               {item.title ? (
                 <>
-                  <InfoIcon src={infoIcon} alt="info" />
+                  <InfoIcon src={infoIcon} alt='info' />
                   <InfoTitle>{item.title}:</InfoTitle>
                   <InfoValue>{item.value}</InfoValue>
                 </>
@@ -195,10 +195,10 @@ const DetailCard: React.FC<DetailCardProps> = ({
 export default DetailCard;
 
 const delegationPoolsTitle = {
-  poolSize: "Pool size",
-  stakeLimit: "Stake limit",
-  delegators: "Delegators",
-  satulation: "Saturation",
+  poolSize: 'Pool size',
+  stakeLimit: 'Stake limit',
+  delegators: 'Delegators',
+  satulation: 'Saturation'
 };
 
 const StyledLinearProgress = styled(LinearProgress)`
@@ -206,10 +206,10 @@ const StyledLinearProgress = styled(LinearProgress)`
   width: 100%;
   height: 10px;
   border-radius: 34px;
-  background: ${props => alpha(props.theme.palette.common.black, 0.1)};
+  background: ${(props) => alpha(props.theme.palette.common.black, 0.1)};
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${props => props.theme.palette.gradient[0]};
+    background: ${(props) => props.theme.palette.gradient[0]};
   }
 `;

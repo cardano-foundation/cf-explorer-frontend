@@ -1,21 +1,21 @@
-import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useLocalStorage } from "react-use";
-import { LinkOff, User2 } from "../../../commons/resources/index";
-import { routers } from "../../../commons/routers";
-import { getShortWallet, removeAuthInfo } from "../../../commons/utils/helper";
-import { signOut } from "../../../commons/utils/userRequest";
-import { Content, Disconnect, Icon, Name, Profile, Span, StyledButton, WrapContent } from "./style";
+import { Box } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useLocalStorage } from 'react-use';
+import { LinkOff, User2 } from '../../../commons/resources/index';
+import { routers } from '../../../commons/routers';
+import { getShortWallet, removeAuthInfo } from '../../../commons/utils/helper';
+import { signOut } from '../../../commons/utils/userRequest';
+import { Content, Disconnect, Icon, Name, Profile, Span, StyledButton, WrapContent } from './style';
 
 interface IProps {
   userData: any;
 }
-const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({userData}) => {
+const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
-  const [, setUsername] = useLocalStorage<string>("username", "");
-  const [user, setUser] = useLocalStorage("persist:user", {});
+  const [, setBookmark] = useLocalStorage<string[]>('bookmark', []);
+  const [, setUsername] = useLocalStorage<string>('username', '');
+  const [user, setUser] = useLocalStorage('persist:user', {});
 
   const history = useHistory();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -27,20 +27,20 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({userData}) => {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? "profile-popover" : undefined;
-
+  const id = open ? 'profile-popover' : undefined;
 
   const handleDisconnect = async () => {
     try {
       await signOut({
-        refreshJwt: localStorage.getItem("refreshToken") || "",
-        username: localStorage.getItem("username") || "",
+        refreshJwt: localStorage.getItem('refreshToken') || '',
+        username: localStorage.getItem('username') || ''
       });
     } catch (error) {
+      //To Do
     } finally {
       removeAuthInfo();
       setBookmark([]);
-      setUsername("");
+      setUsername('');
       setUser({ ...user, userData: {} });
       // window.location.reload();
     }
@@ -48,8 +48,8 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({userData}) => {
 
   return (
     <Box>
-      <StyledButton aria-describedby={id} type="button" onClick={handleClick}>
-        <Span>{(userData.username)}</Span>
+      <StyledButton aria-describedby={id} type='button' onClick={handleClick}>
+        <Span>{userData.username}</Span>
       </StyledButton>
       <WrapContent
         id={id}
@@ -57,12 +57,12 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({userData}) => {
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
+          vertical: 'bottom',
+          horizontal: 'right'
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right'
         }}
       >
         <Content>

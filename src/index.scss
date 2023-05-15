@@ -1,27 +1,27 @@
 @font-face {
-  font-family: "Roboto Bold";
+  font-family: 'Roboto Bold';
   font-style: normal;
   font-weight: 700;
-  src: url(./commons/resources/fonts/Roboto-Bold.ttf) format("ttf");
+  src: url(./commons/resources/fonts/Roboto-Bold.ttf) format('ttf');
 }
 
 @font-face {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
-  src: url(./commons/resources/fonts/Roboto-Regular.ttf) format("ttf");
+  src: url(./commons/resources/fonts/Roboto-Regular.ttf) format('ttf');
 }
 
 @font-face {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: url(./commons/resources/fonts/Roboto-Light.ttf) format("ttf");
+  src: url(./commons/resources/fonts/Roboto-Light.ttf) format('ttf');
 }
 
 :root {
-  --font-family-title: "Roboto Bold", sans-serif;
-  --font-family-text: "Roboto", sans-serif;
+  --font-family-title: 'Roboto Bold', sans-serif;
+  --font-family-text: 'Roboto', sans-serif;
   --font-weight-normal: 400;
   --font-weight-bold: 700;
   --font-size-text: 16px;

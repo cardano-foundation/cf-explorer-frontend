@@ -1,5 +1,5 @@
-import { Box, Skeleton, alpha } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { Box, Skeleton, alpha } from '@mui/material';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   ADAHolderIcon,
@@ -7,15 +7,15 @@ import {
   BackIcon,
   AddressIcon,
   ADAGreen,
-  TimeIcon,
-} from "../../../../commons/resources";
-import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
-import { ReactComponent as PaymentWallet } from "../../../../commons/resources/icons/Staking/paymentWallet.svg";
-import { ReactComponent as RewardWithdraw } from "../../../../commons/resources/icons/Staking/rewardWithdraw.svg";
-import { ReactComponent as WalletIconReward } from "../../../../commons/resources/icons/Staking/walletIconReward.svg";
-import { ReactComponent as WalletIconRewardGreen } from "../../../../commons/resources/icons/Staking/walletIconRewardGreen.svg";
+  TimeIcon
+} from '../../../../commons/resources';
+import cadarnoSystem from '../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg';
+import { ReactComponent as PaymentWallet } from '../../../../commons/resources/icons/Staking/paymentWallet.svg';
+import { ReactComponent as RewardWithdraw } from '../../../../commons/resources/icons/Staking/rewardWithdraw.svg';
+import { ReactComponent as WalletIconReward } from '../../../../commons/resources/icons/Staking/walletIconReward.svg';
+import { ReactComponent as WalletIconRewardGreen } from '../../../../commons/resources/icons/Staking/walletIconRewardGreen.svg';
 
-import Line from "../../../Line";
+import Line from '../../../Line';
 import {
   ADAAmountLabel,
   FeeBox,
@@ -28,24 +28,24 @@ import {
   RewardAccount,
   RewardWallet,
   RoundBox,
-  Withdrawn,
-} from "./styles";
-import ADAicon from "../../../commons/ADAIcon";
-import ArrowDiagram from "../../../ArrowDiagram";
-import RecentWithdraws from "./RecentWithdraws";
-import useFetch from "../../../../commons/hooks/useFetch";
-import { API } from "../../../../commons/utils/api";
-import { useHistory, useParams } from "react-router";
-import { formatADA, formatDateTimeLocal, getShortHash } from "../../../../commons/utils/helper";
-import PopoverStyled from "../../../commons/PopoverStyled";
-import PopupStaking from "../../../commons/PopupStaking";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
-import { details } from "../../../../commons/routers";
+  Withdrawn
+} from './styles';
+import ADAicon from '../../../commons/ADAIcon';
+import ArrowDiagram from '../../../ArrowDiagram';
+import RecentWithdraws from './RecentWithdraws';
+import useFetch from '../../../../commons/hooks/useFetch';
+import { API } from '../../../../commons/utils/api';
+import { useHistory, useParams } from 'react-router';
+import { formatADA, formatDateTimeLocal, getShortHash } from '../../../../commons/utils/helper';
+import PopoverStyled from '../../../commons/PopoverStyled';
+import PopupStaking from '../../../commons/PopupStaking';
+import CustomTooltip from '../../../commons/CustomTooltip';
+import { StyledCopyButton } from '../../SPOLifecycle/Registration/styles';
+import { details } from '../../../../commons/routers';
 
 const Withdraw = ({
   containerPosition,
-  handleResize,
+  handleResize
 }: {
   containerPosition: {
     top?: number;
@@ -91,7 +91,7 @@ const WithdrawTimeline = ({
   containerPosition,
   setSelected,
   handleResize,
-  selected,
+  selected
 }: {
   containerPosition: {
     top?: number;
@@ -101,7 +101,7 @@ const WithdrawTimeline = ({
   selected: WithdrawItem;
   setSelected: (withdraw: WithdrawItem | null) => void;
 }) => {
-  const { stakeId = "" } = useParams<{ stakeId: string }>();
+  const { stakeId = '' } = useParams<{ stakeId: string }>();
   const history = useHistory();
   const { data, loading } = useFetch<WithdrawDetail>(
     selected.txHash && stakeId && API.STAKE_LIFECYCLE.WITHDRAW_DETAIL(stakeId, selected.txHash)
@@ -121,46 +121,46 @@ const WithdrawTimeline = ({
   }, [loading]);
 
   const handleBack = () => {
-    history.push(details.staking(stakeId, "timeline", "withdrawal-history"));
+    history.push(details.staking(stakeId, 'timeline', 'withdrawal-history'));
   };
 
   if (loading) {
     return (
       <Box>
-        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+        <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} mt={1} mb={2}>
           <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
-          <Box display={"flex"}>
+          <Box display={'flex'}>
             <Info>
-              <AddressIcon fill="#438F68" />
-              <Box component={Skeleton} ml={1} variant="rectangular" width={145} height={18} />
+              <AddressIcon fill='#438F68' />
+              <Box component={Skeleton} ml={1} variant='rectangular' width={145} height={18} />
             </Info>
             <Info>
               <ADAGreen />
-              <Box component={Skeleton} ml={1} variant="rectangular" width={60} height={18} />
+              <Box component={Skeleton} ml={1} variant='rectangular' width={60} height={18} />
             </Info>
             <Info>
               <TimeIcon />
-              <Box component={Skeleton} ml={1} variant="rectangular" width={130} height={18} />
+              <Box component={Skeleton} ml={1} variant='rectangular' width={130} height={18} />
             </Info>
           </Box>
         </Box>
-        <Box component={Skeleton} width={"100%"} height={400} variant="rectangular" borderRadius={12} />
+        <Box component={Skeleton} width={'100%'} height={400} variant='rectangular' borderRadius={12} />
       </Box>
     );
   }
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} mt={1} mb={2}>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"}>
+        <Box display={'flex'}>
           <Info>
-            <AddressIcon fill="#438F68" />
+            <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected.txHash}>
-              <InfoText>{getShortHash(selected.txHash || "")}</InfoText>
+              <InfoText>{getShortHash(selected.txHash || '')}</InfoText>
             </CustomTooltip>
             <StyledCopyButton text={selected.txHash} />
           </Info>
@@ -170,24 +170,20 @@ const WithdrawTimeline = ({
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
+            <InfoText>{formatDateTimeLocal(data?.time || '')}</InfoText>
           </Info>
         </Box>
       </Box>
       <Box>
-        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
+        <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} flexWrap={'wrap'}>
           <Box ref={adaHolderRef} width={190} height={215}>
             <ADAHolderIcon />
           </Box>
           <Payment ref={boxWalletRef}>
-            <Box position={"relative"} ref={paymentWalletRef}>
+            <Box position={'relative'} ref={paymentWalletRef}>
               <PaymentWallet />
               <RewardWallet>
-                <Box
-                  component={IconButton}
-                  bgcolor={theme => alpha(theme.palette.common.white, 0.1)}
-                  p={0}
-                >
+                <Box component={IconButton} bgcolor={(theme) => alpha(theme.palette.common.white, 0.1)} p={0}>
                   <WalletIconRewardGreen />
                 </Box>
                 <Box mx={1} fontSize={14}>
@@ -196,20 +192,16 @@ const WithdrawTimeline = ({
                 <ADAicon />
               </RewardWallet>
             </Box>
-            <Box position={"relative"} ref={rewardAccountRef}>
+            <Box position={'relative'} ref={rewardAccountRef}>
               <RewardWithdraw />
               <RewardAccount>
-                <Box
-                  component={IconButton}
-                  bgcolor={theme => alpha(theme.palette.common.white, 0.1)}
-                  p={0}
-                >
+                <Box component={IconButton} bgcolor={(theme) => alpha(theme.palette.common.white, 0.1)} p={0}>
                   <WalletIconReward />
                 </Box>
-                <Box mx={1} color={theme => theme.palette.common.white} fontSize={14}>
+                <Box mx={1} color={(theme) => theme.palette.common.white} fontSize={14}>
                   {formatADA(data?.stakeRewardAvailable || 0)}
                 </Box>
-                <ADAicon color={"white"} fontSize={14} />
+                <ADAicon color={'white'} fontSize={14} />
               </RewardAccount>
             </Box>
           </Payment>
@@ -221,134 +213,134 @@ const WithdrawTimeline = ({
                     <ADAAmountLabel>
                       {data?.amount && data?.fee ? formatADA(data?.amount - data?.fee) : 0}
                     </ADAAmountLabel>
-                    <ADAicon fontSize="18px" />
+                    <ADAicon fontSize='18px' />
                   </Box>
                   <IconButton onClick={() => netAmountRef?.current && handleClick(netAmountRef.current)}>
                     <ButtonListIcon />
                   </IconButton>
                 </NetAmount>
               )}
-              content={<PopupStaking hash={data?.txHash || ""} />}
+              content={<PopupStaking hash={data?.txHash || ''} />}
             />
             <PopoverStyled
               render={({ handleClick }) => (
                 <Withdrawn ref={withdrawnRef}>
                   <Box>
                     <ADAAmountLabel>{formatADA(data?.amount || 0)}</ADAAmountLabel>
-                    <ADAicon fontSize="18px" />
+                    <ADAicon fontSize='18px' />
                   </Box>
                   <IconButton onClick={() => withdrawnRef?.current && handleClick(withdrawnRef.current)}>
                     <ButtonListIcon />
                   </IconButton>
                 </Withdrawn>
               )}
-              content={<PopupStaking hash={data?.txHash || ""} />}
+              content={<PopupStaking hash={data?.txHash || ''} />}
             />
           </RoundBox>
 
           <Box
-            display={"flex"}
-            flexDirection={"column"}
-            justifyContent={"center"}
-            alignItems={"center"}
-            position={"relative"}
+            display={'flex'}
+            flexDirection={'column'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            position={'relative'}
           >
             <PopoverStyled
               render={({ handleClick }) => (
                 <FeeBox ml={1} ref={feesRef}>
-                  <Box ref={feesBrigeRef} width={236} height={71} position={"absolute"} top={"-76px"} left={0}></Box>
+                  <Box ref={feesBrigeRef} width={236} height={71} position={'absolute'} top={'-76px'} left={0}></Box>
                   <Box>
-                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                    <Box component={'span'} fontSize={'18px'} fontWeight={'bold'} mr={1}>
                       {formatADA(data?.fee || 0)}
                     </Box>
-                    <ADAicon fontSize="18px" />
+                    <ADAicon fontSize='18px' />
                   </Box>
                   <IconButton onClick={() => feesRef?.current && handleClick(feesRef.current)}>
                     <ButtonListIcon />
                   </IconButton>
                 </FeeBox>
               )}
-              content={<PopupStaking hash={data?.txHash || ""} />}
+              content={<PopupStaking hash={data?.txHash || ''} />}
             />
           </Box>
 
           <Box width={190} height={215} ref={cadarnoSystemRef}>
-            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
+            <img style={{ marginLeft: '5px' }} src={cadarnoSystem} alt='carrdano' />
           </Box>
 
           <svg
             style={{
-              position: "absolute",
+              position: 'absolute',
               top: 0,
               left: 0,
-              height: "100vh",
-              width: "100vw",
-              zIndex: "-1",
+              height: '100vh',
+              width: '100vw',
+              zIndex: '-1'
             }}
           >
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={adaHolderRef}
               toRef={boxWalletRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
+              pointTo='border'
+              pointFrom='border'
+              orient='vertical'
             />
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={boxWalletRef}
               toRef={withdrawnRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
+              pointTo='border'
+              pointFrom='border'
+              orient='vertical'
               isCentalVertical={false}
             />
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={withdrawnRef}
               toRef={cadarnoSystemRef}
-              pointTo="border"
-              pointFrom="border"
+              pointTo='border'
+              pointFrom='border'
               isCentalHorizontal={false}
-              orient="vertical"
+              orient='vertical'
             />
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={cadarnoSystemRef}
               toRef={feesRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
+              pointTo='border'
+              pointFrom='border'
+              orient='vertical'
               connectToReverse={true}
             />
             <Line
               containerPosition={containerPosition}
               fromRef={feesRef}
               toRef={feesBrigeRef}
-              pointTo="center"
-              pointFrom="border"
-              orient="horizontal"
+              pointTo='center'
+              pointFrom='border'
+              orient='horizontal'
             />
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={feesBrigeRef}
               toRef={netAmountRef}
-              pointTo="border"
+              pointTo='border'
               connectFromReverse={true}
-              pointFrom="center"
+              pointFrom='center'
               connectToReverse={true}
-              orient="vertical"
+              orient='vertical'
             />
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={netAmountRef}
               toRef={boxWalletRef}
-              pointTo="border"
-              pointFrom="border"
+              pointTo='border'
+              pointFrom='border'
               isCentalHorizontal={false}
               connectToReverse={true}
               connectFromReverse={true}
-              orient="vertical"
+              orient='vertical'
             />
           </svg>
         </Box>

@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Box, PaginationRenderItemParams, IconButton, MenuItem, styled, CircularProgress, alpha } from "@mui/material";
-import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
+import React, { useEffect, useMemo, useState } from 'react';
+import { Box, PaginationRenderItemParams, IconButton, MenuItem, styled, CircularProgress, alpha } from '@mui/material';
+import { handleClicktWithoutAnchor, numberWithCommas } from '../../../commons/utils/helper';
 import {
   DownIcon,
   EmptyIcon,
@@ -11,8 +11,8 @@ import {
   StartPage,
   SortTableDown,
   SortTableUp,
-  SortTableUpDown,
-} from "../../../commons/resources";
+  SortTableUpDown
+} from '../../../commons/resources';
 import {
   Empty,
   EmtyImage,
@@ -33,27 +33,27 @@ import {
   TableTitle,
   ShowedResults,
   TableCustomTitle,
-  StyledPagination,
-} from "./styles";
+  StyledPagination
+} from './styles';
 import {
   ColumnType,
   FooterTableProps,
   TableHeaderProps,
   TableProps,
   TableRowProps,
-  TableTopHeaderProps,
-} from "../../../types/table";
-import { useUpdateEffect } from "react-use";
-import { useParams } from "react-router-dom";
-import Filter from "../Filter";
-import { useScreen } from "../../../commons/hooks/useScreen";
+  TableTopHeaderProps
+} from '../../../types/table';
+import { useUpdateEffect } from 'react-use';
+import { useParams } from 'react-router-dom';
+import Filter from '../Filter';
+import { useScreen } from '../../../commons/hooks/useScreen';
 
 type TEmptyRecord = {
   className?: string;
 };
 export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
   <Empty className={className}>
-    <EmtyImage src={EmptyIcon} alt="no data" />
+    <EmtyImage src={EmptyIcon} alt='no data' />
   </Empty>
 );
 
@@ -65,36 +65,36 @@ const TableHeader = <T extends ColumnType>({
   selected = null,
   selectable,
   toggleSelectAll,
-  isSelectAll,
+  isSelectAll
 }: TableHeaderProps<T>) => {
-  const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
-    columnKey: defaultSort ? defaultSort.split(",")[0] : "",
-    sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : "",
+  const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: '' | 'DESC' | 'ASC' }>({
+    columnKey: defaultSort ? defaultSort.split(',')[0] : '',
+    sort: defaultSort ? (defaultSort.split(',')[1] as '' | 'DESC' | 'ASC') : ''
   });
-  const sortValue = ({ key, sort }: { key: string; sort: "" | "DESC" | "ASC" }) => {
+  const sortValue = ({ key, sort }: { key: string; sort: '' | 'DESC' | 'ASC' }) => {
     if (key === columnKey) {
       switch (sort) {
-        case "DESC":
-          setSort({ columnKey: key, sort: "ASC" });
-          return { columnKey: key, sortValue: "ASC" };
-        case "ASC":
-          setSort({ columnKey: key, sort: "" });
-          return { columnKey: key, sortValue: "" };
+        case 'DESC':
+          setSort({ columnKey: key, sort: 'ASC' });
+          return { columnKey: key, sortValue: 'ASC' };
+        case 'ASC':
+          setSort({ columnKey: key, sort: '' });
+          return { columnKey: key, sortValue: '' };
         default: {
-          setSort({ columnKey: key, sort: "DESC" });
-          return { columnKey: key, sortValue: "DESC" };
+          setSort({ columnKey: key, sort: 'DESC' });
+          return { columnKey: key, sortValue: 'DESC' };
         }
       }
     }
-    setSort({ columnKey: key, sort: "DESC" });
-    return { columnKey: key, sortValue: "DESC" };
+    setSort({ columnKey: key, sort: 'DESC' });
+    return { columnKey: key, sortValue: 'DESC' };
   };
-  const IconSort = ({ key, sort }: { key: string; sort: "" | "DESC" | "ASC" }) => {
+  const IconSort = ({ key, sort }: { key: string; sort: '' | 'DESC' | 'ASC' }) => {
     if (key === columnKey)
       switch (sort) {
-        case "DESC":
+        case 'DESC':
           return <SortTableDown />;
-        case "ASC":
+        case 'ASC':
           return <SortTableUp />;
         default: {
           return <SortTableUpDown />;
@@ -107,7 +107,7 @@ const TableHeader = <T extends ColumnType>({
       <tr>
         {selectable && (
           <THeader>
-            <TableCheckBox checked={isSelectAll} onChange={e => toggleSelectAll?.(e.target.checked)} />
+            <TableCheckBox checked={isSelectAll} onChange={(e) => toggleSelectAll?.(e.target.checked)} />
           </THeader>
         )}
         {columns.map((column, idx) => (
@@ -140,13 +140,13 @@ const TableRow = <T extends ColumnType>({
   dataLength,
   selectable,
   toggleSelection,
-  isSelected,
+  isSelected
 }: TableRowProps<T>) => {
   return (
-    <TRow onClick={e => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
+    <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
       {selectable && (
         <TCol>
-          <TableCheckBox checked={isSelected?.(row)} onChange={e => toggleSelection?.(row)} />
+          <TableCheckBox checked={isSelected?.(row)} onChange={(e) => toggleSelection?.(row)} />
         </TCol>
       )}
       {columns.map((column, idx) => {
@@ -163,7 +163,7 @@ const TableRow = <T extends ColumnType>({
       })}
       {showTabView && selected === null && (
         <TCol minWidth={50} maxWidth={90}>
-          <EyeIcon style={{ transform: "scale(.6)" }} />
+          <EyeIcon style={{ transform: 'scale(.6)' }} />
         </TCol>
       )}
     </TRow>
@@ -181,7 +181,7 @@ const TableBody = <T extends ColumnType>({
   initialized,
   selectable,
   toggleSelection,
-  isSelected,
+  isSelected
 }: TableProps<T>) => {
   return (
     <TBody>
@@ -189,15 +189,15 @@ const TableBody = <T extends ColumnType>({
         <tr>
           <td>
             <LoadingWrapper
-              bgcolor={theme => alpha(theme.palette.common.black, 0.05)}
-              width={"100%"}
-              height={"100%"}
+              bgcolor={(theme) => alpha(theme.palette.common.black, 0.05)}
+              width={'100%'}
+              height={'100%'}
               zIndex={1000}
-              display="flex"
-              justifyContent="center"
-              alignItems="self-start"
+              display='flex'
+              justifyContent='center'
+              alignItems='self-start'
             >
-              <Box pt={"20%"}>
+              <Box pt={'20%'}>
                 <CircularProgress />
               </Box>
             </LoadingWrapper>
@@ -238,7 +238,7 @@ const TableSekeleton = () => {
 const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, clearSelection }) => {
   const [page, setPage] = useState(pagination?.page || 1);
   const [size, setSize] = useState(pagination?.size || 50);
-  const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
+  const { poolType } = useParams<{ poolType: 'registration' | 'de-registration' }>();
   const { isMobile } = useScreen();
   useUpdateEffect(() => {
     setPage(1);
@@ -252,11 +252,11 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
 
   return (
     <TFooter>
-      <Box display={"flex"} alignItems="center" margin="15px 0px">
+      <Box display={'flex'} alignItems='center' margin='15px 0px'>
         {pagination?.total && pagination.total > 10 ? (
-          <Box display="flex" alignItems="center">
+          <Box display='flex' alignItems='center'>
             <SelectMui
-              size="small"
+              size='small'
               onChange={(e: any) => {
                 setSize(+e.target.value);
                 setPage(1);
@@ -271,19 +271,19 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
               <MenuItem value={50}>50</MenuItem>
               <MenuItem value={100}>100</MenuItem>
             </SelectMui>
-            <Box component={"span"} ml={1} fontSize="0.875rem">
+            <Box component={'span'} ml={1} fontSize='0.875rem'>
               Per page
             </Box>
           </Box>
         ) : (
-          ""
+          ''
         )}
         {total?.count ? (
-          <Box ml={"20px"} fontSize="0.875rem">
-            <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> {`Result${total.count > 1 ? "s" : ""}`}
+          <Box ml={'20px'} fontSize='0.875rem'>
+            <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> {`Result${total.count > 1 ? 's' : ''}`}
           </Box>
         ) : (
-          ""
+          ''
         )}
       </Box>
       {pagination?.total && pagination.total > 10 ? (
@@ -296,7 +296,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
           loading={loading}
         />
       ) : (
-        ""
+        ''
       )}
     </TFooter>
   );
@@ -326,10 +326,10 @@ const Table: React.FC<TableProps> = ({
   fliterOptions,
   onFilterChange,
   isShowingResult,
-  maxHeight,
+  maxHeight
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
-    onSelectionChange,
+    onSelectionChange
   });
 
   const toggleSelectAll = (isChecked: boolean) => {
@@ -346,10 +346,10 @@ const Table: React.FC<TableProps> = ({
 
   const isSelectAll = useMemo(() => data?.length === selectedItems.length, [data, selectedItems]);
   return (
-    <Box className={className || ""} style={style} data-testid="table-common">
+    <Box className={className || ''} style={style} data-testid="table-common">
       <TableTopHeader
         onFilterChange={onFilterChange}
-        renderAction={items => renderAction?.(items, clearSelection)}
+        renderAction={(items) => renderAction?.(items, clearSelection)}
         title={tableTitle}
         totalShowingResult={isShowingResult && data?.length}
         fliterOptions={fliterOptions}
@@ -399,10 +399,10 @@ const TableTopHeader: React.FC<TableTopHeaderProps> = ({
   title,
   isSelectAll,
   totalShowingResult = 0,
-  onFilterChange,
+  onFilterChange
 }) => (
   <TableHeaderContainer>
-    {typeof title === "string" ? <TableTitle>{title}</TableTitle> : <TableCustomTitle>{title}</TableCustomTitle>}
+    {typeof title === 'string' ? <TableTitle>{title}</TableTitle> : <TableCustomTitle>{title}</TableCustomTitle>}
     {Boolean(totalShowingResult) && <ShowedResults>Showing {totalShowingResult} results</ShowedResults>}
     {fliterOptions && <Filter onOptionChange={onFilterChange} options={fliterOptions} />}
 
@@ -410,7 +410,7 @@ const TableTopHeader: React.FC<TableTopHeaderProps> = ({
   </TableHeaderContainer>
 );
 
-export * from "../../../types/table.d";
+export * from '../../../types/table.d';
 
 export default Table;
 
@@ -420,9 +420,9 @@ const PaginationCustom = ({
   page,
   size,
   handleChangePage,
-  loading,
+  loading
 }: {
-  pagination: TableProps["pagination"];
+  pagination: TableProps['pagination'];
   total: number;
   page: number;
   size: number;
@@ -430,7 +430,7 @@ const PaginationCustom = ({
   handleChangePage: (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => void;
 }) => {
   const [inputPage, setInputPage] = useState(page);
-  const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
+  const { poolType } = useParams<{ poolType: 'registration' | 'de-registration' }>();
 
   useUpdateEffect(() => {
     setInputPage(1);
@@ -444,7 +444,7 @@ const PaginationCustom = ({
 
   const totalPage = Math.ceil((pagination?.total || 0) / size);
   const renderItem = (item: PaginationRenderItemParams) => {
-    if (item.type === "first") {
+    if (item.type === 'first') {
       return (
         <IconButton
           disabled={page === 1 || loading}
@@ -458,7 +458,7 @@ const PaginationCustom = ({
         </IconButton>
       );
     }
-    if (item.type === "last") {
+    if (item.type === 'last') {
       return (
         <IconButton
           disabled={page === totalPage || loading}
@@ -472,7 +472,7 @@ const PaginationCustom = ({
         </IconButton>
       );
     }
-    if (item.type === "next") {
+    if (item.type === 'next') {
       return (
         <IconButton
           disabled={page === totalPage || loading}
@@ -486,7 +486,7 @@ const PaginationCustom = ({
         </IconButton>
       );
     }
-    if (item.type === "previous") {
+    if (item.type === 'previous') {
       return (
         <IconButton
           disabled={page === 1 || loading}
@@ -500,22 +500,22 @@ const PaginationCustom = ({
         </IconButton>
       );
     }
-    if (item.type === "page") {
+    if (item.type === 'page') {
       if (item.page === 1) {
         return (
-          <Box width={isGalaxyFoldSmall ? "100vw" : "auto"} textAlign={isGalaxyFoldSmall ? "left" : "center"}>
+          <Box width={isGalaxyFoldSmall ? '100vw' : 'auto'} textAlign={isGalaxyFoldSmall ? 'left' : 'center'}>
             <InputNumber
-              type={"number"}
+              type={'number'}
               value={inputPage}
               length={inputPage.toString().length || 1}
-              onChange={e => {
+              onChange={(e) => {
                 if (+e.target.value <= totalPage) {
                   setInputPage(+e.target.value);
                 }
               }}
               disabled={loading}
-              onKeyDown={e => {
-                if (e.key === "Enter") {
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
                   if (inputPage < 1) {
                     setInputPage(1);
                   }
@@ -524,9 +524,9 @@ const PaginationCustom = ({
                 }
               }}
             />
-            <Box component={"span"} color={theme => theme.palette.grey[400]} fontSize="0.875rem">
-              {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
-              {numberWithCommas((page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size)} of{" "}
+            <Box component={'span'} color={(theme) => theme.palette.grey[400]} fontSize='0.875rem'>
+              {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{' '}
+              {numberWithCommas((page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size)} of{' '}
               {numberWithCommas(pagination?.total || 0)}
             </Box>
           </Box>
@@ -546,26 +546,26 @@ const PaginationCustom = ({
 };
 
 const StartPageIcon = styled(StartPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
 }));
 const EndPageIcon = styled(EndPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
 }));
 const NextPageIcon = styled(NextPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
 }));
 const PrevPageIcon = styled(PrevPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
 }));
 
 function useSelection<T>({ onSelectionChange }: { onSelectionChange?: (items: T[]) => void }) {
   const [selectedItems, setSelectedItems] = useState<T[]>([]);
   const toggleSelection = (item: T) => {
-    setSelectedItems(prevSelectedItems => {
+    setSelectedItems((prevSelectedItems) => {
       const itemIndex = prevSelectedItems.indexOf(item);
       if (itemIndex >= 0) {
-        onSelectionChange?.(prevSelectedItems.filter(i => i !== item));
-        return prevSelectedItems.filter(i => i !== item);
+        onSelectionChange?.(prevSelectedItems.filter((i) => i !== item));
+        return prevSelectedItems.filter((i) => i !== item);
       }
       onSelectionChange?.([...prevSelectedItems, item]);
       return [...prevSelectedItems, item];
