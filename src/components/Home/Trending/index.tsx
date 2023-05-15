@@ -1,10 +1,8 @@
-import React from "react";
-import TransactionChart from "./TransactionChart";
-import { Grid } from "@mui/material";
+import React from 'react';
+import TransactionChart from './TransactionChart';
+import { Grid } from '@mui/material';
 
-interface Props {}
-
-const HomeTrending: React.FC<Props> = () => {
+const HomeTrending = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>

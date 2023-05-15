@@ -1,10 +1,10 @@
-import { Box, styled } from "@mui/material";
-import { SearchSPOIcon } from "../../commons/resources";
-import { Link } from "react-router-dom";
-import { routers } from "../../commons/routers";
+import { Box, styled } from '@mui/material';
+import { SearchSPOIcon } from '../../commons/resources';
+import { Link } from 'react-router-dom';
+import { routers } from '../../commons/routers';
 
 const SPOSearch = () => {
-  const userName = localStorage.getItem("username");
+  const userName = localStorage.getItem('username');
   return (
     <Box>
       <h2>Welcome to Staking Lifecycle (SPO)</h2>
@@ -19,7 +19,7 @@ const SPOSearch = () => {
 
 export default SPOSearch;
 const LoginBtn = styled(Link)(() => ({
-  fontSize: "1.875rem",
-  textDecoration: "underline !important",
-  cursor: "pointer",
+  fontSize: '1.875rem',
+  textDecoration: 'underline !important',
+  cursor: 'pointer'
 }));

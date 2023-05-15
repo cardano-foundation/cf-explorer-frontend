@@ -41,7 +41,7 @@ export default function FilterButton(props: FilterButtonProps) {
   return (
     <>
       <OutlineButton onClick={handleClick}>
-        <Box marginRight={"5px"} display={"flex"} alignItems={"center"}>
+        <Box marginRight={'5px'} display={'flex'} alignItems={'center'}>
           <FilterIcon />
         </Box>
         Filter
@@ -50,26 +50,26 @@ export default function FilterButton(props: FilterButtonProps) {
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
-        anchorReference="anchorPosition"
+        anchorReference='anchorPosition'
         anchorPosition={{ top: 260, left: 1510 }}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left',
+          horizontal: 'left'
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'left',
+          horizontal: 'left'
         }}
         sx={{
           '& .MuiPopover-paper': {
-            borderRadius: '12px',
+            borderRadius: '12px'
           }
         }}
       >
         <List>
-          {options.map((option: FilterItem) => (
-            <WrapPopoverContent onClick={() => handleOptionClick(option.value)}>
-              <Box marginRight={"5px"} display={"flex"} alignItems={"center"}>
+          {options.map((option: FilterItem, idx) => (
+            <WrapPopoverContent onClick={() => handleOptionClick(option.value)} key={idx}>
+              <Box marginRight={'5px'} display={'flex'} alignItems={'center'}>
                 {option.icon}
               </Box>
               <span>{option.label}</span>

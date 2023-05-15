@@ -1,11 +1,11 @@
-import { Box, Button } from "@mui/material";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import moment from "moment";
-import React, { useEffect, useMemo, useState } from "react";
-import StyledModal from "../commons/StyledModal";
-import { DatePickerFooter, DateRangePickerContainer } from "./styles";
+import { Box, Button } from '@mui/material';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import moment from 'moment';
+import React, { useEffect, useMemo, useState } from 'react';
+import StyledModal from '../commons/StyledModal';
+import { DatePickerFooter, DateRangePickerContainer } from './styles';
 
 export interface DateRange {
   fromDate?: string;
@@ -21,7 +21,7 @@ export interface DateRangeModalProps {
 
 export const DATETIME_PARTTEN = `YYYY/MM/DD HH:mm:ss`;
 
-const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeChange, open,...rest }) => {
+const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeChange, open, ...rest }) => {
   const [value, setValue] = useState<DateRange>();
 
   useEffect(() => {
@@ -30,10 +30,10 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
   }, [rest.value]);
 
   const toLocal = (date?: string) => {
-    return date ? moment.utc(date, DATETIME_PARTTEN).local().format(DATETIME_PARTTEN) : undefined;;
+    return date ? moment.utc(date, DATETIME_PARTTEN).local().format(DATETIME_PARTTEN) : undefined;
   };
 
-  const toMoment = (date?: string) => date ? moment(date, DATETIME_PARTTEN) : null;
+  const toMoment = (date?: string) => (date ? moment(date, DATETIME_PARTTEN) : null);
 
   const onSubmit = () => {
     onDateRangeChange({ fromDate: value?.fromDate, toDate: value?.toDate });
@@ -41,32 +41,34 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
   };
 
   const isValid = useMemo(() => {
-    if(!(value?.fromDate && value?.toDate)){
+    if (!(value?.fromDate && value?.toDate)) {
       return true;
     }
-    return moment(value.fromDate).diff(moment(value.toDate).toDate()) > 0
-  }, [value])
+    return moment(value.fromDate).diff(moment(value.toDate).toDate()) > 0;
+  }, [value]);
   return (
     <StyledModal open={open} handleCloseModal={() => onClose?.()}>
       <LocalizationProvider dateAdapter={AdapterMoment}>
         <DateRangePickerContainer>
           <DatePicker
             value={toMoment(value?.fromDate)}
-            onChange={mDate => setValue(pre => {
-              return ({ ...pre, fromDate: mDate?.format('YYYY/MM/DD HH:mm:ss') })
-            })}
+            onChange={(mDate) =>
+              setValue((pre) => {
+                return { ...pre, fromDate: mDate?.format('YYYY/MM/DD HH:mm:ss') };
+              })
+            }
           />
           <Box>-</Box>
           <DatePicker
             value={toMoment(value?.toDate)}
-            onChange={mDate => setValue(pre => ({ ...pre, toDate: mDate?.format('YYYY/MM/DD 23:59:59') }))}
+            onChange={(mDate) => setValue((pre) => ({ ...pre, toDate: mDate?.format('YYYY/MM/DD 23:59:59') }))}
           />
         </DateRangePickerContainer>
         <DatePickerFooter>
-          <Button disabled={isValid} variant="contained" onClick={onSubmit}>
+          <Button disabled={isValid} variant='contained' onClick={onSubmit}>
             OK
           </Button>
-          <Button variant="outlined" onClick={() => onClose?.()}>
+          <Button variant='outlined' onClick={() => onClose?.()}>
             Cancel
           </Button>
         </DatePickerFooter>

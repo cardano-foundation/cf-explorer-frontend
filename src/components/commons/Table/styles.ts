@@ -1,5 +1,5 @@
-import { Box, Checkbox, alpha, Select, Typography, styled, Pagination } from "@mui/material";
-import CustomSelect from "../CustomSelect";
+import { Box, Checkbox, alpha, Select, Typography, styled, Pagination } from '@mui/material';
+import CustomSelect from '../CustomSelect';
 
 export const Empty = styled(Box)`
   text-align: center;
@@ -9,7 +9,7 @@ export const Empty = styled(Box)`
   border-bottom-right-radius: 10px;
 `;
 
-export const EmtyImage = styled("img")`
+export const EmtyImage = styled('img')`
   width: auto;
   height: 214px;
 `;
@@ -19,65 +19,65 @@ export const Error = styled(Box)`
   padding: 0 0 30px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  color: ${props => props.theme.palette.text.hint};
+  color: ${(props) => props.theme.palette.text.hint};
   font-size: var(--font-size-text-x-large);
 `;
 
-export const THead = styled("thead")(({ theme }) => ({
-  paddingBottom: "10px",
-  [theme.breakpoints.down("sm")]: {
-    "& tr th": {
-      padding: "15px",
-    },
-  },
+export const THead = styled('thead')(({ theme }) => ({
+  paddingBottom: '10px',
+  [theme.breakpoints.down('sm')]: {
+    '& tr th': {
+      padding: '15px'
+    }
+  }
 }));
 
-export const THeader = styled("th")`
+export const THeader = styled('th')`
   text-align: left;
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-text-small);
-  border-bottom: 1px solid ${props => props.theme.palette.border.main};
+  border-bottom: 1px solid ${(props) => props.theme.palette.border.main};
   padding: 20px;
-  color: ${props => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.grey[300]};
   position: sticky;
   top: 0;
   background-color: #fff;
   z-index: 2;
 `;
 
-export const TRow = styled("tr")<{ selected?: number }>`
+export const TRow = styled('tr')<{ selected?: number }>`
   width: 100%;
   padding: 10px 0;
   font-size: 14px;
   cursor: pointer;
   position: relative;
-  background-color: ${({ selected, theme }) => (selected ? theme.palette.background.neutral : "transparent")};
+  background-color: ${({ selected, theme }) => (selected ? theme.palette.background.neutral : 'transparent')};
   &:hover {
     border-radius: 10px;
     background-color: ${({ theme }) => theme.palette.background.neutral};
   }
 `;
 
-export const TCol = styled("td")<{
+export const TCol = styled('td')<{
   width?: number | string;
   minWidth?: number | string;
   maxWidth?: number | string;
   hiddenBorder?: boolean;
 }>`
-  border-bottom: ${({ hiddenBorder, theme }) => (hiddenBorder ? "none" : `1px solid ${theme.palette.grey[200]}`)};
-  width: ${({ width }) => (typeof width === "number" ? `${width}px` : width || "max-content")};
-  min-width: ${({ minWidth }) => (typeof minWidth === "number" ? `${minWidth}px` : minWidth || "80px")};
-  max-width: ${({ maxWidth }) => (typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth || "unset")};
+  border-bottom: ${({ hiddenBorder, theme }) => (hiddenBorder ? 'none' : `1px solid ${theme.palette.grey[200]}`)};
+  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width || 'max-content')};
+  min-width: ${({ minWidth }) => (typeof minWidth === 'number' ? `${minWidth}px` : minWidth || '80px')};
+  max-width: ${({ maxWidth }) => (typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth || 'unset')};
   text-overflow: ellipsis;
   overflow: hidden;
   text-align: left;
   font-family: var(--font-family-text);
-  color: ${props => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.text.primary};
   padding: 24px 20px;
 `;
 
-export const TBody = styled("tbody")`
+export const TBody = styled('tbody')`
   position: relative;
 `;
 export const LoadingWrapper = styled(Box)`
@@ -88,21 +88,21 @@ export const LoadingWrapper = styled(Box)`
 `;
 
 export const TFooter = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "baseline",
-  flexWrap: "wrap",
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'baseline',
+  flexWrap: 'wrap',
   color: theme.palette.grey[400],
-  [theme.breakpoints.down("sm")]: {
-    justifyContent: "flex-start",
-    flexDirection: "column",
-  },
+  [theme.breakpoints.down('sm')]: {
+    justifyContent: 'flex-start',
+    flexDirection: 'column'
+  }
 }));
 
 export const Total = styled(Box)``;
 
-export const TotalNumber = styled("span")`
-  color: ${props => props.theme.palette.text.primary};
+export const TotalNumber = styled('span')`
+  color: ${(props) => props.theme.palette.text.primary};
   font-weight: 500;
 `;
 
@@ -115,7 +115,7 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string }>(
   border-radius: ${theme.spacing(1.5)};
   box-shadow: 0 0.5rem 1.2rem rgba(82, 85, 92, 0.15);
   border: 1px solid ${alpha(theme.palette.common.black, 0.1)};
-  ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
+  ${maxHeight ? 'max-height:' + (typeof maxHeight === 'number' ? maxHeight + 'px' : maxHeight) : ''};
 
   @media screen and (max-width: ${theme.breakpoints.values.sm}px) {
     padding: 0;
@@ -123,43 +123,43 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string }>(
 `
 );
 
-export const TableFullWidth = styled("table")`
+export const TableFullWidth = styled('table')`
   border-collapse: separate;
   border-spacing: 0;
   min-width: 100%;
   width: max-content;
 `;
 
-export const InputNumber = styled("input")<{ length: number }>(({ theme, length }) => ({
-  width: length + "ch !important",
+export const InputNumber = styled('input')<{ length: number }>(({ theme, length }) => ({
+  width: length + 'ch !important',
   padding: `4px ${theme?.spacing(1)}`,
   marginRight: theme?.spacing(1),
   borderRadius: 4,
-  textAlign: "center",
-  fontWeight: "bold",
+  textAlign: 'center',
+  fontWeight: 'bold',
   border: `1px solid ${theme.palette.border.main}`,
-  "::-webkit-inner-spin-button": {
-    appearance: "none",
-    margin: 0,
+  '::-webkit-inner-spin-button': {
+    appearance: 'none',
+    margin: 0
   },
-  background: "transparent",
+  background: 'transparent'
 }));
 
 export const SelectMui = styled(CustomSelect)(({ theme }) => ({
-  borderRadius: "4px",
+  borderRadius: '4px',
   fontSize: 14,
   minWidth: 50,
-  border: "1px solid #E3E5E9",
-  "& > div": {
-    padding: "2.45px 14px",
+  border: '1px solid #E3E5E9',
+  '& > div': {
+    padding: '2.45px 14px'
   },
-  "& > fieldset": {
-    top: 2,
+  '& > fieldset': {
+    top: 2
   },
-  background: "transparent",
-  "& >svg": {
-    top: "calc(50% - 9px)",
-  },
+  background: 'transparent',
+  '& >svg': {
+    top: 'calc(50% - 9px)'
+  }
 }));
 
 export const TableCheckBox = styled(Checkbox)`
@@ -195,9 +195,9 @@ export const TableCustomTitle = styled(Box)`
 `;
 
 export const StyledPagination = styled(Pagination)(({ theme }) => ({
-  "ul li > button": {
+  'ul li > button': {
     width: 24,
     height: 24,
-    padding: 0,
-  },
+    padding: 0
+  }
 }));

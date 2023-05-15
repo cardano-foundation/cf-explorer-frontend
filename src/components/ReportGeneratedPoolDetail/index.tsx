@@ -1,19 +1,19 @@
-import React, { useMemo, createContext } from "react";
-import { DeredistrationIcon, OperatorRewardIcon, PoolUpdateIcon, RegistrationIcon } from "../../commons/resources";
-import { ReactComponent as WalletIcon } from "../../commons/resources/icons/WalletOutline.svg";
+import React, { useMemo, createContext } from 'react';
+import { DeredistrationIcon, OperatorRewardIcon, PoolUpdateIcon, RegistrationIcon } from '../../commons/resources';
+import { ReactComponent as WalletIcon } from '../../commons/resources/icons/WalletOutline.svg';
 
-import StakeTab from "../TabularView/StakeTab";
+import StakeTab from '../TabularView/StakeTab';
 
-import DeregsitrationTab from "./PoolTabs/DeregsitrationTab";
-import PoolRegistrationTab from "./PoolTabs/PoolRegistrationTab";
-import ProtocolUpdateTab from "./PoolTabs/ProtocolUpdateTab";
-import RewardsDistributionTab from "./PoolTabs/RewardsDistributionTab";
-import { useParams } from "react-router-dom";
-import useFetch from "../../commons/hooks/useFetch";
-import { API } from "../../commons/utils/api";
-import PoolSizeTab from "./PoolTabs/PoolSizeTab";
-import { SkeletonUI } from "../TokenDetail/TokenAnalytics/styles";
-import { getPoolEventList } from "../PoolLifecycle";
+import DeregsitrationTab from './PoolTabs/DeregsitrationTab';
+import PoolRegistrationTab from './PoolTabs/PoolRegistrationTab';
+import ProtocolUpdateTab from './PoolTabs/ProtocolUpdateTab';
+import RewardsDistributionTab from './PoolTabs/RewardsDistributionTab';
+import { useParams } from 'react-router-dom';
+import useFetch from '../../commons/hooks/useFetch';
+import { API } from '../../commons/utils/api';
+import PoolSizeTab from './PoolTabs/PoolSizeTab';
+import { SkeletonUI } from '../TokenDetail/TokenAnalytics/styles';
+import { getPoolEventList } from '../PoolLifecycle';
 
 interface ITab {
   icon: React.FC;
@@ -23,37 +23,37 @@ interface ITab {
   component: React.ReactNode;
 }
 
-export const ReportGeneratedPoolDetailContext = createContext({ reportName: "",poolId: "" });
+export const ReportGeneratedPoolDetailContext = createContext({ reportName: '', poolId: '' });
 
 const poolTabs: ITab[] = [
   {
     icon: RegistrationIcon,
-    label: "Pool Registration",
-    key: "registration",
-    mappingKey: "registration",
-    component: <PoolRegistrationTab />,
+    label: 'Pool Registration',
+    key: 'registration',
+    mappingKey: 'registration',
+    component: <PoolRegistrationTab />
   },
   {
     icon: PoolUpdateIcon,
-    label: "Pool Update",
-    key: "poolupdate",
-    mappingKey: "pool_update",
-    component: <ProtocolUpdateTab />,
+    label: 'Pool Update',
+    key: 'poolupdate',
+    mappingKey: 'pool_update',
+    component: <ProtocolUpdateTab />
   },
   {
     icon: OperatorRewardIcon,
-    label: "Rewards Distribution",
-    key: "reward",
-    mappingKey: "reward",
-    component: <RewardsDistributionTab />,
+    label: 'Rewards Distribution',
+    key: 'reward',
+    mappingKey: 'reward',
+    component: <RewardsDistributionTab />
   },
   {
     icon: DeredistrationIcon,
-    label: "Deregsitration",
-    key: "deregistration",
-    mappingKey: "deregistration",
-    component: <DeregsitrationTab />,
-  },
+    label: 'Deregsitration',
+    key: 'deregistration',
+    mappingKey: 'deregistration',
+    component: <DeregsitrationTab />
+  }
 ];
 
 const ReportGeneratedPoolDetailTabs = () => {
@@ -72,25 +72,25 @@ const ReportGeneratedPoolDetailTabs = () => {
       ...poolTabs,
       {
         icon: WalletIcon,
-        label: "Pool size",
-        key: "poolSize",
-        mappingKey: "poolSize",
-        component: <PoolSizeTab />,
-      },
+        label: 'Pool size',
+        key: 'poolSize',
+        mappingKey: 'poolSize',
+        component: <PoolSizeTab />
+      }
     ];
 
-    if (events.includes("all")) return tabs;
-    return tabs.filter(tab => events.includes(tab.mappingKey));
+    if (events.includes('all')) return tabs;
+    return tabs.filter((tab) => events.includes(tab.mappingKey));
   }, [events]);
 
   const initTab = useMemo(() => (displayedTabs.length ? displayedTabs[0].key : undefined), [displayedTabs]);
 
   return (
     <ReportGeneratedPoolDetailContext.Provider
-      value={{ reportName: reportDetail.data?.reportName ?? "", poolId: reportDetail.data?.poolView ?? "" }}
+      value={{ reportName: reportDetail.data?.reportName ?? '', poolId: reportDetail.data?.poolView ?? '' }}
     >
       {reportDetail.loading ? (
-        <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
+        <SkeletonUI variant='rectangular' style={{ height: '400px' }} />
       ) : (
         <StakeTab tabs={displayedTabs} initTab={initTab} />
       )}
