@@ -9,8 +9,9 @@ import {
   StyledLabel,
   StyledSelect,
   StyledStack,
+  TextWarning,
   TextError,
-  TextWarning
+  StyledSlider
 } from "./styles";
 
 import { Box, MenuItem, Slider } from "@mui/material";
@@ -185,7 +186,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
         {reportType === ReportType.PoolReport && (
           <Box sx={{ marginBottom: "20px" }}>
             <StyledLabel>Select a epoch range</StyledLabel>
-            <Slider
+            <StyledSlider
               getAriaLabel={() => "Minimum distance"}
               value={epochRange}
               onChange={handleChangeEpochRange}
