@@ -24,13 +24,13 @@ const OverviewStaking: React.FC<Props> = ({ item, ...props }) => {
   const { hash, amount, time, onClick } = props;
 
   return (
-    <Card onClick={() => onClick(item)}>
+    <Card onClick={() => onClick(item)} data-testid='overview-staking'>
       <Box display={"flex"}>
         <OverviewIcon>
           <CustomIcon icon={HashtagIcon} width={17} fill='currentColor' color={(theme) => theme.palette.primary.main} />
         </OverviewIcon>
         <Box marginLeft={"10px"}>
-          <OverviewTitle>{getShortHash(hash)}</OverviewTitle>
+          <OverviewTitle data-testid='overview-staking-hash'>{getShortHash(hash)}</OverviewTitle>
         </Box>
       </Box>
       <Box display={"flex"}>
@@ -38,7 +38,7 @@ const OverviewStaking: React.FC<Props> = ({ item, ...props }) => {
           <CustomIcon icon={AIconGreen} height={17} fill='currentColor' color={(theme) => theme.palette.primary.main} />
         </OverviewIcon>
         <Box marginLeft={"10px"}>
-          <OverviewTitle>{formatADAFull(amount)}</OverviewTitle>
+          <OverviewTitle data-testid='overview-staking-amount'>{formatADAFull(amount)}</OverviewTitle>
         </Box>
       </Box>
       <Box display={"flex"}>
@@ -46,7 +46,7 @@ const OverviewStaking: React.FC<Props> = ({ item, ...props }) => {
           <CustomIcon icon={TimerIcon} width={17} fill='currentColor' color={(theme) => theme.palette.primary.main} />
         </OverviewIcon>
         <Box marginLeft={"10px"}>
-          <OverviewTitle>{formatDateTimeLocal(time)}</OverviewTitle>
+          <OverviewTitle data-testid='overview-staking-time'>{formatDateTimeLocal(time)}</OverviewTitle>
         </Box>
       </Box>
     </Card>

@@ -346,7 +346,7 @@ const Table: React.FC<TableProps> = ({
 
   const isSelectAll = useMemo(() => data?.length === selectedItems.length, [data, selectedItems]);
   return (
-    <Box className={className || ""} style={style}>
+    <Box className={className || ""} style={style} data-testid='table-common'>
       <TableTopHeader
         onFilterChange={onFilterChange}
         renderAction={(items) => renderAction?.(items, clearSelection)}

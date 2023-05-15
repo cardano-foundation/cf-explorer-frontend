@@ -24,16 +24,11 @@ import defaultAxios from "../../../../commons/utils/axios";
 import { API } from "../../../../commons/utils/api";
 
 export enum ReportType {
-  ChooseReport = "CHOOSE_REPORT",
   PoolReport = "POOL_REPORT",
   StakeKeyReport = "STAKE_KEY_REPORT"
 }
 
 const options = [
-  {
-    value: ReportType.ChooseReport,
-    label: "Choose report"
-  },
   {
     value: ReportType.PoolReport,
     label: "Pool report"
@@ -49,7 +44,7 @@ type IEpochRange = [number, number];
 const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, saveParams, gotoStep }) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
 
-  const [reportType, setReportType] = useState<ReportType>(ReportType.ChooseReport);
+  const [reportType, setReportType] = useState<ReportType>(ReportType.PoolReport);
   const [address, setAddress] = useState<string>("");
   const [dateRange, setDateRange] = useState<IDateRange>([null, null]);
   const [reportName, setReportName] = useState<string>("");
@@ -76,24 +71,22 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   const isDisabledButton = useMemo(() => {
     if (error || loading) return true;
     const [startDate, endDate] = dateRange;
-    if (reportType === ReportType.ChooseReport) return true;
-
     if (reportType === ReportType.StakeKeyReport) {
       return !address?.trim() || !startDate || !endDate;
     } else {
       return !address?.trim();
     }
-  }, [address, dateRange, reportType, error]);
+  }, [address, dateRange, reportType, error, loading]);
 
   let isShowTextWarning = true;
-  let placeholderAddress = "Address details";
+  let placeholderAddress = "Pool ID";
   switch (reportType) {
     case "POOL_REPORT":
       isShowTextWarning = false;
       break;
     case "STAKE_KEY_REPORT":
       isShowTextWarning = false;
-      placeholderAddress = "Stake key";
+      placeholderAddress = "Stake address";
       break;
     default:
       isShowTextWarning = true;
@@ -104,7 +97,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     if (reportType === ReportType.PoolReport) {
       try {
         const res = await defaultAxios.get(`${API.DELEGATION.POOL_DETAIL_HEADER}/${address}`);
-        if (!res.data) throw {};
+        if (!res.data) throw Error();
       } catch (error) {
         setError("No pool found");
         return setLoading(false);
@@ -113,7 +106,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     if (reportType === ReportType.StakeKeyReport) {
       try {
         const res = await defaultAxios.get(`${API.STAKE.DETAIL}/${address}`);
-        if (!res.data) throw {};
+        if (!res.data) throw Error();
       } catch (error) {
         setError("No stake key found");
         return setLoading(false);

@@ -39,10 +39,13 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       // eslint-disable-next-line no-unsafe-optional-chaining
       const [start, end] = step1?.dateRange;
 
-      const defaultReportName = `Report_stake_${step1.address}_${step1}_${moment(start).format("MM/DD/yyyy")}_${moment(
+      let defaultReportName = `Report_stake_${step1.address}_${step1}_${moment(start).format("MM/DD/yyyy")}_${moment(
         end
       ).format("MM/DD/yyyy")}`;
       if (isPoolReport) {
+        defaultReportName = `Report_pool_${step1.address}_${step1}_${moment(start).format("MM/DD/yyyy")}_${moment(
+          end
+        ).format("MM/DD/yyyy")}`;
         const paramsStakeKeyReport = {
           ...getPoolEventType(step3?.eventsKey),
           poolId: step1.address,
@@ -97,7 +100,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       label: isPoolReport ? "Epoch range" : "Date range",
       value: isPoolReport
         ? `Epoch ${epochStart} -  Epoch ${epochEnd}`
-        : `${moment(start).format("d MM yy")} - ${moment(end).format("d MM yy")}`,
+        : `${moment(start).format("DD MM yy")} - ${moment(end).format("DD MM yy")}`,
       step: STEPS.step1
     },
     {
@@ -121,7 +124,6 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       step: STEPS.step3
     }
   ];
-
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
       <Container p={"10px 10px 1px 20px"}>

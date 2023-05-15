@@ -17,14 +17,6 @@ const LoginButton = () => {
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
 
-  // useEffect(() => {
-  //   window.onbeforeunload = function () {
-  //     if (!localStorage.getItem("token")) {
-  //       disconnect();
-  //       removeAuthInfo();
-  //     }
-  //   };
-  // }, []);
   const handleClick = () => {
     history.push(routers.SIGN_IN);
   };
