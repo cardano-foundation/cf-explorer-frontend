@@ -18,4 +18,7 @@ export const TabHeader = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  & .MuiTabs-indicator{
+    height: 4px;
+  }
 `;
