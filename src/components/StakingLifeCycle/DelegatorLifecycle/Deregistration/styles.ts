@@ -1,7 +1,6 @@
 import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
-  width: "200px",
   height: "35px",
   display: "flex",
   alignItems: "center",
@@ -28,7 +27,6 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   },
 }));
 export const FeeBox = styled(Box)(({ theme }) => ({
-  width: "200px",
   height: "35px",
   display: "flex",
   alignItems: "center",

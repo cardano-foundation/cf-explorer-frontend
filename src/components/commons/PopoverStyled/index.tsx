@@ -48,7 +48,7 @@ const PopoverStyled = (props: Props) => {
               backgroundColor: "white",
               content: '""',
               display: "block",
-              position: "absolute",
+              position: "unset",
               width: 12,
               height: 12,
               bottom: -6,
