@@ -1,4 +1,4 @@
-import { Box, Button, Typography, styled } from '@mui/material';
+import { Box, Button, Typography, styled } from "@mui/material";
 
 export const CardOverview = styled(Box)`
   background: white;
@@ -20,14 +20,14 @@ export const CardOverview = styled(Box)`
 export const WrapIcon = styled(Box)(() => ({
   width: 95,
   marginRight: 12,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-start'
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-start"
 }));
 
 export const CardTitle = styled(Typography)(({ theme }) => ({
   fontWeight: theme.typography.fontWeightBold,
-  fontSize: '1rem',
+  fontSize: "1rem",
   color: theme.palette.grey[400],
   marginBottom: 4
 }));
@@ -40,14 +40,14 @@ export const CardValue = styled(Typography)(({ theme }) => ({
 
 export const TransferButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.main,
-  color: 'var(--text-color-reverse)',
+  color: "var(--text-color-reverse)",
   fontSize: 14,
   fontWeight: theme.typography.fontWeightBold,
-  padding: '0 16px',
+  padding: "0 16px",
   height: 38,
   borderRadius: 8,
-  textTransform: 'unset',
-  boxShadow: 'none'
+  textTransform: "unset",
+  boxShadow: "none"
 }));
 
 export const WrapWalletIcon = styled(Box)`

@@ -21,7 +21,7 @@ interface WalletAddress {
 }
 
 interface WalletStake {
-  status: 'ACTIVE' | 'INACTIVE ';
+  status: "ACTIVE" | "INACTIVE ";
   stakeAddress: string;
   totalStake: number;
   rewardAvailable: number;

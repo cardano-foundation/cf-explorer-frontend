@@ -1,8 +1,8 @@
-import React from 'react';
-import { CgArrowsExchange, CgClose } from 'react-icons/cg';
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from '../../../commons/utils/constants';
-import { CubeIcon, RocketIcon } from '../../../commons/resources';
-import ProgressCircle from '../ProgressCircle';
+import React from "react";
+import { CgArrowsExchange, CgClose } from "react-icons/cg";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { CubeIcon, RocketIcon } from "../../../commons/resources";
+import ProgressCircle from "../ProgressCircle";
 import {
   CloseButton,
   EpochNumber,
@@ -32,19 +32,19 @@ import {
   ViewDetailHeader,
   ConfirmStatus,
   ViewDetailScroll
-} from './styles';
-import useFetch from '../../../commons/hooks/useFetch';
-import { BiChevronRight } from 'react-icons/bi';
-import { details } from '../../../commons/routers';
-import { formatADAFull, formatDateTimeLocal, getShortHash } from '../../../commons/utils/helper';
-import ViewMoreButton from '../ViewMoreButton';
-import CustomTooltip from '../CustomTooltip';
-import CopyButton from '../CopyButton';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../stores/types';
-import { API } from '../../../commons/utils/api';
-import ViewAllButton from '../ViewAllButton';
-import ADAicon from '../ADAIcon';
+} from "./styles";
+import useFetch from "../../../commons/hooks/useFetch";
+import { BiChevronRight } from "react-icons/bi";
+import { details } from "../../../commons/routers";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../commons/utils/helper";
+import ViewMoreButton from "../ViewMoreButton";
+import CustomTooltip from "../CustomTooltip";
+import CopyButton from "../CopyButton";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../stores/types";
+import { API } from "../../../commons/utils/api";
+import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
 
 type DetailViewBlockProps = {
   blockNo: number | string;
@@ -160,7 +160,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
               percent={data.epochNo === currentEpoch?.no ? ((data.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100 : 100}
               trailOpacity={1}
             >
-              <EpochNumber>{data.epochNo !== null ? data.epochNo : '_'}</EpochNumber>
+              <EpochNumber>{data.epochNo !== null ? data.epochNo : "_"}</EpochNumber>
               <EpochText>Epoch</EpochText>
             </ProgressCircle>
           </HeaderContainer>
@@ -168,7 +168,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
             <Item>
               <Icon src={CubeIcon} alt='socket' />
               <ItemName>Block</ItemName>
-              <ItemValue>{data.blockNo !== null ? data.blockNo : '_'}</ItemValue>
+              <ItemValue>{data.blockNo !== null ? data.blockNo : "_"}</ItemValue>
             </Item>
             <Item>
               <Icon src={RocketIcon} alt='socket' />
@@ -191,7 +191,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Created At</DetailLabel>
-              <DetailValue>{formatDateTimeLocal(data.time || '')}</DetailValue>
+              <DetailValue>{formatDateTimeLocal(data.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Confirmation</DetailLabel>

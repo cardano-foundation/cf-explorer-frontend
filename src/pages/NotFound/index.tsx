@@ -1,8 +1,8 @@
-import { Container, styled } from '@mui/material';
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { NotFoundIcon } from '../../commons/resources';
-import { routers } from '../../commons/routers';
+import { Container, styled } from "@mui/material";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { NotFoundIcon } from "../../commons/resources";
+import { routers } from "../../commons/routers";
 
 const NotFoundContainer = styled(Container)`
   display: flex;
@@ -12,13 +12,13 @@ const NotFoundContainer = styled(Container)`
   padding: 120px 0px;
 `;
 
-const Image = styled('img')`
+const Image = styled("img")`
   width: 100%;
   max-width: 250px;
   margin-bottom: 2rem;
 `;
 
-const Title = styled('h3')`
+const Title = styled("h3")`
   color: ${(props) => props.theme.palette.grey[400]};
   margin-bottom: 2rem;
   font-weight: var(--font-weight-normal);

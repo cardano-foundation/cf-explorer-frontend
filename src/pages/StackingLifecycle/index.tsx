@@ -1,63 +1,63 @@
-import React, { useState } from 'react';
-import DashboardCard from '../../components/DashboardCard';
-import { Status, GridContainer, TextHeadline, TitleHead, FilterHead, WrapReportName } from './styles';
-import Table, { Column } from '../../components/commons/Table';
-import { FilterIC, PersionalSettingIC, ScanQRCodeIC, ListOfReportsIC, WatchlistIC } from '../../commons/resources';
-import { Box, Button, CircularProgress, Container, Grid } from '@mui/material';
-import { details, routers } from '../../commons/routers';
-import useFetchList from '../../commons/hooks/useFetchList';
-import { API } from '../../commons/utils/api';
-import { defaultAxiosDownload } from '../../commons/utils/axios';
-import { WrapFilterDescription } from '../../components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles';
-import FilterReport from '../../components/FilterReport';
-import { useHistory } from 'react-router-dom';
-import { useScreen } from '../../commons/hooks/useScreen';
-import { formatDateTimeLocal } from '../../commons/utils/helper';
+import React, { useState } from "react";
+import DashboardCard from "../../components/DashboardCard";
+import { Status, GridContainer, TextHeadline, TitleHead, FilterHead, WrapReportName } from "./styles";
+import Table, { Column } from "../../components/commons/Table";
+import { FilterIC, PersionalSettingIC, ScanQRCodeIC, ListOfReportsIC, WatchlistIC } from "../../commons/resources";
+import { Box, Button, CircularProgress, Container, Grid } from "@mui/material";
+import { details, routers } from "../../commons/routers";
+import useFetchList from "../../commons/hooks/useFetchList";
+import { API } from "../../commons/utils/api";
+import { defaultAxiosDownload } from "../../commons/utils/axios";
+import { WrapFilterDescription } from "../../components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
+import FilterReport from "../../components/FilterReport";
+import { useHistory } from "react-router-dom";
+import { useScreen } from "../../commons/hooks/useScreen";
+import { formatDateTimeLocal } from "../../commons/utils/helper";
 
 const cardList = [
   {
     icon: <PersionalSettingIC />,
-    title: 'Personal settings',
-    subtitle: 'Your personal experience'
+    title: "Personal settings",
+    subtitle: "Your personal experience"
   },
   {
     icon: <ScanQRCodeIC />,
-    title: 'Scan QR code',
-    subtitle: 'Scan a QR code'
+    title: "Scan QR code",
+    subtitle: "Scan a QR code"
   },
   {
     icon: <ListOfReportsIC />,
-    title: 'List of reports',
-    subtitle: 'Reports you can view',
+    title: "List of reports",
+    subtitle: "Reports you can view",
     to: routers.REPORT_GENERATED
   },
   {
     icon: <WatchlistIC />,
-    title: 'Watchlist',
-    subtitle: 'Lifecycle events'
+    title: "Watchlist",
+    subtitle: "Lifecycle events"
   }
 ];
 
 export const filterOtions = [
   {
-    value: 'id,desc',
+    value: "id,desc",
     icon: <FilterIC />,
-    label: 'Latest - First'
+    label: "Latest - First"
   },
   {
-    value: 'id,asc',
+    value: "id,asc",
     icon: <FilterIC />,
-    label: 'First - Latest'
+    label: "First - Latest"
   },
   {
-    value: 'id,asc',
+    value: "id,asc",
     icon: <FilterIC />,
-    label: 'Date range'
+    label: "Date range"
   },
   {
-    value: 'id,asc',
+    value: "id,asc",
     icon: <FilterIC />,
-    label: 'Search transaction'
+    label: "Search transaction"
   }
 ];
 
@@ -71,7 +71,7 @@ export interface SavedReport {
 const Dashboard: React.FC = () => {
   const history = useHistory();
   const [onDownload, setOnDownload] = useState<number | false>(false);
-  const [sort, setSort] = useState<string>('');
+  const [sort, setSort] = useState<string>("");
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>({
     page: 0,
     size: 10
@@ -89,7 +89,7 @@ const Dashboard: React.FC = () => {
     sort
   });
   const { isMobile } = useScreen();
-  console.log('data,data', data);
+  console.log("data,data", data);
   const handleRowClick = (e: React.MouseEvent<Element, MouseEvent>, row: any) => {
     if (row.stakeKeyReportId) history.push(details.generated_staking_detail(row.stakeKeyReportId));
     else if (row.poolReportId) history.push(details.generated_pool_detail(row.poolReportId));
@@ -98,22 +98,22 @@ const Dashboard: React.FC = () => {
   const downloadReportDashboard = async (
     reportId: number,
     fileName: string,
-    type: 'POOL_ID' | 'STAKE_KEY',
-    typeExport: 'CSV' | 'EXCEL' = 'CSV'
+    type: "POOL_ID" | "STAKE_KEY",
+    typeExport: "CSV" | "EXCEL" = "CSV"
   ) => {
     setOnDownload(reportId);
 
     defaultAxiosDownload
       .get(
-        type === 'STAKE_KEY'
+        type === "STAKE_KEY"
           ? `${API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId)}?exportType=${typeExport}`
           : `${API.REPORT.DOWNLOAD_POOL_SUMMARY(reportId)}?exportType=${typeExport}`
       )
       .then((response) => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
+        const link = document.createElement("a");
         link.href = url;
-        link.setAttribute('download', `${fileName}.${typeExport === 'CSV' ? 'csv' : 'xlsx'}`);
+        link.setAttribute("download", `${fileName}.${typeExport === "CSV" ? "csv" : "xlsx"}`);
         document.body.appendChild(link);
         link.click();
       })
@@ -124,48 +124,48 @@ const Dashboard: React.FC = () => {
 
   const columns: Column<IDashboardResponse>[] = [
     {
-      title: 'Timestamp',
-      key: 'createdAt',
-      minWidth: isMobile ? '200px' : '50px',
+      title: "Timestamp",
+      key: "createdAt",
+      minWidth: isMobile ? "200px" : "50px",
       render(data) {
         return formatDateTimeLocal(data.createdAt);
       },
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort('');
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
-      title: 'Report name',
-      key: 'entity',
-      minWidth: '150px',
+      title: "Report name",
+      key: "entity",
+      minWidth: "150px",
       render(data) {
         return <WrapReportName>{data.reportName}</WrapReportName>;
       }
     },
     {
-      title: 'Status',
-      key: 'status',
-      minWidth: '100px',
+      title: "Status",
+      key: "status",
+      minWidth: "100px",
       render(data) {
         return <Status status={data.status}>{data.status}</Status>;
       }
     },
     {
-      key: 'downloadUrl',
+      key: "downloadUrl",
       render(data, idx) {
         return onDownload === data.id ? (
           <CircularProgress size={22} color='primary' />
         ) : (
-          <Box textAlign={'right'} key={idx}>
+          <Box textAlign={"right"} key={idx}>
             <Box
               component={Button}
-              textTransform={'capitalize'}
+              textTransform={"capitalize"}
               onClick={() => {
                 downloadReportDashboard(
                   data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
                   data.reportName,
                   data.type,
-                  'CSV'
+                  "CSV"
                 );
               }}
             >
@@ -174,13 +174,13 @@ const Dashboard: React.FC = () => {
             <Box
               ml={2}
               component={Button}
-              textTransform={'capitalize'}
+              textTransform={"capitalize"}
               onClick={() =>
                 downloadReportDashboard(
                   data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
                   data.reportName,
                   data.type,
-                  'EXCEL'
+                  "EXCEL"
                 )
               }
             >
@@ -211,7 +211,7 @@ const Dashboard: React.FC = () => {
         <TextHeadline>Saved Reports</TextHeadline>
         <FilterHead>
           <WrapFilterDescription>
-            Showing {fetchData.total} {fetchData.total > 1 ? 'results' : 'result'}
+            Showing {fetchData.total} {fetchData.total > 1 ? "results" : "result"}
           </WrapFilterDescription>
           <FilterReport
             filterValue={params}
@@ -219,7 +219,7 @@ const Dashboard: React.FC = () => {
               const { sort, toDate, fromDate, txHash } = params;
               const body: any = {};
               if (sort) {
-                body.sort = params?.sort?.replace('time', 'id');
+                body.sort = params?.sort?.replace("time", "id");
               }
               if (toDate) {
                 body.toDate = params?.toDate;
@@ -240,7 +240,7 @@ const Dashboard: React.FC = () => {
         {...fetchData}
         data={data || []}
         columns={columns}
-        total={{ title: 'Dashboard summary', count: fetchData.total }}
+        total={{ title: "Dashboard summary", count: fetchData.total }}
         onClickRow={(e, row) => handleRowClick(e, row)}
         pagination={{
           page,

@@ -1,6 +1,6 @@
-import React from 'react';
-import { CgArrowsExchange, CgClose } from 'react-icons/cg';
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from '../../../commons/utils/constants';
+import React from "react";
+import { CgArrowsExchange, CgClose } from "react-icons/cg";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import {
   CubeIcon,
   FileEditIcon,
@@ -9,8 +9,8 @@ import {
   RocketIcon,
   USDIcon,
   WithdrawlIcon
-} from '../../../commons/resources';
-import ProgressCircle from '../ProgressCircle';
+} from "../../../commons/resources";
+import ProgressCircle from "../ProgressCircle";
 import {
   CloseButton,
   EpochNumber,
@@ -42,33 +42,33 @@ import {
   DetailLinkImage,
   ViewDetailScroll,
   ViewDetailHeader
-} from './styles';
-import useFetch from '../../../commons/hooks/useFetch';
-import { TbFileCheck } from 'react-icons/tb';
-import { BiChevronRight } from 'react-icons/bi';
-import { details } from '../../../commons/routers';
-import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from '../../../commons/utils/helper';
-import ViewMoreButton from '../ViewMoreButton';
-import CustomTooltip from '../CustomTooltip';
-import CopyButton from '../CopyButton';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../stores/types';
-import { API } from '../../../commons/utils/api';
-import ViewAllButton from '../ViewAllButton';
-import ADAicon from '../ADAIcon';
+} from "./styles";
+import useFetch from "../../../commons/hooks/useFetch";
+import { TbFileCheck } from "react-icons/tb";
+import { BiChevronRight } from "react-icons/bi";
+import { details } from "../../../commons/routers";
+import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../commons/utils/helper";
+import ViewMoreButton from "../ViewMoreButton";
+import CustomTooltip from "../CustomTooltip";
+import CopyButton from "../CopyButton";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../stores/types";
+import { API } from "../../../commons/utils/api";
+import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
 
 type DetailViewTransactionProps = {
   hash: string;
   handleClose: () => void;
 };
 const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] = [
-  { key: 'summary', label: 'Summary', icon: <TbFileCheck /> },
-  { key: 'utxOs', label: 'UTXOs', icon: <CgArrowsExchange /> },
-  { key: 'contracts', label: 'Contracts', icon: <DetailLinkImage src={FileEditIcon} alt='contact' /> },
-  { key: 'collaterals', label: 'Collateral', icon: <DetailLinkImage src={USDIcon} alt='contact' /> },
-  { key: 'notes', label: 'Notes', icon: <DetailLinkImage src={NoteEditIcon} alt='contact' /> },
-  { key: 'withdrawals', label: 'Withdrawal', icon: <DetailLinkImage src={WithdrawlIcon} alt='contact' /> },
-  { key: 'mints', label: 'Minting', icon: <DetailLinkImage src={MintingIcon} alt='contact' /> }
+  { key: "summary", label: "Summary", icon: <TbFileCheck /> },
+  { key: "utxOs", label: "UTXOs", icon: <CgArrowsExchange /> },
+  { key: "contracts", label: "Contracts", icon: <DetailLinkImage src={FileEditIcon} alt='contact' /> },
+  { key: "collaterals", label: "Collateral", icon: <DetailLinkImage src={USDIcon} alt='contact' /> },
+  { key: "notes", label: "Notes", icon: <DetailLinkImage src={NoteEditIcon} alt='contact' /> },
+  { key: "withdrawals", label: "Withdrawal", icon: <DetailLinkImage src={WithdrawlIcon} alt='contact' /> },
+  { key: "mints", label: "Minting", icon: <DetailLinkImage src={MintingIcon} alt='contact' /> }
 ];
 
 const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
@@ -146,8 +146,8 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
       </ViewDetailDrawer>
     );
 
-  const input = data.utxOs?.inputs[0]?.address || '';
-  const output = data.utxOs?.outputs[0]?.address || '';
+  const input = data.utxOs?.inputs[0]?.address || "";
+  const output = data.utxOs?.outputs[0]?.address || "";
 
   const renderConfirmationTag = () => {
     if (data?.tx?.confirmation) {
@@ -240,7 +240,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
             )}
             <DetailsInfoItem>
               <DetailLabel>Time</DetailLabel>
-              <DetailValue>{formatDateTimeLocal(data.tx.time || '')}</DetailValue>
+              <DetailValue>{formatDateTimeLocal(data.tx.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Status</DetailLabel>

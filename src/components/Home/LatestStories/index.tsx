@@ -1,9 +1,9 @@
-import moment from 'moment';
-import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { CalenderPaleIcon } from '../../../commons/resources';
-import { details, routers } from '../../../commons/routers';
-import Temp from '../../../commons/resources/temp/Rectangle 31.png';
+import moment from "moment";
+import React, { useRef } from "react";
+import { Link } from "react-router-dom";
+import { CalenderPaleIcon } from "../../../commons/resources";
+import { details, routers } from "../../../commons/routers";
+import Temp from "../../../commons/resources/temp/Rectangle 31.png";
 import {
   Author,
   Detail,
@@ -16,38 +16,38 @@ import {
   Time,
   TimeIcon,
   Title
-} from './style';
-import ViewAllButton from '../../commons/ViewAllButton';
-import { Box } from '@mui/material';
+} from "./style";
+import ViewAllButton from "../../commons/ViewAllButton";
+import { Box } from "@mui/material";
 
 const data: Story[] = [
   {
-    id: '1',
-    title: 'Cardano Foundation Partners with Georgian National Wine Agency',
-    author: 'Cardano Academy',
+    id: "1",
+    title: "Cardano Foundation Partners with Georgian National Wine Agency",
+    author: "Cardano Academy",
     image: Temp,
-    createdDate: '10/10/2022'
+    createdDate: "10/10/2022"
   },
   {
-    id: '2',
-    title: 'Cardano Foundation Partners with Georgian National Wine Agency with Georgian National Wine Agency',
-    author: 'Cardano Academy',
+    id: "2",
+    title: "Cardano Foundation Partners with Georgian National Wine Agency with Georgian National Wine Agency",
+    author: "Cardano Academy",
     image: Temp,
-    createdDate: '10/10/2022'
+    createdDate: "10/10/2022"
   },
   {
-    id: '3',
-    title: 'Cardano Foundation Partners',
-    author: 'Cardano Academy',
+    id: "3",
+    title: "Cardano Foundation Partners",
+    author: "Cardano Academy",
     image: Temp,
-    createdDate: '10/10/2022'
+    createdDate: "10/10/2022"
   },
   {
-    id: '4',
-    title: 'Cardano Foundation Partners',
-    author: 'Cardano Academy',
+    id: "4",
+    title: "Cardano Foundation Partners",
+    author: "Cardano Academy",
     image: Temp,
-    createdDate: '10/10/2022'
+    createdDate: "10/10/2022"
   }
 ];
 
@@ -85,7 +85,7 @@ const LatestStories = () => {
                   </Box>
                   <Time>
                     <TimeIcon src={CalenderPaleIcon} alt='calender pale' />
-                    {moment(createdDate).format('MM/DD/YYYY')}
+                    {moment(createdDate).format("MM/DD/YYYY")}
                   </Time>
                 </Detail>
               </Item>

@@ -1,6 +1,6 @@
-import { Box } from '@mui/material';
-import StyledModal from '../commons/StyledModal';
-import { BoxDetails, NormalDescription, NumberParagraph, Watermark, WrapContent } from './styles';
+import { Box } from "@mui/material";
+import StyledModal from "../commons/StyledModal";
+import { BoxDetails, NormalDescription, NumberParagraph, Watermark, WrapContent } from "./styles";
 interface Props {
   open: boolean;
   handleCloseModal: () => void;
@@ -15,7 +15,7 @@ export function WithdrawingFundProcessDescription({ open, handleCloseModal }: Pr
         <BoxDetails>
           <Watermark
             sx={{
-              top: '240px'
+              top: "240px"
             }}
           >
             foR illustration only

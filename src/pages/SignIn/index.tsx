@@ -1,13 +1,13 @@
-import { Box, Checkbox, FormControlLabel, FormGroup, FormHelperText, IconButton, InputAdornment } from '@mui/material';
-import { useEffect, useReducer, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { HideIcon, LockIcon, ShowIcon } from '../../commons/resources';
-import { routers } from '../../commons/routers';
-import { NETWORK, NETWORK_TYPES } from '../../commons/utils/constants';
-import { removeAuthInfo } from '../../commons/utils/helper';
-import { getInfo, signIn } from '../../commons/utils/userRequest';
-import ConnectWallet from '../../components/commons/Layout/Header/ConnectWallet';
-import { setUserData } from '../../stores/user';
+import { Box, Checkbox, FormControlLabel, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
+import { useEffect, useReducer, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
+import { routers } from "../../commons/routers";
+import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
+import { removeAuthInfo } from "../../commons/utils/helper";
+import { getInfo, signIn } from "../../commons/utils/userRequest";
+import ConnectWallet from "../../components/commons/Layout/Header/ConnectWallet";
+import { setUserData } from "../../stores/user";
 import {
   AlertCustom,
   CloseButton,
@@ -27,9 +27,9 @@ import {
   WrapOr,
   WrapSignUp,
   WrapTitle
-} from './styles';
-import useToast from '../../commons/hooks/useToast';
-import { IoMdClose } from 'react-icons/io';
+} from "./styles";
+import useToast from "../../commons/hooks/useToast";
+import { IoMdClose } from "react-icons/io";
 
 interface IForm {
   username: {
@@ -47,7 +47,7 @@ const formReducer = (state: IForm, event: any) => {
   return {
     ...state,
     [event.name]: {
-      value: event.value || '',
+      value: event.value || "",
       error: event.error,
       touched: event.touched
     }
@@ -64,10 +64,10 @@ export default function SignIn() {
   const [error, setError] = useState(false);
   const [formData, setFormData] = useReducer(formReducer, {
     username: {
-      value: ''
+      value: ""
     },
     password: {
-      value: ''
+      value: ""
     }
   });
 
@@ -80,7 +80,7 @@ export default function SignIn() {
   }
 
   const handleLoginSuccess = () => {
-    toast.success('Login success');
+    toast.success("Login success");
     history.push(routers.HOME);
   };
 
@@ -88,16 +88,16 @@ export default function SignIn() {
     const { username, password } = getSavedPasswordFromLocalStorage();
     if (username && password) {
       setFormData({
-        name: 'username',
+        name: "username",
         value: username,
         touched: true,
-        error: getError('username', username)
+        error: getError("username", username)
       });
       setFormData({
-        name: 'password',
+        name: "password",
         value: password,
         touched: true,
-        error: getError('password', password)
+        error: getError("password", password)
       });
       setRememberMe(true);
     }
@@ -105,23 +105,23 @@ export default function SignIn() {
 
   function getSavedPasswordFromLocalStorage() {
     return {
-      username: localStorage.getItem('usernameStore') || '',
-      password: localStorage.getItem('passwordStore') || ''
+      username: localStorage.getItem("usernameStore") || "",
+      password: localStorage.getItem("passwordStore") || ""
     };
   }
 
   async function saveAuthToLocalStorage(username: string, password: string) {
     try {
-      localStorage.setItem('usernameStore', username);
-      localStorage.setItem('passwordStore', password);
+      localStorage.setItem("usernameStore", username);
+      localStorage.setItem("passwordStore", password);
     } catch (error) {
       console.error(error);
     }
   }
 
   function removeAuthInfoFromLocalStorage() {
-    localStorage.removeItem('usernameStore');
-    localStorage.removeItem('passwordStore');
+    localStorage.removeItem("usernameStore");
+    localStorage.removeItem("passwordStore");
   }
 
   function handleClose() {
@@ -129,16 +129,16 @@ export default function SignIn() {
   }
 
   const getError = (name: string, value: string) => {
-    let error = '';
+    let error = "";
     switch (name) {
-      case 'username':
+      case "username":
         if (!value) {
-          error = 'Please enter Username';
+          error = "Please enter Username";
         }
         break;
-      case 'password':
+      case "password":
         if (!value) {
-          error = 'Please enter your Password';
+          error = "Please enter your Password";
         }
         break;
       default:
@@ -160,18 +160,18 @@ export default function SignIn() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    const errorUsername = getError('username', formData.username.value);
-    const errorPassword = getError('password', formData.password.value);
+    const errorUsername = getError("username", formData.username.value);
+    const errorPassword = getError("password", formData.password.value);
     if (errorUsername) {
       setFormData({
-        name: 'username',
+        name: "username",
         touched: true,
         error: errorUsername
       });
     }
     if (errorPassword) {
       setFormData({
-        name: 'password',
+        name: "password",
         touched: true,
         error: errorPassword
       });
@@ -195,14 +195,14 @@ export default function SignIn() {
       const response = await signIn(payload);
       const data = response.data;
 
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('username', data.username);
-      localStorage.setItem('refreshToken', data.refreshToken);
-      localStorage.setItem('walletId', data.walletId);
-      localStorage.setItem('email', data.email);
-      localStorage.setItem('loginType', 'normal');
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("username", data.username);
+      localStorage.setItem("refreshToken", data.refreshToken);
+      localStorage.setItem("walletId", data.walletId);
+      localStorage.setItem("email", data.email);
+      localStorage.setItem("loginType", "normal");
       const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-      setUserData({ ...userInfo.data, loginType: 'normal' });
+      setUserData({ ...userInfo.data, loginType: "normal" });
       handleLoginSuccess();
     } catch (error) {
       setInvalidInfomation(true);
@@ -229,7 +229,7 @@ export default function SignIn() {
               <InputCustom
                 error={Boolean(formData.username.error && formData.username.touched)}
                 startAdornment={
-                  <Box paddingRight={'10px'} paddingTop={'3px'}>
+                  <Box paddingRight={"10px"} paddingTop={"3px"}>
                     <UserCustomIcon />
                   </Box>
                 }
@@ -247,7 +247,7 @@ export default function SignIn() {
               <Label>Password</Label>
               <InputCustom
                 startAdornment={
-                  <Box paddingRight={'10px'} paddingTop={'5px'} paddingBottom={'2px'}>
+                  <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
                     <LockIcon />
                   </Box>
                 }
@@ -262,7 +262,7 @@ export default function SignIn() {
                   </InputAdornment>
                 }
                 onChange={handleChange}
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 placeholder='Password'
                 error={Boolean(formData.password.error && formData.password.touched)}
               />
@@ -270,14 +270,14 @@ export default function SignIn() {
                 <FormHelperText error>{formData.password.error}</FormHelperText>
               ) : null}
             </WrapInput>
-            <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+            <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
               <FormControlLabel
                 control={
                   <Checkbox
                     sx={{
-                      opacity: '0.15',
-                      '&.Mui-checked': {
-                        opacity: '1'
+                      opacity: "0.15",
+                      "&.Mui-checked": {
+                        opacity: "1"
                       }
                     }}
                     size='medium'
@@ -286,7 +286,7 @@ export default function SignIn() {
                   />
                 }
                 label={
-                  <Box fontSize={'14px'} fontWeight={400} textAlign={'left'}>
+                  <Box fontSize={"14px"} fontWeight={400} textAlign={"left"}>
                     Remember & Auto Login
                   </Box>
                 }
@@ -298,7 +298,7 @@ export default function SignIn() {
             <WrapButton variant='contained' fullWidth onClick={handleSubmit} disabled={loading}>
               Log in
             </WrapButton>
-            <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
+            <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <WrapDivider />
               <WrapOr>or</WrapOr>
               <WrapDivider />

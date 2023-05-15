@@ -1,6 +1,6 @@
-import { Box, styled } from '@mui/system';
-import { AIcon, PoolUpdateIcon, RewardsDistributionIcon } from '../../commons/resources';
-import { TabPanel } from '@mui/lab';
+import { Box, styled } from "@mui/system";
+import { AIcon, PoolUpdateIcon, RewardsDistributionIcon } from "../../commons/resources";
+import { TabPanel } from "@mui/lab";
 
 export const WrapperGrid = styled(Box)`
   display: grid;
@@ -22,19 +22,19 @@ export const WrapperItemUpdates = styled(Box)`
   justify-content: space-between;
 `;
 
-export const ItemTitle = styled('span')`
+export const ItemTitle = styled("span")`
   font-weight: 700;
   font-size: 14px;
   color: ${(props) => props.theme.palette.grey[400]};
 `;
 
-export const HashText = styled('span')`
+export const HashText = styled("span")`
   font-weight: 500;
   color: ${(props) => props.theme.palette.secondary.main};
   font-size: 14px;
 `;
 
-export const PreviousText = styled('span')`
+export const PreviousText = styled("span")`
   color: ${(props) => props.theme.palette.grey[400]};
   font-size: 12px;
   font-weight: 400;

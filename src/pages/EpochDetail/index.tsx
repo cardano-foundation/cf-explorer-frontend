@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import useFetch from '../../commons/hooks/useFetch';
-import { API } from '../../commons/utils/api';
-import NoRecord from '../../components/commons/NoRecord';
-import EpochBlockList from '../../components/EpochDetail/EpochBlockList';
-import EpochOverview from '../../components/EpochDetail/EpochOverview';
-import { StyledContainer } from './styles';
-import { REFRESH_TIMES } from '../../commons/utils/constants';
+import React, { useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import useFetch from "../../commons/hooks/useFetch";
+import { API } from "../../commons/utils/api";
+import NoRecord from "../../components/commons/NoRecord";
+import EpochBlockList from "../../components/EpochDetail/EpochBlockList";
+import EpochOverview from "../../components/EpochDetail/EpochOverview";
+import { StyledContainer } from "./styles";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const EpochDetail: React.FC = () => {
   const { epochId } = useParams<{ epochId: string }>();

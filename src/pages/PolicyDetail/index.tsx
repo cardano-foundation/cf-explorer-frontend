@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import useFetch from '../../commons/hooks/useFetch';
-import { API } from '../../commons/utils/api';
-import NoRecord from '../../components/commons/NoRecord';
-import PolicyOverview from '../../components/PolicyDetail/PolicyOverview';
-import PolicyTable from '../../components/PolicyDetail/PolicyTable';
-import { StyledContainer } from './styles';
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import useFetch from "../../commons/hooks/useFetch";
+import { API } from "../../commons/utils/api";
+import NoRecord from "../../components/commons/NoRecord";
+import PolicyOverview from "../../components/PolicyDetail/PolicyOverview";
+import PolicyTable from "../../components/PolicyDetail/PolicyTable";
+import { StyledContainer } from "./styles";
 
 const PolicyDetail = () => {
   const { policyId } = useParams<{ policyId: string }>();

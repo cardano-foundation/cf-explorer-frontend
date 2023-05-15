@@ -1,6 +1,6 @@
-import { alpha, LinearProgress, styled } from '@mui/material';
+import { alpha, LinearProgress, styled } from "@mui/material";
 
-export const StyledSpan = styled('span')`
+export const StyledSpan = styled("span")`
   display: flex;
   align-items: center;
 
@@ -10,13 +10,13 @@ export const StyledSpan = styled('span')`
   }
 `;
 
-export const HorizonDiv = styled('div')`
+export const HorizonDiv = styled("div")`
   width: 100%;
   border: 1px solid ${(props) => props.theme.palette.common.black};
   opacity: 0.1;
 `;
 
-export const ProcessDiv = styled('div')`
+export const ProcessDiv = styled("div")`
   width: 100%;
 `;
 
@@ -33,15 +33,15 @@ export const StyledLinearProgress = styled(LinearProgress)`
   }
 `;
 
-export const ProgressInfoDiv = styled('div')`
+export const ProgressInfoDiv = styled("div")`
   display: flex;
   justify-content: space-between;
 `;
 
-export const ProgressStatus = styled('h4')`
+export const ProgressStatus = styled("h4")`
   font-weight: var(--font-weight-normal);
 `;
 
-export const ProgressPercent = styled('h4')`
+export const ProgressPercent = styled("h4")`
   color: ${(props) => props.theme.palette.primary.main};
 `;

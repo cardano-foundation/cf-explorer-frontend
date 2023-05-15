@@ -1,9 +1,9 @@
-import { TabContext, TabList } from '@mui/lab';
-import { Box, Tab, Tabs } from '@mui/material';
-import React, { useState } from 'react';
-import { TabContent, TabHeader, TabLabel } from './styles';
-import { DownloadButtonAll } from '../../pages/StackingLifecycle/styles';
-import { DownloadWhiteIC } from '../../commons/resources';
+import { TabContext, TabList } from "@mui/lab";
+import { Box, Tab, Tabs } from "@mui/material";
+import React, { useState } from "react";
+import { TabContent, TabHeader, TabLabel } from "./styles";
+import { DownloadButtonAll } from "../../pages/StackingLifecycle/styles";
+import { DownloadWhiteIC } from "../../commons/resources";
 
 export interface TabsItem {
   value: string;
@@ -16,7 +16,7 @@ interface ReportGeneratedProps {
 }
 
 const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
-  const [value, setValue] = useState('1');
+  const [value, setValue] = useState("1");
 
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);

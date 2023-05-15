@@ -1,19 +1,19 @@
-import React from 'react';
-import { Box, useTheme } from '@mui/material';
-import StakeKeyBox from './StakeKeyBox';
-import { CardHeader } from '../PoolCertificate/styles';
+import React from "react";
+import { Box, useTheme } from "@mui/material";
+import StakeKeyBox from "./StakeKeyBox";
+import { CardHeader } from "../PoolCertificate/styles";
 
 interface IProps {
-  data: Transaction['stakeCertificates'] | null;
+  data: Transaction["stakeCertificates"] | null;
 }
 
 const StakeCertificate: React.FC<IProps> = ({ data }) => {
   const theme = useTheme();
-  console.log('data', data);
+  console.log("data", data);
   return (
     <>
       {data
-        ?.filter((d) => d.type === 'STAKE_REGISTRATION')
+        ?.filter((d) => d.type === "STAKE_REGISTRATION")
         ?.map((item, index) => (
           <Box key={index} px='15px' mb='15px' bgcolor={theme.palette.background.paper} textAlign='left'>
             <CardHeader>Stake Key Registrations</CardHeader>
@@ -21,7 +21,7 @@ const StakeCertificate: React.FC<IProps> = ({ data }) => {
           </Box>
         ))}
       {data
-        ?.filter((d) => d.type === 'STAKE_DEREGISTRATION')
+        ?.filter((d) => d.type === "STAKE_DEREGISTRATION")
         ?.map((item, index) => (
           <Box key={index} px='15px' mb='15px' bgcolor={theme.palette.background.paper} textAlign='left'>
             <CardHeader>Stake Key Deregistrations</CardHeader>

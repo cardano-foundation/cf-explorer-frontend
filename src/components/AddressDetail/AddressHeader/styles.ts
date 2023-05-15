@@ -1,6 +1,6 @@
-import { alpha, TextField, styled, Box } from '@mui/material';
+import { alpha, TextField, styled, Box } from "@mui/material";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export const TitleDetail = styled(Box)`
   font-size: var(--font-size-title);
@@ -68,11 +68,11 @@ export const StyledTextField = styled(TextField)`
   }
 `;
 
-export const Option = styled('li')<{ active: number }>(({ theme, active }) => ({
+export const Option = styled("li")<{ active: number }>(({ theme, active }) => ({
   background: active ? theme.palette.green[600_10] : theme.palette.background.paper
 }));
 
-export const Logo = styled('img')`
+export const Logo = styled("img")`
   width: 25px;
   height: 25px;
   object-fit: cover;
@@ -93,7 +93,7 @@ export const BackButton = styled(Box)`
   cursor: pointer;
 `;
 
-export const BackText = styled('small')`
+export const BackText = styled("small")`
   color: ${(props) => props.theme.palette.text.secondary};
   font-weight: var(--font-weight-bold);
 `;

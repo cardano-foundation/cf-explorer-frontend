@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Option } from '../commons/Filter';
-import CustomIcon from '../commons/CustomIcon';
-import { ArrowFromBottomIcon, ArrowFromTopIcon, CalenderIcon, FilterIC, SearchIcon } from '../../commons/resources';
+import React, { useEffect, useMemo, useState } from "react";
+import { Option } from "../commons/Filter";
+import CustomIcon from "../commons/CustomIcon";
+import { ArrowFromBottomIcon, ArrowFromTopIcon, CalenderIcon, FilterIC, SearchIcon } from "../../commons/resources";
 
-import { ClickAwayListener, IconButton, ListItemIcon, MenuList } from '@mui/material';
+import { ClickAwayListener, IconButton, ListItemIcon, MenuList } from "@mui/material";
 
 import {
   FilterButton,
@@ -12,12 +12,12 @@ import {
   FilterIconContainer,
   FilterListItemText,
   FilterMenuItem
-} from '../commons/Filter/styles';
-import { StyledInput } from '../share/styled';
-import DateRangeModal, { DATETIME_PARTTEN } from './DateRangeModal';
-import { AdditionContainer } from './styles';
-import { StyledListItemIcon } from '../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles';
-import moment from 'moment';
+} from "../commons/Filter/styles";
+import { StyledInput } from "../share/styled";
+import DateRangeModal, { DATETIME_PARTTEN } from "./DateRangeModal";
+import { AdditionContainer } from "./styles";
+import { StyledListItemIcon } from "../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
+import moment from "moment";
 
 interface StakingOption extends Option {
   addition?: React.FC<any>;
@@ -25,20 +25,20 @@ interface StakingOption extends Option {
 
 const filterOptions: StakingOption[] = [
   {
-    label: 'Latest - First',
+    label: "Latest - First",
     icon: <CustomIcon icon={ArrowFromTopIcon} fill='currentColor' width={20} />,
-    value: 'latest'
+    value: "latest"
   },
   {
-    label: 'First - Latest',
+    label: "First - Latest",
     icon: <CustomIcon icon={ArrowFromBottomIcon} fill='currentColor' width={20} />,
-    value: 'first'
+    value: "first"
   },
-  { label: 'Date range', icon: <CustomIcon icon={CalenderIcon} fill='currentColor' width={20} />, value: 'dateRange' },
+  { label: "Date range", icon: <CustomIcon icon={CalenderIcon} fill='currentColor' width={20} />, value: "dateRange" },
   {
-    label: 'Search transaction',
+    label: "Search transaction",
     icon: <CustomIcon icon={SearchIcon} stroke='currentColor' width={22} />,
-    value: 'search'
+    value: "search"
   }
 ];
 
@@ -55,12 +55,12 @@ export interface StackingFilterProps {
   sortKey?: string;
 }
 
-const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, filterValue, sortKey = 'time' }) => {
+const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, filterValue, sortKey = "time" }) => {
   const [open, setOpen] = useState(false);
   const [isOpenSelectRange, setIsOpenSelectRange] = useState(false);
   const [openSearchTransaction, setOpenSearchTransaction] = useState(false);
-  const [selected, setSelected] = useState('');
-  const [textSearch, setTextSearch] = useState('');
+  const [selected, setSelected] = useState("");
+  const [textSearch, setTextSearch] = useState("");
 
   const onClickAway = () => {
     setOpen(false);
@@ -72,23 +72,23 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
   const onFilterButtonClick = () => setOpen((pre) => !pre);
   const onOptionClick = (value: string, option: Option) => {
     switch (value) {
-      case 'latest': {
+      case "latest": {
         onFilterValueChange?.({ sort: `${sortKey},DESC` });
         setSelected(value);
         setOpen(false);
         break;
       }
-      case 'first': {
+      case "first": {
         onFilterValueChange?.({ sort: `${sortKey},ASC` });
         setSelected(value);
         setOpen(false);
         break;
       }
-      case 'dateRange': {
+      case "dateRange": {
         setIsOpenSelectRange(true);
         break;
       }
-      case 'search': {
+      case "search": {
         setOpenSearchTransaction(true);
         break;
       }
@@ -96,7 +96,7 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
   };
 
   useEffect(() => {
-    setTextSearch(filterValue?.txHash ?? '');
+    setTextSearch(filterValue?.txHash ?? "");
     console.timeLog(filterValue?.txHash);
   }, [filterValue?.txHash]);
 
@@ -138,7 +138,7 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
                   endAdornment={
                     <IconButton
                       onClick={() => {
-                        setSelected('search');
+                        setSelected("search");
                         onFilterValueChange?.({ txHash: textSearch });
                         setOpenSearchTransaction(false);
                         setOpen(false);
@@ -156,7 +156,7 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
                 open={isOpenSelectRange}
                 value={{ fromDate: filterValue?.fromDate, toDate: filterValue?.toDate }}
                 onDateRangeChange={({ fromDate, toDate }) => {
-                  setSelected('dateRange');
+                  setSelected("dateRange");
                   onFilterValueChange?.({
                     fromDate: moment(fromDate, DATETIME_PARTTEN).utc().format(DATETIME_PARTTEN),
                     toDate: moment(toDate, DATETIME_PARTTEN).utc().format(DATETIME_PARTTEN)

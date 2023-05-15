@@ -1,9 +1,9 @@
-import { Box, CircularProgress, FormGroup } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { routers } from '../../commons/routers';
-import { verifyActive } from '../../commons/utils/userRequest';
-import { Container, Label, WrapButton, WrapContent, WrapForm } from './styles';
+import { Box, CircularProgress, FormGroup } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { routers } from "../../commons/routers";
+import { verifyActive } from "../../commons/utils/userRequest";
+import { Container, Label, WrapButton, WrapContent, WrapForm } from "./styles";
 
 export default function VerifyEmail() {
   const history = useHistory();
@@ -14,7 +14,7 @@ export default function VerifyEmail() {
     try {
       const response = await verifyActive({ code });
       setLoading(false);
-      setSuccess(response.data.code === 'SS_0');
+      setSuccess(response.data.code === "SS_0");
     } catch (error) {
       setLoading(false);
       setSuccess(false);
@@ -22,7 +22,7 @@ export default function VerifyEmail() {
   };
   useEffect(() => {
     const params = new URLSearchParams(path.search);
-    const code = params.get('code');
+    const code = params.get("code");
     if (code) {
       handleVerify(code);
     }
@@ -33,10 +33,10 @@ export default function VerifyEmail() {
         <FormGroup>
           {loading ? (
             <WrapForm>
-              <Box textAlign={'center'}>
+              <Box textAlign={"center"}>
                 <CircularProgress
                   sx={{
-                    color: 'grey'
+                    color: "grey"
                   }}
                 />
               </Box>

@@ -1,19 +1,19 @@
-import { Box, Grid, Skeleton } from '@mui/material';
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { BlankBlueIcon, ADAIcon } from '../../../commons/resources';
-import { details, routers } from '../../../commons/routers';
-import { API } from '../../../commons/utils/api';
-import { REFRESH_TIMES, TRANSACTION_STATUS } from '../../../commons/utils/constants';
+import { Box, Grid, Skeleton } from "@mui/material";
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
+import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
+import { details, routers } from "../../../commons/routers";
+import { API } from "../../../commons/utils/api";
+import { REFRESH_TIMES, TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import {
   formatADAFull,
   formatDateTimeLocal,
   getShortHash,
   getShortWallet,
   handleClicktWithoutAnchor
-} from '../../../commons/utils/helper';
-import CustomTooltip from '../../commons/CustomTooltip';
-import ViewAllButton from '../../commons/ViewAllButton';
+} from "../../../commons/utils/helper";
+import CustomTooltip from "../../commons/CustomTooltip";
+import ViewAllButton from "../../commons/ViewAllButton";
 import {
   Hash,
   Header,
@@ -29,10 +29,10 @@ import {
   BlankImage,
   RowItem,
   HeaderStatus
-} from './style';
-import useFetch from '../../../commons/hooks/useFetch';
+} from "./style";
+import useFetch from "../../../commons/hooks/useFetch";
 
-import { useScreen } from '../../../commons/hooks/useScreen';
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 const LatestTransactions: React.FC = () => {
   const { data, initialized } = useFetch<CurrentTransactions[]>(
@@ -59,13 +59,13 @@ const LatestTransactions: React.FC = () => {
                     <Item>
                       <ItemHeader>
                         <Skeleton variant='circular' width={50} height={40} />
-                        <Skeleton variant='text' width={'100%'} />
+                        <Skeleton variant='text' width={"100%"} />
                       </ItemHeader>
                       <Skeleton />
-                      <Skeleton variant='text' height={30} width={'100%'} />
-                      <Skeleton variant='text' height={30} width={'100%'} />
-                      <Skeleton variant='text' height={30} width={'100%'} />
-                      <Skeleton variant='text' height={30} width={'100%'} />
+                      <Skeleton variant='text' height={30} width={"100%"} />
+                      <Skeleton variant='text' height={30} width={"100%"} />
+                      <Skeleton variant='text' height={30} width={"100%"} />
+                      <Skeleton variant='text' height={30} width={"100%"} />
                     </Item>
                   </Grid>
                 );
@@ -79,7 +79,7 @@ const LatestTransactions: React.FC = () => {
                     <Item onClick={(e) => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
                       <ItemHeader>
                         <PriceImage src={ADAIcon} alt='check green' />
-                        <Box display={'flex'} flexDirection={'column'} rowGap={'4px'} alignItems={'end'}>
+                        <Box display={"flex"} flexDirection={"column"} rowGap={"4px"} alignItems={"end"}>
                           {!isTablet && <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>}
                           <PriveValue>{formatADAFull(amount)}</PriveValue>
                         </Box>
@@ -127,7 +127,7 @@ const LatestTransactions: React.FC = () => {
                         })}
                         {toAddress?.slice(0, 1).map((add) => {
                           return (
-                            <RowItem key={add} display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+                            <RowItem key={add} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                               <Box>
                                 <small>To: </small>
                                 <CustomTooltip title={add}>

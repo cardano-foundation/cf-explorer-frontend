@@ -1,8 +1,8 @@
-import { Box, useTheme, Modal } from '@mui/material';
+import { Box, useTheme, Modal } from "@mui/material";
 
-import { JsonViewer } from '@textea/json-viewer';
-import { ButtonClose, ModalContainer, ViewJson } from './styles';
-import closeIcon from '../../commons/resources/icons/closeIcon.svg';
+import { JsonViewer } from "@textea/json-viewer";
+import { ButtonClose, ModalContainer, ViewJson } from "./styles";
+import closeIcon from "../../commons/resources/icons/closeIcon.svg";
 
 interface ParseScriptModalProps {
   open: boolean;
@@ -19,7 +19,7 @@ const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ title, script, ...p
           <img src={closeIcon} alt='icon close' />
         </ButtonClose>
         <Box
-          textAlign={'left'}
+          textAlign={"left"}
           color={({ palette }) => palette.grey[700]}
           fontSize='1.5rem'
           fontWeight='bold'
@@ -33,13 +33,13 @@ const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ title, script, ...p
         </Box>
         <ViewJson>
           <JsonViewer
-            value={script || ''}
+            value={script || ""}
             // value={JSON.parse(script || "")}
             displayObjectSize={false}
             displayDataTypes={false}
             enableClipboard={false}
             collapseStringsAfterLength={false}
-            style={{ padding: 0, background: 'none', color: theme.palette.text.secondary }}
+            style={{ padding: 0, background: "none", color: theme.palette.text.secondary }}
             rootName={false}
           />
         </ViewJson>

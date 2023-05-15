@@ -1,9 +1,9 @@
-import { Box } from '@mui/material';
-import FilledInfoModal from './FilledInfoModal';
-import StepTransferModal from './StepTransferModal';
-import StepEventsModal from './StepEventsModal';
-import StepReviewModal from './StepReviewModal';
-import { useCallback, useEffect, useState } from 'react';
+import { Box } from "@mui/material";
+import FilledInfoModal from "./FilledInfoModal";
+import StepTransferModal from "./StepTransferModal";
+import StepEventsModal from "./StepEventsModal";
+import StepReviewModal from "./StepReviewModal";
+import { useCallback, useEffect, useState } from "react";
 
 export interface IPropsModal {
   open: boolean;

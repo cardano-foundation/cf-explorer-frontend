@@ -1,1 +1,1 @@
-type TTabularTabKey = 'registration' | 'delegation' | 'rewards' | 'withdrawal-history' | 'deregistration';
+type TTabularTabKey = "registration" | "delegation" | "rewards" | "withdrawal-history" | "deregistration";

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Store } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, Store } from "@reduxjs/toolkit";
 
 let systemStore: Store | undefined;
 
@@ -14,7 +14,7 @@ const initialState: SystemStoreType = {
 };
 
 const store = createSlice({
-  name: 'storeSystem',
+  name: "storeSystem",
   initialState,
   reducers: {
     setUsdMarket: (state, action: PayloadAction<CardanoMarket>) => ({

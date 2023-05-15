@@ -1,5 +1,5 @@
-import { useTheme } from '@mui/material';
-import { useWindowSize } from 'react-use';
+import { useTheme } from "@mui/material";
+import { useWindowSize } from "react-use";
 
 export const SAMSUNG_FOLD_SMALL_WIDTH = 280;
 export const useScreen = () => {
