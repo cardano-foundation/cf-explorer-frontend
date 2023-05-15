@@ -132,7 +132,7 @@ export default function SignIn() {
     switch (name) {
       case "username":
         if (!value) {
-          error = "Please enter Username";
+          error = 'Please enter Email Address';
         }
         break;
       case "password":
@@ -223,9 +223,9 @@ export default function SignIn() {
             <CloseButton saving={0} onClick={() => handleClose()}>
               <IoMdClose />
             </CloseButton>
-            {invalidInfomation ? <AlertCustom severity='error'>Incorrect Username or Password</AlertCustom> : null}
+            {invalidInfomation ? <AlertCustom severity="error">Incorrect Emaill Address or Password</AlertCustom> : null}
             <WrapInput>
-              <Label>Username</Label>
+              <Label>Email Address</Label>
               <InputCustom
                 error={Boolean(formData.username.error && formData.username.touched)}
                 startAdornment={
@@ -237,7 +237,7 @@ export default function SignIn() {
                 value={formData.username.value}
                 onChange={handleChange}
                 fullWidth
-                placeholder='Username'
+                placeholder='Email Address'
               />
               {formData.username.error && formData.username.touched ? (
                 <FormHelperTextCustom error>{formData.username.error}</FormHelperTextCustom>
