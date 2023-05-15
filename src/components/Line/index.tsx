@@ -15,6 +15,7 @@ interface LineProps {
   connectFromReverse?: boolean;
   connectToReverse?: boolean;
   isCentalVertical?: boolean;
+  isCentalHorizontalFrom?: boolean;
   dashed?: boolean;
 }
 const Line: React.FC<LineProps> = ({
@@ -28,7 +29,8 @@ const Line: React.FC<LineProps> = ({
   isCentalVertical = true,
   connectFromReverse = false,
   connectToReverse = false,
-  dashed = false
+  dashed = false,
+  isCentalHorizontalFrom = false
 }) => {
   const [coords, setCoords] = useState<{ from: { x?: number; y?: number }; to: { x?: number; y?: number } }>({
     from: {},
@@ -73,12 +75,12 @@ const Line: React.FC<LineProps> = ({
 
     setCoords({
       from: {
-        x: xFrom,
+        x: isCentalHorizontalFrom ? xTo : xFrom,
         y: isCentalVertical ? yFrom : yTo
       },
       to: {
         x: xTo,
-        y: yTo
+        y: isCentalHorizontal ? yTo : yFrom
       }
     });
   };

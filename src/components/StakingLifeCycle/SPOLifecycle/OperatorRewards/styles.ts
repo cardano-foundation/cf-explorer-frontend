@@ -82,3 +82,19 @@ export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
   text-decoration: underline !important;
 `;
+
+export const StyledListImages = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "65px",
+    "& > div": {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: "12px",
+      paddingTop: "2px",
+    },
+  },
+}));

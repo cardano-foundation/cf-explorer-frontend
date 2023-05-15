@@ -14,6 +14,7 @@ import {
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import DeregistrationCertificateIcon from "../../../../commons/resources/icons/Staking/DeregistrationCertificateIcon.svg";
+import DeregistrationCertificateMobile from "../../../../commons/resources/icons/Staking/DeregistrationCertificateMobile.svg";
 
 import Line from "../../../Line";
 import {
@@ -25,7 +26,8 @@ import {
   IconButton,
   IconButtonBack,
   Info,
-  InfoText
+  InfoText,
+  StyledBox
 } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
@@ -40,7 +42,7 @@ import CopyButton from "../../../commons/CopyButton";
 import StyledModal from "../../../commons/StyledModal";
 import PopupStaking from "../../../commons/PopupStaking";
 import { StyledLink } from "../styles";
-
+import { useScreen } from "../../../../commons/hooks/useScreen";
 const Deregistration = ({
   containerPosition,
   handleResize
@@ -52,6 +54,7 @@ const Deregistration = ({
   handleResize: () => void;
 }) => {
   const [selected, setSelected] = useState<SPODeregistration | null>(null);
+  const { isTablet } = useScreen();
 
   const handleSelect = (deregistration: SPODeregistration | null) => {
     setSelected(deregistration);
@@ -63,11 +66,19 @@ const Deregistration = ({
         <RecentDeregistrations onSelect={handleSelect} />
       </Box>
       <Box>
-        {!!selected && (
+        {!!selected && !isTablet && (
           <DeregistrationTimeline
             handleResize={handleResize}
             selected={selected}
             containerPosition={containerPosition}
+          />
+        )}
+        {!!selected && isTablet && (
+          <DeregistrationTimelineMobile
+            handleResize={handleResize}
+            selected={selected}
+            containerPosition={containerPosition}
+            setSelected={setSelected}
           />
         )}
       </Box>
@@ -297,10 +308,11 @@ const DeregistrationTimeline = ({
               toRef={holdRef}
               orient='vertical'
               pointFrom='border'
-              pointTo='center'
+              pointTo='border'
               connectToReverse={true}
               connectFromReverse={true}
               isCentalVertical={false}
+              isCentalHorizontal
             />
             <ArrowDiagram
               containerPosition={containerPosition}
@@ -362,11 +374,276 @@ const DeregistrationTimeline = ({
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
+
       <DeregistrationCertificateModal data={selected} handleCloseModal={() => setOpenModal(false)} open={openModal} />
     </Box>
   );
 };
 
+const DeregistrationTimelineMobile = ({
+  containerPosition,
+  selected,
+  setSelected,
+  handleResize
+}: {
+  containerPosition: {
+    top?: number;
+    left?: number;
+  };
+  handleResize: () => void;
+  setSelected: (registration: SPODeregistration | null) => void;
+  selected: SPODeregistration | null;
+}) => {
+  const [openModal, setOpenModal] = useState(false);
+
+  const adaHolderRef = useRef(null);
+  const holdRef = useRef(null);
+  const feeRef = useRef(null);
+  const cadarnoSystemRef = useRef(null);
+  const fake1Ref = useRef(null);
+  const fake2Ref = useRef(null);
+  const registrationRef = useRef(null);
+  const SPOInfoRef = useRef(null);
+  const SPOKeyRef = useRef(null);
+  const fake1CardanoSystemRef = useRef(null);
+  const fake2CardanoSystemRef = useRef(null);
+  const adaHolderRefImg = useRef(null);
+  const cadarnoSystemRefImg = useRef(null);
+  const { isMobile } = useScreen();
+
+  useEffect(() => {
+    handleResize();
+  }, [adaHolderRef.current]);
+
+  return (
+    <StyledBox>
+      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+        <IconButtonBack onClick={() => setSelected(null)}>
+          <BackIcon />
+        </IconButtonBack>
+        <Box display={"flex"}>
+          <Info>
+            <AddressIcon fill='#438F68' />
+            <CustomTooltip title={selected?.txHash}>
+              <InfoText>{getShortHash(selected?.txHash || "")}</InfoText>
+            </CustomTooltip>
+            <StyledCopyButton text={selected?.txHash} />
+          </Info>
+          <Info>
+            <ADAGreen />
+            <InfoText>{formatADA(selected?.totalFee || 0)}</InfoText>
+          </Info>
+          <Info>
+            <TimeIcon />
+            <InfoText>{moment(selected?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+          </Info>
+        </Box>
+      </Box>
+
+      <Box className='list-images' display={"flex"} flexDirection={"column"} alignItems={"center"} gap={"50px"}>
+        <Box
+          ref={adaHolderRef}
+          display={"flex"}
+          flexDirection={"row"}
+          alignItems={"flex-start"}
+          justifyContent={"center"}
+          width={"100%"}
+          position={"relative"}
+        >
+          <Box ref={fake1Ref} width={"2px"} height={"190px"}></Box>
+          <Box ref={adaHolderRefImg} width={190} height={245} position={"relative"}>
+            <SPOStalking />
+            <CustomTooltip title={selected?.poolName}>
+              <PoolName> {selected?.poolName}</PoolName>
+            </CustomTooltip>
+            <PopoverStyled
+              render={({ handleClick }) => (
+                <ButtonSPO
+                  ref={SPOInfoRef}
+                  component={IconButton}
+                  left={"33%"}
+                  onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
+                >
+                  <SPOInfo />
+                </ButtonSPO>
+              )}
+              content={
+                <Box>
+                  <Box display={"flex"} alignItems={"center"}>
+                    <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                      Pool ID:
+                    </Box>
+                    <PoolNamePopup to={details.delegation(selected?.poolView)}>
+                      {getShortHash(selected?.poolView || "")}
+                    </PoolNamePopup>
+                    <CopyButton text={selected?.poolView} />
+                  </Box>
+                  <Box display={"flex"} alignItems={"center"}>
+                    <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                      Pool name:
+                    </Box>
+                    <PoolNamePopup to={details.delegation(selected?.poolView)}>{selected?.poolName}</PoolNamePopup>
+                  </Box>
+                </Box>
+              }
+            />
+            <PopoverStyled
+              render={({ handleClick }) => (
+                <ButtonSPO
+                  ref={SPOKeyRef}
+                  component={IconButton}
+                  left={"52%"}
+                  onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
+                >
+                  <SPOKey fill='#438F68' />
+                </ButtonSPO>
+              )}
+              content={
+                <Box display={"flex"} alignItems={"center"}>
+                  {selected?.stakeKeys && selected.stakeKeys.length > 0 && (
+                    <>
+                      <SPOKey fill='#108AEF' />
+                      <PoolNamePopup to={details.stake(selected?.stakeKeys[0] || "")}>
+                        {getShortWallet(selected?.stakeKeys[0] || "")}
+                      </PoolNamePopup>
+                      <CopyButton text={selected?.stakeKeys[0]} />
+                    </>
+                  )}
+                </Box>
+              }
+            />
+          </Box>
+          <Box ref={fake2Ref} position={"absolute"} width={"1px"} height={"100%"} right={"0px"}></Box>
+        </Box>
+
+        <Box display={"flex"} width={"100%"} flexDirection={"row"} justifyContent={"space-between"}>
+          <Box
+            ref={registrationRef}
+            padding={"24px"}
+            sx={{ background: "#fff", borderRadius: "12px" }}
+            onClick={() => setOpenModal(true)}
+          >
+            <img
+              src={DeregistrationCertificateMobile}
+              width={"90px"}
+              height={"150px"}
+              alt='RegistrationCertificateIcon'
+            />
+          </Box>
+
+          <Box display={"flex"} flexDirection={"column"} position={"relative"}>
+            <PopoverStyled
+              render={({ handleClick }) => (
+                <HoldBox ref={holdRef} ml={1}>
+                  <Box>
+                    <HoldBoxText mr={1} component={"span"}>
+                      {formatADA(selected?.poolHold)}
+                    </HoldBoxText>
+                    <ADAicon fontSize='18px' />
+                  </Box>
+                  <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
+                    <ButtonListIcon />
+                  </IconButton>
+                </HoldBox>
+              )}
+              content={<PopupStaking hash={selected?.txHash || ""} />}
+            />
+            <PopoverStyled
+              render={({ handleClick }) => (
+                <FeeBox ref={feeRef}>
+                  <Box>
+                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      {formatADA(selected?.fee)}
+                    </Box>
+                    <ADAicon fontSize='18px' />
+                  </Box>
+                  <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
+                    <ButtonListIcon />
+                  </IconButton>
+                </FeeBox>
+              )}
+              content={<PopupStaking hash={selected?.txHash || ""} />}
+            />
+          </Box>
+        </Box>
+
+        <Box
+          position={"relative"}
+          ref={cadarnoSystemRef}
+          display={"flex"}
+          justifyContent={"center"}
+          flexDirection={"row"}
+          alignItems={"flex-end"}
+          sx={{ width: "100%", paddingTop: "3px" }}
+        >
+          <Box ref={fake1CardanoSystemRef} width={"1px"} height={"170px"}></Box>
+          <Box ref={cadarnoSystemRefImg}>
+            <img src={cadarnoSystem} alt='carrdano' />
+          </Box>
+          <Box ref={fake2CardanoSystemRef} position={"absolute"} width={"1px"} height={"100%"} right={"0px"}></Box>
+        </Box>
+        <svg
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: "150vh",
+            width: "100vw",
+            zIndex: "-1"
+          }}
+        >
+          <ArrowDiagram
+            containerPosition={containerPosition}
+            fromRef={adaHolderRef}
+            toRef={cadarnoSystemRef}
+            pointTo='border'
+            pointFrom='border'
+            orient='horizontal'
+            connectToReverse
+          />
+          <ArrowDiagram
+            containerPosition={containerPosition}
+            fromRef={fake1Ref}
+            toRef={fake1CardanoSystemRef}
+            pointTo='border'
+            pointFrom='border'
+            orient='horizontal'
+            connectToReverse
+          />
+          <Line
+            containerPosition={containerPosition}
+            fromRef={cadarnoSystemRefImg}
+            toRef={cadarnoSystemRef}
+            pointTo='border'
+            pointFrom='border'
+            orient='vertical'
+            connectToReverse
+          />
+          <ArrowDiagram
+            containerPosition={containerPosition}
+            fromRef={adaHolderRef}
+            toRef={adaHolderRefImg}
+            pointTo='border'
+            pointFrom='border'
+            orient='vertical'
+            connectToReverse
+          />
+          <Line
+            containerPosition={containerPosition}
+            fromRef={fake2CardanoSystemRef}
+            toRef={fake2Ref}
+            pointTo='center'
+            pointFrom='center'
+            orient='horizontal'
+            isCentalHorizontal
+          />
+        </svg>
+      </Box>
+
+      <DeregistrationCertificateModal data={selected} handleCloseModal={() => setOpenModal(false)} open={openModal} />
+    </StyledBox>
+  );
+};
 export const DeregistrationCertificateModal = ({
   data,
   ...props
