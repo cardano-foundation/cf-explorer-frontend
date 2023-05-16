@@ -2,9 +2,10 @@ import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment 
 import { useEffect, useReducer, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
-import { EmailIcon, HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
+import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "../../commons/resources";
 import { routers } from "../../commons/routers";
 import { signUp } from "../../commons/utils/userRequest";
+import { AlertCustom } from "../ForgotPassword/styles";
 import {
   CloseButton,
   Container,
@@ -12,16 +13,18 @@ import {
   FormHelperTextCustom,
   InputCustom,
   Label,
+  LabelInfo,
+  Title,
   WrapButton,
   WrapContent,
+  WrapEmail,
   WrapForm,
   WrapHintText,
   WrapInput,
   WrapSignUp,
   WrapTitle
 } from "./styles";
-import { AlertCustom } from "../ForgotPassword/styles";
-import { AxiosError } from "axios";
+import useAuth from "~/commons/hooks/useAuth";
 
 interface IForm {
   password: {
@@ -60,6 +63,7 @@ export default function SignUp() {
   const emailTextField = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState(false);
   const [serverError, setServerError] = useState("");
+  const { isLoggedIn } = useAuth();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -88,6 +92,12 @@ export default function SignUp() {
       value: ""
     }
   });
+  useEffect(() => {
+    if(isLoggedIn){
+      history.push(routers.HOME);
+    }
+  }, [isLoggedIn]);
+
   useEffect(() => {
     setError(
       Boolean(
@@ -208,18 +218,6 @@ export default function SignUp() {
     } catch (error: any) {
       if (error.response.data.errorCode === "CC_23") {
         setServerError("Username already existed, enter username again");
-        setFormData({
-          name: "email",
-          touched: true,
-          error: error.response.data.errorMessage,
-          value: formData.email.value
-        });
-        setFormData({
-          name: "confirmEmail",
-          touched: false,
-          error: "",
-          value: ""
-        });
         if (emailTextField.current) emailTextField.current.focus();
       }
     } finally {
@@ -228,13 +226,13 @@ export default function SignUp() {
   };
   return (
     <Container>
-      <WrapContent>
-        <WrapTitle>Sign up</WrapTitle>
-        <WrapHintText>
-          Already have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_IN)}>Sign In Here</WrapSignUp>
-        </WrapHintText>
-        <FormGroup>
-          {!success ? (
+      {!success ? (
+        <WrapContent>
+          <WrapTitle>Sign up</WrapTitle>
+          <WrapHintText>
+            Already have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_IN)}>Sign In Here</WrapSignUp>
+          </WrapHintText>
+          <FormGroup>
             <WrapForm>
               {serverError && <AlertCustom severity='error'>{serverError}</AlertCustom>}
               <CloseButton saving={0} onClick={() => handleClose()}>
@@ -357,16 +355,29 @@ export default function SignUp() {
                 Create an Account
               </WrapButton>
             </WrapForm>
-          ) : (
-            <WrapForm>
-              <CloseButton saving={0} onClick={() => handleClose()}>
-                <IoMdClose />
-              </CloseButton>
-              <Label>Please check your email to confirm your account</Label>
-            </WrapForm>
-          )}
-        </FormGroup>
-      </WrapContent>
+          </FormGroup>
+        </WrapContent>) : (
+        <WrapContent>
+          <WrapForm>
+            <FormGroup>
+              <Box textAlign={'center'}>
+                <SuccessIcon />
+                <Box paddingY={"15px"}>
+                  <Title>Verify Your Account</Title>
+                </Box>
+                <Box paddingBottom={"30px"}>
+                  <LabelInfo>
+                    Click on the link we sent to <WrapEmail>{formData.email.value}</WrapEmail> to finish your account setup.
+                  </LabelInfo>
+                </Box>
+              </Box>
+              <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.SIGN_IN)}>
+                Sign In
+              </WrapButton>
+            </FormGroup>
+          </WrapForm>
+        </WrapContent>
+      )}
     </Container>
   );
 }

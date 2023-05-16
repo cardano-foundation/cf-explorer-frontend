@@ -118,15 +118,9 @@ export const ButtonEvent = styled(Button)<{ active: boolean }>(({ theme, active 
   gap: "10px",
   textTransform: "capitalize",
   "&:hover": {
-    background: active ? "#f2f2f2" : "#667085",
-    color: active ? "#667085" : "#fff"
+    background: active ? "#667085" : "#f2f2f2",
+    color: active ? "#fff" : "#667085"
   },
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
-    "&:hover": {
-      background: active ? "#667085" : "#f2f2f2",
-      color: active ? "#fff" : "#667085"
-    }
-  }
 }));
 
 export const TextLabelReview = styled("div")`

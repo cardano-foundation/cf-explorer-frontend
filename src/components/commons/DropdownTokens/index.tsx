@@ -17,6 +17,7 @@ interface IDropdownTokens {
 const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hideInput }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const history = useHistory();
+  const isSend = tokens[0].assetQuantity < 0;
   const handleClickItem = (link: string) => {
     history.push(link);
   };
@@ -47,7 +48,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hide
     >
       <OptionSelect sx={{ display: "none" }} value='default'>
         {" "}
-        {!hideInput ? (type === "down" ? "Sent " : "Received ") : ""}Token
+        {!hideInput ? (isSend ? "Sent " : "Received ") : ""}Token
       </OptionSelect>
       {tokens.map((token, idx) => {
         const tokenName = token.assetName || token.assetId;

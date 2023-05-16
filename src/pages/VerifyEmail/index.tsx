@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { routers } from "../../commons/routers";
 import { verifyActive } from "../../commons/utils/userRequest";
-import { Container, Label, WrapButton, WrapContent, WrapForm } from "./styles";
+import { Container, Label, Title, WrapButton, WrapContent, WrapForm } from "./styles";
+import { FailIcon, SuccessIcon } from "~/commons/resources";
 
 export default function VerifyEmail() {
   const history = useHistory();
@@ -25,6 +26,8 @@ export default function VerifyEmail() {
     const code = params.get("code");
     if (code) {
       handleVerify(code);
+    } else {
+      history.push(routers.HOME);
     }
   }, [path.search]);
   return (
@@ -42,15 +45,24 @@ export default function VerifyEmail() {
               </Box>
             </WrapForm>
           ) : success ? (
-            <WrapForm>
-              <Label mb={3}>Success</Label>
+            <WrapForm alignItems={"center"}>
+              <SuccessIcon />
+              <Title mb={3}>You has successfully verified the account</Title>
               <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.SIGN_IN)}>
                 Sign In
               </WrapButton>
             </WrapForm>
           ) : (
-            <WrapForm>
-              <Label>Something went wrong</Label>
+            <WrapForm alignItems={"center"}>
+              <FailIcon />
+              <Title>Verify Failed</Title>
+              <Box>
+                <Label mb={1}>There's been an error in the verify process</Label>
+                <Label>This URL is either incorrect or has expired.</Label>
+              </Box>
+              <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.HOME)}>
+                Go to Dashboard
+              </WrapButton>
             </WrapForm>
           )}
         </FormGroup>

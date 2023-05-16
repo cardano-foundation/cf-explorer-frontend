@@ -9,30 +9,32 @@ export const StyledCollapse = styled(Collapse)`
   }
 `;
 
-export const Menu = styled(List)<{ open: number }>`
-  max-height: calc(100vh - 181px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  margin-bottom: 5px;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  &:hover::-webkit-scrollbar {
-    display: block;
-  }
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.md}px) {
-    max-height: unset;
-  }
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
-    & > div,
-    & > a {
-      padding-left: 16px;
+export const Menu = styled(List) <{ open: number }>(({ theme, open }) => ({
+  maxHeight: `calc(100vh - 181px)`,
+  "@media screen and (max-device-width: 1200px) and (orientation: portrait), screen and (max-device-height: 1200px) and (orientation: landscape)": {
+    maxHeight: "calc(100vh - 240px)"
+  },
+  overflowY: "auto",
+  overflowX: "hidden",
+  marginBottom: "5px",
+  "&::-webkit-scrollbar": {
+    display: "none"
+  },
+  "&:hover::-webkit-scrollbar": {
+    display: "block"
+  },
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+    maxHeight: "unset"
+  },
+  [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
+    "& > div, & > a": {
+      paddingLeft: "16px"
+    },
+    "& ul > a": {
+      paddingLeft: "40px"
     }
-    & ul > a {
-      padding-left: 40px;
-    }
   }
-`;
+}));
 
 export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<Theme> => ({
   minHeight: 48,
@@ -47,7 +49,7 @@ export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<The
   }
 });
 
-export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; text?: number; disable?: number }>`
+export const MenuIcon = styled("img") <{ iconOnly?: number; active?: number; text?: number; disable?: number }>`
   width: 24px;
   height: 24px;
   min-width: 24px;
@@ -58,22 +60,22 @@ export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; text
   }
 `;
 
-export const SubMenu = styled(List)<{ isActive?: number }>`
+export const SubMenu = styled(List) <{ isActive?: number }>`
   margin-left: 0px;
 `;
 
-export const MenuText = styled(ListItemText)<{ open?: number; active?: number; text?: number; disable?: number }>`
+export const MenuText = styled(ListItemText) <{ open?: number; active?: number; text?: number; disable?: number }>`
   opacity: ${(props) => (props.open ? 1 : 0)};
   width: ${(props) => (props.open ? "unset" : 0)};
   * {
     font-family: var(--font-family-title) !important;
     font-weight: var(--font-weight-bold) !important;
     color: ${({ active, text, disable, theme }) =>
-      active
-        ? text
-          ? theme.palette.text.primary
-          : theme.palette.common.white
-        : disable
+    active
+      ? text
+        ? theme.palette.text.primary
+        : theme.palette.common.white
+      : disable
         ? theme.palette.text.disabled
         : theme.palette.grey[400]};
     white-space: break-spaces;

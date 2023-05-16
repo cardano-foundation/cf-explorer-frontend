@@ -7,6 +7,7 @@ export const Bold = styled("span")`
 
 export const Flex = styled("div")`
   display: flex;
+  align-items: baseline;
 `;
 
 export const StyledLink = styled(Link)`

@@ -24,16 +24,16 @@ export const AddressLink = styled(Link)`
   font-size: 14px;
 `;
 
-export const AddressGroup = styled(Box)`
-  margin-top: 15px;
-  margin-bottom: 24px;
-  background: ${(props) => props.theme.palette.secondary.light};
-  border-radius: 8px;
-  padding: 12px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
+export const AddressGroup = styled(Box)(({ theme }) => ({
+  marginTop: "15px",
+  marginBottom: "24px",
+  background: theme.palette.secondary.light,
+  borderRadius: "8px",
+  padding: "12px 20px",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+}));
 
 export const ItemDetail = styled(Box)`
   width: 100%;
