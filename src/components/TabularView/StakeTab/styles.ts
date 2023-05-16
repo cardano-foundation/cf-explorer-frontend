@@ -30,6 +30,9 @@ export const StyledTabList = styled(TabList)`
   & > div > div {
     justify-content: flex-start;
   }
+  .MuiTabScrollButton-root {
+    display: none
+  }
 `;
 
 export const TableSubTitle = styled("span")(({ theme }) => ({
