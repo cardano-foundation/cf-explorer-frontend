@@ -31,7 +31,8 @@ export const SearchContainer = styled("div")(({ theme }) => ({
   marginBottom: 15,
   height: 35,
   [theme.breakpoints.down("sm")]: {
-    width: "unset"
+    width: "unset",
+    maxWidth: "unset"
   }
 }));
 
