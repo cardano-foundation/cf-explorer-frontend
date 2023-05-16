@@ -73,10 +73,6 @@ export const StackingLifecycleTable = styled(Table)`
     padding: 0;
     border: none;
   }
-  * {
-    box-shadow: none !important;
-    background-color: transparent !important;
-  }
 `;
 
 export const WrapReportName = styled(Box)`
