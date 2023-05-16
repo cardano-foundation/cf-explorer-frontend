@@ -33,7 +33,7 @@ export const GridBox = styled("div")(({ theme }) => ({
   display: "grid",
   gridTemplateColumns: "repeat(4, 1fr)",
   gridTemplateRows: "repeat(2, 1fr)",
-  gridGap: "20px 20px",
+  gridGap: "20px 10px",
   [theme.breakpoints.down("lg")]: {
     gridTemplateColumns: "repeat(3, 1fr)",
     gridTemplateRows: "repeat(3, 1fr)"
@@ -79,3 +79,11 @@ export const WrapPopoverContent = styled("div")`
 export const StyledListItemIcon = styled(ListItemIcon)`
   color: inherit;
 `;
+
+export const GridBoxCustom = styled(GridBox)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    "& > div": {
+      maxWidth: "100%"
+    }
+  }
+}));

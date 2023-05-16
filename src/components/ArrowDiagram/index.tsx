@@ -33,7 +33,8 @@ const ArrowDiagram: React.FC<ArrowDiagramProps> = ({
   connectToReverse = false,
   isCentalHorizontal = true,
   isCentalVertical = true,
-  dashed = false
+  dashed = false,
+  isCentalHorizontalFrom = false
 }) => {
   const [coords, setCoords] = useState<{ from: { x?: number; y?: number }; to: { x?: number; y?: number } }>({
     from: {},

@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useHistory, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 
-import { getShortHash, getShortWallet } from "../../commons/utils/helper";
+import { getShortHash } from "../../commons/utils/helper";
 import CopyButton from "../../components/commons/CopyButton";
 import SPOLifecycleComponent from "../../components/StakingLifeCycle/SPOLifecycle";
 
@@ -15,7 +15,6 @@ import {
   ButtonReport,
   ButtonReportContainer,
   ButtonSwitch,
-  StakeId,
   StyledContainer
 } from "./styles";
 

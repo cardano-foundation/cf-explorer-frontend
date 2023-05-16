@@ -18,16 +18,28 @@ import {
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import PoolCertificateIcon from "../../../../commons/resources/icons/Staking/PoolCertificateIcon.svg";
+import PoolCertificateMobile from "../../../../commons/resources/icons/Staking/PoolCertificateMobile.svg";
 
 import Line from "../../../Line";
-import { CardBox, FeeBox, FeeBoxText, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import {
+  CardBox,
+  FeeBox,
+  FeeBoxText,
+  IconButton,
+  IconButtonBack,
+  Info,
+  InfoText,
+  StyledContainer,
+  StyledGridContainer,
+  StyledBox
+} from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { API } from "../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../StackingFilter";
 import { WrapFilterDescription } from "../../DelegatorLifecycle/Registration/RecentRegistrations/styles";
-import { GridBox } from "../../DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
+import { GridBoxCustom } from "../../DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import OverviewStaking from "../../../commons/OverviewStaking";
 import PopoverStyled from "../../../commons/PopoverStyled";
 import { useHistory, useParams } from "react-router";
@@ -46,7 +58,7 @@ import { TitleTab } from "../../../TransactionDetail/TransactionMetadata/styles"
 import { DescriptionText } from "../../DelegatorLifecycle/styles";
 import { StyledLink } from "../styles";
 import { useUpdateEffect } from "react-use";
-
+import { useScreen } from "../../../../commons/hooks/useScreen";
 const PoollUpdates = ({
   containerPosition,
   handleResize
@@ -62,14 +74,24 @@ const PoollUpdates = ({
   const handleSelect = (pool: PoolUpdateItem | null) => {
     setSelected(pool);
   };
+
+  const { isMobile } = useScreen();
   return (
     <Box>
       <Box>
         <PoollUpdatesList onSelect={handleSelect} />
       </Box>
       <Box>
-        {!!selected && (
+        {!!selected && !isMobile && (
           <PoollUpdatesTimeline handleResize={handleResize} selected={selected} containerPosition={containerPosition} />
+        )}
+        {!!selected && isMobile && (
+          <PoollUpdatesTimelineMobile
+            handleResize={handleResize}
+            selected={selected}
+            setSelected={setSelected}
+            containerPosition={containerPosition}
+          />
         )}
       </Box>
     </Box>
@@ -104,7 +126,7 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
   if (txHash) return null;
 
   return (
-    <Box marginTop='32px'>
+    <StyledContainer marginTop='32px'>
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
         <DescriptionText>Recent Updates</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
@@ -115,7 +137,7 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
           />
         </Box>
       </Box>
-      <GridBox>
+      <GridBoxCustom>
         {data.map((item, ii) => {
           return (
             <OverviewStaking
@@ -128,8 +150,8 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
             />
           );
         })}
-      </GridBox>
-    </Box>
+      </GridBoxCustom>
+    </StyledContainer>
   );
 };
 
@@ -197,7 +219,7 @@ const PoollUpdatesTimeline = ({
   }
 
   return (
-    <Box>
+    <StyledBox>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
@@ -411,8 +433,237 @@ const PoollUpdatesTimeline = ({
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
+
       <PoolUpdateModal data={data} handleCloseModal={() => setOpenModal(false)} open={openModal} />
-    </Box>
+    </StyledBox>
+  );
+};
+
+const PoollUpdatesTimelineMobile = ({
+  containerPosition,
+  setSelected,
+  selected,
+  handleResize
+}: {
+  containerPosition: {
+    top?: number;
+    left?: number;
+  };
+  setSelected: (pool: PoolUpdateItem | null) => void;
+  handleResize: () => void;
+  selected: PoolUpdateItem;
+}) => {
+  const { data, loading } = useFetch<PoolUpdateDetail>(
+    selected?.poolUpdateId ? API.SPO_LIFECYCLE.POOL_UPDATE_DETAIL(selected.poolUpdateId) : ""
+  );
+  const [openModal, setOpenModal] = useState(false);
+  const adaHolderRef = useRef(null);
+  const feeRef = useRef(null);
+  const cadarnoSystemRef = useRef(null);
+  const fake1Ref = useRef(null);
+  const fake2Ref = useRef(null);
+  const registrationRef = useRef(null);
+  const SPOInfoRef = useRef(null);
+  const SPOKeyRef = useRef(null);
+  const fake1CardanoSystemRef = useRef(null);
+  const fake2CardanoSystemRef = useRef(null);
+
+  useEffect(() => {
+    handleResize();
+  }, [loading]);
+
+  if (loading) {
+    return (
+      <Box>
+        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+          <IconButtonBack onClick={() => setSelected(null)}>
+            <BackIcon />
+          </IconButtonBack>
+          <Box display={"flex"}>
+            <Info>
+              <AddressIcon fill='#438F68' />
+              <Box component={Skeleton} ml={1} variant='rectangular' width={145} height={18} />
+              <StyledCopyButton />
+            </Info>
+            <Info>
+              <ADAGreen />
+              <Box component={Skeleton} ml={1} variant='rectangular' width={60} height={18} />
+            </Info>
+            <Info>
+              <TimeIcon />
+              <Box component={Skeleton} ml={1} variant='rectangular' width={130} height={18} />
+            </Info>
+          </Box>
+        </Box>
+        <Box component={Skeleton} width={"100%"} height={400} variant='rectangular' borderRadius={12} />
+      </Box>
+    );
+  }
+
+  return (
+    <StyledBox>
+      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+        <IconButtonBack onClick={() => setSelected(null)}>
+          <BackIcon />
+        </IconButtonBack>
+        <Box display={"flex"}>
+          <Info>
+            <AddressIcon fill='#438F68' />
+            <CustomTooltip title={data?.txHash}>
+              <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            </CustomTooltip>
+            <StyledCopyButton text={data?.txHash} />
+          </Info>
+          <Info>
+            <ADAGreen />
+            <InfoText>{formatADA(data?.fee || 0)}</InfoText>
+          </Info>
+          <Info>
+            <TimeIcon />
+            <InfoText>{moment(data?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+          </Info>
+        </Box>
+      </Box>
+
+      <Box className='list-images' display={"flex"} flexDirection={"column"} gap={"28px"}>
+        <Box display={"flex"} flexDirection={"row"} alignItems={"flex-end"} justifyContent={"center"}>
+          <Box ref={fake1Ref} width={"1px"} height={"130px"}></Box>
+          <Box ref={adaHolderRef} position={"relative"}>
+            <SPOStalking />
+            <CustomTooltip title={data?.poolName}>
+              <PoolName> {data?.poolName}</PoolName>
+            </CustomTooltip>
+            <PopoverStyled
+              render={({ handleClick }) => (
+                <ButtonSPO
+                  ref={SPOInfoRef}
+                  component={IconButton}
+                  left={"40%"}
+                  onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
+                >
+                  <SPOInfo />
+                </ButtonSPO>
+              )}
+              content={
+                <Box>
+                  <Box>
+                    <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                      Pool ID:
+                    </Box>
+                    <PoolNamePopup to={details.delegation(data?.poolView)}>
+                      {getShortHash(data?.poolView || "")}
+                    </PoolNamePopup>
+                    <CopyButton text={data?.poolView} />
+                  </Box>
+                  <Box display={"flex"} alignItems={"center"}>
+                    <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                      Pool name:
+                    </Box>
+                    <PoolNamePopup to={details.delegation(data?.poolView)}>{data?.poolName}</PoolNamePopup>
+                  </Box>
+                </Box>
+              }
+            />
+            <PopoverStyled
+              render={({ handleClick }) => (
+                <ButtonSPO
+                  ref={SPOKeyRef}
+                  component={IconButton}
+                  left={"52%"}
+                  onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
+                >
+                  <SPOKey fill='#438F68' />
+                </ButtonSPO>
+              )}
+              content={
+                <Box>
+                  {data?.stakeKeys && data.stakeKeys.length > 0 && (
+                    <>
+                      <SPOKey fill='#108AEF' />
+                      <PoolNamePopup to={details.stake(data?.stakeKeys[0] || "")}>
+                        {getShortWallet(data?.stakeKeys[0] || "")}
+                      </PoolNamePopup>
+                      <CopyButton text={data?.stakeKeys[0]} />
+                    </>
+                  )}
+                </Box>
+              }
+            />
+          </Box>
+          <Box ref={fake2Ref} width={"1px"} height={"130px"}></Box>
+        </Box>
+
+        <Box>
+          <Box ref={registrationRef} onClick={() => setOpenModal(true)}>
+            <img src={PoolCertificateMobile} alt='RegistrationCertificateIcon' />
+          </Box>
+
+          <Box ref={feeRef}>
+            <PopoverStyled
+              render={({ handleClick }) => (
+                <FeeBox>
+                  <Box>
+                    <FeeBoxText component={"span"} mr={1}>
+                      {formatADA(data?.fee || 0)}
+                    </FeeBoxText>
+                    <ADAicon fontSize='16px' />
+                  </Box>
+                  <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
+                    <ButtonListIcon />
+                  </IconButton>
+                </FeeBox>
+              )}
+              content={<PopupStaking hash={data?.txHash || ""} />}
+            />
+          </Box>
+        </Box>
+        <Box
+          ref={cadarnoSystemRef}
+          display={"flex"}
+          flexDirection={"row"}
+          alignItems={"flex-end"}
+          justifyContent={"center"}
+        >
+          {/* <CadarnoSystemIcon /> */}
+          <Box ref={fake1CardanoSystemRef} width={"1px"} height={"120px"}></Box>
+          <img src={cadarnoSystem} alt='carrdano' />
+          <Box ref={fake2CardanoSystemRef} width={"1px"} height={"120px"}></Box>
+        </Box>
+
+        <svg
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: "140vh",
+            width: "100vw",
+            zIndex: "-1"
+          }}
+        >
+          <ArrowDiagram
+            containerPosition={containerPosition}
+            fromRef={fake1Ref}
+            toRef={fake1CardanoSystemRef}
+            pointTo='border'
+            pointFrom='border'
+            orient='horizontal'
+            connectToReverse
+          />
+
+          <ArrowDiagram
+            containerPosition={containerPosition}
+            fromRef={fake2Ref}
+            toRef={fake2CardanoSystemRef}
+            pointTo='border'
+            pointFrom='border'
+            orient='horizontal'
+            connectToReverse
+          />
+        </svg>
+      </Box>
+
+      <PoolUpdateModal data={data} handleCloseModal={() => setOpenModal(false)} open={openModal} />
+    </StyledBox>
   );
 };
 
@@ -424,9 +675,10 @@ export const PoolUpdateModal = ({
   data: PoolUpdateDetail | null;
   handleCloseModal: () => void;
 }) => {
+  const { isMobile } = useScreen();
   const [tabActive, setTabActive] = useState("poolCertificate");
   const renderPoolCert = () => (
-    <Grid container rowSpacing={1} columnSpacing={2}>
+    <StyledGridContainer container rowSpacing={1} columnSpacing={2}>
       <Grid item xs={6}>
         <Box
           minHeight={50}
@@ -441,7 +693,9 @@ export const PoolUpdateModal = ({
             </Box>
             {data && (
               <Box pt={"7px"} fontWeight={600}>
-                <Link to={details.transaction(data?.txHash || "")}>{getShortHash(data?.txHash || "")}</Link>{" "}
+                <Link to={details.transaction(data?.txHash || "")}>
+                  {isMobile ? getShortWallet(data?.txHash || "") : getShortHash(data?.txHash || "")}
+                </Link>{" "}
                 <CopyButton text={data?.txHash || ""} />
               </Box>
             )}
@@ -462,7 +716,9 @@ export const PoolUpdateModal = ({
             </Box>
             {data && (
               <Box pt={"7px"} fontWeight={600}>
-                <Link to={details.delegation(data?.poolView || "")}>{getShortHash(data?.poolView || "")}</Link>{" "}
+                <Link to={details.delegation(data?.poolView || "")}>
+                  {isMobile ? getShortWallet(data?.poolView || "") : getShortHash(data?.poolView || "")}
+                </Link>{" "}
                 <CopyButton text={data?.poolView || ""} />
               </Box>
             )}
@@ -485,7 +741,7 @@ export const PoolUpdateModal = ({
             {data && (
               <Box pt={"7px"}>
                 <Box display={"inline"} fontWeight={600} fontSize='0.875rem' color={({ palette }) => palette.blue[800]}>
-                  {getShortHash(data?.vrfKey || "")}
+                  {isMobile ? getShortWallet(data?.poolView || "") : getShortHash(data?.vrfKey || "")}
                 </Box>{" "}
                 <CopyButton text={data?.vrfKey || ""} />
               </Box>
@@ -627,7 +883,7 @@ export const PoolUpdateModal = ({
           </Box>
         </Box>
       </Grid>
-    </Grid>
+    </StyledGridContainer>
   );
 
   const renderCertificateUpdates = () => {

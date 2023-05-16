@@ -30,7 +30,8 @@ const Line: React.FC<LineProps> = ({
   isCentalVertical = true,
   connectFromReverse = false,
   connectToReverse = false,
-  dashed = false
+  dashed = false,
+  isCentalHorizontalFrom = false
 }) => {
   const [coords, setCoords] = useState<{ from: { x?: number; y?: number }; to: { x?: number; y?: number } }>({
     from: {},

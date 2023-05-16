@@ -1,4 +1,4 @@
-import { Popover, Button, styled } from "@mui/material";
+import { Popover, Button, styled, Box } from "@mui/material";
 
 export const SubmitButton = styled(Button)`
   display: flex;
@@ -44,7 +44,13 @@ export const GridBox = styled("div")(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     gridTemplateColumns: "1fr",
-    gridTemplateRows: "auto"
+    gridTemplateRows: "auto",
+    "& > span": {
+      width: "100% !important"
+    },
+    "& > div": {
+      maxWidth: "100%"
+    }
   }
 }));
 
@@ -75,3 +81,13 @@ export const WrapPopoverContent = styled("div")`
     background: ${(props) => props.theme.palette.green[600_10]};
   }
 `;
+export const StyledContainer = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    "& > div:nth-of-type(1)": {
+      alignItems: "center"
+    },
+    "& > p": {
+      marginRight: "10px"
+    }
+  }
+}));

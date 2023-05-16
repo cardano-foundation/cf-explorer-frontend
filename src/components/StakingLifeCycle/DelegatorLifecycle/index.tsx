@@ -15,7 +15,6 @@ import {
 import {
   ADATransfersButton,
   ButtonText,
-  DescriptionText,
   NextButton,
   PreviousButton,
   Step,

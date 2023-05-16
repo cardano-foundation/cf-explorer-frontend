@@ -1,4 +1,4 @@
-import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
@@ -27,6 +27,14 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     left: theme.spacing(2),
     background: theme.palette.red[600],
     transform: " translate(0, 60%)"
+  },
+  [theme.breakpoints.down("md")]: {
+    top: "0px",
+    width: "155px",
+    margin: "0px",
+    marginRight: "-6px",
+    fontSize: "16px",
+    padding: "12px 8px"
   }
 }));
 export const FeeBox = styled(Box)(({ theme }) => ({
@@ -53,6 +61,15 @@ export const FeeBox = styled(Box)(({ theme }) => ({
     left: theme.spacing(2),
     background: theme.palette.red[600],
     transform: " translate(0, 60%)"
+  },
+  [theme.breakpoints.down("md")]: {
+    width: "155px",
+    marginRight: "0px",
+    position: "absolute",
+    bottom: "0px",
+    left: "-35px",
+    fontSize: "16px",
+    padding: "12px 8px"
   }
 }));
 
@@ -123,4 +140,36 @@ export const HoldBoxText = styled(Box)(({ theme }) => ({
   fontSize: "18px",
   fontWeight: "bold",
   color: theme.palette.common.black
+}));
+
+export const StyledSkeletonContainer = styled(Box)(({ theme }) => ({}));
+export const StyledGridContainer = styled(Grid)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    wordBreak: "break-all",
+    "& > div": {
+      height: "100%"
+    },
+    "& > div > div": {
+      padding: "20px 15px",
+      gap: "8px",
+      minHeight: "40px"
+    }
+  }
+}));
+export const StyledBox = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    ".list-images": {
+      maxWidth: "390px",
+      margin: "0px auto"
+    }
+  },
+  [theme.breakpoints.down("sm")]: {
+    "& > div:nth-of-type(1)": {
+      alignItems: "flex-start",
+      "& > div:nth-of-type(1)": {
+        flexDirection: "column",
+        gap: "5px"
+      }
+    }
+  }
 }));

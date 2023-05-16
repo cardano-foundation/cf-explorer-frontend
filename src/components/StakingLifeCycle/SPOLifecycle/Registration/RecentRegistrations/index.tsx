@@ -7,7 +7,7 @@ import { API } from "../../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../../StackingFilter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
 import { EmptyRecord } from "../../../../commons/Table";
-import { GridBox, WrapFilterDescription } from "./styles";
+import { GridBox, WrapFilterDescription, StyledList } from "./styles";
 import { FilterDateLabel } from "../../../DelegatorLifecycle/Delegation/styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
 import { details } from "../../../../../commons/routers";
@@ -62,7 +62,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
 
   return (
     <Box marginTop='32px'>
-      <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
+      <StyledList display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
         <DescriptionText>Registration List</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
@@ -82,7 +82,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
             }
           />
         </Box>
-      </Box>
+      </StyledList>
       <GridBox>
         {loading &&
           [...new Array(12)].map((i, ii) => (
