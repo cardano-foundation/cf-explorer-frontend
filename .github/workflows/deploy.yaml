@@ -1,25 +1,25 @@
 name: Deploy the Explorer Frontend
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       stage:
-        description: 'Select the stage the frontend shall be deployed to.'
+        description: "Select the stage the frontend shall be deployed to."
         required: true
-        default: 'dev'
+        default: "dev"
         type: choice
         options:
-        - dev
+          - dev
       tag:
-        description: 'Select the tag which shall be deployed (e.g. 0.3.3, latest, ...)'
+        description: "Select the tag which shall be deployed (e.g. 0.3.3, latest, ...)"
         required: true
-        default: 'latest'
+        default: "latest"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-     - name: 🥸 Check if organization member
+      - name: 🥸 Check if organization member
         id: is_organization_member
         uses: jamessingleton/is-organization-member@v1
         with:
