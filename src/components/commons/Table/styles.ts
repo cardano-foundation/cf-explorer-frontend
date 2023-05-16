@@ -181,6 +181,7 @@ export const TableTitle = styled(Typography)`
   color: #000;
   flex: 1;
   text-align: left;
+  padding-top: 20px;
 `;
 
 export const ShowedResults = styled(Typography)`
