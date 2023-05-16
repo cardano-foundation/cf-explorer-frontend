@@ -10,7 +10,7 @@ export const HeaderDetailContainer = styled(Box)`
 `;
 
 export const EpochDetail = styled(Box)`
-  @media screen and (max-width: ${breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     display: flex;
     width: 100%;
     justify-content: center;
@@ -52,7 +52,7 @@ export const HeaderTitle = styled("h2")`
   color: ${(props) => props.theme.palette.common.black};
   font-size: 2.25rem;
   margin: 0.5rem 0;
-  ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.sm)} {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 1.5rem;
   }
 `;
@@ -153,10 +153,10 @@ export const DetailsInfo = styled(Grid)<{ items_length: number }>`
   margin-top: 15px;
   background: ${(props) => props.theme.palette.background.paper};
   border-radius: 15px;
-  ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.lg)} {
+  ${({ theme }) => theme.breakpoints.down("lg")} {
     padding: 30px 25px;
   }
-  ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.sm)} {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 20px 15px;
   }
 `;
@@ -289,7 +289,7 @@ export const CardItem = styled(Grid)<{ items_length: number; isDetailToken?: boo
     ...(items_length > 6
       ? {
           borderBottomWidth: 1,
-          [theme.breakpoints.up(theme.breakpoints.values.lg)]: {
+          [theme.breakpoints.up("lg")]: {
             ":nth-of-type(4n+1)": {
               borderLeftWidth: 0,
               paddingLeft: 0
@@ -308,7 +308,7 @@ export const CardItem = styled(Grid)<{ items_length: number; isDetailToken?: boo
         }
       : {
           borderBottomWidth: 0,
-          [theme.breakpoints.down(theme.breakpoints.values.lg)]: {
+          [theme.breakpoints.down("lg")]: {
             padding: "20px 25px"
           }
         }),
@@ -340,7 +340,7 @@ export const CardItem = styled(Grid)<{ items_length: number; isDetailToken?: boo
         }
       }
     },
-    [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+    [theme.breakpoints.down("md")]: {
       paddingTop: 20,
       paddingBottom: 20,
       borderBottomWidth: 1,
@@ -376,7 +376,7 @@ export const CardItem = styled(Grid)<{ items_length: number; isDetailToken?: boo
         paddingRight: `${isDetailToken ? `unset` : `0`}`
       }
     },
-    [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
+    [theme.breakpoints.down("sm")]: {
       paddingTop: 20,
       paddingBottom: 20,
       borderBottomWidth: 1,

@@ -118,7 +118,7 @@ export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, activ
   fontFamily: "var(--font-family-title)",
   border: `2px solid ${theme.palette.green[800_20]}`,
   cursor: "pointer",
-  [`@media screen and (max-width: ${theme.breakpoints.values.sm}px)`]: {
+  [theme.breakpoints.down("sm")]: {
     width: "95px",
     textAlign: "center",
     padding: "8px 0px"

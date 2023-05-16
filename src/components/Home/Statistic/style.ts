@@ -18,7 +18,7 @@ export const Item = styled(Card)`
   &:hover {
     box-shadow: ${(props) => props.theme.shadow.card};
   }
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 15px;
   }
 `;
@@ -34,7 +34,7 @@ export const ItemIcon = styled("img")`
   right: 20px;
   width: 40px;
   height: 40px;
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px}) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     right: 10px;
     top: 10px;
     width: 35px;
@@ -52,7 +52,7 @@ export const Name = styled("h4")`
   color: ${(props) => props.theme.palette.text.secondary};
   font-family: var(--font-family-text);
   font-size: 14px;
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 12px;
     margin-top: 0.5rem;
     width: max-content;
@@ -65,7 +65,7 @@ export const Title = styled("h3")`
   margin-top: 0;
   margin-bottom: 0.25rem;
   font-size: 20px;
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 16px;
     max-width: 87px;
     word-break: break-all;
@@ -75,7 +75,7 @@ export const Title = styled("h3")`
 export const Small = styled("small")`
   color: ${(props) => props.theme.palette.grey[400]};
   white-space: nowrap;
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 11px;
   }
 `;
@@ -84,7 +84,7 @@ export const AdaPrice = styled("small")`
   color: ${(props) => props.theme.palette.grey[400]};
   white-space: nowrap;
   margin-left: 15px;
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     margin-left: 0px;
   }
 `;
@@ -93,7 +93,7 @@ export const TimeDuration = styled("small")<{ marginTop?: string }>`
   margin-top: ${(props) => props.marginTop || 0};
   white-space: nowrap;
   display: block;
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     white-space: unset;
   }
 `;
@@ -118,7 +118,7 @@ export const Progress = styled("div")`
   overflow: hidden;
   font-size: 10px;
   font-weight: var(--font-weight-bold);
-  color: var(--text-color-reverse);
+  color: ${({ theme }) => theme.palette.common.white};
   color: ${(props) => props.theme.palette.primary.contrastText};
   margin-bottom: 0.5rem;
 `;

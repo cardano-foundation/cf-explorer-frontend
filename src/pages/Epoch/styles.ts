@@ -36,7 +36,7 @@ export const Status = styled("span")<{ status: string }>(({ status, theme }) => 
       : status === "rewarding"
       ? theme.palette.success.main
       : theme.palette.warning.main,
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down("md")]: {
     fontSize: "7px"
   }
 }));

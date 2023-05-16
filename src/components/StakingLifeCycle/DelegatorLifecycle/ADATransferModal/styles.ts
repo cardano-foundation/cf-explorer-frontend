@@ -2,20 +2,20 @@ import { Tab, Tabs, styled, alpha } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 
-export const ModalTitle = styled("div")({
+export const ModalTitle = styled("div")(({ theme }) => ({
   fontWeight: "var(--font-weight-bold)",
   fontSize: "var(--font-size-title)",
-  color: "var(--text-color)",
+  color: theme.palette.text.primary,
   marginBottom: 30
-});
+}));
 
-export const TextUserInfo = styled("span")({
+export const TextUserInfo = styled("span")(({ theme }) => ({
   fontWeight: 500,
   fontSize: "var(--font-size-text)",
-  color: "var(--text-color)",
+  color: theme.palette.text.primary,
   margin: "0px 3px",
   display: "inline-block"
-});
+}));
 
 export const TextTx = styled("span")`
   font-weight: 400;
@@ -38,7 +38,7 @@ export const TextAmountReward = styled("span")`
 export const StyledTabs = styled(Tabs)`
   .MuiTabs-flexContainer {
     gap: 50px;
-    @media screen and (max-width: 1023px) {
+    ${({ theme }) => theme.breakpoints.down("md")} {
       gap: 30px;
     }
   }

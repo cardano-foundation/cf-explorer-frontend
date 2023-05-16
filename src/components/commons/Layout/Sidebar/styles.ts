@@ -1,17 +1,17 @@
-import styled from "@emotion/styled";
+import { styled } from "@mui/material";
 import { Link } from "react-router-dom";
 import { MenuIcon } from "../../../../commons/resources";
 import { NETWORKS } from "../../../../commons/utils/constants";
 import { Button, Box } from "@mui/material";
 
-export const NavbarContainer = styled.nav`
+export const NavbarContainer = styled("nav")`
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
   padding: 25px 0px 60px;
   text-align: left;
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     height: auto;
     background-color: ${(props) => props.theme.palette.background.paper};
     padding: 0px;
@@ -23,7 +23,7 @@ export const HeaderTop = styled("div")`
   justify-content: space-between;
   align-items: center;
   z-index: 998;
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     padding: 15px;
   }
 `;
@@ -35,17 +35,17 @@ export const LogoLink = styled(Link)<{ open?: number }>`
   margin-bottom: 30px;
   width: max-content;
   height: 50px;
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     margin: 0;
   }
 `;
 
-export const NavBarLogo = styled.img`
+export const NavBarLogo = styled("img")`
   height: 50px;
   width: auto;
 `;
 
-export const NetworkName = styled.small<{ network: keyof typeof NETWORKS }>`
+export const NetworkName = styled("small")<{ network: keyof typeof NETWORKS }>`
   position: absolute;
   bottom: 2px;
   right: 0;
@@ -71,7 +71,7 @@ export const NetworkName = styled.small<{ network: keyof typeof NETWORKS }>`
   text-transform: uppercase;
 `;
 
-export const Toggle = styled.i`
+export const Toggle = styled("i")`
   width: 20px;
   height: 24px;
   background-image: url(${MenuIcon});
@@ -79,7 +79,7 @@ export const Toggle = styled.i`
   background-position: center;
   display: none;
   margin-left: 16px;
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     display: block;
   }
 `;

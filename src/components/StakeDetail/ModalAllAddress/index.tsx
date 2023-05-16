@@ -9,6 +9,7 @@ import { Link, useHistory } from "react-router-dom";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
 import CustomTooltip from "../../commons/CustomTooltip";
+import { StyledLink } from "~/components/share/styled";
 
 interface ModalAllAddressProps {
   open: boolean;
@@ -33,14 +34,11 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
       title: "Addresses",
       minWidth: 120,
       render: (r, idx) => (
-        <Link
-          to={details.address(r.address)}
-          style={{ fontFamily: "var(--font-family-text)", color: "var(--color-blue)" }}
-        >
+        <StyledLink to={details.address(r.address)}>
           <CustomTooltip title={r.address || ""} placement='top-start'>
             <Box component={"span"}>{getShortWallet(r.address)}</Box>
           </CustomTooltip>
-        </Link>
+        </StyledLink>
       ),
       key: "Addresses"
     },

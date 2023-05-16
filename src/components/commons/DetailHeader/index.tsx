@@ -238,7 +238,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               <Box
                 sx={{
                   my: 1,
-                  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+                  [theme.breakpoints.down("md")]: {
                     mb: 0
                   }
                 }}

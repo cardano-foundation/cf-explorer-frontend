@@ -51,7 +51,7 @@ export const TransactionContainer = styled(BoxRaised)`
       }
     }
   }
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 25px 15px;
     height: auto;
   }
@@ -81,7 +81,7 @@ export const Title = styled("h3")`
     content: "";
     width: 50px;
     height: 4px;
-    background: var(--color-green-light);
+    background: ${({ theme }) => theme.palette.primary.main};
   }
 `;
 

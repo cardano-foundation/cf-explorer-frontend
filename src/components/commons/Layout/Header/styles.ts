@@ -3,7 +3,7 @@ import { Container, styled } from "@mui/material";
 export const HeaderContainer = styled("header")`
   color: ${(props) => props.theme.palette.text.primary};
   position: relative;
-  @media (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     padding-top: 78px;
   }
 `;
@@ -20,7 +20,7 @@ export const HeaderBox = styled(Container)<{ home: number }>`
         justify-content: space-between;
         align-items:center;
       `}
-  @media (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     ${(props) => (props.home ? `` : `justify-content: flex-end;`)}
   }
 `;
@@ -32,7 +32,7 @@ export const HeaderTop = styled("div")`
   align-items: center;
   gap: 20px;
   padding: 30px 0px;
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     display: none;
   }
 `;
@@ -53,7 +53,7 @@ export const HeaderMain = styled("div")<{ home: number }>(({ theme, home }) => (
 export const Title = styled("h1")<{ home: number }>`
   display: ${(props) => (props.home ? "block" : "none")};
   text-align: center;
-  @media screen and (max-width: 767px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     font-size: 30px;
   }
 `;

@@ -68,7 +68,7 @@ export const AnalyticsTitle = styled("h2")`
   margin: 50px 0 15px;
 `;
 export const Title = styled("div")`
-  color: var(--text-color-pale);
+  color: ${({ theme }) => theme.palette.grey[400]};
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-title);
   color: ${(props) => props.theme.palette.primary.contrastText};

@@ -21,7 +21,7 @@ export const RegistrationContainer = styled(Container)(({ theme }) => ({
 export const StyledTabs = styled(Tabs)`
   .MuiTabs-flexContainer {
     gap: 50px;
-    @media screen and (max-width: 1023px) {
+    ${({ theme }) => theme.breakpoints.down("md")} {
       gap: 30px;
     }
   }

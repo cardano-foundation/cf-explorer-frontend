@@ -108,7 +108,7 @@ export const ButtonTitle = styled("button")(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   fontFamily: "var(--font-family-title)",
 
-  [`@media screen and (max-width: ${theme.breakpoints.values.sm}px)`]: {
+  [theme.breakpoints.down("sm")]: {
     width: "80px",
     padding: "6px 10px"
   }
@@ -144,7 +144,7 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   fontWeight: "bold",
   backgroundColor: active ? theme.palette.primary.main : "none",
 
-  [`@media screen and (max-width: ${theme.breakpoints.values.sm}px)`]: {
+  [theme.breakpoints.down("sm")]: {
     minWidth: `40px !important`,
     height: `28px !important`,
     marginRight: "0px"

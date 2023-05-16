@@ -40,7 +40,7 @@ export const TextHeadline = styled("span")`
   line-height: 38px;
   color: #000000;
   margin-bottom: 14px;
-  @media screen and (max-width: ${breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 24px;
     line-height: 28.13px;
   }
@@ -51,7 +51,7 @@ export const TitleHead = styled(Box)`
   justify-content: space-between;
   align-items: center;
 
-  @media screen and (max-width: ${breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -63,7 +63,7 @@ export const FilterHead = styled(Box)`
   flex-direction: row;
   align-items: center;
   gap: 16px;
-  @media screen and (max-width: ${breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     width: 100%;
     justify-content: space-between;
   }

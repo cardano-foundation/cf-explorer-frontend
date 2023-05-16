@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { Box, styled } from "@mui/material";
 
 export const Wrapper = styled(Box)(({ theme }) => ({
@@ -25,3 +26,21 @@ export const WrapAddress = styled(Box)(({ theme }) => ({
   width: 197,
   wordBreak: "break-all"
 }));
+
+export const Title = styled(Box)(() => ({
+  fontFamily: "var(--font-family-title)"
+}));
+
+export const CopyButtonMui = styled(Button)(({ theme }) => {
+  return {
+    display: "block",
+    color: theme.palette.primary.main,
+    border: `2px solid ${theme.palette.primary.main}`,
+    borderRadius: 10,
+    padding: `${theme.spacing(1)} ${theme.spacing(4)}`,
+    marginTop: theme.spacing(2),
+    textTransform: "capitalize",
+    fontWeight: "bold",
+    fontFamily: "var(--font-family-title)"
+  };
+});
