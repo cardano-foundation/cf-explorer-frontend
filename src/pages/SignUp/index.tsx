@@ -103,7 +103,8 @@ export default function SignUp() {
           value.length > 30 ||
           !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/.test(value)
         ) {
-          error = "Password must contain at least 8 characters, including upper lowercase number and special character";
+          error =
+            "Password has to be from 8 to 30 characters and must contain at least 1 number, 1 special character, 1 uppercase and 1 lowercase letter";
         }
         break;
       case "confirmPassword":
