@@ -1,6 +1,7 @@
 import { TabList } from "@mui/lab";
 import { Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
+import breakpoints from "~/themes/breakpoints";
 
 export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
   fontWeight: "bold",
@@ -29,5 +30,14 @@ export const StyledLink = styled(Link)`
 export const StyledTabList = styled(TabList)`
   & > div > div {
     justify-content: space-between;
+    @media screen and (max-width: ${breakpoints.values.sm}px) {
+      overflow-x: auto;
+      white-space: nowrap;
+    }
   }
 `;
+
+export const WrapperTabList = styled(Box)(({ theme }) => ({
+  borderBottom: `1px solid ${theme.palette.border.secondary}`,
+  overflowX: "auto"
+}));
