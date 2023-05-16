@@ -100,7 +100,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       label: isPoolReport ? "Epoch range" : "Date range",
       value: isPoolReport
         ? `Epoch ${epochStart} -  Epoch ${epochEnd}`
-        : `${moment(start).format("DD MM yy")} - ${moment(end).format("DD MM yy")}`,
+        : `${moment(start).format("MM/DD/yyyy")} - ${moment(end).format("MM/DD/yyyy")}`,
       step: STEPS.step1
     },
     {
