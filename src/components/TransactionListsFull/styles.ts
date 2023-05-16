@@ -17,3 +17,8 @@ export const StyledLink = styled(Link)`
 export const Label = styled(Box)`
   min-width: 50px;
 `;
+
+export const Img = styled("img")(({ theme }) => ({
+  paddingRight: "10px",
+  width: "35px"
+}));

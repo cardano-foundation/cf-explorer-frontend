@@ -6,13 +6,15 @@ import { details } from "../../../commons/routers";
 import { getShortHash, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import { CustomSelect, OptionSelect } from "./styles";
 import { useScreen } from "../../../commons/hooks/useScreen";
+import CustomTooltip from "../CustomTooltip";
 
 interface IDropdownTokens {
   tokens: Token[];
   type?: "up" | "down" | undefined;
+  hideInput?: boolean;
 }
 
-const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down" }) => {
+const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hideInput }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const history = useHistory();
   const handleClickItem = (link: string) => {
@@ -45,19 +47,30 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down" }) =>
     >
       <OptionSelect sx={{ display: "none" }} value='default'>
         {" "}
-        {type === "down" ? "Sent" : "Received"} Token
+        {!hideInput ? (type === "down" ? "Sent " : "Received ") : ""}Token
       </OptionSelect>
-      {tokens.map((token, idx) => (
-        <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token.assetId))}>
-          <Box>
-            {(token.assetName && token.assetName.length > 20 ? getShortHash(token.assetName) : token.assetName) ||
-              getShortWallet(token.assetId)}
-          </Box>
-          <Box fontWeight={"bold"} fontSize={"14px"}>
-            {`${numberWithCommas(token.assetQuantity) || ""}`}
-          </Box>
-        </OptionSelect>
-      ))}
+      {tokens.map((token, idx) => {
+        const tokenName = token.assetName || token.assetId;
+        const shortTokenName = token.assetName ? getShortHash(tokenName) : getShortWallet(tokenName);
+        const isTokenNameLong = tokenName.length > 20;
+        return (
+          <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token.assetId))}>
+            <Box>
+              {isTokenNameLong ? (
+                <CustomTooltip title={tokenName} placement="top">
+                  <Box>
+                    {shortTokenName}
+                  </Box>
+                </CustomTooltip>
+              ) : tokenName}
+            </Box>
+            <Box fontWeight={"bold"} fontSize={"14px"}>
+              {!hideInput ? `${type === "down" ? "-" : "+"} ` : ""}
+              {`${numberWithCommas(token.assetQuantity) || ""}`}
+            </Box>
+          </OptionSelect>
+        )
+      })}
     </CustomSelect>
   );
 };

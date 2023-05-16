@@ -68,6 +68,36 @@ const Card = ({
               </Box>
               <Box display='flex' justifyContent={"space-between"} width={"100%"} alignItems={"center"}>
                 <Box width={"100%"} display='flex' flexDirection='column' justifyContent='center' paddingTop='5px'>
+                  {type === "down" && (
+                    <Box
+                      justifyContent={"space-between"}
+                      width={"100%"}
+                      display='flex'
+                      flexDirection={isMobile ? "column" : "row"}
+                      paddingBottom='5px'
+                      alignItems='center'
+                    >
+                      <Box mr={3} minWidth={200}>
+                        <Box display={"flex"} justifyContent='flex-start' alignItems={"center"}>
+                          <Box pr={1}>UTXO:</Box>
+                          <Link to={details.transaction(item.txHash)}>
+                            <CustomTooltip title={item.txHash}>
+                              <Box
+                                component={"span"}
+                                fontWeight='bold'
+                                fontFamily={"var(--font-family-text)"}
+                                color={(theme) => theme.palette.secondary.main}
+                                mr={1}
+                              >
+                                {getShortHash(item.txHash)}
+                              </Box>
+                            </CustomTooltip>
+                          </Link>
+                          <CopyButton text={item.txHash} />
+                        </Box>
+                      </Box>
+                    </Box>
+                  )}
                   <Box display={"flex"} justifyContent='space-between' alignItems={"center"}>
                     {!isTablet ? (
                       <Box display={"flex"} alignItems='center' justifyContent={"flex-start"} pr={1}>
@@ -98,36 +128,6 @@ const Card = ({
                       </Box>
                     </Box>
                   </Box>
-                  {type === "down" && (
-                    <Box
-                      justifyContent={"space-between"}
-                      width={"100%"}
-                      display='flex'
-                      flexDirection={isMobile ? "column" : "row"}
-                      paddingTop='5px'
-                      alignItems='center'
-                    >
-                      <Box mr={3} minWidth={200}>
-                        <Box display={"flex"} justifyContent='flex-start' alignItems={"center"}>
-                          <Box pr={1}>UTXO:</Box>
-                          <Link to={details.transaction(item.txHash)}>
-                            <CustomTooltip title={item.txHash}>
-                              <Box
-                                component={"span"}
-                                fontWeight='bold'
-                                fontFamily={"var(--font-family-text)"}
-                                color={(theme) => theme.palette.secondary.main}
-                                mr={1}
-                              >
-                                {getShortHash(item.txHash)}
-                              </Box>
-                            </CustomTooltip>
-                          </Link>
-                          <CopyButton text={item.txHash} />
-                        </Box>
-                      </Box>
-                    </Box>
-                  )}
                   {item?.stakeAddress && (
                     <Box
                       justifyContent={"space-between"}
@@ -180,7 +180,7 @@ const Card = ({
                   <Box display={"flex"} alignItems={"center"}>
                     {item.tokens && item.tokens.length > 0 && (
                       <Box mt={2}>
-                        <DropdownTokens tokens={item.tokens} type={type} />
+                        <DropdownTokens tokens={item.tokens} type={type} hideInput />
                       </Box>
                     )}
                   </Box>
