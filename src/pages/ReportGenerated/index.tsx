@@ -5,12 +5,12 @@ import PoolLifecycle from "../../components/PoolLifecycle";
 
 const tabItems: TabsItem[] = [
   {
-    value: "1",
+    value: "stake-key",
     label: "Stake Key summary",
     component: <StakekeySummary />
   },
   {
-    value: "2",
+    value: "pools",
     label: "Pool lifecycle",
     component: <PoolLifecycle />
   }

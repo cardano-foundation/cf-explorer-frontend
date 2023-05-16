@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { TabContent, TabHeader, TabLabel } from "./styles";
 import { DownloadButtonAll } from "../../pages/StackingLifecycle/styles";
 import { DownloadWhiteIC } from "../../commons/resources";
+import { useHistory, useParams } from "react-router-dom";
+import { details } from "~/commons/routers";
 
 export interface TabsItem {
   value: string;
@@ -16,15 +18,17 @@ interface ReportGeneratedProps {
 }
 
 const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
-  const [value, setValue] = useState("1");
+  const { tab } = useParams<{ tab: "stake-key" | "pools" }>();
+  const history = useHistory();
+  console.log("🚀 ~ file: index.tsx:21 ~ tab:", tab);
 
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
+    history.push(details.generated_report(newValue));
   };
 
   return (
     <Box data-testid='report-generated-tabs'>
-      <TabContext value={value}>
+      <TabContext value={tab || "stake-key"}>
         <TabHeader>
           <Tabs>
             <Box>
@@ -33,7 +37,7 @@ const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
                   <Tab
                     key={item.value}
                     value={item.value}
-                    label={<TabLabel active={value === item.value}>{item.label}</TabLabel>}
+                    label={<TabLabel active={tab === item.value}>{item.label}</TabLabel>}
                   />
                 ))}
               </TabList>

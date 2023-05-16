@@ -19,7 +19,7 @@ import { ReportType } from "./FilledInfoModal";
 import { generateStakeKeyReport, generateStakePoolReport } from "../../../../commons/utils/userRequest";
 import useToast from "../../../../commons/hooks/useToast";
 import { useHistory } from "react-router-dom";
-import { routers } from "../../../../commons/routers";
+import { details, routers } from "../../../../commons/routers";
 import { useState } from "react";
 import { getEventType } from "../../../StakekeySummary";
 import { getPoolEventType } from "../../../PoolLifecycle";
@@ -73,7 +73,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       toast.success("Generate report success");
       handleCloseModal();
       setTimeout(() => {
-        history.push(`${routers.REPORT_GENERATED}`);
+        history.push(details.generated_report(isPoolReport ? "pools" : "stake-key"));
       }, 2000);
     } catch (err: any) {
       console.error(err);

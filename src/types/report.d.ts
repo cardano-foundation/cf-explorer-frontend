@@ -39,7 +39,7 @@ interface IPoolReportList {
   epochRanges: number[];
   toDate: string;
   isPoolSize: boolean;
-  isFreePaid: boolean;
+  isFeesPaid: boolean;
   event: string;
   reportId: number;
   isDeregistration: boolean;

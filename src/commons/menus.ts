@@ -54,7 +54,7 @@ export const menus: Menu[] = [
       { title: "Dashboard", href: routers.STAKING_LIFECYCLE },
       { title: "Timeline Delegator", href: routers.DELEGATOR_SEARCH },
       { title: "Timeline SPO", href: routers.SPO_SEARCH },
-      { title: "Report", href: routers.REPORT_GENERATED }
+      { title: "Report", href: routers.REPORT_GENERATED.replace(":tab", "stake-key") }
     ]
   },
   {
