@@ -2,6 +2,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
 import Card from "../commons/Card";
+import DropdownTokens from "../commons/DropdownTokens";
 import Table, { Column } from "../commons/Table";
 import {
   formatADAFull,
@@ -11,11 +12,14 @@ import {
   getShortWallet,
   numberWithCommas
 } from "../../commons/utils/helper";
+import sendImg from "../../commons/resources/images/sendImg.svg";
+import receiveImg from "../../commons/resources/images/receiveImg.svg";
 import { details } from "../../commons/routers";
-import { Label, StyledLink, StyledContainer } from "./styles";
+import { Label, StyledLink, StyledContainer, Img } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
 import ADAicon from "../commons/ADAIcon";
+import { SmallText } from "../share/styled";
 
 interface TransactionListFullProps {
   underline?: boolean;
@@ -54,14 +58,22 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       key: "txhash",
       minWidth: 120,
 
-      render: (r) => (
-        <div>
-          <CustomTooltip title={r.hash}>
-            <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
-          </CustomTooltip>
-          <Box mt={1}>{formatDateTimeLocal(r.time || "")}</Box>
-        </div>
-      )
+      render: (transaction) => {
+        const type = transaction?.balance >= 0 ? "up" : "down";
+        return (
+          <Box display={"flex"}>
+            <Box width={50} display={transaction?.balance ? "" : "none"}>
+              <Img src={type !== "up" ? receiveImg : sendImg} alt='send icon' />
+            </Box>
+            <Box display={"grid"}>
+              <CustomTooltip title={transaction.hash}>
+                <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
+              </CustomTooltip>
+              <SmallText>{formatDateTimeLocal(transaction.time || "")}</SmallText>
+            </Box>
+          </Box>
+        );
+      }
     },
     {
       title: "Block",
@@ -81,55 +93,6 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: "Addresses",
-      key: "address",
-      minWidth: 120,
-      render(r, index) {
-        return (
-          <div>
-            <Box display={"flex"}>
-              <Label> Input: </Label>
-              <div>
-                {r.addressesInput.slice(0, 1).map((tx, key) => {
-                  return (
-                    <CustomTooltip key={key} title={tx}>
-                      <StyledLink to={details.address(tx)} key={key}>
-                        <Box ml={1}>{getShortWallet(tx)}</Box>
-                      </StyledLink>
-                    </CustomTooltip>
-                  );
-                })}
-                {r.addressesInput.length > 1 && (
-                  <StyledLink to={details.transaction(r.hash)}>
-                    <Box ml={1}>...</Box>
-                  </StyledLink>
-                )}
-              </div>
-            </Box>
-            <Box display={"flex"} mt={1}>
-              <Label>Output: </Label>
-              <div>
-                {r.addressesOutput.slice(0, 1).map((tx, key) => {
-                  return (
-                    <CustomTooltip key={key} title={tx}>
-                      <StyledLink to={details.address(tx)} key={key}>
-                        <Box ml={1}>{getShortWallet(tx)}</Box>
-                      </StyledLink>
-                    </CustomTooltip>
-                  );
-                })}
-                {r.addressesOutput.length > 1 && (
-                  <StyledLink to={details.transaction(r.hash)}>
-                    <Box ml={1}>...</Box>
-                  </StyledLink>
-                )}
-              </div>
-            </Box>
-          </div>
-        );
-      }
-    },
-    {
       title: "Fee",
       key: "fee",
       minWidth: 120,
@@ -141,15 +104,48 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: "Output in ADA",
+      title: "ADA amount",
       minWidth: 120,
-      key: "ouput",
-      render: (r) => (
-        <Box display='inline-flex' alignItems='center'>
-          <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
-          <ADAicon />
-        </Box>
-      )
+      key: "totalOutput",
+      render: (transaction) => {
+        const isUp = transaction?.balance >= 0;
+        return (
+          <Box display='inline-flex' alignItems='center'>
+            {
+              transaction?.balance ? (
+                <>
+                  <Box mr={1} color={isUp ? "success.main" : "error.main"}>
+                    {!isUp ? `- ` : `+ `}
+                    {formatADAFull(transaction.balance)}
+                  </Box>
+                  <ADAicon />
+                </>
+              ) : null
+            }
+          </Box>
+        );
+      }
+    },
+    {
+      title: "Token",
+      minWidth: 120,
+      key: "totalOutput",
+      render: (transaction) => {
+        const type = transaction?.balance >= 0 ? "up" : "down";
+        let tokens: Token[] = [];
+        if (transaction.tokens && transaction.tokens.length > 0) {
+          tokens = transaction.tokens.map((token) => ({
+            assetId: token.addressId.toString(),
+            assetQuantity: token.quantity,
+            assetName: token.displayName
+          }));
+        }
+        return (
+          <Box display={"flex"} alignItems={"center"}>
+            {transaction.tokens && transaction.tokens.length > 0 && <DropdownTokens tokens={tokens} type={type} />}
+          </Box>
+        );
+      }
     }
   ];
 
