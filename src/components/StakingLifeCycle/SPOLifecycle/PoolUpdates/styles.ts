@@ -51,7 +51,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
     background: theme.palette.red[600],
     transform: " translate(0, 60%)"
   },
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     width: "155px"
   }
 }));
@@ -118,7 +118,7 @@ export const StyledBox = styled(Box)(({ theme }) => ({
     maxWidth: "390px",
     margin: "0px auto"
   },
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     "& > div:nth-of-type(1)": {
       alignItems: "flex-start",
       "& > div:nth-of-type(1)": {

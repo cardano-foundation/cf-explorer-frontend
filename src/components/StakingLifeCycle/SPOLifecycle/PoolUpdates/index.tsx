@@ -75,17 +75,17 @@ const PoollUpdates = ({
     setSelected(pool);
   };
 
-  const { isMobile } = useScreen();
+  const { isTablet } = useScreen();
   return (
     <Box>
       <Box>
         <PoollUpdatesList onSelect={handleSelect} />
       </Box>
       <Box>
-        {!!selected && !isMobile && (
+        {!!selected && !isTablet && (
           <PoollUpdatesTimeline handleResize={handleResize} selected={selected} containerPosition={containerPosition} />
         )}
-        {!!selected && isMobile && (
+        {!!selected && isTablet && (
           <PoollUpdatesTimelineMobile
             handleResize={handleResize}
             selected={selected}
