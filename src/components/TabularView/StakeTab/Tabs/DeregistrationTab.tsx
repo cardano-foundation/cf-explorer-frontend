@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../../../commons/hooks/useFetchList";
@@ -9,6 +9,8 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
 import { StyledLink, TableSubTitle } from "../styles";
 import { AdaValue } from "./StakeRegistrationTab";
+import { EyeIcon } from "~/commons/resources";
+import { DeregistrationCertificateModal } from "~/components/StakingLifeCycle/DelegatorLifecycle/Deregistration";
 
 const DeregistrationTab = () => {
   const theme = useTheme();
@@ -17,6 +19,7 @@ const DeregistrationTab = () => {
   const [sort, setSort] = useState<string>("");
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
+  const [openModal, setOpenModal] = useState(false);
 
   const fetchData = useFetchList<DeregistrationItem>(stakeId ? API.STAKE_LIFECYCLE.DEREGISTRATION(stakeId) : "", {
     ...pageInfo,
@@ -64,10 +67,21 @@ const DeregistrationTab = () => {
           </TableSubTitle>
         </Box>
       )
+    },
+    {
+      title: "Certificate",
+      key: "txHash",
+      minWidth: "120px",
+      render: (r) => (
+        <IconButton onClick={() => setOpenModal(true)}>
+          <EyeIcon style={{ transform: "scale(.8)" }} />
+        </IconButton>
+      )
     }
   ];
 
   return (
+    <>
     <Table
       {...fetchData}
       columns={columns}
@@ -79,6 +93,8 @@ const DeregistrationTab = () => {
       }}
       onClickRow={(e, r: DeregistrationItem) => history.push(details.transaction(r.txHash))}
     />
+      <DeregistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
+    </>
   );
 };
 

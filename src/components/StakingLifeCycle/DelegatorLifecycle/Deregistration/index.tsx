@@ -481,7 +481,7 @@ const DeregistrationTimelineMobile = ({
   );
 };
 
-const DeregistrationCertificateModal = ({
+export const DeregistrationCertificateModal = ({
   stake,
   ...props
 }: {
