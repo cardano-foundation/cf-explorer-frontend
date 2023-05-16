@@ -82,6 +82,8 @@ export const Label = styled(Box)`
   opacity: 0.8;
 `;
 
+
+
 export const ForgotPassword = styled("span")`
   font-weight: 400;
   font-size: 14px;
@@ -123,12 +125,30 @@ export const WrapDivider = styled(Divider)`
   background-color: ${({ theme }) => theme.palette.grey[300]};
 `;
 
+export const Title = styled(Box)`
+  font-weight: 700;
+  font-size: 20px;
+  color: ${({ theme }) => theme.palette.grey[500]};
+`;
+
 export const WrapOr = styled(Box)`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
   color: ${({ theme }) => theme.palette.grey[300]};
   text-transform: uppercase;
+`;
+
+export const WrapEmail = styled("span")`
+  font-weight: 400;
+  font-size: 16px;
+  color: ${({ theme }) => theme.palette.secondary.main};
+`;
+
+export const LabelInfo = styled(Box)`
+  font-weight: 400;
+  font-size: 16px;
+  color: ${({ theme }) => theme.palette.grey[400]};
 `;
 
 export const WrapSignUp = styled(Box)`

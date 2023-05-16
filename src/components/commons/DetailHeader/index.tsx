@@ -196,7 +196,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                 )}
                 {item.allowSearch && keyItem && openBackdrop[keyItem] && (
                   <StyledSelect
-                    renderValue={() => (item.isSent ? "Received Token" : "Sent Token")}
+                    renderValue={() => ("Token")}
                     displayEmpty
                     value={""}
                     onChange={() => {

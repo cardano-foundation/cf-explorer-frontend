@@ -100,7 +100,7 @@ const SummaryItems = ({
       </Box>
       {item.tokens && item.tokens.length > 0 && (
         <Box display={"flex"} alignItems={"center"} ml={isMobile ? "50px" : 0}>
-          <DropdownTokens tokens={item.tokens} type={type === "down" ? "up" : "down"} />
+          <DropdownTokens tokens={item.tokens} type={type} />
         </Box>
       )}
     </Box>

@@ -11,6 +11,13 @@ export const Container = styled(Box)`
   padding: 30px 0;
 `;
 
+export const Title = styled(Box)`
+  font-weight: 700;
+  font-size: 20px;
+  color: ${({ theme }) => theme.palette.grey[500]};
+`;
+
+
 export const WrapContent = styled(Box)`
   display: flex;
   flex-direction: column;
@@ -111,6 +118,7 @@ export const WrapButton = styled(Button)`
   font-size: 16px;
   line-height: 19px;
   text-align: center;
+  text-transform: none;
 `;
 
 export const WrapButtonConnectWallet = styled(Button)`

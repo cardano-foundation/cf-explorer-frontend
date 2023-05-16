@@ -13,9 +13,28 @@ export const NumberParagraph = styled(Box)`
   text-align: right;
 `;
 
+//show overflow-y when hover
 export const WrapContent = styled(Box)`
   max-height: 60vh;
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: ${(props) => props.theme.palette.grey[300]};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${(props) => props.theme.palette.grey[100]};
+    }
+  }
+
 `;
 
 export const Watermark = styled("span")`

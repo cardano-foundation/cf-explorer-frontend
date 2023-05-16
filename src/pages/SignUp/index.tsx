@@ -2,7 +2,7 @@ import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment 
 import { useEffect, useReducer, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
-import { EmailIcon, HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
+import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "../../commons/resources";
 import { routers } from "../../commons/routers";
 import { signUp } from "../../commons/utils/userRequest";
 import {
@@ -12,8 +12,11 @@ import {
   FormHelperTextCustom,
   InputCustom,
   Label,
+  LabelInfo,
+  Title,
   WrapButton,
   WrapContent,
+  WrapEmail,
   WrapForm,
   WrapHintText,
   WrapInput,
@@ -197,21 +200,27 @@ export default function SignUp() {
         setSuccess(true);
         return;
       }
-    } catch (error) {
-      //To do
+    } catch (error: any) {
+      if(error.response.status === 400){
+        setFormData({
+          name: "email",
+          touched: true,
+          error: error.response.data.errorMessage
+        });
+      }
     } finally {
       setLoading(false);
     }
   };
   return (
     <Container>
-      <WrapContent>
-        <WrapTitle>Sign up</WrapTitle>
-        <WrapHintText>
-          Already have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_IN)}>Sign In Here</WrapSignUp>
-        </WrapHintText>
-        <FormGroup>
-          {!success ? (
+      {!success ? (
+        <WrapContent>
+          <WrapTitle>Sign up</WrapTitle>
+          <WrapHintText>
+            Already have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_IN)}>Sign In Here</WrapSignUp>
+          </WrapHintText>
+          <FormGroup>
             <WrapForm>
               <CloseButton saving={0} onClick={() => handleClose()}>
                 <IoMdClose />
@@ -330,16 +339,29 @@ export default function SignUp() {
                 Create an Account
               </WrapButton>
             </WrapForm>
-          ) : (
-            <WrapForm>
-              <CloseButton saving={0} onClick={() => handleClose()}>
-                <IoMdClose />
-              </CloseButton>
-              <Label>Please check your email to confirm your account</Label>
-            </WrapForm>
-          )}
-        </FormGroup>
-      </WrapContent>
+          </FormGroup>
+        </WrapContent>) : (
+        <WrapContent>
+          <WrapForm>
+            <FormGroup>
+              <Box textAlign={'center'}>
+                <SuccessIcon />
+                <Box paddingY={"15px"}>
+                  <Title>Verify Your Account</Title>
+                </Box>
+                <Box paddingBottom={"30px"}>
+                  <LabelInfo>
+                    Click on the link we sent to <WrapEmail>{formData.email.value}</WrapEmail> to finish your account setup.
+                  </LabelInfo>
+                </Box>
+              </Box>
+              <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.SIGN_IN)}>
+                Sign In
+              </WrapButton>
+            </FormGroup>
+          </WrapForm>
+        </WrapContent>
+      )}
     </Container>
   );
 }

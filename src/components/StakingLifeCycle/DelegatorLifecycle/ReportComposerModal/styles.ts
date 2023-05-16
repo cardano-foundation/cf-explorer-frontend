@@ -126,7 +126,13 @@ export const ButtonEvent = styled(Button)<{ active: boolean }>(({ theme, active 
       background: active ? "#667085" : "#f2f2f2",
       color: active ? "#fff" : "#667085"
     }
-  }
+  },
+  "@media screen and (max-device-width: 1200px) and (orientation: portrait), screen and (max-device-height: 1200px) and (orientation: landscape)": {
+    "&:hover": {
+      background: active ? "#667085" : "#f2f2f2",
+      color: active ? "#fff" : "#667085"
+    }
+  },
 }));
 
 export const TextLabelReview = styled("div")`
