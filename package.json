@@ -1,6 +1,6 @@
 {
   "name": "cardano-blockchain-explorer",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "private": true,
   "dependencies": {
     "@cardano-foundation/cardano-connect-with-wallet": "^0.1.57",
