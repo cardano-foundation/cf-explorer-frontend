@@ -2,12 +2,14 @@ import { useState } from "react";
 import Table, { Column } from "../commons/Table";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { API } from "../../commons/utils/api";
-import { Box, Button } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import moment from "moment";
 import { TextOverFlow } from "../StakingLifeCycle/DelegatorLifecycle/ReportComposerModal/styles";
 import { defaultAxiosDownload } from "../../commons/utils/axios";
 import { useHistory } from "react-router-dom";
 import { details } from "../../commons/routers";
+import CustomIcon from "../commons/CustomIcon";
+import { DownloadGreenIcon } from "~/commons/resources";
 
 export const EVENTS: { [key in keyof IReportStaking]?: string } = {
   eventDelegation: "Delegation",
@@ -56,6 +58,10 @@ const StakekeySummary = () => {
         link.setAttribute("download", `${fileName}.${typeExport === "CSV" ? "csv" : "xlsx"}`);
         document.body.appendChild(link);
         link.click();
+      })
+      .catch((e) => {
+        //To Do
+        console.log(e);
       });
   };
 
@@ -100,28 +106,16 @@ const StakekeySummary = () => {
     {
       key: "download",
       title: "",
-      render(data, index) {
+      render(data) {
         return (
-          <Box textAlign={"right"} key={index} display={"flex"}>
-            <Box
-              component={Button}
-              display={"block"}
-              textTransform={"capitalize"}
-              onClick={() => {
-                downloadFn(data.id, data.reportName, "CSV");
-              }}
-            >
-              Export CSV
-            </Box>
-            <Box
-              ml={2}
-              component={Button}
-              display={"block"}
-              textTransform={"capitalize"}
-              onClick={() => downloadFn(data.id, data.reportName, "EXCEL")}
-            >
-              Export Excel
-            </Box>
+          <Box
+            ml={2}
+            component={IconButton}
+            display={"block"}
+            textTransform={"capitalize"}
+            onClick={() => downloadFn(data.id, data.reportName, "EXCEL")}
+          >
+            <CustomIcon icon={DownloadGreenIcon} width={24} />
           </Box>
         );
       }

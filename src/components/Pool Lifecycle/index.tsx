@@ -50,7 +50,7 @@ const PoolLifecycle = () => {
       key: "feePaid",
       title: "Fee paid",
       render(data) {
-        return data.isFreePaid ? "Yes" : "No";
+        return data.isFeesPaid ? "Yes" : "No";
       }
     },
     {

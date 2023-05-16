@@ -1,9 +1,16 @@
-import { Box, Button, CircularProgress, Container, Grid } from "@mui/material";
+import { Box, Button, CircularProgress, Container, Grid, IconButton } from "@mui/material";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { useScreen } from "../../commons/hooks/useScreen";
-import { FilterIC, ListOfReportsIC, PersionalSettingIC, ScanQRCodeIC, WatchlistIC } from "../../commons/resources";
+import {
+  DownloadGreenIcon,
+  FilterIC,
+  ListOfReportsIC,
+  PersionalSettingIC,
+  ScanQRCodeIC,
+  WatchlistIC
+} from "../../commons/resources";
 import { details, routers } from "../../commons/routers";
 import { API } from "../../commons/utils/api";
 import { defaultAxiosDownload } from "../../commons/utils/axios";
@@ -21,6 +28,7 @@ import {
   TitleHead,
   WrapReportName
 } from "./styles";
+import CustomIcon from "~/components/commons/CustomIcon";
 
 const cardList = [
   {
@@ -124,6 +132,9 @@ const Dashboard: React.FC = () => {
         document.body.appendChild(link);
         link.click();
       })
+      .catch((e) => {
+        console.log(e.message || "");
+      })
       .finally(() => {
         setOnDownload(false);
       });
@@ -159,40 +170,24 @@ const Dashboard: React.FC = () => {
     },
     {
       key: "downloadUrl",
-      render(data, idx) {
+      render(data) {
         return onDownload === data.id ? (
           <CircularProgress size={22} color='primary' />
         ) : (
-          <Box textAlign={"right"} key={idx}>
-            <Box
-              component={Button}
-              textTransform={"capitalize"}
-              onClick={() => {
-                downloadReportDashboard(
-                  data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
-                  data.reportName,
-                  data.type,
-                  "CSV"
-                );
-              }}
-            >
-              Export CSV
-            </Box>
-            <Box
-              ml={2}
-              component={Button}
-              textTransform={"capitalize"}
-              onClick={() =>
-                downloadReportDashboard(
-                  data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
-                  data.reportName,
-                  data.type,
-                  "EXCEL"
-                )
-              }
-            >
-              Export Excel
-            </Box>
+          <Box
+            ml={2}
+            component={IconButton}
+            textTransform={"capitalize"}
+            onClick={() =>
+              downloadReportDashboard(
+                data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
+                data.reportName,
+                data.type,
+                "EXCEL"
+              )
+            }
+          >
+            <CustomIcon icon={DownloadGreenIcon} width={24} />
           </Box>
         );
       }
