@@ -26,11 +26,11 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
     "& > div:nth-of-type(1)": {
       "& > div:nth-of-type(1)": {
         padding: "0 16px"
+      },
+      "& > div:nth-of-type(2)": {
+        paddingLeft: "16px"
       }
     },
-    padding: "0 0 40px",
-    ".card-table > div:nth-child(2)": {
-      padding: "0 0 25px 16px"
-    }
+    paddingTop: "0px"
   }
 }));
