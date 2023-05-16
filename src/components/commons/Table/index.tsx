@@ -245,7 +245,6 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
   }, [poolType]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
-    console.log("page handleChangePage", page);
     pagination && pagination.onChange && pagination.onChange(page, size);
     setPage(page);
     clearSelection?.();
@@ -512,6 +511,11 @@ const PaginationCustom = ({
               onChange={(e) => {
                 if (+e.target.value <= totalPage) {
                   setInputPage(+e.target.value);
+                }
+              }}
+              onBlur={(e) => {
+                if (inputPage < 1) {
+                  setInputPage(1);
                 }
               }}
               disabled={loading}
