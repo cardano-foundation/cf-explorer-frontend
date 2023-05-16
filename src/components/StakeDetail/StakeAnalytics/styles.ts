@@ -121,7 +121,6 @@ export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, activ
   [`@media screen and (max-width: ${theme.breakpoints.values.sm}px)`]: {
     width: "95px",
     textAlign: "center",
-    marginRight: 0,
     padding: "8px 0px"
   }
 }));

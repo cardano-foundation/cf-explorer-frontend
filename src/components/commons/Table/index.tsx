@@ -245,6 +245,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
   }, [poolType]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
+    console.log("page handleChangePage", page);
     pagination && pagination.onChange && pagination.onChange(page, size);
     setPage(page);
     clearSelection?.();
@@ -505,7 +506,7 @@ const PaginationCustom = ({
         return (
           <Box width={isGalaxyFoldSmall ? "100vw" : "auto"} textAlign={isGalaxyFoldSmall ? "left" : "center"}>
             <InputNumber
-              type={"number"}
+              type={"string"}
               value={inputPage}
               length={inputPage.toString().length || 1}
               onChange={(e) => {

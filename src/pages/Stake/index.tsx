@@ -15,6 +15,7 @@ import NoRecord from "../../components/commons/NoRecord";
 import SelectedIcon from "../../components/commons/SelectedIcon";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
 import { useScreen } from "../../commons/hooks/useScreen";
+import { Box } from "@mui/material";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",
@@ -108,34 +109,36 @@ const Stake = () => {
 
   return (
     <StyledContainer>
-      <Card className='stake-table'>
-        <StyledTabs
-          value={poolType}
-          onChange={onChangeTab}
-          sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}` }}
-          TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
-        >
-          <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
-          <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
-        </StyledTabs>
-        <Table
-          {...fetchData}
-          columns={columns}
-          total={{ title: "Total Token List", count: fetchData.total }}
-          pagination={{
-            ...pageInfo,
-            total: fetchData.total,
-            onChange: (page, size) => {
-              mainRef.current?.scrollTo(0, 0);
-              history.push({ search: stringify({ page, size, poolType }) });
-            },
-            handleCloseDetailView: handleClose
-          }}
-          onClickRow={openDetail}
-          selected={selected}
-          showTabView
-        />
-      </Card>
+      <Box className='stake-list'>
+        <Card>
+          <StyledTabs
+            value={poolType}
+            onChange={onChangeTab}
+            sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}` }}
+            TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
+          >
+            <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
+            <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
+          </StyledTabs>
+          <Table
+            {...fetchData}
+            columns={columns}
+            total={{ title: "Total Token List", count: fetchData.total }}
+            pagination={{
+              ...pageInfo,
+              total: fetchData.total,
+              onChange: (page, size) => {
+                mainRef.current?.scrollTo(0, 0);
+                history.push({ search: stringify({ page, size, poolType }) });
+              },
+              handleCloseDetailView: handleClose
+            }}
+            onClickRow={openDetail}
+            selected={selected}
+            showTabView
+          />
+        </Card>
+      </Box>
       {stake && <DetailViewStakeKey stakeId={stake} handleClose={handleClose} />}
     </StyledContainer>
   );

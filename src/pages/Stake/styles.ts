@@ -6,8 +6,8 @@ export const StyledContainer = styled(Container)`
   text-align: left;
 
   @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
-    .stake-table {
-      padding-left: 16px;
+    .stake-list {
+      padding: 0px 16px;
     }
   }
 `;

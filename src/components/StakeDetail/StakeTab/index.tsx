@@ -8,7 +8,7 @@ import {
   InstantaneousHistoryIcon,
   TransactionIcon
 } from "../../../commons/resources";
-import { StyledTabList, TitleTab } from "./styles";
+import { StyledTabList, TitleTab, WrapperTabList } from "./styles";
 import { useHistory, useParams } from "react-router-dom";
 import DelegationHistoryTab from "./Tabs/DelegationHistoryTab";
 import StakeHistoryTab from "./Tabs/StakeHistoryTab";
@@ -69,7 +69,7 @@ const StakeTab = () => {
   return (
     <Box mt={4}>
       <TabContext value={tabActive}>
-        <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.secondary}` }}>
+        <WrapperTabList>
           <StyledTabList
             onChange={handleChange}
             TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
@@ -90,7 +90,7 @@ const StakeTab = () => {
               />
             ))}
           </StyledTabList>
-        </Box>
+        </WrapperTabList>
         {tabs.map((item) => (
           <TabPanel key={item.key} value={item.key} style={{ padding: 0 }}>
             {item.component}
