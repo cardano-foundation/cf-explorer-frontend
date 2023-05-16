@@ -1,7 +1,16 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
 
-import { NextButton, PreviousButton, Step, StepButton, TitleStep, WrapTitle } from "./styles";
+import {
+  NextButton,
+  PreviousButton,
+  Step,
+  StepButton,
+  TitleStep,
+  WrapTitle,
+  StyledComponent,
+  StyledGroupButton
+} from "./styles";
 
 import {
   InfoIcon,
@@ -106,7 +115,7 @@ const SPOLifecycle = ({
   ];
 
   return (
-    <Box mr={isMobile ? 2 : 0}>
+    <StyledComponent mr={isMobile ? 2 : 0}>
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
           <Step component={"span"} key={idx} active={+(currentStep === idx)}>
@@ -135,14 +144,9 @@ const SPOLifecycle = ({
       <Box minHeight={400} pb={10}>
         {stepper[currentStep]?.component}
       </Box>
-      <Box
-        display='flex'
-        flexDirection={isMobile ? "column" : "row"}
-        justifyContent={isMobile ? "center" : "space-between"}
-      >
+      <StyledGroupButton display={"flex"} isShowPrev={currentStep > 0}>
         {currentStep > 0 && (
           <PreviousButton
-            sx={{ mb: `${isMobile ? "16px" : "0px"}` }}
             onClick={() => {
               history.push(details.spo(poolId, "timeline", stepper[currentStep - 1]?.key));
               setCurrentStep(currentStep - 1);
@@ -165,13 +169,13 @@ const SPOLifecycle = ({
           }}
           variant='contained'
         >
-          <ButtonText fontSize={isMobile ? 14 : 16}>
+          <ButtonText>
             Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
           </ButtonText>
           <NextIcon />
         </NextButton>
-      </Box>
-    </Box>
+      </StyledGroupButton>
+    </StyledComponent>
   );
 };
 

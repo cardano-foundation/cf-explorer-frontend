@@ -1,17 +1,17 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import { useScreen } from "../../../../commons/hooks/useScreen";
-import feeImg from "../../../../commons/resources/images/dola.svg";
-import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
-import sendImg from "../../../../commons/resources/images/sendImg.svg";
-import { details } from "../../../../commons/routers";
-import { formatADAFull, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import ADAicon from "../../../commons/ADAIcon";
-import CopyButton from "../../../commons/CopyButton";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import DropdownTokens from "../../../commons/DropdownTokens";
+import feeImg from "~/commons/resources/images/dola.svg";
+import receiveImg from "~/commons/resources/images/receiveImg.svg";
+import sendImg from "~/commons/resources/images/sendImg.svg";
+import { details } from "~/commons/routers";
+import { formatADAFull, getShortHash, getShortWallet } from "~/commons/utils/helper";
 import { Header, Img, Item, ItemContent, ItemFooter } from "./styles";
+import { useScreen } from "~/commons/hooks/useScreen";
+import ADAicon from "~/components/commons/ADAIcon";
+import CustomTooltip from "~/components/commons/CustomTooltip";
+import CopyButton from "~/components/commons/CopyButton";
+import DropdownTokens from "~/components/commons/DropdownTokens";
 
 interface Props {
   data: Transaction["utxOs"] | null;
@@ -59,14 +59,14 @@ const Card = ({
       <Box fontSize={14}>
         {items?.map((item, index) => (
           <Item key={index}>
-            <ItemContent>
+            <ItemContent sx={{ overflowX: "auto", overflowY: "hidden" }}>
               <Box display='flex' alignItems='center'>
                 <Box width={50}>
                   <Img src={type === "down" ? receiveImg : sendImg} alt='send icon' />
                 </Box>
                 {isTablet ? <Box>{type === "down" ? "From" : "To"}:</Box> : null}
               </Box>
-              <Box display='flex' justifyContent={"space-between"} width={"100%"} alignItems={"center"}>
+              <Box display='flex' width={"100%"} alignItems={"center"}>
                 <Box width={"100%"} display='flex' flexDirection='column' justifyContent='center' paddingTop='5px'>
                   {type === "down" && (
                     <Box
@@ -136,23 +136,30 @@ const Card = ({
                       flexDirection={isMobile ? "column" : "row"}
                       paddingTop='5px'
                     >
-                      <Box mr={3} minWidth={200}>
-                        <Box display={"flex"} justifyContent='flex-start' alignItems={"center"}>
+                      <Box mr={3} minWidth={180}>
+                        <Box
+                          display={"flex"}
+                          flexDirection={isMobile ? "column" : "row"}
+                          justifyContent='flex-start'
+                          alignItems={isMobile ? "flex-start" : "center"}
+                        >
                           <Box pr={1}>Stake Address: </Box>
-                          <Link to={details.stake(item?.stakeAddress)}>
-                            <CustomTooltip title={item?.stakeAddress}>
-                              <Box
-                                component={"span"}
-                                fontWeight='bold'
-                                fontFamily={"var(--font-family-text)"}
-                                color={(theme) => theme.palette.secondary.main}
-                                mr={1}
-                              >
-                                {getShortHash(item?.stakeAddress)}
-                              </Box>
-                            </CustomTooltip>
-                          </Link>
-                          <CopyButton text={item?.stakeAddress} />
+                          <Box>
+                            <Link to={details.stake(item?.stakeAddress)}>
+                              <CustomTooltip title={item?.stakeAddress}>
+                                <Box
+                                  component={"span"}
+                                  fontWeight='bold'
+                                  fontFamily={"var(--font-family-text)"}
+                                  color={(theme) => theme.palette.secondary.main}
+                                  mr={1}
+                                >
+                                  {getShortHash(item?.stakeAddress)}
+                                </Box>
+                              </CustomTooltip>
+                            </Link>
+                            <CopyButton text={item?.stakeAddress} />
+                          </Box>
                         </Box>
                       </Box>
                     </Box>
@@ -194,7 +201,9 @@ const Card = ({
             <Box width={"100%"} display='flex' justifyContent={"space-between"} alignItems='center'>
               <Box display={"flex"} justifyContent='space-between' alignItems={"center"}>
                 <Box display={"flex"} alignItems='center'>
-                  <Img src={feeImg} alt='wallet icon' />
+                  <Box width={50}>
+                    <Img src={feeImg} alt='wallet icon' />
+                  </Box>
                   <Box>Fee</Box>
                 </Box>
               </Box>

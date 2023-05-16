@@ -52,6 +52,9 @@ const Registration = ({
 
   return (
     <Box>
+       <Box>
+        <RecentRegistrations onSelect={handleSelect} />
+      </Box>
       <Box>
         {selected && (isTablet ? (
           <RegistrationTimelineMobile
@@ -336,7 +339,7 @@ const RegistrationTimelineMobile = ({
       </Box>
       <Box margin="0 auto" width={"350px"}>
         <Box>
-          <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={3} pl={3}>
+          <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={3} >
             <ADAHolderIcon />
           </Box>
           <Box display='flex' mt={5}>
@@ -421,13 +424,13 @@ const RegistrationTimelineMobile = ({
             zIndex: "-1"
           }}
         >
-          <Line
+          <ArrowDiagram
             containerPosition={containerPosition}
             fromRef={adaHolderRef}
-            toRef={registrationRef}
+            toRef={cadarnoSystemRef}
             orient='vertical'
-            pointFrom='center'
-            pointTo='center'
+            pointFrom='border'
+            pointTo='border'
             isCentalHorizontalFrom={true}
           />
           <ArrowDiagram
@@ -438,34 +441,14 @@ const RegistrationTimelineMobile = ({
             pointFrom='center'
             pointTo='border'
             connectToReverse
-            isCentalHorizontalFrom={true}
+            isCentalHorizontalFrom
           />
-          <Line
+          <ArrowDiagram
             containerPosition={containerPosition}
             fromRef={holdRef}
-            toRef={feeRef}
-            orient='vertical'
-            pointFrom='center'
-            pointTo='center'
-            isCentalHorizontalFrom
-            connectFromReverse
-          />
-          <ArrowDiagram
-            containerPosition={containerPosition}
-            fromRef={registrationRef}
             toRef={cadarnoSystemRef}
             orient='vertical'
-            pointFrom='center'
-            pointTo='border'
-            isCentalHorizontalFrom
-            connectFromReverse
-          />
-          <ArrowDiagram
-            containerPosition={containerPosition}
-            fromRef={feeRef}
-            toRef={cadarnoSystemRef}
-            orient='vertical'
-            pointFrom='center'
+            pointFrom='border'
             pointTo='border'
             isCentalHorizontalFrom
             connectToReverse

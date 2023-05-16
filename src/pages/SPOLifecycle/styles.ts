@@ -1,10 +1,17 @@
 import { Button, alpha, Box, Container, IconButton, styled } from "@mui/material";
 
-export const StyledContainer = styled(Container)`
-  padding: 20px 0 40px;
-  position: relative;
-  min-height: calc(100vh - 170px);
-`;
+export const StyledContainer = styled(Container)(({ theme }) => ({
+  padding: "20px 0 40px",
+  position: "relative",
+  minHeight: "calc(100vh - 170px)",
+  [theme.breakpoints.down("sm")]: {
+    padding: "20px 16px 30px 16px",
+    overflowY: "hidden",
+    "& > div:nth-of-type(2)": {
+      marginLeft: "0px"
+    }
+  }
+}));
 export const StakeId = styled("span")(({ theme }) => ({
   lineHeight: 1,
   fontWeight: "bold",
@@ -27,6 +34,9 @@ export const ButtonGroup = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     width: "90px",
     marginTop: "10px !important"
+  },
+  [theme.breakpoints.down("sm")]: {
+    margin: "0px !important"
   }
 }));
 export const ButtonSwitch = styled(IconButton)<{ active: number }>(({ theme, active }) => ({
@@ -69,6 +79,12 @@ export const BoxContainerStyled = styled(Box)(({ theme }) => ({
     alignItems: "flex-start",
     flexDirection: "column",
     marginLeft: "16px"
+  },
+  [theme.breakpoints.down("sm")]: {
+    h2: {
+      fontSize: "24px"
+    },
+    marginLeft: "0px"
   }
 }));
 

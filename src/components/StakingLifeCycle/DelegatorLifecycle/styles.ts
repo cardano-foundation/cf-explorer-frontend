@@ -76,10 +76,13 @@ export const StyledBox = styled(Box)`
   gap: 6px;
 `;
 
-export const DescriptionText = styled(Typography)`
-  color: ${({ theme }) => theme.palette.common.black};
-  font-size: 18px;
-`;
+export const DescriptionText = styled(Typography)(({ theme }) => ({
+  color: theme.palette.common.black,
+  fontSize: "18px",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "14px"
+  }
+}));
 
 export const ButtonText = styled(Typography)`
   font-weight: 700;

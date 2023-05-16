@@ -89,7 +89,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       break;
     case "STAKE_KEY_REPORT":
       isShowTextWarning = false;
-      placeholderAddress = "Stake address";
+      placeholderAddress = "Address details";
       break;
     default:
       isShowTextWarning = true;

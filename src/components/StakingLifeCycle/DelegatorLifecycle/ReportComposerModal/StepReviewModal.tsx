@@ -19,7 +19,7 @@ import { ReportType } from "./FilledInfoModal";
 import { generateStakeKeyReport, generateStakePoolReport } from "../../../../commons/utils/userRequest";
 import useToast from "../../../../commons/hooks/useToast";
 import { useHistory } from "react-router-dom";
-import { routers } from "../../../../commons/routers";
+import { details, routers } from "../../../../commons/routers";
 import { useState } from "react";
 import { getEventType } from "../../../StakekeySummary";
 import { getPoolEventType } from "../../../PoolLifecycle";
@@ -64,7 +64,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           fromDate: moment(start).format("yyyy/MM/DD hh:mm:ss"),
           toDate: moment(end).format("yyyy/MM/D hh:mm:ss"),
           isADATransfer: step2.adaTransfers === "YES",
-          isFeesPaid: step2.adaTransfers === "YES",
+          isFeesPaid: step2.feesPaid === "YES",
           ...getEventType(events.map((item: { type: string }) => item.type))
         };
         await generateStakeKeyReport(paramsStakeKeyReport);
@@ -73,7 +73,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       toast.success("Generate report success");
       handleCloseModal();
       setTimeout(() => {
-        history.push(`${routers.REPORT_GENERATED}`);
+        history.push(details.generated_report(isPoolReport ? "pools" : "stake-key"));
       }, 2000);
     } catch (err: any) {
       console.error(err);
@@ -100,7 +100,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       label: isPoolReport ? "Epoch range" : "Date range",
       value: isPoolReport
         ? `Epoch ${epochStart} -  Epoch ${epochEnd}`
-        : `${moment(start).format("DD MM yy")} - ${moment(end).format("DD MM yy")}`,
+        : `${moment(start).format("MM/DD/yyyy")} - ${moment(end).format("MM/DD/yyyy")}`,
       step: STEPS.step1
     },
     {

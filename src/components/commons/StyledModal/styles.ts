@@ -10,7 +10,12 @@ export const ModalContainer = styled(Box)<{ width?: number | string; viewwidth?:
     backgroundColor: theme.palette.background.paper,
     borderRadius: 20,
     textAlign: "left",
-    [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
+    [theme.breakpoints.down("sm")]: {
+      padding: "20px 15px",
+      "& > button": {
+        right: "15px",
+        zIndex: 10
+      },
       width: "90vw"
     }
   })

@@ -26,6 +26,14 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     left: theme.spacing(2),
     background: theme.palette.green[600],
     transform: " translate(0, 60%)"
+  },
+  [theme.breakpoints.down("md")]: {
+    top: "0px",
+    width: "155px",
+    margin: "0px",
+    marginRight: "-6px",
+    fontSize: "16px",
+    padding: "12px 8px"
   }
 }));
 export const FeeBox = styled(Box)(({ theme }) => ({
@@ -52,6 +60,15 @@ export const FeeBox = styled(Box)(({ theme }) => ({
     left: theme.spacing(2),
     background: theme.palette.red[600],
     transform: " translate(0, 60%)"
+  },
+  [theme.breakpoints.down("md")]: {
+    width: "155px",
+    marginRight: "0px",
+    position: "absolute",
+    bottom: "0px",
+    left: "-35px",
+    fontSize: "16px",
+    padding: "12px 8px"
   }
 }));
 
@@ -85,10 +102,31 @@ export const HoldBoxText = styled(Box)(({ theme }) => ({
 export const CustomLink = styled(Link)(({ theme }) => ({
   fontWeight: 600,
   fontSize: "0.875rem",
-  color: theme.palette.blue[800] + " !important"
+  color: theme.palette.blue[800],
+  "&:hover": {
+    color: theme.palette.blue[800]
+  }
 }));
 
 export const DetailRetirement = styled(Box)(({ theme }) => ({
   fontSize: "0.875rem",
   fontWeight: 600
+}));
+
+export const StyledBox = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    ".list-images": {
+      maxWidth: "390px",
+      margin: "0px auto"
+    }
+  },
+  [theme.breakpoints.down("sm")]: {
+    "& > div:nth-of-type(1)": {
+      alignItems: "flex-start",
+      "& > div:nth-of-type(1)": {
+        flexDirection: "column",
+        gap: "5px"
+      }
+    }
+  }
 }));

@@ -1,16 +1,18 @@
 import { Box, Grid } from "@mui/material";
 import moment from "moment";
 import React from "react";
-import useFetch from "../../../commons/hooks/useFetch";
-import { CurentEpochIcon, LiveStakeIcon, RocketBackground } from "../../../commons/resources";
-import { details } from "../../../commons/routers";
-import { API } from "../../../commons/utils/api";
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
-import { formatADA, numberWithCommas } from "../../../commons/utils/helper";
+import { CurentEpochIcon, LiveStakeIcon, RocketBackground } from "~/commons/resources";
 import { StyledCard, StyledImg, StyledLinearProgress, StyledSkeleton } from "./styles";
+import { details } from "~/commons/routers";
+import { API } from "~/commons/utils/api";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "~/commons/utils/constants";
+import { formatADA, numberWithCommas } from "~/commons/utils/helper";
+import useFetch from "~/commons/hooks/useFetch";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 const OverViews: React.FC = () => {
   const { data, loading } = useFetch<OverViewDelegation>(API.DELEGATION.HEADER, undefined, false, REFRESH_TIMES.POOLS);
+  const { isGalaxyFoldSmall } = useScreen();
 
   if (loading) {
     return (
@@ -29,7 +31,6 @@ const OverViews: React.FC = () => {
   }
 
   const duration = moment.duration(data?.countDownEndTime || 0, "seconds");
-
   return (
     <Grid container spacing={2}>
       <Grid item xl={4} md={6} xs={12}>
@@ -37,7 +38,7 @@ const OverViews: React.FC = () => {
           <StyledCard.Content>
             <StyledCard.Title>Epoch</StyledCard.Title>
             <StyledCard.Link to={details.epoch(data?.epochNo)}>{data?.epochNo}</StyledCard.Link>
-            <Box component='span' sx={{ color: (theme) => theme.palette.grey[400] }}>
+            <Box component='span' sx={{ color: (theme) => theme.palette.grey[400], textAlign: "left" }}>
               End in:{" "}
               <StyledCard.Comment>
                 {duration.days()} day {duration.hours()} hours {duration.minutes()} minutes
@@ -74,11 +75,11 @@ const OverViews: React.FC = () => {
       </Grid>
       <Grid item xl={4} md={6} xs={12}>
         <StyledCard.Container>
-          <StyledCard.Content style={{ flex: 1 }}>
+          <StyledCard.Content style={{ flex: 1, paddingTop: isGalaxyFoldSmall ? "50px" : "30px" }}>
             <StyledCard.Title>Live Stake</StyledCard.Title>
             <StyledCard.Value>{formatADA(data?.liveStake)}</StyledCard.Value>
           </StyledCard.Content>
-          <StyledCard.Content style={{ flex: 1 }}>
+          <StyledCard.Content style={{ flex: 1, paddingTop: isGalaxyFoldSmall ? "50px" : "30px" }}>
             <StyledCard.Title>Delegators</StyledCard.Title>
             <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
           </StyledCard.Content>
