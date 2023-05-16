@@ -23,7 +23,7 @@ export const Menu = styled(List) <{ open: number }>(({ theme, open }) => ({
   "&:hover::-webkit-scrollbar": {
     display: "block"
   },
-  [theme.breakpoints.down(theme.breakpoints.values.md) && "orientation: portrait"]: {
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
     maxHeight: "unset"
   },
   [theme.breakpoints.down(theme.breakpoints.values.sm)]: {

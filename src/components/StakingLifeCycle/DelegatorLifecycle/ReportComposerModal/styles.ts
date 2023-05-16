@@ -118,20 +118,8 @@ export const ButtonEvent = styled(Button)<{ active: boolean }>(({ theme, active 
   gap: "10px",
   textTransform: "capitalize",
   "&:hover": {
-    background: active ? "#f2f2f2" : "#667085",
-    color: active ? "#667085" : "#fff"
-  },
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
-    "&:hover": {
-      background: active ? "#667085" : "#f2f2f2",
-      color: active ? "#fff" : "#667085"
-    }
-  },
-  "@media screen and (max-device-width: 1200px) and (orientation: portrait), screen and (max-device-height: 1200px) and (orientation: landscape)": {
-    "&:hover": {
-      background: active ? "#667085" : "#f2f2f2",
-      color: active ? "#fff" : "#667085"
-    }
+    background: active ? "#667085" : "#f2f2f2",
+    color: active ? "#fff" : "#667085"
   },
 }));
 

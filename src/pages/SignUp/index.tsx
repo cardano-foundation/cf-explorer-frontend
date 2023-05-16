@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "../../commons/resources";
 import { routers } from "../../commons/routers";
 import { signUp } from "../../commons/utils/userRequest";
+import { AlertCustom } from "../ForgotPassword/styles";
 import {
   CloseButton,
   Container,
@@ -23,8 +24,7 @@ import {
   WrapSignUp,
   WrapTitle
 } from "./styles";
-import { AlertCustom } from "../ForgotPassword/styles";
-import { AxiosError } from "axios";
+import useAuth from "~/commons/hooks/useAuth";
 
 interface IForm {
   password: {
@@ -63,6 +63,7 @@ export default function SignUp() {
   const emailTextField = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState(false);
   const [serverError, setServerError] = useState("");
+  const { isLoggedIn } = useAuth();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -91,6 +92,12 @@ export default function SignUp() {
       value: ""
     }
   });
+  useEffect(() => {
+    if(isLoggedIn){
+      history.push(routers.HOME);
+    }
+  }, [isLoggedIn]);
+
   useEffect(() => {
     setError(
       Boolean(
