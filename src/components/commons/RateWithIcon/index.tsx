@@ -8,6 +8,7 @@ const PriceRate = styled(Box)<{ size?: string | number }>`
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
+  margin-right: 10px;
   font-size: ${({ size }) => {
     if (typeof size === "number") return `${size}px`;
     if (typeof size === "string") return size;

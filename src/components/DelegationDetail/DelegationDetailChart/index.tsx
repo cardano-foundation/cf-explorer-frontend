@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Grid, Skeleton, styled, Box, useTheme } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatADAFull, formatPrice } from "../../../commons/utils/helper";
-import { HighestIcon, LowestIcon } from "../../../commons/resources";
-import useFetch from "../../../commons/hooks/useFetch";
+import { formatADAFull, formatPrice } from "~/commons/utils/helper";
+import { HighestIcon, LowestIcon } from "~/commons/resources";
+import useFetch from "~/commons/hooks/useFetch";
 import {
   AnalyticsTitle,
   Button,
@@ -16,8 +16,7 @@ import {
   Title,
   Value
 } from "./styles";
-import { API } from "../../../commons/utils/api";
-import { useScreen } from "../../../commons/hooks/useScreen";
+import { API } from "~/commons/utils/api";
 
 interface DelegationDetailChartProps {
   poolId: string;
@@ -30,7 +29,6 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   const categories = data?.[selected]?.dataByDays?.map((item) => item.epochNo) || [];
   const epochs = data?.epochChart?.dataByDays?.map((item) => item.totalStake / 10 ** 6) || [];
   const delegators = data?.delegatorChart?.dataByDays?.map((item) => item.numberDelegator) || [];
-  const { isMobile } = useScreen();
   return (
     <StyledContainer>
       <AnalyticsTitle>Analytics</AnalyticsTitle>
@@ -123,11 +121,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                 {loading || !data?.[selected] ? (
                   <SkeletonUI variant='rectangular' />
                 ) : selected === "epochChart" ? (
-                  isMobile ? (
-                    formatADA(data[selected].highest, LARGE_NUMBER_ABBREVIATIONS, 3)
-                  ) : (
-                    formatADAFull(data[selected].highest)
-                  )
+                  formatADAFull(data[selected].highest)
                 ) : (
                   data[selected].highest
                 )}
@@ -140,11 +134,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                 {loading || !data ? (
                   <SkeletonUI variant='rectangular' />
                 ) : selected === "epochChart" ? (
-                  isMobile ? (
-                    formatADA(data[selected].lowest, LARGE_NUMBER_ABBREVIATIONS, 3)
-                  ) : (
-                    formatADAFull(data[selected].lowest)
-                  )
+                  formatADAFull(data[selected].lowest)
                 ) : (
                   data[selected].lowest
                 )}
