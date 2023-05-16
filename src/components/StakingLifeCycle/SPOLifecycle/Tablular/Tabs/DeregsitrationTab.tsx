@@ -1,13 +1,16 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, getShortWallet } from "../../../../../commons/utils/helper";
+import { formatADAFull, formatHash } from "../../../../../commons/utils/helper";
 import Table, { Column } from "../../../../commons/Table";
-import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, ClickAbleLink } from "./styles";
+import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, ClickAbleLink, VerticalRow } from "./styles";
 import CustomIcon from "../../../../commons/CustomIcon";
 import { ADAsigntIC } from "../../../../../commons/resources";
+import { details } from "../../../../../commons/routers";
+import CustomTooltip from "../../../../commons/CustomTooltip";
+import { StyledLink } from "../../../../share/styled";
 
 const DeregsitrationTab = () => {
   const { poolId = "" } = useParams<{ poolId: string }>();
@@ -23,7 +26,11 @@ const DeregsitrationTab = () => {
       key: "txHash",
       title: "Transaction hash",
       render(data) {
-        return <ClickAbleLink>{getShortWallet(data.txHash)}</ClickAbleLink>;
+        return (
+          <CustomTooltip title={data.txHash}>
+            <StyledLink to={details.transaction(data.txHash)}>{formatHash(data.txHash)}</StyledLink>
+          </CustomTooltip>
+        );
       },
     },
     {
@@ -46,8 +53,8 @@ const DeregsitrationTab = () => {
               {formatADAFull(data.totalFee)} <CustomIcon icon={ADAsigntIC} width={12} />{" "}
             </ADAValueLabel>
             <ADAValueSubLabel>
-              {formatADAFull(data.poolHold)} <CustomIcon icon={ADAsigntIC} width={1} /> {formatADAFull(data.fee)}{" "}
-              <CustomIcon icon={ADAsigntIC} width={12} />{" "}
+              {formatADAFull(data.poolHold)} <CustomIcon icon={ADAsigntIC} width={11} /> / {formatADAFull(data.fee)}{" "}
+              <CustomIcon icon={ADAsigntIC} width={11} />{" "}
             </ADAValueSubLabel>
           </ADAValueFieldContainer>
         );
@@ -57,7 +64,15 @@ const DeregsitrationTab = () => {
       key: "owner",
       title: "Owner",
       render(data) {
-        return data.stakeKeys.map((item, index) => <ClickAbleLink key={index}>{getShortWallet(item)}</ClickAbleLink>);
+        return data.stakeKeys.map((item, index) => (
+          <VerticalRow key={index}>
+            <CustomTooltip  title={item}>
+              <StyledLink to={details.stake(item)} key={index}>
+                {formatHash(item)}
+              </StyledLink>
+            </CustomTooltip>
+          </VerticalRow>
+        ));
       },
     },
   ];

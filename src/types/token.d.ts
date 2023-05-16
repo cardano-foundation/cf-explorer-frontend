@@ -8,7 +8,8 @@ interface ITokenOverview {
   createdOn?: string;
   metadata?: ITokenMetadata;
   volumeIn24h: number;
-  numberHolders: number;
+  totalVolume: string;
+  numberOfHolders: number;
 }
 
 interface ITokenMetadata {

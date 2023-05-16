@@ -1,17 +1,21 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, getShortWallet } from "../../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../../../commons/utils/helper";
 import Table, { Column } from "../../../../commons/Table";
 import { PoolUpdateModal } from "../../PoolUpdates";
 import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, ClickAbleLink } from "./styles";
 import CustomIcon from "../../../../commons/CustomIcon";
 import { ADAsigntIC } from "../../../../../commons/resources";
+import { details } from "../../../../../commons/routers";
+import CustomTooltip from "../../../../commons/CustomTooltip";
+import { StyledLink } from "../../../../share/styled";
 
 const ProtocolUpdateTab = () => {
   const { poolId = "" } = useParams<{ poolId: string }>();
+  const history = useHistory();
   const [selectedValue, setSelectedValue] = useState<PoolUpdateDetail | null>(null);
   const [params, setParams] = useState({
     page: 0,
@@ -25,7 +29,11 @@ const ProtocolUpdateTab = () => {
       key: "txHash",
       title: "Transaction hash",
       render(data) {
-        return <ClickAbleLink>{getShortWallet(data.txHash)}</ClickAbleLink>;
+        return (
+          <CustomTooltip title={data.txHash}>
+            <StyledLink to={details.transaction(data.txHash)}>{formatHash(data.txHash)}</StyledLink>
+          </CustomTooltip>
+        );
       },
     },
     {
@@ -40,18 +48,12 @@ const ProtocolUpdateTab = () => {
     },
     {
       key: "fee",
-      title: "ADA Value",
+      title: "Fees",
       render(data) {
         return (
-          <ADAValueFieldContainer>
-            <ADAValueLabel>
-              {formatADAFull(data.fee)} <CustomIcon icon={ADAsigntIC} width={12} />
-            </ADAValueLabel>
-            <ADAValueSubLabel>
-              {"0"} <CustomIcon icon={ADAsigntIC} width={11} /> / {formatADAFull(data.fee)}{" "}
-              <CustomIcon icon={ADAsigntIC} width={11} />
-            </ADAValueSubLabel>
-          </ADAValueFieldContainer>
+          <ADAValueLabel>
+            {formatADAFull(data.fee)} <CustomIcon icon={ADAsigntIC} width={12} />
+          </ADAValueLabel>
         );
       },
     },

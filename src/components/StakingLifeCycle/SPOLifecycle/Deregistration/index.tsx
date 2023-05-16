@@ -136,9 +136,9 @@ const DeregistrationTimeline = ({
                       Pool ID:
                     </Box>
                     <PoolNamePopup to={details.delegation(selected?.poolView)}>
-                      {getShortWallet(selected?.poolId || "")}
+                      {getShortHash(selected?.poolView || "")}
                     </PoolNamePopup>
-                    <CopyButton text={selected?.poolId} />
+                    <CopyButton text={selected?.poolView} />
                   </Box>
                   <Box display={"flex"} alignItems={"center"}>
                     <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>

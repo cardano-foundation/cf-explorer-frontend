@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import DetailHeader from "../../commons/DetailHeader";
 import { formatADAFull, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
@@ -44,6 +44,31 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       return CONFIRMATION_STATUS.HIGH;
     }
   };
+
+  const inputTransaction = useMemo(() => {
+    const result = [];
+    if (data?.utxOs && data?.utxOs?.inputs?.length > 0) {
+      for (const item of data?.utxOs.inputs) {
+        if (item.tokens.length) {
+          result.push(...item.tokens);
+        }
+      }
+    }
+    return result;
+  }, [data?.utxOs]);
+
+  const outputTransaction = useMemo(() => {
+    const result = [];
+    if (data?.utxOs && data?.utxOs?.outputs?.length > 0) {
+      for (const item of data?.utxOs.outputs) {
+        if (item.tokens.length) {
+          result.push(...item.tokens);
+        }
+      }
+    }
+    return result;
+  }, [data?.utxOs]);
+
   const listOverview = [
     {
       icon: txInputIcon,
@@ -83,6 +108,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           )}
         </Box>
       ),
+      allowSearch: true,
+      isSent: true,
+      dataSearch: inputTransaction,
     },
     {
       icon: txOutputIcon,
@@ -122,6 +150,8 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           )}
         </Box>
       ),
+      allowSearch: true,
+      dataSearch: outputTransaction,
     },
     {
       icon: timeIcon,

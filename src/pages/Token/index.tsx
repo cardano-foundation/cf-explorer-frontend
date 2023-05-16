@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { useWindowSize } from "react-use";
@@ -28,7 +28,7 @@ const Tokens: React.FC<ITokenList> = () => {
   const theme = useTheme();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-
+  const mainRef = useRef(document.querySelector("#main"));
   const { data, ...fetchData } = useFetchList<ITokenOverview>(
     API.TOKEN.LIST,
     { ...pageInfo, sort },
@@ -71,6 +71,18 @@ const Tokens: React.FC<ITokenList> = () => {
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
+    },
+    {
+      title: "Number of Holders",
+      key: "numberOfHolders",
+      minWidth: "150px",
+      render: r => numberWithCommas(r?.numberOfHolders),
+    },
+    {
+      title: "Total Volume",
+      key: "TotalVolume",
+      minWidth: "150px",
+      render: r => numberWithCommas(r?.totalVolume),
     },
     {
       title: "Volume 24H",
@@ -128,7 +140,10 @@ const Tokens: React.FC<ITokenList> = () => {
           pagination={{
             ...pageInfo,
             total: fetchData.total,
-            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+            onChange: (page, size) => {
+              mainRef.current?.scrollTo(0, 0);
+              history.push({ search: stringify({ page, size }) });
+            },
             handleCloseDetailView: handleClose,
           }}
           onClickRow={openDetail}

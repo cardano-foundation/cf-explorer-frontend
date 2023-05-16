@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
 import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import "./index.css";
@@ -21,8 +21,9 @@ import { useHistory, useParams } from "react-router-dom";
 import { details } from "../../../commons/routers";
 import { TitleTab } from "./styles";
 import PoolCertificate from "./PoolCertificate";
-import { ProtocolParameterIcon, ProtocolUpdateIcon } from "../../../commons/resources";
+import { ProtocolUpdateIcon, RewardsDistributionIcon, StakeCertificates } from "../../../commons/resources";
 import ProtocolUpdate from "./ProtocolUpdate";
+import StakeCertificate from "./StakeCertificate";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
@@ -33,10 +34,11 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
   let { tabActive = "summary" } = useParams<{ tabActive: keyof Transaction }>();
   const history = useHistory();
   const theme = useTheme();
-
+  const tabRef = useRef(null);
   if (!data?.[tabActive]) tabActive = "summary";
 
   const handleChange = (event: React.SyntheticEvent, tab: keyof Transaction) => {
+    (tabRef as any)?.current.scrollIntoView();
     history.push(details.transaction(data?.tx?.hash, tab));
   };
 
@@ -115,10 +117,16 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
       children: <Minting data={data?.mints} />,
     },
     {
-      key: "mints",
-      icon: MintingIcon,
+      key: "poolCertificates",
+      icon: RewardsDistributionIcon,
       label: "Pool certificate",
-      children: <PoolCertificate data={data?.mints} />,
+      children: <PoolCertificate data={data?.poolCertificates} />,
+    },
+    {
+      key: "stakeCertificates",
+      icon: StakeCertificates,
+      label: "Stake Certificate",
+      children: <StakeCertificate data={data?.stakeCertificates} />,
     },
     {
       key: "protocols",
@@ -131,7 +139,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
   const items = tabs.filter(item => data?.[item.key]);
 
   return (
-    <Box mt={4}>
+    <Box mt={4} ref={tabRef}>
       <TabContext value={tabActive}>
         <Box sx={{ borderBottom: theme => `1px solid ${theme.palette.border.secondary}` }}>
           <TabList

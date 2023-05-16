@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -18,15 +18,16 @@ import SelectedIcon from "../../components/commons/SelectedIcon";
 import Link from "../../components/commons/Link";
 import ADAicon from "../../components/commons/ADAIcon";
 const BlockList = () => {
-  const [block, setBlock] = useState<number | string | null>(null);
-  const [sort, setSort] = useState<string>("");
-  const [selected, setSelected] = useState<number | null>(null);
   const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
+  const [block, setBlock] = useState<number | string | null>(null);
+  const [sort, setSort] = useState<string>("");
+  const [selected, setSelected] = useState<number | null>(null);
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo, sort });
   const theme = useTheme();
+  const mainRef = useRef(document.querySelector("#main"));
 
   useEffect(() => {
     document.title = `Blocks List | Cardano Explorer`;
@@ -125,7 +126,10 @@ const BlockList = () => {
           pagination={{
             ...pageInfo,
             total: fetchData.total,
-            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+            onChange: (page, size) => {
+              history.push({ search: stringify({ page, size }) });
+              mainRef.current?.scrollTo(0, 0);
+            },
             handleCloseDetailView: handleClose,
           }}
           onClickRow={openDetail}

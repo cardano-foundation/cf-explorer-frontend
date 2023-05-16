@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import useFetch from "../../commons/hooks/useFetch";
 import { API } from "../../commons/utils/api";
@@ -10,9 +10,10 @@ import { StyledContainer } from "./styles";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const StakeDetail: React.FC = () => {
+  const mainRef = useRef(document.querySelector("#main"));
   const { stakeId } = useParams<{ stakeId: string }>();
   const { state } = useLocation<{ data?: IStakeKeyDetail }>();
-  const { data, initialized, error, loading } = useFetch<IStakeKeyDetail>(
+  const { data, initialized, error } = useFetch<IStakeKeyDetail>(
     `${API.STAKE.DETAIL}/${stakeId}`,
     state?.data,
     false,
@@ -22,13 +23,14 @@ const StakeDetail: React.FC = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Stake address ${stakeId} | Cardano Explorer`;
+    mainRef.current?.scrollTo(0, 0);
   }, [stakeId]);
 
   if ((initialized && !data) || error) return <NoRecord />;
 
   return (
     <StyledContainer>
-      <StakeKeyOverview data={data} loading={loading} />
+      <StakeKeyOverview data={data} loading={!initialized} />
       <StakeAnalytics />
       <StakeTab />
     </StyledContainer>

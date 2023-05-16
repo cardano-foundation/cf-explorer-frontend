@@ -15,6 +15,9 @@ export const Header = styled(Box)`
   margin-bottom: 1.5rem;
   padding: 0 20px;
   gap: 10px;
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    padding: 0 15px;
+  }
 `;
 
 export const Title = styled("h3")`
@@ -46,6 +49,9 @@ export const Item = styled(BoxRaised)`
   &:hover {
     box-shadow: ${props => props.theme.shadow.card};
   }
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    padding: 20px 15px;
+  }
 `;
 export const ItemHeader = styled(Box)`
   display: flex;
@@ -53,15 +59,25 @@ export const ItemHeader = styled(Box)`
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    justify-content: flex-start;
+  }
 `;
 export const RowItem = styled(Box)`
   line-height: 1;
   margin-top: ${props => props.theme.spacing(1)};
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    margin-top: 0;
+    margin-right: 10px;
+  }
 }
 `;
 
 export const PriceImage = styled("img")`
   height: 45px;
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    height: 30px;
+  }
 `;
 
 export const PriveValue = styled("span")`
@@ -72,6 +88,9 @@ export const PriveValue = styled("span")`
 
 export const ItemDetail = styled("div")`
   color: var(--text-color-pale);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 `;
 
 export const Hash = styled("small")`
@@ -141,4 +160,8 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
   font-size: 0.8125rem;
   line-height: 1;
   width: min-content;
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px}) {
+    padding: 3px 3px;
+    font-size: 0.75rem;
+  }
 `;

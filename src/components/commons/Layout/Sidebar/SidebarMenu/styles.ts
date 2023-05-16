@@ -1,5 +1,5 @@
 import { Box, Collapse, List, ListItemText, styled, Theme } from "@mui/material";
-import { alpha, SystemStyleObject } from "@mui/system";
+import { SystemStyleObject } from "@mui/system";
 
 export const StyledCollapse = styled(Collapse)`
   @media screen and (max-width: 1023px) {
@@ -20,8 +20,17 @@ export const Menu = styled(List)<{ open: number }>`
   &:hover::-webkit-scrollbar {
     display: block;
   }
-  @media screen and (max-width: 1023px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.md}px) {
     max-height: unset;
+  }
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    & > div,
+    & > a {
+      padding-left: 16px;
+    }
+    & ul > a {
+      padding-left: 40px;
+    }
   }
 `;
 
@@ -102,3 +111,14 @@ export const IconMenu = styled(Box)(({ theme }) => ({
   left: "210px",
   transform: "translate(0, -50%)",
 }));
+
+export const WrapNetwork = styled(Box)`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  & > div {
+    width: 100%;
+  }
+`

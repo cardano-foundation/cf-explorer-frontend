@@ -15,6 +15,7 @@ interface LineProps {
   connectFromReverse?: boolean;
   connectToReverse?: boolean;
   isCentalVertical?: boolean;
+  dashed?: boolean;
 }
 const Line: React.FC<LineProps> = ({
   fromRef,
@@ -27,6 +28,7 @@ const Line: React.FC<LineProps> = ({
   isCentalVertical = true,
   connectFromReverse = false,
   connectToReverse = false,
+  dashed = false,
 }) => {
   const [coords, setCoords] = useState<{ from: { x?: number; y?: number }; to: { x?: number; y?: number } }>({
     from: {},
@@ -34,6 +36,7 @@ const Line: React.FC<LineProps> = ({
   });
   const [angle, setAngle] = useState(0);
   const [distance, setDistance] = useState(0);
+  const [length, setLength] = useState(0);
 
   const handleResize = () => {
     const fromRect = fromRef && fromRef.current && (fromRef.current as any).getBoundingClientRect();
@@ -66,6 +69,7 @@ const Line: React.FC<LineProps> = ({
       fromCenter.y + (orient === "horizontal" ? (connectFromReverse ? distanceFromY * -1 : distanceFromY) : 0);
     const xTo = toCenter.x - (orient === "vertical" ? (connectToReverse ? distanceToX * -1 : distanceToX) : 0);
     const yTo = toCenter.y - (orient === "horizontal" ? (connectToReverse ? distanceToY * -1 : distanceToY) : 0);
+    setLength(Math.sqrt((xTo - xFrom) ** 2 + (yTo - xTo) ** 2));
 
     setCoords({
       from: {
@@ -94,6 +98,8 @@ const Line: React.FC<LineProps> = ({
 
   return (
     <animated.line
+      strokeDasharray={dashed ? 20 : undefined}
+      strokeDashoffset={dashed ? length : undefined}
       x1={coords.from?.x}
       y1={coords.from?.y}
       x2={props.x}

@@ -17,6 +17,10 @@ export const Item = styled(Card)`
   &:hover {
     box-shadow: ${props => props.theme.shadow.card};
   }
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    padding: 15px;
+    min-height: 150px;
+  }
 `;
 
 export const ItemSkeleton = styled(Skeleton)`
@@ -30,6 +34,12 @@ export const ItemIcon = styled("img")`
   right: 20px;
   width: 40px;
   height: 40px;
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px}) {
+    right: 10px;
+    top: 10px;
+    width: 35px;
+    height: 35px;
+  }
 `;
 
 export const Content = styled(Box)`
@@ -43,6 +53,11 @@ export const Name = styled("h4")`
   color: ${props => props.theme.palette.text.secondary};
   font-family: var(--font-family-text);
   font-size: 14px;
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    font-size: 12px;
+    margin-top: 0.5rem;
+    width: max-content;
+  }
 `;
 
 export const Title = styled("h3")`
@@ -51,17 +66,37 @@ export const Title = styled("h3")`
   margin-top: 0;
   margin-bottom: 0.25rem;
   font-size: 20px;
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    font-size: 16px;
+    max-width: 87px;
+    word-break: break-all;
+  }
 `;
 
 export const Small = styled("small")`
   color: ${props => props.theme.palette.grey[400]};
   white-space: nowrap;
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    font-size: 11px;
+  }
+`;
+
+export const AdaPrice = styled("small")`
+  color: ${props => props.theme.palette.grey[400]};
+  white-space: nowrap;
+  margin-left: 15px;
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    margin-left: 0px;
+  }
 `;
 export const TimeDuration = styled("small")<{ marginTop?: string }>`
   color: ${props => props.theme.palette.grey[400]};
   margin-top: ${props => props.marginTop || 0};
   white-space: nowrap;
   display: block;
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    display: none;
+  }
 `;
 export const XSmall = styled("span")`
   font-size: var(--font-size-text-x-small);

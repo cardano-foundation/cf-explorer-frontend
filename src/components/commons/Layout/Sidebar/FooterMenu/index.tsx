@@ -23,7 +23,7 @@ export const Menu = styled(List)<{ open: number }>`
   @media screen and (max-width: 1023px) {
     border-top: 0px;
     position: relative;
-    justify-content: flex-start;
+    justify-content: center;
     padding: 10px 20px 20px;
     height: auto;
   }
@@ -67,11 +67,15 @@ const expandStyle: SxProps<Theme> = theme => ({
   padding: 0,
 });
 
-const FooterMenu: React.FC = () => {
+type TProps = {
+  forceShow?: boolean;
+};
+const FooterMenu = ({ forceShow = false }: TProps) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
+  const footerStatus = sidebar || forceShow;
   return (
-    <Menu open={sidebar ? 1 : 0}>
-      {sidebar ? (
+    <Menu open={footerStatus ? 1 : 0}>
+      {footerStatus ? (
         socials.map((item, index) => {
           const { href, title, icon: Icon } = item;
           return (

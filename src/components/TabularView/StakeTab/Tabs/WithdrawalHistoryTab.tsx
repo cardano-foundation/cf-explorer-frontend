@@ -16,7 +16,7 @@ import { DATETIME_PARTTEN } from "../../../StackingFilter/DateRangeModal";
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import { FilterDateLabel } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles";
 
-const columns: Column<DeregistrationItem>[] = [
+const columns: Column<WithdrawItem>[] = [
   {
     title: "Transaction Hash",
     key: "hash",
@@ -44,12 +44,12 @@ const columns: Column<DeregistrationItem>[] = [
     minWidth: "120px",
     render: r => (
       <Box>
-        <AdaValue value={r.deposit + r.fee} />
+        <AdaValue value={r.value + r.fee} />
         <TableSubTitle>
-          <Box display="flex" mt={1} alignItems="center">
-            <AdaValue value={r.deposit} />
-            <Box mx={1}>/</Box>
-            <AdaValue value={r.fee} />
+          <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+            <AdaValue value={r.value} gap="3px" fontSize="12px" />
+            <Box mx="3px">/</Box>
+            <AdaValue value={r.fee} gap="3px" fontSize="12px" />
           </Box>
         </TableSubTitle>
       </Box>

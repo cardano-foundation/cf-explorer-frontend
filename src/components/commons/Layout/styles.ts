@@ -36,19 +36,25 @@ export const Layout = styled(Box)`
   }
 `;
 
-export const BackDrop = styled("div")<{ isShow: number }>`
-  position: fixed;
-  z-index: 997;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: ${props => alpha(props.theme.palette.common.black, 0.4)};
-  display: none;
-  @media screen and (max-width: 1023px) {
-    display: ${props => (props.isShow ? "block" : "none")};
-  }
-`;
+export const BackDrop = styled("div", { shouldForwardProp: prop => prop !== "isShow" })<{ isShow: number }>(
+  ({ theme, isShow }) => ({
+    position: "fixed",
+    zIndex: 997,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    display: "none",
+    [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+      background: alpha(theme.palette.common.black, 0.4),
+      display: isShow ? "block" : "none",
+    },
+    [theme.breakpoints.up(theme.breakpoints.values.md)]: {
+      background: "transparent",
+      display: "none",
+    }
+  })
+);
 
 export const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -89,6 +95,7 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== "o
   boxSizing: "border-box",
   borderRightWidth: 0,
   boxShadow: theme.shadow.draw,
+  zIndex: 20,
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),

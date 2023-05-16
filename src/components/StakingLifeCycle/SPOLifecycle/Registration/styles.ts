@@ -98,7 +98,7 @@ export const PoolNamePopup = styled(Link)(({ theme }) => ({
   textDecoration: "underline !important",
   fontWeight: 500,
   margin: `0 ${theme.spacing(1)}`,
-  maxWidth: 150,
+  maxWidth: 180,
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
