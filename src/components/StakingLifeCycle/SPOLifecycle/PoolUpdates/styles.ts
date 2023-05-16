@@ -153,3 +153,9 @@ export const StyledBox = styled(Box)(({ theme }) => ({
     }
   }
 }));
+
+export const ViewMoreButton = styled(IconButton)`
+  width: 30px;
+  height: 30px;
+  margin-left: 6px;
+`;

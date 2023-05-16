@@ -31,7 +31,8 @@ import {
   InfoText,
   StyledContainer,
   StyledGridContainer,
-  StyledBox
+  StyledBox,
+  ViewMoreButton
 } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
@@ -59,6 +60,8 @@ import { DescriptionText } from "../../DelegatorLifecycle/styles";
 import { StyledLink } from "../styles";
 import { useUpdateEffect } from "react-use";
 import { useScreen } from "../../../../commons/hooks/useScreen";
+import { DotsIcon } from "~/components/PoolRegistrationCertificate/styles";
+import ViewMoreAddressModal from "~/components/ViewMoreAddressModal";
 const PoollUpdates = ({
   containerPosition,
   handleResize
@@ -677,8 +680,17 @@ export const PoolUpdateModal = ({
 }) => {
   const { isMobile } = useScreen();
   const [tabActive, setTabActive] = useState("poolCertificate");
+  const [selectedOwner, setSelectedOwner] = useState<string[]>([]);
   const renderPoolCert = () => (
     <StyledGridContainer container rowSpacing={1} columnSpacing={2}>
+      <ViewMoreAddressModal
+        showFullHash={true}
+        maxWidth={680}
+        title='Pool Owner'
+        open={!!selectedOwner.length}
+        onClose={() => setSelectedOwner([])}
+        items={selectedOwner}
+      />
       <Grid item xs={6}>
         <Box
           minHeight={50}
@@ -757,25 +769,31 @@ export const PoolUpdateModal = ({
           display={"flex"}
           alignItems={"center"}
         >
-          <Box>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
-              Owners
-            </Box>
-            {data && (
-              <>
-                {data.stakeKeys && data.stakeKeys.length && (
-                  <>
-                    <Box key={data.stakeKeys[0]} pt={"7px"} fontWeight={600} display={"flex"}>
-                      <Box>
-                        <Link to={details.stake(data.stakeKeys[0] || "")}>{getShortWallet(data.stakeKeys[0])}</Link>{" "}
-                        <CopyButton text={data.stakeKeys[0] || ""} />
+          <Box display='flex' alignItems='center'>
+            <Box>
+              <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+                Owners
+              </Box>
+              {data && (
+                <>
+                  {data.stakeKeys && data.stakeKeys.length && (
+                    <>
+                      <Box key={data.stakeKeys[0]} pt={"7px"} fontWeight={600} display={"flex"}>
+                        <Box>
+                          <Link to={details.stake(data.stakeKeys[0] || "")}>{getShortWallet(data.stakeKeys[0])}</Link>{" "}
+                          <CopyButton text={data.stakeKeys[0] || ""} />
+                        </Box>
                       </Box>
-                      {data.stakeKeys.length > 1 ? <Box marginLeft={2}>...</Box> : null}
-                    </Box>
-                  </>
-                )}
-              </>
-            )}
+                    </>
+                  )}
+                </>
+              )}
+            </Box>
+            {data && data.stakeKeys.length > 1 ? (
+              <ViewMoreButton onClick={() => setSelectedOwner(data.stakeKeys)}>
+                <DotsIcon />
+              </ViewMoreButton>
+            ) : null}
           </Box>
         </Box>
       </Grid>
