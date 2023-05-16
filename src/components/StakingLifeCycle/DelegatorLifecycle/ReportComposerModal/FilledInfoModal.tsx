@@ -15,7 +15,7 @@ import {
 } from "./styles";
 
 import { Box, MenuItem, Slider } from "@mui/material";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { IPropsModal, STEPS } from ".";
 import { useScreen } from "../../../../commons/hooks/useScreen";
@@ -23,6 +23,7 @@ import { DownIcon } from "../../../../commons/resources";
 import { API } from "../../../../commons/utils/api";
 import defaultAxios from "../../../../commons/utils/axios";
 import CustomDatePicker, { IDateRange } from "../../../CustomDatePicker";
+import { useHistory } from "react-router-dom";
 
 export enum ReportType {
   PoolReport = "POOL_REPORT",
@@ -44,8 +45,11 @@ type IEpochRange = [number, number];
 
 const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, saveParams, gotoStep }) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-
-  const [reportType, setReportType] = useState<ReportType>(ReportType.PoolReport);
+  const history = useHistory();
+  const isDelegatorPage = history.location.pathname.includes("/delegator-lifecycle/");
+  const [reportType, setReportType] = useState<ReportType>(
+    isDelegatorPage ? ReportType.StakeKeyReport : ReportType.PoolReport
+  );
   const [address, setAddress] = useState<string>("");
   const [dateRange, setDateRange] = useState<IDateRange>([null, null]);
   const [reportName, setReportName] = useState<string>("");
