@@ -59,7 +59,6 @@ const Deregistration = ({
   const handleSelect = (deregistration: SPODeregistration | null) => {
     setSelected(deregistration);
   };
-
   return (
     <Box>
       <Box>
@@ -78,7 +77,6 @@ const Deregistration = ({
             handleResize={handleResize}
             selected={selected}
             containerPosition={containerPosition}
-            setSelected={setSelected}
           />
         )}
       </Box>
@@ -383,7 +381,6 @@ const DeregistrationTimeline = ({
 const DeregistrationTimelineMobile = ({
   containerPosition,
   selected,
-  setSelected,
   handleResize
 }: {
   containerPosition: {
@@ -391,10 +388,11 @@ const DeregistrationTimelineMobile = ({
     left?: number;
   };
   handleResize: () => void;
-  setSelected: (registration: SPODeregistration | null) => void;
   selected: SPODeregistration | null;
 }) => {
   const [openModal, setOpenModal] = useState(false);
+  const history = useHistory();
+  const { poolId = "" } = useParams<{ poolId: string }>();
 
   const adaHolderRef = useRef(null);
   const holdRef = useRef(null);
@@ -409,7 +407,10 @@ const DeregistrationTimelineMobile = ({
   const fake2CardanoSystemRef = useRef(null);
   const adaHolderRefImg = useRef(null);
   const cadarnoSystemRefImg = useRef(null);
-  const { isMobile } = useScreen();
+
+  const handleBack = () => {
+    history.push(details.spo(poolId, "timeline", "deregistration"));
+  };
 
   useEffect(() => {
     handleResize();
@@ -418,7 +419,7 @@ const DeregistrationTimelineMobile = ({
   return (
     <StyledBox>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"}>
