@@ -1,4 +1,4 @@
-import { alpha, Box, Grid, Skeleton, styled, Tooltip } from "@mui/material";
+import { alpha, Box, Grid, Skeleton, styled } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { Link as LinkDom } from "react-router-dom";
 
@@ -14,6 +14,7 @@ import {
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import RegistrationCertificate from "../../../../commons/resources/icons/Staking/PoolRegistrationCertificateIcon.svg";
+import PoolCertificateMobile from "../../../../commons/resources/icons/Staking/PoolCertificateMobile.svg";
 
 import Line from "../../../Line";
 import {
@@ -27,7 +28,10 @@ import {
   InfoText,
   PoolName,
   PoolNamePopup,
-  StyledCopyButton
+  StyledCopyButton,
+  StyledGridContainer,
+  StyledSkeletonContainer,
+  StyledBox
 } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
@@ -44,6 +48,7 @@ import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import StyledModal from "../../../commons/StyledModal";
 import { StyledLink } from "../styles";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
 const Registration = ({
   containerPosition,
@@ -60,15 +65,23 @@ const Registration = ({
   const handleSelect = (registration: SPORegistration | null) => {
     setSelected(registration);
   };
-
+  const { isTablet } = useScreen();
   return (
     <Box>
       <Box>
         <RecentRegistrations onSelect={handleSelect} />
       </Box>
       <Box>
-        {!!selected && (
+        {!!selected && !isTablet && (
           <RegistrationTimeline handleResize={handleResize} selected={selected} containerPosition={containerPosition} />
+        )}
+        {!!selected && isTablet && (
+          <RegistrationTimelineMobile
+            handleResize={handleResize}
+            setSelected={setSelected}
+            selected={selected}
+            containerPosition={containerPosition}
+          />
         )}
       </Box>
     </Box>
@@ -94,7 +107,6 @@ const RegistrationTimeline = ({
     selected?.poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, selected?.poolUpdateId) : ""
   );
   const [openModal, setOpenModal] = useState(false);
-
   useEffect(() => {
     handleResize();
   }, [loading]);
@@ -115,7 +127,7 @@ const RegistrationTimeline = ({
 
   if (loading) {
     return (
-      <Box>
+      <StyledSkeletonContainer>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
           <IconButtonBack onClick={handleBack}>
             <BackIcon />
@@ -136,12 +148,12 @@ const RegistrationTimeline = ({
           </Box>
         </Box>
         <Box component={Skeleton} width={"100%"} height={400} variant='rectangular' borderRadius={12} />
-      </Box>
+      </StyledSkeletonContainer>
     );
   }
 
   return (
-    <Box>
+    <StyledBox>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
@@ -380,13 +392,311 @@ const RegistrationTimeline = ({
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
+
       <RegistrationCertificateModal
         poolId={poolId}
         poolUpdateId={selected?.poolUpdateId || 0}
         handleCloseModal={() => setOpenModal(false)}
         open={openModal}
       />
-    </Box>
+    </StyledBox>
+  );
+};
+const RegistrationTimelineMobile = ({
+  containerPosition,
+  setSelected,
+  handleResize,
+  selected
+}: {
+  containerPosition: {
+    top?: number;
+    left?: number;
+  };
+  handleResize: () => void;
+  setSelected: (registration: SPORegistration | null) => void;
+  selected: SPORegistration | null;
+}) => {
+  const { poolId = "" } = useParams<{ poolId: string }>();
+  const { data, loading } = useFetch<SPORegistrationDetail>(
+    selected?.poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, selected?.poolUpdateId) : ""
+  );
+  const [openModal, setOpenModal] = useState(false);
+  useEffect(() => {
+    handleResize();
+  }, [loading]);
+
+  const adaHolderRef = useRef(null);
+  const holdRef = useRef(null);
+  const feeRef = useRef(null);
+  const cadarnoSystemRef = useRef(null);
+  const registrationRef = useRef(null);
+  const SPOInfoRef = useRef(null);
+  const SPOKeyRef = useRef(null);
+  const fake1Ref = useRef(null);
+  const fake2Ref = useRef(null);
+  const fake1CardanoSystemRef = useRef(null);
+  const fake2CardanoSystemRef = useRef(null);
+  const adaHolderRefImg = useRef(null);
+  const cadarnoSystemRefImg = useRef(null);
+
+  if (loading) {
+    return (
+      <StyledSkeletonContainer>
+        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+          <IconButtonBack onClick={() => setSelected(null)}>
+            <BackIcon />
+          </IconButtonBack>
+          <Box display={"flex"}>
+            <Info>
+              <AddressIcon fill='#438F68' />
+              <Box component={Skeleton} ml={1} variant='rectangular' width={145} height={18} />
+            </Info>
+            <Info>
+              <ADAGreen />
+              <Box component={Skeleton} ml={1} variant='rectangular' width={60} height={18} />
+            </Info>
+            <Info>
+              <TimeIcon />
+              <Box component={Skeleton} ml={1} variant='rectangular' width={130} height={18} />
+            </Info>
+          </Box>
+        </Box>
+        <Box component={Skeleton} width={"100%"} height={400} variant='rectangular' borderRadius={12} />
+      </StyledSkeletonContainer>
+    );
+  }
+
+  return (
+    <StyledBox>
+      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+        <IconButtonBack onClick={() => setSelected(null)}>
+          <BackIcon />
+        </IconButtonBack>
+        <Box display={"flex"}>
+          <Info>
+            <AddressIcon fill='#438F68' />
+            <CustomTooltip title={data?.txHash}>
+              <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+            </CustomTooltip>
+            <StyledCopyButton text={data?.txHash} />
+          </Info>
+          <Info>
+            <ADAGreen />
+            <InfoText>{formatADA(data?.totalFee || 0)}</InfoText>
+          </Info>
+          <Info>
+            <TimeIcon />
+            <InfoText>{moment(data?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+          </Info>
+        </Box>
+      </Box>
+
+      <Box>
+        <Box className='list-images' display={"flex"} flexDirection={"column"} alignItems={"center"} gap={"50px"}>
+          <Box
+            ref={adaHolderRef}
+            display={"flex"}
+            flexDirection={"row"}
+            alignItems={"flex-start"}
+            justifyContent={"center"}
+            width={"100%"}
+            position={"relative"}
+          >
+            <Box ref={fake1Ref} width={"2px"} height={"190px"}></Box>
+            <Box ref={adaHolderRefImg} width={190} height={245} position={"relative"}>
+              <SPOStalking />
+              <CustomTooltip title={data?.poolName}>
+                <PoolName> {data?.poolName}</PoolName>
+              </CustomTooltip>
+              <PopoverStyled
+                render={({ handleClick }) => (
+                  <ButtonSPO
+                    ref={SPOInfoRef}
+                    component={IconButton}
+                    left={"33%"}
+                    onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
+                  >
+                    <SPOInfo />
+                  </ButtonSPO>
+                )}
+                content={
+                  <Box>
+                    <Box display={"flex"} alignItems={"center"}>
+                      <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                        Pool ID:
+                      </Box>
+                      <PoolNamePopup to={details.delegation(data?.poolView)}>
+                        {getShortHash(data?.poolView || "")}
+                      </PoolNamePopup>
+                      <CopyButton text={data?.poolView} />
+                    </Box>
+                    <Box display={"flex"} alignItems={"center"}>
+                      <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                        Pool name:
+                      </Box>
+                      <PoolNamePopup to={details.delegation(data?.poolView)}>{data?.poolName}</PoolNamePopup>
+                    </Box>
+                  </Box>
+                }
+              />
+              <PopoverStyled
+                render={({ handleClick }) => (
+                  <ButtonSPO
+                    ref={SPOKeyRef}
+                    component={IconButton}
+                    left={"52%"}
+                    onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
+                  >
+                    <SPOKey fill='#438F68' />
+                  </ButtonSPO>
+                )}
+                content={
+                  <Box display={"flex"} alignItems={"center"}>
+                    {data?.stakeKeys && data.stakeKeys.length > 0 && (
+                      <>
+                        <SPOKey fill='#108AEF' />
+                        <PoolNamePopup to={details.stake(data?.stakeKeys[0] || "")}>
+                          {getShortWallet(data?.stakeKeys[0] || "")}
+                        </PoolNamePopup>
+                        <CopyButton text={data?.stakeKeys[0]} />
+                      </>
+                    )}
+                  </Box>
+                }
+              />
+            </Box>
+            <Box ref={fake2Ref} position={"absolute"} width={"1px"} height={"100%"} right={"0px"}></Box>
+          </Box>
+
+          <Box display={"flex"} width={"100%"} flexDirection={"row"} justifyContent={"space-between"}>
+            <Box
+              ref={registrationRef}
+              padding={"24px"}
+              sx={{ background: "#fff", borderRadius: "12px" }}
+              onClick={() => setOpenModal(true)}
+            >
+              <img src={PoolCertificateMobile} width={"90px"} height={"150px"} alt='RegistrationCertificateIcon' />
+            </Box>
+
+            <Box display={"flex"} flexDirection={"column"} position={"relative"}>
+              <PopoverStyled
+                render={({ handleClick }) => (
+                  <HoldBox ref={holdRef} ml={1}>
+                    <Box>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                        {formatADA(data?.deposit || 0)}
+                      </Box>
+                      <ADAicon fontSize='18px' />
+                    </Box>
+                    <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </HoldBox>
+                )}
+                content={<PopupStaking hash={data?.txHash || ""} />}
+              />
+              <PopoverStyled
+                render={({ handleClick }) => (
+                  <FeeBox ref={feeRef}>
+                    <Box>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                        {formatADA(data?.fee || 0)}
+                      </Box>
+                      <ADAicon fontSize='18px' />
+                    </Box>
+                    <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </FeeBox>
+                )}
+                content={<PopupStaking hash={data?.txHash || ""} />}
+              />
+            </Box>
+          </Box>
+
+          <Box
+            ref={cadarnoSystemRef}
+            height={215}
+            width={190}
+            position={"relative"}
+            display={"flex"}
+            justifyContent={"center"}
+            flexDirection={"row"}
+            alignItems={"flex-end"}
+            sx={{ width: "100%", paddingTop: "3px" }}
+          >
+            <Box ref={fake1CardanoSystemRef} width={"1px"} height={"170px"}></Box>
+            <Box ref={cadarnoSystemRefImg}>
+              <img src={cadarnoSystem} alt='carrdano' />
+            </Box>
+            <Box ref={fake2CardanoSystemRef} position={"absolute"} width={"1px"} height={"100%"} right={"0px"}></Box>
+          </Box>
+
+          <svg
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              height: "150vh",
+              width: "100vw",
+              zIndex: "-1"
+            }}
+          >
+            <ArrowDiagram
+              containerPosition={containerPosition}
+              fromRef={adaHolderRef}
+              toRef={cadarnoSystemRef}
+              pointTo='border'
+              pointFrom='border'
+              orient='horizontal'
+              connectToReverse
+            />
+            <ArrowDiagram
+              containerPosition={containerPosition}
+              fromRef={fake1Ref}
+              toRef={fake1CardanoSystemRef}
+              pointTo='border'
+              pointFrom='border'
+              orient='horizontal'
+              connectToReverse
+            />
+            <Line
+              containerPosition={containerPosition}
+              fromRef={cadarnoSystemRefImg}
+              toRef={cadarnoSystemRef}
+              pointTo='border'
+              pointFrom='border'
+              orient='vertical'
+              connectToReverse
+            />
+            <ArrowDiagram
+              containerPosition={containerPosition}
+              fromRef={adaHolderRef}
+              toRef={adaHolderRefImg}
+              pointTo='border'
+              pointFrom='border'
+              orient='vertical'
+              connectToReverse
+            />
+            <Line
+              containerPosition={containerPosition}
+              fromRef={fake2CardanoSystemRef}
+              toRef={fake2Ref}
+              pointTo='center'
+              pointFrom='center'
+              orient='horizontal'
+              isCentalHorizontal
+            />
+          </svg>
+        </Box>
+      </Box>
+      <RegistrationCertificateModal
+        poolId={poolId}
+        poolUpdateId={selected?.poolUpdateId || 0}
+        handleCloseModal={() => setOpenModal(false)}
+        open={openModal}
+      />
+    </StyledBox>
   );
 };
 
@@ -403,10 +713,11 @@ export const RegistrationCertificateModal = ({
   const { data, loading } = useFetch<SPORegistrationDetail>(
     poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, poolUpdateId) : ""
   );
+  const { isMobile } = useScreen();
 
   return (
-    <StyledModal {...props} title='Pool registration certificate'>
-      <Grid container spacing={1}>
+    <StyledModal {...props} title='Pool Registration certificate'>
+      <StyledGridContainer container spacing={1}>
         <Grid item xs={6}>
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
@@ -415,7 +726,9 @@ export const RegistrationCertificateModal = ({
             {loading && <Skeleton variant='rectangular' />}
             {data && !loading && (
               <Box>
-                <Link to={details.transaction(data?.txHash || "")}>{getShortHash(data?.txHash || "")}</Link>{" "}
+                <Link to={details.transaction(data?.txHash || "")}>
+                  {isMobile ? getShortWallet(data?.txHash || "") : getShortHash(data?.txHash || "")}
+                </Link>{" "}
                 <CopyButton text={data?.txHash || ""} />
               </Box>
             )}
@@ -429,7 +742,9 @@ export const RegistrationCertificateModal = ({
             {loading && <Skeleton variant='rectangular' />}
             {data && !loading && (
               <Box>
-                <Link to={details.delegation(data?.poolView || "")}>{getShortHash(data?.poolView || "")}</Link>{" "}
+                <Link to={details.delegation(data?.poolView || "")}>
+                  {isMobile ? getShortWallet(data?.poolView || "") : getShortHash(data?.poolView || "")}
+                </Link>{" "}
                 <CopyButton text={data?.poolView || ""} />
               </Box>
             )}
@@ -445,7 +760,7 @@ export const RegistrationCertificateModal = ({
             {data && !loading && (
               <Box>
                 <Box display={"inline"} fontSize='0.875rem' color={({ palette }) => palette.blue[800]}>
-                  {getShortHash(data?.vrfKey || "")}
+                  {isMobile ? getShortWallet(data?.vrfKey || "") : getShortHash(data?.vrfKey || "")}
                 </Box>{" "}
                 <CopyButton text={data?.vrfKey || ""} />
               </Box>
@@ -525,7 +840,7 @@ export const RegistrationCertificateModal = ({
             )}
           </Box>
         </Grid>
-      </Grid>
+      </StyledGridContainer>
     </StyledModal>
   );
 };

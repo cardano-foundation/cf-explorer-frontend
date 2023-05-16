@@ -7,7 +7,7 @@ import { API } from "../../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../../StackingFilter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
 import { EmptyRecord } from "../../../../commons/Table";
-import { GridBox, WrapFilterDescription } from "./styles";
+import { GridBox, WrapFilterDescription, StyledContainer } from "./styles";
 import { FilterDateLabel } from "../../../DelegatorLifecycle/Delegation/styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
 import { details } from "../../../../../commons/routers";
@@ -63,7 +63,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
   if (txHash) return null;
 
   return (
-    <Box marginTop='32px'>
+    <StyledContainer marginTop='32px'>
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
         <DescriptionText>Recent Deregistration</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
@@ -106,7 +106,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
           })}
       </GridBox>
       {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
-    </Box>
+    </StyledContainer>
   );
 };
 

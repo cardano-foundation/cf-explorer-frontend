@@ -28,7 +28,7 @@ interface Props {
 const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
-  const { isMobile } = useScreen();
+  const { isMobile, isTablet } = useScreen();
 
   return (
     <Box>
@@ -50,7 +50,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
                   <Box fontWeight={400} color={(theme) => theme.palette.text.secondary}>
                     Policy ID:{" "}
                   </Box>{" "}
-                  <Box ml={2}>{isMobile ? truncateCustom(data?.policyId ?? "", 4, 8) : data?.policyId}</Box>{" "}
+                  <Box ml={2}>{isMobile || isTablet ? truncateCustom(data?.policyId ?? "", 5, 5) : data?.policyId}</Box>{" "}
                   <CopyButton text={data?.policyId} />
                 </SlotLeader>
               </Box>

@@ -27,7 +27,6 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   }
 }));
 export const FeeBox = styled(Box)(({ theme }) => ({
-  width: "184px",
   height: "35px",
   display: "flex",
   alignItems: "center",

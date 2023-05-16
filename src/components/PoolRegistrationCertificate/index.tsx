@@ -12,7 +12,7 @@ const PoolRegistrationCertificate: React.FC<PoolRegistrationCertificateProps> = 
   return (
     <StyledModal open={!!open} handleCloseModal={() => onModalClosed?.()}>
       <Container>
-        <Title>Pool registration certificate</Title>
+        <Title>Pool Registration certificate</Title>
         <Grid container rowSpacing={1} columnSpacing={2}>
           <Grid item md={6} xs={12}>
             <Card>

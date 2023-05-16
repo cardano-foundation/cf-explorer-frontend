@@ -58,14 +58,15 @@ export const ButtonReport = styled(Button)(({ theme }) => ({
     minWidth: "225px"
   }
 }));
-export const ButtonReportContainer = styled(Button)(({ theme }) => ({
+export const ButtonReportContainer = styled(Button)<{ disabled?: boolean }>(({ theme, disabled }) => ({
   display: "flex",
   marginLeft: 20,
   [theme.breakpoints.down("md")]: {
     justifyContent: "start",
     marginLeft: 0
   },
-  padding: 0
+  padding: 0,
+  opacity: disabled ? 0.5 : 1
 }));
 
 export const BoxContainerStyled = styled(Box)(({ theme }) => ({

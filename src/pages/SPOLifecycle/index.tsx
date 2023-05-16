@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useHistory, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 
-import { getShortHash, getShortWallet } from "../../commons/utils/helper";
+import { getShortHash } from "../../commons/utils/helper";
 import CopyButton from "../../components/commons/CopyButton";
 import SPOLifecycleComponent from "../../components/StakingLifeCycle/SPOLifecycle";
 
@@ -15,7 +15,6 @@ import {
   ButtonReport,
   ButtonReportContainer,
   ButtonSwitch,
-  StakeId,
   StyledContainer
 } from "./styles";
 
@@ -27,6 +26,7 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useScreen } from "../../commons/hooks/useScreen";
 import { StyledStakeId } from "../DelegatorLifecycle/styles";
 import { details } from "../../commons/routers";
+import useAuth from "~/commons/hooks/useAuth";
 
 const SPOLifecycle = () => {
   const {
@@ -46,6 +46,7 @@ const SPOLifecycle = () => {
   const [currentStep, setCurrentStep] = useState(tabList[tab || "registration"] || 0);
 
   const { isMobile } = useScreen();
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     setCurrentStep(tabList[tab || "registration"] || 0);
@@ -115,7 +116,7 @@ const SPOLifecycle = () => {
           </BoxSwitchContainer>
 
           {mode === "tablular" && (
-            <ButtonReportContainer>
+            <ButtonReportContainer disabled={!isLoggedIn}>
               <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>
             </ButtonReportContainer>
           )}

@@ -102,7 +102,7 @@ const Dashboard: React.FC = () => {
     page,
     size,
     ...params,
-    sort
+    sort: sort || params.sort
   });
   const { isMobile } = useScreen();
   const handleRowClick = (e: React.MouseEvent<Element, MouseEvent>, row: any) => {

@@ -25,11 +25,13 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     left: theme.spacing(2),
     background: theme.palette.red[600],
     transform: " translate(0, 60%)"
+  },
+  [theme.breakpoints.down("md")]: {
+    width: "100px"
   }
 }));
 export const FeeBox = styled(Box)(({ theme }) => ({
   width: "200px",
-  height: "35px",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
@@ -51,6 +53,10 @@ export const FeeBox = styled(Box)(({ theme }) => ({
     left: theme.spacing(2),
     background: theme.palette.red[600],
     transform: " translate(0, 60%)"
+  },
+  [theme.breakpoints.down("md")]: {
+    width: "100px",
+    marginLeft: "6px"
   }
 }));
 

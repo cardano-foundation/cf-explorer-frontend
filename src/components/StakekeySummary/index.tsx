@@ -5,12 +5,11 @@ import { API } from "../../commons/utils/api";
 import { Box, Button, IconButton } from "@mui/material";
 import moment from "moment";
 import { TextOverFlow } from "../StakingLifeCycle/DelegatorLifecycle/ReportComposerModal/styles";
-import { DownloadGreenIcon } from "../../commons/resources";
-import { lowerCase, startCase } from "lodash";
 import { defaultAxiosDownload } from "../../commons/utils/axios";
 import { useHistory } from "react-router-dom";
 import { details } from "../../commons/routers";
 import CustomIcon from "../commons/CustomIcon";
+import { DownloadGreenIcon } from "~/commons/resources";
 
 export const EVENTS: { [key in keyof IReportStaking]?: string } = {
   eventDelegation: "Delegation",

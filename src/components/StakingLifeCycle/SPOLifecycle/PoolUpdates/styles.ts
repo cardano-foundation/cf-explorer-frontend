@@ -1,4 +1,4 @@
-import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui, Grid } from "@mui/material";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -50,6 +50,9 @@ export const FeeBox = styled(Box)(({ theme }) => ({
     left: theme.spacing(2),
     background: theme.palette.red[600],
     transform: " translate(0, 60%)"
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "155px"
   }
 }));
 
@@ -84,4 +87,69 @@ export const FeeBoxText = styled(Box)(({ theme }) => ({
   fontSize: "18px",
   fontWeight: "bold",
   color: theme.palette.common.black
+}));
+
+export const StyledContainer = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    "& > div:nth-of-type(1)": {
+      alignItems: "center"
+    },
+    "& > p": {
+      marginRight: "10px"
+    }
+  }
+}));
+export const StyledGridContainer = styled(Grid)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    wordBreak: "break-all",
+    "& > div": {
+      height: "100%"
+    },
+    "& > div > div": {
+      padding: "20px 15px",
+      gap: "8px",
+      minHeight: "40px"
+    }
+  }
+}));
+
+export const StyledBox = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    "& > div:nth-of-type(1)": {
+      alignItems: "flex-start",
+      "& > div:nth-of-type(1)": {
+        flexDirection: "column",
+        gap: "5px"
+      }
+    },
+    ".list-images": {
+      "& > div": {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+      },
+      "& > div:nth-of-type(2)": {
+        justifyContent: "space-between",
+        "& > div:nth-of-type(1)": {
+          background: "#fff",
+          borderRadius: "12px",
+          padding: "24px",
+          img: {
+            width: "90px",
+            height: "150px"
+          }
+        },
+        "& > div:nth-of-type(2)": {
+          "& > div": {
+            marginLeft: "0px",
+            padding: "20px 5px 15px 15px",
+            alignItems: "center"
+          },
+          span: {
+            fontSize: "16px"
+          }
+        }
+      }
+    }
+  }
 }));

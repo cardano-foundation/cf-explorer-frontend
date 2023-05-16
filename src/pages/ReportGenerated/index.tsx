@@ -3,6 +3,8 @@ import ReportGeneratedTabs, { TabsItem } from "../../components/ReportGeneratedT
 import StakekeySummary from "../../components/StakekeySummary";
 import PoolLifecycle from "../../components/PoolLifecycle";
 
+export const defaultReportTab = "stake";
+
 const tabItems: TabsItem[] = [
   {
     value: "stake-key",

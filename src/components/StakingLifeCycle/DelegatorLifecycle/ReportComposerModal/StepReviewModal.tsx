@@ -64,7 +64,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           fromDate: moment(start).format("yyyy/MM/DD hh:mm:ss"),
           toDate: moment(end).format("yyyy/MM/D hh:mm:ss"),
           isADATransfer: step2.adaTransfers === "YES",
-          isFeesPaid: step2.adaTransfers === "YES",
+          isFeesPaid: step2.feesPaid === "YES",
           ...getEventType(events.map((item: { type: string }) => item.type))
         };
         await generateStakeKeyReport(paramsStakeKeyReport);
@@ -100,11 +100,11 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       label: isPoolReport ? "Epoch range" : "Date range",
       value: isPoolReport
         ? `Epoch ${epochStart} -  Epoch ${epochEnd}`
-        : `${moment(start).format("DD MM yy")} - ${moment(end).format("DD MM yy")}`,
+        : `${moment(start).format("MM/DD/yyyy")} - ${moment(end).format("MM/DD/yyyy")}`,
       step: STEPS.step1
     },
     {
-      label: "Address details",
+      label: isPoolReport ? "Pool ID" : "Address details",
       value: <TextOverFlow>{step1.address}</TextOverFlow>,
       step: STEPS.step1
     },
@@ -119,7 +119,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       step: STEPS.step2
     },
     {
-      label: "Staking lifecycle events",
+      label: isPoolReport ? "Pool Report by event" : "Staking lifecycle events",
       value: events,
       step: STEPS.step3
     }

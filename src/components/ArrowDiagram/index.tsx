@@ -17,6 +17,7 @@ interface ArrowDiagramProps {
 
   isCentalHorizontal?: boolean;
   isCentalVertical?: boolean;
+  isCentalHorizontalFrom?: boolean;
   dashed?: boolean;
 }
 
@@ -31,7 +32,8 @@ const ArrowDiagram: React.FC<ArrowDiagramProps> = ({
   connectToReverse = false,
   isCentalHorizontal = true,
   isCentalVertical = true,
-  dashed = false
+  dashed = false,
+  isCentalHorizontalFrom = false
 }) => {
   const [coords, setCoords] = useState<{ from: { x?: number; y?: number }; to: { x?: number; y?: number } }>({
     from: {},
@@ -77,7 +79,7 @@ const ArrowDiagram: React.FC<ArrowDiagramProps> = ({
 
     setCoords({
       from: {
-        x: xFrom,
+        x: isCentalHorizontalFrom ? xTo : xFrom,
         y: isCentalVertical ? yFrom : yTo
       },
       to: {
