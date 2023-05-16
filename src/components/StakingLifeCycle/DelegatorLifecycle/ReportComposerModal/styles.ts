@@ -1,5 +1,6 @@
 import { styled, Stack, Box, Button, TextField, Slider } from "@mui/material";
 import { SelectMui } from "../../../commons/Table/styles";
+import breakpoints from "~/themes/breakpoints";
 
 export const StyledLabel = styled("div")`
   font-weight: 400;
@@ -137,6 +138,9 @@ export const TextValueReview = styled("div")`
   line-height: 19px;
   max-width: 300px;
   color: #000000;
+  @media screen and (max-width: ${breakpoints.values.sm}px) {
+    max-width: 200px;
+  }
 `;
 
 export const TextOverFlow = styled("div")`

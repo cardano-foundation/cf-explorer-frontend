@@ -3,7 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { Drawer, Layout, ToggleMenu, Main, BackDrop, MainContainer } from "./styles";
+import { Drawer, Layout, ToggleMenu, Main, BackDrop, MainContainer, ArrowCollapse } from "./styles";
 import { useSelector } from "react-redux";
 import { setOnDetailView, setSidebar } from "../../../stores/user";
 import { RootState } from "../../../stores/types";
@@ -37,7 +37,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
       <Drawer variant='permanent' open={sidebar}>
         <CustomTooltip placement='right' title={sidebar ? `Collapse` : `Expand`}>
           <ToggleMenu onClick={handleToggle} type='button'>
-            {sidebar ? <FaArrowLeft /> : <FaArrowRight />}
+            <ArrowCollapse> {sidebar ? <FaArrowLeft /> : <FaArrowRight />}</ArrowCollapse>
           </ToggleMenu>
         </CustomTooltip>
         <Sidebar />

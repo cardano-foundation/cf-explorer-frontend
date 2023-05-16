@@ -12,7 +12,6 @@ import useFetchList from "../../../commons/hooks/useFetchList";
 import { API } from "../../../commons/utils/api";
 import { useLocation, useParams } from "react-router-dom";
 import { StakingDetailContext } from "..";
-import { TableTittle } from "../styles";
 import { ADAValueLabel } from "../../StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
 
 const trxType = {
@@ -24,7 +23,6 @@ const trxType = {
 };
 
 const WalletActitityTab = () => {
-  const { reportName } = useContext(StakingDetailContext);
   const [sort, setSort] = useState<string>("");
   const { reportId = "" } = useParams<{ reportId: string }>();
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 10 });
@@ -88,7 +86,7 @@ const WalletActitityTab = () => {
     <Box mt={2}>
       <StyledTable
         {...fetchData}
-        tableTitle={<TableTittle>{reportName}</TableTittle>}
+        tableTitle=''
         columns={columns}
         total={{ title: "Total Epochs", count: fetchData.total }}
         pagination={{

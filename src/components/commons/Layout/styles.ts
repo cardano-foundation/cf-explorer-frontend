@@ -159,3 +159,8 @@ export const Main = styled(Box)<{ open: number; sidebar: number }>`
     height: auto;
   }
 `;
+
+
+export const ArrowCollapse = styled('span')`
+  z-index: 100;
+`

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
-import { StyledTabList, TabHead, TitleTab } from "./styles";
+import { Headline, StyledTabList, TabHead, TitleTab } from "./styles";
 import CustomIcon from "../../commons/CustomIcon";
 import { useScreen } from "../../../commons/hooks/useScreen";
+import { StakingDetailContext } from "~/components/ReportGeneratedStakingDetail";
 
 export interface StakeTabItem {
   icon: React.FC;
@@ -26,6 +27,7 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration", onC
     setTabActive(tab);
     onChangeTab?.(tab);
   };
+  const { reportName } = useContext(StakingDetailContext);
 
   return (
     <Box mt={4} mr={isMobile ? 2 : 0}>
@@ -59,6 +61,7 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration", onC
             ))}
           </StyledTabList>
         </Box>
+        <Headline>{reportName} </Headline>
         {tabs.map((item) => (
           <TabPanel key={item.key} value={item.key} style={{ padding: 0 }}>
             {item.component}
