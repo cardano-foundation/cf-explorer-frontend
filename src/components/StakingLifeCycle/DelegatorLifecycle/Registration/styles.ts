@@ -24,11 +24,11 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     top: "-50%",
     left: theme.spacing(2),
     background: theme.palette.red[600],
-    transform: " translate(0, 60%)",
+    transform: " translate(0, 60%)"
   },
   [theme.breakpoints.down("md")]: {
     width: "100px"
-  },
+  }
 }));
 export const FeeBox = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -52,12 +52,12 @@ export const FeeBox = styled(Box)(({ theme }) => ({
     top: "-50%",
     left: theme.spacing(2),
     background: theme.palette.red[600],
-    transform: " translate(0, 60%)",
+    transform: " translate(0, 60%)"
   },
   [theme.breakpoints.down("md")]: {
     width: "100px",
     marginLeft: "6px"
-  },
+  }
 }));
 
 export const IconButton = styled(IconButtonMui)(({ theme }) => ({

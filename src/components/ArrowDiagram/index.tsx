@@ -80,7 +80,7 @@ const ArrowDiagram: React.FC<ArrowDiagramProps> = ({
     setCoords({
       from: {
         x: isCentalHorizontalFrom ? xTo : xFrom,
-        y: isCentalVertical ? yFrom : yTo,
+        y: isCentalVertical ? yFrom : yTo
       },
       to: {
         x: xTo,

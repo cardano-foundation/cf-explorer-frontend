@@ -76,12 +76,12 @@ const Line: React.FC<LineProps> = ({
     setCoords({
       from: {
         x: isCentalHorizontalFrom ? xTo : xFrom,
-        y: isCentalVertical ? yFrom : yTo,
+        y: isCentalVertical ? yFrom : yTo
       },
       to: {
         x: xTo,
-        y: isCentalHorizontal ? yTo : yFrom,
-      },
+        y: isCentalHorizontal ? yTo : yFrom
+      }
     });
   };
 

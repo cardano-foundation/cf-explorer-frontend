@@ -52,273 +52,257 @@ const RewardsDistribution = ({
     handleResize();
   }, [adaIcon1Ref.current, adaIcon2Ref.current, loading]);
 
-  const { isMobile } = useScreen()
+  const { isTablet } = useScreen();
 
   const RewardsDistributionTimeLine = () => {
     return (
       <Box mt={3}>
-      <ReceivedRewardsModal
-        reward={data?.rewardAvailable || 0}
-        open={openReceivedRewardsModal}
-        onClose={() => setOpenReceivedRewardsModal(false)}
-      />
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
-        <Box display={"flex"} flex={3} justifyContent={"space-between"}>
-          <Box ref={cadarnoSystemRef} width={240} height={300}>
-            <img src={CardarnoSystemReward} alt='CardarnoSystemReward' />
+        <ReceivedRewardsModal
+          reward={data?.rewardAvailable || 0}
+          open={openReceivedRewardsModal}
+          onClose={() => setOpenReceivedRewardsModal(false)}
+        />
+        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
+          <Box display={"flex"} flex={3} justifyContent={"space-between"}>
+            <Box ref={cadarnoSystemRef} width={240} height={300}>
+              <img src={CardarnoSystemReward} alt='CardarnoSystemReward' />
+            </Box>
+            <Box
+              py={"50px"}
+              display={"flex"}
+              flexDirection={"column"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+            >
+              <Box width={60} height={70} ref={adaIcon1Ref}>
+                <ADAOrangeIcon />
+              </Box>
+              <Box width={60} height={70} ref={adaIcon2Ref}>
+                {(data?.rewardPools || []).length === 0 ? <ADADisnableIcon /> : <ADAOrangeIcon />}
+              </Box>
+            </Box>
+            <Box
+              display={"flex"}
+              pt={"32px"}
+              pb={"35px"}
+              flexDirection={"column"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+            >
+              <Box display={"flex"} ref={adaHolderRef}>
+                <PopoverStyled
+                  render={() => (
+                    <Box ref={feeRef} width={270} height={100}>
+                      <img src={ADAHolderVertical} alt='ADAHolderVertical' />
+                    </Box>
+                  )}
+                  content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+                />
+              </Box>
+              <Box display={"flex"} ref={operatorRewardRef}>
+                <PopoverStyled
+                  render={() => (
+                    <Box ref={fee2Ref} width={270} height={100}>
+                      <img
+                        src={(data?.rewardPools || []).length === 0 ? SPOdisnable : SPOOpearatorVertical}
+                        alt='SPOOpearatorVertical'
+                      />
+                    </Box>
+                  )}
+                  content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+                />
+              </Box>
+            </Box>
           </Box>
           <Box
-            py={"50px"}
+            onClick={() => setOpenReceivedRewardsModal(true)}
+            flex={1}
             display={"flex"}
-            flexDirection={"column"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
+            justifyContent={"flex-end"}
+            width={225}
+            height={266}
           >
-            <Box width={60} height={70} ref={adaIcon1Ref}>
-              <ADAOrangeIcon />
-            </Box>
-            <Box width={60} height={70} ref={adaIcon2Ref}>
-              {(data?.rewardPools || []).length === 0 ? <ADADisnableIcon /> : <ADAOrangeIcon />}
-            </Box>
-          </Box>
-          <Box
-            display={"flex"}
-            pt={"32px"}
-            pb={"35px"}
-            flexDirection={"column"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-          >
-            <Box display={"flex"} ref={adaHolderRef}>
-              <PopoverStyled
-                render={() => (
-                  <Box ref={feeRef} width={270} height={100}>
-                    <img src={ADAHolderVertical} alt='ADAHolderVertical' />
-                  </Box>
-                )}
-                content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
-              />
-            </Box>
-            <Box display={"flex"} ref={operatorRewardRef}>
-              <PopoverStyled
-                render={() => (
-                  <Box ref={fee2Ref} width={270} height={100}>
-                    <img
-                      src={(data?.rewardPools || []).length === 0 ? SPOdisnable : SPOOpearatorVertical}
-                      alt='SPOOpearatorVertical'
-                    />
-                  </Box>
-                )}
-                content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
-              />
+            <Box position={"relative"} width={225} height={266}>
+              <img style={{ marginLeft: "5px" }} src={RewardsAccount} alt='carrdano' />
+              <RewarWallet>
+                <Box component={IconButton} bgcolor={(theme) => alpha(theme.palette.common.white, 0.1)} p={0}>
+                  <WalletIconReward />
+                </Box>
+                <Box color={(theme) => theme.palette.common.white} mx={1}>
+                  {formatADA(data?.rewardAvailable || 0)}
+                </Box>
+                <ADAicon color={"white"} />
+              </RewarWallet>
             </Box>
           </Box>
         </Box>
-        <Box
-          onClick={() => setOpenReceivedRewardsModal(true)}
-          flex={1}
-          display={"flex"}
-          justifyContent={"flex-end"}
-          width={225}
-          height={266}
-        >
-          <Box position={"relative"} width={225} height={266}>
-            <img style={{ marginLeft: "5px" }} src={RewardsAccount} alt='carrdano' />
-            <RewarWallet>
-              <Box component={IconButton} bgcolor={(theme) => alpha(theme.palette.common.white, 0.1)} p={0}>
-                <WalletIconReward />
-              </Box>
-              <Box color={(theme) => theme.palette.common.white} mx={1}>
-                {formatADA(data?.rewardAvailable || 0)}
-              </Box>
-              <ADAicon color={"white"} />
-            </RewarWallet>
-          </Box>
-        </Box>
-      </Box>
 
-      <svg
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          height: "100vh",
-          width: "100vw",
-          zIndex: "-1"
-        }}
-      >
-        <Line
-          containerPosition={containerPosition}
-          fromRef={cadarnoSystemRef}
-          toRef={adaIcon1Ref}
-          pointTo='border'
-          pointFrom='border'
-          orient='vertical'
-          isCentalVertical={false}
-        />
-        <Line
-          containerPosition={containerPosition}
-          fromRef={cadarnoSystemRef}
-          toRef={adaIcon2Ref}
-          pointTo='border'
-          pointFrom='border'
-          isCentalVertical={false}
-          orient='vertical'
-          dashed={(data?.rewardPools || []).length === 0}
-        />
-        <ArrowDiagram
-          containerPosition={containerPosition}
-          fromRef={adaIcon1Ref}
-          toRef={adaHolderRef}
-          pointTo='border'
-          pointFrom='border'
-          orient='vertical'
-        />
-        <ArrowDiagram
-          containerPosition={containerPosition}
-          fromRef={adaIcon2Ref}
-          toRef={operatorRewardRef}
-          pointTo='border'
-          pointFrom='border'
-          orient='vertical'
-          dashed={(data?.rewardPools || []).length === 0}
-        />
-      </svg>
-    </Box>
-    )
-  }
+        <svg
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: "100vh",
+            width: "100vw",
+            zIndex: "-1"
+          }}
+        >
+          <Line
+            containerPosition={containerPosition}
+            fromRef={cadarnoSystemRef}
+            toRef={adaIcon1Ref}
+            pointTo='border'
+            pointFrom='border'
+            orient='vertical'
+            isCentalVertical={false}
+          />
+          <Line
+            containerPosition={containerPosition}
+            fromRef={cadarnoSystemRef}
+            toRef={adaIcon2Ref}
+            pointTo='border'
+            pointFrom='border'
+            isCentalVertical={false}
+            orient='vertical'
+            dashed={(data?.rewardPools || []).length === 0}
+          />
+          <ArrowDiagram
+            containerPosition={containerPosition}
+            fromRef={adaIcon1Ref}
+            toRef={adaHolderRef}
+            pointTo='border'
+            pointFrom='border'
+            orient='vertical'
+          />
+          <ArrowDiagram
+            containerPosition={containerPosition}
+            fromRef={adaIcon2Ref}
+            toRef={operatorRewardRef}
+            pointTo='border'
+            pointFrom='border'
+            orient='vertical'
+            dashed={(data?.rewardPools || []).length === 0}
+          />
+        </svg>
+      </Box>
+    );
+  };
 
   const RewardsDistributionTimeLineMobile = () => {
     return (
-      <Box mt={3}>
-      <ReceivedRewardsModal
-        reward={data?.rewardAvailable || 0}
-        open={openReceivedRewardsModal}
-        onClose={() => setOpenReceivedRewardsModal(false)}
-      />
-      <Box>
-        <Box>
-          <Box ref={cadarnoSystemRef}>
-            <img src={CardarnoSystemReward} alt="CardarnoSystemReward" />
+      <Box mt={3} margin='0 auto' width={"350px"}>
+        <ReceivedRewardsModal
+          reward={data?.rewardAvailable || 0}
+          open={openReceivedRewardsModal}
+          onClose={() => setOpenReceivedRewardsModal(false)}
+        />
+        <Box >
+          <Box>
+            <Box ref={cadarnoSystemRef}>
+              <img src={CardarnoSystemReward} alt='CardarnoSystemReward' />
+            </Box>
+            <Box display='flex' flexDirection='row-reverse' justifyContent='space-between' mx={5}>
+              <Box width={80} height={70} ref={adaIcon1Ref}>
+                <ADAOrangeIcon />
+              </Box>
+              <Box width={80} height={70} ref={adaIcon2Ref}>
+                {(data?.rewardPools || []).length === 0 ? <ADADisnableIcon /> : <ADAOrangeIcon />}
+              </Box>
+            </Box>
+            <Box display={"flex"} justifyContent='space-between' flexDirection='row-reverse'>
+              <Box display={"flex"} ref={adaHolderRef}>
+                <PopoverStyled
+                  render={({ handleClick }: any) => (
+                    <Box ref={feeRef}>
+                      <img src={ADAHolderVerticalMobile} alt='ADAHolderVerticalMobile' />
+                    </Box>
+                  )}
+                  content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+                />
+              </Box>
+              <Box display={"flex"} ref={operatorRewardRef}>
+                <PopoverStyled
+                  render={({ handleClick }: any) => (
+                    <Box>
+                      <img
+                        src={(data?.rewardPools || []).length === 0 ? SPOdisnableMobile : SPOOpearatorVertical}
+                        alt='SPOOpearatorVertical'
+                      />
+                    </Box>
+                  )}
+                  content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+                />
+              </Box>
+            </Box>
           </Box>
-          <Box
-            display="flex"
-            flexDirection="row-reverse"
-            justifyContent="space-between"
-            mx={5}
-          >
-            <Box width={80} height={70} ref={adaIcon1Ref}>
-              <ADAOrangeIcon />
-            </Box>
-            <Box width={80} height={70} ref={adaIcon2Ref}>
-              {(data?.rewardPools || []).length === 0 ? <ADADisnableIcon /> : <ADAOrangeIcon />}
-            </Box>
-          </Box>
-          <Box
-            display={"flex"}        
-            justifyContent="space-between" 
-            flexDirection="row-reverse"
-          >
-            <Box display={"flex"} ref={adaHolderRef}>
-              <PopoverStyled
-                render={({ handleClick }: any) => (
-                  <Box ref={feeRef}>
-                    <img src={ADAHolderVerticalMobile} alt="ADAHolderVerticalMobile" />
-                  </Box>
-                )}
-                content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
-              />
-            </Box>
-            <Box display={"flex"} ref={operatorRewardRef}>
-              <PopoverStyled
-                render={({ handleClick }: any) => (
-                  <Box >
-                    <img
-                      src={(data?.rewardPools || []).length === 0 ? SPOdisnableMobile : SPOOpearatorVertical}
-                      alt="SPOOpearatorVertical"
-                    />
-                  </Box>
-                )}
-                content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
-              />
+          <Box onClick={() => setOpenReceivedRewardsModal(true)} >
+            <Box position={"relative"}>
+              <img style={{ marginLeft: "5px" }} src={RewardsAccount} alt='carrdano' />
+              <RewarWallet>
+                <Box component={IconButton} bgcolor={(theme) => alpha(theme.palette.common.white, 0.1)} p={0}>
+                  <WalletIconReward />
+                </Box>
+                <Box color={(theme) => theme.palette.common.white} mx={1}>
+                  {formatADA(data?.rewardAvailable || 0)}
+                </Box>
+                <ADAicon color={"white"} />
+              </RewarWallet>
             </Box>
           </Box>
         </Box>
-        <Box
-          onClick={() => setOpenReceivedRewardsModal(true)}
-          margin="0 auto"
+
+        <svg
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: "150vh",
+            width: "100vw",
+            zIndex: "-1"
+          }}
         >
-          <Box position={"relative"} >
-            <img style={{ marginLeft: "5px" }} src={RewardsAccount} alt="carrdano" />
-            <RewarWallet>
-              <Box component={IconButton} bgcolor={theme => alpha(theme.palette.common.white, 0.1)} p={0}>
-                <WalletIconReward />
-              </Box>
-              <Box color={theme => theme.palette.common.white} mx={1}>
-                {formatADA(data?.rewardAvailable || 0)}
-              </Box>
-              <ADAicon color={"white"} />
-            </RewarWallet>
-          </Box>
-        </Box>
+          <Line
+            containerPosition={containerPosition}
+            fromRef={cadarnoSystemRef}
+            toRef={adaIcon1Ref}
+            pointTo='center'
+            pointFrom='center'
+            orient='vertical'
+            isCentalHorizontalFrom
+          />
+          <Line
+            containerPosition={containerPosition}
+            fromRef={cadarnoSystemRef}
+            toRef={adaIcon2Ref}
+            pointTo='center'
+            pointFrom='center'
+            orient='vertical'
+            isCentalHorizontalFrom
+            dashed
+          />
+          <ArrowDiagram
+            containerPosition={containerPosition}
+            fromRef={adaIcon2Ref}
+            toRef={operatorRewardRef}
+            pointTo='center'
+            pointFrom='center'
+            orient='vertical'
+            connectFromReverse
+            isCentalHorizontalFrom
+          />
+          <ArrowDiagram
+            containerPosition={containerPosition}
+            fromRef={adaIcon1Ref}
+            toRef={feeRef}
+            pointTo='center'
+            pointFrom='center'
+            orient='vertical'
+          />
+        </svg>
       </Box>
+    );
+  };
 
-      <svg
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          height: "150vh",
-          width: "100vw",
-          zIndex: "-1",
-        }}
-      >
-        <Line
-          containerPosition={containerPosition}
-          fromRef={cadarnoSystemRef}
-          toRef={adaIcon1Ref}
-          pointTo="center"
-          pointFrom="center"
-          orient="vertical"
-          isCentalHorizontalFrom
-        />
-         <Line
-          containerPosition={containerPosition}
-          fromRef={cadarnoSystemRef}
-          toRef={adaIcon2Ref}
-          pointTo="center"
-          pointFrom="center"
-          orient="vertical"
-          isCentalHorizontalFrom
-          dashed
-        />
-        <ArrowDiagram
-          containerPosition={containerPosition}
-          fromRef={adaIcon2Ref}
-          toRef={operatorRewardRef}
-          pointTo="center"
-          pointFrom="center"
-          orient="vertical"
-          connectFromReverse
-          isCentalHorizontalFrom
-        />
-        <ArrowDiagram
-          containerPosition={containerPosition}
-          fromRef={adaIcon1Ref}
-          toRef={feeRef}
-          pointTo="center"
-          pointFrom="center"
-          orient="vertical"
-        />
-      </svg>
-    </Box>
-    )
-  }
-
-  return (
-   <Box>
-    {isMobile ? RewardsDistributionTimeLineMobile() : RewardsDistributionTimeLine()}
-   </Box>
-  );
+  return <Box>{isTablet ? RewardsDistributionTimeLineMobile() : RewardsDistributionTimeLine()}</Box>;
 };
 export default RewardsDistribution;

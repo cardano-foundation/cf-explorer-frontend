@@ -29,20 +29,20 @@ import {
   RewardWallet,
   RoundBox,
   Withdrawn
-} from './styles';
-import ADAicon from '../../../commons/ADAIcon';
-import ArrowDiagram from '../../../ArrowDiagram';
-import RecentWithdraws from './RecentWithdraws';
-import useFetch from '../../../../commons/hooks/useFetch';
-import { API } from '../../../../commons/utils/api';
-import { useHistory, useParams } from 'react-router';
-import { formatADA, formatDateTimeLocal, getShortHash } from '../../../../commons/utils/helper';
-import PopoverStyled from '../../../commons/PopoverStyled';
-import PopupStaking from '../../../commons/PopupStaking';
-import CustomTooltip from '../../../commons/CustomTooltip';
-import { StyledCopyButton } from '../../SPOLifecycle/Registration/styles';
-import { details } from '../../../../commons/routers';
-import { useScreen } from '~/commons/hooks/useScreen';
+} from "./styles";
+import ADAicon from "../../../commons/ADAIcon";
+import ArrowDiagram from "../../../ArrowDiagram";
+import RecentWithdraws from "./RecentWithdraws";
+import useFetch from "../../../../commons/hooks/useFetch";
+import { API } from "../../../../commons/utils/api";
+import { useHistory, useParams } from "react-router";
+import { formatADA, formatDateTimeLocal, getShortHash } from "../../../../commons/utils/helper";
+import PopoverStyled from "../../../commons/PopoverStyled";
+import PopupStaking from "../../../commons/PopupStaking";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
+import { details } from "../../../../commons/routers";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 const Withdraw = ({
   containerPosition,
@@ -60,7 +60,7 @@ const Withdraw = ({
     setSelected(withdraw);
   };
 
-  const { isMobile } = useScreen();
+  const { isTablet } = useScreen();
 
   return (
     <Box>
@@ -68,14 +68,15 @@ const Withdraw = ({
         <RecentWithdraws onSelect={handleSelect} />
       </Box>
       <Box>
-        {!!selected && isMobile ? (
+        {!!selected && isTablet ? (
           <WithdrawTimelineMobile
             handleResize={handleResize}
             setSelected={setSelected}
             selected={selected}
             containerPosition={containerPosition}
           />
-        ) : !!selected ? (
+        ) : // eslint-disable-next-line no-extra-boolean-cast
+        !!selected ? (
           <WithdrawTimeline
             handleResize={handleResize}
             setSelected={setSelected}
@@ -362,7 +363,7 @@ const WithdrawTimelineMobile = ({
   containerPosition,
   setSelected,
   handleResize,
-  selected,
+  selected
 }: {
   containerPosition: {
     top?: number;
@@ -400,32 +401,32 @@ const WithdrawTimelineMobile = ({
           </IconButtonBack>
           <Box display={"flex"}>
             <Info>
-              <AddressIcon fill="#438F68" />
-              <Box component={Skeleton} ml={1} variant="rectangular" width={145} height={18} />
+              <AddressIcon fill='#438F68' />
+              <Box component={Skeleton} ml={1} variant='rectangular' width={145} height={18} />
             </Info>
             <Info>
               <ADAGreen />
-              <Box component={Skeleton} ml={1} variant="rectangular" width={60} height={18} />
+              <Box component={Skeleton} ml={1} variant='rectangular' width={60} height={18} />
             </Info>
             <Info>
               <TimeIcon />
-              <Box component={Skeleton} ml={1} variant="rectangular" width={130} height={18} />
+              <Box component={Skeleton} ml={1} variant='rectangular' width={130} height={18} />
             </Info>
           </Box>
         </Box>
-        <Box component={Skeleton} width={"100%"} height={400} variant="rectangular" borderRadius={12} />
+        <Box component={Skeleton} width={"100%"} height={400} variant='rectangular' borderRadius={12} />
       </Box>
     );
   }
   return (
     <Box>
-      <Box display="flex" justifyContent="space-between" mt={2}>
+      <Box display='flex' justifyContent='space-between' mt={2}>
         <IconButtonBack onClick={() => setSelected(null)}>
           <BackIcon />
         </IconButtonBack>
         <Box>
           <Info>
-            <AddressIcon fill="#438F68" />
+            <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected.txHash}>
               <InfoText>{getShortHash(selected.txHash || "")}</InfoText>
             </CustomTooltip>
@@ -444,17 +445,17 @@ const WithdrawTimelineMobile = ({
       <Box ref={adaHolderRef} mt={5}>
         <ADAHolderIcon />
       </Box>
-      <Box >
+      <Box margin="0 auto" width={"350px"}>
         <Box mt={5}>
           <Payment>
             <PopoverStyled
               render={({ handleClick }: any) => (
                 <Box position={"relative"}>
-                  <PaymentWallet ref={boxWalletRef}/>
+                  <PaymentWallet ref={boxWalletRef} />
                   <RewardWallet>
                     <Box
                       component={IconButton}
-                      bgcolor={theme => alpha(theme.palette.common.white, 0.1)}
+                      bgcolor={(theme) => alpha(theme.palette.common.white, 0.1)}
                       p={0}
                       onClick={() => paymentWalletRef?.current && handleClick(paymentWalletRef.current)}
                     >
@@ -476,13 +477,13 @@ const WithdrawTimelineMobile = ({
                   <RewardAccount>
                     <Box
                       component={IconButton}
-                      bgcolor={theme => alpha(theme.palette.common.white, 0.1)}
+                      bgcolor={(theme) => alpha(theme.palette.common.white, 0.1)}
                       p={0}
                       onClick={() => rewardAccountRef?.current && handleClick(rewardAccountRef.current)}
                     >
                       <WalletIconReward />
                     </Box>
-                    <Box mx={1} color={theme => theme.palette.common.white} fontSize={14}>
+                    <Box mx={1} color={(theme) => theme.palette.common.white} fontSize={14}>
                       {formatADA(data?.stakeRewardAvailable || 0)}
                     </Box>
                     <ADAicon color={"white"} fontSize={14} />
@@ -493,15 +494,8 @@ const WithdrawTimelineMobile = ({
             />
           </Payment>
 
-          <Box display="flex" mt={10} flexDirection="row-reverse" position={"relative"}>
-          <Box
-              ref={fake2ref}
-              width={"250px"}
-              height={300}
-              position={"absolute"}
-              right={"-10%"}
-              bottom={"-10%"}
-            ></Box>
+          <Box display='flex' mt={10} flexDirection='row-reverse' position={"relative"}>
+            <Box ref={fake2ref} width={"250px"} height={300} position={"absolute"} right={"-13%"} bottom={"-10%"}></Box>
             <PopoverStyled
               render={({ handleClick }) => (
                 <NetAmount ref={netAmountRef}>
@@ -509,7 +503,7 @@ const WithdrawTimelineMobile = ({
                     <ADAAmountLabel>
                       {data?.amount && data?.fee ? formatADA(data?.amount - data?.fee) : 0}
                     </ADAAmountLabel>
-                    <ADAicon fontSize="18px" />
+                    <ADAicon fontSize='18px' />
                   </Box>
                   <IconButton onClick={() => netAmountRef?.current && handleClick(netAmountRef.current)}>
                     <ButtonListIcon />
@@ -518,20 +512,13 @@ const WithdrawTimelineMobile = ({
               )}
               content={<PopupStaking hash={data?.txHash || ""} />}
             />
-           <Box
-              ref={fake3ref}
-              width={"250px"}
-              height={300}
-              position={"absolute"}
-              right={"40%"}
-              bottom={"-10%"}
-            ></Box>
+            <Box ref={fake3ref} width={"250px"} height={300} position={"absolute"} right={"40%"} bottom={"-10%"}></Box>
             <PopoverStyled
               render={({ handleClick }) => (
                 <Withdrawn ref={withdrawnRef}>
                   <Box>
                     <ADAAmountLabel>{formatADA(data?.amount || 0)}</ADAAmountLabel>
-                    <ADAicon fontSize="18px" />
+                    <ADAicon fontSize='18px' />
                   </Box>
                   <IconButton onClick={() => withdrawnRef?.current && handleClick(withdrawnRef.current)}>
                     <ButtonListIcon />
@@ -550,7 +537,7 @@ const WithdrawTimelineMobile = ({
                     <Box component={"span"} fontSize={"18px"} fontWeight={"bold"}>
                       {formatADA(data?.fee || 0)}
                     </Box>
-                    <ADAicon fontSize="18px" />
+                    <ADAicon fontSize='18px' />
                   </Box>
                   <IconButton onClick={() => feesRef?.current && handleClick(feesRef.current)}>
                     <ButtonListIcon />
@@ -561,8 +548,8 @@ const WithdrawTimelineMobile = ({
             />
           </Box>
 
-          <Box margin="0 auto"  width={190} height={70} ref={cadarnoSystemRef} mt={5} mb={15}>
-            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
+          <Box margin='0 auto' width={190} height={70} ref={cadarnoSystemRef} mt={5} mb={15}>
+            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt='carrdano' />
           </Box>
 
           <svg
@@ -572,52 +559,33 @@ const WithdrawTimelineMobile = ({
               left: 0,
               height: "200vh",
               width: "100vw",
-              zIndex: "-1",
+              zIndex: "-1"
             }}
           >
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={adaHolderRef}
               toRef={boxWalletRef}
-              pointTo="center"
-              pointFrom="center"
-              orient="vertical"
+              pointTo='center'
+              pointFrom='center'
+              orient='vertical'
               connectFromReverse
             />
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={fake3ref}
-              toRef={withdrawnRef}
-              pointTo="center"
-              pointFrom="center"
-              orient="vertical"
+              toRef={cadarnoSystemRef}
+              pointTo='border'
+              pointFrom='center'
+              orient='vertical'
             />
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={fake2ref}
-              toRef={netAmountRef}
-              pointTo="center"
-              pointFrom="center"
-              orient="vertical"
-            />
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={withdrawnRef}
               toRef={cadarnoSystemRef}
-              pointTo="border"
-              pointFrom="center"
-              orient="vertical"
-              // isCentalHorizontalFrom
-              connectFromReverse
-            />
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={netAmountRef}
-              toRef={cadarnoSystemRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
-              isCentalHorizontalFrom
+              pointTo='border'
+              pointFrom='center'
+              orient='vertical'
               connectToReverse
             />
           </svg>

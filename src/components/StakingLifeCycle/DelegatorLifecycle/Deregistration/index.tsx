@@ -8,7 +8,7 @@ import {
   BackIcon,
   AddressIcon,
   ADAGreen,
-  TimeIcon,
+  TimeIcon
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import DeregistrationCertificate from "../../../../commons/resources/icons/Staking/DeregistrationCertificateIcon.svg";
@@ -47,29 +47,28 @@ const Deregistration = ({
     setSelected(deregistration);
   };
 
-  const { isMobile } = useScreen();
+  const { isTablet } = useScreen();
 
   return (
     <Box>
       <Box>
         <RecentDeregistrations onSelect={handleSelect} />
       </Box>
-      <Box>
-        {!!selected && isMobile ? (
+      {selected &&
+        (isTablet ? (
           <DeregistrationTimelineMobile
             handleResize={handleResize}
             setSelected={setSelected}
             selected={selected}
             containerPosition={containerPosition}
           />
-        ) : !!selected ? (
+        ) : (
           <DeregistrationTimeline
             handleResize={handleResize}
             selected={selected}
             containerPosition={containerPosition}
           />
-        ) : null}
-      </Box>
+        ))}
     </Box>
   );
 };
@@ -294,7 +293,7 @@ const DeregistrationTimelineMobile = ({
   containerPosition,
   setSelected,
   handleResize,
-  selected,
+  selected
 }: {
   containerPosition: {
     top?: number;
@@ -310,6 +309,7 @@ const DeregistrationTimelineMobile = ({
   const holdRef = useRef(null);
   const feeRef = useRef(null);
   const cadarnoSystemRef = useRef(null);
+  const imgCadarnoSystemRef = useRef(null);
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
@@ -322,13 +322,13 @@ const DeregistrationTimelineMobile = ({
 
   return (
     <Box>
-      <Box display="flex" justifyContent="space-between" mt={1}>
+      <Box display='flex' justifyContent='space-between' mt={1}>
         <IconButtonBack onClick={() => setSelected(null)}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"} flexDirection="column">
+        <Box display={"flex"} flexDirection='column'>
           <Info>
-            <AddressIcon fill="#438F68" />
+            <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected.txHash}>
               <InfoText>{getShortHash(selected.txHash || "")}</InfoText>
             </CustomTooltip>
@@ -344,9 +344,9 @@ const DeregistrationTimelineMobile = ({
           </Info>
         </Box>
       </Box>
-      <Box>
+      <Box margin="0 auto" width={"350px"}>
         <Box>
-          <Box ref={adaHolderRef} width={190} height={215} margin="0 auto" mt={5} pr={2} position={"relative"}>
+          <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={5} pr={2} position={"relative"}>
             <ADAHolderIcon />
             <Box
               ref={fake2Ref}
@@ -357,7 +357,7 @@ const DeregistrationTimelineMobile = ({
               bottom={"-100%"}
             ></Box>
           </Box>
-          <Box display="flex" mt={5}>
+          <Box display='flex' mt={5}>
             <Box
               p={0}
               component={IconButton}
@@ -365,7 +365,7 @@ const DeregistrationTimelineMobile = ({
               onClick={() => setOpenModal(true)}
               ref={registrationRef}
             >
-              <img src={DeregistrationCertificateMobile} alt="DeregistrationCertificateMobile" />
+              <img src={DeregistrationCertificateMobile} alt='DeregistrationCertificateMobile' />
             </Box>
             <Box mt={8}>
               <PopoverStyled
@@ -375,7 +375,7 @@ const DeregistrationTimelineMobile = ({
                       <Box component={"span"} fontSize={"18px"} fontWeight={"bold"}>
                         {formatADA(Math.abs(selected.deposit) || 0)}
                       </Box>
-                      <ADAicon fontSize="18px" />
+                      <ADAicon fontSize='18px' />
                     </Box>
                     <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
                       <ButtonListIcon />
@@ -391,7 +391,7 @@ const DeregistrationTimelineMobile = ({
                       <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
                         {formatADA(selected.fee || 0)}
                       </Box>
-                      <ADAicon fontSize="18px" />
+                      <ADAicon fontSize='18px' />
                     </Box>
                     <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
                       <ButtonListIcon />
@@ -402,12 +402,14 @@ const DeregistrationTimelineMobile = ({
               />
             </Box>
           </Box>
-          <Box ref={cadarnoSystemRef} width={190} height={70} margin="0 auto" mt={5} mb={15} position={"relative"}>
-            <img src={cadarnoSystem} alt="carrdano" />
+          <Box ref={cadarnoSystemRef} width={190} height={70} margin='0 auto' mt={5} mb={15} position={"relative"}>
+            <Box ref={imgCadarnoSystemRef} height={200}>
+              <img src={cadarnoSystem} alt='carrdano' />
+            </Box>
             <Box
               ref={fake1Ref}
               width={"250px"}
-              height={170}
+              height={70}
               position={"absolute"}
               right={"-100%"}
               bottom={"-100%"}
@@ -421,72 +423,53 @@ const DeregistrationTimelineMobile = ({
               left: 0,
               height: "150vh",
               width: "100vw",
-              zIndex: "-1",
+              zIndex: "-1"
             }}
           >
-            <Line
+            <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={adaHolderRef}
-              toRef={registrationRef}
-              pointTo="center"
-              pointFrom="center"
-              orient="vertical"
-              isCentalHorizontalFrom
-            />
-            <Line
-              containerPosition={containerPosition}
-              fromRef={adaHolderRef}
-              toRef={feeRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
+              toRef={cadarnoSystemRef}
+              pointTo='border'
+              pointFrom='border'
+              orient='vertical'
               isCentalHorizontalFrom
             />
             <ArrowDiagram
               containerPosition={containerPosition}
-              fromRef={feeRef}
+              fromRef={adaHolderRef}
               toRef={cadarnoSystemRef}
-              pointTo="center"
-              pointFrom="center"
-              orient="vertical"
-              isCentalHorizontalFrom
-              connectFromReverse
-            />
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={registrationRef}
-              toRef={cadarnoSystemRef}
-              pointTo="border"
-              pointFrom="center"
-              orient="vertical"
+              pointTo='center'
+              pointFrom='center'
+              orient='vertical'
               isCentalHorizontalFrom
               connectFromReverse
             />
             <Line
               containerPosition={containerPosition}
-              fromRef={cadarnoSystemRef}
+              fromRef={imgCadarnoSystemRef}
               toRef={fake1Ref}
-              pointTo="center"
-              pointFrom="center"
-              orient="vertical"
+              pointTo='center'
+              pointFrom='center'
+              orient='vertical'
               isCentalHorizontal
             />
             <Line
               containerPosition={containerPosition}
               fromRef={fake1Ref}
               toRef={fake2Ref}
-              pointTo="center"
-              pointFrom="center"
-              orient="horizontal"
+              pointTo='center'
+              pointFrom='center'
+              orient='horizontal'
               isCentalHorizontal
             />
             <ArrowDiagram
               containerPosition={containerPosition}
               fromRef={fake2Ref}
               toRef={adaHolderRef}
-              pointTo="border"
-              pointFrom="center"
-              orient="vertical"
+              pointTo='border'
+              pointFrom='center'
+              orient='vertical'
               isCentalHorizontal
               connectToReverse
             />

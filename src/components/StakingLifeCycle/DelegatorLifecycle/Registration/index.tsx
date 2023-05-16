@@ -8,29 +8,29 @@ import {
   AddressIcon,
   ADAGreen,
   TimeIcon
-} from '../../../../commons/resources';
-import cadarnoSystem from '../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg';
-import RegistrationCertificate from '../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg';
-import RegistrationCertificateMobile from '../../../../commons/resources/icons/Staking/RegistrationCertificateMobile.svg';
+} from "../../../../commons/resources";
+import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
+import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
+import RegistrationCertificateMobile from "../../../../commons/resources/icons/Staking/RegistrationCertificateMobile.svg";
 
-import Line from '../../../Line';
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText, StakeLink } from './styles';
-import { AdaLogoIcon } from '../../../commons/ADAIcon';
-import ArrowDiagram from '../../../ArrowDiagram';
-import RecentRegistrations from './RecentRegistrations';
-import PopoverStyled from '../../../commons/PopoverStyled';
-import { formatADAFull, getShortHash } from '../../../../commons/utils/helper';
-import moment from 'moment';
-import PopupStaking from '../../../commons/PopupStaking';
-import StyledModal from '../../../commons/StyledModal';
-import { useHistory, useParams } from 'react-router-dom';
-import useFetch from '../../../../commons/hooks/useFetch';
-import { API } from '../../../../commons/utils/api';
-import { details } from '../../../../commons/routers';
-import CopyButton from '../../../commons/CopyButton';
-import CustomTooltip from '../../../commons/CustomTooltip';
-import { StyledCopyButton } from '../../SPOLifecycle/Registration/styles';
-import { useScreen } from '~/commons/hooks/useScreen';
+import Line from "../../../Line";
+import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText, StakeLink } from "./styles";
+import { AdaLogoIcon } from "../../../commons/ADAIcon";
+import ArrowDiagram from "../../../ArrowDiagram";
+import RecentRegistrations from "./RecentRegistrations";
+import PopoverStyled from "../../../commons/PopoverStyled";
+import { formatADAFull, getShortHash } from "../../../../commons/utils/helper";
+import moment from "moment";
+import PopupStaking from "../../../commons/PopupStaking";
+import StyledModal from "../../../commons/StyledModal";
+import { useHistory, useParams } from "react-router-dom";
+import useFetch from "../../../../commons/hooks/useFetch";
+import { API } from "../../../../commons/utils/api";
+import { details } from "../../../../commons/routers";
+import CopyButton from "../../../commons/CopyButton";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 const Registration = ({
   containerPosition,
@@ -48,25 +48,23 @@ const Registration = ({
     setSelected(registration);
   };
 
-  const { isMobile } = useScreen();
+  const { isTablet } = useScreen();
 
   return (
     <Box>
       <Box>
-        {selected && isMobile ? (
+        {selected && (isTablet ? (
           <RegistrationTimelineMobile
             handleResize={handleResize}
             setSelected={setSelected}
             containerPosition={containerPosition}
             registration={selected}
           />
-        ) : selected ? (
-          <RegistrationTimeline
-            handleResize={handleResize}
-            containerPosition={containerPosition}
-            registration={selected}
-          />
-        ) : null}
+        ) : (<RegistrationTimeline
+          handleResize={handleResize}
+          containerPosition={containerPosition}
+          registration={selected}
+        />))}
       </Box>
     </Box>
   );
@@ -286,7 +284,7 @@ const RegistrationTimelineMobile = ({
   containerPosition,
   setSelected,
   handleResize,
-  registration,
+  registration
 }: {
   containerPosition: {
     top?: number;
@@ -314,13 +312,13 @@ const RegistrationTimelineMobile = ({
 
   return (
     <Box>
-      <Box display="flex" alignItems="flex-start" justifyContent="space-between" mt={1}>
+      <Box display='flex' alignItems='flex-start' justifyContent='space-between' mt={1}>
         <IconButtonBack onClick={() => setSelected(null)}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"} flexDirection="column">
+        <Box display={"flex"} flexDirection='column'>
           <Info>
-            <AddressIcon fill="#438F68" />
+            <AddressIcon fill='#438F68' />
             <CustomTooltip title={txHash}>
               <InfoText>{getShortHash(txHash || "")}</InfoText>
             </CustomTooltip>
@@ -336,12 +334,12 @@ const RegistrationTimelineMobile = ({
           </Info>
         </Box>
       </Box>
-      <Box>
+      <Box margin="0 auto" width={"350px"}>
         <Box>
-          <Box ref={adaHolderRef} width={190} height={215} margin="0 auto" mt={3} pl={3}>
+          <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={3} pl={3}>
             <ADAHolderIcon />
           </Box>
-          <Box display="flex" mt={5}>
+          <Box display='flex' mt={5}>
             <Box>
               <Box
                 component={IconButton}
@@ -354,12 +352,12 @@ const RegistrationTimelineMobile = ({
                 <img
                   style={{ marginLeft: "5px" }}
                   src={RegistrationCertificateMobile}
-                  alt="RegistrationCertificateMobile"
+                  alt='RegistrationCertificateMobile'
                 />
               </Box>
               <Box width={"200px"}></Box>
             </Box>
-            <Box display="flex" flexDirection="column" justifyContent="space-between" mb={2}>
+            <Box display='flex' flexDirection='column' justifyContent='space-between' mb={2}>
               <PopoverStyled
                 render={({ handleClick }: any) => (
                   <HoldBox ref={holdRef} style={{ transform: "translateX(8px)" }} height={25}>
@@ -369,7 +367,7 @@ const RegistrationTimelineMobile = ({
                         fontSize={"18px"}
                         fontWeight={"bold"}
                         mr={1}
-                        color={theme => theme.palette.common.black}
+                        color={(theme) => theme.palette.common.black}
                       >
                         {formatADAFull(deposit || 0, 1)}
                       </Box>
@@ -391,7 +389,7 @@ const RegistrationTimelineMobile = ({
                         fontSize={"18px"}
                         fontWeight={"bold"}
                         mr={1}
-                        color={theme => theme.palette.common.black}
+                        color={(theme) => theme.palette.common.black}
                       >
                         {formatADAFull(fee || 0)}
                       </Box>
@@ -408,8 +406,8 @@ const RegistrationTimelineMobile = ({
           </Box>
 
           <Box position={"relative"} mb={15}>
-            <Box ref={cadarnoSystemRef} width={190} height={70} margin="0 auto" mt={5}>
-              <img style={{ width: 190, height: 215 }} src={cadarnoSystem} alt="carrdano" />
+            <Box ref={cadarnoSystemRef} width={190} height={70} margin='0 auto' mt={5}>
+              <img style={{ width: 190, height: 215 }} src={cadarnoSystem} alt='carrdano' />
             </Box>
           </Box>
         </Box>
@@ -420,25 +418,25 @@ const RegistrationTimelineMobile = ({
             left: 0,
             height: "150vh",
             width: "100vw",
-            zIndex: "-1",
+            zIndex: "-1"
           }}
         >
           <Line
             containerPosition={containerPosition}
             fromRef={adaHolderRef}
             toRef={registrationRef}
-            orient="vertical"
-            pointFrom="center"
-            pointTo="center"
+            orient='vertical'
+            pointFrom='center'
+            pointTo='center'
             isCentalHorizontalFrom={true}
           />
           <ArrowDiagram
             containerPosition={containerPosition}
             fromRef={adaHolderRef}
             toRef={holdRef}
-            orient="horizontal"
-            pointFrom="center"
-            pointTo="border"
+            orient='horizontal'
+            pointFrom='center'
+            pointTo='border'
             connectToReverse
             isCentalHorizontalFrom={true}
           />
@@ -446,9 +444,9 @@ const RegistrationTimelineMobile = ({
             containerPosition={containerPosition}
             fromRef={holdRef}
             toRef={feeRef}
-            orient="vertical"
-            pointFrom="center"
-            pointTo="center"
+            orient='vertical'
+            pointFrom='center'
+            pointTo='center'
             isCentalHorizontalFrom
             connectFromReverse
           />
@@ -456,9 +454,9 @@ const RegistrationTimelineMobile = ({
             containerPosition={containerPosition}
             fromRef={registrationRef}
             toRef={cadarnoSystemRef}
-            orient="vertical"
-            pointFrom="center"
-            pointTo="border"
+            orient='vertical'
+            pointFrom='center'
+            pointTo='border'
             isCentalHorizontalFrom
             connectFromReverse
           />
@@ -466,9 +464,9 @@ const RegistrationTimelineMobile = ({
             containerPosition={containerPosition}
             fromRef={feeRef}
             toRef={cadarnoSystemRef}
-            orient="vertical"
-            pointFrom="center"
-            pointTo="border"
+            orient='vertical'
+            pointFrom='center'
+            pointTo='border'
             isCentalHorizontalFrom
             connectToReverse
           />
