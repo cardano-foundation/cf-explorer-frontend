@@ -1,5 +1,5 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment } from "@mui/material";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 import { EmailIcon, HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
@@ -20,6 +20,8 @@ import {
   WrapSignUp,
   WrapTitle
 } from "./styles";
+import { AlertCustom } from "../ForgotPassword/styles";
+import { AxiosError } from "axios";
 
 interface IForm {
   password: {
@@ -55,7 +57,9 @@ const formReducer = (state: IForm, event: any) => {
 };
 export default function SignUp() {
   const history = useHistory();
+  const emailTextField = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState(false);
+  const [serverError, setServerError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -134,6 +138,9 @@ export default function SignUp() {
   };
 
   const handleChange = (event: any) => {
+    if (event.target.name === "email") {
+      setServerError("");
+    }
     setFormData({
       name: event.target.name,
       value: event.target.value,
@@ -197,8 +204,23 @@ export default function SignUp() {
         setSuccess(true);
         return;
       }
-    } catch (error) {
-      //To do
+    } catch (error: any) {
+      if (error.response.data.errorCode === "CC_23") {
+        setServerError("Username already existed, enter username again");
+        setFormData({
+          name: "email",
+          touched: true,
+          error: error.response.data.errorMessage,
+          value: formData.email.value
+        });
+        setFormData({
+          name: "confirmEmail",
+          touched: false,
+          error: "",
+          value: ""
+        });
+        if (emailTextField.current) emailTextField.current.focus();
+      }
     } finally {
       setLoading(false);
     }
@@ -213,18 +235,21 @@ export default function SignUp() {
         <FormGroup>
           {!success ? (
             <WrapForm>
+              {serverError && <AlertCustom severity='error'>{serverError}</AlertCustom>}
               <CloseButton saving={0} onClick={() => handleClose()}>
                 <IoMdClose />
               </CloseButton>
               <WrapInput>
                 <Label>Email Address</Label>
                 <InputCustom
+                  inputRef={emailTextField}
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"7px"} paddingBottom={"2px"}>
                       <EmailIcon />
                     </Box>
                   }
                   fullWidth
+                  value={formData.email.value}
                   name='email'
                   onChange={handleChange}
                   error={Boolean(formData.email.error && formData.email.touched)}
@@ -243,6 +268,7 @@ export default function SignUp() {
                     </Box>
                   }
                   fullWidth
+                  value={formData.confirmEmail.value}
                   name='confirmEmail'
                   onChange={handleChange}
                   error={Boolean(formData.confirmEmail.error && formData.confirmEmail.touched)}
