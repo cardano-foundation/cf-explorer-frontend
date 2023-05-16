@@ -69,12 +69,17 @@ const HomeStatistic = () => {
 
   return (
     <StatisticContainer container spacing={2}>
-      <Grid item xl lg={3} sm={6} xs={isGalaxyFoldSmall ? 12 : 6}>
+      <Grid item xl lg={3} sm={6} xs={6}>
         {!usdMarket || !btcMarket?.[0] ? (
           <SkeletonBox />
         ) : (
           <Item data-testid='ada-price-box'>
-            <ItemIcon data-testid='ada-price-icon' src={AdaPriceIcon} alt='Ada Price' />
+            <ItemIcon
+              style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
+              data-testid='ada-price-icon'
+              src={AdaPriceIcon}
+              alt='Ada Price'
+            />
             <Content>
               <Name data-testid='ada-price-box-title'>Ada Price</Name>
               <Title data-testid='ada-current-price'>${usdMarket.current_price}</Title>
@@ -88,12 +93,17 @@ const HomeStatistic = () => {
           </Item>
         )}
       </Grid>
-      <Grid item xl lg={3} sm={6} xs={isGalaxyFoldSmall ? 12 : 6}>
+      <Grid item xl lg={3} sm={6} xs={6}>
         {!usdMarket ? (
           <SkeletonBox />
         ) : (
           <Item data-testid='market-cap-box'>
-            <ItemIcon data-testid='market-cap-icon' src={MarketCapIcon} alt='Market cap' />
+            <ItemIcon
+              style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
+              data-testid='market-cap-icon'
+              src={MarketCapIcon}
+              alt='Market cap'
+            />
             <Content>
               <Name data-testid='market-cap-box-title'>Market cap</Name>
               <Title data-testid='market-cap-value'>${numberWithCommas(usdMarket.market_cap)}</Title>
@@ -102,14 +112,19 @@ const HomeStatistic = () => {
           </Item>
         )}
       </Grid>
-      <Grid item xl lg={3} sm={6} xs={isGalaxyFoldSmall ? 12 : 6}>
+      <Grid item xl lg={3} sm={6} xs={6}>
         {!currentEpoch ? (
           <SkeletonBox />
         ) : (
           <Link to={details.epoch(currentEpoch?.no)}>
             <Item data-testid='current-epoch-box'>
               <Content>
-                <ItemIcon data-testid='current-epoch-icon' src={CurentEpochIcon} alt='Curent Epoch' />
+                <ItemIcon
+                  style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
+                  data-testid='current-epoch-icon'
+                  src={CurentEpochIcon}
+                  alt='Curent Epoch'
+                />
                 <Name data-testid='current-epoch-box-title'>Current Epoch</Name>
                 <XSmall data-testid='epoch-label'>Epoch: </XSmall>
                 {isMobile ? <br /> : null}
@@ -134,13 +149,18 @@ const HomeStatistic = () => {
           </Link>
         )}
       </Grid>
-      <Grid item xl lg={3} sm={6} xs={isGalaxyFoldSmall ? 12 : 6}>
+      <Grid item xl lg={3} sm={6} xs={6}>
         {!data || !usdMarket ? (
           <SkeletonBox />
         ) : (
           <Item data-testid='live-stake-box'>
             <Content>
-              <ItemIcon data-testid='live-stake-icon' src={LiveStakeIcon} alt='Total ADA Stake' />
+              <ItemIcon
+                style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
+                data-testid='live-stake-icon'
+                src={LiveStakeIcon}
+                alt='Total ADA Stake'
+              />
               <Name data-testid='live-stake-box-title'>Live Stake</Name>
               <CustomTooltip title={formatADAFull(liveStake)}>
                 <Title>{formatADA(liveStake)}</Title>

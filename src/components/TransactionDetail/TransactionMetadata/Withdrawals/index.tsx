@@ -1,16 +1,14 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { Link } from "react-router-dom";
-import sendImg from "../../../../commons/resources/images/sendImg.svg";
-import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
-import { AIcon } from "../../../../commons/resources";
-import CopyButton from "../../../commons/CopyButton";
-import { details } from "../../../../commons/routers";
-import CustomTooltip from "../../../commons/CustomTooltip";
+import sendImg from "~/commons/resources/images/sendImg.svg";
+import { formatADAFull, getShortWallet } from "~/commons/utils/helper";
+import { details } from "~/commons/routers";
 import { AddressLink, Amount, ItemContainer, StatusIcon, StyledItem, Wrapper, Header } from "./styles";
 
-import ADAicon from "../../../commons/ADAIcon";
-import { useScreen } from "../../../../commons/hooks/useScreen";
+import { useScreen } from "~/commons/hooks/useScreen";
+import CopyButton from "~/components/commons/CopyButton";
+import CustomTooltip from "~/components/commons/CustomTooltip";
+import ADAicon from "~/components/commons/ADAIcon";
 
 interface WithdrawalsProps {
   data: Transaction["withdrawals"] | null;
@@ -33,9 +31,9 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
               </Box>
               {isMobile ? <span>From: </span> : null}
             </Box>
-            <Box width='100%'>
+            <Box width='100%' sx={{ overflowX: "scroll", overflowY: "hidden" }}>
               <Box flex={1} display='flex' justifyContent='space-between'>
-                <Box>
+                <Box minWidth={120}>
                   {!isMobile ? <span>From: </span> : null}
                   <CustomTooltip title={item.stakeAddressFrom}>
                     <AddressLink to={details.address(item.stakeAddressFrom)}>
@@ -49,16 +47,12 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                   <ADAicon ml={"3px"} />
                 </Box>
               </Box>
-              <Box
-                display={"flex"}
-                alignItems={isMobile ? "flex-start" : "center"}
-                flexDirection={isMobile ? "column" : "row"}
-              >
+              <Box display={"flex"} flexDirection={isMobile ? "column" : "row"}>
                 <Box minWidth='1.75rem'>To:</Box>
                 <Box flex={1}>
                   {item?.addressTo.map((address, idx) => {
                     return (
-                      <Box key={idx}>
+                      <Box minWidth={120} key={idx}>
                         <CustomTooltip title={address}>
                           <AddressLink to={details.address(address)}>{getShortWallet(address || "")}</AddressLink>
                         </CustomTooltip>
