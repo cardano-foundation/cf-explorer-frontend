@@ -1,5 +1,5 @@
 import { Box, FormGroup } from "@mui/material";
-import { useReducer, useState } from "react";
+import { useReducer, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { EmailIcon } from "../../commons/resources";
 import { routers } from "../../commons/routers";
@@ -39,6 +39,7 @@ const formReducer = (state: IForm, event: any) => {
 export default function ForgotPassword() {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
+  const emailInputRef = useRef<HTMLInputElement | null>(null);
   const [formData, setFormData] = useReducer(formReducer, {
     email: {
       value: ""
@@ -62,11 +63,11 @@ export default function ForgotPassword() {
     return error;
   };
   const handleChange = (event: any) => {
+    if (error) setError(false);
     setFormData({
       name: event.target.name,
       value: event.target.value,
-      touched: true,
-      error: getError(event.target.name, event.target.value)
+      touched: true
     });
   };
   const handleForgotPassword = async (email: string) => {
@@ -77,26 +78,49 @@ export default function ForgotPassword() {
         setSuccess(true);
       } else {
         setError(true);
+        if (emailInputRef.current) emailInputRef.current.focus();
+        setFormData({
+          name: "email",
+          value: formData.email.value,
+          touched: true,
+          error: true
+        });
       }
     } catch (error) {
       setError(true);
+      if (emailInputRef.current) emailInputRef.current.focus();
+      setFormData({
+        name: "email",
+        value: formData.email.value,
+        touched: true,
+        error: true
+      });
     } finally {
       setLoading(false);
     }
   };
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    const error = getError(formData.email.value, formData.email.value);
+    const error = checkError();
+    console.log("error : ", error);
+    if (error) return;
+    handleForgotPassword(formData.email.value);
+  };
+
+  const checkError = () => {
+    const error = getError("email", formData.email.value);
     if (error) {
       setFormData({
         name: "email",
+        value: formData.email.value,
         touched: true,
         error
       });
-      return;
+      return error;
     }
-    handleForgotPassword(formData.email.value);
+    return;
   };
+
   return (
     <Container>
       <WrapContent>
@@ -117,7 +141,10 @@ export default function ForgotPassword() {
                     </Box>
                   }
                   name='email'
+                  inputRef={emailInputRef}
+                  value={formData.email.value}
                   onChange={handleChange}
+                  onBlur={checkError}
                   fullWidth
                   placeholder='Email'
                   error={Boolean(formData.email.error && formData.email.touched)}
@@ -126,7 +153,12 @@ export default function ForgotPassword() {
                   <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
                 ) : null}
               </WrapInput>
-              <WrapButton variant='contained' fullWidth onClick={handleSubmit} disabled={loading}>
+              <WrapButton
+                variant='contained'
+                fullWidth
+                onClick={handleSubmit}
+                disabled={loading || !!formData.email.error}
+              >
                 Submit
               </WrapButton>
             </WrapForm>
