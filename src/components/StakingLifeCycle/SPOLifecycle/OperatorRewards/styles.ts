@@ -94,7 +94,7 @@ export const StyledListImages = styled(Box)(({ theme }) => ({
       flexDirection: "column",
       alignItems: "center",
       gap: "12px",
-      paddingTop: "2px",
-    },
-  },
+      paddingTop: "2px"
+    }
+  }
 }));
