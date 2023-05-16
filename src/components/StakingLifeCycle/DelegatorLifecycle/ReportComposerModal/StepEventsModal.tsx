@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
-import { Container } from "../../../Account/ActivityLogModal/styles";
-import StyledModal from "../../../commons/StyledModal";
-import { ButtonEvent, ModalTitle, StyledBackButton, StyledButton, StyledStack, SubText, TextRequired } from "./styles";
+import { get } from "lodash";
 import { useState } from "react";
 import { IPropsModal, STEPS } from ".";
+import { Container } from "../../../Account/ActivityLogModal/styles";
+import StyledModal from "../../../commons/StyledModal";
 import { ReportType } from "./FilledInfoModal";
-import { get } from "lodash";
+import { ButtonEvent, ModalTitle, StyledBackButton, StyledButton, StyledStack, SubText, TextRequired } from "./styles";
 
 export enum RatioGroupValue {
   yes = "YES",
@@ -76,7 +76,6 @@ export const EVENTS_NAME = [
 const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, saveParams, gotoStep, defaultParams }) => {
   const [eventsKey, setEventsKey] = useState<Array<string>>([]);
   const [step1] = defaultParams || [];
-
   const handleSelectEvent = (id: string) => {
     const allEventByType = EVENTS_NAME.filter(({ type }) => type === get(defaultParams, "0.reportType"));
 
@@ -110,19 +109,20 @@ const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       : event.type !== ReportType.PoolReport;
   });
   const isAll = eventsKey.length === events.length - 1;
+  const isPoolReport = step1.reportType === ReportType.PoolReport;
 
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
       <Container p={"10px 10px 1px 20px"}>
         <ModalTitle>Report composer</ModalTitle>
-        <SubText>Staking lifecycle events</SubText>
+        <SubText>{isPoolReport ? "Pool Report by event" : "Staking lifecycle events"}</SubText>
         <TextRequired>Select as required</TextRequired>
         <Box display={"flex"} flexWrap={"wrap"} gap='10px' marginTop={"20px"}>
           {events.map(({ label, value }) => {
             return (
               <ButtonEvent
                 key={`${label}_${value}`}
-                active={+((value === SELECT_ALL && isAll) || eventsKey.includes(value))}
+                active={Boolean((value === SELECT_ALL && isAll) || eventsKey.includes(value))}
                 onClick={() => handleSelectEvent(value)}
               >
                 {label}

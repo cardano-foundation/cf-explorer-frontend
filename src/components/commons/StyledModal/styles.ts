@@ -1,4 +1,4 @@
-import { styled, Box, IconButton } from "@mui/material";
+import { Box, IconButton, styled } from "@mui/material";
 
 export const ModalContainer = styled(Box)<{ width?: number | string; viewwidth?: string | number }>(
   ({ theme, width, viewwidth }) => ({
@@ -15,7 +15,8 @@ export const ModalContainer = styled(Box)<{ width?: number | string; viewwidth?:
       "& > button": {
         right: "15px",
         zIndex: 10
-      }
+      },
+      width: "90vw"
     }
   })
 );

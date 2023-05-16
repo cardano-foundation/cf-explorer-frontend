@@ -19,7 +19,7 @@ const PoolUpdateTab = () => {
   const [selectedValue, setSelectedValue] = useState<PoolUpdateDetail | null>(null);
   const [params, setParams] = useState({
     page: 0,
-    size: 10
+    size: 50
   });
 
   const [sort, setSort] = useState<string>("");

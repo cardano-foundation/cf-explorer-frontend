@@ -18,7 +18,6 @@ interface ArrowDiagramProps {
   isCentalHorizontal?: boolean;
   isCentalVertical?: boolean;
   isCentalHorizontalFrom?: boolean;
-
   dashed?: boolean;
 }
 
@@ -29,6 +28,7 @@ const ArrowDiagram: React.FC<ArrowDiagramProps> = ({
   orient,
   pointFrom,
   pointTo,
+  isCentalHorizontalFrom = false,
   connectFromReverse = false,
   connectToReverse = false,
   isCentalHorizontal = true,

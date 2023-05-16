@@ -26,6 +26,7 @@ import { details } from "../../commons/routers";
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useScreen } from "../../commons/hooks/useScreen";
+import useAuth from "~/commons/hooks/useAuth";
 
 const DelegatorLifecycle = () => {
   const {
@@ -49,6 +50,8 @@ const DelegatorLifecycle = () => {
     top: undefined,
     left: undefined
   });
+
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     setCurrentStep(tabList[tab || "registration"] || 0);
@@ -111,7 +114,7 @@ const DelegatorLifecycle = () => {
             </ButtonGroup>
           </BoxSwitchContainer>
           {mode === "tablular" && (
-            <ButtonReportContainer>
+            <ButtonReportContainer disabled={!isLoggedIn}>
               <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>
             </ButtonReportContainer>
           )}

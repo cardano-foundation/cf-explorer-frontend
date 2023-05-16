@@ -94,10 +94,9 @@ const Dashboard: React.FC = () => {
     page,
     size,
     ...params,
-    sort
+    sort: sort || params.sort
   });
   const { isMobile } = useScreen();
-  console.log("data,data", data);
   const handleRowClick = (e: React.MouseEvent<Element, MouseEvent>, row: any) => {
     if (row.stakeKeyReportId) history.push(details.generated_staking_detail(row.stakeKeyReportId));
     else if (row.poolReportId) history.push(details.generated_pool_detail(row.poolReportId));
