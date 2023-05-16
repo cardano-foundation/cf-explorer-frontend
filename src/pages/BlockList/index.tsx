@@ -112,7 +112,7 @@ const BlockList = () => {
 
   return (
     <StyledContainer>
-      <Card title={"Blocks"} className='card-table'>
+      <Card title={"Blocks"}>
         <Table
           {...fetchData}
           columns={columns}
@@ -129,7 +129,6 @@ const BlockList = () => {
           onClickRow={openDetail}
           selected={selected}
           showTabView
-          className='block-list-table'
         />
       </Card>
       {block && <DetailViewBlock blockNo={block} handleClose={handleClose} />}
