@@ -369,7 +369,8 @@ export const CardItem = styled(Grid)<{ items_length: number; isDetailToken?: boo
         }
       },
       ":nth-of-type(2n)": {
-        borderRight: `${isDetailToken ? `1px solid ${alpha(theme.palette.common.black, 0.1)}` : `none`}`
+        borderRight: `${isDetailToken ? `1px solid ${alpha(theme.palette.common.black, 0.1)}` : `none`}`,
+        paddingRight: `${isDetailToken ? `unset` : `0`}`
       }
     },
     [theme.breakpoints.down(theme.breakpoints.values.sm)]: {

@@ -1,11 +1,14 @@
 import { alpha, Box, Button, styled } from "@mui/material";
 
-export const InfoValue = styled(Box)`
-  font-weight: var(--font-weight-bold);
-  font-size: 14px;
-  padding: 15px 0;
-  border-top: 1px solid ${(props) => alpha(props.theme.palette.common.black, 0.05)};
-`;
+export const InfoValue = styled(Box)(({ theme }) => ({
+  fontWeight: "var(--font-weight-bold)",
+  fontSize: 14,
+  padding: "15px 0",
+  borderTop: `1px solid ${alpha(theme.palette.common.black, 0.05)}`,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 12
+  }
+}));
 
 export const ListDropdownContainer = styled(Box)`
   position: absolute;
@@ -31,9 +34,12 @@ export const ButtonClose = styled(Button)`
   right: 10px;
 `;
 
-export const DropdownTitle = styled("h4")`
-  margin: 20px;
-`;
+export const DropdownTitle = styled("h4")(({ theme }) => ({
+  margin: 20,
+  [theme.breakpoints.down("sm")]: {
+    marginRight: 50
+  }
+}));
 
 export const DropdownList = styled("div")`
   margin: 20px;

@@ -142,10 +142,13 @@ export const StyledTitle = styled("span")`
   opacity: 0.5;
 `;
 
-export const InfoValue = styled(Box)`
-  font-weight: var(--font-weight-bold);
-  font-size: 18px;
-`;
+export const InfoValue = styled(Box)(({ theme }) => ({
+  fontWeight: "var(--font-weight-bold)",
+  fontSize: 18,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 16
+  }
+}));
 
 export const StyledLinearProgress = styled(LinearProgress)`
   margin-top: 10px;
@@ -180,5 +183,10 @@ export const ButtonViewAll = styled(Button)(({ theme }) => ({
   padding: `0 ${theme.spacing(1)}`,
   textTransform: "capitalize",
   fontWeight: "bold",
-  opacity: 0.5
+  opacity: 0.5,
+  [theme.breakpoints.down("sm")]: {
+    position: "absolute",
+    top: 15,
+    left: 50
+  }
 }));

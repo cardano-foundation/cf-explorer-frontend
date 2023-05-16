@@ -5,6 +5,7 @@ export const StatisticContainer = styled(Grid)`
 `;
 
 export const Item = styled(Card)`
+  height: 100%;
   font-family: var(--font-family-text);
   box-shadow: ${(props) => props.theme.shadow.card};
   padding: 20px;
@@ -19,7 +20,6 @@ export const Item = styled(Card)`
   }
   @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
     padding: 15px;
-    min-height: 160px;
   }
 `;
 
@@ -43,7 +43,6 @@ export const ItemIcon = styled("img")`
 `;
 
 export const Content = styled(Box)`
-  min-height: 9.1425rem;
   overflow: hidden;
 `;
 

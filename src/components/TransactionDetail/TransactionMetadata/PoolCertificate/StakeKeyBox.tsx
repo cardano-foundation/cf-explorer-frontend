@@ -1,10 +1,10 @@
 import { Box, Grid } from "@mui/material";
-import CopyButton from "../../../commons/CopyButton";
+import CopyButton from "~/components/commons/CopyButton";
 import { TextLabel, TextNormal, TextRightValue, TextValue } from "./styles";
-import Link from "../../../commons/Link";
-import { getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import { AdaValue } from "../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
-import { details, routers } from "../../../../commons/routers";
+import Link from "~/components/commons/Link";
+import { getShortHash, getShortWallet } from "~/commons/utils/helper";
+import { AdaValue } from "~/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import { details } from "~/commons/routers";
 
 type TProps = {
   data: TPoolCertificated;
@@ -30,14 +30,14 @@ const StakeKeyBox = ({ data }: TProps) => {
       value: data.rewardAccount ? getShortWallet(data.rewardAccount) : "",
       isHyperLink: true,
       originValue: data.rewardAccount,
-      linkTo: routers.REGISTRATION_POOLS.replace(":poolType", "")
+      linkTo: details.stake(data.rewardAccount)
     },
     {
       label: "Pool Operator",
       value: data.poolOwners && data.poolOwners.length > 0 ? getShortWallet(data.poolOwners[0]) : "",
       isHyperLink: true,
       originValue: data.poolOwners && data.poolOwners.length > 0 ? data.poolOwners[0] : "",
-      linkTo: routers.REGISTRATION_POOLS.replace(":poolType", "")
+      linkTo: details.stake(data.poolOwners && data.poolOwners.length > 0 ? data.poolOwners[0] : "")
     },
     {
       label: "Metadata Hash",

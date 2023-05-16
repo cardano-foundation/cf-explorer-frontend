@@ -1,17 +1,15 @@
 import { Grid } from "@mui/material";
 import BigNumber from "bignumber.js";
-import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import useFetch from "../../../commons/hooks/useFetch";
-import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "../../../commons/resources";
-import { details } from "../../../commons/routers";
-import { API } from "../../../commons/utils/api";
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
-import { formatADA, formatADAFull, numberWithCommas } from "../../../commons/utils/helper";
-import { RootState } from "../../../stores/types";
-import CustomTooltip from "../../commons/CustomTooltip";
-import RateWithIcon from "../../commons/RateWithIcon";
+import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "~/commons/resources";
+import { details } from "~/commons/routers";
+import { API } from "~/commons/utils/api";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "~/commons/utils/constants";
+import { formatADA, formatADAFull, numberWithCommas } from "~/commons/utils/helper";
+import { RootState } from "~/stores/types";
+import CustomTooltip from "~/components/commons/CustomTooltip";
+import RateWithIcon from "~/components/commons/RateWithIcon";
 import {
   AdaPrice,
   Content,
@@ -31,7 +29,8 @@ import {
   XValue
 } from "./style";
 import moment from "moment";
-import { useScreen } from "../../../commons/hooks/useScreen";
+import { useScreen } from "~/commons/hooks/useScreen";
+import useFetch from "~/commons/hooks/useFetch";
 
 const SkeletonBox = () => (
   <Item>
@@ -68,8 +67,8 @@ const HomeStatistic = () => {
   const { isMobile, isGalaxyFoldSmall } = useScreen();
 
   return (
-    <StatisticContainer container spacing={2}>
-      <Grid item xl lg={3} sm={6} xs={6}>
+    <StatisticContainer container spacing={2} justifyContent='space-between' alignItems='stretch'>
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {!usdMarket || !btcMarket?.[0] ? (
           <SkeletonBox />
         ) : (
@@ -93,7 +92,7 @@ const HomeStatistic = () => {
           </Item>
         )}
       </Grid>
-      <Grid item xl lg={3} sm={6} xs={6}>
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {!usdMarket ? (
           <SkeletonBox />
         ) : (
@@ -112,12 +111,12 @@ const HomeStatistic = () => {
           </Item>
         )}
       </Grid>
-      <Grid item xl lg={3} sm={6} xs={6}>
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {!currentEpoch ? (
           <SkeletonBox />
         ) : (
-          <Link to={details.epoch(currentEpoch?.no)}>
-            <Item data-testid='current-epoch-box'>
+          <Item data-testid='current-epoch-box'>
+            <Link to={details.epoch(currentEpoch?.no)}>
               <Content>
                 <ItemIcon
                   style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
@@ -145,11 +144,11 @@ const HomeStatistic = () => {
                   <b>{numberWithCommas(currentEpoch?.account)}</b>
                 </XValue>
               </Content>
-            </Item>
-          </Link>
+            </Link>
+          </Item>
         )}
       </Grid>
-      <Grid item xl lg={3} sm={6} xs={6}>
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {!data || !usdMarket ? (
           <SkeletonBox />
         ) : (

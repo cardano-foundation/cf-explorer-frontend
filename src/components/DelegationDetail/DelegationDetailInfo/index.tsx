@@ -10,8 +10,8 @@ import {
   RewardIcon,
   TickerIcon,
   UserIcon
-} from "../../../commons/resources";
-import { details } from "../../../commons/routers";
+} from "~/commons/resources";
+import { details } from "~/commons/routers";
 import {
   formatADA,
   formatADAFull,
@@ -19,11 +19,11 @@ import {
   formatPercent,
   getShortHash,
   getShortWallet
-} from "../../../commons/utils/helper";
-import BookmarkButton from "../../commons/BookmarkIcon";
-import CopyButton from "../../commons/CopyButton";
-import CustomTooltip from "../../commons/CustomTooltip";
-import DropdownDetail from "../../commons/DropdownDetail";
+} from "~/commons/utils/helper";
+import BookmarkButton from "~/components/commons/BookmarkIcon";
+import CopyButton from "~/components/commons/CopyButton";
+import CustomTooltip from "~/components/commons/CustomTooltip";
+import DropdownDetail from "~/components/commons/DropdownDetail";
 
 import {
   BackButton,
@@ -121,7 +121,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoTitle>
             <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
           </Item>
-          <Item item xs={6} md={3} top={1}>
+          <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
             <StyledImg src={RewardIcon} alt='Reward Icon' />
             <InfoTitle>
               <Box>
@@ -167,14 +167,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               />
             )}
           </Item>
-          <Item item xs={6} md={3} top={1}>
+          <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
             <StyledImg src={UserIcon} alt='User Icon' />
-            <InfoTitle
-              onClick={() => {
-                setOpenOwner(!isOpenOwner);
-                setOpenReward(false);
-              }}
-            >
+            <InfoTitle>
               <Box>
                 <StyledTitle>Owner Account</StyledTitle>{" "}
                 <InfoValue mt={"4px"}>
