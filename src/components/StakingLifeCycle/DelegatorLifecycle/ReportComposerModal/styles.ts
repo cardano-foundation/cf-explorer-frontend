@@ -168,7 +168,7 @@ export const StyledGroupField = styled(TextField)`
   }
 `;
 export const StyledSlider = styled(Slider)`
-  & .MuiSlider-valueLabelOpen.MuiSlider-valueLabel {
+  & .MuiSlider-valueLabel {
     transform: translateY(160%) scale(1);
     &::before {
       top: -8px;
