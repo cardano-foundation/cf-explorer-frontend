@@ -28,7 +28,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     background: theme.palette.red[600],
     transform: " translate(0, 60%)"
   },
-  [theme.breakpoints.down("md")]: {
+  "@media screen and (max-width: 1270px)": {
     top: "0px",
     width: "155px",
     margin: "0px",
@@ -62,7 +62,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
     background: theme.palette.red[600],
     transform: " translate(0, 60%)"
   },
-  [theme.breakpoints.down("md")]: {
+  "@media screen and (max-width: 1270px)": {
     width: "155px",
     marginRight: "0px",
     position: "absolute",
@@ -157,11 +157,9 @@ export const StyledGridContainer = styled(Grid)(({ theme }) => ({
   }
 }));
 export const StyledBox = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down("md")]: {
-    ".list-images": {
-      maxWidth: "390px",
-      margin: "0px auto"
-    }
+  ".list-images": {
+    maxWidth: "390px",
+    margin: "0px auto"
   },
   [theme.breakpoints.down("sm")]: {
     "& > div:nth-of-type(1)": {

@@ -54,7 +54,7 @@ const Deregistration = ({
   handleResize: () => void;
 }) => {
   const [selected, setSelected] = useState<SPODeregistration | null>(null);
-  const { isTablet } = useScreen();
+  const { isLargeTablet } = useScreen();
 
   const handleSelect = (deregistration: SPODeregistration | null) => {
     setSelected(deregistration);
@@ -65,14 +65,14 @@ const Deregistration = ({
         <RecentDeregistrations onSelect={handleSelect} />
       </Box>
       <Box>
-        {!!selected && !isTablet && (
+        {!!selected && !isLargeTablet && (
           <DeregistrationTimeline
             handleResize={handleResize}
             selected={selected}
             containerPosition={containerPosition}
           />
         )}
-        {!!selected && isTablet && (
+        {!!selected && isLargeTablet && (
           <DeregistrationTimelineMobile
             handleResize={handleResize}
             selected={selected}

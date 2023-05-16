@@ -114,6 +114,10 @@ export const StyledGridContainer = styled(Grid)(({ theme }) => ({
 }));
 
 export const StyledBox = styled(Box)(({ theme }) => ({
+  ".list-images": {
+    maxWidth: "390px",
+    margin: "0px auto"
+  },
   [theme.breakpoints.down("sm")]: {
     "& > div:nth-of-type(1)": {
       alignItems: "flex-start",

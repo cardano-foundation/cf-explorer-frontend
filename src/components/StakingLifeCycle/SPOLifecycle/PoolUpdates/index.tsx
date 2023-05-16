@@ -219,7 +219,7 @@ const PoollUpdatesTimeline = ({
   }
 
   return (
-    <StyledBox>
+    <Box>
       <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
@@ -435,7 +435,7 @@ const PoollUpdatesTimeline = ({
       </Box>
 
       <PoolUpdateModal data={data} handleCloseModal={() => setOpenModal(false)} open={openModal} />
-    </StyledBox>
+    </Box>
   );
 };
 
@@ -474,7 +474,7 @@ const PoollUpdatesTimelineMobile = ({
 
   if (loading) {
     return (
-      <Box>
+      <StyledBox>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
           <IconButtonBack onClick={() => setSelected(null)}>
             <BackIcon />
@@ -496,7 +496,7 @@ const PoollUpdatesTimelineMobile = ({
           </Box>
         </Box>
         <Box component={Skeleton} width={"100%"} height={400} variant='rectangular' borderRadius={12} />
-      </Box>
+      </StyledBox>
     );
   }
 
