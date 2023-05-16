@@ -7,8 +7,8 @@ export const useScreen = () => {
   const theme = useTheme();
   const { width } = useWindowSize(0);
 
-  const isMobile = width <= theme.breakpoints.values.sm;
-  const isTablet = width <= theme.breakpoints.values.md;
+  const isMobile = width < theme.breakpoints.values.sm;
+  const isTablet = width < theme.breakpoints.values.md;
   const isGalaxyFoldSmall = width <= SAMSUNG_FOLD_SMALL_WIDTH;
   const isLargeTablet = width <= IPAD_PRO;
   return { isMobile, isTablet, isGalaxyFoldSmall, isLargeTablet };

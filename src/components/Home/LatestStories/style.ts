@@ -14,7 +14,7 @@ export const Header = styled(Box)`
   margin-bottom: 1.5rem;
   padding: 0 20px;
   gap: 10px;
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 0 15px;
   }
 `;
@@ -32,12 +32,12 @@ export const Title = styled("h3")`
     content: "";
     width: 50px;
     height: 4px;
-    background: var(--color-green-light);
+    background: ${({ theme }) => theme.palette.primary.main};
   }
 `;
 
 export const StyledSlider = styled(Slider)`
-  @media screen and (max-width: 539px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     margin-bottom: 40px;
   }
   div[class*="slick-list"] {
@@ -93,7 +93,7 @@ export const Item = styled(BoxRaised)`
   &:hover {
     box-shadow: ${(props) => props.theme.shadow.card};
   }
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px}) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 15px;
   }
 `;

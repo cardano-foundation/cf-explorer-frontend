@@ -31,7 +31,7 @@ const SummaryItems = ({
         px: 3,
         py: 2,
         mb: 1,
-        [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
+        [theme.breakpoints.down("sm")]: {
           px: 2
         }
       }}

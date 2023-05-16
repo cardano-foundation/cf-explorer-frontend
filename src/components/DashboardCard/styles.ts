@@ -1,18 +1,18 @@
 import { styled, Box } from "@mui/material";
 import breakpoints from "../../themes/breakpoints";
 
-export const CardContent = styled(Box)(`
-    display: flex;
-    align-items: center;
-    gap: 15px;
+export const CardContent = styled(Box)`
+  display: flex;
+  align-items: center;
+  gap: 15px;
 
-    @media screen and (max-width: ${breakpoints.values.sm}px){
-        margin: 15px 0px 15px 15px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-`);
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    margin: 15px 0px 15px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
 
 export const TitleGroup = styled(Box)(`
     display: flex;
@@ -44,7 +44,7 @@ export const Card = styled(Box)`
   width: 100%;
   box-sizing: border-box;
 
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     height: 140px;
     width: 156px;
     margin-top: 25px;

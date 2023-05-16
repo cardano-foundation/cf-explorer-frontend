@@ -10,7 +10,7 @@ export const Layout = styled(Box)`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     flex-direction: column;
     height: auto;
   }
@@ -45,11 +45,11 @@ export const BackDrop = styled("div", { shouldForwardProp: (prop) => prop !== "i
     right: 0,
     bottom: 0,
     display: "none",
-    [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+    [theme.breakpoints.down("md")]: {
       background: alpha(theme.palette.common.black, 0.4),
       display: isShow ? "block" : "none"
     },
-    [theme.breakpoints.up(theme.breakpoints.values.md)]: {
+    [theme.breakpoints.up("md")]: {
       background: "transparent",
       display: "none"
     }
@@ -65,7 +65,7 @@ export const openedMixin = (theme: Theme): CSSObject => ({
   }),
   overflowY: "unset",
   borderRightWidth: 0,
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down("md")]: {
     width: "100%",
     minWidth: "100%",
     height: "auto",
@@ -81,7 +81,7 @@ export const closedMixin = (theme: Theme): CSSObject => ({
   overflowY: "unset",
   width: drawerCollaspWidth,
   borderRightWidth: 0,
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down("md")]: {
     width: "100%",
     height: "auto",
     boxShadow: theme.shadow.card
@@ -104,7 +104,7 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
     ...closedMixin(theme),
     "& .MuiDrawer-paper": closedMixin(theme)
   }),
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down("md")]: {
     width: "100%",
     height: "auto",
     boxShadow: theme.shadow.card
@@ -139,7 +139,7 @@ export const ToggleMenu = styled("button")`
   color: ${(props) => props.theme.palette.primary.contrastText};
   cursor: pointer;
   z-index: 1;
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     display: none;
   }
 `;
@@ -154,7 +154,7 @@ export const Main = styled(Box)<{ open: number; sidebar: number }>`
   overflow-y: auto;
   width: calc(100vw - ${({ open, sidebar }) => (open ? 461 : 0) + (sidebar ? 260 : 85)}px);
   height: calc(100vh - 61px);
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     width: 100vw;
     height: auto;
   }

@@ -43,7 +43,7 @@ export const CardValue = styled(Typography)<{ color?: string }>(({ theme, ...res
 
 export const TransferButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.main,
-  color: "var(--text-color-reverse)",
+  color: theme.palette.common.white,
   fontSize: 14,
   fontWeight: theme.typography.fontWeightBold,
   padding: "0 16px",

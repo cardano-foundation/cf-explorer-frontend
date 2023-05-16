@@ -8,7 +8,7 @@ export const ContentBox = styled(Box)(({ theme }) => ({
   minHeight: "calc(100vh - 252px)",
   borderTopLeftRadius: 10,
   borderTopRightRadius: 10,
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down("md")]: {
     flexDirection: "column"
   }
 }));

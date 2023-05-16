@@ -10,6 +10,7 @@ import { RootState } from "../../../stores/types";
 import CustomTooltip from "../CustomTooltip";
 import ToastContainer from "./ToastContainer";
 import { useHistory } from "react-router-dom";
+import { Container } from "@mui/material";
 
 interface Props {
   children: React.ReactNode;
@@ -45,7 +46,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
       <MainContainer>
         <Main id='main' component='main' open={onDetailView ? 1 : 0} sidebar={sidebar ? 1 : 0}>
           <Header />
-          {children}
+          <Container maxWidth='xl'>{children}</Container>
         </Main>
         <Footer />
       </MainContainer>

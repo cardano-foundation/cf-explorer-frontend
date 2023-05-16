@@ -7,7 +7,7 @@ export const TopDelegateContainer = styled(BoxRaised)`
   margin-bottom: 24px;
   padding: 20px;
   text-align: left;
-  @media screen and (max-width: 539px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 20px 15px;
   }
 `;
@@ -33,7 +33,7 @@ export const Title = styled("h3")`
     content: "";
     width: 50px;
     height: 4px;
-    background: var(--color-green-light);
+    background: ${({ theme }) => theme.palette.primary.main};
   }
 `;
 
@@ -51,7 +51,7 @@ export const DelegateTable = styled(Table)`
         background-color: transparent !important;
         border-bottom-width: 2px !important;
         font-size: var(--font-size-text-small) !important;
-        color: var(--title-color) !important;
+        color: ${({ theme }) => theme.palette.text.hint} !important;
         font-weight: var(--font-weight-bold) !important;
 
         &::before {

@@ -2,18 +2,19 @@ import { Box, Collapse, List, ListItemText, styled, Theme } from "@mui/material"
 import { SystemStyleObject } from "@mui/system";
 
 export const StyledCollapse = styled(Collapse)`
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     max-height: calc(100vh - 80px);
     overflow-x: hidden;
     overflow-y: auto;
   }
 `;
 
-export const Menu = styled(List) <{ open: number }>(({ theme, open }) => ({
+export const Menu = styled(List)<{ open: number }>(({ theme, open }) => ({
   maxHeight: `calc(100vh - 181px)`,
-  "@media screen and (max-device-width: 1200px) and (orientation: portrait), screen and (max-device-height: 1200px) and (orientation: landscape)": {
-    maxHeight: "calc(100vh - 240px)"
-  },
+  "@media screen and (max-device-width: 1200px) and (orientation: portrait), screen and (max-device-height: 1200px) and (orientation: landscape)":
+    {
+      maxHeight: "calc(100vh - 240px)"
+    },
   overflowY: "auto",
   overflowX: "hidden",
   marginBottom: "5px",
@@ -23,10 +24,10 @@ export const Menu = styled(List) <{ open: number }>(({ theme, open }) => ({
   "&:hover::-webkit-scrollbar": {
     display: "block"
   },
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down("md")]: {
     maxHeight: "unset"
   },
-  [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
+  [theme.breakpoints.down("sm")]: {
     "& > div, & > a": {
       paddingLeft: "16px"
     },
@@ -43,45 +44,45 @@ export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<The
   position: "relative",
   marginBottom: "5px",
   justifyContent: sidebar ? "initial" : "center",
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down("md")]: {
     padding: "8px 20px 8px 30px",
     marginBottom: 0
   }
 });
 
-export const MenuIcon = styled("img") <{ iconOnly?: number; active?: number; text?: number; disable?: number }>`
+export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; text?: number; disable?: number }>`
   width: 24px;
   height: 24px;
   min-width: 24px;
   margin-right: ${(props) => (props.iconOnly ? 0 : 15)}px;
   filter: ${(props) => (props.active ? (props.text ? `none` : `brightness(5)`) : `grayscale(1)`)};
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     margin-right: 15px;
   }
 `;
 
-export const SubMenu = styled(List) <{ isActive?: number }>`
+export const SubMenu = styled(List)<{ isActive?: number }>`
   margin-left: 0px;
 `;
 
-export const MenuText = styled(ListItemText) <{ open?: number; active?: number; text?: number; disable?: number }>`
+export const MenuText = styled(ListItemText)<{ open?: number; active?: number; text?: number; disable?: number }>`
   opacity: ${(props) => (props.open ? 1 : 0)};
   width: ${(props) => (props.open ? "unset" : 0)};
   * {
     font-family: var(--font-family-title) !important;
     font-weight: var(--font-weight-bold) !important;
     color: ${({ active, text, disable, theme }) =>
-    active
-      ? text
-        ? theme.palette.text.primary
-        : theme.palette.common.white
-      : disable
+      active
+        ? text
+          ? theme.palette.text.primary
+          : theme.palette.common.white
+        : disable
         ? theme.palette.text.disabled
         : theme.palette.grey[400]};
     white-space: break-spaces;
     width: 165px;
   }
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     opacity: 1;
     width: unset;
   }
@@ -96,7 +97,7 @@ export const SubMenuText = styled(MenuText)`
 
 export const NavbarMenuBottom = styled("div")`
   display: none;
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     display: flex;
     align-items: center;
     gap: 10px 20px;

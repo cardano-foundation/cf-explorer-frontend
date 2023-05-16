@@ -117,7 +117,7 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string }>(
   border: 1px solid ${alpha(theme.palette.common.black, 0.1)};
   ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
 
-  @media screen and (max-width: ${theme.breakpoints.values.sm}px) {
+  ${theme.breakpoints.down("sm")} {
     padding: 0;
   }
 `

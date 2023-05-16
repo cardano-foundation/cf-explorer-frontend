@@ -65,7 +65,8 @@ export const ViewDetailScroll = styled(Box)(({ theme }) => ({
     marginRight: "0px",
     overflowY: "auto",
     width: "100%",
-    padding: "15px 16px"
+    padding: "15px 16px",
+    maxWidth: "unset",
   }
 }));
 export const HeaderContainer = styled(Box)`

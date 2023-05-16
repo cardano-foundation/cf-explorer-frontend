@@ -7,8 +7,8 @@ export const Menu = styled("ul")`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: var(--menu-item-gap);
-  @media screen and (max-width: 1023px) {
+  gap: 32px;
+  ${({ theme }) => theme.breakpoints.down("md")} {
     flex-direction: column;
     gap: 0;
     width: 100%;
@@ -25,7 +25,7 @@ export const SubMenu = styled(Menu)<{ isActive: boolean }>`
   color: ${(props) => props.theme.palette.common.black};
   visibility: hidden;
   padding: 20px 0px;
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     position: relative;
     visibility: visible;
     display: none;
@@ -72,7 +72,7 @@ export const InternalLink = styled(Link)<{ isSubMenu: boolean }>`
   &:hover {
     color: ${(props) => props.theme.palette.primary.contrastText};
     text-shadow: 1px 1px 5px ${(props) => props.theme.palette.primary.contrastText};
-    @media screen and (max-width: 1023px) {
+    ${({ theme }) => theme.breakpoints.down("md")} {
       color: inherit;
     }
   }
@@ -92,7 +92,7 @@ export const ExternalLink = styled("a")<{ isSubMenu: boolean }>`
   &:hover {
     color: ${(props) => props.theme.palette.primary.contrastText};
     text-shadow: 1px 1px 5px ${(props) => props.theme.palette.primary.contrastText};
-    @media screen and (max-width: 1023px) {
+    ${({ theme }) => theme.breakpoints.down("md")} {
       color: inherit;
     }
   }
