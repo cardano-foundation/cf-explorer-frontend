@@ -29,6 +29,7 @@ import {
   WrapReportName
 } from "./styles";
 import CustomIcon from "~/components/commons/CustomIcon";
+import CustomTooltip from "~/components/commons/CustomTooltip";
 
 const cardList = [
   {
@@ -157,7 +158,14 @@ const Dashboard: React.FC = () => {
       key: "entity",
       minWidth: "150px",
       render(data) {
-        return <WrapReportName>{data.reportName}</WrapReportName>;
+        if (data.reportName.length <= 20) {
+          return <WrapReportName>{data.reportName}</WrapReportName>;
+        }
+        return (
+          <CustomTooltip title={data.reportName}>
+            <WrapReportName>{data.reportName}</WrapReportName>
+          </CustomTooltip>
+        );
       }
     },
     {
