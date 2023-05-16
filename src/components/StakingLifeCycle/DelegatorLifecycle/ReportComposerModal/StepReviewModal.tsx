@@ -64,7 +64,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           fromDate: moment(start).format("yyyy/MM/DD hh:mm:ss"),
           toDate: moment(end).format("yyyy/MM/D hh:mm:ss"),
           isADATransfer: step2.adaTransfers === "YES",
-          isFeesPaid: step2.adaTransfers === "YES",
+          isFeesPaid: step2.feesPaid === "YES",
           ...getEventType(events.map((item: { type: string }) => item.type))
         };
         await generateStakeKeyReport(paramsStakeKeyReport);
