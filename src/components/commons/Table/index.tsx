@@ -514,9 +514,7 @@ const PaginationCustom = ({
                 }
               }}
               onBlur={(e) => {
-                if (inputPage < 1) {
-                  setInputPage(1);
-                }
+                setInputPage(page);
               }}
               disabled={loading}
               onKeyDown={(e) => {
