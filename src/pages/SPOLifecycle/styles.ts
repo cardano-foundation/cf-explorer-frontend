@@ -26,7 +26,6 @@ export const ButtonGroup = styled(Box)(({ theme }) => ({
   height: "44px",
   background: "#E7E8EA",
   padding: "3px 2px",
-  margin: `0 ${theme.spacing(2)}`,
   borderTopLeftRadius: "20px",
   borderBottomLeftRadius: "20px",
   borderTopRightRadius: "20px",
@@ -90,8 +89,11 @@ export const BoxContainerStyled = styled(Box)(({ theme }) => ({
 
 export const BoxSwitchContainer = styled(Box)(({ theme }) => ({
   display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center"
+  alignItems: "center",
+  gap: 15,
+  [theme.breakpoints.down("md")]: {
+    justifyContent: "space-between"
+  }
 }));
 
 export const BoxItemStyled = styled(Box)(({ theme }) => ({
@@ -109,7 +111,14 @@ export const BoxSwitch = styled(Box)(({ theme }) => ({
 
 export const ButtonReportContainer = styled(Button)(({ theme }) => ({
   display: "flex",
+  padding: 0,
+  marginLeft: 20,
+  "&:disabled": {
+    opacity: 0.5
+  },
   [theme.breakpoints.down("md")]: {
-    justifyContent: "start"
+    justifyContent: "start",
+    marginLeft: 0,
+    marginTop: "18px"
   }
 }));
