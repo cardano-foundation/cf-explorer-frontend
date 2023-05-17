@@ -140,7 +140,6 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
   const slot = data.no === currentEpoch?.no ? currentEpoch.slot : MAX_SLOT_EPOCH;
 
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
-  console.log(data);
   return (
     <ViewDetailDrawer anchor='right' open hideBackdrop variant='permanent'>
       <ViewDetailHeader>
