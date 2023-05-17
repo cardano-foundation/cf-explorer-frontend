@@ -60,7 +60,7 @@ const Withdraw = ({
     setSelected(withdraw);
   };
 
-  const { isTablet } = useScreen();
+  const { isLargeTablet } = useScreen();
 
   return (
     <Box>
@@ -68,22 +68,22 @@ const Withdraw = ({
         <RecentWithdraws onSelect={handleSelect} />
       </Box>
       <Box>
-        {!!selected && isTablet ? (
-          <WithdrawTimelineMobile
-            handleResize={handleResize}
-            setSelected={setSelected}
-            selected={selected}
-            containerPosition={containerPosition}
-          />
-        ) : // eslint-disable-next-line no-extra-boolean-cast
-        !!selected ? (
-          <WithdrawTimeline
-            handleResize={handleResize}
-            setSelected={setSelected}
-            selected={selected}
-            containerPosition={containerPosition}
-          />
-        ) : null}
+        {!!selected &&
+          (isLargeTablet ? (
+            <WithdrawTimelineMobile
+              handleResize={handleResize}
+              setSelected={setSelected}
+              selected={selected}
+              containerPosition={containerPosition}
+            />
+          ) : (
+            <WithdrawTimeline
+              handleResize={handleResize}
+              setSelected={setSelected}
+              selected={selected}
+              containerPosition={containerPosition}
+            />
+          ))}
       </Box>
     </Box>
   );
@@ -445,7 +445,7 @@ const WithdrawTimelineMobile = ({
       <Box ref={adaHolderRef} mt={5}>
         <ADAHolderIcon />
       </Box>
-      <Box margin="0 auto" width={"350px"}>
+      <Box margin='0 auto' width={"350px"}>
         <Box mt={5}>
           <Payment>
             <PopoverStyled

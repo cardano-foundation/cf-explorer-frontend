@@ -48,7 +48,7 @@ const Registration = ({
     setSelected(registration);
   };
 
-  const { isTablet } = useScreen();
+  const { isLargeTablet } = useScreen();
 
   return (
     <Box>
@@ -56,7 +56,7 @@ const Registration = ({
         <RecentRegistrations onSelect={handleSelect} />
       </Box>
       <Box>
-        {selected && (isTablet ? (
+        {selected && (isLargeTablet ? (
           <RegistrationTimelineMobile
             handleResize={handleResize}
             setSelected={setSelected}
@@ -143,7 +143,7 @@ const RegistrationTimeline = ({
             <Box display={"flex"} flex={1}>
               <PopoverStyled
                 render={({ handleClick }: any) => (
-                  <HoldBox ref={holdRef} style={{ transform: "translateX(8px)" }} height={35}>
+                  <HoldBox ref={holdRef} style={{ transform: "translateX(8px)" }} height={35} width={200}>
                     <Box>
                       <Box
                         component={"span"}
@@ -165,7 +165,7 @@ const RegistrationTimeline = ({
               />
               <PopoverStyled
                 render={({ handleClick }) => (
-                  <FeeBox ref={feeRef} height={35}>
+                  <FeeBox ref={feeRef} height={35} width={200}>
                     <Box>
                       <Box
                         component={"span"}
@@ -308,6 +308,7 @@ const RegistrationTimelineMobile = ({
   const registrationRef = useRef(null);
 
   const [openModal, setOpenModal] = useState(false);
+  const { isLargeTablet } = useScreen()
 
   useEffect(() => {
     handleResize();
@@ -363,7 +364,7 @@ const RegistrationTimelineMobile = ({
             <Box display='flex' flexDirection='column' justifyContent='space-between' mb={2}>
               <PopoverStyled
                 render={({ handleClick }: any) => (
-                  <HoldBox ref={holdRef} style={{ transform: "translateX(8px)" }} height={25}>
+                  <HoldBox ref={holdRef} style={{ transform: "translateX(8px)" }} height={25} width={100}>
                     <Box>
                       <Box
                         component={"span"}
@@ -385,7 +386,7 @@ const RegistrationTimelineMobile = ({
               />
               <PopoverStyled
                 render={({ handleClick }) => (
-                  <FeeBox ref={feeRef} height={25}>
+                  <FeeBox ref={feeRef} height={25} width={100}>
                     <Box>
                       <Box
                         component={"span"}

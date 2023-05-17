@@ -136,7 +136,7 @@ const DelegatorLifecycle = ({
 
   return (
     <Box mr={isMobile ? 2 : 0}>
-      <Box display={"flex"} justifyContent={"space-between"}>
+      <Box display={"flex"} justifyContent={"space-between"} sx={{overflowX: "auto"}}>
         {stepper.map((step, idx) => (
           <Step component={"span"} key={idx} active={+(currentStep === idx)}>
             <StepButton
@@ -148,7 +148,7 @@ const DelegatorLifecycle = ({
             >
               {step.icon}
             </StepButton>
-            <TitleStep currentstep={currentStep} index={idx}>
+            <TitleStep currentstep={currentStep} index={idx} px={2}>
               {step.title}
             </TitleStep>
           </Step>
@@ -156,7 +156,7 @@ const DelegatorLifecycle = ({
       </Box>
 
       <Box mt={3} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-        <StyledBox fontSize={"1.5rem"} fontWeight={"bold"}>
+        <StyledBox>
           <TabTitle>{stepper[currentStep].title}</TabTitle>
           <InfoIcon style={{ cursor: "pointer" }} onClick={() => setOpenDescriptionModal(true)} />
         </StyledBox>

@@ -47,7 +47,7 @@ const Deregistration = ({
     setSelected(deregistration);
   };
 
-  const { isTablet } = useScreen();
+  const { isLargeTablet } = useScreen();
 
   return (
     <Box>
@@ -55,7 +55,7 @@ const Deregistration = ({
         <RecentDeregistrations onSelect={handleSelect} />
       </Box>
       {selected &&
-        (isTablet ? (
+        (isLargeTablet ? (
           <DeregistrationTimelineMobile
             handleResize={handleResize}
             setSelected={setSelected}

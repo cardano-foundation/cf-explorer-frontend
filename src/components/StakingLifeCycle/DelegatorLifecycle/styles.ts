@@ -61,18 +61,22 @@ export const ADATransfersButton = styled(Button)(({ theme }) => ({
   fontWeight: "bold",
   ":hover": {
     background: alpha(theme.palette.green[600], 0.8)
-  }
+  },
+  fontSize: "12px"
 }));
 
 export const TabTitle = styled(Typography)(({ theme }) => ({
-  fontSize: "1.5rem",
+  fontSize: "20px",
   fontWeight: 700,
-  color: theme.palette.common.black
+  color: theme.palette.common.black,
+  textAlign: "left",
+  maxWidth: "131px"
 }));
 
 export const StyledBox = styled(Box)`
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 6px;
 `;
 

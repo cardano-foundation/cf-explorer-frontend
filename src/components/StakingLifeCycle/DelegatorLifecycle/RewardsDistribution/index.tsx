@@ -52,7 +52,7 @@ const RewardsDistribution = ({
     handleResize();
   }, [adaIcon1Ref.current, adaIcon2Ref.current, loading]);
 
-  const { isTablet } = useScreen();
+  const { isLargeTablet } = useScreen();
 
   const RewardsDistributionTimeLine = () => {
     return (
@@ -303,6 +303,6 @@ const RewardsDistribution = ({
     );
   };
 
-  return <Box>{isTablet ? RewardsDistributionTimeLineMobile() : RewardsDistributionTimeLine()}</Box>;
+  return <Box>{isLargeTablet ? RewardsDistributionTimeLineMobile() : RewardsDistributionTimeLine()}</Box>;
 };
 export default RewardsDistribution;

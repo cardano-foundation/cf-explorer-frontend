@@ -46,7 +46,7 @@ const Delegation = ({
     setSelected(delegation);
   };
 
-  const { isMobile, isTablet } = useScreen();
+  const { isLargeTablet } = useScreen();
 
   return (
     <Box>
@@ -54,7 +54,7 @@ const Delegation = ({
         <RecentDelegations onSelect={handleSelect} />
       </Box>
       <Box>
-        {!!selected && isTablet ? (
+        {!!selected && isLargeTablet ? (
           <DelegationTimelineMobile
             handleResize={handleResize}
             setSelected={setSelected}
