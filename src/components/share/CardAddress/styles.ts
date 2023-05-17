@@ -1,5 +1,6 @@
 import { styled, Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import breakpoints from "~/themes/breakpoints";
 
 export const TitleDetail = styled(Box)`
   font-size: var(--font-size-title);
@@ -32,7 +33,7 @@ export const AddressGroup = styled(Box)(({ theme }) => ({
   padding: "12px 20px",
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "center",
+  alignItems: "center"
 }));
 
 export const ItemDetail = styled(Box)`
@@ -68,4 +69,11 @@ export const CardItem = styled(Box)`
   overflow: hidden;
   text-align: left;
   box-shadow: ${(props) => props.theme.shadow.card};
+`;
+
+export const CardItemStyled = styled(CardItem)`
+  padding: 32px;
+  @media screen and (max-width: ${breakpoints.values.sm}px) {
+    padding: 20px 15px;
+  }
 `;
