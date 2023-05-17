@@ -30,7 +30,12 @@ const Title = styled("h2")<{ underline: number; marginTitle?: string }>`
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 24px !important;
-    padding-top: 10px;
+    padding-top: 30px;
+    margin-top: 0px !important;
+  }
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    font-size: 24px !important;
+    margin-top: -20px;
   }
 },
 `;
