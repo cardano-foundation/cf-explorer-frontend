@@ -1,5 +1,5 @@
 import React from "react";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { TabContext, TabPanel } from "@mui/lab";
 import { Box, Tab, useTheme } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
@@ -9,7 +9,7 @@ import { ReactComponent as TokenIcon } from "../../../commons/resources/icons/to
 import { ReactComponent as AssetHolderIcon } from "../../../commons/resources/icons/assetHolder.svg";
 import { formatDateTimeLocal, getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
-import { LinkComponent, TitleTab } from "./styles";
+import { LinkComponent, TitleTab, StyledTabList } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { API } from "../../../commons/utils/api";
 
@@ -128,7 +128,10 @@ const PolicyTable = () => {
     <Box mt={4}>
       <TabContext value={activeTab}>
         <Box style={{ borderBottom: `1px solid ${theme.palette.border.secondary}` }}>
-          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}>
+          <StyledTabList
+            onChange={handleChange}
+            TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
+          >
             {tabs.map(({ icon: Icon, key, label }) => (
               <Tab
                 key={key}
@@ -145,7 +148,7 @@ const PolicyTable = () => {
                 }
               />
             ))}
-          </TabList>
+          </StyledTabList>
         </Box>
         {tabs.map(({ key, columns }) => (
           <TabPanel style={{ padding: 0 }} key={key} value={key}>
