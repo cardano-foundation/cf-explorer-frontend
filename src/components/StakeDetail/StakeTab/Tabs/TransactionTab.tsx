@@ -47,8 +47,15 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Transactions>(url, pageInfo);
 
-  const onClickRow = (_: any, r: Transactions, index: number) => {
-    if (openDetail) return openDetail(_, r, index);
+  const onClickRow = (e: any, r: Transactions, index: number) => {
+    let parent: Element | null = e.target as Element;
+    while (parent !== null && !parent?.className.includes("MuiPopover-root")) {
+      parent = parent?.parentElement;
+    }
+    if (parent) {
+      return;
+    }
+    if (openDetail) return openDetail(e, r, index);
     history.push(details.transaction(r.hash));
   };
 

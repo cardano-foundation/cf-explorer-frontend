@@ -62,7 +62,6 @@ export default function SignUp() {
   const history = useHistory();
   const emailTextField = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState(false);
-  const [serverError, setServerError] = useState("");
   const { isLoggedIn } = useAuth();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -149,9 +148,6 @@ export default function SignUp() {
   };
 
   const handleChange = (event: any) => {
-    if (event.target.name === "email") {
-      setServerError("");
-    }
     setFormData({
       name: event.target.name,
       value: event.target.value,
@@ -217,8 +213,12 @@ export default function SignUp() {
       }
     } catch (error: any) {
       if (error.response.data.errorCode === "CC_23") {
-        setServerError("Username already existed, enter username again");
-        if (emailTextField.current) emailTextField.current.focus();
+        setFormData({
+          name: "email",
+          touched: true,
+          error: error.response.data.errorMessage,
+          value: formData.email.value
+        })
       }
     } finally {
       setLoading(false);
@@ -234,7 +234,6 @@ export default function SignUp() {
           </WrapHintText>
           <FormGroup>
             <WrapForm>
-              {serverError && <AlertCustom severity='error'>{serverError}</AlertCustom>}
               <CloseButton saving={0} onClick={() => handleClose()}>
                 <IoMdClose />
               </CloseButton>
