@@ -15,7 +15,7 @@ export const Form = styled("form")<{ home: number }>`
   padding: 0px 0px 0px ${(props) => (props.home ? 15 : 0)}px;
   box-sizing: border-box;
   margin-top: ${(props) => (props.home ? 30 : 0)}px;
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     min-width: unset;
     max-width: unset;
   }
@@ -26,7 +26,7 @@ export const StyledSelect = styled(Select)<{ home: number }>`
   width: ${(props) => (props.home ? 150 : 130)}px;
   min-width: max-content;
   position: relative;
-  @media screen and (max-width: 539px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     width: ${(props) => (props.home ? 130 : 110)}px;
     min-width: max-content;
   }
@@ -65,7 +65,7 @@ export const StyledInput = styled(Input)<{ home: number }>`
   font-size: ${(props) => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
   width: 100%;
   border-left: 2px solid ${(props) => props.theme.palette.border.main};
-  @media screen and (max-width: 539px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 0px 0px 0px 10px;
   }
   & > input {

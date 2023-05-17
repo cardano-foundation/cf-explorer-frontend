@@ -65,17 +65,17 @@ const Registration = ({
   const handleSelect = (registration: SPORegistration | null) => {
     setSelected(registration);
   };
-  const { isTablet } = useScreen();
+  const { isLargeTablet } = useScreen();
   return (
     <Box>
       <Box>
         <RecentRegistrations onSelect={handleSelect} />
       </Box>
       <Box>
-        {!!selected && !isTablet && (
+        {!!selected && !isLargeTablet && (
           <RegistrationTimeline handleResize={handleResize} selected={selected} containerPosition={containerPosition} />
         )}
-        {!!selected && isTablet && (
+        {!!selected && isLargeTablet && (
           <RegistrationTimelineMobile
             handleResize={handleResize}
             setSelected={setSelected}

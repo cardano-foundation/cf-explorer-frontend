@@ -3,13 +3,14 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { Drawer, Layout, ToggleMenu, Main, BackDrop, MainContainer } from "./styles";
+import { Drawer, Layout, ToggleMenu, Main, BackDrop, MainContainer, ArrowCollapse } from "./styles";
 import { useSelector } from "react-redux";
 import { setOnDetailView, setSidebar } from "../../../stores/user";
 import { RootState } from "../../../stores/types";
 import CustomTooltip from "../CustomTooltip";
 import ToastContainer from "./ToastContainer";
 import { useHistory } from "react-router-dom";
+import { Container } from "@mui/material";
 
 interface Props {
   children: React.ReactNode;
@@ -37,7 +38,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
       <Drawer variant='permanent' open={sidebar}>
         <CustomTooltip placement='right' title={sidebar ? `Collapse` : `Expand`}>
           <ToggleMenu onClick={handleToggle} type='button'>
-            {sidebar ? <FaArrowLeft /> : <FaArrowRight />}
+            <ArrowCollapse> {sidebar ? <FaArrowLeft /> : <FaArrowRight />}</ArrowCollapse>
           </ToggleMenu>
         </CustomTooltip>
         <Sidebar />
@@ -45,7 +46,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
       <MainContainer>
         <Main id='main' component='main' open={onDetailView ? 1 : 0} sidebar={sidebar ? 1 : 0}>
           <Header />
-          {children}
+          <Container maxWidth='xl'>{children}</Container>
         </Main>
         <Footer />
       </MainContainer>

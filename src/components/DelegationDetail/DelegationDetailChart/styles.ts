@@ -68,19 +68,22 @@ export const AnalyticsTitle = styled("h2")`
   margin: 50px 0 15px;
 `;
 export const Title = styled("div")`
-  color: var(--text-color-pale);
+  color: ${({ theme }) => theme.palette.grey[400]};
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-title);
   color: ${(props) => props.theme.palette.primary.contrastText};
 `;
 
-export const Value = styled("div")`
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-title);
-  font-size: 32px;
-  line-height: 47px;
-  color: ${(props) => props.theme.palette.primary.contrastText};
-`;
+export const Value = styled("div")(({ theme }) => ({
+  fontWeight: "var(--font-weight-bold)",
+  fontFamily: "var(--font-family-title)",
+  fontSize: 32,
+  lineHeight: "47px",
+  color: theme.palette.primary.contrastText,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 12
+  }
+}));
 
 export const Horizon = styled("div")`
   width: 100%;

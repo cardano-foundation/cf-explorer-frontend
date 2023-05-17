@@ -17,7 +17,7 @@ export const ConnectOption = styled(Paper)`
 export const WrapContent = styled(Box)(({ theme }) => ({
   padding: "30px 40px",
   position: "relative",
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down("md")]: {
     padding: "0"
   }
 }));

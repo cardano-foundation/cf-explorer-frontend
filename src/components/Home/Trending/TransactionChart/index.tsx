@@ -7,6 +7,7 @@ import { Box, Grid, alpha, useTheme } from "@mui/material";
 import { API } from "../../../../commons/utils/api";
 import { BoxInfo, ColorChart, InfoItem, Skeleton, Tab, Tabs, Title, TransactionContainer, WrapHeader } from "./styles";
 import { formatDateTimeLocal } from "../../../../commons/utils/helper";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 interface TransactionChartIF {
   date: string;
@@ -20,7 +21,7 @@ export type TypeChart = "trx" | "simple" | "complex";
 
 const TransactionChart: React.FC = () => {
   const [rangeTime, setRangeTime] = useState<Time>("ONE_DAY");
-
+  const { isMobile } = useScreen();
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     ONE_DAY: {
       label: "1d",
@@ -165,7 +166,7 @@ const TransactionChart: React.FC = () => {
     <TransactionContainer>
       <WrapHeader>
         <Title>Transaction {optionsTime[rangeTime].displayName}</Title>
-        <Tabs width='100%'>
+        <Tabs width={isMobile ? "100%" : "auto"}>
           {Object.keys(optionsTime).map((option) => {
             return (
               <Tab

@@ -1,6 +1,4 @@
 import React from "react";
-import { useUpdateEffect } from "react-use";
-import { Link } from "react-router-dom";
 
 import { CloseIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
@@ -10,6 +8,7 @@ import CopyButton from "../CopyButton";
 import CustomTooltip from "../CustomTooltip";
 
 import { ButtonClose, DropdownList, DropdownTitle, InfoValue, ListDropdownContainer } from "./styles";
+import { StyledLink } from "~/components/share/styled";
 
 interface IDropdownDetailProps {
   title: string;
@@ -30,12 +29,11 @@ const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, m
         {value.map((item, index) => (
           <InfoValue key={index}>
             <CustomTooltip title={item}>
-              <Link
-                to={details.address(item)}
-                style={{ fontFamily: "var(--font-family-text)", color: "var(--color-blue)" }}
+              <StyledLink
+                to={details.address(item)} 
               >
                 {getShortWallet(item)}
-              </Link>
+              </StyledLink>
             </CustomTooltip>
             <CopyButton text={item} />
           </InfoValue>

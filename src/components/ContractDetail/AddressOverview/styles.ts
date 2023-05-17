@@ -10,7 +10,7 @@ export const StyledTextField = styled(TextField)`
   .MuiInputBase-root {
     padding: 0 9px;
     height: 40px;
-    border: 1.5px solid var(--border-color);
+    border: 1.5px solid ${({ theme }) => theme.palette.border.main};
     border-radius: 8px;
   }
   .MuiInputBase-input {

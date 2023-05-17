@@ -73,6 +73,7 @@ const RewardsDistributionTab = () => {
       <Box display='flex' alignItems='center' justifyContent='space-between' mt={3}>
         <WrapWalletLabel>
           <GreenWalletIcon mr={1} />
+          <Box mr={1}>Reward account:</Box>
           <AdaValue value={data.reduce((current, item) => current + item.amount, 0)} />
         </WrapWalletLabel>
         <Box display={"flex"} alignItems={"center"} gap={2}>

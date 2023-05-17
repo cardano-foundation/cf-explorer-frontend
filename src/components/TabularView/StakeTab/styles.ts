@@ -1,5 +1,5 @@
 import { TabList } from "@mui/lab";
-import { Box, Button, styled } from "@mui/material";
+import { Box, Button, Typography, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => ({
@@ -29,6 +29,9 @@ export const StyledLink = styled(Link)`
 export const StyledTabList = styled(TabList)`
   & > div > div {
     justify-content: flex-start;
+  }
+  .MuiTabScrollButton-root {
+    display: none
   }
 `;
 
@@ -71,3 +74,16 @@ export const TabHead = styled(Box)<{ active?: number }>(
   color: ${active ? "#438F68" : "#98A2B3"} !important;
 `
 );
+
+export const Headline = styled(Typography)`
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 37px;
+  color: #000;
+  flex: 1;
+  text-align: left;
+  padding-top: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;

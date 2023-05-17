@@ -31,7 +31,7 @@ const SummaryItems = ({
         px: 3,
         py: 2,
         mb: 1,
-        [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
+        [theme.breakpoints.down("sm")]: {
           px: 2
         }
       }}
@@ -96,32 +96,6 @@ const SummaryItems = ({
               </Box>
             </Box>
           </Box>
-          {/* {type === "up" ? (
-            <Box
-              display={"flex"}
-              alignItems={isGalaxyFoldSmall ? "flex-start" : "center"}
-              flexDirection={isGalaxyFoldSmall ? "column" : "row"}
-              justifyContent={"space-between"}
-              width="100%"
-              mb={1}
-            >
-              <Box display="flex" justifyContent={"space-between"} alignItems="center" pr={1}>
-                Fee paid:
-              </Box>
-              <Box flex={1} display="flex" alignItems="center">
-                <Box
-                  component={"span"}
-                  whiteSpace="nowrap"
-                  color={theme => theme.palette.error.main}
-                  fontWeight="bold"
-                  mr={1}
-                >
-                  -{formatADAFull(item.fee) || 0}
-                </Box>
-                <ADAicon />
-              </Box>
-            </Box>
-          ) : null} */}
         </Box>
       </Box>
       {item.tokens && item.tokens.length > 0 && (

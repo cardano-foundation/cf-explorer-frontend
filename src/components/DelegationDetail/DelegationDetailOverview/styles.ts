@@ -22,9 +22,12 @@ export const Title = styled("span")`
   color: ${(props) => props.theme.palette.grey[400]};
 `;
 
-export const Value = styled("span")`
-  font-family: var(--font-family-title);
-  font-weight: 700;
-  font-size: 22px;
-  line-height: 33px;
-`;
+export const Value = styled("span")(({ theme }) => ({
+  fontWeight: "var(--font-weight-bold)",
+  fontSize: 22,
+  lineHeight: "33px",
+  fontFamily: "var(--font-family-title)",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 14
+  }
+}));

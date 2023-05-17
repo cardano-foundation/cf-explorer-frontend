@@ -60,7 +60,7 @@ export const WrapForm = styled(Box)(({ theme }) => ({
   gap: "10px",
   width: "min(80vw,420px)",
   padding: "35px 40px 40px",
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down("md")]: {
     padding: "20px 15px",
     gap: "15px"
   }
@@ -81,6 +81,8 @@ export const Label = styled(Box)`
   line-height: 16px;
   opacity: 0.8;
 `;
+
+
 
 export const ForgotPassword = styled("span")`
   font-weight: 400;
@@ -123,12 +125,30 @@ export const WrapDivider = styled(Divider)`
   background-color: ${({ theme }) => theme.palette.grey[300]};
 `;
 
+export const Title = styled(Box)`
+  font-weight: 700;
+  font-size: 20px;
+  color: ${({ theme }) => theme.palette.grey[500]};
+`;
+
 export const WrapOr = styled(Box)`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
   color: ${({ theme }) => theme.palette.grey[300]};
   text-transform: uppercase;
+`;
+
+export const WrapEmail = styled("span")`
+  font-weight: 400;
+  font-size: 16px;
+  color: ${({ theme }) => theme.palette.secondary.main};
+`;
+
+export const LabelInfo = styled(Box)`
+  font-weight: 400;
+  font-size: 16px;
+  color: ${({ theme }) => theme.palette.grey[400]};
 `;
 
 export const WrapSignUp = styled(Box)`

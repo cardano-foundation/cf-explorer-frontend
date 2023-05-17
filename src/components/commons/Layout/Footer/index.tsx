@@ -8,7 +8,7 @@ const StyledFooter = styled("footer")`
   height: 60px;
   padding: 0px 10px;
   border-top: 1px solid ${(props) => props.theme.palette.border.main};
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     height: unset;
     padding: 10px;
   }
@@ -21,7 +21,7 @@ const FooterContainer = styled(Container)`
   flex-wrap: wrap;
   height: 60px;
   max-width: unset !important;
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     height: unset;
   }
 `;
@@ -34,7 +34,7 @@ const Copyright = styled("small")`
     vertical-align: top;
     margin-right: 2px;
   }
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     width: 100%;
     text-align: center;
   }

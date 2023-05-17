@@ -12,6 +12,7 @@ export interface ViewMoreAddressModalProps {
   onClose?: () => void;
   onItemClick?: (item: string) => void;
   showFullHash?: boolean;
+  maxWidth?: number;
 }
 
 const ViewMoreAddressModal: React.FC<ViewMoreAddressModalProps> = ({
@@ -20,10 +21,11 @@ const ViewMoreAddressModal: React.FC<ViewMoreAddressModalProps> = ({
   open,
   showFullHash,
   onClose,
-  onItemClick
+  onItemClick,
+  maxWidth
 }) => {
   return (
-    <StyledModal width={620} open={open} handleCloseModal={() => onClose?.()}>
+    <StyledModal width={maxWidth ? maxWidth : 620} open={open} handleCloseModal={() => onClose?.()}>
       <>
         {title && <ModalTitle>{title}</ModalTitle>}
         <List>

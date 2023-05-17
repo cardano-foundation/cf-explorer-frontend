@@ -144,7 +144,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
               >
                 <TextLabelReview>{label}</TextLabelReview>
                 <Stack direction={"row"} spacing={1} justifyContent='center'>
-                  <TextValueReview>{value}</TextValueReview>
+                  <TextOverFlow><TextValueReview>{value}</TextValueReview></TextOverFlow>
                   <PencilIcon onClick={() => gotoStep?.(step as number)} />
                 </Stack>
               </Box>

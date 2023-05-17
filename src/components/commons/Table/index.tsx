@@ -505,13 +505,16 @@ const PaginationCustom = ({
         return (
           <Box width={isGalaxyFoldSmall ? "100vw" : "auto"} textAlign={isGalaxyFoldSmall ? "left" : "center"}>
             <InputNumber
-              type={"number"}
+              type={"string"}
               value={inputPage}
               length={inputPage.toString().length || 1}
               onChange={(e) => {
                 if (+e.target.value <= totalPage) {
                   setInputPage(+e.target.value);
                 }
+              }}
+              onBlur={(e) => {
+                setInputPage(page);
               }}
               disabled={loading}
               onKeyDown={(e) => {

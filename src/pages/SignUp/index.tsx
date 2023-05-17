@@ -1,10 +1,11 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment } from "@mui/material";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
-import { EmailIcon, HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
+import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "../../commons/resources";
 import { routers } from "../../commons/routers";
 import { signUp } from "../../commons/utils/userRequest";
+import { AlertCustom } from "../ForgotPassword/styles";
 import {
   CloseButton,
   Container,
@@ -12,14 +13,18 @@ import {
   FormHelperTextCustom,
   InputCustom,
   Label,
+  LabelInfo,
+  Title,
   WrapButton,
   WrapContent,
+  WrapEmail,
   WrapForm,
   WrapHintText,
   WrapInput,
   WrapSignUp,
   WrapTitle
 } from "./styles";
+import useAuth from "~/commons/hooks/useAuth";
 
 interface IForm {
   password: {
@@ -55,7 +60,10 @@ const formReducer = (state: IForm, event: any) => {
 };
 export default function SignUp() {
   const history = useHistory();
+  const emailTextField = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState(false);
+  const [serverError, setServerError] = useState("");
+  const { isLoggedIn } = useAuth();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -85,6 +93,12 @@ export default function SignUp() {
     }
   });
   useEffect(() => {
+    if(isLoggedIn){
+      history.push(routers.HOME);
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
     setError(
       Boolean(
         formData.password.error || formData.email.error || formData.confirmPassword.error || formData.confirmEmail.error
@@ -103,7 +117,8 @@ export default function SignUp() {
           value.length > 30 ||
           !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/.test(value)
         ) {
-          error = "Password must contain at least 8 characters, including upper lowercase number and special character";
+          error =
+            "Password has to be from 8 to 30 characters and must contain at least 1 number, 1 special character, 1 uppercase and 1 lowercase letter";
         }
         break;
       case "confirmPassword":
@@ -117,7 +132,7 @@ export default function SignUp() {
         if (!value) {
           error = "Please enter your Email";
           // eslint-disable-next-line no-useless-escape
-        } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
+        } else if (!/^[\w-\.+!#$%&'*/=?^_`{|]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
           error = "Invalid Email";
         }
         break;
@@ -134,6 +149,9 @@ export default function SignUp() {
   };
 
   const handleChange = (event: any) => {
+    if (event.target.name === "email") {
+      setServerError("");
+    }
     setFormData({
       name: event.target.name,
       value: event.target.value,
@@ -197,34 +215,40 @@ export default function SignUp() {
         setSuccess(true);
         return;
       }
-    } catch (error) {
-      //To do
+    } catch (error: any) {
+      if (error.response.data.errorCode === "CC_23") {
+        setServerError("Username already existed, enter username again");
+        if (emailTextField.current) emailTextField.current.focus();
+      }
     } finally {
       setLoading(false);
     }
   };
   return (
     <Container>
-      <WrapContent>
-        <WrapTitle>Sign up</WrapTitle>
-        <WrapHintText>
-          Already have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_IN)}>Sign In Here</WrapSignUp>
-        </WrapHintText>
-        <FormGroup>
-          {!success ? (
+      {!success ? (
+        <WrapContent>
+          <WrapTitle>Sign up</WrapTitle>
+          <WrapHintText>
+            Already have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_IN)}>Sign In Here</WrapSignUp>
+          </WrapHintText>
+          <FormGroup>
             <WrapForm>
+              {serverError && <AlertCustom severity='error'>{serverError}</AlertCustom>}
               <CloseButton saving={0} onClick={() => handleClose()}>
                 <IoMdClose />
               </CloseButton>
               <WrapInput>
                 <Label>Email Address</Label>
                 <InputCustom
+                  inputRef={emailTextField}
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"7px"} paddingBottom={"2px"}>
                       <EmailIcon />
                     </Box>
                   }
                   fullWidth
+                  value={formData.email.value}
                   name='email'
                   onChange={handleChange}
                   error={Boolean(formData.email.error && formData.email.touched)}
@@ -243,6 +267,7 @@ export default function SignUp() {
                     </Box>
                   }
                   fullWidth
+                  value={formData.confirmEmail.value}
                   name='confirmEmail'
                   onChange={handleChange}
                   error={Boolean(formData.confirmEmail.error && formData.confirmEmail.touched)}
@@ -330,16 +355,29 @@ export default function SignUp() {
                 Create an Account
               </WrapButton>
             </WrapForm>
-          ) : (
-            <WrapForm>
-              <CloseButton saving={0} onClick={() => handleClose()}>
-                <IoMdClose />
-              </CloseButton>
-              <Label>Please check your email to confirm your account</Label>
-            </WrapForm>
-          )}
-        </FormGroup>
-      </WrapContent>
+          </FormGroup>
+        </WrapContent>) : (
+        <WrapContent>
+          <WrapForm>
+            <FormGroup>
+              <Box textAlign={'center'}>
+                <SuccessIcon />
+                <Box paddingY={"15px"}>
+                  <Title>Verify Your Account</Title>
+                </Box>
+                <Box paddingBottom={"30px"}>
+                  <LabelInfo>
+                    Click on the link we sent to <WrapEmail>{formData.email.value}</WrapEmail> to finish your account setup.
+                  </LabelInfo>
+                </Box>
+              </Box>
+              <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.SIGN_IN)}>
+                Sign In
+              </WrapButton>
+            </FormGroup>
+          </WrapForm>
+        </WrapContent>
+      )}
     </Container>
   );
 }

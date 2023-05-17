@@ -30,7 +30,7 @@ export const EpochText = styled("span")`
 export const EpochProgress = styled("h3")(({ theme }) => ({
   color: theme.palette.primary.main,
   margin: 0,
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down("md")]: {
     fontSize: 14
   }
 }));

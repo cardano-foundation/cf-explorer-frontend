@@ -5,9 +5,9 @@ export const StyledContainer = styled(Container)`
   padding: 30px 0 40px;
   text-align: left;
 
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
-    .stake-table {
-      padding-left: 16px;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    .stake-list {
+      padding: 0px 16px;
     }
   }
 `;
@@ -15,7 +15,7 @@ export const StyledContainer = styled(Container)`
 export const StyledTabs = styled(Tabs)`
   .MuiTabs-flexContainer {
     gap: 50px;
-    @media screen and (max-width: 1023px) {
+    ${({ theme }) => theme.breakpoints.down("md")} {
       gap: 30px;
     }
   }

@@ -19,10 +19,10 @@ export const TextNote = styled(Box)`
 
 export const Label = styled(FormLabel)`
   font-size: 0.875rem;
-  color: var(--text-color);
+  color: ${({ theme }) => theme.palette.text.primary};
   margin-top: 20px;
   .MuiFormLabel-asterisk {
-    color: var(--color-red);
+    color: #dd4343;
   }
 `;
 

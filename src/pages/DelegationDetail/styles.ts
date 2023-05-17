@@ -40,7 +40,7 @@ export const TabSelect = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   marginTop: 30,
-  [theme.breakpoints.up(theme.breakpoints.values.sm)]: {
+  [theme.breakpoints.up("sm")]: {
     display: "none"
   }
 }));
@@ -48,7 +48,7 @@ export const TabSelect = styled(Box)(({ theme }) => ({
 export const TabsContainer = styled(Box)(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.border.secondary}`,
   display: "none",
-  [theme.breakpoints.up(theme.breakpoints.values.sm)]: {
+  [theme.breakpoints.up("sm")]: {
     display: "block"
   }
 }));

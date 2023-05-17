@@ -30,6 +30,7 @@ import {
   WrapSignUp,
   WrapTitle
 } from "./styles";
+import useAuth from "~/commons/hooks/useAuth";
 interface IForm {
   username: {
     value: string;
@@ -59,6 +60,7 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const { isLoggedIn } = useAuth();
   const [invalidInfomation, setInvalidInfomation] = useState(false);
   const [error, setError] = useState(false);
   const [formData, setFormData] = useReducer(formReducer, {
@@ -82,6 +84,12 @@ export default function SignIn() {
     toast.success("Login success");
     history.push(routers.HOME);
   };
+
+  useEffect(() => {
+    if(isLoggedIn){
+      history.push(routers.HOME);
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const { username, password } = getSavedPasswordFromLocalStorage();

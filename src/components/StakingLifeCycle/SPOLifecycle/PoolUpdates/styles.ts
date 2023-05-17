@@ -51,7 +51,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
     background: theme.palette.red[600],
     transform: " translate(0, 60%)"
   },
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     width: "155px"
   }
 }));
@@ -114,7 +114,11 @@ export const StyledGridContainer = styled(Grid)(({ theme }) => ({
 }));
 
 export const StyledBox = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down("sm")]: {
+  ".list-images": {
+    maxWidth: "390px",
+    margin: "0px auto"
+  },
+  [theme.breakpoints.down("md")]: {
     "& > div:nth-of-type(1)": {
       alignItems: "flex-start",
       "& > div:nth-of-type(1)": {
@@ -153,3 +157,9 @@ export const StyledBox = styled(Box)(({ theme }) => ({
     }
   }
 }));
+
+export const ViewMoreButton = styled(IconButton)`
+  width: 30px;
+  height: 30px;
+  margin-left: 6px;
+`;

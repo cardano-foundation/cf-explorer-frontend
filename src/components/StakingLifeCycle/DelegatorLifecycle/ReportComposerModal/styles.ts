@@ -1,5 +1,6 @@
 import { styled, Stack, Box, Button, TextField, Slider } from "@mui/material";
 import { SelectMui } from "../../../commons/Table/styles";
+import breakpoints from "~/themes/breakpoints";
 
 export const StyledLabel = styled("div")`
   font-weight: 400;
@@ -118,15 +119,9 @@ export const ButtonEvent = styled(Button)<{ active: boolean }>(({ theme, active 
   gap: "10px",
   textTransform: "capitalize",
   "&:hover": {
-    background: active ? "#f2f2f2" : "#667085",
-    color: active ? "#667085" : "#fff"
+    background: active ? "#667085" : "#f2f2f2",
+    color: active ? "#fff" : "#667085"
   },
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
-    "&:hover": {
-      background: active ? "#667085" : "#f2f2f2",
-      color: active ? "#fff" : "#667085"
-    }
-  }
 }));
 
 export const TextLabelReview = styled("div")`
@@ -143,6 +138,9 @@ export const TextValueReview = styled("div")`
   line-height: 19px;
   max-width: 300px;
   color: #000000;
+  @media screen and (max-width: ${breakpoints.values.sm}px) {
+    max-width: 200px;
+  }
 `;
 
 export const TextOverFlow = styled("div")`

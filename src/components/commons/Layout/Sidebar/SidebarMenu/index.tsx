@@ -166,7 +166,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               paddingLeft: "70px",
-                              [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+                              [theme.breakpoints.down("md")]: {
                                 paddingLeft: "60px"
                               }
                             })}
@@ -188,7 +188,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                                 ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
-                              [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+                              [theme.breakpoints.down("md")]: {
                                 paddingLeft: "60px"
                               }
                             })}
@@ -312,7 +312,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               paddingLeft: "70px",
-                              [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+                              [theme.breakpoints.down("md")]: {
                                 paddingLeft: "60px"
                               }
                             })}
@@ -333,7 +333,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                                 ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
-                              [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+                              [theme.breakpoints.down("md")]: {
                                 paddingLeft: "60px"
                               }
                             })}

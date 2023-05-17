@@ -20,7 +20,7 @@ export const Menu = styled(List)<{ open: number }>`
   flex-direction: row;
   padding: 0px 10px;
   border-top: 1px solid ${(props) => props.theme.palette.border.main};
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     border-top: 0px;
     position: relative;
     justify-content: center;

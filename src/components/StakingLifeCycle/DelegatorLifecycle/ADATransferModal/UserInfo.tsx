@@ -6,6 +6,8 @@ import CustomIcon from "../../../commons/CustomIcon";
 import { formatADA, formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { useScreen } from "~/commons/hooks/useScreen";
+import { StyledLink } from "~/components/share/styled";
+import { details } from "~/commons/routers";
 
 const UserInfo = ({
   total,
@@ -33,7 +35,9 @@ const UserInfo = ({
           </OverviewIcon>
           &nbsp;
           <CustomTooltip title={stake}>
-            <TextUserInfo>{getShortWallet(stake || "")}</TextUserInfo>
+            <StyledLink to={details.stake(stake)}>
+              <TextUserInfo>{getShortWallet(stake || "")}</TextUserInfo>
+            </StyledLink>
           </CustomTooltip>
           <CopyButton text={stake || ""} />
         </Box>

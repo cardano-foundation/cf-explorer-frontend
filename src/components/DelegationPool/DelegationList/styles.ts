@@ -16,7 +16,7 @@ export const StyledLinearProgress = styled(LinearProgress)`
 
 export const PoolName = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: var(--color-blue) !important;
+  color: ${({ theme }) => theme.palette.secondary.main} !important;
 `;
 
 export const SearchContainer = styled("div")(({ theme }) => ({

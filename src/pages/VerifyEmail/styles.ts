@@ -11,6 +11,13 @@ export const Container = styled(Box)`
   padding: 30px 0;
 `;
 
+export const Title = styled(Box)`
+  font-weight: 700;
+  font-size: 20px;
+  color: ${({ theme }) => theme.palette.grey[500]};
+`;
+
+
 export const WrapContent = styled(Box)`
   display: flex;
   flex-direction: column;
@@ -45,7 +52,7 @@ export const WrapForm = styled(Box)(({ theme }) => ({
   gap: "25px",
   width: "min(80vw,420px)",
   padding: "35px 40px 40px",
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down("md")]: {
     padding: "20px 15px",
     gap: "15px"
   }
@@ -111,6 +118,7 @@ export const WrapButton = styled(Button)`
   font-size: 16px;
   line-height: 19px;
   text-align: center;
+  text-transform: none;
 `;
 
 export const WrapButtonConnectWallet = styled(Button)`
