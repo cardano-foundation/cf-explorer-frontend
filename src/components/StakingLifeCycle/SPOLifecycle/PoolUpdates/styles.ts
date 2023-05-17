@@ -72,7 +72,7 @@ export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   marginLeft: theme.spacing(1),
-  fontWeight: 500,
+  fontWeight: 600,
   fontSize: "14px",
   cursor: "pointer"
 }));

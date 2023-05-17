@@ -102,8 +102,8 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={450}>
       <Container p={"10px 10px 1px 20px"}>
-        <ModalTitle>Report composer</ModalTitle>
-        <Container>
+        <ModalTitle sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</ModalTitle>
+        <Container marginBottom={"20px"}>
           {OPTIONS_TRANSFER.filter(({ type }) => type.includes(reportType)).map(({ key, label, value }) => {
             return (
               <Box key={key}>
