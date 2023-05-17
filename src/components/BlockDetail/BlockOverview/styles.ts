@@ -55,7 +55,7 @@ export const ConfirmStatus = styled("small")<{ status?: keyof typeof Confirmatio
 `;
 
 export const WrapConfirmation = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     paddingTop: "5px"
   }
 }));

@@ -16,7 +16,6 @@ import SelectedIcon from "../../components/commons/SelectedIcon";
 import ADAicon from "../../components/commons/ADAIcon";
 import ProgressCircle from "../../components/commons/ProgressCircle";
 import FirstEpoch from "../../components/commons/Epoch/FirstEpoch";
-import { useSelector } from "react-redux";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
