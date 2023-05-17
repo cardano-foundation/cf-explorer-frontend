@@ -227,7 +227,6 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                             {item.assetName}
                           </Box>
                           <Box fontWeight={600}>
-                            {item.isSent ? "-" : "+"}
                             {numberWithCommas(item.assetQuantity)}
                           </Box>
                         </StyledMenuItem>

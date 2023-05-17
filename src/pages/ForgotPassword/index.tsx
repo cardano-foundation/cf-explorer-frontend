@@ -54,7 +54,7 @@ export default function ForgotPassword() {
         if (!value) {
           error = "Please enter your Email";
           // eslint-disable-next-line no-useless-escape
-        } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
+        } else if (!/^[\w-\.+!#$%&'*/=?^_`{|]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
           error = "Invalid Email";
         }
         break;
