@@ -161,7 +161,7 @@ const SPOLifecycle = ({
         <NextButton
           onClick={() => {
             if (currentStep === stepper.length - 1) {
-              history.push(details.spo(poolId, "tablular"));
+              history.push(details.spo(poolId, "tabular"));
             } else {
               history.push(details.spo(poolId, "timeline", stepper[currentStep + 1]?.key));
               setCurrentStep(currentStep + 1);
@@ -170,7 +170,7 @@ const SPOLifecycle = ({
           variant='contained'
         >
           <ButtonText>
-            Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+            Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
           </ButtonText>
           <NextIcon />
         </NextButton>
