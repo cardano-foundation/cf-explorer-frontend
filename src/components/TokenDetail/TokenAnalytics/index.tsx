@@ -152,9 +152,7 @@ const AddressAnalytics: React.FC = () => {
                   <img src={HighestIcon} width={"20%"} alt='heighest icon' />
                   <Title>Highest Volume</Title>
                   <CustomTooltip title={numberWithCommas(maxBalance.value || 0)}>
-                    <ValueInfo>
-                      {loading ? <SkeletonUI variant='rectangular' /> : formatPrice(maxBalance.value)}
-                    </ValueInfo>
+                    <ValueInfo>{loading ? <SkeletonUI variant='rectangular' /> : maxBalance.value || ""}</ValueInfo>
                   </CustomTooltip>
                 </Box>
               </BoxInfoItemRight>
@@ -165,9 +163,7 @@ const AddressAnalytics: React.FC = () => {
                   <img src={LowestIcon} width={"20%"} alt='lowest icon' />
                   <Title>Lowest Volume</Title>
                   <CustomTooltip title={numberWithCommas(minBalance.value || 0)}>
-                    <ValueInfo>
-                      {loading ? <SkeletonUI variant='rectangular' /> : formatPrice(minBalance.value)}
-                    </ValueInfo>
+                    <ValueInfo>{loading ? <SkeletonUI variant='rectangular' /> : minBalance.value || ""}</ValueInfo>
                   </CustomTooltip>
                 </Box>
               </BoxInfoItem>
