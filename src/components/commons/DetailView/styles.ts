@@ -11,7 +11,7 @@ export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
     height: "calc(100vh - 61px)",
     [theme.breakpoints.down("md")]: {
       display: "flex",
-      height: "calc(100vh - 80px)",
+      height: "calc(100% - 80px)",
       top: "80px"
     },
     [theme.breakpoints.down("sm")]: {
@@ -66,7 +66,7 @@ export const ViewDetailScroll = styled(Box)(({ theme }) => ({
     overflowY: "auto",
     width: "100%",
     padding: "15px 16px",
-    maxWidth: "unset",
+    maxWidth: "unset"
   }
 }));
 export const HeaderContainer = styled(Box)`

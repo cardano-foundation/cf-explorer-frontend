@@ -29,6 +29,9 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
     minHeight: "200px",
     height: "100%",
     paddingTop: 0
+  },
+  [theme.breakpoints.down("sm")]: {
+    minHeight: "150px"
   }
 }));
 
@@ -48,20 +51,27 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
     paddingTop: 0
   },
   [theme.breakpoints.down("sm")]: {
-    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`
+    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    minHeight: "150px"
   }
 }));
 
 export const Title = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  padding: `${theme.spacing(2)} 0`
+  padding: `${theme.spacing(2)} 0`,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1rem"
+  }
 }));
 
 export const ValueInfo = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "2rem",
   margin: "0 auto",
-  overflowWrap: "anywhere"
+  overflowWrap: "anywhere",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "0.75rem"
+  }
 }));
 
 export const Wrapper = styled(Grid)(({ theme }) => ({
