@@ -13,7 +13,7 @@ import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecy
 import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
 import { GreenWalletIcon } from "../../TabularOverview";
-import { StyledLink, TableSubTitle, WrapWalletLabel } from "../styles";
+import { StyledLink, TableSubTitle, WrapWalletLabel, WrapperDelegationTab } from "../styles";
 import { AdaValue } from "./StakeRegistrationTab";
 
 const WithdrawalHistoryTab = () => {
@@ -94,7 +94,7 @@ const WithdrawalHistoryTab = () => {
 
   return (
     <>
-      <Box display='flex' alignItems='center' justifyContent='space-between' mt={3}>
+      <WrapperDelegationTab>
         <WrapWalletLabel>
           <GreenWalletIcon mr={1} />
           <Box mr={1}>Rewards withdrawn:</Box>
@@ -119,7 +119,7 @@ const WithdrawalHistoryTab = () => {
             }}
           />
         </Box>
-      </Box>
+      </WrapperDelegationTab>
       <Table
         {...fetchData}
         columns={columns}

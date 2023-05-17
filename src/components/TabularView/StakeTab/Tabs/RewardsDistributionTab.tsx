@@ -14,6 +14,7 @@ import StackingFilter, { FilterParams } from "../../../StackingFilter";
 import moment from "moment";
 import { DATETIME_PARTTEN } from "../../../StackingFilter/DateRangeModal";
 import { FilterDateLabel } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles";
+import { WrapperDelegationTab } from "../styles";
 
 const RewardsDistributionTab = () => {
   const { stakeId } = useParams<{ stakeId: string }>();
@@ -70,7 +71,7 @@ const RewardsDistributionTab = () => {
   }, [params]);
   return (
     <>
-      <Box display='flex' alignItems='center' justifyContent='space-between' mt={3}>
+      <WrapperDelegationTab>
         <WrapWalletLabel>
           <GreenWalletIcon mr={1} />
           <Box mr={1}>Reward account:</Box>
@@ -95,7 +96,7 @@ const RewardsDistributionTab = () => {
             }}
           />
         </Box>
-      </Box>
+      </WrapperDelegationTab>
       <Table
         {...fetchData}
         columns={columns}
