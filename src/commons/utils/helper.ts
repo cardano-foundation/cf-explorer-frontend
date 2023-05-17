@@ -39,7 +39,7 @@ export const numberWithCommas = (value?: number | string, decimal = 0) => {
   const formated = Number(value)
     .toFixed(decimal)
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  return formated.replace(/^-?0*(\d+)/, "$1");
+  return formated.replace(/^(-)?0+(?=\d)/, "$1");
 };
 
 export const formatADA = (
