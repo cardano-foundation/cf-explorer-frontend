@@ -43,6 +43,7 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 import { details } from "../../../../commons/routers";
 import { useScreen } from "~/commons/hooks/useScreen";
+import { useWindowSize } from "react-use";
 
 const Withdraw = ({
   containerPosition,
@@ -59,9 +60,8 @@ const Withdraw = ({
   const handleSelect = (withdraw: WithdrawItem | null) => {
     setSelected(withdraw);
   };
-
-  const { isLargeTablet } = useScreen();
-
+  const { width } = useWindowSize(0);
+  const laptop = width <= 1560
   return (
     <Box>
       <Box>
@@ -69,7 +69,7 @@ const Withdraw = ({
       </Box>
       <Box>
         {!!selected &&
-          (isLargeTablet ? (
+          (laptop ? (
             <WithdrawTimelineMobile
               handleResize={handleResize}
               setSelected={setSelected}
