@@ -46,7 +46,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
       <MainContainer>
         <Main id='main' component='main' open={onDetailView ? 1 : 0} sidebar={sidebar ? 1 : 0}>
           <Header />
-          <Container maxWidth='xl'>{children}</Container>
+          {children}
         </Main>
         <Footer />
       </MainContainer>
