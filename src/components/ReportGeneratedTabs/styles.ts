@@ -1,4 +1,4 @@
-import { TabPanel } from "@mui/lab";
+import { TabList, TabPanel } from "@mui/lab";
 import { Box, Typography, styled } from "@mui/material";
 
 export const TabLabel = styled(Typography)<{ active: number }>(
@@ -18,7 +18,12 @@ export const TabHeader = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  & .MuiTabs-indicator{
+  & .MuiTabs-indicator {
     height: 4px;
   }
+`;
+
+export const StyledTabList = styled(TabList)`
+  display: flex;
+  gap: 20px !important;
 `;
