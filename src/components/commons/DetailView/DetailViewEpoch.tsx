@@ -140,6 +140,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
   const slot = data.no === currentEpoch?.no ? currentEpoch.slot : MAX_SLOT_EPOCH;
 
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
+  console.log(data);
   return (
     <ViewDetailDrawer anchor='right' open hideBackdrop variant='permanent'>
       <ViewDetailHeader>
@@ -182,16 +183,20 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           </ListItem>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>Start time</DetailLabel>
+              <DetailLabel>Start Timestamp</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.startTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>End time</DetailLabel>
+              <DetailLabel>End Timestamp</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.endTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Blocks</DetailLabel>
               <DetailValue>{data.blkCount}</DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>Tx Count</DetailLabel>
+              <DetailValue>{data.txCount}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Total Output</DetailLabel>
