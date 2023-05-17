@@ -76,10 +76,10 @@ const StakeKeyBox = ({ data }: TProps) => {
     {
       label: "Metadata URL",
       value: (
-        <div>
+        <Box sx={{ wordBreak: "break-all" }}>
           {data?.metadataUrl}
           {data?.metadataUrl && <CopyButton text={data?.metadataUrl} sx={{ height: 16 }} />}
-        </div>
+        </Box>
       )
     }
   ];
