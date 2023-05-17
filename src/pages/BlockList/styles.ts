@@ -28,7 +28,7 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
         padding: "0 16px"
       },
       "& > div:nth-of-type(2)": {
-        paddingLeft: "16px"
+        padding: "0 16px"
       }
     },
     paddingTop: "0px"
