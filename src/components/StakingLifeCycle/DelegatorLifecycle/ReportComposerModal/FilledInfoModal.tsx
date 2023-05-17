@@ -85,18 +85,14 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     }
   }, [address, dateRange, reportType, error, loading]);
 
-  let isShowTextWarning = true;
   let placeholderAddress = "Pool ID";
   switch (reportType) {
     case "POOL_REPORT":
-      isShowTextWarning = false;
       break;
     case "STAKE_KEY_REPORT":
-      isShowTextWarning = false;
       placeholderAddress = "Address details";
       break;
     default:
-      isShowTextWarning = true;
   }
 
   const handleSubmit = async () => {
@@ -201,9 +197,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             />
           </Box>
         )}
-        {isShowTextWarning && (
-          <TextWarning>The earliest 1,000 transactions within the selected range will be exported</TextWarning>
-        )}
+        <TextWarning>The earliest 1,000 transactions within the selected range will be exported</TextWarning>
         <StyledStack>
           <StyledButton disabled={isDisabledButton} onClick={handleSubmit}>
             Next

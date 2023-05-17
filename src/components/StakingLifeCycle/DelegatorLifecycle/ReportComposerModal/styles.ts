@@ -79,7 +79,7 @@ export const StyledButton = styled(Button)`
     opacity: 0.8;
   }
 `;
-export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ width = 140 }) => ({
+export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ width = 100 }) => ({
   width: `${width}%`,
   borderRadius: "8px",
   height: "44px",
@@ -139,7 +139,7 @@ export const TextValueReview = styled("div")`
   max-width: 300px;
   color: #000000;
   @media screen and (max-width: ${breakpoints.values.sm}px) {
-    max-width: 200px;
+    max-width: 180px;
   }
 `;
 

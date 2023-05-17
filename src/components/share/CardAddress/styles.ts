@@ -60,12 +60,16 @@ export const RowItem = styled(Box)`
   align-items: center;
 `;
 
-export const CardItem = styled(Box)`
-  background-color: ${(props) => props.theme.palette.background.paper};
-  min-height: 200px;
-  height: 100%;
-  border-radius: 10px;
-  overflow: hidden;
-  text-align: left;
-  box-shadow: ${(props) => props.theme.shadow.card};
-`;
+export const CardItem = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
+  minHeight: "200px",
+  height: "100%",
+  borderRadius: "10px",
+  overflow: "hidden",
+  textAlign: "left",
+  boxShadow: theme.shadow.card,
+  padding: theme.spacing(4),
+  [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
+    padding: theme.spacing(2),
+  }
+}));

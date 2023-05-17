@@ -104,7 +104,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Box overflow='hidden' borderRadius={10} height={"100%"}>
+          <Box overflow='hidden' borderRadius={"12px"} height={"100%"}>
             <CardAddress
               title={"Wallet address"}
               type='left'
@@ -115,7 +115,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Box overflow='hidden' borderRadius={10} height={"100%"}>
+          <Box overflow='hidden' borderRadius={"12px"} height={"100%"}>
             <CardAddress
               title={"Stake address"}
               type='right'
