@@ -44,10 +44,10 @@ export const TransferButton = styled(Button)(({ theme }) => ({
   fontSize: 14,
   fontWeight: theme.typography.fontWeightBold,
   padding: "0 16px",
-  height: 38,
   borderRadius: 8,
   textTransform: "unset",
-  boxShadow: "none"
+  boxShadow: "none",
+  height: 36,
 }));
 
 export const WrapWalletIcon = styled(Box)`
