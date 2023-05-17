@@ -174,7 +174,7 @@ const DelegatorLifecycle = ({
         flexDirection={isMobile ? "column" : "row"}
         justifyContent={isMobile ? "center" : "space-between"}
       >
-        {currentStep > 0 && (
+        {currentStep > 0 ? (
           <PreviousButton
             sx={{ mb: `${isMobile ? "16px" : "0px"}` }}
             onClick={() => {
@@ -185,6 +185,8 @@ const DelegatorLifecycle = ({
             <PreviousIcon />
             <ButtonText>Previous: {stepper[currentStep - 1]?.title}</ButtonText>
           </PreviousButton>
+        ) : (
+          <Box />
         )}
         <NextButton
           onClick={() => {
