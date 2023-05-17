@@ -6,6 +6,7 @@ import moment from "moment";
 import React, { useEffect, useMemo, useState } from "react";
 import StyledModal from "../commons/StyledModal";
 import { DatePickerFooter, DateRangePickerContainer } from "./styles";
+import { DesktopDatePicker } from "@mui/x-date-pickers";
 
 export interface DateRange {
   fromDate?: string;
@@ -45,7 +46,7 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
     <StyledModal open={open} handleCloseModal={() => onClose?.()}>
       <LocalizationProvider dateAdapter={AdapterMoment}>
         <DateRangePickerContainer>
-          <DatePicker
+          <DesktopDatePicker
             value={toMoment(value?.fromDate)}
             onChange={(mDate) =>
               setValue((pre) => {

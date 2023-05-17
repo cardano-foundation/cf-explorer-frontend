@@ -14,7 +14,7 @@ import {
   FilterMenuItem
 } from "../commons/Filter/styles";
 import { StyledInput } from "../share/styled";
-import DateRangeModal, { DATETIME_PARTTEN } from "./DateRangeModal";
+import DateRangeModal, { DATETIME_PARTTEN } from "./DateRangeModal"; 
 import { AdditionContainer } from "./styles";
 import { StyledListItemIcon } from "../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import moment from "moment";

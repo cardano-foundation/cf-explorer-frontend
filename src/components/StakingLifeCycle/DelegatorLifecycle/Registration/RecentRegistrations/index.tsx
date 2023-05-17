@@ -71,18 +71,20 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
             Showing {total} {total > 1 ? "results" : "result"}
           </WrapFilterDescription>
           {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
-          <StackingFilter
-            filterValue={params}
-            onFilterValueChange={(params) =>
-              setParams((pre) => ({
-                fromDate: undefined,
-                sort: undefined,
-                toDate: undefined,
-                txHash: undefined,
-                ...params
-              }))
-            }
-          />
+          <Box mt={-1}>
+            <StackingFilter
+              filterValue={params}
+              onFilterValueChange={(params) =>
+                setParams((pre) => ({
+                  fromDate: undefined,
+                  sort: undefined,
+                  toDate: undefined,
+                  txHash: undefined,
+                  ...params
+                }))
+              }
+            />
+          </Box>
         </Box>
       </Box>
       <GridBox>

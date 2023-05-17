@@ -5,6 +5,7 @@ import { AIconGreen, BalanceIcon, HashtagIcon } from "../../../../commons/resour
 import CustomIcon from "../../../commons/CustomIcon";
 import { formatADA, formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
 import CustomTooltip from "../../../commons/CustomTooltip";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 const UserInfo = ({
   total,
@@ -17,9 +18,10 @@ const UserInfo = ({
   reward: number;
   acitve: "wallet" | "reward";
 }) => {
+  const { isMobile } = useScreen()
   return (
-    <Box display={"flex"} justifyContent={"space-between"} margin={"7px 0"}>
-      <Box display={"flex"}>
+    <Box display={"flex"} justifyContent={"space-between"} margin={"7px 0"} flexDirection={isMobile ? "column" : "row"}>
+      <Box display={"flex"} flexDirection={isMobile ? "column" : "row"}>
         <Box display={"flex"} alignItems='center' marginRight={4}>
           <OverviewIcon>
             <CustomIcon
@@ -35,7 +37,7 @@ const UserInfo = ({
           </CustomTooltip>
           <CopyButton text={stake || ""} />
         </Box>
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems='center' mt={isMobile ? "5px" : "0px"}>
           <OverviewIcon marginRight={1}>
             <BalanceIcon />
           </OverviewIcon>
@@ -46,7 +48,7 @@ const UserInfo = ({
           <CustomIcon icon={AIconGreen} fill='currentColor' height={14} />
         </Box>
       </Box>
-      <TextTx>{total} Transactions</TextTx>
+      <TextTx sx={{marginTop: isMobile ? "10px" : "0px"}}>{total} Transactions</TextTx>
     </Box>
   );
 };
