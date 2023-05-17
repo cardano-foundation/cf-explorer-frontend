@@ -8,6 +8,7 @@ import Card from "../../components/commons/Card";
 import NoRecord from "../../components/commons/NoRecord";
 import { API } from "../../commons/utils/api";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
+import ScrollToTop from "~/components/ScrollToTop";
 
 const StyledContainer = styled(Container)`
   padding: 30px 16px 40px;
@@ -32,6 +33,7 @@ const Transaction: React.FC = () => {
 
   return (
     <StyledContainer>
+      <ScrollToTop />
       <TransactionOverview data={data} loading={!initialized} />
       <Box>
         {!initialized ? (
