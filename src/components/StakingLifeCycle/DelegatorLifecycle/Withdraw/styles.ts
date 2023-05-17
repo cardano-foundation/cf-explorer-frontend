@@ -35,7 +35,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
   border: `2px solid ${theme.palette.red[600]}`,
   borderRadius: "10px",
   background: theme.palette.common.white,
-  marginRight: theme.spacing(5),
+  marginRight: theme.spacing(1),
   position: "relative",
   "::after": {
     content: '"FEES"',
@@ -87,7 +87,6 @@ export const InfoText = styled(Box)(({ theme }) => ({
 }));
 
 export const NetAmount = styled(Box)(({ theme }) => ({
-  width: "200px",
   height: "35px",
   display: "flex",
   alignItems: "center",
@@ -113,7 +112,7 @@ export const NetAmount = styled(Box)(({ theme }) => ({
 }));
 
 export const Withdrawn = styled(Box)(({ theme }) => ({
-  width: "200px",
+  width: "150px",
   height: "35px",
   display: "flex",
   alignItems: "center",
@@ -156,7 +155,8 @@ export const RoundBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   height: "220px",
   padding: theme.spacing(3),
-  borderRadius: "25px"
+  borderRadius: "25px",
+  width: "max-content"
 }));
 
 export const ADAAmountLabel = styled(Typography)`

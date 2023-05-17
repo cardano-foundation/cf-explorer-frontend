@@ -69,8 +69,7 @@ export const TabTitle = styled(Typography)(({ theme }) => ({
   fontSize: "20px",
   fontWeight: 700,
   color: theme.palette.common.black,
-  textAlign: "left",
-  maxWidth: "131px"
+  textAlign: "left"
 }));
 
 export const StyledBox = styled(Box)`

@@ -187,7 +187,7 @@ const WithdrawTimeline = ({
       </Box>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
-          <Box ref={adaHolderRef} width={190} height={215}>
+          <Box ref={adaHolderRef} width={200} height={215}>
             <ADAHolderIcon />
           </Box>
           <Payment ref={boxWalletRef}>
@@ -219,7 +219,7 @@ const WithdrawTimeline = ({
           <RoundBox>
             <PopoverStyled
               render={({ handleClick }) => (
-                <NetAmount ref={netAmountRef}>
+                <NetAmount ref={netAmountRef} width={"max-content"}>
                   <Box>
                     <ADAAmountLabel>
                       {data?.amount && data?.fee ? formatADA(data?.amount - data?.fee) : 0}
@@ -235,7 +235,7 @@ const WithdrawTimeline = ({
             />
             <PopoverStyled
               render={({ handleClick }) => (
-                <Withdrawn ref={withdrawnRef}>
+                <Withdrawn ref={withdrawnRef} width={"max-content"}>
                   <Box>
                     <ADAAmountLabel>{formatADA(data?.amount || 0)}</ADAAmountLabel>
                     <ADAicon fontSize='18px' />
@@ -258,10 +258,10 @@ const WithdrawTimeline = ({
           >
             <PopoverStyled
               render={({ handleClick }) => (
-                <FeeBox ml={1} ref={feesRef} width={200}>
-                  <Box ref={feesBrigeRef} width={236} height={71} position={"absolute"} top={"-76px"} left={0}></Box>
+                <FeeBox ml={1} ref={feesRef} width={"max-content"}>
+                  <Box ref={feesBrigeRef} width={176} height={71} position={"absolute"} top={"-76px"} left={0}></Box>
                   <Box>
-                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"}>
                       {formatADA(data?.fee || 0)}
                     </Box>
                     <ADAicon fontSize='18px' />
