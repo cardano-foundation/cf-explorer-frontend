@@ -387,16 +387,21 @@ const WithdrawTimelineMobile = ({
   const netAmountRef = useRef(null);
   const paymentWalletRef = useRef(null);
   const rewardAccountRef = useRef(null);
+  const history = useHistory();
 
   useEffect(() => {
     handleResize();
   }, [loading]);
 
+  const handleBack = () => {
+    history.push(details.staking(stakeId, "timeline", "withdrawal-history"));
+  };
+
   if (loading) {
     return (
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-          <IconButtonBack onClick={() => setSelected(null)}>
+          <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
           <Box display={"flex"}>
@@ -421,7 +426,7 @@ const WithdrawTimelineMobile = ({
   return (
     <Box>
       <Box display='flex' justifyContent='space-between' mt={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box>

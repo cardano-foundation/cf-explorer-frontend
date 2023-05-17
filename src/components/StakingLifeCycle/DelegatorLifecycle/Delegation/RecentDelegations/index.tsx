@@ -75,8 +75,7 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
             Showing {total} {total > 1 ? "results" : "result"}
           </WrapFilterDescription>
           {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
-          <Box mt={-1}>
-            <StackingFilter
+           <StackingFilter
               filterValue={params}
               onFilterValueChange={(params) =>
                 setParams(() => ({
@@ -88,7 +87,6 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
                 }))
               }
             />
-          </Box>
         </Box>
       </Box>
       <GridBox>

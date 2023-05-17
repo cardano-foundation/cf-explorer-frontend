@@ -48,7 +48,7 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
     <StyledModal open={open} handleCloseModal={() => onClose?.()}>
       <LocalizationProvider dateAdapter={AdapterMoment}>
         <DateRangePickerContainer>
-          <DesktopDatePicker
+          <DatePicker
             value={toMoment(value?.fromDate)}
             onChange={(mDate) =>
               setValue((pre) => {

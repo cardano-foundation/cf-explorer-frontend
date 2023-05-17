@@ -64,15 +64,14 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
 
   return (
     <Box marginTop='32px' data-testid='recent-registration'>
-      <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
+      <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"} alignItems={"center"}>
         <DescriptionText>Registration List</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             Showing {total} {total > 1 ? "results" : "result"}
           </WrapFilterDescription>
           {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
-          <Box mt={-1}>
-            <StackingFilter
+          <StackingFilter
               filterValue={params}
               onFilterValueChange={(params) =>
                 setParams((pre) => ({
@@ -84,7 +83,6 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
                 }))
               }
             />
-          </Box>
         </Box>
       </Box>
       <GridBox>

@@ -310,6 +310,7 @@ const DelegationTimelineMobile = ({
 }) => {
   const theme = useTheme();
   const [openModal, setOpenModal] = useState(false);
+  const history = useHistory();
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const { data, loading } = useFetch<DelegationDetail>(
     (selected && selected.txHash && stakeId && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stakeId, selected.txHash)) || ""
@@ -326,11 +327,15 @@ const DelegationTimelineMobile = ({
     handleResize();
   }, [loading, registrationRef.current]);
 
+  const handleBack = () => {
+    history.push(details.staking(stakeId, "timeline", "delegation"));
+  };
+
   if (loading) {
     return (
       <Box>
         <Box display='flex' alignItems='flex-start' justifyContent='space-between' mt={1}>
-          <IconButtonBack onClick={() => setSelected(null)}>
+          <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
           <Box display={"flex"} flexDirection='column'>
@@ -356,7 +361,7 @@ const DelegationTimelineMobile = ({
   return (
     <Box>
       <Box display='flex' alignItems='flex-start' justifyContent='space-between' mt={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"} flexDirection='column'>

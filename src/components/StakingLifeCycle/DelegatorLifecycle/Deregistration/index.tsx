@@ -313,6 +313,7 @@ const DeregistrationTimelineMobile = ({
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
+  const history = useHistory();
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -320,10 +321,14 @@ const DeregistrationTimelineMobile = ({
     handleResize();
   }, [selected]);
 
+  const handleBack = () => {
+    history.push(details.staking(stakeId, "timeline", "deregistration"));
+  };
+
   return (
     <Box>
       <Box display='flex' justifyContent='space-between' mt={1}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"} flexDirection='column'>

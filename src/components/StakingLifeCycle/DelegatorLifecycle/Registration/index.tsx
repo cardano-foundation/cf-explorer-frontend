@@ -306,18 +306,22 @@ const RegistrationTimelineMobile = ({
   const feeRef = useRef(null);
   const cadarnoSystemRef = useRef(null);
   const registrationRef = useRef(null);
+  const history = useHistory();
 
   const [openModal, setOpenModal] = useState(false);
-  const { isLargeTablet } = useScreen()
 
   useEffect(() => {
     handleResize();
   }, [registration]);
 
+  const handleBack = () => {
+    history.push(details.staking(stakeId, "timeline", "registration"));
+  };
+
   return (
     <Box>
       <Box display='flex' alignItems='flex-start' justifyContent='space-between' mt={1}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"} flexDirection='column'>
