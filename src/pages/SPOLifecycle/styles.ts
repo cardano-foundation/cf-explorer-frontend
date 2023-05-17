@@ -27,13 +27,12 @@ export const ButtonGroup = styled(Box)(({ theme }) => ({
   background: "#E7E8EA",
   padding: "3px 2px",
   margin: `0 ${theme.spacing(2)}`,
-  borderTopLeftRadius: "20px",
-  borderBottomLeftRadius: "20px",
-  borderTopRightRadius: "20px",
-  borderBottomRightRadius: "20px",
+  borderRadius: "20px",
   [theme.breakpoints.down("md")]: {
     width: "90px",
-    marginTop: "10px !important"
+    marginTop: "10px !important",
+    borderRadius: "71px",
+    gap: "5px"
   },
   [theme.breakpoints.down("sm")]: {
     margin: "0px !important"
