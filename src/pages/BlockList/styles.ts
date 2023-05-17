@@ -32,5 +32,8 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
       }
     },
     paddingTop: "0px"
+  },
+  [theme.breakpoints.down("md")]: {
+    paddingTop: "0px"
   }
 }));

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
-    paddingLeft: "16px",
+    padding: "0 16px",
     "& h2": {
       paddingLeft: "0px"
     }
