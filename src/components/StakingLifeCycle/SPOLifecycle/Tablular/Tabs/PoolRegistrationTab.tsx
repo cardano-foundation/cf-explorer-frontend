@@ -60,10 +60,10 @@ const PoolRegistrationTab = () => {
       render(data) {
         return (
           <Box>
-            <AdaValue value={data.totalFee} />
+            <AdaValue limit={5} value={data.totalFee} />
             <TableSubTitle>
               <Box display='flex' mt={1} alignItems='center' lineHeight='1'>
-                <AdaValue color={theme.palette.grey[400]} value={data.deposit} gap='3px' fontSize='12px' />
+                <AdaValue limit={1} color={theme.palette.grey[400]} value={data.deposit} gap='3px' fontSize='12px' />
                 <Box mx='3px'>/</Box>
                 <AdaValue color={theme.palette.grey[400]} value={data.fee} gap='3px' fontSize='12px' />
               </Box>

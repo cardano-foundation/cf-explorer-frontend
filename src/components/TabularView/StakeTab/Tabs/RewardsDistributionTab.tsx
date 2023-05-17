@@ -35,7 +35,7 @@ const RewardsDistributionTab = () => {
       title: "Rewards Paid",
       key: "paid",
       minWidth: "120px",
-      render: (r) => <AdaValue value={r.amount} />
+      render: (r) => <AdaValue limit={5} value={r.amount} />
     },
     {
       title: "Timestamp",
