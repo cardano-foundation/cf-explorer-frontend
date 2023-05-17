@@ -6,7 +6,7 @@ import timeIcon from "../../../commons/resources/icons/time.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
 import exchageIcon from "../../../commons/resources/icons/Union.svg";
 import decimalIcon from "../../../commons/resources/icons/decimal.svg";
-import { CardItem } from "./styles";
+import { CardItem, WrapTitle } from "./styles";
 import ScriptModal from "../../ScriptModal";
 import DetailHeader from "../../commons/DetailHeader";
 
@@ -53,6 +53,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
                 fontWeight={"bold"}
                 mb={1}
                 color={({ palette }) => palette.common.black}
+                sx={{
+                  overflowWrap: "anywhere"
+                }}
               >
                 {data?.displayName || ""}
                 {data?.metadata && data?.metadata?.logo ? (
@@ -83,7 +86,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       icon: ""
     },
     {
-      title: "Total Supply",
+      title: <WrapTitle>Total Supply</WrapTitle>,
       value: <Box component={"span"}>{numberWithCommas(data?.supply)}</Box>,
       icon: slotIcon
     },
@@ -92,7 +95,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems='center'>
           <Box component={"span"} mr={1} width={"max-content"}>
-            Total Transactions
+            <WrapTitle>
+              Total Transactions
+            </WrapTitle>
           </Box>
         </Box>
       ),
@@ -104,7 +109,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems='center'>
           <Box component={"span"} mr={1}>
-            Number of Holders
+            <WrapTitle>
+              Number of Holders
+            </WrapTitle>
           </Box>
         </Box>
       ),
@@ -115,7 +122,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems='center'>
           <Box component={"span"} mr={1}>
-            Total Volume
+            <WrapTitle>
+              Total Volume
+            </WrapTitle>
           </Box>
         </Box>
       ),
@@ -126,7 +135,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems='center'>
           <Box component={"span"} mr={1}>
-            Volume 24H
+            <WrapTitle>
+              Volume 24H
+            </WrapTitle>
           </Box>
         </Box>
       ),
@@ -137,7 +148,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems='center'>
           <Box component={"span"} mr={1}>
-            Created
+            <WrapTitle>
+              Created
+            </WrapTitle>
           </Box>
         </Box>
       ),

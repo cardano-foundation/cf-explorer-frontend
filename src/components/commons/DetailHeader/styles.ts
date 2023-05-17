@@ -380,7 +380,7 @@ export const CardItem = styled(Grid)<{ items_length: number; isDetailToken?: boo
       paddingTop: 20,
       paddingBottom: 20,
       borderBottomWidth: 1,
-      wordBreak: "break-all",
+      wordBreak: "break-word",
       borderLeft: `${isDetailToken ? `none` : `1px solid ${alpha(theme.palette.common.black, 0.1)}`}`,
       ":nth-of-type(2n+1)": {
         borderLeftWidth: 0,

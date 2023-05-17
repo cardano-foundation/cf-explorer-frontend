@@ -8,6 +8,10 @@ export const HeaderDetailContainer = styled(Container)`
   text-align: left;
 `;
 
+export const WrapTitle = styled(Box)`
+  padding-bottom: 4px;
+`;
+
 export const BackButton = styled(Box)`
   display: inline-flex;
   text-align: left;

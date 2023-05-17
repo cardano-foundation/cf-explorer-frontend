@@ -45,7 +45,7 @@ export const HeaderMain = styled("div")<{ home: number }>(({ theme, home }) => (
     paddingTop: home ? "0px" : "30px",
     marginBottom: home ? "0px" : "calc(-25px - 1.5715rem)"
   },
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
     padding: home ? "62px 0px 48px" : 0
   }
 }));
