@@ -14,10 +14,11 @@ import { API } from "../../../commons/utils/api";
 import useFetch from "../../../commons/hooks/useFetch";
 import { formatADAFull } from "../../../commons/utils/helper";
 import ADAicon from "../../commons/ADAIcon";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
 import { details } from "../../../commons/routers";
 import { useScreen } from "../../../commons/hooks/useScreen";
+import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -78,10 +79,9 @@ const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
 };
 
 const TabularOverview: React.FC = () => {
+  const data = useContext(DelegatorDetailContext);
   const [open, setOpen] = useState(false);
   const { stakeId } = useParams<{ stakeId: string }>();
-  const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
-
   return (
     <Grid container spacing={2}>
       <GridItem
