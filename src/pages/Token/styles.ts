@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
   padding: "20px 0 40px",
+  [theme.breakpoints.down("md")]: {
+    paddingTop: 0,
+    marginTop: "-20px"
+  },
   [theme.breakpoints.down("sm")]: {
     padding: "10px 0 40px",
     "& > div > div:nth-of-type(2)": {
@@ -12,7 +16,8 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
       "& > div:nth-of-type(1)": {
         padding: "0 16px"
       }
-    }
+    },
+    marginTop: "0px !important"
   }
 }));
 

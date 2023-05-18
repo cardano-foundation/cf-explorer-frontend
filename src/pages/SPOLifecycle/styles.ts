@@ -90,11 +90,9 @@ export const BoxContainerStyled = styled(Box)(({ theme }) => ({
 
 export const BoxSwitchContainer = styled(Box)(({ theme }) => ({
   display: "flex",
-  alignItems: "center",
-  gap: 15,
-  [theme.breakpoints.down("md")]: {
-    justifyContent: "space-between"
-  }
+  justifyContent: "space-between",
+  alignItems: "center"
+
 }));
 
 export const BoxItemStyled = styled(Box)(({ theme }) => ({
