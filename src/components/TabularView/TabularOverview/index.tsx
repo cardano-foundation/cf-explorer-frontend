@@ -52,7 +52,7 @@ type TGridItem = {
 };
 
 const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
-  const { isSmallScreen,isMobile } = useScreen();
+  const { isSmallScreen } = useScreen();
   return (
     <Grid item xs={12} md={isSmallScreen ? 12 : 6} lg={6}>
       <CardOverview
@@ -82,12 +82,6 @@ const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
               <Box />
             )}
           </Box>
-        </Box>
-        <Box
-          pl={`${isMobile ? "70px" : "0px"}`}
-          sx={{ margin: `${isMobile ? "0 auto" : "0px"}`, mt: `${isMobile ? "-6px" : "0px"}` }}
-        >
-          {action}
         </Box>
       </CardOverview>
     </Grid>
