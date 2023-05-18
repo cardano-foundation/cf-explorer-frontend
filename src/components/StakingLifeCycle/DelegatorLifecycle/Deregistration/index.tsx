@@ -31,6 +31,7 @@ import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 import { useScreen } from "../../../../commons/hooks/useScreen";
+import { StakeLink } from "../Registration/styles";
 
 const Deregistration = ({
   containerPosition,
@@ -500,7 +501,7 @@ export const DeregistrationCertificateModal = ({
   const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
 
   return (
-    <StyledModal {...props} title='Deregistration certificate'>
+    <StyledModal  {...props} width={550} title='Deregistration certificate'>
       <Box>
         {loading && <Skeleton variant='rectangular' width={500} height={90} />}
         {!loading && (
@@ -510,10 +511,10 @@ export const DeregistrationCertificateModal = ({
             </Box>
             {data && (
               <Box>
-                <CustomTooltip title={stake}>
-                  <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link>
-                </CustomTooltip>
-                <CopyButton text={stake} />
+                <Box>
+                  <StakeLink to={details.stake(stake)}>{stake || ""}</StakeLink>
+                  <CopyButton text={stake} />
+                </Box>
               </Box>
             )}
           </Box>
