@@ -92,6 +92,7 @@ export const BoxSwitchContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center"
+
 }));
 
 export const BoxItemStyled = styled(Box)(({ theme }) => ({
@@ -109,8 +110,15 @@ export const BoxSwitch = styled(Box)(({ theme }) => ({
 
 export const ButtonReportContainer = styled(Button)(({ theme }) => ({
   display: "flex",
+  padding: 0,
+  marginLeft: 20,
+  "&:disabled": {
+    opacity: 0.5
+  },
   [theme.breakpoints.down("md")]: {
-    justifyContent: "start"
+    justifyContent: "start",
+    marginLeft: 0,
+    marginTop: "18px"
   }
 }));
 

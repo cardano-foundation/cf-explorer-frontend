@@ -103,7 +103,7 @@ const SPOLifecycle = () => {
         <BoxItemStyled>
           <BoxSwitchContainer>
             <BoxSwitch color={({ palette }) => palette.grey[400]}>
-              Switch to {mode === "timeline" ? "tabular" : "timeline"} view
+              <Box>Switch to {mode === "timeline" ? "tabular" : "timeline"} view</Box>
             </BoxSwitch>
             <ButtonGroup>
               <ButtonSwitch active={+(mode === "timeline")} onClick={() => changeMode("timeline")}>
