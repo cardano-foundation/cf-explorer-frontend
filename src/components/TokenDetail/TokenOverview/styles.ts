@@ -8,6 +8,11 @@ export const HeaderDetailContainer = styled(Container)`
   text-align: left;
 `;
 
+export const WrapTitle = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    paddingBottom: "4px"
+  }
+}));
 export const BackButton = styled(Box)`
   display: inline-flex;
   text-align: left;

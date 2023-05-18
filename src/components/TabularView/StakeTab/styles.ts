@@ -87,3 +87,14 @@ export const Headline = styled(Typography)`
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
+
+export const WrapperDelegationTab = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center,
+  margin-top: 12px;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    flex-direction: column;
+    gap: 10px;
+  }
+`;

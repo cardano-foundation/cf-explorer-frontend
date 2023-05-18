@@ -1,5 +1,6 @@
 import { styled, Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import breakpoints from "~/themes/breakpoints";
 
 export const TitleDetail = styled(Box)`
   font-size: var(--font-size-title);
@@ -73,3 +74,10 @@ export const CardItem = styled(Box)(({ theme }) => ({
     padding: theme.spacing(2)
   }
 }));
+
+export const CardItemStyled = styled(CardItem)`
+  padding: 32px;
+  @media screen and (max-width: ${breakpoints.values.sm}px) {
+    padding: 20px 15px;
+  }
+`;

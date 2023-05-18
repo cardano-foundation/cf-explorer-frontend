@@ -104,7 +104,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       step: STEPS.step1
     },
     {
-      label: isPoolReport ? "Pool ID" : "Address details",
+      label: isPoolReport ? "Pool ID" : "Stake key details",
       value: <TextOverFlow>{step1.address}</TextOverFlow>,
       step: STEPS.step1
     },

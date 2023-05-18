@@ -15,6 +15,7 @@ import {
   ButtonReport,
   ButtonReportContainer,
   ButtonSwitch,
+  PoolId,
   StyledContainer
 } from "./styles";
 
@@ -24,7 +25,6 @@ import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLife
 import Tablular from "../../components/StakingLifeCycle/SPOLifecycle/Tablular";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useScreen } from "../../commons/hooks/useScreen";
-import { StyledStakeId } from "../DelegatorLifecycle/styles";
 import { details } from "../../commons/routers";
 import useAuth from "~/commons/hooks/useAuth";
 
@@ -91,11 +91,11 @@ const SPOLifecycle = () => {
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
-            <Box component={"span"} fontSize={"1rem"} lineHeight={1}>
+            <Box component={"span"} fontSize={"0.875rem"} lineHeight={1}>
               Pool ID:
             </Box>
             <CustomTooltip title={poolId}>
-              <StyledStakeId to={details.delegation(poolId)}>{getShortHash(poolId)}</StyledStakeId>
+              <PoolId to={details.delegation(poolId)}>{getShortHash(poolId)}</PoolId>
             </CustomTooltip>
             <CopyButton text={poolId} />
           </Box>
@@ -103,7 +103,7 @@ const SPOLifecycle = () => {
         <BoxItemStyled>
           <BoxSwitchContainer>
             <BoxSwitch color={({ palette }) => palette.grey[400]}>
-              Switch to {mode === "timeline" ? "tabular" : "timeline"} view
+              <Box>Switch to {mode === "timeline" ? "tabular" : "timeline"} view</Box>
             </BoxSwitch>
             <ButtonGroup>
               <ButtonSwitch active={+(mode === "timeline")} onClick={() => changeMode("timeline")}>

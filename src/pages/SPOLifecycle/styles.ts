@@ -1,4 +1,5 @@
 import { Button, alpha, Box, Container, IconButton, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
   padding: "20px 0 40px",
@@ -27,13 +28,12 @@ export const ButtonGroup = styled(Box)(({ theme }) => ({
   background: "#E7E8EA",
   padding: "3px 2px",
   margin: `0 ${theme.spacing(2)}`,
-  borderTopLeftRadius: "20px",
-  borderBottomLeftRadius: "20px",
-  borderTopRightRadius: "20px",
-  borderBottomRightRadius: "20px",
+  borderRadius: "20px",
   [theme.breakpoints.down("md")]: {
     width: "90px",
-    marginTop: "10px !important"
+    marginTop: "10px !important",
+    borderRadius: "71px",
+    gap: "5px"
   },
   [theme.breakpoints.down("sm")]: {
     margin: "0px !important"
@@ -92,6 +92,7 @@ export const BoxSwitchContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center"
+
 }));
 
 export const BoxItemStyled = styled(Box)(({ theme }) => ({
@@ -109,7 +110,22 @@ export const BoxSwitch = styled(Box)(({ theme }) => ({
 
 export const ButtonReportContainer = styled(Button)(({ theme }) => ({
   display: "flex",
+  padding: 0,
+  marginLeft: 20,
+  "&:disabled": {
+    opacity: 0.5
+  },
   [theme.breakpoints.down("md")]: {
-    justifyContent: "start"
+    justifyContent: "start",
+    marginLeft: 0,
+    marginTop: "18px"
   }
+}));
+
+export const PoolId = styled(Link)(({ theme }) => ({
+  lineHeight: 1,
+  fontWeight: "bold",
+  color: `${theme.palette.blue[800]} !important`,
+  margin: `0 ${theme.spacing(1)} `,
+  fontSize: "0.875rem"
 }));

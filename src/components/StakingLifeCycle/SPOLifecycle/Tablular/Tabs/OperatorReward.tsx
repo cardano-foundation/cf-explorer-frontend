@@ -41,7 +41,7 @@ const OperatorRewardTab = () => {
       key: "amount",
       title: "Operator Reward ADA",
       render(data) {
-        return <AdaValue value={data.amount} />;
+        return <AdaValue limit={5} value={data.amount} />;
       }
     },
     {

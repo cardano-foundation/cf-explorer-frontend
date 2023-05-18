@@ -87,7 +87,6 @@ export const Title = styled("h3")`
 
 export const BoxInfo = styled(Box)(({ theme }) => ({
   height: `calc(88% - ${theme.spacing(3)} - ${theme.spacing(3)})`,
-  border: "1px solid rgba(0,0,0,0.5)",
   minHeight: "200px",
   borderRadius: "12px",
   padding: theme.spacing(3),

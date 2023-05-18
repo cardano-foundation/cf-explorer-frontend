@@ -996,7 +996,11 @@ export const PoolUpdateModal = ({
           <TabList
             onChange={handleChange}
             TabIndicatorProps={{
-              sx: { background: (theme) => theme.palette.primary.main, color: (theme) => theme.palette.primary.main }
+              sx: {
+                background: (theme) => theme.palette.primary.main,
+                color: (theme) => theme.palette.primary.main,
+                height: "4px"
+              }
             }}
           >
             {tabs?.map(({ key, icon: Icon, label }) => (

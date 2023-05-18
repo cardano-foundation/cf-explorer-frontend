@@ -81,4 +81,7 @@ export const StakeLink = styled(Link)`
   font-size: 0.875rem;
   color: ${({ theme }) => theme.palette.blue[800]} !important;
   margin-right: 6px;
+  ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.sm)} {
+    overflow-wrap: break-word;
+  }
 `;

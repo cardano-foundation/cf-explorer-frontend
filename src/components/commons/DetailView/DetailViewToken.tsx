@@ -1,50 +1,50 @@
+import { Box } from "@mui/material";
 import React from "react";
+import { BiChevronRight } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
 import { PolicyWhiteIcon } from "../../../commons/resources";
-import {
-  CloseButton,
-  ViewDetailContainer,
-  DetailsInfoItem,
-  DetailLabel,
-  DetailValue,
-  DetailLabelSkeleton,
-  DetailValueSkeleton,
-  IconSkeleton,
-  ViewDetailDrawer,
-  Group,
-  DetailLink,
-  DetailLinkRight,
-  StyledLink,
-  DetailLinkName,
-  TokenContainer,
-  TokenTitle,
-  TokenHeaderContainer,
-  TokenTitleIcon,
-  TokenMetaData,
-  TokenInfo,
-  TokenName,
-  TokenIcon,
-  MetaData,
-  TokenHeaderInfo,
-  TokenTotalSupply,
-  TokenInfoLabel,
-  TokenInfoValue,
-  TokenDecimal,
-  TokenDetailInfo,
-  TokenDetailName,
-  TokenDetailIcon,
-  TokenHeader,
-  ViewDetailScroll,
-  ViewDetailHeader
-} from "./styles";
-import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
 import { formatDateTimeLocal, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
-import ViewMoreButton from "../ViewMoreButton";
-import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
-import { Box } from "@mui/material";
+import CustomTooltip from "../CustomTooltip";
 import ViewAllButton from "../ViewAllButton";
+import ViewMoreButton from "../ViewMoreButton";
+import {
+  CloseButton,
+  DetailLabel,
+  DetailLabelSkeleton,
+  DetailLink,
+  DetailLinkName,
+  DetailLinkRight,
+  DetailValue,
+  DetailValueSkeleton,
+  DetailsInfoItem,
+  Group,
+  IconSkeleton,
+  MetaData,
+  StyledLink,
+  TokenContainer,
+  TokenDecimal,
+  TokenDetailIcon,
+  TokenDetailInfo,
+  TokenDetailName,
+  TokenHeader,
+  TokenHeaderContainer,
+  TokenHeaderInfo,
+  TokenIcon,
+  TokenInfo,
+  TokenInfoLabel,
+  TokenInfoValue,
+  TokenMetaData,
+  TokenName,
+  TokenTitle,
+  TokenTitleIcon,
+  TokenTotalSupply,
+  ViewDetailContainer,
+  ViewDetailDrawer,
+  ViewDetailHeader,
+  ViewDetailScroll
+} from "./styles";
 
 type DetailViewTokenProps = {
   token: IToken | null;

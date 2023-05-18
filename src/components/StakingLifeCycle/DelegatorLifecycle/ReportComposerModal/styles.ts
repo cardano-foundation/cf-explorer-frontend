@@ -166,11 +166,14 @@ export const StyledGroupField = styled(TextField)`
   }
 `;
 export const StyledSlider = styled(Slider)`
-  & .MuiSlider-valueLabel {
-    transform: translateY(160%) scale(1);
+  & .MuiSlider-valueLabel,
+  .MuiSlider-valueLabelLabe,
+  .MuiSlider-valueLabelOpen {
+    transform: translateY(160%) scale(1) !important;
     &::before {
-      top: -8px;
+      top: -8px !important;
     }
   }
+
   margin-bottom: 12px;
 `;

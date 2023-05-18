@@ -72,6 +72,8 @@ export default function SignIn() {
     }
   });
 
+  const enableButton = Object.values(formData).every((value) => value.touched) && !error && !loading;
+
   const handleTogglePassword = () => {
     setShowPassword((prevState) => !prevState);
   };
@@ -305,7 +307,7 @@ export default function SignIn() {
                 Forgot your password?
               </ForgotPassword>
             </Box>
-            <WrapButton variant='contained' fullWidth onClick={handleSubmit} disabled={loading}>
+            <WrapButton variant='contained' fullWidth onClick={handleSubmit} disabled={!enableButton}>
               Log in
             </WrapButton>
             <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
