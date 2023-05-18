@@ -1,5 +1,5 @@
 import { Box, IconButton } from "@mui/material";
-import { StyledLink, WrapWalletLabel } from "../styles";
+import { StyledLink, WrapWalletLabel, WrapperDelegationTab } from "../styles";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
@@ -92,7 +92,7 @@ const DelegationTab = () => {
 
   return (
     <>
-      <Box display='flex' alignItems='center' justifyContent='space-between' mt={3}>
+      <WrapperDelegationTab>
         <WrapWalletLabel>
           <GreenWalletIcon mr={1} />
           <Box mr={1}>Wallet balance:</Box>
@@ -117,7 +117,7 @@ const DelegationTab = () => {
             }}
           />
         </Box>
-      </Box>
+      </WrapperDelegationTab>
       <Table
         {...fetchData}
         columns={columns}

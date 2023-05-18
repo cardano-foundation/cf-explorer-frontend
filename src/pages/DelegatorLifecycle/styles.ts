@@ -23,12 +23,10 @@ export const ButtonGroup = styled(Box)(({ theme }) => ({
   marginTop: "11px !important",
   background: "#E7E8EA",
   padding: "3px 2px",
-  borderTopLeftRadius: "20px",
-  borderBottomLeftRadius: "20px",
-  borderTopRightRadius: "20px",
-  borderBottomRightRadius: "20px",
+  borderRadius: "20px",
   [theme.breakpoints.down("md")]: {
-    width: "90px"
+    borderRadius: "71px",
+    gap: "5px"
   }
 }));
 export const ButtonSwitch = styled(IconButton)<{ active: number }>(({ theme, active }) => ({

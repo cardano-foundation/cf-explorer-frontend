@@ -8,6 +8,7 @@ import {
   AddressGroup,
   AddressLink,
   CardItem,
+  CardItemStyled,
   ItemDetail,
   LabelItem,
   RowItem,
@@ -34,16 +35,16 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
   }
   if (type === "right" && !address) {
     return (
-      <CardItem padding={(props) => props.spacing(4)}>
+      <CardItemStyled>
         <TitleDetail paddingBottom={(props) => props.spacing(2)}>{title}</TitleDetail>
         <Box width={"100%"} display='flex' alignItems='center' justifyContent='center'>
           <img alt='icon' src={EmptyIcon} />
         </Box>
-      </CardItem>
+      </CardItemStyled>
     );
   }
   return (
-    <CardItem>
+    <CardItemStyled>
       <TitleDetail>{title}</TitleDetail>
       <AddressGroup>
         {type === "left" ? (
@@ -68,7 +69,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
           );
         })}
       </Box>
-    </CardItem>
+    </CardItemStyled>
   );
 };
 
