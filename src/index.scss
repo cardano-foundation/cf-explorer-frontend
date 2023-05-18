@@ -29,9 +29,9 @@
   --font-size-text-x-large: 20px;
   --font-size-text-small: 14px;
   --font-size-text-x-small: 12px;
-  --font-size-title: 24px; 
+  --font-size-title: 24px;
   --border-radius: 10px;
-  --border-radius-sm: 8px; 
+  --border-radius-sm: 8px;
 }
 
 html {
@@ -52,7 +52,6 @@ html {
     text-align: center;
     background-color: #f7f7f7;
     color: var(--text-color);
-
     & > iframe {
       pointer-events: none;
     }

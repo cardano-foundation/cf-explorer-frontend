@@ -90,7 +90,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       value: <Box component={"span"}>{numberWithCommas(data?.supply)}</Box>,
       icon: slotIcon
     },
-    { title: "Decimal", icon: decimalIcon, value: data?.metadata?.decimals || 0 },
+    { title:  <WrapTitle>Decimal</WrapTitle>, icon: decimalIcon, value: data?.metadata?.decimals || 0 },
     {
       title: (
         <Box display={"flex"} alignItems='center'>
