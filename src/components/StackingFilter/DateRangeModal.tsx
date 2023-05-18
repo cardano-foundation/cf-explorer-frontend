@@ -6,7 +6,6 @@ import moment from "moment";
 import React, { useEffect, useMemo, useState } from "react";
 import StyledModal from "../commons/StyledModal";
 import { DatePickerFooter, DateRangePickerContainer } from "./styles";
-import { DesktopDatePicker } from "@mui/x-date-pickers";
 
 export interface DateRange {
   fromDate?: string;

@@ -362,7 +362,8 @@ const WithdrawTimelineDestop = ({
 const WithdrawTimeline = ({
   containerPosition,
   handleResize,
-  selected
+  selected,
+  setSelected
 }: {
   containerPosition: {
     top?: number;
@@ -395,6 +396,7 @@ const WithdrawTimeline = ({
 
   const handleBack = () => {
     history.goBack()
+    setSelected(null)
   };
 
   if (loading) {
