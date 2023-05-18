@@ -322,6 +322,7 @@ const DelegationTimelineMobile = ({
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
+  const { isMobile } = useScreen()
 
   useEffect(() => {
     handleResize();
@@ -428,7 +429,7 @@ const DelegationTimelineMobile = ({
             position: "absolute",
             top: 0,
             left: 0,
-            height: "150vh",
+            height: isMobile ? "150vh" : "100vh",
             width: "100vw",
             zIndex: "-1"
           }}

@@ -307,7 +307,7 @@ const RegistrationTimelineMobile = ({
   const cadarnoSystemRef = useRef(null);
   const registrationRef = useRef(null);
   const history = useHistory();
-
+  const { isMobile, isLargeTablet} = useScreen()
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
@@ -424,7 +424,7 @@ const RegistrationTimelineMobile = ({
             position: "absolute",
             top: 0,
             left: 0,
-            height: "150vh",
+            height: isMobile ? "160vh" : "100vh",
             width: "100vw",
             zIndex: "-1"
           }}

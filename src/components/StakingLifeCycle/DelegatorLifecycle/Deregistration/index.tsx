@@ -314,6 +314,7 @@ const DeregistrationTimelineMobile = ({
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
   const history = useHistory();
+  const { isMobile } = useScreen()
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -426,7 +427,7 @@ const DeregistrationTimelineMobile = ({
               position: "absolute",
               top: 0,
               left: 0,
-              height: "150vh",
+              height: isMobile ? "150vh" : "115vh",
               width: "100vw",
               zIndex: "-1"
             }}

@@ -387,6 +387,7 @@ const WithdrawTimeline = ({
   const paymentWalletRef = useRef(null);
   const rewardAccountRef = useRef(null);
   const history = useHistory();
+  const { isMobile, isTablet } = useScreen()
 
   useEffect(() => {
     handleResize();
@@ -562,7 +563,7 @@ const WithdrawTimeline = ({
               position: "absolute",
               top: 0,
               left: 0,
-              height: "200vh",
+              height: isMobile ? "200vh" : isTablet ? "150vh" : "140vh",
               width: "100vw",
               zIndex: "-1"
             }}

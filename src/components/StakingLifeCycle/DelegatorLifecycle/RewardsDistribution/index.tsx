@@ -52,7 +52,7 @@ const RewardsDistribution = ({
     handleResize();
   }, [adaIcon1Ref.current, adaIcon2Ref.current, loading]);
 
-  const { isLargeTablet } = useScreen();
+  const { isLargeTablet, isMobile } = useScreen();
 
   const RewardsDistributionTimeLine = () => {
     return (
@@ -240,7 +240,7 @@ const RewardsDistribution = ({
             position: "absolute",
             top: 0,
             left: 0,
-            height: "150vh",
+            height: isMobile ? "150vh" : "100vh",
             width: "100vw",
             zIndex: "-1"
           }}
