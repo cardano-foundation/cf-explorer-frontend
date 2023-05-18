@@ -191,7 +191,7 @@ const DelegatorLifecycle = ({
         <NextButton
           onClick={() => {
             if (currentStep === stepper.length - 1) {
-              history.push(details.staking(stakeId, "tablular"));
+              history.push(details.staking(stakeId, "tabular"));
             } else {
               history.push(details.staking(stakeId, "timeline", stepper[currentStep + 1]?.key));
               setCurrentStep(currentStep + 1);
