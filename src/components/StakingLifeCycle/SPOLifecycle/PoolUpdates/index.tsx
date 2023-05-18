@@ -560,7 +560,7 @@ const PoollUpdatesTimelineMobile = ({
                 <ButtonSPO
                   ref={SPOInfoRef}
                   component={IconButton}
-                  left={"40%"}
+                  left={"32%"}
                   onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
                 >
                   <SPOInfo />
@@ -591,7 +591,7 @@ const PoollUpdatesTimelineMobile = ({
                 <ButtonSPO
                   ref={SPOKeyRef}
                   component={IconButton}
-                  left={"52%"}
+                  left={"53%"}
                   onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
                 >
                   <SPOKey fill='#438F68' />

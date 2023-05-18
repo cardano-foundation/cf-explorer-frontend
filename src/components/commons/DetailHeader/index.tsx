@@ -60,10 +60,22 @@ interface DetailHeaderProps {
     key?: string;
     hideHeader?: boolean;
   }[];
+  isHideButtonBack?: boolean;
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
-  const { loading, listItem, epoch, type, title, hash, transactionStatus, bookmarkData, stakeKeyStatus } = props;
+  const {
+    loading,
+    listItem,
+    epoch,
+    type,
+    title,
+    hash,
+    transactionStatus,
+    bookmarkData,
+    stakeKeyStatus,
+    isHideButtonBack
+  } = props;
   const history = useHistory();
   const theme = useTheme();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
@@ -86,10 +98,12 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
   if (loading) {
     return (
       <HeaderDetailContainer>
-        <BackButton onClick={history.goBack}>
-          <HiArrowLongLeft />
-          <BackText>Back</BackText>
-        </BackButton>
+        {isHideButtonBack === true ? null : (
+          <BackButton onClick={history.goBack}>
+            <HiArrowLongLeft />
+            <BackText>Back</BackText>
+          </BackButton>
+        )}
         <HeaderContainer>
           <HeaderTitle>
             <HeaderTitleSkeleton variant='rectangular' />
@@ -125,10 +139,12 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     <HeaderDetailContainer>
       <WrapHeader>
         <Box width='100%'>
-          <BackButton onClick={history.goBack}>
-            <HiArrowLongLeft />
-            <BackText>Back</BackText>
-          </BackButton>
+          {isHideButtonBack === true ? null : (
+            <BackButton onClick={history.goBack}>
+              <HiArrowLongLeft />
+              <BackText>Back</BackText>
+            </BackButton>
+          )}
           <HeaderContainer>
             <HeaderTitle>{title}</HeaderTitle>
             {bookmarkData && <Bookmark type={type} keyword={bookmarkData} />}
