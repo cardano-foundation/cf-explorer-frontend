@@ -104,3 +104,9 @@ export const StyledBoxCard = styled(Box)`
   height: 100%;
   overflow: hidden;
 `;
+
+export const TitleText = styled(Box)`
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    font-size: 24px !important;
+  }
+`;
