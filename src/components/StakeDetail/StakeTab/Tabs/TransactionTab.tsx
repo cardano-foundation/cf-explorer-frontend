@@ -124,17 +124,15 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
         const isUp = transaction?.balance >= 0;
         return (
           <Box display='inline-flex' alignItems='center'>
-            {
-              transaction?.balance ? (
-                <>
-                  <Box mr={1} color={isUp ? "success.main" : "error.main"}>
-                    {!isUp ? `- ` : `+ `}
-                    {formatADAFull(transaction.balance)}
-                  </Box>
-                  <ADAicon />
-                </>
-              ) : null
-            }
+            {transaction?.balance ? (
+              <>
+                <Box mr={1} color={isUp ? "success.main" : "error.main"}>
+                  {!isUp ? `- ` : `+ `}
+                  {formatADAFull(transaction.balance)}
+                </Box>
+                <ADAicon />
+              </>
+            ) : null}
           </Box>
         );
       }

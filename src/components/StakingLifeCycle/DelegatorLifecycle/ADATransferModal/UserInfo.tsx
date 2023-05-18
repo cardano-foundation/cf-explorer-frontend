@@ -20,7 +20,7 @@ const UserInfo = ({
   reward: number;
   acitve: "wallet" | "reward";
 }) => {
-  const { isMobile } = useScreen()
+  const { isMobile } = useScreen();
   return (
     <Box display={"flex"} justifyContent={"space-between"} margin={"7px 0"} flexDirection={isMobile ? "column" : "row"}>
       <Box display={"flex"} flexDirection={isMobile ? "column" : "row"}>
@@ -52,7 +52,7 @@ const UserInfo = ({
           <CustomIcon icon={AIconGreen} fill='currentColor' height={14} />
         </Box>
       </Box>
-      <TextTx sx={{marginTop: isMobile ? "10px" : "0px"}}>{total} Transactions</TextTx>
+      <TextTx sx={{ marginTop: isMobile ? "10px" : "0px" }}>{total} Transactions</TextTx>
     </Box>
   );
 };

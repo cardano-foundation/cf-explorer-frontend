@@ -104,7 +104,7 @@ const DeregistrationTimeline = ({
   }, [selected]);
 
   const handleBack = () => {
-    history.push(details.staking(stakeId, "timeline", "deregistration"))
+    history.push(details.staking(stakeId, "timeline", "deregistration"));
   };
 
   return (
@@ -314,7 +314,7 @@ const DeregistrationTimelineMobile = ({
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
   const history = useHistory();
-  const { isMobile } = useScreen()
+  const { isMobile } = useScreen();
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -324,7 +324,7 @@ const DeregistrationTimelineMobile = ({
 
   const handleBack = () => {
     history.goBack();
-    setSelected(null)
+    setSelected(null);
   };
 
   return (
@@ -351,7 +351,7 @@ const DeregistrationTimelineMobile = ({
           </Info>
         </Box>
       </Box>
-      <Box margin="0 auto" width={"350px"}>
+      <Box margin='0 auto' width={"350px"}>
         <Box>
           <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={5} pr={2} position={"relative"}>
             <ADAHolderIcon />

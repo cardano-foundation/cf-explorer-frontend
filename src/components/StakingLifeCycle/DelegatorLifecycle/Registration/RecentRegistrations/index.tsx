@@ -27,7 +27,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
     toDate: undefined,
     txHash: undefined
   });
-  
+
   const { data, total, loading, initialized, error } = useFetchList<RegistrationItem>(
     stakeId ? API.STAKE_LIFECYCLE.REGISTRATION(stakeId) : "",
     {
@@ -51,7 +51,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
   }, [JSON.stringify(data)]);
 
   const filterLabel = useMemo(() => {
-    const sortArr = params.sort && params.sort.split(",")
+    const sortArr = params.sort && params.sort.split(",");
     if (params.fromDate && params.toDate)
       return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
         .utc(params.toDate, DATETIME_PARTTEN)
@@ -74,17 +74,17 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
           </WrapFilterDescription>
           {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
           <StackingFilter
-              filterValue={params}
-              onFilterValueChange={(params) =>
-                setParams((pre) => ({
-                  fromDate: undefined,
-                  sort: undefined,
-                  toDate: undefined,
-                  txHash: undefined,
-                  ...params
-                }))
-              }
-            />
+            filterValue={params}
+            onFilterValueChange={(params) =>
+              setParams((pre) => ({
+                fromDate: undefined,
+                sort: undefined,
+                toDate: undefined,
+                txHash: undefined,
+                ...params
+              }))
+            }
+          />
         </Box>
       </Box>
       <GridBox>

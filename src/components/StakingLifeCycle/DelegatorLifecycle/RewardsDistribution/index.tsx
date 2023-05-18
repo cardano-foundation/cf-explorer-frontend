@@ -183,7 +183,13 @@ const RewardsDistribution = ({
         <Box>
           <Box>
             <Box ref={cadarnoSystemRef}>
-              <img ref={cadarnoSystemRef} width={178} height={230} src={CardarnoSystemReward} alt='CardarnoSystemReward' />
+              <img
+                ref={cadarnoSystemRef}
+                width={178}
+                height={230}
+                src={CardarnoSystemReward}
+                alt='CardarnoSystemReward'
+              />
             </Box>
             <Box display='flex' flexDirection='row-reverse' justifyContent='space-between' mx={"51px"} mt={2}>
               <Box width={80} height={70} ref={adaIcon1Ref}>
@@ -193,7 +199,7 @@ const RewardsDistribution = ({
                 {(data?.rewardPools || []).length === 0 ? <ADADisnableIcon /> : <ADAOrangeIcon />}
               </Box>
             </Box>
-            <Box display={"flex"} margin={"0 auto"} ml={"9px"} mt={4}>    
+            <Box display={"flex"} margin={"0 auto"} ml={"9px"} mt={4}>
               <Box ref={operatorRewardRef}>
                 <PopoverStyled
                   render={({ handleClick }: any) => (

@@ -51,7 +51,7 @@ export const GridBox = styled("div")(({ theme }) => ({
 export const WrapFilterDescription = styled("span")`
   font-size: 14px;
   font-weight: 400;
-   margin-bottom: 5px;
+  margin-bottom: 5px;
   color: ${(props) => props.theme.palette.grey[400]};
 `;
 

@@ -61,7 +61,7 @@ const Withdraw = ({
     setSelected(withdraw);
   };
   const { width } = useWindowSize(0);
-  const laptop = width <= 1560
+  const laptop = width <= 1560;
   return (
     <Box>
       <Box>
@@ -388,15 +388,15 @@ const WithdrawTimeline = ({
   const paymentWalletRef = useRef(null);
   const rewardAccountRef = useRef(null);
   const history = useHistory();
-  const { isMobile, isTablet } = useScreen()
+  const { isMobile, isTablet } = useScreen();
 
   useEffect(() => {
     handleResize();
   }, [loading]);
 
   const handleBack = () => {
-    history.goBack()
-    setSelected(null)
+    history.goBack();
+    setSelected(null);
   };
 
   if (loading) {
@@ -458,8 +458,15 @@ const WithdrawTimeline = ({
             <PopoverStyled
               render={({ handleClick }: any) => (
                 <Box position={"relative"}>
-                  <Box ref={boxWalletRef} position={"absolute"} width={"1px"} height={"-100%"} bottom={"130%"} right={"120px"}></Box>
-                  <PaymentWallet  />
+                  <Box
+                    ref={boxWalletRef}
+                    position={"absolute"}
+                    width={"1px"}
+                    height={"-100%"}
+                    bottom={"130%"}
+                    right={"120px"}
+                  ></Box>
+                  <PaymentWallet />
                   <RewardWallet>
                     <Box
                       component={IconButton}
@@ -502,7 +509,13 @@ const WithdrawTimeline = ({
             />
           </Payment>
 
-          <Box display='flex' mt={10} flexDirection='row-reverse' position={"relative"} justifyContent={"space-between"}>
+          <Box
+            display='flex'
+            mt={10}
+            flexDirection='row-reverse'
+            position={"relative"}
+            justifyContent={"space-between"}
+          >
             <Box ref={fake2ref} width={"250px"} height={300} position={"absolute"} right={"-13%"} bottom={"-10%"}></Box>
             <PopoverStyled
               render={({ handleClick }) => (

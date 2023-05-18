@@ -52,22 +52,25 @@ const Registration = ({
 
   return (
     <Box>
-       <Box>
+      <Box>
         <RecentRegistrations onSelect={handleSelect} />
       </Box>
       <Box>
-        {selected && (isLargeTablet ? (
-          <RegistrationTimelineMobile
-            handleResize={handleResize}
-            setSelected={setSelected}
-            containerPosition={containerPosition}
-            registration={selected}
-          />
-        ) : (<RegistrationTimeline
-          handleResize={handleResize}
-          containerPosition={containerPosition}
-          registration={selected}
-        />))}
+        {selected &&
+          (isLargeTablet ? (
+            <RegistrationTimelineMobile
+              handleResize={handleResize}
+              setSelected={setSelected}
+              containerPosition={containerPosition}
+              registration={selected}
+            />
+          ) : (
+            <RegistrationTimeline
+              handleResize={handleResize}
+              containerPosition={containerPosition}
+              registration={selected}
+            />
+          ))}
       </Box>
     </Box>
   );
@@ -307,7 +310,7 @@ const RegistrationTimelineMobile = ({
   const cadarnoSystemRef = useRef(null);
   const registrationRef = useRef(null);
   const history = useHistory();
-  const { isMobile, isLargeTablet} = useScreen()
+  const { isMobile, isLargeTablet } = useScreen();
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
@@ -315,7 +318,7 @@ const RegistrationTimelineMobile = ({
   }, [registration]);
 
   const handleBack = () => {
-    history.goBack()
+    history.goBack();
   };
 
   return (
@@ -342,9 +345,9 @@ const RegistrationTimelineMobile = ({
           </Info>
         </Box>
       </Box>
-      <Box margin="0 auto" width={"350px"}>
+      <Box margin='0 auto' width={"350px"}>
         <Box>
-          <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={3} >
+          <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={3}>
             <ADAHolderIcon />
           </Box>
           <Box display='flex' mt={5}>

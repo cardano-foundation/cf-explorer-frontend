@@ -32,7 +32,7 @@ export const AddressGroup = styled(Box)(({ theme }) => ({
   padding: "12px 20px",
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "center",
+  alignItems: "center"
 }));
 
 export const ItemDetail = styled(Box)`
@@ -70,6 +70,6 @@ export const CardItem = styled(Box)(({ theme }) => ({
   boxShadow: theme.shadow.card,
   padding: theme.spacing(4),
   [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2)
   }
 }));

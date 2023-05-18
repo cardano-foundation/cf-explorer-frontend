@@ -82,17 +82,17 @@ const DeregistrationTab = () => {
 
   return (
     <>
-    <Table
-      {...fetchData}
-      columns={columns}
-      total={{ title: "Total", count: fetchData.total }}
-      pagination={{
-        ...pageInfo,
-        total: fetchData.total,
-        onChange: (page, size) => setPageInfo({ ...pageInfo, page: page - 1, size })
-      }}
-      onClickRow={(e, r: DeregistrationItem) => history.push(details.transaction(r.txHash))}
-    />
+      <Table
+        {...fetchData}
+        columns={columns}
+        total={{ title: "Total", count: fetchData.total }}
+        pagination={{
+          ...pageInfo,
+          total: fetchData.total,
+          onChange: (page, size) => setPageInfo({ ...pageInfo, page: page - 1, size })
+        }}
+        onClickRow={(e, r: DeregistrationItem) => history.push(details.transaction(r.txHash))}
+      />
       <DeregistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
     </>
   );

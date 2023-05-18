@@ -35,7 +35,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
     }
   };
 
-  const { isMobile } = useScreen()
+  const { isMobile } = useScreen();
 
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={1200} height={isMobile ? "83vh" : "72vh"}>

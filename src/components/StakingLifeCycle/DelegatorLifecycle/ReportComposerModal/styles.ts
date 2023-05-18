@@ -121,7 +121,7 @@ export const ButtonEvent = styled(Button)<{ active: boolean }>(({ theme, active 
   "&:hover": {
     background: active ? "#667085" : "#f2f2f2",
     color: active ? "#fff" : "#667085"
-  },
+  }
 }));
 
 export const TextLabelReview = styled("div")`

@@ -136,7 +136,7 @@ const DelegatorLifecycle = ({
 
   return (
     <Box mr={isMobile ? 2 : 0}>
-      <Box display={"flex"} justifyContent={"space-between"} sx={{overflowX: "auto"}}>
+      <Box display={"flex"} justifyContent={"space-between"} sx={{ overflowX: "auto" }}>
         {stepper.map((step, idx) => (
           <Step component={"span"} key={idx} active={+(currentStep === idx)}>
             <StepButton

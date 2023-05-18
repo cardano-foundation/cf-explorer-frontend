@@ -17,7 +17,6 @@ export const Title = styled(Box)`
   color: ${({ theme }) => theme.palette.grey[500]};
 `;
 
-
 export const WrapContent = styled(Box)`
   display: flex;
   flex-direction: column;

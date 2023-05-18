@@ -54,7 +54,7 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
   }, [JSON.stringify(data)]);
 
   const filterLabel = useMemo(() => {
-    const sortArr = params.sort && params.sort.split(",")
+    const sortArr = params.sort && params.sort.split(",");
     if (params.fromDate && params.toDate)
       return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
         .utc(params.toDate, DATETIME_PARTTEN)
@@ -76,18 +76,18 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
             Showing {total} {total > 1 ? "results" : "result"}
           </WrapFilterDescription>
           {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
-           <StackingFilter
-              filterValue={params}
-              onFilterValueChange={(params) =>
-                setParams(() => ({
-                  fromDate: undefined,
-                  sort: undefined,
-                  toDate: undefined,
-                  txHash: undefined,
-                  ...params
-                }))
-              }
-            />
+          <StackingFilter
+            filterValue={params}
+            onFilterValueChange={(params) =>
+              setParams(() => ({
+                fromDate: undefined,
+                sort: undefined,
+                toDate: undefined,
+                txHash: undefined,
+                ...params
+              }))
+            }
+          />
         </Box>
       </Box>
       <GridBox>

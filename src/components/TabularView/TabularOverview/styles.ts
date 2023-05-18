@@ -48,7 +48,7 @@ export const TransferButton = styled(Button)(({ theme }) => ({
   borderRadius: 8,
   textTransform: "unset",
   boxShadow: "none",
-  height: 36,
+  height: 36
 }));
 
 export const WrapWalletIcon = styled(Box)`

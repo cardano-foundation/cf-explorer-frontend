@@ -59,19 +59,19 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hide
           <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token.assetId))}>
             <Box>
               {isTokenNameLong ? (
-                <CustomTooltip title={tokenName} placement="top">
-                  <Box>
-                    {shortTokenName}
-                  </Box>
+                <CustomTooltip title={tokenName} placement='top'>
+                  <Box>{shortTokenName}</Box>
                 </CustomTooltip>
-              ) : tokenName}
+              ) : (
+                tokenName
+              )}
             </Box>
             <Box fontWeight={"bold"} fontSize={"14px"}>
               {!hideMathChar ? `${type === "down" ? "-" : "+"} ` : ""}
               {`${numberWithCommas(token.assetQuantity) || ""}`}
             </Box>
           </OptionSelect>
-        )
+        );
       })}
     </CustomSelect>
   );
