@@ -1,34 +1,5 @@
 import { Popover, Button, styled, Box } from "@mui/material";
-
-export const SubmitButton = styled(Button)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  box-shadow: none;
-  border-radius: 8px;
-  background: ${(props) => props.theme.palette.primary.dark};
-  color: ${(props) => props.theme.palette.background.paper};
-  font-weight: 700;
-  font-size: 14px;
-  height: 38px;
-  text-transform: none;
-`;
-export const OutlineButton = styled(Button)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  box-shadow: none;
-  border-radius: 8px;
-  background: ${(props) => props.theme.palette.green[600_10]};
-  color: ${(props) => props.theme.palette.primary.dark};
-  font-weight: 700;
-  font-size: 14px;
-  height: 35px;
-  text-transform: none;
-`;
-
+  
 export const GridBox = styled("div")(({ theme }) => ({
   display: "grid",
   gridTemplateColumns: "repeat(4, 1fr)",
@@ -54,6 +25,8 @@ export const GridBox = styled("div")(({ theme }) => ({
   }
 }));
 
+
+
 export const WrapFilterDescription = styled("span")(({ theme }) => ({
   fontSize: "14px",
   fontWeight: 400,
@@ -61,28 +34,7 @@ export const WrapFilterDescription = styled("span")(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     fontSize: "12px"
   }
-}));
-export const WrapPopover = styled(Popover)`
-  .MuiPaper-root {
-    margin-top: 6px;
-    border-radius: 20px;
-    width: 220px;
-    height: 120px;
-    display: flex;
-    align-items: center;
-  }
-`;
-
-export const WrapPopoverContent = styled("div")`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 20px;
-  cursor: pointer;
-  &:hover {
-    background: ${(props) => props.theme.palette.green[600_10]};
-  }
-`;
+})); 
 
 export const StyledList = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {

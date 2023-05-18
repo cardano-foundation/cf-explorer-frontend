@@ -1,5 +1,5 @@
 import { alpha, Box, Grid, Skeleton, styled, Tab } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link as LinkDom } from "react-router-dom";
 
 import {
@@ -62,6 +62,7 @@ import { useUpdateEffect } from "react-use";
 import { useScreen } from "../../../../commons/hooks/useScreen";
 import { DotsIcon } from "~/components/PoolRegistrationCertificate/styles";
 import ViewMoreAddressModal from "~/components/ViewMoreAddressModal";
+import { FilterDateLabel } from "../../DelegatorLifecycle/Delegation/styles";
 const PoollUpdates = ({
   containerPosition,
   handleResize
@@ -105,7 +106,12 @@ export default PoollUpdates;
 export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null) => void }) => {
   const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
-  const [params, setParams] = useState<FilterParams>();
+  const [params, setParams] = useState<FilterParams>({
+    fromDate: undefined,
+    sort: undefined,
+    toDate: undefined,
+    txHash: undefined
+  });
   const { data, total } = useFetchList<PoolUpdateItem>(API.SPO_LIFECYCLE.POOL_UPDATE(poolId), {
     page: 0,
     size: 1000,
@@ -126,6 +132,16 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
     }
   }, [JSON.stringify(data)]);
 
+  const filterLabel = useMemo(() => {
+    if (params.fromDate && params.toDate)
+      return ` Filter by: ${moment(params.fromDate).format("MM/DD/YYYY")} - ${moment(params.toDate).format(
+        "MM/DD/YYYY"
+      )}`;
+    if (params.sort && params.sort.length >= 2)
+      return `${params.sort[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
+    if (params.txHash) return `Searching for : ${params.txHash}`;
+  }, [params]);
+
   if (txHash) return null;
 
   return (
@@ -133,7 +149,10 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
       <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
         <DescriptionText>Recent Updates</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
-          <WrapFilterDescription data-testid='showing'>Showing {total} results</WrapFilterDescription>
+          <WrapFilterDescription>
+            Showing {total} {total > 1 ? "results" : "result"}
+          </WrapFilterDescription>
+          {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
           <StackingFilter
             filterValue={params}
             onFilterValueChange={(params) => setParams((pre) => ({ ...pre, ...params }))}
@@ -692,13 +711,7 @@ export const PoolUpdateModal = ({
         items={selectedOwner}
       />
       <Grid item xs={6}>
-        <Box
-          minHeight={50}
-          bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}
-          p={3}
-          display={"flex"}
-          alignItems={"center"}
-        >
+        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3} display={"flex"}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Transaction ID
@@ -715,13 +728,7 @@ export const PoolUpdateModal = ({
         </Box>
       </Grid>
       <Grid item xs={6}>
-        <Box
-          minHeight={50}
-          bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}
-          p={3}
-          display={"flex"}
-          alignItems={"center"}
-        >
+        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3} display={"flex"}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Pool ID
@@ -739,13 +746,7 @@ export const PoolUpdateModal = ({
       </Grid>
 
       <Grid item xs={6}>
-        <Box
-          minHeight={50}
-          bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}
-          p={3}
-          display={"flex"}
-          alignItems={"center"}
-        >
+        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3} display={"flex"} alignItems={"center"}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               VRF Key
@@ -762,13 +763,7 @@ export const PoolUpdateModal = ({
         </Box>
       </Grid>
       <Grid item xs={6}>
-        <Box
-          minHeight={50}
-          bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}
-          p={3}
-          display={"flex"}
-          alignItems={"center"}
-        >
+        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3} display={"flex"} alignItems={"center"}>
           <Box display='flex' alignItems='center'>
             <Box>
               <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
@@ -799,11 +794,10 @@ export const PoolUpdateModal = ({
       </Grid>
       <Grid item xs={6}>
         <Box
-          minHeight={50}
+          minHeight={data?.previousPledge !== null ? 62 : "unset"}
           p={3}
           bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}
           display={"flex"}
-          alignItems={"center"}
         >
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
@@ -822,7 +816,7 @@ export const PoolUpdateModal = ({
         <Box
           bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}
           p={3}
-          minHeight={50}
+          minHeight={data?.previousPledge !== null ? 62 : "unset"}
           display={"flex"}
           justifyContent={"space-between"}
           alignItems={"center"}
@@ -851,7 +845,7 @@ export const PoolUpdateModal = ({
       </Grid>
       <Grid item xs={6}>
         <Box
-          minHeight={50}
+          minHeight={data?.previousPledge !== null ? 62 : "unset"}
           bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}
           p={3}
           display={"flex"}
@@ -883,11 +877,10 @@ export const PoolUpdateModal = ({
       </Grid>
       <Grid item xs={6}>
         <Box
-          minHeight={50}
+          minHeight={data?.previousPledge !== null ? 62 : "unset"}
           bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}
           p={3}
           display={"flex"}
-          alignItems={"center"}
         >
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
