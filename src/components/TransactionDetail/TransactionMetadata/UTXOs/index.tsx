@@ -187,7 +187,7 @@ const Card = ({
                   <Box display={"flex"} alignItems={"center"}>
                     {item.tokens && item.tokens.length > 0 && (
                       <Box mt={2}>
-                        <DropdownTokens tokens={item.tokens} type={type} hideInput />
+                        <DropdownTokens tokens={item.tokens} type={type} hideInputLabel />
                       </Box>
                     )}
                   </Box>
@@ -196,28 +196,6 @@ const Card = ({
             </ItemContent>
           </Item>
         ))}
-        {type === "up" && (
-          <Item>
-            <Box width={"100%"} display='flex' justifyContent={"space-between"} alignItems='center'>
-              <Box display={"flex"} justifyContent='space-between' alignItems={"center"}>
-                <Box display={"flex"} alignItems='center'>
-                  <Box width={50}>
-                    <Img src={feeImg} alt='wallet icon' />
-                  </Box>
-                  <Box>Fee</Box>
-                </Box>
-              </Box>
-              <Box display={"flex"} alignItems='center'>
-                <Box mr='8px' fontWeight={"bold"} fontFamily={"var(--font-family-text)"} color='red'>
-                  {formatADAFull(fee)}
-                </Box>
-                <Box>
-                  <ADAicon />
-                </Box>
-              </Box>
-            </Box>
-          </Item>
-        )}
       </Box>
       <ItemFooter>
         <Box fontWeight={"bold"}>Total {type === "down" ? "Input" : "Output"}</Box>
