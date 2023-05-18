@@ -1,24 +1,22 @@
 import { Box, BoxProps, Grid, Icon } from "@mui/material";
+import { useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-  WalletGreenIcon,
-  BgGray,
-  PaymentWallet,
-  RewardWithdrawn,
-  DelegationTo,
-  RewardAccount,
-  TransactionIcon
-} from "../../../commons/resources/index";
-import { CardOverview, CardTitle, CardValue, TransferButton, WrapIcon, WrapWalletIcon } from "./styles";
-import { API } from "../../../commons/utils/api";
-import useFetch from "../../../commons/hooks/useFetch";
-import { formatADAFull } from "../../../commons/utils/helper";
-import ADAicon from "../../commons/ADAIcon";
-import { useContext, useEffect, useState } from "react";
-import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
-import { details } from "../../../commons/routers";
-import { useScreen } from "../../../commons/hooks/useScreen";
 import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import { useScreen } from "../../../commons/hooks/useScreen";
+import {
+  BgGray,
+  DelegationTo,
+  PaymentWallet,
+  RewardAccount,
+  RewardWithdrawn,
+  TransactionIcon,
+  WalletGreenIcon
+} from "../../../commons/resources/index";
+import { details } from "../../../commons/routers";
+import { formatADAFull } from "../../../commons/utils/helper";
+import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
+import ADAicon from "../../commons/ADAIcon";
+import { CardOverview, CardTitle, CardValue, TransferButton, WrapFlex, WrapIcon, WrapWalletIcon } from "./styles";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -52,9 +50,11 @@ type TGridItem = {
 };
 
 const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
-  const { isSmallScreen } = useScreen();
+  const { isSmallScreen, isTablet, isLargeTablet, width } = useScreen();
+  const MIN_WIDTH_ITEM_GRID = 700;
+  const isLimitGridItem = width < MIN_WIDTH_ITEM_GRID;
   return (
-    <Grid item xs={12} md={isSmallScreen ? 12 : 6} lg={6}>
+    <Grid item xs={12} sm={!isTablet || isLimitGridItem ? 12 : 6} md={isSmallScreen ? 12 : 6} lg={6}>
       <CardOverview
         mr={isSmallScreen ? 2 : 0}
         flexDirection={isSmallScreen ? "column" : "row"}
@@ -63,25 +63,19 @@ const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
       >
         <Icon component={BgGray} />
         <Box display='flex' alignItems='center' gap='12px'>
-          <WrapIcon pt={`${isSmallScreen ? "30px" : "0px"}`}>{mainIcon}</WrapIcon>
-          <Box
-            display='flex'
-            alignItems={isSmallScreen ? "start" : "center"}
-            flexDirection={isSmallScreen ? "column" : "row"}
-          >
-            <Box textAlign='start'>
+          <WrapIcon>{mainIcon}</WrapIcon>
+          <WrapFlex paddingLeft={action && isLargeTablet && !isSmallScreen ? "20px" : 0} smallScreen={isSmallScreen ? 1 : 0}>
+            <Box textAlign='start' mr={"30px"}>
               <CardTitle>{title}</CardTitle>
               {value}
             </Box>
-            {action ? (
-              <Box display='flex' ml={isSmallScreen ? "" : "30px"} mt={`${isSmallScreen ? "8px" : "0px"}`}>
+            {action ?
+              <Box display='flex'>
                 {" "}
                 {action}
               </Box>
-            ) : (
-              <Box />
-            )}
-          </Box>
+              : <Box />}
+          </WrapFlex>
         </Box>
       </CardOverview>
     </Grid>
@@ -92,8 +86,9 @@ const TabularOverview: React.FC = () => {
   const data = useContext(DelegatorDetailContext);
   const [open, setOpen] = useState(false);
   const { stakeId } = useParams<{ stakeId: string }>();
+  const { isTablet } = useScreen();
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} columnSpacing={isTablet ? "0px" : ""} >
       <GridItem
         title='Payment Wallet'
         mainIcon={<PaymentWallet />}
