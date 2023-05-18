@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DesktopDatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import moment from "moment";
 import React, { useEffect, useMemo, useState } from "react";
@@ -50,7 +50,7 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
     <StyledModal open={open} handleCloseModal={() => onClose?.()}>
       <LocalizationProvider dateAdapter={AdapterMoment}>
         <DateRangePickerContainer>
-          <DatePicker
+          <DesktopDatePicker
             value={toMoment(value?.fromDate)}
             onChange={(mDate) =>
               setValue((pre) => {
@@ -59,7 +59,7 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
             }
           />
           <Box>-</Box>
-          <DatePicker
+          <DesktopDatePicker
             value={toMoment(value?.toDate)}
             onChange={(mDate) => setValue((pre) => ({ ...pre, toDate: mDate?.format("YYYY/MM/DD 23:59:59") }))}
           />
