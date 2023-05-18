@@ -60,7 +60,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
   const history = useHistory();
   const [isOpenReward, setOpenReward] = useState<boolean>(false);
   const [isOpenOwner, setOpenOwner] = useState<boolean>(false);
-  const { isMobile } = useScreen();
+  const { isMobile, isGalaxyFoldSmall } = useScreen();
 
   if (loading) {
     return (
@@ -247,12 +247,18 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3}>
             <InfoValue>
               <StyledLinearProgress variant='determinate' value={data?.saturation || 0} />
-              <div style={{ display: "flex", justifyContent: "space-between", marginTop: "9px" }}>
+              <Box
+                display='flex'
+                flexDirection={isGalaxyFoldSmall ? "column" : "row"}
+                justifyContent='space-between'
+                alignItems={isGalaxyFoldSmall ? "flex-start" : "flex-end"}
+                marginTop='9px'
+              >
                 <Box component={"span"} mt={1} style={{ fontSize: "14px", fontWeight: "400", opacity: "0.5" }}>
                   Saturation
                 </Box>
-                <span style={{ fontSize: "16px" }}>{formatPercent(data?.saturation || 0)}</span>
-              </div>
+                <Box fontSize={16}>{formatPercent(data?.saturation || 0)}</Box>
+              </Box>
             </InfoValue>
           </Item>
         </StyledGrid>

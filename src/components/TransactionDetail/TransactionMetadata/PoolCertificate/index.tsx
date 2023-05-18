@@ -2,11 +2,11 @@ import React from "react";
 import { CardHeader, TextLabel, TextValue } from "./styles";
 import StakeKeyBox from "./StakeKeyBox";
 import { Box, Grid, useTheme } from "@mui/material";
-import CopyButton from "../../../commons/CopyButton";
-import { getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import { details } from "../../../../commons/routers";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import { Link } from "react-router-dom";
+import CopyButton from "~/components/commons/CopyButton";
+import { getShortHash } from "~/commons/utils/helper";
+import { details } from "~/commons/routers";
+import CustomTooltip from "~/components/commons/CustomTooltip";
+import Link from "~/components/commons/Link";
 
 interface IProps {
   data: Transaction["poolCertificates"] | null;
@@ -40,16 +40,18 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
                       <TextLabel>Pool Id: </TextLabel>
                       <TextValue>
                         <CustomTooltip title={item.poolId}>
-                          <Box color={"#108aef !important"} component={Link} to={details.delegation(item.poolId)}>
-                            {getShortHash(item.poolId)}
-                          </Box>
+                          <span>
+                            <Link to={details.delegation(item.poolId || "")}>{getShortHash(item.poolId)}</Link>
+                          </span>
                         </CustomTooltip>
                         <CopyButton text={item.poolId} />
                       </TextValue>
                     </Box>
                     <Box display='flex' alignItems='center'>
                       <TextLabel>Epoch: </TextLabel>
-                      <TextValue>{item.epoch}</TextValue>
+                      <TextValue>
+                        <Link to={details.epoch(item.epoch)}>{item.epoch}</Link>
+                      </TextValue>
                     </Box>
                   </Box>
                 </Grid>
