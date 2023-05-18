@@ -1,6 +1,6 @@
 import { Box, alpha, styled } from "@mui/material";
 
-export const NormalDescription = styled("span")`
+export const NormalDescription = styled(Box)`
   position: relative;
   font-weight: 400;
   line-height: 21px;
@@ -76,19 +76,15 @@ export const Watermark = styled("span")`
   }
 `;
 
-export const BoxDetails = styled(Box)`
-  background: ${(props) => alpha(props.theme.palette.grey[300], 0.1)};
-  padding: 20px 25px;
-  padding-left: 35px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin: 15px 0px;
-`;
-
 export const BoxDescription = styled(Box)`
   display: flex;
   flex-direction: column;
   gap: 15px;
-  position: relative;
+`;
+
+export const BoxDetails = styled(BoxDescription)`
+  background: ${(props) => alpha(props.theme.palette.grey[300], 0.1)};
+  padding: 20px 25px;
+  padding-left: 35px;
+  margin: 15px 0px;
 `;
