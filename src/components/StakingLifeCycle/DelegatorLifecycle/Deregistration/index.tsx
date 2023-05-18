@@ -372,7 +372,7 @@ const DeregistrationTimelineMobile = ({
             >
               <img src={DeregistrationCertificateMobile} alt='DeregistrationCertificateMobile' />
             </Box>
-            <Box mt={8}>
+            <Box mt={11}>
               <PopoverStyled
                 render={({ handleClick }) => (
                   <HoldBox ref={holdRef} width={125} marginLeft={4}>
@@ -439,6 +439,7 @@ const DeregistrationTimelineMobile = ({
               pointFrom='border'
               orient='vertical'
               isCentalHorizontalFrom
+              connectFromReverse
             />
             <ArrowDiagram
               containerPosition={containerPosition}

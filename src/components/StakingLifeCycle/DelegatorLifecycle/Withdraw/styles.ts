@@ -112,7 +112,6 @@ export const NetAmount = styled(Box)(({ theme }) => ({
 }));
 
 export const Withdrawn = styled(Box)(({ theme }) => ({
-  width: "150px",
   height: "35px",
   display: "flex",
   alignItems: "center",

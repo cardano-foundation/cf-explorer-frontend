@@ -53,7 +53,7 @@ type TGridItem = {
 const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
   const { isMobile } = useScreen();
   return (
-    <Grid item xs={12} md={6}>
+    <Grid item xs={12} md={12} lg={6}>
       <CardOverview
         mr={isMobile ? 2 : 0}
         flexDirection={isMobile ? "column" : "row"}
@@ -68,9 +68,8 @@ const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
             {value}
           </Box>
         </Box>
-        <Box display='flex' margin='0 auto' ml='120px' mt={`${isMobile ? "-10px" : "0px"}`}>
-          {" "}
-          {action}
+        <Box pl={`${isMobile ? "70px" : "0px"}`} sx={{margin: `${isMobile ? "0 auto" : "0px"}`, mt: `${isMobile ? "-6px" : "0px"}`}}>
+        {action}
         </Box>
       </CardOverview>
     </Grid>

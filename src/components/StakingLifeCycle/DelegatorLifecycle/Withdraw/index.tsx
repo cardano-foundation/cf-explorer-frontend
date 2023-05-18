@@ -456,7 +456,8 @@ const WithdrawTimelineMobile = ({
             <PopoverStyled
               render={({ handleClick }: any) => (
                 <Box position={"relative"}>
-                  <PaymentWallet ref={boxWalletRef} />
+                  <Box ref={boxWalletRef} position={"absolute"} width={"1px"} height={"-100%"} bottom={"130%"} right={"120px"}></Box>
+                  <PaymentWallet  />
                   <RewardWallet>
                     <Box
                       component={IconButton}
@@ -499,11 +500,11 @@ const WithdrawTimelineMobile = ({
             />
           </Payment>
 
-          <Box display='flex' mt={10} flexDirection='row-reverse' position={"relative"}>
+          <Box display='flex' mt={10} flexDirection='row-reverse' position={"relative"} justifyContent={"space-between"}>
             <Box ref={fake2ref} width={"250px"} height={300} position={"absolute"} right={"-13%"} bottom={"-10%"}></Box>
             <PopoverStyled
               render={({ handleClick }) => (
-                <NetAmount ref={netAmountRef}>
+                <NetAmount ref={netAmountRef} width={120}>
                   <Box>
                     <ADAAmountLabel>
                       {data?.amount && data?.fee ? formatADA(data?.amount - data?.fee) : 0}
@@ -520,7 +521,7 @@ const WithdrawTimelineMobile = ({
             <Box ref={fake3ref} width={"250px"} height={300} position={"absolute"} right={"40%"} bottom={"-10%"}></Box>
             <PopoverStyled
               render={({ handleClick }) => (
-                <Withdrawn ref={withdrawnRef}>
+                <Withdrawn ref={withdrawnRef} width={120}>
                   <Box>
                     <ADAAmountLabel>{formatADA(data?.amount || 0)}</ADAAmountLabel>
                     <ADAicon fontSize='18px' />
@@ -534,10 +535,10 @@ const WithdrawTimelineMobile = ({
             />
           </Box>
 
-          <Box mt={5} ml={22} width={"150px"}>
+          <Box mt={5} ml={"194px"} width={"150px"}>
             <PopoverStyled
               render={({ handleClick }) => (
-                <FeeBox ref={feesRef} width={150}>
+                <FeeBox ref={feesRef} width={120}>
                   <Box>
                     <Box component={"span"} fontSize={"18px"} fontWeight={"bold"}>
                       {formatADA(data?.fee || 0)}

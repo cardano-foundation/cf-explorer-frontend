@@ -68,7 +68,7 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
 
   return (
     <Box marginTop='32px'>
-      <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
+      <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} marginBottom={"10px"}>
         <DescriptionText>Recent Delegations</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
