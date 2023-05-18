@@ -43,15 +43,19 @@ const Registration = ({
   handleResize: () => void;
 }) => {
   const [selected, setSelected] = useState<RegistrationItem | null>(null);
-
+  const [openModal, setOpenModal] = useState(false);
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
   const handleSelect = (registration: RegistrationItem | null) => {
     setSelected(registration);
   };
+
+  const handleToggleModal = () => setOpenModal((state) => !state);
 
   const { isLargeTablet } = useScreen();
 
   return (
     <Box>
+      <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
       <Box>
         <RecentRegistrations onSelect={handleSelect} />
       </Box>
@@ -63,12 +67,14 @@ const Registration = ({
               setSelected={setSelected}
               containerPosition={containerPosition}
               registration={selected}
+              toggleModal={handleToggleModal}
             />
           ) : (
             <RegistrationTimeline
               handleResize={handleResize}
               containerPosition={containerPosition}
               registration={selected}
+              toggleModal={handleToggleModal}
             />
           ))}
       </Box>
@@ -80,7 +86,8 @@ export default Registration;
 const RegistrationTimeline = ({
   containerPosition,
   handleResize,
-  registration
+  registration,
+  toggleModal
 }: {
   containerPosition: {
     top?: number;
@@ -88,6 +95,7 @@ const RegistrationTimeline = ({
   };
   handleResize: () => void;
   registration: RegistrationItem;
+  toggleModal: () => void;
 }) => {
   const { deposit, fee, time, txHash } = registration;
   const { stakeId = "" } = useParams<{ stakeId: string }>();
@@ -101,8 +109,6 @@ const RegistrationTimeline = ({
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
-
-  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     handleResize();
@@ -267,7 +273,7 @@ const RegistrationTimeline = ({
           <Box
             component={IconButton}
             bgcolor={"transparent"}
-            onClick={() => setOpenModal(true)}
+            onClick={toggleModal}
             ref={registrationRef}
             width={220}
             height={220}
@@ -282,7 +288,6 @@ const RegistrationTimeline = ({
           <Box ref={fake2Ref} width={"200px"}></Box>
         </Box>
       </Box>
-      <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
     </Box>
   );
 };
@@ -290,7 +295,8 @@ const RegistrationTimelineMobile = ({
   containerPosition,
   setSelected,
   handleResize,
-  registration
+  registration,
+  toggleModal
 }: {
   containerPosition: {
     top?: number;
@@ -299,6 +305,7 @@ const RegistrationTimelineMobile = ({
   setSelected: (registration: RegistrationItem | null) => void;
   handleResize: () => void;
   registration: RegistrationItem;
+  toggleModal: () => void;
 }) => {
   const { deposit, fee, time, txHash } = registration;
   const { stakeId = "" } = useParams<{ stakeId: string }>();
@@ -311,7 +318,6 @@ const RegistrationTimelineMobile = ({
   const registrationRef = useRef(null);
   const history = useHistory();
   const { isMobile, isLargeTablet } = useScreen();
-  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     handleResize();
@@ -355,7 +361,7 @@ const RegistrationTimelineMobile = ({
               <Box
                 component={IconButton}
                 bgcolor={"transparent"}
-                onClick={() => setOpenModal(true)}
+                onClick={toggleModal}
                 ref={registrationRef}
                 width={140}
                 height={210}
@@ -463,7 +469,6 @@ const RegistrationTimelineMobile = ({
           />
         </svg>
       </Box>
-      <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
     </Box>
   );
 };

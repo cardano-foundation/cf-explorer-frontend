@@ -60,12 +60,15 @@ const Registration = ({
   };
   handleResize: () => void;
 }) => {
+  const { poolId = "" } = useParams<{ poolId: string }>();
+  const [openModal, setOpenModal] = useState(false);
   const [selected, setSelected] = useState<SPORegistration | null>(null);
-
   const handleSelect = (registration: SPORegistration | null) => {
     setSelected(registration);
   };
   const { isLargeTablet } = useScreen();
+
+  const handleToggleCertificateModal = () => setOpenModal((state) => !state);
   return (
     <Box>
       <Box>
@@ -73,7 +76,13 @@ const Registration = ({
       </Box>
       <Box>
         {!!selected && !isLargeTablet && (
-          <RegistrationTimeline handleResize={handleResize} selected={selected} containerPosition={containerPosition} />
+          <RegistrationTimeline
+            handleResize={handleResize}
+            selected={selected}
+            containerPosition={containerPosition}
+            toggleCertificateModal={handleToggleCertificateModal}
+            poolId={poolId}
+          />
         )}
         {!!selected && isLargeTablet && (
           <RegistrationTimelineMobile
@@ -81,9 +90,17 @@ const Registration = ({
             setSelected={setSelected}
             selected={selected}
             containerPosition={containerPosition}
+            toggleCertificateModal={handleToggleCertificateModal}
+            poolId={poolId}
           />
         )}
       </Box>
+      <RegistrationCertificateModal
+        poolId={poolId}
+        poolUpdateId={selected?.poolUpdateId || 0}
+        handleCloseModal={handleToggleCertificateModal}
+        open={openModal}
+      />
     </Box>
   );
 };
@@ -92,7 +109,9 @@ export default Registration;
 const RegistrationTimeline = ({
   containerPosition,
   handleResize,
-  selected
+  selected,
+  toggleCertificateModal,
+  poolId
 }: {
   containerPosition: {
     top?: number;
@@ -100,13 +119,13 @@ const RegistrationTimeline = ({
   };
   handleResize: () => void;
   selected: SPORegistration | null;
+  toggleCertificateModal: () => void;
+  poolId: string;
 }) => {
-  const { poolId = "" } = useParams<{ poolId: string }>();
   const history = useHistory();
   const { data, loading } = useFetch<SPORegistrationDetail>(
     selected?.poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, selected?.poolUpdateId) : ""
   );
-  const [openModal, setOpenModal] = useState(false);
   useEffect(() => {
     handleResize();
   }, [loading]);
@@ -380,7 +399,7 @@ const RegistrationTimeline = ({
             height={220}
             component={IconButton}
             p={0}
-            onClick={() => setOpenModal(true)}
+            onClick={toggleCertificateModal}
           >
             <Box
               component={"img"}
@@ -392,13 +411,6 @@ const RegistrationTimeline = ({
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
-
-      <RegistrationCertificateModal
-        poolId={poolId}
-        poolUpdateId={selected?.poolUpdateId || 0}
-        handleCloseModal={() => setOpenModal(false)}
-        open={openModal}
-      />
     </StyledBox>
   );
 };
@@ -406,7 +418,9 @@ const RegistrationTimelineMobile = ({
   containerPosition,
   setSelected,
   handleResize,
-  selected
+  selected,
+  toggleCertificateModal,
+  poolId
 }: {
   containerPosition: {
     top?: number;
@@ -415,12 +429,12 @@ const RegistrationTimelineMobile = ({
   handleResize: () => void;
   setSelected: (registration: SPORegistration | null) => void;
   selected: SPORegistration | null;
+  poolId: string;
+  toggleCertificateModal: () => void;
 }) => {
-  const { poolId = "" } = useParams<{ poolId: string }>();
   const { data, loading } = useFetch<SPORegistrationDetail>(
     selected?.poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, selected?.poolUpdateId) : ""
   );
-  const [openModal, setOpenModal] = useState(false);
   useEffect(() => {
     handleResize();
   }, [loading]);
@@ -573,7 +587,7 @@ const RegistrationTimelineMobile = ({
               ref={registrationRef}
               padding={"24px"}
               sx={{ background: "#fff", borderRadius: "12px" }}
-              onClick={() => setOpenModal(true)}
+              onClick={toggleCertificateModal}
             >
               <img src={PoolCertificateMobile} width={"90px"} height={"150px"} alt='RegistrationCertificateIcon' />
             </Box>
@@ -690,12 +704,6 @@ const RegistrationTimelineMobile = ({
           </svg>
         </Box>
       </Box>
-      <RegistrationCertificateModal
-        poolId={poolId}
-        poolUpdateId={selected?.poolUpdateId || 0}
-        handleCloseModal={() => setOpenModal(false)}
-        open={openModal}
-      />
     </StyledBox>
   );
 };
