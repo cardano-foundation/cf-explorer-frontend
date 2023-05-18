@@ -51,7 +51,7 @@ const Tablular = () => {
   const history = useHistory();
 
   const onChangeTab = (tab: any) => {
-    history.push(details.spo(poolId, "tablular", tab));
+    history.push(details.spo(poolId, "tabular", tab));
   };
 
   return (

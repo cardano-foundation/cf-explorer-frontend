@@ -1,6 +1,6 @@
 import { Box, useTheme } from "@mui/material";
 import moment from "moment";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
@@ -15,8 +15,10 @@ import Table, { Column } from "../../../commons/Table";
 import { GreenWalletIcon } from "../../TabularOverview";
 import { StyledLink, TableSubTitle, WrapWalletLabel } from "../styles";
 import { AdaValue } from "./StakeRegistrationTab";
+import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 
 const WithdrawalHistoryTab = () => {
+  const detailData = useContext(DelegatorDetailContext);
   const theme = useTheme();
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
@@ -98,7 +100,7 @@ const WithdrawalHistoryTab = () => {
         <WrapWalletLabel>
           <GreenWalletIcon mr={1} />
           <Box mr={1}>Rewards withdrawn:</Box>
-          <AdaValue value={data.reduce((current, item) => current + item.fee, 0)} />
+          <AdaValue value={detailData?.rewardWithdrawn ?? 0} />
         </WrapWalletLabel>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>

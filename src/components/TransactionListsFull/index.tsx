@@ -16,6 +16,7 @@ import { Label, StyledLink, StyledContainer } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
 import ADAicon from "../commons/ADAIcon";
+import { useRef } from "react";
 
 interface TransactionListFullProps {
   underline?: boolean;
@@ -36,6 +37,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Transactions>(url, pageInfo);
+  const mainRef = useRef(document.querySelector("#main"));
 
   const onClickRow = (_: any, r: Transactions, index: number) => {
     if (openDetail) return openDetail(_, r, index);
@@ -163,7 +165,10 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
           pagination={{
             ...pageInfo,
             total: fetchData.total,
-            onChange: (page, size) => history.push({ search: stringify({ page, size }) })
+            onChange: (page, size) => {
+              history.push({ search: stringify({ page, size }) });
+              mainRef.current?.scrollTo(0, 0);
+            }
           }}
           onClickRow={onClickRow}
           selected={selected}

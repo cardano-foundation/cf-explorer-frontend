@@ -1,40 +1,40 @@
-import { useState } from "react";
 import { Box } from "@mui/material";
+import { useState } from "react";
 
 import {
   NextButton,
   PreviousButton,
   Step,
   StepButton,
-  TitleStep,
-  WrapTitle,
   StyledComponent,
-  StyledGroupButton
+  StyledGroupButton,
+  TitleStep,
+  WrapTitle
 } from "./styles";
 
+import { useHistory, useParams } from "react-router";
+import { useScreen } from "../../../commons/hooks/useScreen";
 import {
+  DeredistrationIcon,
   InfoIcon,
   NextIcon,
   OperatorRewardIcon,
   PoolUpdateIcon,
   PreviousIcon,
-  RegistrationIcon,
-  RewardsWithdrawalIcon
+  RegistrationIcon
 } from "../../../commons/resources";
-import Registration from "./Registration";
-import PoolUpdates from "./PoolUpdates";
-import { ButtonText } from "../DelegatorLifecycle/styles";
-import OperatorReward from "./OperatorRewards";
-import Deregistration from "./Deregistration";
+import { details } from "../../../commons/routers";
 import {
+  DeregistrationProcessDescription,
   RegistrationProcessDescription,
   SPOInvolvementInDelegationDescription,
-  WithdrawingFundProcessDescription,
-  DeregistrationProcessDescription
+  WithdrawingFundProcessDescription
 } from "../../ModalDescription";
-import { details } from "../../../commons/routers";
-import { useHistory, useParams } from "react-router";
-import { useScreen } from "../../../commons/hooks/useScreen";
+import { ButtonText } from "../DelegatorLifecycle/styles";
+import Deregistration from "./Deregistration";
+import OperatorReward from "./OperatorRewards";
+import PoolUpdates from "./PoolUpdates";
+import Registration from "./Registration";
 interface StepperProps {
   icon: React.ReactNode;
   title: string;
@@ -101,7 +101,7 @@ const SPOLifecycle = ({
       key: "operator-rewards"
     },
     {
-      icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
+      icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
       title: "Deregistration",
       component: <Deregistration handleResize={handleResize} containerPosition={containerPosition} />,
       description: (
@@ -161,7 +161,7 @@ const SPOLifecycle = ({
         <NextButton
           onClick={() => {
             if (currentStep === stepper.length - 1) {
-              history.push(details.spo(poolId, "tablular"));
+              history.push(details.spo(poolId, "tabular"));
             } else {
               history.push(details.spo(poolId, "timeline", stepper[currentStep + 1]?.key));
               setCurrentStep(currentStep + 1);
@@ -170,7 +170,7 @@ const SPOLifecycle = ({
           variant='contained'
         >
           <ButtonText>
-            Next Step: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+            Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
           </ButtonText>
           <NextIcon />
         </NextButton>

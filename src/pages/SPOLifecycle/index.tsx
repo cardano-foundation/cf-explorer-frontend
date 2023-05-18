@@ -103,19 +103,19 @@ const SPOLifecycle = () => {
         <BoxItemStyled>
           <BoxSwitchContainer>
             <BoxSwitch color={({ palette }) => palette.grey[400]}>
-              Switch to {mode === "timeline" ? "tablular" : "timeline"} view
+              Switch to {mode === "timeline" ? "tabular" : "timeline"} view
             </BoxSwitch>
             <ButtonGroup>
               <ButtonSwitch active={+(mode === "timeline")} onClick={() => changeMode("timeline")}>
                 <ChartMode fill={mode === "timeline" ? "#fff" : "#344054"} />
               </ButtonSwitch>
-              <ButtonSwitch active={+(mode === "tablular")} onClick={() => changeMode("tablular")}>
-                <TableMode fill={mode === "tablular" ? "#fff" : "#344054"} />
+              <ButtonSwitch active={+(mode === "tabular")} onClick={() => changeMode("tabular")}>
+                <TableMode fill={mode === "tabular" ? "#fff" : "#344054"} />
               </ButtonSwitch>
             </ButtonGroup>
           </BoxSwitchContainer>
 
-          {mode === "tablular" && (
+          {mode === "tabular" && (
             <ButtonReportContainer disabled={!isLoggedIn}>
               <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>
             </ButtonReportContainer>
@@ -132,7 +132,7 @@ const SPOLifecycle = () => {
             setCurrentStep={setCurrentStep}
           />
         )}
-        {mode === "tablular" && <Tablular />}
+        {mode === "tabular" && <Tablular />}
       </Box>
       <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
     </StyledContainer>

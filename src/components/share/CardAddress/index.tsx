@@ -43,7 +43,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
     );
   }
   return (
-    <CardItem padding={(props) => props.spacing(4)}>
+    <CardItem>
       <TitleDetail>{title}</TitleDetail>
       <AddressGroup>
         {type === "left" ? (

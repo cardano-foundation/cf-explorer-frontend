@@ -1,4 +1,4 @@
-import { Box, Checkbox, alpha, Select, Typography, styled, Pagination } from "@mui/material";
+import { Box, Checkbox, alpha, Typography, styled, Pagination } from "@mui/material";
 import CustomSelect from "../CustomSelect";
 
 export const Empty = styled(Box)`
@@ -27,7 +27,7 @@ export const THead = styled("thead")(({ theme }) => ({
   paddingBottom: "10px",
   [theme.breakpoints.down("sm")]: {
     "& tr th": {
-      padding: "15px"
+      padding: "15px 20px"
     }
   }
 }));

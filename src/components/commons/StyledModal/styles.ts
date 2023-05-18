@@ -38,9 +38,14 @@ export const CloseButton = styled(IconButton)<{ saving: number }>`
 export const WrapTitle = styled(Box)`
   color: ${(props) => props.theme.palette.text.primary};
   font-size: 24px;
-  font-height: 28px;
+  line-height: 28px;
   font-weight: 700;
-  margin-bototm: 20;
+  margin-bottom: 20px;
   position: relative;
   z-index: 2;
+`;
+
+export const ContentContainer = styled(Box)<{ wiithtitle?: number }>`
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
 `;

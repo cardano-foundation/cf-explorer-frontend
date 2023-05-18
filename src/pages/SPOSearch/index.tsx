@@ -3,9 +3,10 @@ import { SearchSPOIcon } from "../../commons/resources";
 import { Link, useHistory } from "react-router-dom";
 import { routers } from "../../commons/routers";
 import { useScreen } from "../../commons/hooks/useScreen";
+import useAuth from "~/commons/hooks/useAuth";
 
 const SPOSearch = () => {
-  const userName = localStorage.getItem("username");
+  const { isLoggedIn } = useAuth();
   const history = useHistory();
   const { isMobile } = useScreen();
 
@@ -16,8 +17,8 @@ const SPOSearch = () => {
         <SearchSPOIcon />
       </Box>
       <Box mb={3}>No active Pool found</Box>
-      {!userName && !isMobile && <LoginBtn to={routers.SIGN_IN}>Login to view personal staking lifecylcle</LoginBtn>}
-      {!userName && isMobile && (
+      {!isLoggedIn && !isMobile && <LoginBtn to={routers.SIGN_IN}>Login to view personal staking lifecylcle</LoginBtn>}
+      {!isLoggedIn && isMobile && (
         <WrapButton
           onClick={() => {
             history.push(routers.SIGN_IN);

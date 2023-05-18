@@ -53,12 +53,12 @@ const tabs: {
     component: <DeregistrationTab />
   }
 ];
+
 const Tablular = () => {
   const { stakeId = "", tab = "registration" } = useParams<{ stakeId: string; tab: DelegationStep }>();
   const history = useHistory();
-
   const onChangeTab = (tab: any) => {
-    history.push(details.staking(stakeId, "tablular", tab));
+    history.push(details.staking(stakeId, "tabular", tab));
   };
 
   return (

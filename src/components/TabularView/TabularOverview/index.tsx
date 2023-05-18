@@ -14,10 +14,11 @@ import { API } from "../../../commons/utils/api";
 import useFetch from "../../../commons/hooks/useFetch";
 import { formatADAFull } from "../../../commons/utils/helper";
 import ADAicon from "../../commons/ADAIcon";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
 import { details } from "../../../commons/routers";
 import { useScreen } from "../../../commons/hooks/useScreen";
+import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -51,21 +52,29 @@ type TGridItem = {
 };
 
 const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
-  const { isMobile } = useScreen();
+  const { isSmallScreen } = useScreen();
   return (
-    <Grid item xs={12} md={12} lg={6}>
+    <Grid item xs={12} md={isSmallScreen ? 12 : 6} lg={6}>
       <CardOverview
-        mr={isMobile ? 2 : 0}
-        flexDirection={isMobile ? "column" : "row"}
-        alignItems={isMobile ? "flex-start" : "center"}
-        justifyContent={`${isMobile ? "center" : "space-between"}`}
+        mr={isSmallScreen ? 2 : 0}
+        flexDirection={isSmallScreen ? "column" : "row"}
+        alignItems={isSmallScreen ? "flex-start" : "center"}
+        justifyContent={`${isSmallScreen ? "center" : "space-between"}`}
       >
         <Icon component={BgGray} />
         <Box display='flex' alignItems='center' gap='12px'>
-          <WrapIcon pt={`${isMobile ? "30px" : "0px"}`}>{mainIcon}</WrapIcon>
-          <Box textAlign='start'>
-            <CardTitle>{title}</CardTitle>
-            {value}
+          <WrapIcon pt={`${isSmallScreen ? "30px" : "0px"}`}>{mainIcon}</WrapIcon>
+          <Box display='flex' alignItems={isSmallScreen ? "start" : "center"} flexDirection={isSmallScreen ? "column" : "row"}>
+            <Box textAlign='start'>
+              <CardTitle>{title}</CardTitle>
+              {value}
+            </Box>
+            {action ?
+              <Box display='flex' ml={isSmallScreen ? "" : "30px"} mt={`${isSmallScreen ? "8px" : "0px"}`}>
+                {" "}
+                {action}
+              </Box>
+              : <Box />}
           </Box>
         </Box>
         <Box pl={`${isMobile ? "70px" : "0px"}`} sx={{margin: `${isMobile ? "0 auto" : "0px"}`, mt: `${isMobile ? "-6px" : "0px"}`}}>
@@ -77,12 +86,11 @@ const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
 };
 
 const TabularOverview: React.FC = () => {
+  const data = useContext(DelegatorDetailContext);
   const [open, setOpen] = useState(false);
   const { stakeId } = useParams<{ stakeId: string }>();
-  const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
-
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} >
       <GridItem
         title='Payment Wallet'
         mainIcon={<PaymentWallet />}

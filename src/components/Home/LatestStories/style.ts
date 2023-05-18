@@ -36,58 +36,9 @@ export const Title = styled("h3")`
   }
 `;
 
-export const StyledSlider = styled(Slider)`
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    margin-bottom: 40px;
-  }
-  div[class*="slick-list"] {
-    margin: 0 -10px;
-
-    div[class*="slick-slide"] > div {
-      padding: 0 10px;
-    }
-  }
-  ul[class*="slick-dots"] {
-    li {
-      margin: 0;
-      width: 16px;
-      height: 16px;
-      button {
-        position: relative;
-        text-align: center;
-        width: 16px;
-        height: 16px;
-        padding: 5px;
-
-        &::before {
-          content: "";
-          position: absolute;
-          width: 6px;
-          height: 6px;
-          border-radius: 6px;
-          background: ${(props) => props.theme.palette.grey[300]};
-          opacity: 0.3;
-          top: 50%;
-          left: 50%;
-          transform: translateY(-50%) translateX(-50%);
-        }
-      }
-      &[class*="slick-active"] {
-        button::before {
-          width: 8px;
-          height: 8px;
-          background: ${(props) => props.theme.palette.primary.main};
-          opacity: 1;
-        }
-      }
-    }
-  }
-`;
-
 export const Item = styled(BoxRaised)`
   display: flex;
   gap: 15px;
-  margin-bottom: 15px;
   text-align: left;
   overflow: hidden;
   &:hover {

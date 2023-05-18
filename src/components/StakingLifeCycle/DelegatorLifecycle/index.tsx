@@ -174,7 +174,7 @@ const DelegatorLifecycle = ({
         flexDirection={isMobile ? "column" : "row"}
         justifyContent={isMobile ? "center" : "space-between"}
       >
-        {currentStep > 0 && (
+        {currentStep > 0 ? (
           <PreviousButton
             sx={{ mb: `${isMobile ? "16px" : "0px"}` }}
             onClick={() => {
@@ -185,11 +185,13 @@ const DelegatorLifecycle = ({
             <PreviousIcon />
             <ButtonText>Previous: {stepper[currentStep - 1]?.title}</ButtonText>
           </PreviousButton>
+        ) : (
+          <Box />
         )}
         <NextButton
           onClick={() => {
             if (currentStep === stepper.length - 1) {
-              history.push(details.staking(stakeId, "tablular"));
+              history.push(details.staking(stakeId, "tabular"));
             } else {
               history.push(details.staking(stakeId, "timeline", stepper[currentStep + 1]?.key));
               setCurrentStep(currentStep + 1);
