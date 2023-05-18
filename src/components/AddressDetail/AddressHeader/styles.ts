@@ -100,10 +100,7 @@ export const BackText = styled("small")`
 `;
 
 export const StyledBoxCard = styled(Box)`
-  border-radius: 40px;
+  border-radius: 12px;
   height: 100%;
   overflow: hidden;
-  @media screen and (max-width: ${breakpoints.values.sm}px) {
-    border-radius: 12px;
-  }
 `;
