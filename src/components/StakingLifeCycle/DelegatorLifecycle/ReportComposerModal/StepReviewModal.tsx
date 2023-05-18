@@ -104,7 +104,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       step: STEPS.step1
     },
     {
-      label: isPoolReport ? "Pool ID" : "Address details",
+      label: isPoolReport ? "Pool ID" : "Stake key details",
       value: <TextOverFlow>{step1.address}</TextOverFlow>,
       step: STEPS.step1
     },
@@ -144,8 +144,10 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
               >
                 <TextLabelReview>{label}</TextLabelReview>
                 <Box display={"flex"} justifyContent='center'>
-                  <TextOverFlow><TextValueReview>{value}</TextValueReview></TextOverFlow>
-                  <PencilIcon style={{paddingLeft: "10px"}} onClick={() => gotoStep?.(step as number)} />
+                  <TextOverFlow>
+                    <TextValueReview>{value}</TextValueReview>
+                  </TextOverFlow>
+                  <PencilIcon style={{ paddingLeft: "10px" }} onClick={() => gotoStep?.(step as number)} />
                 </Box>
               </Box>
             );

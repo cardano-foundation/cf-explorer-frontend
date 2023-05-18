@@ -48,26 +48,29 @@ const Registration = ({
     setSelected(registration);
   };
 
-  const { isTablet } = useScreen();
+  const { isLargeTablet } = useScreen();
 
   return (
     <Box>
-       <Box>
+      <Box>
         <RecentRegistrations onSelect={handleSelect} />
       </Box>
       <Box>
-        {selected && (isTablet ? (
-          <RegistrationTimelineMobile
-            handleResize={handleResize}
-            setSelected={setSelected}
-            containerPosition={containerPosition}
-            registration={selected}
-          />
-        ) : (<RegistrationTimeline
-          handleResize={handleResize}
-          containerPosition={containerPosition}
-          registration={selected}
-        />))}
+        {selected &&
+          (isLargeTablet ? (
+            <RegistrationTimelineMobile
+              handleResize={handleResize}
+              setSelected={setSelected}
+              containerPosition={containerPosition}
+              registration={selected}
+            />
+          ) : (
+            <RegistrationTimeline
+              handleResize={handleResize}
+              containerPosition={containerPosition}
+              registration={selected}
+            />
+          ))}
       </Box>
     </Box>
   );
@@ -143,7 +146,7 @@ const RegistrationTimeline = ({
             <Box display={"flex"} flex={1}>
               <PopoverStyled
                 render={({ handleClick }: any) => (
-                  <HoldBox ref={holdRef} style={{ transform: "translateX(8px)" }} height={35}>
+                  <HoldBox ref={holdRef} style={{ transform: "translateX(8px)" }} height={35} width={200}>
                     <Box>
                       <Box
                         component={"span"}
@@ -165,7 +168,7 @@ const RegistrationTimeline = ({
               />
               <PopoverStyled
                 render={({ handleClick }) => (
-                  <FeeBox ref={feeRef} height={35}>
+                  <FeeBox ref={feeRef} height={35} width={200}>
                     <Box>
                       <Box
                         component={"span"}
@@ -306,17 +309,22 @@ const RegistrationTimelineMobile = ({
   const feeRef = useRef(null);
   const cadarnoSystemRef = useRef(null);
   const registrationRef = useRef(null);
-
+  const history = useHistory();
+  const { isMobile, isLargeTablet } = useScreen();
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     handleResize();
   }, [registration]);
 
+  const handleBack = () => {
+    history.goBack();
+  };
+
   return (
     <Box>
       <Box display='flex' alignItems='flex-start' justifyContent='space-between' mt={1}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"} flexDirection='column'>
@@ -337,9 +345,9 @@ const RegistrationTimelineMobile = ({
           </Info>
         </Box>
       </Box>
-      <Box margin="0 auto" width={"350px"}>
+      <Box margin='0 auto' width={"350px"}>
         <Box>
-          <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={3} >
+          <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={3}>
             <ADAHolderIcon />
           </Box>
           <Box display='flex' mt={5}>
@@ -363,7 +371,7 @@ const RegistrationTimelineMobile = ({
             <Box display='flex' flexDirection='column' justifyContent='space-between' mb={2}>
               <PopoverStyled
                 render={({ handleClick }: any) => (
-                  <HoldBox ref={holdRef} style={{ transform: "translateX(8px)" }} height={25}>
+                  <HoldBox ref={holdRef} style={{ transform: "translateX(8px)" }} height={25} width={100}>
                     <Box>
                       <Box
                         component={"span"}
@@ -385,7 +393,7 @@ const RegistrationTimelineMobile = ({
               />
               <PopoverStyled
                 render={({ handleClick }) => (
-                  <FeeBox ref={feeRef} height={25}>
+                  <FeeBox ref={feeRef} height={25} width={100}>
                     <Box>
                       <Box
                         component={"span"}
@@ -419,7 +427,7 @@ const RegistrationTimelineMobile = ({
             position: "absolute",
             top: 0,
             left: 0,
-            height: "150vh",
+            height: isMobile ? "160vh" : "100vh",
             width: "100vw",
             zIndex: "-1"
           }}
@@ -471,7 +479,7 @@ export const RegistrationCertificateModal = ({
   const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
 
   return (
-    <StyledModal width={530} {...props} title='Registration certificate'>
+    <StyledModal width={550} {...props} title='Registration certificate'>
       <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
         {loading && <Skeleton variant='rectangular' width={500} height={90} />}
         {!loading && (

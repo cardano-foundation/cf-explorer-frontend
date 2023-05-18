@@ -12,6 +12,10 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
       }
     }
   },
+  [theme.breakpoints.down("md")]: {
+    paddingTop: 0,
+    marginTop: "-20px"
+  },
   [theme.breakpoints.down("sm")]: {
     "& > div": {
       padding: "0 16px"
@@ -24,6 +28,8 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
     },
     "& h2": {
       paddingLeft: "0px"
-    }
+    },
+    paddingTop: "10px",
+    marginTop: "0px !important"
   }
 }));

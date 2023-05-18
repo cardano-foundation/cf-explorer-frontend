@@ -1,7 +1,6 @@
 import { Button, alpha, Box, Container, IconButton, styled } from "@mui/material";
 
 import { Link } from "react-router-dom";
-import { a } from "react-spring";
 
 export const StyledContainer = styled(Container)`
   padding: 20px 0 40px;
@@ -23,12 +22,10 @@ export const ButtonGroup = styled(Box)(({ theme }) => ({
   marginTop: "11px !important",
   background: "#E7E8EA",
   padding: "3px 2px",
-  borderTopLeftRadius: "20px",
-  borderBottomLeftRadius: "20px",
-  borderTopRightRadius: "20px",
-  borderBottomRightRadius: "20px",
+  borderRadius: "20px",
   [theme.breakpoints.down("md")]: {
-    width: "90px"
+    borderRadius: "71px",
+    gap: "5px"
   }
 }));
 export const ButtonSwitch = styled(IconButton)<{ active: number }>(({ theme, active }) => ({
@@ -59,16 +56,18 @@ export const ButtonReport = styled(Button)(({ theme }) => ({
     minWidth: "225px"
   }
 }));
-export const ButtonReportContainer = styled(Button)<{ disabled?: boolean }>(({ theme, disabled }) => ({
+export const ButtonReportContainer = styled(Button)(({ theme }) => ({
   display: "flex",
   marginLeft: 20,
+  padding: 0,
+  "&:disabled": {
+    opacity: 0.5
+  },
   [theme.breakpoints.down("md")]: {
     justifyContent: "start",
     marginLeft: 0,
-    marginTop: "18px"
+    marginTop: 10
   },
-  padding: 0,
-  opacity: disabled ? 0.5 : 1,
 }));
 
 export const BoxContainerStyled = styled(Box)(({ theme }) => ({
@@ -99,7 +98,7 @@ export const BoxSwitchContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   gap: 15,
   [theme.breakpoints.down("md")]: {
-    justifyContent: "space-between",
+    justifyContent: "space-between"
   }
 }));
 

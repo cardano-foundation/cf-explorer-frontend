@@ -31,7 +31,7 @@ export const StyledTabList = styled(TabList)`
     justify-content: flex-start;
   }
   .MuiTabScrollButton-root {
-    display: none
+    display: none;
   }
 `;
 
@@ -86,4 +86,15 @@ export const Headline = styled(Typography)`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+`;
+
+export const WrapperDelegationTab = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center,
+  margin-top: 12px;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    flex-direction: column;
+    gap: 10px;
+  }
 `;

@@ -47,7 +47,7 @@ const Deregistration = ({
     setSelected(deregistration);
   };
 
-  const { isTablet } = useScreen();
+  const { isLargeTablet } = useScreen();
 
   return (
     <Box>
@@ -55,7 +55,7 @@ const Deregistration = ({
         <RecentDeregistrations onSelect={handleSelect} />
       </Box>
       {selected &&
-        (isTablet ? (
+        (isLargeTablet ? (
           <DeregistrationTimelineMobile
             handleResize={handleResize}
             setSelected={setSelected}
@@ -313,6 +313,8 @@ const DeregistrationTimelineMobile = ({
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
+  const history = useHistory();
+  const { isMobile } = useScreen();
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -320,10 +322,15 @@ const DeregistrationTimelineMobile = ({
     handleResize();
   }, [selected]);
 
+  const handleBack = () => {
+    history.goBack();
+    setSelected(null);
+  };
+
   return (
     <Box>
       <Box display='flex' justifyContent='space-between' mt={1}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"} flexDirection='column'>
@@ -344,7 +351,7 @@ const DeregistrationTimelineMobile = ({
           </Info>
         </Box>
       </Box>
-      <Box margin="0 auto" width={"350px"}>
+      <Box margin='0 auto' width={"350px"}>
         <Box>
           <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={5} pr={2} position={"relative"}>
             <ADAHolderIcon />
@@ -367,7 +374,7 @@ const DeregistrationTimelineMobile = ({
             >
               <img src={DeregistrationCertificateMobile} alt='DeregistrationCertificateMobile' />
             </Box>
-            <Box mt={8}>
+            <Box mt={11}>
               <PopoverStyled
                 render={({ handleClick }) => (
                   <HoldBox ref={holdRef} width={125} marginLeft={4}>
@@ -421,7 +428,7 @@ const DeregistrationTimelineMobile = ({
               position: "absolute",
               top: 0,
               left: 0,
-              height: "150vh",
+              height: isMobile ? "150vh" : "115vh",
               width: "100vw",
               zIndex: "-1"
             }}
@@ -434,6 +441,7 @@ const DeregistrationTimelineMobile = ({
               pointFrom='border'
               orient='vertical'
               isCentalHorizontalFrom
+              connectFromReverse
             />
             <ArrowDiagram
               containerPosition={containerPosition}

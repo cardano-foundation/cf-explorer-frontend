@@ -46,7 +46,7 @@ const Delegation = ({
     setSelected(delegation);
   };
 
-  const { isMobile, isTablet } = useScreen();
+  const { isLargeTablet } = useScreen();
 
   return (
     <Box>
@@ -54,7 +54,7 @@ const Delegation = ({
         <RecentDelegations onSelect={handleSelect} />
       </Box>
       <Box>
-        {!!selected && isTablet ? (
+        {!!selected && isLargeTablet ? (
           <DelegationTimelineMobile
             handleResize={handleResize}
             setSelected={setSelected}
@@ -310,6 +310,7 @@ const DelegationTimelineMobile = ({
 }) => {
   const theme = useTheme();
   const [openModal, setOpenModal] = useState(false);
+  const history = useHistory();
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const { data, loading } = useFetch<DelegationDetail>(
     (selected && selected.txHash && stakeId && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stakeId, selected.txHash)) || ""
@@ -321,16 +322,21 @@ const DelegationTimelineMobile = ({
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
+  const { isMobile } = useScreen();
 
   useEffect(() => {
     handleResize();
   }, [loading, registrationRef.current]);
 
+  const handleBack = () => {
+    history.goBack();
+  };
+
   if (loading) {
     return (
       <Box>
         <Box display='flex' alignItems='flex-start' justifyContent='space-between' mt={1}>
-          <IconButtonBack onClick={() => setSelected(null)}>
+          <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
           <Box display={"flex"} flexDirection='column'>
@@ -356,7 +362,7 @@ const DelegationTimelineMobile = ({
   return (
     <Box>
       <Box display='flex' alignItems='flex-start' justifyContent='space-between' mt={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box display={"flex"} flexDirection='column'>
@@ -377,42 +383,42 @@ const DelegationTimelineMobile = ({
           </Info>
         </Box>
       </Box>
-      <Box margin="0 auto" width={"350px"}>
+      <Box margin='0 auto' width={"350px"}>
         <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={3}>
           <ADAHolderIcon />
         </Box>
         <Box display='flex' justifyContent='space-between' mt={8} marginX={2}>
-            <Box>
-              <Box component={IconButton} p={0} onClick={() => setOpenModal(true)}>
-                <Box ref={registrationRef}>
-                  <img width={140} src={DelegationCertificateIcon} alt='RegistrationCertificateIcon' />
-                </Box>
+          <Box>
+            <Box component={IconButton} p={0} onClick={() => setOpenModal(true)}>
+              <Box ref={registrationRef}>
+                <img width={140} src={DelegationCertificateIcon} alt='RegistrationCertificateIcon' />
               </Box>
             </Box>
-            <Box display='flex' alignItems='center' ml={3}>
-              <PopoverStyled
-                render={({ handleClick }) => (
-                  <FeeBox ref={feeRef} width={120} height={10}>
-                    <Box>
-                      <Box
-                        component={"span"}
-                        fontSize={"16px"}
-                        fontWeight={"bold"}
-                        color={(theme) => theme.palette.common.black}
-                      >
-                        {formatADAFull(data?.fee || 0)}
-                      </Box>
-                      <AdaLogoIcon fontSize={14} color={theme.palette.text.secondary} />
-                    </Box>
-                    <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
-                      <ButtonListIcon />
-                    </IconButton>
-                  </FeeBox>
-                )}
-                content={<PopupStaking hash={data?.txHash || ""} />}
-              />
-            </Box>
           </Box>
+          <Box display='flex' alignItems='center' ml={3}>
+            <PopoverStyled
+              render={({ handleClick }) => (
+                <FeeBox ref={feeRef} width={120} height={10}>
+                  <Box>
+                    <Box
+                      component={"span"}
+                      fontSize={"16px"}
+                      fontWeight={"bold"}
+                      color={(theme) => theme.palette.common.black}
+                    >
+                      {formatADAFull(data?.fee || 0)}
+                    </Box>
+                    <AdaLogoIcon fontSize={14} color={theme.palette.text.secondary} />
+                  </Box>
+                  <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
+                    <ButtonListIcon />
+                  </IconButton>
+                </FeeBox>
+              )}
+              content={<PopupStaking hash={data?.txHash || ""} />}
+            />
+          </Box>
+        </Box>
         <Box ref={cadarnoSystemRef} width={192} height={70} margin='0 auto' mt={5} mb={15}>
           <img style={{ width: 190, height: 215 }} src={cadarnoSystem} alt='carrdano' />
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
@@ -423,7 +429,7 @@ const DelegationTimelineMobile = ({
             position: "absolute",
             top: 0,
             left: 0,
-            height: "150vh",
+            height: isMobile ? "150vh" : "100vh",
             width: "100vw",
             zIndex: "-1"
           }}
@@ -446,7 +452,6 @@ const DelegationTimelineMobile = ({
             orient='vertical'
             isCentalHorizontalFrom
             connectToReverse
-            
           />
         </svg>
       </Box>

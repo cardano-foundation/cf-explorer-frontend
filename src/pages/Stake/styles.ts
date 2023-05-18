@@ -5,7 +5,13 @@ export const StyledContainer = styled(Container)`
   padding: 30px 0 40px;
   text-align: left;
 
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    padding-top: 0px;
+    margin-top: -20px;
+  }
+
   ${({ theme }) => theme.breakpoints.down("sm")} {
+    margin-top: 0px !important;
     .stake-list {
       padding: 0px 16px;
     }

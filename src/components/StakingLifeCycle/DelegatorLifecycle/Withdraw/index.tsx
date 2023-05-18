@@ -43,6 +43,7 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 import { details } from "../../../../commons/routers";
 import { useScreen } from "~/commons/hooks/useScreen";
+import { useWindowSize } from "react-use";
 
 const Withdraw = ({
   containerPosition,
@@ -59,31 +60,30 @@ const Withdraw = ({
   const handleSelect = (withdraw: WithdrawItem | null) => {
     setSelected(withdraw);
   };
-
-  const { isTablet } = useScreen();
-
+  const { width } = useWindowSize(0);
+  const laptop = width <= 1560;
   return (
     <Box>
       <Box>
         <RecentWithdraws onSelect={handleSelect} />
       </Box>
       <Box>
-        {!!selected && isTablet ? (
-          <WithdrawTimelineMobile
-            handleResize={handleResize}
-            setSelected={setSelected}
-            selected={selected}
-            containerPosition={containerPosition}
-          />
-        ) : // eslint-disable-next-line no-extra-boolean-cast
-        !!selected ? (
-          <WithdrawTimeline
-            handleResize={handleResize}
-            setSelected={setSelected}
-            selected={selected}
-            containerPosition={containerPosition}
-          />
-        ) : null}
+        {!!selected &&
+          (laptop ? (
+            <WithdrawTimeline
+              handleResize={handleResize}
+              setSelected={setSelected}
+              selected={selected}
+              containerPosition={containerPosition}
+            />
+          ) : (
+            <WithdrawTimelineDestop
+              handleResize={handleResize}
+              setSelected={setSelected}
+              selected={selected}
+              containerPosition={containerPosition}
+            />
+          ))}
       </Box>
     </Box>
   );
@@ -98,7 +98,7 @@ interface WithdrawDetail {
   time: string;
   txHash: string;
 }
-const WithdrawTimeline = ({
+const WithdrawTimelineDestop = ({
   containerPosition,
   setSelected,
   handleResize,
@@ -187,7 +187,7 @@ const WithdrawTimeline = ({
       </Box>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
-          <Box ref={adaHolderRef} width={190} height={215}>
+          <Box ref={adaHolderRef} width={200} height={215}>
             <ADAHolderIcon />
           </Box>
           <Payment ref={boxWalletRef}>
@@ -219,7 +219,7 @@ const WithdrawTimeline = ({
           <RoundBox>
             <PopoverStyled
               render={({ handleClick }) => (
-                <NetAmount ref={netAmountRef}>
+                <NetAmount ref={netAmountRef} width={"max-content"}>
                   <Box>
                     <ADAAmountLabel>
                       {data?.amount && data?.fee ? formatADA(data?.amount - data?.fee) : 0}
@@ -235,7 +235,7 @@ const WithdrawTimeline = ({
             />
             <PopoverStyled
               render={({ handleClick }) => (
-                <Withdrawn ref={withdrawnRef}>
+                <Withdrawn ref={withdrawnRef} width={"max-content"}>
                   <Box>
                     <ADAAmountLabel>{formatADA(data?.amount || 0)}</ADAAmountLabel>
                     <ADAicon fontSize='18px' />
@@ -258,10 +258,10 @@ const WithdrawTimeline = ({
           >
             <PopoverStyled
               render={({ handleClick }) => (
-                <FeeBox ml={1} ref={feesRef} width={200}>
-                  <Box ref={feesBrigeRef} width={236} height={71} position={"absolute"} top={"-76px"} left={0}></Box>
+                <FeeBox ml={1} ref={feesRef} width={"max-content"}>
+                  <Box ref={feesBrigeRef} width={176} height={71} position={"absolute"} top={"-76px"} left={0}></Box>
                   <Box>
-                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"}>
                       {formatADA(data?.fee || 0)}
                     </Box>
                     <ADAicon fontSize='18px' />
@@ -359,11 +359,11 @@ const WithdrawTimeline = ({
     </Box>
   );
 };
-const WithdrawTimelineMobile = ({
+const WithdrawTimeline = ({
   containerPosition,
-  setSelected,
   handleResize,
-  selected
+  selected,
+  setSelected
 }: {
   containerPosition: {
     top?: number;
@@ -387,16 +387,23 @@ const WithdrawTimelineMobile = ({
   const netAmountRef = useRef(null);
   const paymentWalletRef = useRef(null);
   const rewardAccountRef = useRef(null);
+  const history = useHistory();
+  const { isMobile, isTablet } = useScreen();
 
   useEffect(() => {
     handleResize();
   }, [loading]);
 
+  const handleBack = () => {
+    history.goBack();
+    setSelected(null);
+  };
+
   if (loading) {
     return (
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-          <IconButtonBack onClick={() => setSelected(null)}>
+          <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
           <Box display={"flex"}>
@@ -421,7 +428,7 @@ const WithdrawTimelineMobile = ({
   return (
     <Box>
       <Box display='flex' justifyContent='space-between' mt={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
         <Box>
@@ -445,13 +452,21 @@ const WithdrawTimelineMobile = ({
       <Box ref={adaHolderRef} mt={5}>
         <ADAHolderIcon />
       </Box>
-      <Box margin="0 auto" width={"350px"}>
+      <Box margin='0 auto' width={"350px"}>
         <Box mt={5}>
           <Payment>
             <PopoverStyled
               render={({ handleClick }: any) => (
                 <Box position={"relative"}>
-                  <PaymentWallet ref={boxWalletRef} />
+                  <Box
+                    ref={boxWalletRef}
+                    position={"absolute"}
+                    width={"1px"}
+                    height={"-100%"}
+                    bottom={"130%"}
+                    right={"120px"}
+                  ></Box>
+                  <PaymentWallet />
                   <RewardWallet>
                     <Box
                       component={IconButton}
@@ -494,11 +509,17 @@ const WithdrawTimelineMobile = ({
             />
           </Payment>
 
-          <Box display='flex' mt={10} flexDirection='row-reverse' position={"relative"}>
+          <Box
+            display='flex'
+            mt={10}
+            flexDirection='row-reverse'
+            position={"relative"}
+            justifyContent={"space-between"}
+          >
             <Box ref={fake2ref} width={"250px"} height={300} position={"absolute"} right={"-13%"} bottom={"-10%"}></Box>
             <PopoverStyled
               render={({ handleClick }) => (
-                <NetAmount ref={netAmountRef}>
+                <NetAmount ref={netAmountRef} width={120}>
                   <Box>
                     <ADAAmountLabel>
                       {data?.amount && data?.fee ? formatADA(data?.amount - data?.fee) : 0}
@@ -515,7 +536,7 @@ const WithdrawTimelineMobile = ({
             <Box ref={fake3ref} width={"250px"} height={300} position={"absolute"} right={"40%"} bottom={"-10%"}></Box>
             <PopoverStyled
               render={({ handleClick }) => (
-                <Withdrawn ref={withdrawnRef}>
+                <Withdrawn ref={withdrawnRef} width={120}>
                   <Box>
                     <ADAAmountLabel>{formatADA(data?.amount || 0)}</ADAAmountLabel>
                     <ADAicon fontSize='18px' />
@@ -529,10 +550,10 @@ const WithdrawTimelineMobile = ({
             />
           </Box>
 
-          <Box mt={5} ml={22} width={"150px"}>
+          <Box mt={5} ml={"194px"} width={"150px"}>
             <PopoverStyled
               render={({ handleClick }) => (
-                <FeeBox ref={feesRef} width={150}>
+                <FeeBox ref={feesRef} width={120}>
                   <Box>
                     <Box component={"span"} fontSize={"18px"} fontWeight={"bold"}>
                       {formatADA(data?.fee || 0)}
@@ -557,7 +578,7 @@ const WithdrawTimelineMobile = ({
               position: "absolute",
               top: 0,
               left: 0,
-              height: "200vh",
+              height: isMobile ? "200vh" : isTablet ? "150vh" : "140vh",
               width: "100vw",
               zIndex: "-1"
             }}

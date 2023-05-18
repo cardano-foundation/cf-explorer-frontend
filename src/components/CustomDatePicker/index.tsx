@@ -19,7 +19,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
   const [startDate, endDate] = dateRange;
   const CustomInput = ensuredForwardRef(({ value, onClick }: any, ref: any) => (
     <WrapCustomDatePicker onClick={onClick} ref={ref}>
-      {value ? value : (<Box sx={{opacity: 0.42}}>dd/mm/yyyy</Box>)}
+      {value ? value : <Box sx={{ opacity: 0.42 }}>dd/mm/yyyy</Box>}
       <SelectDateButton>
         <DateRangeIcon />
       </SelectDateButton>
