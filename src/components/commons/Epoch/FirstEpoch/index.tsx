@@ -93,7 +93,7 @@ export default function FirstEpoch() {
     }
   ];
   if (isTablet) {
-    return <DetailHeader loading={false} listItem={listOverview} type='EPOCH' title={" "} />;
+    return <DetailHeader isHideButtonBack={true} loading={false} listItem={listOverview} type='EPOCH' title={" "} />;
   }
   return (
     <EpochCard>
