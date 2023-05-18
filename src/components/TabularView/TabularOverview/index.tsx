@@ -52,7 +52,7 @@ type TGridItem = {
 };
 
 const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
-  const { isSmallScreen } = useScreen();
+  const { isSmallScreen,isMobile } = useScreen();
   return (
     <Grid item xs={12} md={isSmallScreen ? 12 : 6} lg={6}>
       <CardOverview
