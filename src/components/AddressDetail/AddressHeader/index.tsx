@@ -13,7 +13,7 @@ import { API } from "../../../commons/utils/api";
 import BookmarkButton from "../../commons/BookmarkIcon";
 import TokenAutocomplete from "../../TokenAutocomplete";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { BackButton, BackText, StyledBoxCard } from "./styles";
+import { BackButton, BackText, StyledBoxCard, TitleText } from "./styles";
 import ADAicon from "../../commons/ADAIcon";
 import { useScreen } from "../../../commons/hooks/useScreen";
 
@@ -98,7 +98,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           </BackButton>
         </Box>
         <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
-          <Box>Address Detail</Box>
+          <TitleText>Address Detail</TitleText>
           {!isMobile && <BookmarkButton keyword={data?.address || ""} type='ADDRESS' />}
         </Box>
       </Box>

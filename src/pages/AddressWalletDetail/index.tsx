@@ -41,4 +41,12 @@ const ContainerBox = styled(Container)`
   flex-direction: column;
   gap: 20px;
   padding-bottom: 40px;
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.md}px) {
+    padding-top: 0;
+    margin-top: -20px;
+  }
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+    padding-top: 20px;
+    margin-top: 0px !important;
+  }
 `;
