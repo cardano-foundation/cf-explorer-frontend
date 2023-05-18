@@ -91,6 +91,9 @@ export default function SignUp() {
       value: ""
     }
   });
+
+  const enableButton = Object.values(formData).every((value) => value.touched) && !error && checkedAgree && !loading;
+
   useEffect(() => {
     if (isLoggedIn) {
       history.push(routers.HOME);
@@ -162,11 +165,13 @@ export default function SignUp() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    let hasError = false;
     const errorPassword = getError("password", formData.password.value);
     const errorEmail = getError("email", formData.email.value);
     const errorConfirmPassword = getError("confirmPassword", formData.confirmPassword.value);
     const errorConfirmEmail = getError("confirmEmail", formData.confirmEmail.value);
     if (errorPassword) {
+      hasError = true;
       setFormData({
         name: "password",
         touched: true,
@@ -174,6 +179,7 @@ export default function SignUp() {
       });
     }
     if (errorEmail) {
+      hasError = true;
       setFormData({
         name: "email",
         touched: true,
@@ -181,6 +187,7 @@ export default function SignUp() {
       });
     }
     if (errorConfirmPassword) {
+      hasError = true;
       setFormData({
         name: "confirmPassword",
         touched: true,
@@ -188,13 +195,14 @@ export default function SignUp() {
       });
     }
     if (errorConfirmEmail) {
+      hasError = true;
       setFormData({
         name: "confirmEmail",
         touched: true,
         error: errorConfirmEmail
       });
     }
-    if (error) return;
+    if (hasError) return;
     handleSignUp(formData.email.value, formData.password.value);
   };
 
@@ -350,7 +358,7 @@ export default function SignUp() {
                   }
                 />
               </Box>
-              <WrapButton variant='contained' fullWidth onClick={handleSubmit} disabled={loading || !checkedAgree}>
+              <WrapButton variant='contained' fullWidth onClick={handleSubmit} disabled={!enableButton}>
                 Create an Account
               </WrapButton>
             </WrapForm>
