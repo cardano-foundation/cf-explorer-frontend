@@ -1,8 +1,8 @@
 import React from "react";
 
-import { CloseIcon } from "../../../commons/resources";
-import { details } from "../../../commons/routers";
-import { getShortWallet } from "../../../commons/utils/helper";
+import { CloseIcon } from "~/commons/resources";
+import { details } from "~/commons/routers";
+import { getShortWallet } from "~/commons/utils/helper";
 
 import CopyButton from "../CopyButton";
 import CustomTooltip from "../CustomTooltip";
@@ -15,9 +15,10 @@ interface IDropdownDetailProps {
   value: string[];
   close?: () => void;
   minWidth?: number | string;
+  isStakeDetail?: boolean;
 }
 
-const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, minWidth }) => {
+const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, minWidth, isStakeDetail = false }) => {
   const ref = useOutsideClick(close);
   return (
     <ListDropdownContainer minWidth={minWidth} ref={ref}>
@@ -29,7 +30,9 @@ const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, m
         {value.map((item, index) => (
           <InfoValue key={index}>
             <CustomTooltip title={item}>
-              <StyledLink to={details.address(item)}>{getShortWallet(item)}</StyledLink>
+              <StyledLink to={isStakeDetail ? details.stake(item) : details.address(item)}>
+                {getShortWallet(item)}
+              </StyledLink>
             </CustomTooltip>
             <CopyButton text={item} />
           </InfoValue>
