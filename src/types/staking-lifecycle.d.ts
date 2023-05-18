@@ -1,3 +1,3 @@
-declare type ViewMode = "tablular" | "timeline";
+declare type ViewMode = "tabular" | "timeline";
 
 declare type DelegationStep = TTabularTabKey;

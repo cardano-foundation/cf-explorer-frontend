@@ -1,13 +1,16 @@
 import { Box, styled } from "@mui/material";
 
-export const TextLabel = styled("div")`
-  display: inline-block;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
-  color: #667085;
-  width: 130px;
-`;
+export const TextLabel = styled("div")(({ theme }) => ({
+  display: "inline-block",
+  fontWeight: 400,
+  fontSize: 14,
+  lineHeight: "16px",
+  color: theme.palette.grey[400],
+  width: 130,
+  [theme.breakpoints.down("sm")]: {
+    width: 110
+  }
+}));
 
 export const TextValue = styled("div")`
   display: inline-block;

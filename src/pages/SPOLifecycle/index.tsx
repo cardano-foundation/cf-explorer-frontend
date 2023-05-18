@@ -15,6 +15,7 @@ import {
   ButtonReport,
   ButtonReportContainer,
   ButtonSwitch,
+  PoolId,
   StyledContainer
 } from "./styles";
 
@@ -24,7 +25,6 @@ import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLife
 import Tablular from "../../components/StakingLifeCycle/SPOLifecycle/Tablular";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useScreen } from "../../commons/hooks/useScreen";
-import { StyledStakeId } from "../DelegatorLifecycle/styles";
 import { details } from "../../commons/routers";
 import useAuth from "~/commons/hooks/useAuth";
 
@@ -91,11 +91,11 @@ const SPOLifecycle = () => {
             Staking Lifecycle For
           </Box>
           <Box display={"flex"} alignItems={"center"}>
-            <Box component={"span"} fontSize={"1rem"} lineHeight={1}>
+            <Box component={"span"} fontSize={"0.875rem"} lineHeight={1}>
               Pool ID:
             </Box>
             <CustomTooltip title={poolId}>
-              <StyledStakeId to={details.delegation(poolId)}>{getShortHash(poolId)}</StyledStakeId>
+              <PoolId to={details.delegation(poolId)}>{getShortHash(poolId)}</PoolId>
             </CustomTooltip>
             <CopyButton text={poolId} />
           </Box>
@@ -103,19 +103,19 @@ const SPOLifecycle = () => {
         <BoxItemStyled>
           <BoxSwitchContainer>
             <BoxSwitch color={({ palette }) => palette.grey[400]}>
-              <Box>Switch to {mode === "timeline" ? "tablular" : "timeline"} view</Box>
+              <Box>Switch to {mode === "timeline" ? "tabular" : "timeline"} view</Box>
             </BoxSwitch>
             <ButtonGroup>
               <ButtonSwitch active={+(mode === "timeline")} onClick={() => changeMode("timeline")}>
                 <ChartMode fill={mode === "timeline" ? "#fff" : "#344054"} />
               </ButtonSwitch>
-              <ButtonSwitch active={+(mode === "tablular")} onClick={() => changeMode("tablular")}>
-                <TableMode fill={mode === "tablular" ? "#fff" : "#344054"} />
+              <ButtonSwitch active={+(mode === "tabular")} onClick={() => changeMode("tabular")}>
+                <TableMode fill={mode === "tabular" ? "#fff" : "#344054"} />
               </ButtonSwitch>
             </ButtonGroup>
           </BoxSwitchContainer>
 
-          {mode === "tablular" && (
+          {mode === "tabular" && (
             <ButtonReportContainer disabled={!isLoggedIn}>
               <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>
             </ButtonReportContainer>
@@ -132,7 +132,7 @@ const SPOLifecycle = () => {
             setCurrentStep={setCurrentStep}
           />
         )}
-        {mode === "tablular" && <Tablular />}
+        {mode === "tabular" && <Tablular />}
       </Box>
       <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
     </StyledContainer>

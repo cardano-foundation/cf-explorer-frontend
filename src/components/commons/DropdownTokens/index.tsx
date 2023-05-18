@@ -11,10 +11,11 @@ import CustomTooltip from "../CustomTooltip";
 interface IDropdownTokens {
   tokens: Token[];
   type?: "up" | "down" | undefined;
-  hideInput?: boolean;
+  hideInputLabel?: boolean;
+  hideMathChar?: boolean;
 }
 
-const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hideInput }) => {
+const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hideInputLabel, hideMathChar }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const history = useHistory();
   const isSend = tokens[0].assetQuantity < 0;
@@ -48,7 +49,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hide
     >
       <OptionSelect sx={{ display: "none" }} value='default'>
         {" "}
-        {!hideInput ? (isSend ? "Sent " : "Received ") : ""}Token
+        {!hideInputLabel ? (isSend ? "Sent " : "Received ") : ""}Token
       </OptionSelect>
       {tokens.map((token, idx) => {
         const tokenName = token.assetName || token.assetId;
@@ -58,19 +59,19 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hide
           <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token.assetId))}>
             <Box>
               {isTokenNameLong ? (
-                <CustomTooltip title={tokenName} placement="top">
-                  <Box>
-                    {shortTokenName}
-                  </Box>
+                <CustomTooltip title={tokenName} placement='top'>
+                  <Box>{shortTokenName}</Box>
                 </CustomTooltip>
-              ) : tokenName}
+              ) : (
+                tokenName
+              )}
             </Box>
             <Box fontWeight={"bold"} fontSize={"14px"}>
-              {!hideInput ? `${type === "down" ? "-" : "+"} ` : ""}
+              {!hideMathChar ? `${type === "down" ? "-" : "+"} ` : ""}
               {`${numberWithCommas(token.assetQuantity) || ""}`}
             </Box>
           </OptionSelect>
-        )
+        );
       })}
     </CustomSelect>
   );

@@ -1,13 +1,13 @@
 import { Box, Container, styled } from "@mui/material";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
-  padding: "30px 0 40px",
+  padding: "30px 0 40px"
 }));
 
 export const WrapHeader = styled(Box)(({ theme }) => ({
   padding: 0,
   [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
-    padding: "0 20px",
+    padding: "0 20px"
   }
 }));
 

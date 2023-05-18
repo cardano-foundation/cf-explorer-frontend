@@ -7,6 +7,16 @@ export const DateRangePickerContainer = styled(Box)`
   justify-content: center;
   align-items: center;
   gap: 12px;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    padding-top: 24px;
+    gap: 5px;
+    & .MuiOutlinedInput-input {
+      padding: 10px;
+      font-size: 12px;
+    };
+    & .MuiButtonBase-root {
+      display: flex;
+    }
 `;
 
 export const DatePickerFooter = styled(Box)`

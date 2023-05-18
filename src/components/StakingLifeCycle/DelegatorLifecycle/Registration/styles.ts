@@ -2,7 +2,6 @@ import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
-  width: "200px",
   height: "35px",
   display: "flex",
   alignItems: "center",
@@ -31,7 +30,6 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   }
 }));
 export const FeeBox = styled(Box)(({ theme }) => ({
-  width: "200px",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
@@ -83,4 +81,7 @@ export const StakeLink = styled(Link)`
   font-size: 0.875rem;
   color: ${({ theme }) => theme.palette.blue[800]} !important;
   margin-right: 6px;
+  ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.sm)} {
+    overflow-wrap: break-word;
+  }
 `;

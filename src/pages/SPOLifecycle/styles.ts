@@ -1,4 +1,5 @@
 import { Button, alpha, Box, Container, IconButton, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
   padding: "20px 0 40px",
@@ -26,13 +27,13 @@ export const ButtonGroup = styled(Box)(({ theme }) => ({
   height: "44px",
   background: "#E7E8EA",
   padding: "3px 2px",
-  borderTopLeftRadius: "20px",
-  borderBottomLeftRadius: "20px",
-  borderTopRightRadius: "20px",
-  borderBottomRightRadius: "20px",
+  margin: `0 ${theme.spacing(2)}`,
+  borderRadius: "20px",
   [theme.breakpoints.down("md")]: {
     width: "90px",
-    marginTop: "10px !important"
+    marginTop: "10px !important",
+    borderRadius: "71px",
+    gap: "5px"
   },
   [theme.breakpoints.down("sm")]: {
     margin: "0px !important"
@@ -121,4 +122,12 @@ export const ButtonReportContainer = styled(Button)(({ theme }) => ({
     marginLeft: 0,
     marginTop: "18px"
   }
+}));
+
+export const PoolId = styled(Link)(({ theme }) => ({
+  lineHeight: 1,
+  fontWeight: "bold",
+  color: `${theme.palette.blue[800]} !important`,
+  margin: `0 ${theme.spacing(1)} `,
+  fontSize: "0.875rem"
 }));
