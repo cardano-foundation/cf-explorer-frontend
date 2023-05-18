@@ -94,8 +94,7 @@ export const Item = styled(Grid)<{ top?: number }>(({ top, theme }) => ({
     borderLeft: 0,
     paddingLeft: 0
   },
-
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
     padding: 15,
     paddingRight: 0,
