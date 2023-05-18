@@ -725,7 +725,7 @@ export const PoolUpdateModal = ({
               Transaction ID
             </Box>
             {data && (
-              <Box pt={"7px"} fontWeight={600}>
+              <Box pt={"7px"} fontWeight={500}>
                 <Link to={details.transaction(data?.txHash || "")}>
                   {isMobile ? getShortWallet(data?.txHash || "") : getShortHash(data?.txHash || "")}
                 </Link>{" "}
@@ -742,7 +742,7 @@ export const PoolUpdateModal = ({
               Pool ID
             </Box>
             {data && (
-              <Box pt={"7px"} fontWeight={600}>
+              <Box pt={"7px"} fontWeight={500}>
                 <Link to={details.delegation(data?.poolView || "")}>
                   {isMobile ? getShortWallet(data?.poolView || "") : getShortHash(data?.poolView || "")}
                 </Link>{" "}
@@ -761,7 +761,7 @@ export const PoolUpdateModal = ({
             </Box>
             {data && (
               <Box pt={"7px"}>
-                <Box display={"inline"} fontWeight={600} fontSize='0.875rem' color={({ palette }) => palette.blue[800]}>
+                <Box display={"inline"} fontWeight={500} fontSize='0.875rem' color={({ palette }) => palette.blue[800]}>
                   {isMobile ? getShortWallet(data?.poolView || "") : getShortHash(data?.vrfKey || "")}
                 </Box>{" "}
                 <CopyButton text={data?.vrfKey || ""} />
@@ -781,7 +781,7 @@ export const PoolUpdateModal = ({
                 <>
                   {data.stakeKeys && data.stakeKeys.length && (
                     <>
-                      <Box key={data.stakeKeys[0]} pt={"7px"} fontWeight={600} display={"flex"}>
+                      <Box key={data.stakeKeys[0]} pt={"7px"} fontWeight={500} display={"flex"}>
                         <Box>
                           <Link to={details.stake(data.stakeKeys[0] || "")}>{getShortWallet(data.stakeKeys[0])}</Link>{" "}
                           <CopyButton text={data.stakeKeys[0] || ""} />
@@ -812,7 +812,7 @@ export const PoolUpdateModal = ({
               Reward Account
             </Box>
             {data && (
-              <Box pt={"7px"} fontWeight={600}>
+              <Box pt={"7px"} fontWeight={500}>
                 <Link to={details.stake(data?.rewardAccount || "")}>{getShortWallet(data?.rewardAccount || "")}</Link>{" "}
                 <CopyButton text={data?.rewardAccount || ""} />
               </Box>
@@ -834,7 +834,7 @@ export const PoolUpdateModal = ({
               Margin
             </Box>
             {data && (
-              <Box fontSize='0.875rem' pt={"7px"} fontWeight={600}>
+              <Box fontSize='0.875rem' pt={"7px"} fontWeight={500}>
                 {data?.margin}%
                 {data?.previousMargin !== null && (
                   <Box fontSize={12} pt={"7px"} color={(theme) => theme.palette.grey[400]}>
@@ -865,7 +865,7 @@ export const PoolUpdateModal = ({
                 Pledge
               </Box>
               {data && (
-                <Box fontSize='0.875rem' pt={"7px"} fontWeight={600}>
+                <Box fontSize='0.875rem' pt={"7px"} fontWeight={500}>
                   {formatADA(data?.pledge)} <ADAicon />
                 </Box>
               )}
@@ -895,7 +895,7 @@ export const PoolUpdateModal = ({
               Cost
             </Box>
             {data && (
-              <Box pt={"7px"} fontWeight={600} fontSize='0.875rem'>
+              <Box pt={"7px"} fontWeight={500} fontSize='0.875rem'>
                 {formatADA(data?.cost)} <ADAicon />
               </Box>
             )}

@@ -242,7 +242,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                           <Box mr={2} sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}>
                             {item.assetName}
                           </Box>
-                          <Box fontWeight={600}>{numberWithCommas(item.assetQuantity)}</Box>
+                          <Box fontWeight={500}>{numberWithCommas(item.assetQuantity)}</Box>
                         </StyledMenuItem>
                       ))}
                   </StyledSelect>
