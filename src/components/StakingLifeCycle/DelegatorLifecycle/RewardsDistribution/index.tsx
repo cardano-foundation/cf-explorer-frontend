@@ -52,7 +52,7 @@ const RewardsDistribution = ({
     handleResize();
   }, [adaIcon1Ref.current, adaIcon2Ref.current, loading]);
 
-  const { isTablet } = useScreen();
+  const { isLargeTablet, isMobile } = useScreen();
 
   const RewardsDistributionTimeLine = () => {
     return (
@@ -64,11 +64,12 @@ const RewardsDistribution = ({
         />
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box display={"flex"} flex={3} justifyContent={"space-between"}>
-            <Box ref={cadarnoSystemRef} width={240} height={300}>
+            <Box width={240} height={300} position={"relative"}>
+              <Box ref={cadarnoSystemRef} position={"absolute"} right={"40px"}></Box>
               <img src={CardarnoSystemReward} alt='CardarnoSystemReward' />
             </Box>
             <Box
-              py={"50px"}
+              py={"23px"}
               display={"flex"}
               flexDirection={"column"}
               justifyContent={"space-between"}
@@ -83,8 +84,8 @@ const RewardsDistribution = ({
             </Box>
             <Box
               display={"flex"}
-              pt={"32px"}
-              pb={"35px"}
+              pt={"9px"}
+              pb={"10px"}
               flexDirection={"column"}
               justifyContent={"space-between"}
               alignItems={"center"}
@@ -147,39 +148,22 @@ const RewardsDistribution = ({
             zIndex: "-1"
           }}
         >
-          <Line
-            containerPosition={containerPosition}
-            fromRef={cadarnoSystemRef}
-            toRef={adaIcon1Ref}
-            pointTo='border'
-            pointFrom='border'
-            orient='vertical'
-            isCentalVertical={false}
-          />
-          <Line
-            containerPosition={containerPosition}
-            fromRef={cadarnoSystemRef}
-            toRef={adaIcon2Ref}
-            pointTo='border'
-            pointFrom='border'
-            isCentalVertical={false}
-            orient='vertical'
-            dashed={(data?.rewardPools || []).length === 0}
-          />
           <ArrowDiagram
             containerPosition={containerPosition}
-            fromRef={adaIcon1Ref}
+            fromRef={cadarnoSystemRef}
             toRef={adaHolderRef}
             pointTo='border'
             pointFrom='border'
             orient='vertical'
+            isCentalVertical={false}
           />
           <ArrowDiagram
             containerPosition={containerPosition}
-            fromRef={adaIcon2Ref}
+            fromRef={cadarnoSystemRef}
             toRef={operatorRewardRef}
             pointTo='border'
             pointFrom='border'
+            isCentalVertical={false}
             orient='vertical'
             dashed={(data?.rewardPools || []).length === 0}
           />
@@ -196,12 +180,18 @@ const RewardsDistribution = ({
           open={openReceivedRewardsModal}
           onClose={() => setOpenReceivedRewardsModal(false)}
         />
-        <Box >
+        <Box>
           <Box>
             <Box ref={cadarnoSystemRef}>
-              <img src={CardarnoSystemReward} alt='CardarnoSystemReward' />
+              <img
+                ref={cadarnoSystemRef}
+                width={178}
+                height={230}
+                src={CardarnoSystemReward}
+                alt='CardarnoSystemReward'
+              />
             </Box>
-            <Box display='flex' flexDirection='row-reverse' justifyContent='space-between' mx={5}>
+            <Box display='flex' flexDirection='row-reverse' justifyContent='space-between' mx={"51px"} mt={2}>
               <Box width={80} height={70} ref={adaIcon1Ref}>
                 <ADAOrangeIcon />
               </Box>
@@ -209,18 +199,8 @@ const RewardsDistribution = ({
                 {(data?.rewardPools || []).length === 0 ? <ADADisnableIcon /> : <ADAOrangeIcon />}
               </Box>
             </Box>
-            <Box display={"flex"} justifyContent='space-between' flexDirection='row-reverse'>
-              <Box display={"flex"} ref={adaHolderRef}>
-                <PopoverStyled
-                  render={({ handleClick }: any) => (
-                    <Box ref={feeRef}>
-                      <img src={ADAHolderVerticalMobile} alt='ADAHolderVerticalMobile' />
-                    </Box>
-                  )}
-                  content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
-                />
-              </Box>
-              <Box display={"flex"} ref={operatorRewardRef}>
+            <Box display={"flex"} margin={"0 auto"} ml={"9px"} mt={4}>
+              <Box ref={operatorRewardRef}>
                 <PopoverStyled
                   render={({ handleClick }: any) => (
                     <Box>
@@ -233,9 +213,19 @@ const RewardsDistribution = ({
                   content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
                 />
               </Box>
+              <Box ref={adaHolderRef} position={"relative"}>
+                <PopoverStyled
+                  render={({ handleClick }: any) => (
+                    <Box ref={feeRef}>
+                      <img src={ADAHolderVerticalMobile} alt='ADAHolderVerticalMobile' />
+                    </Box>
+                  )}
+                  content={<PopupStaking hash={"1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"} />}
+                />
+              </Box>
             </Box>
           </Box>
-          <Box onClick={() => setOpenReceivedRewardsModal(true)} >
+          <Box onClick={() => setOpenReceivedRewardsModal(true)}>
             <Box position={"relative"}>
               <img style={{ marginLeft: "5px" }} src={RewardsAccount} alt='carrdano' />
               <RewarWallet>
@@ -256,20 +246,11 @@ const RewardsDistribution = ({
             position: "absolute",
             top: 0,
             left: 0,
-            height: "150vh",
+            height: isMobile ? "150vh" : "100vh",
             width: "100vw",
             zIndex: "-1"
           }}
         >
-          <Line
-            containerPosition={containerPosition}
-            fromRef={cadarnoSystemRef}
-            toRef={adaIcon1Ref}
-            pointTo='center'
-            pointFrom='center'
-            orient='vertical'
-            isCentalHorizontalFrom
-          />
           <Line
             containerPosition={containerPosition}
             fromRef={cadarnoSystemRef}
@@ -278,31 +259,34 @@ const RewardsDistribution = ({
             pointFrom='center'
             orient='vertical'
             isCentalHorizontalFrom
+            connectToReverse
             dashed
           />
           <ArrowDiagram
             containerPosition={containerPosition}
             fromRef={adaIcon2Ref}
             toRef={operatorRewardRef}
-            pointTo='center'
+            pointTo='border'
             pointFrom='center'
-            orient='vertical'
-            connectFromReverse
+            orient='horizontal'
             isCentalHorizontalFrom
+            connectToReverse
           />
           <ArrowDiagram
             containerPosition={containerPosition}
-            fromRef={adaIcon1Ref}
-            toRef={feeRef}
-            pointTo='center'
+            fromRef={cadarnoSystemRef}
+            toRef={adaHolderRef}
+            pointTo='border'
             pointFrom='center'
-            orient='vertical'
+            orient='horizontal'
+            isCentalHorizontalFrom
+            connectToReverse
           />
         </svg>
       </Box>
     );
   };
 
-  return <Box>{isTablet ? RewardsDistributionTimeLineMobile() : RewardsDistributionTimeLine()}</Box>;
+  return <Box>{isLargeTablet ? RewardsDistributionTimeLineMobile() : RewardsDistributionTimeLine()}</Box>;
 };
 export default RewardsDistribution;

@@ -98,7 +98,7 @@ const DelegatorLifecycle = () => {
               Staking Lifecycle For
             </Box>
             <Box display={"flex"} alignItems={"center"}>
-              <Box component={"span"} fontSize={"1rem"} lineHeight={1}>
+              <Box component={"span"} fontSize={"0.875rem"} lineHeight={1}>
                 Stake key:
               </Box>
               <CustomTooltip title={stakeId}>
@@ -110,18 +110,18 @@ const DelegatorLifecycle = () => {
           <BoxItemStyled>
             <BoxSwitchContainer>
               <BoxSwitch color={({ palette }) => palette.grey[400]}>
-                <Box>Switch to {mode === "timeline" ? "tablular" : "timeline"} view</Box>
+                <Box>Switch to {mode === "timeline" ? "tabular" : "timeline"} view</Box>
               </BoxSwitch>
               <ButtonGroup>
                 <ButtonSwitch active={+(mode === "timeline")} onClick={() => changeMode("timeline")}>
                   <ChartMode fill={mode === "timeline" ? "#fff" : "#344054"} />
                 </ButtonSwitch>
-                <ButtonSwitch active={+(mode === "tablular")} onClick={() => changeMode("tablular")}>
-                  <TableMode fill={mode === "tablular" ? "#fff" : "#344054"} />
+                <ButtonSwitch active={+(mode === "tabular")} onClick={() => changeMode("tabular")}>
+                  <TableMode fill={mode === "tabular" ? "#fff" : "#344054"} />
                 </ButtonSwitch>
               </ButtonGroup>
             </BoxSwitchContainer>
-            {mode === "tablular" && (
+            {mode === "tabular" && (
               <ButtonReportContainer disabled={!isLoggedIn}>
                 <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>
               </ButtonReportContainer>
@@ -137,7 +137,7 @@ const DelegatorLifecycle = () => {
               setCurrentStep={setCurrentStep}
             />
           )}
-          {mode === "tablular" && <Tablular />}
+          {mode === "tabular" && <Tablular />}
         </Box>
         <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
       </StyledContainer>

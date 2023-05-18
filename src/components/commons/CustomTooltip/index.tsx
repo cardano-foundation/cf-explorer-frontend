@@ -1,4 +1,5 @@
 import { Tooltip, TooltipProps, useTheme } from "@mui/material";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 interface Props extends TooltipProps {
   wOpacity?: boolean;
@@ -7,6 +8,7 @@ interface Props extends TooltipProps {
 export const CustomTooltip = (props: Props) => {
   const { componentsProps, placement, wOpacity = true, ...otherProps } = props;
   const theme = useTheme();
+  const { isMobile } = useScreen();
   return (
     <Tooltip
       arrow
@@ -24,7 +26,7 @@ export const CustomTooltip = (props: Props) => {
         transition: {
           ...(componentsProps?.transition || {}),
           style: {
-            maxWidth: 400,
+            maxWidth: isMobile ? "calc(100vw - 20px)" : 400,
             fontSize: "var(--font-size-text-small)",
             padding: "6px 8px",
             lineHeight: 1.5,

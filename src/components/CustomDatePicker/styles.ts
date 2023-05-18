@@ -29,5 +29,5 @@ export const WrapCustomDatePicker = styled(Box)(({ theme }) => ({
   minHeight: "18px",
   minWidth: "200px",
   fontSize: "16px",
-  fontWeight: 400,
+  fontWeight: 400
 }));

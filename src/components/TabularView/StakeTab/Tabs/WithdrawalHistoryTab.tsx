@@ -13,7 +13,7 @@ import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecy
 import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
 import { GreenWalletIcon } from "../../TabularOverview";
-import { StyledLink, TableSubTitle, WrapWalletLabel } from "../styles";
+import { StyledLink, TableSubTitle, WrapWalletLabel, WrapperDelegationTab } from "../styles";
 import { AdaValue } from "./StakeRegistrationTab";
 import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 
@@ -64,10 +64,10 @@ const WithdrawalHistoryTab = () => {
       minWidth: "120px",
       render: (r) => (
         <Box>
-          <AdaValue value={r.value - r.fee} />
+          <AdaValue limit={5} value={r.value - r.fee} />
           <TableSubTitle>
             <Box display='flex' mt={1} alignItems='center' lineHeight='1'>
-              <AdaValue color={theme.palette.grey[400]} value={r.value} gap='3px' fontSize='12px' />
+              <AdaValue limit={1} color={theme.palette.grey[400]} value={r.value} gap='3px' fontSize='12px' />
               <Box mx='3px'>/</Box>
               <AdaValue color={theme.palette.grey[400]} value={r.fee} gap='3px' fontSize='12px' />
             </Box>
@@ -96,7 +96,7 @@ const WithdrawalHistoryTab = () => {
 
   return (
     <>
-      <Box display='flex' alignItems='center' justifyContent='space-between' mt={3}>
+      <WrapperDelegationTab>
         <WrapWalletLabel>
           <GreenWalletIcon mr={1} />
           <Box mr={1}>Rewards withdrawn:</Box>
@@ -121,7 +121,7 @@ const WithdrawalHistoryTab = () => {
             }}
           />
         </Box>
-      </Box>
+      </WrapperDelegationTab>
       <Table
         {...fetchData}
         columns={columns}

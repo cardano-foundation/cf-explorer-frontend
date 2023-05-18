@@ -42,7 +42,7 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
       setBookmark([]);
       setUsername("");
       setUser({ ...user, userData: {} });
-      // window.location.reload();
+      window.location.reload();
     }
   };
 

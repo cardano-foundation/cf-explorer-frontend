@@ -66,7 +66,10 @@ export const ViewDetailScroll = styled(Box)(({ theme }) => ({
     overflowY: "auto",
     width: "100%",
     padding: "15px 16px",
-    maxWidth: "unset"
+    maxWidth: "unset",
+    "&::-webkit-scrollbar": {
+      width: "2px",
+    }
   }
 }));
 export const HeaderContainer = styled(Box)`
@@ -136,13 +139,13 @@ export const MetaData = styled("small")`
 
 export const TokenHeaderInfo = styled(Box)`
   display: flex;
-  width: calc(100% - 40px);
+  width: 100%;
   gap: 10px;
   overflow: hidden;
 `;
 export const TokenTotalSupply = styled(Box)`
   flex: 1;
-  padding-right: 20px;
+  padding-right: 10px;
 `;
 export const TokenDecimal = styled(Box)`
   flex: 1;

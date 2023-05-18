@@ -34,7 +34,6 @@ export const WrapContent = styled(Box)`
       background: ${(props) => props.theme.palette.grey[100]};
     }
   }
-
 `;
 
 export const Watermark = styled("span")`
