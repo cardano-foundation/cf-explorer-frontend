@@ -1,5 +1,5 @@
-import { TabPanel } from "@mui/lab";
-import { Box, Typography, styled } from "@mui/material";
+import { TabList, TabPanel } from "@mui/lab";
+import { Box, Tab, Tabs, Typography, styled } from "@mui/material";
 
 export const TabLabel = styled(Typography)<{ active: number }>(
   (props) => `
@@ -20,5 +20,27 @@ export const TabHeader = styled(Box)`
   align-items: center;
   & .MuiTabs-indicator {
     height: 4px;
+  }
+`;
+
+export const StyledTabList = styled(TabList)`
+  display: flex;
+  gap: 20px !important;
+`;
+
+export const StyledTabs = styled(Tabs)`
+  .MuiTabs-flexContainer {
+    gap: 50px;
+    ${({ theme }) => theme.breakpoints.down("md")} {
+      gap: 30px;
+    }
+  }
+`;
+
+export const StyledTab = styled(Tab)`
+  color: ${(props) => props.theme.palette.grey[400]};
+  padding: 0;
+  &.Mui-selected {
+    color: ${(props) => props.theme.palette.text.primary};
   }
 `;
