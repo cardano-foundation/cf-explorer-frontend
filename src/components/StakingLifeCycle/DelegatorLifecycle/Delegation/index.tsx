@@ -40,16 +40,26 @@ const Delegation = ({
   };
   handleResize: () => void;
 }) => {
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [selected, setSelected] = useState<DelegationItem | null>(null);
+  const [openModal, setOpenModal] = useState(false);
 
   const handleSelect = (delegation: DelegationItem | null) => {
     setSelected(delegation);
   };
 
+  const handleToggleModal = () => setOpenModal((state) => !state);
+
   const { isLargeTablet } = useScreen();
 
   return (
     <Box>
+      <DelegationCertificateModal
+        txHash={selected?.txHash || ""}
+        open={openModal}
+        handleCloseModal={handleToggleModal}
+        stake={stakeId}
+      />
       <Box>
         <RecentDelegations onSelect={handleSelect} />
       </Box>
@@ -60,6 +70,7 @@ const Delegation = ({
             setSelected={setSelected}
             containerPosition={containerPosition}
             selected={selected}
+            toggleModal={handleToggleModal}
           />
         ) : selected ? (
           <DelegationTimeline
@@ -67,6 +78,7 @@ const Delegation = ({
             setSelected={setSelected}
             containerPosition={containerPosition}
             selected={selected}
+            toggleModal={handleToggleModal}
           />
         ) : null}
       </Box>
@@ -90,7 +102,8 @@ interface DelegationDetail {
 const DelegationTimeline = ({
   containerPosition,
   handleResize,
-  selected
+  selected,
+  toggleModal
 }: {
   containerPosition: {
     top?: number;
@@ -99,9 +112,9 @@ const DelegationTimeline = ({
   setSelected: (item: DelegationItem | null) => void;
   handleResize: () => void;
   selected: DelegationItem | null;
+  toggleModal: () => void;
 }) => {
   const theme = useTheme();
-  const [openModal, setOpenModal] = useState(false);
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const history = useHistory();
   const { data, loading } = useFetch<DelegationDetail>(
@@ -271,7 +284,7 @@ const DelegationTimeline = ({
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
           <Box ref={fake1Ref} width={"190px"} height={220}></Box>
-          <Box component={IconButton} p={0} onClick={() => setOpenModal(true)}>
+          <Box component={IconButton} p={0} onClick={toggleModal}>
             <Box ref={registrationRef} width={220} height={220}>
               <Box
                 component={"img"}
@@ -285,12 +298,6 @@ const DelegationTimeline = ({
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
-      <DelegationCertificateModal
-        txHash={selected?.txHash || ""}
-        open={openModal}
-        handleCloseModal={() => setOpenModal(false)}
-        stake={stakeId}
-      />
     </Box>
   );
 };
@@ -298,7 +305,8 @@ const DelegationTimelineMobile = ({
   containerPosition,
   setSelected,
   handleResize,
-  selected
+  selected,
+  toggleModal
 }: {
   containerPosition: {
     top?: number;
@@ -307,9 +315,9 @@ const DelegationTimelineMobile = ({
   setSelected: (item: DelegationItem | null) => void;
   handleResize: () => void;
   selected: DelegationItem | null;
+  toggleModal: () => void;
 }) => {
   const theme = useTheme();
-  const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const { data, loading } = useFetch<DelegationDetail>(
@@ -389,7 +397,7 @@ const DelegationTimelineMobile = ({
         </Box>
         <Box display='flex' justifyContent='space-between' mt={8} marginX={2}>
           <Box>
-            <Box component={IconButton} p={0} onClick={() => setOpenModal(true)}>
+            <Box component={IconButton} p={0} onClick={toggleModal}>
               <Box ref={registrationRef}>
                 <img width={140} src={DelegationCertificateIcon} alt='RegistrationCertificateIcon' />
               </Box>
@@ -455,12 +463,6 @@ const DelegationTimelineMobile = ({
           />
         </svg>
       </Box>
-      <DelegationCertificateModal
-        txHash={selected?.txHash || ""}
-        open={openModal}
-        handleCloseModal={() => setOpenModal(false)}
-        stake={stakeId}
-      />
     </Box>
   );
 };

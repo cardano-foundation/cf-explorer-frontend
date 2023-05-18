@@ -73,24 +73,37 @@ const PoollUpdates = ({
   };
   handleResize: () => void;
 }) => {
+  const { poolId = "" } = useParams<{ poolId: string }>();
   const [selected, setSelected] = useState<PoolUpdateItem | null>(null);
-
+  const [openModal, setOpenModal] = useState(false);
+  const { data, loading } = useFetch<PoolUpdateDetail>(
+    selected?.poolUpdateId ? API.SPO_LIFECYCLE.POOL_UPDATE_DETAIL(selected.poolUpdateId) : ""
+  );
   const handleSelect = (pool: PoolUpdateItem | null) => {
     setSelected(pool);
   };
 
+  const handleToggleModal = () => setOpenModal((state) => !state);
+
   const { isTablet } = useScreen();
   return (
     <Box>
+      <PoolUpdateModal data={data} handleCloseModal={handleToggleModal} open={openModal} />
       <Box>
         <PoollUpdatesList onSelect={handleSelect} />
       </Box>
       <Box>
         {!!selected && !isTablet && (
-          <PoollUpdatesTimeline handleResize={handleResize} selected={selected} containerPosition={containerPosition} />
+          <PoollUpdatesTimeline
+            toggleModal={handleToggleModal}
+            handleResize={handleResize}
+            selected={selected}
+            containerPosition={containerPosition}
+          />
         )}
         {!!selected && isTablet && (
           <PoollUpdatesTimelineMobile
+            toggleModal={handleToggleModal}
             handleResize={handleResize}
             selected={selected}
             setSelected={setSelected}
@@ -180,7 +193,10 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
 const PoollUpdatesTimeline = ({
   containerPosition,
   selected,
-  handleResize
+  handleResize,
+  toggleModal,
+  data,
+  loading
 }: {
   containerPosition: {
     top?: number;
@@ -188,13 +204,12 @@ const PoollUpdatesTimeline = ({
   };
   handleResize: () => void;
   selected: PoolUpdateItem;
+  toggleModal: () => void;
+  data?: PoolUpdateDetail | null;
+  loading?: boolean;
 }) => {
   const { poolId = "" } = useParams<{ poolId: string }>();
   const history = useHistory();
-  const { data, loading } = useFetch<PoolUpdateDetail>(
-    selected?.poolUpdateId ? API.SPO_LIFECYCLE.POOL_UPDATE_DETAIL(selected.poolUpdateId) : ""
-  );
-  const [openModal, setOpenModal] = useState(false);
   const adaHolderRef = useRef(null);
   const feeRef = useRef(null);
   const cadarnoSystemRef = useRef(null);
@@ -437,14 +452,7 @@ const PoollUpdatesTimeline = ({
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
           <Box ref={fake1Ref} width={"190px"} height={220}></Box>
-          <Box
-            ref={registrationRef}
-            width={220}
-            height={220}
-            component={IconButton}
-            p={0}
-            onClick={() => setOpenModal(true)}
-          >
+          <Box ref={registrationRef} width={220} height={220} component={IconButton} p={0} onClick={toggleModal}>
             <Box
               component={"img"}
               style={{ marginLeft: "5px" }}
@@ -455,8 +463,6 @@ const PoollUpdatesTimeline = ({
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
-
-      <PoolUpdateModal data={data} handleCloseModal={() => setOpenModal(false)} open={openModal} />
     </Box>
   );
 };
@@ -465,7 +471,10 @@ const PoollUpdatesTimelineMobile = ({
   containerPosition,
   setSelected,
   selected,
-  handleResize
+  handleResize,
+  toggleModal,
+  data,
+  loading
 }: {
   containerPosition: {
     top?: number;
@@ -474,11 +483,10 @@ const PoollUpdatesTimelineMobile = ({
   setSelected: (pool: PoolUpdateItem | null) => void;
   handleResize: () => void;
   selected: PoolUpdateItem;
+  toggleModal: () => void;
+  data?: PoolUpdateDetail | null;
+  loading?: boolean;
 }) => {
-  const { data, loading } = useFetch<PoolUpdateDetail>(
-    selected?.poolUpdateId ? API.SPO_LIFECYCLE.POOL_UPDATE_DETAIL(selected.poolUpdateId) : ""
-  );
-  const [openModal, setOpenModal] = useState(false);
   const adaHolderRef = useRef(null);
   const feeRef = useRef(null);
   const cadarnoSystemRef = useRef(null);
@@ -616,7 +624,7 @@ const PoollUpdatesTimelineMobile = ({
         </Box>
 
         <Box>
-          <Box ref={registrationRef} onClick={() => setOpenModal(true)}>
+          <Box ref={registrationRef} onClick={toggleModal}>
             <img src={PoolCertificateMobile} alt='RegistrationCertificateIcon' />
           </Box>
 
@@ -683,8 +691,6 @@ const PoollUpdatesTimelineMobile = ({
           />
         </svg>
       </Box>
-
-      <PoolUpdateModal data={data} handleCloseModal={() => setOpenModal(false)} open={openModal} />
     </StyledBox>
   );
 };

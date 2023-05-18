@@ -42,15 +42,21 @@ const Deregistration = ({
   };
   handleResize: () => void;
 }) => {
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [selected, setSelected] = useState<DeregistrationItem | null>(null);
+  const [openModal, setOpenModal] = useState(false);
+
   const handleSelect = (deregistration: DeregistrationItem | null) => {
     setSelected(deregistration);
   };
+
+  const handleToggleModal = () => setOpenModal((state) => !state);
 
   const { isLargeTablet } = useScreen();
 
   return (
     <Box>
+      <DeregistrationCertificateModal open={openModal} handleCloseModal={handleToggleModal} stake={stakeId} />
       <Box>
         <RecentDeregistrations onSelect={handleSelect} />
       </Box>
@@ -61,12 +67,14 @@ const Deregistration = ({
             setSelected={setSelected}
             selected={selected}
             containerPosition={containerPosition}
+            toggleModal={handleToggleModal}
           />
         ) : (
           <DeregistrationTimeline
             handleResize={handleResize}
             selected={selected}
             containerPosition={containerPosition}
+            toggleModal={handleToggleModal}
           />
         ))}
     </Box>
@@ -77,7 +85,8 @@ export default Deregistration;
 const DeregistrationTimeline = ({
   containerPosition,
   handleResize,
-  selected
+  selected,
+  toggleModal
 }: {
   containerPosition: {
     top?: number;
@@ -85,6 +94,7 @@ const DeregistrationTimeline = ({
   };
   handleResize: () => void;
   selected: DeregistrationItem;
+  toggleModal: () => void;
 }) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const history = useHistory();
@@ -96,8 +106,6 @@ const DeregistrationTimeline = ({
   const fake1Ref = useRef(null);
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
-
-  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     handleResize();
@@ -275,7 +283,7 @@ const DeregistrationTimeline = ({
             p={0}
             component={IconButton}
             bgcolor={"transparent"}
-            onClick={() => setOpenModal(true)}
+            onClick={toggleModal}
             ref={registrationRef}
             width={220}
             height={220}
@@ -285,7 +293,6 @@ const DeregistrationTimeline = ({
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
-      <DeregistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
     </Box>
   );
 };
@@ -293,7 +300,8 @@ const DeregistrationTimelineMobile = ({
   containerPosition,
   setSelected,
   handleResize,
-  selected
+  selected,
+  toggleModal
 }: {
   containerPosition: {
     top?: number;
@@ -302,6 +310,7 @@ const DeregistrationTimelineMobile = ({
   handleResize: () => void;
   setSelected: (deregistration: DeregistrationItem | null) => void;
   selected: DeregistrationItem;
+  toggleModal: () => void;
 }) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
 
@@ -315,8 +324,6 @@ const DeregistrationTimelineMobile = ({
   const registrationRef = useRef(null);
   const history = useHistory();
   const { isMobile } = useScreen();
-
-  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     handleResize();
@@ -365,13 +372,7 @@ const DeregistrationTimelineMobile = ({
             ></Box>
           </Box>
           <Box display='flex' mt={5}>
-            <Box
-              p={0}
-              component={IconButton}
-              bgcolor={"transparent"}
-              onClick={() => setOpenModal(true)}
-              ref={registrationRef}
-            >
+            <Box p={0} component={IconButton} bgcolor={"transparent"} onClick={toggleModal} ref={registrationRef}>
               <img src={DeregistrationCertificateMobile} alt='DeregistrationCertificateMobile' />
             </Box>
             <Box mt={11}>
@@ -484,7 +485,6 @@ const DeregistrationTimelineMobile = ({
           </svg>
         </Box>
       </Box>
-      <DeregistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
     </Box>
   );
 };

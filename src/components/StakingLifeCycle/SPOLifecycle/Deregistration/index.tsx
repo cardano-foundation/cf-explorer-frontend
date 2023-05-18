@@ -54,13 +54,18 @@ const Deregistration = ({
   handleResize: () => void;
 }) => {
   const [selected, setSelected] = useState<SPODeregistration | null>(null);
+  const [openModal, setOpenModal] = useState(false);
   const { isLargeTablet } = useScreen();
 
   const handleSelect = (deregistration: SPODeregistration | null) => {
     setSelected(deregistration);
   };
+
+  const handleToggleModal = () => setOpenModal((state) => !state);
+
   return (
     <Box>
+      <DeregistrationCertificateModal data={selected} handleCloseModal={handleToggleModal} open={openModal} />
       <Box>
         <RecentDeregistrations onSelect={handleSelect} />
       </Box>
@@ -70,6 +75,7 @@ const Deregistration = ({
             handleResize={handleResize}
             selected={selected}
             containerPosition={containerPosition}
+            toggleModal={handleToggleModal}
           />
         )}
         {!!selected && isLargeTablet && (
@@ -77,6 +83,7 @@ const Deregistration = ({
             handleResize={handleResize}
             selected={selected}
             containerPosition={containerPosition}
+            toggleModal={handleToggleModal}
           />
         )}
       </Box>
@@ -88,7 +95,8 @@ export default Deregistration;
 const DeregistrationTimeline = ({
   containerPosition,
   selected,
-  handleResize
+  handleResize,
+  toggleModal
 }: {
   containerPosition: {
     top?: number;
@@ -96,8 +104,8 @@ const DeregistrationTimeline = ({
   };
   handleResize: () => void;
   selected: SPODeregistration | null;
+  toggleModal: () => void;
 }) => {
-  const [openModal, setOpenModal] = useState(false);
   const { poolId = "" } = useParams<{ poolId: string }>();
   const history = useHistory();
 
@@ -359,21 +367,12 @@ const DeregistrationTimeline = ({
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
           <Box ref={fake1Ref} width={"190px"} height={220}></Box>
-          <Box
-            ref={registrationRef}
-            width={220}
-            height={220}
-            component={IconButton}
-            p={0}
-            onClick={() => setOpenModal(true)}
-          >
+          <Box ref={registrationRef} width={220} height={220} component={IconButton} p={0} onClick={toggleModal}>
             <img style={{ marginLeft: "5px" }} src={DeregistrationCertificateIcon} alt='RegistrationCertificateIcon' />
           </Box>
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
-
-      <DeregistrationCertificateModal data={selected} handleCloseModal={() => setOpenModal(false)} open={openModal} />
     </Box>
   );
 };
@@ -381,7 +380,8 @@ const DeregistrationTimeline = ({
 const DeregistrationTimelineMobile = ({
   containerPosition,
   selected,
-  handleResize
+  handleResize,
+  toggleModal
 }: {
   containerPosition: {
     top?: number;
@@ -389,8 +389,8 @@ const DeregistrationTimelineMobile = ({
   };
   handleResize: () => void;
   selected: SPODeregistration | null;
+  toggleModal: () => void;
 }) => {
-  const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
   const { poolId = "" } = useParams<{ poolId: string }>();
 
@@ -522,7 +522,7 @@ const DeregistrationTimelineMobile = ({
             ref={registrationRef}
             padding={"24px"}
             sx={{ background: "#fff", borderRadius: "12px" }}
-            onClick={() => setOpenModal(true)}
+            onClick={toggleModal}
           >
             <img
               src={DeregistrationCertificateMobile}
@@ -640,8 +640,6 @@ const DeregistrationTimelineMobile = ({
           />
         </svg>
       </Box>
-
-      <DeregistrationCertificateModal data={selected} handleCloseModal={() => setOpenModal(false)} open={openModal} />
     </StyledBox>
   );
 };
