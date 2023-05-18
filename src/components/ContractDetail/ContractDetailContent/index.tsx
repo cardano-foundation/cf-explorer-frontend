@@ -42,7 +42,9 @@ const ContractDetailContent: React.FC = () => {
           TabIndicatorProps={{ sx: { background: (theme) => theme.palette.primary.main, height: 3 } }}
         >
           {tabs?.map((item) => (
-            <Tab key={item.key} label={item.label} value={item.key} />
+            <Tab key={item.key} label={item.label} value={item.key} sx={{
+              padding: "12px 0",
+            }}/>
           ))}
         </TabListStyled>
       </Box>
