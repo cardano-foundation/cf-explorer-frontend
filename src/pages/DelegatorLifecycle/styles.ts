@@ -65,10 +65,10 @@ export const ButtonReportContainer = styled(Button)<{ disabled?: boolean }>(({ t
   [theme.breakpoints.down("md")]: {
     justifyContent: "start",
     marginLeft: 0,
-    marginTop: "18px"
+    marginTop: 10
   },
   padding: 0,
-  opacity: disabled ? 0.5 : 1,
+  opacity: disabled ? 0.5 : 1
 }));
 
 export const BoxContainerStyled = styled(Box)(({ theme }) => ({
@@ -99,7 +99,7 @@ export const BoxSwitchContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   gap: 15,
   [theme.breakpoints.down("md")]: {
-    justifyContent: "space-between",
+    justifyContent: "space-between"
   }
 }));
 

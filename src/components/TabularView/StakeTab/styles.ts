@@ -31,7 +31,7 @@ export const StyledTabList = styled(TabList)`
     justify-content: flex-start;
   }
   .MuiTabScrollButton-root {
-    display: none
+    display: none;
   }
 `;
 

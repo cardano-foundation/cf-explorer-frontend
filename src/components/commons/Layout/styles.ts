@@ -160,7 +160,6 @@ export const Main = styled(Box)<{ open: number; sidebar: number }>`
   }
 `;
 
-
-export const ArrowCollapse = styled('span')`
+export const ArrowCollapse = styled("span")`
   z-index: 100;
-`
+`;

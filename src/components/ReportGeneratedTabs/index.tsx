@@ -28,7 +28,12 @@ const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
         <TabHeader>
           <Tabs>
             <Box>
-              <TabList onChange={handleChange} aria-label='lab API tabs example'>
+              <TabList
+                onChange={handleChange}
+                aria-label='lab API tabs example'
+                scrollButtons='auto'
+                variant='scrollable'
+              >
                 {tabsItem.map((item) => (
                   <Tab
                     key={item.value}

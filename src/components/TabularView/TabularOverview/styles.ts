@@ -5,6 +5,7 @@ export const CardOverview = styled(Box)`
   border-radius: 12px;
   height: 120px;
   display: flex;
+  flex: wrap;
   padding: 0 25px;
   position: relative;
   overflow: hidden;
@@ -47,7 +48,7 @@ export const TransferButton = styled(Button)(({ theme }) => ({
   borderRadius: 8,
   textTransform: "unset",
   boxShadow: "none",
-  height: 36,
+  height: 36
 }));
 
 export const WrapWalletIcon = styled(Box)`

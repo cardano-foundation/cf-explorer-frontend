@@ -27,6 +27,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
     toDate: undefined,
     txHash: undefined
   });
+
   const { data, total, loading, initialized, error } = useFetchList<RegistrationItem>(
     stakeId ? API.STAKE_LIFECYCLE.REGISTRATION(stakeId) : "",
     {
@@ -50,13 +51,14 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
   }, [JSON.stringify(data)]);
 
   const filterLabel = useMemo(() => {
+    const sortArr = params.sort && params.sort.split(",");
     if (params.fromDate && params.toDate)
       return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
         .utc(params.toDate, DATETIME_PARTTEN)
         .local()
         .format("MM/DD/YYYY")}`;
-    if (params.sort && params.sort.length >= 2)
-      return `${params.sort[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
+    if (params.sort && sortArr && params.sort.length >= 2)
+      return `${sortArr[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
     if (params.txHash) return `Searching for : ${params.txHash}`;
   }, [params]);
 
@@ -64,7 +66,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
 
   return (
     <Box marginTop='32px' data-testid='recent-registration'>
-      <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
+      <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"} alignItems={"center"}>
         <DescriptionText>Registration List</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>

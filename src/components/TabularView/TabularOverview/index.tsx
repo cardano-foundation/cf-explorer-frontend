@@ -64,18 +64,30 @@ const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
         <Icon component={BgGray} />
         <Box display='flex' alignItems='center' gap='12px'>
           <WrapIcon pt={`${isSmallScreen ? "30px" : "0px"}`}>{mainIcon}</WrapIcon>
-          <Box display='flex' alignItems={isSmallScreen ? "start" : "center"} flexDirection={isSmallScreen ? "column" : "row"}>
+          <Box
+            display='flex'
+            alignItems={isSmallScreen ? "start" : "center"}
+            flexDirection={isSmallScreen ? "column" : "row"}
+          >
             <Box textAlign='start'>
               <CardTitle>{title}</CardTitle>
               {value}
             </Box>
-            {action ?
+            {action ? (
               <Box display='flex' ml={isSmallScreen ? "" : "30px"} mt={`${isSmallScreen ? "8px" : "0px"}`}>
                 {" "}
                 {action}
               </Box>
-              : <Box />}
+            ) : (
+              <Box />
+            )}
           </Box>
+        </Box>
+        <Box
+          pl={`${isMobile ? "70px" : "0px"}`}
+          sx={{ margin: `${isMobile ? "0 auto" : "0px"}`, mt: `${isMobile ? "-6px" : "0px"}` }}
+        >
+          {action}
         </Box>
       </CardOverview>
     </Grid>
@@ -87,7 +99,7 @@ const TabularOverview: React.FC = () => {
   const [open, setOpen] = useState(false);
   const { stakeId } = useParams<{ stakeId: string }>();
   return (
-    <Grid container spacing={2} >
+    <Grid container spacing={2}>
       <GridItem
         title='Payment Wallet'
         mainIcon={<PaymentWallet />}

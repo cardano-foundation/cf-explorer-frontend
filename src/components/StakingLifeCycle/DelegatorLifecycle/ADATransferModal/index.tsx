@@ -8,6 +8,7 @@ import { Box } from "@mui/material";
 import RewardActivity from "./RewardActivity";
 import { BalanceIcon, RewardsIcon } from "../../../../commons/resources";
 import CustomIcon from "../../../commons/CustomIcon";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 interface IProps {
   open: boolean;
@@ -34,11 +35,13 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
     }
   };
 
+  const { isMobile } = useScreen();
+
   return (
-    <StyledModal open={open} handleCloseModal={handleCloseModal} width={1200} height={"72vh"}>
+    <StyledModal open={open} handleCloseModal={handleCloseModal} width={1200} height={isMobile ? "83vh" : "72vh"}>
       <TabContext value={activityType}>
         <ModalTitle>ADA Transfers</ModalTitle>
-        <Box overflow={"auto"} maxHeight={"70vh"}>
+        <Box overflow={"auto"} maxHeight={isMobile ? "80vh" : "70vh"}>
           <StyledTabs
             value={activityType}
             onChange={onChangeTab}

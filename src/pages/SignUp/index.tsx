@@ -92,7 +92,7 @@ export default function SignUp() {
     }
   });
   useEffect(() => {
-    if(isLoggedIn){
+    if (isLoggedIn) {
       history.push(routers.HOME);
     }
   }, [isLoggedIn]);
@@ -218,7 +218,7 @@ export default function SignUp() {
           touched: true,
           error: error.response.data.errorMessage,
           value: formData.email.value
-        })
+        });
       }
     } finally {
       setLoading(false);
@@ -355,18 +355,20 @@ export default function SignUp() {
               </WrapButton>
             </WrapForm>
           </FormGroup>
-        </WrapContent>) : (
+        </WrapContent>
+      ) : (
         <WrapContent>
           <WrapForm>
             <FormGroup>
-              <Box textAlign={'center'}>
+              <Box textAlign={"center"}>
                 <SuccessIcon />
                 <Box paddingY={"15px"}>
                   <Title>Verify Your Account</Title>
                 </Box>
                 <Box paddingBottom={"30px"}>
                   <LabelInfo>
-                    Click on the link we sent to <WrapEmail>{formData.email.value}</WrapEmail> to finish your account setup.
+                    Click on the link we sent to <WrapEmail>{formData.email.value}</WrapEmail> to finish your account
+                    setup.
                   </LabelInfo>
                 </Box>
               </Box>

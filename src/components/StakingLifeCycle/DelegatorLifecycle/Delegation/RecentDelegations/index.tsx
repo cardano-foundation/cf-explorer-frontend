@@ -54,13 +54,14 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
   }, [JSON.stringify(data)]);
 
   const filterLabel = useMemo(() => {
+    const sortArr = params.sort && params.sort.split(",");
     if (params.fromDate && params.toDate)
       return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
         .utc(params.toDate, DATETIME_PARTTEN)
         .local()
         .format("MM/DD/YYYY")}`;
-    if (params.sort && params.sort.length >= 2)
-      return `${params.sort[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
+    if (params.sort && sortArr && params.sort.length >= 2)
+      return `${sortArr[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
     if (params.txHash) return `Searching for : ${params.txHash}`;
   }, [params]);
 
@@ -68,7 +69,7 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
 
   return (
     <Box marginTop='32px'>
-      <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
+      <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} marginBottom={"10px"}>
         <DescriptionText>Recent Delegations</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>

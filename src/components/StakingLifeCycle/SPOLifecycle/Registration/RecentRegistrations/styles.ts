@@ -1,5 +1,5 @@
 import { Popover, Button, styled, Box } from "@mui/material";
-  
+
 export const GridBox = styled("div")(({ theme }) => ({
   display: "grid",
   gridTemplateColumns: "repeat(4, 1fr)",
@@ -25,8 +25,6 @@ export const GridBox = styled("div")(({ theme }) => ({
   }
 }));
 
-
-
 export const WrapFilterDescription = styled("span")(({ theme }) => ({
   fontSize: "14px",
   fontWeight: 400,
@@ -34,7 +32,7 @@ export const WrapFilterDescription = styled("span")(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     fontSize: "12px"
   }
-})); 
+}));
 
 export const StyledList = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {

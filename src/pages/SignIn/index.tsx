@@ -86,7 +86,7 @@ export default function SignIn() {
   };
 
   useEffect(() => {
-    if(isLoggedIn){
+    if (isLoggedIn) {
       history.push(routers.HOME);
     }
   }, [isLoggedIn]);
