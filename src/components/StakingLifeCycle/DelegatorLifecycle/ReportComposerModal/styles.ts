@@ -1,4 +1,4 @@
-import { styled, Stack, Box, Button, TextField, Slider } from "@mui/material";
+import { styled, Stack, Box, Button, TextField, Slider, Typography } from "@mui/material";
 import { SelectMui } from "../../../commons/Table/styles";
 import breakpoints from "~/themes/breakpoints";
 
@@ -176,4 +176,19 @@ export const StyledSlider = styled(Slider)`
   }
 
   margin-bottom: 12px;
+`;
+
+export const EventLabel = styled(Typography)`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  max-width: 300px;
+  color: #000000;
+  cursor: pointer;
+  @media screen and (max-width: ${breakpoints.values.sm}px) {
+    max-width: 180px;
+  }
 `;

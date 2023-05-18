@@ -2,6 +2,7 @@ import { Box, CircularProgress, Stack } from "@mui/material";
 import { Container } from "../../../Account/ActivityLogModal/styles";
 import StyledModal from "../../../commons/StyledModal";
 import {
+  EventLabel,
   ModalTitle,
   StyledBackButton,
   StyledButton,
@@ -24,6 +25,7 @@ import { useState } from "react";
 import { getEventType } from "../../../StakekeySummary";
 import { getPoolEventType } from "../../../PoolLifecycle";
 import { useScreen } from "../../../../commons/hooks/useScreen";
+import CustomTooltip from "~/components/commons/CustomTooltip";
 
 const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaultParams, gotoStep }) => {
   const toast = useToast();
@@ -120,7 +122,11 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
     },
     {
       label: isPoolReport ? "Pool Report by event" : "Staking lifecycle events",
-      value: events,
+      value: (
+        <CustomTooltip title={events}>
+          <EventLabel>{events}</EventLabel>
+        </CustomTooltip>
+      ),
       step: STEPS.step3
     }
   ];
