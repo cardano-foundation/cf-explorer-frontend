@@ -1,4 +1,5 @@
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 import { ExchangeIcon } from "../../../../commons/resources";
 import cubeIcon from "../../../../commons/resources/icons/blockIcon.svg";
 import slotIcon from "../../../../commons/resources/icons/slot.svg";
@@ -8,25 +9,18 @@ import { formatDateTimeLocal, getEpochSlotNo } from "../../../../commons/utils/h
 import { Status } from "../../../../pages/Epoch/styles";
 import DetailHeader from "../../DetailHeader";
 import ProgressCircle from "../../ProgressCircle";
-import { useScreen } from "../../../../commons/hooks/useScreen";
-import useFetchList from "../../../../commons/hooks/useFetchList";
-import { API } from "../../../../commons/utils/api";
 import {
-  CardItem,
-  CardItemTitle,
-  Date,
-  EpochCard,
   EpochNumber,
   EpochProgress,
-  EpochValue,
-  MaxSlot,
-  Time,
   TitleCard
 } from "./styles";
 
-export default function FirstEpoch() {
+interface IProps {
+  data: IDataEpoch[];
+}
+
+export default function FirstEpoch({ data }: IProps) {
   const { isTablet } = useScreen();
-  const { data } = useFetchList<IDataEpoch>(API.EPOCH.LIST, { size: 1 });
   const currentEpoch = data[0];
   if (!currentEpoch) return null;
   const progress = ((getEpochSlotNo(currentEpoch) / MAX_SLOT_EPOCH) * 100).toFixed(0);
@@ -38,7 +32,7 @@ export default function FirstEpoch() {
       value: (
         <Box display={"flex"} alignItems='center'>
           <ProgressCircle
-            size={60}
+            size={isTablet ? 60 : 100}
             pathLineCap='butt'
             pathWidth={6}
             trailWidth={6}
@@ -92,65 +86,6 @@ export default function FirstEpoch() {
       value: <Box component={"span"}>{formatDateTimeLocal(currentEpoch?.startTime || "")}</Box>
     }
   ];
-  if (isTablet) {
-    return <DetailHeader isHideButtonBack={true} loading={false} listItem={listOverview} type='EPOCH' title={" "} />;
-  }
-  return (
-    <EpochCard>
-      <EpochNumber>Epoch Number {currentEpoch.no}</EpochNumber>
-      <Box display='flex' alignItems='center' width='max-content' minWidth='100%'>
-        <Box mr={20}>
-          <ProgressCircle
-            size={100}
-            pathLineCap='butt'
-            pathWidth={6}
-            trailWidth={6}
-            percent={Number(progress)}
-            trailOpacity={1}
-          >
-            <EpochProgress>{`${progress}%`}</EpochProgress>
-            <Status status={currentEpoch.status?.toLowerCase()}>{EPOCH_STATUS[currentEpoch.status]}</Status>
-          </ProgressCircle>
-        </Box>
-        <Grid flex={1} container>
-          <CardItem item xs={3}>
-            <Box display='flex' alignItems='center'>
-              <img src={cubeIcon} alt='' height={20} />
-              <CardItemTitle>Block</CardItemTitle>
-            </Box>
-            <EpochValue>{currentEpoch.blkCount}</EpochValue>
-          </CardItem>
+  return <DetailHeader isHideButtonBack={true} loading={false} listItem={listOverview} type='EPOCH' title={" "} />;
 
-          <CardItem item xs={3}>
-            <Box display='flex' alignItems='center'>
-              <img src={slotIcon} alt='' height={20} />
-              <CardItemTitle>Slot</CardItemTitle>
-            </Box>
-            <EpochValue>
-              {getEpochSlotNo(currentEpoch)}
-              <MaxSlot>/{MAX_SLOT_EPOCH}</MaxSlot>
-            </EpochValue>
-          </CardItem>
-
-          <CardItem item xs={3}>
-            <Box display='flex' alignItems='center'>
-              <img src={timeIcon} alt='' height={20} />
-              <CardItemTitle>End Time</CardItemTitle>
-            </Box>
-            <Date>{formatDateTimeLocal(currentEpoch.endTime || "").split(" ")[0]}</Date>
-            <Time>{formatDateTimeLocal(currentEpoch.endTime || "").split(" ")[1]}</Time>
-          </CardItem>
-
-          <CardItem item xs={3}>
-            <Box display='flex' alignItems='center'>
-              <img src={timeIcon} alt='' height={20} />
-              <CardItemTitle>Start Time</CardItemTitle>
-            </Box>
-            <Date>{formatDateTimeLocal(currentEpoch.startTime || "").split(" ")[0]}</Date>
-            <Time>{formatDateTimeLocal(currentEpoch.startTime || "").split(" ")[1]}</Time>
-          </CardItem>
-        </Grid>
-      </Box>
-    </EpochCard>
-  );
 }

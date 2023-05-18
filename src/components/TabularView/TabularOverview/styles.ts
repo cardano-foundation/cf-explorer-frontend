@@ -44,11 +44,19 @@ export const TransferButton = styled(Button)(({ theme }) => ({
   color: theme.palette.common.white,
   fontSize: 14,
   fontWeight: theme.typography.fontWeightBold,
-  padding: "0 16px",
+  padding: "10px 16px",
   borderRadius: 8,
   textTransform: "unset",
   boxShadow: "none",
-  height: 36
+  width: "160px",
+}));
+
+export const WrapFlex = styled(Box)<{smallScreen: number}>(({theme, smallScreen}) => ({
+  display: "flex",
+  alignItems: smallScreen ? "start" : "center",
+  flexDirection: smallScreen ? "column" : "unset",
+  flexWrap: "wrap",
+  gap: "5px",
 }));
 
 export const WrapWalletIcon = styled(Box)`

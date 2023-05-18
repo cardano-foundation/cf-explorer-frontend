@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
-import TabularOverview from "../../../TabularView/TabularOverview";
-import StakeTab from "../../../TabularView/StakeTab";
+import { useHistory, useParams } from "react-router";
 import {
   DelegationIcon,
   DeredistrationIcon,
@@ -8,13 +7,14 @@ import {
   RewardsDistributionIcon,
   RewardsWithdrawalIcon
 } from "../../../../commons/resources";
-import StakeRegistrationTab from "../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
-import DelegationTab from "../../../TabularView/StakeTab/Tabs/DelegationTab";
-import RewardsDistributionTab from "../../../TabularView/StakeTab/Tabs/RewardsDistributionTab";
-import WithdrawalHistoryTab from "../../../TabularView/StakeTab/Tabs/WithdrawalHistoryTab";
-import DeregistrationTab from "../../../TabularView/StakeTab/Tabs/DeregistrationTab";
-import { useHistory, useParams } from "react-router";
 import { details } from "../../../../commons/routers";
+import StakeTab from "../../../TabularView/StakeTab";
+import DelegationTab from "../../../TabularView/StakeTab/Tabs/DelegationTab";
+import DeregistrationTab from "../../../TabularView/StakeTab/Tabs/DeregistrationTab";
+import RewardsDistributionTab from "../../../TabularView/StakeTab/Tabs/RewardsDistributionTab";
+import StakeRegistrationTab from "../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import WithdrawalHistoryTab from "../../../TabularView/StakeTab/Tabs/WithdrawalHistoryTab";
+import TabularOverview from "../../../TabularView/TabularOverview";
 
 const tabs: {
   icon: React.FC;
