@@ -44,8 +44,6 @@ import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
 
 const Routes: React.FC = () => {
-  //TODO: lấy stake key thay vì username trong tương lai
-  const stakeKey = localStorage.getItem("username");
   //TODO: lấy SPO
   return (
     <Switch>
@@ -83,16 +81,7 @@ const Routes: React.FC = () => {
       <Route path={routers.DELEGATOR_LIFECYCLE} exact component={DelegatorLifecycle} />
       <Route path={routers.SPO_LIFECYCLE} exact component={SPOLifecycle} />
       <Route path={routers.SPO_SEARCH} exact component={SPOSearch} />
-      <Route
-        path={routers.DELEGATOR_SEARCH}
-        exact
-        component={() => {
-          if (stakeKey) {
-            return <Redirect to={details.staking(stakeKey)} />;
-          }
-          return <DelegatorSearch />;
-        }}
-      />
+      <Route path={routers.DELEGATOR_SEARCH} exact component={DelegatorSearch} />
       <Route path={routers.ACCOUNT}>
         <AccountLayout>
           <Switch>

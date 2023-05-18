@@ -28,6 +28,9 @@ const Transaction: React.FC = () => {
     document.title = `Transaction ${trxHash} | Cardano Explorer`;
   }, [trxHash]);
 
+  if (!initialized) {
+    return null;
+  }
   if ((initialized && !data) || error) return <NoRecord />;
 
   return (

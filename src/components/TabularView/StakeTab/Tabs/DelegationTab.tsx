@@ -10,15 +10,17 @@ import { API } from "../../../../commons/utils/api";
 import { AdaValue } from "./StakeRegistrationTab";
 import { GreenWalletIcon } from "../../TabularOverview";
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import StackingFilter, { FilterParams } from "../../../StackingFilter";
 import moment from "moment";
 import { DATETIME_PARTTEN } from "../../../StackingFilter/DateRangeModal";
 import { FilterDateLabel } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles";
 import { EyeIcon } from "../../../../commons/resources";
 import { DelegationCertificateModal } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation";
+import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 
 const DelegationTab = () => {
+  const detailData = useContext(DelegatorDetailContext);
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
@@ -94,7 +96,7 @@ const DelegationTab = () => {
         <WrapWalletLabel>
           <GreenWalletIcon mr={1} />
           <Box mr={1}>Wallet balance:</Box>
-          <AdaValue value={data.reduce((current, item) => current + item.outSum, 0)} />
+          <AdaValue value={detailData?.totalStake ?? 0} />
         </WrapWalletLabel>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>

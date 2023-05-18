@@ -127,7 +127,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
       <Container p={"10px 10px 1px 20px"}>
-        <ModalTitle>Report composer</ModalTitle>
+        <ModalTitle sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</ModalTitle>
         <TextRequired>
           Before proceeding with your report creation, we just want to double-check and confirm that you’ve filled out
           all the details correctly?
@@ -143,10 +143,10 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
                 borderBottom={index === list.length - 1 ? "none" : "1px solid #000000"}
               >
                 <TextLabelReview>{label}</TextLabelReview>
-                <Stack direction={"row"} spacing={1} justifyContent='center'>
+                <Box display={"flex"} justifyContent='center'>
                   <TextOverFlow><TextValueReview>{value}</TextValueReview></TextOverFlow>
-                  <PencilIcon onClick={() => gotoStep?.(step as number)} />
-                </Stack>
+                  <PencilIcon style={{paddingLeft: "10px"}} onClick={() => gotoStep?.(step as number)} />
+                </Box>
               </Box>
             );
           })}
@@ -154,7 +154,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
         <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={"20px"}>
           <StyledBackButton
             sx={{ fontSize: `${isMobile ? "14px" : "16px"}` }}
-            width={isMobile ? 160 : 100}
+            width={isMobile ? 120 : 100}
             onClick={() => gotoStep?.(STEPS.step1)}
           >
             I’d like to double-check

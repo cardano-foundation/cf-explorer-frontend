@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { StyledLink, WrapWalletLabel } from "../styles";
+import { StyledLink, WrapWalletLabel, WrapperDelegationTab } from "../styles";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { formatDateTimeLocal, getPageInfo } from "../../../../commons/utils/helper";
@@ -9,14 +9,15 @@ import { API } from "../../../../commons/utils/api";
 import { AdaValue } from "./StakeRegistrationTab";
 import { GreenWalletIcon } from "../../TabularOverview";
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import StackingFilter, { FilterParams } from "../../../StackingFilter";
 import moment from "moment";
 import { DATETIME_PARTTEN } from "../../../StackingFilter/DateRangeModal";
 import { FilterDateLabel } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles";
-import { WrapperDelegationTab } from "../styles";
+import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 
 const RewardsDistributionTab = () => {
+  const detailData = useContext(DelegatorDetailContext);
   const { stakeId } = useParams<{ stakeId: string }>();
   const [sort, setSort] = useState<string>("");
   const { search } = useLocation();
@@ -75,7 +76,7 @@ const RewardsDistributionTab = () => {
         <WrapWalletLabel>
           <GreenWalletIcon mr={1} />
           <Box mr={1}>Reward account:</Box>
-          <AdaValue value={data.reduce((current, item) => current + item.amount, 0)} />
+          <AdaValue value={detailData?.rewardAvailable ?? 0} />
         </WrapWalletLabel>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>

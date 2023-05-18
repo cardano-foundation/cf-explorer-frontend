@@ -27,6 +27,10 @@ import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLife
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useScreen } from "../../commons/hooks/useScreen";
 import useAuth from "~/commons/hooks/useAuth";
+import useFetch from "~/commons/hooks/useFetch";
+import { API } from "~/commons/utils/api";
+import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import NoRecord from "~/components/commons/NoRecord";
 
 const DelegatorLifecycle = () => {
   const {
@@ -52,6 +56,7 @@ const DelegatorLifecycle = () => {
   });
 
   const { isLoggedIn } = useAuth();
+  const { data, error, initialized } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
 
   useEffect(() => {
     setCurrentStep(tabList[tab || "registration"] || 0);
@@ -81,58 +86,62 @@ const DelegatorLifecycle = () => {
   const changeMode = (mode: ViewMode) => {
     history.push(details.staking(stakeId, mode, tab));
   };
+  if (!initialized && !error) return null;
+  if (error || !data) return <NoRecord />;
 
   return (
-    <StyledContainer ref={containerRef}>
-      <BoxContainerStyled>
-        <Box>
-          <Box component={"h2"} mb='5px' mt={0} fontSize={isMobile ? 24 : 36} lineHeight='42px'>
-            Staking Lifecycle For
-          </Box>
-          <Box display={"flex"} alignItems={"center"}>
-            <Box component={"span"} fontSize={"1rem"} lineHeight={1}>
-              Stake key:
+    <DelegatorDetailContext.Provider value={data}>
+      <StyledContainer ref={containerRef}>
+        <BoxContainerStyled>
+          <Box>
+            <Box component={"h2"} mb='5px' mt={0} fontSize={isMobile ? 24 : 36} lineHeight='42px'>
+              Staking Lifecycle For
             </Box>
-            <CustomTooltip title={stakeId}>
-              <StakeId to={details.stake(stakeId)}>{getShortWallet(stakeId)}</StakeId>
-            </CustomTooltip>
-            <CopyButton text={stakeId} />
+            <Box display={"flex"} alignItems={"center"}>
+              <Box component={"span"} fontSize={"1rem"} lineHeight={1}>
+                Stake key:
+              </Box>
+              <CustomTooltip title={stakeId}>
+                <StakeId to={details.stake(stakeId)}>{getShortWallet(stakeId)}</StakeId>
+              </CustomTooltip>
+              <CopyButton text={stakeId} />
+            </Box>
           </Box>
-        </Box>
-        <BoxItemStyled>
-          <BoxSwitchContainer>
-            <BoxSwitch color={({ palette }) => palette.grey[400]}>
-              <Box>Switch to {mode === "timeline" ? "tablular" : "timeline"} view</Box>
-            </BoxSwitch>
-            <ButtonGroup>
-              <ButtonSwitch active={+(mode === "timeline")} onClick={() => changeMode("timeline")}>
-                <ChartMode fill={mode === "timeline" ? "#fff" : "#344054"} />
-              </ButtonSwitch>
-              <ButtonSwitch active={+(mode === "tablular")} onClick={() => changeMode("tablular")}>
-                <TableMode fill={mode === "tablular" ? "#fff" : "#344054"} />
-              </ButtonSwitch>
-            </ButtonGroup>
-          </BoxSwitchContainer>
-          {mode === "tablular" && (
-            <ButtonReportContainer disabled={!isLoggedIn}>
-              <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>
-            </ButtonReportContainer>
+          <BoxItemStyled>
+            <BoxSwitchContainer>
+              <BoxSwitch color={({ palette }) => palette.grey[400]}>
+                <Box>Switch to {mode === "timeline" ? "tablular" : "timeline"} view</Box>
+              </BoxSwitch>
+              <ButtonGroup>
+                <ButtonSwitch active={+(mode === "timeline")} onClick={() => changeMode("timeline")}>
+                  <ChartMode fill={mode === "timeline" ? "#fff" : "#344054"} />
+                </ButtonSwitch>
+                <ButtonSwitch active={+(mode === "tablular")} onClick={() => changeMode("tablular")}>
+                  <TableMode fill={mode === "tablular" ? "#fff" : "#344054"} />
+                </ButtonSwitch>
+              </ButtonGroup>
+            </BoxSwitchContainer>
+            {mode === "tablular" && (
+              <ButtonReportContainer disabled={!isLoggedIn}>
+                <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>
+              </ButtonReportContainer>
+            )}
+          </BoxItemStyled>
+        </BoxContainerStyled>
+        <Box ml={isMobile ? 2 : 0}>
+          {mode === "timeline" && (
+            <DelegatorLifecycleComponent
+              handleResize={handleResize}
+              containerPosition={containerPosition}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+            />
           )}
-        </BoxItemStyled>
-      </BoxContainerStyled>
-      <Box ml={isMobile ? 2 : 0}>
-        {mode === "timeline" && (
-          <DelegatorLifecycleComponent
-            handleResize={handleResize}
-            containerPosition={containerPosition}
-            currentStep={currentStep}
-            setCurrentStep={setCurrentStep}
-          />
-        )}
-        {mode === "tablular" && <Tablular />}
-      </Box>
-      <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
-    </StyledContainer>
+          {mode === "tablular" && <Tablular />}
+        </Box>
+        <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
+      </StyledContainer>
+    </DelegatorDetailContext.Provider>
   );
 };
 
