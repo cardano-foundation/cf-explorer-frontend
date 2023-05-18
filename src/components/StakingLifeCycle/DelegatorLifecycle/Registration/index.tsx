@@ -315,7 +315,7 @@ const RegistrationTimelineMobile = ({
   }, [registration]);
 
   const handleBack = () => {
-    history.push(details.staking(stakeId, "timeline", "registration"));
+    history.goBack()
   };
 
   return (

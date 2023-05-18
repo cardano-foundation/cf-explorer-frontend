@@ -104,7 +104,7 @@ const DeregistrationTimeline = ({
   }, [selected]);
 
   const handleBack = () => {
-    history.push(details.staking(stakeId, "timeline", "deregistration"));
+    history.goBack()
   };
 
   return (

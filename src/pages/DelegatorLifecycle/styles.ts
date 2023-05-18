@@ -63,7 +63,8 @@ export const ButtonReportContainer = styled(Button)<{ disabled?: boolean }>(({ t
   marginLeft: 20,
   [theme.breakpoints.down("md")]: {
     justifyContent: "start",
-    marginLeft: 0
+    marginLeft: 0,
+    marginTop: 10
   },
   padding: 0,
   opacity: disabled ? 0.5 : 1

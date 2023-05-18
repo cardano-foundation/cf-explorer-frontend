@@ -70,14 +70,14 @@ const Withdraw = ({
       <Box>
         {!!selected &&
           (laptop ? (
-            <WithdrawTimelineMobile
+            <WithdrawTimeline
               handleResize={handleResize}
               setSelected={setSelected}
               selected={selected}
               containerPosition={containerPosition}
             />
           ) : (
-            <WithdrawTimeline
+            <WithdrawTimelineDestop
               handleResize={handleResize}
               setSelected={setSelected}
               selected={selected}
@@ -98,7 +98,7 @@ interface WithdrawDetail {
   time: string;
   txHash: string;
 }
-const WithdrawTimeline = ({
+const WithdrawTimelineDestop = ({
   containerPosition,
   setSelected,
   handleResize,
@@ -359,9 +359,8 @@ const WithdrawTimeline = ({
     </Box>
   );
 };
-const WithdrawTimelineMobile = ({
+const WithdrawTimeline = ({
   containerPosition,
-  setSelected,
   handleResize,
   selected
 }: {
@@ -394,7 +393,7 @@ const WithdrawTimelineMobile = ({
   }, [loading]);
 
   const handleBack = () => {
-    history.push(details.staking(stakeId, "timeline", "withdrawal-history"));
+    history.goBack()
   };
 
   if (loading) {

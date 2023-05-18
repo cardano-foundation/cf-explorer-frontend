@@ -328,7 +328,7 @@ const DelegationTimelineMobile = ({
   }, [loading, registrationRef.current]);
 
   const handleBack = () => {
-    history.push(details.staking(stakeId, "timeline", "delegation"));
+    history.goBack()
   };
 
   if (loading) {
