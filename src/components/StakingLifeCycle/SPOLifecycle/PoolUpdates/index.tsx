@@ -698,6 +698,7 @@ export const PoolUpdateModal = ({
   handleCloseModal: () => void;
 }) => {
   const { isMobile } = useScreen();
+  const history = useHistory();
   const [tabActive, setTabActive] = useState("poolCertificate");
   const [selectedOwner, setSelectedOwner] = useState<string[]>([]);
   const renderPoolCert = () => (
@@ -709,6 +710,7 @@ export const PoolUpdateModal = ({
         open={!!selectedOwner.length}
         onClose={() => setSelectedOwner([])}
         items={selectedOwner}
+        onItemClick={(item) => history.push(details.stake(item))}
       />
       <Grid item xs={6}>
         <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3} display={"flex"}>
