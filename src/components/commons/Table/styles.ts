@@ -109,17 +109,17 @@ export const TotalNumber = styled("span")`
   font-weight: 500;
 `;
 
-export const Wrapper = styled(Box)<{ maxHeight?: number | string; isData: number }>(
-  ({ maxHeight, isData, theme }) => `
+export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number }>(
+  ({ maxHeight, height, theme }) => `
   overflow-x: auto;
-  height: ${isData ? "800px" : "auto"};
+  height: ${height || "800px"};
   background: ${theme.palette.common.white};
   padding: ${theme.spacing(1)};
   padding-top: 0;
   border-radius: ${theme.spacing(1.5)};
   box-shadow: 0 0.5rem 1.2rem rgba(82, 85, 92, 0.15);
   border: 1px solid ${alpha(theme.palette.common.black, 0.1)};
-  height:800;
+
   ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
 
   ${theme.breakpoints.down("sm")} {

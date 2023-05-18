@@ -365,7 +365,7 @@ const Table: React.FC<TableProps> = ({
         selectedItems={selectedItems}
         isSelectAll={isSelectAll}
       />
-      <Wrapper maxHeight={maxHeight} isData={!loading && data && data?.length > 0 ? 1 : 0}>
+      <Wrapper maxHeight={maxHeight} height={!loading && data && data?.length > 0 ? 1 : 0}>
         <TableFullWidth>
           <TableHeader
             columns={columns}
