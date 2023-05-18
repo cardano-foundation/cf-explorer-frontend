@@ -1,11 +1,11 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { alpha, Box, useTheme } from "@mui/material";
+import { Box, alpha, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { ReactComponent as SettingIcon } from "../../commons/resources/icons/setting.svg";
 import { ReactComponent as FileSearch } from "../../commons/resources/icons/file-search.svg";
-import { TabLabel, TabTitle, WrapTab } from "./styles";
-import OverviewTab from "../../components/Account/OverviewTab";
+import { ReactComponent as SettingIcon } from "../../commons/resources/icons/setting.svg";
 import AccountSettingTab from "../../components/Account/AccountSettingTab";
+import OverviewTab from "../../components/Account/OverviewTab";
+import { TabLabel, TabTitle, WrapTab } from "./styles";
 
 const MyProfile: React.FC = () => {
   const [tabActive, setTabActive] = useState<"overview" | "setting">("overview");
@@ -52,6 +52,8 @@ const MyProfile: React.FC = () => {
           TabIndicatorProps={{
             style: { background: theme.palette.primary.main, color: theme.palette.primary.main, height: 3 }
           }}
+          scrollButtons={false}
+          variant='scrollable'
         >
           {tabs?.map((item) => (
             <WrapTab key={item.key} label={item.label} value={item.key} />

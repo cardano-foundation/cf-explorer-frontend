@@ -206,7 +206,7 @@ const Dashboard: React.FC = () => {
     <Container>
       <GridContainer container spacing={2} columns={12}>
         {cardList.map((card, idx) => (
-          <Grid item xs={6} md={6} lg={3} key={idx}>
+          <Grid item xs={6} md={3} lg={3} key={idx}>
             <DashboardCard
               key={card.title}
               leftIcon={card.icon}

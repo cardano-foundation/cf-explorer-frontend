@@ -35,7 +35,13 @@ export const NavItemMobile = styled(Link)<{ active: boolean }>(({ theme, active 
   color: `${active ? theme.palette.common.white : theme.palette.grey[400]} !important`,
   backgroundColor: active ? theme.palette.primary.main : "#E7E8EA",
   padding: "10px 17px",
-  borderRadius: `${active ? "5px" : ""}`
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  [theme.breakpoints.down("sm")]: {
+    padding: "10px 15px",
+    fontSize: "13px",
+  }
 }));
 
 export const StyledUsername = styled(Box)`

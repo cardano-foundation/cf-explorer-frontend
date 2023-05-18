@@ -40,7 +40,7 @@ const tabs: SPOTabItem[] = [
   },
   {
     icon: DeredistrationIcon,
-    label: "Deregsitration",
+    label: "Deregistration",
     key: "deregistration",
     component: <DeregsitrationTab />
   }

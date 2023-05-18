@@ -17,7 +17,8 @@ import {
   ButtonReportContainer,
   ButtonSwitch,
   StakeId,
-  StyledContainer
+  StyledContainer,
+  WrapTitle
 } from "./styles";
 
 import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staking/ChartMode.svg";
@@ -94,9 +95,9 @@ const DelegatorLifecycle = () => {
       <StyledContainer ref={containerRef}>
         <BoxContainerStyled>
           <Box>
-            <Box component={"h2"} mb='5px' mt={0} fontSize={isMobile ? 24 : 36} lineHeight='42px'>
+            <WrapTitle component={"h2"}>
               Staking Lifecycle For
-            </Box>
+            </WrapTitle>
             <Box display={"flex"} alignItems={"center"}>
               <Box component={"span"} fontSize={"0.875rem"} lineHeight={1}>
                 Stake key:

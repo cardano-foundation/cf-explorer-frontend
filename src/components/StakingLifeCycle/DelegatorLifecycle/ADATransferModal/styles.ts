@@ -10,7 +10,7 @@ export const ModalTitle = styled("div")(({ theme }) => ({
 }));
 
 export const TextUserInfo = styled("span")(({ theme }) => ({
-  fontWeight: 500,
+  fontWeight: 600,
   fontSize: "var(--font-size-text)",
   color: theme.palette.text.primary,
   margin: "0px 3px",

@@ -46,7 +46,6 @@ export const Card = styled(Box)`
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     height: 140px;
-    width: 156px;
     margin-top: 25px;
     display: flex;
     flex-direction: row;

@@ -2,6 +2,7 @@ import { Box, Checkbox, FormControlLabel, FormGroup, FormHelperText, IconButton,
 import { useEffect, useReducer, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
+import useAuth from "~/commons/hooks/useAuth";
 import useToast from "../../commons/hooks/useToast";
 import { HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
 import { routers } from "../../commons/routers";
@@ -30,7 +31,6 @@ import {
   WrapSignUp,
   WrapTitle
 } from "./styles";
-import useAuth from "~/commons/hooks/useAuth";
 interface IForm {
   username: {
     value: string;
@@ -92,46 +92,6 @@ export default function SignIn() {
       history.push(routers.HOME);
     }
   }, [isLoggedIn]);
-
-  useEffect(() => {
-    const { username, password } = getSavedPasswordFromLocalStorage();
-    if (username && password) {
-      setFormData({
-        name: "username",
-        value: username,
-        touched: true,
-        error: getError("username", username)
-      });
-      setFormData({
-        name: "password",
-        value: password,
-        touched: true,
-        error: getError("password", password)
-      });
-      setRememberMe(true);
-    }
-  }, []);
-
-  function getSavedPasswordFromLocalStorage() {
-    return {
-      username: localStorage.getItem("usernameStore") || "",
-      password: localStorage.getItem("passwordStore") || ""
-    };
-  }
-
-  async function saveAuthToLocalStorage(username: string, password: string) {
-    try {
-      localStorage.setItem("usernameStore", username);
-      localStorage.setItem("passwordStore", password);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  function removeAuthInfoFromLocalStorage() {
-    localStorage.removeItem("usernameStore");
-    localStorage.removeItem("passwordStore");
-  }
 
   function handleClose() {
     history.push(routers.HOME);
@@ -198,9 +158,9 @@ export default function SignIn() {
         type: 0
       };
       if (rememberMe) {
-        await saveAuthToLocalStorage(username, password);
+        localStorage.setItem("rememberMe", "true");
       } else {
-        removeAuthInfoFromLocalStorage();
+        localStorage.removeItem("rememberMe");
       }
       const response = await signIn(payload);
       const data = response.data;

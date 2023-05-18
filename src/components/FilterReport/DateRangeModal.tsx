@@ -44,7 +44,7 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
     if (!(value?.fromDate && value?.toDate)) {
       return true;
     }
-    return moment(value.fromDate).diff(moment(value.toDate).toDate()) > 0;
+    return moment(value.fromDate).isAfter(moment(value.toDate));
   }, [value]);
   return (
     <StyledModal open={open} handleCloseModal={() => onClose?.()}>

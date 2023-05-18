@@ -117,7 +117,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
         return (
           <Box display='inline-flex' alignItems='center'>
             <Box mr={1} color={isUp ? "success.main" : "error.main"}>
-              {!isUp ? `- ` : `+ `}
+              {!isUp ? `` : `+`}
               {formatADAFull(transaction.balance)}
             </Box>
             <ADAicon />

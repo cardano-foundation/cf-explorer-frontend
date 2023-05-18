@@ -15,6 +15,17 @@ export const StakeId = styled(Link)(({ theme }) => ({
   fontSize: "0.875rem"
 }));
 
+export const WrapTitle = styled(Box)(({ theme }) => ({
+  marginBottom: "5px",
+  marginTop: 0,
+  fontSize: 36,
+  lineHeight: "42px",
+  [theme.breakpoints.down("md")]: {
+    fontSize: 24,
+    lineHeight: "25px"
+  }
+}));
+
 export const ButtonGroup = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
