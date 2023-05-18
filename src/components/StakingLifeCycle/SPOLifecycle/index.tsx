@@ -13,13 +13,13 @@ import {
 } from "./styles";
 
 import {
+  DeredistrationIcon,
   InfoIcon,
   NextIcon,
   OperatorRewardIcon,
   PoolUpdateIcon,
   PreviousIcon,
   RegistrationIcon,
-  RewardsWithdrawalIcon
 } from "../../../commons/resources";
 import Registration from "./Registration";
 import PoolUpdates from "./PoolUpdates";
@@ -101,7 +101,7 @@ const SPOLifecycle = ({
       key: "operator-rewards"
     },
     {
-      icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
+      icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
       title: "Deregistration",
       component: <Deregistration handleResize={handleResize} containerPosition={containerPosition} />,
       description: (

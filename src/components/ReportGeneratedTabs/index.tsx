@@ -1,10 +1,9 @@
-import { TabContext, TabList } from "@mui/lab";
+import { TabContext } from "@mui/lab";
 import React from "react";
-import { Box, Tab, Tabs } from "@mui/material";
-import { StyledTabList, TabContent, TabHeader, TabLabel } from "./styles";
+import { Box, Tabs } from "@mui/material";
+import { StyledTab, StyledTabs, TabContent, TabHeader, TabLabel } from "./styles";
 import { useHistory, useParams } from "react-router-dom";
 import { details } from "~/commons/routers";
-import { StyledTab, StyledTabs } from "~/pages/RegistrationPools/styles";
 
 export interface TabsItem {
   value: string;
@@ -34,6 +33,9 @@ const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
                 onChange={handleChange}
                 sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}` }}
                 TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
+                scrollButtons='auto'
+                variant='scrollable'
+                aria-label='lab API tabs example'
               >
                 {tabsItem.map((item) => (
                   <StyledTab
