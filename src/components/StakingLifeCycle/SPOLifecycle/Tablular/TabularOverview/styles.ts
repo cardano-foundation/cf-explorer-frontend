@@ -31,7 +31,7 @@ export const WrapIcon = styled(Box)(() => ({
 export const CardTitle = styled(Typography)(({ theme }) => ({
   fontWeight: theme.typography.fontWeightBold,
   fontSize: 14,
-  color: "#667085",
+  color: theme.palette.grey[400],
   marginBottom: 4
 }));
 
