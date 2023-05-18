@@ -27,6 +27,10 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useScreen } from "../../commons/hooks/useScreen";
 import { details } from "../../commons/routers";
 import useAuth from "~/commons/hooks/useAuth";
+import { API } from "~/commons/utils/api";
+import useFetch from "~/commons/hooks/useFetch";
+import PoolDetailContext from "~/components/StakingLifeCycle/SPOLifecycle/PoolDetailContext";
+import NoRecord from "~/components/commons/NoRecord";
 
 const SPOLifecycle = () => {
   const {
@@ -42,6 +46,8 @@ const SPOLifecycle = () => {
     deregistration: 3,
     tablular: null
   };
+
+  const { data, error, initialized } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : "");
 
   const [currentStep, setCurrentStep] = useState(tabList[tab || "registration"] || 0);
 
@@ -83,59 +89,64 @@ const SPOLifecycle = () => {
     history.push(details.spo(poolId, mode, tab));
   };
 
+  if (!initialized && !error) return null;
+  if (error || !data || !data.poolId) return <NoRecord />;
+
   return (
-    <StyledContainer ref={containerRef}>
-      <BoxContainerStyled>
-        <Box>
-          <Box component={"h2"} mb='5px' mt={0} fontSize={isMobile ? 24 : 36} lineHeight='42px'>
-            Staking Lifecycle For
-          </Box>
-          <Box display={"flex"} alignItems={"center"}>
-            <Box component={"span"} fontSize={"0.875rem"} lineHeight={1}>
-              Pool ID:
+    <PoolDetailContext.Provider value={data}>
+      <StyledContainer ref={containerRef}>
+        <BoxContainerStyled>
+          <Box>
+            <Box component={"h2"} mb='5px' mt={0} fontSize={isMobile ? 24 : 36} lineHeight='42px'>
+              Staking Lifecycle For
             </Box>
-            <CustomTooltip title={poolId}>
-              <PoolId to={details.delegation(poolId)}>{getShortHash(poolId)}</PoolId>
-            </CustomTooltip>
-            <CopyButton text={poolId} />
+            <Box display={"flex"} alignItems={"center"}>
+              <Box component={"span"} fontSize={"0.875rem"} lineHeight={1}>
+                Pool ID:
+              </Box>
+              <CustomTooltip title={poolId}>
+                <PoolId to={details.delegation(poolId)}>{getShortHash(poolId)}</PoolId>
+              </CustomTooltip>
+              <CopyButton text={poolId} />
+            </Box>
           </Box>
-        </Box>
-        <BoxItemStyled>
-          <BoxSwitchContainer>
-            <BoxSwitch color={({ palette }) => palette.grey[400]}>
-              <Box>Switch to {mode === "timeline" ? "tabular" : "timeline"} view</Box>
-            </BoxSwitch>
-            <ButtonGroup>
-              <ButtonSwitch active={+(mode === "timeline")} onClick={() => changeMode("timeline")}>
-                <ChartMode fill={mode === "timeline" ? "#fff" : "#344054"} />
-              </ButtonSwitch>
-              <ButtonSwitch active={+(mode === "tabular")} onClick={() => changeMode("tabular")}>
-                <TableMode fill={mode === "tabular" ? "#fff" : "#344054"} />
-              </ButtonSwitch>
-            </ButtonGroup>
-          </BoxSwitchContainer>
+          <BoxItemStyled>
+            <BoxSwitchContainer>
+              <BoxSwitch color={({ palette }) => palette.grey[400]}>
+                <Box>Switch to {mode === "timeline" ? "tabular" : "timeline"} view</Box>
+              </BoxSwitch>
+              <ButtonGroup>
+                <ButtonSwitch active={+(mode === "timeline")} onClick={() => changeMode("timeline")}>
+                  <ChartMode fill={mode === "timeline" ? "#fff" : "#344054"} />
+                </ButtonSwitch>
+                <ButtonSwitch active={+(mode === "tabular")} onClick={() => changeMode("tabular")}>
+                  <TableMode fill={mode === "tabular" ? "#fff" : "#344054"} />
+                </ButtonSwitch>
+              </ButtonGroup>
+            </BoxSwitchContainer>
 
-          {mode === "tabular" && (
-            <ButtonReportContainer disabled={!isLoggedIn}>
-              <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>
-            </ButtonReportContainer>
+            {mode === "tabular" && (
+              <ButtonReportContainer disabled={!isLoggedIn}>
+                <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>
+              </ButtonReportContainer>
+            )}
+          </BoxItemStyled>
+        </BoxContainerStyled>
+
+        <Box ml={isMobile ? 2 : 0}>
+          {mode === "timeline" && (
+            <SPOLifecycleComponent
+              handleResize={handleResize}
+              containerPosition={containerPosition}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+            />
           )}
-        </BoxItemStyled>
-      </BoxContainerStyled>
-
-      <Box ml={isMobile ? 2 : 0}>
-        {mode === "timeline" && (
-          <SPOLifecycleComponent
-            handleResize={handleResize}
-            containerPosition={containerPosition}
-            currentStep={currentStep}
-            setCurrentStep={setCurrentStep}
-          />
-        )}
-        {mode === "tabular" && <Tablular />}
-      </Box>
-      <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
-    </StyledContainer>
+          {mode === "tabular" && <Tablular />}
+        </Box>
+        <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
+      </StyledContainer>
+    </PoolDetailContext.Provider>
   );
 };
 
