@@ -1,20 +1,20 @@
 import { Box } from "@mui/material";
-import { StyledLink, WrapWalletLabel, WrapperDelegationTab } from "../styles";
+import moment from "moment";
+import { useContext, useMemo, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import useFetchList from "../../../../commons/hooks/useFetchList";
-import { formatDateTimeLocal, getPageInfo } from "../../../../commons/utils/helper";
-import Table, { Column } from "../../../commons/Table";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
-import { AdaValue } from "./StakeRegistrationTab";
-import { GreenWalletIcon } from "../../TabularOverview";
-import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
-import { useContext, useMemo, useState } from "react";
+import { formatDateTimeLocal, getPageInfo } from "../../../../commons/utils/helper";
 import StackingFilter, { FilterParams } from "../../../StackingFilter";
-import moment from "moment";
 import { DATETIME_PARTTEN } from "../../../StackingFilter/DateRangeModal";
 import { FilterDateLabel } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles";
-import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
+import Table, { Column } from "../../../commons/Table";
+import { GreenWalletIcon } from "../../TabularOverview";
+import { StyledLink, WrapWalletLabel, WrapperDelegationTab } from "../styles";
+import { AdaValue } from "./StakeRegistrationTab";
 
 const RewardsDistributionTab = () => {
   const detailData = useContext(DelegatorDetailContext);
@@ -49,7 +49,6 @@ const RewardsDistributionTab = () => {
     {
       title: "Epoch",
       key: "epoch",
-      minWidth: "120px",
       render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
     }
   ];

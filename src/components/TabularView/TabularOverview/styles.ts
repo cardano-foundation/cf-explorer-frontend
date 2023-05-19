@@ -66,7 +66,10 @@ export const TransferButton = styled(Button)(({ theme }) => ({
   borderRadius: 8,
   textTransform: "unset",
   boxShadow: "none",
-  width: "160px"
+  width: "160px",
+  [theme.breakpoints.down("md")]: {
+    padding: "6px 16px",
+  }
 }));
 
 export const WrapFlex = styled(Box)(({ theme }) => ({

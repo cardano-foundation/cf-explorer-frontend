@@ -26,6 +26,7 @@ import {
 import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
 import { details } from "../../../../../commons/routers";
 import PoolDetailContext from "../../PoolDetailContext";
+import { useSelector } from "react-redux";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -60,9 +61,9 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
     red: BgPink,
     white: BgCardWhite
   }[bgType];
-
+  const { sidebar } = useSelector(({ user }: RootState) => user);
   return (
-    <Grid item xs={12} md={6}>
+    <Grid item xs={12} md={sidebar ? 12 : 6} lg={6}>
       <CardOverview>
         <Icon component={bg} />
         <Box display='flex' alignItems='center' gap='12px'>

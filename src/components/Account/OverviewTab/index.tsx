@@ -48,11 +48,9 @@ const OverviewTab: React.FC<IProps> = ({ handleChangeTab }) => {
   return (
     <Box textAlign='left'>
       <TextNote>Below are the username, email and overview information for your account</TextNote>
-      <RowItem label='Your username' value={userData?.username} isTablet={isTablet} />
       <RowItem
         label='Your email address '
         value={userData?.email}
-        action={<Edit onClick={() => handleChangeTab("setting")} />}
         isTablet={isTablet}
       />
       <RowItem
