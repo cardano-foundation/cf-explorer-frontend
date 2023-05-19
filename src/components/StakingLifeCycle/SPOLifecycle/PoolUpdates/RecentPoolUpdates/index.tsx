@@ -7,47 +7,47 @@ import { API } from "../../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../../StackingFilter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
 import { EmptyRecord } from "../../../../commons/Table";
-import { FilterDateLabel } from "../../Delegation/styles";
-import { GridBox, StyledContainer, StyledList, WrapFilterDescription } from "./styles";
-import { DATETIME_PARTTEN } from "../../../../StackingFilter/DateRangeModal";
-import { DescriptionText } from "../../styles";
+import { GridBox, WrapFilterDescription, StyledList, StyledContainer } from "./styles";
+import { FilterDateLabel } from "../../../DelegatorLifecycle/Delegation/styles";
+import { DescriptionText } from "../../../DelegatorLifecycle/styles";
 import { details } from "../../../../../commons/routers";
 import { useUpdateEffect } from "react-use";
 import { useSelector } from "react-redux";
+import { DATETIME_PARTTEN } from "~/components/StackingFilter/DateRangeModal";
 
-interface Props {
-  onSelect: (deregistration: DeregistrationItem | null) => void;
-}
-
-const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
-  const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
+const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null) => void }) => {
+  const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
-  const { sidebar } = useSelector(({ user }: RootState) => user);
-
   const [params, setParams] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
     toDate: undefined,
     txHash: undefined
   });
-  const { data, total, loading, initialized, error } = useFetchList<DeregistrationItem>(
-    stakeId ? API.STAKE_LIFECYCLE.DEREGISTRATION(stakeId) : "",
-    { page: 0, size: 1000, ...params }
+  const { sidebar } = useSelector(({ user }: RootState) => user);
+  const { data, total, loading, initialized, error } = useFetchList<PoolUpdateItem>(
+    API.SPO_LIFECYCLE.POOL_UPDATE(poolId),
+    {
+      page: 0,
+      size: 1000,
+      ...params
+    }
   );
-
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);
     onSelect(currentItem || null);
   }, [txHash, data]);
 
-  const handleSelect = (deregistration: DeregistrationItem) => {
-    history.push(details.staking(stakeId, "timeline", "deregistration", deregistration.txHash));
+  const handleSelect = (poolUpdated: PoolUpdateItem) => {
+    history.push(details.spo(poolId, "timeline", "pool-updates", poolUpdated.txHash));
   };
+
   useUpdateEffect(() => {
     if (data && data.length && data.length === 1) {
       handleSelect(data[0]);
     }
   }, [JSON.stringify(data)]);
+
   const filterLabel = useMemo(() => {
     const sortArr = params.sort && params.sort.split(",");
     if (params.fromDate && params.toDate)
@@ -65,7 +65,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
   return (
     <StyledContainer>
       <StyledList>
-        <DescriptionText>Deregistration List</DescriptionText>
+        <DescriptionText>Recent Updates</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             Showing {total} {total > 1 ? "results" : "result"}
@@ -73,40 +73,26 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
           {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
           <StackingFilter
             filterValue={params}
-            onFilterValueChange={(params) =>
-              setParams(() => ({
-                fromDate: undefined,
-                sort: undefined,
-                toDate: undefined,
-                txHash: undefined,
-                ...params
-              }))
-            }
+            onFilterValueChange={(params) => setParams((pre) => ({ ...pre, ...params }))}
           />
         </Box>
       </StyledList>
       <GridBox sidebar={+sidebar}>
-        {loading &&
-          [...new Array(12)].map((i, ii) => (
-            <Skeleton key={ii} style={{ borderRadius: 12 }} variant='rectangular' width={300} height={185} />
-          ))}
-        {!loading &&
-          data.map((item) => {
-            return (
-              <OverviewStaking
-                key={item.txHash}
-                item={item}
-                amount={Math.abs(item.deposit)}
-                time={item.time}
-                hash={item.txHash}
-                onClick={handleSelect}
-              />
-            );
-          })}
+        {data.map((item, ii) => {
+          return (
+            <OverviewStaking
+              key={ii}
+              item={item}
+              onClick={handleSelect}
+              hash={item.txHash}
+              amount={item.fee}
+              time={item.time}
+            />
+          );
+        })}
       </GridBox>
       {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
     </StyledContainer>
   );
 };
-
-export default RecentDeregistrations;
+export default PoollUpdatesList;

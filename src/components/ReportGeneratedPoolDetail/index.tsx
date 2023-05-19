@@ -85,7 +85,7 @@ const ReportGeneratedPoolDetailTabs = () => {
   }, [events]);
 
   const initTab = useMemo(() => (displayedTabs.length ? displayedTabs[0].key : undefined), [displayedTabs]);
-  console.log(reportDetail);
+
   return (
     <ReportGeneratedPoolDetailContext.Provider
       value={{

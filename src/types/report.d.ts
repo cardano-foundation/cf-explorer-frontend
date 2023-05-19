@@ -47,7 +47,15 @@ interface IPoolReportList {
   eventRegistration: boolean;
   eventReward: boolean;
   poolView: string;
-  reportHistory: any;
+  reportHistory: {
+    id: number;
+    storageKey: string;
+    reportName: string;
+    username: string;
+    createdAt: string;
+    status: string;
+    type: string;
+  };
 }
 
 interface IADATransferReport {

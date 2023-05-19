@@ -339,8 +339,8 @@ const Bookmark = () => {
           <TabList
             onChange={handleChange}
             TabIndicatorProps={{ sx: { style: { background: (theme) => theme.palette.primary.main } } }}
-            sx={{ overflow: "auto" }}
             variant='scrollable'
+            scrollButtons={false}
           >
             {tabs.map(({ key, label }) => (
               <Tab

@@ -1,4 +1,4 @@
-import { Box, styled, IconButton as IconButtonMui, Typography } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui, Typography, alpha } from "@mui/material";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -144,6 +144,7 @@ export const Payment = styled(Box)(({ theme }) => ({
   height: "220px",
   padding: `${theme.spacing(3)} 0`,
   border: "2px dashed #D2D2D2",
+  background: alpha(theme.palette.grey[300], 0.1),
   borderRadius: "25px"
 }));
 
@@ -165,3 +166,28 @@ export const ADAAmountLabel = styled(Typography)`
   display: inline-block;
   margin-right: 8px;
 `;
+
+export const StepInfo = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  gap: 20,
+  marginBottom: 36,
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "flex-start",
+    marginBottom: 30
+  }
+}));
+
+export const InfoGroup = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  gap: 20,
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    gap: 5
+  }
+}));

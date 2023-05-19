@@ -1,13 +1,13 @@
-import CopyButton from "../../../commons/CopyButton";
 import { Box } from "@mui/material";
-import { OverviewIcon, TextTx, TextUserInfo } from "./styles";
-import { AIconGreen, BalanceIcon, HashtagIcon } from "../../../../commons/resources";
-import CustomIcon from "../../../commons/CustomIcon";
-import { formatADA, formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
-import CustomTooltip from "../../../commons/CustomTooltip";
 import { useScreen } from "~/commons/hooks/useScreen";
-import { StyledLink } from "~/components/share/styled";
 import { details } from "~/commons/routers";
+import { StyledLink } from "~/components/share/styled";
+import { AIconGreen, BalanceIcon, HashtagIcon } from "../../../../commons/resources";
+import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
+import CopyButton from "../../../commons/CopyButton";
+import CustomIcon from "../../../commons/CustomIcon";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import { OverviewIcon, TextTx, TextUserInfo } from "./styles";
 
 const UserInfo = ({
   total,

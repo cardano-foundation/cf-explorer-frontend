@@ -2,6 +2,13 @@ import { styled, Stack, Box, Button, TextField, Slider, Typography } from "@mui/
 import { SelectMui } from "../../../commons/Table/styles";
 import breakpoints from "~/themes/breakpoints";
 
+export const Container = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 14,
+    lineHeight: "16px"
+  }
+}));
+
 export const StyledLabel = styled("div")`
   font-weight: 400;
   font-size: 14px;
@@ -63,7 +70,8 @@ export const StyledButton = styled(Button)`
   text-align: center;
   color: #fff;
   font-weight: 700;
-  line-height: 1;
+  font-size: 16px;
+  line-height: 19px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,6 +85,10 @@ export const StyledButton = styled(Button)`
   &:hover {
     background: #13152f;
     opacity: 0.8;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    font-size: 14px;
+    line-height: 16px;
   }
 `;
 export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ width = 100 }) => ({
@@ -99,6 +111,7 @@ export const SubText = styled("div")`
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
+  margin-bottom: 5px;
 `;
 
 export const TextRequired = styled("div")`
@@ -118,9 +131,42 @@ export const ButtonEvent = styled(Button)<{ active: boolean }>(({ theme, active 
   padding: "13px 20px",
   gap: "10px",
   textTransform: "capitalize",
+  fontSize: 16,
+  lineHeight: "19px",
+  fontWeight: 400,
   "&:hover": {
     background: active ? "#667085" : "#f2f2f2",
     color: active ? "#fff" : "#667085"
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 14,
+    lineHeight: "16px"
+  }
+}));
+
+export const OverViewItem = styled(Box)(() => ({
+  display: "flex",
+  padding: "10px 0px",
+  justifyContent: "space-between",
+  alignItems: "center",
+  width: "100%",
+  borderBottom: "1px solid #000000",
+  "&:last-of-type": {
+    borderBottom: "none"
+  }
+}));
+
+export const OverViewValue = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flex: 1,
+  width: "100%",
+  overflow: "hidden",
+  justifyContent: "space-between",
+  alignItems: "center",
+  gap: 5,
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    alignItems: "flex-start"
   }
 }));
 
@@ -130,23 +176,27 @@ export const TextLabelReview = styled("div")`
   line-height: 19px;
   color: #000000;
   opacity: 0.6;
+  white-space: nowrap;
 `;
 
 export const TextValueReview = styled("div")`
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
-  max-width: 300px;
+  max-width: 100%;
   color: #000000;
-  @media screen and (max-width: ${breakpoints.values.sm}px) {
-    max-width: 180px;
-  }
 `;
 
 export const TextOverFlow = styled("div")`
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: auto;
+  max-width: 100%;
+  width: 300px;
+  text-align: right;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    text-align: left;
+  }
 `;
 
 export const StyledGroupField = styled(TextField)`

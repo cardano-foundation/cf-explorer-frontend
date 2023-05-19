@@ -127,7 +127,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             {transaction?.balance ? (
               <>
                 <Box mr={1} color={isUp ? "success.main" : "error.main"}>
-                  {!isUp ? `- ` : `+ `}
+                  {!isUp ? `` : `+`}
                   {formatADAFull(transaction.balance)}
                 </Box>
                 <ADAicon />

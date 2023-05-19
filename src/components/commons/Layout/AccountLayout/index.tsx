@@ -36,6 +36,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   const { pathname } = useLocation();
   const { userData } = useSelector(({ user }: RootState) => user);
   const { isMobile, isTablet } = useScreen();
+  const theme = useTheme();
   const [openReportModal, setOpenReportModal] = useState(false);
   const [isUploadAvatar, setIsUploadAvatar] = useState(false);
   const [firstLoad, setFirstLoad] = useState(true);
@@ -51,7 +52,6 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
     }
   }, []);
 
-  const theme = useTheme();
   const toast = useToast();
 
   const uploadImgRef = useRef(null);
@@ -92,8 +92,11 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   if (firstLoad) return null;
   const MissingData = () => (
     <Box px={3} pb={4} fontSize='0.75rem'>
-      Missing any data? click <StyledButton onClick={() => setOpenReportModal(true)}>here</StyledButton> to report
-    </Box>
+      Missing any data? click <StyledButton sx={{
+        color: theme.palette.blue[800]
+      }}
+        onClick={() => setOpenReportModal(true)}>here</StyledButton> to report
+    </Box >
   );
   const renderListTabs = () => (
     <SideBar width={isMobile || isTablet ? "100%" : "20%"}>
@@ -149,7 +152,12 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
         <Box mt={4}>
           {router.map((route, index) => {
             return isMobile || isTablet ? (
-              <NavItemMobile to={route.to} active={route.to === pathname} key={index}>
+              <NavItemMobile sx={{
+                borderTopRightRadius: index === router.length - 1 ? "5px" : "0px",
+                borderBottomRightRadius: index === router.length - 1 ? "5px" : "0px",
+                borderTopLeftRadius: index === 0 ? "5px" : "0px",
+                borderBottomLeftRadius: index === 0 ? "5px" : "0px",
+              }} to={route.to} active={route.to === pathname} key={index}>
                 {route.title}
               </NavItemMobile>
             ) : (

@@ -56,14 +56,14 @@ const RowItem: React.FC<TRowItem> = ({
           </StyledRowItem>
         ) : (
           <>
-            <StyledRowItem>
+            <StyledRowItem marginTop={"10px"}>
               <StyledInput disabled={disabled || loading} value={value} onChange={onChangeValue} placeholder={label} />
             </StyledRowItem>
             <StyledButton
               loading={loading}
               onClick={action}
               disabled={(["email", "username"].includes(field) && !value) || disabledButton}
-              sx={{ marginTop: "6px", marginLeft: 0 }}
+              sx={{ marginTop: "10px", marginLeft: 0 }}
             >
               Change
             </StyledButton>

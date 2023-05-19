@@ -22,12 +22,14 @@ import {
   IconButton,
   IconButtonBack,
   Info,
+  InfoGroup,
   InfoText,
   NetAmount,
   Payment,
   RewardAccount,
   RewardWallet,
   RoundBox,
+  StepInfo,
   Withdrawn
 } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
@@ -138,11 +140,11 @@ const WithdrawTimelineDestop = ({
   if (loading) {
     return (
       <Box>
-        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+        <StepInfo>
           <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
-          <Box display={"flex"}>
+          <InfoGroup>
             <Info>
               <AddressIcon fill='#438F68' />
               <Box component={Skeleton} ml={1} variant='rectangular' width={145} height={18} />
@@ -155,19 +157,19 @@ const WithdrawTimelineDestop = ({
               <TimeIcon />
               <Box component={Skeleton} ml={1} variant='rectangular' width={130} height={18} />
             </Info>
-          </Box>
-        </Box>
+          </InfoGroup>
+        </StepInfo>
         <Box component={Skeleton} width={"100%"} height={400} variant='rectangular' borderRadius={12} />
       </Box>
     );
   }
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"}>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected.txHash}>
@@ -183,8 +185,8 @@ const WithdrawTimelineDestop = ({
             <TimeIcon />
             <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef} width={200} height={215}>
@@ -402,11 +404,11 @@ const WithdrawTimeline = ({
   if (loading) {
     return (
       <Box>
-        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+        <StepInfo>
           <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
-          <Box display={"flex"}>
+          <InfoGroup>
             <Info>
               <AddressIcon fill='#438F68' />
               <Box component={Skeleton} ml={1} variant='rectangular' width={145} height={18} />
@@ -419,19 +421,19 @@ const WithdrawTimeline = ({
               <TimeIcon />
               <Box component={Skeleton} ml={1} variant='rectangular' width={130} height={18} />
             </Info>
-          </Box>
-        </Box>
+          </InfoGroup>
+        </StepInfo>
         <Box component={Skeleton} width={"100%"} height={400} variant='rectangular' borderRadius={12} />
       </Box>
     );
   }
   return (
     <Box>
-      <Box display='flex' justifyContent='space-between' mt={2}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected.txHash}>
@@ -447,8 +449,8 @@ const WithdrawTimeline = ({
             <TimeIcon />
             <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
       <Box ref={adaHolderRef} mt={5}>
         <ADAHolderIcon />
       </Box>

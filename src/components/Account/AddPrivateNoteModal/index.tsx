@@ -65,7 +65,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal}>
       <Box>
-        <Title>{currentNote ? "View/Update" : "Add"} My Transasaction Private Note</Title>
+        <Title>{currentNote ? "View/Update" : "Add"} My Transaction Private Note</Title>
         <WrapFormInput>
           <StyledLabelInput>Transaction Hash</StyledLabelInput>
           <br />
