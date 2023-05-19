@@ -210,6 +210,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 title='Owner address list'
                 value={data?.ownerAccounts || []}
                 close={() => setOpenOwner(false)}
+                isStakeDetail={true}
               />
             )}
           </Item>

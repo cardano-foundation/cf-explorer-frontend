@@ -68,7 +68,7 @@ export const ViewDetailScroll = styled(Box)(({ theme }) => ({
     padding: "15px 16px",
     maxWidth: "unset",
     "&::-webkit-scrollbar": {
-      width: "2px",
+      width: "2px"
     }
   }
 }));
