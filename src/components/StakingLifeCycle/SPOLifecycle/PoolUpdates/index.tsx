@@ -848,7 +848,7 @@ export const PoolUpdateModal = ({
             </Box>
             {data && (
               <Box fontSize='0.875rem' pt={"7px"} fontWeight={500}>
-                {data?.margin}%
+                {data?.margin ? data?.margin * 100 : 0}%
                 {data?.previousMargin !== null && (
                   <Box fontSize={12} pt={"7px"} color={(theme) => theme.palette.grey[400]}>
                     Previous: {data?.previousMargin} %{" "}
