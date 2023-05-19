@@ -25,7 +25,7 @@ export const TitleStep = styled(Box)<{ currentstep: number; index: number }>(({ 
   fontWeight: "bold",
   fontSize: "0.875rem",
   marginTop: theme.spacing(1),
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     whiteSpace: "nowrap"
   }
 }));
