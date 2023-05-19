@@ -14,7 +14,7 @@ import {
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import DeregistrationCertificateIcon from "../../../../commons/resources/icons/Staking/DeregistrationCertificateIcon.svg";
-import DeregistrationCertificateMobile from "../../../../commons/resources/icons/Staking/DeregistrationCertificateMobile.svg";
+import SPODeregistrationMobile from "../../../../commons/resources/icons/Staking/SPODeregistrationMobile.svg";
 
 import Line from "../../../Line";
 import {
@@ -530,12 +530,7 @@ const DeregistrationTimelineMobile = ({
             sx={{ background: "#fff", borderRadius: "12px" }}
             onClick={toggleModal}
           >
-            <img
-              src={DeregistrationCertificateMobile}
-              width={"90px"}
-              height={"150px"}
-              alt='RegistrationCertificateIcon'
-            />
+            <img src={SPODeregistrationMobile} width={"90px"} height={"150px"} alt='RegistrationCertificateIcon' />
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} position={"relative"}>
