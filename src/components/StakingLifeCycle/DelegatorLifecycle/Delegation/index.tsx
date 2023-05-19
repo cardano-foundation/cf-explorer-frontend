@@ -1,4 +1,4 @@
-import { Box, Grid, Skeleton, alpha, useTheme, styled } from "@mui/material";
+import { Box, Grid, Skeleton, alpha, useTheme, styled, Typography } from "@mui/material";
 import { useRef, useState, useEffect } from "react";
 import { Link as LinkDom } from "react-router-dom";
 
@@ -13,7 +13,18 @@ import {
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import DelegationCertificateIcon from "../../../../commons/resources/icons/Staking/DelegationCertificateIcon.svg";
 import Line from "../../../Line";
-import { FeeBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import {
+  ADATotalStake,
+  ADATotalStakeContainer,
+  FeeBox,
+  IconButton,
+  IconButtonBack,
+  Info,
+  InfoGroup,
+  InfoText,
+  StyledADAicon,
+  StepInfo
+} from "./styles";
 import { AdaLogoIcon } from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentDelegations from "./RecentDelegations";
@@ -29,6 +40,7 @@ import { details } from "../../../../commons/routers";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 import { useScreen } from "~/commons/hooks/useScreen";
+import { AdaValue } from "~/components/ReportGeneratedStakingDetail/StakeyTabs/StakingRegistrationTab";
 
 const Delegation = ({
   containerPosition,
@@ -139,11 +151,11 @@ const DelegationTimeline = ({
   if (loading) {
     return (
       <Box>
-        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+        <StepInfo>
           <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
-          <Box display={"flex"}>
+          <InfoGroup>
             <Info>
               <AddressIcon fill='#438F68' />
               <Box component={Skeleton} ml={1} variant='rectangular' width={145} height={18} />
@@ -156,8 +168,8 @@ const DelegationTimeline = ({
               <TimeIcon />
               <Box component={Skeleton} ml={1} variant='rectangular' width={130} height={18} />
             </Info>
-          </Box>
-        </Box>
+          </InfoGroup>
+        </StepInfo>
         <Box component={Skeleton} width={"100%"} height={400} variant='rectangular' borderRadius={12} />
       </Box>
     );
@@ -165,11 +177,11 @@ const DelegationTimeline = ({
 
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"}>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={data?.txHash}>
@@ -185,12 +197,17 @@ const DelegationTimeline = ({
             <TimeIcon />
             <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef} width={190} height={215}>
-            <ADAHolderIcon />
+            <ADATotalStakeContainer>
+              <ADAHolderIcon />
+              <ADATotalStake>
+                {formatADAFull(data?.stakeTotalAmount)} <StyledADAicon fontSize={12} />
+              </ADATotalStake>
+            </ADATotalStakeContainer>
           </Box>
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
             <Box display={"flex"} flex={1}>
@@ -343,11 +360,11 @@ const DelegationTimelineMobile = ({
   if (loading) {
     return (
       <Box>
-        <Box display='flex' alignItems='flex-start' justifyContent='space-between' mt={1}>
+        <StepInfo>
           <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
-          <Box display={"flex"} flexDirection='column'>
+          <InfoGroup>
             <Info>
               <AddressIcon fill='#438F68' />
               <Box component={Skeleton} ml={1} variant='rectangular' width={145} height={18} />
@@ -360,8 +377,8 @@ const DelegationTimelineMobile = ({
               <TimeIcon />
               <Box component={Skeleton} ml={1} variant='rectangular' width={130} height={18} />
             </Info>
-          </Box>
-        </Box>
+          </InfoGroup>
+        </StepInfo>
         <Box component={Skeleton} width={"100%"} height={400} variant='rectangular' borderRadius={12} />
       </Box>
     );
@@ -369,11 +386,11 @@ const DelegationTimelineMobile = ({
 
   return (
     <Box>
-      <Box display='flex' alignItems='flex-start' justifyContent='space-between' mt={2}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"} flexDirection='column'>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={data?.txHash}>
@@ -389,8 +406,8 @@ const DelegationTimelineMobile = ({
             <TimeIcon />
             <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
       <Box margin='0 auto' width={"350px"}>
         <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={3}>
           <ADAHolderIcon />

@@ -1,6 +1,5 @@
-import { Container } from "../../../Account/ActivityLogModal/styles";
 import StyledModal from "../../../commons/StyledModal";
-import { ModalTitle, StyledBackButton, StyledButton, StyledStack } from "./styles";
+import { Container, ModalTitle, StyledBackButton, StyledButton, StyledStack } from "./styles";
 import { useMemo, useState } from "react";
 import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack } from "@mui/material";
 import { IPropsModal, STEPS } from ".";
@@ -101,7 +100,7 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
 
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={450}>
-      <Container p={"10px 10px 1px 20px"}>
+      <Container>
         <ModalTitle sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</ModalTitle>
         <Container marginBottom={"20px"}>
           {OPTIONS_TRANSFER.filter(({ type }) => type.includes(reportType)).map(({ key, label, value }) => {

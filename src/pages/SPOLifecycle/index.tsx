@@ -1,22 +1,24 @@
-import { Box } from "@mui/material";
 import { useHistory, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 
-import { getShortHash } from "../../commons/utils/helper";
+import { getShortWallet } from "../../commons/utils/helper";
 import CopyButton from "../../components/commons/CopyButton";
 import SPOLifecycleComponent from "../../components/StakingLifeCycle/SPOLifecycle";
 
 import {
   BoxContainerStyled,
   BoxItemStyled,
-  BoxSwitch,
+  LabelSwitch,
   BoxSwitchContainer,
-  ButtonGroup,
+  SwitchGroup,
   ButtonReport,
-  ButtonReportContainer,
   ButtonSwitch,
-  PoolId,
-  StyledContainer
+  LifeCycleHeader,
+  LifeCycleTitle,
+  StakeId,
+  AddressLine,
+  StyledContainer,
+  Label
 } from "./styles";
 
 import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staking/ChartMode.svg";
@@ -27,6 +29,8 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useScreen } from "../../commons/hooks/useScreen";
 import { details } from "../../commons/routers";
 import useAuth from "~/commons/hooks/useAuth";
+import { useSelector } from "react-redux";
+import { useTheme } from "@emotion/react";
 import { API } from "~/commons/utils/api";
 import useFetch from "~/commons/hooks/useFetch";
 import PoolDetailContext from "~/components/StakingLifeCycle/SPOLifecycle/PoolDetailContext";
@@ -61,6 +65,8 @@ const SPOLifecycle = () => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
   const history = useHistory();
+  const theme = useTheme();
+  const { sidebar } = useSelector(({ user }: RootState) => user);
   const [containerPosition, setContainerPosition] = useState<{ top?: number; left?: number }>({
     top: undefined,
     left: undefined
@@ -96,54 +102,45 @@ const SPOLifecycle = () => {
     <PoolDetailContext.Provider value={data}>
       <StyledContainer ref={containerRef}>
         <BoxContainerStyled>
-          <Box>
-            <Box component={"h2"} mb='5px' mt={0} fontSize={isMobile ? 24 : 36} lineHeight='42px'>
-              Staking Lifecycle For
-            </Box>
-            <Box display={"flex"} alignItems={"center"}>
-              <Box component={"span"} fontSize={"0.875rem"} lineHeight={1}>
-                Pool ID:
-              </Box>
+          <LifeCycleHeader sidebar={+sidebar}>
+            <LifeCycleTitle>Staking Lifecycle For</LifeCycleTitle>
+            <AddressLine>
+              <Label>Pool ID:</Label>
               <CustomTooltip title={poolId}>
-                <PoolId to={details.delegation(poolId)}>{getShortHash(poolId)}</PoolId>
+                <StakeId to={details.delegation(poolId)}>{getShortWallet(poolId)}</StakeId>
               </CustomTooltip>
               <CopyButton text={poolId} />
-            </Box>
-          </Box>
-          <BoxItemStyled>
-            <BoxSwitchContainer>
-              <BoxSwitch color={({ palette }) => palette.grey[400]}>
-                <Box>Switch to {mode === "timeline" ? "tabular" : "timeline"} view</Box>
-              </BoxSwitch>
-              <ButtonGroup>
+            </AddressLine>
+          </LifeCycleHeader>
+          <BoxItemStyled sidebar={+sidebar}>
+            <BoxSwitchContainer sidebar={+sidebar}>
+              <LabelSwitch>Switch to {mode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
+              <SwitchGroup>
                 <ButtonSwitch active={+(mode === "timeline")} onClick={() => changeMode("timeline")}>
-                  <ChartMode fill={mode === "timeline" ? "#fff" : "#344054"} />
+                  <ChartMode fill={mode === "timeline" ? theme.palette.common.white : theme.palette.grey[500]} />
                 </ButtonSwitch>
                 <ButtonSwitch active={+(mode === "tabular")} onClick={() => changeMode("tabular")}>
-                  <TableMode fill={mode === "tabular" ? "#fff" : "#344054"} />
+                  <TableMode fill={mode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
                 </ButtonSwitch>
-              </ButtonGroup>
+              </SwitchGroup>
             </BoxSwitchContainer>
-
             {mode === "tabular" && (
-              <ButtonReportContainer disabled={!isLoggedIn}>
-                <ButtonReport onClick={() => setOpen(true)}>Compose report</ButtonReport>
-              </ButtonReportContainer>
+              <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
+                Compose report
+              </ButtonReport>
             )}
           </BoxItemStyled>
         </BoxContainerStyled>
-
-        <Box ml={isMobile ? 2 : 0}>
-          {mode === "timeline" && (
-            <SPOLifecycleComponent
-              handleResize={handleResize}
-              containerPosition={containerPosition}
-              currentStep={currentStep}
-              setCurrentStep={setCurrentStep}
-            />
-          )}
-          {mode === "tabular" && <Tablular />}
-        </Box>
+        {mode === "timeline" ? (
+          <SPOLifecycleComponent
+            handleResize={handleResize}
+            containerPosition={containerPosition}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+          />
+        ) : (
+          <Tablular />
+        )}
         <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
       </StyledContainer>
     </PoolDetailContext.Provider>

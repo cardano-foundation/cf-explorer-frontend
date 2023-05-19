@@ -22,10 +22,6 @@ export const PriceWrapper = styled(StyledColorBlueDard)`
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
   padding: "20px 0 40px",
-  [theme.breakpoints.down("md")]: {
-    paddingTop: "0px",
-    marginTop: "-30px"
-  },
   [theme.breakpoints.down("sm")]: {
     "& > div:nth-of-type(1)": {
       "& > div:nth-of-type(1)": {

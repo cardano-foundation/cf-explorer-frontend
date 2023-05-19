@@ -26,7 +26,9 @@ import {
   IconButton,
   IconButtonBack,
   Info,
+  InfoGroup,
   InfoText,
+  StepInfo,
   StyledBox
 } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
@@ -66,27 +68,23 @@ const Deregistration = ({
   return (
     <Box>
       <DeregistrationCertificateModal data={selected} handleCloseModal={handleToggleModal} open={openModal} />
-      <Box>
-        <RecentDeregistrations onSelect={handleSelect} />
-      </Box>
-      <Box>
-        {!!selected && !isLargeTablet && (
-          <DeregistrationTimeline
-            handleResize={handleResize}
-            selected={selected}
-            containerPosition={containerPosition}
-            toggleModal={handleToggleModal}
-          />
-        )}
-        {!!selected && isLargeTablet && (
-          <DeregistrationTimelineMobile
-            handleResize={handleResize}
-            selected={selected}
-            containerPosition={containerPosition}
-            toggleModal={handleToggleModal}
-          />
-        )}
-      </Box>
+      <RecentDeregistrations onSelect={handleSelect} />
+      {!!selected && !isLargeTablet && (
+        <DeregistrationTimeline
+          handleResize={handleResize}
+          selected={selected}
+          containerPosition={containerPosition}
+          toggleModal={handleToggleModal}
+        />
+      )}
+      {!!selected && isLargeTablet && (
+        <DeregistrationTimelineMobile
+          handleResize={handleResize}
+          selected={selected}
+          containerPosition={containerPosition}
+          toggleModal={handleToggleModal}
+        />
+      )}
     </Box>
   );
 };
@@ -129,11 +127,11 @@ const DeregistrationTimeline = ({
 
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"}>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected?.txHash}>
@@ -153,8 +151,8 @@ const DeregistrationTimeline = ({
             <TimeIcon />
             <InfoText>{moment(selected?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef} width={190} height={245} position={"relative"}>
@@ -367,7 +365,15 @@ const DeregistrationTimeline = ({
         </Box>
         <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
           <Box ref={fake1Ref} width={"190px"} height={220}></Box>
-          <Box ref={registrationRef} width={220} height={220} component={IconButton} p={0} onClick={toggleModal}>
+          <Box
+            ref={registrationRef}
+            width={220}
+            height={220}
+            component={IconButton}
+            p={0}
+            onClick={toggleModal}
+            sx={{ background: "none !important" }}
+          >
             <img style={{ marginLeft: "5px" }} src={DeregistrationCertificateIcon} alt='RegistrationCertificateIcon' />
           </Box>
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
@@ -418,11 +424,11 @@ const DeregistrationTimelineMobile = ({
 
   return (
     <StyledBox>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"}>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected?.txHash}>
@@ -438,8 +444,8 @@ const DeregistrationTimelineMobile = ({
             <TimeIcon />
             <InfoText>{moment(selected?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
 
       <Box className='list-images' display={"flex"} flexDirection={"column"} alignItems={"center"} gap={"50px"}>
         <Box

@@ -3,10 +3,7 @@ import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
   margin-top: 18px;
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.md}px) {
-    padding-top: 0;
-    margin-top: -20px;
-  }
+
   @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
     padding-top: 10px;
     margin-top: 0px !important;

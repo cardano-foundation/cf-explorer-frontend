@@ -1,15 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { PoollUpdatesList } from ".";
+import PoollUpdatesList from ".";
 
 import Router from "react-router";
-
-// jest.mock("../../../../commons/hooks/useFetchList", () => {
-//   return {
-//     useFetchList: () => {
-//       return { total: 1 };
-//     },
-//   };
-// });
 
 describe("Pool Updates", () => {
   it("should render SPO PoollUpdatesList coponents", async () => {
