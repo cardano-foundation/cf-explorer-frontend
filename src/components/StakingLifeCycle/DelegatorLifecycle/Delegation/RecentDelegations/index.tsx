@@ -5,7 +5,7 @@ import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../../StackingFilter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
-import { GridBox, WrapFilterDescription } from "./styles";
+import { GridBox, StyledContainer, StyledList, WrapFilterDescription } from "./styles";
 
 import moment from "moment";
 import { EmptyRecord } from "../../../../commons/Table";
@@ -14,6 +14,7 @@ import { DATETIME_PARTTEN } from "../../../../StackingFilter/DateRangeModal";
 import { DescriptionText } from "../../styles";
 import { details } from "../../../../../commons/routers";
 import { useUpdateEffect } from "react-use";
+import { useSelector } from "react-redux";
 
 interface Props {
   onSelect: (delegation: DelegationItem | null) => void;
@@ -22,6 +23,7 @@ interface Props {
 const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
   const history = useHistory();
+  const { sidebar } = useSelector(({ user }: RootState) => user);
   const [params, setParams] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
@@ -68,8 +70,8 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
   if (txHash) return null;
 
   return (
-    <Box marginTop='32px'>
-      <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} marginBottom={"10px"}>
+    <StyledContainer>
+      <StyledList>
         <DescriptionText>Recent Delegations</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
@@ -89,8 +91,8 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
             }
           />
         </Box>
-      </Box>
-      <GridBox>
+      </StyledList>
+      <GridBox sidebar={+sidebar}>
         {loading &&
           [...new Array(12)].map((i, ii) => (
             <Skeleton key={ii} style={{ borderRadius: 12 }} variant='rectangular' width={300} height={185} />
@@ -110,7 +112,7 @@ const RecentDelegations: React.FC<Props> = ({ onSelect }) => {
           })}
       </GridBox>
       {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
-    </Box>
+    </StyledContainer>
   );
 };
 

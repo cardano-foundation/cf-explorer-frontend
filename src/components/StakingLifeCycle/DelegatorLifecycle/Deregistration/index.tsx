@@ -15,7 +15,7 @@ import DeregistrationCertificate from "../../../../commons/resources/icons/Staki
 import DeregistrationCertificateMobile from "../../../../commons/resources/icons/Staking/DeregistrationCertificateMobile.svg";
 
 import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoGroup, InfoText, StepInfo } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentDeregistrations from "./RecentDeregistration";
@@ -118,11 +118,11 @@ const DeregistrationTimeline = ({
 
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"}>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected.txHash}>
@@ -138,8 +138,8 @@ const DeregistrationTimeline = ({
             <TimeIcon />
             <InfoText>{formatDateTimeLocal(selected.time)}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef} width={190} height={215}>
@@ -337,11 +337,11 @@ const DeregistrationTimelineMobile = ({
 
   return (
     <Box>
-      <Box display='flex' justifyContent='space-between' mt={1}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"} flexDirection='column'>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected.txHash}>
@@ -357,8 +357,8 @@ const DeregistrationTimelineMobile = ({
             <TimeIcon />
             <InfoText>{formatDateTimeLocal(selected.time)}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
       <Box margin='0 auto' width={"350px"}>
         <Box>
           <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={5} pr={2} position={"relative"}>

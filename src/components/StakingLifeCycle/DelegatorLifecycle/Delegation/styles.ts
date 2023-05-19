@@ -73,11 +73,40 @@ export const InfoText = styled(Box)(({ theme }) => ({
   fontSize: "14px"
 }));
 
-export const FilterDateLabel = styled(Typography)`
-  font-size: 14px;
-  font-weight: 400;
-  color: ${(props) => props.theme.palette.grey[400]};
-`;
+export const FilterDateLabel = styled("span")(({ theme }) => ({
+  fontSize: 14,
+  fontWeight: 400,
+  color: theme.palette.grey[400],
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
+    fontSize: 12
+  }
+}));
+
+export const StepInfo = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  gap: 20,
+  marginBottom: 36,
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "flex-start",
+    marginBottom: 30
+  }
+}));
+
+export const InfoGroup = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  gap: 20,
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    gap: 5
+  }
+}));
 
 export const ADATotalStake = styled(Typography)`
   font-size: 12px;

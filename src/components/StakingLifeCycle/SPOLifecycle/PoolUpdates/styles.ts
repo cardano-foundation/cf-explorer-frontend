@@ -63,11 +63,11 @@ export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
   padding: 0
 }));
 
-export const Info = styled(Box)(({ theme }) => ({
+export const Info = styled(Box)(() => ({
   display: "flex",
-  alignItems: "center",
-  marginLeft: theme.spacing(2)
+  alignItems: "center"
 }));
+
 export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -90,15 +90,24 @@ export const FeeBoxText = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledContainer = styled(Box)(({ theme }) => ({
+  marginTop: 25,
   [theme.breakpoints.down("sm")]: {
-    "& > div:nth-of-type(1)": {
-      alignItems: "center"
-    },
+    marginTop: 15
+  }
+}));
+
+export const StyledList = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  marginBottom: 20,
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "center",
     "& > p": {
-      marginRight: "10px"
+      marginRight: 20
     }
   }
 }));
+
 export const StyledGridContainer = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     wordBreak: "break-all",
@@ -113,19 +122,41 @@ export const StyledGridContainer = styled(Grid)(({ theme }) => ({
   }
 }));
 
+export const GridBox = styled("div")<{ sidebar?: number }>(({ theme, sidebar }) => ({
+  display: "grid",
+  gridTemplateColumns: "repeat(4, 1fr)",
+  gridTemplateRows: "repeat(2, 1fr)",
+  gridGap: "20px 10px",
+  [theme.breakpoints.down("xl")]: {
+    gridTemplateColumns: `repeat(${sidebar ? 3 : 4}, 1fr)`,
+    gridTemplateRows: `repeat(${sidebar ? 3 : 4}, 1fr)`
+  },
+  [theme.breakpoints.down("lg")]: {
+    gridTemplateColumns: `repeat(${sidebar ? 2 : 3}, 1fr)`,
+    gridTemplateRows: `repeat(${sidebar ? 2 : 3}, 1fr)`
+  },
+  [theme.breakpoints.down("md")]: {
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gridTemplateRows: "repeat(4, 1fr)"
+  },
+  [theme.breakpoints.down("sm")]: {
+    gridTemplateColumns: "1fr",
+    gridTemplateRows: "auto",
+    "& > span": {
+      width: "100% !important"
+    },
+    "& > div": {
+      maxWidth: "100%"
+    }
+  }
+}));
+
 export const StyledBox = styled(Box)(({ theme }) => ({
   ".list-images": {
     maxWidth: "390px",
     margin: "0px auto"
   },
   [theme.breakpoints.down("md")]: {
-    "& > div:nth-of-type(1)": {
-      alignItems: "flex-start",
-      "& > div:nth-of-type(1)": {
-        flexDirection: "column",
-        gap: "5px"
-      }
-    },
     ".list-images": {
       "& > div": {
         display: "flex",
@@ -163,3 +194,58 @@ export const ViewMoreButton = styled(IconButton)`
   height: 30px;
   margin-left: 6px;
 `;
+
+export const DotsIcon = styled(Box)`
+  border-radius: 50%;
+  background-color: #667085;
+  width: 3.6px;
+  height: 3.6px;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 3.6px;
+    height: 3.6px;
+    right: -7px;
+    top: 0px;
+    border-radius: 50%;
+    background-color: #667085;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 3.6px;
+    height: 3.6px;
+    left: -7px;
+    top: 0px;
+    border-radius: 50%;
+    background-color: #667085;
+  }
+`;
+
+export const StepInfo = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  gap: 20,
+  marginBottom: 36,
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "flex-start",
+    marginBottom: 30
+  }
+}));
+
+export const InfoGroup = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  gap: 20,
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    gap: 5
+  }
+}));

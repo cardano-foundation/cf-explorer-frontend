@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { ListItemIcon, Popover, Button, styled } from "@mui/material";
 
 export const SubmitButton = styled(Button)`
@@ -29,14 +30,18 @@ export const OutlineButton = styled(Button)`
   text-transform: none;
 `;
 
-export const GridBox = styled("div")(({ theme }) => ({
+export const GridBox = styled("div")<{ sidebar?: number }>(({ theme, sidebar }) => ({
   display: "grid",
   gridTemplateColumns: "repeat(4, 1fr)",
   gridTemplateRows: "repeat(2, 1fr)",
   gridGap: "20px 10px",
+  [theme.breakpoints.down("xl")]: {
+    gridTemplateColumns: `repeat(${sidebar ? 3 : 4}, 1fr)`,
+    gridTemplateRows: `repeat(${sidebar ? 3 : 4}, 1fr)`
+  },
   [theme.breakpoints.down("lg")]: {
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gridTemplateRows: "repeat(3, 1fr)"
+    gridTemplateColumns: `repeat(${sidebar ? 2 : 3}, 1fr)`,
+    gridTemplateRows: `repeat(${sidebar ? 2 : 3}, 1fr)`
   },
   [theme.breakpoints.down("md")]: {
     gridTemplateColumns: "repeat(2, 1fr)",
@@ -44,16 +49,24 @@ export const GridBox = styled("div")(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     gridTemplateColumns: "1fr",
-    gridTemplateRows: "auto"
+    gridTemplateRows: "auto",
+    "& > span": {
+      width: "100% !important"
+    },
+    "& > div": {
+      maxWidth: "100%"
+    }
   }
 }));
 
-export const WrapFilterDescription = styled("span")`
-  font-size: 14px;
-  font-weight: 400;
-  margin-bottom: 5px;
-  color: ${(props) => props.theme.palette.grey[400]};
-`;
+export const WrapFilterDescription = styled("span")(({ theme }) => ({
+  fontSize: 14,
+  fontWeight: 400,
+  color: theme.palette.grey[400],
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 12
+  }
+}));
 
 export const WrapPopover = styled(Popover)`
   .MuiPaper-root {
@@ -85,6 +98,25 @@ export const GridBoxCustom = styled(GridBox)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     "& > div": {
       maxWidth: "100%"
+    }
+  }
+}));
+
+export const StyledContainer = styled(Box)(({ theme }) => ({
+  marginTop: 25,
+  [theme.breakpoints.down("sm")]: {
+    marginTop: 15
+  }
+}));
+
+export const StyledList = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  marginBottom: 20,
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "center",
+    "& > p": {
+      marginRight: 20
     }
   }
 }));
