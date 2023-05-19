@@ -10,7 +10,6 @@ import { RootState } from "../../../stores/types";
 import CustomTooltip from "../CustomTooltip";
 import ToastContainer from "./ToastContainer";
 import { useHistory } from "react-router-dom";
-import { Container } from "@mui/material";
 
 interface Props {
   children: React.ReactNode;

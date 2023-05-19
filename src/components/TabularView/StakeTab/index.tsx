@@ -27,12 +27,11 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration", onC
     setTabActive(tab);
     onChangeTab?.(tab);
   };
-  const { reportName } = useContext(StakingDetailContext);
 
   return (
-    <Box mt={4} mr={isMobile ? 2 : 0}>
+    <Box mt={4}>
       <TabContext value={tabActive}>
-        <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.secondary}` }}>
+        <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.secondary}` }} marginBottom='15px'>
           <StyledTabList
             onChange={handleChange}
             TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
