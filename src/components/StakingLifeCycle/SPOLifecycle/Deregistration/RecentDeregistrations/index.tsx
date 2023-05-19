@@ -7,11 +7,13 @@ import { API } from "../../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../../StackingFilter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
 import { EmptyRecord } from "../../../../commons/Table";
-import { GridBox, WrapFilterDescription, StyledContainer } from "./styles";
+import { GridBox, WrapFilterDescription, StyledContainer, StyledList } from "./styles";
 import { FilterDateLabel } from "../../../DelegatorLifecycle/Delegation/styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
 import { details } from "../../../../../commons/routers";
 import { useUpdateEffect } from "react-use";
+import { useSelector } from "react-redux";
+import { DATETIME_PARTTEN } from "~/components/StackingFilter/DateRangeModal";
 
 interface Props {
   onSelect: (registration: SPODeregistration | null) => void;
@@ -20,6 +22,7 @@ interface Props {
 const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
   const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
+  const { sidebar } = useSelector(({ user }: RootState) => user);
   const [params, setParams] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
@@ -51,20 +54,22 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
   }, [JSON.stringify(data)]);
 
   const filterLabel = useMemo(() => {
+    const sortArr = params.sort && params.sort.split(",");
     if (params.fromDate && params.toDate)
-      return ` Filter by: ${moment(params.fromDate).format("MM/DD/YYYY")} - ${moment(params.toDate).format(
-        "MM/DD/YYYY"
-      )}`;
-    if (params.sort && params.sort.length >= 2)
-      return `${params.sort[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
+      return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
+        .utc(params.toDate, DATETIME_PARTTEN)
+        .local()
+        .format("MM/DD/YYYY")}`;
+    if (params.sort && sortArr && params.sort.length >= 2)
+      return `${sortArr[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
     if (params.txHash) return `Searching for : ${params.txHash}`;
   }, [params]);
 
   if (txHash) return null;
 
   return (
-    <StyledContainer marginTop='32px'>
-      <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"}>
+    <StyledContainer>
+      <StyledList>
         <DescriptionText>Recent Deregistration</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
@@ -84,8 +89,8 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
             }
           />
         </Box>
-      </Box>
-      <GridBox>
+      </StyledList>
+      <GridBox sidebar={+sidebar}>
         {loading &&
           [...new Array(12)].map((i, ii) => (
             <Skeleton key={ii} style={{ borderRadius: 12 }} variant='rectangular' width={300} height={185} />

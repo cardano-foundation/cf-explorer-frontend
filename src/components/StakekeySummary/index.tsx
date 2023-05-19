@@ -106,16 +106,20 @@ const StakekeySummary = () => {
     {
       key: "download",
       title: "",
+      maxWidth: "30px",
+      minWidth: "30px",
       render(data) {
         return (
-          <Box
-            ml={2}
-            component={IconButton}
-            display={"block"}
-            textTransform={"capitalize"}
-            onClick={() => downloadFn(data.id, data.reportName, "EXCEL")}
-          >
-            <CustomIcon icon={DownloadGreenIcon} width={24} />
+          <Box width='100%' textAlign='center'>
+            <Box
+              component={IconButton}
+              display={"block"}
+              margin='auto'
+              textTransform={"capitalize"}
+              onClick={() => downloadFn(data.id, data.reportName, "EXCEL")}
+            >
+              <CustomIcon icon={DownloadGreenIcon} width={24} />
+            </Box>
           </Box>
         );
       }

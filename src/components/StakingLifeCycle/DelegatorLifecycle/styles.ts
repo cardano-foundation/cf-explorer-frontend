@@ -2,8 +2,11 @@ import { Box, Button, IconButton, Typography, alpha, styled } from "@mui/materia
 
 export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   width: "100%",
-  padding: `${theme.spacing(3)} 0`,
-  borderBottom: `3px solid ${active ? theme.palette.green[600] : theme.palette.grey[200]}`
+  padding: `0 0 ${theme.spacing(3)}`,
+  borderBottom: `3px solid ${active ? theme.palette.green[600] : theme.palette.grey[200]}`,
+  [theme.breakpoints.down("sm")]: {
+    padding: "16px 30px"
+  }
 }));
 
 export const StepButton = styled(IconButton)<{ active: number }>(({ theme, active }) => ({
@@ -21,8 +24,12 @@ export const TitleStep = styled(Box)<{ currentstep: number; index: number }>(({ 
       : theme.palette.grey[300],
   fontWeight: "bold",
   fontSize: "0.875rem",
-  marginTop: theme.spacing(1)
+  marginTop: theme.spacing(1),
+  [theme.breakpoints.down("sm")]: {
+    whiteSpace: "nowrap"
+  }
 }));
+
 export const NextButton = styled(Button)(({ theme }) => ({
   color: theme.palette.common.white,
   background: theme.palette.grey[700],
@@ -70,6 +77,18 @@ export const TabTitle = styled(Typography)(({ theme }) => ({
   fontWeight: 700,
   color: theme.palette.common.black,
   textAlign: "left"
+}));
+
+export const StepHeader = styled(Typography)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginTop: 40,
+  marginBottom: 20,
+  [theme.breakpoints.down("sm")]: {
+    marginTop: 30,
+    marginBottom: 15
+  }
 }));
 
 export const StyledBox = styled(Box)`

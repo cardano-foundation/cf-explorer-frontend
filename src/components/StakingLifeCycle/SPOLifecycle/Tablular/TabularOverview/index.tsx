@@ -1,4 +1,4 @@
-import { Box, BoxProps, Grid, Icon, IconButton, Typography } from "@mui/material";
+import { Box, BoxProps, Grid, Icon } from "@mui/material";
 import { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import useFetch from "../../../../../commons/hooks/useFetch";
@@ -15,10 +15,17 @@ import {
 } from "../../../../../commons/resources";
 import { API } from "../../../../../commons/utils/api";
 import { formatADAFull, getShortWallet } from "../../../../../commons/utils/helper";
-import { CardOverview, CardTitle, CardValue, ClickAbleLink, ViewMoreButton, WrapIcon, WrapWalletIcon } from "./styles";
-import { DotsIcon } from "../../../../PoolRegistrationCertificate/styles";
+import {
+  CardOverview,
+  CardTitle,
+  CardValue,
+  ClickAbleLink,
+  DotsIcon,
+  ViewMoreButton,
+  WrapIcon,
+  WrapWalletIcon
+} from "./styles";
 import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
-import { useScreen } from "../../../../../commons/hooks/useScreen";
 import { details } from "../../../../../commons/routers";
 
 export const GreenWalletIcon = (props: BoxProps) => {
@@ -48,7 +55,6 @@ type TGridItem = {
 };
 
 const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
-  const [showPoolOwners, setShowPoolOwners] = useState(false);
   const bg = {
     blue: BgBlue,
     green: BgGreen,
@@ -57,7 +63,7 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
   }[bgType];
 
   return (
-    <Grid item xs={12} md={12} lg={6}>
+    <Grid item xs={12} md={6}>
       <CardOverview>
         <Icon component={bg} />
         <Box display='flex' alignItems='center' gap='12px'>
@@ -81,9 +87,8 @@ const TabularOverview: React.FC = () => {
   const onOwnerItemClick = (key: string) => {
     return history.push(`/stake/${key}/delegation`);
   };
-  const { isMobile } = useScreen();
   return (
-    <Box mr={isMobile ? 2 : 0}>
+    <Box>
       <Grid container spacing={2}>
         <GridItem
           title='Pool Size'

@@ -80,10 +80,9 @@ export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
   padding: 0
 }));
 
-export const Info = styled(Box)(({ theme }) => ({
+export const Info = styled(Box)(() => ({
   display: "flex",
-  alignItems: "center",
-  marginLeft: theme.spacing(2)
+  alignItems: "center"
 }));
 export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -156,18 +155,35 @@ export const StyledGridContainer = styled(Grid)(({ theme }) => ({
     }
   }
 }));
+
 export const StyledBox = styled(Box)(({ theme }) => ({
   ".list-images": {
     maxWidth: "390px",
     margin: "0px auto"
   },
+}));
+
+export const StepInfo = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  gap: 20,
+  marginBottom: 36,
   [theme.breakpoints.down("sm")]: {
-    "& > div:nth-of-type(1)": {
-      alignItems: "flex-start",
-      "& > div:nth-of-type(1)": {
-        flexDirection: "column",
-        gap: "5px"
-      }
-    }
+    alignItems: "flex-start",
+    marginBottom: 30
+  }
+}));
+
+export const InfoGroup = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  gap: 20,
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    gap: 5
   }
 }));

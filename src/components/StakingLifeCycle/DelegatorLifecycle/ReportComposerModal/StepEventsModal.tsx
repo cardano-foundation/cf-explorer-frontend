@@ -2,10 +2,18 @@ import { Box } from "@mui/material";
 import { get } from "lodash";
 import { useState } from "react";
 import { IPropsModal, STEPS } from ".";
-import { Container } from "../../../Account/ActivityLogModal/styles";
 import StyledModal from "../../../commons/StyledModal";
 import { ReportType } from "./FilledInfoModal";
-import { ButtonEvent, ModalTitle, StyledBackButton, StyledButton, StyledStack, SubText, TextRequired } from "./styles";
+import {
+  Container,
+  ButtonEvent,
+  ModalTitle,
+  StyledBackButton,
+  StyledButton,
+  StyledStack,
+  SubText,
+  TextRequired
+} from "./styles";
 import { useScreen } from "~/commons/hooks/useScreen";
 
 export enum RatioGroupValue {
@@ -115,11 +123,11 @@ const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
 
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
-      <Container p={"10px 10px 1px 20px"}>
+      <Container>
         <ModalTitle sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</ModalTitle>
         <SubText>{isPoolReport ? "Pool Report by event" : "Staking lifecycle events"}</SubText>
         <TextRequired>Select as required</TextRequired>
-        <Box display={"flex"} flexWrap={"wrap"} gap='10px' marginY={"20px"}>
+        <Box display={"flex"} flexWrap={"wrap"} gap='10px' marginTop='20px' marginBottom='40px'>
           {events.map(({ label, value }) => {
             return (
               <ButtonEvent

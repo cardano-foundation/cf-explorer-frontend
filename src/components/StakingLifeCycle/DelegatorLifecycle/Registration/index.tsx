@@ -14,7 +14,7 @@ import RegistrationCertificate from "../../../../commons/resources/icons/Staking
 import RegistrationCertificateMobile from "../../../../commons/resources/icons/Staking/RegistrationCertificateMobile.svg";
 
 import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText, StakeLink } from "./styles";
+import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoGroup, InfoText, StakeLink, StepInfo } from "./styles";
 import { AdaLogoIcon } from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentRegistrations from "./RecentRegistrations";
@@ -120,11 +120,11 @@ const RegistrationTimeline = ({
 
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"}>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={txHash}>
@@ -140,8 +140,8 @@ const RegistrationTimeline = ({
             <TimeIcon />
             <InfoText>{moment(time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef} width={190} height={215}>
@@ -329,11 +329,11 @@ const RegistrationTimelineMobile = ({
 
   return (
     <Box>
-      <Box display='flex' alignItems='flex-start' justifyContent='space-between' mt={1}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"} flexDirection='column'>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={txHash}>
@@ -349,8 +349,8 @@ const RegistrationTimelineMobile = ({
             <TimeIcon />
             <InfoText>{moment(time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
       <Box margin='0 auto' width={"350px"}>
         <Box>
           <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={3}>

@@ -1,9 +1,9 @@
-import { Box, Button, IconButton, alpha, styled } from "@mui/material";
+import { Box, Button, IconButton, Typography, alpha, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   width: "100%",
-  padding: `${theme.spacing(3)} 0`,
+  padding: `0 0 ${theme.spacing(3)}`,
   borderBottom: `3px solid ${active ? theme.palette.green[600] : theme.palette.grey[200]}`,
   [theme.breakpoints.down("sm")]: {
     padding: "16px 30px"
@@ -28,6 +28,18 @@ export const TitleStep = styled(Box)<{ currentStep: number; index: number }>(({ 
   marginTop: theme.spacing(1),
   [theme.breakpoints.down("sm")]: {
     whiteSpace: "nowrap"
+  }
+}));
+
+export const StepHeader = styled(Typography)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginTop: 40,
+  marginBottom: 20,
+  [theme.breakpoints.down("sm")]: {
+    marginTop: 30,
+    marginBottom: 15
   }
 }));
 
