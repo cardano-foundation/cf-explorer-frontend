@@ -177,6 +177,10 @@ export const TextLabelReview = styled("div")`
   color: #000000;
   opacity: 0.6;
   white-space: nowrap;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    font-size: 14px;
+    line-height: 16px;
+  }
 `;
 
 export const TextValueReview = styled("div")`
@@ -185,6 +189,10 @@ export const TextValueReview = styled("div")`
   line-height: 19px;
   max-width: 100%;
   color: #000000;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    font-size: 14px;
+    line-height: 16px;
+  }
 `;
 
 export const TextOverFlow = styled("div")`
@@ -226,19 +234,4 @@ export const StyledSlider = styled(Slider)`
   }
 
   margin-bottom: 12px;
-`;
-
-export const EventLabel = styled(Typography)`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-  max-width: 300px;
-  color: #000000;
-  cursor: pointer;
-  @media screen and (max-width: ${breakpoints.values.sm}px) {
-    max-width: 180px;
-  }
 `;
