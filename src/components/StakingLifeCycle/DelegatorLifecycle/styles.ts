@@ -100,10 +100,11 @@ export const StyledBox = styled(Box)`
 
 export const DescriptionText = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.black,
-  marginBottom: "4px",
   fontSize: "18px",
+  lineHeight: "21px",
   [theme.breakpoints.down("sm")]: {
-    fontSize: "14px"
+    fontSize: "14px",
+    lineHeight: "16px"
   }
 }));
 

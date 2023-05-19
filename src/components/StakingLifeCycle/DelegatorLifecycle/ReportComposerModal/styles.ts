@@ -1,11 +1,14 @@
-import { styled, Stack, Box, Button, TextField, Slider, Typography } from "@mui/material";
+import { styled, Stack, Box, Button, TextField, Slider } from "@mui/material";
 import { SelectMui } from "../../../commons/Table/styles";
-import breakpoints from "~/themes/breakpoints";
 
 export const Container = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
-    fontSize: 14,
-    lineHeight: "16px"
+    label: {
+      "*": {
+        fontSize: 14,
+        lineHeight: "16px"
+      }
+    }
   }
 }));
 
@@ -91,20 +94,24 @@ export const StyledButton = styled(Button)`
     line-height: 16px;
   }
 `;
-export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ width = 100 }) => ({
+export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ width = 100, theme }) => ({
   width: `${width}%`,
   borderRadius: "8px",
   height: "44px",
   textAlign: "center",
   color: "#344054",
+  fontSize: 16,
   lineHeight: "19px",
   fontWeight: 700,
   border: "2px solid #c8cdd8",
+  textTransform: "none",
   ":hover": {
     opacity: 0.8
   },
-  textTransform: "none",
-  fontSize: "1rem"
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 14,
+    lineHeight: "16px"
+  }
 }));
 
 export const SubText = styled("div")`
