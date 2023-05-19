@@ -86,7 +86,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
   const { isTablet } = useScreen();
   const getHashLabel = () => {
     if (type === "BLOCK") return "Block Id";
-    if (type === "STAKE_KEY") return "Token Id";
+    if (type === "STAKE_KEY") return "";
     if (type === "POOL") return "Pool Id";
     if (type === "TOKEN") return "Token ID";
   };

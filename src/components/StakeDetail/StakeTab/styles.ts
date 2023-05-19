@@ -30,14 +30,18 @@ export const StyledLink = styled(Link)`
 export const StyledTabList = styled(TabList)`
   & > div > div {
     justify-content: space-between;
-    @media screen and (max-width: ${breakpoints.values.sm}px) {
+    @media screen and (max-width: ${({ theme }) => theme.breakpoints.values.md}px) {
       overflow-x: auto;
       white-space: nowrap;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 `;
 
 export const WrapperTabList = styled(Box)(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.border.secondary}`,
-  overflowX: "auto"
+  borderBottom: `1px solid ${theme.palette.border.secondary}`
 }));

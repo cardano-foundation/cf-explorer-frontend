@@ -27,6 +27,12 @@ export const CustomButton = styled("button")<{ active: number }>`
   font-family: var(--font-family-title);
   font-size: 16px;
   line-height: 24px;
+
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+    width: 78px;
+    padding: 6px 10px;
+    margin-right: 8px !important;
+  }
 `;
 
 export const BoxInfoItem = styled(Box)(({ theme }) => ({
@@ -49,7 +55,7 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
 
     div: {
       width: "100%",
-      height: "100px",
+      height: "80%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -80,7 +86,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
 
     div: {
       width: "100%",
-      height: "100px",
+      height: "80%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -141,8 +147,11 @@ export const Tabs = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("md")]: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     gap: theme.spacing(1)
+  },
+  [theme.breakpoints.down("sm")]: {
+    color: "red"
   }
 }));
 
@@ -156,5 +165,10 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   ":hover": {
     color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
     backgroundColor: active ? theme.palette.primary.main : "none"
+  },
+  [theme.breakpoints.down("sm")]: {
+    minWidth: `40px !important`,
+    height: `28px !important`,
+    marginRight: "0px"
   }
 }));
