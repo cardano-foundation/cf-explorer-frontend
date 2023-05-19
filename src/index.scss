@@ -38,6 +38,7 @@ html {
   font-size: var(--font-size-text);
   scroll-behavior: smooth;
   & > body {
+    position: fixed;
     scroll-behavior: smooth;
     margin: 0;
     padding: 0;
