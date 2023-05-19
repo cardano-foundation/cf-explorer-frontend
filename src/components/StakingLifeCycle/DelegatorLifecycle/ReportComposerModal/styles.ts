@@ -103,7 +103,8 @@ export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ w
   ":hover": {
     opacity: 0.8
   },
-  textTransform: "none"
+  textTransform: "none",
+  fontSize: "1rem"
 }));
 
 export const SubText = styled("div")`
