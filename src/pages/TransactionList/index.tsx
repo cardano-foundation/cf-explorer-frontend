@@ -9,10 +9,6 @@ import { API } from "../../commons/utils/api";
 
 const StyledContainer = styled(Container)`
   padding: 20px 16px 40px;
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.md}px) {
-    padding-top: 0;
-    margin-top: -20px;
-  }
   @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
     padding-top: 10px;
     margin-top: 0px !important;

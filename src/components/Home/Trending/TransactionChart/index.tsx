@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import moment from "moment";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import useFetch from "../../../../commons/hooks/useFetch";
@@ -158,14 +158,14 @@ const renderTooltipContent = (o: any, range: Time) => {
     smartContract: "Smart contracts",
     metadata: "Metadata"
   };
-  const total = payload.reduce((result: number, entry: any) => result + entry.value, 0);
+  const total = (payload || []).reduce((result: number, entry: any) => result + entry.value, 0);
   return (
     <Box>
       <Box p={1} bgcolor={alpha("#000", 0.8)} borderRadius={"8px"} textAlign={"left"}>
         <Box color={({ palette }) => palette.common.white} textAlign={"center"}>{`${moment(label).format(
           formatTimeX(range)
         )}`}</Box>
-        {payload.map((entry: any, index: number) => (
+        {(payload || []).map((entry: any, index: number) => (
           <Box key={`item-${index}`} mt={1}>
             <Box color={({ palette }) => alpha(palette.common.white, 0.7)} fontSize={"0.75rem"}>{`${
               nameTooltips[entry.name as keyof typeof nameTooltips]

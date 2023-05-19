@@ -1,4 +1,5 @@
 import { Typography, Box, styled, IconButton as IconButtonMui } from "@mui/material";
+import ADAicon from "~/components/commons/ADAIcon";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -106,3 +107,20 @@ export const InfoGroup = styled(Box)(({ theme }) => ({
     gap: 5
   }
 }));
+
+export const ADATotalStake = styled(Typography)`
+  font-size: 12px;
+  position: absolute;
+  left: 50%;
+  bottom: 36px;
+  transform: translateX(-50%);
+  color: #13152f;
+`;
+
+export const ADATotalStakeContainer = styled(Box)`
+  position: relative;
+`;
+
+export const StyledADAicon = styled(ADAicon)`
+  color: #13152f;
+`;

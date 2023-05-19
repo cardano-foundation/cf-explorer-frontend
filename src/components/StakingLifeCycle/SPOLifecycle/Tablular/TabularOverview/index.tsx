@@ -1,7 +1,6 @@
 import { Box, BoxProps, Grid, Icon } from "@mui/material";
-import { useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import useFetch from "../../../../../commons/hooks/useFetch";
+import { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   BgBlue,
   BgCardWhite,
@@ -13,7 +12,6 @@ import {
   StatusIC,
   WalletGreenIcon
 } from "../../../../../commons/resources";
-import { API } from "../../../../../commons/utils/api";
 import { formatADAFull, getShortWallet } from "../../../../../commons/utils/helper";
 import {
   CardOverview,
@@ -27,6 +25,7 @@ import {
 } from "./styles";
 import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
 import { details } from "../../../../../commons/routers";
+import PoolDetailContext from "../../PoolDetailContext";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -80,9 +79,8 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
 };
 
 const TabularOverview: React.FC = () => {
+  const data = useContext(PoolDetailContext);
   const [open, setOpen] = useState(false);
-  const { poolId = "" } = useParams<{ poolId: string }>();
-  const { data } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : "");
   const history = useHistory();
   const onOwnerItemClick = (key: string) => {
     return history.push(`/stake/${key}/delegation`);
