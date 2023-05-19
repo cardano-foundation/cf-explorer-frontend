@@ -65,6 +65,7 @@ import SaveOnIcon from "./icons/save-on.svg";
 import SaveOffIcon from "./icons/save-off.svg";
 import LinkOff from "./icons/link-off.svg";
 import User2 from "./icons/user2.svg";
+import CertificateIcon from "./images/certificate.png";
 
 import FlintIcon from "./icons/flint.svg";
 import NamiIcon from "./icons/nami.svg";
@@ -169,7 +170,8 @@ export {
   SearchNormalIcon,
   FilterIcon,
   IconRefresh,
-  IconThreeDot
+  IconThreeDot,
+  CertificateIcon
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";

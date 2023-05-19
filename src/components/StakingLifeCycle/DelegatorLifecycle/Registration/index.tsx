@@ -11,10 +11,26 @@ import {
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import RegistrationCertificate from "../../../../commons/resources/icons/Staking/RegistrationCertificateIcon.svg";
-import RegistrationCertificateMobile from "../../../../commons/resources/icons/Staking/RegistrationCertificateMobile.svg";
 
 import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoGroup, InfoText, StakeLink, StepInfo } from "./styles";
+import {
+  BoxGroup,
+  CertificateShapeMobile,
+  FeeBox,
+  FeeBoxMobile,
+  HoldBox,
+  HoldBoxMobile,
+  IconButton,
+  IconButtonBack,
+  Info,
+  InfoGroup,
+  InfoText,
+  MiddleGroup,
+  StakeLink,
+  StepInfo,
+  StyledAdaLogoIcon,
+  Value
+} from "./styles";
 import { AdaLogoIcon } from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentRegistrations from "./RecentRegistrations";
@@ -308,7 +324,6 @@ const RegistrationTimelineMobile = ({
   toggleModal: () => void;
 }) => {
   const { deposit, fee, time, txHash } = registration;
-  const { stakeId = "" } = useParams<{ stakeId: string }>();
   const theme = useTheme();
 
   const adaHolderRef = useRef(null);
@@ -317,7 +332,7 @@ const RegistrationTimelineMobile = ({
   const cadarnoSystemRef = useRef(null);
   const registrationRef = useRef(null);
   const history = useHistory();
-  const { isMobile, isLargeTablet } = useScreen();
+  const { isMobile } = useScreen();
 
   useEffect(() => {
     handleResize();
@@ -351,76 +366,50 @@ const RegistrationTimelineMobile = ({
           </Info>
         </InfoGroup>
       </StepInfo>
-      <Box margin='0 auto' width={"350px"}>
+      <Box margin='0 auto' width='max-content' maxWidth='100%'>
         <Box>
           <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={3}>
             <ADAHolderIcon />
           </Box>
-          <Box display='flex' mt={5}>
-            <Box>
-              <Box
-                component={IconButton}
-                bgcolor={"transparent"}
-                onClick={toggleModal}
-                ref={registrationRef}
-                width={140}
-                height={210}
-              >
-                <img
-                  style={{ marginLeft: "5px" }}
-                  src={RegistrationCertificateMobile}
-                  alt='RegistrationCertificateMobile'
-                />
-              </Box>
-              <Box width={"200px"}></Box>
+          <MiddleGroup>
+            <Box width={180} textAlign='center'>
+              <CertificateShapeMobile onClick={toggleModal} ref={registrationRef}>
+                Registration Certificate
+              </CertificateShapeMobile>
             </Box>
-            <Box display='flex' flexDirection='column' justifyContent='space-between' mb={2}>
-              <PopoverStyled
-                render={({ handleClick }: any) => (
-                  <HoldBox ref={holdRef} style={{ transform: "translateX(8px)" }} height={25} width={100}>
-                    <Box>
-                      <Box
-                        component={"span"}
-                        fontSize={"18px"}
-                        fontWeight={"bold"}
-                        mr={1}
-                        color={(theme) => theme.palette.common.black}
-                      >
+            <Box width={180} textAlign='center' height={220}>
+              <BoxGroup>
+                <PopoverStyled
+                  render={({ handleClick }: any) => (
+                    <HoldBoxMobile ref={holdRef}>
+                      <Value>
                         {formatADAFull(deposit || 0, 1)}
-                      </Box>
-                      <AdaLogoIcon fontSize={14} color={theme.palette.text.secondary} />
-                    </Box>
-                    <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
-                      <ButtonListIcon />
-                    </IconButton>
-                  </HoldBox>
-                )}
-                content={<PopupStaking hash={txHash} />}
-              />
-              <PopoverStyled
-                render={({ handleClick }) => (
-                  <FeeBox ref={feeRef} height={25} width={100}>
-                    <Box>
-                      <Box
-                        component={"span"}
-                        fontSize={"18px"}
-                        fontWeight={"bold"}
-                        mr={1}
-                        color={(theme) => theme.palette.common.black}
-                      >
+                        <StyledAdaLogoIcon />
+                      </Value>
+                      <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
+                        <ButtonListIcon />
+                      </IconButton>
+                    </HoldBoxMobile>
+                  )}
+                  content={<PopupStaking hash={txHash} />}
+                />
+                <PopoverStyled
+                  render={({ handleClick }) => (
+                    <FeeBoxMobile ref={feeRef}>
+                      <Value>
                         {formatADAFull(fee || 0)}
-                      </Box>
-                      <AdaLogoIcon fontSize={14} color={theme.palette.text.secondary} />
-                    </Box>
-                    <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
-                      <ButtonListIcon />
-                    </IconButton>
-                  </FeeBox>
-                )}
-                content={<PopupStaking hash={txHash} />}
-              />
+                        <StyledAdaLogoIcon />
+                      </Value>
+                      <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
+                        <ButtonListIcon />
+                      </IconButton>
+                    </FeeBoxMobile>
+                  )}
+                  content={<PopupStaking hash={txHash} />}
+                />
+              </BoxGroup>
             </Box>
-          </Box>
+          </MiddleGroup>
 
           <Box position={"relative"} mb={15}>
             <Box ref={cadarnoSystemRef} width={190} height={70} margin='0 auto' mt={5}>
