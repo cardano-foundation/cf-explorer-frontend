@@ -10,7 +10,17 @@ import {
 } from "./styles";
 import styled from "@emotion/styled";
 import _ from "lodash";
-import { AccordionDetails, Box, Button, Checkbox, Container, Skeleton, alpha, useTheme } from "@mui/material";
+import {
+  AccordionDetails,
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  Skeleton,
+  alpha,
+  useTheme,
+  IconButton
+} from "@mui/material";
 import { useList, useUpdateEffect } from "react-use";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { HiArrowLongLeft } from "react-icons/hi2";
@@ -24,30 +34,30 @@ import useFetch from "~/commons/hooks/useFetch";
 import { API } from "~/commons/utils/api";
 import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "~/types/protocol";
 import ParseScriptModal from "~/components/ParseScriptModal";
-import { DateRangeIcon, FilterIcon, FirstLast, LastFirst, ProtocolParam, ResetIcon } from "~/commons/resources";
+import { DateRangeIcon, FilterIcon, ProtocolParam, ResetIcon } from "~/commons/resources";
 import DateRangeModal from "~/components/FilterReport/DateRangeModal";
+import { formatDateTimeLocal } from "~/commons/utils/helper";
+import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
+import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
 
 const ProtocolParameter: React.FC = () => {
-  const [fixedColumnList, { push: pushFixedColumn }] = useList<string>([]);
+  const [fixedColumnKeys, { push: pushFixedColumnKeys }] = useList<string>([]);
   const [variableColumnList, { push: pushVariableColumn }] = useList<string>([]);
   const [costModelScript, setCostModelScript] = useState("");
   const [showHistory, setShowHistory] = useState(false);
 
-  const { data: dataFixed, loading: loadingFixed } = useFetch<TProtocolParam>(API.PROTOCOL_PARAMETER.FIXED);
+  const { data: dataFixed, loading: loadingFixed } = useFetch(API.PROTOCOL_PARAMETER.FIXED);
   const { data: dataLastest, loading: loadingLastest } = useFetch<TProtocolParam>(API.PROTOCOL_PARAMETER.LASTEST);
 
   useUpdateEffect(() => {
-    dataFixed &&
-      [...Object.keys(PROTOCOL_TYPE), "startEpoch", "endEpoch"].map((k) =>
-        dataFixed[k as ProtocolTypeKey] !== null ? pushFixedColumn(k) : ""
-      );
-
     dataLastest &&
       [...Object.keys(PROTOCOL_TYPE), "startEpoch", "endEpoch"].map((k) =>
         dataLastest[k as ProtocolTypeKey] !== null && dataLastest[k as ProtocolTypeKey]?.transactionHash !== null
           ? pushVariableColumn(k)
           : ""
       );
+
+    dataLastest && [...Object.keys(dataFixed || {})].map((k) => pushFixedColumnKeys(k));
   }, [dataFixed, dataLastest]);
 
   useEffect(() => {
@@ -64,7 +74,10 @@ const ProtocolParameter: React.FC = () => {
       return (
         <Box
           component={k === "costModel" ? Button : Box}
-          onClick={() => k === "costModel" && setCostModelScript(r["costModel"] !== null ? r["costModel"].value : "")}
+          onClick={() =>
+            k === "costModel" && setCostModelScript(r["costModel"] !== null ? r["costModel"]?.value || 0 : "")
+          }
+          p={0}
           justifyItems={"flex-start"}
           textTransform={"capitalize"}
         >
@@ -75,7 +88,7 @@ const ProtocolParameter: React.FC = () => {
             textOverflow={"ellipsis"}
             color={({ palette }) => (k === "costModel" ? palette.blue[800] : "unset")}
           >
-            {r[k as ProtocolTypeKey] !== null ? r[k as ProtocolTypeKey].value : ""}
+            {r[k as ProtocolTypeKey] !== null ? r[k as ProtocolTypeKey]?.value || 0 : ""}
           </Box>
         </Box>
       );
@@ -90,10 +103,29 @@ const ProtocolParameter: React.FC = () => {
         return r?.epochChange?.startEpoch || 0;
       }
     },
+    {
+      title: "Last Updated",
+      key: "startEpoch",
+      render: (r: TProtocolParam) => {
+        return r?.timestamp ? formatDateTimeLocal(r.timestamp || "") : "";
+      }
+    },
     ...columnsMap
   ];
 
-  const fixedColumn = columnsFull.filter((c) => fixedColumnList.includes(c.key));
+  const fixedColumn = (fixedColumnKeys || []).map((k) => ({
+    title: k,
+    key: k,
+    render: (r: any) => {
+      return (
+        <Box component={Box} justifyItems={"flex-start"} textTransform={"capitalize"}>
+          <Box maxWidth={300} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
+            {typeof r[k] === "object" ? JSON.stringify(r[k]) : r[k]}
+          </Box>
+        </Box>
+      );
+    }
+  }));
   const variableColumn = columnsFull.filter((c) => variableColumnList.includes(c.key));
 
   return (
@@ -114,7 +146,7 @@ const ProtocolParameter: React.FC = () => {
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                   <Box fontWeight={"bold"} fontSize={"1.25rem"}>
-                    Variable Parameters
+                    Updatable Parameters
                   </Box>
                   <Box
                     component={Button}
@@ -141,7 +173,7 @@ const ProtocolParameter: React.FC = () => {
               <Box pt={"30px"}>
                 <Box>
                   <Box textAlign={"left"} fontWeight={"bold"} fontSize={"1.25rem"}>
-                    Fixed Parameters
+                    Non-updatable Parameters
                   </Box>
                   {loadingFixed && (
                     <Box
@@ -152,7 +184,9 @@ const ProtocolParameter: React.FC = () => {
                       height={280}
                     />
                   )}
-                  {!loadingFixed && <Table columns={fixedColumn} data={dataFixed !== null ? [dataFixed] : []} />}
+                  {!loadingFixed && (
+                    <Table columns={fixedColumn} data={dataFixed !== null && dataFixed ? [dataFixed] : []} />
+                  )}
                 </Box>
               </Box>
             </>
@@ -234,9 +268,11 @@ const ProtocolParameterHistory = () => {
     return column;
   };
 
-  const columnsMap = columnTitle.map((t) => ({
+  const columnsMap = columnTitle.map((t, idx) => ({
     title: t,
     key: t,
+    fixed: idx === 0 ? true : false,
+    leftFixed: 130,
     render: (r: any) => (
       <Box
         p={"24px 20px"}
@@ -247,17 +283,13 @@ const ProtocolParameterHistory = () => {
         textOverflow={"ellipsis"}
         bgcolor={({ palette }) =>
           r[t as ProtocolTypeKey] !== null
-            ? r[t as ProtocolTypeKey].status === "UPDATED"
-              ? palette.yellow[100]
-              : r[t as ProtocolTypeKey].status === "ADDED"
-              ? alpha(palette.green[600], 0.1)
-              : r[t as ProtocolTypeKey].status === "NOT_EXIST"
-              ? palette.red[100]
+            ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey].status as string)
+              ? alpha(palette.green[600], 0.4)
               : "transparent"
             : "transparent"
         }
       >
-        {r[t] ? r[t]?.value : ""}
+        {r[t] ? r[t]?.value || "" : ""}
       </Box>
     )
   }));
@@ -266,6 +298,7 @@ const ProtocolParameterHistory = () => {
     {
       title: "Parameter Name",
       key: "ParameterName",
+      fixed: true,
       render: (r: TProtocolParam & { params: string }) => {
         return <Box p={"24px 20px"}>{r?.params}</Box>;
       }
@@ -371,7 +404,12 @@ const ProtocolParameterHistory = () => {
           </Box>
         }
       >
-        <TableStyled columns={columnsTable} data={dataTable} loading={loading} />
+        <TableStyled
+          columns={columnsTable}
+          data={dataTable}
+          // data={[]}
+          loading={loading}
+        />
       </Card>
     </Box>
   );
@@ -433,12 +471,15 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
     setShowFiter(false);
   };
   return (
-    <FilterContainer padding={2}>
+    <FilterContainer padding={2} pt={5}>
+      <CloseButton saving={0} onClick={() => setShowFiter(false)} data-testid='close-modal-button'>
+        <IoMdClose />
+      </CloseButton>
       <Box display={"flex"} flexDirection={"column"}>
         <ButtonFilter onClick={() => setSort("LastFirst")}>
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
-              <LastFirst />
+              <ImArrowDown2 />
               <Box ml={1}>Latest - First</Box>
             </Box>
             {sort === "LastFirst" && <BsFillCheckCircleFill size={16} style={{ color: "#108AEF !important" }} />}
@@ -447,7 +488,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
         <ButtonFilter onClick={() => setSort("FirstLast")}>
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
-              <FirstLast />
+              <ImArrowUp2 />
               <Box ml={1}>First - Latest</Box>
             </Box>
             {sort === "FirstLast" && <BsFillCheckCircleFill size={16} style={{ color: "#108AEF !important" }} />}
@@ -465,11 +506,18 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 
         <AccordionContainer expanded={expanded === "params"} onChange={handleChange("params")}>
           <AccordionSummary>
-            <Box fontSize={"0.875rem"}>
+            <Box
+              fontSize={"0.875rem"}
+              width={"100%"}
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"space-between"}
+            >
               <Box display={"flex"} alignItems={"center"}>
                 <ProtocolParam />
                 <Box ml={1}>Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ""}</Box>
               </Box>
+              <Box>{expanded === "params" ? <IoIosArrowDown /> : <IoIosArrowUp />}</Box>
             </Box>
           </AccordionSummary>
           <AccordionDetails>
@@ -557,27 +605,16 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   );
 };
 
-const inputData = [
-  {
-    params: "minFeeA",
-    "Epoch 393": {
-      time: "10/2/2023",
-      value: 10
-    },
-    "Epoch 366 - 392": {
-      time: "13/2/2023",
-      value: 10
-    }
-  },
-  {
-    params: "minFeeB",
-    "Epoch 393": {
-      time: null,
-      value: 10
-    },
-    "Epoch 366 - 392": {
-      time: "18/2/2023",
-      value: 10
-    }
+const CloseButton = styled(IconButton)<{ saving: number }>`
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid ${(props) => props.theme.palette.grey["A100"]};
+  cursor: ${(props) => (props.saving ? `wait` : `pointer`)};
+  &:hover {
+    ${(props) => (props.saving ? `background: none;` : ``)}
   }
-];
+`;
