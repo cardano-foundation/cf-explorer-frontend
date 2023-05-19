@@ -14,7 +14,14 @@ export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => 
 }));
 
 export const StyledTabList = styled(TabList)(({ theme }) => ({
-  "& button:nth-of-type(1)": {
-    paddingLeft: "0px"
+  "& button": {
+    paddingLeft: "0px",
+    paddingRight: "0px",
+    marginRight: "40px"
+  },
+  [theme.breakpoints.down("sm")]: {
+    "& button": {
+      marginRight: "20px"
+    }
   }
 }));
