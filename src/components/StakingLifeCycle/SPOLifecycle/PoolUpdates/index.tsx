@@ -51,7 +51,7 @@ import PopoverStyled from "../../../commons/PopoverStyled";
 import { useHistory, useParams } from "react-router";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { details } from "../../../../commons/routers";
-import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADA, getShortHash, getShortWallet, numberWithCommas } from "../../../../commons/utils/helper";
 import { ButtonSPO, PoolName, PoolNamePopup, StyledCopyButton } from "../Registration/styles";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
@@ -848,7 +848,7 @@ export const PoolUpdateModal = ({
             </Box>
             {data && (
               <Box fontSize='0.875rem' pt={"7px"} fontWeight={500}>
-                {data?.margin ? data?.margin * 100 : 0}%
+                {data?.margin ? numberWithCommas(data?.margin * 100, 2) : 0}%
                 {data?.previousMargin !== null && (
                   <Box fontSize={12} pt={"7px"} color={(theme) => theme.palette.grey[400]}>
                     Previous: {data?.previousMargin} %{" "}

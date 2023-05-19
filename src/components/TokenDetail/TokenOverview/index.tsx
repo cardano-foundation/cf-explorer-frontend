@@ -1,14 +1,14 @@
-import React, { useState } from "react";
 import { alpha, Box } from "@mui/material";
-import { formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/helper";
-import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
-import timeIcon from "../../../commons/resources/icons/time.svg";
-import slotIcon from "../../../commons/resources/icons/slot.svg";
-import exchageIcon from "../../../commons/resources/icons/Union.svg";
+import React, { useState } from "react";
 import decimalIcon from "../../../commons/resources/icons/decimal.svg";
-import { CardItem, WrapTitle } from "./styles";
-import ScriptModal from "../../ScriptModal";
+import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
+import slotIcon from "../../../commons/resources/icons/slot.svg";
+import timeIcon from "../../../commons/resources/icons/time.svg";
+import exchageIcon from "../../../commons/resources/icons/Union.svg";
+import { formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/helper";
 import DetailHeader from "../../commons/DetailHeader";
+import ScriptModal from "../../ScriptModal";
+import { CardItem, WrapTitle } from "./styles";
 
 interface ITokenOverview {
   data: IToken | null;
@@ -18,12 +18,11 @@ interface ITokenOverview {
 const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
-
   const listItem = [
     {
       title: "",
       value: (
-        <CardItem display={"flex"} gap={2} flex={3}>
+        <CardItem display={"flex"} gap={2} flex={3} mt={"-30px"}>
           <Box>
             <img src={policyIcon} alt='' />
           </Box>
