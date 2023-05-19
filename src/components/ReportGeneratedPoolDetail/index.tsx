@@ -14,6 +14,7 @@ import { API } from "../../commons/utils/api";
 import PoolSizeTab from "./PoolTabs/PoolSizeTab";
 import { SkeletonUI } from "../TokenDetail/TokenAnalytics/styles";
 import { getPoolEventList } from "../PoolLifecycle";
+import { Headline } from "../TabularView/StakeTab/styles";
 
 interface ITab {
   icon: React.FC;
@@ -87,12 +88,18 @@ const ReportGeneratedPoolDetailTabs = () => {
 
   return (
     <ReportGeneratedPoolDetailContext.Provider
-      value={{ reportName: reportDetail.data?.reportName ?? "", poolId: reportDetail.data?.poolView ?? "" }}
+      value={{
+        reportName: reportDetail.data?.reportHistory.reportName ?? "",
+        poolId: reportDetail.data?.poolView ?? ""
+      }}
     >
       {reportDetail.loading ? (
         <SkeletonUI variant='rectangular' style={{ height: "400px" }} />
       ) : (
-        <StakeTab tabs={displayedTabs} initTab={initTab} />
+        <>
+          <Headline>{reportDetail.data?.reportHistory.reportName} </Headline>
+          <StakeTab tabs={displayedTabs} initTab={initTab} />
+        </>
       )}
     </ReportGeneratedPoolDetailContext.Provider>
   );

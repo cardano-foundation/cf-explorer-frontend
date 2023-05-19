@@ -61,7 +61,6 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration", onC
             ))}
           </StyledTabList>
         </Box>
-        <Headline>{reportName} </Headline>
         {tabs.map((item) => (
           <TabPanel key={item.key} value={item.key} style={{ padding: 0 }}>
             {item.component}
