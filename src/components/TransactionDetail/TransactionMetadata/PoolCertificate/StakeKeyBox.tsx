@@ -96,7 +96,7 @@ const StakeKeyBox = ({ data }: TProps) => {
                 <Box key={label} display='flex' alignItems='flex-start'>
                   <TextLabel>{label}: </TextLabel>
                   {isMultipleValue ? (
-                    <Box>
+                    <Box display='flex' flexDirection='column'>
                       {value.map((item, index) => (
                         <TextValue key={index}>
                           <Link to={details.stake(item || "")}>{getShortWallet(item)}</Link>
