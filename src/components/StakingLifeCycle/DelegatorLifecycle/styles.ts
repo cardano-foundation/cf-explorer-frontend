@@ -103,8 +103,7 @@ export const DescriptionText = styled(Typography)(({ theme }) => ({
   fontSize: "18px",
   lineHeight: "21px",
   [theme.breakpoints.down("sm")]: {
-    fontSize: "14px",
-    lineHeight: "16px"
+    fontSize: "14px"
   }
 }));
 
