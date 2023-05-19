@@ -28,11 +28,8 @@ export const Menu = styled(List)<{ open: number }>(({ theme, open }) => ({
     maxHeight: "unset"
   },
   [theme.breakpoints.down("sm")]: {
-    "& > div, & > a": {
-      paddingLeft: "16px"
-    },
     "& ul > a": {
-      paddingLeft: "40px"
+      paddingLeft: "59px"
     }
   }
 }));
@@ -45,7 +42,7 @@ export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<The
   marginBottom: "5px",
   justifyContent: sidebar ? "initial" : "center",
   [theme.breakpoints.down("md")]: {
-    padding: "8px 20px 8px 30px",
+    padding: "8px 20px",
     marginBottom: 0
   }
 });

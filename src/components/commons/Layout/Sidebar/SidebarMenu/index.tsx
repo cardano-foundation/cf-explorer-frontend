@@ -225,7 +225,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
           sx={{
             margin: "10px 0px 10px 30px",
             width: sidebar ? 200 : 25,
-            transition: "width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms"
+            transition: "width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms",
+            [theme.breakpoints.down("md")]: {
+              marginLeft: "20px"
+            }
           }}
         />
         {footerMenus.map((item, index) => {

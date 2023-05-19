@@ -13,7 +13,6 @@ import {
 } from "~/commons/resources";
 import { details } from "~/commons/routers";
 import {
-  formatADA,
   formatADAFull,
   formatDateTimeLocal,
   formatPercent,
@@ -219,9 +218,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoTitle>
               <StyledTitle>Pool size</StyledTitle>
             </InfoTitle>
-            <InfoValue>
+            <InfoValue sx={{ wordBreak: "break-all" }}>
               <FlexGap10>
-                {isMobile ? formatADA(data?.poolSize) : formatADAFull(data?.poolSize)}
+                {formatADAFull(data?.poolSize)}
                 <ADAicon />
               </FlexGap10>
             </InfoValue>
@@ -233,7 +232,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoTitle>
             <InfoValue>
               <FlexGap10>
-                {isMobile ? formatADA(data?.stakeLimit) : formatADAFull(data?.stakeLimit)}
+                {formatADAFull(data?.stakeLimit)}
                 <ADAicon />
               </FlexGap10>
             </InfoValue>
