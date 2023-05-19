@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Container, Grid, IconButton } from "@mui/material";
+import { Box, CircularProgress, Container, Grid, IconButton } from "@mui/material";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -211,7 +211,7 @@ const Dashboard: React.FC = () => {
     <Container>
       <GridContainer container spacing={2} columns={12}>
         {cardList.map((card, idx) => (
-          <Grid item xs={6} md={3} lg={3} key={idx}>
+          <Grid item xs={6} md={6} lg={6} key={idx}>
             <DashboardCard
               key={card.title}
               leftIcon={card.icon}
