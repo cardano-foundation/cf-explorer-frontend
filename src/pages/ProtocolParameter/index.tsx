@@ -521,7 +521,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
             </Box>
           </AccordionSummary>
           <AccordionDetails>
-            <Box height={170} overflow={"auto"} bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
+            <Box height={170} overflow={"auto"}>
               <Checkbox
                 checked={filterOption.length === Object.keys(PROTOCOL_TYPE).length}
                 id={"all"}
