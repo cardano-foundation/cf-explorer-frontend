@@ -21,7 +21,7 @@ import {
   OperatorRewardIcon,
   PoolUpdateIcon,
   PreviousIcon,
-  RegistrationIcon,
+  RegistrationIcon
 } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import {

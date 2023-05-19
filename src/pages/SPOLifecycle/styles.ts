@@ -92,7 +92,6 @@ export const BoxSwitchContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center"
-
 }));
 
 export const BoxItemStyled = styled(Box)(({ theme }) => ({

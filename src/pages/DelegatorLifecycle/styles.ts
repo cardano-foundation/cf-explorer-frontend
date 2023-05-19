@@ -67,7 +67,7 @@ export const ButtonReportContainer = styled(Button)(({ theme }) => ({
     justifyContent: "start",
     marginLeft: 0,
     marginTop: 10
-  },
+  }
 }));
 
 export const BoxContainerStyled = styled(Box)(({ theme }) => ({
