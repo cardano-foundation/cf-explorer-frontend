@@ -90,14 +90,12 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       value: <Box component={"span"}>{numberWithCommas(data?.supply)}</Box>,
       icon: slotIcon
     },
-    { title:  <WrapTitle>Decimal</WrapTitle>, icon: decimalIcon, value: data?.metadata?.decimals || 0 },
+    { title: <WrapTitle>Decimal</WrapTitle>, icon: decimalIcon, value: data?.metadata?.decimals || 0 },
     {
       title: (
         <Box display={"flex"} alignItems='center'>
           <Box component={"span"} mr={1} width={"max-content"}>
-            <WrapTitle>
-              Total Transactions
-            </WrapTitle>
+            <WrapTitle>Total Transactions</WrapTitle>
           </Box>
         </Box>
       ),
@@ -109,9 +107,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems='center'>
           <Box component={"span"} mr={1}>
-            <WrapTitle>
-              Number of Holders
-            </WrapTitle>
+            <WrapTitle>Number of Holders</WrapTitle>
           </Box>
         </Box>
       ),
@@ -122,9 +118,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems='center'>
           <Box component={"span"} mr={1}>
-            <WrapTitle>
-              Total Volume
-            </WrapTitle>
+            <WrapTitle>Total Volume</WrapTitle>
           </Box>
         </Box>
       ),
@@ -135,9 +129,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems='center'>
           <Box component={"span"} mr={1}>
-            <WrapTitle>
-              Volume 24H
-            </WrapTitle>
+            <WrapTitle>Volume 24H</WrapTitle>
           </Box>
         </Box>
       ),
@@ -148,9 +140,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems='center'>
           <Box component={"span"} mr={1}>
-            <WrapTitle>
-              Created
-            </WrapTitle>
+            <WrapTitle>Created</WrapTitle>
           </Box>
         </Box>
       ),

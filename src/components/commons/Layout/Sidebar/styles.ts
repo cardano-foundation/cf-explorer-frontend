@@ -1,8 +1,7 @@
-import { styled } from "@mui/material";
+import { styled, Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { MenuIcon } from "../../../../commons/resources";
 import { NETWORKS } from "../../../../commons/utils/constants";
-import { Button, Box } from "@mui/material";
 
 export const NavbarContainer = styled("nav")`
   position: relative;

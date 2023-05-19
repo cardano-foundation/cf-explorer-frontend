@@ -36,10 +36,10 @@ const StakeKeyBox = ({ data }: TProps) => {
     },
     {
       label: "Pool Operator",
-      value: data.poolOwners && data.poolOwners.length > 0 ? getShortWallet(data.poolOwners[0]) : "",
+      value: data.poolOwners || [],
       isHyperLink: true,
       originValue: data.poolOwners && data.poolOwners.length > 0 ? data.poolOwners[0] : "",
-      linkTo: details.stake(data.poolOwners && data.poolOwners.length > 0 ? data.poolOwners[0] : "")
+      isMultipleValue: true
     },
     {
       label: "Metadata Hash",
@@ -91,14 +91,25 @@ const StakeKeyBox = ({ data }: TProps) => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Box display='flex' flexDirection='column' gap='15px'>
-            {(leftRow || []).map(({ label, value, isHyperLink, originValue, linkTo }) => {
+            {(leftRow || []).map(({ label, value, isHyperLink, originValue, linkTo, isMultipleValue }) => {
               return (
-                <Box key={label} display='flex' alignItems='center'>
+                <Box key={label} display='flex' alignItems='flex-start'>
                   <TextLabel>{label}: </TextLabel>
-                  <TextValue>
-                    {isHyperLink && linkTo ? <Link to={linkTo}>{value}</Link> : value}
-                    {value && <CopyButton sx={{ marginLeft: 1, height: 16 }} text={originValue} />}
-                  </TextValue>
+                  {isMultipleValue ? (
+                    <Box display='flex' flexDirection='column'>
+                      {value.map((item, index) => (
+                        <TextValue key={index}>
+                          <Link to={details.stake(item || "")}>{getShortWallet(item)}</Link>
+                          <CopyButton sx={{ marginLeft: 1, height: 16 }} text={item} />
+                        </TextValue>
+                      ))}
+                    </Box>
+                  ) : (
+                    <TextValue>
+                      {isHyperLink && linkTo ? <Link to={linkTo}>{value}</Link> : value}
+                      {value && <CopyButton sx={{ marginLeft: 1, height: 16 }} text={originValue} />}
+                    </TextValue>
+                  )}
                 </Box>
               );
             })}

@@ -1,7 +1,6 @@
 import { Box, CircularProgress, Stack } from "@mui/material";
 import StyledModal from "../../../commons/StyledModal";
 import {
-  EventLabel,
   Container,
   ModalTitle,
   OverViewItem,
@@ -122,11 +121,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
     },
     {
       label: isPoolReport ? "Pool Report by event" : "Staking lifecycle events",
-      value: (
-        <CustomTooltip title={events}>
-          <EventLabel>{events}</EventLabel>
-        </CustomTooltip>
-      ),
+      value: events,
       step: STEPS.step3
     }
   ];

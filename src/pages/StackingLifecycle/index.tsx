@@ -178,24 +178,29 @@ const Dashboard: React.FC = () => {
     },
     {
       key: "downloadUrl",
+      maxWidth: "30px",
+      minWidth: "30px",
       render(data) {
-        return onDownload === data.id ? (
-          <CircularProgress size={22} color='primary' />
-        ) : (
-          <Box
-            ml={2}
-            component={IconButton}
-            textTransform={"capitalize"}
-            onClick={() =>
-              downloadReportDashboard(
-                data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
-                data.reportName,
-                data.type,
-                "EXCEL"
-              )
-            }
-          >
-            <CustomIcon icon={DownloadGreenIcon} width={24} />
+        return (
+          <Box width='100%' textAlign='right'>
+            {onDownload === data.id ? (
+              <CircularProgress size={22} color='primary' />
+            ) : (
+              <Box
+                component={IconButton}
+                textTransform={"capitalize"}
+                onClick={() =>
+                  downloadReportDashboard(
+                    data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
+                    data.reportName,
+                    data.type,
+                    "EXCEL"
+                  )
+                }
+              >
+                <CustomIcon icon={DownloadGreenIcon} width={24} />
+              </Box>
+            )}
           </Box>
         );
       }

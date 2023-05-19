@@ -102,7 +102,7 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={450}>
       <Container>
         <ModalTitle sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</ModalTitle>
-        <Container marginBottom={"20px"}>
+        <Box marginBottom={"20px"}>
           {OPTIONS_TRANSFER.filter(({ type }) => type.includes(reportType)).map(({ key, label, value }) => {
             return (
               <Box key={key}>
@@ -133,7 +133,7 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
               </Box>
             );
           })}
-        </Container>
+        </Box>
         <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={3}>
           <StyledBackButton onClick={() => gotoStep?.(STEPS.step1)}>Previous</StyledBackButton>
           <StyledButton disabled={isDisabled} onClick={handleSubmit}>
