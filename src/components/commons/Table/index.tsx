@@ -340,7 +340,8 @@ const Table: React.FC<TableProps> = ({
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
   });
-
+  const tableRef = useRef(null);
+  const heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, 800);
   const toggleSelectAll = (isChecked: boolean) => {
     if (data && isChecked) {
       selectAll(data);
@@ -365,8 +366,12 @@ const Table: React.FC<TableProps> = ({
         selectedItems={selectedItems}
         isSelectAll={isSelectAll}
       />
-      <Wrapper maxHeight={maxHeight} height={!loading && data && data?.length > 0 ? 1 : 0}>
-        <TableFullWidth>
+      <Wrapper
+        maxHeight={maxHeight}
+        minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 600 : 0}
+        height={heightTable}
+      >
+        <TableFullWidth ref={tableRef}>
           <TableHeader
             columns={columns}
             loading={loading}
