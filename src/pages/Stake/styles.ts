@@ -7,7 +7,6 @@ export const StyledContainer = styled(Container)`
 
   ${({ theme }) => theme.breakpoints.down("md")} {
     padding-top: 0px;
-    margin-top: -20px;
   }
 
   ${({ theme }) => theme.breakpoints.down("sm")} {

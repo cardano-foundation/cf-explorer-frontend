@@ -2,10 +2,6 @@ import { styled, Container } from "@mui/material";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
   padding: "20px 0 40px",
-  [theme.breakpoints.down("md")]: {
-    paddingTop: 0,
-    marginTop: "-20px"
-  },
   [theme.breakpoints.down("sm")]: {
     padding: "10px 0 40px",
     "& > div:nth-of-type(1)": {

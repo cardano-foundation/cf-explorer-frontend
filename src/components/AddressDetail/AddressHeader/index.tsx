@@ -99,7 +99,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
         </Box>
         <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
           <TitleText>Address Detail</TitleText>
-          {!isMobile && <BookmarkButton keyword={data?.address || ""} type='ADDRESS' />}
+          <BookmarkButton keyword={data?.address || ""} type='ADDRESS' />
         </Box>
       </Box>
       <Grid container spacing={2}>
