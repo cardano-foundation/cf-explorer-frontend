@@ -39,6 +39,8 @@ import DateRangeModal from "~/components/FilterReport/DateRangeModal";
 import { formatDateTimeLocal } from "~/commons/utils/helper";
 import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
+import { Link } from "react-router-dom";
+import { details } from "~/commons/routers";
 
 const ProtocolParameter: React.FC = () => {
   const [fixedColumnKeys, { push: pushFixedColumnKeys }] = useList<string>([]);
@@ -273,25 +275,35 @@ const ProtocolParameterHistory = () => {
     key: t,
     fixed: idx === 0 ? true : false,
     leftFixed: 130,
-    render: (r: any) => (
-      <Box
-        p={"24px 20px"}
-        maxWidth={200}
-        overflow={"hidden"}
-        whiteSpace={"nowrap"}
-        minHeight={"16px"}
-        textOverflow={"ellipsis"}
-        bgcolor={({ palette }) =>
-          r[t as ProtocolTypeKey] !== null
-            ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey].status as string)
-              ? alpha(palette.green[600], 0.4)
+    render: (r: any) => {
+      console.log(["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey].status as string) ? "Link" : "Box");
+      return (
+        <Box
+          p={"24px 20px"}
+          maxWidth={200}
+          overflow={"hidden"}
+          whiteSpace={"nowrap"}
+          component={["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey].status as string) ? Link : Box}
+          minHeight={"16px"}
+          textOverflow={"ellipsis"}
+          display={"block"}
+          bgcolor={({ palette }) =>
+            r[t as ProtocolTypeKey] !== null
+              ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey].status as string)
+                ? alpha(palette.green[600], 0.4)
+                : "transparent"
               : "transparent"
-            : "transparent"
-        }
-      >
-        {r[t] ? r[t]?.value || "" : ""}
-      </Box>
-    )
+          }
+          to={
+            r[t as ProtocolTypeKey]?.transactionHash
+              ? details.transaction(r[t as ProtocolTypeKey].transactionHash)
+              : "#"
+          }
+        >
+          {r[t] ? r[t]?.value || "" : ""}
+        </Box>
+      );
+    }
   }));
 
   const columnsFull: Column<TProtocolParam & { params: string }>[] = [
