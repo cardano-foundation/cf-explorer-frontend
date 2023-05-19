@@ -19,6 +19,7 @@ import {
   PreviousButton,
   Step,
   StepButton,
+  StepHeader,
   StyledBox,
   TabTitle,
   TitleStep
@@ -135,8 +136,8 @@ const DelegatorLifecycle = ({
   ];
 
   return (
-    <Box mr={isMobile ? 2 : 0}>
-      <Box display={"flex"} justifyContent={"space-between"} sx={{ overflowX: "auto"}}>
+    <Box>
+      <Box display={"flex"} justifyContent={"space-between"} sx={{ overflowX: "auto" }}>
         {stepper.map((step, idx) => (
           <Step component={"span"} key={idx} active={+(currentStep === idx)}>
             <StepButton
@@ -154,8 +155,7 @@ const DelegatorLifecycle = ({
           </Step>
         ))}
       </Box>
-
-      <Box mt={3} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+      <StepHeader>
         <StyledBox>
           <TabTitle>{stepper[currentStep].title}</TabTitle>
           <InfoIcon style={{ cursor: "pointer" }} onClick={() => setOpenDescriptionModal(true)} />
@@ -163,7 +163,7 @@ const DelegatorLifecycle = ({
         <ADATransfersButton onClick={() => setOpen(true)}>
           <TranferIcon /> ADA Transfers
         </ADATransfersButton>
-      </Box>
+      </StepHeader>
       <Box>{stepper[currentStep].description}</Box>
       <Box pb={10} minHeight={400}>
         {stepper[currentStep].component}

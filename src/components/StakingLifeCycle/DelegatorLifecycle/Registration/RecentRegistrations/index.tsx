@@ -8,11 +8,12 @@ import StackingFilter, { FilterParams } from "../../../../StackingFilter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
 import { EmptyRecord } from "../../../../commons/Table";
 import { FilterDateLabel } from "../../Delegation/styles";
-import { GridBox, WrapFilterDescription } from "./styles";
+import { GridBox, StyledContainer, StyledList, WrapFilterDescription } from "./styles";
 import { DATETIME_PARTTEN } from "../../../../StackingFilter/DateRangeModal";
 import { DescriptionText } from "../../styles";
 import { details } from "../../../../../commons/routers";
 import { useUpdateEffect } from "react-use";
+import { useSelector } from "react-redux";
 
 interface Props {
   onSelect: (registration: RegistrationItem | null) => void;
@@ -21,6 +22,7 @@ interface Props {
 const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
   const history = useHistory();
+  const { sidebar } = useSelector(({ user }: RootState) => user);
   const [params, setParams] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
@@ -65,8 +67,8 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
   if (txHash) return null;
 
   return (
-    <Box marginTop='32px' data-testid='recent-registration'>
-      <Box display={"flex"} justifyContent={"space-between"} marginBottom={"10px"} alignItems={"center"}>
+    <StyledContainer data-testid='recent-registration'>
+      <StyledList>
         <DescriptionText>Registration List</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
@@ -86,8 +88,8 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
             }
           />
         </Box>
-      </Box>
-      <GridBox>
+      </StyledList>
+      <GridBox sidebar={+sidebar}>
         {loading &&
           [...new Array(12)].map((i, ii) => (
             <Skeleton key={ii} style={{ borderRadius: 12 }} variant='rectangular' width={300} height={185} />
@@ -108,7 +110,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
           })}
       </GridBox>
       {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
-    </Box>
+    </StyledContainer>
   );
 };
 

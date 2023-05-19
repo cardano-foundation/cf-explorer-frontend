@@ -1,130 +1,134 @@
 import { Button, alpha, Box, Container, IconButton, styled } from "@mui/material";
+
 import { Link } from "react-router-dom";
 
-export const StyledContainer = styled(Container)(({ theme }) => ({
-  padding: "20px 0 40px",
-  position: "relative",
-  minHeight: "calc(100vh - 170px)",
-  [theme.breakpoints.down("sm")]: {
-    padding: "20px 16px 30px 16px",
-    overflowY: "hidden",
-    "& > div:nth-of-type(2)": {
-      marginLeft: "0px"
-    }
-  }
-}));
-export const StakeId = styled("span")(({ theme }) => ({
-  lineHeight: 1,
-  fontWeight: "bold",
-  color: `${theme.palette.blue[800]} !important`,
-  margin: `0 ${theme.spacing(1)} `,
-  fontSize: "0.875rem"
-}));
-
-export const ButtonGroup = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  height: "44px",
-  background: "#E7E8EA",
-  padding: "3px 2px",
-  margin: `0 ${theme.spacing(2)}`,
-  borderRadius: "20px",
-  [theme.breakpoints.down("md")]: {
-    width: "90px",
-    marginTop: "10px !important",
-    borderRadius: "71px",
-    gap: "5px"
-  },
-  [theme.breakpoints.down("sm")]: {
-    margin: "0px !important"
-  }
-}));
-export const ButtonSwitch = styled(IconButton)<{ active: number }>(({ theme, active }) => ({
-  margin: "0 2px",
-  background: active ? theme.palette.green[600] : "transparent",
-  ":hover": {
-    background: active ? theme.palette.green[600] : theme.palette.green[600_10]
-  },
-  width: 38,
-  height: 38,
-  boxSizing: "border-box"
-}));
-
-export const ButtonReport = styled(Button)(({ theme }) => ({
-  color: theme.palette.common.white,
-  background: theme.palette.grey[700],
-  height: "44px",
-  textTransform: "capitalize",
-  fontWeight: "bold",
-  padding: "10px 20px",
-  borderRadius: "8px",
-  ":hover": {
-    background: alpha(theme.palette.grey[700], 0.8)
-  },
-  [theme.breakpoints.down("md")]: {
-    width: "100%",
-    maxWidth: "900px",
-    minWidth: "215px",
-    marginRight: "10px"
-  }
-}));
+export const StyledContainer = styled(Container)`
+  padding-top: 20px;
+  padding-bottom: 40px;
+  position: relative;
+  min-height: calc(100vh - 170px);
+`;
 
 export const BoxContainerStyled = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItem: "center",
   flexDirection: "row",
+  flexWrap: "wrap",
+  gap: 20,
+  marginBottom: 35,
   [theme.breakpoints.down("md")]: {
-    display: "flex",
-    alignItems: "flex-start",
-    flexDirection: "column",
-    marginLeft: "16px"
-  },
-  [theme.breakpoints.down("sm")]: {
-    h2: {
-      fontSize: "24px"
-    },
-    marginLeft: "0px"
+    marginBottom: 30,
+    flexDirection: "column"
   }
 }));
 
-export const BoxSwitchContainer = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center"
+export const LifeCycleHeader = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+  textAlign: "left"
 }));
 
-export const BoxItemStyled = styled(Box)(({ theme }) => ({
+export const LifeCycleTitle = styled("h2")(({ theme }) => ({
+  margin: "0px 0px 5px",
+  fontSize: 36,
+  lineHeight: "42px",
+  whiteSpace: "nowrap",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 24,
+    lineHeight: "28px"
+  }
+}));
+
+export const AddressLine = styled(Box)(({ theme }) => ({
   display: "flex",
+  alignItems: "center",
+  color: theme.palette.text.secondary
+}));
+
+export const Label = styled("small")(({ theme }) => ({
+  lineHeight: 1
+}));
+
+export const StakeId = styled(Link)(({ theme }) => ({
+  lineHeight: 1,
+  fontWeight: "bold",
+  color: `${theme.palette.blue[800]} !important`,
+  margin: `0 ${theme.spacing(1)} `,
+  fontSize: "0.875rem"
+}));
+
+export const BoxItemStyled = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  gap: 20,
+  [theme.breakpoints.down("lg")]: {
+    flexDirection: sidebar ? "column" : "row",
+    width: sidebar ? "100%" : "auto"
+  },
   [theme.breakpoints.down("md")]: {
     flexDirection: "column",
     width: "100%"
   }
 }));
 
-export const BoxSwitch = styled(Box)(({ theme }) => ({
+export const BoxSwitchContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
   display: "flex",
-  alignItems: "center"
-}));
-
-export const ButtonReportContainer = styled(Button)(({ theme }) => ({
-  display: "flex",
-  padding: 0,
-  marginLeft: 20,
-  "&:disabled": {
-    opacity: 0.5
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: 15,
+  [theme.breakpoints.down("lg")]: {
+    width: sidebar ? "100%" : "auto"
   },
   [theme.breakpoints.down("md")]: {
-    justifyContent: "start",
-    marginLeft: 0,
-    marginTop: "18px"
+    width: "100%"
   }
 }));
 
-export const PoolId = styled(Link)(({ theme }) => ({
-  lineHeight: 1,
-  fontWeight: "bold",
-  color: `${theme.palette.blue[800]} !important`,
-  margin: `0 ${theme.spacing(1)} `,
-  fontSize: "0.875rem"
+export const LabelSwitch = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  color: theme.palette.grey[400],
+  whiteSpace: "break-spaces"
+}));
+
+export const SwitchGroup = styled(Box)(() => ({
+  display: "flex",
+  alignItems: "center",
+  background: "#E7E8EA",
+  padding: 3,
+  borderRadius: 22,
+  gap: 8
+}));
+
+export const ButtonSwitch = styled(IconButton)<{ active: number }>(({ theme, active }) => ({
+  background: active ? theme.palette.green[600] : "transparent",
+  width: 38,
+  height: 38,
+  ":hover": {
+    background: active ? theme.palette.green[600] : theme.palette.green[600_10]
+  }
+}));
+
+export const ButtonReport = styled(Button)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+  color: theme.palette.common.white,
+  background: theme.palette.text.primary,
+  height: "44px",
+  textTransform: "capitalize",
+  fontWeight: 700,
+  padding: "10px 20px",
+  borderRadius: "8px",
+  whiteSpace: "nowrap",
+  ":hover": {
+    background: alpha(theme.palette.grey[700], 0.8)
+  },
+  "&:disabled": {
+    opacity: 0.5,
+    color: theme.palette.common.white
+  },
+  [theme.breakpoints.down("lg")]: {
+    width: sidebar ? "100%" : "auto"
+  },
+  [theme.breakpoints.down("md")]: {
+    width: "100%"
+  }
 }));

@@ -14,7 +14,7 @@ import {
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 import DeregistrationCertificateIcon from "../../../../commons/resources/icons/Staking/DeregistrationCertificateIcon.svg";
-import DeregistrationCertificateMobile from "../../../../commons/resources/icons/Staking/DeregistrationCertificateMobile.svg";
+import SPODeregistrationMobile from "../../../../commons/resources/icons/Staking/SPODeregistrationMobile.svg";
 
 import Line from "../../../Line";
 import {
@@ -26,7 +26,9 @@ import {
   IconButton,
   IconButtonBack,
   Info,
+  InfoGroup,
   InfoText,
+  StepInfo,
   StyledBox
 } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
@@ -54,32 +56,35 @@ const Deregistration = ({
   handleResize: () => void;
 }) => {
   const [selected, setSelected] = useState<SPODeregistration | null>(null);
+  const [openModal, setOpenModal] = useState(false);
   const { isLargeTablet } = useScreen();
 
   const handleSelect = (deregistration: SPODeregistration | null) => {
     setSelected(deregistration);
   };
+
+  const handleToggleModal = () => setOpenModal((state) => !state);
+
   return (
     <Box>
-      <Box>
-        <RecentDeregistrations onSelect={handleSelect} />
-      </Box>
-      <Box>
-        {!!selected && !isLargeTablet && (
-          <DeregistrationTimeline
-            handleResize={handleResize}
-            selected={selected}
-            containerPosition={containerPosition}
-          />
-        )}
-        {!!selected && isLargeTablet && (
-          <DeregistrationTimelineMobile
-            handleResize={handleResize}
-            selected={selected}
-            containerPosition={containerPosition}
-          />
-        )}
-      </Box>
+      <DeregistrationCertificateModal data={selected} handleCloseModal={handleToggleModal} open={openModal} />
+      <RecentDeregistrations onSelect={handleSelect} />
+      {!!selected && !isLargeTablet && (
+        <DeregistrationTimeline
+          handleResize={handleResize}
+          selected={selected}
+          containerPosition={containerPosition}
+          toggleModal={handleToggleModal}
+        />
+      )}
+      {!!selected && isLargeTablet && (
+        <DeregistrationTimelineMobile
+          handleResize={handleResize}
+          selected={selected}
+          containerPosition={containerPosition}
+          toggleModal={handleToggleModal}
+        />
+      )}
     </Box>
   );
 };
@@ -88,7 +93,8 @@ export default Deregistration;
 const DeregistrationTimeline = ({
   containerPosition,
   selected,
-  handleResize
+  handleResize,
+  toggleModal
 }: {
   containerPosition: {
     top?: number;
@@ -96,8 +102,8 @@ const DeregistrationTimeline = ({
   };
   handleResize: () => void;
   selected: SPODeregistration | null;
+  toggleModal: () => void;
 }) => {
-  const [openModal, setOpenModal] = useState(false);
   const { poolId = "" } = useParams<{ poolId: string }>();
   const history = useHistory();
 
@@ -121,11 +127,11 @@ const DeregistrationTimeline = ({
 
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"}>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected?.txHash}>
@@ -145,8 +151,8 @@ const DeregistrationTimeline = ({
             <TimeIcon />
             <InfoText>{moment(selected?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef} width={190} height={245} position={"relative"}>
@@ -365,15 +371,14 @@ const DeregistrationTimeline = ({
             height={220}
             component={IconButton}
             p={0}
-            onClick={() => setOpenModal(true)}
+            onClick={toggleModal}
+            sx={{ background: "none !important" }}
           >
             <img style={{ marginLeft: "5px" }} src={DeregistrationCertificateIcon} alt='RegistrationCertificateIcon' />
           </Box>
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
-
-      <DeregistrationCertificateModal data={selected} handleCloseModal={() => setOpenModal(false)} open={openModal} />
     </Box>
   );
 };
@@ -381,7 +386,8 @@ const DeregistrationTimeline = ({
 const DeregistrationTimelineMobile = ({
   containerPosition,
   selected,
-  handleResize
+  handleResize,
+  toggleModal
 }: {
   containerPosition: {
     top?: number;
@@ -389,8 +395,8 @@ const DeregistrationTimelineMobile = ({
   };
   handleResize: () => void;
   selected: SPODeregistration | null;
+  toggleModal: () => void;
 }) => {
-  const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
   const { poolId = "" } = useParams<{ poolId: string }>();
 
@@ -418,11 +424,11 @@ const DeregistrationTimelineMobile = ({
 
   return (
     <StyledBox>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"}>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected?.txHash}>
@@ -438,8 +444,8 @@ const DeregistrationTimelineMobile = ({
             <TimeIcon />
             <InfoText>{moment(selected?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
 
       <Box className='list-images' display={"flex"} flexDirection={"column"} alignItems={"center"} gap={"50px"}>
         <Box
@@ -522,14 +528,9 @@ const DeregistrationTimelineMobile = ({
             ref={registrationRef}
             padding={"24px"}
             sx={{ background: "#fff", borderRadius: "12px" }}
-            onClick={() => setOpenModal(true)}
+            onClick={toggleModal}
           >
-            <img
-              src={DeregistrationCertificateMobile}
-              width={"90px"}
-              height={"150px"}
-              alt='RegistrationCertificateIcon'
-            />
+            <img src={SPODeregistrationMobile} width={"90px"} height={"150px"} alt='RegistrationCertificateIcon' />
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} position={"relative"}>
@@ -640,8 +641,6 @@ const DeregistrationTimelineMobile = ({
           />
         </svg>
       </Box>
-
-      <DeregistrationCertificateModal data={selected} handleCloseModal={() => setOpenModal(false)} open={openModal} />
     </StyledBox>
   );
 };

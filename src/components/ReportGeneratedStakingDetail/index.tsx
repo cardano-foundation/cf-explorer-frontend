@@ -20,6 +20,7 @@ import { API } from "../../commons/utils/api";
 import WalletActitityTab from "./StakeyTabs/WalletActivityTab";
 import { getEventList } from "../StakekeySummary";
 import { SkeletonUI } from "../TokenDetail/TokenAnalytics/styles";
+import { Headline } from "../TabularView/StakeTab/styles";
 
 interface ITab {
   icon: React.FC;
@@ -105,7 +106,10 @@ const ReportGeneratedStakingDetailTabs = () => {
       {reportDetail.loading ? (
         <SkeletonUI variant='rectangular' style={{ height: "400px" }} />
       ) : (
-        <StakeTab tabs={displayedTabs} initTab={initTab} />
+        <>
+          <Headline>{reportDetail.data?.reportName} </Headline>
+          <StakeTab tabs={displayedTabs} initTab={initTab} />
+        </>
       )}
     </StakingDetailContext.Provider>
   );

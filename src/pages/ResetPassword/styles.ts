@@ -19,6 +19,12 @@ export const WrapContent = styled(Box)`
   justify-content: center;
 `;
 
+export const Title = styled(Box)`
+  font-weight: 700;
+  font-size: 20px;
+  color: ${({ theme }) => theme.palette.grey[500]};
+`;
+
 export const WrapTitle = styled(Box)`
   text-transform: uppercase;
   font-size: 36px;

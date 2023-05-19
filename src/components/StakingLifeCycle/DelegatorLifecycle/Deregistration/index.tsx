@@ -15,7 +15,7 @@ import DeregistrationCertificate from "../../../../commons/resources/icons/Staki
 import DeregistrationCertificateMobile from "../../../../commons/resources/icons/Staking/DeregistrationCertificateMobile.svg";
 
 import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoGroup, InfoText, StepInfo } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentDeregistrations from "./RecentDeregistration";
@@ -31,6 +31,7 @@ import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 import { useScreen } from "../../../../commons/hooks/useScreen";
+import { StakeLink } from "../Registration/styles";
 
 const Deregistration = ({
   containerPosition,
@@ -42,15 +43,21 @@ const Deregistration = ({
   };
   handleResize: () => void;
 }) => {
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [selected, setSelected] = useState<DeregistrationItem | null>(null);
+  const [openModal, setOpenModal] = useState(false);
+
   const handleSelect = (deregistration: DeregistrationItem | null) => {
     setSelected(deregistration);
   };
+
+  const handleToggleModal = () => setOpenModal((state) => !state);
 
   const { isLargeTablet } = useScreen();
 
   return (
     <Box>
+      <DeregistrationCertificateModal open={openModal} handleCloseModal={handleToggleModal} stake={stakeId} />
       <Box>
         <RecentDeregistrations onSelect={handleSelect} />
       </Box>
@@ -61,12 +68,14 @@ const Deregistration = ({
             setSelected={setSelected}
             selected={selected}
             containerPosition={containerPosition}
+            toggleModal={handleToggleModal}
           />
         ) : (
           <DeregistrationTimeline
             handleResize={handleResize}
             selected={selected}
             containerPosition={containerPosition}
+            toggleModal={handleToggleModal}
           />
         ))}
     </Box>
@@ -77,7 +86,8 @@ export default Deregistration;
 const DeregistrationTimeline = ({
   containerPosition,
   handleResize,
-  selected
+  selected,
+  toggleModal
 }: {
   containerPosition: {
     top?: number;
@@ -85,6 +95,7 @@ const DeregistrationTimeline = ({
   };
   handleResize: () => void;
   selected: DeregistrationItem;
+  toggleModal: () => void;
 }) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const history = useHistory();
@@ -97,8 +108,6 @@ const DeregistrationTimeline = ({
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
 
-  const [openModal, setOpenModal] = useState(false);
-
   useEffect(() => {
     handleResize();
   }, [selected]);
@@ -109,11 +118,11 @@ const DeregistrationTimeline = ({
 
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"}>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected.txHash}>
@@ -129,8 +138,8 @@ const DeregistrationTimeline = ({
             <TimeIcon />
             <InfoText>{formatDateTimeLocal(selected.time)}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef} width={190} height={215}>
@@ -275,7 +284,7 @@ const DeregistrationTimeline = ({
             p={0}
             component={IconButton}
             bgcolor={"transparent"}
-            onClick={() => setOpenModal(true)}
+            onClick={toggleModal}
             ref={registrationRef}
             width={220}
             height={220}
@@ -285,7 +294,6 @@ const DeregistrationTimeline = ({
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
-      <DeregistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
     </Box>
   );
 };
@@ -293,7 +301,8 @@ const DeregistrationTimelineMobile = ({
   containerPosition,
   setSelected,
   handleResize,
-  selected
+  selected,
+  toggleModal
 }: {
   containerPosition: {
     top?: number;
@@ -302,6 +311,7 @@ const DeregistrationTimelineMobile = ({
   handleResize: () => void;
   setSelected: (deregistration: DeregistrationItem | null) => void;
   selected: DeregistrationItem;
+  toggleModal: () => void;
 }) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
 
@@ -316,8 +326,6 @@ const DeregistrationTimelineMobile = ({
   const history = useHistory();
   const { isMobile } = useScreen();
 
-  const [openModal, setOpenModal] = useState(false);
-
   useEffect(() => {
     handleResize();
   }, [selected]);
@@ -329,11 +337,11 @@ const DeregistrationTimelineMobile = ({
 
   return (
     <Box>
-      <Box display='flex' justifyContent='space-between' mt={1}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"} flexDirection='column'>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected.txHash}>
@@ -349,8 +357,8 @@ const DeregistrationTimelineMobile = ({
             <TimeIcon />
             <InfoText>{formatDateTimeLocal(selected.time)}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
       <Box margin='0 auto' width={"350px"}>
         <Box>
           <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={5} pr={2} position={"relative"}>
@@ -365,13 +373,7 @@ const DeregistrationTimelineMobile = ({
             ></Box>
           </Box>
           <Box display='flex' mt={5}>
-            <Box
-              p={0}
-              component={IconButton}
-              bgcolor={"transparent"}
-              onClick={() => setOpenModal(true)}
-              ref={registrationRef}
-            >
+            <Box p={0} component={IconButton} bgcolor={"transparent"} onClick={toggleModal} ref={registrationRef}>
               <img src={DeregistrationCertificateMobile} alt='DeregistrationCertificateMobile' />
             </Box>
             <Box mt={11}>
@@ -484,7 +486,6 @@ const DeregistrationTimelineMobile = ({
           </svg>
         </Box>
       </Box>
-      <DeregistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
     </Box>
   );
 };
@@ -500,7 +501,7 @@ export const DeregistrationCertificateModal = ({
   const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
 
   return (
-    <StyledModal {...props} title='Deregistration certificate'>
+    <StyledModal  {...props} width={550} title='Deregistration certificate'>
       <Box>
         {loading && <Skeleton variant='rectangular' width={500} height={90} />}
         {!loading && (
@@ -510,10 +511,10 @@ export const DeregistrationCertificateModal = ({
             </Box>
             {data && (
               <Box>
-                <CustomTooltip title={stake}>
-                  <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link>
-                </CustomTooltip>
-                <CopyButton text={stake} />
+                <Box>
+                  <StakeLink to={details.stake(stake)}>{stake || ""}</StakeLink>
+                  <CopyButton text={stake} />
+                </Box>
               </Box>
             )}
           </Box>

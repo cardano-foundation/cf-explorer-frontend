@@ -1,6 +1,6 @@
 import { Box, alpha, styled } from "@mui/material";
 
-export const NormalDescription = styled("span")`
+export const NormalDescription = styled(Box)`
   position: relative;
   font-weight: 400;
   line-height: 21px;
@@ -9,14 +9,18 @@ export const NormalDescription = styled("span")`
 `;
 export const NumberParagraph = styled(Box)`
   position: absolute;
-  left: -2em;
+  left: -1em;
   text-align: right;
 `;
 
 //show overflow-y when hover
 export const WrapContent = styled(Box)`
-  max-height: 60vh;
+  max-height: calc(100vh - 160px);
   overflow-y: auto;
+  overflow-x: hidden;
+  width: 600px;
+  max-width: 100%;
+  position: relative;
   &::-webkit-scrollbar {
     width: 5px;
   }
@@ -36,32 +40,51 @@ export const WrapContent = styled(Box)`
   }
 `;
 
-export const Watermark = styled("span")`
-  position: absolute;
-  top: 185px;
-  z-index: 1;
-  left: 0;
-  font-weight: 900;
-  font-size: 80px;
-  line-height: 94px;
-  text-align: center;
-  text-transform: uppercase;
-  color: ${(props) => props.theme.palette.grey[100]};
-  transform: rotate(45deg);
+export const ContentContainer = styled(Box)`
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
 `;
 
-export const BoxDetails = styled(Box)`
-  background: ${(props) => alpha(props.theme.palette.grey[300], 0.1)};
-  padding: 20px 25px 20px 55px;
+export const Watermark = styled("span")`
+  position: absolute;
+  z-index: 1;
+  overflow: hidden;
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin: 15px 0px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+  max-height: 100%;
+  &::after {
+    content: "FOR \\a ILLUSTRION \\a ONLY";
+    white-space: pre;
+    z-index: 1;
+    width: max-content;
+    font-weight: 900;
+    font-size: 80px;
+    line-height: 94px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #e9eaec;
+    transform: rotate(45deg);
+    ${({ theme }) => theme.breakpoints.down("sm")} {
+      font-size: 50px;
+      line-height: 59px;
+    }
+  }
 `;
 
 export const BoxDescription = styled(Box)`
   display: flex;
   flex-direction: column;
   gap: 15px;
-  position: relative;
+`;
+
+export const BoxDetails = styled(BoxDescription)`
+  background: ${(props) => alpha(props.theme.palette.grey[300], 0.1)};
+  padding: 20px 25px;
+  padding-left: 35px;
+  margin: 15px 0px;
 `;

@@ -85,7 +85,7 @@ const PrivateNotes = () => {
     setLoadingDelete(true);
     try {
       await removePrivateNote(note.id);
-      toast.success(`Delete transaction private note ${getShortHash(note.txHash || "")} successfully`);
+      toast.success(<Box>Delete transaction private note <Box>{getShortHash(note.txHash || "")} successfully</Box></Box>);
       setSelected(null);
       refresh();
     } catch (error) {
@@ -170,7 +170,7 @@ const PrivateNotes = () => {
       <Dialog
         open={!!selected}
         PaperProps={{
-          style: { borderRadius: 20, width: 550 }
+          style: { borderRadius: 20, width: 550, padding: "0 2px" }
         }}
       >
         <Box textAlign={"center"} pt={5} pb={2}>
@@ -190,7 +190,7 @@ const PrivateNotes = () => {
         <DialogActions>
           <Box flex={1} pt={2} pb={3}>
             <CancelButton disabled={loadingDelete} onClick={() => setSelected(null)}>
-              Cancel
+              Close
             </CancelButton>
             <DeleteButton
               loading={loadingDelete}

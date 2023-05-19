@@ -67,7 +67,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hide
               )}
             </Box>
             <Box fontWeight={"bold"} fontSize={"14px"}>
-              {!hideMathChar ? `${type === "down" ? "-" : "+"} ` : ""}
+              {!hideMathChar ? `${type === "down" ? "-" : "+"} ` : isSend || hideInputLabel ? "" : "+"}
               {`${numberWithCommas(token.assetQuantity) || ""}`}
             </Box>
           </OptionSelect>

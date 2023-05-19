@@ -81,8 +81,7 @@ export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
 
 export const Info = styled(Box)(({ theme }) => ({
   display: "flex",
-  alignItems: "center",
-  marginLeft: theme.spacing(2)
+  alignItems: "center"
 }));
 export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -102,7 +101,7 @@ export const HoldBoxText = styled(Box)(({ theme }) => ({
 export const CustomLink = styled(Link)(({ theme }) => ({
   fontWeight: 600,
   fontSize: "0.875rem",
-  color: theme.palette.blue[800],
+  color: theme.palette.blue[800] + "!important",
   "&:hover": {
     color: theme.palette.blue[800]
   }
@@ -117,14 +116,30 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   ".list-images": {
     maxWidth: "390px",
     margin: "0px auto"
-  },
+  }
+}));
+
+export const StepInfo = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  gap: 20,
+  marginBottom: 36,
   [theme.breakpoints.down("sm")]: {
-    "& > div:nth-of-type(1)": {
-      alignItems: "flex-start",
-      "& > div:nth-of-type(1)": {
-        flexDirection: "column",
-        gap: "5px"
-      }
-    }
+    alignItems: "flex-start",
+    marginBottom: 30
+  }
+}));
+
+export const InfoGroup = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  gap: 20,
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    gap: 5
   }
 }));

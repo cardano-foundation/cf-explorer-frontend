@@ -90,7 +90,7 @@ const SummaryItems = ({
                   fontWeight='bold'
                   mr={1}
                 >
-                  {type === "down" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
+                  {type === "down" ? `${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
                 </Box>
                 <ADAicon />
               </Box>

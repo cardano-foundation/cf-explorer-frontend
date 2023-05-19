@@ -105,18 +105,24 @@ const PoolLifecycle = () => {
     {
       key: "download",
       title: "",
+      maxWidth: "30px",
+      minWidth: "30px",
       render(data) {
-        return onDownload === data.reportId ? (
-          <CircularProgress size={22} color='primary' />
-        ) : (
-          <Box
-            ml={2}
-            component={IconButton}
-            display={"block"}
-            textTransform={"capitalize"}
-            onClick={() => downloadFn(data.reportId, data.reportName, "EXCEL")}
-          >
-            <CustomIcon icon={DownloadGreenIcon} width={24} />
+        return (
+          <Box width='100%' textAlign='center'>
+            {onDownload === data.reportId ? (
+              <CircularProgress size={22} color='primary' />
+            ) : (
+              <Box
+                component={IconButton}
+                display={"block"}
+                margin='auto'
+                textTransform={"capitalize"}
+                onClick={() => downloadFn(data.reportId, data.reportName, "EXCEL")}
+              >
+                <CustomIcon icon={DownloadGreenIcon} width={24} />
+              </Box>
+            )}
           </Box>
         );
       }

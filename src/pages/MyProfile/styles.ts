@@ -13,6 +13,8 @@ export const TabTitle = styled("h3")`
 
 export const WrapTab = styled(Tab)`
   max-width: unset;
+  padding: 12px 0;
+  margin-right: 30px;
 `;
 
 export const TabLabel = styled(Box)(({ theme }) => ({

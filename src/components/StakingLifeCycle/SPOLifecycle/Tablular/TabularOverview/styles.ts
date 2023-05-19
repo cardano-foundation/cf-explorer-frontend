@@ -76,3 +76,33 @@ export const ViewMoreButton = styled(IconButton)`
   padding: 14px;
   background-color: #e3e5e9;
 `;
+
+export const DotsIcon = styled(Box)`
+  border-radius: 50%;
+  background-color: #667085;
+  width: 3.6px;
+  height: 3.6px;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 3.6px;
+    height: 3.6px;
+    right: -7px;
+    top: 0px;
+    border-radius: 50%;
+    background-color: #667085;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 3.6px;
+    height: 3.6px;
+    left: -7px;
+    top: 0px;
+    border-radius: 50%;
+    background-color: #667085;
+  }
+`;

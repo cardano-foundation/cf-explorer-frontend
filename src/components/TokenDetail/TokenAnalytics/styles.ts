@@ -114,11 +114,9 @@ export const Tabs = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("md")]: {
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "flex-end"
   },
   [theme.breakpoints.down("sm")]: {
-    justifyContent: "flex-end",
-
     "& button": {
       width: "40px !important",
       height: "28px !important",

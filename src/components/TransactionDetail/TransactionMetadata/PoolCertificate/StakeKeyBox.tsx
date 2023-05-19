@@ -5,12 +5,14 @@ import Link from "~/components/commons/Link";
 import { getShortHash, getShortWallet } from "~/commons/utils/helper";
 import { AdaValue } from "~/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
 import { details } from "~/commons/routers";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 type TProps = {
   data: TPoolCertificated;
 };
 
 const StakeKeyBox = ({ data }: TProps) => {
+  const { isGalaxyFoldSmall } = useScreen();
   const leftRow = [
     {
       label: "Pool Id",
@@ -66,7 +68,7 @@ const StakeKeyBox = ({ data }: TProps) => {
         <Box display='flex' flexDirection='column'>
           {(data?.relays || []).map((relay, index) => (
             <TextNormal key={index}>
-              IPv4: <TextRightValue>{relay.ipv4}</TextRightValue> | Port:
+              IPv4: <TextRightValue>{relay.ipv4}</TextRightValue> {isGalaxyFoldSmall ? <br /> : <>|</>} Port:
               <TextRightValue>{relay.port}</TextRightValue>
             </TextNormal>
           ))}
@@ -106,7 +108,7 @@ const StakeKeyBox = ({ data }: TProps) => {
           <Box display='flex' flexDirection='column' gap='15px'>
             {(rightRow || []).map(({ label, value }) => {
               return (
-                <Box key={label}>
+                <Box key={label} display='flex'>
                   <TextLabel>{label}: </TextLabel>
                   <TextRightValue>{value}</TextRightValue>
                 </Box>

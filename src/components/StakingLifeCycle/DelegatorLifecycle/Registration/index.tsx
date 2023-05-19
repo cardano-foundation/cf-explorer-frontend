@@ -14,7 +14,7 @@ import RegistrationCertificate from "../../../../commons/resources/icons/Staking
 import RegistrationCertificateMobile from "../../../../commons/resources/icons/Staking/RegistrationCertificateMobile.svg";
 
 import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText, StakeLink } from "./styles";
+import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoGroup, InfoText, StakeLink, StepInfo } from "./styles";
 import { AdaLogoIcon } from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import RecentRegistrations from "./RecentRegistrations";
@@ -43,15 +43,19 @@ const Registration = ({
   handleResize: () => void;
 }) => {
   const [selected, setSelected] = useState<RegistrationItem | null>(null);
-
+  const [openModal, setOpenModal] = useState(false);
+  const { stakeId = "" } = useParams<{ stakeId: string }>();
   const handleSelect = (registration: RegistrationItem | null) => {
     setSelected(registration);
   };
+
+  const handleToggleModal = () => setOpenModal((state) => !state);
 
   const { isLargeTablet } = useScreen();
 
   return (
     <Box>
+      <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
       <Box>
         <RecentRegistrations onSelect={handleSelect} />
       </Box>
@@ -63,12 +67,14 @@ const Registration = ({
               setSelected={setSelected}
               containerPosition={containerPosition}
               registration={selected}
+              toggleModal={handleToggleModal}
             />
           ) : (
             <RegistrationTimeline
               handleResize={handleResize}
               containerPosition={containerPosition}
               registration={selected}
+              toggleModal={handleToggleModal}
             />
           ))}
       </Box>
@@ -80,7 +86,8 @@ export default Registration;
 const RegistrationTimeline = ({
   containerPosition,
   handleResize,
-  registration
+  registration,
+  toggleModal
 }: {
   containerPosition: {
     top?: number;
@@ -88,6 +95,7 @@ const RegistrationTimeline = ({
   };
   handleResize: () => void;
   registration: RegistrationItem;
+  toggleModal: () => void;
 }) => {
   const { deposit, fee, time, txHash } = registration;
   const { stakeId = "" } = useParams<{ stakeId: string }>();
@@ -102,8 +110,6 @@ const RegistrationTimeline = ({
   const fake2Ref = useRef(null);
   const registrationRef = useRef(null);
 
-  const [openModal, setOpenModal] = useState(false);
-
   useEffect(() => {
     handleResize();
   }, [registration]);
@@ -114,11 +120,11 @@ const RegistrationTimeline = ({
 
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"}>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={txHash}>
@@ -134,8 +140,8 @@ const RegistrationTimeline = ({
             <TimeIcon />
             <InfoText>{moment(time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef} width={190} height={215}>
@@ -267,7 +273,7 @@ const RegistrationTimeline = ({
           <Box
             component={IconButton}
             bgcolor={"transparent"}
-            onClick={() => setOpenModal(true)}
+            onClick={toggleModal}
             ref={registrationRef}
             width={220}
             height={220}
@@ -282,7 +288,6 @@ const RegistrationTimeline = ({
           <Box ref={fake2Ref} width={"200px"}></Box>
         </Box>
       </Box>
-      <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
     </Box>
   );
 };
@@ -290,7 +295,8 @@ const RegistrationTimelineMobile = ({
   containerPosition,
   setSelected,
   handleResize,
-  registration
+  registration,
+  toggleModal
 }: {
   containerPosition: {
     top?: number;
@@ -299,6 +305,7 @@ const RegistrationTimelineMobile = ({
   setSelected: (registration: RegistrationItem | null) => void;
   handleResize: () => void;
   registration: RegistrationItem;
+  toggleModal: () => void;
 }) => {
   const { deposit, fee, time, txHash } = registration;
   const { stakeId = "" } = useParams<{ stakeId: string }>();
@@ -311,7 +318,6 @@ const RegistrationTimelineMobile = ({
   const registrationRef = useRef(null);
   const history = useHistory();
   const { isMobile, isLargeTablet } = useScreen();
-  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     handleResize();
@@ -323,11 +329,11 @@ const RegistrationTimelineMobile = ({
 
   return (
     <Box>
-      <Box display='flex' alignItems='flex-start' justifyContent='space-between' mt={1}>
+      <StepInfo>
         <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"} flexDirection='column'>
+        <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={txHash}>
@@ -343,8 +349,8 @@ const RegistrationTimelineMobile = ({
             <TimeIcon />
             <InfoText>{moment(time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
       <Box margin='0 auto' width={"350px"}>
         <Box>
           <Box ref={adaHolderRef} width={190} height={215} margin='0 auto' mt={3}>
@@ -355,7 +361,7 @@ const RegistrationTimelineMobile = ({
               <Box
                 component={IconButton}
                 bgcolor={"transparent"}
-                onClick={() => setOpenModal(true)}
+                onClick={toggleModal}
                 ref={registrationRef}
                 width={140}
                 height={210}
@@ -463,7 +469,6 @@ const RegistrationTimelineMobile = ({
           />
         </svg>
       </Box>
-      <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
     </Box>
   );
 };

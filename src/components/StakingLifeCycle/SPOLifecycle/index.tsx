@@ -6,6 +6,7 @@ import {
   PreviousButton,
   Step,
   StepButton,
+  StepHeader,
   StyledComponent,
   StyledGroupButton,
   TitleStep,
@@ -115,7 +116,7 @@ const SPOLifecycle = ({
   ];
 
   return (
-    <StyledComponent mr={isMobile ? 2 : 0}>
+    <StyledComponent>
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
           <Step component={"span"} key={idx} active={+(currentStep === idx)}>
@@ -134,12 +135,12 @@ const SPOLifecycle = ({
           </Step>
         ))}
       </Box>
-      <Box mt={3} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+      <StepHeader>
         <WrapTitle>
           {stepper[currentStep]?.title}{" "}
           <InfoIcon style={{ cursor: "pointer" }} onClick={() => setOpenDescriptionModal(true)} />
         </WrapTitle>
-      </Box>
+      </StepHeader>
       <Box>{stepper[currentStep]?.description}</Box>
       <Box minHeight={400} pb={10}>
         {stepper[currentStep]?.component}

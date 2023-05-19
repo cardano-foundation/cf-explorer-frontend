@@ -14,5 +14,5 @@ export const useScreen = () => {
   const isSmallScreen = (width < theme.breakpoints.values.lg && sidebar) || isTablet;
   const isGalaxyFoldSmall = width <= SAMSUNG_FOLD_SMALL_WIDTH;
   const isLargeTablet = width <= IPAD_PRO;
-  return { isMobile, isTablet, isGalaxyFoldSmall, isLargeTablet, isSmallScreen };
+  return { isMobile, isTablet, isGalaxyFoldSmall, isLargeTablet, isSmallScreen, width };
 };

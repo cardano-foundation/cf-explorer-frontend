@@ -31,7 +31,9 @@ import {
   StyledCopyButton,
   StyledGridContainer,
   StyledSkeletonContainer,
-  StyledBox
+  StyledBox,
+  StepInfo,
+  InfoGroup
 } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
@@ -60,30 +62,79 @@ const Registration = ({
   };
   handleResize: () => void;
 }) => {
+  const { poolId = "" } = useParams<{ poolId: string }>();
+  const [openModal, setOpenModal] = useState(false);
   const [selected, setSelected] = useState<SPORegistration | null>(null);
-
+  const history = useHistory();
   const handleSelect = (registration: SPORegistration | null) => {
     setSelected(registration);
   };
+  const { data, loading } = useFetch<SPORegistrationDetail>(
+    selected?.poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, selected?.poolUpdateId) : ""
+  );
+
+  const handleBack = () => {
+    history.push(details.spo(poolId, "timeline", "registration"));
+  };
+
   const { isLargeTablet } = useScreen();
+
+  const handleToggleCertificateModal = () => setOpenModal((state) => !state);
   return (
     <Box>
-      <Box>
-        <RecentRegistrations onSelect={handleSelect} />
-      </Box>
-      <Box>
-        {!!selected && !isLargeTablet && (
-          <RegistrationTimeline handleResize={handleResize} selected={selected} containerPosition={containerPosition} />
-        )}
-        {!!selected && isLargeTablet && (
-          <RegistrationTimelineMobile
-            handleResize={handleResize}
-            setSelected={setSelected}
-            selected={selected}
-            containerPosition={containerPosition}
-          />
-        )}
-      </Box>
+      <RecentRegistrations onSelect={handleSelect} />
+      {selected ? (
+        <>
+          <StepInfo>
+            <IconButtonBack onClick={handleBack}>
+              <BackIcon />
+            </IconButtonBack>
+            <InfoGroup>
+              <Info>
+                <AddressIcon fill='#438F68' />
+                <CustomTooltip title={data?.txHash}>
+                  <InfoText>
+                    <StyledLink to={details.transaction(data?.txHash)}>{getShortHash(data?.txHash || "")}</StyledLink>
+                  </InfoText>
+                </CustomTooltip>
+                <StyledCopyButton text={data?.txHash} />
+              </Info>
+              <Info>
+                <ADAGreen />
+                <InfoText>{formatADA(data?.totalFee || 0)}</InfoText>
+              </Info>
+              <Info>
+                <TimeIcon />
+                <InfoText>{moment(data?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+              </Info>
+            </InfoGroup>
+          </StepInfo>
+          {isLargeTablet ? (
+            <RegistrationTimelineMobile
+              handleResize={handleResize}
+              setSelected={setSelected}
+              data={data}
+              loading={loading}
+              containerPosition={containerPosition}
+              toggleCertificateModal={handleToggleCertificateModal}
+            />
+          ) : (
+            <RegistrationTimeline
+              handleResize={handleResize}
+              data={data}
+              loading={loading}
+              containerPosition={containerPosition}
+              toggleCertificateModal={handleToggleCertificateModal}
+            />
+          )}
+        </>
+      ) : null}
+      <RegistrationCertificateModal
+        poolId={poolId}
+        poolUpdateId={selected?.poolUpdateId || 0}
+        handleCloseModal={handleToggleCertificateModal}
+        open={openModal}
+      />
     </Box>
   );
 };
@@ -92,21 +143,19 @@ export default Registration;
 const RegistrationTimeline = ({
   containerPosition,
   handleResize,
-  selected
+  data,
+  loading,
+  toggleCertificateModal
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
   handleResize: () => void;
-  selected: SPORegistration | null;
+  toggleCertificateModal: () => void;
+  data: SPORegistrationDetail | null;
+  loading: boolean;
 }) => {
-  const { poolId = "" } = useParams<{ poolId: string }>();
-  const history = useHistory();
-  const { data, loading } = useFetch<SPORegistrationDetail>(
-    selected?.poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, selected?.poolUpdateId) : ""
-  );
-  const [openModal, setOpenModal] = useState(false);
   useEffect(() => {
     handleResize();
   }, [loading]);
@@ -121,32 +170,9 @@ const RegistrationTimeline = ({
   const SPOInfoRef = useRef(null);
   const SPOKeyRef = useRef(null);
 
-  const handleBack = () => {
-    history.push(details.spo(poolId, "timeline", "registration"));
-  };
-
   if (loading) {
     return (
       <StyledSkeletonContainer>
-        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-          <IconButtonBack onClick={handleBack}>
-            <BackIcon />
-          </IconButtonBack>
-          <Box display={"flex"}>
-            <Info>
-              <AddressIcon fill='#438F68' />
-              <Box component={Skeleton} ml={1} variant='rectangular' width={145} height={18} />
-            </Info>
-            <Info>
-              <ADAGreen />
-              <Box component={Skeleton} ml={1} variant='rectangular' width={60} height={18} />
-            </Info>
-            <Info>
-              <TimeIcon />
-              <Box component={Skeleton} ml={1} variant='rectangular' width={130} height={18} />
-            </Info>
-          </Box>
-        </Box>
         <Box component={Skeleton} width={"100%"} height={400} variant='rectangular' borderRadius={12} />
       </StyledSkeletonContainer>
     );
@@ -154,30 +180,6 @@ const RegistrationTimeline = ({
 
   return (
     <StyledBox>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={handleBack}>
-          <BackIcon />
-        </IconButtonBack>
-        <Box display={"flex"}>
-          <Info>
-            <AddressIcon fill='#438F68' />
-            <CustomTooltip title={data?.txHash}>
-              <InfoText>
-                <StyledLink to={details.transaction(data?.txHash)}>{getShortHash(data?.txHash || "")}</StyledLink>
-              </InfoText>
-            </CustomTooltip>
-            <StyledCopyButton text={data?.txHash} />
-          </Info>
-          <Info>
-            <ADAGreen />
-            <InfoText>{formatADA(data?.totalFee || 0)}</InfoText>
-          </Info>
-          <Info>
-            <TimeIcon />
-            <InfoText>{moment(data?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
-          </Info>
-        </Box>
-      </Box>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef} width={190} height={245} position={"relative"}>
@@ -380,7 +382,7 @@ const RegistrationTimeline = ({
             height={220}
             component={IconButton}
             p={0}
-            onClick={() => setOpenModal(true)}
+            onClick={toggleCertificateModal}
           >
             <Box
               component={"img"}
@@ -392,13 +394,6 @@ const RegistrationTimeline = ({
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
-
-      <RegistrationCertificateModal
-        poolId={poolId}
-        poolUpdateId={selected?.poolUpdateId || 0}
-        handleCloseModal={() => setOpenModal(false)}
-        open={openModal}
-      />
     </StyledBox>
   );
 };
@@ -406,7 +401,9 @@ const RegistrationTimelineMobile = ({
   containerPosition,
   setSelected,
   handleResize,
-  selected
+  data,
+  loading,
+  toggleCertificateModal
 }: {
   containerPosition: {
     top?: number;
@@ -414,13 +411,10 @@ const RegistrationTimelineMobile = ({
   };
   handleResize: () => void;
   setSelected: (registration: SPORegistration | null) => void;
-  selected: SPORegistration | null;
+  data: SPORegistrationDetail | null;
+  loading: boolean;
+  toggleCertificateModal: () => void;
 }) => {
-  const { poolId = "" } = useParams<{ poolId: string }>();
-  const { data, loading } = useFetch<SPORegistrationDetail>(
-    selected?.poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, selected?.poolUpdateId) : ""
-  );
-  const [openModal, setOpenModal] = useState(false);
   useEffect(() => {
     handleResize();
   }, [loading]);
@@ -468,29 +462,6 @@ const RegistrationTimelineMobile = ({
 
   return (
     <StyledBox>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
-          <BackIcon />
-        </IconButtonBack>
-        <Box display={"flex"}>
-          <Info>
-            <AddressIcon fill='#438F68' />
-            <CustomTooltip title={data?.txHash}>
-              <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
-            </CustomTooltip>
-            <StyledCopyButton text={data?.txHash} />
-          </Info>
-          <Info>
-            <ADAGreen />
-            <InfoText>{formatADA(data?.totalFee || 0)}</InfoText>
-          </Info>
-          <Info>
-            <TimeIcon />
-            <InfoText>{moment(data?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
-          </Info>
-        </Box>
-      </Box>
-
       <Box>
         <Box className='list-images' display={"flex"} flexDirection={"column"} alignItems={"center"} gap={"50px"}>
           <Box
@@ -573,7 +544,7 @@ const RegistrationTimelineMobile = ({
               ref={registrationRef}
               padding={"24px"}
               sx={{ background: "#fff", borderRadius: "12px" }}
-              onClick={() => setOpenModal(true)}
+              onClick={toggleCertificateModal}
             >
               <img src={PoolCertificateMobile} width={"90px"} height={"150px"} alt='RegistrationCertificateIcon' />
             </Box>
@@ -690,12 +661,6 @@ const RegistrationTimelineMobile = ({
           </svg>
         </Box>
       </Box>
-      <RegistrationCertificateModal
-        poolId={poolId}
-        poolUpdateId={selected?.poolUpdateId || 0}
-        handleCloseModal={() => setOpenModal(false)}
-        open={openModal}
-      />
     </StyledBox>
   );
 };

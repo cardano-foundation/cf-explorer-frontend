@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Box, PaginationRenderItemParams, IconButton, MenuItem, styled, CircularProgress, alpha } from "@mui/material";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
 import {
@@ -111,7 +111,12 @@ const TableHeader = <T extends ColumnType>({
           </THeader>
         )}
         {columns.map((column, idx) => (
-          <THeader key={idx}>
+          <THeader
+            key={idx}
+            style={
+              column.fixed ? { position: "sticky", left: column.leftFixed ? column.leftFixed : "-8px", zIndex: 10 } : {}
+            }
+          >
             {column.title}
             {column.sort && (
               <IconButton
@@ -142,6 +147,7 @@ const TableRow = <T extends ColumnType>({
   toggleSelection,
   isSelected
 }: TableRowProps<T>) => {
+  const colRef = useRef(null);
   return (
     <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
       {selectable && (
@@ -152,10 +158,13 @@ const TableRow = <T extends ColumnType>({
       {columns.map((column, idx) => {
         return (
           <TCol
+            className='tb-col'
             key={idx}
+            ref={colRef}
             minWidth={column.minWidth}
             maxWidth={column.maxWidth}
             hiddenBorder={column.isHiddenBorder && dataLength === index + 1}
+            style={column.fixed ? { position: "sticky", left: column.leftFixed ? column.leftFixed : "-8px" } : {}}
           >
             {column.render ? column.render(row, index) : row[column.key]}
           </TCol>
@@ -331,7 +340,8 @@ const Table: React.FC<TableProps> = ({
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
   });
-
+  const tableRef = useRef(null);
+  const heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, 800);
   const toggleSelectAll = (isChecked: boolean) => {
     if (data && isChecked) {
       selectAll(data);
@@ -356,8 +366,12 @@ const Table: React.FC<TableProps> = ({
         selectedItems={selectedItems}
         isSelectAll={isSelectAll}
       />
-      <Wrapper maxHeight={maxHeight}>
-        <TableFullWidth>
+      <Wrapper
+        maxHeight={maxHeight}
+        minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 600 : 0}
+        height={heightTable}
+      >
+        <TableFullWidth ref={tableRef}>
           <TableHeader
             columns={columns}
             loading={loading}

@@ -136,7 +136,7 @@ const Epoch: React.FC = () => {
   return (
     <StyledContainer>
       <Card title={"Epochs"}>
-        <FirstEpoch />
+        <FirstEpoch data={fetchData.data}/>
         <Table
           {...fetchData}
           data={fetchData.currentPage === 0 ? [...fetchData.data.slice(1)] : fetchData.data}

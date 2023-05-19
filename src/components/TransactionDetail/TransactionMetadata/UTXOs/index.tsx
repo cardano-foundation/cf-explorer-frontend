@@ -187,7 +187,7 @@ const Card = ({
                   <Box display={"flex"} alignItems={"center"}>
                     {item.tokens && item.tokens.length > 0 && (
                       <Box mt={2}>
-                        <DropdownTokens tokens={item.tokens} type={type} hideInputLabel />
+                        <DropdownTokens tokens={item.tokens} type={type} hideInputLabel hideMathChar />
                       </Box>
                     )}
                   </Box>

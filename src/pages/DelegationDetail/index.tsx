@@ -2,27 +2,21 @@ import { Box, Container, Tab, useTheme } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { parse, stringify } from "qs";
-import { BiChevronDown } from "react-icons/bi";
-import useFetch from "../../commons/hooks/useFetch";
-import DelegationDetailInfo from "../../components/DelegationDetail/DelegationDetailInfo";
-import DelegationDetailOverview from "../../components/DelegationDetail/DelegationDetailOverview";
-import DelegationDetailChart from "../../components/DelegationDetail/DelegationDetailChart";
-import { OptionSelect, TabSelect, TabsContainer, Title, TitleTab } from "./styles";
+import useFetch from "~/commons/hooks/useFetch";
+import DelegationDetailInfo from "~/components/DelegationDetail/DelegationDetailInfo";
+import DelegationDetailOverview from "~/components/DelegationDetail/DelegationDetailOverview";
+import DelegationDetailChart from "~/components/DelegationDetail/DelegationDetailChart";
+import { TabsContainer, TitleTab } from "./styles";
 import {
   DelegationEpochList,
   DelegationStakingDelegatorsList
-} from "../../components/DelegationDetail/DelegationDetailList";
-import useFetchList from "../../commons/hooks/useFetchList";
-import NoRecord from "../../components/commons/NoRecord";
-import { API } from "../../commons/utils/api";
+} from "~/components/DelegationDetail/DelegationDetailList";
+import useFetchList from "~/commons/hooks/useFetchList";
+import NoRecord from "~/components/commons/NoRecord";
+import { API } from "~/commons/utils/api";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { DelegationHistoryIcon, StakeKeyHistoryIcon } from "../../commons/resources";
-import CustomSelect from "../../components/commons/CustomSelect";
+import { StakingDelegators, StakeKeyHistoryIcon } from "~/commons/resources";
 
-const titles = {
-  epochs: "Epoch",
-  delegators: "Staking Delegators"
-};
 const DelegationDetail: React.FC = () => {
   const { poolId } = useParams<{ poolId: string }>();
   const { search, state } = useLocation<{ data?: DelegationOverview }>();
@@ -77,7 +71,7 @@ const DelegationDetail: React.FC = () => {
     component: React.ReactNode;
   }[] = [
     {
-      icon: DelegationHistoryIcon,
+      icon: StakeKeyHistoryIcon,
       label: "Epoch",
       key: "epochs",
       component: (
@@ -93,7 +87,7 @@ const DelegationDetail: React.FC = () => {
       )
     },
     {
-      icon: StakeKeyHistoryIcon,
+      icon: StakingDelegators,
       label: "Staking Delegators",
       key: "delegators",
       component: (
@@ -115,22 +109,7 @@ const DelegationDetail: React.FC = () => {
       <DelegationDetailInfo data={data} loading={loading} poolId={poolId} />
       <DelegationDetailOverview data={data} loading={loading} />
       <DelegationDetailChart poolId={poolId} />
-
-      <TabSelect>
-        <CustomSelect
-          value={tab}
-          onChange={(e) => {
-            setQuery({ tab: e.target.value, page: 1, size: 50 });
-            scrollEffect();
-          }}
-          IconComponent={() => <BiChevronDown size={30} style={{ paddingRight: 10 }} />}
-        >
-          <OptionSelect value='epochs'>Epoch</OptionSelect>
-          <OptionSelect value='delegators'>Staking Delegators</OptionSelect>
-        </CustomSelect>
-        <Title>{titles[tab]}</Title>
-      </TabSelect>
-      <Box my={4}>
+      <Box sx={{ my: 4, [theme.breakpoints.down("sm")]: { my: 2 } }}>
         <TabContext value={tab}>
           <TabsContainer>
             <TabList
@@ -148,7 +127,7 @@ const DelegationDetail: React.FC = () => {
                   label={
                     <Box display={"flex"} alignItems='center'>
                       <Icon fill={key === tab ? theme.palette.primary.main : theme.palette.text.hint} />
-                      <TitleTab pl={1} active={key === tab}>
+                      <TitleTab pl={1} active={+(key === tab)}>
                         {label}
                       </TitleTab>
                     </Box>

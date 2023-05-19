@@ -1,7 +1,6 @@
-import { Box, BoxProps, Grid, Icon, IconButton, Typography } from "@mui/material";
-import { useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import useFetch from "../../../../../commons/hooks/useFetch";
+import { Box, BoxProps, Grid, Icon } from "@mui/material";
+import { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   BgBlue,
   BgCardWhite,
@@ -13,13 +12,21 @@ import {
   StatusIC,
   WalletGreenIcon
 } from "../../../../../commons/resources";
-import { API } from "../../../../../commons/utils/api";
 import { formatADAFull, getShortWallet } from "../../../../../commons/utils/helper";
-import { CardOverview, CardTitle, CardValue, ClickAbleLink, ViewMoreButton, WrapIcon, WrapWalletIcon } from "./styles";
-import { DotsIcon } from "../../../../PoolRegistrationCertificate/styles";
+import {
+  CardOverview,
+  CardTitle,
+  CardValue,
+  ClickAbleLink,
+  DotsIcon,
+  ViewMoreButton,
+  WrapIcon,
+  WrapWalletIcon
+} from "./styles";
 import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
-import { useScreen } from "../../../../../commons/hooks/useScreen";
 import { details } from "../../../../../commons/routers";
+import PoolDetailContext from "../../PoolDetailContext";
+import { useSelector } from "react-redux";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -48,16 +55,15 @@ type TGridItem = {
 };
 
 const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
-  const [showPoolOwners, setShowPoolOwners] = useState(false);
   const bg = {
     blue: BgBlue,
     green: BgGreen,
     red: BgPink,
     white: BgCardWhite
   }[bgType];
-
+  const { sidebar } = useSelector(({ user }: RootState) => user);
   return (
-    <Grid item xs={12} md={12} lg={6}>
+    <Grid item xs={12} md={sidebar ? 12 : 6} lg={6}>
       <CardOverview>
         <Icon component={bg} />
         <Box display='flex' alignItems='center' gap='12px'>
@@ -74,16 +80,14 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
 };
 
 const TabularOverview: React.FC = () => {
+  const data = useContext(PoolDetailContext);
   const [open, setOpen] = useState(false);
-  const { poolId = "" } = useParams<{ poolId: string }>();
-  const { data } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : "");
   const history = useHistory();
   const onOwnerItemClick = (key: string) => {
     return history.push(`/stake/${key}/delegation`);
   };
-  const { isMobile } = useScreen();
   return (
-    <Box mr={isMobile ? 2 : 0}>
+    <Box>
       <Grid container spacing={2}>
         <GridItem
           title='Pool Size'

@@ -1,8 +1,11 @@
 import { Box, CircularProgress, Stack } from "@mui/material";
-import { Container } from "../../../Account/ActivityLogModal/styles";
 import StyledModal from "../../../commons/StyledModal";
 import {
+  EventLabel,
+  Container,
   ModalTitle,
+  OverViewItem,
+  OverViewValue,
   StyledBackButton,
   StyledButton,
   StyledStack,
@@ -24,6 +27,7 @@ import { useState } from "react";
 import { getEventType } from "../../../StakekeySummary";
 import { getPoolEventType } from "../../../PoolLifecycle";
 import { useScreen } from "../../../../commons/hooks/useScreen";
+import CustomTooltip from "~/components/commons/CustomTooltip";
 
 const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaultParams, gotoStep }) => {
   const toast = useToast();
@@ -39,13 +43,11 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       // eslint-disable-next-line no-unsafe-optional-chaining
       const [start, end] = step1?.dateRange;
 
-      let defaultReportName = `Report_stake_${step1.address}_${step1}_${moment(start).format("MM/DD/yyyy")}_${moment(
-        end
-      ).format("MM/DD/yyyy")}`;
+      let defaultReportName = `Report_stake_${step1.address}_${moment(start).format("MM/DD/yyyy")}_${moment(end).format(
+        "MM/DD/yyyy"
+      )}`;
       if (isPoolReport) {
-        defaultReportName = `Report_pool_${step1.address}_${step1}_${moment(start).format("MM/DD/yyyy")}_${moment(
-          end
-        ).format("MM/DD/yyyy")}`;
+        defaultReportName = `Report_pool_${step1.address}_${step1.epochRange[0]}_${step1.epochRange[1]}`;
         const paramsStakeKeyReport = {
           ...getPoolEventType(step3?.eventsKey),
           poolId: step1.address,
@@ -120,36 +122,34 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
     },
     {
       label: isPoolReport ? "Pool Report by event" : "Staking lifecycle events",
-      value: events,
+      value: (
+        <CustomTooltip title={events}>
+          <EventLabel>{events}</EventLabel>
+        </CustomTooltip>
+      ),
       step: STEPS.step3
     }
   ];
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
-      <Container p={"10px 10px 1px 20px"}>
+      <Container>
         <ModalTitle sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</ModalTitle>
         <TextRequired>
           Before proceeding with your report creation, we just want to double-check and confirm that you’ve filled out
           all the details correctly?
         </TextRequired>
-        <Stack>
-          {list.map(({ label, value, step }, index: number) => {
+        <Stack marginBottom='35px'>
+          {list.map(({ label, value, step }) => {
             return (
-              <Box
-                display={"flex"}
-                key={label}
-                padding={"10px 0px"}
-                justifyContent={"space-between"}
-                borderBottom={index === list.length - 1 ? "none" : "1px solid #000000"}
-              >
-                <TextLabelReview>{label}</TextLabelReview>
-                <Box display={"flex"} justifyContent='center'>
+              <OverViewItem key={label}>
+                <OverViewValue>
+                  <TextLabelReview>{label}</TextLabelReview>
                   <TextOverFlow>
                     <TextValueReview>{value}</TextValueReview>
                   </TextOverFlow>
-                  <PencilIcon style={{ paddingLeft: "10px" }} onClick={() => gotoStep?.(step as number)} />
-                </Box>
-              </Box>
+                </OverViewValue>
+                <PencilIcon style={{ paddingLeft: "10px" }} onClick={() => gotoStep?.(step as number)} />
+              </OverViewItem>
             );
           })}
         </Stack>

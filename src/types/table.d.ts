@@ -11,6 +11,8 @@ export interface Column<T extends ColumnType = any> {
   minWidth?: number | string;
   isHiddenBorder?: boolean;
   maxWidth?: number | string;
+  fixed?: boolean;
+  leftFixed?: number | string;
   render?: (data: T, index: number) => ReactNode;
   sort?: ({ columnKey, sortValue }: { columnKey: string; sortValue: string }) => void;
 }

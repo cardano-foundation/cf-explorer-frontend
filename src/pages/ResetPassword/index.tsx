@@ -1,13 +1,14 @@
 import { Box, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
 import { useReducer, useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
+import { FailIcon, HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
 import {
   AlertCustom,
   Container,
   FormHelperTextCustom,
   InputCustom,
   Label,
+  Title,
   WrapButton,
   WrapContent,
   WrapForm,
@@ -153,9 +154,8 @@ export default function ResetPassword() {
       <WrapContent>
         <WrapTitle>Reset Password</WrapTitle>
         <FormGroup>
-          {!success ? (
+          {!success && !error ? (
             <WrapForm>
-              {error ? <AlertCustom severity='error'>Something was wrong!</AlertCustom> : null}
               <WrapInput>
                 <Label>New Password</Label>
                 <InputCustom
@@ -212,11 +212,23 @@ export default function ResetPassword() {
                 Submit
               </WrapButton>
             </WrapForm>
-          ) : (
+          ) : !error ? (
             <WrapForm>
               <Label>Your password has been reset successfully</Label>
               <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.SIGN_IN)}>
                 Sign In
+              </WrapButton>
+            </WrapForm>
+          ) : (
+            <WrapForm alignItems={"center"}>
+              <FailIcon />
+              <Title>Reset Password Failed</Title>
+              <Box>
+                <Label mb={1}>There's been an error in the verify process</Label>
+                <Label>This URL is either incorrect or has expired.</Label>
+              </Box>
+              <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.HOME)}>
+                Go to Dashboard
               </WrapButton>
             </WrapForm>
           )}
