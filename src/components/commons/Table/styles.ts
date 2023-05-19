@@ -127,12 +127,17 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number
 `
 );
 
-export const TableFullWidth = styled("table")`
+export const TableFullWidth = styled("table")(
+  ({ theme }) => `
   border-collapse: separate;
   border-spacing: 0;
   min-width: 100%;
   width: max-content;
-`;
+  ${theme.breakpoints.down("sm")} {
+    position: relative;
+  }
+`
+);
 
 export const InputNumber = styled("input")<{ length: number }>(({ theme, length }) => ({
   width: length + "ch !important",
