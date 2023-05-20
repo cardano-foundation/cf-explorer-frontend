@@ -27,7 +27,7 @@ export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => 
   fontWeight: "bold"
 }));
 
-export const NavItemMobile = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
+export const NavItemMobile = styled(Link)<{ active: boolean, smallWidth: number }>(({ theme, active, smallWidth }) => ({
   textAlign: "center",
   fontWeight: 700,
   fontSize: "14px",
@@ -39,7 +39,7 @@ export const NavItemMobile = styled(Link)<{ active: boolean }>(({ theme, active 
   whiteSpace: "nowrap",
   overflow: "hidden",
   [theme.breakpoints.down("sm")]: {
-    padding: "10px 15px",
+    padding: smallWidth ? "10px 13px" : "10px 19px",
     fontSize: "13px",
   }
 }));

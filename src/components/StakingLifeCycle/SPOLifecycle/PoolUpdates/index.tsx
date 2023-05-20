@@ -929,7 +929,7 @@ export const PoolUpdateModal = ({
     }
     return (
       <Box display={"flex"} flexDirection={"column"} gap={1}>
-        {data?.previousMargin !== null && (
+        {data?.previousMargin !== null && data?.previousMargin !== data?.margin && (
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
             <Box color={(theme) => theme.palette.grey[400]} fontWeight={"bold"}>
               Margin
@@ -957,7 +957,7 @@ export const PoolUpdateModal = ({
             </Box>
           </Box>
         )}
-        {data?.previousPledge !== null && (
+        {data?.previousPledge !== null && data?.previousPledge !== data?.pledge && (
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
             <Box color={(theme) => theme.palette.grey[400]} fontWeight={"bold"}>
               Pledge

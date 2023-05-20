@@ -10,6 +10,7 @@ interface IProps extends ModalProps {
   height?: number | string;
   paddingX?: number | string;
   paddingY?: number | string;
+  overflowY?: string;
 }
 const StyledModal: React.FC<IProps> = ({
   open,
@@ -19,7 +20,8 @@ const StyledModal: React.FC<IProps> = ({
   width,
   height,
   paddingX,
-  paddingY
+  paddingY,
+  overflowY = 'auto'
 }) => {
   const { isMobile } = useScreen();
   return (
@@ -39,7 +41,9 @@ const StyledModal: React.FC<IProps> = ({
             <WrapTitle>{title}</WrapTitle>
           </Box>
         )}
-        <ContentContainer>{children}</ContentContainer>
+        <ContentContainer sx={{
+          overflowY
+        }}>{children}</ContentContainer>
       </ModalContainer>
     </Modal>
   );
