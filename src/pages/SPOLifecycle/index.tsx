@@ -24,7 +24,7 @@ import {
 import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staking/ChartMode.svg";
 import { ReactComponent as TableMode } from "../../commons/resources/icons/Staking/TableMode.svg";
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
-import Tablular from "../../components/StakingLifeCycle/SPOLifecycle/Tablular";
+import Tabular from "../../components/StakingLifeCycle/SPOLifecycle/Tablular";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useScreen } from "../../commons/hooks/useScreen";
 import { details } from "../../commons/routers";
@@ -139,7 +139,7 @@ const SPOLifecycle = () => {
             setCurrentStep={setCurrentStep}
           />
         ) : (
-          <Tablular />
+          <Tabular />
         )}
         <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
       </StyledContainer>

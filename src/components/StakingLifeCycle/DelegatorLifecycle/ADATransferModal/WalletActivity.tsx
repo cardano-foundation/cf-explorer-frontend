@@ -24,10 +24,10 @@ const WalletActivity: React.FC = () => {
 
   const trxType = {
     SENT: "ADA sent from wallet",
-    RECEIVED: "ADA received from wallet",
+    RECEIVED: "ADA received",
     FEE_PAID: "Transaction fee paid",
     CERTIFICATE_FEE_PAID: "Certificate fee paid",
-    CERTIFICATE_DEPOSIT_PAID: "Certificate deposit paid"
+    CERTIFICATE_DEPOSIT_PAID: "Certificate hold paid"
   };
 
   const columns: Column<WalletActivityIF>[] = [
@@ -37,7 +37,7 @@ const WalletActivity: React.FC = () => {
       minWidth: "100px",
       render: (r) => (
         <Box display='flex' alignItems='center'>
-          <TextAmountReward>{formatADAFull(r.amount)}</TextAmountReward>
+          <TextAmountReward>{r.amount > 0 ? `+${formatADAFull(r.amount)}` : formatADAFull(r.amount)}</TextAmountReward>
           <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
         </Box>
       )
@@ -51,17 +51,17 @@ const WalletActivity: React.FC = () => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
-    {
-      title: "Fees Paid",
-      key: "fee",
-      minWidth: "100px",
-      render: (r) => (
-        <Box display='flex' alignItems='center'>
-          <TextAmountReward>{formatADAFull(r.fee)}</TextAmountReward>
-          <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
-        </Box>
-      )
-    },
+    // {
+    //   title: "Fees Paid",
+    //   key: "fee",
+    //   minWidth: "100px",
+    //   render: (r) => (
+    //     <Box display='flex' alignItems='center'>
+    //       <TextAmountReward>{formatADAFull(r.fee)}</TextAmountReward>
+    //       <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
+    //     </Box>
+    //   )
+    // },
     {
       title: "Transaction Hash",
       key: "transactionHash",
