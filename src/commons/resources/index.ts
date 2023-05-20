@@ -270,3 +270,4 @@ export { ReactComponent as PeopleIcon } from "./icons/people.svg";
 export { ReactComponent as SuccessIcon } from "./icons/success.svg";
 export { ReactComponent as FailIcon } from "./icons/failed.svg";
 export { ReactComponent as StakingDelegators } from "./icons/stakingDelegators.svg";
+export { ReactComponent as TransferIcon } from "./icons/transfer.svg";

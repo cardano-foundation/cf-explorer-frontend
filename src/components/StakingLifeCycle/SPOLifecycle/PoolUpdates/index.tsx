@@ -51,7 +51,7 @@ import PopoverStyled from "../../../commons/PopoverStyled";
 import { useHistory, useParams } from "react-router";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { details } from "../../../../commons/routers";
-import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADA, getShortHash, getShortWallet, numberWithCommas } from "../../../../commons/utils/helper";
 import { ButtonSPO, PoolName, PoolNamePopup, StyledCopyButton } from "../Registration/styles";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
@@ -848,10 +848,10 @@ export const PoolUpdateModal = ({
             </Box>
             {data && (
               <Box fontSize='0.875rem' pt={"7px"} fontWeight={500}>
-                {data?.margin ? data?.margin * 100 : 0}%
+                {data?.margin ? numberWithCommas(data?.margin * 100, 2) : 0}%
                 {data?.previousMargin !== null && (
                   <Box fontSize={12} pt={"7px"} color={(theme) => theme.palette.grey[400]}>
-                    Previous: {data?.previousMargin} %{" "}
+                    Previous: {data?.previousMargin ? numberWithCommas(data?.previousMargin * 100, 2) : 0} %{" "}
                   </Box>
                 )}
               </Box>
@@ -919,7 +919,8 @@ export const PoolUpdateModal = ({
   );
 
   const renderCertificateUpdates = () => {
-    if (data?.previousMargin === null && data?.previousPledge === null) {
+    const isOldEqualNew = data?.previousMargin === data?.margin && data?.previousPledge === data?.pledge;
+    if ((data?.previousMargin === null && data?.previousPledge === null) || isOldEqualNew) {
       return (
         <Box textAlign={"center"}>
           <Box component={"img"} height={215} src={EmptyIcon} alt='no data' />
@@ -939,7 +940,7 @@ export const PoolUpdateModal = ({
                   OLD
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
-                  {data?.previousMargin} %
+                  {data?.previousMargin ? numberWithCommas(data?.previousMargin * 100, 2) : 0}%
                 </Box>
               </CardBox>
               <Box flex={1} textAlign={"center"}>
@@ -950,7 +951,7 @@ export const PoolUpdateModal = ({
                   NEW
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
-                  {data?.margin} %
+                  {data?.margin ? numberWithCommas(data?.margin * 100, 2) : 0}%
                 </Box>
               </CardBox>
             </Box>
@@ -993,19 +994,19 @@ export const PoolUpdateModal = ({
     label: string;
     children: React.ReactNode;
   }[] = [
-    {
-      key: "poolCertificate",
-      icon: PoolCert,
-      label: "Pool certificate",
-      children: <>{renderPoolCert()}</>
-    },
-    {
-      key: "certificateUpdates",
-      icon: CertUpdate,
-      label: "Certificate updates",
-      children: <Box>{renderCertificateUpdates()}</Box>
-    }
-  ];
+      {
+        key: "poolCertificate",
+        icon: PoolCert,
+        label: "Pool certificate",
+        children: <>{renderPoolCert()}</>
+      },
+      {
+        key: "certificateUpdates",
+        icon: CertUpdate,
+        label: "Certificate updates",
+        children: <Box>{renderCertificateUpdates()}</Box>
+      }
+    ];
 
   const handleChange = (event: React.SyntheticEvent, tab: "poolCertificate" | "certificateUpdates") => {
     setTabActive(tab);
