@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import StyledModal from "../commons/StyledModal";
 import { BoxDetails, ContentContainer, NormalDescription, NumberParagraph, Watermark, WrapContent } from "./styles";
 interface Props {
@@ -10,11 +9,11 @@ export function WithdrawingFundProcessDescription({ open, handleCloseModal }: Pr
     <StyledModal title='The withdrawing funds process' handleCloseModal={handleCloseModal} open={open}>
       <WrapContent>
         <ContentContainer>
-          <Watermark />
           <NormalDescription>
             When a delegator wants to withdraw their funds from a staking pool on Cardano, the following steps occur:
           </NormalDescription>
           <BoxDetails>
+            <Watermark />
             <NormalDescription>
               <NumberParagraph>1.</NumberParagraph>
               The delegator initiates a withdrawal request in their wallet or through a staking service.

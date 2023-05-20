@@ -16,8 +16,6 @@ export const NumberParagraph = styled(Box)`
 //show overflow-y when hover
 export const WrapContent = styled(Box)`
   max-height: calc(100vh - 160px);
-  overflow-y: auto;
-  overflow-x: hidden;
   width: 600px;
   max-width: 100%;
   position: relative;
@@ -57,6 +55,9 @@ export const Watermark = styled("span")`
   width: 100%;
   aspect-ratio: 1;
   max-height: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
   &::after {
     content: "FOR \\a ILLUSTRION \\a ONLY";
     white-space: pre;
@@ -87,4 +88,5 @@ export const BoxDetails = styled(BoxDescription)`
   padding: 20px 25px;
   padding-left: 35px;
   margin: 15px 0px;
+  position: relative;
 `;
