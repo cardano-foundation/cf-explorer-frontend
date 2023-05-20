@@ -28,6 +28,7 @@ import { LogoFullIcon } from "../../../../../commons/resources";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const pathname = history.location.pathname;
+  console.log("🚀 ~ file: index.tsx:31 ~ pathname:", pathname);
   const { isTablet } = useScreen();
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { width } = useWindowSize(0);
@@ -157,6 +158,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
                       const { href, title, icon } = subItem;
+                      console.log("🚀 ~ file: index.tsx:161 ~ {children.map ~ href:", href);
                       return href ? (
                         isExtenalLink(href) ? (
                           <ListItem
@@ -184,7 +186,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               ...(pathname === href ||
-                              (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1]))
+                              (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
+                              (href === "/time-line" &&
+                                (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
                                 ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
@@ -206,7 +210,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                               open={sidebar ? 1 : 0}
                               active={
                                 pathname === href ||
-                                (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1]))
+                                (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
+                                (href === "/time-line" &&
+                                  (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
                                   ? 1
                                   : 0
                               }

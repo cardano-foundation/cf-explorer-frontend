@@ -30,7 +30,11 @@ const RewardActivity: React.FC = () => {
       minWidth: "100px",
       render: (r) => (
         <Amount type={r.type}>
-          {formatADAFull(r.amount)}
+          {r.amount
+            ? r.type === "REWARD_RECEIVED"
+              ? `+${formatADAFull(r.amount)}`
+              : `-${formatADAFull(r.amount)}`
+            : 0}
           <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
         </Amount>
       )
