@@ -43,7 +43,7 @@ import RecentRegistrations from "./RecentRegistrations";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
 import { useHistory, useParams } from "react-router";
-import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADA, getShortHash, getShortWallet, numberWithCommas } from "../../../../commons/utils/helper";
 import moment from "moment";
 import PopupStaking from "../../../commons/PopupStaking";
 import CopyButton from "../../../commons/CopyButton";
@@ -774,7 +774,7 @@ export const RegistrationCertificateModal = ({
             {loading && <Skeleton variant='rectangular' />}
             {data && !loading && (
               <Box display={"inline"} fontSize='0.875rem'>
-                {data?.margin}%
+                {data?.margin ? numberWithCommas(data?.margin * 100, 2) : 0}%
               </Box>
             )}
           </Box>
