@@ -6,6 +6,7 @@ import { getShortHash, getShortWallet } from "~/commons/utils/helper";
 import { AdaValue } from "~/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
 import { details } from "~/commons/routers";
 import { useScreen } from "~/commons/hooks/useScreen";
+import CustomTooltip from "~/components/commons/CustomTooltip";
 
 type TProps = {
   data: TPoolCertificated;
@@ -19,7 +20,7 @@ const StakeKeyBox = ({ data }: TProps) => {
       value: getShortHash(data.poolId),
       isHyperLink: true,
       originValue: data.poolId,
-      linkTo: details.delegation(data.poolId)
+      linkTo: details.delegation(data.poolId),
     },
     {
       label: "VRF Key",
@@ -98,17 +99,25 @@ const StakeKeyBox = ({ data }: TProps) => {
                   {isMultipleValue ? (
                     <Box display='flex' flexDirection='column'>
                       {value.map((item, index) => (
-                        <TextValue key={index}>
-                          <Link to={details.stake(item || "")}>{getShortWallet(item)}</Link>
+                        <Box key={index} display={"flex"}>
+                          <CustomTooltip title={item}>
+                            <TextValue>
+                              <Link to={details.stake(item || "")}>{getShortWallet(item)}</Link>
+                            </TextValue>
+                          </CustomTooltip>
                           <CopyButton sx={{ marginLeft: 1, height: 16 }} text={item} />
-                        </TextValue>
+                        </Box>
                       ))}
                     </Box>
                   ) : (
-                    <TextValue>
-                      {isHyperLink && linkTo ? <Link to={linkTo}>{value}</Link> : value}
+                    <Box display={"flex"}>
+                      <CustomTooltip title={originValue}>
+                        <TextValue>
+                          {isHyperLink && linkTo ? <Link to={linkTo}>{value}</Link> : value}
+                        </TextValue>
+                      </CustomTooltip>
                       {value && <CopyButton sx={{ marginLeft: 1, height: 16 }} text={originValue} />}
-                    </TextValue>
+                    </Box>
                   )}
                 </Box>
               );
@@ -128,7 +137,7 @@ const StakeKeyBox = ({ data }: TProps) => {
           </Box>
         </Grid>
       </Grid>
-    </Box>
+    </Box >
   );
 };
 export default StakeKeyBox;

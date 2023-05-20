@@ -141,6 +141,13 @@ export const HoldBoxText = styled(Box)(({ theme }) => ({
   color: theme.palette.common.black
 }));
 
+export const MyGrid = styled(Box)(({ theme }) => ({
+  display: "grid",
+  gridTemplateColumns: "repeat(2, 1fr)",
+  gridGap: "10px 20px",
+  gridAutoRows: "auto",
+}));
+
 export const StyledSkeletonContainer = styled(Box)(({ theme }) => ({}));
 export const StyledGridContainer = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
