@@ -70,6 +70,7 @@ import ViewMoreAddressModal from "~/components/ViewMoreAddressModal";
 import { FilterDateLabel } from "../../DelegatorLifecycle/Delegation/styles";
 import { useSelector } from "react-redux";
 import { DATETIME_PARTTEN } from "~/components/StackingFilter/DateRangeModal";
+import { EmptyRecord } from "~/components/commons/Table";
 const PoollUpdates = ({
   containerPosition,
   handleResize
@@ -131,7 +132,7 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
     toDate: undefined,
     txHash: undefined
   });
-  const { data, total } = useFetchList<PoolUpdateItem>(API.SPO_LIFECYCLE.POOL_UPDATE(poolId), {
+  const { data, total, loading, initialized, error } = useFetchList<PoolUpdateItem>(API.SPO_LIFECYCLE.POOL_UPDATE(poolId), {
     page: 0,
     size: 1000,
     ...params
@@ -180,19 +181,25 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
         </Box>
       </StyledList>
       <GridBox sidebar={+sidebar}>
-        {data.map((item, ii) => {
-          return (
-            <OverviewStaking
-              key={ii}
-              item={item}
-              onClick={handleSelect}
-              hash={item.txHash}
-              amount={item.fee}
-              time={item.time}
-            />
-          );
-        })}
+        {loading &&
+          [...new Array(12)].map((i, ii) => (
+            <Skeleton key={ii} style={{ borderRadius: 12 }} variant='rectangular' width={300} height={185} />
+          ))}
+        {!loading &&
+          data.map((item, ii) => {
+            return (
+              <OverviewStaking
+                key={ii}
+                item={item}
+                onClick={handleSelect}
+                hash={item.txHash}
+                amount={item.fee}
+                time={item.time}
+              />
+            );
+          })}
       </GridBox>
+      {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
     </StyledContainer>
   );
 };
@@ -335,7 +342,7 @@ const PoollUpdatesTimeline = ({
                 <SPOInfo />
               </ButtonSPO>
             </CustomTooltip>
-            <Link to={details.stake(data?.stakeKeys[0] || "")}>
+            <Box>
               <CustomTooltip
                 wOpacity={false}
                 componentsProps={{
@@ -370,7 +377,7 @@ const PoollUpdatesTimeline = ({
                   <SPOKey fill='#438F68' />
                 </ButtonSPO>
               </CustomTooltip>
-            </Link>
+            </Box>
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
@@ -774,7 +781,7 @@ export const PoolUpdateModal = ({
       </Box>
 
       <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
-        <Box display={"flex"} p={3}  alignItems={"center"}>
+        <Box display={"flex"} p={3} alignItems={"center"}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               VRF Key
@@ -799,7 +806,7 @@ export const PoolUpdateModal = ({
         </Box>
       </Box>
       <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
-        <Box p={3}  display={"flex"} alignItems={"center"} >
+        <Box p={3} display={"flex"} alignItems={"center"} >
           <Box display='flex' alignItems='center'>
             <Box>
               <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
@@ -878,7 +885,7 @@ export const PoolUpdateModal = ({
               </Box>
             )}
           </Box>
-          {data?.previousMargin !== null && (
+          {data?.previousMargin !== null && data?.previousMargin !== data?.margin && (
             <Box>
               <ChangeIcon />
             </Box>
@@ -907,7 +914,7 @@ export const PoolUpdateModal = ({
                 </Box>
               )}
             </Box>
-            {data?.previousPledge !== null && (
+            {data?.previousPledge !== null && data?.previousPledge !== data?.pledge && (
               <Box>
                 <ChangeIcon />
               </Box>
