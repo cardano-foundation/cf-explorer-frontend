@@ -31,6 +31,7 @@ import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 import { useScreen } from "~/commons/hooks/useScreen";
+import { FilterParams } from "~/components/StackingFilter";
 
 const Registration = ({
   containerPosition,
@@ -48,6 +49,12 @@ const Registration = ({
   const handleSelect = (registration: RegistrationItem | null) => {
     setSelected(registration);
   };
+  const [params, setParams] = useState<FilterParams>({
+    fromDate: undefined,
+    sort: undefined,
+    toDate: undefined,
+    txHash: undefined
+  });
 
   const handleToggleModal = () => setOpenModal((state) => !state);
 
@@ -57,7 +64,7 @@ const Registration = ({
     <Box>
       <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
       <Box>
-        <RecentRegistrations onSelect={handleSelect} />
+        <RecentRegistrations onSelect={handleSelect} params={params} setParams={setParams} />
       </Box>
       <Box>
         {selected &&

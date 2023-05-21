@@ -41,6 +41,7 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 import { useScreen } from "~/commons/hooks/useScreen";
 import { AdaValue } from "~/components/ReportGeneratedStakingDetail/StakeyTabs/StakingRegistrationTab";
+import { FilterParams } from "~/components/StackingFilter";
 
 const Delegation = ({
   containerPosition,
@@ -55,7 +56,12 @@ const Delegation = ({
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [selected, setSelected] = useState<DelegationItem | null>(null);
   const [openModal, setOpenModal] = useState(false);
-
+  const [params, setParams] = useState<FilterParams>({
+    fromDate: undefined,
+    sort: undefined,
+    toDate: undefined,
+    txHash: undefined
+  });
   const handleSelect = (delegation: DelegationItem | null) => {
     setSelected(delegation);
   };
@@ -73,7 +79,7 @@ const Delegation = ({
         stake={stakeId}
       />
       <Box>
-        <RecentDelegations onSelect={handleSelect} />
+        <RecentDelegations onSelect={handleSelect} params={params} setParams={setParams} />
       </Box>
       <Box>
         {!!selected && isLargeTablet ? (

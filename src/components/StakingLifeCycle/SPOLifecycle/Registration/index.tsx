@@ -52,6 +52,7 @@ import { details } from "../../../../commons/routers";
 import StyledModal from "../../../commons/StyledModal";
 import { StyledLink } from "../styles";
 import { useScreen } from "../../../../commons/hooks/useScreen";
+import { FilterParams } from "~/components/StackingFilter";
 
 const Registration = ({
   containerPosition,
@@ -67,6 +68,12 @@ const Registration = ({
   const [openModal, setOpenModal] = useState(false);
   const [selected, setSelected] = useState<SPORegistration | null>(null);
   const history = useHistory();
+  const [params, setParams] = useState<FilterParams>({
+    fromDate: undefined,
+    sort: undefined,
+    toDate: undefined,
+    txHash: undefined
+  });
   const handleSelect = (registration: SPORegistration | null) => {
     setSelected(registration);
   };
@@ -83,7 +90,7 @@ const Registration = ({
   const handleToggleCertificateModal = () => setOpenModal((state) => !state);
   return (
     <Box>
-      <RecentRegistrations onSelect={handleSelect} />
+      <RecentRegistrations params={params} setParams={setParams} onSelect={handleSelect} />
       {selected ? (
         <>
           <StepInfo>
