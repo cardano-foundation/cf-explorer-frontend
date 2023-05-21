@@ -48,7 +48,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
   };
 
   useUpdateEffect(() => {
-    if (data && data.length && data.length === 1) {
+    if (data && data.length && data.length === 1 && params.txHash === undefined) {
       handleSelect(data[0]);
     }
   }, [JSON.stringify(data)]);

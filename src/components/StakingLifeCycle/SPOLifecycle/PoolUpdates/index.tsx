@@ -46,7 +46,6 @@ import useFetchList from "../../../../commons/hooks/useFetchList";
 import { API } from "../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../StackingFilter";
 import { WrapFilterDescription } from "../../DelegatorLifecycle/Registration/RecentRegistrations/styles";
-import { GridBoxCustom } from "../../DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import OverviewStaking from "../../../commons/OverviewStaking";
 import PopoverStyled from "../../../commons/PopoverStyled";
 import { useHistory, useParams } from "react-router";
@@ -147,7 +146,7 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
   };
 
   useUpdateEffect(() => {
-    if (data && data.length && data.length === 1) {
+    if (data && data.length && data.length === 1 && params.txHash === undefined) {
       handleSelect(data[0]);
     }
   }, [JSON.stringify(data)]);
@@ -1018,19 +1017,19 @@ export const PoolUpdateModal = ({
     label: string;
     children: React.ReactNode;
   }[] = [
-      {
-        key: "poolCertificate",
-        icon: PoolCert,
-        label: "Pool certificate",
-        children: <>{renderPoolCert()}</>
-      },
-      {
-        key: "certificateUpdates",
-        icon: CertUpdate,
-        label: "Certificate updates",
-        children: <Box>{renderCertificateUpdates()}</Box>
-      }
-    ];
+    {
+      key: "poolCertificate",
+      icon: PoolCert,
+      label: "Pool certificate",
+      children: <>{renderPoolCert()}</>
+    },
+    {
+      key: "certificateUpdates",
+      icon: CertUpdate,
+      label: "Certificate updates",
+      children: <Box>{renderCertificateUpdates()}</Box>
+    }
+  ];
 
   const handleChange = (event: React.SyntheticEvent, tab: "poolCertificate" | "certificateUpdates") => {
     setTabActive(tab);

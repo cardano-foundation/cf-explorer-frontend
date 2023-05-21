@@ -310,29 +310,33 @@ const DeregistrationTimeline = ({
               pointFrom='border'
               orient='vertical'
             />
-            <Line
-              containerPosition={containerPosition}
-              fromRef={cadarnoSystemRef}
-              toRef={holdRef}
-              orient='vertical'
-              pointFrom='border'
-              pointTo='border'
-              connectToReverse={true}
-              connectFromReverse={true}
-              isCentalVertical={false}
-              isCentalHorizontal
-            />
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={holdRef}
-              toRef={adaHolderRef}
-              pointTo='border'
-              pointFrom='border'
-              orient='vertical'
-              connectToReverse={true}
-              connectFromReverse={true}
-              isCentalHorizontal={false}
-            />
+            {selected?.poolHold && (
+              <Line
+                containerPosition={containerPosition}
+                fromRef={cadarnoSystemRef}
+                toRef={holdRef}
+                orient='vertical'
+                pointFrom='border'
+                pointTo='border'
+                connectToReverse={true}
+                connectFromReverse={true}
+                isCentalVertical={false}
+                isCentalHorizontal
+              />
+            )}
+            {selected?.poolHold && (
+              <ArrowDiagram
+                containerPosition={containerPosition}
+                fromRef={holdRef}
+                toRef={adaHolderRef}
+                pointTo='border'
+                pointFrom='border'
+                orient='vertical'
+                connectToReverse={true}
+                connectFromReverse={true}
+                isCentalHorizontal={false}
+              />
+            )}
             <Line
               containerPosition={containerPosition}
               fromRef={adaHolderRef}
