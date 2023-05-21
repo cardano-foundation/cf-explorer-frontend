@@ -32,26 +32,27 @@ import CustomIcon from "~/components/commons/CustomIcon";
 import CustomTooltip from "~/components/commons/CustomTooltip";
 
 const cardList = [
-  {
-    icon: <PersionalSettingIC />,
-    title: "Personal settings",
-    subtitle: "Your personal experience"
-  },
-  {
-    icon: <ScanQRCodeIC />,
-    title: "Scan QR code",
-    subtitle: "Scan a QR code"
-  },
+  // {
+  //   icon: <PersionalSettingIC />,
+  //   title: "Personal settings",
+  //   subtitle: "Your personal experience"
+  // },
+  // {
+  //   icon: <ScanQRCodeIC />,
+  //   title: "Scan QR code",
+  //   subtitle: "Scan a QR code"
+  // },
   {
     icon: <ListOfReportsIC />,
     title: "List of reports",
     subtitle: "Reports you can view",
-    to: routers.REPORT_GENERATED
+    to: details.generated_report("stake-key")
   },
   {
     icon: <WatchlistIC />,
     title: "Watchlist",
-    subtitle: "Lifecycle events"
+    subtitle: "Lifecycle events",
+    to: routers.STAKING_LIFECYCLE_SEARCH
   }
 ];
 
@@ -212,7 +213,7 @@ const Dashboard: React.FC = () => {
     <Container>
       <GridContainer container spacing={2} columns={12}>
         {cardList.map((card, idx) => (
-          <Grid item xs={6} md={6} lg={6} xl={3} key={idx}>
+          <Grid item xs={6} md={6} lg={6} xl={6} key={idx}>
             <DashboardCard
               key={card.title}
               leftIcon={card.icon}
