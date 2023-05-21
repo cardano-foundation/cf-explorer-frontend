@@ -33,6 +33,7 @@ interface SPORegistration {
   poolUpdateId: number;
   txHash: string;
   fee: number;
+  poolHold: number;
   time: string;
   margin: number;
 }

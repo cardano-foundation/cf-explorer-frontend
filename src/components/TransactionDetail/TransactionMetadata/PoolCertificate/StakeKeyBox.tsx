@@ -40,12 +40,6 @@ const StakeKeyBox = ({ data }: TProps) => {
       isHyperLink: true,
       originValue: data.poolOwners && data.poolOwners.length > 0 ? data.poolOwners[0] : "",
       isMultipleValue: true
-    },
-    {
-      label: "Metadata Hash",
-      value: data.metadataHash ? getShortHash(data.metadataHash) : "",
-      isHyperLink: false,
-      originValue: data.metadataHash
     }
   ];
 
@@ -61,28 +55,6 @@ const StakeKeyBox = ({ data }: TProps) => {
     {
       label: "Pledge",
       value: <AdaValue value={data.pledge} />
-    },
-    {
-      label: "Relay nNode",
-      value: (
-        <Box display='flex' flexDirection='column'>
-          {(data?.relays || []).map((relay, index) => (
-            <TextNormal key={index}>
-              IPv4: <TextRightValue>{relay.ipv4}</TextRightValue> {isGalaxyFoldSmall ? <br /> : <>|</>} Port:
-              <TextRightValue>{relay.port}</TextRightValue>
-            </TextNormal>
-          ))}
-        </Box>
-      )
-    },
-    {
-      label: "Metadata URL",
-      value: (
-        <Box sx={{ wordBreak: "break-all" }}>
-          {data?.metadataUrl}
-          {data?.metadataUrl && <CopyButton text={data?.metadataUrl} sx={{ height: 16 }} />}
-        </Box>
-      )
     }
   ];
 

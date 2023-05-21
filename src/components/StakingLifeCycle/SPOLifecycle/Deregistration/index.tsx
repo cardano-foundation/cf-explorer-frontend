@@ -145,7 +145,9 @@ const DeregistrationTimeline = ({
           </Info>
           <Info>
             <ADAGreen />
-            <InfoText>{formatADA(selected?.totalFee || 0)}</InfoText>
+            <InfoText>
+              {formatADA(selected?.poolHold ? selected?.poolHold - selected?.fee : selected?.fee || 0)}
+            </InfoText>
           </Info>
           <Info>
             <TimeIcon />
@@ -240,22 +242,24 @@ const DeregistrationTimeline = ({
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
             <Box display={"flex"} flex={1}>
-              <PopoverStyled
-                render={({ handleClick }) => (
-                  <HoldBox ref={holdRef} ml={1}>
-                    <Box>
-                      <HoldBoxText mr={1} component={"span"}>
-                        {formatADA(selected?.poolHold)}
-                      </HoldBoxText>
-                      <ADAicon fontSize='18px' />
-                    </Box>
-                    <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
-                      <ButtonListIcon />
-                    </IconButton>
-                  </HoldBox>
-                )}
-                content={<PopupStaking hash={selected?.txHash || ""} />}
-              />
+              {selected?.poolHold && (
+                <PopoverStyled
+                  render={({ handleClick }) => (
+                    <HoldBox ref={holdRef} ml={1}>
+                      <Box>
+                        <HoldBoxText mr={1} component={"span"}>
+                          {formatADA(selected?.poolHold - selected?.fee)}
+                        </HoldBoxText>
+                        <ADAicon fontSize='18px' />
+                      </Box>
+                      <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
+                        <ButtonListIcon />
+                      </IconButton>
+                    </HoldBox>
+                  )}
+                  content={<PopupStaking hash={selected?.txHash || ""} />}
+                />
+              )}
               <PopoverStyled
                 render={({ handleClick }) => (
                   <FeeBox ref={feeRef}>
@@ -397,6 +401,7 @@ const DeregistrationTimelineMobile = ({
   selected: SPODeregistration | null;
   toggleModal: () => void;
 }) => {
+  console.log("🚀 ~ file: index.tsx:402 ~ selected:", selected);
   const history = useHistory();
   const { poolId = "" } = useParams<{ poolId: string }>();
 
@@ -438,7 +443,9 @@ const DeregistrationTimelineMobile = ({
           </Info>
           <Info>
             <ADAGreen />
-            <InfoText>{formatADA(selected?.totalFee || 0)}</InfoText>
+            <InfoText>
+              {formatADA(selected?.poolHold ? selected?.poolHold - selected?.fee : selected?.fee || 0)}
+            </InfoText>
           </Info>
           <Info>
             <TimeIcon />
@@ -534,25 +541,30 @@ const DeregistrationTimelineMobile = ({
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} position={"relative"}>
+            {selected?.poolHold ? (
+              <PopoverStyled
+                render={({ handleClick }) => (
+                  <HoldBox ref={holdRef} ml={1}>
+                    <Box>
+                      <HoldBoxText mr={1} component={"span"}>
+                        {formatADA(selected?.poolHold)}
+                      </HoldBoxText>
+                      <ADAicon fontSize='18px' />
+                    </Box>
+                    <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </HoldBox>
+                )}
+                content={<PopupStaking hash={selected?.txHash || ""} />}
+              />
+            ) : (
+              <Box width='200px' height='35px' />
+            )}
+
             <PopoverStyled
               render={({ handleClick }) => (
-                <HoldBox ref={holdRef} ml={1}>
-                  <Box>
-                    <HoldBoxText mr={1} component={"span"}>
-                      {formatADA(selected?.poolHold)}
-                    </HoldBoxText>
-                    <ADAicon fontSize='18px' />
-                  </Box>
-                  <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
-                    <ButtonListIcon />
-                  </IconButton>
-                </HoldBox>
-              )}
-              content={<PopupStaking hash={selected?.txHash || ""} />}
-            />
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <FeeBox ref={feeRef}>
+                <FeeBox ref={feeRef} ml={selected?.poolHold ? 0 : "30px"}>
                   <Box>
                     <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
                       {formatADA(selected?.fee)}
@@ -612,33 +624,39 @@ const DeregistrationTimelineMobile = ({
             orient='horizontal'
             connectToReverse
           />
-          <Line
-            containerPosition={containerPosition}
-            fromRef={cadarnoSystemRefImg}
-            toRef={cadarnoSystemRef}
-            pointTo='border'
-            pointFrom='border'
-            orient='vertical'
-            connectToReverse
-          />
-          <ArrowDiagram
-            containerPosition={containerPosition}
-            fromRef={adaHolderRef}
-            toRef={adaHolderRefImg}
-            pointTo='border'
-            pointFrom='border'
-            orient='vertical'
-            connectToReverse
-          />
-          <Line
-            containerPosition={containerPosition}
-            fromRef={fake2CardanoSystemRef}
-            toRef={fake2Ref}
-            pointTo='center'
-            pointFrom='center'
-            orient='horizontal'
-            isCentalHorizontal
-          />
+          {selected?.poolHold && (
+            <Line
+              containerPosition={containerPosition}
+              fromRef={cadarnoSystemRefImg}
+              toRef={cadarnoSystemRef}
+              pointTo='border'
+              pointFrom='border'
+              orient='vertical'
+              connectToReverse
+            />
+          )}
+          {selected?.poolHold && (
+            <ArrowDiagram
+              containerPosition={containerPosition}
+              fromRef={adaHolderRef}
+              toRef={adaHolderRefImg}
+              pointTo='border'
+              pointFrom='border'
+              orient='vertical'
+              connectToReverse
+            />
+          )}
+          {selected?.poolHold && (
+            <Line
+              containerPosition={containerPosition}
+              fromRef={fake2CardanoSystemRef}
+              toRef={fake2Ref}
+              pointTo='center'
+              pointFrom='center'
+              orient='horizontal'
+              isCentalHorizontal
+            />
+          )}
         </svg>
       </Box>
     </StyledBox>
