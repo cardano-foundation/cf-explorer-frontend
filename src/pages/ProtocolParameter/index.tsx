@@ -276,7 +276,6 @@ const ProtocolParameterHistory = () => {
     fixed: idx === 0 ? true : false,
     leftFixed: 130,
     render: (r: any) => {
-      console.log(["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey].status as string) ? "Link" : "Box");
       return (
         <Box
           p={"24px 20px"}
