@@ -16,9 +16,9 @@ const StakingLifeCycleSearch = () => {
     if (!value) {
       setError("No records found!");
     }
-    if (value.startsWith("stake") && value.length === 59) {
+    if (value.startsWith("stake")) {
       history.push(details.staking(value, "timeline"));
-    } else if (value.startsWith("pool") && value.length === 56) {
+    } else if (value.startsWith("pool")) {
       history.push(details.spo(value, "timeline"));
     } else setError("No records found!");
   };
