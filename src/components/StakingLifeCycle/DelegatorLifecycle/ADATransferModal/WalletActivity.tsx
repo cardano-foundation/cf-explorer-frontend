@@ -27,7 +27,10 @@ const WalletActivity: React.FC = () => {
     RECEIVED: "ADA received",
     FEE_PAID: "Transaction fee paid",
     CERTIFICATE_FEE_PAID: "Certificate fee paid",
-    CERTIFICATE_DEPOSIT_PAID: "Certificate hold paid"
+    CERTIFICATE_DEPOSIT_PAID: "Certificate deposit paid",
+    CERTIFICATE_HOLD_PAID: "Certificate hold paid",
+    CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "Hold deposit refunded",
+    REWARD_WITHDRAWN: "Reward withdrawn"
   };
 
   const columns: Column<WalletActivityIF>[] = [
