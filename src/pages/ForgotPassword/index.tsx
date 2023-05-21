@@ -102,7 +102,6 @@ export default function ForgotPassword() {
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const error = checkError();
-    console.log("error : ", error);
     if (error) return;
     handleForgotPassword(formData.email.value);
   };

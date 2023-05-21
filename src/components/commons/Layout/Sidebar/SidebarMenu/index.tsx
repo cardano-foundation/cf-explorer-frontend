@@ -28,7 +28,6 @@ import { LogoFullIcon } from "../../../../../commons/resources";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const pathname = history.location.pathname;
-  console.log("🚀 ~ file: index.tsx:31 ~ pathname:", pathname);
   const { isTablet } = useScreen();
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { width } = useWindowSize(0);
@@ -158,7 +157,6 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
                       const { href, title, icon } = subItem;
-                      console.log("🚀 ~ file: index.tsx:161 ~ {children.map ~ href:", href);
                       return href ? (
                         isExtenalLink(href) ? (
                           <ListItem

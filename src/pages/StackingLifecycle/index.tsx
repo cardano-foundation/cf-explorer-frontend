@@ -134,6 +134,7 @@ const Dashboard: React.FC = () => {
         link.click();
       })
       .catch((e) => {
+        // To do
         console.log(e.message || "");
       })
       .finally(() => {
