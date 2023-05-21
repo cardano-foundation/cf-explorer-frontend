@@ -1,11 +1,11 @@
-import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { TabContext, TabPanel } from "@mui/lab";
 import { alpha, Box, Tab, useTheme } from "@mui/material";
 import React from "react";
-import { ReactComponent as UtxoIcon } from "../../../commons/resources/images/utxoIcon.svg";
+import { ReactComponent as UtxoIcon } from "~/commons/resources/images/utxoIcon.svg";
 import { TabListStyled, TabTitle } from "./styles";
 import TokenTransaction from "./TokenTransaction";
 import { useHistory, useParams } from "react-router-dom";
-import { details } from "../../../commons/routers";
+import { details } from "~/commons/routers";
 
 const ContractDetailContent: React.FC = () => {
   const { tabActive = "transaction", address } = useParams<{
@@ -42,9 +42,14 @@ const ContractDetailContent: React.FC = () => {
           TabIndicatorProps={{ sx: { background: (theme) => theme.palette.primary.main, height: 3 } }}
         >
           {tabs?.map((item) => (
-            <Tab key={item.key} label={item.label} value={item.key} sx={{
-              padding: "12px 0",
-            }}/>
+            <Tab
+              key={item.key}
+              label={item.label}
+              value={item.key}
+              sx={{
+                padding: "12px 0"
+              }}
+            />
           ))}
         </TabListStyled>
       </Box>

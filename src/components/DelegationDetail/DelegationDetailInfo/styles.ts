@@ -164,11 +164,14 @@ export const StyledLinearProgress = styled(LinearProgress)`
 
 export const StyledGrid = styled(Grid)``;
 
-export const FlexGap10 = styled("div")`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
+export const FlexGap10 = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  gap: 10,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 11
+  }
+}));
 
 export const SavingImg = styled("img")`
   position: absolute;

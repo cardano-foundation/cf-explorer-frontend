@@ -79,7 +79,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
 
   return (
     <Card title='Contract Detail'>
-      <GridContainer container columnSpacing={2}>
+      <GridContainer container spacing={2}>
         <GridItem item xs={12} md={6}>
           <Box overflow='hidden' borderRadius={3} height={"100%"}>
             <CardAddress
