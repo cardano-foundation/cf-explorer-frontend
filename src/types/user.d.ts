@@ -1,11 +1,12 @@
 import { NETWORKS } from "../commons/utils/constants";
 
-export declare type SupportedWallets = "Flint" | "Nami" | "Eternl" | "Yoroi" | "Typhon";
+export declare type SupportedWallets = "Flint" | "Nami" | "Eternl" | "Yoroi" | "Typhon" | "Yoroi nightly";
 
 export type Wallet = {
   name: SupportedWallets;
   icon: string;
   link: string;
+  networks: NETWORKS[];
 };
 export declare type ThemeType = "dark" | "light";
 
