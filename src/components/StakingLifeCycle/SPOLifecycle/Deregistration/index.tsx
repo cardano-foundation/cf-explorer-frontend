@@ -383,6 +383,10 @@ const DeregistrationTimeline = ({
           <Box ref={fake2Ref} width={"190px"} height={220}></Box>
         </Box>
       </Box>
+      <Box width={"100%"} fontWeight={"bold"} fontSize={"1.2rem"}>
+        Pool hold paid during registration is refunded 1 epoch after the retirement epoch to the reward address of the
+        pool operator
+      </Box>
     </Box>
   );
 };
@@ -401,7 +405,6 @@ const DeregistrationTimelineMobile = ({
   selected: SPODeregistration | null;
   toggleModal: () => void;
 }) => {
-  console.log("🚀 ~ file: index.tsx:402 ~ selected:", selected);
   const history = useHistory();
   const { poolId = "" } = useParams<{ poolId: string }>();
 
@@ -658,6 +661,10 @@ const DeregistrationTimelineMobile = ({
             />
           )}
         </svg>
+      </Box>
+      <Box width={"100%"} fontWeight={"bold"} mt={4} fontSize={"1.2rem"}>
+        Pool hold paid during registration is refunded 1 epoch after the retirement epoch to the reward address of the
+        pool operator
       </Box>
     </StyledBox>
   );
