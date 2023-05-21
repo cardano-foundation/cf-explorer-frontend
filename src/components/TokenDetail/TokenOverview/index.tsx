@@ -1,4 +1,4 @@
-import { alpha, Box } from "@mui/material";
+import { alpha, Box, Button } from "@mui/material";
 import React, { useState } from "react";
 import decimalIcon from "../../../commons/resources/icons/decimal.svg";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
@@ -32,10 +32,12 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
               fontWeight='bold'
               fontFamily={'"Roboto", sans-serif'}
               fontSize={"1.125rem"}
-              component='button'
+              component={Button}
               border={"none"}
               bgcolor='transparent'
+              textTransform={"capitalize"}
               padding={0}
+              justifyContent={"flex-start"}
               textAlign='left'
               onClick={() => {
                 setOpenModal(true);
