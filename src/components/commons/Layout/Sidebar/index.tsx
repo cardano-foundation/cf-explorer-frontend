@@ -15,8 +15,7 @@ import { useLocation } from "react-router-dom";
 const Sidebar: React.FC = () => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const handleToggle = () => setSidebar(!sidebar);
-  const { isMobile, isTablet } = useScreen();
-  const isMd = isMobile || isTablet;
+  const { isMobile, isTablet, width } = useScreen();
   const [openSearch, setOpenSearch] = React.useState(false);
   const { pathname } = useLocation();
 
@@ -25,9 +24,9 @@ const Sidebar: React.FC = () => {
       <HeaderTop>
         <LogoLink to='/' open={sidebar ? 1 : 0}>
           <NavBarLogo src={!isMobile && sidebar ? LogoFullIcon : LogoIcon} alt='logo desktop' />
-          {!isMd && sidebar && <NetworkName network={NETWORK}>{NETWORK_NAMES[NETWORK]}</NetworkName>}
+          {!isTablet && sidebar && <NetworkName network={NETWORK}>{NETWORK_NAMES[NETWORK]}</NetworkName>}
         </LogoLink>
-        {isMd && (
+        {isTablet ? (
           <Box display='flex' alignItems='center'>
             <LoginButton />
             {pathname !== "/" && (
@@ -37,7 +36,7 @@ const Sidebar: React.FC = () => {
             )}
             <Toggle onClick={handleToggle} />
           </Box>
-        )}
+        ) : null}
       </HeaderTop>
       <TopSearch open={openSearch} onClose={setOpenSearch} />
       <SidebarMenu />
