@@ -50,8 +50,8 @@ const StakeAnalytics: React.FC = () => {
   const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
     `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
   );
-  const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.STAKE.MIN_MAX_BALANCE}/${stakeId}`);
-
+  const { data: balanceRaw, loading: balanceLoading } = useFetch<number[]>(`${API.STAKE.MIN_MAX_BALANCE}/${stakeId}`);
+  const balance = balanceRaw?.length ? balanceRaw : [0, 0];
   const dataBalanceChart = data?.map((i) => {
     const value = BigNumber(i.value).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
@@ -60,7 +60,6 @@ const StakeAnalytics: React.FC = () => {
     data?.map((i) => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
   const minBalance = Math.min(...(balance || []));
   const maxBalance = Math.max(...(balance || []), 0);
-
   const dataRewardChart = dataReward?.map((i) => {
     const value = BigNumber(i.value).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
