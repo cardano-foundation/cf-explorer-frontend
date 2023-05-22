@@ -22,8 +22,10 @@ export const BackButton = styled(Box)`
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  @media screen and (max-width: ${breakpoints.values.sm}px) {
-    margin-top: 20px;
+  @media screen and (max-width: ${breakpoints.values.md}px) {
+    margin-top: 30px;
+    position: relative;
+    top: 5px;
   }
 `;
 
