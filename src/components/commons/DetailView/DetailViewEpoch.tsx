@@ -14,7 +14,6 @@ import {
   DetailValue,
   Icon,
   BlockDefault,
-  InfoIcon,
   DetailLabelSkeleton,
   DetailValueSkeleton,
   IconSkeleton,
@@ -29,7 +28,7 @@ import {
   DetailLinkIcon,
   DetailLinkRight,
   ViewDetailScroll,
-  ViewDetailHeader,
+  ViewDetailHeader
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
 import { HiOutlineCube } from "react-icons/hi2";
@@ -60,8 +59,8 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
 
   useEffect(() => {
     if (data) {
-      callback(list => {
-        const index = list.findIndex(item => item.no === data?.no);
+      callback((list) => {
+        const index = list.findIndex((item) => item.no === data?.no);
         if (index >= 0) list[index] = { ...list[index], ...data };
         return [...list];
       });
@@ -70,10 +69,10 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
 
   if (!data)
     return (
-      <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
+      <ViewDetailDrawer anchor='right' open hideBackdrop variant='permanent'>
         <ViewDetailHeader>
-          <ViewAllButton tooltipTitle="View Detail" to={details.epoch(epochNo)} />
-          <CustomTooltip title="Close">
+          <ViewAllButton tooltipTitle='View Detail' to={details.epoch(epochNo)} />
+          <CustomTooltip title='Close'>
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -82,25 +81,25 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
         <ViewDetailContainer>
           <ViewDetailScroll>
             <HeaderContainer>
-              <ProgressSkeleton variant="circular" />
+              <ProgressSkeleton variant='circular' />
             </HeaderContainer>
             <ListItem>
               <Item>
-                <IconSkeleton variant="circular" />
+                <IconSkeleton variant='circular' />
                 <ItemName>
-                  <DetailValueSkeleton variant="rectangular" />
+                  <DetailValueSkeleton variant='rectangular' />
                 </ItemName>
                 <ItemValue>
-                  <DetailLabelSkeleton variant="rectangular" />
+                  <DetailLabelSkeleton variant='rectangular' />
                 </ItemValue>
               </Item>
               <Item>
-                <IconSkeleton variant="circular" />
+                <IconSkeleton variant='circular' />
                 <ItemName>
-                  <DetailValueSkeleton variant="rectangular" />
+                  <DetailValueSkeleton variant='rectangular' />
                 </ItemName>
                 <ItemValue>
-                  <DetailLabelSkeleton variant="rectangular" />
+                  <DetailLabelSkeleton variant='rectangular' />
                 </ItemValue>
               </Item>
             </ListItem>
@@ -109,10 +108,10 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
                 return (
                   <DetailsInfoItem key={index}>
                     <DetailLabel>
-                      <DetailValueSkeleton variant="rectangular" />
+                      <DetailValueSkeleton variant='rectangular' />
                     </DetailLabel>
                     <DetailValue>
-                      <DetailLabelSkeleton variant="rectangular" />
+                      <DetailLabelSkeleton variant='rectangular' />
                     </DetailValue>
                   </DetailsInfoItem>
                 );
@@ -123,10 +122,10 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
                 <Group key={index}>
                   <DetailsInfoItem>
                     <DetailLabel>
-                      <DetailValueSkeleton variant="rectangular" />
+                      <DetailValueSkeleton variant='rectangular' />
                     </DetailLabel>
                     <DetailValue>
-                      <DetailLabelSkeleton variant="rectangular" />
+                      <DetailLabelSkeleton variant='rectangular' />
                     </DetailValue>
                   </DetailsInfoItem>
                 </Group>
@@ -142,10 +141,10 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
 
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
   return (
-    <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
+    <ViewDetailDrawer anchor='right' open hideBackdrop variant='permanent'>
       <ViewDetailHeader>
-        <ViewAllButton tooltipTitle="View Detail" to={details.epoch(epochNo)} />
-        <CustomTooltip title="Close">
+        <ViewAllButton tooltipTitle='View Detail' to={details.epoch(epochNo)} />
+        <CustomTooltip title='Close'>
           <CloseButton onClick={handleClose}>
             <CgClose />
           </CloseButton>
@@ -156,7 +155,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           <HeaderContainer>
             <ProgressCircle
               size={150}
-              pathLineCap="butt"
+              pathLineCap='butt'
               pathWidth={4}
               trailWidth={2}
               percent={progress}
@@ -168,12 +167,12 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           </HeaderContainer>
           <ListItem>
             <Item>
-              <Icon src={CubeIcon} alt="socket" />
+              <Icon src={CubeIcon} alt='socket' />
               <ItemName>Block</ItemName>
               <ItemValue>{data.blkCount}</ItemValue>
             </Item>
             <Item>
-              <Icon src={RocketIcon} alt="socket" />
+              <Icon src={RocketIcon} alt='socket' />
               <ItemName>slot</ItemName>
               <ItemValue>
                 {slot}
@@ -183,16 +182,20 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           </ListItem>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>Start time</DetailLabel>
+              <DetailLabel>Start Timestamp</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.startTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>End time</DetailLabel>
+              <DetailLabel>End Timestamp</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.endTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Blocks</DetailLabel>
               <DetailValue>{data.blkCount}</DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>Tx Count</DetailLabel>
+              <DetailValue>{data.txCount}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Total Output</DetailLabel>

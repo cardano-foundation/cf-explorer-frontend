@@ -7,7 +7,7 @@ import {
   MediumIcon,
   ResourcesIcon,
   StakingLifecycleIcon,
-  ProtocolParameterIcon,
+  ProtocolParameterIcon
 } from "./resources";
 import { routers } from "./routers";
 
@@ -34,8 +34,8 @@ export const menus: Menu[] = [
       { title: "Transactions", href: routers.TRANSACTION_LIST },
       { title: "Native Tokens", href: "/tokens" },
       { title: "Top Addresses", href: "/addresses" },
-      { title: "Smart Contracts", href: routers.CONTRACT_LIST },
-    ],
+      { title: "Smart Contracts", href: routers.CONTRACT_LIST }
+    ]
   },
   {
     title: "Staking",
@@ -44,25 +44,26 @@ export const menus: Menu[] = [
       { title: "Pools", href: routers.DELEGATION_POOLS },
       { title: "Stake key registration", href: routers.STAKE_LIST.replace(":poolType?", "registration") },
       { title: "Pool Registration", href: "/registration-pools" },
-      { title: "Top Delegators", href: routers.TOP_DELEGATOR },
-    ],
-  },
-  {
-    title: "Protocol Parameter",
-    icon: ProtocolParameterIcon,
-    href: "/protocol-parameter",
-    children: [],
+      { title: "Top Delegators", href: routers.TOP_DELEGATOR }
+    ]
   },
   {
     title: "Staking Lifecycle",
     icon: StakingLifecycleIcon,
     children: [
       { title: "Dashboard", href: routers.STAKING_LIFECYCLE },
-      { title: "Timeline Delegator", href: routers.DELEGATOR_SEARCH },
-      { title: "Timeline SPO", href: routers.SPO_SEARCH },
-      { title: "Report", href: routers.REPORT_GENERATED },
-    ],
+      // { title: "Timeline Delegator", href: routers.DELEGATOR_SEARCH },
+      // { title: "Timeline SPO", href: routers.SPO_SEARCH },
+      { title: "Staking Lifecycle", href: routers.STAKING_LIFECYCLE_SEARCH },
+      { title: "Report", href: routers.REPORT_GENERATED.replace(":tab", "stake-key") }
+    ]
   },
+  {
+    title: "Protocol Parameters",
+    icon: ProtocolParameterIcon,
+    href: "/protocol-parameters",
+    children: []
+  }
 ];
 
 export const socials: Social[] = [
@@ -70,7 +71,7 @@ export const socials: Social[] = [
   { href: "#", title: "Discord", icon: FaDiscord },
   { href: "https://t.me/CardanoAnnouncements", title: "Telegram", icon: FaTelegramPlane },
   { href: "https://twitter.com/Cardano_CF", title: "Twitter", icon: FaTwitter },
-  { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube", icon: FaYoutube },
+  { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube", icon: FaYoutube }
 ];
 
 export const footerMenus: Menu[] = [
@@ -81,8 +82,8 @@ export const footerMenus: Menu[] = [
       { href: "https://cardanofoundation.org/en/about-us/", title: "About Us" },
       { href: "https://cardanofoundation.org/en/contact-us/", title: "Contact Us" },
       { href: "https://docs.cardano.org/en/latest/", title: "Documentation" },
-      { href: "https://cardanofoundation.org/en/news", title: "News and Blog" },
-    ],
+      { href: "https://cardanofoundation.org/en/news", title: "News and Blog" }
+    ]
   },
   {
     title: "Resources",
@@ -91,7 +92,7 @@ export const footerMenus: Menu[] = [
       { href: "https://education.cardanofoundation.org/", title: "Blockchain Course" },
       { href: "https://developers.cardano.org/tools/", title: "Builder Tools" },
       { href: "https://dappsoncardano.com/", title: "Dapps" },
-      { href: "https://github.com/cardano-foundation", title: "Github" },
-    ],
-  },
+      { href: "https://github.com/cardano-foundation", title: "Github" }
+    ]
+  }
 ];

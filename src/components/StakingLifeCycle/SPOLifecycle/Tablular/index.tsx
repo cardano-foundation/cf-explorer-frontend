@@ -1,52 +1,65 @@
 import { Box } from "@mui/material";
 import StakeTab, { StakeTabItem } from "../../../TabularView/StakeTab";
 import PoolRegistrationTab from "./Tabs/PoolRegistrationTab";
-import ProtocolUpdateTab from "./Tabs/ProtocolUpdateTab";
+import PoolUpdateTab from "./Tabs/PoolUpdateTab";
 import DeregsitrationTab from "./Tabs/DeregsitrationTab";
-import RewardsDistributionTab from "./Tabs/RewardsDistributionTab";
+import OperatorRewardTab from "./Tabs/OperatorReward";
 import CustomIcon from "../../../commons/CustomIcon";
 import {
   DeredistrationIcon,
   OperatorRewardIcon,
   PoolUpdateIcon,
-  RegistrationIcon,
+  RegistrationIcon
 } from "../../../../commons/resources";
 import TabularOverview from "./TabularOverview";
+import { useHistory, useParams } from "react-router";
+import { details } from "../../../../commons/routers";
 
-const tabs: StakeTabItem[] = [
+interface SPOTabItem extends StakeTabItem {
+  key: SPOStep;
+}
+
+const tabs: SPOTabItem[] = [
   {
     icon: RegistrationIcon,
     label: "Pool Registration",
-    key: "poolRegistration",
-    component: <PoolRegistrationTab />,
+    key: "registration",
+    component: <PoolRegistrationTab />
   },
   {
     icon: PoolUpdateIcon,
     label: "Pool Update",
-    key: "protocolUpdate",
-    component: <ProtocolUpdateTab />,
+    key: "pool-updates",
+    component: <PoolUpdateTab />
   },
   {
     icon: OperatorRewardIcon,
-    label: "Rewards Distribution",
-    key: "rewardDistribution",
-    component: <RewardsDistributionTab />,
+    label: "Operator Rewards",
+    key: "operator-rewards",
+    component: <OperatorRewardTab />
   },
   {
     icon: DeredistrationIcon,
-    label: "Deregsitration",
-    key: "deregsitration",
-    component: <DeregsitrationTab />,
-  },
+    label: "Deregistration",
+    key: "deregistration",
+    component: <DeregsitrationTab />
+  }
 ];
 
-const Tablular = () => {
+const Tabular = () => {
+  const { poolId = "", tab = "registration" } = useParams<{ poolId: string; tab: SPOStep }>();
+  const history = useHistory();
+
+  const onChangeTab = (tab: any) => {
+    history.push(details.spo(poolId, "tabular", tab));
+  };
+
   return (
     <Box mt={5}>
       <TabularOverview />
-      <StakeTab tabs={tabs} initTab="poolRegistration" />
+      <StakeTab tabs={tabs} initTab={tab} onChangeTab={onChangeTab} />
     </Box>
   );
 };
 
-export default Tablular;
+export default Tabular;

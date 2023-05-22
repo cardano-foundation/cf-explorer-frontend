@@ -1,7 +1,9 @@
 import "react-datepicker/dist/react-datepicker.css";
 import { Box } from "@mui/material";
-import { StyledDatePicker } from "./styles";
+import { SelectDateButton, StyledDatePicker, WrapCustomDatePicker } from "./styles";
 import { DateRangeIcon } from "../../commons/resources";
+import { useState } from "react";
+import { ensuredForwardRef } from "react-use";
 
 export type IDate = Date | null;
 
@@ -15,22 +17,25 @@ interface ICustomDatePicker {
 const CustomDatePicker = (props: ICustomDatePicker) => {
   const { dateRange, setDateRange } = props;
   const [startDate, endDate] = dateRange;
-
-  return (
-    <Box position={"relative"}>
-      <StyledDatePicker
-        placeholderText="dd/mm/yyyy"
-        selectsRange={true}
-        startDate={startDate}
-        endDate={endDate}
-        onChange={(update: any) => {
-          setDateRange(update);
-        }}
-      />
-      <Box position={"absolute"} right="0" top="10px">
+  const CustomInput = ensuredForwardRef(({ value, onClick }: any, ref: any) => (
+    <WrapCustomDatePicker onClick={onClick} ref={ref}>
+      {value ? value : <Box sx={{ opacity: 0.42 }}>dd/mm/yyyy</Box>}
+      <SelectDateButton onClick={onClick}>
         <DateRangeIcon />
-      </Box>
-    </Box>
+      </SelectDateButton>
+    </WrapCustomDatePicker>
+  ));
+  return (
+    <StyledDatePicker
+      placeholderText='dd/mm/yyyy'
+      selectsRange={true}
+      startDate={startDate}
+      endDate={endDate}
+      customInput={<CustomInput />}
+      onChange={(update: any) => {
+        setDateRange(update);
+      }}
+    />
   );
 };
 export default CustomDatePicker;

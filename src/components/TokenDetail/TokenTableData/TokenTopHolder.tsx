@@ -21,7 +21,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply }) => 
 
   const fetchData = useFetchList<ITokenTopHolderTable>(`${API.TOKEN.LIST}/${tokenId}/top_holders`, {
     ...pageInfo,
-    tokenId,
+    tokenId
   });
 
   const columns: Column<ITokenTopHolderTable>[] = [
@@ -29,38 +29,36 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply }) => 
       title: "#",
       key: "id",
       minWidth: "40px",
-      render: (data, index) => (
-        <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
-      ),
+      render: (data, index) => <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
     },
     {
       title: "Address",
       key: "address",
       minWidth: "200px",
-      render: r => (
+      render: (r) => (
         <CustomTooltip title={r.address}>
           <StyledLink to={details.address(r.address)}>{getShortWallet(r.address)}</StyledLink>
         </CustomTooltip>
-      ),
+      )
     },
     {
       title: "Balance",
       key: "balance",
       minWidth: "200px",
-      render: r => (
+      render: (r) => (
         <PriceValue>
           <SmallText>{numberWithCommas(r?.quantity)}</SmallText>
         </PriceValue>
-      ),
+      )
     },
     {
       title: "Share",
       key: "share",
       minWidth: "200px",
-      render: r => (
+      render: (r) => (
         <SmallText>{r.quantity && totalSupply ? ((r.quantity / totalSupply) * 100).toFixed(2) : 0}%</SmallText>
-      ),
-    },
+      )
+    }
   ];
 
   return (
@@ -71,7 +69,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply }) => 
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+        onChange: (page, size) => history.push({ search: stringify({ page, size }) })
       }}
       onClickRow={(_, r: ITokenTopHolderTable) => history.push(details.address(r.address))}
     />

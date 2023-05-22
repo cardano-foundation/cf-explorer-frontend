@@ -1,11 +1,11 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { alpha, Box, useTheme } from "@mui/material";
+import { Box, alpha, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { ReactComponent as SettingIcon } from "../../commons/resources/icons/setting.svg";
 import { ReactComponent as FileSearch } from "../../commons/resources/icons/file-search.svg";
-import { TabTitle, WrapTab } from "./styles";
-import OverviewTab from "../../components/Account/OverviewTab";
+import { ReactComponent as SettingIcon } from "../../commons/resources/icons/setting.svg";
 import AccountSettingTab from "../../components/Account/AccountSettingTab";
+import OverviewTab from "../../components/Account/OverviewTab";
+import { TabLabel, TabTitle, WrapTab } from "./styles";
 
 const MyProfile: React.FC = () => {
   const [tabActive, setTabActive] = useState<"overview" | "setting">("overview");
@@ -21,27 +21,27 @@ const MyProfile: React.FC = () => {
     {
       label: (
         <TabTitle className={tabActive === "overview" ? "active" : ""}>
-          <Box display={"flex"} alignItems="center">
+          <Box display={"flex"} alignItems='center'>
             <FileSearch fill={tabActive === "overview" ? theme.palette.primary.main : theme.palette.text.hint} />
-            <Box pl={1}>Overview</Box>
+            <TabLabel pl={1}>Overview</TabLabel>
           </Box>
         </TabTitle>
       ),
       key: "overview",
-      children: <OverviewTab handleChangeTab={setTabActive} />,
+      children: <OverviewTab handleChangeTab={setTabActive} />
     },
     {
       label: (
         <TabTitle className={tabActive === "setting" ? "active" : ""}>
-          <Box display={"flex"} alignItems="center">
+          <Box display={"flex"} alignItems='center'>
             <SettingIcon fill={tabActive === "setting" ? theme.palette.primary.main : theme.palette.text.hint} />
-            <Box pl={1}>Account settings & Profile</Box>
+            <TabLabel pl={1}>Account settings & Profile</TabLabel>
           </Box>
         </TabTitle>
       ),
       key: "setting",
-      children: <AccountSettingTab />,
-    },
+      children: <AccountSettingTab />
+    }
   ];
 
   return (
@@ -50,15 +50,17 @@ const MyProfile: React.FC = () => {
         <TabList
           onChange={handleChange}
           TabIndicatorProps={{
-            style: { background: theme.palette.primary.main, color: theme.palette.primary.main, height: 3 },
+            style: { background: theme.palette.primary.main, color: theme.palette.primary.main, height: 3 }
           }}
+          scrollButtons={false}
+          variant='scrollable'
         >
-          {tabs?.map(item => (
+          {tabs?.map((item) => (
             <WrapTab key={item.key} label={item.label} value={item.key} />
           ))}
         </TabList>
       </Box>
-      {tabs.map(item => (
+      {tabs.map((item) => (
         <TabPanel
           sx={{ padding: "25px 0", borderTop: `1px solid ${alpha(theme.palette.green[800], 0.1)}` }}
           key={item.key}

@@ -10,7 +10,6 @@ import Table, { Column } from "../../components/commons/Table";
 import { Blocks, StyledContainer, Output, StyledColorBlueDard, Status } from "./styles";
 import { setOnDetailView } from "../../stores/user";
 import DetailViewEpoch from "../../components/commons/DetailView/DetailViewEpoch";
-import { useWindowSize } from "react-use";
 import { Box, useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
@@ -21,7 +20,6 @@ import FirstEpoch from "../../components/commons/Epoch/FirstEpoch";
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
-  const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
   const theme = useTheme();
@@ -34,10 +32,10 @@ const Epoch: React.FC = () => {
       title: "Epoch Number",
       key: "epochNumber",
       minWidth: "50px",
-      render: r => (
+      render: (r) => (
         <Link to={details.epoch(r.no || 0)}>
-          <Box textAlign="center">
-            <Box width={41} margin="auto">
+          <Box textAlign='center'>
+            <Box width={41} margin='auto'>
               <ProgressCircle
                 size={41}
                 pathWidth={5}
@@ -51,28 +49,28 @@ const Epoch: React.FC = () => {
             <Status status={r.status.toLowerCase()}>{EPOCH_STATUS[r.status]}</Status>
           </Box>
         </Link>
-      ),
+      )
     },
     {
       title: "Blocks",
       key: "blkCount",
       minWidth: "100px",
-      render: r => <Blocks>{r.blkCount}</Blocks>,
+      render: (r) => <Blocks>{r.blkCount}</Blocks>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+      }
     },
     {
       title: "Transaction Count",
       key: "transactionCount",
       minWidth: "100px",
-      render: r => <Blocks>{r.txCount}</Blocks>,
+      render: (r) => <Blocks>{r.txCount}</Blocks>
     },
     {
       title: "Rewards Distributed",
       key: "rDistributed",
       minWidth: "100px",
-      render: r => (
+      render: (r) => (
         <>
           {r.rewardsDistributed ? (
             <Output>
@@ -83,13 +81,13 @@ const Epoch: React.FC = () => {
             "Not available"
           )}
         </>
-      ),
+      )
     },
     {
       title: "Total Output",
       key: "outSum",
       minWidth: "100px",
-      render: r => (
+      render: (r) => (
         <Output>
           {formatADAFull(r.outSum)}
           <ADAicon />
@@ -97,25 +95,25 @@ const Epoch: React.FC = () => {
       ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+      }
     },
     {
       title: "Start Timestamp",
       key: "startTime",
       minWidth: "100px",
-      render: r => <StyledColorBlueDard>{formatDateTimeLocal(r.startTime || "")}</StyledColorBlueDard>,
+      render: (r) => <StyledColorBlueDard>{formatDateTimeLocal(r.startTime || "")}</StyledColorBlueDard>
     },
     {
       title: "End Timestamp",
       key: "endTime",
       minWidth: "100px",
-      render: r => (
+      render: (r) => (
         <StyledColorBlueDard>
           {formatDateTimeLocal(r.endTime || "")}
           {epoch === r.no && <SelectedIcon />}
         </StyledColorBlueDard>
-      ),
-    },
+      )
+    }
   ];
 
   useEffect(() => {
@@ -124,11 +122,9 @@ const Epoch: React.FC = () => {
   }, []);
 
   const openDetail = (_: any, r: IDataEpoch, index: number) => {
-    if (width >= theme.breakpoints.values.md) {
-      setOnDetailView(true);
-      setEpoch(r.no);
-      setSelected(index);
-    } else history.push(details.epoch(r.no));
+    setOnDetailView(true);
+    setEpoch(r.no);
+    setSelected(index);
   };
 
   const handleClose = () => {
@@ -140,7 +136,7 @@ const Epoch: React.FC = () => {
   return (
     <StyledContainer>
       <Card title={"Epochs"}>
-        {fetchData.currentPage === 0 ? <FirstEpoch data={fetchData.data?.[0] || {}} /> : null}
+        <FirstEpoch data={fetchData.data} />
         <Table
           {...fetchData}
           data={fetchData.currentPage === 0 ? [...fetchData.data.slice(1)] : fetchData.data}
@@ -153,7 +149,7 @@ const Epoch: React.FC = () => {
               history.push({ search: stringify({ page, size }) });
               mainRef.current?.scrollTo(0, 0);
             },
-            handleCloseDetailView: handleClose,
+            handleCloseDetailView: handleClose
           }}
           onClickRow={openDetail}
           selected={selected}

@@ -65,7 +65,6 @@ import SaveOnIcon from "./icons/save-on.svg";
 import SaveOffIcon from "./icons/save-off.svg";
 import LinkOff from "./icons/link-off.svg";
 import User2 from "./icons/user2.svg";
-
 import FlintIcon from "./icons/flint.svg";
 import NamiIcon from "./icons/nami.svg";
 import EternlIcon from "./icons/eternl.svg";
@@ -74,6 +73,10 @@ import TyphonIcon from "./icons/typhon.svg";
 import HeaderBackgroundImage from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
+import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
+import AdaHolderIconUrl from "./images/ada-holder.png";
+import PaymentWalletUrl from "./images/payment-wallet.png";
+import RewardAccountUrl from "./images/reward-account.png";
 
 import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
 import { ReactComponent as FilterIcon } from "./icons/filter.svg";
@@ -170,6 +173,10 @@ export {
   FilterIcon,
   IconRefresh,
   IconThreeDot,
+  PolygonWhiteIconUrl,
+  AdaHolderIconUrl,
+  PaymentWalletUrl,
+  RewardAccountUrl
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -253,3 +260,24 @@ export { ReactComponent as OwnerAccIC } from "./images/owner-acc-ic.svg";
 export { ReactComponent as Hamburger } from "./icons/menus/hamburger.svg";
 export { ReactComponent as HideIcon } from "./icons/hide.svg";
 export { ReactComponent as ShowIcon } from "./icons/show.svg";
+export { ReactComponent as OfficialAdaIcon } from "./icons/ada-logo.svg";
+export { ReactComponent as DelegationHistoryIcon } from "./icons/delegationHistory.svg";
+export { ReactComponent as StakeKeyHistoryIcon } from "./icons/stateKeyHistory.svg";
+export { ReactComponent as WithdrawHistoryIcon } from "./icons/withdrawHistory.svg";
+export { ReactComponent as InstantaneousHistoryIcon } from "./icons/instantaneousHistory.svg";
+export { ReactComponent as SortTableUpDown } from "./icons/SortTableUpDown.svg";
+export { ReactComponent as SortTableUp } from "./icons/SortTableUp.svg";
+export { ReactComponent as SortTableDown } from "./icons/SortTableDown.svg";
+export { ReactComponent as LastFirst } from "./icons/lastFirst.svg";
+export { ReactComponent as FirstLast } from "./icons/firstLast.svg";
+export { ReactComponent as ProtocolParam } from "./icons/protocolParam.svg";
+export { ReactComponent as ResetIcon } from "./icons/resetIcon.svg";
+export { ReactComponent as UnionTokenIcon } from "./icons/union-token.svg";
+export { ReactComponent as PeopleIcon } from "./icons/people.svg";
+export { ReactComponent as SuccessIcon } from "./icons/success.svg";
+export { ReactComponent as FailIcon } from "./icons/failed.svg";
+export { ReactComponent as StakingDelegators } from "./icons/stakingDelegators.svg";
+export { ReactComponent as CertificateIcon } from "./icons/certificate.svg";
+export { ReactComponent as CardanoSystemIcon } from "./icons/cardano-system.svg";
+export { ReactComponent as WalletIconRewardGreen } from "./icons/Staking/walletIconRewardGreen.svg";
+export { ReactComponent as TransferIcon } from "./icons/transfer.svg";

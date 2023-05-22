@@ -5,8 +5,7 @@ export const CardOverview = styled(Box)`
   border-radius: 12px;
   height: 120px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex: wrap;
   padding: 0 25px;
   position: relative;
   overflow: hidden;
@@ -19,37 +18,66 @@ export const CardOverview = styled(Box)`
   }
 `;
 
+export const CardContent = styled(Box)(() => ({
+  display: "flex",
+  alignItems: "center",
+  gap: "12px",
+  width: "100%",
+  padding: "15px 0px"
+}));
+
 export const WrapIcon = styled(Box)(() => ({
   width: 95,
   marginRight: 12,
   display: "flex",
   alignItems: "center",
-  justifyContent: "flex-start",
+  justifyContent: "flex-start"
 }));
 
 export const CardTitle = styled(Typography)(({ theme }) => ({
   fontWeight: theme.typography.fontWeightBold,
-  fontSize: 14,
-  color: theme.palette.grey[500],
+  fontSize: "1rem",
+  color: theme.palette.grey[400],
   marginBottom: 4,
+  [theme.breakpoints.down("md")]: {
+    fontSize: "0.785rem"
+  }
 }));
 
 export const CardValue = styled(Typography)(({ theme }) => ({
   fontWeight: theme.typography.fontWeightBold,
   fontSize: 16,
-  color: theme.palette.grey[700],
+  color: theme.palette.grey[700]
+}));
+
+export const WalletBox = styled(Box)(({ theme }) => ({
+  display: " block",
+  [theme.breakpoints.down("md")]: {
+    display: "none"
+  }
 }));
 
 export const TransferButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.main,
-  color: "var(--text-color-reverse)",
+  color: theme.palette.common.white,
   fontSize: 14,
   fontWeight: theme.typography.fontWeightBold,
-  padding: "0 16px",
-  height: 38,
+  padding: "10px 16px",
   borderRadius: 8,
   textTransform: "unset",
   boxShadow: "none",
+  width: "160px",
+  [theme.breakpoints.down("md")]: {
+    padding: "6px 16px",
+  }
+}));
+
+export const WrapFlex = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  flexWrap: "wrap",
+  gap: "5px",
+  flex: 1
 }));
 
 export const WrapWalletIcon = styled(Box)`

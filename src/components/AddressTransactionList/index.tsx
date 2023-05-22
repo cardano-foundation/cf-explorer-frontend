@@ -1,157 +1,155 @@
-import { useHistory, useLocation } from "react-router-dom";
-import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { useState } from "react";
-
-import Card from "../commons/Card";
-import Table, { Column } from "../commons/Table";
+import { stringify } from "qs";
+import { useHistory, useLocation } from "react-router-dom";
+import sendImg from "../../commons/resources/images/sendImg.svg";
+import receiveImg from "../../commons/resources/images/receiveImg.svg";
+import useFetchList from "../../commons/hooks/useFetchList";
+import { useScreen } from "../../commons/hooks/useScreen";
+import { details } from "../../commons/routers";
+import { API } from "../../commons/utils/api";
 import {
   formatADAFull,
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
-  getShortWallet,
-  numberWithCommas,
+  numberWithCommas
 } from "../../commons/utils/helper";
-import { details } from "../../commons/routers";
-import { StyledLink } from "./styles";
-import CustomTooltip from "../commons/CustomTooltip";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { SmallText } from "../share/styled";
 import ADAicon from "../commons/ADAIcon";
+import Card from "../commons/Card";
+import CustomTooltip from "../commons/CustomTooltip";
+import DropdownTokens from "../commons/DropdownTokens";
+import Table, { Column } from "../commons/Table";
+import { SmallText } from "../share/styled";
+import { Img, StyledLink } from "./styles";
+import { TransferIcon } from "~/commons/resources";
 
 interface AddressTransactionListProps {
   underline?: boolean;
-  url: string;
   openDetail?: (_: any, transaction: Transactions, index: number) => void;
   selected?: number | null;
   showTabView?: boolean;
+  address: string;
 }
 
 const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   underline = false,
-  url,
+  address,
   openDetail,
   selected,
-  showTabView,
+  showTabView
 }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-
+  const url = `${API.ADDRESS.DETAIL}/${address}/txs`;
   const fetchData = useFetchList<Transactions>(url, { ...pageInfo });
-
-  const onClickRow = (_: any, transaction: Transactions, index: number) => {
-    if (openDetail) return openDetail(_, transaction, index);
+  const onClickRow = (e: any, transaction: Transactions, index: number) => {
+    let parent: Element | null = e.target as Element;
+    while (parent !== null && !parent?.className.includes("MuiPopover-root")) {
+      parent = parent?.parentElement;
+    }
+    if (parent) {
+      return;
+    }
+    if (openDetail) return openDetail(e, transaction, index);
     history.push(details.transaction(transaction.hash));
   };
+  const { isMobile } = useScreen();
 
   const columns: Column<Transactions>[] = [
     {
       title: "#",
       key: "id",
-      minWidth: 30,
-      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1),
+      minWidth: 14,
+      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1)
     },
     {
       title: "Trx Hash",
       key: "trxhash",
-      minWidth: 120,
+      minWidth: isMobile ? 190 : 120,
 
-      render: transaction => (
-        <div>
-          <CustomTooltip title={transaction.hash}>
-            <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
-          </CustomTooltip>
-        </div>
-      ),
-    },
-    {
-      title: "Time",
-      key: "time",
-      minWidth: "180px",
-      render: r => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>,
+      render: (transaction) => {
+        const type = transaction.balance >= 0 ? "up" : "down";
+        const hasSentToken = transaction?.tokens.some((t) => t.quantity < 0);
+        const hasReceivedToken = transaction?.tokens.some((t) => t.quantity > 0);
+        return (
+          <Box display={"flex"}>
+            {(hasSentToken && hasReceivedToken) ? <Box width={40} ml={"2px"} mr={"8px"}><TransferIcon style={{ scale: "1.15" }} /></Box> :
+              <Box width={50} display={transaction?.balance ? "" : "none"}>
+                <Img src={type !== "up" ? receiveImg : sendImg} alt='send icon' />
+              </Box>}
+            <Box display={"grid"}>
+              <CustomTooltip title={transaction.hash}>
+                <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
+              </CustomTooltip>
+              <SmallText>{formatDateTimeLocal(transaction.time || "")}</SmallText>
+            </Box>
+          </Box>
+        );
+      }
     },
     {
       title: "Block",
       key: "block",
       minWidth: 120,
-      render: transaction => (
+      render: (transaction) => (
         <>
           <StyledLink to={details.block(transaction.blockNo)}>{transaction.blockNo}</StyledLink>
           <br />
           <StyledLink to={details.epoch(transaction.epochNo)}>{transaction.epochNo}</StyledLink>/
           <SmallText>{transaction.epochSlotNo} </SmallText>
         </>
-      ),
-    },
-    {
-      title: "Addresses",
-      key: "address",
-      minWidth: 120,
-      render(transaction, index) {
-        return (
-          <div>
-            <Box display={"flex"}>
-              <Box width="50px"> Input: </Box>
-              <div>
-                {transaction.addressesInput.slice(0, 1).map((tx, key) => {
-                  return (
-                    <CustomTooltip key={key} title={tx}>
-                      <StyledLink to={details.address(tx)}>{getShortWallet(tx)}</StyledLink>
-                    </CustomTooltip>
-                  );
-                })}
-                <Box>
-                  {transaction.addressesInput.length > 1 && (
-                    <StyledLink to={details.transaction(transaction.hash)}> ...</StyledLink>
-                  )}
-                </Box>
-              </div>
-            </Box>
-            <Box display={"flex"} mt={1}>
-              <Box width="50px">Output: </Box>
-              <div>
-                {transaction.addressesOutput.slice(0, 1).map((tx, key) => {
-                  return (
-                    <CustomTooltip key={key} title={tx}>
-                      <StyledLink to={details.address(tx)}>{getShortWallet(tx)}</StyledLink>
-                    </CustomTooltip>
-                  );
-                })}
-                <Box>
-                  {transaction.addressesOutput.length > 1 && (
-                    <StyledLink to={details.transaction(transaction.hash)}> ...</StyledLink>
-                  )}
-                </Box>
-              </div>
-            </Box>
-          </div>
-        );
-      },
+      )
     },
     {
       title: "Fees",
       key: "fee",
       minWidth: 120,
-      render: transaction => (
-        <Box display="inline-flex" alignItems="center">
+      render: (transaction) => (
+        <Box display='inline-flex' alignItems='center'>
           <Box mr={1}>{formatADAFull(transaction.fee)}</Box>
           <ADAicon />
         </Box>
-      ),
+      )
     },
     {
-      title: "Output",
+      title: "ADA amount",
       minWidth: 120,
-      key: "outSum",
-      render: transaction => (
-        <Box display="inline-flex" alignItems="center">
-          <Box mr={1}>{formatADAFull(transaction.totalOutput)}</Box>
-          <ADAicon />
-        </Box>
-      ),
+      key: "totalOutput",
+      render: (transaction) => {
+        const isUp = transaction.balance >= 0;
+        return (
+          <Box display='inline-flex' alignItems='center'>
+            <Box mr={1} color={isUp ? "success.main" : "error.main"}>
+              {!isUp ? `` : `+`}
+              {formatADAFull(transaction.balance)}
+            </Box>
+            <ADAicon />
+          </Box>
+        );
+      }
     },
+    {
+      title: "Token",
+      minWidth: 120,
+      key: "totalOutput",
+      render: (transaction) => {
+        const type = transaction.balance >= 0 ? "up" : "down";
+        let tokens: Token[] = [];
+        if (transaction.tokens && transaction.tokens.length > 0) {
+          tokens = transaction.tokens.map((token) => ({
+            assetId: token.addressId.toString(),
+            assetQuantity: token.quantity,
+            assetName: token.displayName
+          }));
+        }
+        return (
+          <Box display={"flex"} alignItems={"center"}>
+            {transaction.tokens && transaction.tokens.length > 0 && <DropdownTokens tokens={tokens} type={type} hideInputLabel />}
+          </Box>
+        );
+      }
+    }
   ];
 
   return (
@@ -163,7 +161,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
         pagination={{
           ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+          onChange: (page, size) => history.push({ search: stringify({ page, size }) })
         }}
         onClickRow={onClickRow}
         selected={selected}

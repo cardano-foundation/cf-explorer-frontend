@@ -6,4 +6,4 @@ export const Title = styled("h3")`
 
 export const WrapFormInput = styled(Box)`
   margin-bottom: 20px;
-`
+`;

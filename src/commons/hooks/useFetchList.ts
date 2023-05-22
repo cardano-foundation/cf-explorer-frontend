@@ -56,7 +56,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, ...Object.values(params || {})]);
-  
+
   useEffect(() => {
     if (timeout) {
       const interval = setInterval(() => {
@@ -88,7 +88,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
     totalPage,
     currentPage,
     refresh: getList,
-    update: setData,
+    update: setData
   };
 };
 

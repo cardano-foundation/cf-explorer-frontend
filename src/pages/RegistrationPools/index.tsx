@@ -9,7 +9,7 @@ import {
   formatPercent,
   getPageInfo,
   getShortHash,
-  getShortWallet,
+  getShortWallet
 } from "../../commons/utils/helper";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table, { Column } from "../../components/commons/Table";
@@ -21,7 +21,7 @@ import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",
-  DEREREGISTRATION = "de-registration",
+  DEREREGISTRATION = "de-registration"
 }
 
 const RegistrationPools = () => {
@@ -52,7 +52,7 @@ const RegistrationPools = () => {
     {
       title: "Trx Hash",
       key: "bk.time",
-      render: pool => {
+      render: (pool) => {
         return (
           <>
             <CustomTooltip title={pool.txHash}>
@@ -64,60 +64,60 @@ const RegistrationPools = () => {
       },
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+      }
     },
     {
       title: "Block",
       key: "block",
-      render: pool => (
+      render: (pool) => (
         <>
           <StyledLink to={details.block(pool.block)}>{pool.block}</StyledLink>
           <br />
           <StyledLink to={details.epoch(pool.epoch)}>{pool.epoch}</StyledLink>/{pool.slotNo}
         </>
-      ),
+      )
     },
     {
       title: "Pool",
       key: "pool",
-      render: pool => (
+      render: (pool) => (
         <StyledLink to={details.delegation(pool.poolView || "")}>
           <CustomTooltip title={pool.poolName || `Pool[${pool.poolView}]` || ""}>
             <Box component={"span"}>{pool.poolName || `Pool[${getShortHash(pool.poolView)}]`}</Box>
           </CustomTooltip>
         </StyledLink>
-      ),
+      )
     },
     {
       title: "Pledge (A)",
       key: poolType === POOL_TYPE.REGISTRATION ? "pledge" : "pu.pledge",
-      render: pool => <>{formatADAFull(pool.pledge)}</>,
+      render: (pool) => <>{formatADAFull(pool.pledge)}</>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+      }
     },
     {
       title: "Cost (A)",
       key: poolType === POOL_TYPE.REGISTRATION ? "fixedCost" : "pu.fixedCost",
-      render: pool => <>{formatADAFull(pool.cost)}</>,
+      render: (pool) => <>{formatADAFull(pool.cost)}</>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+      }
     },
     {
       title: "Fee",
       key: poolType === POOL_TYPE.REGISTRATION ? "margin" : "pu.margin",
-      render: pool => formatPercent(pool.margin),
+      render: (pool) => formatPercent(pool.margin),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+      }
     },
     {
       title: "Stake Key",
       key: "stakeKey",
-      render: pool => (
+      render: (pool) => (
         <>
-          {pool.stakeKey?.map(stakeKey => (
+          {pool.stakeKey?.map((stakeKey) => (
             <StakeKey key={stakeKey}>
               <CustomTooltip title={stakeKey}>
                 <StyledLink to={details.stake(stakeKey)}>{getShortWallet(stakeKey)}</StyledLink>
@@ -126,8 +126,8 @@ const RegistrationPools = () => {
           ))}
           {pool.stakeKey?.length > 2 ? <StyledLink to={details.delegation(pool.poolView || "")}>...</StyledLink> : ""}
         </>
-      ),
-    },
+      )
+    }
   ];
   if (!Object.values(POOL_TYPE).includes(poolType)) return <NoRecord />;
 
@@ -136,8 +136,8 @@ const RegistrationPools = () => {
       <StyledTabs
         value={poolType}
         onChange={onChangeTab}
-        sx={{ borderBottom: theme => `1px solid ${theme.palette.border.main}` }}
-        TabIndicatorProps={{ sx: { backgroundColor: theme => theme.palette.primary.main, height: 4 } }}
+        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}` }}
+        TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
       >
         <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
         <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
@@ -153,7 +153,7 @@ const RegistrationPools = () => {
               history.push({ search: stringify({ page, size }) });
               mainRef.current?.scrollTo(0, 0);
             },
-            total: fetchData.total,
+            total: fetchData.total
           }}
         />
       </Box>

@@ -6,31 +6,35 @@ export const StyledLinearProgress = styled(LinearProgress)`
   width: 100%;
   height: 8px;
   border-radius: 34px;
-  background: ${props => alpha(props.theme.palette.common.black, 0.1)};
+  background: ${(props) => alpha(props.theme.palette.common.black, 0.1)};
   margin-left: 8px;
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${props => props.theme.palette.gradient[0]};
+    background: ${(props) => props.theme.palette.gradient[0]};
   }
 `;
 
 export const PoolName = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: var(--color-blue) !important;
+  color: ${({ theme }) => theme.palette.secondary.main} !important;
 `;
 
-export const SearchContainer = styled("div")`
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  width: 100%;
-  max-width: 360px;
-  background: ${props => props.theme.palette.background.paper};
-  padding: 0 12px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  height: 35px;
-`;
+export const SearchContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "start",
+  alignItems: "center",
+  width: "100%",
+  maxWidth: 360,
+  background: theme.palette.background.paper,
+  padding: "0 12px",
+  borderRadius: 8,
+  marginBottom: 15,
+  height: 35,
+  [theme.breakpoints.down("sm")]: {
+    width: "unset",
+    maxWidth: "unset"
+  }
+}));
 
 export const StyledInput = styled("input")`
   border: none;

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Backdrop, Box, MenuItem, OutlinedInput, useTheme } from "@mui/material";
-
+import { Backdrop, Box, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import ProgressCircle from "../ProgressCircle";
@@ -28,15 +27,19 @@ import {
   AllowSearchButton,
   StyledSelect,
   StyledMenuItem,
+  WrapHeader,
+  EpochDetail
 } from "./styles";
-import { details, routers } from "../../../commons/routers";
+import { details } from "../../../commons/routers";
 import Bookmark from "../BookmarkIcon";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../stores/types";
 import { useHistory } from "react-router-dom";
-import { SearchIcon } from "../../../commons/resources";
+import { EmptyIcon, SearchIcon } from "../../../commons/resources";
 import { BiChevronDown } from "react-icons/bi";
-import { numberWithCommas } from "../../../commons/utils/helper";
+import { getShortHash, numberWithCommas } from "../../../commons/utils/helper";
+import { useScreen } from "../../../commons/hooks/useScreen";
+import CustomTooltip from "../CustomTooltip";
 
 interface DetailHeaderProps {
   type: Bookmark["type"];
@@ -54,22 +57,40 @@ interface DetailHeaderProps {
     allowSearch?: boolean;
     dataSearch?: any[];
     isSent?: boolean;
+    key?: string;
+    hideHeader?: boolean;
   }[];
+  isHideButtonBack?: boolean;
 }
 
-const DetailHeader: React.FC<DetailHeaderProps> = props => {
-  const { loading, listItem, epoch, type, title, hash, transactionStatus, bookmarkData, stakeKeyStatus } = props;
+const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
+  const {
+    loading,
+    listItem,
+    epoch,
+    type,
+    title,
+    hash,
+    transactionStatus,
+    bookmarkData,
+    stakeKeyStatus,
+    isHideButtonBack
+  } = props;
   const history = useHistory();
   const theme = useTheme();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-  const [openBackdrop, setOpenBackdrop] = useState(false);
-
+  const [openBackdrop, setOpenBackdrop] = useState<any>({
+    input: false,
+    output: false
+  });
+  const { isTablet } = useScreen();
   const getHashLabel = () => {
     if (type === "BLOCK") return "Block Id";
-    if (type === "STAKE_KEY") return "Token Id";
+    if (type === "STAKE_KEY") return "";
     if (type === "POOL") return "Pool Id";
     if (type === "TOKEN") return "Token ID";
   };
+  const isDetailToken = type === "TOKEN";
 
   const hashLabel = getHashLabel();
 
@@ -77,13 +98,15 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
   if (loading) {
     return (
       <HeaderDetailContainer>
-        <BackButton onClick={history.goBack}>
-          <HiArrowLongLeft />
-          <BackText>Back</BackText>
-        </BackButton>
+        {isHideButtonBack === true ? null : (
+          <BackButton onClick={history.goBack}>
+            <HiArrowLongLeft />
+            <BackText>Back</BackText>
+          </BackButton>
+        )}
         <HeaderContainer>
           <HeaderTitle>
-            <HeaderTitleSkeleton variant="rectangular" />
+            <HeaderTitleSkeleton variant='rectangular' />
           </HeaderTitle>
         </HeaderContainer>
         <DetailsInfo container items_length={numberOfItems}>
@@ -91,17 +114,18 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
             return (
               <CardItem
                 item
-                xs={12}
-                sm={6}
+                xs={isDetailToken && index === 0 ? 12 : 6}
+                sm={isDetailToken && index === 0 ? 12 : 6}
                 md={4}
                 lg={numberOfItems > 6 ? 3 : true}
                 items_length={numberOfItems}
                 key={index}
+                isDetailToken={isDetailToken}
               >
-                <IconSkeleton variant="circular" />
-                <DetailValueSkeleton variant="rectangular" />
+                <IconSkeleton variant='circular' />
+                <DetailValueSkeleton variant='rectangular' />
                 <ValueCard>
-                  <DetailLabelSkeleton variant="rectangular" />
+                  <DetailLabelSkeleton variant='rectangular' />
                 </ValueCard>
               </CardItem>
             );
@@ -113,12 +137,14 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
 
   return (
     <HeaderDetailContainer>
-      <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap={"wrap"}>
-        <Box>
-          <BackButton onClick={history.goBack}>
-            <HiArrowLongLeft />
-            <BackText>Back</BackText>
-          </BackButton>
+      <WrapHeader>
+        <Box width='100%'>
+          {isHideButtonBack === true ? null : (
+            <BackButton onClick={history.goBack}>
+              <HiArrowLongLeft />
+              <BackText>Back</BackText>
+            </BackButton>
+          )}
           <HeaderContainer>
             <HeaderTitle>{title}</HeaderTitle>
             {bookmarkData && <Bookmark type={type} keyword={bookmarkData} />}
@@ -129,13 +155,19 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
           {hash && (
             <SlotLeader>
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
-              <SlotLeaderValue>{hash}</SlotLeaderValue>
+              {isTablet ? (
+                <CustomTooltip title={hash}>
+                  <SlotLeaderValue>{getShortHash(hash)}</SlotLeaderValue>
+                </CustomTooltip>
+              ) : (
+                <SlotLeaderValue>{hash}</SlotLeaderValue>
+              )}
               <SlotLeaderCopy text={hash} />
             </SlotLeader>
           )}
         </Box>
         {epoch ? (
-          <Box>
+          <EpochDetail class-name='123'>
             <ProgressCircle
               size={100}
               pathWidth={8}
@@ -148,65 +180,94 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
               </EpochNumber>
               <EpochText>Epoch</EpochText>
             </ProgressCircle>
-          </Box>
+          </EpochDetail>
         ) : (
           ""
         )}
-      </Box>
+      </WrapHeader>
       <DetailsInfo container items_length={numberOfItems}>
         {listItem.map((item, index) => {
+          const keyItem = item.key || "";
           return (
             <CardItem
               item
-              xs={12}
-              sm={6}
+              xs={isDetailToken && index === 0 ? 12 : 6}
+              sm={isDetailToken && index === 0 ? 12 : 6}
               md={listItem.length === 4 ? 3 : 4}
               lg={numberOfItems > 6 ? 3 : true}
               items_length={numberOfItems}
               key={index}
+              isDetailToken={isDetailToken}
             >
-              <Box position="relative">
-                <img src={item.icon} alt="" height={20} />
-                {item.allowSearch && (
-                  <AllowSearchButton onClick={() => setOpenBackdrop(true)}>
+              <Box position='relative' display={item.hideHeader ? "none" : ""}>
+                <img src={item.icon} alt='' height={20} />
+                {item.allowSearch && keyItem && (
+                  <AllowSearchButton
+                    onClick={() => {
+                      setOpenBackdrop((prev: any) => ({ ...prev, [keyItem]: true }));
+                    }}
+                  >
                     <SearchIcon stroke={theme.palette.grey[400]} />
                   </AllowSearchButton>
                 )}
-                {item.allowSearch && openBackdrop && (
+                {item.allowSearch && keyItem && openBackdrop[keyItem] && (
                   <StyledSelect
-                    renderValue={() => (item.isSent ? "Received Token" : "Sent Token")}
+                    renderValue={() => "Token"}
                     displayEmpty
                     value={""}
-                    onChange={() => {}}
+                    onChange={() => {
+                      //To do
+                    }}
                     IconComponent={BiChevronDown}
                     MenuProps={{
                       PaperProps: {
                         sx: {
                           borderRadius: 2,
-                          marginTop: 0.5,
-                        },
-                      },
+                          marginTop: 0.5
+                        }
+                      }
                     }}
                   >
-                    {item?.dataSearch?.map((item, index) => (
-                      <StyledMenuItem onClick={() => {}} key={index}>
-                        <Box>{item.assetName}</Box>
-                        <Box fontWeight={600}>
-                          {item.isSent ? "-" : "+"}
-                          {numberWithCommas(item.assetQuantity)}
-                        </Box>
-                      </StyledMenuItem>
-                    ))}
+                    {!item?.dataSearch ||
+                      (item?.dataSearch?.length === 0 && <Box height={"200px"} component={"img"} src={EmptyIcon} />)}
+                    {item?.dataSearch &&
+                      item?.dataSearch?.length > 0 &&
+                      item?.dataSearch?.map((item, index) => (
+                        <StyledMenuItem
+                          onClick={() => {
+                            //To do
+                          }}
+                          key={index}
+                        >
+                          <Box mr={2} sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}>
+                            {item.assetName}
+                          </Box>
+                          <Box fontWeight={500}>{numberWithCommas(item.assetQuantity)}</Box>
+                        </StyledMenuItem>
+                      ))}
                   </StyledSelect>
                 )}
               </Box>
-              <Box my={1}>{item.title}</Box>
+              <Box
+                sx={{
+                  my: 1,
+                  [theme.breakpoints.down("md")]: {
+                    mb: 0
+                  }
+                }}
+              >
+                {item.title}
+              </Box>
               <ValueCard>{item.value}</ValueCard>
             </CardItem>
           );
         })}
       </DetailsInfo>
-      <Backdrop sx={{ zIndex: 100 }} onClick={() => setOpenBackdrop(false)} open={openBackdrop} />
+      <Backdrop
+        sx={{ zIndex: 100 }}
+        onClick={() => setOpenBackdrop({ input: false, output: false })}
+        open={openBackdrop.input || openBackdrop.output}
+      />
     </HeaderDetailContainer>
   );
 };

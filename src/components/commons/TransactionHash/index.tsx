@@ -19,5 +19,5 @@ export default function TransactionHash({ hash }: TransactionHashProps) {
         </Box>
       </CopyContainer>
     </Box>
-  )
+  );
 }

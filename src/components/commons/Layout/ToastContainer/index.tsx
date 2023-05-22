@@ -3,7 +3,7 @@ import {
   MdOutlineErrorOutline,
   MdOutlineCheckCircleOutline,
   MdInfoOutline,
-  MdOutlineWarningAmber,
+  MdOutlineWarningAmber
 } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { removeToast } from "../../../../stores/toast";
@@ -32,19 +32,20 @@ const ToastContainer: React.FC = () => {
   return (
     <>
       <StyledStack spacing={2}>
-        {toasts.map(item => {
+        {toasts.map((item, idx) => {
           const { id, severity, message, duration } = item;
           const { title, color, background } = getProps(severity);
           return (
             <StyledAlert
+              key={idx}
               iconMapping={{
                 error: <MdOutlineErrorOutline color={theme.palette.error.dark} />,
                 success: <MdOutlineCheckCircleOutline color={theme.palette.success.dark} />,
                 info: <MdInfoOutline color={theme.palette.info.dark} />,
-                warning: <MdOutlineWarningAmber color={theme.palette.info.dark} />,
+                warning: <MdOutlineWarningAmber color={theme.palette.info.dark} />
               }}
               severity={severity}
-              variant="standard"
+              variant='standard'
               borderColor={color}
               background={background}
               onClose={() => removeToast(id)}

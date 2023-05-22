@@ -1,6 +1,6 @@
 import { alpha, Box, Grid, styled } from "@mui/material";
 import { useRef, useState, useEffect } from "react";
-import { Link as LinkDom } from "react-router-dom";
+import { Link as LinkDom, useHistory, useParams } from "react-router-dom";
 
 import {
   SPOStalking,
@@ -10,13 +10,27 @@ import {
   ADAGreen,
   TimeIcon,
   SPOInfo,
-  SPOKey,
+  SPOKey
 } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
-import DelegationCertificateIcon from "../../../../commons/resources/icons/Staking/DelegationCertificateIcon.svg";
+import DeregistrationCertificateIcon from "../../../../commons/resources/icons/Staking/DeregistrationCertificateIcon.svg";
+import SPODeregistrationMobile from "../../../../commons/resources/icons/Staking/SPODeregistrationMobile.svg";
 
 import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
+import {
+  CustomLink,
+  DetailRetirement,
+  FeeBox,
+  HoldBox,
+  HoldBoxText,
+  IconButton,
+  IconButtonBack,
+  Info,
+  InfoGroup,
+  InfoText,
+  StepInfo,
+  StyledBox
+} from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
 import PopoverStyled from "../../../commons/PopoverStyled";
@@ -24,15 +38,16 @@ import RecentDeregistrations from "./RecentDeregistrations";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import moment from "moment";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { ButtonSPO, PoolName, PoolNamePopup } from "../Registration/styles";
+import { ButtonSPO, PoolName, PoolNamePopup, StyledCopyButton } from "../Registration/styles";
 import { details } from "../../../../commons/routers";
 import CopyButton from "../../../commons/CopyButton";
 import StyledModal from "../../../commons/StyledModal";
 import PopupStaking from "../../../commons/PopupStaking";
-
+import { StyledLink } from "../styles";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 const Deregistration = ({
   containerPosition,
-  handleResize,
+  handleResize
 }: {
   containerPosition: {
     top?: number;
@@ -41,20 +56,35 @@ const Deregistration = ({
   handleResize: () => void;
 }) => {
   const [selected, setSelected] = useState<SPODeregistration | null>(null);
+  const [openModal, setOpenModal] = useState(false);
+  const { isLargeTablet } = useScreen();
+
+  const handleSelect = (deregistration: SPODeregistration | null) => {
+    setSelected(deregistration);
+  };
+
+  const handleToggleModal = () => setOpenModal((state) => !state);
 
   return (
     <Box>
-      <Box>{selected === null && <RecentDeregistrations onSelect={registration => setSelected(registration)} />}</Box>
-      <Box>
-        {!!selected && (
-          <DeregistrationTimeline
-            handleResize={handleResize}
-            selected={selected}
-            containerPosition={containerPosition}
-            setSelected={setSelected}
-          />
-        )}
-      </Box>
+      <DeregistrationCertificateModal data={selected} handleCloseModal={handleToggleModal} open={openModal} />
+      <RecentDeregistrations onSelect={handleSelect} />
+      {!!selected && !isLargeTablet && (
+        <DeregistrationTimeline
+          handleResize={handleResize}
+          selected={selected}
+          containerPosition={containerPosition}
+          toggleModal={handleToggleModal}
+        />
+      )}
+      {!!selected && isLargeTablet && (
+        <DeregistrationTimelineMobile
+          handleResize={handleResize}
+          selected={selected}
+          containerPosition={containerPosition}
+          toggleModal={handleToggleModal}
+        />
+      )}
     </Box>
   );
 };
@@ -63,18 +93,19 @@ export default Deregistration;
 const DeregistrationTimeline = ({
   containerPosition,
   selected,
-  setSelected,
   handleResize,
+  toggleModal
 }: {
   containerPosition: {
     top?: number;
     left?: number;
   };
   handleResize: () => void;
-  setSelected: (registration: SPODeregistration | null) => void;
   selected: SPODeregistration | null;
+  toggleModal: () => void;
 }) => {
-  const [openModal, setOpenModal] = useState(false);
+  const { poolId = "" } = useParams<{ poolId: string }>();
+  const history = useHistory();
 
   const adaHolderRef = useRef(null);
   const holdRef = useRef(null);
@@ -90,30 +121,358 @@ const DeregistrationTimeline = ({
     handleResize();
   }, [adaHolderRef.current]);
 
+  const handleBack = () => {
+    history.push(details.spo(poolId, "timeline", "deregistration"));
+  };
+
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
+      <StepInfo>
+        <IconButtonBack onClick={handleBack}>
           <BackIcon />
         </IconButtonBack>
-        <Box display={"flex"}>
+        <InfoGroup>
           <Info>
-            <AddressIcon fill="#438F68" />
-            <InfoText>{getShortHash(selected?.txHash || "")}</InfoText>
+            <AddressIcon fill='#438F68' />
+            <CustomTooltip title={selected?.txHash}>
+              <InfoText>
+                <StyledLink to={details.transaction(selected?.txHash)}>
+                  {getShortHash(selected?.txHash || "")}
+                </StyledLink>
+              </InfoText>
+            </CustomTooltip>
+            <StyledCopyButton text={selected?.txHash} />
           </Info>
           <Info>
             <ADAGreen />
-            <InfoText>{formatADA(selected?.totalFee || 0)}</InfoText>
+            <InfoText>
+              {formatADA(selected?.poolHold ? selected?.poolHold - selected?.fee : selected?.fee || 0)}
+            </InfoText>
           </Info>
           <Info>
             <TimeIcon />
             <InfoText>{moment(selected?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
           </Info>
-        </Box>
-      </Box>
+        </InfoGroup>
+      </StepInfo>
       <Box>
         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
           <Box ref={adaHolderRef} width={190} height={245} position={"relative"}>
+            <SPOStalking />
+            <CustomTooltip title={selected?.poolName}>
+              <PoolName> {selected?.poolName}</PoolName>
+            </CustomTooltip>
+            <CustomTooltip
+              wOpacity={false}
+              componentsProps={{
+                transition: {
+                  style: {
+                    backgroundColor: "white",
+                    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                    padding: "10px"
+                  }
+                },
+                arrow: {
+                  style: {
+                    color: "white"
+                  }
+                }
+              }}
+              title={
+                <Box>
+                  <Box display={"flex"} alignItems={"center"}>
+                    <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                      Pool ID:
+                    </Box>
+                    <PoolNamePopup to={details.delegation(selected?.poolView)}>
+                      {getShortHash(selected?.poolView || "")}
+                    </PoolNamePopup>
+                    <CopyButton text={selected?.poolView} />
+                  </Box>
+                  <Box display={"flex"} alignItems={"center"}>
+                    <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                      Pool name:
+                    </Box>
+                    <PoolNamePopup to={details.delegation(selected?.poolView)}>{selected?.poolName}</PoolNamePopup>
+                  </Box>
+                </Box>
+              }
+            >
+              <ButtonSPO ref={SPOInfoRef} component={IconButton} left={"33%"}>
+                <SPOInfo />
+              </ButtonSPO>
+            </CustomTooltip>
+            <Box>
+              <CustomTooltip
+                wOpacity={false}
+                componentsProps={{
+                  transition: {
+                    style: {
+                      backgroundColor: "white",
+                      boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                      padding: "10px"
+                    }
+                  },
+                  arrow: {
+                    style: {
+                      color: "white"
+                    }
+                  }
+                }}
+                title={
+                  <Box display={"flex"} alignItems={"center"}>
+                    {selected?.stakeKeys && selected.stakeKeys.length > 0 && (
+                      <>
+                        <SPOKey fill='#108AEF' />
+                        <PoolNamePopup to={details.stake(selected?.stakeKeys[0] || "")}>
+                          {getShortWallet(selected?.stakeKeys[0] || "")}
+                        </PoolNamePopup>
+                        <CopyButton text={selected?.stakeKeys[0]} />
+                      </>
+                    )}
+                  </Box>
+                }
+              >
+                <ButtonSPO ref={SPOKeyRef} component={IconButton} left={"52%"}>
+                  <SPOKey fill='#438F68' />
+                </ButtonSPO>
+              </CustomTooltip>
+            </Box>
+          </Box>
+
+          <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
+            <Box display={"flex"} flex={1}>
+              {selected?.poolHold && (
+                <PopoverStyled
+                  render={({ handleClick }) => (
+                    <HoldBox ref={holdRef} ml={1}>
+                      <Box>
+                        <HoldBoxText mr={1} component={"span"}>
+                          {formatADA(selected?.poolHold || 0)}
+                        </HoldBoxText>
+                        <ADAicon fontSize='18px' />
+                      </Box>
+                      <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
+                        <ButtonListIcon />
+                      </IconButton>
+                    </HoldBox>
+                  )}
+                  content={<PopupStaking hash={selected?.txHash || ""} />}
+                />
+              )}
+              <PopoverStyled
+                render={({ handleClick }) => (
+                  <FeeBox ref={feeRef}>
+                    <Box>
+                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                        {formatADA(selected?.fee)}
+                      </Box>
+                      <ADAicon fontSize='18px' />
+                    </Box>
+                    <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
+                      <ButtonListIcon />
+                    </IconButton>
+                  </FeeBox>
+                )}
+                content={<PopupStaking hash={selected?.txHash || ""} />}
+              />
+            </Box>
+          </Box>
+          <Box ref={cadarnoSystemRef}>
+            {/* <CadarnoSystemIcon /> */}
+            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt='carrdano' />
+          </Box>
+
+          <svg
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              height: "100vh",
+              width: "100vw",
+              zIndex: "-1"
+            }}
+          >
+            <Line
+              containerPosition={containerPosition}
+              fromRef={adaHolderRef}
+              toRef={feeRef}
+              pointTo='border'
+              pointFrom='border'
+              orient='vertical'
+            />
+
+            <ArrowDiagram
+              containerPosition={containerPosition}
+              fromRef={feeRef}
+              toRef={cadarnoSystemRef}
+              pointTo='border'
+              pointFrom='border'
+              orient='vertical'
+            />
+            {selected?.poolHold && (
+              <Line
+                containerPosition={containerPosition}
+                fromRef={cadarnoSystemRef}
+                toRef={holdRef}
+                orient='vertical'
+                pointFrom='border'
+                pointTo='border'
+                connectToReverse={true}
+                connectFromReverse={true}
+                isCentalVertical={false}
+                isCentalHorizontal
+              />
+            )}
+            {selected?.poolHold && (
+              <ArrowDiagram
+                containerPosition={containerPosition}
+                fromRef={holdRef}
+                toRef={adaHolderRef}
+                pointTo='border'
+                pointFrom='border'
+                orient='vertical'
+                connectToReverse={true}
+                connectFromReverse={true}
+                isCentalHorizontal={false}
+              />
+            )}
+            <Line
+              containerPosition={containerPosition}
+              fromRef={adaHolderRef}
+              toRef={fake1Ref}
+              orient='horizontal'
+              pointFrom='border'
+              pointTo='center'
+            />
+            <ArrowDiagram
+              containerPosition={containerPosition}
+              fromRef={fake1Ref}
+              toRef={registrationRef}
+              pointTo='border'
+              pointFrom='center'
+              orient='vertical'
+            />
+            <Line
+              containerPosition={containerPosition}
+              fromRef={registrationRef}
+              toRef={fake2Ref}
+              orient='vertical'
+              pointFrom='border'
+              pointTo='center'
+            />
+            <ArrowDiagram
+              containerPosition={containerPosition}
+              fromRef={fake2Ref}
+              toRef={cadarnoSystemRef}
+              orient='horizontal'
+              pointFrom='center'
+              pointTo='border'
+            />
+          </svg>
+        </Box>
+        <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
+          <Box ref={fake1Ref} width={"190px"} height={220}></Box>
+          <Box
+            ref={registrationRef}
+            width={220}
+            height={220}
+            component={IconButton}
+            p={0}
+            onClick={toggleModal}
+            sx={{ background: "none !important" }}
+          >
+            <img style={{ marginLeft: "5px" }} src={DeregistrationCertificateIcon} alt='RegistrationCertificateIcon' />
+          </Box>
+          <Box ref={fake2Ref} width={"190px"} height={220}></Box>
+        </Box>
+      </Box>
+      <Box width={"100%"} fontWeight={"bold"} fontSize={"1.2rem"}>
+        Pool hold paid during registration is refunded 1 epoch after the retirement epoch to the reward address of the
+        pool operator
+      </Box>
+    </Box>
+  );
+};
+
+const DeregistrationTimelineMobile = ({
+  containerPosition,
+  selected,
+  handleResize,
+  toggleModal
+}: {
+  containerPosition: {
+    top?: number;
+    left?: number;
+  };
+  handleResize: () => void;
+  selected: SPODeregistration | null;
+  toggleModal: () => void;
+}) => {
+  const history = useHistory();
+  const { poolId = "" } = useParams<{ poolId: string }>();
+
+  const adaHolderRef = useRef(null);
+  const holdRef = useRef(null);
+  const feeRef = useRef(null);
+  const cadarnoSystemRef = useRef(null);
+  const fake1Ref = useRef(null);
+  const fake2Ref = useRef(null);
+  const registrationRef = useRef(null);
+  const SPOInfoRef = useRef(null);
+  const SPOKeyRef = useRef(null);
+  const fake1CardanoSystemRef = useRef(null);
+  const fake2CardanoSystemRef = useRef(null);
+  const adaHolderRefImg = useRef(null);
+  const cadarnoSystemRefImg = useRef(null);
+
+  const handleBack = () => {
+    history.push(details.spo(poolId, "timeline", "deregistration"));
+  };
+
+  useEffect(() => {
+    handleResize();
+  }, [adaHolderRef.current]);
+
+  return (
+    <StyledBox>
+      <StepInfo>
+        <IconButtonBack onClick={handleBack}>
+          <BackIcon />
+        </IconButtonBack>
+        <InfoGroup>
+          <Info>
+            <AddressIcon fill='#438F68' />
+            <CustomTooltip title={selected?.txHash}>
+              <InfoText>{getShortHash(selected?.txHash || "")}</InfoText>
+            </CustomTooltip>
+            <StyledCopyButton text={selected?.txHash} />
+          </Info>
+          <Info>
+            <ADAGreen />
+            <InfoText>
+              {formatADA(selected?.poolHold ? selected?.poolHold - selected?.fee : selected?.fee || 0)}
+            </InfoText>
+          </Info>
+          <Info>
+            <TimeIcon />
+            <InfoText>{moment(selected?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+          </Info>
+        </InfoGroup>
+      </StepInfo>
+
+      <Box className='list-images' display={"flex"} flexDirection={"column"} alignItems={"center"} gap={"50px"}>
+        <Box
+          ref={adaHolderRef}
+          display={"flex"}
+          flexDirection={"row"}
+          alignItems={"flex-start"}
+          justifyContent={"center"}
+          width={"100%"}
+          position={"relative"}
+        >
+          <Box ref={fake1Ref} width={"2px"} height={"190px"}></Box>
+          <Box ref={adaHolderRefImg} width={190} height={245} position={"relative"}>
             <SPOStalking />
             <CustomTooltip title={selected?.poolName}>
               <PoolName> {selected?.poolName}</PoolName>
@@ -132,7 +491,7 @@ const DeregistrationTimeline = ({
               content={
                 <Box>
                   <Box display={"flex"} alignItems={"center"}>
-                    <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
+                    <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
                       Pool ID:
                     </Box>
                     <PoolNamePopup to={details.delegation(selected?.poolView)}>
@@ -141,7 +500,7 @@ const DeregistrationTimeline = ({
                     <CopyButton text={selected?.poolView} />
                   </Box>
                   <Box display={"flex"} alignItems={"center"}>
-                    <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
+                    <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
                       Pool name:
                     </Box>
                     <PoolNamePopup to={details.delegation(selected?.poolView)}>{selected?.poolName}</PoolNamePopup>
@@ -157,14 +516,14 @@ const DeregistrationTimeline = ({
                   left={"52%"}
                   onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
                 >
-                  <SPOKey fill="#438F68" />
+                  <SPOKey fill='#438F68' />
                 </ButtonSPO>
               )}
               content={
                 <Box display={"flex"} alignItems={"center"}>
                   {selected?.stakeKeys && selected.stakeKeys.length > 0 && (
                     <>
-                      <SPOKey fill="#108AEF" />
+                      <SPOKey fill='#108AEF' />
                       <PoolNamePopup to={details.stake(selected?.stakeKeys[0] || "")}>
                         {getShortWallet(selected?.stakeKeys[0] || "")}
                       </PoolNamePopup>
@@ -175,17 +534,29 @@ const DeregistrationTimeline = ({
               }
             />
           </Box>
+          <Box ref={fake2Ref} position={"absolute"} width={"1px"} height={"100%"} right={"0px"}></Box>
+        </Box>
 
-          <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
-            <Box display={"flex"} flex={1}>
+        <Box display={"flex"} width={"100%"} flexDirection={"row"} justifyContent={"space-between"}>
+          <Box
+            ref={registrationRef}
+            padding={"24px"}
+            sx={{ background: "#fff", borderRadius: "12px" }}
+            onClick={toggleModal}
+          >
+            <img src={SPODeregistrationMobile} width={"90px"} height={"150px"} alt='RegistrationCertificateIcon' />
+          </Box>
+
+          <Box display={"flex"} flexDirection={"column"} position={"relative"}>
+            {selected?.poolHold ? (
               <PopoverStyled
                 render={({ handleClick }) => (
                   <HoldBox ref={holdRef} ml={1}>
                     <Box>
-                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      <HoldBoxText mr={1} component={"span"}>
                         {formatADA(selected?.poolHold)}
-                      </Box>
-                      <ADAicon fontSize="18px" />
+                      </HoldBoxText>
+                      <ADAicon fontSize='18px' />
                     </Box>
                     <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
                       <ButtonListIcon />
@@ -194,133 +565,115 @@ const DeregistrationTimeline = ({
                 )}
                 content={<PopupStaking hash={selected?.txHash || ""} />}
               />
-              <PopoverStyled
-                render={({ handleClick }) => (
-                  <FeeBox ref={feeRef}>
-                    <Box>
-                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                        {formatADA(selected?.fee)}
-                      </Box>
-                      <ADAicon fontSize="18px" />
+            ) : (
+              <Box width='200px' height='35px' />
+            )}
+
+            <PopoverStyled
+              render={({ handleClick }) => (
+                <FeeBox ref={feeRef} ml={selected?.poolHold ? 0 : "30px"}>
+                  <Box>
+                    <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
+                      {formatADA(selected?.fee)}
                     </Box>
-                    <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
-                      <ButtonListIcon />
-                    </IconButton>
-                  </FeeBox>
-                )}
-                content={<PopupStaking hash={selected?.txHash || ""} />}
-              />
-            </Box>
+                    <ADAicon fontSize='18px' />
+                  </Box>
+                  <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
+                    <ButtonListIcon />
+                  </IconButton>
+                </FeeBox>
+              )}
+              content={<PopupStaking hash={selected?.txHash || ""} />}
+            />
           </Box>
-          <Box ref={cadarnoSystemRef}>
-            {/* <CadarnoSystemIcon /> */}
-            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
-          </Box>
+        </Box>
 
-          <svg
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              height: "100vh",
-              width: "100vw",
-              zIndex: "-1",
-            }}
-          >
+        <Box
+          position={"relative"}
+          ref={cadarnoSystemRef}
+          display={"flex"}
+          justifyContent={"center"}
+          flexDirection={"row"}
+          alignItems={"flex-end"}
+          sx={{ width: "100%", paddingTop: "3px" }}
+        >
+          <Box ref={fake1CardanoSystemRef} width={"1px"} height={"170px"}></Box>
+          <Box ref={cadarnoSystemRefImg}>
+            <img src={cadarnoSystem} alt='carrdano' />
+          </Box>
+          <Box ref={fake2CardanoSystemRef} position={"absolute"} width={"1px"} height={"100%"} right={"0px"}></Box>
+        </Box>
+        <svg
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: "150vh",
+            width: "100vw",
+            zIndex: "-1"
+          }}
+        >
+          <ArrowDiagram
+            containerPosition={containerPosition}
+            fromRef={adaHolderRef}
+            toRef={cadarnoSystemRef}
+            pointTo='border'
+            pointFrom='border'
+            orient='horizontal'
+            connectToReverse
+          />
+          <ArrowDiagram
+            containerPosition={containerPosition}
+            fromRef={fake1Ref}
+            toRef={fake1CardanoSystemRef}
+            pointTo='border'
+            pointFrom='border'
+            orient='horizontal'
+            connectToReverse
+          />
+          {selected?.poolHold && (
             <Line
               containerPosition={containerPosition}
-              fromRef={adaHolderRef}
-              toRef={feeRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
-            />
-
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={feeRef}
+              fromRef={cadarnoSystemRefImg}
               toRef={cadarnoSystemRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
+              pointTo='border'
+              pointFrom='border'
+              orient='vertical'
+              connectToReverse
             />
-            <Line
-              containerPosition={containerPosition}
-              fromRef={cadarnoSystemRef}
-              toRef={holdRef}
-              orient="vertical"
-              pointFrom="border"
-              pointTo="center"
-              connectToReverse={true}
-              connectFromReverse={true}
-              isCentalVertical={false}
-            />
+          )}
+          {selected?.poolHold && (
             <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={holdRef}
-              toRef={adaHolderRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
-              connectToReverse={true}
-              connectFromReverse={true}
-              isCentalHorizontal={false}
-            />
-            <Line
               containerPosition={containerPosition}
               fromRef={adaHolderRef}
-              toRef={fake1Ref}
-              orient="horizontal"
-              pointFrom="border"
-              pointTo="center"
+              toRef={adaHolderRefImg}
+              pointTo='border'
+              pointFrom='border'
+              orient='vertical'
+              connectToReverse
             />
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={fake1Ref}
-              toRef={registrationRef}
-              pointTo="border"
-              pointFrom="center"
-              orient="vertical"
-            />
+          )}
+          {selected?.poolHold && (
             <Line
               containerPosition={containerPosition}
-              fromRef={registrationRef}
+              fromRef={fake2CardanoSystemRef}
               toRef={fake2Ref}
-              orient="vertical"
-              pointFrom="border"
-              pointTo="center"
+              pointTo='center'
+              pointFrom='center'
+              orient='horizontal'
+              isCentalHorizontal
             />
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={fake2Ref}
-              toRef={cadarnoSystemRef}
-              orient="horizontal"
-              pointFrom="center"
-              pointTo="border"
-            />
-          </svg>
-        </Box>
-        <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
-          <Box ref={fake1Ref} width={"190px"} height={220}></Box>
-          <Box
-            ref={registrationRef}
-            width={220}
-            height={220}
-            component={IconButton}
-            p={0}
-            onClick={() => setOpenModal(true)}
-          >
-            <img style={{ marginLeft: "5px" }} src={DelegationCertificateIcon} alt="RegistrationCertificateIcon" />
-          </Box>
-          <Box ref={fake2Ref} width={"190px"} height={220}></Box>
-        </Box>
+          )}
+        </svg>
       </Box>
-      <RegistrationCertificateModal data={selected} handleCloseModal={() => setOpenModal(false)} open={openModal} />
-    </Box>
+      <Box width={"100%"} fontWeight={"bold"} mt={4} fontSize={"1.2rem"}>
+        Pool hold paid during registration is refunded 1 epoch after the retirement epoch to the reward address of the
+        pool operator
+      </Box>
+    </StyledBox>
   );
 };
-
-const RegistrationCertificateModal = ({
+export const DeregistrationCertificateModal = ({
   data,
   ...props
 }: {
@@ -329,7 +682,7 @@ const RegistrationCertificateModal = ({
   handleCloseModal: () => void;
 }) => {
   return (
-    <StyledModal {...props} title="Pool registration certificate">
+    <StyledModal {...props} title='Deregistration certificate'>
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
@@ -338,7 +691,11 @@ const RegistrationCertificateModal = ({
             </Box>
             {data && (
               <Box>
-                <Link to={details.delegation(data?.poolView || "")}>{getShortWallet(data?.poolId || "")}</Link>{" "}
+                <CustomTooltip title={data?.poolId || ""}>
+                  <CustomLink to={details.delegation(data?.poolView || "")}>
+                    {getShortWallet(data?.poolId || "")}
+                  </CustomLink>
+                </CustomTooltip>
                 <CopyButton text={data?.poolId || ""} />
               </Box>
             )}
@@ -349,7 +706,11 @@ const RegistrationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Retirement in Epoch
             </Box>
-            {data && <Box fontSize={"0.875rem"}>{data?.retiringEpoch}</Box>}
+            {data && (
+              <DetailRetirement pt={"3px"} pb={"5px"}>
+                {data?.retiringEpoch}
+              </DetailRetirement>
+            )}
           </Box>
         </Grid>
       </Grid>
@@ -359,5 +720,5 @@ const RegistrationCertificateModal = ({
 
 const Link = styled(LinkDom)(({ theme }) => ({
   fontSize: "0.875rem",
-  color: `${theme.palette.blue[800]} !important`,
+  color: `${theme.palette.blue[800]} !important`
 }));

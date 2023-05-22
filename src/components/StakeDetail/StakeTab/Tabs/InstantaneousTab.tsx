@@ -15,42 +15,42 @@ const columns: Column<Instantaneous>[] = [
     title: "Trx Hash",
     key: "hash",
     minWidth: "120px",
-    render: r => (
+    render: (r) => (
       <CustomTooltip title={r.txHash || ""}>
         <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash || "")}</StyledLink>
       </CustomTooltip>
-    ),
+    )
   },
   {
     title: "Time",
     key: "time",
     minWidth: "120px",
-    render: r => formatDateTimeLocal(r.time || ""),
+    render: (r) => formatDateTimeLocal(r.time || "")
   },
   {
     title: "Block",
     key: "block",
     minWidth: "120px",
-    render: r => (
+    render: (r) => (
       <Box>
         <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
-        <Box marginTop="5px">
+        <Box marginTop='5px'>
           <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
         </Box>
       </Box>
-    ),
+    )
   },
   {
     title: "Reward Paid",
     key: "rewardPaid",
     minWidth: "120px",
-    render: r => (
+    render: (r) => (
       <>
         <Box component={"span"}> {formatADAFull(r.amount)}</Box>
         <ADAicon pl={"3px"} />
       </>
-    ),
-  },
+    )
+  }
 ];
 
 const InstantaneousTab = () => {
@@ -69,7 +69,7 @@ const InstantaneousTab = () => {
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+        onChange: (page, size) => history.push({ search: stringify({ page, size }) })
       }}
     />
   );

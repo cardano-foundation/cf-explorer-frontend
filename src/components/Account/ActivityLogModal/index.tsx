@@ -24,12 +24,12 @@ const ActivityLogModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
     {
       title: "Time",
       key: "time",
-      render: r => moment(r.actionTime).format("MM/DD/YYYY HH:mm:ss"),
+      render: (r) => moment(r.actionTime).format("MM/DD/YYYY HH:mm:ss")
     },
     {
       title: "Action",
       key: "action",
-      render: r => {
+      render: (r) => {
         return (
           <>
             <SmallText>Transaction hash</SmallText>
@@ -37,8 +37,8 @@ const ActivityLogModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
             <StyledLink to={details.transaction(r.description)}>{getShortHash(r.description || "")}</StyledLink>
           </>
         );
-      },
-    },
+      }
+    }
   ];
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal}>

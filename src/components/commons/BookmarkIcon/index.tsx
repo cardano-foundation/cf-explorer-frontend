@@ -21,13 +21,13 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
   const theme = useTheme();
   const toast = useToast();
 
-  const bookmark = (bookmarks || []).find(r => r.keyword === `${keyword}`);
+  const bookmark = (bookmarks || []).find((r) => r.keyword === `${keyword}`);
   const updateBookmark = async () => {
     if (!isLogin) {
       if (!bookmark) {
         setBookmarks([...(bookmarks || []), { keyword: `${keyword}`, type, network: NETWORK_TYPES[NETWORK] }]);
       } else {
-        setBookmarks((bookmarks || []).filter(b => b.keyword !== `${keyword}`));
+        setBookmarks((bookmarks || []).filter((b) => b.keyword !== `${keyword}`));
       }
       toast.success("Successfully!");
     }
@@ -39,7 +39,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
             const { data } = await addBookmark({
               keyword,
               type,
-              network: NETWORK_TYPES[NETWORK],
+              network: NETWORK_TYPES[NETWORK]
             });
             setBookmarks([...(bookmarks || []), data]);
             toast.success("Successfully!");
@@ -48,7 +48,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
           }
         } else {
           deleteBookmark(bookmark?.id || 0);
-          setBookmarks((bookmarks || []).filter(b => b.keyword !== `${keyword}`));
+          setBookmarks((bookmarks || []).filter((b) => b.keyword !== `${keyword}`));
           toast.success("Successfully!");
         }
       } catch (error) {
@@ -59,7 +59,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
   return (
     <Box>
       <Box mx={1} component={IconButton} style={{ width: 45, height: 45 }} onClick={updateBookmark}>
-        {!!bookmark ? <Bookmarked /> : <BookmarkIcon fill={theme.palette.text.hint} />}
+        {bookmark ? <Bookmarked /> : <BookmarkIcon fill={theme.palette.text.hint} />}
       </Box>
     </Box>
   );

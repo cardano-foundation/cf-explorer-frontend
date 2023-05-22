@@ -21,6 +21,7 @@ import { BiShowAlt } from "react-icons/bi";
 import { RootState } from "../../../stores/types";
 import CustomTooltip from "../../commons/CustomTooltip";
 import ADAicon from "../../commons/ADAIcon";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface Props {
   data: Transaction | null;
@@ -32,6 +33,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   const [openListInput, setOpenListInput] = useState(false);
   const [openListOutput, setOpenListOutput] = useState(false);
   const theme = useTheme();
+  const { isMobile } = useScreen();
 
   const renderConfirmationTag = () => {
     if (data && data.tx && data.tx.confirmation) {
@@ -48,6 +50,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   const inputTransaction = useMemo(() => {
     const result = [];
     if (data?.utxOs && data?.utxOs?.inputs?.length > 0) {
+      // eslint-disable-next-line no-unsafe-optional-chaining
       for (const item of data?.utxOs.inputs) {
         if (item.tokens.length) {
           result.push(...item.tokens);
@@ -60,6 +63,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   const outputTransaction = useMemo(() => {
     const result = [];
     if (data?.utxOs && data?.utxOs?.outputs?.length > 0) {
+      // eslint-disable-next-line no-unsafe-optional-chaining
       for (const item of data?.utxOs.outputs) {
         if (item.tokens.length) {
           result.push(...item.tokens);
@@ -73,7 +77,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
     {
       icon: txInputIcon,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1} height={24}>
             Input{" "}
             {data?.utxOs && data?.utxOs?.inputs?.length > 1 && (
@@ -100,9 +104,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           <CopyButton text={data?.utxOs?.inputs[0]?.address || ""} />
           {openListInput && (
             <DropdownDetail
-              minWidth={200}
-              title="Address list"
-              value={data?.utxOs?.inputs.map(i => i.address) || []}
+              minWidth={isMobile ? 160 : 200}
+              title='Address list'
+              value={data?.utxOs?.inputs.map((i) => i.address) || []}
               close={() => setOpenListInput(false)}
             />
           )}
@@ -111,11 +115,12 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       allowSearch: true,
       isSent: true,
       dataSearch: inputTransaction,
+      key: "input"
     },
     {
       icon: txOutputIcon,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1} height={24}>
             Output{" "}
             {data?.utxOs && data?.utxOs?.outputs?.length > 1 && (
@@ -142,9 +147,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           <CopyButton text={data?.utxOs?.outputs[0]?.address || ""} />
           {openListOutput && (
             <DropdownDetail
-              minWidth={200}
-              title="Address list"
-              value={data?.utxOs?.outputs.map(i => i.address) || []}
+              minWidth={isMobile ? 160 : 200}
+              title='Address list'
+              value={data?.utxOs?.outputs.map((i) => i.address) || []}
               close={() => setOpenListOutput(false)}
             />
           )}
@@ -152,20 +157,21 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
       allowSearch: true,
       dataSearch: outputTransaction,
+      key: "output"
     },
     {
       icon: timeIcon,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}>Time </TitleCard>
         </Box>
       ),
-      value: formatDateTimeLocal(data?.tx?.time || ""),
+      value: formatDateTimeLocal(data?.tx?.time || "")
     },
     {
       icon: txConfirm,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}>Confirmation</TitleCard>
         </Box>
       ),
@@ -174,12 +180,12 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           {data?.tx?.confirmation || 0}
           <ConfirmStatus status={renderConfirmationTag() || "LOW"}>{renderConfirmationTag() || "LOW"}</ConfirmStatus>
         </>
-      ),
+      )
     },
     {
       icon: totalOutput,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}>Total Output</TitleCard>
         </Box>
       ),
@@ -187,12 +193,12 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         <Box component={"span"}>
           {formatADAFull(data?.tx?.totalOutput)} <ADAicon />
         </Box>
-      ),
+      )
     },
     {
       icon: exchageAltIcon,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}>Transaction Fees </TitleCard>
         </Box>
       ),
@@ -200,24 +206,24 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         <Box component={"span"}>
           {formatADAFull(data?.tx?.fee)} <ADAicon />
         </Box>
-      ),
+      )
     },
     {
       icon: cubeIcon,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box display={"flex"} alignItems='center'>
           <TitleCard height={24} mr={1}>
             {" "}
             Block
           </TitleCard>
         </Box>
       ),
-      value: <StyledLink to={details.block(data?.tx?.blockNo || 0)}>{data?.tx?.blockNo || 0}</StyledLink>,
+      value: <StyledLink to={details.block(data?.tx?.blockNo || 0)}>{data?.tx?.blockNo || 0}</StyledLink>
     },
     {
       icon: slotIcon,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box display={"flex"} alignItems='center'>
           <TitleCard height={24} mr={1}>
             Slot
           </TitleCard>
@@ -227,12 +233,12 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         <>
           {data?.tx?.epochSlot || 0}/<MaxSlot>432000</MaxSlot>
         </>
-      ),
-    },
+      )
+    }
   ];
   return (
     <DetailHeader
-      type="TRANSACTION"
+      type='TRANSACTION'
       bookmarkData={data?.tx.hash || ""}
       title={"Transaction detail"}
       hash={data?.tx.hash}
@@ -240,7 +246,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       epoch={
         data && {
           no: data.tx.epochNo,
-          slot: currentEpoch?.no === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH,
+          slot: currentEpoch?.no === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH
         }
       }
       listItem={listOverview}

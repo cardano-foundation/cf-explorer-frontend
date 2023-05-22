@@ -39,9 +39,10 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
     try {
       await signOut({
         refreshJwt: localStorage.getItem("refreshToken") || "",
-        username: localStorage.getItem("username") || "",
+        username: localStorage.getItem("username") || ""
       });
     } catch (error) {
+      //To Do
     } finally {
       disconnect();
       removeAuthInfo();
@@ -55,7 +56,7 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
 
   return (
     <Box>
-      <StyledButton aria-describedby={id} type="button" onClick={handleClick}>
+      <StyledButton aria-describedby={id} type='button' onClick={handleClick}>
         <Span>{getShortWallet(stakeAddress || "")}</Span>
       </StyledButton>
       <WrapContent
@@ -65,11 +66,11 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
         onClose={handleClose}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "right",
+          horizontal: "right"
         }}
         transformOrigin={{
           vertical: "top",
-          horizontal: "right",
+          horizontal: "right"
         }}
       >
         <Content>

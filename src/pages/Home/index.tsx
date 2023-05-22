@@ -11,14 +11,11 @@ const HomeContainer = styled(Container)`
   padding-bottom: 40px;
 `;
 
-interface Props {}
-
-const Home: React.FC<Props> = () => {
-
-  useEffect(() => { 
+const Home = () => {
+  useEffect(() => {
     document.title = `Cardano Explorer`;
   }, []);
-  
+
   return (
     <HomeContainer>
       <HomeStatistic />

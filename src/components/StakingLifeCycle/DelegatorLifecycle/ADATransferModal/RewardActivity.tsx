@@ -21,47 +21,51 @@ const RewardActivity: React.FC = () => {
   const fetchData = useFetchList<RewardActivityIF>(API.STAKE_LIFECYCLE.REWARDS_ACTIVITY(stakeId), { page, size, sort });
   const rewardType = {
     REWARD_RECEIVED: "Reward received",
-    REWARD_WITHDRAWN: "Reward withdrawn",
+    REWARD_WITHDRAWN: "Reward withdrawn"
   };
   const columns: Column<RewardActivityIF>[] = [
     {
       title: "Amount ADA",
       key: "outSum",
       minWidth: "100px",
-      render: r => (
-        <Amount value={r.amount}>
-          {formatADAFull(r.amount)}
-          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={theme => theme.palette.text.primary} />
+      render: (r) => (
+        <Amount type={r.type}>
+          {r.amount
+            ? r.type === "REWARD_RECEIVED"
+              ? `+${formatADAFull(r.amount)}`
+              : `-${formatADAFull(r.amount)}`
+            : 0}
+          <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
         </Amount>
-      ),
+      )
     },
     {
       title: "Timestamp",
       key: "time",
       minWidth: "100px",
-      render: r => formatDateTimeLocal(r.time || ""),
+      render: (r) => formatDateTimeLocal(r.time || ""),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+      }
     },
     {
       title: "Epoch",
       key: "Epoch",
       minWidth: "100px",
-      render: r => <StyledLink to={details.epoch(r.epochNo || 0)}>{r.epochNo}</StyledLink>,
+      render: (r) => <StyledLink to={details.epoch(r.epochNo || 0)}>{r.epochNo}</StyledLink>
     },
 
     {
       title: "Transaction Type",
       key: "transactionCount",
       minWidth: "100px",
-      render: r => <Box>{rewardType[r.type]}</Box>,
-    },
+      render: (r) => <Box>{rewardType[r.type]}</Box>
+    }
   ];
 
   return (
     <Box>
-      <UserInfo acitve="reward" total={fetchData.total} reward={data?.rewardAvailable || 0} stake={stakeId} />
+      <UserInfo acitve='reward' total={fetchData.total} reward={data?.rewardAvailable || 0} stake={stakeId} />
       <StyledTable
         {...fetchData}
         columns={columns}
@@ -71,7 +75,7 @@ const RewardActivity: React.FC = () => {
           page,
           size,
           total: fetchData.total,
-          onChange: (page, size) => setPagi({ page: page - 1, size }),
+          onChange: (page, size) => setPagi({ page: page - 1, size })
         }}
       />
     </Box>
@@ -81,6 +85,6 @@ const RewardActivity: React.FC = () => {
 export default RewardActivity;
 const StyledTable = styled(Table)(() => ({
   "> :nth-child(2)": {
-    boxShadow: "none !important",
-  },
+    boxShadow: "none !important"
+  }
 }));

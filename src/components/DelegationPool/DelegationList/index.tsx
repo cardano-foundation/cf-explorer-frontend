@@ -24,7 +24,7 @@ const DelegationLists: React.FC = () => {
     page: page - 1,
     size,
     search,
-    sort,
+    sort
   });
 
   const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
@@ -33,7 +33,7 @@ const DelegationLists: React.FC = () => {
       key: "Pool",
       minWidth: "40px",
       maxWidth: "350px",
-      render: r => (
+      render: (r) => (
         <CustomTooltip title={r.poolName || r.poolId}>
           <PoolName to={details.delegation(r.poolId)}>
             <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
@@ -41,64 +41,64 @@ const DelegationLists: React.FC = () => {
             </Box>
           </PoolName>
         </CustomTooltip>
-      ),
+      )
     },
     {
       title: "Pool size (A)",
       key: "poolSize",
       minWidth: "120px",
-      render: r => <Box component={"span"}>{formatADAFull(r.poolSize)}</Box>,
+      render: (r) => <Box component={"span"}>{formatADAFull(r.poolSize)}</Box>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+      }
     },
     {
       title: "Reward",
       key: "Reward",
       minWidth: "120px",
-      render: r => <RateWithIcon value={r.reward} multiple={100} />,
+      render: (r) => <RateWithIcon value={r.reward} multiple={100} />
     },
     {
       title: "Fee (A) ",
       key: "pu.fixedCost",
       minWidth: "120px",
-      render: r => `${formatPercent(r.feePercent)} (${formatADAFull(r.feeAmount)} A)`,
+      render: (r) => `${formatPercent(r.feePercent)} (${formatADAFull(r.feeAmount)} A)`,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+      }
     },
     {
       title: "Declared Pledge (A)",
       key: "pu.pledge",
       minWidth: "120px",
-      render: r => <Box component={"span"}>{formatADAFull(r.pledge)}</Box>,
+      render: (r) => <Box component={"span"}>{formatADAFull(r.pledge)}</Box>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+      }
     },
     {
       title: "Saturation",
       minWidth: "200px",
       key: "Saturation",
-      render: r => (
+      render: (r) => (
         <CustomTooltip title={r.saturation ? r.saturation * 100 : 0}>
-          <Box display="flex" alignItems="center">
+          <Box display='flex' alignItems='center'>
             <span>{formatPercent(r.saturation) || `0%`}</span>
-            <StyledLinearProgress variant="determinate" value={r.saturation * 100 || 0} />
+            <StyledLinearProgress variant='determinate' value={r.saturation * 100 || 0} />
           </Box>
         </CustomTooltip>
-      ),
-    },
+      )
+    }
   ];
 
   return (
     <>
       <SearchContainer ref={tableRef}>
         <StyledInput
-          placeholder="Search Pools"
-          onChange={e => setValue(e.target.value)}
+          placeholder='Search Pools'
+          onChange={(e) => setValue(e.target.value)}
           value={value}
-          onKeyUp={e => {
+          onKeyUp={(e) => {
             if (e.key === "Enter") {
               setSearch(value);
               setPage(1);
@@ -106,7 +106,7 @@ const DelegationLists: React.FC = () => {
           }}
         />
         <SubmitButton onClick={() => setSearch(value)}>
-          <Image src={HeaderSearchIcon} alt="Search" />
+          <Image src={HeaderSearchIcon} alt='Search' />
         </SubmitButton>
       </SearchContainer>
       <Table
@@ -122,7 +122,7 @@ const DelegationLists: React.FC = () => {
             setPage(page);
             setSize(size);
             (tableRef.current as any)?.scrollIntoView();
-          },
+          }
         }}
       />
     </>

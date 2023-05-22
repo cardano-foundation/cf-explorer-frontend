@@ -1,5 +1,5 @@
-import { Popover } from "@mui/material";
-import { Button, styled } from "@mui/material";
+import { Box } from "@mui/material";
+import { Popover, Button, styled } from "@mui/material";
 
 export const SubmitButton = styled(Button)`
   display: flex;
@@ -8,8 +8,8 @@ export const SubmitButton = styled(Button)`
   border: none;
   box-shadow: none;
   border-radius: 8px;
-  background: ${props => props.theme.palette.primary.dark};
-  color: ${props => props.theme.palette.background.paper};
+  background: ${(props) => props.theme.palette.primary.dark};
+  color: ${(props) => props.theme.palette.background.paper};
   font-weight: 700;
   font-size: 14px;
   height: 38px;
@@ -22,38 +22,52 @@ export const OutlineButton = styled(Button)`
   border: none;
   box-shadow: none;
   border-radius: 8px;
-  background: ${props => props.theme.palette.green[600_10]};
-  color: ${props => props.theme.palette.primary.dark};
+  background: ${(props) => props.theme.palette.green[600_10]};
+  color: ${(props) => props.theme.palette.primary.dark};
   font-weight: 700;
   font-size: 14px;
   height: 35px;
   text-transform: none;
 `;
 
-export const GridBox = styled("div")(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(4, 1fr)',
-  gridTemplateRows: 'repeat(2, 1fr)',
-  gridGap: '20px 10px',
-  [theme.breakpoints.down('lg')]: {
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gridTemplateRows: 'repeat(3, 1fr)',
+
+export const GridBox = styled("div")<{ sidebar?: number }>(({ theme, sidebar }) => ({
+  display: "grid",
+  gridTemplateColumns: "repeat(4, 1fr)",
+  gridTemplateRows: "repeat(2, 1fr)",
+  gridGap: "20px 10px",
+  [theme.breakpoints.down("xl")]: {
+    gridTemplateColumns: `repeat(${sidebar ? 3 : 4}, 1fr)`,
+    gridTemplateRows: `repeat(${sidebar ? 3 : 4}, 1fr)`
   },
-  [theme.breakpoints.down('md')]: {
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    gridTemplateRows: 'repeat(4, 1fr)',
+  [theme.breakpoints.down("lg")]: {
+    gridTemplateColumns: `repeat(${sidebar ? 2 : 3}, 1fr)`,
+    gridTemplateRows: `repeat(${sidebar ? 2 : 3}, 1fr)`
   },
-  [theme.breakpoints.down('sm')]: {
-    gridTemplateColumns: '1fr',
-    gridTemplateRows: 'auto',
+  [theme.breakpoints.down("md")]: {
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gridTemplateRows: "repeat(4, 1fr)"
   },
+  [theme.breakpoints.down("sm")]: {
+    gridTemplateColumns: "1fr",
+    gridTemplateRows: "auto",
+    "& > span": {
+      width: "100% !important"
+    },
+    "& > div": {
+      maxWidth: "100%"
+    }
+  }
 }));
 
-export const WrapFilterDescription = styled("span")`
-  font-size: 14px;
-  font-weight: 400;
-  color: ${props => props.theme.palette.grey[400]};
-`
+export const WrapFilterDescription = styled("span")(({ theme }) => ({
+  fontSize: 14,
+  fontWeight: 400,
+  color: theme.palette.grey[400],
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 12
+  }
+}));
 
 export const WrapPopover = styled(Popover)`
   .MuiPaper-root {
@@ -73,7 +87,26 @@ export const WrapPopoverContent = styled("div")`
   padding: 10px 20px;
   cursor: pointer;
   &:hover {
-    background: ${props => props.theme.palette.green[600_10]};
+    background: ${(props) => props.theme.palette.green[600_10]};
   }
-`
+`;
 
+export const StyledContainer = styled(Box)(({ theme }) => ({
+  marginTop: 25,
+  [theme.breakpoints.down("sm")]: {
+    marginTop: 15
+  }
+}));
+
+export const StyledList = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: 20,
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "center",
+    "& > p": {
+      marginRight: 20
+    }
+  }
+}));

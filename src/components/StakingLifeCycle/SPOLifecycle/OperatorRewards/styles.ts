@@ -1,4 +1,5 @@
 import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -23,9 +24,10 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     top: "-50%",
     left: theme.spacing(2),
     background: theme.palette.red[600],
-    transform: " translate(0, 60%)",
-  },
+    transform: " translate(0, 60%)"
+  }
 }));
+
 export const FeeBox = styled(Box)(({ theme }) => ({
   width: "184px",
   height: "35px",
@@ -49,26 +51,50 @@ export const FeeBox = styled(Box)(({ theme }) => ({
     top: "-50%",
     left: theme.spacing(2),
     background: theme.palette.red[600],
-    transform: " translate(0, 60%)",
-  },
+    transform: " translate(0, 60%)"
+  }
 }));
 
 export const IconButton = styled(IconButtonMui)(({ theme }) => ({
-  background: theme.palette.grey[100],
+  background: theme.palette.grey[100]
 }));
+
 export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
-  padding: 0,
+  padding: 0
 }));
 
 export const Info = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  marginLeft: theme.spacing(2),
+  marginLeft: theme.spacing(2)
 }));
+
 export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   marginLeft: theme.spacing(1),
   fontWeight: 600,
-  fontSize: "14px",
+  fontSize: "14px"
+}));
+
+export const StyledLink = styled(Link)`
+  color: ${(props) => props.theme.palette.secondary.main} !important;
+  font-family: var(--font-family-text) !important;
+  text-decoration: underline !important;
+`;
+
+export const StyledListImages = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "65px",
+    "& > div": {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: "12px",
+      paddingTop: "2px"
+    }
+  }
 }));

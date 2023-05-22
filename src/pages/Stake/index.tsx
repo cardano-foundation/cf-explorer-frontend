@@ -1,9 +1,6 @@
 import { stringify } from "qs";
 import React, { useEffect, useRef, useState } from "react";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { useWindowSize } from "react-use";
-import { Box, useTheme } from "@mui/material";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { details, routers } from "../../commons/routers";
 import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
@@ -17,25 +14,24 @@ import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import SelectedIcon from "../../components/commons/SelectedIcon";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
-
-interface IStake {}
+import { useScreen } from "../../commons/hooks/useScreen";
+import { Box } from "@mui/material";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",
-  DEREREGISTRATION = "de-registration",
+  DEREREGISTRATION = "de-registration"
 }
 
-const Stake: React.FC<IStake> = () => {
+const Stake = () => {
   const mainRef = useRef(document.querySelector("#main"));
   const [stake, setStake] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
-  const { width } = useWindowSize();
   const { search } = useLocation();
   const history = useHistory();
 
-  const theme = useTheme();
   const pageInfo = getPageInfo(search);
+  const { isMobile } = useScreen();
 
   const fetchData = useFetchList<IStakeKey>(
     `${API.STAKE.DETAIL}/${poolType}`,
@@ -55,11 +51,9 @@ const Stake: React.FC<IStake> = () => {
   };
 
   const openDetail = (_: any, r: IStakeKey, index: number) => {
-    if (width >= theme.breakpoints.values.md) {
-      setOnDetailView(true);
-      setStake(r.stakeKey);
-      setSelected(index);
-    } else history.push(details.stake(r.stakeKey));
+    setOnDetailView(true);
+    setStake(r.stakeKey);
+    setSelected(index);
   };
 
   const handleClose = () => {
@@ -72,28 +66,29 @@ const Stake: React.FC<IStake> = () => {
     {
       title: "Trx Hash",
       key: "trxHash",
-      render: r => (
+      minWidth: isMobile ? 245 : 80,
+      render: (r) => (
         <CustomTooltip title={r.txHash}>
           <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
         </CustomTooltip>
-      ),
+      )
     },
     {
       title: "Time",
       key: "time",
-      render: r => formatDateTimeLocal(r.txTime || ""),
+      render: (r) => formatDateTimeLocal(r.txTime || "")
     },
     {
       title: "Block",
       key: "block",
-      render: r => (
+      render: (r) => (
         <>
           <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
           <div style={{ display: "flex", marginTop: "6px" }}>
             <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/{r.epochSlotNo}
           </div>
         </>
-      ),
+      )
     },
     {
       title: "Stake Key",
@@ -106,42 +101,44 @@ const Stake: React.FC<IStake> = () => {
 
           {selected === idx && <SelectedIcon />}
         </>
-      ),
-    },
+      )
+    }
   ];
 
   if (!Object.values(POOL_TYPE).includes(poolType)) return <NoRecord />;
 
   return (
     <StyledContainer>
-      <Card>
-        <StyledTabs
-          value={poolType}
-          onChange={onChangeTab}
-          sx={{ borderBottom: theme => `1px solid ${theme.palette.border.main}` }}
-          TabIndicatorProps={{ sx: { backgroundColor: theme => theme.palette.primary.main, height: 4 } }}
-        >
-          <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
-          <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
-        </StyledTabs>
-        <Table
-          {...fetchData}
-          columns={columns}
-          total={{ title: "Total Token List", count: fetchData.total }}
-          pagination={{
-            ...pageInfo,
-            total: fetchData.total,
-            onChange: (page, size) => {
-              mainRef.current?.scrollTo(0, 0);
-              history.push({ search: stringify({ page, size, poolType }) });
-            },
-            handleCloseDetailView: handleClose,
-          }}
-          onClickRow={openDetail}
-          selected={selected}
-          showTabView
-        />
-      </Card>
+      <Box className='stake-list'>
+        <Card>
+          <StyledTabs
+            value={poolType}
+            onChange={onChangeTab}
+            sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}` }}
+            TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
+          >
+            <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
+            <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
+          </StyledTabs>
+          <Table
+            {...fetchData}
+            columns={columns}
+            total={{ title: "Total Token List", count: fetchData.total }}
+            pagination={{
+              ...pageInfo,
+              total: fetchData.total,
+              onChange: (page, size) => {
+                mainRef.current?.scrollTo(0, 0);
+                history.push({ search: stringify({ page, size, poolType }) });
+              },
+              handleCloseDetailView: handleClose
+            }}
+            onClickRow={openDetail}
+            selected={selected}
+            showTabView
+          />
+        </Card>
+      </Box>
       {stake && <DetailViewStakeKey stakeId={stake} handleClose={handleClose} />}
     </StyledContainer>
   );

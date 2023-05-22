@@ -1,12 +1,7 @@
 import { Box, IconButton, styled } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
-import {
-  SPOStalking,
-  ADAOrangeIcon,
-  SPOInfo,
-  SPOKey,
-} from "../../../../commons/resources";
+import { SPOStalking, ADAOrangeIcon, SPOInfo, SPOKey } from "../../../../commons/resources";
 import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
 
 import Line from "../../../Line";
@@ -25,10 +20,12 @@ import Table, { Column } from "../../../commons/Table";
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import moment from "moment";
 import ADAicon from "../../../commons/ADAIcon";
+import { StyledLink, StyledListImages } from "./styles";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
 const OperatorReward = ({
   containerPosition,
-  handleResize,
+  handleResize
 }: {
   containerPosition: {
     top?: number;
@@ -45,6 +42,8 @@ const OperatorReward = ({
   const SPOInfoRef = useRef(null);
   const SPOKeyRef = useRef(null);
 
+  const { isMobile } = useScreen();
+
   useEffect(() => {
     handleResize();
   }, [operatorRef.current, loading]);
@@ -52,111 +51,233 @@ const OperatorReward = ({
   return (
     <Box>
       <Box mt={4}>
-        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
-          <Box ref={cadarnoSystemRef}>
-            <img src={cadarnoSystem} alt="carrdano" />
-          </Box>
-          <Box position={"relative"}>
-            <Box ref={operatorRef} width={60} height={67}>
-              <Box component={IconButton} onClick={() => setOpenModal(true)} p={0}>
-                <ADAOrangeIcon />
+        {!isMobile ? (
+          <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
+            <Box ref={cadarnoSystemRef}>
+              <img src={cadarnoSystem} alt='carrdano' />
+            </Box>
+            <Box position={"relative"}>
+              <Box ref={operatorRef} width={60} height={67}>
+                <Box component={IconButton} onClick={() => setOpenModal(true)} p={0}>
+                  <ADAOrangeIcon />
+                </Box>
+              </Box>
+              <Box position={"absolute"} width={"max-content"} left={"-64%"} bottom={"-50%"} fontWeight={"bold"}>
+                Operator Rewards
               </Box>
             </Box>
-            <Box position={"absolute"} width={"max-content"} left={"-50%"} fontWeight={"bold"}>
-              Operator Rewards
-            </Box>
-          </Box>
-          <Box ref={SPOHolderRef} width={190} height={245} position={"relative"}>
-            <SPOStalking />
-            <CustomTooltip title={data?.poolName}>
-              <PoolName> {data?.poolName}</PoolName>
-            </CustomTooltip>
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOInfoRef}
-                  component={IconButton}
-                  left={"33%"}
-                  onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
-                >
-                  <SPOInfo />
-                </ButtonSPO>
-              )}
-              content={
-                <Box>
-                  <Box display={"flex"} alignItems={"center"}>
-                    <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
-                      Pool ID:
-                    </Box>
-                    <PoolNamePopup to={details.delegation(data?.poolView)}>
-                      {getShortHash(data?.poolView || "")}
-                    </PoolNamePopup>
-                    <CopyButton text={data?.poolView} />
-                  </Box>
-                  <Box display={"flex"} alignItems={"center"}>
-                    <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
-                      Pool name:
-                    </Box>
-                    <PoolNamePopup to={details.delegation(data?.poolView)}>{data?.poolName}</PoolNamePopup>
-                  </Box>
-                </Box>
-              }
-            />
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOKeyRef}
-                  component={IconButton}
-                  left={"52%"}
-                  onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
-                >
-                  <SPOKey fill="#438F68" />
-                </ButtonSPO>
-              )}
-              content={
-                <Box display={"flex"} alignItems={"center"}>
-                  {data?.stakeKeys && data.stakeKeys.length > 0 && (
-                    <>
-                      <SPOKey fill="#108AEF" />
-                      <PoolNamePopup to={details.stake(data?.stakeKeys[0] || "")}>
-                        {getShortWallet(data?.stakeKeys[0] || "")}
+            <Box ref={SPOHolderRef} width={190} height={245} position={"relative"}>
+              <SPOStalking />
+              <CustomTooltip title={data?.poolName}>
+                <PoolName> {data?.poolName}</PoolName>
+              </CustomTooltip>
+              <PopoverStyled
+                render={({ handleClick }) => (
+                  <ButtonSPO
+                    ref={SPOInfoRef}
+                    component={IconButton}
+                    left={"33%"}
+                    onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
+                  >
+                    <SPOInfo />
+                  </ButtonSPO>
+                )}
+                content={
+                  <Box>
+                    <Box display={"flex"} alignItems={"center"}>
+                      <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                        Pool ID:
+                      </Box>
+                      <PoolNamePopup to={details.delegation(data?.poolView)}>
+                        {getShortHash(data?.poolView || "")}
                       </PoolNamePopup>
-                      <CopyButton text={data?.stakeKeys[0]} />
-                    </>
-                  )}
-                </Box>
-              }
-            />
-          </Box>
-          <svg
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              height: "100vh",
-              width: "100vw",
-              zIndex: "-1",
-            }}
-          >
-            <Line
-              containerPosition={containerPosition}
-              fromRef={cadarnoSystemRef}
-              toRef={operatorRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
-            />
+                      <CopyButton text={data?.poolView} />
+                    </Box>
+                    <Box display={"flex"} alignItems={"center"}>
+                      <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                        Pool name:
+                      </Box>
+                      <PoolNamePopup to={details.delegation(data?.poolView)}>{data?.poolName}</PoolNamePopup>
+                    </Box>
+                  </Box>
+                }
+              />
+              <Box>
+                <CustomTooltip
+                  wOpacity={false}
+                  componentsProps={{
+                    transition: {
+                      style: {
+                        backgroundColor: "white",
+                        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                        padding: "10px"
+                      }
+                    },
+                    arrow: {
+                      style: {
+                        color: "white"
+                      }
+                    }
+                  }}
+                  title={
+                    <Box display={"flex"} alignItems={"center"}>
+                      {data?.stakeKeys && data.stakeKeys.length > 0 && (
+                        <>
+                          <SPOKey fill='#108AEF' />
+                          <PoolNamePopup to={details.stake(data?.stakeKeys[0] || "")}>
+                            {getShortWallet(data?.stakeKeys[0] || "")}
+                          </PoolNamePopup>
+                          <CopyButton text={data?.stakeKeys[0]} />
+                        </>
+                      )}
+                    </Box>
+                  }
+                >
+                  <ButtonSPO
+                    ref={SPOKeyRef}
+                    component={IconButton}
+                    left={"52%"}
+                  >
+                    <SPOKey fill='#438F68' />
+                  </ButtonSPO>
+                </CustomTooltip>
+              </Box>
+            </Box>
+            <svg
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                height: "100vh",
+                width: "100vw",
+                zIndex: "-1"
+              }}
+            >
+              <Line
+                containerPosition={containerPosition}
+                fromRef={cadarnoSystemRef}
+                toRef={operatorRef}
+                pointTo='border'
+                pointFrom='border'
+                orient='vertical'
+              />
 
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={operatorRef}
-              toRef={SPOHolderRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
-            />
-          </svg>
-        </Box>
+              <ArrowDiagram
+                containerPosition={containerPosition}
+                fromRef={operatorRef}
+                toRef={SPOHolderRef}
+                pointTo='border'
+                pointFrom='border'
+                orient='vertical'
+              />
+            </svg>
+          </Box>
+        ) : (
+          <StyledListImages>
+            <Box ref={cadarnoSystemRef}>
+              <img src={cadarnoSystem} alt='carrdano' />
+            </Box>
+            <Box ref={operatorRef}>
+              <Box width={60} height={67}>
+                <Box component={IconButton} onClick={() => setOpenModal(true)} p={0}>
+                  <ADAOrangeIcon />
+                </Box>
+              </Box>
+              <Box fontWeight={"bold"}>Operator Rewards</Box>
+            </Box>
+            <Box ref={SPOHolderRef} width={190} height={245} position={"relative"}>
+              <SPOStalking />
+              <CustomTooltip title={data?.poolName}>
+                <PoolName> {data?.poolName}</PoolName>
+              </CustomTooltip>
+              <PopoverStyled
+                render={({ handleClick }) => (
+                  <ButtonSPO
+                    ref={SPOInfoRef}
+                    component={IconButton}
+                    left={"33%"}
+                    onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
+                  >
+                    <SPOInfo />
+                  </ButtonSPO>
+                )}
+                content={
+                  <Box>
+                    <Box display={"flex"} alignItems={"center"}>
+                      <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                        Pool ID:
+                      </Box>
+                      <PoolNamePopup to={details.delegation(data?.poolView)}>
+                        {getShortWallet(data?.poolView || "")}
+                      </PoolNamePopup>
+                      <CopyButton text={data?.poolView} />
+                    </Box>
+                    <Box display={"flex"} alignItems={"center"}>
+                      <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                        Pool name:
+                      </Box>
+                      <PoolNamePopup to={details.delegation(data?.poolView)}>{data?.poolName}</PoolNamePopup>
+                    </Box>
+                  </Box>
+                }
+              />
+              <PopoverStyled
+                render={({ handleClick }) => (
+                  <ButtonSPO
+                    ref={SPOKeyRef}
+                    component={IconButton}
+                    left={"52%"}
+                    onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
+                  >
+                    <SPOKey fill='#438F68' />
+                  </ButtonSPO>
+                )}
+                content={
+                  <Box display={"flex"} alignItems={"center"}>
+                    {data?.stakeKeys && data.stakeKeys.length > 0 && (
+                      <>
+                        <SPOKey fill='#108AEF' />
+                        <PoolNamePopup to={details.stake(data?.stakeKeys[0] || "")}>
+                          {getShortWallet(data?.stakeKeys[0] || "")}
+                        </PoolNamePopup>
+                        <CopyButton text={data?.stakeKeys[0]} />
+                      </>
+                    )}
+                  </Box>
+                }
+              />
+            </Box>
+            <svg
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                height: "140vh",
+                width: "100vw",
+                zIndex: "-1"
+              }}
+            >
+              <ArrowDiagram
+                containerPosition={containerPosition}
+                fromRef={cadarnoSystemRef}
+                toRef={operatorRef}
+                pointTo='border'
+                pointFrom='border'
+                orient='horizontal'
+                connectToReverse
+              />
+              <ArrowDiagram
+                containerPosition={containerPosition}
+                fromRef={operatorRef}
+                toRef={SPOHolderRef}
+                pointTo='border'
+                pointFrom='border'
+                orient='horizontal'
+                connectToReverse
+              />
+            </svg>
+          </StyledListImages>
+        )}
       </Box>
       <OperatorRewardModal open={openModal} handleCloseModal={() => setOpenModal(false)} />
     </Box>
@@ -175,36 +296,40 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: ()
       title: "Epoch",
       key: "Epoch",
       minWidth: "50px",
-      render: r => <Link to={details.epoch(r.epochNo)}>{r.epochNo}</Link>,
+      render: (r) => <Link to={details.epoch(r.epochNo)}>{r.epochNo}</Link>
     },
     {
       title: "Timestamp",
       key: "time",
       minWidth: "50px",
-      render: r => <Box>{moment(r?.time).format("MM/DD/yyyy HH:mm:ss")}</Box>,
+      render: (r) => <Box>{moment(r?.time).format("MM/DD/yyyy HH:mm:ss")}</Box>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+      }
     },
     {
       title: "Amount ADA",
       key: "AmountADA",
       minWidth: "50px",
-      render: r => (
+      render: (r) => (
         <Box>
           {formatADA(r.amount)} <ADAicon />
         </Box>
-      ),
+      )
     },
     {
       title: "Reward Account",
       key: "RewardAccount",
       minWidth: "50px",
-      render: r => <Link to={details.stake(r.rewardAccount)}>{getShortWallet(r.rewardAccount || "")}</Link>,
-    },
+      render: (r) => (
+        <CustomTooltip title={r.rewardAccount}>
+          <StyledLink to={details.stake(r.rewardAccount)}>{getShortWallet(r.rewardAccount || "")}</StyledLink>
+        </CustomTooltip>
+      )
+    }
   ];
   return (
-    <StyledModal width={600} {...props} title="Pool registration certificate">
+    <StyledModal width={600} {...props} title='Operator rewards received'>
       <Box>
         <Box maxHeight={"75vh"} overflow={"auto"}>
           <StyledTable
@@ -215,7 +340,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: ()
               page,
               size,
               total: fetchData.total,
-              onChange: (page, size) => setPagination({ page: page - 1, size }),
+              onChange: (page, size) => setPagination({ page: page - 1, size })
             }}
           />
         </Box>
@@ -226,6 +351,9 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: ()
 
 const StyledTable = styled(Table)(() => ({
   "> :nth-child(2)": {
-    boxShadow: "none !important",
+    boxShadow: "none !important"
   },
+  "& nav li > div": {
+    width: "100% !important"
+  }
 }));

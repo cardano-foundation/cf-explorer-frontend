@@ -9,11 +9,11 @@ export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
   flexDirection: "column",
   textAlign: "center",
   [theme.breakpoints.down("lg")]: {
-    flexDirection: "row",
+    flexDirection: "row"
   },
   [theme.breakpoints.down("sm")]: {
-    flexDirection: "column",
-  },
+    flexDirection: "column"
+  }
 }));
 
 export const BoxInfoItem = styled(Box)(({ theme }) => ({
@@ -27,8 +27,8 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
     width: "100%",
     minHeight: "200px",
     height: "100%",
-    paddingTop: 0,
-  },
+    paddingTop: 0
+  }
 }));
 
 export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
@@ -44,31 +44,31 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
     borderBottom: "none",
     width: "100%",
     minHeight: "200px",
-    paddingTop: 0,
+    paddingTop: 0
   },
   [theme.breakpoints.down("sm")]: {
     width: "80%",
     borderRight: "none",
-    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
-  },
+    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`
+  }
 }));
 
 export const Title = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  padding: `${theme.spacing(2)} 0`,
+  padding: `${theme.spacing(2)} 0`
 }));
 
 export const ValueInfo = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "2rem",
   margin: "0 auto",
-  overflowWrap: "anywhere",
+  overflowWrap: "anywhere"
 }));
 
 export const Wrapper = styled(Grid)(({ theme }) => ({
   borderRadius: 10,
   minHeight: "400px",
-  textAlign: "left",
+  textAlign: "left"
 }));
 
 export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, active }) => ({
@@ -81,27 +81,27 @@ export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, activ
   backgroundColor: active ? theme.palette.primary.main : "none",
   fontFamily: "var(--font-family-title)",
   border: `2px solid ${theme.palette.green[800_20]}`,
-  cursor: "pointer",
+  cursor: "pointer"
 }));
 
 export const ChartBox = styled(Box)(({ theme }) => ({
-  paddingTop: theme.spacing(3),
+  paddingTop: theme.spacing(3)
 }));
 
 export const SkeletonUI = styled(Skeleton)(({ theme }) => ({
   paddingTop: theme.spacing(3),
   marginRight: theme.spacing(2),
-  borderRadius: 10,
+  borderRadius: 10
 }));
 
 export const Tabs = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up("md")]: {
-    textAlign: "end",
+    textAlign: "end"
   },
   [theme.breakpoints.down("md")]: {
     display: "flex",
-    justifyContent: "space-between",
-  },
+    justifyContent: "space-between"
+  }
 }));
 
 export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
@@ -114,6 +114,6 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   backgroundColor: active ? theme.palette.primary.main : "none",
   ":hover": {
     color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
-    backgroundColor: active ? theme.palette.primary.main : "none",
-  },
+    backgroundColor: active ? theme.palette.primary.main : "none"
+  }
 }));

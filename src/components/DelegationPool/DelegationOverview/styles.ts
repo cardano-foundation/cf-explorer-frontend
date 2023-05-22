@@ -11,11 +11,11 @@ export const StyledLinearProgress = styled(LinearProgress)`
   width: 100%;
   height: 10px;
   border-radius: 34px;
-  background: ${props => alpha(props.theme.palette.common.black, 0.1)};
+  background: ${(props) => alpha(props.theme.palette.common.black, 0.1)};
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${props => props.theme.palette.gradient[0]};
+    background: ${(props) => props.theme.palette.gradient[0]};
   }
 `;
 
@@ -30,9 +30,9 @@ export const StyledImg = styled("img")`
 export const StyledCard = {
   Container: styled("div")`
     height: 100%;
-    background: ${props => props.theme.palette.background.paper};
+    background: ${(props) => props.theme.palette.background.paper};
     border-radius: 12px;
-    box-shadow: ${props => props.theme.shadow.card};
+    box-shadow: ${(props) => props.theme.shadow.card};
     position: relative;
     display: flex;
   `,
@@ -43,7 +43,7 @@ export const StyledCard = {
     align-items: flex-start;
   `,
   Title: styled("span")`
-    color: ${props => props.theme.palette.text.secondary};
+    color: ${(props) => props.theme.palette.text.secondary};
     font-weight: var(--font-weight-bold);
     margin-bottom: 15px;
   `,
@@ -60,6 +60,6 @@ export const StyledCard = {
   `,
   Comment: styled("span")`
     font-weight: var(--font-weight-bold);
-    color: ${props => props.theme.palette.primary.main};
-  `,
+    color: ${(props) => props.theme.palette.primary.main};
+  `
 };

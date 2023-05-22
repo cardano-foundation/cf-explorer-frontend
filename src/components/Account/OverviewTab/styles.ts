@@ -1,14 +1,14 @@
 import { Box, styled } from "@mui/material";
 
 export const TextNote = styled(Box)`
-  color: var(--color-black);
+  color: ${({ theme }) => theme.palette.common.black};
   opacity: 0.5;
   margin-bottom: 15px;
   font-size: 14px;
 `;
 
 export const Label = styled(Box)`
-  color: var(--color-black);
+  color: ${({ theme }) => theme.palette.common.black};
   opacity: 0.6;
   width: 190px;
 `;
@@ -21,11 +21,17 @@ export const Value = styled(Box)`
 export const StyledRowItem = styled(Box)`
   display: flex;
   padding-right: 20px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid ${({ theme }) => theme.palette.border.main};
   height: 50px;
   align-items: center;
   font-size: var(--font-size-text-small);
 `;
+
+export const WrapInfoItemMobile = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "4px"
+}));
 
 export const StyledAction = styled(Box)`
   cursor: pointer;

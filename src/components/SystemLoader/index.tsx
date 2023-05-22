@@ -35,7 +35,8 @@ export const SystemLoader = () => {
       const { no, slot, totalSlot, account } = currentEpoch;
       const interval = setInterval(() => {
         const newSlot = slot + Math.floor((Date.now() - startTime.current) / 1000);
-        const newNo = newSlot >= MAX_SLOT_EPOCH ? no + 1 : no;
+        const isCrawlerStop = newSlot - MAX_SLOT_EPOCH > REFRESH_TIMES.CURRENT_EPOCH;
+        const newNo = newSlot >= MAX_SLOT_EPOCH && !isCrawlerStop ? no + 1 : no;
         setCurrentEpoch({ slot: newSlot % MAX_SLOT_EPOCH, no: newNo, totalSlot, account });
       }, 1000);
       return () => clearInterval(interval);

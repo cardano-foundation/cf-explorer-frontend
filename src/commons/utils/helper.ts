@@ -2,20 +2,20 @@ import BigNumber from "bignumber.js";
 import moment from "moment";
 import { parse } from "qs";
 import { setUserData } from "../../stores/user";
-import { setUserData as setUser2Data } from "../../stores/user2";
 import { getInfo, signIn } from "./userRequest";
-import { NETWORK, NETWORK_TYPES } from "./constants";
+import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const alphaNumeric = /[^0-9a-zA-Z]/;
 
+// eslint-disable-next-line no-useless-escape
 export const regexEmail = /^[\w\.\+\-]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-export const getShortWallet = (address: string) => {
+export const getShortWallet = (address = "") => {
   return `${address.slice(0, 5)}...${address.slice(-5)}`;
 };
 
-export const getShortHash = (address: string) => {
+export const getShortHash = (address = "") => {
   return `${address.slice(0, 10)}...${address.slice(-7)}`;
 };
 
@@ -34,20 +34,31 @@ export const formatPrice = (value?: string | number, abbreviations: string[] = L
   return `${newValue && newValue[0]}${syntax ?? `x 10^${exponential}`}`;
 };
 
-export const numberWithCommas = (value?: number | string, decimal: number = 18) => {
+// export const numberWithCommas = (value?: number | string, decimal = 0) => {
+//   if (!value) return "0";
+//   const formated = Number(value)
+//     .toFixed(decimal)
+//     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+//   return formated.replace(/^(-)?0+(?=\d)/, "$1");
+// };
+export const numberWithCommas = (value?: number | string, decimal = 0) => {
   if (!value) return "0";
-  const formated = value.toString().match(new RegExp(`^-?\\d+(?:\\.\\d{0,${decimal}})?`))?.[0] || "0";
-  return formated.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  const [integerPart, decimalPart] = Number(value).toFixed(decimal).split(".");
+  const formattedIntegerPart = integerPart.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  return decimalPart ? `${formattedIntegerPart}.${decimalPart}` : formattedIntegerPart;
 };
-
-export const formatADA = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
+export const formatADA = (
+  value?: string | number,
+  abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS,
+  numOfUnits = 6
+): string => {
   if (!value) return `0${abbreviations[0]}`;
   const realAda = new BigNumber(value).div(10 ** 6);
-  if (realAda.gte(10 ** 6)) {
+  if (realAda.gte(10 ** numOfUnits)) {
     const length = realAda.toFixed(0).length;
     const exponential = Math.floor((length - 1) / 3) * 3;
 
-    if (exponential > 5) {
+    if (exponential > numOfUnits - 1) {
       const newValue = realAda
         .div(10 ** exponential)
         .toFixed(2, 3)
@@ -57,13 +68,13 @@ export const formatADA = (value?: string | number, abbreviations: string[] = LAR
       return `${newValue}${syntax ?? `x 10^${exponential}`}`;
     }
   }
-  return numberWithCommas(realAda.toString());
+  return numberWithCommas(realAda.toString(), 6);
 };
 
-export const formatADAFull = (value?: string | number): string => {
+export const formatADAFull = (value?: string | number, limit = 6): string => {
   if (!value) return `0`;
   const realAda = new BigNumber(value).div(10 ** 6);
-  return numberWithCommas(realAda.toFixed(6).toString());
+  return numberWithCommas(realAda.toFixed(limit).toString(), limit);
 };
 
 export const exchangeADAToUSD = (value: number | string, rate: number, isFull?: boolean) => {
@@ -127,7 +138,7 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
     localStorage.setItem("login-type", "normal");
 
     const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-    setUserData({...userInfo.data, loginType: "normal"});
+    setUserData({ ...userInfo.data, loginType: "normal" });
     cbSuccess?.();
   } catch (error) {
     removeAuthInfo();
@@ -143,14 +154,17 @@ export const formatDateTimeLocal = (date: string) => {
 
 export const getEpochSlotNo = (data: IDataEpoch) => {
   if (data.status === "FINISHED") {
-    return data.maxSlot;
+    return MAX_SLOT_EPOCH;
   }
-  return moment().diff(moment(data.startTime), "seconds");
+  return moment().diff(moment(data.startTime + "Z"), "seconds");
 };
-
 
 export function formatHash(hash: string): string {
   const prefix = hash.slice(0, 6);
   const suffix = hash.slice(-5);
   return `${prefix}...${suffix}`;
 }
+
+export const truncateCustom = (text: string, first = 4, last = 8) => {
+  return `${text.slice(0, first)}...${text.slice(-last)}`;
+};

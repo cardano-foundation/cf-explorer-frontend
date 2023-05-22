@@ -24,14 +24,14 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
         return (
           <AssetName>
             {r?.metadata?.logo ? (
-              <Logo src={`data:/image/png;base64,${r?.metadata?.logo}`} alt="icon" />
+              <Logo src={`data:/image/png;base64,${r?.metadata?.logo}`} alt='icon' />
             ) : (
               <LogoEmpty />
             )}
             {r.assetName}
           </AssetName>
         );
-      },
+      }
     },
     {
       title: "Amount minted",
@@ -40,30 +40,31 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       minWidth: "40px",
       render: (r, index) => {
         return <Amount>{r.assetQuantity}</Amount>;
-      },
+      }
     },
     {
       title: "Policy script",
       key: "Policy",
       minWidth: "40px",
+      maxWidth: "120px",
       isHiddenBorder: true,
-      render: (r, index) => {
+      render: (r) => {
         return (
-          <div
+          <Box
             onClick={() => {
               setOpen(true);
               setSelectedItem(r.policy || "");
             }}
           >
             <PolicyScriptIcon />
-          </div>
+          </Box>
         );
-      },
-    },
+      }
+    }
   ];
 
   return (
-    <Box bgcolor={"white"} px={2}>
+    <Box>
       <TableMinting columns={columns} data={data || []} />
       <ScriptModal open={open} policy={selectedItem || ""} onClose={() => setOpen(false)} />
     </Box>

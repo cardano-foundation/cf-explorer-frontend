@@ -1,8 +1,6 @@
-import moment from "moment";
 import React from "react";
 import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import DetailHeader from "../../commons/DetailHeader";
-import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
 import outputIcon from "../../../commons/resources/icons/outputIcon.svg";
 import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";
@@ -25,25 +23,25 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
     {
       icon: timeIcon,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}>Start time </TitleCard>
         </Box>
       ),
-      value: formatDateTimeLocal(data?.startTime || ""),
+      value: formatDateTimeLocal(data?.startTime || "")
     },
     {
       icon: timeIcon,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}>End time </TitleCard>
         </Box>
       ),
-      value: formatDateTimeLocal(data?.endTime || ""),
+      value: formatDateTimeLocal(data?.endTime || "")
     },
     {
       icon: outputIcon,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}> Total Output</TitleCard>
         </Box>
       ),
@@ -51,46 +49,46 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
         <Box component={"span"}>
           {formatADAFull(data?.outSum || 0)} <ADAicon />
         </Box>
-      ),
+      )
     },
     {
       icon: cubeIcon,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}> Block</TitleCard>
         </Box>
       ),
-      value: data?.blkCount || 0,
+      value: data?.blkCount || 0
     },
     {
       icon: slotIcon,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box display={"flex"} alignItems='center'>
           <TitleCard mr={1}> Slot</TitleCard>
         </Box>
       ),
       value: (
         <>
           {slot}/
-          <Box component={"span"} fontWeight="400">
+          <Box component={"span"} fontWeight='400'>
             {MAX_SLOT_EPOCH}
           </Box>
         </>
-      ),
-    },
+      )
+    }
   ];
   return (
     <DetailHeader
       loading={loading}
       listItem={listOverview}
-      type="EPOCH"
+      type='EPOCH'
       bookmarkData={`${data?.no || ""}`}
       title={"Epoch detail"}
       epoch={
         data && {
           no: data.no,
           slot: slot,
-          status: data.status,
+          status: data.status
         }
       }
     />

@@ -13,7 +13,7 @@ import {
   SkeletonUI,
   Title,
   ValueInfo,
-  Wrapper,
+  Wrapper
 } from "./styles";
 import moment from "moment";
 import { useParams } from "react-router-dom";
@@ -35,7 +35,7 @@ const options = [
   { value: "ONE_DAY", label: "1d" },
   { value: "ONE_WEEK", label: "1w" },
   { value: "ONE_MONTH", label: "1m" },
-  { value: "THREE_MONTH", label: "3m" },
+  { value: "THREE_MONTH", label: "3m" }
 ];
 
 const StakeAnalytics: React.FC = () => {
@@ -48,22 +48,22 @@ const StakeAnalytics: React.FC = () => {
     `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
   );
   const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.STAKE.MIN_MAX_BALANCE}/${stakeId}`);
-  const dataBalanceChart = data?.map(i => {
+  const dataBalanceChart = data?.map((i) => {
     const value = BigNumber(i.value).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
   });
 
-  const dataRewardChart = dataReward?.map(i => {
+  const dataRewardChart = dataReward?.map((i) => {
     const value = BigNumber(i.value).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
   });
 
   const categoriesBalance =
-    data?.map(i => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
+    data?.map((i) => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
   const minBalance = Math.min(...(balance || []));
   const maxBalance = Math.max(...(balance || []), 0);
 
-  const categoriesReward = dataReward?.map(i => i.epoch) || [];
+  const categoriesReward = dataReward?.map((i) => i.epoch) || [];
   const minReward = dataReward
     ? dataReward.reduce(
         function (prev, current) {
@@ -82,10 +82,10 @@ const StakeAnalytics: React.FC = () => {
     : { epoch: 0, value: 0 };
 
   return (
-    <Card title="Analytics" pt={5}>
-      <Wrapper container columns={24} spacing="35px">
+    <Card title='Analytics' pt={5}>
+      <Wrapper container columns={24} spacing='35px'>
         <Grid item xs={24} lg={18}>
-          <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
+          <Grid spacing={2} container alignItems='center' justifyContent={"space-between"}>
             <Grid item xs={12} sm={6}>
               <ButtonTitle active={tab === "BALANCE"} onClick={() => setTab("BALANCE")}>
                 Balance
@@ -108,7 +108,7 @@ const StakeAnalytics: React.FC = () => {
           </Grid>
           <ChartBox>
             {loading || loadingReward ? (
-              <SkeletonUI variant="rectangular" style={{ height: "375px" }} />
+              <SkeletonUI variant='rectangular' style={{ height: "375px" }} />
             ) : (
               <Box position={"relative"}>
                 <HighchartsReact
@@ -117,7 +117,7 @@ const StakeAnalytics: React.FC = () => {
                     chart: {
                       type: "areaspline",
                       backgroundColor: "transparent",
-                      style: { fontFamily: "Helvetica, monospace" },
+                      style: { fontFamily: "Helvetica, monospace" }
                     },
                     title: { text: "" },
                     yAxis: {
@@ -131,8 +131,8 @@ const StakeAnalytics: React.FC = () => {
                         style: { fontSize: 12 },
                         formatter: (e: { value: string }) => {
                           return formatPrice(e.value);
-                        },
-                      },
+                        }
+                      }
                     },
                     xAxis: {
                       categories: tab === "BALANCE" ? categoriesBalance : categoriesReward,
@@ -142,9 +142,9 @@ const StakeAnalytics: React.FC = () => {
                       angle: 0,
                       labels: {
                         style: {
-                          fontSize: 12,
-                        },
-                      },
+                          fontSize: 12
+                        }
+                      }
                     },
                     legend: { enabled: false },
                     tooltip: { shared: true },
@@ -161,12 +161,12 @@ const StakeAnalytics: React.FC = () => {
                           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                           stops: [
                             [0, theme.palette.success.light],
-                            [1, "transparent"],
-                          ],
+                            [1, "transparent"]
+                          ]
                         },
-                        data: tab === "BALANCE" ? dataBalanceChart : dataRewardChart,
-                      },
-                    ],
+                        data: tab === "BALANCE" ? dataBalanceChart : dataRewardChart
+                      }
+                    ]
                   }}
                 />
               </Box>
@@ -176,14 +176,14 @@ const StakeAnalytics: React.FC = () => {
         <Grid item xs={24} lg={6}>
           <BoxInfo space={(categoriesBalance || categoriesReward).length ? 36 : 16}>
             <Box flex={1}>
-              <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
+              <BoxInfoItemRight display={"flex"} alignItems='center' justifyContent={"center"}>
                 <Box>
-                  <img src={HighestIcon} width={"20%"} alt="heighest icon" />
+                  <img src={HighestIcon} width={"20%"} alt='heighest icon' />
                   <Title>{tab === "BALANCE" ? "Highest Balance" : "Highest Reward"}</Title>
                   <CustomTooltip title={numberWithCommas(maxBalance || 0)}>
                     <ValueInfo>
                       {balanceLoading ? (
-                        <SkeletonUI variant="rectangular" />
+                        <SkeletonUI variant='rectangular' />
                       ) : tab === "BALANCE" ? (
                         formatADA(maxBalance)
                       ) : (
@@ -195,14 +195,14 @@ const StakeAnalytics: React.FC = () => {
               </BoxInfoItemRight>
             </Box>
             <Box flex={1}>
-              <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
+              <BoxInfoItem display={"flex"} alignItems='center' justifyContent={"center"}>
                 <Box>
-                  <img src={LowestIcon} width={"20%"} alt="lowest icon" />
+                  <img src={LowestIcon} width={"20%"} alt='lowest icon' />
                   <Title>{tab === "BALANCE" ? "Lowest Balance" : "Lowest Reward"}</Title>
                   <CustomTooltip title={numberWithCommas(minBalance || 0)}>
                     <ValueInfo>
                       {balanceLoading ? (
-                        <SkeletonUI variant="rectangular" />
+                        <SkeletonUI variant='rectangular' />
                       ) : tab === "BALANCE" ? (
                         formatADA(minBalance)
                       ) : (

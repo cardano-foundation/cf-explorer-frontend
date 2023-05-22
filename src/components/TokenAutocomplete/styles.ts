@@ -1,5 +1,5 @@
-import { alpha, Button, TextField } from "@mui/material";
-import { styled, Box } from "@mui/material";
+import { alpha, Button, TextField, styled, Box } from "@mui/material";
+
 import { Link } from "react-router-dom";
 
 export const TitleDetail = styled(Box)`
@@ -23,14 +23,14 @@ export const ItemLeft = styled(Box)`
 
 export const ItemLeftTitle = styled(Box)`
   margin-left: 10px;
-  color: ${props => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.text.secondary};
   font-size: 14px;
 `;
 
 export const AddressGroup = styled(Box)`
   margin-top: 15px;
   margin-bottom: 24px;
-  background: ${props => props.theme.palette.secondary.light};
+  background: ${(props) => props.theme.palette.secondary.light};
   border-radius: 8px;
   padding: 12px 20px;
   display: flex;
@@ -43,7 +43,7 @@ export const AddressLink = styled(Link)`
   word-wrap: break-word;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
-  color: ${props => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.main};
   font-size: 14px;
 `;
 
@@ -57,7 +57,7 @@ export const StyledTextField = styled(TextField)`
   .MuiInputBase-root {
     padding: 0 9px;
     height: 40px;
-    border: 1.5px solid ${props => props.theme.palette.border.main};
+    border: 1.5px solid ${(props) => props.theme.palette.border.main};
     border-radius: 8px;
   }
   .MuiFormControl-root {
@@ -71,7 +71,7 @@ export const StyledTextField = styled(TextField)`
 `;
 
 export const Option = styled("li")<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.green[600_10] : theme.palette.background.paper,
+  background: active ? theme.palette.green[600_10] : theme.palette.background.paper
 }));
 
 export const Logo = styled("img")`
@@ -82,9 +82,9 @@ export const Logo = styled("img")`
 export const LogoEmpty = styled(Box)`
   width: 25px;
   height: 25px;
-  background: ${props => alpha(props.theme.palette.common.white, 0.6)};
+  background: ${(props) => alpha(props.theme.palette.common.white, 0.6)};
   border-radius: 50%;
-  border: 1px solid ${props => props.theme.palette.border.main};
+  border: 1px solid ${(props) => props.theme.palette.border.main};
 `;
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
@@ -101,7 +101,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(4),
   borderRadius: 10,
   textAlign: "left",
-  overflowY: "auto",
+  overflowY: "auto"
 }));
 
 export const ButtonClose = styled(Button)(({ theme }) => ({
@@ -112,7 +112,7 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
   height: 30,
   borderRadius: "50%",
   padding: 0,
-  minWidth: 0,
+  minWidth: 0
 }));
 
 export const SearchContainer = styled(Box)`
@@ -121,11 +121,11 @@ export const SearchContainer = styled(Box)`
   align-items: center;
   width: 100%;
   max-width: 250px;
-  background: ${props => props.theme.palette.background.paper};
+  background: ${(props) => props.theme.palette.background.paper};
   padding: 0 12px;
   border-radius: 8px;
   height: 35px;
-  border: 1px solid ${props => alpha(props.theme.palette.primary.main, 0.2)};
+  border: 1px solid ${(props) => alpha(props.theme.palette.primary.main, 0.2)};
 `;
 
 export const StyledInput = styled("input")`

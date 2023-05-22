@@ -5,11 +5,9 @@ import Card from "../../commons/Card";
 import Table, { Column } from "../../commons/Table";
 import { formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
-import { AIcon } from "../../../commons/resources";
 import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer, StyledLink } from "./styles";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { API } from "../../../commons/utils/api";
-import { Box } from "@mui/material";
 import ADAicon from "../../commons/ADAIcon";
 import { REFRESH_TIMES } from "../../../commons/utils/constants";
 
@@ -38,28 +36,28 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
         return (
           <StyledColorBlueDard>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</StyledColorBlueDard>
         );
-      },
+      }
     },
     {
       title: "Block",
       key: "block",
       minWidth: "100px",
-      render: r => (
+      render: (r) => (
         <StyledLink to={details.block(r.blockNo || r.hash)}>{r.blockNo || getShortHash(r.hash || "")}</StyledLink>
-      ),
+      )
     },
     {
       title: "Slot",
       key: "slot",
       minWidth: "100px",
-      render: r => (
+      render: (r) => (
         <>
           <FakedLink>{r.slotNo}</FakedLink>
           <div>
             {r.epochNo}/{r.epochSlotNo || 0}
           </div>
         </>
-      ),
+      )
     },
     // {
     //   title: "Created by",
@@ -78,19 +76,19 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       title: "Transactions",
       key: "blkCount",
       minWidth: "100px",
-      render: r => <StyledColorBlueDard>{r.txCount || 0}</StyledColorBlueDard>,
+      render: (r) => <StyledColorBlueDard>{r.txCount || 0}</StyledColorBlueDard>
     },
     {
       title: "Output",
       key: "outSum",
       minWidth: "100px",
-      render: r => (
+      render: (r) => (
         <StyledOutput>
           <StyledColorBlueDard>{formatADAFull(r.totalOutput)}</StyledColorBlueDard>
           <ADAicon />
         </StyledOutput>
-      ),
-    },
+      )
+    }
   ];
 
   return (
@@ -103,7 +101,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
           pagination={{
             ...pageInfo,
             total: fetchData.total,
-            onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+            onChange: (page, size) => history.push({ search: stringify({ page, size }) })
           }}
           onClickRow={(_, r) => history.push(details.block(r.blockNo || r.hash))}
         />

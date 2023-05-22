@@ -17,7 +17,7 @@ const Image = styled("img")`
 const NoRecord = () => {
   return (
     <NoRecordContainer>
-      <Image src={EmptyIcon} alt="empty icon" />
+      <Image src={EmptyIcon} alt='empty icon' />
     </NoRecordContainer>
   );
 };

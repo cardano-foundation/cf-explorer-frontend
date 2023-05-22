@@ -2,37 +2,37 @@ import { Box, Collapse, List, ListItemText, styled, Theme } from "@mui/material"
 import { SystemStyleObject } from "@mui/system";
 
 export const StyledCollapse = styled(Collapse)`
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     max-height: calc(100vh - 80px);
     overflow-x: hidden;
     overflow-y: auto;
   }
 `;
 
-export const Menu = styled(List)<{ open: number }>`
-  max-height: calc(100vh - 181px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  margin-bottom: 5px;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  &:hover::-webkit-scrollbar {
-    display: block;
-  }
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.md}px) {
-    max-height: unset;
-  }
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
-    & > div,
-    & > a {
-      padding-left: 16px;
+export const Menu = styled(List)<{ open: number }>(({ theme, open }) => ({
+  maxHeight: `calc(100vh - 181px)`,
+  "@media screen and (max-device-width: 1200px) and (orientation: portrait), screen and (max-device-height: 1200px) and (orientation: landscape)":
+    {
+      maxHeight: "calc(100vh - 240px)"
+    },
+  overflowY: "auto",
+  overflowX: "hidden",
+  marginBottom: "5px",
+  "&::-webkit-scrollbar": {
+    display: "none"
+  },
+  "&:hover::-webkit-scrollbar": {
+    display: "block"
+  },
+  [theme.breakpoints.down("md")]: {
+    maxHeight: "unset"
+  },
+  [theme.breakpoints.down("sm")]: {
+    "& ul > a": {
+      paddingLeft: "59px"
     }
-    & ul > a {
-      padding-left: 40px;
-    }
   }
-`;
+}));
 
 export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<Theme> => ({
   minHeight: 48,
@@ -41,19 +41,19 @@ export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<The
   position: "relative",
   marginBottom: "5px",
   justifyContent: sidebar ? "initial" : "center",
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
-    padding: "8px 20px 8px 30px",
-    marginBottom: 0,
-  },
+  [theme.breakpoints.down("md")]: {
+    padding: "8px 20px",
+    marginBottom: 0
+  }
 });
 
 export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; text?: number; disable?: number }>`
   width: 24px;
   height: 24px;
   min-width: 24px;
-  margin-right: ${props => (props.iconOnly ? 0 : 15)}px;
-  filter: ${props => (props.active ? (props.text ? `none` : `brightness(5)`) : `grayscale(1)`)};
-  @media screen and (max-width: 1023px) {
+  margin-right: ${(props) => (props.iconOnly ? 0 : 15)}px;
+  filter: ${(props) => (props.active ? (props.text ? `none` : `brightness(5)`) : `grayscale(1)`)};
+  ${({ theme }) => theme.breakpoints.down("md")} {
     margin-right: 15px;
   }
 `;
@@ -63,8 +63,8 @@ export const SubMenu = styled(List)<{ isActive?: number }>`
 `;
 
 export const MenuText = styled(ListItemText)<{ open?: number; active?: number; text?: number; disable?: number }>`
-  opacity: ${props => (props.open ? 1 : 0)};
-  width: ${props => (props.open ? "unset" : 0)};
+  opacity: ${(props) => (props.open ? 1 : 0)};
+  width: ${(props) => (props.open ? "unset" : 0)};
   * {
     font-family: var(--font-family-title) !important;
     font-weight: var(--font-weight-bold) !important;
@@ -79,7 +79,7 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
     white-space: break-spaces;
     width: 165px;
   }
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     opacity: 1;
     width: unset;
   }
@@ -94,7 +94,7 @@ export const SubMenuText = styled(MenuText)`
 
 export const NavbarMenuBottom = styled("div")`
   display: none;
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     display: flex;
     align-items: center;
     gap: 10px 20px;
@@ -109,7 +109,7 @@ export const IconMenu = styled(Box)(({ theme }) => ({
   zIndex: 10,
   top: "50%",
   left: "210px",
-  transform: "translate(0, -50%)",
+  transform: "translate(0, -50%)"
 }));
 
 export const WrapNetwork = styled(Box)`
@@ -121,4 +121,8 @@ export const WrapNetwork = styled(Box)`
   & > div {
     width: 100%;
   }
-`
+  margin-top: auto;
+  @media screen and (max-height: 780px) {
+    position: relative !important;
+  }
+`;

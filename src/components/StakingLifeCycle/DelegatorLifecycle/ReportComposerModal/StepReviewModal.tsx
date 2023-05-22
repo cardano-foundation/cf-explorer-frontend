@@ -1,15 +1,17 @@
-import { Box, Stack } from "@mui/material";
-import { Container } from "../../../Account/ActivityLogModal/styles";
+import { Box, CircularProgress, Stack } from "@mui/material";
 import StyledModal from "../../../commons/StyledModal";
 import {
+  Container,
   ModalTitle,
+  OverViewItem,
+  OverViewValue,
   StyledBackButton,
   StyledButton,
   StyledStack,
   TextLabelReview,
   TextOverFlow,
   TextRequired,
-  TextValueReview,
+  TextValueReview
 } from "./styles";
 import { IPropsModal, STEPS } from ".";
 import moment from "moment";
@@ -19,30 +21,40 @@ import { ReportType } from "./FilledInfoModal";
 import { generateStakeKeyReport, generateStakePoolReport } from "../../../../commons/utils/userRequest";
 import useToast from "../../../../commons/hooks/useToast";
 import { useHistory } from "react-router-dom";
-import { routers } from "../../../../commons/routers";
+import { details, routers } from "../../../../commons/routers";
+import { useState } from "react";
+import { getEventType } from "../../../StakekeySummary";
+import { getPoolEventType } from "../../../PoolLifecycle";
+import { useScreen } from "../../../../commons/hooks/useScreen";
+import CustomTooltip from "~/components/commons/CustomTooltip";
 
 const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaultParams, gotoStep }) => {
   const toast = useToast();
+  const [loading, setLoading] = useState(false);
   const [step1, step2, step3] = defaultParams || [];
 
   const history = useHistory();
+  const { isMobile } = useScreen();
   const handleGenerateReport = async () => {
+    setLoading(true);
     try {
       const [step1, step2, step3] = defaultParams || {};
+      // eslint-disable-next-line no-unsafe-optional-chaining
       const [start, end] = step1?.dateRange;
 
-      const defaultReportName = `Report_stake_${step1.address}_${step1}_${moment(start).format("MM/DD/yyyy")}_${moment(
-        end
-      ).format("MM/DD/yyyy")}`;
-
+      let defaultReportName = `Report_stake_${step1.address}_${moment(start).format("MM/DD/yyyy")}_${moment(end).format(
+        "MM/DD/yyyy"
+      )}`;
       if (isPoolReport) {
+        defaultReportName = `Report_pool_${step1.address}_${step1.epochRange[0]}_${step1.epochRange[1]}`;
         const paramsStakeKeyReport = {
+          ...getPoolEventType(step3?.eventsKey),
           poolId: step1.address,
           reportName: step1.reportName || defaultReportName,
           isPoolSize: step2.poolSize === "YES",
-          isFeesPaid: step2.adaTransfers === "YES",
+          isFeesPaid: step2.feesPaid === "YES",
           event: step3?.eventsKey,
-          epochRanges: step1.epochRange,
+          epochRanges: step1.epochRange
         };
         await generateStakePoolReport(paramsStakeKeyReport);
       } else {
@@ -53,8 +65,8 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           fromDate: moment(start).format("yyyy/MM/DD hh:mm:ss"),
           toDate: moment(end).format("yyyy/MM/D hh:mm:ss"),
           isADATransfer: step2.adaTransfers === "YES",
-          isFeesPaid: step2.adaTransfers === "YES",
-          stakingLifeCycleEvents: events,
+          isFeesPaid: step2.feesPaid === "YES",
+          ...getEventType(events.map((item: { type: string }) => item.type))
         };
         await generateStakeKeyReport(paramsStakeKeyReport);
       }
@@ -62,12 +74,13 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       toast.success("Generate report success");
       handleCloseModal();
       setTimeout(() => {
-        history.push(`${routers.REPORT_GENERATED}`);
+        history.push(details.generated_report(isPoolReport ? "pools" : "stake-key"));
       }, 2000);
     } catch (err: any) {
       console.error(err);
       toast.error("This stake key has no transaction history");
     }
+    setLoading(false);
   };
 
   const [start, end] = step1.dateRange || [];
@@ -82,68 +95,73 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
     {
       label: "Report name",
       value: <TextOverFlow>{step1.reportName}</TextOverFlow>,
-      step: STEPS.step1,
+      step: STEPS.step1
     },
     {
       label: isPoolReport ? "Epoch range" : "Date range",
       value: isPoolReport
         ? `Epoch ${epochStart} -  Epoch ${epochEnd}`
-        : `${moment(start).format("d MM yy")} - ${moment(end).format("d MM yy")}`,
-      step: STEPS.step1,
+        : `${moment(start).format("MM/DD/yyyy")} - ${moment(end).format("MM/DD/yyyy")}`,
+      step: STEPS.step1
     },
     {
-      label: "Address details",
+      label: isPoolReport ? "Pool ID" : "Stake key details",
       value: <TextOverFlow>{step1.address}</TextOverFlow>,
-      step: STEPS.step1,
+      step: STEPS.step1
     },
     {
       label: isPoolReport ? "Pool size" : "ADA transfers",
       value: isPoolReport ? step2.poolSize : step2.adaTransfers,
-      step: STEPS.step2,
+      step: STEPS.step2
     },
     {
       label: "Fees paid",
       value: step2.feesPaid,
-      step: STEPS.step2,
+      step: STEPS.step2
     },
     {
-      label: "Staking lifecycle events",
+      label: isPoolReport ? "Pool Report by event" : "Staking lifecycle events",
       value: events,
-      step: STEPS.step3,
-    },
+      step: STEPS.step3
+    }
   ];
-
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
       <Container>
-        <ModalTitle>Report composer</ModalTitle>
+        <ModalTitle sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</ModalTitle>
         <TextRequired>
           Before proceeding with your report creation, we just want to double-check and confirm that you’ve filled out
           all the details correctly?
         </TextRequired>
-        <Stack>
-          {list.map(({ label, value, step }, index: number) => {
+        <Stack marginBottom='35px'>
+          {list.map(({ label, value, step }) => {
             return (
-              <Box
-                display={"flex"}
-                key={label}
-                padding={"10px 0px"}
-                justifyContent={"space-between"}
-                borderBottom={index === list.length - 1 ? "none" : "1px solid #000000"}
-              >
-                <TextLabelReview>{label}</TextLabelReview>
-                <Stack direction={"row"} spacing={1} justifyContent="center">
-                  <TextValueReview>{value}</TextValueReview>
-                  <PencilIcon onClick={() => gotoStep?.(step as number)} />
-                </Stack>
-              </Box>
+              <OverViewItem key={label}>
+                <OverViewValue>
+                  <TextLabelReview>{label}</TextLabelReview>
+                  <TextOverFlow>
+                    <TextValueReview>{value}</TextValueReview>
+                  </TextOverFlow>
+                </OverViewValue>
+                <PencilIcon style={{ paddingLeft: "10px" }} onClick={() => gotoStep?.(step as number)} />
+              </OverViewItem>
             );
           })}
         </Stack>
         <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={"20px"}>
-          <StyledBackButton onClick={() => gotoStep?.(STEPS.step1)}>I’d like to double-check</StyledBackButton>
-          <StyledButton isDisabled={false} onClick={handleGenerateReport}>
-            Generate report
+          <StyledBackButton
+            sx={{ fontSize: `${isMobile ? "14px" : "16px"}` }}
+            width={isMobile ? 120 : 100}
+            onClick={() => gotoStep?.(STEPS.step1)}
+          >
+            I’d like to double-check
+          </StyledBackButton>
+          <StyledButton
+            disabled={loading}
+            onClick={handleGenerateReport}
+            sx={{ fontSize: `${isMobile ? "14px" : "16px"}` }}
+          >
+            {loading && <CircularProgress color='info' size={20} />}Generate report
           </StyledButton>
         </StyledStack>
       </Container>

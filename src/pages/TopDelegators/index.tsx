@@ -32,7 +32,7 @@ const TopDelegators = () => {
       title: "#",
       minWidth: 30,
       key: "index",
-      render: (r, idx) => numberWithCommas(idx + 1),
+      render: (r, idx) => numberWithCommas(idx + 1)
     },
     {
       title: "Stake key Addresses",
@@ -42,7 +42,7 @@ const TopDelegators = () => {
         <CustomTooltip title={r.stakeKey}>
           <StyledLink to={details.stake(r.stakeKey)}>{getShortWallet(r.stakeKey)}</StyledLink>
         </CustomTooltip>
-      ),
+      )
     },
     {
       title: "Pool",
@@ -53,7 +53,7 @@ const TopDelegators = () => {
             {r.poolName || `Pool [${getShortWallet(r.poolId)}]`}
           </StyledLink>
         </CustomTooltip>
-      ),
+      )
     },
     {
       title: "Stake amount",
@@ -62,19 +62,19 @@ const TopDelegators = () => {
         <Box component={"span"}>
           {formatADAFull(r.balance)} <ADAicon />
         </Box>
-      ),
-    },
+      )
+    }
   ];
 
   return (
     <StyledContainer>
       <Card
-        title="Top delegators"
+        title='Top delegators'
         extra={
-          <Box display="flex" alignItems="center">
+          <Box display='flex' alignItems='center'>
             <Select
               value={pageSize}
-              onChange={event => setPageSize(event.target.value)}
+              onChange={(event) => setPageSize(event.target.value)}
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
             >

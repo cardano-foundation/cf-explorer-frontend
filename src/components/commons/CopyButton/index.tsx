@@ -7,7 +7,7 @@ import copy from "../../../commons/resources/images/copy.svg";
 import CustomTooltip from "../CustomTooltip";
 
 const Button = styled(IconButton)`
-  color: ${props => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.text.primary};
   width: 23px;
   height: 23px;
   font-size: var(--font-size-text-large);
@@ -47,13 +47,13 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, p
     }
   };
   return (
-    <CustomTooltip placement={placement || "top"} title={copied ? "Copied" : "Copy"}>
+    <CustomTooltip placement={placement || "top"} title={copied ? "Copied" : "Copy"} enterTouchDelay={0}>
       <Button {...props} onClick={onCopy}>
         {children ||
           (copied ? (
             <BiCheckCircle style={{ verticalAlign: "text-bottom", scale: "2" }} />
           ) : (
-            <CopyIcon src={copy} alt="icon copy" />
+            <CopyIcon src={copy} alt='icon copy' />
           ))}
       </Button>
     </CustomTooltip>

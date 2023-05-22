@@ -8,14 +8,17 @@ import {
   CardItem,
   HeaderContainer,
   HeaderTitle,
+  OverViewContainer,
   SlotLeader,
   SlotLeaderContainer,
-  SlotLeaderSkeleton,
+  SlotLeaderSkeleton
 } from "./styles";
 import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 
 import ScriptModal from "../../ScriptModal";
+import { truncateCustom } from "../../../commons/utils/helper";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface Props {
   data: PolicyDetail | null;
@@ -25,10 +28,11 @@ interface Props {
 const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
+  const { isMobile, isTablet } = useScreen();
 
   return (
     <Box>
-      <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
+      <OverViewContainer display={"flex"} justifyContent='space-between' alignItems={"center"}>
         <Box>
           <BackButton onClick={history.goBack}>
             <HiArrowLongLeft />
@@ -39,39 +43,40 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
           </HeaderContainer>
           <SlotLeaderContainer>
             {loading ? (
-              <SlotLeaderSkeleton variant="rectangular" />
+              <SlotLeaderSkeleton variant='rectangular' />
             ) : (
               <Box>
                 <SlotLeader>
-                  <Box fontWeight={400} color={theme => theme.palette.text.secondary}>
+                  <Box fontWeight={400} color={(theme) => theme.palette.text.secondary}>
                     Policy ID:{" "}
                   </Box>{" "}
-                  <Box ml={2}>{data?.policyId}</Box> <CopyButton text={data?.policyId} />
+                  <Box ml={2}>{isMobile || isTablet ? truncateCustom(data?.policyId ?? "", 5, 5) : data?.policyId}</Box>{" "}
+                  <CopyButton text={data?.policyId} />
                 </SlotLeader>
               </Box>
             )}
           </SlotLeaderContainer>
         </Box>
         <CardItem
-          color={theme => theme.palette.primary.main}
-          fontWeight="bold"
+          color={(theme) => theme.palette.primary.main}
+          fontWeight='bold'
           fontFamily={'"Roboto", sans-serif'}
           fontSize={"1.125rem"}
-          component="button"
+          component='button'
           border={"none"}
-          bgcolor="transparent"
+          bgcolor='transparent'
           padding={0}
           onClick={() => setOpenModal(true)}
           style={{ cursor: "pointer" }}
         >
           <Box>
-            <img src={policyIcon} alt="" width={"40%"} />
+            <img src={policyIcon} alt='' width={"40%"} />
           </Box>
-          <Box display={"flex"} flexDirection="column" height={"100%"} justifyContent="space-between">
+          <Box display={"flex"} flexDirection='column' height={"100%"} justifyContent='space-between'>
             <Box>Policy Script</Box>
           </Box>
         </CardItem>
-      </Box>
+      </OverViewContainer>
 
       <ScriptModal open={openModal} onClose={() => setOpenModal(false)} policy={data?.policyId || ""} />
     </Box>

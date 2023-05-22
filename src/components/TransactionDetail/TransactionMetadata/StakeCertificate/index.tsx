@@ -1,29 +1,33 @@
 import React from "react";
-import { Box } from "@mui/material";
-import { Column } from "../../../commons/Table";
-import { TableMinting } from "./styles";
+import { Box, useTheme } from "@mui/material";
 import StakeKeyBox from "./StakeKeyBox";
+import { CardHeader } from "../PoolCertificate/styles";
 
 interface IProps {
   data: Transaction["stakeCertificates"] | null;
 }
 
 const StakeCertificate: React.FC<IProps> = ({ data }) => {
-  const columns: Column<Required<Transaction>["stakeCertificates"][number]>[] = [
-    {
-      title: "Stake Key Registration",
-      isHiddenBorder: true,
-      key: "stakeKey",
-      render: (r, index) => {
-        return <StakeKeyBox data={r} />;
-      },
-    },
-  ];
-
+  const theme = useTheme();
   return (
-    <Box bgcolor={"white"} px={2}>
-      <TableMinting columns={columns} data={data || []} />
-    </Box>
+    <>
+      {data
+        ?.filter((d) => d.type === "STAKE_REGISTRATION")
+        ?.map((item, index) => (
+          <Box key={index} px='15px' mb='15px' bgcolor={theme.palette.background.paper} textAlign='left'>
+            <CardHeader>Stake Key Registrations</CardHeader>
+            <StakeKeyBox key={index} data={item} />
+          </Box>
+        ))}
+      {data
+        ?.filter((d) => d.type === "STAKE_DEREGISTRATION")
+        ?.map((item, index) => (
+          <Box key={index} px='15px' mb='15px' bgcolor={theme.palette.background.paper} textAlign='left'>
+            <CardHeader>Stake Key Deregistrations</CardHeader>
+            <StakeKeyBox key={index} data={item} />
+          </Box>
+        ))}
+    </>
   );
 };
 

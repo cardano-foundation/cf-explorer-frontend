@@ -11,9 +11,9 @@ const StyledLink = styled(Link)`
   width: 35px;
   height: 35px;
   border-radius: 5px;
-  background: ${props => alpha(props.theme.palette.primary.main, 0.1)};
+  background: ${(props) => alpha(props.theme.palette.primary.main, 0.1)};
   &:hover {
-    background: ${props => alpha(props.theme.palette.primary.main, 0.3)};
+    background: ${(props) => alpha(props.theme.palette.primary.main, 0.3)};
   }
 `;
 
@@ -32,7 +32,7 @@ const ViewAllButton: React.FC<ViewAllButtonProps> = ({ tooltipTitle = "View All"
   return (
     <CustomTooltip placement={placement} title={tooltipTitle}>
       <StyledLink {...props}>
-        <ViewAllImage src={SeeMoreIcon} alt="view all" />
+        <ViewAllImage src={SeeMoreIcon} alt='view all' />
       </StyledLink>
     </CustomTooltip>
   );

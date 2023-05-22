@@ -19,8 +19,8 @@ export const Menu = styled(List)<{ open: number }>`
   gap: 15px;
   flex-direction: row;
   padding: 0px 10px;
-  border-top: 1px solid ${props => props.theme.palette.border.main};
-  @media screen and (max-width: 1023px) {
+  border-top: 1px solid ${(props) => props.theme.palette.border.main};
+  ${({ theme }) => theme.breakpoints.down("md")} {
     border-top: 0px;
     position: relative;
     justify-content: center;
@@ -34,7 +34,7 @@ export const MenuIcon = styled("img")`
   height: auto;
 `;
 
-const itemStyle: SxProps<Theme> = theme => ({
+const itemStyle: SxProps<Theme> = (theme) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -49,12 +49,12 @@ const itemStyle: SxProps<Theme> = theme => ({
     background: theme.palette.green[800_20],
     color: `${theme.palette.common.black} !important`,
     img: {
-      filter: "brightness(0.75)",
-    },
-  },
+      filter: "brightness(0.75)"
+    }
+  }
 });
 
-const expandStyle: SxProps<Theme> = theme => ({
+const expandStyle: SxProps<Theme> = (theme) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -64,7 +64,7 @@ const expandStyle: SxProps<Theme> = theme => ({
   height: 40,
   cursor: "pointer",
   borderRadius: 40,
-  padding: 0,
+  padding: 0
 });
 
 type TProps = {
@@ -82,10 +82,10 @@ const FooterMenu = ({ forceShow = false }: TProps) => {
             <ListItem
               key={index}
               button
-              component="a"
+              component='a'
               href={href}
-              target="_blank"
-              rel="noreferrer"
+              target='_blank'
+              rel='noreferrer'
               title={title}
               sx={itemStyle}
             >
@@ -94,12 +94,12 @@ const FooterMenu = ({ forceShow = false }: TProps) => {
           );
         })
       ) : (
-        <CustomTooltip placement="right" title="Expand">
+        <CustomTooltip placement='right' title='Expand'>
           <ListItem
             button
-            component="a"
-            target="_blank"
-            rel="noreferrer"
+            component='a'
+            target='_blank'
+            rel='noreferrer'
             sx={expandStyle}
             onClick={() => setSidebar(true)}
           >

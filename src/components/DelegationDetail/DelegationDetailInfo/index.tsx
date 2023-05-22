@@ -3,22 +3,26 @@ import React, { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link, useHistory } from "react-router-dom";
 import {
-  AIcon,
   CalendarIcon,
   DelegatorIcon,
   DropIcon,
   HighestIcon,
-  InfoIcon,
   RewardIcon,
   TickerIcon,
-  UserIcon,
-} from "../../../commons/resources";
-import { details, routers } from "../../../commons/routers";
-import { formatADAFull, formatDateTimeLocal, formatPercent, getShortWallet } from "../../../commons/utils/helper";
-import BookmarkButton from "../../commons/BookmarkIcon";
-import CopyButton from "../../commons/CopyButton";
-import CustomTooltip from "../../commons/CustomTooltip";
-import DropdownDetail from "../../commons/DropdownDetail";
+  UserIcon
+} from "~/commons/resources";
+import { details } from "~/commons/routers";
+import {
+  formatADAFull,
+  formatDateTimeLocal,
+  formatPercent,
+  getShortHash,
+  getShortWallet
+} from "~/commons/utils/helper";
+import BookmarkButton from "~/components/commons/BookmarkIcon";
+import CopyButton from "~/components/commons/CopyButton";
+import CustomTooltip from "~/components/commons/CustomTooltip";
+import DropdownDetail from "~/components/commons/DropdownDetail";
 
 import {
   BackButton,
@@ -30,7 +34,6 @@ import {
   HeaderDetailContainer,
   HeaderTitle,
   HeaderTitleSkeleton,
-  InfoImg,
   InfoTitle,
   InfoValue,
   Item,
@@ -41,9 +44,10 @@ import {
   StyledGrid,
   StyledImg,
   StyledLinearProgress,
-  StyledTitle,
+  StyledTitle
 } from "./styles";
 import ADAicon from "../../commons/ADAIcon";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface IDelegationDetailInfo {
   data: DelegationOverview | null;
@@ -55,6 +59,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
   const history = useHistory();
   const [isOpenReward, setOpenReward] = useState<boolean>(false);
   const [isOpenOwner, setOpenOwner] = useState<boolean>(false);
+  const { isMobile, isGalaxyFoldSmall } = useScreen();
 
   if (loading) {
     return (
@@ -65,14 +70,14 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         </BackButton>
         <HeaderContainer>
           <HeaderTitle>
-            <HeaderTitleSkeleton variant="rectangular" />
+            <HeaderTitleSkeleton variant='rectangular' />
           </HeaderTitle>
         </HeaderContainer>
         <PoolId>
-          <PoolIdSkeleton variant="rectangular" />
+          <PoolIdSkeleton variant='rectangular' />
         </PoolId>
-        <Box borderRadius={10} overflow="hidden">
-          <Skeleton variant="rectangular" height={250} width="100%" />
+        <Box borderRadius={10} overflow='hidden'>
+          <Skeleton variant='rectangular' height={250} width='100%' />
         </Box>
       </HeaderDetailContainer>
     );
@@ -88,13 +93,13 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <CustomTooltip title={data?.poolName || poolId}>
           <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
         </CustomTooltip>
-        <BookmarkButton keyword={poolId} type="POOL" />
+        <BookmarkButton keyword={poolId} type='POOL' />
       </HeaderContainer>
       <PoolId>
         <CustomTooltip title={poolId}>
           <Link to={details.delegation(poolId)}>
             <PoolIdLabel>Pool Id: </PoolIdLabel>
-            <PoolIdValue>{poolId}</PoolIdValue>
+            <PoolIdValue>{isMobile ? getShortHash(poolId) : poolId}</PoolIdValue>
           </Link>
         </CustomTooltip>
         <CopyButton text={poolId} />
@@ -102,21 +107,21 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       <DataContainer>
         <StyledGrid container>
           <Item item xs={6} md={3} top={1}>
-            <StyledImg src={TickerIcon} alt="Ticker Icon" />
+            <StyledImg src={TickerIcon} alt='Ticker Icon' />
             <InfoTitle>
               <StyledTitle>Ticker</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.tickerName || ""}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
-            <StyledImg src={CalendarIcon} alt="Calendar Icon" />
+            <StyledImg src={CalendarIcon} alt='Calendar Icon' />
             <InfoTitle>
               <StyledTitle>Created date</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
           </Item>
-          <Item item xs={6} md={3} top={1}>
-            <StyledImg src={RewardIcon} alt="Reward Icon" />
+          <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
+            <StyledImg src={RewardIcon} alt='Reward Icon' />
             <InfoTitle>
               <Box>
                 <StyledTitle>Reward Account</StyledTitle>
@@ -128,7 +133,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                           component={Link}
                           to={details.stake(data?.rewardAccounts[0] || "")}
                           style={{ fontFamily: "var(--font-family-text)" }}
-                          color={theme => `${theme.palette.secondary.main} !important`}
+                          color={(theme) => `${theme.palette.secondary.main} !important`}
                         >
                           {getShortWallet(data?.rewardAccounts[0] || "")}
                         </Box>
@@ -142,7 +147,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               </Box>
               {data?.rewardAccounts && data.rewardAccounts.length > 1 && (
                 <ButtonViewAll
-                  sx={{ color: theme => theme.palette.common.black }}
+                  sx={{ color: (theme) => theme.palette.common.black }}
                   onClick={() => {
                     setOpenReward(!isOpenReward);
                     setOpenOwner(false);
@@ -155,20 +160,15 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
 
             {isOpenReward && (
               <DropdownDetail
-                title="Reward account list"
+                title='Reward account list'
                 value={data?.rewardAccounts || []}
                 close={() => setOpenReward(false)}
               />
             )}
           </Item>
-          <Item item xs={6} md={3} top={1}>
-            <StyledImg src={UserIcon} alt="User Icon" />
-            <InfoTitle
-              onClick={() => {
-                setOpenOwner(!isOpenOwner);
-                setOpenReward(false);
-              }}
-            >
+          <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
+            <StyledImg src={UserIcon} alt='User Icon' />
+            <InfoTitle>
               <Box>
                 <StyledTitle>Owner Account</StyledTitle>{" "}
                 <InfoValue mt={"4px"}>
@@ -177,7 +177,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                       <CustomTooltip title={data?.ownerAccounts[0] || ""}>
                         <Box
                           component={Link}
-                          color={theme => `${theme.palette.blue[800]} !important`}
+                          color={(theme) => `${theme.palette.blue[800]} !important`}
                           to={details.stake(data?.ownerAccounts[0] || "")}
                           style={{ fontFamily: "var(--font-family-text)" }}
                         >
@@ -193,7 +193,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               </Box>
               {data?.ownerAccounts && data.ownerAccounts.length > 1 && (
                 <ButtonViewAll
-                  sx={{ color: theme => theme.palette.common.black }}
+                  sx={{ color: (theme) => theme.palette.common.black }}
                   onClick={() => {
                     setOpenOwner(!isOpenOwner);
                     setOpenReward(false);
@@ -206,20 +206,19 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
 
             {isOpenOwner && (
               <DropdownDetail
-                title="Owner address list"
+                title='Owner address list'
                 value={data?.ownerAccounts || []}
                 close={() => setOpenOwner(false)}
+                isStakeDetail={true}
               />
             )}
           </Item>
-        </StyledGrid>
-        <StyledGrid container>
           <Item item xs={6} md={3}>
-            <StyledImg src={DropIcon} alt="Drop Icon" />
+            <StyledImg src={DropIcon} alt='Drop Icon' />
             <InfoTitle>
               <StyledTitle>Pool size</StyledTitle>
             </InfoTitle>
-            <InfoValue>
+            <InfoValue sx={{ wordBreak: "break-all" }}>
               <FlexGap10>
                 {formatADAFull(data?.poolSize)}
                 <ADAicon />
@@ -227,7 +226,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <StyledImg src={HighestIcon} alt="Highest Icon" />
+            <StyledImg src={HighestIcon} alt='Highest Icon' />
             <InfoTitle>
               <StyledTitle>Stake limit</StyledTitle>
             </InfoTitle>
@@ -239,7 +238,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <StyledImg src={DelegatorIcon} alt="Delegator Icon" />
+            <StyledImg src={DelegatorIcon} alt='Delegator Icon' />
             <InfoTitle>
               <StyledTitle>Delegators</StyledTitle>
             </InfoTitle>
@@ -247,13 +246,19 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           </Item>
           <Item item xs={6} md={3}>
             <InfoValue>
-              <StyledLinearProgress variant="determinate" value={data?.saturation || 0} />
-              <div style={{ display: "flex", justifyContent: "space-between", marginTop: "9px" }}>
+              <StyledLinearProgress variant='determinate' value={data?.saturation || 0} />
+              <Box
+                display='flex'
+                flexDirection={isGalaxyFoldSmall ? "column" : "row"}
+                justifyContent='space-between'
+                alignItems={isGalaxyFoldSmall ? "flex-start" : "flex-end"}
+                marginTop='9px'
+              >
                 <Box component={"span"} mt={1} style={{ fontSize: "14px", fontWeight: "400", opacity: "0.5" }}>
                   Saturation
                 </Box>
-                <span style={{ fontSize: "16px" }}>{formatPercent(data?.saturation || 0)}</span>
-              </div>
+                <Box fontSize={16}>{formatPercent(data?.saturation || 0)}</Box>
+              </Box>
             </InfoValue>
           </Item>
         </StyledGrid>

@@ -8,12 +8,13 @@ import {
   AddressGroup,
   AddressLink,
   CardItem,
+  CardItemStyled,
   ItemDetail,
   LabelItem,
   RowItem,
   TitleDetail,
   TokenAddress,
-  ValueItem,
+  ValueItem
 } from "./styles";
 
 interface DetailCardProps {
@@ -28,22 +29,22 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
   if (loading) {
     return (
       <CardItem padding={0}>
-        <Skeleton variant="rectangular" height={"100%"} width="100%" />
+        <Skeleton variant='rectangular' height={"100%"} width='100%' />
       </CardItem>
     );
   }
   if (type === "right" && !address) {
     return (
-      <CardItem padding={props => props.spacing(4)}>
-        <TitleDetail paddingBottom={props => props.spacing(2)}>{title}</TitleDetail>
-        <Box width={"100%"} display="flex" alignItems="center" justifyContent="center">
-          <img alt="icon" src={EmptyIcon} />
+      <CardItemStyled>
+        <TitleDetail paddingBottom={(props) => props.spacing(2)}>{title}</TitleDetail>
+        <Box width={"100%"} display='flex' alignItems='center' justifyContent='center'>
+          <img alt='icon' src={EmptyIcon} />
         </Box>
-      </CardItem>
+      </CardItemStyled>
     );
   }
   return (
-    <CardItem padding={props => props.spacing(4)}>
+    <CardItemStyled>
       <TitleDetail>{title}</TitleDetail>
       <AddressGroup>
         {type === "left" ? (
@@ -59,7 +60,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
             <ItemDetail key={ii}>
               {i.title && (
                 <RowItem>
-                  <img src={infoIcon} alt="info icon" />
+                  <img src={infoIcon} alt='info icon' />
                   <LabelItem>{i.title}</LabelItem>
                 </RowItem>
               )}
@@ -68,7 +69,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
           );
         })}
       </Box>
-    </CardItem>
+    </CardItemStyled>
   );
 };
 

@@ -7,7 +7,6 @@ import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import { formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
-import { AIcon } from "../../commons/resources";
 import { StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -31,7 +30,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
   selected,
   showTabView,
   hash,
-  handleClose,
+  handleClose
 }) => {
   const { search } = useLocation();
   const history = useHistory();
@@ -49,26 +48,26 @@ const TransactionList: React.FC<TransactionListProps> = ({
       title: "#",
       key: "id",
       minWidth: 30,
-      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0),
+      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)
     },
     {
       title: "Tx Hash",
       key: "txhash",
       minWidth: 120,
 
-      render: r => (
+      render: (r) => (
         <div>
           <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
         </div>
-      ),
+      )
     },
     {
       title: "Block",
       key: "block",
       minWidth: 60,
-      render: r => (
+      render: (r) => (
         <Box>
           <Box>
             <StyledLink to={details.block(r.blockNo || r.blockHash)}>
@@ -79,28 +78,28 @@ const TransactionList: React.FC<TransactionListProps> = ({
             <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
           </Box>
         </Box>
-      ),
+      )
     },
     {
       title: "Fee",
       key: "fee",
       minWidth: 120,
-      render: r => (
-        <Box display="inline-flex" alignItems="center">
+      render: (r) => (
+        <Box display='inline-flex' alignItems='center'>
           <Box mr={1}>{formatADAFull(r.fee)}</Box>
           <ADAicon />
         </Box>
       ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+      }
     },
     {
       title: "Output in ADA",
       minWidth: 120,
       key: "outSum",
-      render: r => (
-        <Box display="inline-flex" alignItems="center">
+      render: (r) => (
+        <Box display='inline-flex' alignItems='center'>
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
           <ADAicon />
           {hash === r.hash && <SelectedIcon />}
@@ -108,8 +107,8 @@ const TransactionList: React.FC<TransactionListProps> = ({
       ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
-    },
+      }
+    }
   ];
   const { pathname } = window.location;
   return (
@@ -129,7 +128,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
             mainRef.current?.scrollTo(0, 0);
             history.push({ search: stringify({ page, size }) });
           },
-          handleCloseDetailView: handleClose,
+          handleCloseDetailView: handleClose
         }}
         onClickRow={onClickRow}
         selected={selected}

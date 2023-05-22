@@ -25,36 +25,34 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tokenId }) => {
       title: "#",
       key: "id",
       minWidth: "40px",
-      render: (data, index) => (
-        <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
-      ),
+      render: (data, index) => <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
     },
     {
       title: "Trx Hash",
       key: "trxHash",
       minWidth: "200px",
-      render: r => (
+      render: (r) => (
         <CustomTooltip title={r.txHash}>
           <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
         </CustomTooltip>
-      ),
+      )
     },
     {
       title: "Amount minted",
       key: "amountMinted",
       minWidth: "200px",
-      render: r => (
+      render: (r) => (
         <PriceValue>
           <SmallText>{numberWithCommas(r.amount)}</SmallText>
         </PriceValue>
-      ),
+      )
     },
     {
       title: "Time",
       key: "time",
       minWidth: "200px",
-      render: r => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>,
-    },
+      render: (r) => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
+    }
   ];
 
   return (
@@ -65,7 +63,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tokenId }) => {
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+        onChange: (page, size) => history.push({ search: stringify({ page, size }) })
       }}
       onClickRow={(_, r: ITokenMintingTable) => history.push(details.transaction(r.txHash))}
     />

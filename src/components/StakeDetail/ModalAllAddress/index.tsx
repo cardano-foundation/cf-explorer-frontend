@@ -9,6 +9,7 @@ import { Link, useHistory } from "react-router-dom";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
 import CustomTooltip from "../../commons/CustomTooltip";
+import { StyledLink } from "~/components/share/styled";
 
 interface ModalAllAddressProps {
   open: boolean;
@@ -27,38 +28,35 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
       title: "#",
       minWidth: 20,
       render: (r, index) => numberWithCommas((page - 1) * size + index + 1 || 0),
-      key: "no",
+      key: "no"
     },
     {
       title: "Addresses",
       minWidth: 120,
       render: (r, idx) => (
-        <Link
-          to={details.address(r.address)}
-          style={{ fontFamily: "var(--font-family-text)", color: "var(--color-blue)" }}
-        >
-          <CustomTooltip title={r.address || ""} placement="top-start">
+        <StyledLink to={details.address(r.address)}>
+          <CustomTooltip title={r.address || ""} placement='top-start'>
             <Box component={"span"}>{getShortWallet(r.address)}</Box>
           </CustomTooltip>
-        </Link>
+        </StyledLink>
       ),
-      key: "Addresses",
+      key: "Addresses"
     },
     {
       title: "Balance",
       minWidth: 80,
       render: (r, idx) => <Box component={"span"}>{formatADAFull(r.balance)}</Box>,
-      key: "Balance",
-    },
+      key: "Balance"
+    }
   ];
 
   return (
     <Modal {...props}>
       <ModalContainer px={4}>
         <ButtonClose onClick={props.onClose}>
-          <img src={closeIcon} alt="icon close" />
+          <img src={closeIcon} alt='icon close' />
         </ButtonClose>
-        <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Roboto", sans-serif '}>
+        <Box textAlign={"left"} fontSize='1.5rem' fontWeight='bold' fontFamily={'"Roboto", sans-serif '}>
           Addresses list
         </Box>
         <Box>
@@ -72,7 +70,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
                 setSize(size);
               },
               page,
-              total: fetchData.total,
+              total: fetchData.total
             }}
             onClickRow={(_, r) => history.push(details.address(r.address || ""))}
           />

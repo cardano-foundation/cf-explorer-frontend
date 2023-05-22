@@ -1,16 +1,18 @@
-import React, { useEffect, useMemo, useState } from "react";
-import {
-  Box,
-  Pagination,
-  PaginationRenderItemParams,
-  IconButton,
-  MenuItem,
-  styled,
-  CircularProgress,
-  alpha,
-} from "@mui/material";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Box, PaginationRenderItemParams, IconButton, MenuItem, styled, CircularProgress, alpha } from "@mui/material";
 import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
-import { DownIcon, EmptyIcon, EndPage, EyeIcon, NextPage, PrevPage, StartPage } from "../../../commons/resources";
+import {
+  DownIcon,
+  EmptyIcon,
+  EndPage,
+  EyeIcon,
+  NextPage,
+  PrevPage,
+  StartPage,
+  SortTableDown,
+  SortTableUp,
+  SortTableUpDown
+} from "../../../commons/resources";
 import {
   Empty,
   EmtyImage,
@@ -20,7 +22,6 @@ import {
   THead,
   THeader,
   TRow,
-  Total,
   TotalNumber,
   Wrapper,
   TableFullWidth,
@@ -32,6 +33,7 @@ import {
   TableTitle,
   ShowedResults,
   TableCustomTitle,
+  StyledPagination
 } from "./styles";
 import {
   ColumnType,
@@ -39,19 +41,19 @@ import {
   TableHeaderProps,
   TableProps,
   TableRowProps,
-  TableTopHeaderProps,
+  TableTopHeaderProps
 } from "../../../types/table";
 import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
-import { TbArrowsDownUp, TbArrowUp, TbArrowDown } from "react-icons/tb";
 import Filter from "../Filter";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 type TEmptyRecord = {
   className?: string;
 };
 export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
   <Empty className={className}>
-    <EmtyImage src={EmptyIcon} alt="no data" />
+    <EmtyImage src={EmptyIcon} alt='no data' />
   </Empty>
 );
 
@@ -63,11 +65,11 @@ const TableHeader = <T extends ColumnType>({
   selected = null,
   selectable,
   toggleSelectAll,
-  isSelectAll,
+  isSelectAll
 }: TableHeaderProps<T>) => {
   const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
     columnKey: defaultSort ? defaultSort.split(",")[0] : "",
-    sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : "",
+    sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : ""
   });
   const sortValue = ({ key, sort }: { key: string; sort: "" | "DESC" | "ASC" }) => {
     if (key === columnKey) {
@@ -91,25 +93,30 @@ const TableHeader = <T extends ColumnType>({
     if (key === columnKey)
       switch (sort) {
         case "DESC":
-          return <TbArrowDown color={"#98A2B3"} size={"18px"} />;
+          return <SortTableDown />;
         case "ASC":
-          return <TbArrowUp color={"#98A2B3"} size={"18px"} />;
+          return <SortTableUp />;
         default: {
-          return <TbArrowsDownUp color={"#98A2B3"} size={"18px"} />;
+          return <SortTableUpDown />;
         }
       }
-    return <TbArrowsDownUp color={"#98A2B3"} size={"18px"} />;
+    return <SortTableUpDown />;
   };
   return (
     <THead>
       <tr>
         {selectable && (
           <THeader>
-            <TableCheckBox checked={isSelectAll} onChange={e => toggleSelectAll?.(e.target.checked)} />
+            <TableCheckBox checked={isSelectAll} onChange={(e) => toggleSelectAll?.(e.target.checked)} />
           </THeader>
         )}
         {columns.map((column, idx) => (
-          <THeader key={idx}>
+          <THeader
+            key={idx}
+            style={
+              column.fixed ? { position: "sticky", left: column.leftFixed ? column.leftFixed : "-8px", zIndex: 10 } : {}
+            }
+          >
             {column.title}
             {column.sort && (
               <IconButton
@@ -138,22 +145,26 @@ const TableRow = <T extends ColumnType>({
   dataLength,
   selectable,
   toggleSelection,
-  isSelected,
+  isSelected
 }: TableRowProps<T>) => {
+  const colRef = useRef(null);
   return (
-    <TRow onClick={e => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
+    <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
       {selectable && (
         <TCol>
-          <TableCheckBox checked={isSelected?.(row)} onChange={e => toggleSelection?.(row)} />
+          <TableCheckBox checked={isSelected?.(row)} onChange={(e) => toggleSelection?.(row)} />
         </TCol>
       )}
       {columns.map((column, idx) => {
         return (
           <TCol
+            className='tb-col'
             key={idx}
+            ref={colRef}
             minWidth={column.minWidth}
             maxWidth={column.maxWidth}
             hiddenBorder={column.isHiddenBorder && dataLength === index + 1}
+            style={column.fixed ? { position: "sticky", left: column.leftFixed ? column.leftFixed : "-8px" } : {}}
           >
             {column.render ? column.render(row, index) : row[column.key]}
           </TCol>
@@ -179,7 +190,7 @@ const TableBody = <T extends ColumnType>({
   initialized,
   selectable,
   toggleSelection,
-  isSelected,
+  isSelected
 }: TableProps<T>) => {
   return (
     <TBody>
@@ -187,15 +198,15 @@ const TableBody = <T extends ColumnType>({
         <tr>
           <td>
             <LoadingWrapper
-              bgcolor={theme => alpha(theme.palette.common.black, 0.05)}
+              bgcolor={(theme) => alpha(theme.palette.common.black, 0.05)}
               width={"100%"}
               height={"100%"}
               zIndex={1000}
-              display="flex"
-              justifyContent="center"
-              alignItems="self-start"
+              display='flex'
+              justifyContent='center'
+              alignItems='self-start'
             >
-              <Box pt={'20%'}>
+              <Box pt={"20%"}>
                 <CircularProgress />
               </Box>
             </LoadingWrapper>
@@ -237,7 +248,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
   const [page, setPage] = useState(pagination?.page || 1);
   const [size, setSize] = useState(pagination?.size || 50);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
-
+  const { isMobile } = useScreen();
   useUpdateEffect(() => {
     setPage(1);
   }, [poolType]);
@@ -250,11 +261,11 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
 
   return (
     <TFooter>
-      <Box display={"flex"} alignItems="center">
+      <Box display={"flex"} alignItems='center' margin='15px 0px'>
         {pagination?.total && pagination.total > 10 ? (
-          <Box>
+          <Box display='flex' alignItems='center'>
             <SelectMui
-              size="small"
+              size='small'
               onChange={(e: any) => {
                 setSize(+e.target.value);
                 setPage(1);
@@ -269,7 +280,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
               <MenuItem value={50}>50</MenuItem>
               <MenuItem value={100}>100</MenuItem>
             </SelectMui>
-            <Box component={"span"} ml={1} fontSize="0.875rem">
+            <Box component={"span"} ml={1} fontSize='0.875rem'>
               Per page
             </Box>
           </Box>
@@ -277,15 +288,13 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
           ""
         )}
         {total?.count ? (
-          <Total ml={"20px"} fontSize="0.875rem" lineHeight={"1 !important"}>
+          <Box ml={"20px"} fontSize='0.875rem'>
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> {`Result${total.count > 1 ? "s" : ""}`}
-          </Total>
+          </Box>
         ) : (
           ""
         )}
       </Box>
-
-      <Box />
       {pagination?.total && pagination.total > 10 ? (
         <PaginationCustom
           pagination={pagination}
@@ -326,12 +335,13 @@ const Table: React.FC<TableProps> = ({
   fliterOptions,
   onFilterChange,
   isShowingResult,
-  maxHeight,
+  maxHeight
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
-    onSelectionChange,
+    onSelectionChange
   });
-
+  const tableRef = useRef(null);
+  const heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, 800);
   const toggleSelectAll = (isChecked: boolean) => {
     if (data && isChecked) {
       selectAll(data);
@@ -346,18 +356,22 @@ const Table: React.FC<TableProps> = ({
 
   const isSelectAll = useMemo(() => data?.length === selectedItems.length, [data, selectedItems]);
   return (
-    <Box className={className || ""} style={style}>
+    <Box className={className || ""} style={style} data-testid='table-common'>
       <TableTopHeader
         onFilterChange={onFilterChange}
-        renderAction={items => renderAction?.(items, clearSelection)}
+        renderAction={(items) => renderAction?.(items, clearSelection)}
         title={tableTitle}
         totalShowingResult={isShowingResult && data?.length}
         fliterOptions={fliterOptions}
         selectedItems={selectedItems}
         isSelectAll={isSelectAll}
       />
-      <Wrapper maxHeight={maxHeight}>
-        <TableFullWidth>
+      <Wrapper
+        maxHeight={maxHeight}
+        minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 600 : 150}
+        height={heightTable}
+      >
+        <TableFullWidth ref={tableRef}>
           <TableHeader
             columns={columns}
             loading={loading}
@@ -399,7 +413,7 @@ const TableTopHeader: React.FC<TableTopHeaderProps> = ({
   title,
   isSelectAll,
   totalShowingResult = 0,
-  onFilterChange,
+  onFilterChange
 }) => (
   <TableHeaderContainer>
     {typeof title === "string" ? <TableTitle>{title}</TableTitle> : <TableCustomTitle>{title}</TableCustomTitle>}
@@ -420,7 +434,7 @@ const PaginationCustom = ({
   page,
   size,
   handleChangePage,
-  loading,
+  loading
 }: {
   pagination: TableProps["pagination"];
   total: number;
@@ -434,11 +448,15 @@ const PaginationCustom = ({
 
   useUpdateEffect(() => {
     setInputPage(1);
-  }, [poolType]);
+  }, [poolType, size]);
 
-  useUpdateEffect(() => {
-    setInputPage(1);
-  }, [size]);
+  useEffect(() => {
+    if (pagination?.page) {
+      setInputPage(pagination?.page + 1);
+    }
+  }, [pagination?.page]);
+
+  const { isGalaxyFoldSmall } = useScreen();
 
   const totalPage = Math.ceil((pagination?.total || 0) / size);
   const renderItem = (item: PaginationRenderItemParams) => {
@@ -501,18 +519,21 @@ const PaginationCustom = ({
     if (item.type === "page") {
       if (item.page === 1) {
         return (
-          <Box>
+          <Box width={isGalaxyFoldSmall ? "100vw" : "auto"} textAlign={isGalaxyFoldSmall ? "left" : "center"}>
             <InputNumber
-              type={"number"}
+              type={"string"}
               value={inputPage}
               length={inputPage.toString().length || 1}
-              onChange={e => {
+              onChange={(e) => {
                 if (+e.target.value <= totalPage) {
                   setInputPage(+e.target.value);
                 }
               }}
+              onBlur={(e) => {
+                setInputPage(page);
+              }}
               disabled={loading}
-              onKeyDown={e => {
+              onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   if (inputPage < 1) {
                     setInputPage(1);
@@ -522,7 +543,7 @@ const PaginationCustom = ({
                 }
               }}
             />
-            <Box component={"span"} color={theme => theme.palette.grey[400]} fontSize="0.875rem">
+            <Box component={"span"} color={(theme) => theme.palette.grey[400]} fontSize='0.875rem'>
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
               {numberWithCommas((page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size)} of{" "}
               {numberWithCommas(pagination?.total || 0)}
@@ -533,31 +554,37 @@ const PaginationCustom = ({
     }
   };
   return (
-    <Pagination count={total || 0} page={page} showFirstButton={true} showLastButton={true} renderItem={renderItem} />
+    <StyledPagination
+      count={total || 0}
+      page={page}
+      showFirstButton={true}
+      showLastButton={true}
+      renderItem={renderItem}
+    />
   );
 };
 
 const StartPageIcon = styled(StartPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
 }));
 const EndPageIcon = styled(EndPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
 }));
 const NextPageIcon = styled(NextPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
 }));
 const PrevPageIcon = styled(PrevPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400],
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
 }));
 
 function useSelection<T>({ onSelectionChange }: { onSelectionChange?: (items: T[]) => void }) {
   const [selectedItems, setSelectedItems] = useState<T[]>([]);
   const toggleSelection = (item: T) => {
-    setSelectedItems(prevSelectedItems => {
+    setSelectedItems((prevSelectedItems) => {
       const itemIndex = prevSelectedItems.indexOf(item);
       if (itemIndex >= 0) {
-        onSelectionChange?.(prevSelectedItems.filter(i => i !== item));
-        return prevSelectedItems.filter(i => i !== item);
+        onSelectionChange?.(prevSelectedItems.filter((i) => i !== item));
+        return prevSelectedItems.filter((i) => i !== item);
       }
       onSelectionChange?.([...prevSelectedItems, item]);
       return [...prevSelectedItems, item];

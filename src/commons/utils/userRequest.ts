@@ -28,7 +28,7 @@ export const addBookmark = (payload: Bookmark) =>
   authAxios.post<any, AxiosResponse<Bookmark, any>>("/bookmark/add", payload);
 export const addListBookmark = (payload: Bookmark[]) =>
   authAxios.post<any, AxiosResponse<{ passNumber: number; failNumber: number }, any>>("/bookmark/add-list", {
-    bookMarks: payload,
+    bookMarks: payload
   });
 export const deleteBookmark = (id: number) => authAxios.delete("/bookmark/delete/" + id);
 export const getAllBookmarks = (network: string) =>

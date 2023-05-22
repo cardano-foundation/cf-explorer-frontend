@@ -13,7 +13,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   maxHeight: "90vh",
   overflowY: "auto",
   "::-webkit-scrollbar": {
-    width: "16px",
+    width: "16px"
   },
 
   "::-webkit-scrollbar-thumb": {
@@ -23,13 +23,17 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
     backgroundClip: "padding-box",
     ":hover": {
       background: theme.palette.grey[300],
-      backgroundClip: "padding-box",
+      backgroundClip: "padding-box"
     },
     ":active": {
       background: theme.palette.grey[400],
-      backgroundClip: "padding-box",
-    },
+      backgroundClip: "padding-box"
+    }
   },
+
+  [`@media screen and (max-width: ${theme.breakpoints.values.md}px)`]: {
+    marginTop: theme.spacing(4)
+  }
 }));
 export const ButtonClose = styled(Button)(({ theme }) => ({
   position: "absolute",
@@ -39,5 +43,5 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
   height: 30,
   borderRadius: "50%",
   padding: 0,
-  minWidth: 0,
+  minWidth: 0
 }));

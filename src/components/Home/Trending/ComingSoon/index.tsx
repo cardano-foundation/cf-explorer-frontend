@@ -20,15 +20,15 @@ const Image = styled("img")`
 
 const Title = styled("h3")`
   margin-bottom: 0;
-  color: ${props => props.theme.palette.text.hint};
+  color: ${(props) => props.theme.palette.text.hint};
   font-size: var(--font-size-text-x-large);
 `;
 
 const ComingSoon: React.FC = () => {
   return (
-    <CustomTooltip title="Exciting things incoming">
+    <CustomTooltip title='Exciting things incoming'>
       <ComingSoonContainer>
-        <Image src={ComingSoonIcon} alt="News" />
+        <Image src={ComingSoonIcon} alt='News' />
         <Title>News</Title>
       </ComingSoonContainer>
     </CustomTooltip>

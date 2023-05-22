@@ -1,12 +1,24 @@
-import { styled, Container, Select, Box, alpha, Avatar } from "@mui/material";
+import { styled, Container, Select } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const StyledContainer = styled(Container)`
-  padding: 20px 0 40px;
-`;
+export const StyledContainer = styled(Container)(({ theme }) => ({
+  padding: "20px 0 40px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "10px 0 40px",
+    "& > div > div:nth-of-type(2)": {
+      padding: "0 16px"
+    },
+    "& > div:nth-of-type(1)": {
+      "& > div:nth-of-type(1)": {
+        padding: "0 16px"
+      }
+    },
+    marginTop: "0px !important"
+  }
+}));
 
 export const AssetName = styled(Link)`
-  color: ${props => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
   font-family: var(--font-family-text) !important;
 `;
 
@@ -18,8 +30,8 @@ export const Logo = styled("img")`
 
 export const StyledSelect = styled(Select)`
   font-family: var(--font-family-text);
-  background: ${props => props.theme.palette.background.paper};
-  color: ${props => props.theme.palette.text.secondary};
+  background: ${(props) => props.theme.palette.background.paper};
+  color: ${(props) => props.theme.palette.text.secondary};
   border-radius: 8px;
   min-width: 250px;
   & > div {
@@ -33,7 +45,7 @@ export const StyledSelect = styled(Select)`
     border: none !important;
   }
   & > svg {
-    color: ${props => props.theme.palette.text.secondary};
+    color: ${(props) => props.theme.palette.text.secondary};
     font-size: 20px;
   }
 `;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { routers } from "./commons/routers";
+import { routers, details } from "./commons/routers";
 import Home from "./pages/Home";
 import BlockList from "./pages/BlockList";
 import BlockDetail from "./pages/BlockDetail";
@@ -39,13 +39,12 @@ import ResetPassword from "./pages/ResetPassword";
 import StackingLifecycle from "./pages/StackingLifecycle";
 import ReportGenerated from "./pages/ReportGenerated";
 import VerifyEmail from "./pages/VerifyEmail";
-import { Box } from "@mui/material";
-import { details } from "./commons/routers";
+
+import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
+import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
+import StakingLifeCycleSearch from "./pages/StakingLifeCycleSearch";
 
 const Routes: React.FC = () => {
-  console.log(localStorage.getItem("username"));
-  //TODO: lấy stake key thay vì username trong tương lai
-  const stakeKey = localStorage.getItem("username");
   //TODO: lấy SPO
   return (
     <Switch>
@@ -76,21 +75,15 @@ const Routes: React.FC = () => {
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
       <Route path={routers.STAKING_LIFECYCLE} exact component={StackingLifecycle} />
       <Route path={routers.REPORT_GENERATED} exact component={ReportGenerated} />
+      <Route path={routers.REPORT_GENERATED_STAKING_DETAIL} exact component={ReportGeneratedStakingDetail} />
+      <Route path={routers.REPORT_GENERATED_POOL_DETAIL} exact component={ReportGeneratedPoolDetail} />
       <Route path={routers.PROTOCOL_PARAMETER} exact component={ProtocolParameter} />
       <Route path={routers.SEARCH} exact component={SearchResult} />
       <Route path={routers.DELEGATOR_LIFECYCLE} exact component={DelegatorLifecycle} />
       <Route path={routers.SPO_LIFECYCLE} exact component={SPOLifecycle} />
       <Route path={routers.SPO_SEARCH} exact component={SPOSearch} />
-      <Route
-        path={routers.DELEGATOR_SEARCH}
-        exact
-        component={() => {
-          if (stakeKey) {
-            return <Redirect to={details.staking(stakeKey)} />;
-          }
-          return <DelegatorSearch />;
-        }}
-      />
+      <Route path={routers.DELEGATOR_SEARCH} exact component={DelegatorSearch} />
+      <Route path={routers.STAKING_LIFECYCLE_SEARCH} exact component={StakingLifeCycleSearch} />
       <Route path={routers.ACCOUNT}>
         <AccountLayout>
           <Switch>

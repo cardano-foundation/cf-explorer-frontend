@@ -1,13 +1,14 @@
 import { TabList } from "@mui/lab";
 import { Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
+import breakpoints from "~/themes/breakpoints";
 
-export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
+export const TitleTab = styled(Box)<{ active?: boolean }>(({ active, theme }) => ({
   fontWeight: "bold",
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.common.black : theme.palette.text.hint,
+  color: active ? theme.palette.common.black : theme.palette.text.hint
 }));
 
 export const LabelStatus = styled(Box)(({ theme }) => ({
@@ -18,12 +19,12 @@ export const LabelStatus = styled(Box)(({ theme }) => ({
   fontSize: "0.875rem",
   borderRadius: 4,
   height: "60%",
-  width: "max-content",
+  width: "max-content"
 }));
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.palette.secondary.main}!important;
+  color: ${(props) => props.theme.palette.secondary.main}!important;
 `;
 
 export const StyledTabList = styled(TabList)`
@@ -31,3 +32,7 @@ export const StyledTabList = styled(TabList)`
     justify-content: space-between;
   }
 `;
+
+export const WrapperTabList = styled(Box)(({ theme }) => ({
+  borderBottom: `1px solid ${theme.palette.border.secondary}`
+}));

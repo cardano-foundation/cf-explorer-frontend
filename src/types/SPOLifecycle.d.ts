@@ -33,6 +33,7 @@ interface SPORegistration {
   poolUpdateId: number;
   txHash: string;
   fee: number;
+  poolHold: number;
   time: string;
   margin: number;
 }
@@ -97,6 +98,7 @@ interface SPO_REWARD {
 interface WalletActivityIF {
   txHash: string;
   amount: number;
+  fee: number;
   time: string;
   type: "SENT" | "RECEIVED" | "FEE_PAID" | "CERTIFICATE_FEE_PAID" | "CERTIFICATE_DEPOSIT_PAID";
   status: "FAIL" | "SUCCESS" | "PENDING";
@@ -121,8 +123,12 @@ interface PoolInfo {
 
 interface IDashboardResponse {
   id: number;
+  poolReportId: number;
+  stakeKeyReportId: number;
   createdAt: string;
   reportName: string;
   status: string;
-  type: string;
+  type: "STAKE_KEY" | "POOL_ID";
 }
+
+declare type SPOStep = "registration" | "pool-updates" | "operator-rewards" | "deregistration";

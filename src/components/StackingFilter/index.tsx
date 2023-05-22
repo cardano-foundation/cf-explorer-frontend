@@ -11,7 +11,7 @@ import {
   FilterContent,
   FilterIconContainer,
   FilterListItemText,
-  FilterMenuItem,
+  FilterMenuItem
 } from "../commons/Filter/styles";
 import { StyledInput } from "../share/styled";
 import DateRangeModal, { DATETIME_PARTTEN } from "./DateRangeModal";
@@ -26,20 +26,20 @@ interface StakingOption extends Option {
 const filterOptions: StakingOption[] = [
   {
     label: "Latest - First",
-    icon: <CustomIcon icon={ArrowFromTopIcon} fill="currentColor" width={20} />,
-    value: "latest",
+    icon: <CustomIcon icon={ArrowFromTopIcon} fill='currentColor' width={20} />,
+    value: "latest"
   },
   {
     label: "First - Latest",
-    icon: <CustomIcon icon={ArrowFromBottomIcon} fill="currentColor" width={20} />,
-    value: "first",
+    icon: <CustomIcon icon={ArrowFromBottomIcon} fill='currentColor' width={20} />,
+    value: "first"
   },
-  { label: "Date range", icon: <CustomIcon icon={CalenderIcon} fill="currentColor" width={20} />, value: "dateRange" },
+  { label: "Date range", icon: <CustomIcon icon={CalenderIcon} fill='currentColor' width={20} />, value: "dateRange" },
   {
     label: "Search transaction",
-    icon: <CustomIcon icon={SearchIcon} stroke="currentColor" width={22} />,
-    value: "search",
-  },
+    icon: <CustomIcon icon={SearchIcon} stroke='currentColor' width={22} />,
+    value: "search"
+  }
 ];
 
 export interface FilterParams {
@@ -68,9 +68,8 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
 
   const onDateRangeModalClose = () => {
     setIsOpenSelectRange(false);
-    console.log(isOpenSelectRange);
   };
-  const onFilterButtonClick = () => setOpen(pre => !pre);
+  const onFilterButtonClick = () => setOpen((pre) => !pre);
   const onOptionClick = (value: string, option: Option) => {
     switch (value) {
       case "latest": {
@@ -108,7 +107,12 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
           onClick={onFilterButtonClick}
           startIcon={
             <FilterIconContainer>
-              <CustomIcon icon={FilterIC} width={18} color={theme => theme.palette.primary.main} fill="currentColor" />
+              <CustomIcon
+                icon={FilterIC}
+                width={18}
+                color={(theme) => theme.palette.primary.main}
+                fill='currentColor'
+              />
             </FilterIconContainer>
           }
         >
@@ -117,7 +121,7 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
         {open && filterOptions && (
           <FilterContent>
             <MenuList>
-              {filterOptions.map(option => (
+              {filterOptions.map((option) => (
                 <FilterMenuItem
                   active={+(option.value === selected)}
                   key={option.value}
@@ -155,7 +159,7 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
                   setSelected("dateRange");
                   onFilterValueChange?.({
                     fromDate: moment(fromDate, DATETIME_PARTTEN).utc().format(DATETIME_PARTTEN),
-                    toDate: moment(toDate, DATETIME_PARTTEN).utc().format(DATETIME_PARTTEN),
+                    toDate: moment(toDate, DATETIME_PARTTEN).utc().format(DATETIME_PARTTEN)
                   });
                   setOpen(false);
                 }}

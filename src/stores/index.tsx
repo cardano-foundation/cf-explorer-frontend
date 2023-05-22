@@ -18,13 +18,13 @@ const setStore = (store: Store) => {
 const persistConfig = {
   key: "root",
   storage: storage,
-  whitelist: [],
+  whitelist: []
 };
 
 const userPersistConfig = {
   key: "user",
   storage: storage,
-  blacklist: ["onDetailView", "openModal", "modalSignMessage", "modalRegister"],
+  blacklist: ["onDetailView", "openModal", "modalSignMessage", "modalRegister"]
 };
 
 export const getStore = (): Store<RootState> => {
@@ -38,7 +38,7 @@ const appReducer = combineReducers({
   user: persistReducer(userPersistConfig, userReducer),
   user2: userReducer2,
   system: systemReducer,
-  toast: toastReducer,
+  toast: toastReducer
 });
 
 const rootReducer = (state: any, action: any) => appReducer(state, action);

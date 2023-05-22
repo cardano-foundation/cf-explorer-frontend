@@ -13,8 +13,9 @@ import { API } from "../../../commons/utils/api";
 import BookmarkButton from "../../commons/BookmarkIcon";
 import TokenAutocomplete from "../../TokenAutocomplete";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { BackButton, BackText } from "./styles";
+import { BackButton, BackText, StyledBoxCard, TitleText } from "./styles";
 import ADAicon from "../../commons/ADAIcon";
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface Props {
   data: WalletAddress | null;
@@ -27,6 +28,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   );
   const { adaRate } = useSelector(({ system }: RootState) => system);
   const theme = useTheme();
+  const { isMobile } = useScreen();
 
   const history = useHistory();
   useEffect(() => {
@@ -38,19 +40,19 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: "ADA Balance",
       value: (
-        <Box display="flex" alignItems="center">
+        <Box display='flex' alignItems='center'>
           {formatADAFull(data?.balance)}
           <ADAicon pl={"8px"} />
         </Box>
-      ),
+      )
     },
     {
       title: "ADA Value",
-      value: <Box>$ {exchangeADAToUSD(data?.balance || 0, adaRate, true)}</Box>,
+      value: <Box>$ {exchangeADAToUSD(data?.balance || 0, adaRate, true)}</Box>
     },
     {
-      value: <TokenAutocomplete address={data?.address || ""} />,
-    },
+      value: <TokenAutocomplete address={data?.address || ""} />
+    }
   ];
   const itemRight = [
     {
@@ -60,7 +62,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           {formatADAFull(dataStake?.totalStake)}
           <ADAicon pl={"8px"} />
         </Box>
-      ),
+      )
     },
     {
       title: "POOL NAME",
@@ -73,7 +75,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
             (dataStake?.pool?.poolId && `Pool [${getShortWallet(dataStake.pool.poolId)}]`) ||
             ""}
         </Link>
-      ),
+      )
     },
     {
       title: "Reward",
@@ -82,8 +84,8 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           {formatADAFull(dataStake?.rewardAvailable)}
           <ADAicon pl={"8px"} />
         </Box>
-      ),
-    },
+      )
+    }
   ];
 
   return (
@@ -91,38 +93,38 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       <Box display={"flex"} alignItems={"flex-start"} flexDirection={"column"}>
         <Box>
           <BackButton onClick={history.goBack}>
-            <HiArrowLongLeft fontSize="16px" />
+            <HiArrowLongLeft fontSize='16px' />
             <BackText>Back</BackText>
           </BackButton>
         </Box>
         <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
-          <Box>Address Detail</Box>
-          <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
+          <TitleText>Address Detail</TitleText>
+          <BookmarkButton keyword={data?.address || ""} type='ADDRESS' />
         </Box>
       </Box>
-      <Grid container columnSpacing={2}>
+      <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Box overflow="hidden" borderRadius={10} height={"100%"}>
+          <StyledBoxCard>
             <CardAddress
               title={"Wallet address"}
-              type="left"
+              type='left'
               address={data?.address || ""}
               item={itemLeft}
               loading={loading}
             />
-          </Box>
+          </StyledBoxCard>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Box overflow="hidden" borderRadius={10} height={"100%"}>
+          <StyledBoxCard>
             <CardAddress
               title={"Stake address"}
-              type="right"
+              type='right'
               address={data?.stakeAddress || ""}
               item={itemRight}
               loading={loading || loadingStake}
               addressDestination={details.stake(data?.stakeAddress)}
             />
-          </Box>
+          </StyledBoxCard>
         </Grid>
       </Grid>
     </Card>

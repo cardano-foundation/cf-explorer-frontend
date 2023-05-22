@@ -4,11 +4,11 @@ export const API = {
     DETAIL: "addresses",
     MIN_MAX_BALANCE: "addresses/min-max-balance",
     TOP_ADDRESS: "addresses/top-addresses",
-    TOKENS: "addresses/:address/tokens",
+    TOKENS: "addresses/:address/tokens"
   },
   BLOCK: {
     DETAIL: "blocks",
-    LIST: "blocks",
+    LIST: "blocks"
   },
   CONTRACT: "contracts",
   DELEGATION: {
@@ -17,12 +17,12 @@ export const API = {
     POOL_DETAIL_HEADER: "delegations/pool-detail-header",
     POOL_DETAIL: "delegations/pool-detail",
     POOL_LIST: "delegations/pool-list",
-    TOP: "delegations/top",
+    TOP: "delegations/top"
   },
   EPOCH: {
     CURRENT_EPOCH: "epochs/current",
     DETAIL: "epochs",
-    LIST: "epochs",
+    LIST: "epochs"
   },
   POLICY: "policies",
   POOL: "pools",
@@ -32,7 +32,7 @@ export const API = {
     CURRENT: "txs/current",
     DETAIL: "txs",
     LIST: "txs",
-    GRAPH: "txs/graph",
+    GRAPH: "txs/graph"
   },
   STAKE: {
     ANALYTICS: "stakes/analytics",
@@ -42,7 +42,7 @@ export const API = {
     DE_REGISTRATION: "stakes/de-registration",
     TOP_DELEGATOR: "stakes/top-delegators",
     REGISTRATION: "stakes/registration",
-    MIN_MAX_BALANCE: "stakes/min-max-balance",
+    MIN_MAX_BALANCE: "stakes/min-max-balance"
   },
   STAKE_LIFECYCLE: {
     REGISTRATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/registrations`,
@@ -53,7 +53,7 @@ export const API = {
     DEREGISTRATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/de-registrations`,
     RECEIVED_REWARD: (stakeKey: string) => `stake-lifecycle/${stakeKey}/rewards`,
     WALLET_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/wallet-activity`,
-    REWARDS_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/reward-activity`,
+    REWARDS_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/reward-activity`
   },
   SPO_LIFECYCLE: {
     SPO_REGISTRATION: (poolId: string) => `pool-lifecycle/registration?poolView=${poolId}`,
@@ -68,12 +68,13 @@ export const API = {
     SPO_DEREGISTRATION: (poolId: string) => `pool-lifecycle/de-registration?poolView=${poolId}`,
     SPO_POOL_INFO: (poolId: string) => `pool-lifecycle/pool-info?poolView=${poolId}`,
     SPO_DEREGISTRATION_DETAIl: (poolView: string, poolId: number) =>
-      `pool-lifecycle/de-registration-detail?poolView=${poolView}&id=${poolId}`,
+      `pool-lifecycle/de-registration-detail?poolView=${poolView}&id=${poolId}`
   },
   MARKETS: "markets",
   PROTOCOL_PARAMETER: {
-    CURRENT: "protocol/current",
-    HISTORY: "protocol/:type/history",
+    LASTEST: "protocols/latest",
+    HISTORY: "protocols/histories",
+    FIXED: "protocols/fixed"
   },
   REPORT: {
     STAKE_KEY_SUMMARY: `staking-lifecycle/report/stake-key/history`,
@@ -81,11 +82,31 @@ export const API = {
     DOWNLOAD_POOL_SUMMARY: (reportId: number) => `pool-report/detail/${reportId}/export`,
     POOL_REPORT_SUMMARY: `pool-report/list`,
     DASHBOARD: `staking-lifecycle/report/dashboard`,
-  },
+    //report for staking
+    STAKING_REPORTED_DETAIL: (reportId: number | string) => `staking-lifecycle/report/stake-key/${reportId}/detail`,
+    SREPORT_DETAIL_REGISTRATIONS: (reportId: number | string) =>
+      `staking-lifecycle/report/stake-key/${reportId}/registrations`,
+    SREPORT_DETAIL_WITHDRAWALS: (reportId: number | string) =>
+      `staking-lifecycle/report/stake-key/${reportId}/withdrawals`,
+    SREPORT_DETAIL_REWARDS: (reportId: number | string) => `staking-lifecycle/report/stake-key/${reportId}/rewards`,
+    SREPORT_DETAIL_DELEGATIONS: (reportId: number | string) =>
+      `staking-lifecycle/report/stake-key/${reportId}/delegations`,
+    SREPORT_DETAIL_DEGEGISTRATIONS: (reportId: number | string) =>
+      `staking-lifecycle/report/stake-key/${reportId}/de-registrations`,
+    SREPORT_WALLET_ACTIVITY: (reportId: number | string) =>
+      `staking-lifecycle/report/stake-key/${reportId}/wallet-activity`,
+    //report for pool
+    POOL_REPORTED_DETAIL: (reportId: number | string) => `pool-report/detail/${reportId}`,
+    PREPORT_REGISTRATIONS: (reportId: number | string) => `pool-report/detail/${reportId}/pool-registration`,
+    PREPORT_PROTOCOL_UPDATE: (reportId: number | string) => `pool-report/detail/${reportId}/pool-update`,
+    PREPORT_REWARD_DISTRIBUTIONS: (reportId: number | string) => `pool-report/detail/${reportId}/rewards-distribution`,
+    PREPORT_DEREGSITRATION: (reportId: number | string) => `pool-report/detail/${reportId}/deregistration`,
+    PREPORT_EPOCH_SIZE: (reportId: number | string) => `pool-report/detail/${reportId}/epoch-size`
+  }
 };
 
 export const USER_API = {
   ACTIVITY_LOG: "user/activities-log",
   INFO: "user/info",
-  BOOKMARK: "find-all-key",
+  BOOKMARK: "find-all-key"
 };
