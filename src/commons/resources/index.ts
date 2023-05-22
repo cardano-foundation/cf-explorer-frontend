@@ -65,8 +65,7 @@ import SaveOnIcon from "./icons/save-on.svg";
 import SaveOffIcon from "./icons/save-off.svg";
 import LinkOff from "./icons/link-off.svg";
 import User2 from "./icons/user2.svg";
-import CertificateIcon from "./images/certificate.png";
-
+import CertificateIconUrl from "./images/certificate.png";
 import FlintIcon from "./icons/flint.svg";
 import NamiIcon from "./icons/nami.svg";
 import EternlIcon from "./icons/eternl.svg";
@@ -75,6 +74,10 @@ import TyphonIcon from "./icons/typhon.svg";
 import HeaderBackgroundImage from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
+import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
+import AdaHolderIconUrl from "./images/ada-holder.png";
+import PaymentWalletUrl from "./images/payment-wallet.png";
+import RewardAccountUrl from "./images/reward-account.png";
 
 import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
 import { ReactComponent as FilterIcon } from "./icons/filter.svg";
@@ -171,7 +174,11 @@ export {
   FilterIcon,
   IconRefresh,
   IconThreeDot,
-  CertificateIcon
+  CertificateIconUrl,
+  PolygonWhiteIconUrl,
+  AdaHolderIconUrl,
+  PaymentWalletUrl,
+  RewardAccountUrl
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -272,3 +279,6 @@ export { ReactComponent as PeopleIcon } from "./icons/people.svg";
 export { ReactComponent as SuccessIcon } from "./icons/success.svg";
 export { ReactComponent as FailIcon } from "./icons/failed.svg";
 export { ReactComponent as StakingDelegators } from "./icons/stakingDelegators.svg";
+export { ReactComponent as CertificateIcon } from "./icons/certificate.svg";
+export { ReactComponent as CardanoSystemIcon } from "./icons/cardano-system.svg";
+export { ReactComponent as WalletIconRewardGreen } from "./icons/Staking/walletIconRewardGreen.svg";
