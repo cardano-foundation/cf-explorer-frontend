@@ -73,7 +73,15 @@ const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null
           {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
           <StackingFilter
             filterValue={params}
-            onFilterValueChange={(params) => setParams((pre) => ({ ...pre, ...params }))}
+            onFilterValueChange={(params) => {
+              setParams({
+                fromDate: undefined,
+                sort: undefined,
+                toDate: undefined,
+                txHash: undefined,
+                ...params
+              });
+            }}
           />
         </Box>
       </StyledList>

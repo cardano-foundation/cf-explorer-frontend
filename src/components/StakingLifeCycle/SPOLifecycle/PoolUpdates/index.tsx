@@ -131,11 +131,14 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
     toDate: undefined,
     txHash: undefined
   });
-  const { data, total, loading, initialized, error } = useFetchList<PoolUpdateItem>(API.SPO_LIFECYCLE.POOL_UPDATE(poolId), {
-    page: 0,
-    size: 1000,
-    ...params
-  });
+  const { data, total, loading, initialized, error } = useFetchList<PoolUpdateItem>(
+    API.SPO_LIFECYCLE.POOL_UPDATE(poolId),
+    {
+      page: 0,
+      size: 1000,
+      ...params
+    }
+  );
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);
     onSelect(currentItem || null);
@@ -175,7 +178,15 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
           {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
           <StackingFilter
             filterValue={params}
-            onFilterValueChange={(params) => setParams((pre) => ({ ...pre, ...params }))}
+            onFilterValueChange={(params) =>
+              setParams({
+                fromDate: undefined,
+                sort: undefined,
+                toDate: undefined,
+                txHash: undefined,
+                ...params
+              })
+            }
           />
         </Box>
       </StyledList>
@@ -767,9 +778,7 @@ export const PoolUpdateModal = ({
               <Box pt={"7px"} fontWeight={500}>
                 <CustomTooltip title={data?.poolView || ""}>
                   <Link to={details.delegation(data?.poolView || "")}>
-                    <>
-                      {isMobile ? getShortWallet(data?.poolView || "") : getShortHash(data?.poolView || "")}{" "}
-                    </>
+                    <>{isMobile ? getShortWallet(data?.poolView || "") : getShortHash(data?.poolView || "")} </>
                   </Link>
                 </CustomTooltip>
                 <CopyButton text={data?.poolView || ""} />
@@ -790,7 +799,12 @@ export const PoolUpdateModal = ({
                 <CustomTooltip title={data?.vrfKey || "123"}>
                   <Box pt={"7px"}>
                     <>
-                      <Box display={"inline"} fontWeight={500} fontSize='0.875rem' color={({ palette }) => palette.blue[800]}>
+                      <Box
+                        display={"inline"}
+                        fontWeight={500}
+                        fontSize='0.875rem'
+                        color={({ palette }) => palette.blue[800]}
+                      >
                         {isMobile ? getShortWallet(data?.vrfKey || "") : getShortHash(data?.vrfKey || "")}
                       </Box>{" "}
                     </>
@@ -805,7 +819,7 @@ export const PoolUpdateModal = ({
         </Box>
       </Box>
       <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
-        <Box p={3} display={"flex"} alignItems={"center"} >
+        <Box p={3} display={"flex"} alignItems={"center"}>
           <Box display='flex' alignItems='center'>
             <Box>
               <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
@@ -837,10 +851,7 @@ export const PoolUpdateModal = ({
         </Box>
       </Box>
       <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
-        <Box
-          p={3}
-          display={"flex"}
-        >
+        <Box p={3} display={"flex"}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Reward Account
@@ -850,7 +861,9 @@ export const PoolUpdateModal = ({
                 <CustomTooltip title={data?.rewardAccount || ""}>
                   <Box pt={"7px"} fontWeight={500}>
                     <>
-                      <Link to={details.stake(data?.rewardAccount || "")}>{getShortWallet(data?.rewardAccount || "")}</Link>{" "}
+                      <Link to={details.stake(data?.rewardAccount || "")}>
+                        {getShortWallet(data?.rewardAccount || "")}
+                      </Link>{" "}
                     </>
                   </Box>
                 </CustomTooltip>
@@ -863,12 +876,7 @@ export const PoolUpdateModal = ({
         </Box>
       </Box>
       <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
-        <Box
-          p={3}
-          display={"flex"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-        >
+        <Box p={3} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Margin
@@ -892,11 +900,7 @@ export const PoolUpdateModal = ({
         </Box>
       </Box>
       <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
-        <Box
-          p={3}
-          display={"flex"}
-          alignItems={"center"}
-        >
+        <Box p={3} display={"flex"} alignItems={"center"}>
           <Box width={"100%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
             <Box>
               <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
@@ -922,10 +926,7 @@ export const PoolUpdateModal = ({
         </Box>
       </Box>
       <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
-        <Box
-          p={3}
-          display={"flex"}
-        >
+        <Box p={3} display={"flex"}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Cost
@@ -938,7 +939,7 @@ export const PoolUpdateModal = ({
           </Box>
         </Box>
       </Box>
-    </MyGrid >
+    </MyGrid>
   );
 
   const renderCertificateUpdates = () => {
