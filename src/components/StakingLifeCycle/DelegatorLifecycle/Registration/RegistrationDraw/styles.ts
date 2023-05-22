@@ -77,10 +77,10 @@ export const MiddleGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }
   flexDirection: "column",
   gap: 25,
   paddingTop: 75,
-  [theme.breakpoints.down("md")]: {
+  [theme.breakpoints.down("lg")]: {
     gap: 10
   },
-  [theme.breakpoints.down(sidebar ? "lg" : "md")]: {
+  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
     flexDirection: "row-reverse",
     maxWidth: 536,
     gap: 96,
@@ -106,7 +106,7 @@ export const BoxGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) =
   [theme.breakpoints.down("xl")]: {
     gap: 30
   },
-  [theme.breakpoints.down(sidebar ? "lg" : "md")]: {
+  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
     flexDirection: "column",
     gap: 60
   },
