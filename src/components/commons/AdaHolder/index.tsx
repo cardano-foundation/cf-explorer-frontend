@@ -1,18 +1,26 @@
-import { BoxProps, styled } from "@mui/material";
+import { BoxProps, styled, useTheme } from "@mui/material";
 import React, { forwardRef } from "react";
 import { AdaHolderIconUrl } from "~/commons/resources";
 import PolygonShape from "../PolygonShape";
+import { AdaHolderImage, AdaHolderValue } from "./styles";
+import { formatADAFull } from "~/commons/utils/helper";
+import ADAicon from "../ADAIcon";
 
-export const AdaHolderImage = styled("img")(() => ({
-  width: 100,
-  height: 100
-}));
+export interface IAdaHolderProps extends BoxProps {
+  value?: number;
+}
 
-export const AdaHolder: React.FC<BoxProps> = forwardRef(({ children, ...props }, boxRef) => {
+export const AdaHolder: React.FC<IAdaHolderProps> = forwardRef(({ children, value, ...props }, boxRef) => {
+  const theme = useTheme();
   return (
     <PolygonShape {...props} ref={boxRef}>
       <AdaHolderImage src={AdaHolderIconUrl} alt='AdaHolderIconUrl' />
       ADA Holder
+      {value && (
+        <AdaHolderValue>
+          {formatADAFull(value)} <ADAicon style={{ color: theme.palette.grey[700] }} fontSize={14} />
+        </AdaHolderValue>
+      )}
     </PolygonShape>
   );
 });
