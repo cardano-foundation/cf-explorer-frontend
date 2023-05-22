@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -29,7 +29,7 @@ const RegistrationPools = () => {
   const { search } = useLocation();
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
-
+  const mainRef = useRef(document.querySelector("#main"));
   const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
 
   const fetchData = useFetchList<Registration>(
@@ -142,16 +142,21 @@ const RegistrationPools = () => {
         <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
         <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
       </StyledTabs>
-      <Table
-        {...fetchData}
-        columns={columns}
-        total={{ title: "Total Transactions", count: fetchData.total }}
-        pagination={{
-          ...pageInfo,
-          onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
-          total: fetchData.total,
-        }}
-      />
+      <Box>
+        <Table
+          {...fetchData}
+          columns={columns}
+          total={{ title: "Total Transactions", count: fetchData.total }}
+          pagination={{
+            ...pageInfo,
+            onChange: (page, size) => {
+              history.push({ search: stringify({ page, size }) });
+              mainRef.current?.scrollTo(0, 0);
+            },
+            total: fetchData.total,
+          }}
+        />
+      </Box>
     </RegistrationContainer>
   );
 };

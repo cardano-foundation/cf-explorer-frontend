@@ -1,5 +1,5 @@
-import { Box, Checkbox, FormControlLabel, FormGroup, Input } from "@mui/material";
-import { EmailIcon, LockIcon } from "../../commons/resources";
+import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, Input, InputAdornment } from "@mui/material";
+import { EmailIcon, HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
 import { Container, ForgotPassword, FormHelperTextCustom, InputCustom, Label, UserCustomIcon, WrapButton, WrapContent, WrapForm, WrapHintText, WrapInput, WrapSignUp, WrapTitle } from "./styles";
 import { useHistory } from 'react-router-dom';
 import { routers } from "../../commons/routers";
@@ -49,6 +49,8 @@ export default function SignUp() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [checkedAgree, setCheckedAgree] = useState(false);
   const [checkedSubcribe, setCheckedSubcribe] = useState(false);
   const handleChangeAgree = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,6 +58,12 @@ export default function SignUp() {
   };
   const handleChangeSubcribe = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCheckedSubcribe(event.target.checked);
+  };
+  const handleTogglePassword = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+  const handleToggleConfirmPassword = () => {
+    setShowConfirmPassword((prevState) => !prevState);
   };
   const [formData, setFormData] = useReducer(formReducer, {
     username: {
@@ -85,14 +93,14 @@ export default function SignUp() {
         if (!value) {
           error = "Please enter Username";
         } else if (value.length < 5 || value.length > 30 || !/^[a-zA-Z0-9]+$/.test(value)) {
-          error = "Invalid Username";
+          error = "Username has to be from 5 to 30 characters in length, only alphanumeric characters allowed";
         }
         break;
       case 'password':
         if (!value) {
           error = "Please enter your Password";
-        } else if (value.length < 8 || value.length > 60 || !/^[a-zA-Z0-9!@#$%^&*]+$/.test(value)) {
-          error = "Invalid Password";
+        } else if (value.length < 8 || value.length > 30 || !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/.test(value)) {
+          error = "Password must contain at least 8 characters, including upper lowercase number and special character";
         }
         break;
       case 'confirmPassword':
@@ -222,9 +230,7 @@ export default function SignUp() {
                       fullWidth
                       name="username"
                       onChange={handleChange}
-                      style={{
-                        borderColor: (formData.username.error && formData.username.touched) ? "#DD4343" : ""
-                      }}
+                      error={Boolean(formData.username.error && formData.username.touched)}
                       placeholder="Username"
                     />
                     {(formData.username.error && formData.username.touched) ? <FormHelperTextCustom error>{formData.username.error}</FormHelperTextCustom> : null}
@@ -242,9 +248,7 @@ export default function SignUp() {
                       fullWidth
                       name="email"
                       onChange={handleChange}
-                      style={{
-                        borderColor: (formData.email.error && formData.email.touched) ? "#DD4343" : ""
-                      }}
+                      error={Boolean(formData.email.error && formData.email.touched)}
                       placeholder="A confirmation code will be sent to this address"
                     />
                     {(formData.email.error && formData.email.touched) ? <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom> : null}
@@ -262,9 +266,7 @@ export default function SignUp() {
                       fullWidth
                       name="confirmEmail"
                       onChange={handleChange}
-                      style={{
-                        borderColor: (formData.confirmEmail.error && formData.confirmEmail.touched) ? "#DD4343" : ""
-                      }}
+                      error={Boolean(formData.confirmEmail.error && formData.confirmEmail.touched)}
                       placeholder="Re-enter Your email address"
                     />
                     {(formData.confirmEmail.error && formData.confirmEmail.touched) ? <FormHelperTextCustom error>
@@ -281,13 +283,21 @@ export default function SignUp() {
                           <LockIcon />
                         </Box>
                       }
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       fullWidth
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleTogglePassword}
+                          >
+                            {showPassword ? <ShowIcon /> : <HideIcon />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
                       name="password"
                       onChange={handleChange}
-                      style={{
-                        borderColor: (formData.password.error && formData.password.touched) ? "#DD4343" : ""
-                      }}
+                      error={Boolean(formData.password.error && formData.password.touched)}
                       placeholder="Password"
                     />
                     {(formData.password.error && formData.password.touched) ? <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom> : null}
@@ -303,27 +313,35 @@ export default function SignUp() {
                         </Box>
                       }
                       fullWidth
-                      type="password"
+                      type={showConfirmPassword ? "text" : "password"}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleToggleConfirmPassword}
+                          >
+                            {showConfirmPassword ? <ShowIcon /> : <HideIcon />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
                       name="confirmPassword"
                       onChange={handleChange}
-                      style={{
-                        borderColor: (formData.confirmPassword.error && formData.confirmPassword.touched) ? "#DD4343" : ""
-                      }}
+                      error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
                       placeholder="Confirm Password"
                     />
                     {(formData.confirmPassword.error && formData.confirmPassword.touched) ? <FormHelperTextCustom error>{formData.confirmPassword.error}</FormHelperTextCustom> : null}
                   </WrapInput>
                   <Box display={'flex'}>
                     <FormControlLabel control={
-                      <Checkbox 
+                      <Checkbox
                         checked={checkedAgree}
                         onChange={handleChangeAgree}
                         sx={{
-                        opacity: "0.15",
-                        "&.Mui-checked": {
-                          opacity: "1",
-                        }
-                      }}
+                          opacity: "0.15",
+                          "&.Mui-checked": {
+                            opacity: "1",
+                          }
+                        }}
                         size="medium"
                       />
                     }
@@ -336,15 +354,15 @@ export default function SignUp() {
                   </Box>
                   <Box display={'flex'} marginBottom={'10px'}>
                     <FormControlLabel control={
-                      <Checkbox 
+                      <Checkbox
                         checked={checkedSubcribe}
                         onChange={handleChangeSubcribe}
                         sx={{
-                        opacity: "0.15",
-                        "&.Mui-checked": {
-                          opacity: "1",
-                        }
-                      }}
+                          opacity: "0.15",
+                          "&.Mui-checked": {
+                            opacity: "1",
+                          }
+                        }}
                         size="medium"
                       />
                     }
@@ -356,7 +374,7 @@ export default function SignUp() {
                       }
                     />
                   </Box>
-                  <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={loading || !checkedSubcribe || !checkedAgree}>
+                  <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={loading || !checkedAgree}>
                     Create an Account
                   </WrapButton>
                 </WrapForm>) : (

@@ -10,6 +10,9 @@ export const Tabs = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "space-between",
   },
+  [theme.breakpoints.down("sm")]: {
+    marginBottom: theme.spacing(2),
+  },
 }));
 
 export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
@@ -23,6 +26,11 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   ":hover": {
     color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
     backgroundColor: active ? theme.palette.primary.main : "none",
+  },
+  [theme.breakpoints.down("sm")]: {
+    border: `1.5px solid ${theme.palette.green[800_20]}`,
+    borderRadius: 5,
+    height: 28,
   },
 }));
 export const TransactionContainer = styled(BoxRaised)`
@@ -42,7 +50,21 @@ export const TransactionContainer = styled(BoxRaised)`
       }
     }
   }
+  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+    padding: 25px 15px;
+    height: auto;
+  }
 `;
+
+export const WrapHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+  },
+}));
 
 export const Title = styled("h3")`
   position: relative;
@@ -71,6 +93,12 @@ export const BoxInfo = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
+  [theme.breakpoints.down("sm")]: {
+    border: "none",
+    padding: 0,
+    minHeight: 0,
+    gap: 20,
+  },
 }));
 export const InfoItem = styled(Box)(({ theme }) => ({
   display: "flex",

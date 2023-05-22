@@ -4,37 +4,40 @@ import {
   Menu,
   MenuIcon,
   MenuText,
-  NavbarMenuBottom,
   SubMenu,
   SubMenuText,
   itemStyle,
   StyledCollapse,
   IconMenu,
+  WrapNetwork,
 } from "./styles";
-import { Box, Collapse, Divider, ListItem, useTheme } from "@mui/material";
+import { Box, Collapse, Divider, Drawer, ListItem, useTheme } from "@mui/material";
 import { isExtenalLink } from "../../../../../commons/utils/helper";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import SelectNetwork from "../../Header/SelectNetwork";
-import ConnectWallet from "../../Header/ConnectWallet";
 import { useWindowSize } from "react-use";
 import { setSidebar } from "../../../../../stores/user";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../stores/types";
 import FooterMenu from "../FooterMenu";
 import CustomTooltip from "../../../CustomTooltip";
+import { useScreen } from "../../../../../commons/hooks/useScreen";
+import { LogoLink, NavBarLogo } from "../styles";
+import { LogoFullIcon } from "../../../../../commons/resources";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const pathname = history.location.pathname;
+  const { isMobile } = useScreen();
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { width } = useWindowSize(0);
   const theme = useTheme();
 
   const getActive = () => {
     const active = menus.findIndex(menu => {
-        return menu?.children?.find(r => {
-          return pathname.split("/").length > 2 ? r.href?.includes(pathname.split("/")[1]) : r.href === pathname;
-        });
+      return menu?.children?.find(r => {
+        return pathname.split("/").length > 2 ? r.href?.includes(pathname.split("/")[1]) : r.href === pathname;
+      });
     });
 
     if (active !== -1) {
@@ -68,8 +71,8 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     if (!sidebar) setSidebar(true);
   };
 
-  return (
-    <StyledCollapse in={width >= theme.breakpoints.values.md ? true : sidebar} timeout="auto" unmountOnExit>
+  const MenuElement = () => {
+    return (
       <Menu open={sidebar ? 1 : 0}>
         {menus.map((item, index) => {
           const { href, title, children, icon, tooltip } = item;
@@ -79,13 +82,19 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
               <CustomTooltip key={index} title={tooltipTitle} placement="right">
                 {href ? (
                   isExtenalLink(href) ? (
-                    <ListItem button onClick={e => window.open(href, "_blank")} sx={theme => itemStyle(theme, sidebar)}>
+                    <ListItem
+                      data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
+                      button
+                      onClick={e => window.open(href, "_blank")}
+                      sx={theme => itemStyle(theme, sidebar)}
+                    >
                       {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
                       <MenuText primary={title} open={sidebar ? 1 : 0} />
                     </ListItem>
                   ) : (
                     <ListItem
                       button
+                      data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                       component={Link}
                       to={href}
                       selected={pathname === href}
@@ -102,16 +111,13 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           active={pathname === href ? 1 : 0}
                         />
                       ) : null}
-                      <MenuText
-                        primary={title}
-                        open={sidebar ? 1 : 0}
-                        active={pathname === href ? 1 : 0}
-                      />
+                      <MenuText primary={title} open={sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
                     </ListItem>
                   )
                 ) : (
                   <ListItem
                     button
+                    data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                     onClick={() => children?.length && handleOpen(`menu-${index}`)}
                     sx={theme => ({
                       ...itemStyle(theme, sidebar),
@@ -157,6 +163,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       return href ? (
                         isExtenalLink(href) ? (
                           <ListItem
+                            data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                             key={subIndex}
                             button
                             onClick={e => window.open(href, "_blank")}
@@ -173,6 +180,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           </ListItem>
                         ) : (
                           <ListItem
+                            data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                             key={subIndex}
                             button
                             component={Link}
@@ -351,10 +359,30 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
           );
         })}
       </Menu>
-      <NavbarMenuBottom>
-        <SelectNetwork />
-        <ConnectWallet />
-      </NavbarMenuBottom>
+    );
+  };
+
+  if (isMobile) {
+    return (
+      <Drawer open={sidebar} onClose={() => setSidebar(false)}>
+        <Box position="relative" height="100%">
+          <Box p="16px">
+            <LogoLink to="/">
+              <NavBarLogo src={LogoFullIcon} alt="logo desktop" />
+            </LogoLink>
+          </Box>
+          <MenuElement />
+          <WrapNetwork>
+            <SelectNetwork />
+          </WrapNetwork>
+        </Box>
+      </Drawer>
+    );
+  }
+
+  return (
+    <StyledCollapse in={width >= theme.breakpoints.values.md ? true : sidebar} timeout="auto" unmountOnExit>
+      <MenuElement />
       <FooterMenu />
     </StyledCollapse>
   );

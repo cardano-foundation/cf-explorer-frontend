@@ -9,7 +9,6 @@ import StyledModal from "../../../StyledModal";
 import { Label, StyledTitle, TextError, TextNote, WrapButton } from "./styles";
 import { StyledInput, StyledDarkLoadingButton } from "../../../../share/styled";
 import { FormHelperText } from "@mui/material";
-// @ts-ignore
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { existUserName } from "../../../../../commons/utils/userRequest";
 import useToast from "../../../../../commons/hooks/useToast";

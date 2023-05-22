@@ -1,7 +1,7 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
@@ -38,7 +38,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
   const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort });
-
+  const mainRef = useRef(document.querySelector("#main"));
   const onClickRow = (_: any, r: Transactions, index: number) => {
     if (openDetail) return openDetail(_, r, index);
     history.push(details.transaction(r.hash));
@@ -88,7 +88,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.fee)}</Box>
-            <ADAicon  />
+          <ADAicon />
         </Box>
       ),
       sort: ({ columnKey, sortValue }) => {
@@ -102,7 +102,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       render: r => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
-            <ADAicon  />
+          <ADAicon />
           {hash === r.hash && <SelectedIcon />}
         </Box>
       ),
@@ -113,7 +113,11 @@ const TransactionList: React.FC<TransactionListProps> = ({
   ];
   const { pathname } = window.location;
   return (
-    <Card title={pathname === "/transactions" ? "Transactions" : ""} underline={underline}>
+    <Card
+      data-testid="transactions-card"
+      title={pathname === "/transactions" ? "Transactions" : ""}
+      underline={underline}
+    >
       <Table
         {...fetchData}
         columns={columns}
@@ -121,7 +125,10 @@ const TransactionList: React.FC<TransactionListProps> = ({
         pagination={{
           ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+          onChange: (page, size) => {
+            mainRef.current?.scrollTo(0, 0);
+            history.push({ search: stringify({ page, size }) });
+          },
           handleCloseDetailView: handleClose,
         }}
         onClickRow={onClickRow}

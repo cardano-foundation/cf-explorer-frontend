@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 
-import { getShortWallet } from "../../commons/utils/helper";
+import { getShortHash } from "../../commons/utils/helper";
 import CopyButton from "../../components/commons/CopyButton";
 import SPOLifecycleComponent from "../../components/StakingLifeCycle/SPOLifecycle";
 
@@ -14,7 +14,28 @@ import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLife
 import Tablular from "../../components/StakingLifeCycle/SPOLifecycle/Tablular";
 
 const SPOLifecycle = () => {
-  const { poolId = "" } = useParams<{ poolId: string }>();
+  const { poolId = "", tab } = useParams<{
+    poolId: string;
+    tab?: "registration" | "pool-updates" | "operator-rewards" | "deregistration" | "tablular";
+  }>();
+
+  const tabList = {
+    registration: 0,
+    "pool-updates": 1,
+    "operator-rewards": 2,
+    deregistration: 3,
+    tablular: null,
+  };
+
+  const [currentStep, setCurrentStep] = useState(tabList[tab || "registration"] || 0);
+
+  useEffect(() => {
+    setCurrentStep(tabList[tab || "registration"] || 0);
+    if (tab === "tablular") {
+      setMode("tablular");
+    }
+  }, [tab]);
+
   const [mode, setMode] = useState<"timeline" | "tablular">("timeline");
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
@@ -52,7 +73,7 @@ const SPOLifecycle = () => {
           </Box>
           <Box display={"flex"} alignItems={"center"}>
             <Box component={"span"}>Pool ID:</Box>
-            <StakeId>{getShortWallet(poolId)}</StakeId>
+            <StakeId>{getShortHash(poolId)}</StakeId>
             <CopyButton text={poolId} />
           </Box>
         </Box>
@@ -74,7 +95,13 @@ const SPOLifecycle = () => {
 
       <Box>
         {mode === "timeline" && (
-          <SPOLifecycleComponent handleResize={handleResize} containerPosition={containerPosition} setMode={setMode} />
+          <SPOLifecycleComponent
+            handleResize={handleResize}
+            containerPosition={containerPosition}
+            setMode={setMode}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+          />
         )}
         {mode === "tablular" && <Tablular />}
       </Box>

@@ -114,7 +114,7 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
     const payload = {
       username,
       password,
-      type: 0,
+      type: 0
     };
     const response = await signIn(payload);
     const data = response.data;
@@ -127,7 +127,7 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
     localStorage.setItem("login-type", "normal");
 
     const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-    setUserData({ ...userInfo.data, loginType: "normal" });
+    setUserData({...userInfo.data, loginType: "normal"});
     cbSuccess?.();
   } catch (error) {
     removeAuthInfo();
@@ -147,3 +147,10 @@ export const getEpochSlotNo = (data: IDataEpoch) => {
   }
   return moment().diff(moment(data.startTime), "seconds");
 };
+
+
+export function formatHash(hash: string): string {
+  const prefix = hash.slice(0, 6);
+  const suffix = hash.slice(-5);
+  return `${prefix}...${suffix}`;
+}

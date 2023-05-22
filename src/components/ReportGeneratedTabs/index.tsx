@@ -39,7 +39,6 @@ const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
               </TabList>
             </Box>
           </Tabs>
-          <DownloadButtonAll startIcon={<DownloadWhiteIC />} variant="contained">Download All</DownloadButtonAll>
         </TabHeader>
 
         {tabsItem.map(item => (

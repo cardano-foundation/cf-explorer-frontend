@@ -3,9 +3,19 @@ import { Box } from "@mui/material";
 import { OverviewIcon, TextTx, TextUserInfo } from "./styles";
 import { AIconGreen, BalanceIcon, HashtagIcon } from "../../../../commons/resources";
 import CustomIcon from "../../../commons/CustomIcon";
-import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADA, formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
 
-const UserInfo = ({ total, stake, reward }: { total: number; stake: string; reward: number }) => {
+const UserInfo = ({
+  total,
+  stake,
+  reward,
+  acitve,
+}: {
+  total: number;
+  stake: string;
+  reward: number;
+  acitve: "wallet" | "reward";
+}) => {
   return (
     <Box display={"flex"} justifyContent={"space-between"} margin={"7px 0"}>
       <Box display={"flex"}>
@@ -14,13 +24,16 @@ const UserInfo = ({ total, stake, reward }: { total: number; stake: string; rewa
             <CustomIcon icon={HashtagIcon} width={17} color={theme => theme.palette.primary.main} fill="currentColor" />
           </OverviewIcon>
           &nbsp;<TextUserInfo>{getShortWallet(stake || "")}</TextUserInfo>
-          <CopyButton />
+          <CopyButton text={stake || ""} />
         </Box>
         <Box display={"flex"} alignItems="center">
           <OverviewIcon marginRight={1}>
             <BalanceIcon />
           </OverviewIcon>
-          <TextUserInfo> Reward Balance: {formatADA(reward)}</TextUserInfo>
+          <TextUserInfo>
+            {" "}
+            {acitve === "reward" ? "Reward" : "Wallet"} Balance: {formatADAFull(reward)}
+          </TextUserInfo>
           <CustomIcon icon={AIconGreen} fill="currentColor" height={14} />
         </Box>
       </Box>
