@@ -97,7 +97,7 @@ export const HoldBox = forwardRef<HTMLElement, Props>(({ value, txHash, ...props
           </Value>
           <Button
             onClick={() => typeof feeRef !== "function" && feeRef?.current && handleClick(feeRef?.current)}
-            over={+(formatADAFull(value || 0).length > 9)}
+            over={+(formatADAFull(value || 0).length > 8)}
             sidebar={+sidebar}
           >
             <ButtonListIcon />

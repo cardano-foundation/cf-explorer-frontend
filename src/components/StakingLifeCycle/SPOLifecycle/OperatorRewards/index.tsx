@@ -102,31 +102,46 @@ const OperatorReward = ({
                   </Box>
                 }
               />
-              <PopoverStyled
-                render={({ handleClick }) => (
+              <Box>
+                <CustomTooltip
+                  wOpacity={false}
+                  componentsProps={{
+                    transition: {
+                      style: {
+                        backgroundColor: "white",
+                        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                        padding: "10px"
+                      }
+                    },
+                    arrow: {
+                      style: {
+                        color: "white"
+                      }
+                    }
+                  }}
+                  title={
+                    <Box display={"flex"} alignItems={"center"}>
+                      {data?.stakeKeys && data.stakeKeys.length > 0 && (
+                        <>
+                          <SPOKey fill='#108AEF' />
+                          <PoolNamePopup to={details.stake(data?.stakeKeys[0] || "")}>
+                            {getShortWallet(data?.stakeKeys[0] || "")}
+                          </PoolNamePopup>
+                          <CopyButton text={data?.stakeKeys[0]} />
+                        </>
+                      )}
+                    </Box>
+                  }
+                >
                   <ButtonSPO
                     ref={SPOKeyRef}
                     component={IconButton}
                     left={"52%"}
-                    onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
                   >
                     <SPOKey fill='#438F68' />
                   </ButtonSPO>
-                )}
-                content={
-                  <Box display={"flex"} alignItems={"center"}>
-                    {data?.stakeKeys && data.stakeKeys.length > 0 && (
-                      <>
-                        <SPOKey fill='#108AEF' />
-                        <PoolNamePopup to={details.stake(data?.stakeKeys[0] || "")}>
-                          {getShortWallet(data?.stakeKeys[0] || "")}
-                        </PoolNamePopup>
-                        <CopyButton text={data?.stakeKeys[0]} />
-                      </>
-                    )}
-                  </Box>
-                }
-              />
+                </CustomTooltip>
+              </Box>
             </Box>
             <svg
               style={{

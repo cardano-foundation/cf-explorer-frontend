@@ -33,7 +33,8 @@ import {
   StyledSkeletonContainer,
   StyledBox,
   StepInfo,
-  InfoGroup
+  InfoGroup,
+  MyGrid
 } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
@@ -43,7 +44,7 @@ import RecentRegistrations from "./RecentRegistrations";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
 import { useHistory, useParams } from "react-router";
-import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADA, getShortHash, getShortWallet, numberWithCommas } from "../../../../commons/utils/helper";
 import moment from "moment";
 import PopupStaking from "../../../commons/PopupStaking";
 import CopyButton from "../../../commons/CopyButton";
@@ -51,6 +52,7 @@ import { details } from "../../../../commons/routers";
 import StyledModal from "../../../commons/StyledModal";
 import { StyledLink } from "../styles";
 import { useScreen } from "../../../../commons/hooks/useScreen";
+import { FilterParams } from "~/components/StackingFilter";
 
 const Registration = ({
   containerPosition,
@@ -66,6 +68,12 @@ const Registration = ({
   const [openModal, setOpenModal] = useState(false);
   const [selected, setSelected] = useState<SPORegistration | null>(null);
   const history = useHistory();
+  const [params, setParams] = useState<FilterParams>({
+    fromDate: undefined,
+    sort: undefined,
+    toDate: undefined,
+    txHash: undefined
+  });
   const handleSelect = (registration: SPORegistration | null) => {
     setSelected(registration);
   };
@@ -82,7 +90,7 @@ const Registration = ({
   const handleToggleCertificateModal = () => setOpenModal((state) => !state);
   return (
     <Box>
-      <RecentRegistrations onSelect={handleSelect} />
+      <RecentRegistrations params={params} setParams={setParams} onSelect={handleSelect} />
       {selected ? (
         <>
           <StepInfo>
@@ -227,7 +235,7 @@ const RegistrationTimeline = ({
                 <SPOInfo />
               </ButtonSPO>
             </CustomTooltip>
-            <Link to={details.stake(data?.stakeKeys[0] || "")}>
+            <Box>
               <CustomTooltip
                 wOpacity={false}
                 componentsProps={{
@@ -262,7 +270,7 @@ const RegistrationTimeline = ({
                   <SPOKey fill='#438F68' />
                 </ButtonSPO>
               </CustomTooltip>
-            </Link>
+            </Box>
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
@@ -681,132 +689,172 @@ export const RegistrationCertificateModal = ({
   const { isMobile } = useScreen();
 
   return (
-    <StyledModal {...props} title='Pool Registration certificate'>
-      <StyledGridContainer container spacing={1}>
-        <Grid item xs={6}>
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
-              Transaction ID
-            </Box>
-            {loading && <Skeleton variant='rectangular' />}
-            {data && !loading && (
-              <Box>
-                <Link to={details.transaction(data?.txHash || "")}>
-                  {isMobile ? getShortWallet(data?.txHash || "") : getShortHash(data?.txHash || "")}
-                </Link>{" "}
-                <CopyButton text={data?.txHash || ""} />
+    <StyledModal {...props} title='Pool Registration certificate' >
+      <MyGrid>
+        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
+          <Box p={3} display={"flex"}>
+            <Box>
+              <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+                Transaction ID
               </Box>
-            )}
-          </Box>
-        </Grid>
-        <Grid item xs={6}>
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
-              Pool ID
+              {loading && <Skeleton variant='rectangular' />}
+              {data && !loading && (
+                <Box pt={"7px"} fontWeight={500}>
+                  <CustomTooltip title={data?.txHash || ""}>
+                    <Link to={details.transaction(data?.txHash || "")}>
+                      {isMobile ? getShortWallet(data?.txHash || "") : getShortHash(data?.txHash || "")}
+                    </Link>
+                  </CustomTooltip>
+                  <CopyButton text={data?.txHash || ""} />
+                </Box>
+              )}
             </Box>
-            {loading && <Skeleton variant='rectangular' />}
-            {data && !loading && (
-              <Box>
-                <Link to={details.delegation(data?.poolView || "")}>
-                  {isMobile ? getShortWallet(data?.poolView || "") : getShortHash(data?.poolView || "")}
-                </Link>{" "}
-                <CopyButton text={data?.poolView || ""} />
-              </Box>
-            )}
           </Box>
-        </Grid>
+        </Box>
+        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
+          <Box p={3} display={"flex"}>
+            <Box>
+              <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+                Pool ID
+              </Box>
+              {loading && <Skeleton variant='rectangular' />}
+              {data && !loading && (
+                <Box pt={"7px"} fontWeight={500}>
+                  <CustomTooltip title={data?.poolView || ""}>
+                    <Link to={details.delegation(data?.poolView || "")}>
+                      <>
+                        {isMobile ? getShortWallet(data?.poolView || "") : getShortHash(data?.poolView || "")}{" "}
+                      </>
+                    </Link>
+                  </CustomTooltip>
+                  <CopyButton text={data?.poolView || ""} />
+                </Box>
+              )}
+            </Box>
+          </Box>
+        </Box>
 
-        <Grid item xs={6}>
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
-              VRF Key
-            </Box>
-            {loading && <Skeleton variant='rectangular' />}
-            {data && !loading && (
-              <Box>
-                <Box display={"inline"} fontSize='0.875rem' color={({ palette }) => palette.blue[800]}>
-                  {isMobile ? getShortWallet(data?.vrfKey || "") : getShortHash(data?.vrfKey || "")}
-                </Box>{" "}
-                <CopyButton text={data?.vrfKey || ""} />
+        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
+          <Box display={"flex"} p={3} alignItems={"center"}>
+            <Box>
+              <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+                VRF Key
               </Box>
-            )}
-          </Box>
-        </Grid>
-        <Grid item xs={6}>
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
-              Owners
-            </Box>
-            {loading && <Skeleton variant='rectangular' />}
-            {data && !loading && (
-              <>
-                {(data.stakeKeys || []).map((item) => (
-                  <>
-                    <Box key={item}>
-                      <Link to={details.stake(item || "")}>{getShortWallet(item)}</Link>{" "}
-                      <CopyButton text={item || ""} />
+              {loading && <Skeleton variant='rectangular' />}
+              {data && !loading && (
+                <Box display={"flex"} gap={"3px"}>
+                  <CustomTooltip title={data?.vrfKey || "123"}>
+                    <Box pt={"7px"}>
+                      <>
+                        <Box display={"inline"} fontWeight={500} fontSize='0.875rem' color={({ palette }) => palette.blue[800]}>
+                          {isMobile ? getShortWallet(data?.vrfKey || "") : getShortHash(data?.vrfKey || "")}
+                        </Box>{" "}
+                      </>
                     </Box>
-                  </>
-                ))}
-              </>
-            )}
+                  </CustomTooltip>
+                  <Box pt={"7px"}>
+                    <CopyButton text={data?.vrfKey || ""} />
+                  </Box>
+                </Box>
+              )}
+            </Box>
           </Box>
-        </Grid>
-        <Grid item xs={6}>
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
+        </Box>
+        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
+          <Box p={3} display={"flex"} alignItems={"center"} >
+            <Box>
+              <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+                Owners
+              </Box>
+              {loading && <Skeleton variant='rectangular' />}
+              {data && !loading && (
+                <>
+                  {(data.stakeKeys || []).map((item) => (
+                    <>
+                      <Box key={item} pt={"7px"} fontWeight={500} display={"flex"} gap={"3px"}>
+                        <CustomTooltip title={item || ""}>
+                          <Box>
+                            <Link to={details.stake(item || "")}>{getShortWallet(item)}</Link>{" "}
+                          </Box>
+                        </CustomTooltip>
+                        <CopyButton text={item || ""} />
+                      </Box>
+                    </>
+                  ))}
+                </>
+              )}
+            </Box>
+          </Box>
+        </Box>
+        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
+          <Box p={3}>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Reward Account
             </Box>
             {loading && <Skeleton variant='rectangular' />}
             {data && !loading && (
-              <Box>
-                <Link to={details.stake(data?.rewardAccount || "")}>{getShortWallet(data?.rewardAccount || "")}</Link>{" "}
-                <CopyButton text={data?.rewardAccount || ""} />
+              <Box display={"flex"} gap={"3px"}>
+                <CustomTooltip title={data?.rewardAccount || ""}>
+                  <Box pt={"7px"} fontWeight={500}>
+                    <>
+                      <Link to={details.stake(data?.rewardAccount || "")}>{getShortWallet(data?.rewardAccount || "")}</Link>{" "}
+                    </>
+                  </Box>
+                </CustomTooltip>
+                <Box pt={"7px"}>
+                  <CopyButton text={data?.rewardAccount || ""} />
+                </Box>
               </Box>
             )}
           </Box>
-        </Grid>
-        <Grid item xs={6}>
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
-              Margin
+        </Box>
+        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
+          <Box p={3} display={"flex"}>
+            <Box>
+              <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+                Margin
+              </Box>
+              {loading && <Skeleton variant='rectangular' />}
+              {data && !loading && (
+                <Box fontSize='0.875rem' pt={"7px"} fontWeight={500}>
+                  {data?.margin ? numberWithCommas(data?.margin * 100, 2) : 0}%
+                </Box>
+              )}
             </Box>
-            {loading && <Skeleton variant='rectangular' />}
-            {data && !loading && (
-              <Box display={"inline"} fontSize='0.875rem'>
-                {data?.margin}%
-              </Box>
-            )}
           </Box>
-        </Grid>
-        <Grid item xs={6}>
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
-              Pledge
+        </Box>
+        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
+          <Box p={3} display={"flex"}>
+            <Box>
+              <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+                Pledge
+              </Box>
+              {loading && <Skeleton variant='rectangular' />}
+              {data && !loading && (
+                <Box fontSize='0.875rem' pt={"7px"} fontWeight={500}>
+                  {formatADA(data?.pledge)} <ADAicon />
+                </Box>
+              )}
             </Box>
-            {loading && <Skeleton variant='rectangular' />}
-            {data && !loading && (
-              <Box display={"inline"} fontSize='0.875rem'>
-                {formatADA(data?.pledge)} <ADAicon />
-              </Box>
-            )}
           </Box>
-        </Grid>
-        <Grid item xs={6}>
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
+        </Box>
+        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
+          <Box p={3}>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Cost
             </Box>
             {loading && <Skeleton variant='rectangular' />}
             {data && !loading && (
-              <Box display={"inline"} fontSize='0.875rem'>
-                {formatADA(data?.cost)} <ADAicon />
+              <Box pt={"7px"}>
+                <Box display={"inline"} fontSize="0.875rem" fontWeight={500}>
+                  {formatADA(data?.cost)} <ADAicon />
+                </Box>
               </Box>
             )}
           </Box>
-        </Grid>
-      </StyledGridContainer>
-    </StyledModal>
+        </Box>
+      </MyGrid >
+    </StyledModal >
   );
 };
 

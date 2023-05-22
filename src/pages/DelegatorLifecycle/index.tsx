@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router";
 
 import { getShortWallet } from "../../commons/utils/helper";
 import DelegatorLifecycleComponent from "../../components/StakingLifeCycle/DelegatorLifecycle";
-import Tablular from "../../components/StakingLifeCycle/DelegatorLifecycle/Tablular";
+import Tabular from "../../components/StakingLifeCycle/DelegatorLifecycle/Tabular";
 import CopyButton from "../../components/commons/CopyButton";
 
 import {
@@ -99,9 +99,9 @@ const DelegatorLifecycle = () => {
       <StyledContainer ref={containerRef}>
         <BoxContainerStyled>
           <LifeCycleHeader sidebar={+sidebar}>
-            <LifeCycleTitle>Staking Lifecycle For</LifeCycleTitle>
+            <LifeCycleTitle>Staking Delegation Lifecycle</LifeCycleTitle>
             <AddressLine>
-              <Label>Stake key:</Label>
+              <Label>Stake Address:</Label>
               <CustomTooltip title={stakeId}>
                 <StakeId to={details.stake(stakeId)}>{getShortWallet(stakeId)}</StakeId>
               </CustomTooltip>
@@ -135,7 +135,7 @@ const DelegatorLifecycle = () => {
             setCurrentStep={setCurrentStep}
           />
         ) : (
-          <Tablular />
+          <Tabular />
         )}
         <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
       </StyledContainer>

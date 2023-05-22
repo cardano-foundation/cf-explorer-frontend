@@ -56,6 +56,7 @@ const PoolLifecycle = () => {
         document.body.appendChild(link);
         link.click();
       })
+      //To do
       .catch((e) => console.log(e))
       .finally(() => {
         setOnDownload(false);

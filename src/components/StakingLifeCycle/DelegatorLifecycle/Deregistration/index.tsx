@@ -32,6 +32,7 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 import { useScreen } from "../../../../commons/hooks/useScreen";
 import { StakeLink } from "../Registration/styles";
+import { FilterParams } from "~/components/StackingFilter";
 
 const Deregistration = ({
   containerPosition,
@@ -46,7 +47,12 @@ const Deregistration = ({
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [selected, setSelected] = useState<DeregistrationItem | null>(null);
   const [openModal, setOpenModal] = useState(false);
-
+  const [params, setParams] = useState<FilterParams>({
+    fromDate: undefined,
+    sort: undefined,
+    toDate: undefined,
+    txHash: undefined
+  });
   const handleSelect = (deregistration: DeregistrationItem | null) => {
     setSelected(deregistration);
   };
@@ -59,7 +65,7 @@ const Deregistration = ({
     <Box>
       <DeregistrationCertificateModal open={openModal} handleCloseModal={handleToggleModal} stake={stakeId} />
       <Box>
-        <RecentDeregistrations onSelect={handleSelect} />
+        <RecentDeregistrations onSelect={handleSelect} params={params} setParams={setParams} />
       </Box>
       {selected &&
         (isLargeTablet ? (
@@ -160,7 +166,7 @@ const DeregistrationTimeline = ({
                   <HoldBox ref={holdRef} ml={1} width={200}>
                     <Box>
                       <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                        {formatADA(Math.abs(selected.deposit) || 0)}
+                        {formatADA(Math.abs(selected.deposit) - selected.fee || 0)}
                       </Box>
                       <ADAicon fontSize='18px' />
                     </Box>
@@ -501,7 +507,7 @@ export const DeregistrationCertificateModal = ({
   const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
 
   return (
-    <StyledModal  {...props} width={550} title='Deregistration certificate'>
+    <StyledModal {...props} width={550} title='Deregistration certificate'>
       <Box>
         {loading && <Skeleton variant='rectangular' width={500} height={90} />}
         {!loading && (

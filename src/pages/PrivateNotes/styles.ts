@@ -24,6 +24,9 @@ export const Title = styled("span")(({ theme }) => ({
   color: theme.palette.common.black,
   [theme.breakpoints.down("sm")]: {
     fontSize: "14px",
+  },
+  "@media (max-width: 355px)": {
+    fontSize: "12px",
   }
 }));
 

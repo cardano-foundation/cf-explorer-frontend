@@ -32,7 +32,7 @@ import {
   WrapTitle
 } from "./styles";
 interface IForm {
-  username: {
+  email: {
     value: string;
     error?: string;
     touched?: boolean;
@@ -64,7 +64,7 @@ export default function SignIn() {
   const [invalidInfomation, setInvalidInfomation] = useState(false);
   const [error, setError] = useState(false);
   const [formData, setFormData] = useReducer(formReducer, {
-    username: {
+    email: {
       value: ""
     },
     password: {
@@ -125,16 +125,16 @@ export default function SignIn() {
   };
 
   useEffect(() => {
-    setError(Boolean(formData.username.error || formData.password.error));
+    setError(Boolean(formData.email.error || formData.password.error));
   }, [formData]);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    const errorUsername = getError("username", formData.username.value);
+    const errorUsername = getError("email", formData.email.value);
     const errorPassword = getError("password", formData.password.value);
     if (errorUsername) {
       setFormData({
-        name: "username",
+        name: "email",
         touched: true,
         error: errorUsername
       });
@@ -147,13 +147,13 @@ export default function SignIn() {
       });
     }
     if (errorUsername || errorPassword) return;
-    handleSignIn(formData.username.value, formData.password.value);
+    handleSignIn(formData.email.value, formData.password.value);
   };
-  const handleSignIn = async (username: string, password: string) => {
+  const handleSignIn = async (email: string, password: string) => {
     try {
       setLoading(true);
       const payload = {
-        username,
+        email,
         password,
         type: 0
       };
@@ -166,7 +166,7 @@ export default function SignIn() {
       const data = response.data;
 
       localStorage.setItem("token", data.token);
-      localStorage.setItem("username", data.username);
+      localStorage.setItem("username", data.email);
       localStorage.setItem("refreshToken", data.refreshToken);
       localStorage.setItem("walletId", data.walletId);
       localStorage.setItem("email", data.email);
@@ -199,20 +199,20 @@ export default function SignIn() {
             <WrapInput>
               <Label>Email Address</Label>
               <InputCustom
-                error={Boolean(formData.username.error && formData.username.touched)}
+                error={Boolean(formData.email.error && formData.email.touched)}
                 startAdornment={
                   <Box paddingRight={"10px"} paddingTop={"3px"}>
                     <UserCustomIcon />
                   </Box>
                 }
-                name='username'
-                value={formData.username.value}
+                name='email'
+                value={formData.email.value}
                 onChange={handleChange}
                 fullWidth
                 placeholder='Email Address'
               />
-              {formData.username.error && formData.username.touched ? (
-                <FormHelperTextCustom error>{formData.username.error}</FormHelperTextCustom>
+              {formData.email.error && formData.email.touched ? (
+                <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
               ) : null}
             </WrapInput>
             <WrapInput>

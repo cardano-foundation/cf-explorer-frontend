@@ -48,7 +48,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
   };
 
   useUpdateEffect(() => {
-    if (data && data.length && data.length === 1) {
+    if (data && data.length && data.length === 1 && params.txHash === undefined) {
       handleSelect(data[0]);
     }
   }, [JSON.stringify(data)]);
@@ -101,7 +101,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
             return (
               <OverviewStaking
                 key={item.txHash}
-                amount={item.fee}
+                amount={item.poolHold ? item.poolHold - item.fee : item.fee}
                 time={item.time}
                 hash={item.txHash}
                 item={item}

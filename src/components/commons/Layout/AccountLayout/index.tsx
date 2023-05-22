@@ -35,7 +35,7 @@ interface Props {
 const AccountLayout: React.FC<Props> = ({ children }) => {
   const { pathname } = useLocation();
   const { userData } = useSelector(({ user }: RootState) => user);
-  const { isMobile, isTablet } = useScreen();
+  const { isMobile, isTablet, isGalaxyFoldSmall } = useScreen();
   const theme = useTheme();
   const [openReportModal, setOpenReportModal] = useState(false);
   const [isUploadAvatar, setIsUploadAvatar] = useState(false);
@@ -152,12 +152,14 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
         <Box mt={4}>
           {router.map((route, index) => {
             return isMobile || isTablet ? (
-              <NavItemMobile sx={{
-                borderTopRightRadius: index === router.length - 1 ? "5px" : "0px",
-                borderBottomRightRadius: index === router.length - 1 ? "5px" : "0px",
-                borderTopLeftRadius: index === 0 ? "5px" : "0px",
-                borderBottomLeftRadius: index === 0 ? "5px" : "0px",
-              }} to={route.to} active={route.to === pathname} key={index}>
+              <NavItemMobile
+                smallWidth={isGalaxyFoldSmall ? 1 : 0}
+                sx={{
+                  borderTopRightRadius: index === router.length - 1 ? "5px" : "0px",
+                  borderBottomRightRadius: index === router.length - 1 ? "5px" : "0px",
+                  borderTopLeftRadius: index === 0 ? "5px" : "0px",
+                  borderBottomLeftRadius: index === 0 ? "5px" : "0px",
+                }} to={route.to} active={route.to === pathname} key={index}>
                 {route.title}
               </NavItemMobile>
             ) : (

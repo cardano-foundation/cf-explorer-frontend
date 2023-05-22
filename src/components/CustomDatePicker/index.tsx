@@ -20,7 +20,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
   const CustomInput = ensuredForwardRef(({ value, onClick }: any, ref: any) => (
     <WrapCustomDatePicker onClick={onClick} ref={ref}>
       {value ? value : <Box sx={{ opacity: 0.42 }}>dd/mm/yyyy</Box>}
-      <SelectDateButton>
+      <SelectDateButton onClick={onClick}>
         <DateRangeIcon />
       </SelectDateButton>
     </WrapCustomDatePicker>

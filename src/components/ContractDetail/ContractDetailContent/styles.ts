@@ -12,8 +12,4 @@ export const TabTitle = styled("h3")`
   }
 `;
 
-export const TabListStyled = styled(TabList)(({ theme }) => ({
-  [theme.breakpoints.down("lg")]: {
-    paddingLeft: "16px !important"
-  }
-}));
+export const TabListStyled = styled(TabList)``;

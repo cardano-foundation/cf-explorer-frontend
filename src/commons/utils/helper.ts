@@ -34,14 +34,19 @@ export const formatPrice = (value?: string | number, abbreviations: string[] = L
   return `${newValue && newValue[0]}${syntax ?? `x 10^${exponential}`}`;
 };
 
+// export const numberWithCommas = (value?: number | string, decimal = 0) => {
+//   if (!value) return "0";
+//   const formated = Number(value)
+//     .toFixed(decimal)
+//     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+//   return formated.replace(/^(-)?0+(?=\d)/, "$1");
+// };
 export const numberWithCommas = (value?: number | string, decimal = 0) => {
   if (!value) return "0";
-  const formated = Number(value)
-    .toFixed(decimal)
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  return formated.replace(/^(-)?0+(?=\d)/, "$1");
+  const [integerPart, decimalPart] = Number(value).toFixed(decimal).split(".");
+  const formattedIntegerPart = integerPart.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  return decimalPart ? `${formattedIntegerPart}.${decimalPart}` : formattedIntegerPart;
 };
-
 export const formatADA = (
   value?: string | number,
   abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS,
@@ -151,7 +156,7 @@ export const getEpochSlotNo = (data: IDataEpoch) => {
   if (data.status === "FINISHED") {
     return MAX_SLOT_EPOCH;
   }
-  return moment().diff(moment(data.startTime), "seconds");
+  return moment().diff(moment(data.startTime + "Z"), "seconds");
 };
 
 export function formatHash(hash: string): string {

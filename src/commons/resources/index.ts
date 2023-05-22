@@ -282,3 +282,4 @@ export { ReactComponent as StakingDelegators } from "./icons/stakingDelegators.s
 export { ReactComponent as CertificateIcon } from "./icons/certificate.svg";
 export { ReactComponent as CardanoSystemIcon } from "./icons/cardano-system.svg";
 export { ReactComponent as WalletIconRewardGreen } from "./icons/Staking/walletIconRewardGreen.svg";
+export { ReactComponent as TransferIcon } from "./icons/transfer.svg";

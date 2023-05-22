@@ -53,17 +53,5 @@ export const LogoEmpty = styled(Box)`
   border: 1px solid ${(props) => props.theme.palette.border.main};
 `;
 
-export const GridContainer = styled(Grid)(({ theme }) => ({
-  [theme.breakpoints.down("lg")]: {
-    paddingLeft: "16px !important",
-    paddingRight: "16px !important"
-  }
-}));
-export const GridItem = styled(Grid)(({ theme }) => ({
-  [theme.breakpoints.down("sm")]: {
-    marginBottom: "20px !important"
-  },
-  [theme.breakpoints.down("lg")]: {
-    marginBottom: "20px !important"
-  }
-}));
+export const GridContainer = styled(Grid)``;
+export const GridItem = styled(Grid)``;

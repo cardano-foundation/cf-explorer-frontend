@@ -76,7 +76,7 @@ const DelegatorLifecycle = ({
     {
       icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
       title: "Registration",
-      component: <Registration handleResize={handleResize} />,
+      component: <Registration />,
       description: (
         <RegistrationProcessDescription
           open={openDescriptionModal}

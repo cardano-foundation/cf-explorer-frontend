@@ -17,19 +17,15 @@ import { useSelector } from "react-redux";
 
 interface Props {
   onSelect: (deregistration: DeregistrationItem | null) => void;
+  params?: FilterParams;
+  setParams?: (params: FilterParams) => void;
 }
 
-const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
+const RecentDeregistrations: React.FC<Props> = ({ onSelect, params, setParams }) => {
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
 
-  const [params, setParams] = useState<FilterParams>({
-    fromDate: undefined,
-    sort: undefined,
-    toDate: undefined,
-    txHash: undefined
-  });
   const { data, total, loading, initialized, error } = useFetchList<DeregistrationItem>(
     stakeId ? API.STAKE_LIFECYCLE.DEREGISTRATION(stakeId) : "",
     { page: 0, size: 1000, ...params }
@@ -44,20 +40,20 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
     history.push(details.staking(stakeId, "timeline", "deregistration", deregistration.txHash));
   };
   useUpdateEffect(() => {
-    if (data && data.length && data.length === 1) {
+    if (data && data.length && data.length === 1 && params?.txHash === undefined) {
       handleSelect(data[0]);
     }
   }, [JSON.stringify(data)]);
   const filterLabel = useMemo(() => {
-    const sortArr = params.sort && params.sort.split(",");
-    if (params.fromDate && params.toDate)
-      return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
-        .utc(params.toDate, DATETIME_PARTTEN)
+    const sortArr = params?.sort && params?.sort.split(",");
+    if (params?.fromDate && params?.toDate)
+      return ` Filter by: ${moment.utc(params?.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
+        .utc(params?.toDate, DATETIME_PARTTEN)
         .local()
         .format("MM/DD/YYYY")}`;
-    if (params.sort && sortArr && params.sort.length >= 2)
+    if (params?.sort && sortArr && params?.sort.length >= 2)
       return `${sortArr[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
-    if (params.txHash) return `Searching for : ${params.txHash}`;
+    if (params?.txHash) return `Searching for : ${params?.txHash}`;
   }, [params]);
 
   if (txHash) return null;
@@ -74,13 +70,14 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
           <StackingFilter
             filterValue={params}
             onFilterValueChange={(params) =>
-              setParams(() => ({
+              setParams &&
+              setParams({
                 fromDate: undefined,
                 sort: undefined,
                 toDate: undefined,
                 txHash: undefined,
                 ...params
-              }))
+              })
             }
           />
         </Box>
@@ -96,7 +93,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
               <OverviewStaking
                 key={item.txHash}
                 item={item}
-                amount={Math.abs(item.deposit)}
+                amount={Math.abs(item.deposit) - item.fee || 0}
                 time={item.time}
                 hash={item.txHash}
                 onClick={handleSelect}

@@ -64,10 +64,6 @@ export const BackDrop = styled("div", { shouldForwardProp: (prop) => prop !== "i
 export const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   minWidth: drawerCollaspWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen
-  }),
   overflowY: "unset",
   borderRightWidth: 0,
   [theme.breakpoints.down("md")]: {
@@ -79,10 +75,6 @@ export const openedMixin = (theme: Theme): CSSObject => ({
 });
 
 export const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen
-  }),
   overflowY: "unset",
   width: drawerCollaspWidth,
   borderRightWidth: 0,
@@ -129,8 +121,8 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
 export const ToggleMenu = styled("button")`
   position: absolute;
   top: 50px;
-  right: 0px; 
-  transform: translateX(50%) translateY(-50%); 
+  right: 0px;
+  transform: translateX(50%) translateY(-50%);
   width: 22px;
   height: 22px;
   padding: 0;
@@ -169,5 +161,5 @@ export const ArrowCollapse = styled("span")`
   justify-content: center;
   align-items: center;
   font-size: 14px;
-  line-height: 14px; 
+  line-height: 14px;
 `;

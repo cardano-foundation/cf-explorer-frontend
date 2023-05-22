@@ -37,7 +37,8 @@ import {
   InfoGroup,
   StyledList,
   GridBox,
-  DotsIcon
+  DotsIcon,
+  MyGrid
 } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import ArrowDiagram from "../../../ArrowDiagram";
@@ -45,13 +46,12 @@ import useFetchList from "../../../../commons/hooks/useFetchList";
 import { API } from "../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../StackingFilter";
 import { WrapFilterDescription } from "../../DelegatorLifecycle/Registration/RecentRegistrations/styles";
-import { GridBoxCustom } from "../../DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import OverviewStaking from "../../../commons/OverviewStaking";
 import PopoverStyled from "../../../commons/PopoverStyled";
 import { useHistory, useParams } from "react-router";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { details } from "../../../../commons/routers";
-import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADA, getShortHash, getShortWallet, numberWithCommas } from "../../../../commons/utils/helper";
 import { ButtonSPO, PoolName, PoolNamePopup, StyledCopyButton } from "../Registration/styles";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
@@ -69,6 +69,7 @@ import ViewMoreAddressModal from "~/components/ViewMoreAddressModal";
 import { FilterDateLabel } from "../../DelegatorLifecycle/Delegation/styles";
 import { useSelector } from "react-redux";
 import { DATETIME_PARTTEN } from "~/components/StackingFilter/DateRangeModal";
+import { EmptyRecord } from "~/components/commons/Table";
 const PoollUpdates = ({
   containerPosition,
   handleResize
@@ -130,7 +131,7 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
     toDate: undefined,
     txHash: undefined
   });
-  const { data, total } = useFetchList<PoolUpdateItem>(API.SPO_LIFECYCLE.POOL_UPDATE(poolId), {
+  const { data, total, loading, initialized, error } = useFetchList<PoolUpdateItem>(API.SPO_LIFECYCLE.POOL_UPDATE(poolId), {
     page: 0,
     size: 1000,
     ...params
@@ -145,7 +146,7 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
   };
 
   useUpdateEffect(() => {
-    if (data && data.length && data.length === 1) {
+    if (data && data.length && data.length === 1 && params.txHash === undefined) {
       handleSelect(data[0]);
     }
   }, [JSON.stringify(data)]);
@@ -179,19 +180,25 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
         </Box>
       </StyledList>
       <GridBox sidebar={+sidebar}>
-        {data.map((item, ii) => {
-          return (
-            <OverviewStaking
-              key={ii}
-              item={item}
-              onClick={handleSelect}
-              hash={item.txHash}
-              amount={item.fee}
-              time={item.time}
-            />
-          );
-        })}
+        {loading &&
+          [...new Array(12)].map((i, ii) => (
+            <Skeleton key={ii} style={{ borderRadius: 12 }} variant='rectangular' width={300} height={185} />
+          ))}
+        {!loading &&
+          data.map((item, ii) => {
+            return (
+              <OverviewStaking
+                key={ii}
+                item={item}
+                onClick={handleSelect}
+                hash={item.txHash}
+                amount={item.fee}
+                time={item.time}
+              />
+            );
+          })}
       </GridBox>
+      {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
     </StyledContainer>
   );
 };
@@ -334,7 +341,7 @@ const PoollUpdatesTimeline = ({
                 <SPOInfo />
               </ButtonSPO>
             </CustomTooltip>
-            <Link to={details.stake(data?.stakeKeys[0] || "")}>
+            <Box>
               <CustomTooltip
                 wOpacity={false}
                 componentsProps={{
@@ -369,7 +376,7 @@ const PoollUpdatesTimeline = ({
                   <SPOKey fill='#438F68' />
                 </ButtonSPO>
               </CustomTooltip>
-            </Link>
+            </Box>
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
@@ -721,7 +728,7 @@ export const PoolUpdateModal = ({
   const [tabActive, setTabActive] = useState("poolCertificate");
   const [selectedOwner, setSelectedOwner] = useState<string[]>([]);
   const renderPoolCert = () => (
-    <StyledGridContainer container rowSpacing={1} columnSpacing={2}>
+    <MyGrid>
       <ViewMoreAddressModal
         showFullHash={true}
         maxWidth={680}
@@ -731,60 +738,74 @@ export const PoolUpdateModal = ({
         items={selectedOwner}
         onItemClick={(item) => history.push(details.stake(item))}
       />
-      <Grid item xs={6}>
-        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3} display={"flex"}>
+      <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
+        <Box p={3} display={"flex"}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Transaction ID
             </Box>
             {data && (
               <Box pt={"7px"} fontWeight={500}>
-                <Link to={details.transaction(data?.txHash || "")}>
-                  {isMobile ? getShortWallet(data?.txHash || "") : getShortHash(data?.txHash || "")}
-                </Link>{" "}
+                <CustomTooltip title={data?.txHash || ""}>
+                  <Link to={details.transaction(data?.txHash || "")}>
+                    {isMobile ? getShortWallet(data?.txHash || "") : getShortHash(data?.txHash || "")}
+                  </Link>
+                </CustomTooltip>
                 <CopyButton text={data?.txHash || ""} />
               </Box>
             )}
           </Box>
         </Box>
-      </Grid>
-      <Grid item xs={6}>
-        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3} display={"flex"}>
+      </Box>
+      <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
+        <Box p={3} display={"flex"}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Pool ID
             </Box>
             {data && (
               <Box pt={"7px"} fontWeight={500}>
-                <Link to={details.delegation(data?.poolView || "")}>
-                  {isMobile ? getShortWallet(data?.poolView || "") : getShortHash(data?.poolView || "")}
-                </Link>{" "}
+                <CustomTooltip title={data?.poolView || ""}>
+                  <Link to={details.delegation(data?.poolView || "")}>
+                    <>
+                      {isMobile ? getShortWallet(data?.poolView || "") : getShortHash(data?.poolView || "")}{" "}
+                    </>
+                  </Link>
+                </CustomTooltip>
                 <CopyButton text={data?.poolView || ""} />
               </Box>
             )}
           </Box>
         </Box>
-      </Grid>
+      </Box>
 
-      <Grid item xs={6}>
-        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3} display={"flex"} alignItems={"center"}>
+      <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
+        <Box display={"flex"} p={3} alignItems={"center"}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               VRF Key
             </Box>
             {data && (
-              <Box pt={"7px"}>
-                <Box display={"inline"} fontWeight={500} fontSize='0.875rem' color={({ palette }) => palette.blue[800]}>
-                  {isMobile ? getShortWallet(data?.poolView || "") : getShortHash(data?.vrfKey || "")}
-                </Box>{" "}
-                <CopyButton text={data?.vrfKey || ""} />
+              <Box display={"flex"} gap={"3px"}>
+                <CustomTooltip title={data?.vrfKey || "123"}>
+                  <Box pt={"7px"}>
+                    <>
+                      <Box display={"inline"} fontWeight={500} fontSize='0.875rem' color={({ palette }) => palette.blue[800]}>
+                        {isMobile ? getShortWallet(data?.vrfKey || "") : getShortHash(data?.vrfKey || "")}
+                      </Box>{" "}
+                    </>
+                  </Box>
+                </CustomTooltip>
+                <Box pt={"7px"}>
+                  <CopyButton text={data?.vrfKey || ""} />
+                </Box>
               </Box>
             )}
           </Box>
         </Box>
-      </Grid>
-      <Grid item xs={6}>
-        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3} display={"flex"} alignItems={"center"}>
+      </Box>
+      <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
+        <Box p={3} display={"flex"} alignItems={"center"} >
           <Box display='flex' alignItems='center'>
             <Box>
               <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
@@ -794,11 +815,13 @@ export const PoolUpdateModal = ({
                 <>
                   {data.stakeKeys && data.stakeKeys.length && (
                     <>
-                      <Box key={data.stakeKeys[0]} pt={"7px"} fontWeight={500} display={"flex"}>
-                        <Box>
-                          <Link to={details.stake(data.stakeKeys[0] || "")}>{getShortWallet(data.stakeKeys[0])}</Link>{" "}
-                          <CopyButton text={data.stakeKeys[0] || ""} />
-                        </Box>
+                      <Box key={data.stakeKeys[0]} pt={"7px"} fontWeight={500} display={"flex"} gap={"3px"}>
+                        <CustomTooltip title={data.stakeKeys[0] || ""}>
+                          <Box>
+                            <Link to={details.stake(data.stakeKeys[0] || "")}>{getShortWallet(data.stakeKeys[0])}</Link>{" "}
+                          </Box>
+                        </CustomTooltip>
+                        <CopyButton text={data.stakeKeys[0] || ""} />
                       </Box>
                     </>
                   )}
@@ -812,12 +835,10 @@ export const PoolUpdateModal = ({
             ) : null}
           </Box>
         </Box>
-      </Grid>
-      <Grid item xs={6}>
+      </Box>
+      <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
         <Box
-          minHeight={data?.previousPledge !== null ? 62 : "unset"}
           p={3}
-          bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}
           display={"flex"}
         >
           <Box>
@@ -825,19 +846,25 @@ export const PoolUpdateModal = ({
               Reward Account
             </Box>
             {data && (
-              <Box pt={"7px"} fontWeight={500}>
-                <Link to={details.stake(data?.rewardAccount || "")}>{getShortWallet(data?.rewardAccount || "")}</Link>{" "}
-                <CopyButton text={data?.rewardAccount || ""} />
+              <Box display={"flex"} gap={"3px"}>
+                <CustomTooltip title={data?.rewardAccount || ""}>
+                  <Box pt={"7px"} fontWeight={500}>
+                    <>
+                      <Link to={details.stake(data?.rewardAccount || "")}>{getShortWallet(data?.rewardAccount || "")}</Link>{" "}
+                    </>
+                  </Box>
+                </CustomTooltip>
+                <Box pt={"7px"}>
+                  <CopyButton text={data?.rewardAccount || ""} />
+                </Box>
               </Box>
             )}
           </Box>
         </Box>
-      </Grid>
-      <Grid item xs={6}>
+      </Box>
+      <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
         <Box
-          bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}
           p={3}
-          minHeight={data?.previousPledge !== null ? 62 : "unset"}
           display={"flex"}
           justifyContent={"space-between"}
           alignItems={"center"}
@@ -848,26 +875,24 @@ export const PoolUpdateModal = ({
             </Box>
             {data && (
               <Box fontSize='0.875rem' pt={"7px"} fontWeight={500}>
-                {data?.margin ? data?.margin * 100 : 0}%
+                {data?.margin ? numberWithCommas(data?.margin * 100, 2) : 0}%
                 {data?.previousMargin !== null && (
                   <Box fontSize={12} pt={"7px"} color={(theme) => theme.palette.grey[400]}>
-                    Previous: {data?.previousMargin} %{" "}
+                    Previous: {data?.previousMargin ? numberWithCommas(data?.previousMargin * 100, 2) : 0} %{" "}
                   </Box>
                 )}
               </Box>
             )}
           </Box>
-          {data?.previousMargin !== null && (
+          {data?.previousMargin !== null && data?.previousMargin !== data?.margin && (
             <Box>
               <ChangeIcon />
             </Box>
           )}
         </Box>
-      </Grid>
-      <Grid item xs={6}>
+      </Box>
+      <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
         <Box
-          minHeight={data?.previousPledge !== null ? 62 : "unset"}
-          bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}
           p={3}
           display={"flex"}
           alignItems={"center"}
@@ -888,18 +913,16 @@ export const PoolUpdateModal = ({
                 </Box>
               )}
             </Box>
-            {data?.previousPledge !== null && (
+            {data?.previousPledge !== null && data?.previousPledge !== data?.pledge && (
               <Box>
                 <ChangeIcon />
               </Box>
             )}
           </Box>
         </Box>
-      </Grid>
-      <Grid item xs={6}>
+      </Box>
+      <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
         <Box
-          minHeight={data?.previousPledge !== null ? 62 : "unset"}
-          bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}
           p={3}
           display={"flex"}
         >
@@ -914,12 +937,13 @@ export const PoolUpdateModal = ({
             )}
           </Box>
         </Box>
-      </Grid>
-    </StyledGridContainer>
+      </Box>
+    </MyGrid >
   );
 
   const renderCertificateUpdates = () => {
-    if (data?.previousMargin === null && data?.previousPledge === null) {
+    const isOldEqualNew = data?.previousMargin === data?.margin && data?.previousPledge === data?.pledge;
+    if ((data?.previousMargin === null && data?.previousPledge === null) || isOldEqualNew) {
       return (
         <Box textAlign={"center"}>
           <Box component={"img"} height={215} src={EmptyIcon} alt='no data' />
@@ -928,7 +952,7 @@ export const PoolUpdateModal = ({
     }
     return (
       <Box display={"flex"} flexDirection={"column"} gap={1}>
-        {data?.previousMargin !== null && (
+        {data?.previousMargin !== null && data?.previousMargin !== data?.margin && (
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
             <Box color={(theme) => theme.palette.grey[400]} fontWeight={"bold"}>
               Margin
@@ -939,7 +963,7 @@ export const PoolUpdateModal = ({
                   OLD
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
-                  {data?.previousMargin} %
+                  {data?.previousMargin ? numberWithCommas(data?.previousMargin * 100, 2) : 0}%
                 </Box>
               </CardBox>
               <Box flex={1} textAlign={"center"}>
@@ -950,13 +974,13 @@ export const PoolUpdateModal = ({
                   NEW
                 </Box>
                 <Box fontWeight={500} fontSize={14}>
-                  {data?.margin} %
+                  {data?.margin ? numberWithCommas(data?.margin * 100, 2) : 0}%
                 </Box>
               </CardBox>
             </Box>
           </Box>
         )}
-        {data?.previousPledge !== null && (
+        {data?.previousPledge !== null && data?.previousPledge !== data?.pledge && (
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
             <Box color={(theme) => theme.palette.grey[400]} fontWeight={"bold"}>
               Pledge

@@ -1,5 +1,4 @@
 import { Box, Button, Container, Grid, styled } from "@mui/material";
-import breakpoints from "../../themes/breakpoints";
 import Table from "../../components/commons/Table";
 
 export const DashboardCardList = styled(Box)`
@@ -22,6 +21,15 @@ export const DownloadButtonAll = styled(Button)`
 
 export const GridContainer = styled(Grid)`
   margin-bottom: 35px;
+  & > div > div {
+    height: 100%;
+  }
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    padding-top: 30px;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    padding-top: 0px;
+  }
 `;
 
 export const Status = styled("span")<{ status: string }>`

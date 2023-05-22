@@ -1,9 +1,7 @@
 import { alpha, Box, Skeleton } from "@mui/material";
 import { useState } from "react";
 
-
-import {
-  StakeLink} from "./styles";
+import { StakeLink } from "./styles";
 import RecentRegistrations from "./RecentRegistrations";
 import StyledModal from "../../../commons/StyledModal";
 import { useParams } from "react-router-dom";
@@ -12,14 +10,21 @@ import { API } from "../../../../commons/utils/api";
 import { details } from "../../../../commons/routers";
 import CopyButton from "../../../commons/CopyButton";
 import { RegistrationDraw } from "./RegistrationDraw";
+import { FilterParams } from "~/components/StackingFilter";
 
-const Registration = ({ handleResize }: { handleResize: () => void }) => {
+const Registration = () => {
   const [selected, setSelected] = useState<RegistrationItem | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const handleSelect = (registration: RegistrationItem | null) => {
     setSelected(registration);
   };
+  const [params, setParams] = useState<FilterParams>({
+    fromDate: undefined,
+    sort: undefined,
+    toDate: undefined,
+    txHash: undefined
+  });
 
   const handleToggleModal = () => setOpenModal((state) => !state);
 
@@ -27,7 +32,7 @@ const Registration = ({ handleResize }: { handleResize: () => void }) => {
     <Box>
       <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
       <Box>
-        <RecentRegistrations onSelect={handleSelect} />
+        <RecentRegistrations onSelect={handleSelect} params={params} setParams={setParams} />
       </Box>
       <Box>
         {selected && (
@@ -55,8 +60,8 @@ export const RegistrationCertificateModal = ({
         {loading && <Skeleton variant='rectangular' width={500} height={90} />}
         {!loading && (
           <Box>
-            <Box fontWeight={"bold"} mb={1} fontSize={"1rem"} color={({ palette }) => palette.grey[400]}>
-              STAKE KEY
+            <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+              Stake Key
             </Box>
             {data && (
               <Box>
