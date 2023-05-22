@@ -166,7 +166,7 @@ const DeregistrationTimeline = ({
                   <HoldBox ref={holdRef} ml={1} width={200}>
                     <Box>
                       <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                        {formatADA(Math.abs(selected.deposit) - selected.fee || 0)}
+                        {formatADA(Math.abs(selected.deposit || 0))}
                       </Box>
                       <ADAicon fontSize='18px' />
                     </Box>
@@ -388,7 +388,7 @@ const DeregistrationTimelineMobile = ({
                   <HoldBox ref={holdRef} width={125} marginLeft={4}>
                     <Box>
                       <Box component={"span"} fontSize={"18px"} fontWeight={"bold"}>
-                        {formatADA(Math.abs(selected.deposit) || 0)}
+                        {formatADA(Math.abs(selected.deposit || 0))}
                       </Box>
                       <ADAicon fontSize='18px' />
                     </Box>
