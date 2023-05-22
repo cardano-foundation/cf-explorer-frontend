@@ -38,7 +38,6 @@ export const Title = styled("h3")`
 `;
 
 export const DelegateTable = styled(Table)`
-  height: 300px;
   overflow: hidden;
   & > div {
     padding: 0;

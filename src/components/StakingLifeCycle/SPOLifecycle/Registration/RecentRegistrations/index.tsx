@@ -17,18 +17,15 @@ import { DATETIME_PARTTEN } from "~/components/StackingFilter/DateRangeModal";
 
 interface Props {
   onSelect: (registration: SPORegistration | null) => void;
+  params?: FilterParams;
+  setParams?: (params: FilterParams) => void;
 }
 
-const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
+const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams }) => {
   const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
-  const [params, setParams] = useState<FilterParams>({
-    fromDate: undefined,
-    sort: undefined,
-    toDate: undefined,
-    txHash: undefined
-  });
+
   const { data, total, loading, initialized, error } = useFetchList<SPORegistration>(
     poolId ? API.SPO_LIFECYCLE.SPO_REGISTRATION(poolId) : "",
     {
@@ -53,15 +50,15 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
   }, [JSON.stringify(data)]);
 
   const filterLabel = useMemo(() => {
-    const sortArr = params.sort && params.sort.split(",");
-    if (params.fromDate && params.toDate)
-      return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
-        .utc(params.toDate, DATETIME_PARTTEN)
+    const sortArr = params?.sort && params?.sort.split(",");
+    if (params?.fromDate && params?.toDate)
+      return ` Filter by: ${moment.utc(params?.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
+        .utc(params?.toDate, DATETIME_PARTTEN)
         .local()
         .format("MM/DD/YYYY")}`;
-    if (params.sort && sortArr && params.sort.length >= 2)
+    if (params?.sort && sortArr && params?.sort.length >= 2)
       return `${sortArr[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
-    if (params.txHash) return `Searching for : ${params.txHash}`;
+    if (params?.txHash) return `Searching for : ${params?.txHash}`;
   }, [params]);
 
   if (txHash) return null;
@@ -78,13 +75,14 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
           <StackingFilter
             filterValue={params}
             onFilterValueChange={(params) =>
-              setParams((pre) => ({
+              setParams &&
+              setParams({
                 fromDate: undefined,
                 sort: undefined,
                 toDate: undefined,
                 txHash: undefined,
                 ...params
-              }))
+              })
             }
           />
         </Box>
@@ -100,7 +98,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect }) => {
             return (
               <OverviewStaking
                 key={item.txHash}
-                amount={item.fee}
+                amount={item.fee + item.poolHold || 0}
                 time={item.time}
                 hash={item.txHash}
                 item={item}

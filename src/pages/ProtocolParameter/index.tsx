@@ -41,6 +41,7 @@ import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
 import { Link } from "react-router-dom";
 import { details } from "~/commons/routers";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 const ProtocolParameter: React.FC = () => {
   const [fixedColumnKeys, { push: pushFixedColumnKeys }] = useList<string>([]);
@@ -115,19 +116,41 @@ const ProtocolParameter: React.FC = () => {
     ...columnsMap
   ];
 
-  const fixedColumn = (fixedColumnKeys || []).map((k) => ({
-    title: k,
-    key: k,
-    render: (r: any) => {
-      return (
-        <Box component={Box} justifyItems={"flex-start"} textTransform={"capitalize"}>
-          <Box maxWidth={300} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
-            {typeof r[k] === "object" ? JSON.stringify(r[k]) : r[k]}
+  const fixedColumn = [
+    {
+      title: "Timestamp",
+      key: "Timestamp",
+      render: (r: any) => {
+        return (
+          <Box component={Box} justifyItems={"flex-start"} textTransform={"capitalize"}>
+            <Box maxWidth={300} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
+              {r?.timestamp ? formatDateTimeLocal(r.timestamp || "") : ""}
+            </Box>
           </Box>
-        </Box>
-      );
-    }
-  }));
+        );
+      }
+    },
+    ...(fixedColumnKeys || [])
+      .map((k) => {
+        if (k === "timestamp") {
+          return false;
+        }
+        return {
+          title: k,
+          key: k,
+          render: (r: any) => {
+            return (
+              <Box component={Box} justifyItems={"flex-start"} textTransform={"capitalize"}>
+                <Box maxWidth={300} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
+                  {typeof r[k] === "object" ? JSON.stringify(r[k]) : r[k]}
+                </Box>
+              </Box>
+            );
+          }
+        };
+      })
+      .filter((k) => k)
+  ];
   const variableColumn = columnsFull.filter((c) => variableColumnList.includes(c.key));
 
   return (
@@ -187,7 +210,10 @@ const ProtocolParameter: React.FC = () => {
                     />
                   )}
                   {!loadingFixed && (
-                    <Table columns={fixedColumn} data={dataFixed !== null && dataFixed ? [dataFixed] : []} />
+                    <Table
+                      columns={fixedColumn as Column<any>[]}
+                      data={dataFixed !== null && dataFixed ? [dataFixed] : []}
+                    />
                   )}
                 </Box>
               </Box>
@@ -212,11 +238,11 @@ const ProtocolParameterHistory = () => {
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
     [key: string]: any;
   }>([]);
-
+  const { isMobile } = useScreen();
   const [columnTitle, { push: pushColumnTitle }] = useList<string>([]);
   const [dataTable, setDataTable] = useState<{ [key: string]: any }[]>([]);
   const [columnsTable, setColumnsTable] = useState<Column<TProtocolParam & { params: string }>[]>([]);
-
+  const [sort, setSort] = useState("");
   const [showFilter, setShowFiter] = useState(false);
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [resetFilter, setResetFilter] = useState<boolean>(false);
@@ -273,8 +299,8 @@ const ProtocolParameterHistory = () => {
   const columnsMap = columnTitle.map((t, idx) => ({
     title: t,
     key: t,
-    fixed: idx === 0 ? true : false,
-    leftFixed: 130,
+    fixed: idx === 0 && !isMobile,
+    leftFixed: 150,
     render: (r: any) => {
       return (
         <Box
@@ -310,9 +336,13 @@ const ProtocolParameterHistory = () => {
       title: "Parameter Name",
       key: "ParameterName",
       fixed: true,
+      minWidth: 200,
       render: (r: TProtocolParam & { params: string }) => {
         return <Box p={"24px 20px"}>{r?.params}</Box>;
-      }
+      },
+      // sort: ({ columnKey, sortValue }) => {
+      //   sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      // }
     },
     ...columnsMap
   ];
@@ -322,6 +352,42 @@ const ProtocolParameterHistory = () => {
       getTitleColumn(dataHistory);
     }
   }, [JSON.stringify(dataHistory)]);
+
+  // useEffect(() => {
+  //   if (sort === "") {
+  //     setDataTableSort(dataTable);
+  //   }
+  //   if (sort.split(",")[1] === "DESC") {
+  //     setDataTableSort(
+  //       dataHistoryMapping.sort(function (a, b) {
+  //         const paramsA = a.params.toUpperCase();
+  //         const paramsB = b.params.toUpperCase();
+  //         if (paramsA < paramsB) {
+  //           return -1;
+  //         }
+  //         if (paramsA > paramsB) {
+  //           return 1;
+  //         }
+  //         return 0;
+  //       })
+  //     );
+  //   }
+  //   if (sort.split(",")[1] === "ASC") {
+  //     setDataTableSort(
+  //       dataHistoryMapping.sort(function (a, b) {
+  //         const paramsA = a.params.toUpperCase();
+  //         const paramsB = b.params.toUpperCase();
+  //         if (paramsA > paramsB) {
+  //           return -1;
+  //         }
+  //         if (paramsA < paramsB) {
+  //           return 1;
+  //         }
+  //         return 0;
+  //       })
+  //     );
+  //   }
+  // }, [sort]);
 
   useUpdateEffect(() => {
     if (columnTitle) {
@@ -415,12 +481,7 @@ const ProtocolParameterHistory = () => {
           </Box>
         }
       >
-        <TableStyled
-          columns={columnsTable}
-          data={dataTable}
-          // data={[]}
-          loading={loading}
-        />
+        <TableStyled columns={columnsTable} data={dataTable} loading={loading} />
       </Card>
     </Box>
   );
@@ -528,7 +589,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                 <ProtocolParam />
                 <Box ml={1}>Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ""}</Box>
               </Box>
-              <Box>{expanded === "params" ? <IoIosArrowDown /> : <IoIosArrowUp />}</Box>
+              <Box>{expanded === "params" ? <IoIosArrowUp /> : <IoIosArrowDown />}</Box>
             </Box>
           </AccordionSummary>
           <AccordionDetails>

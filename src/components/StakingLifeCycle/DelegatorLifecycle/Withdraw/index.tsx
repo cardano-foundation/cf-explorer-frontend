@@ -46,6 +46,7 @@ import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 import { details } from "../../../../commons/routers";
 import { useScreen } from "~/commons/hooks/useScreen";
 import { useWindowSize } from "react-use";
+import { FilterParams } from "~/components/StackingFilter";
 
 const Withdraw = ({
   containerPosition,
@@ -58,7 +59,12 @@ const Withdraw = ({
   handleResize: () => void;
 }) => {
   const [selected, setSelected] = useState<WithdrawItem | null>(null);
-
+  const [params, setParams] = useState<FilterParams>({
+    fromDate: undefined,
+    sort: undefined,
+    toDate: undefined,
+    txHash: undefined
+  });
   const handleSelect = (withdraw: WithdrawItem | null) => {
     setSelected(withdraw);
   };
@@ -67,7 +73,7 @@ const Withdraw = ({
   return (
     <Box>
       <Box>
-        <RecentWithdraws onSelect={handleSelect} />
+        <RecentWithdraws onSelect={handleSelect} params={params} setParams={setParams} />
       </Box>
       <Box>
         {!!selected &&

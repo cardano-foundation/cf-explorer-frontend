@@ -13,7 +13,7 @@ import {
   WalletGreenIcon
 } from "../../../commons/resources/index";
 import { details } from "../../../commons/routers";
-import { formatADAFull } from "../../../commons/utils/helper";
+import { formatADAFull, getShortHash } from "../../../commons/utils/helper";
 import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
 import ADAicon from "../../commons/ADAIcon";
 import {
@@ -125,7 +125,7 @@ const TabularOverview: React.FC = () => {
         mainIcon={<DelegationTo />}
         value={
           <Box component={Link} to={details.delegation(data?.pool?.poolId)} display='flex' alignItems='center'>
-            <CardValue>{data?.pool?.poolName}</CardValue>
+            <CardValue>{data?.pool?.poolName || getShortHash(data?.pool?.poolId || "")}</CardValue>
           </Box>
         }
       />
