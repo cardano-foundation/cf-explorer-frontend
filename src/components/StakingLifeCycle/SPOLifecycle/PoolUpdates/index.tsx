@@ -335,7 +335,7 @@ const PoollUpdatesTimeline = ({
                       Pool ID:
                     </Box>
                     <PoolNamePopup to={details.delegation(data?.poolView)}>
-                      {getShortHash(data?.poolView || "")}
+                      {getShortWallet(data?.poolView || "")}
                     </PoolNamePopup>
                     <CopyButton text={data?.poolView} />
                   </Box>
@@ -611,7 +611,7 @@ const PoollUpdatesTimelineMobile = ({
                         Pool ID:
                       </Box>
                       <PoolNamePopup to={details.delegation(data?.poolView)}>
-                        {getShortHash(data?.poolView || "")}
+                        {getShortWallet(data?.poolView || "")}
                       </PoolNamePopup>
                       <CopyButton text={data?.poolView} />
                     </Box>
@@ -778,7 +778,7 @@ export const PoolUpdateModal = ({
               <Box pt={"7px"} fontWeight={500}>
                 <CustomTooltip title={data?.poolView || ""}>
                   <Link to={details.delegation(data?.poolView || "")}>
-                    <>{isMobile ? getShortWallet(data?.poolView || "") : getShortHash(data?.poolView || "")} </>
+                    <>{getShortWallet(data?.poolView || "")} </>
                   </Link>
                 </CustomTooltip>
                 <CopyButton text={data?.poolView || ""} />

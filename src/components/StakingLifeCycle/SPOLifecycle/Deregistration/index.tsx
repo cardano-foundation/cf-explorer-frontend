@@ -185,7 +185,7 @@ const DeregistrationTimeline = ({
                       Pool ID:
                     </Box>
                     <PoolNamePopup to={details.delegation(selected?.poolView)}>
-                      {getShortHash(selected?.poolView || "")}
+                      {getShortWallet(selected?.poolView || "")}
                     </PoolNamePopup>
                     <CopyButton text={selected?.poolView} />
                   </Box>
@@ -495,7 +495,7 @@ const DeregistrationTimelineMobile = ({
                       Pool ID:
                     </Box>
                     <PoolNamePopup to={details.delegation(selected?.poolView)}>
-                      {getShortHash(selected?.poolView || "")}
+                      {getShortWallet(selected?.poolView || "")}
                     </PoolNamePopup>
                     <CopyButton text={selected?.poolView} />
                   </Box>

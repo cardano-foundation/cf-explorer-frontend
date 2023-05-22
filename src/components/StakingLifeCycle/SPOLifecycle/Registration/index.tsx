@@ -218,7 +218,7 @@ const RegistrationTimeline = ({
                       Pool ID:
                     </Box>
                     <PoolNamePopup to={details.delegation(data?.poolView)}>
-                      {getShortHash(data?.poolView || "")}
+                      {getShortWallet(data?.poolView || "")}
                     </PoolNamePopup>
                     <CopyButton text={data?.poolView} />
                   </Box>
@@ -505,7 +505,7 @@ const RegistrationTimelineMobile = ({
                         Pool ID:
                       </Box>
                       <PoolNamePopup to={details.delegation(data?.poolView)}>
-                        {getShortHash(data?.poolView || "")}
+                        {getShortWallet(data?.poolView || "")}
                       </PoolNamePopup>
                       <CopyButton text={data?.poolView} />
                     </Box>
@@ -723,7 +723,7 @@ export const RegistrationCertificateModal = ({
                   <CustomTooltip title={data?.poolView || ""}>
                     <Link to={details.delegation(data?.poolView || "")}>
                       <>
-                        {isMobile ? getShortWallet(data?.poolView || "") : getShortHash(data?.poolView || "")}{" "}
+                        {getShortWallet(data?.poolView || "")}{" "}
                       </>
                     </Link>
                   </CustomTooltip>

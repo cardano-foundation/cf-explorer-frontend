@@ -137,7 +137,7 @@ const Bookmark = () => {
           to={details.delegation(data.keyword)}
           color={(theme) => `${theme.palette.secondary.main} !important`}
         >
-          {getShortHash(data.keyword)}
+          {getShortWallet(data.keyword)}
         </Box>
       )
     },
