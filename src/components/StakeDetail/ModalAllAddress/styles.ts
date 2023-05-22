@@ -6,6 +6,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "min(80vw, 600px)",
+  backfaceVisibility: "hidden",
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
   borderRadius: 10,

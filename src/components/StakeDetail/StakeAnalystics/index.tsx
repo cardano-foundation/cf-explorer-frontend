@@ -24,6 +24,7 @@ import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { BigNumber } from "bignumber.js";
 import { API } from "../../../commons/utils/api";
 import CustomTooltip from "../../commons/CustomTooltip";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 type AnalyticsBalance = { date: string; value: number };
 type AnalyticsReward = {
@@ -43,6 +44,7 @@ const StakeAnalytics: React.FC = () => {
   const [tab, setTab] = useState<"BALANCE" | "REWARD">("BALANCE");
   const { stakeId } = useParams<{ stakeId: string }>();
   const theme = useTheme();
+  const { isMobile } = useScreen();
   const { data, loading } = useFetch<AnalyticsBalance[]>(`${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`);
   const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
     `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
@@ -66,19 +68,19 @@ const StakeAnalytics: React.FC = () => {
   const categoriesReward = dataReward?.map((i) => i.epoch) || [];
   const minReward = dataReward
     ? dataReward.reduce(
-        function (prev, current) {
-          return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
-        },
-        { epoch: 0, value: 0 }
-      )
+      function (prev, current) {
+        return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
+      },
+      { epoch: 0, value: 0 }
+    )
     : { epoch: 0, value: 0 };
   const maxReward = dataReward
     ? dataReward.reduce(
-        function (prev, current) {
-          return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
-        },
-        { epoch: 0, value: 0 }
-      )
+      function (prev, current) {
+        return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
+      },
+      { epoch: 0, value: 0 }
+    )
     : { epoch: 0, value: 0 };
 
   return (
@@ -143,7 +145,8 @@ const StakeAnalytics: React.FC = () => {
                       labels: {
                         style: {
                           fontSize: 12
-                        }
+                        },
+                        rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null
                       }
                     },
                     legend: { enabled: false },

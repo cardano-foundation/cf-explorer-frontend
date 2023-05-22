@@ -67,7 +67,7 @@ const StakeTab = () => {
   ];
 
   return (
-    <Box mt={4}>
+    <Box>
       <TabContext value={tabActive}>
         <WrapperTabList>
           <StyledTabList

@@ -13,6 +13,7 @@ export declare type ThemeType = "dark" | "light";
 export declare interface UserDataType {
   avatar: string;
   email: string;
+  address: string;
   wallet: string;
   username: string;
   sizeBookmark: number;

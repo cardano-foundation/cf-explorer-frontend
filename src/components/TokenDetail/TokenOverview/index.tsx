@@ -22,7 +22,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
     {
       title: "",
       value: (
-        <CardItem display={"flex"} gap={2} flex={3} mt={"-30px"}>
+        <CardItem display={"flex"} gap={2} flex={3} mt={"-30px"} paddingLeft={0} paddingRight={0}>
           <Box>
             <img src={policyIcon} alt='' />
           </Box>

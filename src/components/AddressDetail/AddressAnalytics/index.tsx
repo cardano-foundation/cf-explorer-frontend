@@ -23,6 +23,7 @@ import { formatADAFull, formatPrice } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { BigNumber } from "bignumber.js";
 import { API } from "../../../commons/utils/api";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 type AnalyticsData = { date: string; value: number };
 
@@ -36,6 +37,7 @@ const options = [
 const AddressAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { address } = useParams<{ address: string }>();
+  const { isMobile } = useScreen();
   const theme = useTheme();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`);
   const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${address}`);
@@ -104,7 +106,8 @@ const AddressAnalytics: React.FC = () => {
                       labels: {
                         style: {
                           fontSize: 12
-                        }
+                        },
+                        rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null
                       }
                     },
                     legend: { enabled: false },
