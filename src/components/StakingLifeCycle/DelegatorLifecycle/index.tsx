@@ -76,7 +76,7 @@ const DelegatorLifecycle = ({
     {
       icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
       title: "Registration",
-      component: <Registration handleResize={handleResize} containerPosition={containerPosition} />,
+      component: <Registration />,
       description: (
         <RegistrationProcessDescription
           open={openDescriptionModal}
@@ -112,7 +112,7 @@ const DelegatorLifecycle = ({
     {
       icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
       title: "Rewards Withdrawal",
-      component: <RewardsWithdrawal handleResize={handleResize} containerPosition={containerPosition} />,
+      component: <RewardsWithdrawal />,
       description: (
         <WithdrawingFundProcessDescription
           open={openDescriptionModal}
