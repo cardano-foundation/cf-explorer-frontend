@@ -13,6 +13,7 @@ import {
   StyledButtonClose,
   StyledButtonReport,
   StyledUsername,
+  WrapItemMobile,
   Wrapper
 } from "./styled";
 import editAva from "../../../../commons/resources/icons/editAva.svg";
@@ -28,6 +29,7 @@ import CustomTooltip from "../../CustomTooltip";
 import useToast from "../../../../commons/hooks/useToast";
 import StyledModal from "../../StyledModal";
 import { useScreen } from "../../../../commons/hooks/useScreen";
+import { getShortWallet } from "~/commons/utils/helper";
 interface Props {
   children: React.ReactNode;
 }
@@ -143,44 +145,56 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
               </Box>
             </Box>
           </Box>
-          <CustomTooltip title={userData?.username || ""} placement='bottom'>
-            <StyledUsername component={"h4"} pt={1} m='auto'>
-              {userData?.username}
-            </StyledUsername>
-          </CustomTooltip>
-        </Box>
-        <Box mt={4}>
-          {router.map((route, index) => {
-            return isMobile || isTablet ? (
-              <NavItemMobile
-                smallWidth={isGalaxyFoldSmall ? 1 : 0}
-                sx={{
-                  borderTopRightRadius: index === router.length - 1 ? "5px" : "0px",
-                  borderBottomRightRadius: index === router.length - 1 ? "5px" : "0px",
-                  borderTopLeftRadius: index === 0 ? "5px" : "0px",
-                  borderBottomLeftRadius: index === 0 ? "5px" : "0px",
-                }} to={route.to} active={route.to === pathname} key={index}>
-                {route.title}
-              </NavItemMobile>
+          {
+            userData?.address ? (
+              <CustomTooltip title={userData?.address || ""} placement='bottom'>
+                <StyledUsername component={"h4"} pt={1} m='auto'>
+                  {getShortWallet(userData?.address)}
+                </StyledUsername>
+              </CustomTooltip>
             ) : (
-              <NavItem to={route.to} active={route.to === pathname} key={index}>
-                <Box
-                  display='flex'
-                  alignItems={"center"}
-                  justifyContent='space-between'
-                  py={2}
-                  mx={4}
-                  borderBottom={`1px solid${alpha(theme.palette.common.black, 0.07)}`}
-                >
-                  <Box>{route.title}</Box>
-                  <MdChevronRight
-                    size={25}
-                    color={route.to === pathname ? theme.palette.primary.main : theme.palette.text.hint}
-                  />
-                </Box>
-              </NavItem>
-            );
-          })}
+              <StyledUsername component={"h4"} pt={1} m='auto'>
+                {userData?.email}
+              </StyledUsername>
+            )
+          }
+        </Box>
+        <Box display={"flex"} justifyContent={"center"} mt={4}>
+          <WrapItemMobile>
+            {router.map((route, index) => {
+              const active = route.to === pathname;
+              return isMobile || isTablet ? (
+                <NavItemMobile
+                  smallWidth={isGalaxyFoldSmall ? 1 : 0}
+                  sx={{
+                    borderTopRightRadius: index === router.length - 1 ? "5px" : "0px",
+                    borderBottomRightRadius: index === router.length - 1 ? "5px" : "0px",
+                    borderTopLeftRadius: index === 0 ? "5px" : "0px",
+                    borderBottomLeftRadius: index === 0 ? "5px" : "0px",
+                    borderRadius: active ? "5px" : ""
+                  }} to={route.to} active={active} key={index}>
+                  {route.title}
+                </NavItemMobile>
+              ) : (
+                <NavItem to={route.to} active={route.to === pathname} key={index}>
+                  <Box
+                    display='flex'
+                    alignItems={"center"}
+                    justifyContent='space-between'
+                    py={2}
+                    mx={4}
+                    borderBottom={`1px solid${alpha(theme.palette.common.black, 0.07)}`}
+                  >
+                    <Box>{route.title}</Box>
+                    <MdChevronRight
+                      size={25}
+                      color={route.to === pathname ? theme.palette.primary.main : theme.palette.text.hint}
+                    />
+                  </Box>
+                </NavItem>
+              );
+            })}
+          </WrapItemMobile>
         </Box>
       </Box>
       {!isMobile && !isTablet ? <MissingData /> : null}

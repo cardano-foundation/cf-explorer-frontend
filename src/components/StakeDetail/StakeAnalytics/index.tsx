@@ -161,7 +161,8 @@ const StakeAnalytics: React.FC = () => {
                       labels: {
                         style: {
                           fontSize: 12
-                        }
+                        },
+                        rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null
                       }
                     },
                     legend: { enabled: false },

@@ -15,7 +15,7 @@ export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
   }
 }));
 
-export const CustomButton = styled("button")<{ active: number }>`
+export const CustomButton = styled("button") <{ active: number }>`
   width: 115px;
   border: none;
   border-radius: 5px;
@@ -159,9 +159,11 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   fontWeight: "bold",
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   backgroundColor: active ? theme.palette.primary.main : "none",
-  ":hover": {
-    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
-    backgroundColor: active ? theme.palette.primary.main : "none"
+  [theme.breakpoints.down("md")]: {
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText
+    }
   },
   [theme.breakpoints.down("sm")]: {
     minWidth: `40px !important`,

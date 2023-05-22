@@ -37,7 +37,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
               <Box>
                 Pool ID:{" "}
                 <CustomTooltip title={item.poolId}>
-                  <AddressLink to={details.delegation(item.poolId)}>{getShortHash(item.poolId || "")}</AddressLink>
+                  <AddressLink to={details.delegation(item.poolId)}>{getShortWallet(item.poolId || "")}</AddressLink>
                 </CustomTooltip>
                 <CopyButton text={item.poolId || ""} />
               </Box>
