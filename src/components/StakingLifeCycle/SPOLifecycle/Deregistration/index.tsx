@@ -248,7 +248,7 @@ const DeregistrationTimeline = ({
                     <HoldBox ref={holdRef} ml={1}>
                       <Box>
                         <HoldBoxText mr={1} component={"span"}>
-                          {formatADA(selected?.poolHold - selected?.fee)}
+                          {formatADA(selected?.poolHold || 0)}
                         </HoldBoxText>
                         <ADAicon fontSize='18px' />
                       </Box>
