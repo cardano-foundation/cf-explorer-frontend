@@ -65,7 +65,6 @@ import SaveOnIcon from "./icons/save-on.svg";
 import SaveOffIcon from "./icons/save-off.svg";
 import LinkOff from "./icons/link-off.svg";
 import User2 from "./icons/user2.svg";
-import CertificateIconUrl from "./images/certificate.png";
 import FlintIcon from "./icons/flint.svg";
 import NamiIcon from "./icons/nami.svg";
 import EternlIcon from "./icons/eternl.svg";
@@ -174,7 +173,6 @@ export {
   FilterIcon,
   IconRefresh,
   IconThreeDot,
-  CertificateIconUrl,
   PolygonWhiteIconUrl,
   AdaHolderIconUrl,
   PaymentWalletUrl,
