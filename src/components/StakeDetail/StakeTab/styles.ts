@@ -3,7 +3,7 @@ import { Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 import breakpoints from "~/themes/breakpoints";
 
-export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
+export const TitleTab = styled(Box)<{ active?: boolean }>(({ active, theme }) => ({
   fontWeight: "bold",
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
@@ -30,15 +30,6 @@ export const StyledLink = styled(Link)`
 export const StyledTabList = styled(TabList)`
   & > div > div {
     justify-content: space-between;
-    @media screen and (max-width: ${({ theme }) => theme.breakpoints.values.md}px) {
-      overflow-x: auto;
-      white-space: nowrap;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      &::-webkit-scrollbar {
-        display: none;
-      }
-    }
   }
 `;
 
