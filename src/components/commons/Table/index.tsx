@@ -448,11 +448,13 @@ const PaginationCustom = ({
 
   useUpdateEffect(() => {
     setInputPage(1);
-  }, [poolType]);
+  }, [poolType, size]);
 
-  useUpdateEffect(() => {
-    setInputPage(1);
-  }, [size]);
+  useEffect(() => {
+    if (pagination?.page) {
+      setInputPage(pagination?.page + 1);
+    }
+  }, [pagination?.page]);
 
   const { isGalaxyFoldSmall } = useScreen();
 
