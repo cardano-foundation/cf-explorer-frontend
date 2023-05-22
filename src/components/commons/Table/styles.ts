@@ -124,6 +124,23 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number
   ${theme.breakpoints.down("sm")} {
     padding: 0;
   }
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: ${theme.palette.grey[300]};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${theme.palette.grey[100]};
+    }
+  }
 `
 );
 
