@@ -99,7 +99,7 @@ export const LineArrow: React.FC<LineArrowProps> = (props) => {
       theme.breakpoints.values.xl
     );
     const listMatch = listPoints.filter((item) => {
-      return item < width - (sidebar ? nextPoint - prevPoint : 0);
+      return item <= width - (sidebar ? nextPoint - prevPoint : 0);
     });
     const key = Math.max(...listMatch);
     const index = listPoints.indexOf(key);
