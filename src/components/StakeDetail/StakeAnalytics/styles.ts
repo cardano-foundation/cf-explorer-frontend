@@ -28,7 +28,7 @@ export const CustomButton = styled("button")<{ active: number }>`
   font-size: 16px;
   line-height: 24px;
 
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.down("sm")}px) {
     width: 78px;
     padding: 6px 10px;
     margin-right: 8px !important;
@@ -149,9 +149,6 @@ export const Tabs = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "flex-end",
     gap: theme.spacing(1)
-  },
-  [theme.breakpoints.down("sm")]: {
-    color: "red"
   }
 }));
 
