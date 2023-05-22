@@ -54,7 +54,9 @@ export const NextButton = styled(Button)(({ theme }) => ({
   background: theme.palette.grey[700],
   textTransform: "capitalize",
   fontWeight: "bold",
+  padding: "8px 20px",
   borderRadius: "8px",
+  border: "2px solid transparent",
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.8)
   },

@@ -62,6 +62,10 @@ const DelegationDetail: React.FC = () => {
     mainRef.current?.scrollTo(0, 0);
   }, [poolId]);
 
+  if (!initialized) {
+    return null;
+  }
+
   if ((initialized && !data) || error) return <NoRecord />;
 
   const tabs: {

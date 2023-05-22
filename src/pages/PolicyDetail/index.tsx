@@ -16,6 +16,10 @@ const PolicyDetail = () => {
     document.title = `Policy ${policyId} | Cardano Explorer`;
   }, [policyId]);
 
+  if (!initialized) {
+    return null;
+  }
+
   if ((initialized && !data) || error) return <NoRecord />;
 
   return (

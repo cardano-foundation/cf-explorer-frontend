@@ -17,7 +17,10 @@ export const ModalContainer = styled(Box)<{ width?: number | string; viewwidth?:
         right: "15px",
         zIndex: 10
       },
-      width: "90vw"
+      width: "90vw",
+      maxHeight: "80vh",
+      display: "flex",
+      flexDirection: "column"
     }
   })
 );
@@ -36,15 +39,19 @@ export const CloseButton = styled(IconButton)<{ saving: number }>`
   }
 `;
 
-export const WrapTitle = styled(Box)`
-  color: ${(props) => props.theme.palette.text.primary};
-  font-size: 24px;
-  line-height: 28px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  position: relative;
-  z-index: 2;
-`;
+export const WrapTitle = styled(Box)(({ theme }) => ({
+  color: theme.palette.text.primary,
+  fontSize: 24,
+  lineHeight: "28px",
+  fontWeight: 700,
+  marginBottom: 20,
+  position: "relative",
+  zIndex: 2,
+  [theme.breakpoints.down("sm")]: {
+    maxWidth: "calc(100% - 40px)",
+    marginBottom: 0
+  }
+}));
 
 export const ContentContainer = styled(Box)<{ wiithtitle?: number }>`
   max-height: calc(100vh - 160px);

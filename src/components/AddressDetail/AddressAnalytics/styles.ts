@@ -36,7 +36,7 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
 
     div: {
       width: "100%",
-      height: "100px",
+      height: "80%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -67,7 +67,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
 
     div: {
       width: "100%",
-      height: "100px",
+      height: "80%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",

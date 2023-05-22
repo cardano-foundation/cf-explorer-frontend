@@ -29,6 +29,10 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
       background: theme.palette.grey[400],
       backgroundClip: "padding-box"
     }
+  },
+
+  [`@media screen and (max-width: ${theme.breakpoints.values.md}px)`]: {
+    marginTop: theme.spacing(4)
   }
 }));
 export const ButtonClose = styled(Button)(({ theme }) => ({
