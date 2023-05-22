@@ -89,7 +89,7 @@ const OperatorReward = ({
                         Pool ID:
                       </Box>
                       <PoolNamePopup to={details.delegation(data?.poolView)}>
-                        {getShortHash(data?.poolView || "")}
+                        {getShortWallet(data?.poolView || "")}
                       </PoolNamePopup>
                       <CopyButton text={data?.poolView} />
                     </Box>

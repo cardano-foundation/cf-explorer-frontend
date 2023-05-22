@@ -38,9 +38,8 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
   const { isMobile } = useScreen();
 
   return (
-    <StyledModal open={open} handleCloseModal={handleCloseModal} width={1200} height={isMobile ? "83vh" : "72vh"}>
+    <StyledModal title={"ADA Transfers"} open={open} handleCloseModal={handleCloseModal} width={1200} height={isMobile ? "83vh" : "72vh"}>
       <TabContext value={activityType}>
-        <ModalTitle>ADA Transfers</ModalTitle>
         <Box overflow={!isGalaxyFoldSmall ? "auto" : "hidden"} maxHeight={isMobile ? "80vh" : "70vh"}>
           <StyledTabs
             value={activityType}

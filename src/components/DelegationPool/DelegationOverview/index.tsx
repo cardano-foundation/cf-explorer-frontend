@@ -74,16 +74,16 @@ const OverViews: React.FC = () => {
         </Box>
       </Grid>
       <Grid item xl={4} md={6} xs={12}>
-        <StyledCard.Container>
-          <StyledCard.Content style={{ flex: 1, paddingTop: isGalaxyFoldSmall ? "50px" : "30px" }}>
+        <StyledCard.Container sx={{justifyContent: "space-between"}}>
+          <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>
             <StyledCard.Title>Live Stake</StyledCard.Title>
             <StyledCard.Value>{formatADA(data?.liveStake)}</StyledCard.Value>
           </StyledCard.Content>
-          <StyledCard.Content style={{ flex: 1, paddingTop: isGalaxyFoldSmall ? "50px" : "30px" }}>
+          <StyledCard.Content style={{ }}>
             <StyledCard.Title>Delegators</StyledCard.Title>
             <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
           </StyledCard.Content>
-          <Box flex={"1"}>
+          <Box>
             <StyledImg src={LiveStakeIcon} alt='Rocket' />
           </Box>
         </StyledCard.Container>

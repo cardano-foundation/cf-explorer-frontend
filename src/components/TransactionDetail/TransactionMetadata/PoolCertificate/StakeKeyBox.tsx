@@ -17,7 +17,7 @@ const StakeKeyBox = ({ data }: TProps) => {
   const leftRow = [
     {
       label: "Pool Id",
-      value: getShortHash(data.poolId),
+      value: getShortWallet(data.poolId),
       isHyperLink: true,
       originValue: data.poolId,
       linkTo: details.delegation(data.poolId),

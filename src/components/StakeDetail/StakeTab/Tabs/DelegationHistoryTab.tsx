@@ -52,7 +52,7 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
       minWidth: "120px",
       render: (r) => (
         <CustomTooltip title={r.poolId || ""}>
-          <StyledLink to={details.delegation(r.poolId)}>{getShortHash(r.poolId || "")}</StyledLink>
+          <StyledLink to={details.delegation(r.poolId)}>{getShortWallet(r.poolId || "")}</StyledLink>
         </CustomTooltip>
       )
     },
