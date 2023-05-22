@@ -30,7 +30,7 @@ const OverViews: React.FC = () => {
     );
   }
 
-  const duration = moment.duration(data?.countDownEndTime || 0, "seconds");
+  const duration = moment.duration(data?.countDownEndTime || 0, "millisecond");
   return (
     <Grid container spacing={2}>
       <Grid item xl={4} md={6} xs={12}>
