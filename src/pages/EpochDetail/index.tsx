@@ -12,7 +12,7 @@ const EpochDetail: React.FC = () => {
   const { epochId } = useParams<{ epochId: string }>();
   const { state } = useLocation<{ data?: IDataEpoch }>();
 
-  const { data, initialized, error } = useFetch<IDataEpoch>(
+  const { data, loading, initialized, error } = useFetch<IDataEpoch>(
     `${API.EPOCH.DETAIL}/${epochId}`,
     state?.data,
     false,
@@ -24,11 +24,15 @@ const EpochDetail: React.FC = () => {
     document.title = `Epoch ${epochId} | Cardano Explorer`;
   }, [epochId]);
 
+  if (!initialized) {
+    return null;
+  }
+
   if ((initialized && !data) || error) return <NoRecord />;
 
   return (
     <StyledContainer>
-      <EpochOverview data={data} loading={!initialized} />
+      <EpochOverview data={data} loading={loading} />
       <EpochBlockList epochId={epochId} />
     </StyledContainer>
   );

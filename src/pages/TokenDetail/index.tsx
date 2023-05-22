@@ -23,6 +23,10 @@ const TokenDetail: React.FC = () => {
     mainRef.current?.scrollTo(0, 0);
   }, [tokenId]);
 
+  if (!initialized) {
+    return null;
+  }
+
   if ((initialized && !data) || error) return <NoRecord />;
 
   return (

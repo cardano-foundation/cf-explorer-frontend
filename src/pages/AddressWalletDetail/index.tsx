@@ -22,6 +22,10 @@ const AddressWalletDetail = () => {
     mainRef.current?.scrollTo(0, 0);
   }, [address]);
 
+  if (!initialized) {
+    return null;
+  }
+
   if ((initialized && !data) || error) return <NoRecord />;
 
   return (

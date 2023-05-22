@@ -21,7 +21,7 @@ const StyledContainer = styled(Container)`
 const Transaction: React.FC = () => {
   const { trxHash } = useParams<{ trxHash: string }>();
   const { state } = useLocation<{ data?: Transaction }>();
-  const { data, initialized, error } = useFetch<Transaction>(
+  const { data, loading, initialized, error } = useFetch<Transaction>(
     `${API.TRANSACTION.DETAIL}/${trxHash}`,
     state?.data,
     false,
@@ -40,7 +40,7 @@ const Transaction: React.FC = () => {
 
   return (
     <StyledContainer>
-      <TransactionOverview data={data} loading={!initialized} />
+      <TransactionOverview data={data} loading={loading} />
       <Box>
         {!initialized ? (
           <Card>
