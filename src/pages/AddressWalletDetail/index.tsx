@@ -5,7 +5,7 @@ import AddressHeader from "../../components/AddressDetail/AddressHeader";
 import AddressAnalytics from "../../components/AddressDetail/AddressAnalytics";
 import useFetch from "../../commons/hooks/useFetch";
 import NoRecord from "../../components/commons/NoRecord";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { API } from "../../commons/utils/api";
 
 const AddressWalletDetail = () => {
@@ -15,11 +15,11 @@ const AddressWalletDetail = () => {
     state?.data ? "" : `${API.ADDRESS.DETAIL}/${address}`,
     state?.data
   );
-  const mainRef = useRef(document.querySelector("#main"));
+
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Address ${address} | Cardano Explorer`;
-    mainRef.current?.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
   }, [address]);
 
   if (!initialized) {

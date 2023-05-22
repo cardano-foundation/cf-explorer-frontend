@@ -208,7 +208,7 @@ const OperatorReward = ({
                         Pool ID:
                       </Box>
                       <PoolNamePopup to={details.delegation(data?.poolView)}>
-                        {getShortHash(data?.poolView || "")}
+                        {getShortWallet(data?.poolView || "")}
                       </PoolNamePopup>
                       <CopyButton text={data?.poolView} />
                     </Box>
@@ -352,5 +352,8 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: ()
 const StyledTable = styled(Table)(() => ({
   "> :nth-child(2)": {
     boxShadow: "none !important"
+  },
+  "& nav li > div": {
+    width: "100% !important"
   }
 }));
