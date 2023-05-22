@@ -148,7 +148,7 @@ const TabularOverview: React.FC = () => {
       <ViewMoreAddressModal
         showFullHash={true}
         onItemClick={onOwnerItemClick}
-        title='Pool Owner'
+        title='Owner Account'
         open={open}
         items={data?.stakeKeys}
         onClose={() => setOpen(false)}

@@ -31,6 +31,7 @@ import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 import { useScreen } from "~/commons/hooks/useScreen";
+import { StyledLinkKey } from "../ADATransferModal/styles";
 import { FilterParams } from "~/components/StackingFilter";
 
 const Registration = ({
@@ -135,7 +136,9 @@ const RegistrationTimeline = ({
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={txHash}>
-              <InfoText>{getShortHash(txHash || "")}</InfoText>
+              <InfoText>
+                <StyledLinkKey to={details.transaction(txHash)}>{getShortHash(txHash || "")}</StyledLinkKey>
+              </InfoText>
             </CustomTooltip>
             <StyledCopyButton text={txHash} />
           </Info>
@@ -344,7 +347,9 @@ const RegistrationTimelineMobile = ({
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={txHash}>
-              <InfoText>{getShortHash(txHash || "")}</InfoText>
+              <InfoText>
+                <StyledLinkKey to={details.transaction(txHash)}>{getShortHash(txHash || "")}</StyledLinkKey>
+              </InfoText>
             </CustomTooltip>
             <StyledCopyButton text={txHash} />
           </Info>

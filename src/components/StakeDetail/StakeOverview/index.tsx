@@ -6,7 +6,7 @@ import totalStakeIcon from "../../../commons/resources/icons/totalStake.svg";
 import rewardIcon from "../../../commons/resources/icons/reward.svg";
 import rewardWithdrawIcon from "../../../commons/resources/icons/rewardWithdraw.svg";
 import { formatADAFull } from "../../../commons/utils/helper";
-import { ButtonModal, StyledFlexValue, StyledLink, TitleCard } from "./styles";
+import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard } from "./styles";
 import { useParams } from "react-router-dom";
 import ModalAllAddress from "../ModalAllAddress";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -20,6 +20,9 @@ interface Props {
 const StakeOverview: React.FC<Props> = ({ data, loading }) => {
   const [open, setOpen] = useState(false);
   const { stakeId } = useParams<{ stakeId: string }>();
+  const delegateTo = data?.pool
+    ? `${data?.pool?.tickerName || ""} - ${data?.pool?.poolName || ""}`
+    : "Not delegated to any pool";
   const listOverview = [
     {
       icon: delegatedIcon,
@@ -29,10 +32,10 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <CustomTooltip title={`${data?.pool?.tickerName || ""} - ${data?.pool?.poolName || ""}`}>
-          <StyledLink to={details.delegation(data?.pool?.poolId)}>
-            {data?.pool?.tickerName || ""} - {data?.pool?.poolName || ""}
-          </StyledLink>
+        <CustomTooltip title={delegateTo}>
+          <StyledLinkTo isTo={!!data?.pool} to={data?.pool?.poolId ? details.delegation(data?.pool?.poolId) : "#"}>
+            {delegateTo}
+          </StyledLinkTo>
         </CustomTooltip>
       )
     },

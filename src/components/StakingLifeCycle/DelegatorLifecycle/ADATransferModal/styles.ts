@@ -88,6 +88,12 @@ export const StyledLink = styled(Link)`
   }
 `;
 
+export const StyledLinkKey = styled(Link)`
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+`;
+
 export const OverviewIcon = styled(Box)`
   border-radius: 49px;
   background: ${(props) => props.theme.palette.green[600_10]};
