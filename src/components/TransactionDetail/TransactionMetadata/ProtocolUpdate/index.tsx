@@ -1,6 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
-import { Column } from "../../../commons/Table";
+import { Column } from "~/components/commons/Table";
 import { TableProtocol } from "./styles";
 
 interface IProps {
@@ -14,7 +13,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
       isHiddenBorder: true,
       key: "paramName",
       minWidth: "40px",
-      render: (r, index) => {
+      render: (r) => {
         return <div>{r.protocol}</div>;
       }
     },
@@ -24,7 +23,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
       key: "previousValue",
       minWidth: "40px",
       render: (r, index) => {
-        return <div>{r?.oldValue}</div>;
+        return <pre>{r?.oldValue}</pre>;
       }
     },
     {
@@ -33,16 +32,12 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
       minWidth: "40px",
       isHiddenBorder: true,
       render: (r, index) => {
-        return <div>{r?.value}</div>;
+        return <pre>{r?.value}</pre>;
       }
     }
   ];
 
-  return (
-    <Box bgcolor={"white"} px={2}>
-      <TableProtocol columns={columns} data={data.filter((item) => item.value !== null)} />
-    </Box>
-  );
+  return <TableProtocol columns={columns} data={data.filter((item) => item.value !== null)} />;
 };
 
 export default ProtocolUpdate;

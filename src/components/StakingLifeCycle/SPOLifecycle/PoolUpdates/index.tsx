@@ -181,7 +181,7 @@ export const PoolUpdateModal = ({
               <Box pt={"7px"} fontWeight={500}>
                 <CustomTooltip title={data?.txHash || ""}>
                   <Link to={details.transaction(data?.txHash || "")}>
-                    {isMobile ? getShortWallet(data?.txHash || "") : getShortHash(data?.txHash || "")}
+                    {getShortHash(data?.txHash || "")}
                   </Link>
                 </CustomTooltip>
                 <CopyButton text={data?.txHash || ""} />
@@ -218,7 +218,7 @@ export const PoolUpdateModal = ({
             </Box>
             {data && (
               <Box display={"flex"} gap={"3px"}>
-                <CustomTooltip title={data?.vrfKey || "123"}>
+                <CustomTooltip title={data?.vrfKey}>
                   <Box pt={"7px"}>
                     <>
                       <Box
@@ -227,7 +227,7 @@ export const PoolUpdateModal = ({
                         fontSize='0.875rem'
                         color={({ palette }) => palette.blue[800]}
                       >
-                        {isMobile ? getShortWallet(data?.vrfKey || "") : getShortHash(data?.vrfKey || "")}
+                        {getShortHash(data?.vrfKey || "")}
                       </Box>{" "}
                     </>
                   </Box>

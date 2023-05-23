@@ -15,10 +15,12 @@ const PopoverStyled = (props: Props) => {
 
   const handleClick = (element: HTMLElement) => {
     setAnchorEl(element);
+    document.body.classList.add("no-scroll");
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+    document.body.classList.remove("no-scroll");
   };
 
   const open = Boolean(anchorEl);

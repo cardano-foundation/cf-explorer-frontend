@@ -66,7 +66,25 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
   const containsSpecialCharacters = (inputValue: string) => {
     const regex = /[!@#$%^&*(),.?":{}|<>]/;
     return regex.test(inputValue);
-  };
+  }
+
+  const handleChangeTxHash = (e: any) => {
+    const inputValue = e.target.value
+    const isHasSpecialCharacters = containsSpecialCharacters(inputValue)
+    const isLengthToLong = inputValue.length > 70
+    const isLengthToShort =  inputValue.length === 1;
+    let error = "";
+    if (isHasSpecialCharacters || isLengthToShort) {
+      error = "Address is invalid, please try again!"
+    }
+    if (isLengthToLong) {
+      error = "Maximum reached!"
+    }
+    setTxHash({
+      value: inputValue.slice(0, 70),
+      error
+    })
+  }
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal}>
       <Box>
@@ -77,18 +95,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
           <StyledInput
             disabled={!!currentNote}
             value={txHash?.value}
-            onChange={(e) => {
-              const isHasSpecialCharacters = containsSpecialCharacters(e.target.value);
-              const isLengthToLong = e.target.value.length > 70;
-              setTxHash({
-                value: e.target.value.slice(0, 70),
-                error: isHasSpecialCharacters
-                  ? "Address is invalid, please try again!"
-                  : isLengthToLong
-                  ? "Maximum reached!"
-                  : ""
-              });
-            }}
+            onChange={handleChangeTxHash}
             fullWidth={true}
             error={!!txHash?.error}
           />
@@ -109,7 +116,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
         </WrapFormInput>
         <StyledDarkLoadingButton
           loading={loading}
-          disabled={!privateNote?.value || !txHash?.value}
+          disabled={!privateNote?.value || !txHash?.value || !!txHash?.error}
           loadingPosition='end'
           onClick={handleSubmitData}
           fullWidth={isTablet}

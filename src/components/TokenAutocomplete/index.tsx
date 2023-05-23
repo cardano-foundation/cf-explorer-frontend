@@ -190,7 +190,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             <Image src={HeaderSearchIcon} alt='Search' />
           </SubmitButton>
         </SearchContainer>
-        <Box>
+        <Box sx={{ overflowY: "scroll" }}>
           <Table
             {...fetchData}
             data={data || []}

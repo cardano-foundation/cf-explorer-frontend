@@ -167,3 +167,8 @@ export const StyledContainerModal = styled(Box)(({ theme }) => ({
     padding: 15
   }
 }));
+export const StyledLink = styled(Link)`
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+`;

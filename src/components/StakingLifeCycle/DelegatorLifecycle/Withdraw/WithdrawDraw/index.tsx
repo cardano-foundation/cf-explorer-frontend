@@ -35,7 +35,7 @@ import {
   TimeIcon,
   PaymentWalletUrl,
   WalletIconRewardGreen,
-  RewardAccountUrl
+  RewardBoxIcon,
 } from "~/commons/resources";
 import { LineArrowItem } from "~/components/commons/LineArrow";
 import DrawPath from "~/components/commons/DrawPath";
@@ -44,6 +44,8 @@ import AdaHolder from "~/components/commons/AdaHolder";
 import CardanoSystem from "~/components/commons/CardanoSystem";
 import useFetch from "~/commons/hooks/useFetch";
 import { API } from "~/commons/utils/api";
+import { details } from "~/commons/routers";
+import { StyledLink } from "../../Registration/styles";
 
 export interface WithdrawDetail {
   amount: number;
@@ -143,7 +145,11 @@ export const WithdrawnDraw = ({ selected }: Props) => {
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={txHash}>
-              <InfoText>{getShortHash(txHash || "")}</InfoText>
+              <InfoText>
+                <StyledLink to={details.transaction(txHash)}>
+                  {getShortHash(txHash || "")}
+                </StyledLink>
+              </InfoText>
             </CustomTooltip>
             <StyledCopyButton text={txHash} />
           </Info>
@@ -173,7 +179,7 @@ export const WithdrawnDraw = ({ selected }: Props) => {
             </PaymentWalletInfo>
           </PaymentWalletContainer>
           <PaymentWalletContainer>
-            <PaymentWalletIcon src={RewardAccountUrl} alt='PaymentWallet' />
+            <PaymentWalletIcon src={RewardBoxIcon} alt='PaymentWallet' />
             <PaymentWalletInfo>
               <PaymentWalletTitle>Reward Account</PaymentWalletTitle>
               <PaymentWalletValueContainer>
@@ -198,6 +204,6 @@ export const WithdrawnDraw = ({ selected }: Props) => {
         <CardanoSystem ref={cadarnoSystemRef} />
         <DrawPath paths={paths} />
       </DrawContainer>
-    </Box>
+    </Box >
   );
 };

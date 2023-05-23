@@ -66,6 +66,7 @@ export const TCol = styled("td")<{
   minWidth?: number | string;
   maxWidth?: number | string;
   hiddenBorder?: boolean;
+  selected?: number;
 }>`
   border-bottom: ${({ hiddenBorder, theme }) => (hiddenBorder ? "none" : `1px solid ${theme.palette.grey[200]}`)};
   width: ${({ width }) => (typeof width === "number" ? `${width}px` : width || "max-content")};
@@ -77,7 +78,7 @@ export const TCol = styled("td")<{
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.text.primary};
   padding: 24px 20px;
-  background: ${(props) => props.theme.palette.common.white};
+  background: ${(props) => props.selected ? props.theme.palette.background.neutral : props.theme.palette.common.white};
 `;
 
 export const TBody = styled("tbody")`

@@ -148,11 +148,12 @@ const TableRow = <T extends ColumnType>({
   isSelected
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
+  const isClickRow = selected === index ? 1 : 0;
+
   return (
     <TRow
       onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))}
       {...selectedProps}
-      selected={selected === null ? 0 : 1}
     >
       {selectable && (
         <TCol>
@@ -168,6 +169,7 @@ const TableRow = <T extends ColumnType>({
             minWidth={column.minWidth}
             maxWidth={column.maxWidth}
             hiddenBorder={column.isHiddenBorder && dataLength === index + 1}
+            selected={isClickRow}
             style={column.fixed ? { position: "sticky", left: column.leftFixed ? column.leftFixed : "-8px" } : {}}
           >
             {column.render ? column.render(row, index) : row[column.key]}
