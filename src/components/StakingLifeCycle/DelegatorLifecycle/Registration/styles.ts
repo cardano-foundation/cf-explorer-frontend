@@ -160,3 +160,9 @@ export const CertificateShapeMobile = styled(CertificateShape)(() => ({
   height: 220,
   margin: "auto"
 }));
+
+export const StyledLink = styled(Link)`
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+`;
