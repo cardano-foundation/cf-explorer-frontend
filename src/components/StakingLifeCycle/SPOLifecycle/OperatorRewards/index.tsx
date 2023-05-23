@@ -36,30 +36,27 @@ const OperatorReward = () => {
         end: operatorRef,
         endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
         startOffset: { 0: [0], sm: [-10] },
-        endOffset: { 0: [0, 30], sm: [50] },
-        arrow: { 0: "top", sm: "left" },
-        fold: { sm: "none" }
+        endOffset: { 0: [0, -2], sm: [50] },
+        arrow: { 0: "top", sm: "left" }
       },
       {
         start: operatorRef,
         startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
         end: SPOHolderRef,
         endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
-        startOffset: { 0: [0], sm: [-40] },
-        endOffset: { 0: [0], sm: [0] },
-        arrow: { 0: "top", sm: "left" },
-        fold: { sm: "none" }
+        startOffset: { 0: [0, -14], sm: [-40] },
+        arrow: { 0: "top", sm: "left" }
       }
     ];
   }, []);
 
   return (
     <Box>
-      <DrawContainer sidebar={+sidebar}>
+      <DrawContainer>
         <CardanoSystem ref={cadarnoSystemRef} />
         <ADAOperator ref={operatorRef} onClick={() => setOpenModal(true)}>
           <ADAOrangeIcon />
-          <ADATitle fontWeight={"bold"}>Operator Rewards</ADATitle>
+          <ADATitle>Operator Rewards</ADATitle>
         </ADAOperator>
         <SPOHolder
           ref={SPOHolderRef}

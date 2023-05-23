@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import CertificateShape from "~/components/commons/CertificateShape";
 import CopyButton from "~/components/commons/CopyButton";
 
-export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
+export const IconButtonBack = styled(IconButtonMui)(( ) => ({
   padding: 0
 }));
 
-export const Info = styled(Box)(({ theme }) => ({
+export const Info = styled(Box)(( ) => ({
   display: "flex",
   alignItems: "center"
 }));
@@ -29,7 +29,7 @@ export const CustomLink = styled(Link)(({ theme }) => ({
   }
 }));
 
-export const DetailRetirement = styled(Box)(({ theme }) => ({
+export const DetailRetirement = styled(Box)(( ) => ({
   fontSize: "0.875rem",
   fontWeight: 600
 }));
