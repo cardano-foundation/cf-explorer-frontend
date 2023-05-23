@@ -19,59 +19,44 @@ import SPOHolder from "~/components/commons/SPOHolder";
 import DrawPath from "~/components/commons/DrawPath";
 import { LineArrowItem } from "~/components/commons/LineArrow";
 
-const OperatorReward = ({
-  containerPosition,
-  handleResize
-}: {
-  containerPosition: {
-    top?: number;
-    left?: number;
-  };
-  handleResize: () => void;
-}) => {
+const OperatorReward = () => {
   const [openModal, setOpenModal] = useState(false);
   const { poolId = "" } = useParams<{ poolId: string }>();
-  const { data, loading } = useFetch<PoolInfo>(API.SPO_LIFECYCLE.SPO_POOL_INFO(poolId));
+  const { data } = useFetch<PoolInfo>(API.SPO_LIFECYCLE.SPO_POOL_INFO(poolId));
   const SPOHolderRef = useRef(null);
   const operatorRef = useRef(null);
   const cadarnoSystemRef = useRef(null);
   const { sidebar } = useSelector(({ user }: RootState) => user);
 
-  useEffect(() => {
-    handleResize();
-  }, [operatorRef.current, loading]);
   const paths = useMemo((): LineArrowItem[] => {
     return [
       {
         start: cadarnoSystemRef,
-        startPosition: { 0: ["center", "bottom"], md: ["right", "middle"] },
+        startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
         end: operatorRef,
-        endPosition: { 0: ["center", "top"], md: ["left", "middle"] },
-        startOffset: { 0: [0], md: [-10] },
-        endOffset: { 0: [0, 30], md: [50], lg: [50] },
-        arrow: { 0: "top", md: "left" },
-        fold: { sm: "none" }
+        endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
+        startOffset: { 0: [0], sm: [-10] },
+        endOffset: { 0: [0, -2], sm: [50] },
+        arrow: { 0: "top", sm: "left" }
       },
       {
         start: operatorRef,
-        startPosition: { 0: ["center", "bottom"], md: ["right", "middle"] },
+        startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
         end: SPOHolderRef,
-        endPosition: { 0: ["center", "top"], md: ["left", "middle"] },
-        startOffset: { 0: [0], md: [-40] },
-        endOffset: { 0: [0], md: [0], lg: [0] },
-        arrow: { 0: "top", md: "left" },
-        fold: { sm: "none" }
+        endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
+        startOffset: { 0: [0, -14], sm: [-40] },
+        arrow: { 0: "top", sm: "left" }
       }
     ];
   }, []);
 
   return (
     <Box>
-      <DrawContainer sidebar={+sidebar}>
+      <DrawContainer>
         <CardanoSystem ref={cadarnoSystemRef} />
         <ADAOperator ref={operatorRef} onClick={() => setOpenModal(true)}>
           <ADAOrangeIcon />
-          <ADATitle fontWeight={"bold"}>Operator Rewards</ADATitle>
+          <ADATitle>Operator Rewards</ADATitle>
         </ADAOperator>
         <SPOHolder
           ref={SPOHolderRef}

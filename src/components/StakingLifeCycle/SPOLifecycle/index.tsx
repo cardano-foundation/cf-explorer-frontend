@@ -92,7 +92,7 @@ const SPOLifecycle = ({
     {
       icon: <OperatorRewardIcon width={"25px"} height={"25px"} fill={currentStep >= 2 ? "#fff" : "#98A2B3"} />,
       title: "Operator Rewards",
-      component: <OperatorReward handleResize={handleResize} containerPosition={containerPosition} />,
+      component: <OperatorReward />,
       description: (
         <WithdrawingFundProcessDescription
           open={openDescriptionModal}
@@ -104,7 +104,7 @@ const SPOLifecycle = ({
     {
       icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
       title: "Deregistration",
-      component: <Deregistration handleResize={handleResize} containerPosition={containerPosition} />,
+      component: <Deregistration />,
       description: (
         <DeregistrationProcessDescription
           open={openDescriptionModal}

@@ -4,7 +4,6 @@ import { ButtonListIcon } from "~/commons/resources";
 import PopoverStyled from "../PopoverStyled";
 import { useSelector } from "react-redux";
 import { formatADAFull } from "~/commons/utils/helper";
-
 import { AdaLogoIcon } from "../ADAIcon";
 import PopupStaking from "../PopupStaking";
 
