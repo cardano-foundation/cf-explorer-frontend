@@ -3,7 +3,7 @@ import { alpha, Box, Button, Grid, LinearProgress, Skeleton, styled } from "@mui
 export const HeaderDetailContainer = styled(Box)(({ theme }) => ({
   textAlign: "left",
   position: "relative",
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     paddingTop: 32
   }
 }));

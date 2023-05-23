@@ -99,9 +99,14 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   width: "min(80vw, 650px)",
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
-  borderRadius: 10,
+  borderRadius: 20,
   textAlign: "left",
-  overflowY: "auto"
+  "& table tbody tr": {
+    height: "55px"
+  },
+  "& > div:last-child > div > div:nth-of-type(2)": {
+    height: "unset"
+  }
 }));
 
 export const ButtonClose = styled(Button)(({ theme }) => ({

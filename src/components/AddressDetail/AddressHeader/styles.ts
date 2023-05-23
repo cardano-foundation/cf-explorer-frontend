@@ -1,7 +1,6 @@
 import { alpha, TextField, styled, Box } from "@mui/material";
 
 import { Link } from "react-router-dom";
-import breakpoints from "~/themes/breakpoints";
 
 export const TitleDetail = styled(Box)`
   font-size: var(--font-size-title);
@@ -110,3 +109,12 @@ export const TitleText = styled(Box)`
     font-size: 24px !important;
   }
 `;
+
+export const WrapHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "flex-start",
+  flexDirection: "column",
+  [theme.breakpoints.between("sm", "md")]: {
+    paddingTop: "56px"
+  }
+}));
