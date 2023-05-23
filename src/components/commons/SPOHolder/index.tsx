@@ -1,13 +1,14 @@
 import { Box, BoxProps, styled, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import React, { forwardRef, useRef } from "react";
-import { AdaHolderIconUrl, SPOInfo, SPOKey } from "~/commons/resources";
+import { SPOHolderIconUrl, SPOInfo, SPOKey, PolygonSPOUrl } from "~/commons/resources";
 import PolygonShape from "../PolygonShape";
 import CustomTooltip from "~/components/commons/CustomTooltip";
 import PopoverStyled from "../PopoverStyled";
 import { getShortHash, getShortWallet } from "~/commons/utils/helper";
 import { details } from "~/commons/routers";
 import CopyButton from "../CopyButton";
+
 interface ISPOPropsData {
   poolName?: string;
   poolView?: string;
@@ -23,7 +24,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
   const SPOKeyRef = useRef(null);
   return (
     <PolygonShapeSPO {...props} ref={boxRef}>
-      <SPOImage src={AdaHolderIconUrl} alt='SPO image' />
+      <SPOImage src={SPOHolderIconUrl} alt='SPO image' />
       <SPOTitle>SPO</SPOTitle>
       <CustomTooltip title={poolName}>
         <PoolName> {poolName}</PoolName>
@@ -104,7 +105,9 @@ export default SPOHolder;
 
 const PolygonShapeSPO = styled(PolygonShape)(({ theme }) => ({
   height: "250px",
-  position: "relative"
+  width: 190,
+  position: "relative",
+  backgroundImage: `url(${PolygonSPOUrl})`
 }));
 
 export const SPOImage = styled("img")(() => ({
