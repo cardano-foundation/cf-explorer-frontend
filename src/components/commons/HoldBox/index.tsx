@@ -87,7 +87,11 @@ interface Props extends BoxProps {
 
 export const HoldBox = forwardRef<HTMLElement, Props>(({ value, txHash, roundingNumber = 6, ...props }, feeRef) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
-
+  const isOverText =
+    typeof feeRef !== "function" &&
+    !!feeRef?.current &&
+    feeRef?.current?.getBoundingClientRect?.()?.width < 200 &&
+    formatADAFull(value || 0).length > 8;
   return (
     <PopoverStyled
       render={({ handleClick }) => (
@@ -98,7 +102,7 @@ export const HoldBox = forwardRef<HTMLElement, Props>(({ value, txHash, rounding
           </Value>
           <Button
             onClick={() => typeof feeRef !== "function" && feeRef?.current && handleClick(feeRef?.current)}
-            over={+(formatADAFull(value || 0).length > 8)}
+            over={+isOverText}
             sidebar={+sidebar}
           >
             <ButtonListIcon />
