@@ -13,13 +13,13 @@ import {
   DrawContainer,
   MiddleGroup,
   BoxGroup,
-  StyledCertificateShape
+  StyledCertificateShape,
+  StyledCopyButton
 } from "./styles";
 import RecentDeregistrations from "./RecentDeregistrations";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import moment from "moment";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { StyledCopyButton } from "../Registration/styles";
 import { details } from "../../../../commons/routers";
 import CopyButton from "../../../commons/CopyButton";
 import StyledModal from "../../../commons/StyledModal";
@@ -169,17 +169,12 @@ const DeregistrationTimeline = ({
               <HoldBoxSPO
                 sidebar={sidebar}
                 ref={holdRef}
-                value={formatADA(selected?.poolHold || "")}
+                value={selected?.poolHold || ""}
                 txHash={selected?.txHash || ""}
               />
             </Box>
             <Box>
-              <FeeBoxSPO
-                sidebar={sidebar}
-                ref={feeRef}
-                value={formatADA(selected?.fee) || ""}
-                txHash={selected?.txHash || ""}
-              />
+              <FeeBoxSPO sidebar={sidebar} ref={feeRef} value={selected?.fee || ""} txHash={selected?.txHash || ""} />
             </Box>
           </BoxGroup>
           <StyledCertificateShape onClick={toggleModal} ref={deregistrationRef}>

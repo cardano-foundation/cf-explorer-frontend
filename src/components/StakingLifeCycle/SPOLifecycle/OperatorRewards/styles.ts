@@ -18,7 +18,7 @@ export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar
     margin: "auto",
     width: "100%"
   },
-  [theme.breakpoints.down(sidebar ? "lg" : "md")]: {
+  [theme.breakpoints.down("md")]: {
     flexDirection: "column",
     alignItems: "center",
     margin: "auto",

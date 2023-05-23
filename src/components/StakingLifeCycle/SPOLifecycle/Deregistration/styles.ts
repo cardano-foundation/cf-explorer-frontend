@@ -1,6 +1,7 @@
 import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
 import { Link } from "react-router-dom";
 import CertificateShape from "~/components/commons/CertificateShape";
+import CopyButton from "~/components/commons/CopyButton";
 
 export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
   padding: 0
@@ -149,3 +150,6 @@ export const StyledCertificateShape = styled(CertificateShape)(({ theme }) => ({
     width: 140
   }
 }));
+export const StyledCopyButton = styled(CopyButton)`
+  margin-left: 5px;
+`;
