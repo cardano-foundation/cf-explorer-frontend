@@ -570,7 +570,7 @@ const PoollUpdatesTimelineMobile = ({
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={data?.txHash}>
-              <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+              <InfoText><StyledLink to={details.transaction(data?.txHash)}>{getShortHash(data?.txHash || "")}</StyledLink></InfoText>
             </CustomTooltip>
             <StyledCopyButton text={data?.txHash} />
           </Info>
