@@ -8,10 +8,11 @@ import PopoverStyled from "../PopoverStyled";
 import { getShortHash, getShortWallet } from "~/commons/utils/helper";
 import { details } from "~/commons/routers";
 import CopyButton from "../CopyButton";
+import { isArray } from "lodash";
 interface ISPOPropsData {
   poolName?: string;
   poolView?: string;
-  stakeKeys?: string[];
+  stakeKeys?: string[] | string;
 }
 interface ISPOProps extends BoxProps {
   data: ISPOPropsData;
@@ -22,6 +23,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
   const SPOInfoRef = useRef(null);
   const SPOKeyRef = useRef(null);
   const history = useHistory();
+
   return (
     <PolygonShapeSPO {...props} ref={boxRef}>
       <SPOImage src={SPOHolderIconUrl} alt='SPO image' />
@@ -75,15 +77,26 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
           }}
           title={
             <Box display={"flex"} alignItems={"center"}>
-              {stakeKeys && stakeKeys.length > 0 && (
-                <>
-                  <SPOKey fill='#108AEF' />
-                  <PoolNamePopup to={details.stake(stakeKeys[0] || "")}>
-                    {getShortWallet(stakeKeys[0] || "")}
-                  </PoolNamePopup>
-                  <CopyButton text={stakeKeys[0]} />
-                </>
-              )}
+              {isArray(stakeKeys)
+                ? stakeKeys &&
+                  stakeKeys.length > 0 && (
+                    <>
+                      <SPOKey fill='#108AEF' />
+                      <PoolNamePopup to={details.stake(stakeKeys[0] || "")}>
+                        {getShortWallet(stakeKeys[0] || "")}
+                      </PoolNamePopup>
+                      <CopyButton text={stakeKeys[0]} />
+                    </>
+                  )
+                : stakeKeys && (
+                    <>
+                      <SPOKey fill='#108AEF' />
+                      <PoolNamePopup to={details.stake(stakeKeys || "")}>
+                        {getShortWallet(stakeKeys || "")}
+                      </PoolNamePopup>
+                      <CopyButton text={stakeKeys} />
+                    </>
+                  )}
             </Box>
           }
         >

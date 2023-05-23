@@ -60,7 +60,7 @@ const OperatorReward = () => {
         </ADAOperator>
         <SPOHolder
           ref={SPOHolderRef}
-          data={{ poolName: data?.poolName, poolView: data?.poolView, stakeKeys: data?.stakeKeys }}
+          data={{ poolName: data?.poolName, poolView: data?.poolView, stakeKeys: data?.rewardAccount }}
         />
         <DrawPath paths={paths} />
       </DrawContainer>

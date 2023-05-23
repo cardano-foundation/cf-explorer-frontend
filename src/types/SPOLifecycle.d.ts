@@ -119,6 +119,7 @@ interface PoolInfo {
   status: "ACTIVE" | "INACTIVE" | "RETIRING";
   epochNo: number;
   stakeKeys: string[];
+  rewardAccount: string;
 }
 
 interface IDashboardResponse {

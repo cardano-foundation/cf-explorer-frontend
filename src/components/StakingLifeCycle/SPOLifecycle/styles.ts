@@ -93,8 +93,7 @@ export const StyledComponent = styled(Box)(({ theme }) => ({
       }
     },
     "& > div:nth-of-type(4)": {
-      paddingBottom: "30px",
-      borderBottom: `1px solid ${alpha(theme.palette.grey[200], 1)}`
+      borderTop: `1px solid ${alpha(theme.palette.grey[200], 1)}`
     }
   }
 }));
@@ -105,7 +104,7 @@ export const StyledGroupButton = styled(Box)<{ isShowPrev: boolean }>(({ theme, 
   [theme.breakpoints.down("sm")]: {
     flexDirection: "column",
     gap: "16px",
-    marginTop: "30px",
+    paddingTop: "30px",
     "& > button": {
       width: "100%",
       "& p": {
