@@ -16,7 +16,7 @@ export const BoxGroup = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   height: "100%",
   width: "max-content",
-  margin:"auto",
+  margin: "auto",
 
   [theme.breakpoints.down("md")]: {},
   [theme.breakpoints.down("sm")]: {
@@ -62,7 +62,7 @@ export const FeeBox = styled(HoldBox)(() => ({
 }));
 
 export const HoldBoxMobile = styled(HoldBox)(({ theme }) => ({
-  margin: 0, 
+  margin: 0,
   [theme.breakpoints.down("md")]: {
     fontSize: "16px",
     lineHeight: "19px",

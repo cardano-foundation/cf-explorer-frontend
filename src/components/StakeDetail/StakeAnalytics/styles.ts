@@ -15,7 +15,7 @@ export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
   }
 }));
 
-export const CustomButton = styled("button") <{ active: number }>`
+export const CustomButton = styled("button")<{ active: number }>`
   width: 115px;
   border: none;
   border-radius: 5px;

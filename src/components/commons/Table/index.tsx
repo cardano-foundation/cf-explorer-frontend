@@ -149,9 +149,11 @@ const TableRow = <T extends ColumnType>({
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
   return (
-    <TRow onClick={(e) =>
-      handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))
-    } {...selectedProps} selected={selected === null ? 0 : 1}>
+    <TRow
+      onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))}
+      {...selectedProps}
+      selected={selected === null ? 0 : 1}
+    >
       {selectable && (
         <TCol>
           <TableCheckBox checked={isSelected?.(row)} onChange={(e) => toggleSelection?.(row)} />

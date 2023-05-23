@@ -6,7 +6,7 @@ import { addPrivateNote, editPrivateNote } from "../../../commons/utils/userRequ
 import StyledModal from "../../commons/StyledModal";
 import { StyledDarkLoadingButton, StyledHelperText, StyledInput, StyledLabelInput } from "../../share/styled";
 import { Title, WrapFormInput } from "./styles";
-import { useScreen } from "../../../commons/hooks/useScreen"; 
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface IProps {
   open: boolean;
@@ -66,7 +66,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
   const containsSpecialCharacters = (inputValue: string) => {
     const regex = /[!@#$%^&*(),.?":{}|<>]/;
     return regex.test(inputValue);
-  }
+  };
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal}>
       <Box>
@@ -78,14 +78,17 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
             disabled={!!currentNote}
             value={txHash?.value}
             onChange={(e) => {
-              const isHasSpecialCharacters = containsSpecialCharacters(e.target.value)
-              const isLengthToLong = e.target.value.length > 70
+              const isHasSpecialCharacters = containsSpecialCharacters(e.target.value);
+              const isLengthToLong = e.target.value.length > 70;
               setTxHash({
                 value: e.target.value.slice(0, 70),
-                error: isHasSpecialCharacters ? "Address is invalid, please try again!" : isLengthToLong ? "Maximum reached!" : ""
-              })
-            }
-            }
+                error: isHasSpecialCharacters
+                  ? "Address is invalid, please try again!"
+                  : isLengthToLong
+                  ? "Maximum reached!"
+                  : ""
+              });
+            }}
             fullWidth={true}
             error={!!txHash?.error}
           />

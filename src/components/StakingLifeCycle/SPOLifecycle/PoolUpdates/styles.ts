@@ -113,7 +113,7 @@ export const MyGrid = styled(Box)(({ theme }) => ({
   display: "grid",
   gridTemplateColumns: "repeat(2, 1fr)",
   gridGap: "10px 20px",
-  gridAutoRows: "auto",
+  gridAutoRows: "auto"
 }));
 
 export const StyledGridContainer = styled(Grid)(({ theme }) => ({
@@ -124,8 +124,8 @@ export const StyledGridContainer = styled(Grid)(({ theme }) => ({
     },
     "& > div > div": {
       padding: "20px 15px",
-      gap: "8px",
-    },
+      gap: "8px"
+    }
   }
 }));
 
