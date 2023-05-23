@@ -74,7 +74,6 @@ import HeaderBackgroundImage from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
-import PolygonWhiteIconUrlHigher from "./images/PolygonWhiteIconUrl.png";
 import AdaHolderIconUrl from "./images/ada-holder.png";
 import PaymentWalletUrl from "./images/payment-wallet.png";
 import RewardAccountUrl from "./images/reward-account.png";
