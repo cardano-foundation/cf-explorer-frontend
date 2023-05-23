@@ -35,7 +35,7 @@ import {
   TimeIcon,
   PaymentWalletUrl,
   WalletIconRewardGreen,
-  RewardAccountUrl
+  RewardBoxIcon,
 } from "~/commons/resources";
 import { LineArrowItem } from "~/components/commons/LineArrow";
 import DrawPath from "~/components/commons/DrawPath";
@@ -179,7 +179,7 @@ export const WithdrawnDraw = ({ selected }: Props) => {
             </PaymentWalletInfo>
           </PaymentWalletContainer>
           <PaymentWalletContainer>
-            <PaymentWalletIcon src={RewardAccountUrl} alt='PaymentWallet' />
+            <PaymentWalletIcon src={RewardBoxIcon} alt='PaymentWallet' />
             <PaymentWalletInfo>
               <PaymentWalletTitle>Reward Account</PaymentWalletTitle>
               <PaymentWalletValueContainer>

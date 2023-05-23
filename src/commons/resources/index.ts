@@ -76,9 +76,9 @@ import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
 import AdaHolderIconUrl from "./images/ada-holder.png";
 import PaymentWalletUrl from "./images/payment-wallet.png";
-import RewardAccountUrl from "./images/reward-account.png";
 import SPOHolderIconUrl from "./images/spo-holder.png";
 import PolygonSPOUrl from "./images/polygon-spo.png";
+import RewardBoxIcon from "./images/reward-box-icon.png";
 
 import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
 import { ReactComponent as FilterIcon } from "./icons/filter.svg";
@@ -178,9 +178,9 @@ export {
   PolygonWhiteIconUrl,
   AdaHolderIconUrl,
   PaymentWalletUrl,
-  RewardAccountUrl,
   SPOHolderIconUrl,
-  PolygonSPOUrl
+  PolygonSPOUrl,
+  RewardBoxIcon
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -285,3 +285,4 @@ export { ReactComponent as CertificateIcon } from "./icons/certificate.svg";
 export { ReactComponent as CardanoSystemIcon } from "./icons/cardano-system.svg";
 export { ReactComponent as WalletIconRewardGreen } from "./icons/Staking/walletIconRewardGreen.svg";
 export { ReactComponent as TransferIcon } from "./icons/transfer.svg";
+export { ReactComponent as ADADisnableIcon } from "./icons/Staking/ADADisnableIcon.svg";
