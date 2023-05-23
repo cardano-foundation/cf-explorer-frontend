@@ -27,8 +27,9 @@ const DelegationDraw: React.FC<IDelegationDrawProps> = ({ data, toggleCertificat
         end: feeRef,
         endPosition: { 0: ["center", "top"], sm: ["center", "top"], md: ["left", "middle"] },
         startOffset: { 0: [-23, -50], sm: [-10, 0], md: [0] },
-        endOffset: { 0: [3, 0], sm: [0, 10], md: [0] },
-        fold: { sm: "horizontal", md: "none" }
+        endOffset: { 0: [3, 0], sm: [0, 10], md: [20] },
+        fold: { sm: "horizontal", md: "none" },
+        arrow: { 0: "top" }
       },
       {
         start: feeRef,

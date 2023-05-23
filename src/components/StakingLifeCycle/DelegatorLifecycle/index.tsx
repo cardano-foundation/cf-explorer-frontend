@@ -22,7 +22,8 @@ import {
   StepHeader,
   StyledBox,
   TabTitle,
-  TitleStep
+  TitleStep,
+  StyledGroupButton
 } from "./styles";
 
 import Registration from "./Registration";
@@ -165,11 +166,11 @@ const DelegatorLifecycle = ({
         </ADATransfersButton>
       </StepHeader>
       <Box>{stepper[currentStep].description}</Box>
-      <Box pb={10} minHeight={400}>
+      <Box pb={5} minHeight={400}>
         {stepper[currentStep].component}
       </Box>
 
-      <Box
+      <StyledGroupButton
         display='flex'
         flexDirection={isMobile ? "column" : "row"}
         justifyContent={isMobile ? "center" : "space-between"}
@@ -204,7 +205,7 @@ const DelegatorLifecycle = ({
           </ButtonText>
           <NextIcon />
         </NextButton>
-      </Box>
+      </StyledGroupButton>
       <ADATransferModal open={open} handleCloseModal={() => setOpen(false)} />
     </Box>
   );
