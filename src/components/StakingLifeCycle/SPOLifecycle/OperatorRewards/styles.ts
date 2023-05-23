@@ -7,28 +7,20 @@ export const StyledLink = styled(Link)`
   text-decoration: underline !important;
 `;
 
-export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const DrawContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
   height: "max-content",
   position: "relative",
   marginTop: 35,
-  [theme.breakpoints.down("lg")]: {
-    margin: "auto",
-    width: "100%"
-  },
-  [theme.breakpoints.down(sidebar ? "lg" : "md")]: {
+  [theme.breakpoints.down("sm")]: {
     flexDirection: "column",
     alignItems: "center",
     margin: "auto",
-    maxWidth: 540,
-    minWidth: 540,
-    gap: "50px"
-  },
-  [theme.breakpoints.down("sm")]: {
     maxWidth: 320,
-    minWidth: 320
+    minWidth: 320,
+    gap: "65px"
   }
 }));
 
@@ -37,11 +29,15 @@ export const ADAOperator = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   alignItems: "center",
   paddingTop: "31px",
-  cursor: "pointer"
+  cursor: "pointer",
+  [theme.breakpoints.down("sm")]: {
+    padding: "0px 0px 20px"
+  }
 }));
-export const ADATitle = styled(Box)(({ theme }) => ({
+export const ADATitle = styled(Box)(() => ({
   background: "#F6F6F6",
   height: "30px",
   display: "flex",
-  alignItems: "flex-end"
+  alignItems: "flex-end",
+  fontWeight: 700
 }));

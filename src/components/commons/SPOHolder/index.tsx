@@ -1,5 +1,5 @@
 import { Box, BoxProps, styled, IconButton } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import React, { forwardRef, useRef } from "react";
 import { SPOHolderIconUrl, SPOInfo, SPOKey, PolygonSPOUrl } from "~/commons/resources";
 import PolygonShape from "../PolygonShape";
@@ -22,6 +22,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
   const { poolName, poolView, stakeKeys } = data;
   const SPOInfoRef = useRef(null);
   const SPOKeyRef = useRef(null);
+  const history = useHistory();
   return (
     <PolygonShapeSPO {...props} ref={boxRef}>
       <SPOImage src={SPOHolderIconUrl} alt='SPO image' />
@@ -71,11 +72,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
                 padding: "10px"
               }
             },
-            arrow: {
-              style: {
-                color: "white"
-              }
-            }
+            arrow: { style: { color: "white" } }
           }}
           title={
             <Box display={"flex"} alignItems={"center"}>
@@ -91,7 +88,12 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
             </Box>
           }
         >
-          <ButtonSPO ref={SPOKeyRef} component={IconButton} left={"52%"}>
+          <ButtonSPO
+            ref={SPOKeyRef}
+            component={IconButton}
+            onClick={() => stakeKeys?.[0] && history.push(details.stake(stakeKeys[0]))}
+            left={"52%"}
+          >
             <SPOKey fill='#438F68' />
           </ButtonSPO>
         </CustomTooltip>

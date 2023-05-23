@@ -1,10 +1,9 @@
-import { BoxProps, IconButton, styled } from "@mui/material";
+import { BoxProps, IconButton, styled, Box } from "@mui/material";
 import { forwardRef } from "react";
 import { ButtonListIcon } from "~/commons/resources";
 import PopoverStyled from "../PopoverStyled";
 import { useSelector } from "react-redux";
 import { formatADAFull } from "~/commons/utils/helper";
-import { Box } from "@mui/material";
 import { AdaLogoIcon } from "../ADAIcon";
 import PopupStaking from "../PopupStaking";
 

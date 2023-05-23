@@ -98,8 +98,9 @@ export const LineArrow: React.FC<LineArrowProps> = (props) => {
       ...Object.values(theme.breakpoints.values).filter((item) => item >= width),
       theme.breakpoints.values.xl
     );
+    const sidebarWidth = width >= theme.breakpoints.values.md && sidebar ? nextPoint - prevPoint : 0;
     const listMatch = listPoints.filter((item) => {
-      return item <= width - (sidebar ? nextPoint - prevPoint : 0);
+      return item <= width - sidebarWidth;
     });
     const key = Math.max(...listMatch);
     const index = listPoints.indexOf(key);
