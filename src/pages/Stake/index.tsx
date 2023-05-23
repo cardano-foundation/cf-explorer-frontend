@@ -12,11 +12,12 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import DetailViewStakeKey from "../../components/commons/DetailView/DetailViewStakeKey";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
-import { StyledContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
+import { StyledContainer, StyledLink, StyledTab, StyledTabs, TabLabel, TimeDuration } from "./styles";
 import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import SelectedIcon from "../../components/commons/SelectedIcon";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
+import moment from "moment";
 
 interface IStake {}
 
@@ -124,6 +125,7 @@ const Stake: React.FC<IStake> = () => {
           <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
           <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
         </StyledTabs>
+        <TimeDuration>Last updated {moment(fetchData.lastUpdated).fromNow()}</TimeDuration>
         <Table
           {...fetchData}
           columns={columns}

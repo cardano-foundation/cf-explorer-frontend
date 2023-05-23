@@ -8,6 +8,7 @@ interface FetchReturnType<T> {
   error: string | null;
   initialized: boolean;
   refresh: () => void;
+  lastUpdated: number;
 }
 
 const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, timeout?: number): FetchReturnType<T> => {
@@ -41,12 +42,19 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, timeout?: numbe
 
   useEffect(() => {
     if (timeout) {
-      const interval = setInterval(() => {
-        if (!document.hidden) fetch();
-        lastFetch.current = Date.now();
+      const interval = setInterval(async () => {
+        if (!document.hidden) {
+          await fetch();
+          lastFetch.current = Date.now();
+        }
       }, timeout * 1000);
 
-      const onFocus = () => lastFetch.current + timeout * 1000 <= Date.now() && fetch();
+      const onFocus = async () => {
+        if (lastFetch.current + timeout * 1000 <= Date.now()) {
+          await fetch();
+          lastFetch.current = Date.now();
+        }
+      };
 
       window.addEventListener("focus", onFocus);
 
@@ -61,7 +69,7 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, timeout?: numbe
     fetch(true);
   }, [fetch]);
 
-  return { data, loading, error, initialized, refresh: fetch };
+  return { data, loading, error, initialized, refresh: fetch, lastUpdated: lastFetch.current };
 };
 
 export default useFetch;

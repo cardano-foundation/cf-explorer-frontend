@@ -10,12 +10,13 @@ import { formatDateTimeLocal, getPageInfo, getShortWallet, numberWithCommas } fr
 
 import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { AssetName, Logo, StyledContainer } from "./styles";
+import { AssetName, Logo, StyledContainer, TimeDuration } from "./styles";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { useTheme } from "@mui/material";
 import { API } from "../../commons/utils/api";
 import SelectedIcon from "../../components/commons/SelectedIcon";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
+import moment from "moment";
 
 interface ITokenList {}
 
@@ -29,7 +30,7 @@ const Tokens: React.FC<ITokenList> = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const mainRef = useRef(document.querySelector("#main"));
-  const { data, ...fetchData } = useFetchList<ITokenOverview>(
+  const { data, lastUpdated, ...fetchData } = useFetchList<ITokenOverview>(
     API.TOKEN.LIST,
     { ...pageInfo, sort },
     false,
@@ -130,7 +131,7 @@ const Tokens: React.FC<ITokenList> = () => {
 
   return (
     <StyledContainer>
-      <Card title="Token List">
+      <Card title="Token List" extra={<TimeDuration>Last updated {moment(lastUpdated).fromNow()}</TimeDuration>}>
         <Table
           {...fetchData}
           data={data}

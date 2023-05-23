@@ -30,6 +30,7 @@ import {
   DetailLinkRight,
   ViewDetailScroll,
   ViewDetailHeader,
+  TimeDuration,
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
 import { HiOutlineCube } from "react-icons/hi2";
@@ -42,6 +43,7 @@ import { API } from "../../../commons/utils/api";
 import { useSelector } from "react-redux";
 import ViewAllButton from "../ViewAllButton";
 import ADAicon from "../ADAIcon";
+import moment from "moment";
 
 type DetailViewEpochProps = {
   epochNo: number;
@@ -51,7 +53,7 @@ type DetailViewEpochProps = {
 
 const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose, callback }) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-  const { data } = useFetch<IDataEpoch>(
+  const { data, lastUpdated } = useFetch<IDataEpoch>(
     `${API.EPOCH.DETAIL}/${epochNo}`,
     undefined,
     false,
@@ -145,6 +147,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
     <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
       <ViewDetailHeader>
         <ViewAllButton tooltipTitle="View Detail" to={details.epoch(epochNo)} />
+        {!!lastUpdated && <TimeDuration>Last updated {moment(lastUpdated).fromNow()}</TimeDuration>}
         <CustomTooltip title="Close">
           <CloseButton onClick={handleClose}>
             <CgClose />

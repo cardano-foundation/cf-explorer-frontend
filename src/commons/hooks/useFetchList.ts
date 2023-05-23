@@ -19,6 +19,7 @@ interface FetchReturnType<T> {
   currentPage: number;
   refresh: () => void;
   update: (callback: (data: T[]) => T[]) => void;
+  lastUpdated: number;
 }
 
 const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, timeout?: number): FetchReturnType<T> => {
@@ -62,12 +63,19 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
 
   useEffect(() => {
     if (timeout) {
-      const interval = setInterval(() => {
-        if (!document.hidden) getList();
-        lastFetch.current = Date.now();
+      const interval = setInterval(async () => {
+        if (!document.hidden) {
+          await getList();
+          lastFetch.current = Date.now();
+        }
       }, timeout * 1000);
 
-      const onFocus = () => lastFetch.current + timeout * 1000 <= Date.now() && getList();
+      const onFocus = async () => {
+        if (lastFetch.current + timeout * 1000 <= Date.now()) {
+          await getList();
+          lastFetch.current = Date.now();
+        }
+      };
 
       window.addEventListener("focus", onFocus);
 
@@ -92,6 +100,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
     currentPage,
     refresh: getList,
     update: setData,
+    lastUpdated: lastFetch.current,
   };
 };
 
