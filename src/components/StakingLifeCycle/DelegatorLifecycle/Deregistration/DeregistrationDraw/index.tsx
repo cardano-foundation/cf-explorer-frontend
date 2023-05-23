@@ -10,7 +10,7 @@ import {
   MiddleGroup,
   StyledCertificateShape,
   StyledFreeBox,
-  StyledWithDawnBox
+  StyledWithHoldBox
 } from "./styles";
 
 export interface IDeregistrationDrawProps {
@@ -102,11 +102,11 @@ const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCe
       <AdaHolder ref={adaHolderRef} />
       <MiddleGroup sidebar={+sidebar}>
         <BoxGroup sidebar={+sidebar}>
-          <StyledWithDawnBox
+          <StyledWithHoldBox
             roundingNumber={1}
             sidebar={+sidebar}
             ref={withDrawRef}
-            value={data?.deposit}
+            value={Math.abs(data?.deposit || 0)}
             txHash={data?.txHash || ""}
           />
           <StyledFreeBox sidebar={+sidebar} ref={feeRef} value={data?.fee} txHash={data?.txHash || ""} />

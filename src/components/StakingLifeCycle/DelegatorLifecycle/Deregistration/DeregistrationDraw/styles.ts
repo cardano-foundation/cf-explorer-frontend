@@ -103,7 +103,7 @@ export const StyledFreeBox = styled(FeeBox)<{ sidebar?: number }>(({ theme, side
   }
 }));
 
-export const StyledWithDawnBox = styled(HoldBox)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const StyledWithHoldBox = styled(HoldBox)<{ sidebar?: number }>(({ theme, sidebar }) => ({
   border: "2px solid #438F68",
   boxSizing: "border-box",
   height: 70,
