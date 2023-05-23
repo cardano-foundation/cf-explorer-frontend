@@ -20,6 +20,7 @@ import { MdOutlineFileDownload } from "react-icons/md";
 import useToast from "../../../commons/hooks/useToast";
 import StyledModal from "../StyledModal";
 import StorageUtils from "~/commons/utils/storage";
+import { boolean } from "yargs";
 
 interface IProps {
   connect: (name: string, onSuccess: () => void, onError: (error: Error) => void) => Promise<any>;
@@ -39,7 +40,6 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
     onTriggerSignMessage();
   };
   const onError = (error: Error) => {
-    console.error(error);
     if (error.name === "EnablementFailedError") {
       toast.error(
         `You are currently connect to ${

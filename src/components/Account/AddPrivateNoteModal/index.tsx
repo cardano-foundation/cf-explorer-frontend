@@ -2,7 +2,7 @@ import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import useToast from "../../../commons/hooks/useToast";
 import { ACCOUNT_ERROR, NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
-import { addPrivateNote, editPrivateNote } from "../../../commons/utils/userRequest";
+import { addPrivateNote, checkTrxHash, editPrivateNote } from "../../../commons/utils/userRequest";
 import StyledModal from "../../commons/StyledModal";
 import { StyledDarkLoadingButton, StyledHelperText, StyledInput, StyledLabelInput } from "../../share/styled";
 import { Title, WrapFormInput } from "./styles";
@@ -37,23 +37,39 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
     } else
       try {
         setLoading(true);
-        if (!currentNote) {
-          const payload = {
-            note: privateNote?.value || "",
-            txHash: txHash?.value || "",
-            network: NETWORK_TYPES[NETWORK]
-          };
-          await addPrivateNote(payload);
-        } else {
-          const payload = { note: privateNote?.value || "", noteId: currentNote.id };
-          await editPrivateNote(payload);
+        try {
+          await checkTrxHash(txHash?.value || "");
+          if (!currentNote) {
+            const payload = {
+              note: privateNote?.value || "",
+              txHash: txHash?.value || "",
+              network: NETWORK_TYPES[NETWORK]
+            };
+            try {
+              await addPrivateNote(payload);
+              toast.success(`Add transaction private note successfully!`);
+            } catch (error) {
+              toast.error("Private note is already exists");
+            }
+          } else {
+            const payload = { note: privateNote?.value || "", noteId: currentNote.id };
+            try {
+              await editPrivateNote(payload);
+              toast.success(`Update transaction private note successfully!`);
+            } catch (error) {
+              toast.error("Something went wrong!");
+            }
+          }
+          setTxHash(undefined);
+          setPrivateNote(undefined);
+          setLoading(false);
+          handleCloseModal();
+          refresh();
+        } catch (error) {
+          toast.error("Transaction hash not found!");
+        } finally {
+          setLoading(false);
         }
-        toast.success(`${!currentNote ? "Add" : "Update"} transaction private note successfully!`);
-        setTxHash(undefined);
-        setPrivateNote(undefined);
-        setLoading(false);
-        handleCloseModal();
-        refresh();
       } catch (error: any) {
         const errorData = error.response?.data;
         if (errorData?.errorCode === ACCOUNT_ERROR.PRIVATE_NOTE_IS_EXIST) {
@@ -66,25 +82,25 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
   const containsSpecialCharacters = (inputValue: string) => {
     const regex = /[!@#$%^&*(),.?":{}|<>]/;
     return regex.test(inputValue);
-  }
+  };
 
   const handleChangeTxHash = (e: any) => {
-    const inputValue = e.target.value
-    const isHasSpecialCharacters = containsSpecialCharacters(inputValue)
-    const isLengthToLong = inputValue.length > 70
-    const isLengthToShort =  inputValue.length === 1;
+    const inputValue = e.target.value;
+    const isHasSpecialCharacters = containsSpecialCharacters(inputValue);
+    const isLengthToLong = inputValue.length > 70;
+    const isLengthToShort = inputValue.length === 1;
     let error = "";
     if (isHasSpecialCharacters || isLengthToShort) {
-      error = "Address is invalid, please try again!"
+      error = "Address is invalid, please try again!";
     }
     if (isLengthToLong) {
-      error = "Maximum reached!"
+      error = "Maximum reached!";
     }
     setTxHash({
       value: inputValue.slice(0, 70),
       error
-    })
-  }
+    });
+  };
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal}>
       <Box>

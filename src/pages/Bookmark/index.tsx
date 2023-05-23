@@ -52,7 +52,7 @@ const Bookmark = () => {
         setLoadingDelete(false);
         setBookmarks(bookmarks?.filter((r) => r.keyword !== keyword));
         refresh();
-        toast.success("Successfully!");
+        toast.success("Delete bookmark successfully!");
       }
     } catch (error) {
       setSelected(null);
