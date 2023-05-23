@@ -52,13 +52,13 @@ const AddressAnalytics: React.FC = () => {
     data?.map((i) => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
   const minBalance = data
     ? data.reduce(function (prev, current) {
-      return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
-    })
+        return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
+      })
     : { date: "", value: 0 };
   const maxBalance = data
     ? data.reduce(function (prev, current) {
-      return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
-    })
+        return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
+      })
     : { date: "", value: 0 };
 
   return (

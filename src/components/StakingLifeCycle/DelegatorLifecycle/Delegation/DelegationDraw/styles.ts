@@ -75,4 +75,3 @@ export const StyledAdaHolder = styled(AdaHolder)`
     margin-bottom: 12px;
   }
 `;
-

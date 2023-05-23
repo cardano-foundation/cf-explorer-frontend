@@ -201,7 +201,7 @@ export const CardItem = styled(Box)(({ theme }) => ({
   borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
   [theme.breakpoints.up("sm")]: {
     paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
+    paddingRight: theme.spacing(2)
   },
   ":first-of-type": {
     borderLeft: "none"

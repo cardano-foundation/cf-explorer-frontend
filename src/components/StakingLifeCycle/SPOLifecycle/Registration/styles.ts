@@ -107,7 +107,8 @@ export const PoolName = styled(Box)(({ theme }) => ({
 }));
 export const ButtonSPO = styled(Box)(({ theme }) => ({
   position: "absolute",
-  bottom: "12%",
+  top: "40%",
+  // right: "20%",
   padding: 0,
   zIndex: 3
 }));
@@ -145,7 +146,7 @@ export const MyGrid = styled(Box)(({ theme }) => ({
   display: "grid",
   gridTemplateColumns: "repeat(2, 1fr)",
   gridGap: "10px 20px",
-  gridAutoRows: "auto",
+  gridAutoRows: "auto"
 }));
 
 export const StyledSkeletonContainer = styled(Box)(({ theme }) => ({}));
@@ -167,7 +168,7 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   ".list-images": {
     maxWidth: "390px",
     margin: "0px auto"
-  },
+  }
 }));
 
 export const StepInfo = styled(Box)(({ theme }) => ({
