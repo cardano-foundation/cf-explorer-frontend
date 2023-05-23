@@ -94,11 +94,17 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   if (firstLoad) return null;
   const MissingData = () => (
     <Box px={3} pb={4} fontSize='0.75rem'>
-      Missing any data? click <StyledButton sx={{
-        color: theme.palette.blue[800]
-      }}
-        onClick={() => setOpenReportModal(true)}>here</StyledButton> to report
-    </Box >
+      Missing any data? click{" "}
+      <StyledButton
+        sx={{
+          color: theme.palette.blue[800]
+        }}
+        onClick={() => setOpenReportModal(true)}
+      >
+        here
+      </StyledButton>{" "}
+      to report
+    </Box>
   );
   const renderListTabs = () => (
     <SideBar width={isMobile || isTablet ? "100%" : "20%"}>
@@ -145,19 +151,17 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
               </Box>
             </Box>
           </Box>
-          {
-            userData?.address ? (
-              <CustomTooltip title={userData?.address || ""} placement='bottom'>
-                <StyledUsername component={"h4"} pt={1} m='auto'>
-                  {getShortWallet(userData?.address)}
-                </StyledUsername>
-              </CustomTooltip>
-            ) : (
+          {userData?.address ? (
+            <CustomTooltip title={userData?.address || ""} placement='bottom'>
               <StyledUsername component={"h4"} pt={1} m='auto'>
-                {userData?.email}
+                {getShortWallet(userData?.address)}
               </StyledUsername>
-            )
-          }
+            </CustomTooltip>
+          ) : (
+            <StyledUsername component={"h4"} pt={1} m='auto'>
+              {userData?.email}
+            </StyledUsername>
+          )}
         </Box>
         <Box display={"flex"} justifyContent={"center"} mt={4}>
           <WrapItemMobile>
@@ -172,7 +176,11 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                     borderTopLeftRadius: index === 0 ? "5px" : "0px",
                     borderBottomLeftRadius: index === 0 ? "5px" : "0px",
                     borderRadius: active ? "5px" : ""
-                  }} to={route.to} active={active} key={index}>
+                  }}
+                  to={route.to}
+                  active={active}
+                  key={index}
+                >
                   {route.title}
                 </NavItemMobile>
               ) : (

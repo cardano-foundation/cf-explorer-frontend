@@ -20,7 +20,7 @@ const WalletActivity: React.FC = () => {
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const [sort, setSort] = useState<string>("");
   const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}` || "");
-  const {isMobile, isGalaxyFoldSmall} = useScreen();
+  const { isMobile, isGalaxyFoldSmall } = useScreen();
 
   const fetchData = useFetchList<WalletActivityIF>(API.STAKE_LIFECYCLE.WALLET_ACTIVITY(stakeId), { ...pageInfo, sort });
 
@@ -82,7 +82,7 @@ const WalletActivity: React.FC = () => {
       <UserInfo acitve='wallet' total={fetchData.total} reward={data?.totalStake || 0} stake={stakeId} />
       <StyledTable
         {...fetchData}
-        maxHeight={`calc(70vh - ${isMobile ? isGalaxyFoldSmall ? "270px" : "230px" : "208px"})`}
+        maxHeight={`calc(70vh - ${isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"})`}
         columns={columns}
         total={{ title: "Total Epochs", count: fetchData.total }}
         pagination={{

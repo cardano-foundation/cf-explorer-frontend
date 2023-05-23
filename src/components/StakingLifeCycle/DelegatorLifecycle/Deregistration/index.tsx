@@ -2,12 +2,7 @@ import { alpha, Box, Skeleton, styled } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { Link as LinkDom, useHistory, useParams } from "react-router-dom";
 
-import {
-  ADAGreen,
-  AddressIcon,
-  BackIcon,
-  TimeIcon
-} from "../../../../commons/resources";
+import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "../../../../commons/resources";
 
 import { FilterParams } from "~/components/StackingFilter";
 import useFetch from "../../../../commons/hooks/useFetch";

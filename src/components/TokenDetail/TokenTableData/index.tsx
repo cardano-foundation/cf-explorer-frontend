@@ -57,7 +57,11 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
         onChange={handleChange}
         variant='scrollable'
         TabIndicatorProps={{
-          sx: { background: (theme) => theme.palette.primary.main, color: (theme) => theme.palette.primary.main, height: 3 }
+          sx: {
+            background: (theme) => theme.palette.primary.main,
+            color: (theme) => theme.palette.primary.main,
+            height: 3
+          }
         }}
         sx={isTablet ? { borderBottom: "1px solid #E0E0E0", width: isMobile ? "calc(100% - 30px)" : "auto" } : {}}
       >

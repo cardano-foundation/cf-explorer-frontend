@@ -16,7 +16,7 @@ export const BoxGroup = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   height: "100%",
   width: "max-content",
-  margin:"auto",
+  margin: "auto",
 
   [theme.breakpoints.down("md")]: {},
   [theme.breakpoints.down("sm")]: {
