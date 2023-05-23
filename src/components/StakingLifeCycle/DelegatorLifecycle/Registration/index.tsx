@@ -1,7 +1,7 @@
 import { alpha, Box, Skeleton } from "@mui/material";
 import { useState } from "react";
 
-import { StakeLink } from "./styles";
+import { StakeLink, StyledContainerModal } from "./styles";
 import RecentRegistrations from "./RecentRegistrations";
 import StyledModal from "../../../commons/StyledModal";
 import { useParams } from "react-router-dom";
@@ -56,7 +56,7 @@ export const RegistrationCertificateModal = ({
 
   return (
     <StyledModal width={550} {...props} title='Registration certificate'>
-      <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
+      <StyledContainerModal bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
         {loading && <Skeleton variant='rectangular' width={500} height={90} />}
         {!loading && (
           <Box>
@@ -71,7 +71,7 @@ export const RegistrationCertificateModal = ({
             )}
           </Box>
         )}
-      </Box>
+      </StyledContainerModal>
     </StyledModal>
   );
 };

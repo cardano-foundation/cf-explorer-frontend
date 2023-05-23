@@ -96,3 +96,9 @@ export const InfoGroup = styled(Box)(({ theme }) => ({
     gap: 5
   }
 }));
+
+export const StyledContainerModal = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    padding: "15px !important"
+  }
+}));

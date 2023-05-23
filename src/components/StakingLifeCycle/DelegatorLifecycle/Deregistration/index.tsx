@@ -6,7 +6,6 @@ import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "../../../../commons/r
 
 import { FilterParams } from "~/components/StackingFilter";
 import useFetch from "../../../../commons/hooks/useFetch";
-import { useScreen } from "../../../../commons/hooks/useScreen";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
 import { formatADA, formatDateTimeLocal, getShortHash } from "../../../../commons/utils/helper";
@@ -17,7 +16,7 @@ import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 import { StakeLink } from "../Registration/styles";
 import DeregistrationDraw from "./DeregistrationDraw";
 import RecentDeregistrations from "./RecentDeregistration";
-import { IconButtonBack, Info, InfoGroup, InfoText, StepInfo } from "./styles";
+import { IconButtonBack, Info, InfoGroup, InfoText, StepInfo, StyledContainerModal } from "./styles";
 
 const Deregistration = ({
   containerPosition,
@@ -140,7 +139,7 @@ export const DeregistrationCertificateModal = ({
       <Box>
         {loading && <Skeleton variant='rectangular' width={500} height={90} />}
         {!loading && (
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
+          <StyledContainerModal bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Stake Key
             </Box>
@@ -152,7 +151,7 @@ export const DeregistrationCertificateModal = ({
                 </Box>
               </Box>
             )}
-          </Box>
+          </StyledContainerModal>
         )}
       </Box>
     </StyledModal>

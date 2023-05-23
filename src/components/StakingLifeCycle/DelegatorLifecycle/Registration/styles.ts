@@ -160,3 +160,10 @@ export const CertificateShapeMobile = styled(CertificateShape)(() => ({
   height: 220,
   margin: "auto"
 }));
+
+export const StyledContainerModal = styled(Box)(({ theme }) => ({
+  padding: 24,
+  [theme.breakpoints.down("md")]: {
+    padding: 15
+  }
+}));
