@@ -23,6 +23,9 @@ export const Amount = styled(Box)`
 `;
 
 export const TableProtocol = styled(Table)({
+  "& > div:first-of-type": {
+    margin: 0
+  },
   "& tr th:last-child": {
     width: "120px"
   }

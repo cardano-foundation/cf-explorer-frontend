@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import { Column } from "../../../commons/Table";
-import ScriptModal from "../../../ScriptModal";
+import { Column } from "~/components/commons/Table";
+import ScriptModal from "~/components/ScriptModal";
 import { Amount, AssetName, LogoEmpty, TableMinting } from "./styles";
-import { PolicyScriptIcon } from "../../../../commons/resources";
-import { Logo } from "../../../../pages/Token/styles";
+import { PolicyScriptIcon } from "~/commons/resources";
+import { Logo } from "~/pages/Token/styles";
 
 interface MintingProps {
   data: Transaction["mints"] | null;
@@ -20,7 +20,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       isHiddenBorder: true,
       key: "Assetname",
       minWidth: "40px",
-      render: (r, index) => {
+      render: (r) => {
         return (
           <AssetName>
             {r?.metadata?.logo ? (
@@ -38,7 +38,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       isHiddenBorder: true,
       key: "Amount",
       minWidth: "40px",
-      render: (r, index) => {
+      render: (r) => {
         return <Amount>{r.assetQuantity}</Amount>;
       }
     },
