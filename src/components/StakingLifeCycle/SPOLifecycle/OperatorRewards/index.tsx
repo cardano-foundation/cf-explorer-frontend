@@ -1,17 +1,9 @@
-import { Box, IconButton, styled } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
-
-import { SPOStalking, ADAOrangeIcon, SPOInfo, SPOKey } from "../../../../commons/resources";
-import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
-
-import Line from "../../../Line";
-import ArrowDiagram from "../../../ArrowDiagram";
+import { Box, styled } from "@mui/material";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ADAOrangeIcon } from "../../../../commons/resources";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { ButtonSPO, PoolName, PoolNamePopup } from "../Registration/styles";
-import PopoverStyled from "../../../commons/PopoverStyled";
 import { details } from "../../../../commons/routers";
-import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import CopyButton from "../../../commons/CopyButton";
+import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { Link, useParams } from "react-router-dom";
 import { API } from "../../../../commons/utils/api";
@@ -20,8 +12,12 @@ import Table, { Column } from "../../../commons/Table";
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import moment from "moment";
 import ADAicon from "../../../commons/ADAIcon";
-import { StyledLink, StyledListImages } from "./styles";
-import { useScreen } from "../../../../commons/hooks/useScreen";
+import { StyledLink, DrawContainer, ADAOperator, ADATitle } from "./styles";
+import { useSelector } from "react-redux";
+import CardanoSystem from "~/components/commons/CardanoSystem";
+import SPOHolder from "~/components/commons/SPOHolder";
+import DrawPath from "~/components/commons/DrawPath";
+import { LineArrowItem } from "~/components/commons/LineArrow";
 
 const OperatorReward = ({
   containerPosition,
@@ -39,246 +35,51 @@ const OperatorReward = ({
   const SPOHolderRef = useRef(null);
   const operatorRef = useRef(null);
   const cadarnoSystemRef = useRef(null);
-  const SPOInfoRef = useRef(null);
-  const SPOKeyRef = useRef(null);
-
-  const { isMobile } = useScreen();
+  const { sidebar } = useSelector(({ user }: RootState) => user);
 
   useEffect(() => {
     handleResize();
   }, [operatorRef.current, loading]);
+  const paths = useMemo((): LineArrowItem[] => {
+    return [
+      {
+        start: cadarnoSystemRef,
+        startPosition: { 0: ["center", "bottom"], md: ["right", "middle"] },
+        end: operatorRef,
+        endPosition: { 0: ["center", "top"], md: ["left", "middle"] },
+        startOffset: { 0: [0], md: [-10] },
+        endOffset: { 0: [0, 30], md: [50], lg: [50] },
+        arrow: { 0: "top", md: "left" },
+        fold: { sm: "none" }
+      },
+      {
+        start: operatorRef,
+        startPosition: { 0: ["center", "bottom"], md: ["right", "middle"] },
+        end: SPOHolderRef,
+        endPosition: { 0: ["center", "top"], md: ["left", "middle"] },
+        startOffset: { 0: [0], md: [-40] },
+        endOffset: { 0: [0], md: [0], lg: [0] },
+        arrow: { 0: "top", md: "left" },
+        fold: { sm: "none" }
+      }
+    ];
+  }, []);
 
   return (
     <Box>
-      <Box mt={4}>
-        {!isMobile ? (
-          <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
-            <Box ref={cadarnoSystemRef}>
-              <img src={cadarnoSystem} alt='carrdano' />
-            </Box>
-            <Box position={"relative"}>
-              <Box ref={operatorRef} width={60} height={67}>
-                <Box component={IconButton} onClick={() => setOpenModal(true)} p={0}>
-                  <ADAOrangeIcon />
-                </Box>
-              </Box>
-              <Box position={"absolute"} width={"max-content"} left={"-64%"} bottom={"-50%"} fontWeight={"bold"}>
-                Operator Rewards
-              </Box>
-            </Box>
-            <Box ref={SPOHolderRef} width={190} height={245} position={"relative"}>
-              <SPOStalking />
-              <CustomTooltip title={data?.poolName}>
-                <PoolName> {data?.poolName}</PoolName>
-              </CustomTooltip>
-              <PopoverStyled
-                render={({ handleClick }) => (
-                  <ButtonSPO
-                    ref={SPOInfoRef}
-                    component={IconButton}
-                    left={"33%"}
-                    onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
-                  >
-                    <SPOInfo />
-                  </ButtonSPO>
-                )}
-                content={
-                  <Box>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
-                        Pool ID:
-                      </Box>
-                      <PoolNamePopup to={details.delegation(data?.poolView)}>
-                        {getShortWallet(data?.poolView || "")}
-                      </PoolNamePopup>
-                      <CopyButton text={data?.poolView} />
-                    </Box>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
-                        Pool name:
-                      </Box>
-                      <PoolNamePopup to={details.delegation(data?.poolView)}>{data?.poolName}</PoolNamePopup>
-                    </Box>
-                  </Box>
-                }
-              />
-              <Box>
-                <CustomTooltip
-                  wOpacity={false}
-                  componentsProps={{
-                    transition: {
-                      style: {
-                        backgroundColor: "white",
-                        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
-                        padding: "10px"
-                      }
-                    },
-                    arrow: {
-                      style: {
-                        color: "white"
-                      }
-                    }
-                  }}
-                  title={
-                    <Box display={"flex"} alignItems={"center"}>
-                      {data?.stakeKeys && data.stakeKeys.length > 0 && (
-                        <>
-                          <SPOKey fill='#108AEF' />
-                          <PoolNamePopup to={details.stake(data?.stakeKeys[0] || "")}>
-                            {getShortWallet(data?.stakeKeys[0] || "")}
-                          </PoolNamePopup>
-                          <CopyButton text={data?.stakeKeys[0]} />
-                        </>
-                      )}
-                    </Box>
-                  }
-                >
-                  <ButtonSPO
-                    ref={SPOKeyRef}
-                    component={IconButton}
-                    left={"52%"}
-                  >
-                    <SPOKey fill='#438F68' />
-                  </ButtonSPO>
-                </CustomTooltip>
-              </Box>
-            </Box>
-            <svg
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                height: "100vh",
-                width: "100vw",
-                zIndex: "-1"
-              }}
-            >
-              <Line
-                containerPosition={containerPosition}
-                fromRef={cadarnoSystemRef}
-                toRef={operatorRef}
-                pointTo='border'
-                pointFrom='border'
-                orient='vertical'
-              />
+      <DrawContainer sidebar={+sidebar}>
+        <CardanoSystem ref={cadarnoSystemRef} />
+        <ADAOperator ref={operatorRef} onClick={() => setOpenModal(true)}>
+          <ADAOrangeIcon />
+          <ADATitle fontWeight={"bold"}>Operator Rewards</ADATitle>
+        </ADAOperator>
+        <SPOHolder
+          ref={SPOHolderRef}
+          data={{ poolName: data?.poolName, poolView: data?.poolView, stakeKeys: data?.stakeKeys }}
+        />
+        <DrawPath paths={paths} />
+      </DrawContainer>
 
-              <ArrowDiagram
-                containerPosition={containerPosition}
-                fromRef={operatorRef}
-                toRef={SPOHolderRef}
-                pointTo='border'
-                pointFrom='border'
-                orient='vertical'
-              />
-            </svg>
-          </Box>
-        ) : (
-          <StyledListImages>
-            <Box ref={cadarnoSystemRef}>
-              <img src={cadarnoSystem} alt='carrdano' />
-            </Box>
-            <Box ref={operatorRef}>
-              <Box width={60} height={67}>
-                <Box component={IconButton} onClick={() => setOpenModal(true)} p={0}>
-                  <ADAOrangeIcon />
-                </Box>
-              </Box>
-              <Box fontWeight={"bold"}>Operator Rewards</Box>
-            </Box>
-            <Box ref={SPOHolderRef} width={190} height={245} position={"relative"}>
-              <SPOStalking />
-              <CustomTooltip title={data?.poolName}>
-                <PoolName> {data?.poolName}</PoolName>
-              </CustomTooltip>
-              <PopoverStyled
-                render={({ handleClick }) => (
-                  <ButtonSPO
-                    ref={SPOInfoRef}
-                    component={IconButton}
-                    left={"33%"}
-                    onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
-                  >
-                    <SPOInfo />
-                  </ButtonSPO>
-                )}
-                content={
-                  <Box>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
-                        Pool ID:
-                      </Box>
-                      <PoolNamePopup to={details.delegation(data?.poolView)}>
-                        {getShortWallet(data?.poolView || "")}
-                      </PoolNamePopup>
-                      <CopyButton text={data?.poolView} />
-                    </Box>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
-                        Pool name:
-                      </Box>
-                      <PoolNamePopup to={details.delegation(data?.poolView)}>{data?.poolName}</PoolNamePopup>
-                    </Box>
-                  </Box>
-                }
-              />
-              <PopoverStyled
-                render={({ handleClick }) => (
-                  <ButtonSPO
-                    ref={SPOKeyRef}
-                    component={IconButton}
-                    left={"52%"}
-                    onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
-                  >
-                    <SPOKey fill='#438F68' />
-                  </ButtonSPO>
-                )}
-                content={
-                  <Box display={"flex"} alignItems={"center"}>
-                    {data?.stakeKeys && data.stakeKeys.length > 0 && (
-                      <>
-                        <SPOKey fill='#108AEF' />
-                        <PoolNamePopup to={details.stake(data?.stakeKeys[0] || "")}>
-                          {getShortWallet(data?.stakeKeys[0] || "")}
-                        </PoolNamePopup>
-                        <CopyButton text={data?.stakeKeys[0]} />
-                      </>
-                    )}
-                  </Box>
-                }
-              />
-            </Box>
-            <svg
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                height: "140vh",
-                width: "100vw",
-                zIndex: "-1"
-              }}
-            >
-              <ArrowDiagram
-                containerPosition={containerPosition}
-                fromRef={cadarnoSystemRef}
-                toRef={operatorRef}
-                pointTo='border'
-                pointFrom='border'
-                orient='horizontal'
-                connectToReverse
-              />
-              <ArrowDiagram
-                containerPosition={containerPosition}
-                fromRef={operatorRef}
-                toRef={SPOHolderRef}
-                pointTo='border'
-                pointFrom='border'
-                orient='horizontal'
-                connectToReverse
-              />
-            </svg>
-          </StyledListImages>
-        )}
-      </Box>
       <OperatorRewardModal open={openModal} handleCloseModal={() => setOpenModal(false)} />
     </Box>
   );
