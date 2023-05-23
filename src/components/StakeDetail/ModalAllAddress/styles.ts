@@ -11,7 +11,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(4),
   borderRadius: 10,
   textAlign: "left",
-  maxHeight: "90vh",
+  maxHeight: "70vh",
   overflowY: "auto",
   "::-webkit-scrollbar": {
     width: "16px"
