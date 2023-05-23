@@ -95,11 +95,14 @@ export const StepInfo = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const InfoGroup = styled(Box)(({ theme }) => ({
+export const InfoGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
   display: "flex",
   justifyContent: "flex-end",
   alignItems: "center",
   gap: 20,
+  [theme.breakpoints.down(sidebar ? "lg" : "md")]: {
+    gap: 12
+  },
   [theme.breakpoints.down("sm")]: {
     flexDirection: "column",
     justifyContent: "flex-start",
