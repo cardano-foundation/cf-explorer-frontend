@@ -50,7 +50,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
               <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
                 Pool ID:
               </Box>
-              <PoolNamePopup to={details.delegation(poolView)}>{getShortHash(poolView || "")}</PoolNamePopup>
+              <PoolNamePopup to={details.delegation(poolView)}>{getShortWallet(poolView || "")}</PoolNamePopup>
               <CopyButton text={poolView} />
             </Box>
             <Box display={"flex"} alignItems={"center"}>

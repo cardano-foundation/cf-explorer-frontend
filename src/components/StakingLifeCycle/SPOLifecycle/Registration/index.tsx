@@ -86,7 +86,7 @@ export const RegistrationCertificateModal = ({
                 <Box pt={"7px"} fontWeight={500}>
                   <CustomTooltip title={data?.txHash || ""}>
                     <Link to={details.transaction(data?.txHash || "")}>
-                      {isMobile ? getShortWallet(data?.txHash || "") : getShortHash(data?.txHash || "")}
+                      {getShortHash(data?.txHash || "")}
                     </Link>
                   </CustomTooltip>
                   <CopyButton text={data?.txHash || ""} />
@@ -134,7 +134,7 @@ export const RegistrationCertificateModal = ({
                           fontSize='0.875rem'
                           color={({ palette }) => palette.blue[800]}
                         >
-                          {isMobile ? getShortWallet(data?.vrfKey || "") : getShortHash(data?.vrfKey || "")}
+                          {getShortHash(data?.vrfKey || "")}
                         </Box>{" "}
                       </>
                     </Box>
