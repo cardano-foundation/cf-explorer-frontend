@@ -82,9 +82,10 @@ const Button = styled(IconButton)<{ over?: number; sidebar?: number }>(({ theme,
 interface Props extends BoxProps {
   value?: number | string;
   txHash: string;
+  roundingNumber?: number;
 }
 
-export const HoldBox = forwardRef<HTMLElement, Props>(({ value, txHash, ...props }, feeRef) => {
+export const HoldBox = forwardRef<HTMLElement, Props>(({ value, txHash, roundingNumber = 6, ...props }, feeRef) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
 
   return (
@@ -92,7 +93,7 @@ export const HoldBox = forwardRef<HTMLElement, Props>(({ value, txHash, ...props
       render={({ handleClick }) => (
         <HoldContainer {...props} ref={feeRef} sidebar={+sidebar}>
           <Value>
-            {formatADAFull(value || 0)}
+            {formatADAFull(value || 0, roundingNumber)}
             <StyledAdaLogoIcon />
           </Value>
           <Button
