@@ -2,9 +2,8 @@ import { BoxProps, styled, useTheme } from "@mui/material";
 import React, { forwardRef } from "react";
 import { AdaHolderIconUrl } from "~/commons/resources";
 import PolygonShape from "../PolygonShape";
-import { AdaHolderImage, AdaHolderValue } from "./styles";
+import { AdaHolderImage, AdaHolderValue, StyledAdaLogoIcon } from "./styles";
 import { formatADAFull } from "~/commons/utils/helper";
-import ADAicon from "../ADAIcon";
 
 export interface IAdaHolderProps extends BoxProps {
   value?: number;
@@ -18,7 +17,8 @@ export const AdaHolder: React.FC<IAdaHolderProps> = forwardRef(({ children, valu
       ADA Holder
       {value && (
         <AdaHolderValue>
-          {formatADAFull(value)} <ADAicon style={{ color: theme.palette.grey[700] }} fontSize={14} />
+          {formatADAFull(value)}
+          <StyledAdaLogoIcon />
         </AdaHolderValue>
       )}
     </PolygonShape>
