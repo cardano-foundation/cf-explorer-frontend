@@ -9,7 +9,6 @@ import { Status } from "~/pages/Epoch/styles";
 import DetailHeader from "../../DetailHeader";
 import ProgressCircle from "../../ProgressCircle";
 import { Container, EpochNumber, EpochProgress, TitleCard } from "./styles";
-import { useEffect, useState } from "react";
 
 interface IProps {
   data: IDataEpoch[];
@@ -18,23 +17,6 @@ interface IProps {
 export default function FirstEpoch({ data }: IProps) {
   const theme = useTheme();
   const currentEpoch = data[0];
-  const [timerSlot, setTimerSlot] = useState<number>(0);
-
-  useEffect(() => {
-    let id: any;
-    if (currentEpoch) {
-      id = setInterval(() => {
-        const currentSlot = getEpochSlotNo(currentEpoch);
-        setTimerSlot(currentSlot);
-        if (currentSlot >= MAX_SLOT_EPOCH) {
-          clearInterval(id);
-          setTimerSlot(MAX_SLOT_EPOCH);
-        }
-      }, 1000);
-    }
-    return () => clearInterval(id);
-  }, [currentEpoch]);
-
   if (!currentEpoch) return null;
   const progress = ((getEpochSlotNo(currentEpoch) / MAX_SLOT_EPOCH) * 100).toFixed(0);
   const listOverview = [
@@ -80,7 +62,7 @@ export default function FirstEpoch({ data }: IProps) {
       ),
       value: (
         <Box component={"span"}>
-          {timerSlot}/{MAX_SLOT_EPOCH}
+          {getEpochSlotNo(currentEpoch)}/{MAX_SLOT_EPOCH}
         </Box>
       )
     },
