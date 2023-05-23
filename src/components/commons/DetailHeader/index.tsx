@@ -83,10 +83,11 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     input: false,
     output: false
   });
-  const { isTablet } = useScreen();
+  const { isMobile } = useScreen();
+
   const getHashLabel = () => {
     if (type === "BLOCK") return "Block Id";
-    if (type === "STAKE_KEY") return "";
+    if (type === "STAKE_KEY") return "Stake key";
     if (type === "POOL") return "Pool Id";
     if (type === "TOKEN") return "Token ID";
   };
@@ -155,7 +156,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           {hash && (
             <SlotLeader>
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
-              {isTablet ? (
+              {isMobile ? (
                 <CustomTooltip title={hash}>
                   <SlotLeaderValue>{getShortHash(hash)}</SlotLeaderValue>
                 </CustomTooltip>
