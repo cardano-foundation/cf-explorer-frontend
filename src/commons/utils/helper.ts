@@ -156,7 +156,7 @@ export const getEpochSlotNo = (data: IDataEpoch) => {
   if (data.status === "FINISHED") {
     return MAX_SLOT_EPOCH;
   }
-  return moment().diff(moment(data.startTime + "Z"), "seconds");
+  return moment().diff(moment(data.startTime), "seconds");
 };
 
 export function formatHash(hash: string): string {
