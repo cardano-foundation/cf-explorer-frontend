@@ -1,8 +1,7 @@
-import { Box, Button, styled } from "@mui/material";
+import { Box, Button, styled, Tab } from "@mui/material";
 
 import Table from "../../components/commons/Table";
 import { LoadingButton } from "@mui/lab";
-import { Tab } from "@mui/material";
 
 export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
   fontWeight: "bold",

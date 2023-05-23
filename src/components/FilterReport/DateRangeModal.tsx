@@ -60,8 +60,8 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
             slotProps={{
               textField: {
                 InputProps: {
-                  disabled: true,
-                },
+                  disabled: true
+                }
               }
             }}
           />
@@ -72,8 +72,8 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
             slotProps={{
               textField: {
                 InputProps: {
-                  disabled: true,
-                },
+                  disabled: true
+                }
               }
             }}
           />

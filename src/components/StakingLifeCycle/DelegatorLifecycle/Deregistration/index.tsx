@@ -2,12 +2,7 @@ import { alpha, Box, Skeleton, styled } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { Link as LinkDom, useHistory, useParams } from "react-router-dom";
 
-import {
-  ADAGreen,
-  AddressIcon,
-  BackIcon,
-  TimeIcon
-} from "../../../../commons/resources";
+import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "../../../../commons/resources";
 
 import { FilterParams } from "~/components/StackingFilter";
 import useFetch from "../../../../commons/hooks/useFetch";
@@ -19,7 +14,7 @@ import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import StyledModal from "../../../commons/StyledModal";
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
-import { StakeLink } from "../Registration/styles";
+import { StakeLink, StyledLink } from "../Registration/styles";
 import DeregistrationDraw from "./DeregistrationDraw";
 import RecentDeregistrations from "./RecentDeregistration";
 import { IconButtonBack, Info, InfoGroup, InfoText, StepInfo } from "./styles";
@@ -111,7 +106,11 @@ const DeregistrationTimeline = ({
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected.txHash}>
-              <InfoText>{getShortHash(selected.txHash || "")}</InfoText>
+              <InfoText>
+                <StyledLink to={details.transaction(selected.txHash)}>
+                  {getShortHash(selected.txHash || "")}
+                </StyledLink>
+              </InfoText>
             </CustomTooltip>
             <StyledCopyButton text={selected.txHash} />
           </Info>

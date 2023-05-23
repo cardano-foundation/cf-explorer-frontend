@@ -43,7 +43,7 @@ const DelegationEpochList = ({
       title: "Blocks",
       key: "block",
       minWidth: "120px",
-      render: (data) => <StyledLink to={details.block(data.block)}>{numberWithCommas(data.block)}</StyledLink>
+      render: (data) => numberWithCommas(data.block)
     },
     {
       title: "Stake Amount (A)",

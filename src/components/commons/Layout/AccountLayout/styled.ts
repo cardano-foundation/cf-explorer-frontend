@@ -31,16 +31,16 @@ export const WrapItemMobile = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     display: "flex",
     backgroundColor: "#E7E8EA",
-    borderRadius: "8px",
+    borderRadius: "8px"
   },
   [theme.breakpoints.down("sm")]: {
     width: "100%",
     margin: "0 23px",
-    justifyContent: "space-between",
+    justifyContent: "space-between"
   }
 }));
 
-export const NavItemMobile = styled(Link)<{ active: boolean, smallWidth: number }>(({ theme, active, smallWidth }) => ({
+export const NavItemMobile = styled(Link)<{ active: boolean; smallWidth: number }>(({ theme, active, smallWidth }) => ({
   textAlign: "center",
   fontWeight: 700,
   fontSize: "14px",
@@ -54,7 +54,7 @@ export const NavItemMobile = styled(Link)<{ active: boolean, smallWidth: number 
   [theme.breakpoints.down("sm")]: {
     padding: "10px 0",
     width: "100%",
-    fontSize: "13px",
+    fontSize: "13px"
   }
 }));
 

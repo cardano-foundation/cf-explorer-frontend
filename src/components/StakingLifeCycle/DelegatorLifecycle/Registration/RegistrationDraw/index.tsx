@@ -25,6 +25,8 @@ import AdaHolder from "~/components/commons/AdaHolder";
 import CardanoSystem from "~/components/commons/CardanoSystem";
 import HoldBox from "~/components/commons/HoldBox";
 import FeeBox from "~/components/commons/FeeBox";
+import { StyledLink } from "../styles";
+import { details } from "~/commons/routers";
 
 interface Props {
   setSelected: (registration: RegistrationItem | null) => void;
@@ -99,7 +101,11 @@ export const RegistrationDraw = ({ registration, toggleModal }: Props) => {
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={txHash}>
-              <InfoText>{getShortHash(txHash || "")}</InfoText>
+              <InfoText>
+                <StyledLink to={details.transaction(txHash)}>
+                  {getShortHash(txHash || "")}
+                </StyledLink>
+              </InfoText>
             </CustomTooltip>
             <StyledCopyButton text={txHash} />
           </Info>

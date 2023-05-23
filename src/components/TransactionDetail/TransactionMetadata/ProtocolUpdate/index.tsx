@@ -22,8 +22,8 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
       isHiddenBorder: true,
       key: "previousValue",
       minWidth: "40px",
-      render: (r) => {
-        return <div>{r?.oldValue}</div>;
+      render: (r, index) => {
+        return <pre>{r?.oldValue}</pre>;
       }
     },
     {
@@ -31,8 +31,8 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
       key: "updatedValue",
       minWidth: "40px",
       isHiddenBorder: true,
-      render: (r) => {
-        return <div>{r?.value}</div>;
+      render: (r, index) => {
+        return <pre>{r?.value}</pre>;
       }
     }
   ];

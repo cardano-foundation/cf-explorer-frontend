@@ -34,8 +34,8 @@ import {
 import { ButtonText } from "../DelegatorLifecycle/styles";
 import Deregistration from "./Deregistration";
 import OperatorReward from "./OperatorRewards";
-import PoolUpdates from "./PoolUpdates";
 import Registration from "./Registration";
+import PoollUpdates from "./PoolUpdates";
 interface StepperProps {
   icon: React.ReactNode;
   title: string;
@@ -68,7 +68,7 @@ const SPOLifecycle = ({
     {
       icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
       title: "Registration",
-      component: <Registration handleResize={handleResize} containerPosition={containerPosition} />,
+      component: <Registration />,
       description: (
         <RegistrationProcessDescription
           open={openDescriptionModal}
@@ -80,7 +80,7 @@ const SPOLifecycle = ({
     {
       icon: <PoolUpdateIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
       title: "Pool Updates",
-      component: <PoolUpdates handleResize={handleResize} containerPosition={containerPosition} />,
+      component: <PoollUpdates />,
       description: (
         <SPOInvolvementInDelegationDescription
           open={openDescriptionModal}
@@ -92,7 +92,7 @@ const SPOLifecycle = ({
     {
       icon: <OperatorRewardIcon width={"25px"} height={"25px"} fill={currentStep >= 2 ? "#fff" : "#98A2B3"} />,
       title: "Operator Rewards",
-      component: <OperatorReward handleResize={handleResize} containerPosition={containerPosition} />,
+      component: <OperatorReward />,
       description: (
         <WithdrawingFundProcessDescription
           open={openDescriptionModal}
@@ -104,7 +104,7 @@ const SPOLifecycle = ({
     {
       icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
       title: "Deregistration",
-      component: <Deregistration handleResize={handleResize} containerPosition={containerPosition} />,
+      component: <Deregistration />,
       description: (
         <DeregistrationProcessDescription
           open={openDescriptionModal}

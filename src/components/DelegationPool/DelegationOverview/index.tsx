@@ -74,12 +74,12 @@ const OverViews: React.FC = () => {
         </Box>
       </Grid>
       <Grid item xl={4} md={6} xs={12}>
-        <StyledCard.Container sx={{justifyContent: "space-between"}}>
+        <StyledCard.Container sx={{ justifyContent: "space-between" }}>
           <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>
             <StyledCard.Title>Live Stake</StyledCard.Title>
             <StyledCard.Value>{formatADA(data?.liveStake)}</StyledCard.Value>
           </StyledCard.Content>
-          <StyledCard.Content style={{ }}>
+          <StyledCard.Content style={{}}>
             <StyledCard.Title>Delegators</StyledCard.Title>
             <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
           </StyledCard.Content>
