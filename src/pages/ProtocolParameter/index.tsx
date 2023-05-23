@@ -339,7 +339,7 @@ const ProtocolParameterHistory = () => {
       minWidth: 200,
       render: (r: TProtocolParam & { params: string }) => {
         return <Box p={"24px 20px"}>{r?.params}</Box>;
-      },
+      }
       // sort: ({ columnKey, sortValue }) => {
       //   sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       // }

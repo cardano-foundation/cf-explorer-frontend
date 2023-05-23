@@ -8,7 +8,7 @@ import { formatADAFull } from "~/commons/utils/helper";
 import { AdaLogoIcon } from "../ADAIcon";
 import PopupStaking from "../PopupStaking";
 
-const HoldContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+const PoolHoldContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
   height: "35px",
   width: 184,
   display: "flex",
@@ -81,19 +81,18 @@ const Button = styled(IconButton)<{ over?: number; sidebar?: number }>(({ theme,
 
 interface Props extends BoxProps {
   value?: number | string;
-  txHash: string;
-  roundingNumber?: number;
+  txHash?: string | any;
 }
 
-export const HoldBox = forwardRef<HTMLElement, Props>(({ value, txHash, roundingNumber = 6, ...props }, feeRef) => {
+export const PoolHoldBox = forwardRef<HTMLElement, Props>(({ value, txHash, ...props }, feeRef) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
 
   return (
     <PopoverStyled
       render={({ handleClick }) => (
-        <HoldContainer {...props} ref={feeRef} sidebar={+sidebar}>
+        <PoolHoldContainer {...props} ref={feeRef} sidebar={+sidebar}>
           <Value>
-            {formatADAFull(value || 0, roundingNumber)}
+            {formatADAFull(value || 0)}
             <StyledAdaLogoIcon />
           </Value>
           <Button
@@ -103,13 +102,13 @@ export const HoldBox = forwardRef<HTMLElement, Props>(({ value, txHash, rounding
           >
             <ButtonListIcon />
           </Button>
-        </HoldContainer>
+        </PoolHoldContainer>
       )}
       content={<PopupStaking hash={txHash} />}
     />
   );
 });
 
-HoldBox.displayName = "HoldBox";
+PoolHoldBox.displayName = "PoolHoldBox";
 
-export default HoldBox;
+export default PoolHoldBox;

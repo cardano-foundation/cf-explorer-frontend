@@ -48,11 +48,7 @@ const OverviewTab: React.FC<IProps> = ({ handleChangeTab }) => {
   return (
     <Box textAlign='left'>
       <TextNote>Below are the username, email and overview information for your account</TextNote>
-      <RowItem
-        label='Your email address '
-        value={userData?.email}
-        isTablet={isTablet}
-      />
+      <RowItem label='Your email address ' value={userData?.email} isTablet={isTablet} />
       <RowItem
         label='Private Notes'
         value={`${userData?.sizeNote} out of 2000 available limit`}

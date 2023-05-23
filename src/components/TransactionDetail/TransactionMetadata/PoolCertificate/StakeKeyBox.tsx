@@ -20,7 +20,7 @@ const StakeKeyBox = ({ data }: TProps) => {
       value: getShortWallet(data.poolId),
       isHyperLink: true,
       originValue: data.poolId,
-      linkTo: details.delegation(data.poolId),
+      linkTo: details.delegation(data.poolId)
     },
     {
       label: "VRF Key",
@@ -84,9 +84,7 @@ const StakeKeyBox = ({ data }: TProps) => {
                   ) : (
                     <Box display={"flex"}>
                       <CustomTooltip title={originValue}>
-                        <TextValue>
-                          {isHyperLink && linkTo ? <Link to={linkTo}>{value}</Link> : value}
-                        </TextValue>
+                        <TextValue>{isHyperLink && linkTo ? <Link to={linkTo}>{value}</Link> : value}</TextValue>
                       </CustomTooltip>
                       {value && <CopyButton sx={{ marginLeft: 1, height: 16 }} text={originValue} />}
                     </Box>
@@ -109,7 +107,7 @@ const StakeKeyBox = ({ data }: TProps) => {
           </Box>
         </Grid>
       </Grid>
-    </Box >
+    </Box>
   );
 };
 export default StakeKeyBox;

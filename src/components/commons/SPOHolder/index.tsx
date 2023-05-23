@@ -8,7 +8,6 @@ import PopoverStyled from "../PopoverStyled";
 import { getShortHash, getShortWallet } from "~/commons/utils/helper";
 import { details } from "~/commons/routers";
 import CopyButton from "../CopyButton";
-
 interface ISPOPropsData {
   poolName?: string;
   poolView?: string;
@@ -111,14 +110,20 @@ const PolygonShapeSPO = styled(PolygonShape)(({ theme }) => ({
 }));
 
 export const SPOImage = styled("img")(() => ({
+  position: "absolute",
+  top: "10%",
   width: 100,
   height: 100
 }));
 
-export const SPOTitle = styled(Box)(() => ({}));
+export const SPOTitle = styled(Box)(() => ({
+  position: "absolute",
+  top: "55%"
+}));
 
 export const PoolName = styled(Box)(({ theme }) => ({
   position: "absolute",
+  top: "64%",
   left: "50%",
   bottom: "30%",
   color: theme.palette.grey[400],

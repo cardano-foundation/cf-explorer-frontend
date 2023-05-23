@@ -21,7 +21,7 @@ const StyledModal: React.FC<IProps> = ({
   height,
   paddingX,
   paddingY,
-  overflowY = 'auto'
+  overflowY = "auto"
 }) => {
   const { isMobile } = useScreen();
   return (
@@ -41,9 +41,13 @@ const StyledModal: React.FC<IProps> = ({
             <WrapTitle>{title}</WrapTitle>
           </Box>
         )}
-        <ContentContainer sx={{
-          overflowY
-        }}>{children}</ContentContainer>
+        <ContentContainer
+          sx={{
+            overflowY
+          }}
+        >
+          {children}
+        </ContentContainer>
       </ModalContainer>
     </Modal>
   );
