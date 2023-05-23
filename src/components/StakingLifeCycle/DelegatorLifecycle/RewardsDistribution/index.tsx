@@ -8,16 +8,7 @@ import { API } from "../../../../commons/utils/api";
 import ReceivedRewardsModal from "../../../ReceivedRewardsModal";
 import RewarsDistributionDraw from "./RewardsDistributionDraw";
 
-const RewardsDistribution = ({
-  containerPosition,
-  handleResize
-}: {
-  containerPosition: {
-    top?: number;
-    left?: number;
-  };
-  handleResize: () => void;
-}) => {
+const RewardsDistribution = ( ) => {
   const [openReceivedRewardsModal, setOpenReceivedRewardsModal] = useState(false);
 
   const { stakeId = "" } = useParams<{ stakeId: string }>();

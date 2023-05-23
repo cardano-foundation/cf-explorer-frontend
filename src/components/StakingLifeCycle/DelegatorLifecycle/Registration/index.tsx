@@ -1,6 +1,5 @@
 import { alpha, Box, Skeleton } from "@mui/material";
 import { useState } from "react";
-
 import { StakeLink } from "./styles";
 import RecentRegistrations from "./RecentRegistrations";
 import StyledModal from "../../../commons/StyledModal";
@@ -31,14 +30,8 @@ const Registration = () => {
   return (
     <Box>
       <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
-      <Box>
-        <RecentRegistrations onSelect={handleSelect} params={params} setParams={setParams} />
-      </Box>
-      <Box>
-        {selected && (
-          <RegistrationDraw setSelected={setSelected} registration={selected} toggleModal={handleToggleModal} />
-        )}
-      </Box>
+      <RecentRegistrations onSelect={handleSelect} params={params} setParams={setParams} />
+      {selected && <RegistrationDraw selected={selected} toggleModal={handleToggleModal} />}
     </Box>
   );
 };

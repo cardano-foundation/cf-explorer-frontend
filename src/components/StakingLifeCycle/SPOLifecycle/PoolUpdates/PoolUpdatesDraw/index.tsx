@@ -34,7 +34,6 @@ interface ISPOPropsData {
   txHash?: string;
 }
 interface Props {
-  setSelected: (registration: PoolUpdateItem | null) => void;
   poolUpdates: PoolUpdateItem;
   toggleModal?: () => void;
   data: ISPOPropsData | null;

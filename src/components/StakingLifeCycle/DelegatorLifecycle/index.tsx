@@ -89,7 +89,7 @@ const DelegatorLifecycle = ({
     {
       icon: <DelegationIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
       title: "Delegation",
-      component: <Delegation handleResize={handleResize} containerPosition={containerPosition} />,
+      component: <Delegation />,
       description: (
         <DelegationProcessDescription
           open={openDescriptionModal}
@@ -101,7 +101,7 @@ const DelegatorLifecycle = ({
     {
       icon: <RewardsDistributionIcon width={"25px"} height={"25px"} fill={currentStep >= 2 ? "#fff" : "#98A2B3"} />,
       title: "Rewards Distribution",
-      component: <RewardsDistribution handleResize={handleResize} containerPosition={containerPosition} />,
+      component: <RewardsDistribution />,
       description: (
         <RewardDistributionProcessDescription
           open={openDescriptionModal}
@@ -125,7 +125,7 @@ const DelegatorLifecycle = ({
     {
       icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 4 ? "#fff" : "#98A2B3"} />,
       title: "Deregistration",
-      component: <Deregistration handleResize={handleResize} containerPosition={containerPosition} />,
+      component: <Deregistration />,
       description: (
         <DeregistrationProcessDescription
           open={openDescriptionModal}
