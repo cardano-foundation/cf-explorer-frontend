@@ -74,10 +74,15 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
         const hasReceivedToken = transaction?.tokens.some((t) => t.quantity > 0);
         return (
           <Box display={"flex"}>
-            {(hasSentToken && hasReceivedToken) ? <Box width={40} ml={"2px"} mr={"8px"}><TransferIcon style={{ scale: "1.15" }} /></Box> :
+            {hasSentToken && hasReceivedToken ? (
+              <Box width={40} ml={"2px"} mr={"8px"}>
+                <TransferIcon style={{ scale: "1.15" }} />
+              </Box>
+            ) : (
               <Box width={50} display={transaction?.balance ? "" : "none"}>
                 <Img src={type !== "up" ? receiveImg : sendImg} alt='send icon' />
-              </Box>}
+              </Box>
+            )}
             <Box display={"grid"}>
               <CustomTooltip title={transaction.hash}>
                 <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
@@ -140,12 +145,15 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
           tokens = transaction.tokens.map((token) => ({
             assetId: token.addressId.toString(),
             assetQuantity: token.quantity,
-            assetName: token.displayName
+            assetName: token.displayName,
+            fingerprint: token.fingerprint
           }));
         }
         return (
           <Box display={"flex"} alignItems={"center"}>
-            {transaction.tokens && transaction.tokens.length > 0 && <DropdownTokens tokens={tokens} type={type} hideInputLabel />}
+            {transaction.tokens && transaction.tokens.length > 0 && (
+              <DropdownTokens tokens={tokens} type={type} hideInputLabel />
+            )}
           </Box>
         );
       }
