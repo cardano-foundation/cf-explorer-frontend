@@ -133,7 +133,7 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
     localStorage.setItem("token", data.token);
     localStorage.setItem("username", data.username);
     localStorage.setItem("refreshToken", data.refreshToken);
-    localStorage.setItem("walletId", data.walletId);
+    localStorage.setItem("walletId", data.address);
     localStorage.setItem("email", data.email);
     localStorage.setItem("login-type", "normal");
 
