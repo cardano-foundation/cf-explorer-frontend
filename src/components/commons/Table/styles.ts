@@ -50,7 +50,6 @@ export const TRow = styled("tr")<{ selected?: number }>`
   width: 100%;
   padding: 10px 0;
   font-size: 14px;
-  cursor: pointer;
   position: relative;
   background-color: ${({ selected, theme }) => (selected ? theme.palette.background.neutral : "transparent")};
   &:hover {
