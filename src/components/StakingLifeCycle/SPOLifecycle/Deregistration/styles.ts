@@ -1,13 +1,13 @@
-import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui, Grid, alpha } from "@mui/material";
 import { Link } from "react-router-dom";
 import CertificateShape from "~/components/commons/CertificateShape";
 import CopyButton from "~/components/commons/CopyButton";
 
-export const IconButtonBack = styled(IconButtonMui)(( ) => ({
+export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0
 }));
 
-export const Info = styled(Box)(( ) => ({
+export const Info = styled(Box)(() => ({
   display: "flex",
   alignItems: "center"
 }));
@@ -29,7 +29,7 @@ export const CustomLink = styled(Link)(({ theme }) => ({
   }
 }));
 
-export const DetailRetirement = styled(Box)(( ) => ({
+export const DetailRetirement = styled(Box)(() => ({
   fontSize: "0.875rem",
   fontWeight: 600
 }));
@@ -153,3 +153,15 @@ export const StyledCertificateShape = styled(CertificateShape)(({ theme }) => ({
 export const StyledCopyButton = styled(CopyButton)`
   margin-left: 5px;
 `;
+export const StyledGridItem = styled(Grid)(({ theme }) => ({
+  "& > div": {
+    background: `${alpha(theme.palette.grey[300], 0.1)}`,
+    padding: 24
+  },
+  [theme.breakpoints.down("sm")]: {
+    "& > div": {
+      minHeight: "59px",
+      padding: 15
+    }
+  }
+}));
