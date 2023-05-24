@@ -9,6 +9,8 @@ import { Status } from "~/pages/Epoch/styles";
 import DetailHeader from "../../DetailHeader";
 import ProgressCircle from "../../ProgressCircle";
 import { Container, EpochNumber, EpochProgress, TitleCard } from "./styles";
+import { useSelector } from "react-redux";
+import { cloneDeep } from "lodash";
 
 interface IProps {
   data: IDataEpoch[];
@@ -16,16 +18,17 @@ interface IProps {
 
 export default function FirstEpoch({ data }: IProps) {
   const theme = useTheme();
-  const currentEpoch = data[0];
-  if (!currentEpoch) return null;
-  const progress = ((getEpochSlotNo(currentEpoch) / MAX_SLOT_EPOCH) * 100).toFixed(0);
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const currentEpochData = data[0];
+  if (!currentEpochData) return null;
+  const progress = (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0);
   const listOverview = [
     {
       icon: ExchangeIcon,
       hideHeader: true,
       title: (
         <EpochNumber sx={{ [theme.breakpoints.down("sm")]: { marginTop: "-8px" } }}>
-          Epoch Number {currentEpoch?.no}
+          Epoch Number {currentEpochData?.no}
         </EpochNumber>
       ),
       value: (
@@ -39,7 +42,7 @@ export default function FirstEpoch({ data }: IProps) {
             trailOpacity={1}
           >
             <EpochProgress>{`${progress}%`}</EpochProgress>
-            <Status status={currentEpoch?.status?.toLowerCase()}>{EPOCH_STATUS[currentEpoch?.status]}</Status>
+            <Status status={currentEpochData?.status?.toLowerCase()}>{EPOCH_STATUS[currentEpochData?.status]}</Status>
           </ProgressCircle>
         </Box>
       )
@@ -51,7 +54,7 @@ export default function FirstEpoch({ data }: IProps) {
           <TitleCard mr={1}>Block </TitleCard>
         </Box>
       ),
-      value: <Box component={"span"}>{currentEpoch?.blkCount}</Box>
+      value: <Box component={"span"}>{currentEpochData?.blkCount}</Box>
     },
     {
       icon: slotIcon,
@@ -62,7 +65,7 @@ export default function FirstEpoch({ data }: IProps) {
       ),
       value: (
         <Box component={"span"}>
-          {getEpochSlotNo(currentEpoch)}/{MAX_SLOT_EPOCH}
+          {currentEpoch?.slot}/{MAX_SLOT_EPOCH}
         </Box>
       )
     },
@@ -73,7 +76,7 @@ export default function FirstEpoch({ data }: IProps) {
           <TitleCard mr={1}> End Time</TitleCard>
         </Box>
       ),
-      value: <Box component={"span"}>{formatDateTimeLocal(currentEpoch?.endTime || "")}</Box>
+      value: <Box component={"span"}>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Box>
     },
     {
       icon: timeIcon,
@@ -82,7 +85,7 @@ export default function FirstEpoch({ data }: IProps) {
           <TitleCard mr={1}> Start Time</TitleCard>
         </Box>
       ),
-      value: <Box component={"span"}>{formatDateTimeLocal(currentEpoch?.startTime || "")}</Box>
+      value: <Box component={"span"}>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Box>
     }
   ];
   return (
