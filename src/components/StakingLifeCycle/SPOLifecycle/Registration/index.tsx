@@ -14,6 +14,7 @@ import { details } from "../../../../commons/routers";
 import StyledModal from "../../../commons/StyledModal";
 import { FilterParams } from "~/components/StackingFilter";
 import { RegistrationDraw } from "./RegistrationDraw";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 const Registration = () => {
   const { poolId = "" } = useParams<{ poolId: string }>();
@@ -61,6 +62,7 @@ export const RegistrationCertificateModal = ({
   const { data, loading } = useFetch<SPORegistrationDetail>(
     poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, poolUpdateId) : ""
   );
+  const { isMobile } = useScreen();
 
   return (
     <StyledModal {...props} title='Pool Registration certificate'>
