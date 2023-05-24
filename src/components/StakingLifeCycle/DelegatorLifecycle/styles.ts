@@ -96,6 +96,9 @@ export const StyledBox = styled(Box)`
   align-items: center;
   justify-content: flex-start;
   gap: 6px;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    gap: 3px;
+  }
 `;
 
 export const DescriptionText = styled(Typography)(({ theme }) => ({
