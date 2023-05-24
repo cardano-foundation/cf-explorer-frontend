@@ -50,7 +50,7 @@ const RegistrationPools = () => {
 
   const columns: Column<Registration>[] = [
     {
-      title: "Trx Hash",
+      title: "Tx Hash",
       key: "bk.time",
       render: (pool) => {
         return (
