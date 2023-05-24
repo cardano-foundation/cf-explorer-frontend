@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   AmountADARow,
-  CustomModal,
   EpochRow,
   ModalContainer,
   ModalContent,
@@ -9,12 +8,11 @@ import {
   RewardBalance,
   RewardBalanceHeader,
   RewardBalanceTitle,
-  TableContainer,
-  TotalTransaction
+  TableContainer
 } from "./styles";
-import Table, { Column, ColumnType } from "../commons/Table";
+import Table, { Column } from "../commons/Table";
 import { Box } from "@mui/material";
-import { ReceidvedRewardsIC, ADAsigntIC } from "../../commons/resources";
+import { ReceidvedRewardsIC } from "../../commons/resources";
 import StyledModal from "../commons/StyledModal";
 import { useParams } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
@@ -22,6 +20,7 @@ import { API } from "../../commons/utils/api";
 import { formatADA, formatADAFull, formatDateTimeLocal } from "../../commons/utils/helper";
 import ADAicon from "../commons/ADAIcon";
 import { details } from "../../commons/routers";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 interface ReceivedReward {
   amount: string;
@@ -46,6 +45,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
   const [params, setParams] = useState({ page: 0, size: 50 });
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [sort, setSort] = useState<string>("");
+  const { isMobile, isGalaxyFoldSmall } = useScreen();
 
   const fetchData = useFetchList<RewardDistributionItem>(stakeId ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) : "", {
     ...params,
@@ -98,6 +98,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
             <Table
               {...fetchData}
               columns={columns}
+              maxHeight={`calc(70vh - ${isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"})`}
               total={{ count: fetchData.total, title: "Total Transactions" }}
               pagination={{
                 ...params,
@@ -106,7 +107,6 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
                   setParams({ page: page - 1, size });
                 }
               }}
-              maxHeight={"calc(70vh - 100px)"}
             />
           </TableContainer>
         </ModalContent>

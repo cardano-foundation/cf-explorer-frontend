@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Option } from "../commons/Filter";
 import CustomIcon from "../commons/CustomIcon";
 import {
@@ -10,7 +10,7 @@ import {
   SearchIcon
 } from "../../commons/resources";
 
-import { Box, Button, ClickAwayListener, IconButton, ListItemIcon, MenuList } from "@mui/material";
+import { Box, Button, ClickAwayListener, IconButton, MenuList } from "@mui/material";
 
 import {
   FilterButton,

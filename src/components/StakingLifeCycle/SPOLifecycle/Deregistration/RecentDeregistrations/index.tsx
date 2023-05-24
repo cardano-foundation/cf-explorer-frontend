@@ -1,6 +1,5 @@
 import { Box, Skeleton } from "@mui/material";
-import moment from "moment";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
@@ -8,12 +7,10 @@ import StackingFilter, { FilterParams } from "../../../../StackingFilter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
 import { EmptyRecord } from "../../../../commons/Table";
 import { GridBox, WrapFilterDescription, StyledContainer, StyledList } from "./styles";
-import { FilterDateLabel } from "../../../DelegatorLifecycle/Delegation/styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
 import { details } from "../../../../../commons/routers";
 import { useUpdateEffect } from "react-use";
 import { useSelector } from "react-redux";
-import { DATETIME_PARTTEN } from "~/components/StackingFilter/DateRangeModal";
 
 interface Props {
   onSelect: (registration: SPODeregistration | null) => void;
@@ -60,18 +57,6 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
     }
   }, [JSON.stringify(data)]);
 
-  const filterLabel = useMemo(() => {
-    const sortArr = params.sort && params.sort.split(",");
-    if (params.fromDate && params.toDate)
-      return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
-        .utc(params.toDate, DATETIME_PARTTEN)
-        .local()
-        .format("MM/DD/YYYY")}`;
-    if (params.sort && sortArr && params.sort.length >= 2)
-      return `${sortArr[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
-    if (params.txHash) return `Searching for : ${params.txHash}`;
-  }, [params]);
-
   if (txHash) return null;
 
   return (
@@ -82,7 +67,6 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
           <WrapFilterDescription>
             Showing {total} {total > 1 ? "results" : "result"}
           </WrapFilterDescription>
-          {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
           <StackingFilter
             filterValue={params}
             onFilterValueChange={(params) =>

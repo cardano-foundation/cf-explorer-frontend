@@ -1,7 +1,6 @@
 import { alpha, Box, Skeleton, styled } from "@mui/material";
 import { useState } from "react";
 import { Link as LinkDom } from "react-router-dom";
-
 import { MyGrid } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import CustomTooltip from "../../../commons/CustomTooltip";
@@ -13,7 +12,6 @@ import { formatADA, getShortHash, getShortWallet, numberWithCommas } from "../..
 import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import StyledModal from "../../../commons/StyledModal";
-import { useScreen } from "../../../../commons/hooks/useScreen";
 import { FilterParams } from "~/components/StackingFilter";
 import { RegistrationDraw } from "./RegistrationDraw";
 
@@ -63,7 +61,6 @@ export const RegistrationCertificateModal = ({
   const { data, loading } = useFetch<SPORegistrationDetail>(
     poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, poolUpdateId) : ""
   );
-  const { isMobile } = useScreen();
 
   return (
     <StyledModal {...props} title='Pool Registration certificate'>
