@@ -55,7 +55,6 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
 
     div: {
       width: "100%",
-      height: "80%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -86,7 +85,6 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
 
     div: {
       width: "100%",
-      height: "80%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -102,9 +100,12 @@ export const Title = styled(Box)(({ theme }) => ({
 
 export const ValueInfo = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  fontSize: "2rem",
+  fontSize: "1.25rem",
   margin: "0 auto",
-  overflowWrap: "anywhere"
+  overflowWrap: "anywhere",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.125rem"
+  }
 }));
 
 export const Wrapper = styled(Grid)(({ theme }) => ({
