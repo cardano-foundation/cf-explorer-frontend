@@ -153,3 +153,10 @@ export const StyledCertificateShape = styled(CertificateShape)(({ theme }) => ({
 export const StyledCopyButton = styled(CopyButton)`
   margin-left: 5px;
 `;
+export const MyGrid = styled(Box)(({ theme }) => ({
+  display: "grid",
+  gridTemplateColumns: "repeat(2, 1fr)",
+  gridGap: "10px 20px",
+  gridAutoRows: "auto"
+}));
+
