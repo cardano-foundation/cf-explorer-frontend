@@ -106,9 +106,7 @@ const DeregistrationTimeline = ({
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected.txHash}>
               <InfoText>
-                <StyledLink to={details.transaction(selected.txHash)}>
-                  {getShortHash(selected.txHash || "")}
-                </StyledLink>
+                <StyledLink to={details.transaction(selected.txHash)}>{getShortHash(selected.txHash || "")}</StyledLink>
               </InfoText>
             </CustomTooltip>
             <StyledCopyButton text={selected.txHash} />
@@ -143,7 +141,7 @@ export const DeregistrationCertificateModal = ({
       <Box>
         {loading && <Skeleton variant='rectangular' width={500} height={90} />}
         {!loading && (
-          <StyledContainerModal bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
+          <StyledContainerModal>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Stake Key
             </Box>

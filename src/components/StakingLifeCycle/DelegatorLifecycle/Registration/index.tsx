@@ -56,7 +56,7 @@ export const RegistrationCertificateModal = ({
 
   return (
     <StyledModal width={550} {...props} title='Registration certificate'>
-      <StyledContainerModal bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
+      <StyledContainerModal>
         {loading && <Skeleton variant='rectangular' width={500} height={90} />}
         {!loading && (
           <Box>
