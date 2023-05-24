@@ -3,20 +3,21 @@ import useFetchList from "../../commons/hooks/useFetchList";
 import { Box, MenuItem, Select } from "@mui/material";
 import { formatADAFull, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
-import { PerPage, StyledContainer, StyledLink } from "./styles";
+import { Actions, PageSize, PerPage, StyledContainer, StyledLink, TimeDuration } from "./styles";
 import Table, { Column } from "../../components/commons/Table";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { API } from "../../commons/utils/api";
 import ADAicon from "../../components/commons/ADAIcon";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
+import moment from "moment";
 
-interface Props {}
+const perPages = [10, 20, 50, 100];
 
-const TopAddresses: React.FC<Props> = () => {
+const TopAddresses: React.FC = () => {
   const [pageSize, setPageSize] = useState("50");
 
-  const { error, data, initialized, loading } = useFetchList<Contracts>(
+  const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
     API.ADDRESS.TOP_ADDRESS,
     { page: 0, size: +pageSize },
     false,
@@ -72,26 +73,25 @@ const TopAddresses: React.FC<Props> = () => {
 
   return (
     <StyledContainer>
-      <Card
-        title={"Top addresses"}
-        underline={false}
-        extra={
-          <Box display="flex" alignItems="center">
+      <Card title={"Top addresses"} underline={false}>
+        <Actions>
+          <TimeDuration>Last updated {moment(lastUpdated).fromNow()}</TimeDuration>
+          <PageSize>
             <Select
               value={pageSize}
               onChange={event => setPageSize(event.target.value)}
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
             >
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={50}>50</MenuItem>
-              <MenuItem value={100}>100</MenuItem>
+              {perPages.map(item => (
+                <MenuItem key={item} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
             </Select>
             <PerPage>Per page</PerPage>
-          </Box>
-        }
-      >
+          </PageSize>
+        </Actions>
         <Table data={data} error={error} loading={loading} initialized={initialized} columns={columns} />
       </Card>
     </StyledContainer>

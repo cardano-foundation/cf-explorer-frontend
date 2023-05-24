@@ -6,12 +6,14 @@ import { formatADAFull, formatPercent } from "../../../commons/utils/helper";
 import ViewAllButton from "../../commons/ViewAllButton";
 import { Column } from "../../commons/Table";
 import {
+  Actions,
   DelegateTable,
   Header,
   PoolName,
   ProgressContainer,
   ProgressTitle,
   StyledLinearProgress,
+  TimeDuration,
   Title,
   TopDelegateContainer,
 } from "./style";
@@ -20,11 +22,12 @@ import CustomTooltip from "../../commons/CustomTooltip";
 import { Box } from "@mui/system";
 import { API } from "../../../commons/utils/api";
 import { REFRESH_TIMES } from "../../../commons/utils/constants";
+import moment from "moment";
 
 interface Props {}
 
 const TopDelegationPools: React.FC<Props> = () => {
-  const { data, loading, initialized } = useFetch<DelegationPool[]>(
+  const { data, loading, initialized, lastUpdated } = useFetch<DelegationPool[]>(
     `${API.DELEGATION.TOP}?page=1&size=4`,
     undefined,
     false,
@@ -83,7 +86,10 @@ const TopDelegationPools: React.FC<Props> = () => {
     <TopDelegateContainer>
       <Header>
         <Title>Top Delegation Pools</Title>
-        <ViewAllButton to={routers.DELEGATION_POOLS} />
+        <Actions>
+          <TimeDuration>Last updated {moment(lastUpdated).fromNow()}</TimeDuration>
+          <ViewAllButton to={routers.DELEGATION_POOLS} />
+        </Actions>
       </Header>
       <DelegateTable
         loading={loading}

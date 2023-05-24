@@ -13,6 +13,7 @@ export const StyledLink = styled(Link)`
 export const RegistrationContainer = styled(Container)`
   padding: 30px 0px 40px;
   text-align: left;
+  position: relative;
 `;
 
 export const StyledTabs = styled(Tabs)`
@@ -36,3 +37,23 @@ export const TabLabel = styled("h3")`
   text-transform: none;
   color: inherit;
 `;
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.grey[400],
+  display: "block",
+  textAlign: "right",
+  position: "absolute",
+  width: "max-content",
+  top: 60,
+  right: 24,
+  lineHeight: 1,
+  marginTop: "0.5rem",
+  [theme.breakpoints.down("sm")]: {
+    position: "relative",
+    width: "100%",
+    textAlign: "left",
+    marginTop: 10,
+    top: "unset",
+    right: "unset",
+  },
+}));

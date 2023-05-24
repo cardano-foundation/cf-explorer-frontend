@@ -19,6 +19,7 @@ interface FetchReturnType<T> {
   currentPage: number;
   refresh: () => void;
   update: (callback: (data: T[]) => T[]) => void;
+  lastUpdated: number;
 }
 
 const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, timeout?: number): FetchReturnType<T> => {
@@ -31,40 +32,50 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
   const [total, setTotal] = useState(0);
   const lastFetch = useRef<number>(Date.now());
 
-  const getList = useCallback(async () => {
-    if (!url) return;
-    let service: AxiosInstance = isAuth ? authAxios : defaultAxios;
-    if (url.search("http://") === 0 || url.search("https://") === 0) {
-      service = axios;
-    }
-    setLoading(true);
-    try {
-      const baseURL = url.split("?")[0];
-      const lastURL = url.split("?")[1];
-      const res = await service.get(`${baseURL}?${lastURL ? `${lastURL}&` : ""}${qs.stringify(params)}`);
-      setData(res.data.data as T[]);
-      setError(null);
-      setCurrentPage(res.data.currentPage);
-      setTotalPage(res.data.totalPages);
-      setTotal(res.data.totalItems);
-      setInitialized(true);
-    } catch (error: any) {
-      setData([]);
-      setError(error?.response?.data?.message || error?.message);
-    }
-    setLoading(false);
+  const getList = useCallback(
+    async (needLoading?: boolean) => {
+      if (!url) return;
+      let service: AxiosInstance = isAuth ? authAxios : defaultAxios;
+      if (url.search("http://") === 0 || url.search("https://") === 0) {
+        service = axios;
+      }
+      needLoading && setLoading(true);
+      try {
+        const baseURL = url.split("?")[0];
+        const lastURL = url.split("?")[1];
+        const res = await service.get(`${baseURL}?${lastURL ? `${lastURL}&` : ""}${qs.stringify(params)}`);
+        setData(res.data.data as T[]);
+        setError(null);
+        setCurrentPage(res.data.currentPage);
+        setTotalPage(res.data.totalPages);
+        setTotal(res.data.totalItems);
+        setInitialized(true);
+      } catch (error: any) {
+        setData([]);
+        setError(error?.response?.data?.message || error?.message);
+      }
+      needLoading && setLoading(false);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, ...Object.values(params || {})]);
-  
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [url, ...Object.values(params || {})]
+  );
+
   useEffect(() => {
     if (timeout) {
-      const interval = setInterval(() => {
-        if (!document.hidden) getList();
-        lastFetch.current = Date.now();
+      const interval = setInterval(async () => {
+        if (!document.hidden) {
+          await getList();
+          lastFetch.current = Date.now();
+        }
       }, timeout * 1000);
 
-      const onFocus = () => lastFetch.current + timeout * 1000 <= Date.now() && getList();
+      const onFocus = async () => {
+        if (lastFetch.current + timeout * 1000 <= Date.now()) {
+          await getList();
+          lastFetch.current = Date.now();
+        }
+      };
 
       window.addEventListener("focus", onFocus);
 
@@ -76,7 +87,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
   }, [getList, timeout]);
 
   useEffect(() => {
-    getList();
+    getList(true);
   }, [getList]);
 
   return {
@@ -89,6 +100,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
     currentPage,
     refresh: getList,
     update: setData,
+    lastUpdated: lastFetch.current,
   };
 };
 
