@@ -236,7 +236,9 @@ export const LineArrow: React.FC<LineArrowProps> = (props) => {
     return str;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mount]);
+
   if (!mount) return null;
+
   return <StyledLine d={d} ref={ref} strokeDasharray={dashed ? 20 : undefined} />;
 };
 

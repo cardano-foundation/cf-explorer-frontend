@@ -47,9 +47,7 @@ const PoollUpdates = () => {
     <Box>
       <PoolUpdateModal data={data} handleCloseModal={handleToggleModal} open={openModal} />
       <PoollUpdatesList onSelect={handleSelect} />
-      {selected && (
-        <PoolUpdatesDraw setSelected={setSelected} poolUpdates={selected} data={data} toggleModal={handleToggleModal} />
-      )}
+      {selected && <PoolUpdatesDraw poolUpdates={selected} data={data} toggleModal={handleToggleModal} />}
     </Box>
   );
 };
@@ -180,9 +178,7 @@ export const PoolUpdateModal = ({
             {data && (
               <Box pt={"7px"} fontWeight={500}>
                 <CustomTooltip title={data?.txHash || ""}>
-                  <Link to={details.transaction(data?.txHash || "")}>
-                    {getShortHash(data?.txHash || "")}
-                  </Link>
+                  <Link to={details.transaction(data?.txHash || "")}>{getShortHash(data?.txHash || "")}</Link>
                 </CustomTooltip>
                 <CopyButton text={data?.txHash || ""} />
               </Box>

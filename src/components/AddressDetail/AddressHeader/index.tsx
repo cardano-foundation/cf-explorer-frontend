@@ -1,21 +1,19 @@
 import { Link, useHistory } from "react-router-dom";
 import { Grid, Box, useTheme } from "@mui/material";
-import { exchangeADAToUSD, formatADAFull, getShortWallet } from "../../../commons/utils/helper";
-import Card from "../../commons/Card";
-import useFetch from "../../../commons/hooks/useFetch";
-import { AIcon } from "../../../commons/resources";
-import CardAddress from "../../share/CardAddress";
-import { details } from "../../../commons/routers";
+import { exchangeADAToUSD, formatADAFull, getShortWallet } from "~/commons/utils/helper";
+import Card from "~/components/commons/Card";
+import useFetch from "~/commons/hooks/useFetch";
+import CardAddress from "~/components/share/CardAddress";
+import { details } from "~/commons/routers";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../stores/types";
+import { RootState } from "~/stores/types";
 import { useEffect, useState } from "react";
-import { API } from "../../../commons/utils/api";
-import BookmarkButton from "../../commons/BookmarkIcon";
-import TokenAutocomplete from "../../TokenAutocomplete";
+import { API } from "~/commons/utils/api";
+import BookmarkButton from "~/components/commons/BookmarkIcon";
+import TokenAutocomplete from "~/components/TokenAutocomplete";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { BackButton, BackText, StyledBoxCard, TitleText } from "./styles";
-import ADAicon from "../../commons/ADAIcon";
-import { useScreen } from "../../../commons/hooks/useScreen";
+import { BackButton, BackText, StyledBoxCard, TitleText, WrapHeader } from "./styles";
+import ADAicon from "~/components/commons/ADAIcon";
 
 interface Props {
   data: WalletAddress | null;
@@ -28,7 +26,6 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   );
   const { adaRate } = useSelector(({ system }: RootState) => system);
   const theme = useTheme();
-  const { isMobile } = useScreen();
 
   const history = useHistory();
   useEffect(() => {
@@ -90,18 +87,16 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
 
   return (
     <Card>
-      <Box display={"flex"} alignItems={"flex-start"} flexDirection={"column"}>
-        <Box>
-          <BackButton onClick={history.goBack}>
-            <HiArrowLongLeft fontSize='16px' />
-            <BackText>Back</BackText>
-          </BackButton>
-        </Box>
+      <WrapHeader>
+        <BackButton onClick={history.goBack}>
+          <HiArrowLongLeft fontSize='16px' />
+          <BackText>Back</BackText>
+        </BackButton>
         <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
           <TitleText>Address Detail</TitleText>
           <BookmarkButton keyword={data?.address || ""} type='ADDRESS' />
         </Box>
-      </Box>
+      </WrapHeader>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <StyledBoxCard>

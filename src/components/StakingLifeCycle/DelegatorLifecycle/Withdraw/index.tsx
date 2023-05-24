@@ -18,10 +18,8 @@ const Withdraw = () => {
   };
   return (
     <Box>
-      <Box>
-        <RecentWithdraws onSelect={handleSelect} params={params} setParams={setParams} />
-      </Box>
-      <Box>{!!selected && <WithdrawnDraw selected={selected} setSelected={setSelected} />}</Box>
+      <RecentWithdraws onSelect={handleSelect} params={params} setParams={setParams} />
+      {!!selected && <WithdrawnDraw selected={selected} setSelected={setSelected} />}
     </Box>
   );
 };
