@@ -1,4 +1,4 @@
-import { Box, Skeleton } from "@mui/material";
+import { Box, IconButton, Skeleton } from "@mui/material";
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router";
@@ -14,6 +14,7 @@ import { DescriptionText } from "../../styles";
 import { details } from "../../../../../commons/routers";
 import { useUpdateEffect } from "react-use";
 import { useSelector } from "react-redux";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 interface Props {
   onSelect: (registration: RegistrationItem | null) => void;
@@ -42,7 +43,14 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams }) =
   }, [txHash, data]);
 
   useUpdateEffect(() => {
-    if (data && data.length && data.length === 1 && params?.txHash === undefined) {
+    if (
+      data &&
+      data.length &&
+      data.length === 1 &&
+      params?.txHash === undefined &&
+      params?.fromDate === undefined &&
+      params?.toDate === undefined
+    ) {
       handleSelect(data[0]);
     }
   }, [JSON.stringify(data)]);

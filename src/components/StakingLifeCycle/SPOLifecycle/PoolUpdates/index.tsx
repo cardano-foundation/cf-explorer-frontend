@@ -81,7 +81,14 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
   };
 
   useUpdateEffect(() => {
-    if (data && data.length && data.length === 1 && params.txHash === undefined) {
+    if (
+      data &&
+      data.length &&
+      data.length === 1 &&
+      params?.txHash === undefined &&
+      params?.fromDate === undefined &&
+      params?.toDate === undefined
+    ) {
       handleSelect(data[0]);
     }
   }, [JSON.stringify(data)]);
