@@ -72,6 +72,10 @@ export default function SignIn() {
     }
   });
 
+  useEffect(() => {
+    document.title = "Sign In | Cardano Explorer";
+  }, []);
+
   const enableButton = Object.values(formData).every((value) => value.touched) && !error && !loading;
 
   const handleTogglePassword = () => {

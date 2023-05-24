@@ -3,9 +3,15 @@ import { SearchDelegatorIcon } from "../../commons/resources";
 import { Link } from "react-router-dom";
 import { routers } from "../../commons/routers";
 import useAuth from "~/commons/hooks/useAuth";
+import { useEffect } from "react";
 
 const DelegatorSearch = () => {
   const { isLoggedIn } = useAuth();
+
+  useEffect(() => {
+    document.title = "Welcome to Staking Lifecycle (Delegator) | Cardano Explorer";
+  }, []);
+
   return (
     <Box>
       <h2>Welcome to Staking Lifecycle (Delegator)</h2>

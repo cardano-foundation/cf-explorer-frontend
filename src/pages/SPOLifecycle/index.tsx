@@ -43,6 +43,10 @@ const SPOLifecycle = () => {
     tab = "registration"
   } = useParams<{ poolId: string; mode: ViewMode; tab: SPOStep }>();
 
+  useEffect(() => {
+    document.title = `Staking Delegation Lifecycle ${poolId} | Cardano Explorer`;
+  }, [poolId]);
+
   const tabList = {
     registration: 0,
     "pool-updates": 1,
@@ -55,7 +59,6 @@ const SPOLifecycle = () => {
 
   const [currentStep, setCurrentStep] = useState(tabList[tab || "registration"] || 0);
 
-  const { isMobile } = useScreen();
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {

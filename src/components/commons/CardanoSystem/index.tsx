@@ -8,7 +8,7 @@ export const CardanoSystem: React.FC<BoxProps> = forwardRef(({ children, ...prop
   return (
     <PolygonShape {...props} ref={boxRef}>
       <CustomIcon icon={CardanoSystemIcon} height={100} width={100} />
-      Cardano System
+      Cardano Blockchain
     </PolygonShape>
   );
 });

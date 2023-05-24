@@ -58,6 +58,11 @@ export default function ResetPassword() {
       value: ""
     }
   });
+
+  useEffect(() => {
+    document.title = "Reset Password | Cardano Explorer";
+  }, []);
+
   const handleTogglePassword = () => {
     setShowPassword((prevState) => !prevState);
   };
