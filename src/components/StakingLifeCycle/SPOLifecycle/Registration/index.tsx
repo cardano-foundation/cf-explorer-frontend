@@ -69,7 +69,7 @@ export const RegistrationCertificateModal = ({
     <StyledModal {...props} title='Pool Registration certificate'>
       <MyGrid>
         <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
-          <Box p={3} display={"flex"}>
+          <Box p={3} pr={isMobile ? 2 : 3} display={"flex"}>
             <Box>
               <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
                 Transaction ID
