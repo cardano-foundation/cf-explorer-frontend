@@ -64,7 +64,7 @@ const Stake = () => {
 
   const columns: Column<IStakeKey>[] = [
     {
-      title: "Trx Hash",
+      title: "Tx Hash",
       key: "trxHash",
       minWidth: isMobile ? 245 : 80,
       render: (r) => (

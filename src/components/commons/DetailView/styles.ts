@@ -324,12 +324,15 @@ export const DetailLink = styled(Link)`
   font-family: var(--font-family-normal);
 `;
 
-export const DetailLinkIcon = styled("h3")`
-  color: ${(props) => props.theme.palette.primary.main};
-  margin: 0;
-  line-height: 1;
-  margin-right: 10px;
-`;
+export const DetailLinkIcon = styled("h3")(({ theme }) => ({
+  color: theme.palette.primary.main,
+  margin: 0,
+  lineHeight: 1,
+  marginRight: 10,
+  "svg path": {
+    fill: theme.palette.green[600]
+  }
+}));
 
 export const DetailLinkImage = styled("img")`
   width: 1.5rem;

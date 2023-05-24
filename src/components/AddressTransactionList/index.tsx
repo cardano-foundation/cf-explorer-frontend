@@ -1,19 +1,19 @@
 import { Box } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
-import sendImg from "../../commons/resources/images/sendImg.svg";
-import receiveImg from "../../commons/resources/images/receiveImg.svg";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { useScreen } from "../../commons/hooks/useScreen";
-import { details } from "../../commons/routers";
-import { API } from "../../commons/utils/api";
+import sendImg from "~/commons/resources/images/sendImg.svg";
+import receiveImg from "~/commons/resources/images/receiveImg.svg";
+import useFetchList from "~/commons/hooks/useFetchList";
+import { useScreen } from "~/commons/hooks/useScreen";
+import { details } from "~/commons/routers";
+import { API } from "~/commons/utils/api";
 import {
   formatADAFull,
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
   numberWithCommas
-} from "../../commons/utils/helper";
+} from "~/commons/utils/helper";
 import ADAicon from "../commons/ADAIcon";
 import Card from "../commons/Card";
 import CustomTooltip from "../commons/CustomTooltip";
@@ -64,7 +64,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1)
     },
     {
-      title: "Trx Hash",
+      title: "Tx Hash",
       key: "trxhash",
       minWidth: isMobile ? 190 : 120,
 

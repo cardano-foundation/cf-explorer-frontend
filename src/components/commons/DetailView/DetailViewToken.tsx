@@ -2,9 +2,9 @@ import { Box } from "@mui/material";
 import React from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
-import { PolicyWhiteIcon } from "../../../commons/resources";
-import { details } from "../../../commons/routers";
-import { formatDateTimeLocal, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import { PeopleIcon, PolicyWhiteIcon, TransactionIcon, UnionTokenIcon } from "~/commons/resources";
+import { details } from "~/commons/routers";
+import { formatDateTimeLocal, getShortWallet, numberWithCommas } from "~/commons/utils/helper";
 import CopyButton from "../CopyButton";
 import CustomTooltip from "../CustomTooltip";
 import ViewAllButton from "../ViewAllButton";
@@ -14,6 +14,7 @@ import {
   DetailLabel,
   DetailLabelSkeleton,
   DetailLink,
+  DetailLinkIcon,
   DetailLinkName,
   DetailLinkRight,
   DetailValue,
@@ -45,6 +46,7 @@ import {
   ViewDetailHeader,
   ViewDetailScroll
 } from "./styles";
+import { useTheme } from "@emotion/react";
 
 type DetailViewTokenProps = {
   token: IToken | null;
@@ -54,7 +56,7 @@ type DetailViewTokenProps = {
 
 const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
   const { token: data, handleClose, tokenId } = props;
-
+  const theme = useTheme();
   if (!data)
     return (
       <ViewDetailDrawer anchor='right' open={!!tokenId} hideBackdrop variant='permanent'>
@@ -235,9 +237,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
           <Group>
             <DetailLink to={details.token(tokenId)}>
               <DetailLabel>
-                {/* <DetailLinkIcon>
-                  <CgArrowsExchange />
-                </DetailLinkIcon> */}
+                <DetailLinkIcon>
+                  <TransactionIcon fill={theme.palette.green[600]} />
+                </DetailLinkIcon>
                 <DetailLinkName>Transactions</DetailLinkName>
               </DetailLabel>
               <DetailValue>
@@ -250,9 +252,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
           <Group>
             <DetailLink to={details.token(tokenId, "topHolders")}>
               <DetailLabel>
-                {/* <DetailLinkIcon>
-                  <CgArrowsExchange />
-                </DetailLinkIcon> */}
+                <DetailLinkIcon>
+                  <PeopleIcon fill={theme.palette.green[600]} />
+                </DetailLinkIcon>
                 <DetailLinkName>Top Holders</DetailLinkName>
               </DetailLabel>
               <DetailValue>
@@ -265,9 +267,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
           <Group>
             <DetailLink to={details.token(tokenId, "tokenMint")}>
               <DetailLabel>
-                {/* <DetailLinkIcon>
-                  <CgArrowsExchange />
-                </DetailLinkIcon> */}
+                <DetailLinkIcon>
+                  <UnionTokenIcon fill={theme.palette.green[600]} />
+                </DetailLinkIcon>
                 <DetailLinkName>Token Mint</DetailLinkName>
               </DetailLabel>
               <DetailValue>
