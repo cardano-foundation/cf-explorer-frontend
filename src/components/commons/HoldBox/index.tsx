@@ -1,11 +1,11 @@
 import { BoxProps, IconButton, styled, Box } from "@mui/material";
 import { forwardRef } from "react";
 import { ButtonListIcon } from "~/commons/resources";
-import PopoverStyled from "../PopoverStyled";
 import { useSelector } from "react-redux";
 import { formatADAFull } from "~/commons/utils/helper";
 import { AdaLogoIcon } from "../ADAIcon";
 import PopupStaking from "../PopupStaking";
+import PopperStyled from "../PopperStyled";
 
 const HoldContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
   height: "35px",
@@ -92,7 +92,7 @@ export const HoldBox = forwardRef<HTMLElement, Props>(({ value, txHash, rounding
     feeRef?.current?.getBoundingClientRect?.()?.width < 200 &&
     formatADAFull(value || 0).length > 8;
   return (
-    <PopoverStyled
+    <PopperStyled
       render={({ handleClick }) => (
         <HoldContainer {...props} ref={feeRef} sidebar={+sidebar}>
           <Value>
