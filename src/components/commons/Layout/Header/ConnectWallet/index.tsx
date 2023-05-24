@@ -35,7 +35,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
   });
   const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
   const [openSyncBookmark, setOpenSyncBookmark] = useState(false);
-  console.log("🚀 ~ file: index.tsx:38 ~ openSyncBookmark:", openSyncBookmark);
   const [signature, setSignature] = React.useState("");
   const [submitting, setSubmitting] = useState(false);
   const [isSign, setIsSign] = useState(isConnected);
@@ -102,7 +101,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         setModalRegister(true);
       }
       onSuccess?.();
-      window.location.reload();
     } catch (error) {
       disconnect();
       removeAuthInfo();
