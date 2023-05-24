@@ -89,6 +89,8 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
     }
   }, [JSON.stringify(data)]);
 
+  if (txHash) return null;
+
   return (
     <StyledContainer>
       <StyledList>
