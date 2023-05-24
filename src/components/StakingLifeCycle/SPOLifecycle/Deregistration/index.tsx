@@ -46,19 +46,18 @@ const Deregistration = () => {
     <Box>
       <DeregistrationCertificateModal data={selected} handleCloseModal={handleToggleModal} open={openModal} />
       <RecentDeregistrations onSelect={handleSelect} />
-      {!!selected && <DeregistrationTimeline selected={selected} toggleModal={handleToggleModal} />}
+      {selected && <DeregistrationTimeline selected={selected} toggleModal={handleToggleModal} />}
     </Box>
   );
 };
 export default Deregistration;
 
-const DeregistrationTimeline = ({
-  selected,
-  toggleModal
-}: {
+type DeregistrationTimelineProps = {
   selected: SPODeregistration | null;
   toggleModal: () => void;
-}) => {
+};
+
+const DeregistrationTimeline = ({ selected, toggleModal }: DeregistrationTimelineProps) => {
   const history = useHistory();
 
   const SPOHolderRef = useRef(null);

@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { useRef, useMemo } from "react";
-
 import {
   DrawContainer,
   BoxGroup,
@@ -21,7 +20,8 @@ import {
   PaymentWalletIconBox,
   PaymentWalleValue,
   BufferBox,
-  StyledFeeBox
+  StyledFeeBox,
+  StyledAdaLogoIcon
 } from "./styles";
 import { formatADA, getShortHash } from "../../../../../commons/utils/helper";
 import moment from "moment";
@@ -35,7 +35,7 @@ import {
   TimeIcon,
   PaymentWalletUrl,
   WalletIconRewardGreen,
-  RewardBoxIcon,
+  RewardBoxIcon
 } from "~/commons/resources";
 import { LineArrowItem } from "~/components/commons/LineArrow";
 import DrawPath from "~/components/commons/DrawPath";
@@ -146,9 +146,7 @@ export const WithdrawnDraw = ({ selected }: Props) => {
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={txHash}>
               <InfoText>
-                <StyledLink to={details.transaction(txHash)}>
-                  {getShortHash(txHash || "")}
-                </StyledLink>
+                <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash || "")}</StyledLink>
               </InfoText>
             </CustomTooltip>
             <StyledCopyButton text={txHash} />
@@ -174,6 +172,7 @@ export const WithdrawnDraw = ({ selected }: Props) => {
                 <PaymentWalletIconBox>
                   <WalletIconRewardGreen />
                   <PaymentWalleValue>{formatADA(stakeTotalAmount || 0)}</PaymentWalleValue>
+                  <StyledAdaLogoIcon />
                 </PaymentWalletIconBox>
               </PaymentWalletValueContainer>
             </PaymentWalletInfo>
@@ -186,6 +185,7 @@ export const WithdrawnDraw = ({ selected }: Props) => {
                 <PaymentWalletIconBox>
                   <WalletIconRewardGreen />
                   <PaymentWalleValue>{formatADA(stakeRewardAvailable || 0)}</PaymentWalleValue>
+                  <StyledAdaLogoIcon />
                 </PaymentWalletIconBox>
               </PaymentWalletValueContainer>
             </PaymentWalletInfo>
@@ -204,6 +204,6 @@ export const WithdrawnDraw = ({ selected }: Props) => {
         <CardanoSystem ref={cadarnoSystemRef} />
         <DrawPath paths={paths} />
       </DrawContainer>
-    </Box >
+    </Box>
   );
 };

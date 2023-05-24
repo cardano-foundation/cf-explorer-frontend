@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { useRef, useMemo } from "react";
-
 import {
   DrawContainer,
   BoxGroup,
@@ -35,14 +34,13 @@ interface ISPOPropsData {
   txHash?: string;
 }
 interface Props {
-  setSelected: (registration: SPORegistration | null) => void;
-  registration: SPORegistration;
+  selected: SPORegistration;
   toggleModal?: () => void;
   data: ISPOPropsData | null;
 }
 
-export const RegistrationDraw = ({ registration, toggleModal, data }: Props) => {
-  const { poolHold, fee, time, txHash } = registration;
+export const RegistrationDraw = ({ selected, toggleModal, data }: Props) => {
+  const { poolHold, fee, time, txHash } = selected;
   const { poolName, poolView, stakeKeys } = data ?? {};
 
   const SPOPoolRef = useRef(null);

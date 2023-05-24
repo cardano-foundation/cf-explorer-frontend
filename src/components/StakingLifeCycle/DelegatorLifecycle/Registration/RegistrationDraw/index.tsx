@@ -29,13 +29,12 @@ import { StyledLink } from "../styles";
 import { details } from "~/commons/routers";
 
 interface Props {
-  setSelected: (registration: RegistrationItem | null) => void;
-  registration: RegistrationItem;
+  selected: RegistrationItem;
   toggleModal: () => void;
 }
 
-export const RegistrationDraw = ({ registration, toggleModal }: Props) => {
-  const { deposit, fee, time, txHash } = registration;
+export const RegistrationDraw = ({ selected, toggleModal }: Props) => {
+  const { deposit, fee, time, txHash } = selected;
 
   const adaHolderRef = useRef(null);
   const holdRef = useRef(null);
@@ -102,9 +101,7 @@ export const RegistrationDraw = ({ registration, toggleModal }: Props) => {
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={txHash}>
               <InfoText>
-                <StyledLink to={details.transaction(txHash)}>
-                  {getShortHash(txHash || "")}
-                </StyledLink>
+                <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash || "")}</StyledLink>
               </InfoText>
             </CustomTooltip>
             <StyledCopyButton text={txHash} />
@@ -123,7 +120,7 @@ export const RegistrationDraw = ({ registration, toggleModal }: Props) => {
         <AdaHolder ref={adaHolderRef} />
         <MiddleGroup sidebar={+sidebar}>
           <BoxGroup sidebar={+sidebar}>
-            <HoldBox ref={holdRef} value={deposit} txHash={txHash} />
+            <HoldBox ref={holdRef} value={deposit} txHash={txHash} roundingNumber={1} />
             <FeeBox ref={feeRef} value={fee} txHash={txHash} />
           </BoxGroup>
           <StyledCertificateShape onClick={toggleModal} ref={registrationRef}>

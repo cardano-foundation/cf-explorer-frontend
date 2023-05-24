@@ -1,5 +1,5 @@
-import { alpha, Box, Skeleton, styled } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { Box, Skeleton, styled } from "@mui/material";
+import { useState } from "react";
 import { Link as LinkDom, useHistory, useParams } from "react-router-dom";
 
 import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "../../../../commons/resources";
@@ -18,16 +18,7 @@ import DeregistrationDraw from "./DeregistrationDraw";
 import RecentDeregistrations from "./RecentDeregistration";
 import { IconButtonBack, Info, InfoGroup, InfoText, StepInfo, StyledContainerModal } from "./styles";
 
-const Deregistration = ({
-  containerPosition,
-  handleResize
-}: {
-  containerPosition: {
-    top?: number;
-    left?: number;
-  };
-  handleResize: () => void;
-}) => {
+const Deregistration = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [selected, setSelected] = useState<DeregistrationItem | null>(null);
   const [openModal, setOpenModal] = useState(false);
@@ -46,51 +37,21 @@ const Deregistration = ({
   return (
     <Box>
       <DeregistrationCertificateModal open={openModal} handleCloseModal={handleToggleModal} stake={stakeId} />
-      <Box>
-        <RecentDeregistrations onSelect={handleSelect} params={params} setParams={setParams} />
-      </Box>
-      {selected && (
-        <DeregistrationTimeline
-          handleResize={handleResize}
-          selected={selected}
-          containerPosition={containerPosition}
-          toggleModal={handleToggleModal}
-        />
-      )}
+      <RecentDeregistrations onSelect={handleSelect} params={params} setParams={setParams} />
+      {selected && <DeregistrationTimeline selected={selected} toggleModal={handleToggleModal} />}
     </Box>
   );
 };
 export default Deregistration;
 
-const DeregistrationTimeline = ({
-  containerPosition,
-  handleResize,
-  selected,
-  toggleModal
-}: {
-  containerPosition: {
-    top?: number;
-    left?: number;
-  };
-  handleResize: () => void;
+type DeregistrationProps = {
   selected: DeregistrationItem;
   toggleModal: () => void;
-}) => {
+};
+
+const DeregistrationTimeline = ({ selected, toggleModal }: DeregistrationProps) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const history = useHistory();
-
-  const adaHolderRef = useRef(null);
-  const holdRef = useRef(null);
-  const feeRef = useRef(null);
-  const cadarnoSystemRef = useRef(null);
-  const fake1Ref = useRef(null);
-  const fake2Ref = useRef(null);
-  const registrationRef = useRef(null);
-
-  useEffect(() => {
-    handleResize();
-  }, [selected]);
-
   const handleBack = () => {
     history.push(details.staking(stakeId, "timeline", "deregistration"));
   };
@@ -159,8 +120,3 @@ export const DeregistrationCertificateModal = ({
     </StyledModal>
   );
 };
-
-const Link = styled(LinkDom)(({ theme }) => ({
-  fontSize: "0.875rem",
-  color: `${theme.palette.blue[800]} !important`
-}));

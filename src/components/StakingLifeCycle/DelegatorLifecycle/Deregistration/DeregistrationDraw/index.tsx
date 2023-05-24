@@ -112,7 +112,7 @@ const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCe
           <StyledFreeBox sidebar={+sidebar} ref={feeRef} value={data?.fee} txHash={data?.txHash || ""} />
         </BoxGroup>
         <StyledCertificateShape onClick={toggleCertificateModal} sidebar={+sidebar} ref={registrationRef}>
-          Registration Certificate
+          Deregistration Certificate
         </StyledCertificateShape>
       </MiddleGroup>
       <CardanoSystem ref={cadarnoSystemRef} />

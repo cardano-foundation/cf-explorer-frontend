@@ -1,4 +1,5 @@
 import { Box, Typography, styled } from "@mui/material";
+import { AdaLogoIcon } from "~/components/commons/ADAIcon";
 
 export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
   display: "flex",
@@ -104,7 +105,8 @@ export const RewardValueLabel = styled(Box)(() => ({
 export const ClickAbleButton = styled(Box)(() => ({
   display: "inline-block",
   cursor: "pointer",
-  marginRight: 4
+  marginRight: 4,
+  height: 30
 }));
 
 export const FacingImg = styled("img")(() => ({
@@ -115,4 +117,16 @@ export const FacingImg = styled("img")(() => ({
 export const RewardBoxImg = styled("img")(() => ({
   width: 100,
   height: 100
+}));
+
+export const RewardValue = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  gap: 5
+}));
+
+export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
+  fontSize: 11,
+  color: theme.palette.text.secondary,
+  marginBottom: ".125em"
 }));

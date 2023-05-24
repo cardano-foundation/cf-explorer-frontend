@@ -1,4 +1,5 @@
 import { Box, styled, IconButton as IconButtonMui, alpha } from "@mui/material";
+import { AdaLogoIcon } from "~/components/commons/ADAIcon";
 import FeeBox from "~/components/commons/FeeBox";
 import HoldBox from "~/components/commons/HoldBox";
 
@@ -100,6 +101,8 @@ export const PaymentWalletContainer = styled(Box)(({ theme }) => ({
   padding: "15px 10px",
   display: "flex",
   alignItems: "center",
+  width: 245,
+  boxSizing: "border-box",
   gap: 8
 }));
 
@@ -110,14 +113,15 @@ export const PaymentWalletIcon = styled("img")(() => ({
 
 export const PaymentWalletInfo = styled(Box)(() => ({
   flex: 1,
-  textAlign: "left"
+  textAlign: "left",
 }));
 
 export const PaymentWalletTitle = styled(Box)(({ theme }) => ({
   fontWeight: 700,
   fontSize: 16,
   lineHeight: "19px",
-  color: theme.palette.common.black
+  color: theme.palette.common.black,
+  marginBottom: 5
 }));
 
 export const PaymentWalletValueContainer = styled(Box)(({ theme }) => ({
@@ -127,7 +131,10 @@ export const PaymentWalletValueContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const PaymentWalletIconBox = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.common.white, 0.1)
+  backgroundColor: alpha(theme.palette.common.white, 0.1),
+  display: "flex",
+  alignItems: "center",
+  gap: 5
 }));
 
 export const PaymentWalleValue = styled(Box)(({ theme }) => ({
@@ -159,6 +166,12 @@ export const AmountGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }
   }
 }));
 
+export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
+  fontSize: 11,
+  color: theme.palette.text.secondary,
+  marginBottom: ".125em"
+}));
+
 export const BoxGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
   display: "flex",
   flexDirection: "column",
@@ -183,14 +196,14 @@ export const BoxGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) =
   }
 }));
 
-export const NetAmountBox = styled(HoldBox)(({ theme }) => ({
-  width: 144,
+export const NetAmountBox = styled(HoldBox)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+  width: 164,
   borderColor: theme.palette.green[600],
   "::after": {
     content: '"NET AMOUNT"',
     background: theme.palette.green[600]
   },
-  [theme.breakpoints.down("lg")]: {
+  [theme.breakpoints.down(sidebar ? "lg" : "xl")]: {
     width: 156,
     padding: "16px 10px"
   },
@@ -200,7 +213,7 @@ export const NetAmountBox = styled(HoldBox)(({ theme }) => ({
   }
 }));
 
-export const WithdrawnBox = styled(NetAmountBox)(({ theme }) => ({
+export const WithdrawnBox = styled(NetAmountBox)(() => ({
   "::after": {
     content: '"WITHDRAWN"'
   }

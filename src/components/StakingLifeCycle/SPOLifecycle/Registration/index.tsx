@@ -38,14 +38,7 @@ const Registration = () => {
   return (
     <Box>
       <RecentRegistrations params={params} setParams={setParams} onSelect={handleSelect} />
-      {selected && (
-        <RegistrationDraw
-          setSelected={setSelected}
-          registration={selected}
-          data={data}
-          toggleModal={handleToggleCertificateModal}
-        />
-      )}
+      {selected && <RegistrationDraw selected={selected} data={data} toggleModal={handleToggleCertificateModal} />}
       <RegistrationCertificateModal
         poolId={poolId}
         poolUpdateId={selected?.poolUpdateId || 0}
@@ -85,9 +78,7 @@ export const RegistrationCertificateModal = ({
               {data && !loading && (
                 <Box pt={"7px"} fontWeight={500}>
                   <CustomTooltip title={data?.txHash || ""}>
-                    <Link to={details.transaction(data?.txHash || "")}>
-                      {getShortHash(data?.txHash || "")}
-                    </Link>
+                    <Link to={details.transaction(data?.txHash || "")}>{getShortHash(data?.txHash || "")}</Link>
                   </CustomTooltip>
                   <CopyButton text={data?.txHash || ""} />
                 </Box>

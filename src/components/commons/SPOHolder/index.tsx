@@ -23,7 +23,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
   const SPOInfoRef = useRef(null);
   const SPOKeyRef = useRef(null);
   const history = useHistory();
-
+  const stakeKey = isArray(stakeKeys) ? stakeKeys[0] : stakeKeys;
   return (
     <PolygonShapeSPO {...props} ref={boxRef}>
       <SPOImage src={SPOHolderIconUrl} alt='SPO image' />
@@ -76,34 +76,19 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
             arrow: { style: { color: "white" } }
           }}
           title={
-            <Box display={"flex"} alignItems={"center"}>
-              {isArray(stakeKeys)
-                ? stakeKeys &&
-                  stakeKeys.length > 0 && (
-                    <>
-                      <SPOKey fill='#108AEF' />
-                      <PoolNamePopup to={details.stake(stakeKeys[0] || "")}>
-                        {getShortWallet(stakeKeys[0] || "")}
-                      </PoolNamePopup>
-                      <CopyButton text={stakeKeys[0]} />
-                    </>
-                  )
-                : stakeKeys && (
-                    <>
-                      <SPOKey fill='#108AEF' />
-                      <PoolNamePopup to={details.stake(stakeKeys || "")}>
-                        {getShortWallet(stakeKeys || "")}
-                      </PoolNamePopup>
-                      <CopyButton text={stakeKeys} />
-                    </>
-                  )}
-            </Box>
+            stakeKey && (
+              <Box display={"flex"} alignItems={"center"}>
+                <SPOKey fill='#108AEF' />
+                <PoolNamePopup to={details.stake(stakeKey)}>{getShortWallet(stakeKey)}</PoolNamePopup>
+                <CopyButton text={stakeKey} />
+              </Box>
+            )
           }
         >
           <ButtonSPO
             ref={SPOKeyRef}
             component={IconButton}
-            onClick={() => stakeKeys?.[0] && history.push(details.stake(stakeKeys[0]))}
+            onClick={() => stakeKey && history.push(details.stake(stakeKey))}
             left={"52%"}
           >
             <SPOKey fill='#438F68' />

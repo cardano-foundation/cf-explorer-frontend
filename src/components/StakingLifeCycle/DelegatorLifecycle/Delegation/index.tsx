@@ -1,7 +1,6 @@
 import { Box, Grid, Skeleton, alpha, styled } from "@mui/material";
 import { useState } from "react";
 import { Link as LinkDom } from "react-router-dom";
-
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { FilterParams } from "~/components/StackingFilter";
@@ -19,16 +18,7 @@ import RecentDelegations from "./RecentDelegations";
 import { IconButtonBack, Info, InfoGroup, InfoText, StepInfo } from "./styles";
 import { StyledLink } from "../Registration/styles";
 
-const Delegation = ({
-  containerPosition,
-  handleResize
-}: {
-  containerPosition: {
-    top?: number;
-    left?: number;
-  };
-  handleResize: () => void;
-}) => {
+const Delegation = () => {
   const [selected, setSelected] = useState<DelegationItem | null>(null);
   const [params, setParams] = useState<FilterParams>({
     fromDate: undefined,
@@ -42,12 +32,8 @@ const Delegation = ({
 
   return (
     <Box>
-      <Box>
-        <RecentDelegations onSelect={handleSelect} params={params} setParams={setParams} />
-      </Box>
-      <Box>
-        <DelegationTimeline setSelected={setSelected} containerPosition={containerPosition} selected={selected} />
-      </Box>
+      <RecentDelegations onSelect={handleSelect} params={params} setParams={setParams} />
+      {selected && <DelegationTimeline selected={selected} />}
     </Box>
   );
 };
@@ -65,16 +51,11 @@ export interface DelegationDetail {
   stakeTotalAmount: number;
 }
 
-const DelegationTimeline = ({
-  selected
-}: {
-  containerPosition: {
-    top?: number;
-    left?: number;
-  };
-  setSelected: (item: DelegationItem | null) => void;
-  selected: DelegationItem | null;
-}) => {
+interface Props {
+  selected: DelegationItem;
+}
+
+const DelegationTimeline = ({ selected }: Props) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
@@ -127,9 +108,7 @@ const DelegationTimeline = ({
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={data?.txHash}>
               <InfoText>
-                <StyledLink to={details.transaction(data?.txHash)}>
-                  {getShortHash(data?.txHash || "")}
-                </StyledLink>
+                <StyledLink to={details.transaction(data?.txHash)}>{getShortHash(data?.txHash || "")}</StyledLink>
               </InfoText>
             </CustomTooltip>
             <StyledCopyButton text={data?.txHash} />

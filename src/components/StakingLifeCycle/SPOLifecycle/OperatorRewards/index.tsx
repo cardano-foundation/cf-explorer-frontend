@@ -1,5 +1,5 @@
 import { Box, styled } from "@mui/material";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { ADAOrangeIcon } from "../../../../commons/resources";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { details } from "../../../../commons/routers";
@@ -13,7 +13,6 @@ import useFetchList from "../../../../commons/hooks/useFetchList";
 import moment from "moment";
 import ADAicon from "../../../commons/ADAIcon";
 import { StyledLink, DrawContainer, ADAOperator, ADATitle } from "./styles";
-import { useSelector } from "react-redux";
 import CardanoSystem from "~/components/commons/CardanoSystem";
 import SPOHolder from "~/components/commons/SPOHolder";
 import DrawPath from "~/components/commons/DrawPath";
@@ -26,7 +25,6 @@ const OperatorReward = () => {
   const SPOHolderRef = useRef(null);
   const operatorRef = useRef(null);
   const cadarnoSystemRef = useRef(null);
-  const { sidebar } = useSelector(({ user }: RootState) => user);
 
   const paths = useMemo((): LineArrowItem[] => {
     return [
