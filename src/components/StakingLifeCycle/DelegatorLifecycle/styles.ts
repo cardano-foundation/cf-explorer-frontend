@@ -97,7 +97,9 @@ export const StyledBox = styled(Box)`
   justify-content: flex-start;
   gap: 6px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    gap: 3px;
+    & > p:nth-of-type(1) {
+      width: min-content;
+    }
   }
 `;
 
