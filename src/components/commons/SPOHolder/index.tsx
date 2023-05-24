@@ -4,11 +4,11 @@ import React, { forwardRef, useRef } from "react";
 import { SPOHolderIconUrl, SPOInfo, SPOKey, PolygonSPOUrl } from "~/commons/resources";
 import PolygonShape from "../PolygonShape";
 import CustomTooltip from "~/components/commons/CustomTooltip";
-import PopoverStyled from "../PopoverStyled";
-import { getShortHash, getShortWallet } from "~/commons/utils/helper";
+import { getShortWallet } from "~/commons/utils/helper";
 import { details } from "~/commons/routers";
 import CopyButton from "../CopyButton";
 import { isArray } from "lodash";
+import PopperStyled from "../PopperStyled";
 interface ISPOPropsData {
   poolName?: string;
   poolView?: string;
@@ -31,7 +31,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
       <CustomTooltip title={poolName}>
         <PoolName> {poolName}</PoolName>
       </CustomTooltip>
-      <PopoverStyled
+      <PopperStyled
         render={({ handleClick }) => (
           <ButtonSPO
             ref={SPOInfoRef}
