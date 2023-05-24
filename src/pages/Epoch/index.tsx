@@ -26,6 +26,14 @@ const Epoch: React.FC = () => {
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
   const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo, sort });
+  const [latestEpoch, setLatestEpoch] = useState<IDataEpoch>();
+
+  useEffect(() => {
+    if (fetchData.initialized) {
+      setLatestEpoch(fetchData.data[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchData.initialized]);
   const mainRef = useRef(document.querySelector("#main"));
   const columns: Column<IDataEpoch>[] = [
     {
@@ -136,7 +144,7 @@ const Epoch: React.FC = () => {
   return (
     <StyledContainer>
       <Card title={"Epochs"}>
-        <FirstEpoch data={fetchData.data} />
+        {latestEpoch && <FirstEpoch data={latestEpoch} />}
         <Table
           {...fetchData}
           data={fetchData.currentPage === 0 ? [...fetchData.data.slice(1)] : fetchData.data}

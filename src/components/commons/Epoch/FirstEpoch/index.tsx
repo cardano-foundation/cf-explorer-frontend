@@ -4,22 +4,20 @@ import cubeIcon from "~/commons/resources/icons/blockIcon.svg";
 import slotIcon from "~/commons/resources/icons/slot.svg";
 import timeIcon from "~/commons/resources/icons/time.svg";
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "~/commons/utils/constants";
-import { formatDateTimeLocal, getEpochSlotNo } from "~/commons/utils/helper";
+import { formatDateTimeLocal } from "~/commons/utils/helper";
 import { Status } from "~/pages/Epoch/styles";
 import DetailHeader from "../../DetailHeader";
 import ProgressCircle from "../../ProgressCircle";
 import { Container, EpochNumber, EpochProgress, TitleCard } from "./styles";
 import { useSelector } from "react-redux";
-import { cloneDeep } from "lodash";
 
 interface IProps {
-  data: IDataEpoch[];
+  data: IDataEpoch;
 }
 
-export default function FirstEpoch({ data }: IProps) {
+export default function FirstEpoch({ data: currentEpochData }: IProps) {
   const theme = useTheme();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-  const currentEpochData = data[0];
   if (!currentEpochData) return null;
   const progress = (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0);
   const listOverview = [
