@@ -17,6 +17,7 @@ import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 import DelegationDraw from "./DelegationDraw";
 import RecentDelegations from "./RecentDelegations";
 import { IconButtonBack, Info, InfoGroup, InfoText, StepInfo } from "./styles";
+import { StyledLink } from "../Registration/styles";
 
 const Delegation = ({
   containerPosition,
@@ -125,7 +126,11 @@ const DelegationTimeline = ({
           <Info>
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={data?.txHash}>
-              <InfoText>{getShortHash(data?.txHash || "")}</InfoText>
+              <InfoText>
+                <StyledLink to={details.transaction(data?.txHash)}>
+                  {getShortHash(data?.txHash || "")}
+                </StyledLink>
+              </InfoText>
             </CustomTooltip>
             <StyledCopyButton text={data?.txHash} />
           </Info>

@@ -150,6 +150,11 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
     marginRight: "0px"
   },
 
+  [theme.breakpoints.down("lg")]: {
+    backgroundColor: active ? `${theme.palette.primary.main} !important` : "none",
+    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400]
+  },
+
   [theme.breakpoints.down("md")]: {
     "&:hover": {
       backgroundColor: theme.palette.primary.main,

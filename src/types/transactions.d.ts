@@ -44,6 +44,7 @@ interface Token {
     totalToken: number;
     policyScript: string;
   };
+  fingerprint?: string;
 }
 interface CurrentTransactions {
   blockNo: number;
