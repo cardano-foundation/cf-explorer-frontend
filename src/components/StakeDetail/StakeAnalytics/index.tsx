@@ -85,7 +85,7 @@ const StakeAnalytics: React.FC = () => {
   return (
     <Card title='Analytics' pt={5}>
       <Wrapper container columns={24} spacing='35px'>
-        <Grid item xs={24} lg={18}>
+        <Grid item xs={24} lg={16}>
           <Grid spacing={2} container alignItems='center' justifyContent={"space-between"}>
             {isMobile ? (
               <Grid item xs={12} sm={6}>
@@ -192,7 +192,7 @@ const StakeAnalytics: React.FC = () => {
             )}
           </ChartBox>
         </Grid>
-        <Grid item xs={24} lg={6}>
+        <Grid item xs={24} lg={8}>
           <BoxInfo height={"100%"} space={(categoriesBalance || categoriesReward).length ? 36 : 16}>
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems='center' justifyContent={"center"}>
