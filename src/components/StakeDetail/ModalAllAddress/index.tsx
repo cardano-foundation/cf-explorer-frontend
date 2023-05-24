@@ -69,7 +69,6 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
                 setPage(page);
                 setSize(size);
               },
-              page,
               total: fetchData.total
             }}
             onClickRow={(_, r) => history.push(details.address(r.address || ""))}
