@@ -1,9 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Option } from "../commons/Filter";
 import CustomIcon from "../commons/CustomIcon";
-import { ArrowFromBottomIcon, ArrowFromTopIcon, CalenderIcon, FilterIC, SearchIcon } from "../../commons/resources";
+import {
+  ArrowFromBottomIcon,
+  ArrowFromTopIcon,
+  CalenderIcon,
+  FilterIC,
+  ResetIcon,
+  SearchIcon
+} from "../../commons/resources";
 
-import { ClickAwayListener, IconButton, ListItemIcon, MenuList } from "@mui/material";
+import { Box, Button, ClickAwayListener, IconButton, ListItemIcon, MenuList } from "@mui/material";
 
 import {
   FilterButton,
@@ -89,7 +96,7 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
         break;
       }
       case "search": {
-        setOpenSearchTransaction(true);
+        setOpenSearchTransaction((prev) => !prev);
         break;
       }
     }
@@ -166,6 +173,22 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
                 onClose={onDateRangeModalClose}
               />
             </AdditionContainer>
+            <Box
+              component={Button}
+              width={"100%"}
+              textTransform={"capitalize"}
+              display={"flex"}
+              alignItems={"center"}
+              color={`#108AEF !important`}
+              onClick={() => {
+                onFilterValueChange?.({ fromDate: undefined, sort: undefined, toDate: undefined, txHash: undefined });
+                setOpen(false);
+                setSelected("");
+              }}
+            >
+              <Box mr={1}>Reset</Box>
+              <ResetIcon />
+            </Box>
           </FilterContent>
         )}
       </FilterContainer>

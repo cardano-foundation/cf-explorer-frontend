@@ -40,7 +40,14 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, params, setParams })
     history.push(details.staking(stakeId, "timeline", "deregistration", deregistration.txHash));
   };
   useUpdateEffect(() => {
-    if (data && data.length && data.length === 1 && params?.txHash === undefined) {
+    if (
+      data &&
+      data.length &&
+      data.length === 1 &&
+      params?.txHash === undefined &&
+      params?.fromDate === undefined &&
+      params?.toDate === undefined
+    ) {
       handleSelect(data[0]);
     }
   }, [JSON.stringify(data)]);
