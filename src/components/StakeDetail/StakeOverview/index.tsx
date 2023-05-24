@@ -6,7 +6,7 @@ import totalStakeIcon from "~/commons/resources/icons/totalStake.svg";
 import rewardIcon from "~/commons/resources/icons/reward.svg";
 import rewardWithdrawIcon from "~/commons/resources/icons/rewardWithdraw.svg";
 import { formatADAFull, getShortWallet } from "~/commons/utils/helper";
-import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard } from "./styles";
+import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleValue } from "./styles";
 import { useParams } from "react-router-dom";
 import ModalAllAddress from "../ModalAllAddress";
 import CustomTooltip from "~/components/commons/CustomTooltip";
@@ -41,13 +41,13 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       icon: delegatedIcon,
       title: (
         <Box display={"flex"} alignItems='center'>
-          <TitleCard mr={1}>Delegated to </TitleCard>
+          <TitleCard mr={1}>Delegated t4433o </TitleCard>
         </Box>
       ),
       value: (
-        <CustomTooltip sx={{ width: "max-content" }} title={delegateTooltip}>
+        <CustomTooltip sx={{ width: "100%" }} title={delegateTooltip}>
           <StyledLinkTo isTo={!!data?.pool} to={data?.pool?.poolId ? details.delegation(data?.pool?.poolId) : "#"}>
-            {delegateTo}
+            <TitleValue>{delegateTo}</TitleValue>
           </StyledLinkTo>
         </CustomTooltip>
       )

@@ -26,14 +26,16 @@ const Epoch: React.FC = () => {
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
   const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo, sort });
+  const fetchDataLatestEpoch = useFetchList<IDataEpoch>(API.EPOCH.LIST, { page: 0, size: 1 });
+
   const [latestEpoch, setLatestEpoch] = useState<IDataEpoch>();
 
   useEffect(() => {
-    if (fetchData.initialized) {
-      setLatestEpoch(fetchData.data[0]);
+    if (fetchDataLatestEpoch.initialized) {
+      setLatestEpoch(fetchDataLatestEpoch.data[0]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchData.initialized]);
+  }, [fetchDataLatestEpoch.initialized]);
   const mainRef = useRef(document.querySelector("#main"));
   const columns: Column<IDataEpoch>[] = [
     {
