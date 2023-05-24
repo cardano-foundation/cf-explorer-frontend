@@ -50,7 +50,7 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIs
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
         localStorage.setItem("refreshToken", data.refreshToken);
-        localStorage.setItem("walletId", data.walletId);
+        localStorage.setItem("walletId", data.address);
         localStorage.setItem("email", data.email);
         setIsSign(true);
         setModalRegister(false);

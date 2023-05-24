@@ -172,7 +172,7 @@ export default function SignIn() {
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.email);
       localStorage.setItem("refreshToken", data.refreshToken);
-      localStorage.setItem("walletId", data.walletId);
+      localStorage.setItem("walletId", data.address);
       localStorage.setItem("email", data.email);
       localStorage.setItem("loginType", "normal");
       const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });

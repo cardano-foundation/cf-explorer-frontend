@@ -4,7 +4,7 @@ import { RootState } from "~/stores/types";
 const useAuth = () => {
   const { userData } = useSelector(({ user }: RootState) => user);
   return {
-    isLoggedIn: userData?.email || userData?.address
+    isLoggedIn: userData?.email || userData?.address || userData?.wallet
   };
 };
 
