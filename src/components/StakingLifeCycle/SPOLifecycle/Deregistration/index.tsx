@@ -206,12 +206,12 @@ export const DeregistrationCertificateModal = ({
             </Box>
             {data && (
               <Box>
-                <CustomTooltip title={data?.poolId || ""}>
+                <CustomTooltip title={data?.poolView || ""}>
                   <CustomLink to={details.delegation(data?.poolView || "")}>
-                    {getShortWallet(data?.poolId || "")}
+                    {getShortWallet(data?.poolView || "")}
                   </CustomLink>
                 </CustomTooltip>
-                <CopyButton text={data?.poolId || ""} />
+                <CopyButton text={data?.poolView || ""} />
               </Box>
             )}
           </Box>

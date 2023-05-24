@@ -4,7 +4,8 @@ import {
   DeredistrationIcon,
   RegistrationIcon,
   RewardsDistributionIcon,
-  RewardsWithdrawalIcon
+  RewardsWithdrawalIcon,
+  TranferIcon
 } from "../../commons/resources";
 
 import { useParams } from "react-router-dom";
@@ -87,7 +88,7 @@ const ReportGeneratedStakingDetailTabs = () => {
       tabs = [
         ...tabs,
         {
-          icon: DeredistrationIcon,
+          icon: TranferIcon,
           label: "ADA Transfer",
           key: "walletActivity",
           mappingKey: "",

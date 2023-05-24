@@ -63,7 +63,6 @@ export const RegistrationCertificateModal = ({
   const { data, loading } = useFetch<SPORegistrationDetail>(
     poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, poolUpdateId) : ""
   );
-  const { isMobile } = useScreen();
 
   return (
     <StyledModal {...props} title='Pool Registration certificate'>
@@ -78,7 +77,9 @@ export const RegistrationCertificateModal = ({
               {data && !loading && (
                 <Box pt={"7px"} fontWeight={500}>
                   <CustomTooltip title={data?.txHash || ""}>
-                    <Link to={details.transaction(data?.txHash || "")}>{getShortHash(data?.txHash || "")}</Link>
+                    <Link to={details.transaction(data?.txHash || "")}>
+                      {getShortHash(data?.txHash || "")}
+                    </Link>
                   </CustomTooltip>
                   <CopyButton text={data?.txHash || ""} />
                 </Box>
@@ -116,21 +117,20 @@ export const RegistrationCertificateModal = ({
               {loading && <Skeleton variant='rectangular' />}
               {data && !loading && (
                 <Box display={"flex"} gap={"3px"}>
-                  <CustomTooltip title={data?.vrfKey || "123"}>
-                    <Box pt={"7px"}>
-                      <>
-                        <Box
-                          display={"inline"}
-                          fontWeight={500}
-                          fontSize='0.875rem'
-                          color={({ palette }) => palette.blue[800]}
-                        >
-                          {getShortHash(data?.vrfKey || "")}
-                        </Box>{" "}
-                      </>
-                    </Box>
-                  </CustomTooltip>
                   <Box pt={"7px"}>
+                    <CustomTooltip title={data?.vrfKey}>
+                      <Box
+                        fontWeight={500}
+                        fontSize='0.875rem'
+                        color={({ palette }) => palette.blue[800]}
+                        sx={{
+                          wordBreak: "break-all"
+                        }}
+                        component={"span"}
+                      >
+                        {getShortHash(data?.vrfKey || "")}
+                      </Box>
+                    </CustomTooltip>
                     <CopyButton text={data?.vrfKey || ""} />
                   </Box>
                 </Box>
@@ -234,11 +234,12 @@ export const RegistrationCertificateModal = ({
           </Box>
         </Box>
       </MyGrid>
-    </StyledModal>
+    </StyledModal >
   );
 };
 
 const Link = styled(LinkDom)(({ theme }) => ({
   fontSize: "0.875rem",
-  color: `${theme.palette.blue[800]} !important`
+  color: `${theme.palette.blue[800]} !important`,
+  wordBreak: "break-all",
 }));
