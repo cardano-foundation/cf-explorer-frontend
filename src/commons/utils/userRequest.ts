@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import { UserDataType } from "../../types/user";
 import defaultAxios, { authAxios, defaultAxiosDownload } from "./axios";
+import { API } from "./api";
 //user
 export const signOut = (payload: TSignOut) => authAxios.post("auth/sign-out", payload);
 export const signIn = (payload: TSignIn) => authAxios.post("auth/sign-in", payload);
@@ -20,6 +21,7 @@ export const existEmail = (payload: TCheckExistEmail) => authAxios.get("user/exi
 export const existUserName = (payload: TCheckExistUsername) =>
   authAxios.get("user/exist-username", { params: payload });
 //note
+export const checkTrxHash = (payload: string) => defaultAxios.get(API.TRANSACTION.DETAIL + "/" + payload);
 export const addPrivateNote = (payload: TAddPrivateNote) => authAxios.post("note/add", payload);
 export const editPrivateNote = (payload: TEditPrivateNote) => authAxios.put("note/edit", {}, { params: payload });
 export const removePrivateNote = (noteId: number) => authAxios.delete(`note/delete/${noteId}`);

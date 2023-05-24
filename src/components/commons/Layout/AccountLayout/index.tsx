@@ -70,7 +70,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
           }
         });
 
-        if (data && data.id && data.avatar) {
+        if (data && data.email && data.avatar) {
           await fetchUserInfo();
         }
         toast.success("Your avatar has been changed.");
@@ -91,7 +91,6 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   if (!userData) {
     return <Redirect to={routers.HOME} />;
   }
-  if (firstLoad) return null;
   const MissingData = () => (
     <Box px={3} pb={4} fontSize='0.75rem'>
       Missing any data? click{" "}
@@ -180,6 +179,9 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                   to={route.to}
                   active={active}
                   key={index}
+                  onClick={() => {
+                    route.to === routers.MY_PROFILE && fetchUserInfo();
+                  }}
                 >
                   {route.title}
                 </NavItemMobile>
@@ -192,6 +194,9 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                     py={2}
                     mx={4}
                     borderBottom={`1px solid${alpha(theme.palette.common.black, 0.07)}`}
+                    onClick={() => {
+                      route.to === routers.MY_PROFILE && fetchUserInfo();
+                    }}
                   >
                     <Box>{route.title}</Box>
                     <MdChevronRight

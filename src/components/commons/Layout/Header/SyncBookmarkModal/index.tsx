@@ -10,10 +10,9 @@ import { NETWORK, NETWORK_TYPES } from "../../../../../commons/utils/constants";
 
 interface SyncBookmarkModalProps {
   open: boolean;
-  loadingSubmit: boolean;
   handleCloseModal: () => void;
 }
-const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, loadingSubmit, handleCloseModal }) => {
+const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, handleCloseModal }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<{ passNumber: number; failNumber: number }>();
   const [message, setMessage] = useState("");

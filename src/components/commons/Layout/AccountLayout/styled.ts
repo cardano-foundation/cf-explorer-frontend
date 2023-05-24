@@ -59,11 +59,11 @@ export const NavItemMobile = styled(Link)<{ active: boolean; smallWidth: number 
 }));
 
 export const StyledUsername = styled(Box)`
-  max- width: 200px;
-padding - left: ${({ theme }) => theme.spacing(1)};
-padding - right: ${({ theme }) => theme.spacing(1)};
-overflow: hidden;
-text - overflow: ellipsis;
+  max-width: 200px;
+  padding-left: ${({ theme }) => theme.spacing(1)};
+  padding-right: ${({ theme }) => theme.spacing(1)};
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const StyledButton = styled("span")(({ theme }) => ({
