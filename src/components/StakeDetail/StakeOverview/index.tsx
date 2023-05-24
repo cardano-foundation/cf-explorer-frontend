@@ -25,13 +25,13 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
   const ticketName = data?.pool?.tickerName || "";
   const poolId = data?.pool?.poolId || "";
 
-  const delegateTo = data?.pool
+  const delegateTooltip = data?.pool
     ? ticketName || poolName
       ? `${ticketName} - ${poolName}`
       : poolId
     : "Not delegated to any pool";
 
-  const delegateTooltip = data?.pool
+  const delegateTo = data?.pool
     ? ticketName || poolName
       ? `${ticketName} - ${poolName}`
       : getShortWallet(poolId)
