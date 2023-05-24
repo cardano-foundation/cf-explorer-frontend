@@ -16,7 +16,14 @@ export const SideBar = styled(Box)(({ theme }) => ({
   borderRight: `1px solid ${theme.palette.grey[50]}`,
   display: "flex",
   flexDirection: "column",
-  justifyContent: "space-between"
+  justifyContent: "space-between",
+  width: "20%",
+  [theme.breakpoints.down("sm")]: {
+    width: "100%"
+  },
+  [theme.breakpoints.down("md")]: {
+    width: "100%"
+  }
 }));
 
 export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
@@ -24,7 +31,10 @@ export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => 
   display: "block",
   backgroundColor: active ? alpha(theme.palette.primary.main, 0.1) : theme.palette.background.paper,
   color: `${active ? theme.palette.primary.main : theme.palette.grey[400]} !important`,
-  fontWeight: "bold"
+  fontWeight: "bold",
+  [theme.breakpoints.down("md")]: {
+    display: "none"
+  }
 }));
 
 export const WrapItemMobile = styled(Box)(({ theme }) => ({
@@ -55,6 +65,9 @@ export const NavItemMobile = styled(Link)<{ active: boolean; smallWidth: number 
     padding: "10px 0",
     width: "100%",
     fontSize: "13px"
+  },
+  [theme.breakpoints.up("md")]: {
+    display: "none"
   }
 }));
 
@@ -96,3 +109,10 @@ export const ModalTitle = styled("h3")`
 font - family: var(--font - family - title);
 margin - top: 0px;
 `;
+
+export const MissingItemWrapper = styled(Box)(({ theme }) => ({
+  display: "none",
+  [theme.breakpoints.up("md")]: {
+    display: "block"
+  }
+}));

@@ -5,6 +5,7 @@ import { routers } from "../../../../commons/routers";
 import { RootState } from "../../../../stores/types";
 import {
   ContentBox,
+  MissingItemWrapper,
   ModalTitle,
   NavItem,
   NavItemMobile,
@@ -92,7 +93,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
     return <Redirect to={routers.HOME} />;
   }
   const MissingData = () => (
-    <Box px={3} pb={4} fontSize='0.75rem'>
+    <MissingItemWrapper px={3} pb={4} fontSize='0.75rem'>
       Missing any data? click{" "}
       <StyledButton
         sx={{
@@ -103,10 +104,10 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
         here
       </StyledButton>{" "}
       to report
-    </Box>
+    </MissingItemWrapper>
   );
   const renderListTabs = () => (
-    <SideBar width={isMobile || isTablet ? "100%" : "20%"}>
+    <SideBar>
       <Box>
         <Box>
           <Box pt={4} textAlign='center' display={"flex"} justifyContent='center'>
@@ -166,51 +167,46 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
           <WrapItemMobile>
             {router.map((route, index) => {
               const active = route.to === pathname;
-              return isMobile || isTablet ? (
-                <NavItemMobile
-                  smallWidth={isGalaxyFoldSmall ? 1 : 0}
-                  sx={{
-                    borderTopRightRadius: index === router.length - 1 ? "5px" : "0px",
-                    borderBottomRightRadius: index === router.length - 1 ? "5px" : "0px",
-                    borderTopLeftRadius: index === 0 ? "5px" : "0px",
-                    borderBottomLeftRadius: index === 0 ? "5px" : "0px",
-                    borderRadius: active ? "5px" : ""
-                  }}
-                  to={route.to}
-                  active={active}
-                  key={index}
-                  onClick={() => {
-                    route.to === routers.MY_PROFILE && fetchUserInfo();
-                  }}
-                >
-                  {route.title}
-                </NavItemMobile>
-              ) : (
-                <NavItem to={route.to} active={route.to === pathname} key={index}>
-                  <Box
-                    display='flex'
-                    alignItems={"center"}
-                    justifyContent='space-between'
-                    py={2}
-                    mx={4}
-                    borderBottom={`1px solid${alpha(theme.palette.common.black, 0.07)}`}
-                    onClick={() => {
-                      route.to === routers.MY_PROFILE && fetchUserInfo();
+              return (
+                <Box key={index}>
+                  <NavItemMobile
+                    smallWidth={isGalaxyFoldSmall ? 1 : 0}
+                    sx={{
+                      borderTopRightRadius: index === router.length - 1 ? "5px" : "0px",
+                      borderBottomRightRadius: index === router.length - 1 ? "5px" : "0px",
+                      borderTopLeftRadius: index === 0 ? "5px" : "0px",
+                      borderBottomLeftRadius: index === 0 ? "5px" : "0px",
+                      borderRadius: active ? "5px" : ""
                     }}
+                    to={route.to}
+                    active={active}
+                    key={index}
                   >
-                    <Box>{route.title}</Box>
-                    <MdChevronRight
-                      size={25}
-                      color={route.to === pathname ? theme.palette.primary.main : theme.palette.text.hint}
-                    />
-                  </Box>
-                </NavItem>
+                    {route.title}
+                  </NavItemMobile>
+                  <NavItem to={route.to} active={route.to === pathname} key={index}>
+                    <Box
+                      display='flex'
+                      alignItems={"center"}
+                      justifyContent='space-between'
+                      py={2}
+                      mx={4}
+                      borderBottom={`1px solid${alpha(theme.palette.common.black, 0.07)}`}
+                    >
+                      <Box>{route.title}</Box>
+                      <MdChevronRight
+                        size={25}
+                        color={route.to === pathname ? theme.palette.primary.main : theme.palette.text.hint}
+                      />
+                    </Box>
+                  </NavItem>
+                </Box>
               );
             })}
           </WrapItemMobile>
         </Box>
       </Box>
-      {!isMobile && !isTablet ? <MissingData /> : null}
+      <MissingData />
     </SideBar>
   );
   return (
