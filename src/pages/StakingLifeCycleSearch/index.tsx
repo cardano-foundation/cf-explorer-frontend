@@ -1,13 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, styled, Button } from "@mui/material";
 import { HeaderSearchIcon } from "../../commons/resources";
 import { ReactComponent as Search } from "../../commons/resources/icons/Staking/Search.svg";
 import { useHistory } from "react-router-dom";
-import useAuth from "~/commons/hooks/useAuth";
 import { details } from "~/commons/routers";
 
 const StakingLifeCycleSearch = () => {
-  const { isLoggedIn } = useAuth();
   const history = useHistory();
 
   const [value, setValue] = useState<string>("");
@@ -22,6 +20,11 @@ const StakingLifeCycleSearch = () => {
       history.push(details.spo(value, "timeline"));
     } else setError("No records found!");
   };
+
+  useEffect(() => {
+    document.title = "Welcome to Staking Lifecycle | Cardano Explorer";
+  }, []);
+
   return (
     <StyledContainer>
       <h2>Welcome to Staking Lifecycle </h2>

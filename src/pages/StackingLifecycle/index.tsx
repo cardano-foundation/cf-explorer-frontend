@@ -1,5 +1,5 @@
 import { Box, CircularProgress, Container, Grid, IconButton } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { useScreen } from "../../commons/hooks/useScreen";
@@ -106,6 +106,11 @@ const Dashboard: React.FC = () => {
     ...params,
     sort: sort || params.sort
   });
+
+  useEffect(() => {
+    document.title = "Saved Reports | Cardano Explorer";
+  }, []);
+
   const { isMobile } = useScreen();
   const handleRowClick = (e: React.MouseEvent<Element, MouseEvent>, row: any) => {
     if (row.stakeKeyReportId) history.push(details.generated_staking_detail(row.stakeKeyReportId));

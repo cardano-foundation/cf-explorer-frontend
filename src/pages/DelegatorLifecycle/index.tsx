@@ -67,7 +67,9 @@ const DelegatorLifecycle = () => {
     setCurrentStep(tabList[tab || "registration"] || 0);
   }, [tab]);
 
-  const { isMobile } = useScreen();
+  useEffect(() => {
+    document.title = `Staking Delegation Lifecycle ${stakeId} | Cardano Explorer`;
+  }, [stakeId]);
 
   useEffect(() => {
     if (containerRef.current) {
