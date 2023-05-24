@@ -72,7 +72,7 @@ export default OperatorReward;
 const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: () => void }) => {
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [sort, setSort] = useState<string>("");
-  const [{ page, size }, setPagination] = useState<{ page: number; size: number }>({ page: 0, size: 10 });
+  const [{ page, size }, setPagination] = useState<{ page: number; size: number }>({ page: 0, size: 50 });
   const fetchData = useFetchList<SPO_REWARD>(API.SPO_LIFECYCLE.REWARD(poolId), { page, size, sort });
 
   const columns: Column<SPO_REWARD>[] = [
