@@ -1,4 +1,4 @@
-import { alpha, Box, Skeleton, styled } from "@mui/material";
+import { Box, Skeleton, styled } from "@mui/material";
 import { useState } from "react";
 import { Link as LinkDom, useHistory, useParams } from "react-router-dom";
 
@@ -16,7 +16,7 @@ import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 import { StakeLink, StyledLink } from "../Registration/styles";
 import DeregistrationDraw from "./DeregistrationDraw";
 import RecentDeregistrations from "./RecentDeregistration";
-import { IconButtonBack, Info, InfoGroup, InfoText, StepInfo } from "./styles";
+import { IconButtonBack, Info, InfoGroup, InfoText, StepInfo, StyledContainerModal } from "./styles";
 
 const Deregistration = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
@@ -67,9 +67,7 @@ const DeregistrationTimeline = ({ selected, toggleModal }: DeregistrationProps) 
             <AddressIcon fill='#438F68' />
             <CustomTooltip title={selected.txHash}>
               <InfoText>
-                <StyledLink to={details.transaction(selected.txHash)}>
-                  {getShortHash(selected.txHash || "")}
-                </StyledLink>
+                <StyledLink to={details.transaction(selected.txHash)}>{getShortHash(selected.txHash || "")}</StyledLink>
               </InfoText>
             </CustomTooltip>
             <StyledCopyButton text={selected.txHash} />
@@ -104,7 +102,7 @@ export const DeregistrationCertificateModal = ({
       <Box>
         {loading && <Skeleton variant='rectangular' width={500} height={90} />}
         {!loading && (
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
+          <StyledContainerModal>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Stake Key
             </Box>
@@ -116,14 +114,9 @@ export const DeregistrationCertificateModal = ({
                 </Box>
               </Box>
             )}
-          </Box>
+          </StyledContainerModal>
         )}
       </Box>
     </StyledModal>
   );
 };
-
-const Link = styled(LinkDom)(({ theme }) => ({
-  fontSize: "0.875rem",
-  color: `${theme.palette.blue[800]} !important`
-}));

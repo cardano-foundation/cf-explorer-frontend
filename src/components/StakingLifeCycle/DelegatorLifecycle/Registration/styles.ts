@@ -1,4 +1,4 @@
-import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui, alpha } from "@mui/material";
 import { Link } from "react-router-dom";
 import { AdaLogoIcon } from "~/components/commons/ADAIcon";
 import CertificateShape from "~/components/commons/CertificateShape";
@@ -161,6 +161,13 @@ export const CertificateShapeMobile = styled(CertificateShape)(() => ({
   margin: "auto"
 }));
 
+export const StyledContainerModal = styled(Box)(({ theme }) => ({
+  backgroundColor: alpha(theme.palette.grey[300], 0.1),
+  padding: 24,
+  [theme.breakpoints.down("md")]: {
+    padding: 15
+  }
+}));
 export const StyledLink = styled(Link)`
   font-size: inherit;
   font-weight: inherit;
