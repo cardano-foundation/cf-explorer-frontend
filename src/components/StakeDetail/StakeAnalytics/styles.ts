@@ -80,9 +80,10 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
     paddingTop: 0
   },
   [theme.breakpoints.down("sm")]: {
-    width: "80%",
-    borderRight: "none",
-    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    width: "100%",
+    height: "100%",
+    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    borderBottom: "none",
 
     div: {
       width: "100%",
