@@ -59,7 +59,7 @@ const DelegationTab = () => {
       title: "Fees",
       key: "block",
       minWidth: "120px",
-      render: (r) => <AdaValue value={r.outSum} />
+      render: (r) => <AdaValue value={r.fee} />
     },
     {
       title: "Certificate",
@@ -75,10 +75,7 @@ const DelegationTab = () => {
   return (
     <>
       <Box display='flex' alignItems='center' justifyContent='space-between' mt={4}>
-        <WrapWalletLabel>
-          <GreenWalletIcon mr={1} />
-          <AdaValue value={data.reduce((current, item) => current + item.outSum, 0)} />
-        </WrapWalletLabel>
+        <Box />
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}
