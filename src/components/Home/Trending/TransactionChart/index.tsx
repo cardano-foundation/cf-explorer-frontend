@@ -137,7 +137,7 @@ const formatTimeX = (date: Time) => {
     case "ONE_WEEK":
     case "TWO_WEEK":
     case "ONE_MONTH":
-      return "DD/MM";
+      return "MM/DD";
 
     default:
       break;
