@@ -1,5 +1,5 @@
 import { alpha, Box, Skeleton, styled, Tab } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link as LinkDom } from "react-router-dom";
 
 import { PoolCert, CertUpdate, ChangeIcon, EmptyIcon } from "../../../../commons/resources";
@@ -17,18 +17,14 @@ import { details } from "../../../../commons/routers";
 import { formatADA, getShortHash, getShortWallet, numberWithCommas } from "../../../../commons/utils/helper";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import moment from "moment";
 import StyledModal from "../../../commons/StyledModal";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 import { TitleTab } from "../../../TransactionDetail/TransactionMetadata/styles";
 import { DescriptionText } from "../../DelegatorLifecycle/styles";
 import { useUpdateEffect } from "react-use";
-import { useScreen } from "../../../../commons/hooks/useScreen";
 import ViewMoreAddressModal from "~/components/ViewMoreAddressModal";
-import { FilterDateLabel } from "../../DelegatorLifecycle/Delegation/styles";
 import { useSelector } from "react-redux";
-import { DATETIME_PARTTEN } from "~/components/StackingFilter/DateRangeModal";
 import { EmptyRecord } from "~/components/commons/Table";
 import { PoolUpdatesDraw } from "./PoolUpdatesDraw";
 const PoollUpdates = () => {
@@ -93,19 +89,6 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
     }
   }, [JSON.stringify(data)]);
 
-  const filterLabel = useMemo(() => {
-    const sortArr = params.sort && params.sort.split(",");
-    if (params.fromDate && params.toDate)
-      return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
-        .utc(params.toDate, DATETIME_PARTTEN)
-        .local()
-        .format("MM/DD/YYYY")}`;
-    if (params.sort && sortArr && params.sort.length >= 2)
-      return `${sortArr[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
-    if (params.txHash) return `Searching for : ${params.txHash}`;
-  }, [params]);
-  if (txHash) return null;
-
   return (
     <StyledContainer>
       <StyledList>
@@ -114,7 +97,6 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
           <WrapFilterDescription>
             Showing {total} {total > 1 ? "results" : "result"}
           </WrapFilterDescription>
-          {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
           <StackingFilter
             filterValue={params}
             onFilterValueChange={(params) =>
@@ -161,7 +143,6 @@ export const PoolUpdateModal = ({
   data: PoolUpdateDetail | null;
   handleCloseModal: () => void;
 }) => {
-  const { isMobile } = useScreen();
   const history = useHistory();
   const [tabActive, setTabActive] = useState("poolCertificate");
   const [selectedOwner, setSelectedOwner] = useState<string[]>([]);
