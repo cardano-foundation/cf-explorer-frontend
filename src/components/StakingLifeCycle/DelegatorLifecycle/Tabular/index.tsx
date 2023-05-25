@@ -24,7 +24,7 @@ const tabs: {
 }[] = [
   {
     icon: RegistrationIcon,
-    label: "Stake Key Registration",
+    label: "Registration",
     key: "registration",
     component: <StakeRegistrationTab />
   },

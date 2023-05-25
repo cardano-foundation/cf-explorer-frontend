@@ -204,21 +204,20 @@ export const PoolUpdateModal = ({
             </Box>
             {data && (
               <Box display={"flex"} gap={"3px"}>
-                <CustomTooltip title={data?.vrfKey}>
-                  <Box pt={"7px"}>
-                    <>
-                      <Box
-                        display={"inline"}
-                        fontWeight={500}
-                        fontSize='0.875rem'
-                        color={({ palette }) => palette.blue[800]}
-                      >
-                        {getShortHash(data?.vrfKey || "")}
-                      </Box>{" "}
-                    </>
-                  </Box>
-                </CustomTooltip>
                 <Box pt={"7px"}>
+                  <CustomTooltip title={data?.vrfKey}>
+                    <Box
+                      fontWeight={500}
+                      fontSize='0.875rem'
+                      color={({ palette }) => palette.blue[800]}
+                      sx={{
+                        wordBreak: "break-all"
+                      }}
+                      component={"span"}
+                    >
+                      {getShortHash(data?.vrfKey || "")}
+                    </Box>
+                  </CustomTooltip>
                   <CopyButton text={data?.vrfKey || ""} />
                 </Box>
               </Box>
@@ -426,19 +425,19 @@ export const PoolUpdateModal = ({
     label: string;
     children: React.ReactNode;
   }[] = [
-    {
-      key: "poolCertificate",
-      icon: PoolCert,
-      label: "Pool certificate",
-      children: <>{renderPoolCert()}</>
-    },
-    {
-      key: "certificateUpdates",
-      icon: CertUpdate,
-      label: "Certificate updates",
-      children: <Box>{renderCertificateUpdates()}</Box>
-    }
-  ];
+      {
+        key: "poolCertificate",
+        icon: PoolCert,
+        label: "Pool certificate",
+        children: <>{renderPoolCert()}</>
+      },
+      {
+        key: "certificateUpdates",
+        icon: CertUpdate,
+        label: "Certificate updates",
+        children: <Box>{renderCertificateUpdates()}</Box>
+      }
+    ];
 
   const handleChange = (event: React.SyntheticEvent, tab: "poolCertificate" | "certificateUpdates") => {
     setTabActive(tab);
@@ -486,5 +485,6 @@ export const PoolUpdateModal = ({
 
 const Link = styled(LinkDom)(({ theme }) => ({
   fontSize: "0.875rem",
-  color: `${theme.palette.blue[800]} !important`
+  color: `${theme.palette.blue[800]} !important`,
+  wordBreak: "break-all",
 }));

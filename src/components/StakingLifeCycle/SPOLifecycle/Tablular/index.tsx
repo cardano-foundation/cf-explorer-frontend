@@ -22,7 +22,7 @@ interface SPOTabItem extends StakeTabItem {
 const tabs: SPOTabItem[] = [
   {
     icon: RegistrationIcon,
-    label: "Pool Registration",
+    label: "Registration",
     key: "registration",
     component: <PoolRegistrationTab />
   },

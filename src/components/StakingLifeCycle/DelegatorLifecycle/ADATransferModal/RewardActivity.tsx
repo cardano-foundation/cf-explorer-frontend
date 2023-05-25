@@ -31,7 +31,7 @@ const RewardActivity: React.FC = () => {
       key: "outSum",
       minWidth: "100px",
       render: (r) => (
-        <Amount type={r.type}>
+        <Amount type={r.type === "REWARD_RECEIVED" ? "up" : "down"}>
           {r.amount
             ? r.type === "REWARD_RECEIVED"
               ? `+${formatADAFull(r.amount)}`
