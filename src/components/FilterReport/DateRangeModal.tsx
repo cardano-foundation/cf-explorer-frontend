@@ -26,7 +26,9 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
 
   useEffect(() => {
     const { value } = rest;
-    setValue({ fromDate: toLocal(value?.fromDate), toDate: toLocal(value?.toDate) });
+    if (value?.fromDate && value?.toDate) {
+      setValue({ fromDate: toLocal(value?.fromDate), toDate: toLocal(value?.toDate) });
+    }
   }, [rest.value]);
 
   const toLocal = (date?: string) => {
@@ -57,25 +59,11 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
                 return { ...pre, fromDate: mDate?.format("YYYY/MM/DD HH:mm:ss") };
               })
             }
-            slotProps={{
-              textField: {
-                InputProps: {
-                  disabled: true
-                }
-              }
-            }}
           />
           <Box>-</Box>
           <DesktopDatePicker
             value={toMoment(value?.toDate)}
             onChange={(mDate) => setValue((pre) => ({ ...pre, toDate: mDate?.format("YYYY/MM/DD 23:59:59") }))}
-            slotProps={{
-              textField: {
-                InputProps: {
-                  disabled: true
-                }
-              }
-            }}
           />
         </DateRangePickerContainer>
         <DatePickerFooter>
