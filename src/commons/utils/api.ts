@@ -53,7 +53,8 @@ export const API = {
     DEREGISTRATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/de-registrations`,
     RECEIVED_REWARD: (stakeKey: string) => `stake-lifecycle/${stakeKey}/rewards`,
     WALLET_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/wallet-activity`,
-    REWARDS_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/reward-activity`
+    REWARDS_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/reward-activity`,
+    TABS: (stakeKey: string) => `stake-lifecycle/${stakeKey}`
   },
   SPO_LIFECYCLE: {
     SPO_REGISTRATION: (poolId: string) => `pool-lifecycle/registration?poolView=${poolId}`,
