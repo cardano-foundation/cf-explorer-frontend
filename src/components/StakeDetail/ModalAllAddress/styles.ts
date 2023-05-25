@@ -4,7 +4,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   position: "relative",
   top: "50%",
   left: "50%",
-  transform: "translate(-50%, -50%)",
+  transform: "translate(-50%, -51%)",
   width: "min(80vw, 600px)",
   backfaceVisibility: "hidden",
   backgroundColor: theme.palette.background.paper,
@@ -16,6 +16,8 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   "::-webkit-scrollbar": {
     width: "16px"
   },
+  willChange: "transform",
+  "-webkit-font-smoothing": "subpixel-antialiased",
 
   "::-webkit-scrollbar-thumb": {
     background: theme.palette.grey["A400"],
