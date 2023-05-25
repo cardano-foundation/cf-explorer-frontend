@@ -63,6 +63,8 @@ export const RegistrationCertificateModal = ({
     poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, poolUpdateId) : ""
   );
 
+  const { isMobile } = useScreen()
+
   return (
     <StyledModal {...props} title='Pool Registration certificate'>
       <MyGrid>
