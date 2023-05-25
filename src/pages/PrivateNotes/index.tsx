@@ -33,11 +33,12 @@ import { useScreen } from "~/commons/hooks/useScreen";
 
 type TAction = {
   onClick: () => void;
-  isTablet: boolean;
 };
 
-const ViewButton: React.FC<TAction> = ({ onClick, isTablet }) => {
+const ViewButton: React.FC<TAction> = ({ onClick }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { isTablet } = useScreen();
+
   return (
     <CustomTooltip
       onClose={() => setIsOpen(false)}
@@ -49,7 +50,7 @@ const ViewButton: React.FC<TAction> = ({ onClick, isTablet }) => {
       title='View private note'
     >
       <ActionButton
-        onClick={(e) => {
+        onClick={() => {
           if (isOpen && isTablet) return;
           onClick();
         }}
@@ -61,8 +62,9 @@ const ViewButton: React.FC<TAction> = ({ onClick, isTablet }) => {
   );
 };
 
-const RemoveButton: React.FC<TAction> = ({ onClick, isTablet }) => {
+const RemoveButton: React.FC<TAction> = ({ onClick }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { isTablet } = useScreen();
 
   return (
     <CustomTooltip
@@ -75,7 +77,7 @@ const RemoveButton: React.FC<TAction> = ({ onClick, isTablet }) => {
       title='Remove note'
     >
       <ActionButton
-        onClick={(e) => {
+        onClick={() => {
           if (isOpen && isTablet) return;
           onClick();
         }}
@@ -104,7 +106,6 @@ const PrivateNotes = () => {
   const { data, total, refresh } = useFetchList("note/find-all", { network: NETWORK_TYPES[NETWORK], page, size }, true);
   const { search } = useLocation();
   const pageInfo = getPageInfo(search);
-  const { isTablet } = useScreen();
 
   const handleClickViewDetail = (note: TPrivateNote) => {
     setCurrentNote({
@@ -168,8 +169,8 @@ const PrivateNotes = () => {
       minWidth: "40px",
       render: (item) => (
         <Box display='flex' justifyContent={"flex-end"}>
-          <ViewButton onClick={() => handleClickViewDetail(item)} isTablet={isTablet} />
-          <RemoveButton onClick={() => setSelected(item)} isTablet={isTablet} />
+          <ViewButton onClick={() => handleClickViewDetail(item)} />
+          <RemoveButton onClick={() => setSelected(item)} />
         </Box>
       )
     }
