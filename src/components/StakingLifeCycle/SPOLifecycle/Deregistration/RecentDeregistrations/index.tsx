@@ -5,7 +5,7 @@ import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../../StackingFilter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
-import { EmptyRecord } from "../../../../commons/Table";
+import { EmptyRecord, FooterTable } from "../../../../commons/Table";
 import { GridBox, WrapFilterDescription, StyledContainer, StyledList } from "./styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
 import { details } from "../../../../../commons/routers";
@@ -20,6 +20,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
   const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
+  const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const [params, setParams] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
@@ -29,8 +30,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
   const { data, total, loading, initialized, error } = useFetchList<SPODeregistration>(
     poolId ? API.SPO_LIFECYCLE.SPO_DEREGISTRATION(poolId) : "",
     {
-      page: 0,
-      size: 1000,
+      ...pageInfo,
       ...params
     }
   );
@@ -65,19 +65,20 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
         <DescriptionText>Recent Deregistration</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={1}>
           <WrapFilterDescription>
-            Showing {total} {total > 1 ? "results" : "result"}
+            Showing {data.length} {data.length > 1 ? "results" : "result"}
           </WrapFilterDescription>
           <StackingFilter
             filterValue={params}
-            onFilterValueChange={(params) =>
+            onFilterValueChange={(params) => {
               setParams((pre) => ({
                 fromDate: undefined,
                 sort: undefined,
                 toDate: undefined,
                 txHash: undefined,
                 ...params
-              }))
-            }
+              }));
+              setPageInfo((pre) => ({ ...pre, page: 0 }));
+            }}
           />
         </Box>
       </StyledList>
@@ -102,6 +103,20 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
           })}
       </GridBox>
       {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
+      {initialized && data?.length > 0 && !error && (
+        <FooterTable
+          total={{
+            count: total,
+            title: ""
+          }}
+          pagination={{
+            total,
+            ...pageInfo,
+            onChange: (page, size) => setPageInfo((pre) => ({ ...pre, page: page - 1, size }))
+          }}
+          loading={loading || false}
+        />
+      )}
     </StyledContainer>
   );
 };
