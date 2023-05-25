@@ -152,3 +152,9 @@ export const ButtonModal = styled(Button)(({ theme }) => ({
     textDecoration: "underline"
   }
 }));
+
+export const TitleValue = styled(Box)`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;

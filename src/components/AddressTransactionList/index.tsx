@@ -143,10 +143,9 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
         let tokens: Token[] = [];
         if (transaction.tokens && transaction.tokens.length > 0) {
           tokens = transaction.tokens.map((token) => ({
-            assetId: token.addressId.toString(),
+            assetId: token.fingerprint,
             assetQuantity: token.quantity,
-            assetName: token.displayName,
-            fingerprint: token.fingerprint
+            assetName: token.displayName
           }));
         }
         return (
