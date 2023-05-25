@@ -45,6 +45,7 @@ const RegistrationPools = () => {
   }, [poolType]);
 
   const onChangeTab = (e: React.SyntheticEvent, poolType: POOL_TYPE) => {
+    setSort("");
     history.push(routers.REGISTRATION_POOLS.replace(":poolType", poolType));
   };
 
