@@ -115,7 +115,6 @@ const DelegationLists: React.FC = () => {
         total={{ count: fetchData.total, title: "Total" }}
         onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId))}
         pagination={{
-          page,
           size,
           total: fetchData.total,
           onChange: (page, size) => {
