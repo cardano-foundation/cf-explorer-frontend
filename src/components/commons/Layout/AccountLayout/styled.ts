@@ -51,6 +51,9 @@ export const WrapItemMobile = styled(Box)(({ theme }) => ({
 }));
 
 export const NavItemMobile = styled(Link)<{ active: boolean; }>(({ theme, active }) => ({
+  [theme.breakpoints.down("md")]: {
+    display: "block"
+  },
   textAlign: "center",
   fontWeight: 700,
   fontSize: "14px",
@@ -66,9 +69,6 @@ export const NavItemMobile = styled(Link)<{ active: boolean; }>(({ theme, active
     width: "100%",
     fontSize: "13px"
   },
-  [theme.breakpoints.down("md")]: {
-    display: "block"
-  }
 }));
 
 
