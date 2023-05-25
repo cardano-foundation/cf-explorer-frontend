@@ -1,17 +1,23 @@
 import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
 
-export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
+export const StyledGrid = styled(Grid)(({ theme }) => ({
+  [theme.breakpoints.down("lg")]: {
+    height: "100%",
+    minHeight: 160
+  }
+}));
+
+export const BoxInfo = styled(Box)(({ theme }) => ({
   background: theme.palette.secondary.dark,
   borderRadius: "10px",
   color: theme.palette.primary.contrastText,
   display: "flex",
   flexDirection: "column",
   textAlign: "center",
+  height: "100%",
   [theme.breakpoints.down("lg")]: {
-    flexDirection: "row"
-  },
-  [theme.breakpoints.down("sm")]: {
-    flexDirection: "row"
+    flexDirection: "row",
+    padding: "27px 10px"
   }
 }));
 
@@ -44,14 +50,11 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("lg")]: {
     borderTop: "none",
     width: "100%",
-    minHeight: "200px",
-    height: "100%",
     paddingTop: 0
   },
   [theme.breakpoints.down("sm")]: {
     width: "80%",
     borderRight: "none",
-    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
 
     div: {
       width: "100%",
@@ -73,17 +76,11 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("lg")]: {
     borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
     height: "100%",
-    borderBottom: "none",
     width: "100%",
-    minHeight: "200px",
+    borderBottom: "none",
     paddingTop: 0
   },
   [theme.breakpoints.down("sm")]: {
-    width: "100%",
-    height: "100%",
-    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
-    borderBottom: "none",
-
     div: {
       width: "100%",
       display: "flex",

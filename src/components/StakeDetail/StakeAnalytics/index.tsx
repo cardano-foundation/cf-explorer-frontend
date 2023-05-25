@@ -14,7 +14,8 @@ import {
   Title,
   ValueInfo,
   Wrapper,
-  CustomButton
+  CustomButton,
+  StyledGrid
 } from "./styles";
 import moment from "moment";
 import { useParams } from "react-router-dom";
@@ -192,8 +193,8 @@ const StakeAnalytics: React.FC = () => {
             )}
           </ChartBox>
         </Grid>
-        <Grid item xs={24} lg={8}>
-          <BoxInfo height={"100%"} space={(categoriesBalance || categoriesReward).length ? 36 : 16}>
+        <StyledGrid item xs={24} lg={8}>
+          <BoxInfo>
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems='center' justifyContent={"center"}>
                 <Box>
@@ -233,7 +234,7 @@ const StakeAnalytics: React.FC = () => {
               </BoxInfoItem>
             </Box>
           </BoxInfo>
-        </Grid>
+        </StyledGrid>
       </Wrapper>
     </Card>
   );
