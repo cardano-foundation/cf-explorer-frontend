@@ -283,7 +283,7 @@ export const PoolUpdateModal = ({
         </Box>
       </Box>
       <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
-        <Box p={3} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+        <Box py={3} pl={3} pr={10} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Margin
