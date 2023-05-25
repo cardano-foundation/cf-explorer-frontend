@@ -41,7 +41,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       icon: delegatedIcon,
       title: (
         <Box display={"flex"} alignItems='center'>
-          <TitleCard mr={1}>Delegated t4433o </TitleCard>
+          <TitleCard mr={1}>Delegated to </TitleCard>
         </Box>
       ),
       value: (
