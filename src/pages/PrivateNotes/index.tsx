@@ -29,25 +29,58 @@ import { details } from "../../commons/routers";
 import { ButtonClose } from "../../components/ScriptModal/styles";
 import { CloseIcon } from "../../commons/resources";
 import useToast from "../../commons/hooks/useToast";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 type TAction = {
   onClick: () => void;
+  isTablet: boolean;
 };
 
-const ViewButton: React.FC<TAction> = ({ onClick }) => {
+const ViewButton: React.FC<TAction> = ({ onClick, isTablet }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
-    <CustomTooltip placement='top' title='View private note'>
-      <ActionButton onClick={onClick} typeButton='View'>
+    <CustomTooltip
+      onClose={() => setIsOpen(false)}
+      onOpen={() => {
+        if (!isTablet) return;
+        setIsOpen(true);
+      }}
+      placement='top'
+      title='View private note'
+    >
+      <ActionButton
+        onClick={(e) => {
+          if (isOpen && isTablet) return;
+          onClick();
+        }}
+        typeButton='View'
+      >
         <Expand />
       </ActionButton>
     </CustomTooltip>
   );
 };
 
-const RemoveButton: React.FC<TAction> = ({ onClick }) => {
+const RemoveButton: React.FC<TAction> = ({ onClick, isTablet }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
-    <CustomTooltip placement='top' title='Remove note'>
-      <ActionButton onClick={onClick} typeButton='Remove'>
+    <CustomTooltip
+      onClose={() => setIsOpen(false)}
+      onOpen={() => {
+        if (!isTablet) return;
+        setIsOpen(true);
+      }}
+      placement='top'
+      title='Remove note'
+    >
+      <ActionButton
+        onClick={(e) => {
+          if (isOpen && isTablet) return;
+          onClick();
+        }}
+        typeButton='Remove'
+      >
         <Warning />
       </ActionButton>
     </CustomTooltip>
@@ -71,6 +104,7 @@ const PrivateNotes = () => {
   const { data, total, refresh } = useFetchList("note/find-all", { network: NETWORK_TYPES[NETWORK], page, size }, true);
   const { search } = useLocation();
   const pageInfo = getPageInfo(search);
+  const { isTablet } = useScreen();
 
   const handleClickViewDetail = (note: TPrivateNote) => {
     setCurrentNote({
@@ -134,8 +168,8 @@ const PrivateNotes = () => {
       minWidth: "40px",
       render: (item) => (
         <Box display='flex' justifyContent={"flex-end"}>
-          <ViewButton onClick={() => handleClickViewDetail(item)} />
-          <RemoveButton onClick={() => setSelected(item)} />
+          <ViewButton onClick={() => handleClickViewDetail(item)} isTablet={isTablet} />
+          <RemoveButton onClick={() => setSelected(item)} isTablet={isTablet} />
         </Box>
       )
     }
