@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import StyledModal from "../../../commons/StyledModal";
 import { TabContext, TabPanel } from "@mui/lab";
 import WalletActivity from "./WalletActivity";
-import { CustomTab, ModalTitle, StyledTab, StyledTabs } from "./styles";
+import { CustomTab, StyledTab, StyledTabs } from "./styles";
 import { Box } from "@mui/material";
 
 import RewardActivity from "./RewardActivity";
