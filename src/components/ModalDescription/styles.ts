@@ -15,7 +15,7 @@ export const NumberParagraph = styled(Box)`
 
 //show overflow-y when hover
 export const WrapContent = styled(Box)`
-  max-height: calc(100vh - 160px);
+  max-height: calc(100vh - 220px);
   width: 600px;
   max-width: 100%;
   position: relative;

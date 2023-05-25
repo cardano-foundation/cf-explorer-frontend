@@ -1,19 +1,17 @@
-import { stringify } from "qs";
-import { useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
 import { Box, styled } from "@mui/material";
-import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
-import useFetchList from "../../../../commons/hooks/useFetchList";
-import { API } from "../../../../commons/utils/api";
-import Table, { Column } from "../../../commons/Table";
-import { details } from "../../../../commons/routers";
-import { Status, StyledLink, TextAmountReward } from "./styles";
-import CustomIcon from "../../../commons/CustomIcon";
-import { AIconGreen } from "../../../../commons/resources";
-import UserInfo from "./UserInfo";
-import { EPOCH_STATUS } from "../../../../commons/utils/constants";
-import useFetch from "../../../../commons/hooks/useFetch";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { useScreen } from "~/commons/hooks/useScreen";
+import useFetch from "../../../../commons/hooks/useFetch";
+import useFetchList from "../../../../commons/hooks/useFetchList";
+import { AIconGreen } from "../../../../commons/resources";
+import { details } from "../../../../commons/routers";
+import { API } from "../../../../commons/utils/api";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../../commons/utils/helper";
+import CustomIcon from "../../../commons/CustomIcon";
+import Table, { Column } from "../../../commons/Table";
+import UserInfo from "./UserInfo";
+import { Amount, Status, StyledLink } from "./styles";
 
 const WalletActivity: React.FC = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
@@ -42,7 +40,7 @@ const WalletActivity: React.FC = () => {
       minWidth: "100px",
       render: (r) => (
         <Box display='flex' alignItems='center'>
-          <TextAmountReward>{r.amount > 0 ? `+${formatADAFull(r.amount)}` : formatADAFull(r.amount)}</TextAmountReward>
+          <Amount type={r.amount > 0 ? "up" : "down"}>{r.amount > 0 ? `+${formatADAFull(r.amount)}` : formatADAFull(r.amount)}</Amount>
           <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
         </Box>
       )

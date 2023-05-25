@@ -57,7 +57,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hide
         const shortTokenName = token.assetName ? getShortHash(tokenName) : getShortWallet(tokenName);
         const isTokenNameLong = tokenName.length > 20;
         return (
-          <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token?.fingerprint))}>
+          <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token?.assetId))}>
             <Box>
               {isTokenNameLong ? (
                 <CustomTooltip title={tokenName} placement='top'>

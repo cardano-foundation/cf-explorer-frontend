@@ -15,7 +15,7 @@ import {
   BoxGroup,
   StyledCertificateShape,
   StyledCopyButton,
-  MyGrid
+  StyledGridItem
 } from "./styles";
 import RecentDeregistrations from "./RecentDeregistrations";
 import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
@@ -199,25 +199,25 @@ export const DeregistrationCertificateModal = ({
 }) => {
   return (
     <StyledModal {...props} title='Deregistration certificate'>
-      <MyGrid>
-        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
+      <Grid container spacing={1}>
+        <StyledGridItem item xs={6}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Pool ID
             </Box>
             {data && (
-              <Box display="flex" flexWrap="nowrap">
-                <CustomTooltip title={data?.poolId || ""}>
+              <Box>
+                <CustomTooltip title={data?.poolView || ""}>
                   <CustomLink to={details.delegation(data?.poolView || "")}>
-                    {getShortWallet(data?.poolId || "")}
+                    {getShortWallet(data?.poolView || "")}
                   </CustomLink>
                 </CustomTooltip>
-                <CopyButton text={data?.poolId || ""} />
+                <CopyButton text={data?.poolView || ""} />
               </Box>
             )}
           </Box>
-        </Box>
-        <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
+        </StyledGridItem>
+        <StyledGridItem item xs={6}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Retirement in Epoch
@@ -228,8 +228,8 @@ export const DeregistrationCertificateModal = ({
               </DetailRetirement>
             )}
           </Box>
-        </Box>
-      </MyGrid>
+        </StyledGridItem>
+      </Grid>
     </StyledModal>
   );
 };

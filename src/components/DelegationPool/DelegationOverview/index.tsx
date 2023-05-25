@@ -9,9 +9,11 @@ import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "~/commons/utils/constants";
 import { formatADA, numberWithCommas } from "~/commons/utils/helper";
 import useFetch from "~/commons/hooks/useFetch";
 import { useScreen } from "~/commons/hooks/useScreen";
+import { useSelector } from "react-redux";
 
 const OverViews: React.FC = () => {
   const { data, loading } = useFetch<OverViewDelegation>(API.DELEGATION.HEADER, undefined, false, REFRESH_TIMES.POOLS);
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const { isGalaxyFoldSmall } = useScreen();
 
   if (loading) {
@@ -59,7 +61,7 @@ const OverViews: React.FC = () => {
               <StyledCard.Content>
                 <StyledCard.Title>Slot</StyledCard.Title>
                 <StyledCard.Value>
-                  {data?.epochSlotNo}
+                  {currentEpoch?.slot}
                   <Box component='span' sx={{ color: (theme) => theme.palette.text.hint, fontWeight: "400" }}>
                     / {MAX_SLOT_EPOCH}
                   </Box>
@@ -68,7 +70,7 @@ const OverViews: React.FC = () => {
               <StyledImg src={RocketBackground} alt='Rocket' />
             </StyledCard.Container>
             <Box position={"relative"} top={-30} px={4}>
-              <StyledLinearProgress variant='determinate' value={((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100} />
+              <StyledLinearProgress variant='determinate' value={((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100} />
             </Box>
           </Box>
         </Box>

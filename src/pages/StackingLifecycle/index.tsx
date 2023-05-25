@@ -1,16 +1,9 @@
 import { Box, CircularProgress, Container, Grid, IconButton } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { useScreen } from "../../commons/hooks/useScreen";
-import {
-  DownloadGreenIcon,
-  FilterIC,
-  ListOfReportsIC,
-  PersionalSettingIC,
-  ScanQRCodeIC,
-  WatchlistIC
-} from "../../commons/resources";
+import { DownloadGreenIcon, FilterIC, ListOfReportsIC, WatchlistIC } from "../../commons/resources";
 import { details, routers } from "../../commons/routers";
 import { API } from "../../commons/utils/api";
 import { defaultAxiosDownload } from "../../commons/utils/axios";
@@ -32,16 +25,6 @@ import CustomIcon from "~/components/commons/CustomIcon";
 import CustomTooltip from "~/components/commons/CustomTooltip";
 
 const cardList = [
-  // {
-  //   icon: <PersionalSettingIC />,
-  //   title: "Personal settings",
-  //   subtitle: "Your personal experience"
-  // },
-  // {
-  //   icon: <ScanQRCodeIC />,
-  //   title: "Scan QR code",
-  //   subtitle: "Scan a QR code"
-  // },
   {
     icon: <ListOfReportsIC />,
     title: "List of reports",
@@ -106,6 +89,11 @@ const Dashboard: React.FC = () => {
     ...params,
     sort: sort || params.sort
   });
+
+  useEffect(() => {
+    document.title = "Saved Reports | Cardano Explorer";
+  }, []);
+
   const { isMobile } = useScreen();
   const handleRowClick = (e: React.MouseEvent<Element, MouseEvent>, row: any) => {
     if (row.stakeKeyReportId) history.push(details.generated_staking_detail(row.stakeKeyReportId));

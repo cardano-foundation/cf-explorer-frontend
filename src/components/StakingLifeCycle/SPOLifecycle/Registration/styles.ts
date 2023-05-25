@@ -144,7 +144,7 @@ export const HoldBoxText = styled(Box)(({ theme }) => ({
 
 export const MyGrid = styled(Box)(({ theme }) => ({
   display: "grid",
-  gridTemplateColumns: "repeat(2, 1fr)",
+  gridTemplateColumns: "50% 50%",
   gridGap: "10px 20px",
   gridAutoRows: "auto"
 }));

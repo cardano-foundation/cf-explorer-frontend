@@ -1,7 +1,29 @@
 import React, { useState } from "react";
-import { Box, Popover } from "@mui/material";
+import { Box, Popper, styled } from "@mui/material";
 import { CloseLineIcon } from "../../../commons/resources";
 import CustomIcon from "../CustomIcon";
+
+const StyledPopper = styled(Popper)(() => ({
+  padding: "10px",
+  marginBottom: "20px !important",
+  backgroundColor: "white",
+  color: "rgb(19, 21, 47)",
+  transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+  borderRadius: 4,
+  boxShadow:
+    "rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px",
+  "&::before": {
+    backgroundColor: "white",
+    content: '""',
+    display: "block",
+    position: "absolute",
+    width: 12,
+    height: 12,
+    bottom: -6,
+    transform: "rotate(45deg)",
+    left: "calc(50% - 6px)"
+  }
+}));
 
 type Props = {
   render: ({ handleClick }: { handleClick: (e: HTMLElement) => void }) => React.ReactNode;
@@ -9,7 +31,7 @@ type Props = {
   showCloseButton?: boolean;
 };
 
-const PopoverStyled = (props: Props) => {
+const PopperStyled = (props: Props) => {
   const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLElement) | null>(null);
   const { render, content, showCloseButton = true } = props;
 
@@ -26,38 +48,7 @@ const PopoverStyled = (props: Props) => {
   return (
     <>
       {render({ handleClick: anchorEl ? handleClose : handleClick })}
-      <Popover
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "center"
-        }}
-        disableScrollLock={true}
-        transformOrigin={{
-          vertical: "bottom",
-          horizontal: "center"
-        }}
-        sx={{
-          "& .MuiPopover-paper": {
-            padding: "10px",
-            overflow: "visible",
-            transform: "translateY(-20px)!important",
-            "&::before": {
-              backgroundColor: "white",
-              content: '""',
-              display: "block",
-              position: "absolute",
-              width: 12,
-              height: 12,
-              bottom: -6,
-              transform: "rotate(45deg)",
-              left: "calc(50% - 6px)"
-            }
-          }
-        }}
-      >
+      <StyledPopper open={open} anchorEl={anchorEl} placement={"top-start"}>
         {showCloseButton && (
           <Box
             onClick={handleClose}
@@ -80,9 +71,9 @@ const PopoverStyled = (props: Props) => {
           </Box>
         )}
         {content}
-      </Popover>
+      </StyledPopper>
     </>
   );
 };
 
-export default PopoverStyled;
+export default PopperStyled;

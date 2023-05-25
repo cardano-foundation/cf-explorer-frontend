@@ -1,12 +1,12 @@
 import React from "react";
-import sendImg from "../../../../commons/resources/images/sendImg.svg";
-import { getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import { details } from "../../../../commons/routers";
-import CopyButton from "../../../commons/CopyButton";
+import sendImg from "~/commons/resources/images/sendImg.svg";
+import { getShortWallet } from "~/commons/utils/helper";
+import { details } from "~/commons/routers";
+import CopyButton from "~/components/commons/CopyButton";
 import { Box } from "@mui/material";
-import CustomTooltip from "../../../commons/CustomTooltip";
+import CustomTooltip from "~/components/commons/CustomTooltip";
 import { AddressLink, Header, ItemContainer, StatusIcon, StyledItem, Wrapper } from "./styles";
-import { useScreen } from "../../../../commons/hooks/useScreen";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 interface DelegationProps {
   data: Transaction["delegations"] | null;
@@ -16,7 +16,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
   const { isTablet } = useScreen();
   return (
     <Wrapper>
-      <Header>Wallet Addresses</Header>
+      <Header>Address Stake Key</Header>
       {data?.map((item) => (
         <StyledItem key={item.address}>
           <ItemContainer>

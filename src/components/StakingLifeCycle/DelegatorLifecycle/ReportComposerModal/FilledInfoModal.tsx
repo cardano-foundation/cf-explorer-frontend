@@ -180,7 +180,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
           <Container>
             <StyledStack>
               <StyledLabel>Select a date range</StyledLabel>
-              <CustomDatePicker dateRange={dateRange} setDateRange={setDateRange} />
+              <CustomDatePicker dateRange={dateRange} setDateRange={setDateRange} hideFuture />
             </StyledStack>
           </Container>
         )}

@@ -68,6 +68,11 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [checkedAgree, setCheckedAgree] = useState(false);
+
+  useEffect(() => {
+    document.title = "Sign Up | Cardano Explorer";
+  }, []);
+
   const handleChangeAgree = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCheckedAgree(event.target.checked);
   };

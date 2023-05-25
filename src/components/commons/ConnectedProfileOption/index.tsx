@@ -17,7 +17,6 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
   const [, setUsername] = useLocalStorage<string>("username", "");
-  const [user, setUser] = useLocalStorage("persist:user", {});
 
   const history = useHistory();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

@@ -1,18 +1,18 @@
 import { Box } from "@mui/material";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
-import useFetchList from "../../../../commons/hooks/useFetchList";
-import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
-import Table, { Column } from "../../../commons/Table";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import { details } from "../../../../commons/routers";
+import useFetchList from "~/commons/hooks/useFetchList";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "~/commons/utils/helper";
+import Table, { Column } from "~/components/commons/Table";
+import CustomTooltip from "~/components/commons/CustomTooltip";
+import { details } from "~/commons/routers";
 import { StyledLink } from "../styles";
-import { API } from "../../../../commons/utils/api";
-import ADAicon from "../../../commons/ADAIcon";
+import { API } from "~/commons/utils/api";
+import ADAicon from "~/components/commons/ADAIcon";
 
 const columns: Column<Instantaneous>[] = [
   {
-    title: "Trx Hash",
+    title: "Tx Hash",
     key: "hash",
     minWidth: "120px",
     render: (r) => (

@@ -15,7 +15,7 @@ import { useLocation } from "react-router-dom";
 const Sidebar: React.FC = () => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const handleToggle = () => setSidebar(!sidebar);
-  const { isMobile, isTablet, width } = useScreen();
+  const { isMobile, isTablet } = useScreen();
   const [openSearch, setOpenSearch] = React.useState(false);
   const { pathname } = useLocation();
 

@@ -11,12 +11,14 @@ import { AIconGreen } from "../../../../commons/resources";
 import { Box, styled } from "@mui/material";
 import UserInfo from "./UserInfo";
 import useFetch from "../../../../commons/hooks/useFetch";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 const RewardActivity: React.FC = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [{ page, size }, setPagi] = useState<{ page: number; size: number }>({ page: 0, size: 10 });
   const [sort, setSort] = useState<string>("");
   const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}` || "");
+  const { isMobile, isGalaxyFoldSmall } = useScreen();
 
   const fetchData = useFetchList<RewardActivityIF>(API.STAKE_LIFECYCLE.REWARDS_ACTIVITY(stakeId), { page, size, sort });
   const rewardType = {
@@ -29,7 +31,7 @@ const RewardActivity: React.FC = () => {
       key: "outSum",
       minWidth: "100px",
       render: (r) => (
-        <Amount type={r.type}>
+        <Amount type={r.type === "REWARD_RECEIVED" ? "up" : "down"}>
           {r.amount
             ? r.type === "REWARD_RECEIVED"
               ? `+${formatADAFull(r.amount)}`
@@ -69,7 +71,7 @@ const RewardActivity: React.FC = () => {
       <StyledTable
         {...fetchData}
         columns={columns}
-        maxHeight={"calc(70vh - 208px)"}
+        maxHeight={`calc(70vh - ${isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"})`}
         total={{ title: "Total Epochs", count: fetchData.total }}
         pagination={{
           page,

@@ -1,7 +1,6 @@
 import { alpha, Box, Skeleton, styled } from "@mui/material";
 import { useState } from "react";
 import { Link as LinkDom } from "react-router-dom";
-
 import { MyGrid } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import CustomTooltip from "../../../commons/CustomTooltip";
@@ -13,9 +12,9 @@ import { formatADA, getShortHash, getShortWallet, numberWithCommas } from "../..
 import CopyButton from "../../../commons/CopyButton";
 import { details } from "../../../../commons/routers";
 import StyledModal from "../../../commons/StyledModal";
-import { useScreen } from "../../../../commons/hooks/useScreen";
 import { FilterParams } from "~/components/StackingFilter";
 import { RegistrationDraw } from "./RegistrationDraw";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 const Registration = () => {
   const { poolId = "" } = useParams<{ poolId: string }>();
@@ -63,13 +62,12 @@ export const RegistrationCertificateModal = ({
   const { data, loading } = useFetch<SPORegistrationDetail>(
     poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, poolUpdateId) : ""
   );
-  const { isMobile } = useScreen();
 
   return (
     <StyledModal {...props} title='Pool Registration certificate'>
       <MyGrid>
         <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
-          <Box p={3} display={"flex"}>
+          <Box p={3} pr={isMobile ? 2 : 3} display={"flex"}>
             <Box>
               <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
                 Transaction ID
@@ -78,7 +76,9 @@ export const RegistrationCertificateModal = ({
               {data && !loading && (
                 <Box pt={"7px"} fontWeight={500}>
                   <CustomTooltip title={data?.txHash || ""}>
-                    <Link to={details.transaction(data?.txHash || "")}>{getShortHash(data?.txHash || "")}</Link>
+                    <Link to={details.transaction(data?.txHash || "")}>
+                      {getShortHash(data?.txHash || "")}
+                    </Link>
                   </CustomTooltip>
                   <CopyButton text={data?.txHash || ""} />
                 </Box>
@@ -116,21 +116,20 @@ export const RegistrationCertificateModal = ({
               {loading && <Skeleton variant='rectangular' />}
               {data && !loading && (
                 <Box display={"flex"} gap={"3px"}>
-                  <CustomTooltip title={data?.vrfKey || "123"}>
-                    <Box pt={"7px"}>
-                      <>
-                        <Box
-                          display={"inline"}
-                          fontWeight={500}
-                          fontSize='0.875rem'
-                          color={({ palette }) => palette.blue[800]}
-                        >
-                          {getShortHash(data?.vrfKey || "")}
-                        </Box>{" "}
-                      </>
-                    </Box>
-                  </CustomTooltip>
                   <Box pt={"7px"}>
+                    <CustomTooltip title={data?.vrfKey}>
+                      <Box
+                        fontWeight={500}
+                        fontSize='0.875rem'
+                        color={({ palette }) => palette.blue[800]}
+                        sx={{
+                          wordBreak: "break-all"
+                        }}
+                        component={"span"}
+                      >
+                        {getShortHash(data?.vrfKey || "")}
+                      </Box>
+                    </CustomTooltip>
                     <CopyButton text={data?.vrfKey || ""} />
                   </Box>
                 </Box>
@@ -234,11 +233,12 @@ export const RegistrationCertificateModal = ({
           </Box>
         </Box>
       </MyGrid>
-    </StyledModal>
+    </StyledModal >
   );
 };
 
 const Link = styled(LinkDom)(({ theme }) => ({
   fontSize: "0.875rem",
-  color: `${theme.palette.blue[800]} !important`
+  color: `${theme.palette.blue[800]} !important`,
+  wordBreak: "break-all",
 }));

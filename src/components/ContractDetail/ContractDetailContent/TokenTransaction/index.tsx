@@ -8,15 +8,14 @@ import {
   getShortHash,
   getShortWallet,
   numberWithCommas
-} from "../../../../commons/utils/helper";
-import Table, { Column } from "../../../commons/Table";
-import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import useFetchList from "../../../../commons/hooks/useFetchList";
-import { details } from "../../../../commons/routers";
-import { AIcon } from "../../../../commons/resources";
-import { API } from "../../../../commons/utils/api";
-import ADAicon from "../../../commons/ADAIcon";
+} from "~/commons/utils/helper";
+import Table, { Column } from "~/components/commons/Table";
+import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
+import CustomTooltip from "~/components/commons/CustomTooltip";
+import useFetchList from "~/commons/hooks/useFetchList";
+import { details } from "~/commons/routers";
+import { API } from "~/commons/utils/api";
+import ADAicon from "~/components/commons/ADAIcon";
 
 const columns: Column<Transactions>[] = [
   {
@@ -26,7 +25,7 @@ const columns: Column<Transactions>[] = [
     render: (data, index) => <SmallText>{numberWithCommas(index + 1)}</SmallText>
   },
   {
-    title: "Trx Hash",
+    title: "Tx Hash",
     key: "trxhash",
     minWidth: "200px",
 
