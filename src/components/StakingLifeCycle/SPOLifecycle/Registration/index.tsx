@@ -64,6 +64,8 @@ export const RegistrationCertificateModal = ({
   );
   const { isMobile } = useScreen();
 
+  const { isMobile } = useScreen()
+
   return (
     <StyledModal {...props} title='Pool Registration certificate'>
       <MyGrid>

@@ -448,6 +448,8 @@ export const PoolUpdateModal = ({
         <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.secondary}` }}>
           <TabList
             onChange={handleChange}
+            variant="scrollable"
+            scrollButtons='auto'
             TabIndicatorProps={{
               sx: {
                 background: (theme) => theme.palette.primary.main,
