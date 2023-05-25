@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { CgClose } from "react-icons/cg";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
-import { CubeIcon, RocketIcon } from "../../../commons/resources";
+import { BlockIcon, CubeIcon, RocketIcon } from "../../../commons/resources";
 import ProgressCircle from "../ProgressCircle";
 import {
   CloseButton,
@@ -209,7 +209,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
             <DetailLink to={details.epoch(epochNo)}>
               <DetailLabel style={{ fontSize: 18 }}>
                 <DetailLinkIcon>
-                  <HiOutlineCube />
+                  <BlockIcon />
                 </DetailLinkIcon>
                 Blocks
               </DetailLabel>

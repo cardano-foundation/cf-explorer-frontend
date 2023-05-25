@@ -67,7 +67,8 @@ export const NavItemMobile = styled(Link)<{ active: boolean; }>(({ theme, active
   overflow: "hidden",
   [theme.breakpoints.down("sm")]: {
     width: "100%",
-    fontSize: "13px"
+    fontSize: "13px",
+    padding: "10px 0px",
   },
 }));
 

@@ -120,7 +120,6 @@ export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, activ
   padding: "8px 30px",
   fontWeight: "bold",
   fontSize: "1rem",
-  marginRight: 5,
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   backgroundColor: active ? theme.palette.primary.main : "none",
   fontFamily: "var(--font-family-title)",
