@@ -7,6 +7,7 @@ import {
   MintingIcon,
   NoteEditIcon,
   RocketIcon,
+  SummaryIconTx,
   USDIcon,
   WithdrawlIcon
 } from "../../../commons/resources";
@@ -44,7 +45,6 @@ import {
   ViewDetailHeader
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
-import { TbFileCheck } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../commons/utils/helper";
@@ -62,7 +62,7 @@ type DetailViewTransactionProps = {
   handleClose: () => void;
 };
 const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] = [
-  { key: "summary", label: "Summary", icon: <TbFileCheck /> },
+  { key: "summary", label: "Summary", icon: <SummaryIconTx /> },
   { key: "utxOs", label: "UTXOs", icon: <CgArrowsExchange /> },
   { key: "contracts", label: "Contracts", icon: <DetailLinkImage src={FileEditIcon} alt='contact' /> },
   { key: "collaterals", label: "Collateral", icon: <DetailLinkImage src={USDIcon} alt='contact' /> },
