@@ -1,4 +1,4 @@
-import { BoxProps, IconButton, styled, Box } from "@mui/material";
+import { BoxProps, IconButton, styled, Box, Typography } from "@mui/material";
 import { forwardRef } from "react";
 import { ButtonListIcon } from "~/commons/resources";
 import { useSelector } from "react-redux";
@@ -66,6 +66,8 @@ const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
   fontSize: 14,
   color: theme.palette.text.secondary,
   marginBottom: ".125rem",
+  width: 11,
+  minWidth: 11,
   [theme.breakpoints.down("md")]: {
     fontSize: 12
   }
@@ -83,6 +85,16 @@ interface Props extends BoxProps {
   txHash: string;
   roundingNumber?: number;
 }
+const HolderValueLabel = styled(Typography)(({ theme }) => ({
+  fontSize: 18,
+  fontWeight: 700,
+  wordBreak: "break-word",
+  textAlign: "right",
+  lineHeight: "20px",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 16
+  }
+}));
 
 export const HoldBox = forwardRef<HTMLElement, Props>(({ value, txHash, roundingNumber = 6, ...props }, feeRef) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
@@ -96,7 +108,7 @@ export const HoldBox = forwardRef<HTMLElement, Props>(({ value, txHash, rounding
       render={({ handleClick }) => (
         <HoldContainer {...props} ref={feeRef} sidebar={+sidebar}>
           <Value>
-            {formatADAFull(value || 0, roundingNumber)}
+            <HolderValueLabel>{formatADAFull(value || 0, roundingNumber)}</HolderValueLabel>
             <StyledAdaLogoIcon />
           </Value>
           <Button

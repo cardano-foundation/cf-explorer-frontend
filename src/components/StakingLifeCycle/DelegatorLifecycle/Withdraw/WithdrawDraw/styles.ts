@@ -113,7 +113,7 @@ export const PaymentWalletIcon = styled("img")(() => ({
 
 export const PaymentWalletInfo = styled(Box)(() => ({
   flex: 1,
-  textAlign: "left",
+  textAlign: "left"
 }));
 
 export const PaymentWalletTitle = styled(Box)(({ theme }) => ({
@@ -197,18 +197,27 @@ export const BoxGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) =
 }));
 
 export const NetAmountBox = styled(HoldBox)<{ sidebar?: number }>(({ theme, sidebar }) => ({
-  width: 164,
+  boxSizing: "border-box",
+  minHeight: 70,
+  height: "max-content",
   borderColor: theme.palette.green[600],
+  width: 180,
+  maxWidth: 180,
+  minWidth: 180,
   "::after": {
     content: '"NET AMOUNT"',
     background: theme.palette.green[600]
   },
   [theme.breakpoints.down(sidebar ? "lg" : "xl")]: {
-    width: 156,
+    width: 180,
+    maxWidth: 180,
+    minWidth: 180,
     padding: "16px 10px"
   },
   [theme.breakpoints.down("sm")]: {
-    width: 135,
+    width: 155,
+    maxWidth: 155,
+    minWidth: 155,
     padding: "16px 8px"
   }
 }));
