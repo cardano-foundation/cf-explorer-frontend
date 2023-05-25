@@ -52,10 +52,7 @@ export const menus: Menu[] = [
     icon: StakingLifecycleIcon,
     children: [
       { title: "Dashboard", href: routers.STAKING_LIFECYCLE },
-      // { title: "Timeline Delegator", href: routers.DELEGATOR_SEARCH },
-      // { title: "Timeline SPO", href: routers.SPO_SEARCH },
-      { title: "Staking Lifecycle", href: routers.STAKING_LIFECYCLE_SEARCH },
-      { title: "Report", href: routers.REPORT_GENERATED.replace(":tab", "stake-key") }
+      { title: "Timeline", href: routers.STAKING_LIFECYCLE_SEARCH },
     ]
   },
   {
