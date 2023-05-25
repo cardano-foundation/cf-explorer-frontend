@@ -118,7 +118,7 @@ const RegistrationPools = () => {
       key: "stakeKey",
       render: (pool) => (
         <>
-          {pool.stakeKey?.map((stakeKey) => (
+          {pool.stakeKey?.slice(0, 2).map((stakeKey) => (
             <StakeKey key={stakeKey}>
               <CustomTooltip title={stakeKey}>
                 <StyledLink to={details.stake(stakeKey)}>{getShortWallet(stakeKey)}</StyledLink>
