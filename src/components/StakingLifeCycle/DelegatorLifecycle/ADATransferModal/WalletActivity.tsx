@@ -29,7 +29,7 @@ const WalletActivity: React.FC = () => {
     CERTIFICATE_FEE_PAID: "Certificate fee paid",
     CERTIFICATE_DEPOSIT_PAID: "Certificate deposit paid",
     CERTIFICATE_HOLD_PAID: "Certificate hold paid",
-    CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "certificate hold deposit refunded",
+    CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "Certificate hold deposit refunded",
     REWARD_WITHDRAWN: "Reward withdrawn"
   };
 

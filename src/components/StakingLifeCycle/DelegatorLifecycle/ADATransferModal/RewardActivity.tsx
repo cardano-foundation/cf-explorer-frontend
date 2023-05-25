@@ -15,7 +15,7 @@ import { useScreen } from "~/commons/hooks/useScreen";
 
 const RewardActivity: React.FC = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
-  const [{ page, size }, setPagi] = useState<{ page: number; size: number }>({ page: 0, size: 10 });
+  const [{ page, size }, setPagi] = useState<{ page: number; size: number }>({ page: 0, size: 50 });
   const [sort, setSort] = useState<string>("");
   const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}` || "");
   const { isMobile, isGalaxyFoldSmall } = useScreen();

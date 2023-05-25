@@ -97,13 +97,12 @@ export const OptionsWrapper = styled(Box)<{ home: number }>(({ theme, home }) =>
   position: "absolute",
   top: home ? "61px" : "44px",
   left: home ? "175px" : "0",
-  width: home ? "calc(100% - 370px)" : "380px",
   backgroundColor: theme.palette.common.white,
   textAlign: "left",
   padding: "0 10px",
   borderBottomLeftRadius: 10,
   borderBottomRightRadius: 10,
-  zIndex: 10
+  zIndex: 1000
 }));
 
 export const Option = styled(Button)(({ theme }) => ({
