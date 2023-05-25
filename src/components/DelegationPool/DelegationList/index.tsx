@@ -1,8 +1,8 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useState, useRef } from "react";
 
 import Table, { Column } from "../../commons/Table";
-import { formatADAFull, formatPercent, getShortWallet } from "../../../commons/utils/helper";
+import { formatADAFull, formatPercent, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
 import { details } from "../../../commons/routers";
 import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 import { HeaderSearchIcon } from "../../../commons/resources";
@@ -26,6 +26,8 @@ const DelegationLists: React.FC = () => {
     search,
     sort
   });
+  const { search: locationSearch } = useLocation();
+  const pageInfo = getPageInfo(locationSearch);
 
   const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     {
@@ -115,6 +117,7 @@ const DelegationLists: React.FC = () => {
         total={{ count: fetchData.total, title: "Total" }}
         onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId))}
         pagination={{
+          ...pageInfo,
           size,
           total: fetchData.total,
           onChange: (page, size) => {
