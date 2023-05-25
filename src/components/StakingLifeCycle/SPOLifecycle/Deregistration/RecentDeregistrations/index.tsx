@@ -63,7 +63,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
     <StyledContainer>
       <StyledList>
         <DescriptionText>Recent Deregistration</DescriptionText>
-        <Box display={"flex"} alignItems={"center"} gap={2}>
+        <Box display={"flex"} alignItems={"center"} gap={1}>
           <WrapFilterDescription>
             Showing {total} {total > 1 ? "results" : "result"}
           </WrapFilterDescription>
