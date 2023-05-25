@@ -62,6 +62,7 @@ export const RegistrationCertificateModal = ({
   const { data, loading } = useFetch<SPORegistrationDetail>(
     poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, poolUpdateId) : ""
   );
+  const { isMobile } = useScreen();
 
   return (
     <StyledModal {...props} title='Pool Registration certificate'>
@@ -76,9 +77,7 @@ export const RegistrationCertificateModal = ({
               {data && !loading && (
                 <Box pt={"7px"} fontWeight={500}>
                   <CustomTooltip title={data?.txHash || ""}>
-                    <Link to={details.transaction(data?.txHash || "")}>
-                      {getShortHash(data?.txHash || "")}
-                    </Link>
+                    <Link to={details.transaction(data?.txHash || "")}>{getShortHash(data?.txHash || "")}</Link>
                   </CustomTooltip>
                   <CopyButton text={data?.txHash || ""} />
                 </Box>
@@ -233,7 +232,7 @@ export const RegistrationCertificateModal = ({
           </Box>
         </Box>
       </MyGrid>
-    </StyledModal >
+    </StyledModal>
   );
 };
 

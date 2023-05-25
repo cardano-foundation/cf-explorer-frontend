@@ -168,9 +168,8 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
             {router.map((route, index) => {
               const active = route.to === pathname;
               return (
-                <Box key={index}>
+                <>
                   <NavItemMobile
-                    smallWidth={isGalaxyFoldSmall ? 1 : 0}
                     sx={{
                       borderTopRightRadius: index === router.length - 1 ? "5px" : "0px",
                       borderBottomRightRadius: index === router.length - 1 ? "5px" : "0px",
@@ -200,7 +199,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                       />
                     </Box>
                   </NavItem>
-                </Box>
+                </>
               );
             })}
           </WrapItemMobile>

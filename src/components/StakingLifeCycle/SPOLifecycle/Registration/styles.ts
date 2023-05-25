@@ -144,9 +144,9 @@ export const HoldBoxText = styled(Box)(({ theme }) => ({
 
 export const MyGrid = styled(Box)(({ theme }) => ({
   display: "grid",
-  gridTemplateColumns: "50% 50%",
   gridGap: "10px 20px",
-  gridAutoRows: "auto"
+  gridAutoRows: "auto",
+  gridTemplateColumns: "50% 50%",
 }));
 
 export const StyledSkeletonContainer = styled(Box)(({ theme }) => ({}));

@@ -50,7 +50,7 @@ export const WrapItemMobile = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const NavItemMobile = styled(Link)<{ active: boolean; smallWidth: number }>(({ theme, active, smallWidth }) => ({
+export const NavItemMobile = styled(Link)<{ active: boolean; }>(({ theme, active }) => ({
   textAlign: "center",
   fontWeight: 700,
   fontSize: "14px",
@@ -62,14 +62,12 @@ export const NavItemMobile = styled(Link)<{ active: boolean; smallWidth: number 
   whiteSpace: "nowrap",
   overflow: "hidden",
   [theme.breakpoints.down("sm")]: {
-    padding: "10px 0",
     width: "100%",
     fontSize: "13px"
   },
-  [theme.breakpoints.up("md")]: {
-    display: "none"
-  }
 }));
+
+
 
 export const StyledUsername = styled(Box)`
   max-width: 200px;
