@@ -5,14 +5,14 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import { details } from "../../../../commons/routers";
 import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
 import useFetch from "../../../../commons/hooks/useFetch";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { API } from "../../../../commons/utils/api";
 import StyledModal from "../../../commons/StyledModal";
 import Table, { Column } from "../../../commons/Table";
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import moment from "moment";
 import ADAicon from "../../../commons/ADAIcon";
-import { StyledLink, DrawContainer, ADAOperator, ADATitle } from "./styles";
+import { StyledLink, DrawContainer, ADAOperator, ADATitle, ADAAmount } from "./styles";
 import CardanoSystem from "~/components/commons/CardanoSystem";
 import SPOHolder from "~/components/commons/SPOHolder";
 import DrawPath from "~/components/commons/DrawPath";
@@ -80,7 +80,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: ()
       title: "Epoch",
       key: "Epoch",
       minWidth: "50px",
-      render: (r) => <Link to={details.epoch(r.epochNo)}>{r.epochNo}</Link>
+      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
     },
     {
       title: "Timestamp",
@@ -96,9 +96,9 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: ()
       key: "AmountADA",
       minWidth: "50px",
       render: (r) => (
-        <Box>
+        <ADAAmount>
           {formatADA(r.amount)} <ADAicon />
-        </Box>
+        </ADAAmount>
       )
     },
     {

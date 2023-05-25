@@ -31,20 +31,19 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
       <CustomTooltip title={poolName}>
         <PoolName> {poolName}</PoolName>
       </CustomTooltip>
-      <PopperStyled
-        render={({ handleClick }) => (
-          <ButtonSPO
-            ref={SPOInfoRef}
-            component={IconButton}
-            left={"33%"}
-            onClick={() => {
-              SPOInfoRef?.current && handleClick(SPOInfoRef.current);
-            }}
-          >
-            <SPOInfo />
-          </ButtonSPO>
-        )}
-        content={
+      <CustomTooltip
+        wOpacity={false}
+        componentsProps={{
+          transition: {
+            style: {
+              backgroundColor: "white",
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+              padding: "10px"
+            }
+          },
+          arrow: { style: { color: "white" } }
+        }}
+        title={
           <Box>
             <Box display={"flex"} alignItems={"center"}>
               <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
@@ -61,40 +60,49 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
             </Box>
           </Box>
         }
-      />
-      <Box>
-        <CustomTooltip
-          wOpacity={false}
-          componentsProps={{
-            transition: {
-              style: {
-                backgroundColor: "white",
-                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
-                padding: "10px"
-              }
-            },
-            arrow: { style: { color: "white" } }
+      >
+        <ButtonSPO
+          ref={SPOInfoRef}
+          component={IconButton}
+          left={"33%"}
+          onClick={() => {
+            SPOInfoRef?.current && history.push(details.delegation(poolView));
           }}
-          title={
-            stakeKey && (
-              <Box display={"flex"} alignItems={"center"}>
-                <SPOKey fill='#108AEF' />
-                <PoolNamePopup to={details.stake(stakeKey)}>{getShortWallet(stakeKey)}</PoolNamePopup>
-                <CopyButton text={stakeKey} />
-              </Box>
-            )
-          }
         >
-          <ButtonSPO
-            ref={SPOKeyRef}
-            component={IconButton}
-            onClick={() => stakeKey && history.push(details.stake(stakeKey))}
-            left={"52%"}
-          >
-            <SPOKey fill='#438F68' />
-          </ButtonSPO>
-        </CustomTooltip>
-      </Box>
+          <SPOInfo />
+        </ButtonSPO>
+      </CustomTooltip>
+      <CustomTooltip
+        wOpacity={false}
+        componentsProps={{
+          transition: {
+            style: {
+              backgroundColor: "white",
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+              padding: "10px"
+            }
+          },
+          arrow: { style: { color: "white" } }
+        }}
+        title={
+          stakeKey && (
+            <Box display={"flex"} alignItems={"center"}>
+              <SPOKey fill='#108AEF' />
+              <PoolNamePopup to={details.stake(stakeKey)}>{getShortWallet(stakeKey)}</PoolNamePopup>
+              <CopyButton text={stakeKey} />
+            </Box>
+          )
+        }
+      >
+        <ButtonSPO
+          ref={SPOKeyRef}
+          component={IconButton}
+          onClick={() => stakeKey && history.push(details.stake(stakeKey))}
+          left={"52%"}
+        >
+          <SPOKey fill='#438F68' />
+        </ButtonSPO>
+      </CustomTooltip>
     </PolygonShapeSPO>
   );
 });

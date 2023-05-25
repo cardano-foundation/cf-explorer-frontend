@@ -41,3 +41,6 @@ export const ADATitle = styled(Box)(() => ({
   alignItems: "flex-end",
   fontWeight: 700
 }));
+export const ADAAmount = styled(Box)`
+  color: ${(props) => props.theme.palette.green[600]} !important;
+`;
