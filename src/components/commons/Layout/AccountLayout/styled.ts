@@ -55,6 +55,7 @@ export const NavItemMobile = styled(Link)<{ active: boolean; }>(({ theme, active
   fontWeight: 700,
   fontSize: "14px",
   lineHeight: "16px",
+  display: "none",
   color: `${active ? theme.palette.common.white : theme.palette.grey[400]} !important`,
   backgroundColor: active ? theme.palette.primary.main : "#E7E8EA",
   padding: "10px 17px",
@@ -65,6 +66,9 @@ export const NavItemMobile = styled(Link)<{ active: boolean; }>(({ theme, active
     width: "100%",
     fontSize: "13px"
   },
+  [theme.breakpoints.down("md")]: {
+    display: "block"
+  }
 }));
 
 
