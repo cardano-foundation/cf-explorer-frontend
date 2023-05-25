@@ -29,7 +29,7 @@ const WalletActivity: React.FC = () => {
     CERTIFICATE_FEE_PAID: "Certificate fee paid",
     CERTIFICATE_DEPOSIT_PAID: "Certificate deposit paid",
     CERTIFICATE_HOLD_PAID: "Certificate hold paid",
-    CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "certificate hold deposit refunded",
+    CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "Certificate hold deposit refunded",
     REWARD_WITHDRAWN: "Reward withdrawn"
   };
 
@@ -54,17 +54,6 @@ const WalletActivity: React.FC = () => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
-    // {
-    //   title: "Fees Paid",
-    //   key: "fee",
-    //   minWidth: "100px",
-    //   render: (r) => (
-    //     <Box display='flex' alignItems='center'>
-    //       <TextAmountReward>{formatADAFull(r.fee)}</TextAmountReward>
-    //       <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
-    //     </Box>
-    //   )
-    // },
     {
       title: "Transaction Hash",
       key: "transactionHash",
