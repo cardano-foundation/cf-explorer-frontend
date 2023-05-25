@@ -80,12 +80,6 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
       label: "Pool size",
       value: poolSize,
       type: [ReportType.PoolReport]
-    },
-    {
-      label: "Fees paid",
-      key: OptionTransfer.feesPaid,
-      value: feesPaid,
-      type: [ReportType.PoolReport, ReportType.StakeKeyReport]
     }
   ];
 
