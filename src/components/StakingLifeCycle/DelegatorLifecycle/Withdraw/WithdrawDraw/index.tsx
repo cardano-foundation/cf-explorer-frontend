@@ -59,9 +59,10 @@ export interface WithdrawDetail {
 interface Props {
   setSelected: (withdraw: WithdrawItem | null) => void;
   selected: WithdrawItem;
+  showBackButton?: boolean;
 }
 
-export const WithdrawnDraw = ({ selected }: Props) => {
+export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const { data, loading } = useFetch<WithdrawDetail>(
     selected.txHash && stakeId && API.STAKE_LIFECYCLE.WITHDRAW_DETAIL(stakeId, selected.txHash)
@@ -138,9 +139,12 @@ export const WithdrawnDraw = ({ selected }: Props) => {
   return (
     <Box>
       <StepInfo>
-        <IconButtonBack onClick={handleBack}>
-          <BackIcon />
-        </IconButtonBack>
+        {showBackButton && (
+          <IconButtonBack onClick={handleBack}>
+            <BackIcon />
+          </IconButtonBack>
+        )}
+
         <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />

@@ -33,6 +33,8 @@ const PoollUpdates = () => {
   const { data } = useFetch<PoolUpdateDetail>(
     selected?.poolUpdateId ? API.SPO_LIFECYCLE.POOL_UPDATE_DETAIL(selected.poolUpdateId) : ""
   );
+
+  const [showBackButton, setShowBackButton] = useState<boolean>(false);
   const handleSelect = (pool: PoolUpdateItem | null) => {
     setSelected(pool);
   };
@@ -42,14 +44,20 @@ const PoollUpdates = () => {
   return (
     <Box>
       <PoolUpdateModal data={data} handleCloseModal={handleToggleModal} open={openModal} />
-      <PoollUpdatesList onSelect={handleSelect} />
-      {selected && <PoolUpdatesDraw poolUpdates={selected} data={data} toggleModal={handleToggleModal} />}
+      <PoollUpdatesList onSelect={handleSelect} setShowBackButton={setShowBackButton} />
+      {selected && <PoolUpdatesDraw poolUpdates={selected} data={data} toggleModal={handleToggleModal} showBackButton={showBackButton}/>}
     </Box>
   );
 };
 export default PoollUpdates;
 
-export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null) => void }) => {
+export const PoollUpdatesList = ({
+  onSelect,
+  setShowBackButton
+}: {
+  onSelect: (pool: PoolUpdateItem | null) => void;
+  setShowBackButton: (status: boolean) => void;
+}) => {
   const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
@@ -67,6 +75,13 @@ export const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem
       ...params
     }
   );
+
+  useEffect(() => {
+    if (initialized) {
+      setShowBackButton?.(data.length > 1);
+    }
+  }, [initialized]);
+
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);
     onSelect(currentItem || null);
@@ -425,19 +440,19 @@ export const PoolUpdateModal = ({
     label: string;
     children: React.ReactNode;
   }[] = [
-      {
-        key: "poolCertificate",
-        icon: PoolCert,
-        label: "Pool certificate",
-        children: <>{renderPoolCert()}</>
-      },
-      {
-        key: "certificateUpdates",
-        icon: CertUpdate,
-        label: "Certificate updates",
-        children: <Box>{renderCertificateUpdates()}</Box>
-      }
-    ];
+    {
+      key: "poolCertificate",
+      icon: PoolCert,
+      label: "Pool certificate",
+      children: <>{renderPoolCert()}</>
+    },
+    {
+      key: "certificateUpdates",
+      icon: CertUpdate,
+      label: "Certificate updates",
+      children: <Box>{renderCertificateUpdates()}</Box>
+    }
+  ];
 
   const handleChange = (event: React.SyntheticEvent, tab: "poolCertificate" | "certificateUpdates") => {
     setTabActive(tab);
@@ -448,7 +463,7 @@ export const PoolUpdateModal = ({
         <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.secondary}` }}>
           <TabList
             onChange={handleChange}
-            variant="scrollable"
+            variant='scrollable'
             scrollButtons='auto'
             TabIndicatorProps={{
               sx: {
@@ -488,5 +503,5 @@ export const PoolUpdateModal = ({
 const Link = styled(LinkDom)(({ theme }) => ({
   fontSize: "0.875rem",
   color: `${theme.palette.blue[800]} !important`,
-  wordBreak: "break-all",
+  wordBreak: "break-all"
 }));

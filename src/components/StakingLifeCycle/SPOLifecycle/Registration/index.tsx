@@ -33,11 +33,25 @@ const Registration = () => {
     setSelected(registration);
   };
 
+  const [showBackButton, setShowBackButton] = useState<boolean>(false);
+
   const handleToggleCertificateModal = () => setOpenModal((state) => !state);
   return (
     <Box>
-      <RecentRegistrations params={params} setParams={setParams} onSelect={handleSelect} />
-      {selected && <RegistrationDraw selected={selected} data={data} toggleModal={handleToggleCertificateModal} />}
+      <RecentRegistrations
+        params={params}
+        setParams={setParams}
+        onSelect={handleSelect}
+        setShowBackButton={setShowBackButton}
+      />
+      {selected && (
+        <RegistrationDraw
+          selected={selected}
+          data={data}
+          toggleModal={handleToggleCertificateModal}
+          showBackButton={showBackButton}
+        />
+      )}
       <RegistrationCertificateModal
         poolId={poolId}
         poolUpdateId={selected?.poolUpdateId || 0}
@@ -239,5 +253,5 @@ export const RegistrationCertificateModal = ({
 const Link = styled(LinkDom)(({ theme }) => ({
   fontSize: "0.875rem",
   color: `${theme.palette.blue[800]} !important`,
-  wordBreak: "break-all",
+  wordBreak: "break-all"
 }));

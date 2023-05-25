@@ -36,6 +36,7 @@ import DrawPath from "~/components/commons/DrawPath";
 const Deregistration = () => {
   const [selected, setSelected] = useState<SPODeregistration | null>(null);
   const [openModal, setOpenModal] = useState(false);
+  const [showBackButton, setShowBackButton] = useState<boolean>(false);
 
   const handleSelect = (deregistration: SPODeregistration | null) => {
     setSelected(deregistration);
@@ -46,8 +47,10 @@ const Deregistration = () => {
   return (
     <Box>
       <DeregistrationCertificateModal data={selected} handleCloseModal={handleToggleModal} open={openModal} />
-      <RecentDeregistrations onSelect={handleSelect} />
-      {selected && <DeregistrationTimeline selected={selected} toggleModal={handleToggleModal} />}
+      <RecentDeregistrations onSelect={handleSelect} setShowBackButton={setShowBackButton} />
+      {selected && (
+        <DeregistrationTimeline selected={selected} toggleModal={handleToggleModal} showBackButton={showBackButton} />
+      )}
     </Box>
   );
 };
@@ -56,9 +59,10 @@ export default Deregistration;
 type DeregistrationTimelineProps = {
   selected: SPODeregistration | null;
   toggleModal: () => void;
+  showBackButton?: boolean;
 };
 
-const DeregistrationTimeline = ({ selected, toggleModal }: DeregistrationTimelineProps) => {
+const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: DeregistrationTimelineProps) => {
   const history = useHistory();
 
   const SPOHolderRef = useRef(null);
@@ -131,9 +135,11 @@ const DeregistrationTimeline = ({ selected, toggleModal }: DeregistrationTimelin
   return (
     <Box>
       <StepInfo>
-        <IconButtonBack onClick={handleBack}>
-          <BackIcon />
-        </IconButtonBack>
+        {showBackButton && (
+          <IconButtonBack onClick={handleBack}>
+            <BackIcon />
+          </IconButtonBack>
+        )}
         <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
