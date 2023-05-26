@@ -97,7 +97,8 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
         endPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
         endOffset: { 0: [86, 0], sm: [97, 0], lg: [0, -70] },
         startOffset: { 0: [0, -15], lg: [0] },
-        arrow: { 0: "bottom", lg: "right" }
+        arrow: { 0: "bottom", lg: "right" },
+        autoAlign: { 0: "end-vertical", lg: "end-horizontal" }
       },
       {
         start: paymentRef,
@@ -106,7 +107,8 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
         startOffset: { 0: [-86, 0], sm: [-97, 0], lg: [0, 70] },
         endOffset: { 0: [0, -15], lg: [0] },
-        arrow: { 0: "top", lg: "left" }
+        arrow: { 0: "top", lg: "left" },
+        autoAlign: { 0: "start-vertical", lg: "start-horizontal" }
       },
       {
         start: feeRef,
