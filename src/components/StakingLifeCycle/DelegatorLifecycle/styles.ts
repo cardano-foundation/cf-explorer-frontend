@@ -4,6 +4,9 @@ export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   width: "100%",
   padding: `0 0 ${theme.spacing(3)}`,
   borderBottom: `3px solid ${active ? theme.palette.green[600] : theme.palette.grey[200]}`,
+  [theme.breakpoints.down("lg")]: {
+    minWidth: "190px"
+  },
   [theme.breakpoints.down("sm")]: {
     padding: "16px 30px"
   }
