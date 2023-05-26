@@ -198,7 +198,6 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             />
           </Box>
         )}
-        <TextWarning>The earliest 1,000 transactions within the selected range will be exported</TextWarning>
         <StyledStack>
           <StyledButton disabled={isDisabledButton} onClick={handleSubmit}>
             Next
