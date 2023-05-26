@@ -125,7 +125,7 @@ const PolicyTable = () => {
   const fetchData = useFetchList<PolicyHolder | TokenPolicys>(`${API.POLICY}/${policyId}/${activeTab}`, pageInfo);
 
   return (
-    <Box mt={4}>
+    <Box mt={4} mr={2}>
       <TabContext value={activeTab}>
         <Box style={{ borderBottom: `1px solid ${theme.palette.border.secondary}` }}>
           <StyledTabList
