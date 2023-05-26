@@ -18,7 +18,7 @@ import {
   StyledGridItem
 } from "./styles";
 import RecentDeregistrations from "./RecentDeregistrations";
-import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADA, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import moment from "moment";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { details } from "../../../../commons/routers";
@@ -135,10 +135,12 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
   return (
     <Box>
       <StepInfo>
-        {showBackButton && (
+        {showBackButton ? (
           <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
+        ) : (
+          <Box />
         )}
         <InfoGroup>
           <Info>
@@ -160,7 +162,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>{moment(selected?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+            <InfoText>{formatDateTimeLocal(selected?.time || "")}</InfoText>
           </Info>
         </InfoGroup>
       </StepInfo>

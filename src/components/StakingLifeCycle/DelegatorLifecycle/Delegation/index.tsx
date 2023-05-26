@@ -82,10 +82,12 @@ const DelegationTimeline = ({ selected, showBackButton = false }: Props) => {
     return (
       <Box>
         <StepInfo>
-          {showBackButton && (
+          {showBackButton ? (
             <IconButtonBack onClick={handleBack}>
               <BackIcon />
             </IconButtonBack>
+          ) : (
+            <Box />
           )}
 
           <InfoGroup sidebar={+sidebar}>
@@ -111,10 +113,12 @@ const DelegationTimeline = ({ selected, showBackButton = false }: Props) => {
   return (
     <Box>
       <StepInfo>
-        {showBackButton && (
+        {showBackButton ? (
           <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
+        ) : (
+          <Box />
         )}
         <InfoGroup>
           <Info>
