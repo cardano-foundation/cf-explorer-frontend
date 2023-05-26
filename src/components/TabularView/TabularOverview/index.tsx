@@ -66,7 +66,7 @@ const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
 
   return (
-    <Grid item xs={12} lg={sidebar ? 12 : 6} xl={6}>
+    <Grid item sm={sidebar ? 12 : 6} md={6} lg={6} width={"100%"}>
       <CardOverview>
         <Icon component={BgGray} />
         <CardContent>
@@ -93,9 +93,9 @@ const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
 const TabularOverview: React.FC = () => {
   const data = useContext(DelegatorDetailContext);
   const [open, setOpen] = useState(false);
-  const { isTablet } = useScreen();
+
   return (
-    <Grid container spacing={2} columnSpacing={isTablet ? "0px" : ""}>
+    <Grid container spacing={2}>
       <GridItem
         title='Payment Wallet'
         mainIcon={<PaymentWallet />}
