@@ -8,7 +8,7 @@ import { API } from "../../../../commons/utils/api";
 import ReceivedRewardsModal from "../../../ReceivedRewardsModal";
 import RewarsDistributionDraw from "./RewardsDistributionDraw";
 
-const RewardsDistribution = ( ) => {
+const RewardsDistribution = () => {
   const [openReceivedRewardsModal, setOpenReceivedRewardsModal] = useState(false);
 
   const { stakeId = "" } = useParams<{ stakeId: string }>();

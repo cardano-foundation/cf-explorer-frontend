@@ -3,7 +3,7 @@ import { Backdrop, Box, SelectChangeEvent } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { HeaderSearchIcon } from "../../../../../commons/resources";
 import { details, routers } from "../../../../../commons/routers";
-import qs, { stringify } from "qs";
+import { stringify } from "qs";
 import { BiChevronDown } from "react-icons/bi";
 import { GoChevronRight } from "react-icons/go";
 import {
@@ -19,12 +19,11 @@ import {
 } from "./style";
 import { useSelector } from "react-redux";
 import { useScreen } from "../../../../../commons/hooks/useScreen";
-import defaultAxios from "../../../../../commons/utils/axios";
-import { API } from "../../../../../commons/utils/api";
 
 interface Props {
   home: boolean;
   callback?: () => void;
+  setShowErrorMobile?: (show: boolean) => void;
 }
 interface FormValues {
   filter: FilterParams;
@@ -83,30 +82,29 @@ const options: Option[] = [
     paths: [routers.DELEGATION_POOLS, routers.REGISTRATION_POOLS]
   },
   {
-    value: "delegation-lifecycle",
-    label: "Delegation Lifecycle",
-    paths: [routers.DELEGATOR_LIFECYCLE],
-    detail: details.staking
-  },
-  {
-    value: "spo-lifecycle",
-    label: "SPO Lifecycle",
-    paths: [routers.SPO_LIFECYCLE],
-    detail: details.spo
+    value: "lifecycle",
+    label: "Lifecycle",
+    paths: [
+      routers.STAKING_LIFECYCLE_SEARCH,
+      routers.SPO_LIFECYCLE,
+      routers.DELEGATOR_LIFECYCLE,
+      routers.STAKING_LIFECYCLE
+    ]
   }
 ];
 
-const HeaderSearch: React.FC<Props> = ({ home, callback }) => {
+const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile }) => {
   const history = useHistory();
   const [{ search, filter }, setValues] = useState<FormValues>({ ...intitalValue });
   const [showOption, setShowOption] = useState(false);
+  const [error, setError] = useState("");
   useEffect(() => {
     if (!search) {
       setShowOption(false);
     }
-    if (filter !== "all") {
-      setShowOption(false);
-    }
+    // if (filter !== "all") {
+    //   setShowOption(false);
+    // }
   }, [search, filter]);
 
   const currentPath = history.location.pathname.split("/")[1];
@@ -116,34 +114,50 @@ const HeaderSearch: React.FC<Props> = ({ home, callback }) => {
     const filter: FilterParams = options.find((item) => checkIncludesPath(item.paths))?.value || "all";
 
     setValues({ ...intitalValue, filter });
+    setError("");
+    setShowErrorMobile && setShowErrorMobile(false);
   }, [history.location.pathname]);
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
     const option = options.find((item) => item.value === filter);
 
-    callback?.();
-    if (option?.value === "spo-lifecycle" && option?.detail) {
-      const data = await defaultAxios
-        .get(`${API.DELEGATION.POOL_LIST}?${qs.stringify({ search })}`)
-        .then((res) => res.data.data);
-      if (data && data.length) return history.push(option?.detail(data[0].poolId));
+    if (option?.value === "lifecycle") {
+      if (search.startsWith("stake")) {
+        history.push(details.staking(search, "timeline"));
+        callback?.();
+      } else if (search.startsWith("pool")) {
+        history.push(details.spo(search, "timeline"));
+        callback?.();
+      } else {
+        setError("No records found!");
+        setShowErrorMobile && setShowErrorMobile(true);
+        setShowOption(true);
+      }
+      return;
     }
+    callback?.();
     if (option?.detail) return history.push(option?.detail(search));
     if (search) {
       history.push(
         `${routers.SEARCH}?${stringify({ search, filter: filterParams || (filter !== "all" ? filter : undefined) })}`
       );
       setValues({ ...intitalValue });
+      setError("");
+      setShowErrorMobile && setShowErrorMobile(false);
     }
   };
 
   const handleChangeFilter = (e: SelectChangeEvent<unknown>) => {
     setValues({ search, filter: e.target.value as Option["value"] });
+    setError("");
+    setShowErrorMobile && setShowErrorMobile(false);
   };
 
   const handleChangeSearch = (e?: React.ChangeEvent) => {
     setValues({ filter, search: (e?.target as HTMLInputElement)?.value });
+    setError("");
+    setShowErrorMobile && setShowErrorMobile(false);
     onFocus((e?.target as HTMLInputElement)?.value);
   };
   const onFocus = (newValue?: string) => {
@@ -199,7 +213,9 @@ const HeaderSearch: React.FC<Props> = ({ home, callback }) => {
         disableUnderline
         onFocus={() => onFocus()}
       />
-      {!isMobile && <OptionsSearch home={home} show={showOption} value={search} handleSearch={handleSearch} />}
+
+      <OptionsSearch error={error} home={home} show={showOption} value={search} handleSearch={handleSearch} />
+
       <SubmitButton type='submit' home={home ? 1 : 0} disabled={!search}>
         <Image src={HeaderSearchIcon} alt='search' home={home ? 1 : 0} />
       </SubmitButton>
@@ -213,34 +229,49 @@ export const OptionsSearch = ({
   show,
   home,
   value,
-  handleSearch
+  handleSearch,
+  error
 }: {
   show: boolean;
   home: boolean;
   value: string;
+  error: string;
   handleSearch: (e?: FormEvent, filterParams?: FilterParams) => void;
 }) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const submitSearch = (filter: FilterParams) => {
     handleSearch(undefined, filter);
   };
-
+  const { isTablet } = useScreen();
   return (
-    <OptionsWrapper display={show ? "block" : "none"} home={+home}>
-      {+value <= (currentEpoch?.no || 0) && (
-        <Option onClick={() => submitSearch("epochs")}>
-          <Box>
-            Search for an epoch <ValueOption> {value}</ValueOption>
-          </Box>
-          <GoChevronRight />
-        </Option>
+    <OptionsWrapper
+      display={show ? "block" : "none"}
+      home={+home}
+      width={isTablet ? "calc(100% - 22px)" : home ? "calc(100% - 370px)" : "380px"}
+    >
+      {!error && (
+        <>
+          {+value <= (currentEpoch?.no || 0) && (
+            <Option onClick={() => submitSearch("epochs")}>
+              <Box>
+                Search for an epoch <ValueOption> {value}</ValueOption>
+              </Box>
+              <GoChevronRight />
+            </Option>
+          )}
+          <Option onClick={() => submitSearch("blocks")}>
+            <Box>
+              Search for a block by number <ValueOption>{value}</ValueOption>
+            </Box>
+            <GoChevronRight />
+          </Option>
+        </>
       )}
-      <Option onClick={() => submitSearch("blocks")}>
-        <Box>
-          Search for a block by number <ValueOption>{value}</ValueOption>
+      {!!error && (
+        <Box component={Option} color={({ palette }) => palette.red[700]} justifyContent={"center"}>
+          <Box>{error}</Box>
         </Box>
-        <GoChevronRight />
-      </Option>
+      )}
     </OptionsWrapper>
   );
 };

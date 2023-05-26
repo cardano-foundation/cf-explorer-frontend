@@ -1,6 +1,6 @@
 import { alpha, Box, Skeleton, styled } from "@mui/material";
 import { useState } from "react";
-import { Link as LinkDom } from "react-router-dom";
+import { Link as LinkDom, useHistory } from "react-router-dom";
 import { MyGrid } from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import CustomTooltip from "../../../commons/CustomTooltip";
@@ -15,6 +15,8 @@ import StyledModal from "../../../commons/StyledModal";
 import { FilterParams } from "~/components/StackingFilter";
 import { RegistrationDraw } from "./RegistrationDraw";
 import { useScreen } from "~/commons/hooks/useScreen";
+import { DotsIcon, ViewMoreButton } from "../PoolUpdates/styles";
+import ViewMoreAddressModal from "~/components/ViewMoreAddressModal";
 
 const Registration = () => {
   const { poolId = "" } = useParams<{ poolId: string }>();
@@ -33,11 +35,25 @@ const Registration = () => {
     setSelected(registration);
   };
 
+  const [showBackButton, setShowBackButton] = useState<boolean>(false);
+
   const handleToggleCertificateModal = () => setOpenModal((state) => !state);
   return (
     <Box>
-      <RecentRegistrations params={params} setParams={setParams} onSelect={handleSelect} />
-      {selected && <RegistrationDraw selected={selected} data={data} toggleModal={handleToggleCertificateModal} />}
+      <RecentRegistrations
+        params={params}
+        setParams={setParams}
+        onSelect={handleSelect}
+        setShowBackButton={setShowBackButton}
+      />
+      {selected && (
+        <RegistrationDraw
+          selected={selected}
+          data={data}
+          toggleModal={handleToggleCertificateModal}
+          showBackButton={showBackButton}
+        />
+      )}
       <RegistrationCertificateModal
         poolId={poolId}
         poolUpdateId={selected?.poolUpdateId || 0}
@@ -62,11 +78,22 @@ export const RegistrationCertificateModal = ({
   const { data, loading } = useFetch<SPORegistrationDetail>(
     poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, poolUpdateId) : ""
   );
+  const history = useHistory();
   const { isMobile } = useScreen();
+  const [selectedOwner, setSelectedOwner] = useState<string[]>([]);
 
   return (
     <StyledModal {...props} title='Pool Registration certificate'>
       <MyGrid>
+        <ViewMoreAddressModal
+          showFullHash={true}
+          maxWidth={680}
+          title='Pool Owner'
+          open={!!selectedOwner.length}
+          onClose={() => setSelectedOwner([])}
+          items={selectedOwner}
+          onItemClick={(item) => history.push(details.stake(item))}
+        />
         <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
           <Box p={3} pr={isMobile ? 2 : 3} display={"flex"}>
             <Box>
@@ -145,21 +172,24 @@ export const RegistrationCertificateModal = ({
               {loading && <Skeleton variant='rectangular' />}
               {data && !loading && (
                 <>
-                  {(data.stakeKeys || []).map((item) => (
-                    <>
-                      <Box key={item} pt={"7px"} fontWeight={500} display={"flex"} gap={"3px"}>
-                        <CustomTooltip title={item || ""}>
-                          <Box>
-                            <Link to={details.stake(item || "")}>{getShortWallet(item)}</Link>{" "}
-                          </Box>
-                        </CustomTooltip>
-                        <CopyButton text={item || ""} />
-                      </Box>
-                    </>
-                  ))}
+                  {(data.stakeKeys || []).length > 0 && (
+                    <Box pt={"7px"} fontWeight={500} display={"flex"} gap={"3px"}>
+                      <CustomTooltip title={data.stakeKeys[0] || ""}>
+                        <Box>
+                          <Link to={details.stake(data.stakeKeys[0] || "")}>{getShortWallet(data.stakeKeys[0])}</Link>{" "}
+                        </Box>
+                      </CustomTooltip>
+                      <CopyButton text={data.stakeKeys[0] || ""} />
+                    </Box>
+                  )}
                 </>
               )}
             </Box>
+            {data && data.stakeKeys.length > 0 && (
+              <ViewMoreButton onClick={() => setSelectedOwner(data.stakeKeys || [])}>
+                <DotsIcon />
+              </ViewMoreButton>
+            )}
           </Box>
         </Box>
         <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
@@ -239,5 +269,5 @@ export const RegistrationCertificateModal = ({
 const Link = styled(LinkDom)(({ theme }) => ({
   fontSize: "0.875rem",
   color: `${theme.palette.blue[800]} !important`,
-  wordBreak: "break-all",
+  wordBreak: "break-all"
 }));

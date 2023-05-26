@@ -10,6 +10,7 @@ import DetailHeader from "../../DetailHeader";
 import ProgressCircle from "../../ProgressCircle";
 import { Container, EpochNumber, EpochProgress, TitleCard } from "./styles";
 import { useSelector } from "react-redux";
+import moment from "moment";
 
 interface IProps {
   data: IDataEpoch;
@@ -19,7 +20,10 @@ export default function FirstEpoch({ data: currentEpochData }: IProps) {
   const theme = useTheme();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   if (!currentEpochData) return null;
-  const progress = (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0);
+  const progress =
+    moment(currentEpochData.endTime).diff(moment()) >= 0
+      ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
+      : 100;
   const listOverview = [
     {
       icon: ExchangeIcon,
@@ -63,7 +67,7 @@ export default function FirstEpoch({ data: currentEpochData }: IProps) {
       ),
       value: (
         <Box component={"span"}>
-          {currentEpoch?.slot}/{MAX_SLOT_EPOCH}
+          {moment(currentEpochData.endTime).diff(moment()) >= 0 ? currentEpoch?.slot : MAX_SLOT_EPOCH}/{MAX_SLOT_EPOCH}
         </Box>
       )
     },

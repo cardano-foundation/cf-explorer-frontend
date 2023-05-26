@@ -25,13 +25,22 @@ const Registration = () => {
     txHash: undefined
   });
 
+  const [showBackButton, setShowBackButton] = useState<boolean>(false);
+
   const handleToggleModal = () => setOpenModal((state) => !state);
 
   return (
     <Box>
       <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
-      <RecentRegistrations onSelect={handleSelect} params={params} setParams={setParams} />
-      {selected && <RegistrationDraw selected={selected} toggleModal={handleToggleModal} />}
+      <RecentRegistrations
+        onSelect={handleSelect}
+        params={params}
+        setParams={setParams}
+        setShowBackButton={setShowBackButton}
+      />
+      {selected && (
+        <RegistrationDraw selected={selected} toggleModal={handleToggleModal} showBackButton={showBackButton} />
+      )}
     </Box>
   );
 };

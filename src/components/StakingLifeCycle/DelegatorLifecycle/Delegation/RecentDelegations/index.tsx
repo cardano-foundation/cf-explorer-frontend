@@ -17,9 +17,10 @@ interface Props {
   onSelect: (delegation: DelegationItem | null) => void;
   params?: FilterParams;
   setParams?: (params: FilterParams) => void;
+  setShowBackButton?: (status: boolean) => void;
 }
 
-const RecentDelegations: React.FC<Props> = ({ onSelect, params, setParams }) => {
+const RecentDelegations: React.FC<Props> = ({ onSelect, params, setParams, setShowBackButton }) => {
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
@@ -32,6 +33,13 @@ const RecentDelegations: React.FC<Props> = ({ onSelect, params, setParams }) => 
       ...params
     }
   );
+
+  useEffect(() => {
+    if (initialized) {
+      setShowBackButton?.(data.length > 1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialized]);
 
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);

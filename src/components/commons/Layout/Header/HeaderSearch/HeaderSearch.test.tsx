@@ -20,7 +20,7 @@ describe("HeaderSearch", () => {
   });
   it("should function search has been called", async () => {
     const mockHandleSearch = jest.fn();
-    render(<OptionsSearch show={true} home={true} value={"6789"} handleSearch={mockHandleSearch} />);
+    render(<OptionsSearch show={true} home={true} error='abc' value={"6789"} handleSearch={mockHandleSearch} />);
     const buttonSearch = screen.getByRole("button", { name: /Search/i });
     await userEvent.click(buttonSearch);
     expect(mockHandleSearch).toBeCalled();

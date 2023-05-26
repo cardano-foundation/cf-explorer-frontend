@@ -31,9 +31,10 @@ import { details } from "~/commons/routers";
 interface Props {
   selected: RegistrationItem;
   toggleModal: () => void;
+  showBackButton?: boolean;
 }
 
-export const RegistrationDraw = ({ selected, toggleModal }: Props) => {
+export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false }: Props) => {
   const { deposit, fee, time, txHash } = selected;
 
   const adaHolderRef = useRef(null);
@@ -93,9 +94,11 @@ export const RegistrationDraw = ({ selected, toggleModal }: Props) => {
   return (
     <Box>
       <StepInfo>
-        <IconButtonBack onClick={handleBack}>
-          <BackIcon />
-        </IconButtonBack>
+        {showBackButton && (
+          <IconButtonBack onClick={handleBack}>
+            <BackIcon />
+          </IconButtonBack>
+        )}
         <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />

@@ -18,7 +18,7 @@ const WalletActivity: React.FC = () => {
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const [sort, setSort] = useState<string>("");
   const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}` || "");
-  const { isMobile, isGalaxyFoldSmall } = useScreen();
+  const { isMobile, isGalaxyFoldSmall, isTablet } = useScreen();
 
   const fetchData = useFetchList<WalletActivityIF>(API.STAKE_LIFECYCLE.WALLET_ACTIVITY(stakeId), { ...pageInfo, sort });
 
@@ -29,7 +29,7 @@ const WalletActivity: React.FC = () => {
     CERTIFICATE_FEE_PAID: "Certificate fee paid",
     CERTIFICATE_DEPOSIT_PAID: "Certificate deposit paid",
     CERTIFICATE_HOLD_PAID: "Certificate hold paid",
-    CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "certificate hold deposit refunded",
+    CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "Certificate hold deposit refunded",
     REWARD_WITHDRAWN: "Reward withdrawn"
   };
 
@@ -40,7 +40,9 @@ const WalletActivity: React.FC = () => {
       minWidth: "100px",
       render: (r) => (
         <Box display='flex' alignItems='center'>
-          <Amount type={r.amount > 0 ? "up" : "down"}>{r.amount > 0 ? `+${formatADAFull(r.amount)}` : formatADAFull(r.amount)}</Amount>
+          <Amount type={r.amount > 0 ? "up" : "down"}>
+            {r.amount > 0 ? `+${formatADAFull(r.amount)}` : formatADAFull(r.amount)}
+          </Amount>
           <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
         </Box>
       )
@@ -74,13 +76,15 @@ const WalletActivity: React.FC = () => {
       render: (r) => <Status status={r.status}>{r.status}</Status>
     }
   ];
-
+  const maxHeightCalc = `calc(70vh - ${
+    isTablet ? "290px" : isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"
+  })`;
   return (
     <Box>
       <UserInfo acitve='wallet' total={fetchData.total} reward={data?.totalStake || 0} stake={stakeId} />
       <StyledTable
         {...fetchData}
-        maxHeight={`calc(70vh - ${isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"})`}
+        maxHeight={maxHeightCalc}
         columns={columns}
         total={{ title: "Total Epochs", count: fetchData.total }}
         pagination={{

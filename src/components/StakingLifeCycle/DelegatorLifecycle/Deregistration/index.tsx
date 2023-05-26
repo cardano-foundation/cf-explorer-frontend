@@ -33,12 +33,20 @@ const Deregistration = () => {
   };
 
   const handleToggleModal = () => setOpenModal((state) => !state);
+  const [showBackButton, setShowBackButton] = useState<boolean>(false);
 
   return (
     <Box>
       <DeregistrationCertificateModal open={openModal} handleCloseModal={handleToggleModal} stake={stakeId} />
-      <RecentDeregistrations onSelect={handleSelect} params={params} setParams={setParams} />
-      {selected && <DeregistrationTimeline selected={selected} toggleModal={handleToggleModal} />}
+      <RecentDeregistrations
+        onSelect={handleSelect}
+        params={params}
+        setParams={setParams}
+        setShowBackButton={setShowBackButton}
+      />
+      {selected && (
+        <DeregistrationTimeline selected={selected} toggleModal={handleToggleModal} showBackButton={showBackButton} />
+      )}
     </Box>
   );
 };
@@ -47,9 +55,10 @@ export default Deregistration;
 type DeregistrationProps = {
   selected: DeregistrationItem;
   toggleModal: () => void;
+  showBackButton?: boolean;
 };
 
-const DeregistrationTimeline = ({ selected, toggleModal }: DeregistrationProps) => {
+const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: DeregistrationProps) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const history = useHistory();
   const handleBack = () => {
@@ -59,9 +68,12 @@ const DeregistrationTimeline = ({ selected, toggleModal }: DeregistrationProps) 
   return (
     <Box>
       <StepInfo>
-        <IconButtonBack onClick={handleBack}>
-          <BackIcon />
-        </IconButtonBack>
+        {showBackButton && (
+          <IconButtonBack onClick={handleBack}>
+            <BackIcon />
+          </IconButtonBack>
+        )}
+
         <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />

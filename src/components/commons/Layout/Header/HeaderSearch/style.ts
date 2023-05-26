@@ -62,7 +62,11 @@ export const StyledInput = styled(Input)<{ home: number }>`
   border: none;
   box-shadow: none !important;
   border-radius: 0;
-  font-size: ${(props) => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
+  font-size: var(--font-size-text-large);
+  ${(props) => (!props.home && `
+  transform-origin: left center;
+  transform: scale(0.75);
+  `)}
   width: 100%;
   border-left: 2px solid ${(props) => props.theme.palette.border.main};
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -93,13 +97,12 @@ export const OptionsWrapper = styled(Box)<{ home: number }>(({ theme, home }) =>
   position: "absolute",
   top: home ? "61px" : "44px",
   left: home ? "175px" : "0",
-  width: home ? "calc(100% - 370px)" : "380px",
   backgroundColor: theme.palette.common.white,
   textAlign: "left",
   padding: "0 10px",
   borderBottomLeftRadius: 10,
   borderBottomRightRadius: 10,
-  zIndex: 10
+  zIndex: 1000
 }));
 
 export const Option = styled(Button)(({ theme }) => ({

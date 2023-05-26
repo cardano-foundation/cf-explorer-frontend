@@ -37,9 +37,10 @@ interface Props {
   selected: SPORegistration;
   toggleModal?: () => void;
   data: ISPOPropsData | null;
+  showBackButton?: boolean;
 }
 
-export const RegistrationDraw = ({ selected, toggleModal, data }: Props) => {
+export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }: Props) => {
   const { poolHold, fee, time, txHash } = selected;
   const { poolName, poolView, stakeKeys } = data ?? {};
 
@@ -100,9 +101,12 @@ export const RegistrationDraw = ({ selected, toggleModal, data }: Props) => {
   return (
     <Box>
       <StepInfo>
-        <IconButtonBack onClick={handleBack}>
-          <BackIcon />
-        </IconButtonBack>
+        {showBackButton && (
+          <IconButtonBack onClick={handleBack}>
+            <BackIcon />
+          </IconButtonBack>
+        )}
+
         <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />
