@@ -3,7 +3,7 @@ import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "~/commons/hooks/useFetchList";
 import { details } from "~/commons/routers";
-import { formatDateTimeLocal, getPageInfo, getShortHash, numberWithCommas } from "~/commons/utils/helper";
+import { formatADA, formatDateTimeLocal, getPageInfo, getShortHash, numberWithCommas } from "~/commons/utils/helper";
 import { API } from "~/commons/utils/api";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
@@ -11,9 +11,10 @@ import { PriceValue, SmallText, StyledLink } from "./styles";
 
 interface ITokenMinting {
   tokenId: string;
+  metadata?: ITokenMetadata;
 }
 
-const TokenMinting: React.FC<ITokenMinting> = ({ tokenId }) => {
+const TokenMinting: React.FC<ITokenMinting> = ({ tokenId, metadata }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -43,7 +44,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tokenId }) => {
       minWidth: "200px",
       render: (r) => (
         <PriceValue>
-          <SmallText>{numberWithCommas(r.amount)}</SmallText>
+          <SmallText>{numberWithCommas(r.amount * 10 ** -(metadata?.decimals || 0), 5)}</SmallText>
         </PriceValue>
       )
     },

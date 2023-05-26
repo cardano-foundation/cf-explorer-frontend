@@ -65,7 +65,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
             <Box component={"span"}>{formatADAFull(data?.totalStake)}</Box>
             <ADAicon />
           </StyledFlexValue>
-          <Box>
+          <Box sx={{ color: "blue" }}>
             <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>
           </Box>
           <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={stakeId} />

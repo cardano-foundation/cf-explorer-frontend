@@ -18,6 +18,7 @@ interface ITokenOverview {
 const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
+  const decimalToken = data?.decimals || 0;
   const listItem = [
     {
       title: "",
@@ -88,10 +89,10 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
     },
     {
       title: <WrapTitle>Total Supply</WrapTitle>,
-      value: <Box component={"span"}>{numberWithCommas(data?.supply)}</Box>,
+      value: <Box component={"span"}>{numberWithCommas((data?.supply || 0) * 10 ** -decimalToken)}</Box>,
       icon: slotIcon
     },
-    { title: <WrapTitle>Decimal</WrapTitle>, icon: decimalIcon, value: data?.metadata?.decimals || 0 },
+    { title: <WrapTitle>Decimal</WrapTitle>, icon: decimalIcon, value: decimalToken },
     {
       title: (
         <Box display={"flex"} alignItems='center'>
