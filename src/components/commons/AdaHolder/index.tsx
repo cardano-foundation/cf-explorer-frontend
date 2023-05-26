@@ -1,4 +1,4 @@
-import { BoxProps, styled, useTheme } from "@mui/material";
+import { BoxProps } from "@mui/material";
 import React, { forwardRef } from "react";
 import { AdaHolderIconUrl } from "~/commons/resources";
 import PolygonShape from "../PolygonShape";
@@ -10,7 +10,6 @@ export interface IAdaHolderProps extends BoxProps {
 }
 
 export const AdaHolder: React.FC<IAdaHolderProps> = forwardRef(({ children, value, ...props }, boxRef) => {
-  const theme = useTheme();
   return (
     <PolygonShape {...props} ref={boxRef}>
       <AdaHolderImage src={AdaHolderIconUrl} alt='AdaHolderIconUrl' />

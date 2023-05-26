@@ -1,5 +1,5 @@
 import { useTheme } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 
 import { getShortWallet } from "../../commons/utils/helper";
@@ -35,12 +35,16 @@ import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifec
 import NoRecord from "~/components/commons/NoRecord";
 import { useSelector } from "react-redux";
 
+interface Params {
+  stakeId: string;
+  mode: ViewMode;
+  tab: DelegationStep;
+}
+
+const MODES: ViewMode[] = ["timeline", "tabular"];
+
 const DelegatorLifecycle = () => {
-  const {
-    stakeId = "",
-    mode = "timeline",
-    tab = "registration"
-  } = useParams<{ stakeId: string; mode: ViewMode; tab: DelegationStep }>();
+  const { stakeId = "", mode = "timeline", tab = "registration" } = useParams<Params>();
   const tabList: { [key in DelegationStep]: number } & { tablular: null } = {
     registration: 0,
     delegation: 1,
@@ -49,55 +53,36 @@ const DelegatorLifecycle = () => {
     deregistration: 4,
     tablular: null
   };
-  const [currentStep, setCurrentStep] = useState(tabList[tab || "registration"] || 0);
+
+  const validTab: DelegationStep = tabList[tab] >= 0 ? tab : "registration";
+  const validMode: ViewMode = MODES.find((item) => item === mode) || "timeline";
+
+  const [currentStep, setCurrentStep] = useState(tabList[validTab]);
   const [open, setOpen] = useState(false);
   const history = useHistory();
-  const containerRef = useRef(null);
-  const [containerPosition, setContainerPosition] = useState<{ top?: number; left?: number }>({
-    top: undefined,
-    left: undefined
-  });
+
   const theme = useTheme();
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { isLoggedIn } = useAuth();
   const { data, error, initialized } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
 
   useEffect(() => {
-    setCurrentStep(tabList[tab || "registration"] || 0);
-  }, [tab]);
+    setCurrentStep(tabList[validTab]);
+  }, [validTab]);
 
   useEffect(() => {
     document.title = `Staking Delegation Lifecycle ${stakeId} | Cardano Explorer`;
   }, [stakeId]);
 
-  useEffect(() => {
-    if (containerRef.current) {
-      const position = (containerRef.current as any)?.getBoundingClientRect();
-      setContainerPosition({ top: position.top, left: position.left });
-    }
-  }, [containerRef.current]);
-
-  const handleResize = () => {
-    if (containerRef.current) {
-      const position = (containerRef.current as any).getBoundingClientRect();
-      setContainerPosition({ top: position.top, left: position.left });
-    }
-  };
-  useEffect(() => {
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   const changeMode = (mode: ViewMode) => {
-    history.push(details.staking(stakeId, mode, tab));
+    history.push(details.staking(stakeId, mode, validTab));
   };
   if (!initialized && !error) return null;
   if (error || !data) return <NoRecord />;
 
   return (
     <DelegatorDetailContext.Provider value={data}>
-      <StyledContainer ref={containerRef}>
+      <StyledContainer>
         <BoxContainerStyled>
           <LifeCycleHeader sidebar={+sidebar}>
             <LifeCycleTitle>Staking Delegation Lifecycle</LifeCycleTitle>
@@ -111,30 +96,25 @@ const DelegatorLifecycle = () => {
           </LifeCycleHeader>
           <BoxItemStyled sidebar={+sidebar}>
             <BoxSwitchContainer sidebar={+sidebar}>
-              <LabelSwitch>Switch to {mode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
+              <LabelSwitch>Switch to {validMode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
               <SwitchGroup>
-                <ButtonSwitch active={+(mode === "timeline")} onClick={() => changeMode("timeline")}>
-                  <ChartMode fill={mode === "timeline" ? theme.palette.common.white : theme.palette.grey[500]} />
+                <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
+                  <ChartMode fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.grey[500]} />
                 </ButtonSwitch>
-                <ButtonSwitch active={+(mode === "tabular")} onClick={() => changeMode("tabular")}>
-                  <TableMode fill={mode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
+                <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
+                  <TableMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            {mode === "tabular" && (
+            {validMode === "tabular" && (
               <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
                 Compose report
               </ButtonReport>
             )}
           </BoxItemStyled>
         </BoxContainerStyled>
-        {mode === "timeline" ? (
-          <DelegatorLifecycleComponent
-            handleResize={handleResize}
-            containerPosition={containerPosition}
-            currentStep={currentStep}
-            setCurrentStep={setCurrentStep}
-          />
+        {validMode === "timeline" ? (
+          <DelegatorLifecycleComponent currentStep={currentStep} setCurrentStep={setCurrentStep} />
         ) : (
           <Tabular />
         )}
