@@ -256,3 +256,15 @@ export const InfoGroup = styled(Box)(({ theme }) => ({
     gap: 5
   }
 }));
+
+export const StyledBoxMargin = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  padding: "24px 56px 24px 24px",
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "flex-start",
+    marginBottom: 30,
+    paddingRight: "24px !important"
+  }
+}));

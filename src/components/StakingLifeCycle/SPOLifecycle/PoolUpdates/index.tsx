@@ -4,7 +4,16 @@ import { Link as LinkDom } from "react-router-dom";
 
 import { PoolCert, CertUpdate, ChangeIcon, EmptyIcon } from "../../../../commons/resources";
 
-import { CardBox, StyledContainer, ViewMoreButton, StyledList, GridBox, DotsIcon, MyGrid } from "./styles";
+import {
+  CardBox,
+  StyledContainer,
+  ViewMoreButton,
+  StyledList,
+  GridBox,
+  DotsIcon,
+  MyGrid,
+  StyledBoxMargin
+} from "./styles";
 import ADAicon from "../../../commons/ADAIcon";
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { API } from "../../../../commons/utils/api";
@@ -283,7 +292,7 @@ export const PoolUpdateModal = ({
         </Box>
       </Box>
       <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
-        <Box py={3} pl={3} pr={10} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+        <StyledBoxMargin>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Margin
@@ -304,7 +313,7 @@ export const PoolUpdateModal = ({
               <ChangeIcon />
             </Box>
           )}
-        </Box>
+        </StyledBoxMargin>
       </Box>
       <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)}>
         <Box p={3} display={"flex"} alignItems={"center"}>
@@ -425,19 +434,19 @@ export const PoolUpdateModal = ({
     label: string;
     children: React.ReactNode;
   }[] = [
-      {
-        key: "poolCertificate",
-        icon: PoolCert,
-        label: "Pool certificate",
-        children: <>{renderPoolCert()}</>
-      },
-      {
-        key: "certificateUpdates",
-        icon: CertUpdate,
-        label: "Certificate updates",
-        children: <Box>{renderCertificateUpdates()}</Box>
-      }
-    ];
+    {
+      key: "poolCertificate",
+      icon: PoolCert,
+      label: "Pool certificate",
+      children: <>{renderPoolCert()}</>
+    },
+    {
+      key: "certificateUpdates",
+      icon: CertUpdate,
+      label: "Certificate updates",
+      children: <Box>{renderCertificateUpdates()}</Box>
+    }
+  ];
 
   const handleChange = (event: React.SyntheticEvent, tab: "poolCertificate" | "certificateUpdates") => {
     setTabActive(tab);
@@ -448,7 +457,7 @@ export const PoolUpdateModal = ({
         <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.secondary}` }}>
           <TabList
             onChange={handleChange}
-            variant="scrollable"
+            variant='scrollable'
             scrollButtons='auto'
             TabIndicatorProps={{
               sx: {
@@ -488,5 +497,5 @@ export const PoolUpdateModal = ({
 const Link = styled(LinkDom)(({ theme }) => ({
   fontSize: "0.875rem",
   color: `${theme.palette.blue[800]} !important`,
-  wordBreak: "break-all",
+  wordBreak: "break-all"
 }));
