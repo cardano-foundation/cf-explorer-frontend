@@ -10,3 +10,13 @@ export const ButtonSPO = styled(Box)(({ theme }) => ({
   padding: 0,
   zIndex: 3
 }));
+
+export const StakeKeyItem = styled(Box)(() => ({
+  display: "flex"
+}));
+
+export const StakeKeyItemList = styled(Box)(() => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: 4
+}));

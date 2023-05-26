@@ -9,6 +9,7 @@ import { details } from "~/commons/routers";
 import CopyButton from "../CopyButton";
 import { isArray } from "lodash";
 import PopperStyled from "../PopperStyled";
+import { StakeKeyItem, StakeKeyItemList } from "./styles";
 interface ISPOPropsData {
   poolName?: string;
   poolView?: string;
@@ -23,86 +24,88 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
   const SPOInfoRef = useRef(null);
   const SPOKeyRef = useRef(null);
   const history = useHistory();
-  const stakeKey = isArray(stakeKeys) ? stakeKeys[0] : stakeKeys;
+  const rewardAccounts = isArray(stakeKeys) ? stakeKeys : [stakeKeys];
+  console.log("rewardAccounts: ", rewardAccounts);
   return (
     <PolygonShapeSPO {...props} ref={boxRef}>
       <SPOImage src={SPOHolderIconUrl} alt='SPO image' />
       <SPOTitle>SPO</SPOTitle>
-      <CustomTooltip title={poolName}>
-        <PoolName> {poolName}</PoolName>
-      </CustomTooltip>
-      <CustomTooltip
-        wOpacity={false}
-        componentsProps={{
-          transition: {
-            style: {
-              backgroundColor: "white",
-              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
-              padding: "10px"
-            }
-          },
-          arrow: { style: { color: "white" } }
-        }}
-        title={
-          <Box>
-            <Box display={"flex"} alignItems={"center"}>
-              <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
-                Pool ID:
-              </Box>
-              <PoolNamePopup to={details.delegation(poolView)}>{getShortWallet(poolView || "")}</PoolNamePopup>
-              <CopyButton text={poolView} />
-            </Box>
-            <Box display={"flex"} alignItems={"center"}>
-              <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
-                Pool name:
-              </Box>
-              <PoolNamePopup to={details.delegation(poolView)}>{poolName}</PoolNamePopup>
-            </Box>
-          </Box>
-        }
-      >
-        <ButtonSPO
-          ref={SPOInfoRef}
-          component={IconButton}
-          left={"33%"}
-          onClick={() => {
-            SPOInfoRef?.current && history.push(details.delegation(poolView));
+      <Box>
+        <CustomTooltip title={poolName}>
+          <PoolName> {poolName}</PoolName>
+        </CustomTooltip>
+        <CustomTooltip
+          wOpacity={false}
+          componentsProps={{
+            transition: {
+              style: {
+                backgroundColor: "white",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                padding: "10px"
+              }
+            },
+            arrow: { style: { color: "white" } }
           }}
-        >
-          <SPOInfo />
-        </ButtonSPO>
-      </CustomTooltip>
-      <CustomTooltip
-        wOpacity={false}
-        componentsProps={{
-          transition: {
-            style: {
-              backgroundColor: "white",
-              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
-              padding: "10px"
-            }
-          },
-          arrow: { style: { color: "white" } }
-        }}
-        title={
-          stakeKey && (
-            <Box display={"flex"} alignItems={"center"}>
-              <SPOKey fill='#108AEF' />
-              <PoolNamePopup to={details.stake(stakeKey)}>{getShortWallet(stakeKey)}</PoolNamePopup>
-              <CopyButton text={stakeKey} />
+          title={
+            <Box>
+              <Box display={"flex"} alignItems={"center"}>
+                <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                  Pool ID:
+                </Box>
+                <PoolNamePopup to={details.delegation(poolView)}>{getShortWallet(poolView || "")}</PoolNamePopup>
+                <CopyButton text={poolView} />
+              </Box>
+              <Box display={"flex"} alignItems={"center"}>
+                <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                  Pool name:
+                </Box>
+                <PoolNamePopup to={details.delegation(poolView)}>{poolName}</PoolNamePopup>
+              </Box>
             </Box>
-          )
-        }
-      >
-        <ButtonSPO
-          ref={SPOKeyRef}
-          component={IconButton}
-          onClick={() => stakeKey && history.push(details.stake(stakeKey))}
-          left={"52%"}
+          }
         >
-          <SPOKey fill='#438F68' />
-        </ButtonSPO>
-      </CustomTooltip>
+          <ButtonSPO
+            ref={SPOInfoRef}
+            component={IconButton}
+            left={"33%"}
+            onClick={() => {
+              SPOInfoRef?.current && history.push(details.delegation(poolView));
+            }}
+          >
+            <SPOInfo />
+          </ButtonSPO>
+        </CustomTooltip>
+        <CustomTooltip
+          wOpacity={false}
+          componentsProps={{
+            transition: {
+              style: {
+                backgroundColor: "white",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                padding: "10px"
+              }
+            },
+            arrow: { style: { color: "white" } }
+          }}
+          title={
+            rewardAccounts.length > 0 && (
+              <StakeKeyItemList>
+                {rewardAccounts.map((item) => (
+                  <StakeKeyItem key={item}>
+                    <SPOKey fill='#108AEF' />
+                    <PoolNamePopup to={details.stake(item)}>{getShortWallet(item)}</PoolNamePopup>
+                    <CopyButton text={item} />
+                  </StakeKeyItem>
+                ))}
+              </StakeKeyItemList>
+            )
+          }
+        >
+          <ButtonSPO ref={SPOKeyRef} component={IconButton}>
+            <SPOKey fill='#438F68' />
+          </ButtonSPO>
+        </CustomTooltip>
+      </Box>
     </PolygonShapeSPO>
   );
 });
@@ -157,5 +160,7 @@ export const PoolNamePopup = styled(Link)(({ theme }) => ({
   maxWidth: 180,
   whiteSpace: "nowrap",
   overflow: "hidden",
-  textOverflow: "ellipsis"
+  textOverflow: "ellipsis",
+  flex: 1,
+  textAlign: "left",
 }));
