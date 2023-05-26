@@ -41,6 +41,15 @@ interface Params {
   tab: DelegationStep;
 }
 
+export interface ListStakeKeyResponse {
+  [key: string]: boolean;
+  hasDeRegistration: boolean;
+  hasDelegation: boolean;
+  hasRegistration: boolean;
+  hasWithdrawal: boolean;
+  hashRewards: boolean;
+}
+
 const MODES: ViewMode[] = ["timeline", "tabular"];
 
 const DelegatorLifecycle = () => {
@@ -65,6 +74,7 @@ const DelegatorLifecycle = () => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { isLoggedIn } = useAuth();
   const { data, error, initialized } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
+  const { data: dataTabsConfig } = useFetch<ListStakeKeyResponse>(API.STAKE_LIFECYCLE.TABS(stakeId));
 
   useEffect(() => {
     setCurrentStep(tabList[validTab]);
@@ -77,7 +87,8 @@ const DelegatorLifecycle = () => {
   const changeMode = (mode: ViewMode) => {
     history.push(details.staking(stakeId, mode, validTab));
   };
-  if (!initialized && !error) return null;
+  if ((!initialized && !error) || !dataTabsConfig) return null;
+
   if (error || !data) return <NoRecord />;
 
   return (
@@ -114,9 +125,13 @@ const DelegatorLifecycle = () => {
           </BoxItemStyled>
         </BoxContainerStyled>
         {validMode === "timeline" ? (
-          <DelegatorLifecycleComponent currentStep={currentStep} setCurrentStep={setCurrentStep} />
+          <DelegatorLifecycleComponent
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+            tabsRenderConfig={dataTabsConfig}
+          />
         ) : (
-          <Tabular />
+          <Tabular tabsRenderConfig={dataTabsConfig} />
         )}
         <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
       </StyledContainer>

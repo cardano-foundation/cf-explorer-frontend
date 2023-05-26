@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Box } from "@mui/material";
 
 import {
@@ -43,9 +43,7 @@ import {
 import { useHistory, useParams } from "react-router-dom";
 import { details } from "../../../commons/routers";
 import { useScreen } from "../../../commons/hooks/useScreen";
-import { API } from "~/commons/utils/api";
-import defaultAxios from "~/commons/utils/axios";
-
+import { ListStakeKeyResponse } from "~/pages/DelegatorLifecycle";
 interface StepperProps {
   icon: React.ReactNode;
   title: string;
@@ -55,20 +53,13 @@ interface StepperProps {
   keyCheckShow: string;
 }
 
-interface ListStakeKeyResponse {
-  [key: string]: boolean;
-  hasDeRegistration: boolean;
-  hasDelegation: boolean;
-  hasRegistration: boolean;
-  hasWithdrawal: boolean;
-  hashRewards: boolean;
-}
 interface Props {
   currentStep: number;
   setCurrentStep: (step: number) => void;
+  tabsRenderConfig?: ListStakeKeyResponse;
 }
 
-const DelegatorLifecycle = ({ currentStep, setCurrentStep }: Props) => {
+const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: Props) => {
   const history = useHistory();
   const { isMobile } = useScreen();
   const { stakeId = "" } = useParams<{
@@ -76,17 +67,6 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep }: Props) => {
   }>();
   const [open, setOpen] = useState(false);
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
-
-  const [data, setData] = useState<ListStakeKeyResponse>();
-
-  useEffect(() => {
-    defaultAxios
-      .get(API.STAKE_LIFECYCLE.TABS(stakeId))
-      .then((res: any) => {
-        setData(res.data);
-      })
-      .catch(console.error);
-  }, []);
 
   const stepper: StepperProps[] = [
     {
@@ -156,7 +136,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep }: Props) => {
     }
   ];
 
-  if (!data) return null;
+  if (!tabsRenderConfig) return null;
 
   return (
     <Box>
@@ -167,7 +147,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep }: Props) => {
               component={"span"}
               key={idx}
               active={+(currentStep === idx)}
-              display={data[step.keyCheckShow] ? "block" : "none"}
+              display={tabsRenderConfig[step.keyCheckShow] ? "block" : "none"}
             >
               <StepButton
                 active={+(currentStep === idx)}
