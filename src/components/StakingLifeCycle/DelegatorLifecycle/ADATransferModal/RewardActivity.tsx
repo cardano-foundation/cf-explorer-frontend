@@ -18,7 +18,7 @@ const RewardActivity: React.FC = () => {
   const [{ page, size }, setPagi] = useState<{ page: number; size: number }>({ page: 0, size: 50 });
   const [sort, setSort] = useState<string>("");
   const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}` || "");
-  const { isMobile, isGalaxyFoldSmall } = useScreen();
+  const { isMobile, isGalaxyFoldSmall, isTablet } = useScreen();
 
   const fetchData = useFetchList<RewardActivityIF>(API.STAKE_LIFECYCLE.REWARDS_ACTIVITY(stakeId), { page, size, sort });
   const rewardType = {
@@ -64,14 +64,16 @@ const RewardActivity: React.FC = () => {
       render: (r) => <Box>{rewardType[r.type]}</Box>
     }
   ];
-
+  const maxHeightCalc = `calc(70vh - ${
+    isTablet ? "290px" : isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"
+  })`;
   return (
     <Box>
       <UserInfo acitve='reward' total={fetchData.total} reward={data?.rewardAvailable || 0} stake={stakeId} />
       <StyledTable
         {...fetchData}
         columns={columns}
-        maxHeight={`calc(70vh - ${isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"})`}
+        maxHeight={maxHeightCalc}
         total={{ title: "Total Epochs", count: fetchData.total }}
         pagination={{
           page,
