@@ -25,3 +25,9 @@ export const StyledTabList = styled(TabList)(({ theme }) => ({
     }
   }
 }));
+export const StyledBoxContainer = styled(Box)(({ theme }) => ({
+  marginTop: "32px",
+  [theme.breakpoints.down("sm")]: {
+    marginRight: "16px"
+  }
+}));
