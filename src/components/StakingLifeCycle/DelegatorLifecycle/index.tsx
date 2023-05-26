@@ -63,21 +63,12 @@ interface ListStakeKeyResponse {
   hasWithdrawal: boolean;
   hashRewards: boolean;
 }
-
-const DelegatorLifecycle = ({
-  containerPosition,
-  handleResize,
-  currentStep,
-  setCurrentStep
-}: {
-  containerPosition: {
-    top?: number;
-    left?: number;
-  };
-  handleResize: () => void;
+interface Props {
   currentStep: number;
   setCurrentStep: (step: number) => void;
-}) => {
+}
+
+const DelegatorLifecycle = ({ currentStep, setCurrentStep }: Props) => {
   const history = useHistory();
   const { isMobile } = useScreen();
   const { stakeId = "" } = useParams<{

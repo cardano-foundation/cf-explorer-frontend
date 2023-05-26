@@ -1,8 +1,8 @@
 import { Box, styled, alpha } from "@mui/material";
-import CopyButton from "../../../commons/CopyButton";
 import CustomModal from "~/components/commons/CustomModal";
 import { Link } from "react-router-dom";
 import { AdaLogoIcon } from "~/components/commons/ADAIcon";
+import CopyButton from "~/components/commons/CopyButton";
 
 export const StyledModal = styled(CustomModal)(() => ({}));
 
