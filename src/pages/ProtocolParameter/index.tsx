@@ -6,7 +6,8 @@ import {
   BackButton,
   BackText,
   ButtonFilter,
-  FilterContainer
+  FilterContainer,
+  UpdatableParameters
 } from "./styles";
 import styled from "@emotion/styled";
 import _ from "lodash";
@@ -169,10 +170,8 @@ const ProtocolParameter: React.FC = () => {
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
-                <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                  <Box fontWeight={"bold"} fontSize={"1.25rem"}>
-                    Updatable Parameters
-                  </Box>
+                <UpdatableParameters>
+                  <Box className='title'>Updatable Parameters</Box>
                   <Box
                     component={Button}
                     variant='contained'
@@ -180,10 +179,11 @@ const ProtocolParameter: React.FC = () => {
                     fontWeight={"bold"}
                     fontSize={"0.875rem"}
                     onClick={() => setShowHistory(true)}
+                    className='button'
                   >
                     View update history
                   </Box>
-                </Box>
+                </UpdatableParameters>
                 {loadingLastest && (
                   <Box
                     component={Skeleton}
