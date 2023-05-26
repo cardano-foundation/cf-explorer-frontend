@@ -30,10 +30,10 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
 
   const isDisabled = useMemo(() => {
     if (reportType === ReportType.PoolReport) {
-      return poolSize === RatioGroupValue.unTicked || feesPaid === RatioGroupValue.unTicked;
+      return poolSize === RatioGroupValue.unTicked;
     }
-    return adaTransfers === RatioGroupValue.unTicked || feesPaid === RatioGroupValue.unTicked;
-  }, [feesPaid, adaTransfers, poolSize, reportType]);
+    return adaTransfers === RatioGroupValue.unTicked;
+  }, [adaTransfers, poolSize, reportType]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, key: OptionTransfer) => {
     const value = e.target.value as RatioGroupValue;
@@ -86,7 +86,7 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
   const handleSubmit = () => {
     saveParams?.({
       adaTransfers,
-      feesPaid,
+      feesPaid: false,
       poolSize
     });
     gotoStep?.(STEPS.step3);

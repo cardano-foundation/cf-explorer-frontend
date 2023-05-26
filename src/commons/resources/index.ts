@@ -285,3 +285,5 @@ export { ReactComponent as CardanoSystemIcon } from "./icons/cardano-system.svg"
 export { ReactComponent as WalletIconRewardGreen } from "./icons/Staking/walletIconRewardGreen.svg";
 export { ReactComponent as TransferIcon } from "./icons/transfer.svg";
 export { ReactComponent as ADADisnableIcon } from "./icons/Staking/ADADisnableIcon.svg";
+export { ReactComponent as DelegationHistoryMainIcon } from "./icons/delegationHistoryGreen.svg";
+export { ReactComponent as BlockIcon } from "./icons/blockIcon.svg";

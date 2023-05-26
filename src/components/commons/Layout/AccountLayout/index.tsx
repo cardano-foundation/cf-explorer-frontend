@@ -1,4 +1,4 @@
-import { alpha, Avatar, Box, CircularProgress, IconButton, useTheme } from "@mui/material";
+import { alpha, Avatar, Box, CircularProgress, ClickAwayListener, IconButton, useTheme } from "@mui/material";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { routers } from "../../../../commons/routers";
@@ -43,6 +43,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   const [openReportModal, setOpenReportModal] = useState(false);
   const [isUploadAvatar, setIsUploadAvatar] = useState(false);
   const [firstLoad, setFirstLoad] = useState(true);
+  const [openFullname, setOpenFullname] = useState(false);
   const fetchUserInfo = useCallback(async () => {
     try {
       setFirstLoad(true);
@@ -151,17 +152,25 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
               </Box>
             </Box>
           </Box>
-          {userData?.address ? (
-            <CustomTooltip title={userData?.address || ""} placement='bottom'>
-              <StyledUsername component={"h4"} pt={1} m='auto'>
-                {getShortWallet(userData?.address)}
-              </StyledUsername>
-            </CustomTooltip>
-          ) : (
-            <StyledUsername component={"h4"} pt={1} m='auto'>
-              {userData?.email}
-            </StyledUsername>
-          )}
+          <ClickAwayListener onClickAway={() => setOpenFullname(false)} >
+            <div
+              onMouseEnter={() => setOpenFullname(true)}
+              onMouseLeave={() => setOpenFullname(false)}
+            >
+              <CustomTooltip
+                title={userData?.address || userData?.email || ""}
+                open={openFullname}
+                placement='bottom'
+                onClose={() => setOpenFullname(false)}
+                disableFocusListener
+                disableTouchListener
+              >
+                <StyledUsername component={"h4"} pt={1} m='auto' onClick={() => setOpenFullname(true)}>
+                  {userData?.address ? <>{getShortWallet(userData?.address)}</> : <>{userData?.email}</>}
+                </StyledUsername>
+              </CustomTooltip>
+            </div>
+          </ClickAwayListener>
         </Box>
         <Box display={"flex"} justifyContent={"center"} mt={4}>
           <WrapItemMobile>
