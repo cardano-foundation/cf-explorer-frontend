@@ -178,7 +178,7 @@ export const BoxGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) =
   justifyContent: "space-between",
   alignItems: "center",
   gap: 68,
-  width: "max-content",
+  width: 200,
   height: "100%",
   margin: "auto",
   [theme.breakpoints.down("lg")]: {
@@ -201,8 +201,8 @@ export const NetAmountBox = styled(HoldBox)<{ sidebar?: number }>(({ theme, side
   minHeight: 70,
   height: "max-content",
   borderColor: theme.palette.green[600],
-  width: 180,
-  maxWidth: 180,
+  width: "100%",
+  maxWidth: 200,
   minWidth: 180,
   "::after": {
     content: '"NET AMOUNT"',
