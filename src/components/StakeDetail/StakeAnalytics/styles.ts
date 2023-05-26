@@ -98,11 +98,11 @@ export const Title = styled(Box)(({ theme }) => ({
 
 export const ValueInfo = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  fontSize: "1.25rem",
+  fontSize: "2rem",
   margin: "0 auto",
   overflowWrap: "anywhere",
   [theme.breakpoints.down("sm")]: {
-    fontSize: "1.125rem"
+    fontSize: "0.75rem"
   }
 }));
 
