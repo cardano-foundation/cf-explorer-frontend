@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useHistory, useParams } from "react-router";
 
@@ -28,7 +28,6 @@ import { ReactComponent as TableMode } from "../../commons/resources/icons/Staki
 import { details } from "../../commons/routers";
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import CustomTooltip from "../../components/commons/CustomTooltip";
-import { useScreen } from "../../commons/hooks/useScreen";
 import useAuth from "~/commons/hooks/useAuth";
 import useFetch from "~/commons/hooks/useFetch";
 import { API } from "~/commons/utils/api";

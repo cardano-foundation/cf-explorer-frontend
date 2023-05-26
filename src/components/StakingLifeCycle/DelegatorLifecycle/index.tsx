@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 
 import {
@@ -42,6 +43,8 @@ import {
 import { useHistory, useParams } from "react-router-dom";
 import { details } from "../../../commons/routers";
 import { useScreen } from "../../../commons/hooks/useScreen";
+import { API } from "~/commons/utils/api";
+import defaultAxios from "~/commons/utils/axios";
 
 interface StepperProps {
   icon: React.ReactNode;
@@ -49,6 +52,16 @@ interface StepperProps {
   component: React.ReactNode;
   description: React.ReactNode;
   key: DelegationStep;
+  keyCheckShow: string;
+}
+
+interface ListStakeKeyResponse {
+  [key: string]: boolean;
+  hasDeRegistration: boolean;
+  hasDelegation: boolean;
+  hasRegistration: boolean;
+  hasWithdrawal: boolean;
+  hashRewards: boolean;
 }
 
 const DelegatorLifecycle = ({
@@ -73,6 +86,17 @@ const DelegatorLifecycle = ({
   const [open, setOpen] = useState(false);
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
 
+  const [data, setData] = useState<ListStakeKeyResponse>();
+
+  useEffect(() => {
+    defaultAxios
+      .get(API.STAKE_LIFECYCLE.TABS(stakeId))
+      .then((res: any) => {
+        setData(res.data);
+      })
+      .catch(console.error);
+  }, []);
+
   const stepper: StepperProps[] = [
     {
       icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
@@ -84,7 +108,8 @@ const DelegatorLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "registration"
+      key: "registration",
+      keyCheckShow: "hasRegistration"
     },
     {
       icon: <DelegationIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
@@ -96,7 +121,8 @@ const DelegatorLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "delegation"
+      key: "delegation",
+      keyCheckShow: "hasDelegation"
     },
     {
       icon: <RewardsDistributionIcon width={"25px"} height={"25px"} fill={currentStep >= 2 ? "#fff" : "#98A2B3"} />,
@@ -108,7 +134,8 @@ const DelegatorLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "rewards"
+      key: "rewards",
+      keyCheckShow: "hashRewards"
     },
     {
       icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
@@ -120,7 +147,8 @@ const DelegatorLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "withdrawal-history"
+      key: "withdrawal-history",
+      keyCheckShow: "hasWithdrawal"
     },
     {
       icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 4 ? "#fff" : "#98A2B3"} />,
@@ -132,29 +160,39 @@ const DelegatorLifecycle = ({
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "deregistration"
+      key: "deregistration",
+      keyCheckShow: "hasDeRegistration"
     }
   ];
+
+  if (!data) return null;
 
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} sx={{ overflowX: "auto" }}>
-        {stepper.map((step, idx) => (
-          <Step component={"span"} key={idx} active={+(currentStep === idx)}>
-            <StepButton
+        {stepper.map((step, idx) => {
+          return (
+            <Step
+              component={"span"}
+              key={idx}
               active={+(currentStep === idx)}
-              onClick={() => {
-                setCurrentStep(idx);
-                history.push(details.staking(stakeId, "timeline", step.key));
-              }}
+              display={data[step.keyCheckShow] ? "block" : "none"}
             >
-              {step.icon}
-            </StepButton>
-            <TitleStep currentstep={currentStep} index={idx} px={2}>
-              {step.title}
-            </TitleStep>
-          </Step>
-        ))}
+              <StepButton
+                active={+(currentStep === idx)}
+                onClick={() => {
+                  setCurrentStep(idx);
+                  history.push(details.staking(stakeId, "timeline", step.key));
+                }}
+              >
+                {step.icon}
+              </StepButton>
+              <TitleStep currentstep={currentStep} index={idx} px={2}>
+                {step.title}
+              </TitleStep>
+            </Step>
+          );
+        })}
       </Box>
       <StepHeader>
         <StyledBox>

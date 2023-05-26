@@ -37,9 +37,10 @@ interface Props {
   poolUpdates: PoolUpdateItem;
   toggleModal?: () => void;
   data: ISPOPropsData | null;
+  showBackButton?: boolean;
 }
 
-export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data }: Props) => {
+export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton }: Props) => {
   const { fee, time, txHash } = poolUpdates;
   const { poolName, poolView, stakeKeys } = data ?? {};
 
@@ -99,9 +100,11 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data }: Props) => {
   return (
     <Box>
       <StepInfo>
-        <IconButtonBack onClick={handleBack}>
-          <BackIcon />
-        </IconButtonBack>
+        {showBackButton && (
+          <IconButtonBack onClick={handleBack}>
+            <BackIcon />
+          </IconButtonBack>
+        )}
         <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />

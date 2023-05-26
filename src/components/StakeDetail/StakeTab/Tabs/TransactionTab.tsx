@@ -155,7 +155,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
         let tokens: Token[] = [];
         if (transaction.tokens && transaction.tokens.length > 0) {
           tokens = transaction.tokens.map((token) => ({
-            assetId: token.addressId.toString(),
+            assetId: token.fingerprint,
             assetQuantity: token.quantity,
             assetName: token.displayName
           }));

@@ -16,10 +16,17 @@ const Withdraw = () => {
   const handleSelect = (withdraw: WithdrawItem | null) => {
     setSelected(withdraw);
   };
+  const [showBackButton, setShowBackButton] = useState<boolean>(false);
+
   return (
     <Box>
-      <RecentWithdraws onSelect={handleSelect} params={params} setParams={setParams} />
-      {!!selected && <WithdrawnDraw selected={selected} setSelected={setSelected} />}
+      <RecentWithdraws
+        onSelect={handleSelect}
+        params={params}
+        setParams={setParams}
+        setShowBackButton={setShowBackButton}
+      />
+      {!!selected && <WithdrawnDraw selected={selected} setSelected={setSelected} showBackButton={showBackButton} />}
     </Box>
   );
 };

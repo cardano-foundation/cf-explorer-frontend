@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Skeleton } from "@mui/material";
 import { useEffect } from "react";
 import { useHistory, useParams } from "react-router";
@@ -16,9 +17,10 @@ interface Props {
   onSelect: (deregistration: DeregistrationItem | null) => void;
   params?: FilterParams;
   setParams?: (params: FilterParams) => void;
+  setShowBackButton?: (status: boolean) => void;
 }
 
-const RecentDeregistrations: React.FC<Props> = ({ onSelect, params, setParams }) => {
+const RecentDeregistrations: React.FC<Props> = ({ onSelect, params, setParams, setShowBackButton }) => {
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
@@ -27,6 +29,12 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, params, setParams })
     stakeId ? API.STAKE_LIFECYCLE.DEREGISTRATION(stakeId) : "",
     { page: 0, size: 1000, ...params }
   );
+
+  useEffect(() => {
+    if (initialized) {
+      setShowBackButton?.(data.length > 1);
+    }
+  }, [initialized]);
 
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);

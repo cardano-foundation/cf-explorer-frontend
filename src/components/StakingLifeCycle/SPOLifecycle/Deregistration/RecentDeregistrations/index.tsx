@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
@@ -14,9 +15,10 @@ import { useSelector } from "react-redux";
 
 interface Props {
   onSelect: (registration: SPODeregistration | null) => void;
+  setShowBackButton?: (status: boolean) => void;
 }
 
-const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
+const RecentDeregistrations: React.FC<Props> = ({ onSelect, setShowBackButton }) => {
   const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
@@ -34,6 +36,12 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect }) => {
       ...params
     }
   );
+
+  useEffect(() => {
+    if (initialized) {
+      setShowBackButton?.(data.length > 1);
+    }
+  }, [initialized]);
 
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);

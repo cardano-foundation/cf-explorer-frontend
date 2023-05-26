@@ -30,10 +30,17 @@ const Delegation = () => {
     setSelected(delegation);
   };
 
+  const [showBackButton, setShowBackButton] = useState<boolean>(false);
+
   return (
     <Box>
-      <RecentDelegations onSelect={handleSelect} params={params} setParams={setParams} />
-      {selected && <DelegationTimeline selected={selected} />}
+      <RecentDelegations
+        onSelect={handleSelect}
+        params={params}
+        setParams={setParams}
+        setShowBackButton={setShowBackButton}
+      />
+      {selected && <DelegationTimeline selected={selected} showBackButton={showBackButton} />}
     </Box>
   );
 };
@@ -53,9 +60,10 @@ export interface DelegationDetail {
 
 interface Props {
   selected: DelegationItem;
+  showBackButton?: boolean;
 }
 
-const DelegationTimeline = ({ selected }: Props) => {
+const DelegationTimeline = ({ selected, showBackButton = false }: Props) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
@@ -74,9 +82,12 @@ const DelegationTimeline = ({ selected }: Props) => {
     return (
       <Box>
         <StepInfo>
-          <IconButtonBack onClick={handleBack}>
-            <BackIcon />
-          </IconButtonBack>
+          {showBackButton && (
+            <IconButtonBack onClick={handleBack}>
+              <BackIcon />
+            </IconButtonBack>
+          )}
+
           <InfoGroup sidebar={+sidebar}>
             <Info>
               <AddressIcon fill='#438F68' />
@@ -100,9 +111,11 @@ const DelegationTimeline = ({ selected }: Props) => {
   return (
     <Box>
       <StepInfo>
-        <IconButtonBack onClick={handleBack}>
-          <BackIcon />
-        </IconButtonBack>
+        {showBackButton && (
+          <IconButtonBack onClick={handleBack}>
+            <BackIcon />
+          </IconButtonBack>
+        )}
         <InfoGroup>
           <Info>
             <AddressIcon fill='#438F68' />

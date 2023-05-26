@@ -35,11 +35,25 @@ const Registration = () => {
     setSelected(registration);
   };
 
+  const [showBackButton, setShowBackButton] = useState<boolean>(false);
+
   const handleToggleCertificateModal = () => setOpenModal((state) => !state);
   return (
     <Box>
-      <RecentRegistrations params={params} setParams={setParams} onSelect={handleSelect} />
-      {selected && <RegistrationDraw selected={selected} data={data} toggleModal={handleToggleCertificateModal} />}
+      <RecentRegistrations
+        params={params}
+        setParams={setParams}
+        onSelect={handleSelect}
+        setShowBackButton={setShowBackButton}
+      />
+      {selected && (
+        <RegistrationDraw
+          selected={selected}
+          data={data}
+          toggleModal={handleToggleCertificateModal}
+          showBackButton={showBackButton}
+        />
+      )}
       <RegistrationCertificateModal
         poolId={poolId}
         poolUpdateId={selected?.poolUpdateId || 0}
