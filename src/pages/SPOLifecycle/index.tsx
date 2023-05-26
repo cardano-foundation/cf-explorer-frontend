@@ -41,6 +41,14 @@ interface Params {
   tab: SPOStep;
 }
 
+export interface ListTabResponseSPO {
+  [key: string]: boolean;
+  isRegistration: boolean;
+  isUpdate: boolean;
+  isReward: boolean;
+  isDeRegistration: boolean;
+}
+
 const MODES: ViewMode[] = ["timeline", "tabular"];
 
 const SPOLifecycle = () => {
@@ -59,7 +67,9 @@ const SPOLifecycle = () => {
   };
 
   const { data, error, initialized } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : "");
-  
+
+  const { data: renderTabsSPO } = useFetch<ListTabResponseSPO>(`${API.SPO_LIFECYCLE.TABS(poolId)}`);
+
   const validTab: SPOStep = tabList[tab] >= 0 ? tab : "registration";
   const validMode: ViewMode = MODES.find((item) => item === mode) || "timeline";
 
@@ -81,7 +91,7 @@ const SPOLifecycle = () => {
     history.push(details.spo(poolId, mode, validTab));
   };
 
-  if (!initialized && !error) return null;
+  if ((!initialized && !error) || !renderTabsSPO) return null;
   if (error || !data || !data.poolId) return <NoRecord />;
 
   return (
@@ -118,9 +128,13 @@ const SPOLifecycle = () => {
           </BoxItemStyled>
         </BoxContainerStyled>
         {validMode === "timeline" ? (
-          <SPOLifecycleComponent currentStep={currentStep} setCurrentStep={setCurrentStep} />
+          <SPOLifecycleComponent
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+            renderTabsSPO={renderTabsSPO}
+          />
         ) : (
-          <Tabular />
+          <Tabular renderTabsSPO={renderTabsSPO} />
         )}
         <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
       </StyledContainer>

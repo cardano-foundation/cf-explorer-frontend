@@ -36,8 +36,7 @@ import Deregistration from "./Deregistration";
 import OperatorReward from "./OperatorRewards";
 import Registration from "./Registration";
 import PoollUpdates from "./PoolUpdates";
-import defaultAxios from "~/commons/utils/axios";
-import { API } from "~/commons/utils/api";
+import { ListTabResponseSPO } from "~/pages/SPOLifecycle";
 interface StepperProps {
   icon: React.ReactNode;
   title: string;
@@ -58,23 +57,14 @@ interface ListTabResponse {
 interface Props {
   currentStep: number;
   setCurrentStep: (step: number) => void;
+  renderTabsSPO?: ListTabResponseSPO;
 }
 
-const SPOLifecycle = ({ currentStep, setCurrentStep }: Props) => {
+const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => {
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
   const history = useHistory();
   const { isMobile } = useScreen();
-  const [data, setData] = useState<ListTabResponse>();
-
-  useEffect(() => {
-    defaultAxios
-      .get(`${API.SPO_LIFECYCLE.TABS(poolId)}`)
-      .then((res: { data: ListTabResponse }) => {
-        setData(res.data);
-      })
-      .catch(console.error);
-  }, []);
 
   const stepper: StepperProps[] = [
     {
@@ -131,7 +121,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep }: Props) => {
     }
   ];
 
-  if (!data) return null;
+  if (!renderTabsSPO) return null;
 
   return (
     <StyledComponent>
@@ -141,7 +131,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep }: Props) => {
             component={"span"}
             key={idx}
             active={+(currentStep === idx)}
-            display={data[step.keyCheckShow] ? "block" : "none"}
+            display={renderTabsSPO[step.keyCheckShow] ? "block" : "none"}
           >
             <StepButton
               active={+(currentStep === idx)}
