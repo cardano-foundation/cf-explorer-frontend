@@ -23,7 +23,7 @@ import {
   StyledFeeBox,
   StyledAdaLogoIcon
 } from "./styles";
-import { formatADA, getShortHash } from "../../../../../commons/utils/helper";
+import { formatADA, formatDateTimeLocal, getShortHash } from "../../../../../commons/utils/helper";
 import moment from "moment";
 import { useHistory, useParams } from "react-router-dom";
 import CustomTooltip from "../../../../commons/CustomTooltip";
@@ -139,10 +139,12 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
   return (
     <Box>
       <StepInfo>
-        {showBackButton && (
+        {showBackButton ? (
           <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
+        ) : (
+          <Box />
         )}
 
         <InfoGroup>
@@ -161,7 +163,7 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>{moment(time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+            <InfoText>{formatDateTimeLocal(time || "")}</InfoText>
           </Info>
         </InfoGroup>
       </StepInfo>

@@ -12,7 +12,7 @@ import {
   MiddleGroup,
   StepInfo
 } from "./styles";
-import { formatADAFull, getShortHash } from "../../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../../../commons/utils/helper";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
 import CustomTooltip from "../../../../commons/CustomTooltip";
@@ -94,10 +94,12 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
   return (
     <Box>
       <StepInfo>
-        {showBackButton && (
+        {showBackButton ? (
           <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
+        ) : (
+          <Box />
         )}
         <InfoGroup>
           <Info>
@@ -115,7 +117,7 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
           </Info>
           <Info>
             <TimeIcon />
-            <InfoText>{moment(time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
+            <InfoText>{formatDateTimeLocal(time)}</InfoText>
           </Info>
         </InfoGroup>
       </StepInfo>
