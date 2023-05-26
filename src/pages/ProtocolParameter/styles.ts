@@ -69,3 +69,18 @@ export const ApplyFilterButton = styled(Button)(({ theme }) => ({
     background: alpha(theme.palette.grey[700], 0.3)
   }
 }));
+
+export const UpdatableParameters = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+
+  ".title": {
+    fontWeight: "bold",
+    fontSize: "1.25rem",
+    textAlign: "left",
+    [`@media screen and (max-width: ${theme.breakpoints.values.sm}px)`]: {
+      width: "50%"
+    }
+  }
+}));
