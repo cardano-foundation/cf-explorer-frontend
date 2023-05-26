@@ -6,7 +6,6 @@ import { ADAsigntIC, EyeIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
 import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../commons/utils/helper";
-import { RegistrationCertificateModal } from "../../StakingLifeCycle/SPOLifecycle/Registration";
 import {
   ADAValueFieldContainer,
   ADAValueLabel,
@@ -17,6 +16,7 @@ import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { StyledLink } from "../../share/styled";
 import { ReportGeneratedPoolDetailContext } from "..";
+import RegistrationCertificateModal from "~/components/StakingLifeCycle/SPOLifecycle/Registration/RegistrationCertificateModal";
 
 const PoolRegistrationTab = () => {
   const { reportId = "" } = useParams<{ reportId: string }>();
