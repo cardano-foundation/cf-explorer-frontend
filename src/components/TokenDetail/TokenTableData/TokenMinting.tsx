@@ -3,7 +3,7 @@ import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "~/commons/hooks/useFetchList";
 import { details } from "~/commons/routers";
-import { formatDateTimeLocal, getPageInfo, getShortHash, numberWithCommas } from "~/commons/utils/helper";
+import { formatADA, formatDateTimeLocal, getPageInfo, getShortHash, numberWithCommas } from "~/commons/utils/helper";
 import { API } from "~/commons/utils/api";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
@@ -43,7 +43,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tokenId }) => {
       minWidth: "200px",
       render: (r) => (
         <PriceValue>
-          <SmallText>{numberWithCommas(r.amount)}</SmallText>
+          <SmallText>{formatADA(r.amount)}</SmallText>
         </PriceValue>
       )
     },
