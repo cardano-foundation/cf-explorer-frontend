@@ -124,30 +124,23 @@ export const SkeletonUI = styled(Skeleton)(({ theme }) => ({
   borderRadius: 10
 }));
 
-export const Tabs = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.up("md")]: {
-    textAlign: "end"
-  },
-  [theme.breakpoints.down("md")]: {
-    display: "flex",
-    justifyContent: "flex-end",
-    gap: theme.spacing(1)
-  }
+export const Tabs = styled(Box)(() => ({
+  display: "flex",
+  justifyContent: "flex-end",
+  gap: "5px"
 }));
 
 export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   textTransform: "lowercase",
   borderRadius: 10,
   border: `2px solid ${theme.palette.green[800_20]}`,
-  marginRight: theme.spacing(1),
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   fontWeight: "bold",
   backgroundColor: active ? theme.palette.primary.main : "none",
 
   [theme.breakpoints.down("sm")]: {
     minWidth: `40px !important`,
-    height: `28px !important`,
-    marginRight: "0px"
+    height: `28px !important`
   },
 
   [theme.breakpoints.down("lg")]: {

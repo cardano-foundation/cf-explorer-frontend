@@ -139,15 +139,10 @@ export const SkeletonUI = styled(Skeleton)(({ theme }) => ({
   borderRadius: 10
 }));
 
-export const Tabs = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.up("md")]: {
-    textAlign: "end"
-  },
-  [theme.breakpoints.down("md")]: {
-    display: "flex",
-    justifyContent: "flex-end",
-    gap: theme.spacing(1)
-  }
+export const Tabs = styled(Box)(() => ({
+  display: "flex",
+  justifyContent: "flex-end",
+  gap: "5px"
 }));
 
 export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({

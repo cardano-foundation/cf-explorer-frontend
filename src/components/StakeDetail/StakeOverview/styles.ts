@@ -148,6 +148,7 @@ export const ButtonModal = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
   padding: 0,
   textDecoration: "underline",
+  color: theme.palette.blue[800],
   ":hover": {
     textDecoration: "underline"
   }

@@ -240,7 +240,7 @@ export const WrapDetailInfo = styled(Box)`
   flex-direction: row;
   gap: 5px;
   align-items: center;
-  `;
+`;
 export const DetailLabel = styled("small")`
   display: flex;
   justify-content: flex-start;
@@ -291,7 +291,7 @@ export const Group = styled(Box)`
   border-bottom: 1px solid ${(props) => alpha(props.theme.palette.common.black, 0.1)};
 `;
 
-export const ProgressLiner = styled("div") <{ progress: number }>`
+export const ProgressLiner = styled("div")<{ progress: number }>`
   position: relative;
   width: 100%;
   background: ${(props) => alpha(props.theme.palette.common.black, 0.2)};
@@ -353,7 +353,7 @@ export const DetailLinkRight = styled("span")`
   color: ${(props) => props.theme.palette.grey[400]};
 `;
 
-export const TxStatus = styled("small") <{ status?: keyof typeof TransactionStatus }>`
+export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
   color: ${({ status, theme }) => {
     switch (status) {
       case TRANSACTION_STATUS.FAIL:
@@ -380,7 +380,7 @@ export const TxStatus = styled("small") <{ status?: keyof typeof TransactionStat
   padding: 5px 10px;
   border-radius: 2px;
 `;
-export const ConfirmStatus = styled("small") <{ status?: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
   color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.HIGH:
@@ -482,7 +482,7 @@ export const StakeKeyLink = styled(StyledLink)`
   line-height: 1.575;
 `;
 
-export const StakeKeyStatus = styled("small") <{ status: StakeStatus }>`
+export const StakeKeyStatus = styled("small")<{ status: StakeStatus }>`
   color: ${(props) => {
     switch (props.status) {
       case STAKE_KEY_STATUS.ACTIVE:

@@ -43,7 +43,7 @@ export const formatPrice = (value?: string | number, abbreviations: string[] = L
 // };
 export const numberWithCommas = (value?: number | string, decimal = 0) => {
   if (!value) return "0";
-  const [integerPart, decimalPart] = Number(value).toFixed(decimal).split(".");
+  const [integerPart, decimalPart] = String(parseFloat(Number(value).toFixed(decimal))).split(".");
   const formattedIntegerPart = integerPart.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   return decimalPart ? `${formattedIntegerPart}.${decimalPart}` : formattedIntegerPart;
 };

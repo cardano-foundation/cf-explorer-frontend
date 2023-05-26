@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CgClose } from "react-icons/cg";
-import { DelegationHistoryIcon, DelegationHistoryMainIcon, DelegationIcon, FileEditIcon, InfoIcon, LightningIcon } from "../../../commons/resources";
+import { DelegationHistoryMainIcon, FileEditIcon, LightningIcon } from "../../../commons/resources";
 import {
   CloseButton,
   ViewDetailContainer,
@@ -42,7 +42,6 @@ import ViewMoreButton from "../ViewMoreButton";
 import { ReactComponent as StakeKeyHistoryIcon } from "../../../commons/resources/icons/stateKeyHistory.svg";
 import { ReactComponent as TransactionIcon } from "../../../commons/resources/icons/exchangeArrow.svg";
 import CustomTooltip from "../CustomTooltip";
-import { TbFileCheck } from "react-icons/tb";
 import CopyButton from "../CopyButton";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
@@ -57,7 +56,11 @@ type DetailViewStakeKeyProps = {
   handleClose: () => void;
 };
 const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
-  { key: "delegation", label: "Delegation History", icon: <DelegationHistoryMainIcon style={{ padding: "2px 4px 2px 2px" }} /> },
+  {
+    key: "delegation",
+    label: "Delegation History",
+    icon: <DelegationHistoryMainIcon style={{ padding: "2px 4px 2px 2px" }} />
+  },
   {
     key: "stake-key",
     label: "Stake Key History",
@@ -151,8 +154,8 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
   const poolName = data.pool?.poolName
     ? `${data.pool.tickerName || ""} - ${data.pool.poolName}`
     : data.pool?.poolId
-      ? `Pool [${getShortWallet(data.pool.poolId)}]`
-      : "-";
+    ? `Pool [${getShortWallet(data.pool.poolId)}]`
+    : "-";
 
   return (
     <ViewDetailDrawer anchor='right' open={!!stakeId} hideBackdrop variant='permanent'>
@@ -173,7 +176,6 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
           <Group>
             <DetailsInfoItem>
               <WrapDetailInfo>
-                <InfoIcon />
                 <DetailLabel>Status</DetailLabel>
               </WrapDetailInfo>
               <DetailValue>
@@ -182,7 +184,6 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
             </DetailsInfoItem>
             <DetailsInfoItem>
               <WrapDetailInfo>
-                <InfoIcon />
                 <DetailLabel>Reward available</DetailLabel>
               </WrapDetailInfo>
               <DetailValue>
@@ -192,7 +193,6 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
             </DetailsInfoItem>
             <DetailsInfoItem>
               <WrapDetailInfo>
-                <InfoIcon />
                 <DetailLabel>Reward withdrawn</DetailLabel>
               </WrapDetailInfo>
               <DetailValue>
@@ -202,7 +202,6 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
             </DetailsInfoItem>
             <DetailsInfoItem>
               <WrapDetailInfo>
-                <InfoIcon />
                 <DetailLabel>Delegated to</DetailLabel>
               </WrapDetailInfo>
               <CustomTooltip title={poolName}>
@@ -213,7 +212,6 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
             </DetailsInfoItem>
             <DetailsInfoItem>
               <WrapDetailInfo>
-                <InfoIcon />
                 <DetailLabel>Total Stake</DetailLabel>
               </WrapDetailInfo>
               <DetailValue>
@@ -222,9 +220,14 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
               </DetailValue>
             </DetailsInfoItem>
             <Box textAlign={"right"}>
-              <ButtonModal sx={{
-                color: theme.palette.secondary.main,
-              }} onClick={() => setOpen(true)}>View all addresses</ButtonModal>
+              <ButtonModal
+                sx={{
+                  color: theme.palette.secondary.main
+                }}
+                onClick={() => setOpen(true)}
+              >
+                View all addresses
+              </ButtonModal>
             </Box>
             <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={stakeId} />
           </Group>

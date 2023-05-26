@@ -13,11 +13,13 @@ import { UnionTokenIcon, PeopleIcon, TransactionIcon } from "../../../commons/re
 import CustomIcon from "../../commons/CustomIcon";
 import { useScreen } from "~/commons/hooks/useScreen";
 
+
 interface ITokenTableData {
   totalSupply?: number;
+  metadata?: ITokenMetadata;
 }
 
-const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
+const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata }) => {
   const history = useHistory();
   const { tabActive = "transactions", tokenId } = useParams<{ tabActive: keyof Transaction; tokenId: string }>();
   const theme = useTheme();
@@ -43,7 +45,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
     {
       key: "tokenMint",
       label: "Minting",
-      children: <TokenMinting tokenId={tokenId} />,
+      children: <TokenMinting tokenId={tokenId} metadata={metadata} />,
       icon: <UnionTokenIcon />
     }
   ];
