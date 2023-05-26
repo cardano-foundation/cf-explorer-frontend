@@ -26,8 +26,11 @@ export const StyledTable = styled(Table)(({ theme }) => ({
   "tbody tr td": {
     padding: "0 25px"
   },
-  "& .MuiTablePagination-root": {
-    background: "red"
+  ".MuiPagination-root.MuiPagination-text": {
+    [theme.breakpoints.down("sm")]: {
+      overflow: "hidden",
+      width: "100% "
+    }
   }
 }));
 
