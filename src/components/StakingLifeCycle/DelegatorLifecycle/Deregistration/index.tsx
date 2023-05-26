@@ -68,10 +68,12 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
   return (
     <Box>
       <StepInfo>
-        {showBackButton && (
+        {showBackButton ? (
           <IconButtonBack onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
+        ) : (
+          <Box />
         )}
 
         <InfoGroup>

@@ -55,23 +55,13 @@ interface ListTabResponse {
   isDeRegistration: boolean;
 }
 
-const SPOLifecycle = ({
-  containerPosition,
-  currentStep,
-  setCurrentStep,
-  handleResize
-}: {
-  containerPosition: {
-    top?: number;
-    left?: number;
-  };
-  handleResize: () => void;
+interface Props {
   currentStep: number;
   setCurrentStep: (step: number) => void;
-}) => {
-  const { poolId = "" } = useParams<{
-    poolId: string;
-  }>();
+}
+
+const SPOLifecycle = ({ currentStep, setCurrentStep }: Props) => {
+  const { poolId = "" } = useParams<{ poolId: string }>();
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
   const history = useHistory();
   const { isMobile } = useScreen();

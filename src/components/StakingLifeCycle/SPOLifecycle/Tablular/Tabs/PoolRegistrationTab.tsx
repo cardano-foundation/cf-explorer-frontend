@@ -12,7 +12,7 @@ import { TableSubTitle } from "../../../../TabularView/StakeTab/styles";
 import CustomTooltip from "../../../../commons/CustomTooltip";
 import Table, { Column } from "../../../../commons/Table";
 import { StyledLink } from "../../../../share/styled";
-import { RegistrationCertificateModal } from "../../Registration";
+import { RegistrationCertificateModal } from "../../Registration/RegistrationCertificateModal";
 
 const PoolRegistrationTab = () => {
   const theme = useTheme();
@@ -109,7 +109,7 @@ const PoolRegistrationTab = () => {
       <RegistrationCertificateModal
         poolUpdateId={selected || 0}
         open={!!selected}
-        handleCloseModal={() => setSelected(null)}
+        onClose={() => setSelected(null)}
         poolId={poolId}
       />
     </Box>

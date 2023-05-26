@@ -250,7 +250,7 @@ const TableSekeleton = () => {
   );
 };
 
-const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, clearSelection }) => {
+export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, clearSelection }) => {
   const [page, setPage] = useState(pagination?.page || 1);
   const [size, setSize] = useState(pagination?.size || 50);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();

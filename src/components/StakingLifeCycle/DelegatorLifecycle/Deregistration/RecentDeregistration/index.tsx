@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Skeleton } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../../StackingFilter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
-import { EmptyRecord } from "../../../../commons/Table";
+import { EmptyRecord, FooterTable } from "../../../../commons/Table";
 import { GridBox, StyledContainer, StyledList, WrapFilterDescription } from "./styles";
 import { DescriptionText } from "../../styles";
 import { details } from "../../../../../commons/routers";
@@ -24,10 +24,11 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, params, setParams, s
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
+  const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
 
   const { data, total, loading, initialized, error } = useFetchList<DeregistrationItem>(
     stakeId ? API.STAKE_LIFECYCLE.DEREGISTRATION(stakeId) : "",
-    { page: 0, size: 1000, ...params }
+    { ...pageInfo, ...params }
   );
 
   useEffect(() => {
@@ -65,20 +66,21 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, params, setParams, s
         <DescriptionText>Deregistration List</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
-            Showing {total} {total > 1 ? "results" : "result"}
+            Showing {data.length} {data.length > 1 ? "results" : "result"}
           </WrapFilterDescription>
           <StackingFilter
             filterValue={params}
-            onFilterValueChange={(params) =>
+            onFilterValueChange={(params) => {
               setParams &&
-              setParams({
-                fromDate: undefined,
-                sort: undefined,
-                toDate: undefined,
-                txHash: undefined,
-                ...params
-              })
-            }
+                setParams({
+                  fromDate: undefined,
+                  sort: undefined,
+                  toDate: undefined,
+                  txHash: undefined,
+                  ...params
+                });
+              setPageInfo((pre) => ({ ...pre, page: 0 }));
+            }}
           />
         </Box>
       </StyledList>
@@ -102,6 +104,20 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, params, setParams, s
           })}
       </GridBox>
       {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
+      {initialized && data?.length > 0 && !error && (
+        <FooterTable
+          total={{
+            count: total,
+            title: ""
+          }}
+          pagination={{
+            total,
+            ...pageInfo,
+            onChange: (page, size) => setPageInfo((pre) => ({ ...pre, page: page - 1, size }))
+          }}
+          loading={loading || false}
+        />
+      )}
     </StyledContainer>
   );
 };
