@@ -1,4 +1,4 @@
-import { alpha, Avatar, Box, CircularProgress, ClickAwayListener, IconButton, useTheme } from "@mui/material";
+import { alpha, Avatar, Box, CircularProgress, IconButton, useTheme } from "@mui/material";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { routers } from "../../../../commons/routers";
@@ -38,7 +38,7 @@ interface Props {
 const AccountLayout: React.FC<Props> = ({ children }) => {
   const { pathname } = useLocation();
   const { userData } = useSelector(({ user }: RootState) => user);
-  const { isMobile, isTablet, isGalaxyFoldSmall } = useScreen();
+  const { isMobile, isTablet } = useScreen();
   const theme = useTheme();
   const [openReportModal, setOpenReportModal] = useState(false);
   const [isUploadAvatar, setIsUploadAvatar] = useState(false);
@@ -152,25 +152,17 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
               </Box>
             </Box>
           </Box>
-          <ClickAwayListener onClickAway={() => setOpenFullname(false)} >
-            <div
-              onMouseEnter={() => setOpenFullname(true)}
-              onMouseLeave={() => setOpenFullname(false)}
-            >
-              <CustomTooltip
-                title={userData?.address || userData?.email || ""}
-                open={openFullname}
-                placement='bottom'
-                onClose={() => setOpenFullname(false)}
-                disableFocusListener
-                disableTouchListener
-              >
-                <StyledUsername component={"h4"} pt={1} m='auto' onClick={() => setOpenFullname(true)}>
-                  {userData?.address ? <>{getShortWallet(userData?.address)}</> : <>{userData?.email}</>}
-                </StyledUsername>
-              </CustomTooltip>
-            </div>
-          </ClickAwayListener>
+          {userData?.address && JSON.parse(localStorage.getItem("cf-wallet-connected") || "") ? (
+            <CustomTooltip title={userData?.address || ""} placement='bottom'>
+              <StyledUsername component={"h4"} pt={1} m='auto'>
+                {getShortWallet(userData?.address)}
+              </StyledUsername>
+            </CustomTooltip>
+          ) : (
+            <StyledUsername component={"h4"} pt={1} m='auto'>
+              {userData?.email}
+            </StyledUsername>
+          )}
         </Box>
         <Box display={"flex"} justifyContent={"center"} mt={4}>
           <WrapItemMobile>

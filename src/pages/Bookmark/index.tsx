@@ -164,7 +164,9 @@ const Bookmark = () => {
       title: "Added On",
       key: "Added On",
       minWidth: 120,
-      render: (data) => moment(data.createdDate).format("MM/DD/YYYY hh:mm:ss")
+      render: (data) => {
+        return moment(data.createdDate).utc().format("MM/DD/YYYY HH:mm:ss");
+      }
     },
     {
       title: <Box textAlign={"right"}>Action</Box>,

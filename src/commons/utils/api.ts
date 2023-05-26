@@ -110,5 +110,5 @@ export const API = {
 export const USER_API = {
   ACTIVITY_LOG: "user/activities-log",
   INFO: "user/info",
-  BOOKMARK: "find-all-key"
+  BOOKMARK: "bookmark/find-all-key"
 };

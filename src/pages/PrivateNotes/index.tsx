@@ -180,8 +180,13 @@ const PrivateNotes = () => {
     <Container overflow={"auto"}>
       <Header>
         <Title>My Transaction Private Notes</Title>
-        <AddButton onClick={() => setOpenModal(true)} endIcon={<Plus />}>
-          Add
+        <AddButton onClick={() => setOpenModal(true)}>
+          <Box lineHeight={1} mr={"4px"}>
+            Add
+          </Box>
+          <Box lineHeight={1}>
+            <Plus width={"14px"} />
+          </Box>
         </AddButton>
       </Header>
       <Box overflow={"auto"} height='100%'>
