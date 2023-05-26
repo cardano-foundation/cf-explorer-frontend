@@ -149,7 +149,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
         </ModalTitle>
         <StyledStack>
           <StyledLabel>Report name</StyledLabel>
-          <StyledTextField placeholder='Filled report name' value={reportName} onChange={onChangeReportName} />
+          <StyledTextField placeholder='Enter report name' value={reportName} onChange={onChangeReportName} />
         </StyledStack>
         <Box sx={{ marginBottom: "20px" }}>
           <StyledLabel>Address details</StyledLabel>
