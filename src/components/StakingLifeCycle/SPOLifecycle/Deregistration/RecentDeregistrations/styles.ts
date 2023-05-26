@@ -1,4 +1,4 @@
-import { Popover, Button, styled, Box } from "@mui/material";
+import { Popover, Button, styled, Box, Typography } from "@mui/material";
 
 export const SubmitButton = styled(Button)`
   display: flex;
@@ -107,4 +107,10 @@ export const StyledList = styled(Box)(({ theme }) => ({
       marginBottom: 4
     }
   }
+}));
+
+export const AditionalLabel = styled(Typography)(() => ({
+  fontSize: 18,
+  fontWeight: 700,
+  marginTop: 24
 }));

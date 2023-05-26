@@ -84,13 +84,14 @@ export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar
     minWidth: 320
   }
 }));
-export const MiddleGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const MiddleGroup = styled(Box)<{ sidebar?: number; hold?: number }>(({ theme, sidebar, hold }) => ({
   display: "flex",
   justifyContent: "space-around",
   width: "max-content",
   flexDirection: "column",
-  gap: 25,
-  paddingTop: 5,
+  gap: hold ? 25 : 90,
+  paddingTop: hold ? 5 : 75,
+
   [theme.breakpoints.down("lg")]: {
     gap: 10
   },
@@ -99,7 +100,8 @@ export const MiddleGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }
     maxWidth: 536,
     gap: 30,
     paddingTop: 46,
-    paddingBottom: 35
+    paddingBottom: 35,
+    alignItems: hold ? "unset" : "center"
   },
   [theme.breakpoints.down("sm")]: {
     maxWidth: 320,
