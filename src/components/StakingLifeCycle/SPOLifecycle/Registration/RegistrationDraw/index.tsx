@@ -83,8 +83,9 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
         startPosition: { 0: ["left", "bottom"], sm: ["left", "middle"], lg: ["center", "middle"] },
         end: registrationRef,
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-        startOffset: { 0: [1, -50], sm: [10, 0], lg: [0] },
-        fold: { sm: "horizontal", lg: "vertical" }
+        startOffset: { 0: [5, -50], sm: [10, 0], lg: [0] },
+        fold: { sm: "horizontal", lg: "vertical" },
+        autoAlign: { 0: "start-vertical", sm: "none" }
       },
       {
         start: registrationRef,
@@ -93,7 +94,8 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
         endPosition: { 0: ["left", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
         endOffset: { 0: [18, 45], sm: [10], lg: [0, 3] },
         fold: { sm: "vertical", lg: "horizontal" },
-        arrow: { 0: "top", sm: "left", lg: "bottom" }
+        arrow: { 0: "top", sm: "left", lg: "bottom" },
+        autoAlign: { 0: "end-vertical", sm: "none" }
       }
     ];
   }, []);

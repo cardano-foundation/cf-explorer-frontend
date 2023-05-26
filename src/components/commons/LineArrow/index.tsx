@@ -21,6 +21,8 @@ type Direction = "top" | "bottom" | "left" | "right";
 
 type Fold = "vertical" | "horizontal" | "none";
 
+type Align = "start-vertical" | "start-horizontal" | "end-vertical" | "end-horizontal" | "none";
+
 type DirectionOptions =
   | Direction
   | Partial<{
@@ -33,7 +35,14 @@ type FoldOptions =
       [key in Breakpoint | number]: Fold;
     }>;
 
+type AlignOptions =
+  | Align
+  | Partial<{
+      [key in Breakpoint | number]: Align;
+    }>;
+
 type PositionOffset = number[];
+
 type PositionOffsetOptions =
   | PositionOffset
   | Partial<{
@@ -50,6 +59,7 @@ export interface LineArrowItem {
   endOffset?: PositionOffsetOptions;
   arrow?: DirectionOptions;
   fold?: FoldOptions;
+  autoAlign?: AlignOptions;
 }
 
 interface LineArrowProps extends LineArrowItem {
@@ -67,7 +77,8 @@ export const LineArrow: React.FC<LineArrowProps> = (props) => {
     startOffset = [],
     endOffset = [],
     arrow,
-    fold
+    fold,
+    autoAlign
   } = props;
   const [mount, setMount] = useState(0);
   const { width } = useWindowSize(0);
@@ -164,6 +175,38 @@ export const LineArrow: React.FC<LineArrowProps> = (props) => {
     }
     return direction;
   };
+
+  const getAlign = (align: AlignOptions): Align => {
+    if (typeof align === "object") {
+      const key = getKey(align);
+      return align[key] || "none";
+    }
+    return align;
+  };
+
+  const getAlignX = (x: number, startX: number, endX: number): number => {
+    const align = autoAlign ? getAlign(autoAlign) : "none";
+    switch (align) {
+      case "start-vertical":
+        return startX;
+      case "end-vertical":
+        return endX;
+      default:
+        return x;
+    }
+  };
+  const getAlignY = (y: number, startY: number, endY: number): number => {
+    const align = autoAlign ? getAlign(autoAlign) : "none";
+    switch (align) {
+      case "start-horizontal":
+        return startY;
+      case "end-horizontal":
+        return endY;
+      default:
+        return y;
+    }
+  };
+
   const getFold = (fold: FoldOptions): Fold => {
     if (typeof fold === "object") {
       const key = getKey(fold);
@@ -184,49 +227,54 @@ export const LineArrow: React.FC<LineArrowProps> = (props) => {
       const [startPositionX, startPositionY] = getPosition(startPosition);
       const startX = startRect.x - parentRect.x + getOffsetX(startRect, startPositionX) + offsetStartX;
       const startY = startRect.y - parentRect.y + getOffsetY(startRect, startPositionY) + offsetStartY;
-      str += `M${startX},${startY}`;
 
       const [endPositionX, endPositionY] = getPosition(endPosition);
       const endX = endRect.x - parentRect.x + getOffsetX(endRect, endPositionX) + offsetEndX;
       const endY = endRect.y - parentRect.y + getOffsetY(endRect, endPositionY) + offsetEndY;
+      const alignStartX = getAlignX(startX, startX, endX);
+      const alignStartY = getAlignY(startY, startY, endY);
+      const alignEndX = getAlignX(endX, startX, endX);
+      const alignEndY = getAlignY(endY, startY, endY);
+
+      str += `M${alignStartX},${alignStartY}`;
 
       if (fold) {
         const direction = getFold(fold);
         switch (direction) {
           case "vertical":
-            str += ` L${startX},${endY}`;
+            str += ` L${alignStartX},${endY}`;
             break;
           case "horizontal":
-            str += ` L${endX},${startY}`;
+            str += ` L${alignEndX},${alignStartY}`;
             break;
           default:
         }
       }
 
-      str += ` L${endX},${endY}`;
+      str += ` L${alignEndX},${alignEndY}`;
 
       if (arrow) {
         const direction = getDirection(arrow);
         switch (direction) {
           case "top":
-            str += ` M${endX - 7},${endY - 7}`;
-            str += ` L${endX},${endY}`;
-            str += ` L${endX + 7},${endY - 7}`;
+            str += ` M${alignEndX - 7},${alignEndY - 7}`;
+            str += ` L${alignEndX},${alignEndY}`;
+            str += ` L${alignEndX + 7},${alignEndY - 7}`;
             break;
           case "bottom":
-            str += ` M${endX - 7},${endY + 7}`;
-            str += ` L${endX},${endY}`;
-            str += ` L${endX + 7},${endY + 7}`;
+            str += ` M${alignEndX - 7},${alignEndY + 7}`;
+            str += ` L${alignEndX},${alignEndY}`;
+            str += ` L${alignEndX + 7},${alignEndY + 7}`;
             break;
           case "left":
-            str += ` M${endX - 7},${endY - 7}`;
-            str += ` L${endX},${endY}`;
-            str += ` L${endX - 7},${endY + 7}`;
+            str += ` M${alignEndX - 7},${alignEndY - 7}`;
+            str += ` L${alignEndX},${alignEndY}`;
+            str += ` L${alignEndX - 7},${alignEndY + 7}`;
             break;
           case "right":
-            str += ` M${endX + 7},${endY - 7}`;
-            str += ` L${endX},${endY}`;
-            str += ` L${endX + 7},${endY + 7}`;
+            str += ` M${alignEndX + 7},${alignEndY - 7}`;
+            str += ` L${alignEndX},${alignEndY}`;
+            str += ` L${alignEndX + 7},${alignEndY + 7}`;
             break;
           default:
         }
