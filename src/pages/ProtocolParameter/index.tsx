@@ -270,11 +270,9 @@ const ProtocolParameterHistory = () => {
     return column;
   };
 
-  const columnsMap = columnTitle.map((t, idx) => ({
+  const columnsMap = columnTitle.map((t) => ({
     title: t,
     key: t,
-    fixed: idx === 0 ? true : false,
-    leftFixed: 130,
     render: (r: any) => {
       console.log(["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey].status as string) ? "Link" : "Box");
       return (
