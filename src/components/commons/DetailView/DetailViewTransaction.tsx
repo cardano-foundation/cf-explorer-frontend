@@ -3,11 +3,11 @@ import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import {
   CubeIcon,
+  DelegationHistoryMainIcon,
   FileEditIcon,
   MintingIcon,
   NoteEditIcon,
   RocketIcon,
-  SummaryIconTx,
   USDIcon,
   WithdrawlIcon
 } from "../../../commons/resources";
@@ -62,7 +62,7 @@ type DetailViewTransactionProps = {
   handleClose: () => void;
 };
 const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] = [
-  { key: "summary", label: "Summary", icon: <SummaryIconTx /> },
+  { key: "summary", label: "Summary", icon: <DelegationHistoryMainIcon /> },
   { key: "utxOs", label: "UTXOs", icon: <CgArrowsExchange /> },
   { key: "contracts", label: "Contracts", icon: <DetailLinkImage src={FileEditIcon} alt='contact' /> },
   { key: "collaterals", label: "Collateral", icon: <DetailLinkImage src={USDIcon} alt='contact' /> },
