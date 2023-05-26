@@ -45,7 +45,6 @@ import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
 import StakingLifeCycleSearch from "./pages/StakingLifeCycleSearch";
 
 const Routes: React.FC = () => {
-  //TODO: lấy SPO
   return (
     <Switch>
       <Route path={routers.SIGN_IN} exact component={SignIn} />

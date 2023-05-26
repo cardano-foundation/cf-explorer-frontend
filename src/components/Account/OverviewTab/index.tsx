@@ -41,6 +41,7 @@ import {
 import { MdOutlineFileDownload } from "react-icons/md";
 import { SupportedWallets, Wallet } from "~/types/user";
 import { StyledDarkLoadingButton } from "~/components/share/styled";
+import CustomTooltip from "~/components/commons/CustomTooltip";
 
 type TRowItem = {
   label: string;
@@ -180,8 +181,10 @@ const OverviewTab = () => {
       <RowItem
         label='Wallet'
         value={
-          <Box display='flex' alignItems='center'>
-            <WalletAddress>{userData?.wallet || userData?.address}</WalletAddress>
+          <Box display='inline-flex' alignItems='center'>
+            <CustomTooltip title={userData?.wallet || userData?.address}>
+              <WalletAddress>{userData?.wallet || userData?.address}</WalletAddress>
+            </CustomTooltip>
             {userData?.wallet || userData?.address ? <CopyButton text={userData?.wallet || userData?.address} /> : null}
           </Box>
         }

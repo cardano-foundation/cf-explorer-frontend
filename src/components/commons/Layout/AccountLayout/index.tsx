@@ -150,7 +150,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
               </Box>
             </Box>
           </Box>
-          {userData?.address ? (
+          {userData?.address && JSON.parse(localStorage.getItem("cf-wallet-connected") || "") ? (
             <CustomTooltip title={userData?.address || ""} placement='bottom'>
               <StyledUsername component={"h4"} pt={1} m='auto'>
                 {getShortWallet(userData?.address)}

@@ -151,10 +151,7 @@ const TableRow = <T extends ColumnType>({
   const isClickRow = selected === index ? 1 : 0;
 
   return (
-    <TRow
-      onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))}
-      {...selectedProps}
-    >
+    <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
       {selectable && (
         <TCol>
           <TableCheckBox checked={isSelected?.(row)} onChange={(e) => toggleSelection?.(row)} />
@@ -254,7 +251,7 @@ const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, c
   const [page, setPage] = useState(pagination?.page || 1);
   const [size, setSize] = useState(pagination?.size || 50);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
-  const { isMobile } = useScreen();
+
   useUpdateEffect(() => {
     setPage(1);
   }, [poolType]);
@@ -374,7 +371,7 @@ const Table: React.FC<TableProps> = ({
       />
       <Wrapper
         maxHeight={maxHeight}
-        minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 600 : 150}
+        minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 400 : 150}
         height={heightTable}
       >
         <TableFullWidth ref={tableRef}>
