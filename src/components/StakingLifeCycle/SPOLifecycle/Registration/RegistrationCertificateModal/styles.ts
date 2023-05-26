@@ -2,13 +2,8 @@ import { Box, styled, alpha } from "@mui/material";
 import CustomModal from "~/components/commons/CustomModal";
 import { Link } from "react-router-dom";
 import { AdaLogoIcon } from "~/components/commons/ADAIcon";
-import CopyButton from "~/components/commons/CopyButton";
 
 export const StyledModal = styled(CustomModal)(() => ({}));
-
-export const StyledCopyButton = styled(CopyButton)`
-  margin-left: 5px;
-`;
 
 export const ItemList = styled(Box)(({ theme }) => ({
   display: "flex",

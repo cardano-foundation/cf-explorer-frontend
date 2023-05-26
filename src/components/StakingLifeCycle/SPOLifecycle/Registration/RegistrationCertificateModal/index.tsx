@@ -17,13 +17,13 @@ interface CertificateItemType {
   extra?: React.ReactNode | false;
 }
 
-interface RegistrationCertificateModalProps {
+interface Props {
   open: boolean;
   poolId: string;
   poolUpdateId: number;
   onClose: () => void;
 }
-export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }: RegistrationCertificateModalProps) => {
+export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }: Props) => {
   const { data } = useFetch<SPORegistrationDetail>(
     poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, poolUpdateId) : ""
   );
@@ -76,7 +76,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
           <CopyButton text={data?.stakeKeys[0] || ""} />
         </LineData>
       ),
-      extra: data && data.stakeKeys?.length > 0 && (
+      extra: data && data.stakeKeys?.length > 1 && (
         <ViewMoreThreeDots onClick={() => setSelectedOwner(data.stakeKeys || [])} />
       )
     },
