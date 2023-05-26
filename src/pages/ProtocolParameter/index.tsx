@@ -296,11 +296,9 @@ const ProtocolParameterHistory = () => {
     return column;
   };
 
-  const columnsMap = columnTitle.map((t, idx) => ({
+  const columnsMap = columnTitle.map((t) => ({
     title: t,
     key: t,
-    fixed: idx === 0 && !isMobile,
-    leftFixed: 150,
     render: (r: any) => {
       return (
         <Box
