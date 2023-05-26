@@ -9,7 +9,7 @@ import { ADAValueLabel, ClickAbleLink } from "../../StakingLifeCycle/SPOLifecycl
 import CustomIcon from "../../commons/CustomIcon";
 import { ADAsigntIC, EyeIcon } from "../../../commons/resources";
 import useFetchList from "../../../commons/hooks/useFetchList";
-import { PoolUpdateModal } from "../../StakingLifeCycle/SPOLifecycle/PoolUpdates";
+import { PoolUpdateModal } from "../../StakingLifeCycle/SPOLifecycle/PoolUpdates/PoolUpdateModal";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
 
@@ -76,13 +76,7 @@ const ProtocolUpdateTab = () => {
 
   return (
     <Box>
-      <PoolUpdateModal
-        data={selectedValue}
-        open={!!selectedValue}
-        handleCloseModal={() => {
-          setSelectedValue(null);
-        }}
-      />
+      <PoolUpdateModal data={selectedValue} open={!!selectedValue} onClose={() => setSelectedValue(null)} />
       <Table
         {...fetchData}
         columns={columns}
