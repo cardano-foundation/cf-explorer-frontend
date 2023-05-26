@@ -65,7 +65,7 @@ const AddressAnalytics: React.FC = () => {
     <Box pt={isMobile ? 0 : "20px"}>
       <Card title='Analytics' py={4}>
         <Wrapper container columns={24} spacing='35px'>
-          <Grid item xs={24} lg={16}>
+          <Grid item xs={24} lg={18}>
             <Grid spacing={2} container alignItems='center' justifyContent={"space-between"}>
               <Grid item xs={4} sm={4}>
                 <ButtonTitle>Volume</ButtonTitle>
@@ -148,7 +148,7 @@ const AddressAnalytics: React.FC = () => {
               )}
             </ChartBox>
           </Grid>
-          <Grid item xs={24} lg={8}>
+          <Grid item xs={24} lg={6}>
             <BoxInfo space={0}>
               <Box flex={1}>
                 <BoxInfoItemRight display={"flex"} alignItems='center' justifyContent={"center"}>
