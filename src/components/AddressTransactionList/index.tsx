@@ -1,19 +1,19 @@
 import { Box } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
-import sendImg from "../../commons/resources/images/sendImg.svg";
-import receiveImg from "../../commons/resources/images/receiveImg.svg";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { useScreen } from "../../commons/hooks/useScreen";
-import { details } from "../../commons/routers";
-import { API } from "../../commons/utils/api";
+import sendImg from "~/commons/resources/images/sendImg.svg";
+import receiveImg from "~/commons/resources/images/receiveImg.svg";
+import useFetchList from "~/commons/hooks/useFetchList";
+import { useScreen } from "~/commons/hooks/useScreen";
+import { details } from "~/commons/routers";
+import { API } from "~/commons/utils/api";
 import {
   formatADAFull,
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
   numberWithCommas
-} from "../../commons/utils/helper";
+} from "~/commons/utils/helper";
 import ADAicon from "../commons/ADAIcon";
 import Card from "../commons/Card";
 import CustomTooltip from "../commons/CustomTooltip";
@@ -21,6 +21,7 @@ import DropdownTokens from "../commons/DropdownTokens";
 import Table, { Column } from "../commons/Table";
 import { SmallText } from "../share/styled";
 import { Img, StyledLink } from "./styles";
+import { TransferIcon } from "~/commons/resources";
 
 interface AddressTransactionListProps {
   underline?: boolean;
@@ -63,17 +64,25 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1)
     },
     {
-      title: "Trx Hash",
+      title: "Tx Hash",
       key: "trxhash",
       minWidth: isMobile ? 190 : 120,
 
       render: (transaction) => {
         const type = transaction.balance >= 0 ? "up" : "down";
+        const hasSentToken = transaction?.tokens.some((t) => t.quantity < 0);
+        const hasReceivedToken = transaction?.tokens.some((t) => t.quantity > 0);
         return (
           <Box display={"flex"}>
-            <Box width={50}>
-              <Img src={type !== "up" ? receiveImg : sendImg} alt='send icon' />
-            </Box>
+            {hasSentToken && hasReceivedToken ? (
+              <Box width={40} ml={"2px"} mr={"8px"}>
+                <TransferIcon style={{ scale: "1.15" }} />
+              </Box>
+            ) : (
+              <Box width={50} display={transaction?.balance ? "" : "none"}>
+                <Img src={type !== "up" ? receiveImg : sendImg} alt='send icon' />
+              </Box>
+            )}
             <Box display={"grid"}>
               <CustomTooltip title={transaction.hash}>
                 <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
@@ -134,14 +143,16 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
         let tokens: Token[] = [];
         if (transaction.tokens && transaction.tokens.length > 0) {
           tokens = transaction.tokens.map((token) => ({
-            assetId: token.addressId.toString(),
+            assetId: token.fingerprint,
             assetQuantity: token.quantity,
             assetName: token.displayName
           }));
         }
         return (
           <Box display={"flex"} alignItems={"center"}>
-            {transaction.tokens && transaction.tokens.length > 0 && <DropdownTokens tokens={tokens} type={type} />}
+            {transaction.tokens && transaction.tokens.length > 0 && (
+              <DropdownTokens tokens={tokens} type={type} hideInputLabel />
+            )}
           </Box>
         );
       }

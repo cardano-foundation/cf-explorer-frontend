@@ -33,6 +33,11 @@ export const Layout = styled(Box)`
         background-clip: padding-box;
       }
     }
+    ${({ theme }) => theme.breakpoints.down("sm")} {
+      &::-webkit-scrollbar {
+        display: none !important;
+      }
+    }
   }
 `;
 
@@ -59,10 +64,6 @@ export const BackDrop = styled("div", { shouldForwardProp: (prop) => prop !== "i
 export const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   minWidth: drawerCollaspWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen
-  }),
   overflowY: "unset",
   borderRightWidth: 0,
   [theme.breakpoints.down("md")]: {
@@ -74,10 +75,6 @@ export const openedMixin = (theme: Theme): CSSObject => ({
 });
 
 export const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen
-  }),
   overflowY: "unset",
   width: drawerCollaspWidth,
   borderRightWidth: 0,
@@ -125,14 +122,10 @@ export const ToggleMenu = styled("button")`
   position: absolute;
   top: 50px;
   right: 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   transform: translateX(50%) translateY(-50%);
-  font-size: 18px;
-  line-height: 18px;
   width: 22px;
   height: 22px;
+  padding: 0;
   border-radius: 50%;
   background-image: ${(props) => props.theme.palette.gradient[0]};
   border: none;
@@ -162,4 +155,11 @@ export const Main = styled(Box)<{ open: number; sidebar: number }>`
 
 export const ArrowCollapse = styled("span")`
   z-index: 100;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  line-height: 14px;
 `;

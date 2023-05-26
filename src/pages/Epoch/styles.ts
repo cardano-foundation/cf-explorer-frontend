@@ -18,7 +18,7 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
       margin: "0 16px"
     },
     "& > div > div:nth-of-type(3)": {
-      paddingLeft: "16px"
+      padding: "0 16px"
     },
     marginTop: "0px !important"
   }

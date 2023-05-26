@@ -24,7 +24,7 @@ const tabs: {
 }[] = [
   {
     icon: RegistrationIcon,
-    label: "Stake Key Registration",
+    label: "Registration",
     key: "registration",
     component: <StakeRegistrationTab />
   },
@@ -54,7 +54,7 @@ const tabs: {
   }
 ];
 
-const Tablular = () => {
+const Tabular = () => {
   const { stakeId = "", tab = "registration" } = useParams<{ stakeId: string; tab: DelegationStep }>();
   const history = useHistory();
   const onChangeTab = (tab: any) => {
@@ -69,4 +69,4 @@ const Tablular = () => {
   );
 };
 
-export default Tablular;
+export default Tabular;

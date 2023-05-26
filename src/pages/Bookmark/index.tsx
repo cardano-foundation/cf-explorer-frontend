@@ -4,7 +4,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { Column } from "../../types/table";
-import { CancelButton, DeleteButton, StyledTable, TitleTab } from "./Styles";
+import { CancelButton, DeleteButton, StyledTable, TitleTab, WrapTab } from "./Styles";
 import { ReactComponent as DeleteBookmark } from "../../commons/resources/icons/deleteBookmark.svg";
 import { ReactComponent as QuestionConfirm } from "../../commons/resources/icons/questionConfirm.svg";
 import { Link } from "react-router-dom";
@@ -52,7 +52,7 @@ const Bookmark = () => {
         setLoadingDelete(false);
         setBookmarks(bookmarks?.filter((r) => r.keyword !== keyword));
         refresh();
-        toast.success("Successfully!");
+        toast.success("Delete bookmark successfully!");
       }
     } catch (error) {
       setSelected(null);
@@ -137,7 +137,7 @@ const Bookmark = () => {
           to={details.delegation(data.keyword)}
           color={(theme) => `${theme.palette.secondary.main} !important`}
         >
-          {getShortHash(data.keyword)}
+          {getShortWallet(data.keyword)}
         </Box>
       )
     },
@@ -338,12 +338,12 @@ const Bookmark = () => {
         <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.secondary}` }}>
           <TabList
             onChange={handleChange}
-            TabIndicatorProps={{ sx: { style: { background: (theme) => theme.palette.primary.main } } }}
+            TabIndicatorProps={{ sx: { style: { background: (theme) => theme.palette.primary.main }, height: 3 } }}
             variant='scrollable'
             scrollButtons={false}
           >
             {tabs.map(({ key, label }) => (
-              <Tab
+              <WrapTab
                 key={key}
                 value={key}
                 label={

@@ -1,16 +1,9 @@
-import { Box, Button, CircularProgress, Container, Grid, IconButton } from "@mui/material";
-import React, { useState } from "react";
+import { Box, CircularProgress, Container, Grid, IconButton } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { useScreen } from "../../commons/hooks/useScreen";
-import {
-  DownloadGreenIcon,
-  FilterIC,
-  ListOfReportsIC,
-  PersionalSettingIC,
-  ScanQRCodeIC,
-  WatchlistIC
-} from "../../commons/resources";
+import { DownloadGreenIcon, FilterIC, ListOfReportsIC, WatchlistIC } from "../../commons/resources";
 import { details, routers } from "../../commons/routers";
 import { API } from "../../commons/utils/api";
 import { defaultAxiosDownload } from "../../commons/utils/axios";
@@ -33,25 +26,16 @@ import CustomTooltip from "~/components/commons/CustomTooltip";
 
 const cardList = [
   {
-    icon: <PersionalSettingIC />,
-    title: "Personal settings",
-    subtitle: "Your personal experience"
-  },
-  {
-    icon: <ScanQRCodeIC />,
-    title: "Scan QR code",
-    subtitle: "Scan a QR code"
-  },
-  {
     icon: <ListOfReportsIC />,
     title: "List of reports",
     subtitle: "Reports you can view",
-    to: routers.REPORT_GENERATED
+    to: details.generated_report("stake-key")
   },
   {
     icon: <WatchlistIC />,
     title: "Watchlist",
-    subtitle: "Lifecycle events"
+    subtitle: "Lifecycle events",
+    to: routers.STAKING_LIFECYCLE_SEARCH
   }
 ];
 
@@ -105,6 +89,11 @@ const Dashboard: React.FC = () => {
     ...params,
     sort: sort || params.sort
   });
+
+  useEffect(() => {
+    document.title = "Saved Reports | Cardano Explorer";
+  }, []);
+
   const { isMobile } = useScreen();
   const handleRowClick = (e: React.MouseEvent<Element, MouseEvent>, row: any) => {
     if (row.stakeKeyReportId) history.push(details.generated_staking_detail(row.stakeKeyReportId));
@@ -134,6 +123,7 @@ const Dashboard: React.FC = () => {
         link.click();
       })
       .catch((e) => {
+        // To do
         console.log(e.message || "");
       })
       .finally(() => {
@@ -178,24 +168,29 @@ const Dashboard: React.FC = () => {
     },
     {
       key: "downloadUrl",
+      maxWidth: "30px",
+      minWidth: "30px",
       render(data) {
-        return onDownload === data.id ? (
-          <CircularProgress size={22} color='primary' />
-        ) : (
-          <Box
-            ml={2}
-            component={IconButton}
-            textTransform={"capitalize"}
-            onClick={() =>
-              downloadReportDashboard(
-                data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
-                data.reportName,
-                data.type,
-                "EXCEL"
-              )
-            }
-          >
-            <CustomIcon icon={DownloadGreenIcon} width={24} />
+        return (
+          <Box width='100%' textAlign='right'>
+            {onDownload === data.id ? (
+              <CircularProgress size={22} color='primary' />
+            ) : (
+              <Box
+                component={IconButton}
+                textTransform={"capitalize"}
+                onClick={() =>
+                  downloadReportDashboard(
+                    data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
+                    data.reportName,
+                    data.type,
+                    "EXCEL"
+                  )
+                }
+              >
+                <CustomIcon icon={DownloadGreenIcon} width={24} />
+              </Box>
+            )}
           </Box>
         );
       }
@@ -206,7 +201,7 @@ const Dashboard: React.FC = () => {
     <Container>
       <GridContainer container spacing={2} columns={12}>
         {cardList.map((card, idx) => (
-          <Grid item xs={6} md={3} lg={3} key={idx}>
+          <Grid item xs={6} md={6} lg={6} xl={6} key={idx}>
             <DashboardCard
               key={card.title}
               leftIcon={card.icon}

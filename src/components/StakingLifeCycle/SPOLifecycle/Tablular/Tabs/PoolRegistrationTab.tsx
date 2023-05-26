@@ -109,7 +109,7 @@ const PoolRegistrationTab = () => {
       <RegistrationCertificateModal
         poolUpdateId={selected || 0}
         open={!!selected}
-        handleCloseModal={() => setSelected(null)}
+        onClose={() => setSelected(null)}
         poolId={poolId}
       />
     </Box>

@@ -1,4 +1,4 @@
-import { Box, Button, styled } from "@mui/material";
+import { Box, Button, styled, Tab } from "@mui/material";
 
 import Table from "../../components/commons/Table";
 import { LoadingButton } from "@mui/lab";
@@ -8,6 +8,7 @@ export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => 
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
+  paddingLeft: 0,
   color: active ? theme.palette.common.black : theme.palette.text.hint
 }));
 export const StyledTable = styled(Table)(({ theme }) => ({
@@ -52,3 +53,11 @@ export const DeleteButton = styled(LoadingButton)(({ theme }) => ({
     background: theme.palette.grey[700]
   }
 }));
+
+export const WrapTab = styled(Tab)`
+  max-width: unset;
+  padding-left: 0;
+  padding-right: 0;
+  min-width: unset;
+  margin-right: 20px;
+`;

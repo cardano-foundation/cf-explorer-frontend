@@ -58,7 +58,7 @@ export const WrapForm = styled(Box)(({ theme }) => ({
   position: "relative",
   flexDirection: "column",
   gap: "10px",
-  width: "min(80vw,420px)",
+  width: "min(74vw,420px)",
   padding: "35px 40px 40px",
   [theme.breakpoints.down("md")]: {
     padding: "20px 15px",

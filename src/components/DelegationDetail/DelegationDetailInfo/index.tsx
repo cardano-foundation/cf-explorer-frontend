@@ -13,7 +13,6 @@ import {
 } from "~/commons/resources";
 import { details } from "~/commons/routers";
 import {
-  formatADA,
   formatADAFull,
   formatDateTimeLocal,
   formatPercent,
@@ -100,7 +99,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <CustomTooltip title={poolId}>
           <Link to={details.delegation(poolId)}>
             <PoolIdLabel>Pool Id: </PoolIdLabel>
-            <PoolIdValue>{isMobile ? getShortHash(poolId) : poolId}</PoolIdValue>
+            <PoolIdValue>{isMobile ? getShortWallet(poolId) : poolId}</PoolIdValue>
           </Link>
         </CustomTooltip>
         <CopyButton text={poolId} />
@@ -210,6 +209,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 title='Owner address list'
                 value={data?.ownerAccounts || []}
                 close={() => setOpenOwner(false)}
+                isStakeDetail={true}
               />
             )}
           </Item>
@@ -218,9 +218,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoTitle>
               <StyledTitle>Pool size</StyledTitle>
             </InfoTitle>
-            <InfoValue>
+            <InfoValue sx={{ wordBreak: "break-all" }}>
               <FlexGap10>
-                {isMobile ? formatADA(data?.poolSize) : formatADAFull(data?.poolSize)}
+                {formatADAFull(data?.poolSize)}
                 <ADAicon />
               </FlexGap10>
             </InfoValue>
@@ -232,7 +232,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoTitle>
             <InfoValue>
               <FlexGap10>
-                {isMobile ? formatADA(data?.stakeLimit) : formatADAFull(data?.stakeLimit)}
+                {formatADAFull(data?.stakeLimit)}
                 <ADAicon />
               </FlexGap10>
             </InfoValue>

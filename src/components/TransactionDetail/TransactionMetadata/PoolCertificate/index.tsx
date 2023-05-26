@@ -3,7 +3,7 @@ import { CardHeader, TextLabel, TextValue } from "./styles";
 import StakeKeyBox from "./StakeKeyBox";
 import { Box, Grid, useTheme } from "@mui/material";
 import CopyButton from "~/components/commons/CopyButton";
-import { getShortHash } from "~/commons/utils/helper";
+import { getShortHash, getShortWallet } from "~/commons/utils/helper";
 import { details } from "~/commons/routers";
 import CustomTooltip from "~/components/commons/CustomTooltip";
 import Link from "~/components/commons/Link";
@@ -41,7 +41,7 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
                       <TextValue>
                         <CustomTooltip title={item.poolId}>
                           <span>
-                            <Link to={details.delegation(item.poolId || "")}>{getShortHash(item.poolId)}</Link>
+                            <Link to={details.delegation(item.poolId || "")}>{getShortWallet(item.poolId)}</Link>
                           </span>
                         </CustomTooltip>
                         <CopyButton text={item.poolId} />

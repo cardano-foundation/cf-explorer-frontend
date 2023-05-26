@@ -2,12 +2,12 @@ import { Box } from "@mui/material";
 import { StyledLink } from "../styles";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
-import useFetchList from "../../../../commons/hooks/useFetchList";
-import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import Table, { Column } from "../../../commons/Table";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import { details } from "../../../../commons/routers";
-import { API } from "../../../../commons/utils/api";
+import useFetchList from "~/commons/hooks/useFetchList";
+import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "~/commons/utils/helper";
+import Table, { Column } from "~/components/commons/Table";
+import CustomTooltip from "~/components/commons/CustomTooltip";
+import { details } from "~/commons/routers";
+import { API } from "~/commons/utils/api";
 
 const DelegationHistoryTab = ({ isMobile = false }) => {
   const { stakeId } = useParams<{ stakeId: string }>();
@@ -18,7 +18,7 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
 
   const columns: Column<DelegationHistory>[] = [
     {
-      title: "Trx Hash",
+      title: "Tx Hash",
       key: "hash",
       minWidth: isMobile ? "245px" : "120px",
       render: (r) => (
@@ -52,7 +52,7 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
       minWidth: "120px",
       render: (r) => (
         <CustomTooltip title={r.poolId || ""}>
-          <StyledLink to={details.delegation(r.poolId)}>{getShortHash(r.poolId || "")}</StyledLink>
+          <StyledLink to={details.delegation(r.poolId)}>{getShortWallet(r.poolId || "")}</StyledLink>
         </CustomTooltip>
       )
     },

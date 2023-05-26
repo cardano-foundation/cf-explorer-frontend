@@ -45,6 +45,11 @@ export const BackButton = styled("button")`
   cursor: pointer;
   padding: 0;
   font-family: "Roboto", sans-serif;
+  ${({ theme }) => theme.breakpoints.down("xl")} {
+    svg {
+      fill: ${(props) => props.theme.palette.grey[500]} !important;
+    }
+  }
 `;
 export const BackText = styled("small")`
   color: ${(props) => props.theme.palette.text.secondary};

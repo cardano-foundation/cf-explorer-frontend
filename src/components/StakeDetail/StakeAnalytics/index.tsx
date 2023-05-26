@@ -14,7 +14,8 @@ import {
   Title,
   ValueInfo,
   Wrapper,
-  CustomButton
+  CustomButton,
+  StyledGrid
 } from "./styles";
 import moment from "moment";
 import { useParams } from "react-router-dom";
@@ -50,8 +51,8 @@ const StakeAnalytics: React.FC = () => {
   const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
     `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
   );
-  const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.STAKE.MIN_MAX_BALANCE}/${stakeId}`);
-
+  const { data: balanceRaw, loading: balanceLoading } = useFetch<number[]>(`${API.STAKE.MIN_MAX_BALANCE}/${stakeId}`);
+  const balance = balanceRaw?.length ? balanceRaw : [0, 0];
   const dataBalanceChart = data?.map((i) => {
     const value = BigNumber(i.value).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
@@ -60,7 +61,6 @@ const StakeAnalytics: React.FC = () => {
     data?.map((i) => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
   const minBalance = Math.min(...(balance || []));
   const maxBalance = Math.max(...(balance || []), 0);
-
   const dataRewardChart = dataReward?.map((i) => {
     const value = BigNumber(i.value).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
@@ -86,7 +86,7 @@ const StakeAnalytics: React.FC = () => {
   return (
     <Card title='Analytics' pt={5}>
       <Wrapper container columns={24} spacing='35px'>
-        <Grid item xs={24} lg={18}>
+        <Grid item xs={24} lg={16}>
           <Grid spacing={2} container alignItems='center' justifyContent={"space-between"}>
             {isMobile ? (
               <Grid item xs={12} sm={6}>
@@ -162,7 +162,8 @@ const StakeAnalytics: React.FC = () => {
                       labels: {
                         style: {
                           fontSize: 12
-                        }
+                        },
+                        rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null
                       }
                     },
                     legend: { enabled: false },
@@ -192,8 +193,8 @@ const StakeAnalytics: React.FC = () => {
             )}
           </ChartBox>
         </Grid>
-        <Grid item xs={24} lg={6}>
-          <BoxInfo height={"100%"} space={(categoriesBalance || categoriesReward).length ? 36 : 16}>
+        <StyledGrid item xs={24} lg={8}>
+          <BoxInfo>
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems='center' justifyContent={"center"}>
                 <Box>
@@ -233,7 +234,7 @@ const StakeAnalytics: React.FC = () => {
               </BoxInfoItem>
             </Box>
           </BoxInfo>
-        </Grid>
+        </StyledGrid>
       </Wrapper>
     </Card>
   );

@@ -141,6 +141,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       handleCloseModal={handleCloseModal}
       paddingX={isMobile ? "10px" : "40px"}
       paddingY={isMobile ? "20px" : "30px"}
+      overflowY='unset'
     >
       <Container>
         <ModalTitle>
@@ -179,7 +180,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
           <Container>
             <StyledStack>
               <StyledLabel>Select a date range</StyledLabel>
-              <CustomDatePicker dateRange={dateRange} setDateRange={setDateRange} />
+              <CustomDatePicker dateRange={dateRange} setDateRange={setDateRange} hideFuture />
             </StyledStack>
           </Container>
         )}

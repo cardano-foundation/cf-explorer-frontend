@@ -11,7 +11,42 @@ export const EpochCard = styled(Box)(({ theme }) => ({
   overflowX: "scroll"
 }));
 
-export const EpochNumber = styled(Box)(({ theme }) => ({
+export const Container = styled(Box)(({ theme }) => ({
+  "& > div > div:first-of-type": {
+    display: "none"
+  },
+  [theme.breakpoints.up("lg")]: {
+    "& .MuiGrid-container": {
+      alignItems: "center"
+    },
+    "& .MuiGrid-item:not(:first-of-type)": {
+      marginTop: 30
+    }
+  },
+  [theme.breakpoints.down("lg")]: {
+    "& .MuiGrid-item": {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center"
+    },
+    "& .MuiGrid-item:first-of-type > div:last-of-type > div > div": {
+      width: "60px !important"
+    },
+    "& .MuiGrid-item:first-of-type > div:nth-of-type(2)": {
+      margin: 0
+    },
+    "& .MuiGrid-item:first-of-type > div:last-of-type span": {
+      fontSize: "7px !important"
+    }
+  },
+  [theme.breakpoints.down("sm")]: {
+    "& .MuiGrid-item > div:last-of-type": {
+      fontSize: 12
+    }
+  }
+}));
+
+export const EpochNumber = styled(Box)(() => ({
   fontWeight: 600,
   fontSize: 16,
   marginBottom: 8
@@ -30,7 +65,7 @@ export const EpochText = styled("span")`
 export const EpochProgress = styled("h3")(({ theme }) => ({
   color: theme.palette.primary.main,
   margin: 0,
-  [theme.breakpoints.down("md")]: {
+  [theme.breakpoints.down("lg")]: {
     fontSize: 14
   }
 }));

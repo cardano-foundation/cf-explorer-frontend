@@ -77,7 +77,7 @@ const DelegationTab = () => {
     }
   ];
 
-  const { total, data } = fetchData;
+  const { total } = fetchData;
 
   const filterLabel = useMemo(() => {
     if (params.fromDate && params.toDate)

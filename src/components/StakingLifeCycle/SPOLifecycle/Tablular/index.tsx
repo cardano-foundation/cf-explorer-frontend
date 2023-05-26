@@ -22,7 +22,7 @@ interface SPOTabItem extends StakeTabItem {
 const tabs: SPOTabItem[] = [
   {
     icon: RegistrationIcon,
-    label: "Pool Registration",
+    label: "Registration",
     key: "registration",
     component: <PoolRegistrationTab />
   },
@@ -46,7 +46,7 @@ const tabs: SPOTabItem[] = [
   }
 ];
 
-const Tablular = () => {
+const Tabular = () => {
   const { poolId = "", tab = "registration" } = useParams<{ poolId: string; tab: SPOStep }>();
   const history = useHistory();
 
@@ -62,4 +62,4 @@ const Tablular = () => {
   );
 };
 
-export default Tablular;
+export default Tabular;

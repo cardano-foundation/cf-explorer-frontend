@@ -4,11 +4,16 @@ import { Link, useHistory } from "react-router-dom";
 import { routers } from "../../commons/routers";
 import { useScreen } from "../../commons/hooks/useScreen";
 import useAuth from "~/commons/hooks/useAuth";
+import { useEffect } from "react";
 
 const SPOSearch = () => {
   const { isLoggedIn } = useAuth();
   const history = useHistory();
   const { isMobile } = useScreen();
+
+  useEffect(() => {
+    document.title = "Welcome to Staking Lifecycle (SPO) | Cardano Explorer";
+  }, []);
 
   return (
     <StyledContainer>

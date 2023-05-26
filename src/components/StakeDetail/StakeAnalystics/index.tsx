@@ -24,6 +24,7 @@ import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { BigNumber } from "bignumber.js";
 import { API } from "../../../commons/utils/api";
 import CustomTooltip from "../../commons/CustomTooltip";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 type AnalyticsBalance = { date: string; value: number };
 type AnalyticsReward = {
@@ -43,6 +44,7 @@ const StakeAnalytics: React.FC = () => {
   const [tab, setTab] = useState<"BALANCE" | "REWARD">("BALANCE");
   const { stakeId } = useParams<{ stakeId: string }>();
   const theme = useTheme();
+  const { isMobile } = useScreen();
   const { data, loading } = useFetch<AnalyticsBalance[]>(`${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`);
   const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
     `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
@@ -84,7 +86,7 @@ const StakeAnalytics: React.FC = () => {
   return (
     <Card title='Analytics' pt={5}>
       <Wrapper container columns={24} spacing='35px'>
-        <Grid item xs={24} lg={18}>
+        <Grid item xs={24} lg={16}>
           <Grid spacing={2} container alignItems='center' justifyContent={"space-between"}>
             <Grid item xs={12} sm={6}>
               <ButtonTitle active={tab === "BALANCE"} onClick={() => setTab("BALANCE")}>
@@ -143,7 +145,8 @@ const StakeAnalytics: React.FC = () => {
                       labels: {
                         style: {
                           fontSize: 12
-                        }
+                        },
+                        rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null
                       }
                     },
                     legend: { enabled: false },
@@ -173,7 +176,7 @@ const StakeAnalytics: React.FC = () => {
             )}
           </ChartBox>
         </Grid>
-        <Grid item xs={24} lg={6}>
+        <Grid item xs={24} lg={8}>
           <BoxInfo space={(categoriesBalance || categoriesReward).length ? 36 : 16}>
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems='center' justifyContent={"center"}>

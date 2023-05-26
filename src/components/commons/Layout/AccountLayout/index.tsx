@@ -1,10 +1,11 @@
-import { alpha, Avatar, Box, CircularProgress, IconButton, useTheme } from "@mui/material";
+import { alpha, Avatar, Box, CircularProgress, ClickAwayListener, IconButton, useTheme } from "@mui/material";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { routers } from "../../../../commons/routers";
 import { RootState } from "../../../../stores/types";
 import {
   ContentBox,
+  MissingItemWrapper,
   ModalTitle,
   NavItem,
   NavItemMobile,
@@ -13,6 +14,7 @@ import {
   StyledButtonClose,
   StyledButtonReport,
   StyledUsername,
+  WrapItemMobile,
   Wrapper
 } from "./styled";
 import editAva from "../../../../commons/resources/icons/editAva.svg";
@@ -28,6 +30,7 @@ import CustomTooltip from "../../CustomTooltip";
 import useToast from "../../../../commons/hooks/useToast";
 import StyledModal from "../../StyledModal";
 import { useScreen } from "../../../../commons/hooks/useScreen";
+import { getShortWallet } from "~/commons/utils/helper";
 interface Props {
   children: React.ReactNode;
 }
@@ -35,11 +38,12 @@ interface Props {
 const AccountLayout: React.FC<Props> = ({ children }) => {
   const { pathname } = useLocation();
   const { userData } = useSelector(({ user }: RootState) => user);
-  const { isMobile, isTablet } = useScreen();
+  const { isMobile, isTablet, isGalaxyFoldSmall } = useScreen();
   const theme = useTheme();
   const [openReportModal, setOpenReportModal] = useState(false);
   const [isUploadAvatar, setIsUploadAvatar] = useState(false);
   const [firstLoad, setFirstLoad] = useState(true);
+  const [openFullname, setOpenFullname] = useState(false);
   const fetchUserInfo = useCallback(async () => {
     try {
       setFirstLoad(true);
@@ -68,7 +72,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
           }
         });
 
-        if (data && data.id && data.avatar) {
+        if (data && data.email && data.avatar) {
           await fetchUserInfo();
         }
         toast.success("Your avatar has been changed.");
@@ -89,17 +93,22 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   if (!userData) {
     return <Redirect to={routers.HOME} />;
   }
-  if (firstLoad) return null;
   const MissingData = () => (
-    <Box px={3} pb={4} fontSize='0.75rem'>
-      Missing any data? click <StyledButton sx={{
-        color: theme.palette.blue[800]
-      }}
-        onClick={() => setOpenReportModal(true)}>here</StyledButton> to report
-    </Box >
+    <MissingItemWrapper px={3} pb={4} fontSize='0.75rem'>
+      Missing any data? click{" "}
+      <StyledButton
+        sx={{
+          color: theme.palette.blue[800]
+        }}
+        onClick={() => setOpenReportModal(true)}
+      >
+        here
+      </StyledButton>{" "}
+      to report
+    </MissingItemWrapper>
   );
   const renderListTabs = () => (
-    <SideBar width={isMobile || isTablet ? "100%" : "20%"}>
+    <SideBar>
       <Box>
         <Box>
           <Box pt={4} textAlign='center' display={"flex"} justifyContent='center'>
@@ -143,45 +152,69 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
               </Box>
             </Box>
           </Box>
-          <CustomTooltip title={userData?.username || ""} placement='bottom'>
-            <StyledUsername component={"h4"} pt={1} m='auto'>
-              {userData?.username}
-            </StyledUsername>
-          </CustomTooltip>
+          <ClickAwayListener onClickAway={() => setOpenFullname(false)} >
+            <div
+              onMouseEnter={() => setOpenFullname(true)}
+              onMouseLeave={() => setOpenFullname(false)}
+            >
+              <CustomTooltip
+                title={userData?.address || userData?.email || ""}
+                open={openFullname}
+                placement='bottom'
+                onClose={() => setOpenFullname(false)}
+                disableFocusListener
+                disableTouchListener
+              >
+                <StyledUsername component={"h4"} pt={1} m='auto' onClick={() => setOpenFullname(true)}>
+                  {userData?.address ? <>{getShortWallet(userData?.address)}</> : <>{userData?.email}</>}
+                </StyledUsername>
+              </CustomTooltip>
+            </div>
+          </ClickAwayListener>
         </Box>
-        <Box mt={4}>
-          {router.map((route, index) => {
-            return isMobile || isTablet ? (
-              <NavItemMobile sx={{
-                borderTopRightRadius: index === router.length - 1 ? "5px" : "0px",
-                borderBottomRightRadius: index === router.length - 1 ? "5px" : "0px",
-                borderTopLeftRadius: index === 0 ? "5px" : "0px",
-                borderBottomLeftRadius: index === 0 ? "5px" : "0px",
-              }} to={route.to} active={route.to === pathname} key={index}>
-                {route.title}
-              </NavItemMobile>
-            ) : (
-              <NavItem to={route.to} active={route.to === pathname} key={index}>
-                <Box
-                  display='flex'
-                  alignItems={"center"}
-                  justifyContent='space-between'
-                  py={2}
-                  mx={4}
-                  borderBottom={`1px solid${alpha(theme.palette.common.black, 0.07)}`}
-                >
-                  <Box>{route.title}</Box>
-                  <MdChevronRight
-                    size={25}
-                    color={route.to === pathname ? theme.palette.primary.main : theme.palette.text.hint}
-                  />
-                </Box>
-              </NavItem>
-            );
-          })}
+        <Box display={"flex"} justifyContent={"center"} mt={4}>
+          <WrapItemMobile>
+            {router.map((route, index) => {
+              const active = route.to === pathname;
+              return (
+                <>
+                  <NavItemMobile
+                    sx={{
+                      borderTopRightRadius: index === router.length - 1 ? "5px" : "0px",
+                      borderBottomRightRadius: index === router.length - 1 ? "5px" : "0px",
+                      borderTopLeftRadius: index === 0 ? "5px" : "0px",
+                      borderBottomLeftRadius: index === 0 ? "5px" : "0px",
+                      borderRadius: active ? "5px" : ""
+                    }}
+                    to={route.to}
+                    active={active}
+                    key={index}
+                  >
+                    {route.title}
+                  </NavItemMobile>
+                  <NavItem to={route.to} active={route.to === pathname} key={index}>
+                    <Box
+                      display='flex'
+                      alignItems={"center"}
+                      justifyContent='space-between'
+                      py={2}
+                      mx={4}
+                      borderBottom={`1px solid${alpha(theme.palette.common.black, 0.07)}`}
+                    >
+                      <Box>{route.title}</Box>
+                      <MdChevronRight
+                        size={25}
+                        color={route.to === pathname ? theme.palette.primary.main : theme.palette.text.hint}
+                      />
+                    </Box>
+                  </NavItem>
+                </>
+              );
+            })}
+          </WrapItemMobile>
         </Box>
       </Box>
-      {!isMobile && !isTablet ? <MissingData /> : null}
+      <MissingData />
     </SideBar>
   );
   return (

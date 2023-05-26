@@ -65,7 +65,6 @@ import SaveOnIcon from "./icons/save-on.svg";
 import SaveOffIcon from "./icons/save-off.svg";
 import LinkOff from "./icons/link-off.svg";
 import User2 from "./icons/user2.svg";
-
 import FlintIcon from "./icons/flint.svg";
 import NamiIcon from "./icons/nami.svg";
 import EternlIcon from "./icons/eternl.svg";
@@ -74,16 +73,20 @@ import TyphonIcon from "./icons/typhon.svg";
 import HeaderBackgroundImage from "./images/header-bg.png";
 import EmptyIcon from "./images/noData.png";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
+import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
+import AdaHolderIconUrl from "./images/ada-holder.png";
+import PaymentWalletUrl from "./images/payment-wallet.png";
+import SPOHolderIconUrl from "./images/spo-holder.png";
+import PolygonSPOUrl from "./images/polygon-spo.png";
+import RewardBoxIcon from "./images/reward-box-icon.png";
 
 import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
 import { ReactComponent as FilterIcon } from "./icons/filter.svg";
 import { ReactComponent as SearchNormalIcon } from "./icons/search-normal.svg";
 import { ReactComponent as IconRefresh } from "./icons/IconRefresh.svg";
 import { ReactComponent as IconThreeDot } from "./icons/IconThreeDot.svg";
-export { ReactComponent as PersionalSettingIC } from "./images/d-persional-ic.svg";
-export { ReactComponent as ScanQRCodeIC } from "./images/d-scan-qr-ic.svg";
-export { ReactComponent as ListOfReportsIC } from "./images/d-list-of-rp-ic.svg";
-export { ReactComponent as WatchlistIC } from "./images/d-watchlist-tc.svg";
+export { ReactComponent as ListOfReportsIC } from "./icons/list-of-report.svg";
+export { ReactComponent as WatchlistIC } from "./icons/watchlist.svg";
 export { ReactComponent as DownloadWhiteIC } from "./icons/download-white-ic.svg";
 export { ReactComponent as DownloadBlueIC } from "./icons/download-blue-ic.svg";
 
@@ -169,7 +172,13 @@ export {
   SearchNormalIcon,
   FilterIcon,
   IconRefresh,
-  IconThreeDot
+  IconThreeDot,
+  PolygonWhiteIconUrl,
+  AdaHolderIconUrl,
+  PaymentWalletUrl,
+  SPOHolderIconUrl,
+  PolygonSPOUrl,
+  RewardBoxIcon
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -270,3 +279,10 @@ export { ReactComponent as PeopleIcon } from "./icons/people.svg";
 export { ReactComponent as SuccessIcon } from "./icons/success.svg";
 export { ReactComponent as FailIcon } from "./icons/failed.svg";
 export { ReactComponent as StakingDelegators } from "./icons/stakingDelegators.svg";
+export { ReactComponent as CertificateIcon } from "./icons/certificate.svg";
+export { ReactComponent as CardanoSystemIcon } from "./icons/cardano-system.svg";
+export { ReactComponent as WalletIconRewardGreen } from "./icons/Staking/walletIconRewardGreen.svg";
+export { ReactComponent as TransferIcon } from "./icons/transfer.svg";
+export { ReactComponent as ADADisnableIcon } from "./icons/Staking/ADADisnableIcon.svg";
+export { ReactComponent as DelegationHistoryMainIcon } from "./icons/delegationHistoryGreen.svg";
+export { ReactComponent as BlockIcon } from "./icons/blockIcon.svg";

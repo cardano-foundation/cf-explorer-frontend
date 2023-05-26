@@ -66,7 +66,7 @@ export const Title = styled(Box)(({ theme }) => ({
 
 export const ValueInfo = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  fontSize: "2rem",
+  fontSize: "1.25rem",
   margin: "0 auto",
   overflowWrap: "anywhere",
   [theme.breakpoints.down("sm")]: {
@@ -114,11 +114,9 @@ export const Tabs = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("md")]: {
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "flex-end"
   },
   [theme.breakpoints.down("sm")]: {
-    justifyContent: "flex-end",
-
     "& button": {
       width: "40px !important",
       height: "28px !important",
@@ -136,5 +134,15 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   marginRight: theme.spacing(1),
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   fontWeight: "bold",
-  backgroundColor: active ? theme.palette.primary.main : "none"
+  backgroundColor: active ? theme.palette.primary.main : "none",
+  [theme.breakpoints.down("lg")]: {
+    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
+    backgroundColor: active ? `${theme.palette.primary.main} !important` : "none"
+  },
+  [theme.breakpoints.down("md")]: {
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText
+    }
+  }
 }));

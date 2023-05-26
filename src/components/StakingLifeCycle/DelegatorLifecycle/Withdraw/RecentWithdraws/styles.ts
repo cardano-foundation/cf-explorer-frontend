@@ -1,5 +1,4 @@
-import { Box } from "@mui/material";
-import { ListItemIcon, Popover, Button, styled } from "@mui/material";
+import { Box, ListItemIcon, Popover, Button, styled } from "@mui/material";
 
 export const SubmitButton = styled(Button)`
   display: flex;
@@ -112,6 +111,7 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
 export const StyledList = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
+  alignItems: "center",
   marginBottom: 20,
   [theme.breakpoints.down("sm")]: {
     alignItems: "center",

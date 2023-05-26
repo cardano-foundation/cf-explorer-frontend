@@ -119,7 +119,7 @@ const PolicyTable = () => {
 
   const handleChange = (event: React.SyntheticEvent, tab: TABS) => {
     setActiveTab(tab);
-    history.push({ search: stringify({ page: 1, size: 10 }) });
+    history.push({ search: stringify({ page: 1, size: 50 }) });
   };
 
   const fetchData = useFetchList<PolicyHolder | TokenPolicys>(`${API.POLICY}/${policyId}/${activeTab}`, pageInfo);

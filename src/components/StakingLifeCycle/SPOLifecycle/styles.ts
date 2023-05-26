@@ -54,7 +54,9 @@ export const NextButton = styled(Button)(({ theme }) => ({
   background: theme.palette.grey[700],
   textTransform: "capitalize",
   fontWeight: "bold",
+  padding: "8px 20px",
   borderRadius: "8px",
+  border: "2px solid transparent",
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.8)
   },
@@ -91,8 +93,7 @@ export const StyledComponent = styled(Box)(({ theme }) => ({
       }
     },
     "& > div:nth-of-type(4)": {
-      paddingBottom: "30px",
-      borderBottom: `1px solid ${alpha(theme.palette.grey[200], 1)}`
+      borderTop: `1px solid ${alpha(theme.palette.grey[200], 1)}`
     }
   }
 }));
@@ -103,7 +104,7 @@ export const StyledGroupButton = styled(Box)<{ isShowPrev: boolean }>(({ theme, 
   [theme.breakpoints.down("sm")]: {
     flexDirection: "column",
     gap: "16px",
-    marginTop: "30px",
+    paddingTop: "30px",
     "& > button": {
       width: "100%",
       "& p": {

@@ -1,14 +1,14 @@
+import { alpha, Box, Button } from "@mui/material";
 import React, { useState } from "react";
-import { alpha, Box } from "@mui/material";
-import { formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/helper";
-import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
-import timeIcon from "../../../commons/resources/icons/time.svg";
-import slotIcon from "../../../commons/resources/icons/slot.svg";
-import exchageIcon from "../../../commons/resources/icons/Union.svg";
 import decimalIcon from "../../../commons/resources/icons/decimal.svg";
-import { CardItem, WrapTitle } from "./styles";
-import ScriptModal from "../../ScriptModal";
+import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
+import slotIcon from "../../../commons/resources/icons/slot.svg";
+import timeIcon from "../../../commons/resources/icons/time.svg";
+import exchageIcon from "../../../commons/resources/icons/Union.svg";
+import { formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/helper";
 import DetailHeader from "../../commons/DetailHeader";
+import ScriptModal from "../../ScriptModal";
+import { CardItem, WrapTitle } from "./styles";
 
 interface ITokenOverview {
   data: IToken | null;
@@ -18,12 +18,11 @@ interface ITokenOverview {
 const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
-
   const listItem = [
     {
       title: "",
       value: (
-        <CardItem display={"flex"} gap={2} flex={3}>
+        <CardItem display={"flex"} gap={2} flex={3} mt={"-30px"} paddingLeft={0} paddingRight={0}>
           <Box>
             <img src={policyIcon} alt='' />
           </Box>
@@ -33,10 +32,12 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
               fontWeight='bold'
               fontFamily={'"Roboto", sans-serif'}
               fontSize={"1.125rem"}
-              component='button'
+              component={Button}
               border={"none"}
               bgcolor='transparent'
+              textTransform={"capitalize"}
               padding={0}
+              justifyContent={"flex-start"}
               textAlign='left'
               onClick={() => {
                 setOpenModal(true);
@@ -90,14 +91,12 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       value: <Box component={"span"}>{numberWithCommas(data?.supply)}</Box>,
       icon: slotIcon
     },
-    { title:  <WrapTitle>Decimal</WrapTitle>, icon: decimalIcon, value: data?.metadata?.decimals || 0 },
+    { title: <WrapTitle>Decimal</WrapTitle>, icon: decimalIcon, value: data?.metadata?.decimals || 0 },
     {
       title: (
         <Box display={"flex"} alignItems='center'>
           <Box component={"span"} mr={1} width={"max-content"}>
-            <WrapTitle>
-              Total Transactions
-            </WrapTitle>
+            <WrapTitle>Total Transactions</WrapTitle>
           </Box>
         </Box>
       ),
@@ -109,9 +108,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems='center'>
           <Box component={"span"} mr={1}>
-            <WrapTitle>
-              Number of Holders
-            </WrapTitle>
+            <WrapTitle>Number of Holders</WrapTitle>
           </Box>
         </Box>
       ),
@@ -122,9 +119,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems='center'>
           <Box component={"span"} mr={1}>
-            <WrapTitle>
-              Total Volume
-            </WrapTitle>
+            <WrapTitle>Total Volume</WrapTitle>
           </Box>
         </Box>
       ),
@@ -135,9 +130,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems='center'>
           <Box component={"span"} mr={1}>
-            <WrapTitle>
-              Volume 24H
-            </WrapTitle>
+            <WrapTitle>Volume 24H</WrapTitle>
           </Box>
         </Box>
       ),
@@ -148,9 +141,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems='center'>
           <Box component={"span"} mr={1}>
-            <WrapTitle>
-              Created
-            </WrapTitle>
+            <WrapTitle>Created</WrapTitle>
           </Box>
         </Box>
       ),

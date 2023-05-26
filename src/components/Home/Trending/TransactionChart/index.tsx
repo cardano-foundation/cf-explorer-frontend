@@ -137,7 +137,7 @@ const formatTimeX = (date: Time) => {
     case "ONE_WEEK":
     case "TWO_WEEK":
     case "ONE_MONTH":
-      return "DD/MM";
+      return "MM/DD";
 
     default:
       break;
@@ -165,7 +165,7 @@ const renderTooltipContent = (o: any, range: Time) => {
         <Box color={({ palette }) => palette.common.white} textAlign={"center"}>{`${moment(label).format(
           formatTimeX(range)
         )}`}</Box>
-        {(payload || []).map((entry: any, index: number) => (
+        {(payload || []).reverse().map((entry: any, index: number) => (
           <Box key={`item-${index}`} mt={1}>
             <Box color={({ palette }) => alpha(palette.common.white, 0.7)} fontSize={"0.75rem"}>{`${
               nameTooltips[entry.name as keyof typeof nameTooltips]
@@ -205,10 +205,10 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
           <Tooltip content={(o: any) => renderTooltipContent(o, range)} />
           <Area
             type='monotone'
-            dataKey='simpleTransactions'
+            dataKey='metadata'
             stackId='1'
-            stroke={theme.palette.yellow[600]}
-            fill={theme.palette.yellow[600]}
+            stroke={theme.palette.green[600]}
+            fill={theme.palette.green[600]}
           />
           <Area
             type='monotone'
@@ -219,10 +219,10 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
           />
           <Area
             type='monotone'
-            dataKey='metadata'
+            dataKey='simpleTransactions'
             stackId='1'
-            stroke={theme.palette.green[600]}
-            fill={theme.palette.green[600]}
+            stroke={theme.palette.yellow[600]}
+            fill={theme.palette.yellow[600]}
           />
         </AreaChart>
       </ResponsiveContainer>

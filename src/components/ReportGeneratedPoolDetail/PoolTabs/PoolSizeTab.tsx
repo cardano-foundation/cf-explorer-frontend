@@ -39,7 +39,7 @@ const PoolSizeTab = () => {
     {
       title: "Fees paid",
       key: "fees",
-      minWidth: "100px",
+      minWidth: "140px",
       render: (r) => (
         <Box display='flex' alignItems='center'>
           <TextAmountReward>{formatADAFull(r.fee)}</TextAmountReward>
@@ -50,7 +50,7 @@ const PoolSizeTab = () => {
     {
       title: "Epoch",
       key: "epoch",
-      minWidth: "150px",
+      minWidth: "70px",
       render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
     }
   ];

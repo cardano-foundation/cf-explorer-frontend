@@ -19,6 +19,8 @@ import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wall
 import { MdOutlineFileDownload } from "react-icons/md";
 import useToast from "../../../commons/hooks/useToast";
 import StyledModal from "../StyledModal";
+import StorageUtils from "~/commons/utils/storage";
+import { boolean } from "yargs";
 
 interface IProps {
   connect: (name: string, onSuccess: () => void, onError: (error: Error) => void) => Promise<any>;
@@ -28,7 +30,6 @@ interface IProps {
 
 const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, isModal }) => {
   const [walletConnecting, setWalletConnecting] = useState<SupportedWallets | null>(null);
-
   const toast = useToast();
   const handleClose = () => {
     setOpenModal(false);
@@ -90,7 +91,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
   return (
     <WrapContainer>
       <>
-        {SUPPORTED_WALLETS.map((wallet) => {
+        {SUPPORTED_WALLETS.filter((wallet) => wallet.networks.includes(StorageUtils.getNetwork())).map((wallet) => {
           const active = walletConnecting === wallet.name;
           return (
             <WalletItem

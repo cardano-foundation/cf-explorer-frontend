@@ -20,10 +20,10 @@ const UserInfo = ({
   reward: number;
   acitve: "wallet" | "reward";
 }) => {
-  const { isMobile } = useScreen();
+  const { isTablet } = useScreen();
   return (
-    <Box display={"flex"} justifyContent={"space-between"} margin={"7px 0"} flexDirection={isMobile ? "column" : "row"}>
-      <Box display={"flex"} flexDirection={isMobile ? "column" : "row"}>
+    <Box display={"flex"} justifyContent={"space-between"} margin={"7px 0"} flexDirection={isTablet ? "column" : "row"}>
+      <Box display={"flex"} flexDirection={isTablet ? "column" : "row"}>
         <Box display={"flex"} alignItems='center' marginRight={4}>
           <OverviewIcon>
             <CustomIcon
@@ -41,7 +41,7 @@ const UserInfo = ({
           </CustomTooltip>
           <CopyButton text={stake || ""} />
         </Box>
-        <Box display={"flex"} alignItems='center' mt={isMobile ? "5px" : "0px"}>
+        <Box display={"flex"} alignItems='center' mt={isTablet ? "5px" : "0px"}>
           <OverviewIcon marginRight={1}>
             <BalanceIcon />
           </OverviewIcon>
@@ -52,7 +52,7 @@ const UserInfo = ({
           <CustomIcon icon={AIconGreen} fill='currentColor' height={14} />
         </Box>
       </Box>
-      <TextTx sx={{ marginTop: isMobile ? "10px" : "0px" }}>{total} Transactions</TextTx>
+      <TextTx sx={{ marginTop: isTablet ? "10px" : "0px" }}>{total} Transactions</TextTx>
     </Box>
   );
 };

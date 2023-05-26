@@ -48,6 +48,7 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
 export const StyledList = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
+  alignItems: "center",
   marginBottom: 20,
   [theme.breakpoints.down("sm")]: {
     alignItems: "center",

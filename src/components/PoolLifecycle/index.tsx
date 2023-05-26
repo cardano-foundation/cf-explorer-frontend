@@ -56,6 +56,7 @@ const PoolLifecycle = () => {
         document.body.appendChild(link);
         link.click();
       })
+      //To do
       .catch((e) => console.log(e))
       .finally(() => {
         setOnDownload(false);
@@ -68,7 +69,11 @@ const PoolLifecycle = () => {
       title: "Report Name",
       maxWidth: "300px",
       render(data) {
-        return <TextOverFlow>{data.reportName}</TextOverFlow>;
+        return (
+          <Box textOverflow='unset' whiteSpace='break-spaces' sx={{ wordBreak: "break-word", lineHeight: 1.5 }}>
+            {data.reportName}
+          </Box>
+        );
       }
     },
     {

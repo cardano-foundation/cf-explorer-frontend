@@ -13,53 +13,25 @@ describe("SPOLifecycle timeline view", () => {
   });
 
   it("should render Registration", () => {
-    render(
-      <SPOLifecycle
-        handleResize={jest.fn()}
-        containerPosition={{ top: undefined, left: undefined }}
-        currentStep={0}
-        setCurrentStep={jest.fn()}
-      />
-    );
+    render(<SPOLifecycle currentStep={0} setCurrentStep={jest.fn()} />);
     expect(screen.getByText("Deregistration")).toBeInTheDocument();
     expect(screen.getByText("Operator Rewards")).toBeInTheDocument();
     expect(screen.getByText("Next Step: Pool Updates")).toBeInTheDocument();
   });
 
   it("should render Pool Updates", () => {
-    render(
-      <SPOLifecycle
-        handleResize={jest.fn()}
-        containerPosition={{ top: undefined, left: undefined }}
-        currentStep={1}
-        setCurrentStep={jest.fn()}
-      />
-    );
+    render(<SPOLifecycle currentStep={1} setCurrentStep={jest.fn()} />);
     expect(screen.getByText("Next Step: Operator Rewards")).toBeInTheDocument();
   });
 
   it("should render Operator Rewards", () => {
-    render(
-      <SPOLifecycle
-        handleResize={jest.fn()}
-        containerPosition={{ top: undefined, left: undefined }}
-        currentStep={2}
-        setCurrentStep={jest.fn()}
-      />
-    );
+    render(<SPOLifecycle currentStep={2} setCurrentStep={jest.fn()} />);
     expect(screen.getByText("Previous: Pool Updates")).toBeInTheDocument();
     expect(screen.getByText("Next Step: Deregistration")).toBeInTheDocument();
   });
 
   it("should render Deregistration", () => {
-    render(
-      <SPOLifecycle
-        handleResize={jest.fn()}
-        containerPosition={{ top: undefined, left: undefined }}
-        currentStep={3}
-        setCurrentStep={jest.fn()}
-      />
-    );
+    render(<SPOLifecycle currentStep={3} setCurrentStep={jest.fn()} />);
     expect(screen.getByText("Previous: Operator Rewards")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /View in tabular/i })).toBeInTheDocument();
   });

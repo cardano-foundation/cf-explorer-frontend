@@ -36,7 +36,7 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
 
     div: {
       width: "100%",
-      height: "100px",
+      height: "80%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -67,7 +67,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
 
     div: {
       width: "100%",
-      height: "100px",
+      height: "80%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -148,5 +148,17 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
     minWidth: `40px !important`,
     height: `28px !important`,
     marginRight: "0px"
+  },
+
+  [theme.breakpoints.down("lg")]: {
+    backgroundColor: active ? `${theme.palette.primary.main} !important` : "none",
+    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400]
+  },
+
+  [theme.breakpoints.down("md")]: {
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText
+    }
   }
 }));

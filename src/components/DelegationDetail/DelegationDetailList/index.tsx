@@ -43,7 +43,7 @@ const DelegationEpochList = ({
       title: "Blocks",
       key: "block",
       minWidth: "120px",
-      render: (data) => <StyledLink to={details.block(data.block)}>{numberWithCommas(data.block)}</StyledLink>
+      render: (data) => numberWithCommas(data.block)
     },
     {
       title: "Stake Amount (A)",
@@ -77,7 +77,6 @@ const DelegationEpochList = ({
     <Table
       columns={columns}
       data={data || []}
-      onClickRow={(_, r) => history.push(details.epoch(r.epoch))}
       total={{ count: total, title: "Total Token List" }}
       loading={loading}
       initialized={initialized}

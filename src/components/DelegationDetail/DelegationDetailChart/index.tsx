@@ -31,9 +31,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   const delegators = data?.delegatorChart?.dataByDays?.map((item) => item.numberDelegator) || [];
   return (
     <StyledContainer>
-      <AnalyticsTitle>
-        <h2>Analytics</h2>
-      </AnalyticsTitle>
+      <AnalyticsTitle>Analytics</AnalyticsTitle>
       <GridWrapper container columns={12} spacing={3}>
         <Grid item xs={12} lg={9}>
           <Box>

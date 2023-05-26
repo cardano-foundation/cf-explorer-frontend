@@ -1,38 +1,42 @@
-import { Box } from "@mui/material";
-import { useScreen } from "../../../../commons/hooks/useScreen";
-import { ExchangeIcon } from "../../../../commons/resources";
-import cubeIcon from "../../../../commons/resources/icons/blockIcon.svg";
-import slotIcon from "../../../../commons/resources/icons/slot.svg";
-import timeIcon from "../../../../commons/resources/icons/time.svg";
-import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../../commons/utils/constants";
-import { formatDateTimeLocal, getEpochSlotNo } from "../../../../commons/utils/helper";
-import { Status } from "../../../../pages/Epoch/styles";
+import { Box, useTheme } from "@mui/material";
+import { ExchangeIcon } from "~/commons/resources";
+import cubeIcon from "~/commons/resources/icons/blockIcon.svg";
+import slotIcon from "~/commons/resources/icons/slot.svg";
+import timeIcon from "~/commons/resources/icons/time.svg";
+import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "~/commons/utils/constants";
+import { formatDateTimeLocal } from "~/commons/utils/helper";
+import { Status } from "~/pages/Epoch/styles";
 import DetailHeader from "../../DetailHeader";
 import ProgressCircle from "../../ProgressCircle";
-import {
-  EpochNumber,
-  EpochProgress,
-  TitleCard
-} from "./styles";
+import { Container, EpochNumber, EpochProgress, TitleCard } from "./styles";
+import { useSelector } from "react-redux";
+import moment from "moment";
 
 interface IProps {
-  data: IDataEpoch[];
+  data: IDataEpoch;
 }
 
-export default function FirstEpoch({ data }: IProps) {
-  const { isTablet } = useScreen();
-  const currentEpoch = data[0];
-  if (!currentEpoch) return null;
-  const progress = ((getEpochSlotNo(currentEpoch) / MAX_SLOT_EPOCH) * 100).toFixed(0);
+export default function FirstEpoch({ data: currentEpochData }: IProps) {
+  const theme = useTheme();
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  if (!currentEpochData) return null;
+  const progress =
+    moment(currentEpochData.endTime).diff(moment()) >= 0
+      ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
+      : 100;
   const listOverview = [
     {
       icon: ExchangeIcon,
       hideHeader: true,
-      title: <EpochNumber>Epoch Number {currentEpoch?.no}</EpochNumber>,
+      title: (
+        <EpochNumber sx={{ [theme.breakpoints.down("sm")]: { marginTop: "-8px" } }}>
+          Epoch Number {currentEpochData?.no}
+        </EpochNumber>
+      ),
       value: (
         <Box display={"flex"} alignItems='center'>
           <ProgressCircle
-            size={isTablet ? 60 : 100}
+            size={100}
             pathLineCap='butt'
             pathWidth={6}
             trailWidth={6}
@@ -40,7 +44,7 @@ export default function FirstEpoch({ data }: IProps) {
             trailOpacity={1}
           >
             <EpochProgress>{`${progress}%`}</EpochProgress>
-            <Status status={currentEpoch?.status?.toLowerCase()}>{EPOCH_STATUS[currentEpoch?.status]}</Status>
+            <Status status={currentEpochData?.status?.toLowerCase()}>{EPOCH_STATUS[currentEpochData?.status]}</Status>
           </ProgressCircle>
         </Box>
       )
@@ -52,7 +56,7 @@ export default function FirstEpoch({ data }: IProps) {
           <TitleCard mr={1}>Block </TitleCard>
         </Box>
       ),
-      value: <Box component={"span"}>{currentEpoch?.blkCount}</Box>
+      value: <Box component={"span"}>{currentEpochData?.blkCount}</Box>
     },
     {
       icon: slotIcon,
@@ -63,7 +67,7 @@ export default function FirstEpoch({ data }: IProps) {
       ),
       value: (
         <Box component={"span"}>
-          {getEpochSlotNo(currentEpoch)}/{MAX_SLOT_EPOCH}
+          {moment(currentEpochData.endTime).diff(moment()) >= 0 ? currentEpoch?.slot : MAX_SLOT_EPOCH}/{MAX_SLOT_EPOCH}
         </Box>
       )
     },
@@ -74,7 +78,7 @@ export default function FirstEpoch({ data }: IProps) {
           <TitleCard mr={1}> End Time</TitleCard>
         </Box>
       ),
-      value: <Box component={"span"}>{formatDateTimeLocal(currentEpoch?.endTime || "")}</Box>
+      value: <Box component={"span"}>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Box>
     },
     {
       icon: timeIcon,
@@ -83,9 +87,12 @@ export default function FirstEpoch({ data }: IProps) {
           <TitleCard mr={1}> Start Time</TitleCard>
         </Box>
       ),
-      value: <Box component={"span"}>{formatDateTimeLocal(currentEpoch?.startTime || "")}</Box>
+      value: <Box component={"span"}>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Box>
     }
   ];
-  return <DetailHeader isHideButtonBack={true} loading={false} listItem={listOverview} type='EPOCH' title={" "} />;
-
+  return (
+    <Container>
+      <DetailHeader isHideButtonBack={true} loading={false} listItem={listOverview} type='EPOCH' title={" "} />
+    </Container>
+  );
 }

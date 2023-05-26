@@ -39,12 +39,17 @@ export const StyledLink = styled(Link)`
   display: inline-block;
 `;
 
+export const StyledLinkTo = styled(StyledLink)<{ isTo: boolean }>(({ theme, isTo }) => ({
+  color: isTo ? "inherit" : `${theme.palette.red[700]} !important`
+}));
+
 export const BackButton = styled(Link)`
   display: inline-flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
 `;
+
 export const BackText = styled("small")`
   color: ${(props) => props.theme.palette.text.secondary};
   font-weight: var(--font-weight-bold);
@@ -147,3 +152,9 @@ export const ButtonModal = styled(Button)(({ theme }) => ({
     textDecoration: "underline"
   }
 }));
+
+export const TitleValue = styled(Box)`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;

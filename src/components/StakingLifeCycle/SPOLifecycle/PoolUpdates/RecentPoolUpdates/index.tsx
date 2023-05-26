@@ -1,23 +1,21 @@
-import { Box, Skeleton } from "@mui/material";
-import moment from "moment";
-import { useEffect, useMemo, useState } from "react";
+import { Box } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../../StackingFilter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
-import { EmptyRecord } from "../../../../commons/Table";
+import { EmptyRecord, FooterTable } from "../../../../commons/Table";
 import { GridBox, WrapFilterDescription, StyledList, StyledContainer } from "./styles";
-import { FilterDateLabel } from "../../../DelegatorLifecycle/Delegation/styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
 import { details } from "../../../../../commons/routers";
 import { useUpdateEffect } from "react-use";
 import { useSelector } from "react-redux";
-import { DATETIME_PARTTEN } from "~/components/StackingFilter/DateRangeModal";
 
 const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null) => void }) => {
   const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
+  const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const [params, setParams] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
@@ -28,8 +26,7 @@ const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null
   const { data, total, loading, initialized, error } = useFetchList<PoolUpdateItem>(
     API.SPO_LIFECYCLE.POOL_UPDATE(poolId),
     {
-      page: 0,
-      size: 1000,
+      ...pageInfo,
       ...params
     }
   );
@@ -48,18 +45,6 @@ const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null
     }
   }, [JSON.stringify(data)]);
 
-  const filterLabel = useMemo(() => {
-    const sortArr = params.sort && params.sort.split(",");
-    if (params.fromDate && params.toDate)
-      return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
-        .utc(params.toDate, DATETIME_PARTTEN)
-        .local()
-        .format("MM/DD/YYYY")}`;
-    if (params.sort && sortArr && params.sort.length >= 2)
-      return `${sortArr[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
-    if (params.txHash) return `Searching for : ${params.txHash}`;
-  }, [params]);
-
   if (txHash) return null;
 
   return (
@@ -68,12 +53,21 @@ const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null
         <DescriptionText>Recent Updates</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
-            Showing {total} {total > 1 ? "results" : "result"}
+            Showing {data.length} {data.length > 1 ? "results" : "result"}
           </WrapFilterDescription>
-          {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
           <StackingFilter
             filterValue={params}
-            onFilterValueChange={(params) => setParams((pre) => ({ ...pre, ...params }))}
+            onFilterValueChange={(params) => {
+              params &&
+                setParams({
+                  fromDate: undefined,
+                  sort: undefined,
+                  toDate: undefined,
+                  txHash: undefined,
+                  ...params
+                });
+              setPageInfo((pre) => ({ ...pre, page: 0 }));
+            }}
           />
         </Box>
       </StyledList>
@@ -92,6 +86,20 @@ const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null
         })}
       </GridBox>
       {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
+      {initialized && data?.length > 0 && !error && (
+        <FooterTable
+          total={{
+            count: total,
+            title: ""
+          }}
+          pagination={{
+            total,
+            ...pageInfo,
+            onChange: (page, size) => setPageInfo((pre) => ({ ...pre, page: page - 1, size }))
+          }}
+          loading={loading || false}
+        />
+      )}
     </StyledContainer>
   );
 };

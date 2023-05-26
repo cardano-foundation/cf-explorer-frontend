@@ -24,7 +24,7 @@ type TEditPrivateNote = {
 
 type TEditUser = {
   email?: string;
-  username?: string;
+  address?: string;
 };
 
 type TGetInfo = {

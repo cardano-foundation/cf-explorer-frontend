@@ -9,7 +9,6 @@ interface IProps {
 
 const StakeCertificate: React.FC<IProps> = ({ data }) => {
   const theme = useTheme();
-  console.log("data", data);
   return (
     <>
       {data

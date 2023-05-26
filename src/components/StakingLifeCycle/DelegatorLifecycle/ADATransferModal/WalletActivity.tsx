@@ -1,33 +1,36 @@
-import { stringify } from "qs";
-import { useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
 import { Box, styled } from "@mui/material";
-import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
-import useFetchList from "../../../../commons/hooks/useFetchList";
-import { API } from "../../../../commons/utils/api";
-import Table, { Column } from "../../../commons/Table";
-import { details } from "../../../../commons/routers";
-import { Status, StyledLink, TextAmountReward } from "./styles";
-import CustomIcon from "../../../commons/CustomIcon";
-import { AIconGreen } from "../../../../commons/resources";
-import UserInfo from "./UserInfo";
-import { EPOCH_STATUS } from "../../../../commons/utils/constants";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useScreen } from "~/commons/hooks/useScreen";
 import useFetch from "../../../../commons/hooks/useFetch";
+import useFetchList from "../../../../commons/hooks/useFetchList";
+import { AIconGreen } from "../../../../commons/resources";
+import { details } from "../../../../commons/routers";
+import { API } from "../../../../commons/utils/api";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../../commons/utils/helper";
+import CustomIcon from "../../../commons/CustomIcon";
+import Table, { Column } from "../../../commons/Table";
+import UserInfo from "./UserInfo";
+import { Amount, Status, StyledLink } from "./styles";
 
 const WalletActivity: React.FC = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const [sort, setSort] = useState<string>("");
   const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}` || "");
+  const { isMobile, isGalaxyFoldSmall, isTablet } = useScreen();
 
   const fetchData = useFetchList<WalletActivityIF>(API.STAKE_LIFECYCLE.WALLET_ACTIVITY(stakeId), { ...pageInfo, sort });
 
   const trxType = {
     SENT: "ADA sent from wallet",
-    RECEIVED: "ADA received from wallet",
+    RECEIVED: "ADA received",
     FEE_PAID: "Transaction fee paid",
     CERTIFICATE_FEE_PAID: "Certificate fee paid",
-    CERTIFICATE_DEPOSIT_PAID: "Certificate deposit paid"
+    CERTIFICATE_DEPOSIT_PAID: "Certificate deposit paid",
+    CERTIFICATE_HOLD_PAID: "Certificate hold paid",
+    CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "Certificate hold deposit refunded",
+    REWARD_WITHDRAWN: "Reward withdrawn"
   };
 
   const columns: Column<WalletActivityIF>[] = [
@@ -37,7 +40,9 @@ const WalletActivity: React.FC = () => {
       minWidth: "100px",
       render: (r) => (
         <Box display='flex' alignItems='center'>
-          <TextAmountReward>{formatADAFull(r.amount)}</TextAmountReward>
+          <Amount type={r.amount > 0 ? "up" : "down"}>
+            {r.amount > 0 ? `+${formatADAFull(r.amount)}` : formatADAFull(r.amount)}
+          </Amount>
           <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
         </Box>
       )
@@ -50,17 +55,6 @@ const WalletActivity: React.FC = () => {
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
-    },
-    {
-      title: "Fees Paid",
-      key: "fee",
-      minWidth: "100px",
-      render: (r) => (
-        <Box display='flex' alignItems='center'>
-          <TextAmountReward>{formatADAFull(r.fee)}</TextAmountReward>
-          <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
-        </Box>
-      )
     },
     {
       title: "Transaction Hash",
@@ -82,13 +76,15 @@ const WalletActivity: React.FC = () => {
       render: (r) => <Status status={r.status}>{r.status}</Status>
     }
   ];
-
+  const maxHeightCalc = `calc(70vh - ${
+    isTablet ? "290px" : isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"
+  })`;
   return (
     <Box>
       <UserInfo acitve='wallet' total={fetchData.total} reward={data?.totalStake || 0} stake={stakeId} />
       <StyledTable
         {...fetchData}
-        maxHeight={"calc(70vh - 208px)"}
+        maxHeight={maxHeightCalc}
         columns={columns}
         total={{ title: "Total Epochs", count: fetchData.total }}
         pagination={{

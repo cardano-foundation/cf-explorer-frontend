@@ -99,6 +99,7 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
 export const StyledList = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
+  alignItems: "center",
   marginBottom: 20,
   [theme.breakpoints.down("sm")]: {
     alignItems: "center",
@@ -106,6 +107,13 @@ export const StyledList = styled(Box)(({ theme }) => ({
       marginRight: 20
     }
   }
+}));
+
+export const MyGrid = styled(Box)(({ theme }) => ({
+  display: "grid",
+  gridTemplateColumns: "50% 50%",
+  gridGap: "10px 20px",
+  gridAutoRows: "auto"
 }));
 
 export const StyledGridContainer = styled(Grid)(({ theme }) => ({
@@ -116,8 +124,7 @@ export const StyledGridContainer = styled(Grid)(({ theme }) => ({
     },
     "& > div > div": {
       padding: "20px 15px",
-      gap: "8px",
-      minHeight: "40px"
+      gap: "8px"
     }
   }
 }));
@@ -247,5 +254,17 @@ export const InfoGroup = styled(Box)(({ theme }) => ({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     gap: 5
+  }
+}));
+
+export const StyledBoxMargin = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  padding: "24px 56px 24px 24px",
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "flex-start",
+    marginBottom: 30,
+    paddingRight: "24px !important"
   }
 }));

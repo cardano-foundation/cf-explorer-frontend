@@ -1,17 +1,23 @@
 import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
 
-export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
+export const StyledGrid = styled(Grid)(({ theme }) => ({
+  [theme.breakpoints.down("lg")]: {
+    height: "100%",
+    minHeight: 160
+  }
+}));
+
+export const BoxInfo = styled(Box)(({ theme }) => ({
   background: theme.palette.secondary.dark,
   borderRadius: "10px",
   color: theme.palette.primary.contrastText,
   display: "flex",
   flexDirection: "column",
   textAlign: "center",
+  height: "100%",
   [theme.breakpoints.down("lg")]: {
-    flexDirection: "row"
-  },
-  [theme.breakpoints.down("sm")]: {
-    flexDirection: "row"
+    flexDirection: "row",
+    padding: "27px 10px"
   }
 }));
 
@@ -27,6 +33,12 @@ export const CustomButton = styled("button")<{ active: number }>`
   font-family: var(--font-family-title);
   font-size: 16px;
   line-height: 24px;
+
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.down("sm")}px) {
+    width: 78px;
+    padding: 6px 10px;
+    margin-right: 8px !important;
+  }
 `;
 
 export const BoxInfoItem = styled(Box)(({ theme }) => ({
@@ -38,18 +50,14 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("lg")]: {
     borderTop: "none",
     width: "100%",
-    minHeight: "200px",
-    height: "100%",
     paddingTop: 0
   },
   [theme.breakpoints.down("sm")]: {
     width: "80%",
     borderRight: "none",
-    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
 
     div: {
       width: "100%",
-      height: "100px",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -68,19 +76,13 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("lg")]: {
     borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
     height: "100%",
-    borderBottom: "none",
     width: "100%",
-    minHeight: "200px",
+    borderBottom: "none",
     paddingTop: 0
   },
   [theme.breakpoints.down("sm")]: {
-    width: "80%",
-    borderRight: "none",
-    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
-
     div: {
       width: "100%",
-      height: "100px",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -96,9 +98,12 @@ export const Title = styled(Box)(({ theme }) => ({
 
 export const ValueInfo = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  fontSize: "2rem",
+  fontSize: "1.25rem",
   margin: "0 auto",
-  overflowWrap: "anywhere"
+  overflowWrap: "anywhere",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.125rem"
+  }
 }));
 
 export const Wrapper = styled(Grid)(({ theme }) => ({
@@ -112,7 +117,6 @@ export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, activ
   padding: "8px 30px",
   fontWeight: "bold",
   fontSize: "1rem",
-  marginRight: 5,
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   backgroundColor: active ? theme.palette.primary.main : "none",
   fontFamily: "var(--font-family-title)",
@@ -141,7 +145,7 @@ export const Tabs = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("md")]: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     gap: theme.spacing(1)
   }
 }));
@@ -153,8 +157,15 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   fontWeight: "bold",
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   backgroundColor: active ? theme.palette.primary.main : "none",
-  ":hover": {
-    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
-    backgroundColor: active ? theme.palette.primary.main : "none"
+  [theme.breakpoints.down("md")]: {
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText
+    }
+  },
+  [theme.breakpoints.down("sm")]: {
+    minWidth: `40px !important`,
+    height: `28px !important`,
+    marginRight: "0px"
   }
 }));

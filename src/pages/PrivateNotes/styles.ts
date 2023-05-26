@@ -15,7 +15,7 @@ export const Header = styled(Box)(({ theme }) => ({
   paddingBottom: "8px",
   borderBottom: `1px solid ${alpha(theme.palette.green[800], 0.1)}`,
   [theme.breakpoints.down("sm")]: {
-    alignItems: "center",
+    alignItems: "center"
   }
 }));
 
@@ -23,7 +23,10 @@ export const Title = styled("span")(({ theme }) => ({
   lineHeight: 1,
   color: theme.palette.common.black,
   [theme.breakpoints.down("sm")]: {
-    fontSize: "14px",
+    fontSize: "14px"
+  },
+  "@media (max-width: 355px)": {
+    fontSize: "12px"
   }
 }));
 
@@ -38,12 +41,12 @@ export const AddButton = styled(Button)(({ theme }) => ({
   fontWeight: "var(--font-weight-bold)",
   fontFamily: "var(--font-family-title)",
   "&:hover": {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.main
   },
   [theme.breakpoints.down("sm")]: {
     fontSize: "14px",
     height: "28px",
-    lineHeight: "28px",
+    lineHeight: "28px"
   }
 }));
 // & .empty-content-table {
@@ -62,18 +65,18 @@ export const AddButton = styled(Button)(({ theme }) => ({
 // }
 export const StyledTable = styled(Table)(({ theme }) => ({
   "& .empty-content-table": {
-    top: "unset",
+    top: "unset"
   },
   "& thead tr th": {
     fontSize: "var(--font-size-text-x-small)",
-    padding: "10px 20px",
+    padding: "10px 20px"
   },
   "& tbody tr": {
     padding: 0,
-    height: "60px",
+    height: "60px"
   },
   "& tbody tr td": {
-    padding: "0 20px",
+    padding: "0 20px"
   },
   [theme.breakpoints.down("sm")]: {
     "& > div": {
@@ -82,7 +85,7 @@ export const StyledTable = styled(Table)(({ theme }) => ({
   }
 }));
 
-export const ActionButton = styled("button") <{ typeButton: string }>`
+export const ActionButton = styled("button")<{ typeButton: string }>`
   width: 30px;
   height: 30px;
   background-color: ${({ typeButton, theme }) =>

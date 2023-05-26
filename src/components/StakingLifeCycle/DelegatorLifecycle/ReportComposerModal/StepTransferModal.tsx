@@ -30,10 +30,10 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
 
   const isDisabled = useMemo(() => {
     if (reportType === ReportType.PoolReport) {
-      return poolSize === RatioGroupValue.unTicked || feesPaid === RatioGroupValue.unTicked;
+      return poolSize === RatioGroupValue.unTicked;
     }
-    return adaTransfers === RatioGroupValue.unTicked || feesPaid === RatioGroupValue.unTicked;
-  }, [feesPaid, adaTransfers, poolSize, reportType]);
+    return adaTransfers === RatioGroupValue.unTicked;
+  }, [adaTransfers, poolSize, reportType]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, key: OptionTransfer) => {
     const value = e.target.value as RatioGroupValue;
@@ -80,19 +80,13 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
       label: "Pool size",
       value: poolSize,
       type: [ReportType.PoolReport]
-    },
-    {
-      label: "Fees paid",
-      key: OptionTransfer.feesPaid,
-      value: feesPaid,
-      type: [ReportType.PoolReport, ReportType.StakeKeyReport]
     }
   ];
 
   const handleSubmit = () => {
     saveParams?.({
       adaTransfers,
-      feesPaid,
+      feesPaid: false,
       poolSize
     });
     gotoStep?.(STEPS.step3);
@@ -102,7 +96,7 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={450}>
       <Container>
         <ModalTitle sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</ModalTitle>
-        <Container marginBottom={"20px"}>
+        <Box marginBottom={"20px"}>
           {OPTIONS_TRANSFER.filter(({ type }) => type.includes(reportType)).map(({ key, label, value }) => {
             return (
               <Box key={key}>
@@ -133,7 +127,7 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
               </Box>
             );
           })}
-        </Container>
+        </Box>
         <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={3}>
           <StyledBackButton onClick={() => gotoStep?.(STEPS.step1)}>Previous</StyledBackButton>
           <StyledButton disabled={isDisabled} onClick={handleSubmit}>

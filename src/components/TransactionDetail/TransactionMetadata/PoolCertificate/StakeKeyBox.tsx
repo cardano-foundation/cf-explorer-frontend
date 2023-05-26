@@ -6,6 +6,7 @@ import { getShortHash, getShortWallet } from "~/commons/utils/helper";
 import { AdaValue } from "~/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
 import { details } from "~/commons/routers";
 import { useScreen } from "~/commons/hooks/useScreen";
+import CustomTooltip from "~/components/commons/CustomTooltip";
 
 type TProps = {
   data: TPoolCertificated;
@@ -16,7 +17,7 @@ const StakeKeyBox = ({ data }: TProps) => {
   const leftRow = [
     {
       label: "Pool Id",
-      value: getShortHash(data.poolId),
+      value: getShortWallet(data.poolId),
       isHyperLink: true,
       originValue: data.poolId,
       linkTo: details.delegation(data.poolId)
@@ -36,16 +37,10 @@ const StakeKeyBox = ({ data }: TProps) => {
     },
     {
       label: "Pool Operator",
-      value: data.poolOwners && data.poolOwners.length > 0 ? getShortWallet(data.poolOwners[0]) : "",
+      value: data.poolOwners || [],
       isHyperLink: true,
       originValue: data.poolOwners && data.poolOwners.length > 0 ? data.poolOwners[0] : "",
-      linkTo: details.stake(data.poolOwners && data.poolOwners.length > 0 ? data.poolOwners[0] : "")
-    },
-    {
-      label: "Metadata Hash",
-      value: data.metadataHash ? getShortHash(data.metadataHash) : "",
-      isHyperLink: false,
-      originValue: data.metadataHash
+      isMultipleValue: true
     }
   ];
 
@@ -61,28 +56,6 @@ const StakeKeyBox = ({ data }: TProps) => {
     {
       label: "Pledge",
       value: <AdaValue value={data.pledge} />
-    },
-    {
-      label: "Relay nNode",
-      value: (
-        <Box display='flex' flexDirection='column'>
-          {(data?.relays || []).map((relay, index) => (
-            <TextNormal key={index}>
-              IPv4: <TextRightValue>{relay.ipv4}</TextRightValue> {isGalaxyFoldSmall ? <br /> : <>|</>} Port:
-              <TextRightValue>{relay.port}</TextRightValue>
-            </TextNormal>
-          ))}
-        </Box>
-      )
-    },
-    {
-      label: "Metadata URL",
-      value: (
-        <Box sx={{ wordBreak: "break-all" }}>
-          {data?.metadataUrl}
-          {data?.metadataUrl && <CopyButton text={data?.metadataUrl} sx={{ height: 16 }} />}
-        </Box>
-      )
     }
   ];
 
@@ -91,14 +64,31 @@ const StakeKeyBox = ({ data }: TProps) => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Box display='flex' flexDirection='column' gap='15px'>
-            {(leftRow || []).map(({ label, value, isHyperLink, originValue, linkTo }) => {
+            {(leftRow || []).map(({ label, value, isHyperLink, originValue, linkTo, isMultipleValue }) => {
               return (
-                <Box key={label} display='flex' alignItems='center'>
+                <Box key={label} display='flex' alignItems='flex-start'>
                   <TextLabel>{label}: </TextLabel>
-                  <TextValue>
-                    {isHyperLink && linkTo ? <Link to={linkTo}>{value}</Link> : value}
-                    {value && <CopyButton sx={{ marginLeft: 1, height: 16 }} text={originValue} />}
-                  </TextValue>
+                  {isMultipleValue ? (
+                    <Box display='flex' flexDirection='column'>
+                      {value.map((item, index) => (
+                        <Box key={index} display={"flex"}>
+                          <CustomTooltip title={item}>
+                            <TextValue>
+                              <Link to={details.stake(item || "")}>{getShortWallet(item)}</Link>
+                            </TextValue>
+                          </CustomTooltip>
+                          <CopyButton sx={{ marginLeft: 1, height: 16 }} text={item} />
+                        </Box>
+                      ))}
+                    </Box>
+                  ) : (
+                    <Box display={"flex"}>
+                      <CustomTooltip title={originValue}>
+                        <TextValue>{isHyperLink && linkTo ? <Link to={linkTo}>{value}</Link> : value}</TextValue>
+                      </CustomTooltip>
+                      {value && <CopyButton sx={{ marginLeft: 1, height: 16 }} text={originValue} />}
+                    </Box>
+                  )}
                 </Box>
               );
             })}

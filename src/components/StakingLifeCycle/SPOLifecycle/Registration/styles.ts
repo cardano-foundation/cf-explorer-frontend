@@ -1,189 +1,94 @@
-import { Box, styled, IconButton as IconButtonMui, Grid } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, styled, alpha } from "@mui/material";
 import CopyButton from "../../../commons/CopyButton";
-import CustomTooltip from "../../../commons/CustomTooltip";
+import CustomModal from "~/components/commons/CustomModal";
+import { Link } from "react-router-dom";
+import { AdaLogoIcon } from "~/components/commons/ADAIcon";
 
-export const HoldBox = styled(Box)(({ theme }) => ({
-  width: "200px",
-  height: "35px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[600]}`,
-  borderRadius: "10px",
-  marginRight: theme.spacing(5),
-  position: "relative",
-  background: theme.palette.common.white,
-  "::after": {
-    content: '"POOL HOLD"',
-    borderRadius: "4px",
-    fontWeight: "bold",
-    color: theme.palette.common.white,
-    padding: "6px 8px",
-    fontSize: "14px",
-    position: "absolute",
-    top: "-50%",
-    left: theme.spacing(2),
-    background: theme.palette.red[600],
-    transform: " translate(0, 60%)"
-  },
-  "@media screen and (max-width: 1270px)": {
-    top: "0px",
-    width: "155px",
-    margin: "0px",
-    marginRight: "-6px",
-    fontSize: "16px",
-    padding: "12px 8px"
-  }
-}));
-export const FeeBox = styled(Box)(({ theme }) => ({
-  width: "200px",
-  height: "35px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[600]}`,
-  borderRadius: "10px",
-  background: theme.palette.common.white,
-  marginRight: theme.spacing(5),
-  position: "relative",
-  "::after": {
-    content: '"FEES"',
-    borderRadius: "4px",
-    fontWeight: "bold",
-    color: theme.palette.common.white,
-    padding: "6px 8px",
-    fontSize: "14px",
-    position: "absolute",
-    top: "-50%",
-    left: theme.spacing(2),
-    background: theme.palette.red[600],
-    transform: " translate(0, 60%)"
-  },
-  "@media screen and (max-width: 1270px)": {
-    width: "155px",
-    marginRight: "0px",
-    position: "absolute",
-    bottom: "0px",
-    left: "-35px",
-    fontSize: "16px",
-    padding: "12px 8px"
-  }
-}));
+export const StyledModal = styled(CustomModal)(() => ({}));
 
-export const IconButton = styled(IconButtonMui)(({ theme }) => ({
-  background: theme.palette.grey[100]
-}));
-export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
-  padding: 0
-}));
-
-export const Info = styled(Box)(() => ({
-  display: "flex",
-  alignItems: "center"
-}));
-export const InfoText = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  marginLeft: theme.spacing(1),
-  fontWeight: 600,
-  fontSize: "14px",
-  cursor: "pointer"
-}));
-
-export const PoolName = styled(Box)(({ theme }) => ({
-  position: "absolute",
-  left: "50%",
-  bottom: "30%",
-  color: theme.palette.grey[400],
-  fontWeight: 500,
-  transform: "translate(-50%, 0)",
-  maxWidth: "70%",
-  whiteSpace: "nowrap",
-  overflow: "hidden",
-  textOverflow: "ellipsis"
-}));
-export const ButtonSPO = styled(Box)(({ theme }) => ({
-  position: "absolute",
-  bottom: "12%",
-  padding: 0,
-  zIndex: 3
-}));
-export const PoolNamePopup = styled(Link)(({ theme }) => ({
-  fontSize: "1.125rem",
-  color: `${theme.palette.blue[800]} !important`,
-  textDecoration: "underline !important",
-  fontWeight: 500,
-  margin: `0 ${theme.spacing(1)}`,
-  maxWidth: 180,
-  whiteSpace: "nowrap",
-  overflow: "hidden",
-  textOverflow: "ellipsis"
-}));
 export const StyledCopyButton = styled(CopyButton)`
   margin-left: 5px;
 `;
-export const StyledLink = styled(Link)`
-  font-size: 0.875rem;
-`;
 
-export const CustomPopover = styled(CustomTooltip)(({ theme }) => ({
-  background: theme.palette.common.white,
-  borderRadius: "4px",
-  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)"
-}));
-
-export const HoldBoxText = styled(Box)(({ theme }) => ({
-  fontSize: "18px",
-  fontWeight: "bold",
-  color: theme.palette.common.black
-}));
-
-export const StyledSkeletonContainer = styled(Box)(({ theme }) => ({}));
-export const StyledGridContainer = styled(Grid)(({ theme }) => ({
-  [theme.breakpoints.down("sm")]: {
-    wordBreak: "break-all",
-    "& > div": {
-      height: "100%"
-    },
-    "& > div > div": {
-      padding: "20px 15px",
-      gap: "8px",
-      minHeight: "40px"
-    }
-  }
-}));
-
-export const StyledBox = styled(Box)(({ theme }) => ({
-  ".list-images": {
-    maxWidth: "390px",
-    margin: "0px auto"
-  },
-}));
-
-export const StepInfo = styled(Box)(({ theme }) => ({
+export const ItemList = styled(Box)(({ theme }) => ({
   display: "flex",
+  gap: "5px 15px",
   justifyContent: "space-between",
-  alignItems: "center",
-  gap: 20,
-  marginBottom: 36,
+  flexWrap: "wrap",
+  width: 475,
   [theme.breakpoints.down("sm")]: {
-    alignItems: "flex-start",
-    marginBottom: 30
+    width: "100%"
   }
 }));
 
-export const InfoGroup = styled(Box)(({ theme }) => ({
+export const Item = styled(Box)(({ theme, flexDirection }) => ({
+  backgroundColor: alpha(theme.palette.grey[300], 0.1),
+  padding: 20,
+  flex: 1,
   display: "flex",
-  justifyContent: "flex-end",
-  alignItems: "center",
-  gap: 20,
+  flexDirection: typeof flexDirection === "string" ? flexDirection : "column",
+  justifyContent: flexDirection === "row" ? "space-between" : "flex-start",
+  alignItems: flexDirection === "row" ? "center" : "flex-start",
+  minWidth: "calc(50% - 8px)",
+  boxSizing: "border-box",
+  [theme.breakpoints.down("md")]: {
+    padding: "15px 20px"
+  },
   [theme.breakpoints.down("sm")]: {
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    gap: 5
+    padding: 15,
+    paddingRight: flexDirection === "row" ? 5 : 15
   }
+}));
+
+export const Label = styled(Box)(({ theme }) => ({
+  fontWeight: 700,
+  fontSize: 14,
+  lineHeight: "16px",
+  color: theme.palette.grey[400],
+  marginBottom: 8
+}));
+
+export const LineData = styled(Box)(() => ({
+  marginBottom: 8,
+  ":last-of-type": {
+    marginBottom: 0
+  }
+}));
+
+export const StyledLink = styled(Link)(({ theme }) => ({
+  fontSize: 14,
+  lineHeight: "22px",
+  color: `${theme.palette.blue[800]} !important`,
+  wordBreak: "break-all",
+  fontWeight: 500,
+  marginRight: 5,
+  [theme.breakpoints.down("sm")]: {
+    marginRight: 3
+  }
+}));
+
+export const FakeLink = styled(Box)(({ theme }) => ({
+  fontSize: 14,
+  lineHeight: "22px",
+  color: theme.palette.blue[800],
+  wordBreak: "break-all",
+  fontWeight: 500,
+  display: "inline",
+  marginRight: 5,
+  [theme.breakpoints.down("sm")]: {
+    marginRight: 3
+  }
+}));
+
+export const Value = styled(FakeLink)(({ theme }) => ({
+  color: theme.palette.common.black,
+  display: "flex",
+  alignItems: "center",
+  gap: 8
+}));
+
+export const StyledAdaLogoIcon = styled(AdaLogoIcon)(() => ({
+  fontSize: 12,
+  lineHeight: "16px",
+  marginBottom: ".125rem"
 }));
