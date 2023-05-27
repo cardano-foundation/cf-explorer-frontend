@@ -208,7 +208,7 @@ interface ConnectWalletModal {
   setOpen: (open: boolean) => void;
 }
 const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen }) => {
-  const { stakeAddress, connect } = useCardano({
+  const { stakeAddress, connect, disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
   const [stakeKey, setStakeKey] = useState<string | null>("");
@@ -225,6 +225,7 @@ const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen }) => 
       await editInfo({ address: stakeKey || "" });
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
       setUserData({ ...response.data, loginType: userData?.loginType || "" });
+      disconnect();
       toast.success("Change wallet successfully!");
       setOpen(false);
     } catch (error) {
