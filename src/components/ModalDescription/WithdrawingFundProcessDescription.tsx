@@ -6,7 +6,12 @@ interface Props {
 }
 export function WithdrawingFundProcessDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title='The withdrawing funds process' handleCloseModal={handleCloseModal} open={open}>
+    <StyledModal
+      contentStyle={{ paddingRight: "5px" }}
+      title='The withdrawing funds process'
+      handleCloseModal={handleCloseModal}
+      open={open}
+    >
       <WrapContent>
         <ContentContainer>
           <NormalDescription>

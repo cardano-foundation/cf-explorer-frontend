@@ -6,7 +6,12 @@ interface Props {
 }
 export function RewardDistributionProcessDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title='The reward distribution process' handleCloseModal={handleCloseModal} open={open}>
+    <StyledModal
+      contentStyle={{ paddingRight: "5px" }}
+      title='The reward distribution process'
+      handleCloseModal={handleCloseModal}
+      open={open}
+    >
       <WrapContent>
         <ContentContainer>
           <NormalDescription>
