@@ -15,6 +15,7 @@ import PoolSizeTab from "./PoolTabs/PoolSizeTab";
 import { SkeletonUI } from "../TokenDetail/TokenAnalytics/styles";
 import { getPoolEventList } from "../PoolLifecycle";
 import { Headline } from "../TabularView/StakeTab/styles";
+import CustomTooltip from "../commons/CustomTooltip";
 
 interface ITab {
   icon: React.FC;
@@ -97,6 +98,9 @@ const ReportGeneratedPoolDetailTabs = () => {
         <SkeletonUI variant='rectangular' style={{ height: "400px" }} />
       ) : (
         <>
+          <CustomTooltip title={reportDetail.data?.reportHistory.reportName}>
+            <Headline collapsed={1}>{reportDetail.data?.reportHistory.reportName} </Headline>
+          </CustomTooltip>
           <Headline>{reportDetail.data?.reportHistory.reportName} </Headline>
           <StakeTab tabs={displayedTabs} initTab={initTab} />
         </>

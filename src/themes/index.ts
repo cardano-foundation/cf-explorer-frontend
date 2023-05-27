@@ -1,5 +1,4 @@
-import { alpha, Breakpoints, createTheme, Shadows } from "@mui/material";
-import { Typography } from "@mui/material/styles/createTypography";
+import { createTheme } from "@mui/material";
 import { ThemeType } from "../types/user";
 import breakpoints from "./breakpoints";
 import palette, { CustomPalette } from "./palette";

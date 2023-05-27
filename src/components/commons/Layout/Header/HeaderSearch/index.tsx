@@ -1,6 +1,6 @@
 import React, { FormEvent, useState, useEffect } from "react";
 import { Backdrop, Box, SelectChangeEvent } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
 import { HeaderSearchIcon } from "../../../../../commons/resources";
 import { details, routers } from "../../../../../commons/routers";
 import { stringify } from "qs";
@@ -20,11 +20,6 @@ import {
 import { useSelector } from "react-redux";
 import { useScreen } from "../../../../../commons/hooks/useScreen";
 
-interface Props {
-  home: boolean;
-  callback?: () => void;
-  setShowErrorMobile?: (show: boolean) => void;
-}
 interface FormValues {
   filter: FilterParams;
   search: string;
@@ -49,37 +44,44 @@ const options: Option[] = [
   {
     value: "epochs",
     label: "Epochs",
-    paths: [routers.EPOCH_LIST]
+    paths: [routers.EPOCH_LIST, routers.EPOCH_DETAIL],
+    detail: details.epoch
   },
   {
     value: "blocks",
     label: "Blocks",
-    paths: [routers.BLOCK_LIST]
+    paths: [routers.BLOCK_LIST, routers.BLOCK_DETAIL],
+    detail: details.block
   },
   {
     value: "txs",
     label: "Transactions",
-    paths: [routers.TRANSACTION_LIST]
+    paths: [routers.TRANSACTION_LIST, routers.TRANSACTION_DETAIL],
+    detail: details.transaction
   },
   {
     value: "tokens",
     label: "Tokens",
-    paths: [routers.TOKEN_LIST]
+    paths: [routers.TOKEN_LIST, routers.TOKEN_DETAIL],
+    detail: details.token
   },
   {
     value: "stakes",
     label: "Stake keys",
-    paths: [routers.STAKE_LIST, routers.TOP_DELEGATOR]
+    paths: [routers.STAKE_LIST, routers.TOP_DELEGATOR, routers.STAKE_DETAIL],
+    detail: details.stake
   },
   {
     value: "addresses",
     label: "Addresses",
-    paths: [routers.ADDRESS_LIST, routers.CONTRACT_LIST]
+    paths: [routers.ADDRESS_LIST, routers.CONTRACT_LIST, routers.ADDRESS_DETAIL],
+    detail: details.address
   },
   {
     value: "delegations/pool-detail-header",
     label: "Pools",
-    paths: [routers.DELEGATION_POOLS, routers.REGISTRATION_POOLS]
+    paths: [routers.DELEGATION_POOLS, routers.DELEGATION_POOL_DETAIL],
+    detail: details.delegation
   },
   {
     value: "lifecycle",
@@ -93,8 +95,13 @@ const options: Option[] = [
   }
 ];
 
-const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile }) => {
-  const history = useHistory();
+interface Props extends RouteComponentProps {
+  home: boolean;
+  callback?: () => void;
+  setShowErrorMobile?: (show: boolean) => void;
+}
+
+const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, history }) => {
   const [{ search, filter }, setValues] = useState<FormValues>({ ...intitalValue });
   const [showOption, setShowOption] = useState(false);
   const [error, setError] = useState("");
@@ -112,9 +119,10 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile }) =
   const checkIncludesPath = (paths: Option["paths"]) => paths?.find((path) => path?.split("/")[1] === currentPath);
 
   useEffect(() => {
+    console.log(options);
     const filter: FilterParams = options.find((item) => checkIncludesPath(item.paths))?.value || "all";
-
-    setValues({ ...intitalValue, filter });
+    console.log(filter);
+    if ("/" + currentPath !== routers.SEARCH) setValues({ ...intitalValue, filter });
     setError("");
     setShowErrorMobile && setShowErrorMobile(false);
   }, [history.location.pathname]);
@@ -140,10 +148,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile }) =
     callback?.();
     if (option?.detail) return history.push(option?.detail(search));
     if (search) {
-      history.push(
-        `${routers.SEARCH}?${stringify({ search, filter: filterParams || (filter !== "all" ? filter : undefined) })}`
-      );
-      setValues({ ...intitalValue });
+      const params = { search, filter: filterParams || (filter !== "all" ? filter : undefined) };
+      history.push(`${routers.SEARCH}?${stringify(params)}`);
       setError("");
       setShowErrorMobile && setShowErrorMobile(false);
     }
@@ -224,32 +230,23 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile }) =
   );
 };
 
-export default HeaderSearch;
+export default withRouter(HeaderSearch);
 
-export const OptionsSearch = ({
-  show,
-  home,
-  value,
-  handleSearch,
-  error
-}: {
+interface OptionProps {
   show: boolean;
   home: boolean;
   value: string;
   error: string;
   handleSearch: (e?: FormEvent, filterParams?: FilterParams) => void;
-}) => {
+}
+
+export const OptionsSearch = ({ show, home, value, handleSearch, error }: OptionProps) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-  const submitSearch = (filter: FilterParams) => {
-    handleSearch(undefined, filter);
-  };
-  const { isTablet } = useScreen();
+
+  const submitSearch = (filter: FilterParams) => handleSearch(undefined, filter);
+
   return (
-    <OptionsWrapper
-      display={show ? "block" : "none"}
-      home={+home}
-      width={isTablet ? "calc(100% - 22px)" : home ? "calc(100% - 370px)" : "380px"}
-    >
+    <OptionsWrapper display={show ? "block" : "none"} home={+home}>
       {!error && (
         <>
           {+value <= (currentEpoch?.no || 0) && (

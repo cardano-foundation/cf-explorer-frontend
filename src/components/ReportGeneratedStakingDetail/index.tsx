@@ -22,6 +22,7 @@ import WalletActitityTab from "./StakeyTabs/WalletActivityTab";
 import { getEventList } from "../StakekeySummary";
 import { SkeletonUI } from "../TokenDetail/TokenAnalytics/styles";
 import { Headline } from "../TabularView/StakeTab/styles";
+import CustomTooltip from "../commons/CustomTooltip";
 
 interface ITab {
   icon: React.FC;
@@ -108,6 +109,9 @@ const ReportGeneratedStakingDetailTabs = () => {
         <SkeletonUI variant='rectangular' style={{ height: "400px" }} />
       ) : (
         <>
+          <CustomTooltip title={reportDetail.data?.reportName}>
+            <Headline collapsed={1}>{reportDetail.data?.reportName} </Headline>
+          </CustomTooltip>
           <Headline>{reportDetail.data?.reportName} </Headline>
           <StakeTab tabs={displayedTabs} initTab={initTab} />
         </>

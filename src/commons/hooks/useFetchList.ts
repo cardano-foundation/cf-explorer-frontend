@@ -50,6 +50,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
       setInitialized(true);
     } catch (error: any) {
       setData([]);
+      setInitialized(true);
       setError(error?.response?.data?.message || error?.message);
     }
     setLoading(false);

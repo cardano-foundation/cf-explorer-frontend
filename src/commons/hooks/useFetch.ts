@@ -30,6 +30,7 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, timeout?: numbe
       setError(null);
       setInitialized(true);
     } catch (error: any) {
+      setInitialized(true);
       setData(null);
       setError(error?.response?.data?.message || error?.message);
     }
