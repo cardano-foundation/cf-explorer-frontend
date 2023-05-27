@@ -8,3 +8,4 @@ export const TableTittle = styled(Typography)`
   font-size: 36px;
   font-weight: 700;
 `;
+

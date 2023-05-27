@@ -96,6 +96,10 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
   const hashLabel = getHashLabel();
 
   const numberOfItems = listItem.length;
+
+  const handleClickItem = (link: string) => {
+    history.push(link);
+  };
   if (loading) {
     return (
       <HeaderDetailContainer>
@@ -224,7 +228,24 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                       PaperProps: {
                         sx: {
                           borderRadius: 2,
-                          marginTop: 0.5
+                          marginTop: 0.5,
+                          "&::-webkit-scrollbar": {
+                            width: "5px"
+                          },
+                          "&::-webkit-scrollbar-track": {
+                            background: "transparent"
+                          },
+                          "&::-webkit-scrollbar-thumb": {
+                            background: "transparent"
+                          },
+                          "&:hover": {
+                            "&::-webkit-scrollbar-thumb": {
+                              background: theme.palette.grey[300]
+                            },
+                            "&::-webkit-scrollbar-track": {
+                              background: theme.palette.grey[100]
+                            }
+                          }
                         }
                       }
                     }}
@@ -236,7 +257,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                       item?.dataSearch?.map((item, index) => (
                         <StyledMenuItem
                           onClick={() => {
-                            //To do
+                            handleClickItem(details.token(item?.assetId))
                           }}
                           key={index}
                         >
@@ -269,7 +290,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
         onClick={() => setOpenBackdrop({ input: false, output: false })}
         open={openBackdrop.input || openBackdrop.output}
       />
-    </HeaderDetailContainer>
+    </HeaderDetailContainer >
   );
 };
 
