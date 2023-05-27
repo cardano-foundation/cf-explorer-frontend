@@ -79,17 +79,6 @@ const DelegationTab = () => {
 
   const { total } = fetchData;
 
-  const filterLabel = useMemo(() => {
-    if (params.fromDate && params.toDate)
-      return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
-        .utc(params.toDate, DATETIME_PARTTEN)
-        .local()
-        .format("MM/DD/YYYY")}`;
-    if (params.sort && params.sort.length >= 2)
-      return `${params.sort[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
-    if (params.txHash) return `Searching for : ${params.txHash}`;
-  }, [params]);
-
   return (
     <>
       <WrapperDelegationTab>
@@ -102,7 +91,6 @@ const DelegationTab = () => {
           <WrapFilterDescription>
             Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}
           </WrapFilterDescription>
-          {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
           <StackingFilter
             filterValue={params}
             onFilterValueChange={(params) => {
