@@ -66,7 +66,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, set
   return (
     <StyledContainer data-testid='recent-registration'>
       <StyledList>
-        <DescriptionText>Registration List</DescriptionText>
+        <DescriptionText sx={{ mr: 0 }}>Registration List</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             Showing {data.length} {data.length > 1 ? "results" : "result"}

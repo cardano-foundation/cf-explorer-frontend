@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/material";
 import { useMemo, useRef, useState } from "react";
-import { ADAOrangeIcon } from "../../../../commons/resources";
+import { ADAOrangeBorderIcon } from "../../../../commons/resources";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { details } from "../../../../commons/routers";
 import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
@@ -53,7 +53,7 @@ const OperatorReward = () => {
       <DrawContainer>
         <CardanoSystem ref={cadarnoSystemRef} />
         <ADAOperator ref={operatorRef} onClick={() => setOpenModal(true)}>
-          <ADAOrangeIcon />
+          <ADAOrangeBorderIcon />
           <ADATitle>Operator Rewards</ADATitle>
         </ADAOperator>
         <SPOHolder
