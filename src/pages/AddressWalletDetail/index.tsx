@@ -22,7 +22,7 @@ const AddressWalletDetail = () => {
     document.documentElement.scrollTop = 0;
   }, [address]);
 
-  if (!initialized) {
+  if (!initialized && !state?.data) {
     return null;
   }
 
