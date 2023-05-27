@@ -142,7 +142,7 @@ const AddressAnalytics: React.FC = () => {
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems='center' justifyContent={"center"}>
                 <Box>
-                  <img src={HighestIcon} width={"20%"} alt='heighest icon' />
+                  <img src={HighestIcon} alt='heighest icon' />
                   <Title>Highest Balance</Title>
                   <ValueInfo>
                     {balanceLoading ? <SkeletonUI variant='rectangular' /> : formatADAFull(maxBalance)}
@@ -153,7 +153,7 @@ const AddressAnalytics: React.FC = () => {
             <Box flex={1}>
               <BoxInfoItem display={"flex"} alignItems='center' justifyContent={"center"}>
                 <Box>
-                  <img src={LowestIcon} width={"20%"} alt='lowest icon' />
+                  <img src={LowestIcon} alt='lowest icon' />
                   <Title>Lowest Balance</Title>
                   <ValueInfo>
                     {balanceLoading ? <SkeletonUI variant='rectangular' /> : formatADAFull(minBalance)}
