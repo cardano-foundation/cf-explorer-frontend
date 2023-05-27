@@ -21,6 +21,7 @@ import {
   CardOverview,
   CardTitle,
   CardValue,
+  StyledPaymentWalletIcon,
   TransferButton,
   WalletBox,
   WrapFlex,
@@ -98,7 +99,7 @@ const TabularOverview: React.FC = () => {
     <Grid container spacing={2}>
       <GridItem
         title='Payment Wallet'
-        mainIcon={<PaymentWallet />}
+        mainIcon={<StyledPaymentWalletIcon />}
         value={<CardAmount amount={Math.max(data?.totalStake || 0, 0)} />}
         action={
           <TransferButton

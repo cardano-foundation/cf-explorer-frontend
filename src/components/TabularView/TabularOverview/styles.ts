@@ -1,4 +1,5 @@
 import { Box, Button, Typography, styled } from "@mui/material";
+import { PaymentWallet } from "~/commons/resources";
 
 export const CardOverview = styled(Box)`
   background: white;
@@ -57,6 +58,15 @@ export const WalletBox = styled(Box)(({ theme }) => ({
   }
 }));
 
+export const StyledPaymentWalletIcon = styled(PaymentWallet)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    transform: "scale(0.8)"
+  },
+  [theme.breakpoints.down("sm")]: {
+    transform: "none"
+  }
+}));
+
 export const TransferButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.main,
   color: theme.palette.common.white,
@@ -68,7 +78,14 @@ export const TransferButton = styled(Button)(({ theme }) => ({
   boxShadow: "none",
   width: "160px",
   [theme.breakpoints.down("md")]: {
-    padding: "6px 16px"
+    padding: "6px 12px",
+    width: "min(100%, 160px)",
+    fontSize: 10,
+  },
+  [theme.breakpoints.down("sm")]: {
+    padding: "6px 16px",
+    width: "160px",
+    fontSize: 14,
   }
 }));
 
