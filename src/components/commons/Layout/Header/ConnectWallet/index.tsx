@@ -34,8 +34,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
   const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
-  const [openSyncBookmark, setOpenSyncBookmark] = useState(false);
-  console.log("🚀 ~ file: index.tsx:38 ~ openSyncBookmark:", openSyncBookmark);
   const [signature, setSignature] = React.useState("");
   const [submitting, setSubmitting] = useState(false);
   const [isSign, setIsSign] = useState(isConnected);
@@ -85,18 +83,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         localStorage.setItem("loginType", "connectWallet");
         const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
         setUserData({ ...userInfo.data, loginType: "connectWallet" });
-        setOpenSyncBookmark(true);
-        if (
-          (((JSON.parse(localStorage.getItem("bookmark") || "") as Bookmark[]) || [])?.filter((r) => !r.id) || [])
-            .length > 0
-        ) {
-          setOpenSyncBookmark(true);
-        } else {
-          const { data } = await getAllBookmarks(NETWORK_TYPES[NETWORK]);
-          if (data) {
-            setBookmark(data);
-          }
-        }
       } else {
         setAddress(stakeAddress);
         setModalRegister(true);
