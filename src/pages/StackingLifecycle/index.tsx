@@ -175,10 +175,19 @@ const Dashboard: React.FC = () => {
           <Box width='100%' textAlign='right'>
             {onDownload === data.id ? (
               <CircularProgress size={22} color='primary' />
+            ) : data.status === "EXPIRED" ? (
+              <CustomTooltip title='Report file only available for 7 days after created'>
+                <Box display={"inline-block"}>
+                  <Box component={IconButton} textTransform={"capitalize"} disabled>
+                    <CustomIcon icon={DownloadGreenIcon} width={24} />
+                  </Box>
+                </Box>
+              </CustomTooltip>
             ) : (
               <Box
                 component={IconButton}
                 textTransform={"capitalize"}
+                disabled={data.status !== "GENERATED"}
                 onClick={() =>
                   downloadReportDashboard(
                     data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,

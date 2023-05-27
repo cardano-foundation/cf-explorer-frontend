@@ -47,6 +47,8 @@ interface IPoolReportList {
   eventRegistration: boolean;
   eventReward: boolean;
   poolView: string;
+  createdAt: string;
+  status: "IN_PROGRESS" | "GENERATED" | "FAILED" | "EXPIRED";
   reportHistory: {
     id: number;
     storageKey: string;
@@ -75,13 +77,14 @@ interface IReportStaking {
   eventWithdrawal: boolean;
   id: number;
   stakeKey: string;
+  createdAt: string;
   username: string;
   reportName: string;
   fromDate: string;
   toDate: string;
   isADATransfer: boolean;
   isFeesPaid: boolean;
-  status: string;
+  status: "IN_PROGRESS" | "GENERATED" | "FAILED" | "EXPIRED";
 }
 
 interface IPoolReportSummary {

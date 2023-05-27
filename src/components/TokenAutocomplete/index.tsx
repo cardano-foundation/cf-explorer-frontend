@@ -120,7 +120,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
 export default TokenAutocomplete;
 
 const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => void; address: string }) => {
-  const [{ page, size }, setPagination] = useState({ page: 1, size: 10 });
+  const [{ page, size }, setPagination] = useState({ page: 1, size: 50 });
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
@@ -182,7 +182,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             onKeyUp={(e) => {
               if (e.key === "Enter") {
                 setSearch(value);
-                setPagination({ page: 1, size: 10 });
+                setPagination({ page: 1, size: 50 });
               }
             }}
           />

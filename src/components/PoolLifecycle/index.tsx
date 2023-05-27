@@ -2,7 +2,7 @@ import { useState } from "react";
 import Table, { Column } from "../commons/Table";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { API } from "../../commons/utils/api";
-import { Box, Button, CircularProgress, IconButton } from "@mui/material";
+import { Box, Button, CircularProgress, IconButton, styled } from "@mui/material";
 import { TextOverFlow } from "../StakingLifeCycle/DelegatorLifecycle/ReportComposerModal/styles";
 import { DownloadGreenIcon } from "../../commons/resources";
 import { lowerCase, startCase } from "lodash";
@@ -10,6 +10,8 @@ import { defaultAxiosDownload } from "../../commons/utils/axios";
 import { useHistory } from "react-router-dom";
 import { details } from "../../commons/routers";
 import CustomIcon from "../commons/CustomIcon";
+import { formatDateTimeLocal } from "~/commons/utils/helper";
+import CustomTooltip from "../commons/CustomTooltip";
 
 // Registration, Deregistration, Protocol Update,...
 export const EVENTS: { [key in keyof IPoolReportList]?: string } = {
@@ -65,6 +67,13 @@ const PoolLifecycle = () => {
 
   const columns: Column<IPoolReportList>[] = [
     {
+      title: "Timestamp",
+      key: "createdAt",
+      render(data) {
+        return formatDateTimeLocal(data.createdAt);
+      }
+    },
+    {
       key: "name",
       title: "Report Name",
       maxWidth: "300px",
@@ -108,6 +117,14 @@ const PoolLifecycle = () => {
       }
     },
     {
+      title: "Status",
+      key: "status",
+      minWidth: "100px",
+      render(data) {
+        return <Status status={data.status}>{data.status}</Status>;
+      }
+    },
+    {
       key: "download",
       title: "",
       maxWidth: "30px",
@@ -117,11 +134,22 @@ const PoolLifecycle = () => {
           <Box width='100%' textAlign='center'>
             {onDownload === data.reportId ? (
               <CircularProgress size={22} color='primary' />
+            ) : data.status === "EXPIRED" ? (
+              <Box width='100%' textAlign='center'>
+                <CustomTooltip title='Report file only available for 7 days after created'>
+                  <Box display={"inline-block"}>
+                    <Box component={IconButton} disabled>
+                      <CustomIcon icon={DownloadGreenIcon} width={24} />
+                    </Box>
+                  </Box>
+                </CustomTooltip>
+              </Box>
             ) : (
               <Box
                 component={IconButton}
                 display={"block"}
                 margin='auto'
+                disabled={data.status !== "GENERATED"}
                 textTransform={"capitalize"}
                 onClick={() => downloadFn(data.reportId, data.reportName, "EXCEL")}
               >
@@ -158,3 +186,37 @@ const PoolLifecycle = () => {
 };
 
 export default PoolLifecycle;
+
+const Status = styled("span")<{ status: string }>`
+  font-family: var(--font-family-title);
+  font-weight: var(--font-weight-bold);
+  padding: 7.5px 11.5px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case "EXPIRED":
+      case "FAILED":
+        return theme.palette.error.light;
+      case "GENERATED":
+        return theme.palette.success.light;
+      case "IN_PROGRESS":
+        return theme.palette.warning.light;
+      default:
+        return theme.palette.success.light;
+    }
+  }};
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case "EXPIRED":
+      case "FAILED":
+        return theme.palette.error.main;
+      case "GENERATED":
+        return theme.palette.success.main;
+      case "IN_PROGRESS":
+        return theme.palette.warning.main;
+      default:
+        return theme.palette.success.main;
+    }
+  }};
+`;
