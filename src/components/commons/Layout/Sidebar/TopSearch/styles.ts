@@ -2,6 +2,9 @@ import { Box, Drawer, styled } from "@mui/material";
 
 export const WrapTopSearch = styled(Drawer)(({ theme }) => ({
   display: "none",
+  "& .MuiPaper-root": {
+    overflow: "visible"
+  },
   [theme.breakpoints.down("md")]: {
     display: "unset"
   }

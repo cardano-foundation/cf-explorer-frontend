@@ -6,7 +6,7 @@ export const StyledListItem = styled(ListItem)`
   overflow-wrap: break-word;
   padding: ${({ theme }) => theme.spacing(2)} 0px;
   border-bottom: 1px solid ${alpha("#000", 0.05)};
-  &:first-child {
+  &:first-of-type {
     border-top: 1px solid ${alpha("#000", 0.05)};
   }
 `;

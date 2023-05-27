@@ -61,7 +61,6 @@ export const StyledTabList = styled(TabList)(({ theme }) => ({
   }
 }));
 
-
 export const TableSubTitle = styled("span")(({ theme }) => ({
   color: theme.palette.grey[300],
   fontSize: "0.75rem",
@@ -102,7 +101,7 @@ export const TabHead = styled(Box)<{ active?: number }>(
 `
 );
 
-export const Headline = styled(Typography)`
+export const Headline = styled(Typography)<{ collapsed?: number }>`
   font-weight: 700;
   font-size: 32px;
   line-height: 37px;
@@ -113,6 +112,10 @@ export const Headline = styled(Typography)`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: ${({ collapsed }) => (collapsed ? "none" : "block")};
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    display: ${({ collapsed }) => (collapsed ? "block" : "none")};
+  }
 `;
 
 export const WrapperDelegationTab = styled(Box)`

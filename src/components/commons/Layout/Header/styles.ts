@@ -23,14 +23,18 @@ export const HeaderBox = styled(Container)<{ home: number }>`
   }
 `;
 
-export const HeaderTop = styled("div")(({ theme }) => ({
+export const HeaderTop = styled("div")<{ collasped: number }>(({ theme, collasped }) => ({
   zIndex: 1300,
   display: "flex",
   justifyContent: "flex-end",
   alignItems: "center",
   gap: 20,
   padding: "30px 0",
+  [theme.breakpoints.down("xl")]: {
+    display: collasped ? "none" : "flex"
+  },
   [theme.breakpoints.down("md")]: {
+    display: "flex",
     position: "fixed",
     top: 0,
     left: 0,

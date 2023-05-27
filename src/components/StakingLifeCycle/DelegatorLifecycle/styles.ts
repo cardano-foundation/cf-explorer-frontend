@@ -101,6 +101,7 @@ export const StyledBox = styled(Box)`
   gap: 6px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     & > p:nth-of-type(1) {
+      white-space: nowrap;
       width: min-content;
     }
   }

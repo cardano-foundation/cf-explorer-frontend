@@ -1,6 +1,7 @@
 import { Box, Button, Input, MenuItem, Select, styled } from "@mui/material";
 
 export const Form = styled("form")<{ home: number; sidebar?: number }>(({ theme, home, sidebar }) => ({
+  position: "relative",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -109,14 +110,24 @@ export const Image = styled("img")<{ home: number }>`
 
 export const OptionsWrapper = styled(Box)<{ home: number }>(({ theme, home }) => ({
   position: "absolute",
-  top: home ? "61px" : "44px",
-  left: home ? "175px" : "0",
+  top: home ? 61 : 45,
+  left: home ? 145 : 0,
+  width: home ? "calc(100% - 280px)" : "100%",
+  boxSizing: "border-box",
   backgroundColor: theme.palette.common.white,
   textAlign: "left",
   padding: "0 10px",
   borderBottomLeftRadius: 10,
   borderBottomRightRadius: 10,
-  zIndex: 1000
+  zIndex: 1000,
+  boxShadow: theme.shadow.card,
+  [theme.breakpoints.down("md")]: {
+    top: home ? 61 : 45
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    left: 0
+  }
 }));
 
 export const Option = styled(Button)(({ theme }) => ({

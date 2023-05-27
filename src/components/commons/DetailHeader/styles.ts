@@ -350,7 +350,7 @@ export const CardItem = styled(Grid)<{ items_length: number; isDetailToken?: boo
         borderLeftWidth: 0,
         paddingLeft: `${isDetailToken ? `none` : `0`}`
       },
-      ":first-child": {
+      ":first-of-type": {
         paddingLeft: `${isDetailToken ? `9px` : `0`}`
       },
       ":last-of-type::after": {
@@ -388,7 +388,7 @@ export const CardItem = styled(Grid)<{ items_length: number; isDetailToken?: boo
         padding: 15,
         paddingLeft: `${isDetailToken ? `none` : `0`}`
       },
-      ":first-child": {
+      ":first-of-type": {
         padding: `${isDetailToken ? `0 0 15px 0` : `none`}`
       },
       ":nth-of-type(2n)": {
