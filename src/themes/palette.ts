@@ -110,7 +110,8 @@ const border = {
   secondary: GREEN[800_10],
   main: GREY[200],
   disabled: GREY[400],
-  hint: "#C8CDD8"
+  hint: "#C8CDD8",
+  block: "#438F68"
 };
 const background = {
   paper: COMMON.white,
