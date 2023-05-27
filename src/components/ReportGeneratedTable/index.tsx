@@ -47,7 +47,7 @@ const ReportGeneratedTable = () => {
       columns={columns}
       data={data}
       pagination={{
-        size: 10,
+        size: 50,
         page: 1,
         total: 1000
       }}

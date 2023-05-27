@@ -55,6 +55,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   const [reportName, setReportName] = useState<string>("");
   const [epochRange, setEpochRange] = useState<IEpochRange>([30, 50]);
   const [error, setError] = useState("");
+  const [errorReportField, setErrorReportField] = useState("");
   const [loading, setLoading] = useState(false);
 
   const onChangeReportType = useCallback((e: any) => {
@@ -62,9 +63,14 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     setError("");
   }, []);
 
-  const onChangeReportName = useCallback((e: any) => {
+  const onChangeReportName = (e: any) => {
     setReportName(e.target.value as ReportType);
-  }, []);
+    if (reportName.trim().length > 200) {
+      setErrorReportField("Report name can not exceed 200 characters");
+    } else {
+      setErrorReportField("");
+    }
+  };
 
   const onChangeAddress = useCallback((e: any) => {
     const regex = /^[a-zA-Z0-9_]*$/;
@@ -76,14 +82,14 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   const { isMobile } = useScreen();
 
   const isDisabledButton = useMemo(() => {
-    if (error || loading) return true;
+    if (error || loading || errorReportField) return true;
     const [startDate, endDate] = dateRange;
     if (reportType === ReportType.StakeKeyReport) {
       return !address?.trim() || !startDate || !endDate;
     } else {
       return !address?.trim();
     }
-  }, [address, dateRange, reportType, error, loading]);
+  }, [address, dateRange, reportType, error, loading, errorReportField]);
 
   let placeholderAddress = "Pool ID";
   switch (reportType) {
@@ -198,6 +204,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             />
           </Box>
         )}
+        {errorReportField && <TextError>{errorReportField}</TextError>}
         <StyledStack>
           <StyledButton disabled={isDisabledButton} onClick={handleSubmit}>
             Next

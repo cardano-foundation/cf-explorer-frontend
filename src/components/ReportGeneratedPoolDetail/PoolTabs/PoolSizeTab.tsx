@@ -16,7 +16,7 @@ import { details } from "~/commons/routers";
 
 const PoolSizeTab = () => {
   const { reportId = "" } = useParams<{ reportId: string }>();
-  const [pageInfo, setPageInfo] = useState({ page: 0, size: 10 });
+  const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const { loading, ...fetchData } = useFetchList<any>(API.REPORT.PREPORT_EPOCH_SIZE(reportId), {
     ...pageInfo
   });

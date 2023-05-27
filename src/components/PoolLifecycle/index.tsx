@@ -43,7 +43,7 @@ export function getPoolEventType(data: any) {
 
 const PoolLifecycle = () => {
   const history = useHistory();
-  const [{ page, size }, setPagi] = useState<{ page: number; size: number }>({ page: 0, size: 10 });
+  const [{ page, size }, setPagi] = useState<{ page: number; size: number }>({ page: 0, size: 50 });
   const [onDownload, setOnDownload] = useState<number | false>(false);
 
   const downloadFn = async (reportId: number, fileName: string, typeExport: "CSV" | "EXCEL" = "CSV") => {
@@ -97,13 +97,6 @@ const PoolLifecycle = () => {
       title: "Pool Size",
       render(data) {
         return data.isPoolSize ? "Yes" : "No";
-      }
-    },
-    {
-      key: "feePaid",
-      title: "Fees Paid",
-      render(data) {
-        return data.isFeesPaid ? "Yes" : "No";
       }
     },
     {

@@ -30,7 +30,7 @@ const trxType = {
 const WalletActitityTab = () => {
   const [sort, setSort] = useState<string>("");
   const { reportId = "" } = useParams<{ reportId: string }>();
-  const [pageInfo, setPageInfo] = useState({ page: 0, size: 10 });
+  const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const fetchData = useFetchList<WalletActivityIF>(API.REPORT.SREPORT_WALLET_ACTIVITY(reportId), {
     ...pageInfo,
     sort
