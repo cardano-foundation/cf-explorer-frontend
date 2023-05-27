@@ -210,6 +210,7 @@ export const TextOverFlow = styled("div")`
   max-width: 100%;
   width: 300px;
   text-align: right;
+  white-space: nowrap;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     text-align: left;
   }

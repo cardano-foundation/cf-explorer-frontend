@@ -45,7 +45,7 @@ const StakekeySummary = () => {
   const history = useHistory();
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>({
     page: 0,
-    size: 10,
+    size: 50,
     sort: "id,desc"
   });
   const [sort, setSort] = useState<string>("id,desc");
@@ -99,13 +99,6 @@ const StakekeySummary = () => {
       title: "ADA Transfer",
       render(data) {
         return data.isADATransfer ? "Yes" : "No";
-      }
-    },
-    {
-      key: "feePaid",
-      title: "Fees Paid",
-      render(data) {
-        return data.isFeesPaid ? "Yes" : "No";
       }
     },
     {

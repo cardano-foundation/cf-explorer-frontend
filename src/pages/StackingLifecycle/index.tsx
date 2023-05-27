@@ -75,7 +75,7 @@ const Dashboard: React.FC = () => {
   const [sort, setSort] = useState<string>("");
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>({
     page: 0,
-    size: 10
+    size: 50
   });
   const [params, setParams] = useState<any>({
     sort: undefined,
