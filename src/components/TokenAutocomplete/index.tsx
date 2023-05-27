@@ -24,11 +24,13 @@ import { AssetName } from "../../pages/Token/styles";
 import { details } from "../../commons/routers";
 import { debounce } from "lodash";
 import { WrappModalScrollBar } from "../commons/Table/styles";
+import { useTheme } from "@mui/material";
 
 const TokenAutocomplete = ({ address }: { address: string }) => {
   const [openModalToken, setOpenModalToken] = useState(false);
   const [selected, setSelected] = useState("");
   const [search, setSearch] = useState("");
+  const theme = useTheme();
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
   const { data, loading, total } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
     page: 0,
@@ -51,6 +53,29 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
             <Box maxHeight='200px' component={"img"} src={EmptyIcon}></Box>
           </Box>
         }
+        ListboxProps={{
+          sx(theme) {
+            return {
+              "&::-webkit-scrollbar": {
+                width: "5px"
+              },
+              "&::-webkit-scrollbar-track": {
+                background: "transparent"
+              },
+              "&::-webkit-scrollbar-thumb": {
+                background: "transparent"
+              },
+              "&:hover": {
+                "&::-webkit-scrollbar-thumb": {
+                  background: theme.palette.grey[300]
+                },
+                "&::-webkit-scrollbar-track": {
+                  background: theme.palette.grey[100]
+                }
+              }
+            }
+          },
+        }}
         renderOption={(propss, option: WalletAddress["tokens"][number] | string) => {
           if (typeof option === "string") {
             return (

@@ -19,7 +19,7 @@ interface ITokenOverview {
 const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
-  const decimalToken = data?.decimals || 0;
+  const decimalToken = data?.decimals || data?.metadata?.decimals || 0;
   const { txCountRealtime } = useContext(OverviewMetadataTokenContext);
   const listItem = [
     {
