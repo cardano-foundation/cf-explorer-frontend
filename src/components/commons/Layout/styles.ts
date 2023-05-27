@@ -3,16 +3,18 @@ import MuiDrawer from "@mui/material/Drawer";
 import { Box } from "@mui/material";
 
 const drawerWidth = 260;
+const drawerWidthMobile = 240;
 const drawerCollaspWidth = 85;
 
-export const Layout = styled(Box)`
+export const Layout = styled(Box)<{ sidebar: number }>`
   display: flex;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   ${({ theme }) => theme.breakpoints.down("md")} {
     flex-direction: column;
-    height: auto;
+    height: ${({ sidebar }) => (sidebar ? "100vh" : "auto")};
+    max-height: ${({ sidebar }) => (sidebar ? "fill-avalible" : "auto")};
   }
   * {
     &::-webkit-scrollbar {
@@ -44,7 +46,7 @@ export const Layout = styled(Box)`
 export const BackDrop = styled("div", { shouldForwardProp: (prop) => prop !== "isShow" })<{ isShow: number }>(
   ({ theme, isShow }) => ({
     position: "fixed",
-    zIndex: 997,
+    zIndex: 1301,
     top: 0,
     left: 0,
     right: 0,
@@ -65,23 +67,31 @@ export const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   minWidth: drawerCollaspWidth,
   overflowY: "unset",
-  borderRightWidth: 0,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen
+  }),
   [theme.breakpoints.down("md")]: {
-    width: "100%",
-    minWidth: "100%",
-    height: "auto",
-    boxShadow: theme.shadow.card
+    minWidth: 0,
+    height: "100vh",
+    maxHeight: "fill-available"
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: drawerWidthMobile
   }
 });
 
 export const closedMixin = (theme: Theme): CSSObject => ({
   overflowY: "unset",
   width: drawerCollaspWidth,
-  borderRightWidth: 0,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen
+  }),
   [theme.breakpoints.down("md")]: {
-    width: "100%",
-    height: "auto",
-    boxShadow: theme.shadow.card
+    width: 0,
+    height: "100vh",
+    maxHeight: "fill-available"
   }
 });
 
@@ -92,7 +102,7 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
   boxSizing: "border-box",
   borderRightWidth: 0,
   boxShadow: theme.shadow.draw,
-  zIndex: 20,
+  zIndex: 1302,
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme)
@@ -102,9 +112,10 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
     "& .MuiDrawer-paper": closedMixin(theme)
   }),
   [theme.breakpoints.down("md")]: {
-    width: "100%",
-    height: "auto",
-    boxShadow: theme.shadow.card
+    height: 0
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: drawerWidthMobile
   },
   "&>div": {
     "&>button": {
@@ -141,17 +152,18 @@ export const MainContainer = styled(Box)`
   width: 100%;
 `;
 
-export const Main = styled(Box)<{ open: number; sidebar: number }>`
-  flex-grow: 1;
-  overflow-x: hidden;
-  overflow-y: auto;
-  width: calc(100vw - ${({ open, sidebar }) => (open ? 461 : 0) + (sidebar ? 260 : 85)}px);
-  height: calc(100vh - 61px);
-  ${({ theme }) => theme.breakpoints.down("md")} {
-    width: 100vw;
-    height: auto;
+export const Main = styled(Box)<{ open: number; sidebar: number }>(({ theme, sidebar, open }) => ({
+  flexGrow: 1,
+  overflowX: "hidden",
+  overflowY: "auto",
+  width: `calc(100vw - ${(open ? 461 : 0) + (sidebar ? 260 : 85)}px)`,
+  height: "calc(100vh - 61px)",
+  [theme.breakpoints.down("md")]: {
+    paddingTop: 80,
+    width: "100vw",
+    height: "auto"
   }
-`;
+}));
 
 export const ArrowCollapse = styled("span")`
   z-index: 100;

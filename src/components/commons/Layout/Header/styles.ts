@@ -1,16 +1,14 @@
-import { Container, styled } from "@mui/material";
+import { Box, Button, Container, styled } from "@mui/material";
+import { Link } from "react-router-dom";
+import { MenuIcon } from "~/commons/resources";
 
 export const HeaderContainer = styled("header")`
   color: ${(props) => props.theme.palette.text.primary};
   position: relative;
-  ${({ theme }) => theme.breakpoints.down("md")} {
-    padding-top: 78px;
-  }
 `;
 
 export const HeaderBox = styled(Container)<{ home: number }>`
   display: flex;
-  flex-wrap: wrap;
   gap: 10px;
   ${(props) =>
     props.home
@@ -25,17 +23,24 @@ export const HeaderBox = styled(Container)<{ home: number }>`
   }
 `;
 
-export const HeaderTop = styled("div")`
-  z-index: 1300;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 20px;
-  padding: 30px 0px;
-  ${({ theme }) => theme.breakpoints.down("md")} {
-    display: none;
+export const HeaderTop = styled("div")(({ theme }) => ({
+  zIndex: 1300,
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  gap: 20,
+  padding: "30px 0",
+  [theme.breakpoints.down("md")]: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    justifyContent: "space-between",
+    width: "calc(100% - 32px)",
+    padding: "16px 16px",
+    backgroundColor: theme.palette.common.white,
+    boxShadow: theme.shadow.card
   }
-`;
+}));
 
 export const HeaderMain = styled("div")<{ home: number }>(({ theme, home }) => ({
   position: "relative",
@@ -46,7 +51,8 @@ export const HeaderMain = styled("div")<{ home: number }>(({ theme, home }) => (
     marginBottom: home ? "0px" : "calc(-25px - 1.5715rem)"
   },
   [theme.breakpoints.down("md")]: {
-    padding: home ? "62px 0px 48px" : 0
+    padding: home ? "62px 0px 48px" : 0,
+    display: home ? "block" : "none"
   }
 }));
 
@@ -55,5 +61,66 @@ export const Title = styled("h1")<{ home: number }>`
   text-align: center;
   ${({ theme }) => theme.breakpoints.down("md")} {
     font-size: 30px;
+  }
+`;
+
+export const HeaderLogoLink = styled(Link)<{ open?: number }>(({ theme }) => ({
+  display: "none",
+  width: "max-content",
+  height: 50,
+  [theme.breakpoints.down("md")]: {
+    display: "block",
+    height: 44
+  }
+}));
+
+export const HeaderLogo = styled("img")(({ theme }) => ({
+  height: 50,
+  width: "auto",
+  [theme.breakpoints.down("md")]: {
+    height: 44
+  }
+}));
+
+export const SearchButton = styled(Button)<{ home: number }>(({ theme, home }) => ({
+  padding: 0,
+  minWidth: 24,
+  height: 24,
+  display: "none",
+  [theme.breakpoints.down("md")]: {
+    display: home ? "none" : "block"
+  }
+}));
+
+export const HumburgerArea = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+`;
+
+export const SideBarRight = styled(Box)(() => ({
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  gap: 15
+}));
+
+export const NetworkContainer = styled(Box)(({ theme }) => ({
+  display: "block",
+  [theme.breakpoints.down("sm")]: {
+    display: "none"
+  }
+}));
+
+export const Toggle = styled("i")`
+  width: 20px;
+  height: 24px;
+  background-image: url(${MenuIcon});
+  background-repeat: no-repeat;
+  background-position: center;
+  display: none;
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    display: block;
   }
 `;

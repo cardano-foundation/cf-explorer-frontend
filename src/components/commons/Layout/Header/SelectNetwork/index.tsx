@@ -81,6 +81,7 @@ const SelectNetwork: React.FC = () => {
       onChange={handleChange}
       value={NETWORK}
       IconComponent={BiChevronDown}
+      MenuProps={{ style: { zIndex: 1303 } }}
     >
       {Object.entries(NETWORK_NAMES).map(([value, name]) => (
         <MenuItem data-testid='network-options' key={value} value={value}>

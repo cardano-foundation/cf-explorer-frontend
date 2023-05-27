@@ -1,20 +1,18 @@
-import { Box, Collapse, List, ListItemText, styled, Theme } from "@mui/material";
+import { Box, List, ListItemText, styled, Theme } from "@mui/material";
 import { SystemStyleObject } from "@mui/system";
 
-export const StyledCollapse = styled(Collapse)`
-  ${({ theme }) => theme.breakpoints.down("md")} {
-    max-height: calc(100vh - 80px);
-    overflow-x: hidden;
-    overflow-y: auto;
+export const SidebarMenuContainer = styled(Box)(({ theme }) => ({
+  height: "calc(100% - 60px)",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  [theme.breakpoints.down("sm")]: {
+    height: "calc(100% - 120px)"
   }
-`;
+}));
 
-export const Menu = styled(List)<{ open: number }>(({ theme, open }) => ({
-  maxHeight: `calc(100vh - 181px)`,
-  "@media screen and (max-device-width: 1200px) and (orientation: portrait), screen and (max-device-height: 1200px) and (orientation: landscape)":
-    {
-      maxHeight: "calc(100vh - 240px)"
-    },
+export const Menu = styled(List)(({ theme }) => ({
+  maxHeight: "calc(100vh - 181px)",
   overflowY: "auto",
   overflowX: "hidden",
   marginBottom: "5px",
@@ -24,6 +22,7 @@ export const Menu = styled(List)<{ open: number }>(({ theme, open }) => ({
   "&:hover::-webkit-scrollbar": {
     display: "block"
   },
+
   [theme.breakpoints.down("md")]: {
     maxHeight: "unset"
   },
@@ -92,37 +91,17 @@ export const SubMenuText = styled(MenuText)`
   }
 `;
 
-export const NavbarMenuBottom = styled("div")`
-  display: none;
-  ${({ theme }) => theme.breakpoints.down("md")} {
-    display: flex;
-    align-items: center;
-    gap: 10px 20px;
-    flex-wrap: wrap;
-    padding: 0px 20px 10px;
-    margin-bottom: 10px;
+export const FooterMenuContainer = styled(Box)(({ theme }) => ({
+  display: "block",
+  [theme.breakpoints.down("md")]: {
+    display: "none"
   }
-`;
+}));
 
-export const IconMenu = styled(Box)(({ theme }) => ({
+export const IconMenu = styled(Box)(() => ({
   position: "absolute",
   zIndex: 10,
   top: "50%",
   left: "210px",
   transform: "translate(0, -50%)"
 }));
-
-export const WrapNetwork = styled(Box)`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 16px;
-  & > div {
-    width: 100%;
-  }
-  margin-top: auto;
-  @media screen and (max-height: 780px) {
-    position: relative !important;
-  }
-`;

@@ -1,6 +1,11 @@
 import { Box, Drawer, styled } from "@mui/material";
 
-export const WrapTopSearch = styled(Drawer)(({ theme }) => ({}));
+export const WrapTopSearch = styled(Drawer)(({ theme }) => ({
+  display: "none",
+  [theme.breakpoints.down("md")]: {
+    display: "unset"
+  }
+}));
 
 export const MainContent = styled(Box)(({ theme }) => ({
   marginTop: 80,
