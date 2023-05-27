@@ -208,17 +208,23 @@ const ProtocolParameter: React.FC = () => {
 export default ProtocolParameter;
 
 const ProtocolParameterHistory = () => {
-  const { data: dataHistory, loading } = useFetch<ProtocolHistory>(API.PROTOCOL_PARAMETER.HISTORY);
+  const [filterParams, setFilterParams] = useState<string[]>([]);
+  const { data: dataHistory, loading } = useFetch<ProtocolHistory>(
+    `${API.PROTOCOL_PARAMETER.HISTORY}/${
+      filterParams.length === 29 || filterParams.length === 0
+        ? "ALL"
+        : filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]).join(",")
+    }`
+  );
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
     [key: string]: any;
   }>([]);
 
-  const [columnTitle, { push: pushColumnTitle }] = useList<string>([]);
+  const [columnTitle, { push: pushColumnTitle, clear: clearColumnTitle }] = useList<string>([]);
   const [dataTable, setDataTable] = useState<{ [key: string]: any }[]>([]);
   const [columnsTable, setColumnsTable] = useState<Column<TProtocolParam & { params: string }>[]>([]);
 
   const [showFilter, setShowFiter] = useState(false);
-  const [filterParams, setFilterParams] = useState<string[]>([]);
   const [resetFilter, setResetFilter] = useState<boolean>(false);
   const [sortTimeFilter, setSortTimeFilter] = useState<"FirstLast" | "LastFirst" | "">("");
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
@@ -274,27 +280,26 @@ const ProtocolParameterHistory = () => {
     title: t,
     key: t,
     render: (r: any) => {
-      console.log(["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey].status as string) ? "Link" : "Box");
       return (
         <Box
           p={"24px 20px"}
           maxWidth={200}
           overflow={"hidden"}
           whiteSpace={"nowrap"}
-          component={["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey].status as string) ? Link : Box}
+          component={["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string) ? Link : Box}
           minHeight={"16px"}
           textOverflow={"ellipsis"}
           display={"block"}
           bgcolor={({ palette }) =>
             r[t as ProtocolTypeKey] !== null
-              ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey].status as string)
+              ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string)
                 ? alpha(palette.green[600], 0.4)
                 : "transparent"
               : "transparent"
           }
           to={
             r[t as ProtocolTypeKey]?.transactionHash
-              ? details.transaction(r[t as ProtocolTypeKey].transactionHash)
+              ? details.transaction(r[t as ProtocolTypeKey]?.transactionHash, "protocols")
               : "#"
           }
         >
@@ -318,6 +323,7 @@ const ProtocolParameterHistory = () => {
 
   useUpdateEffect(() => {
     if (dataHistory) {
+      clearColumnTitle();
       getTitleColumn(dataHistory);
     }
   }, [JSON.stringify(dataHistory)]);
@@ -350,14 +356,6 @@ const ProtocolParameterHistory = () => {
       setResetFilter(false);
     }
   }, [resetFilter]);
-
-  useUpdateEffect(() => {
-    if (filterParams.length > 0) {
-      setDataTable(dataHistoryMapping.filter((h) => filterParams.includes(h.params)));
-    } else {
-      setDataTable(dataHistoryMapping.slice(1));
-    }
-  }, [JSON.stringify(filterParams)]);
 
   useUpdateEffect(() => {
     if (_.isEmpty(dateRangeFilter)) {
@@ -414,12 +412,7 @@ const ProtocolParameterHistory = () => {
           </Box>
         }
       >
-        <TableStyled
-          columns={columnsTable}
-          data={dataTable}
-          // data={[]}
-          loading={loading}
-        />
+        <TableStyled columns={columnsTable} data={dataTable} loading={loading} />
       </Card>
     </Box>
   );

@@ -73,7 +73,7 @@ export const API = {
   MARKETS: "markets",
   PROTOCOL_PARAMETER: {
     LASTEST: "protocols/latest",
-    HISTORY: "protocols/histories",
+    HISTORY: "protocols/histories/filter",
     FIXED: "protocols/fixed"
   },
   REPORT: {
