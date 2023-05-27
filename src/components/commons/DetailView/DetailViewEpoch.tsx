@@ -31,7 +31,6 @@ import {
   ViewDetailHeader
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
-import { HiOutlineCube } from "react-icons/hi2";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
 import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
@@ -66,6 +65,14 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
       });
     }
   }, [data, callback]);
+
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+
+    return () => {
+      document.body.style.overflowY = "scroll";
+    };
+  }, []);
 
   if (!data)
     return (

@@ -198,7 +198,7 @@ const StakeAnalytics: React.FC = () => {
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems='center' justifyContent={"center"}>
                 <Box>
-                  <img src={HighestIcon} width={"20%"} alt='heighest icon' />
+                  <img src={HighestIcon} alt='heighest icon' />
                   <Title>{tab === "BALANCE" ? "Highest Balance" : "Highest Reward"}</Title>
                   <CustomTooltip title={numberWithCommas(maxBalance || 0)}>
                     <ValueInfo>
@@ -217,7 +217,7 @@ const StakeAnalytics: React.FC = () => {
             <Box flex={1}>
               <BoxInfoItem display={"flex"} alignItems='center' justifyContent={"center"}>
                 <Box>
-                  <img src={LowestIcon} width={"20%"} alt='lowest icon' />
+                  <img src={LowestIcon} alt='lowest icon' />
                   <Title>{tab === "BALANCE" ? "Lowest Balance" : "Lowest Reward"}</Title>
                   <CustomTooltip title={numberWithCommas(minBalance || 0)}>
                     <ValueInfo>

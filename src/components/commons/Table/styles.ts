@@ -109,6 +109,29 @@ export const TotalNumber = styled("span")`
   font-weight: 500;
 `;
 
+export const WrappModalScrollBar = styled(Box)(({theme}) => `
+overflow-y: scroll;
+max-height: 75vh;
+&::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: ${theme.palette.grey[300]};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${theme.palette.grey[100]};
+    }
+  }
+`);
+
 export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number }>(
   ({ maxHeight, height, theme }) => `
   overflow-x: auto;

@@ -18,6 +18,12 @@ export const BoxInfo = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("lg")]: {
     flexDirection: "row",
     padding: "27px 10px"
+  },
+  [theme.breakpoints.down("sm")]: {
+    "&:first-of-type": {
+      borderBottom: "none",
+      borderRight: `1px solid ${alpha(theme.palette.common.white, 0.06)}`
+    }
   }
 }));
 
@@ -53,10 +59,11 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
     paddingTop: 0
   },
   [theme.breakpoints.down("sm")]: {
-    width: "80%",
+    width: "100%",
     borderRight: "none",
+    paddingLeft: "10px",
 
-    div: {
+    "& > div": {
       width: "100%",
       display: "flex",
       flexDirection: "column",
@@ -81,12 +88,13 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
     paddingTop: 0
   },
   [theme.breakpoints.down("sm")]: {
-    div: {
+    "& > div": {
       width: "100%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+      paddingRight: "10px"
     }
   }
 }));
@@ -102,7 +110,7 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   margin: "0 auto",
   overflowWrap: "anywhere",
   [theme.breakpoints.down("sm")]: {
-    fontSize: "0.75rem"
+    fontSize: "1.25rem"
   }
 }));
 

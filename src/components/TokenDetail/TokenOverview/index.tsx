@@ -1,5 +1,5 @@
 import { alpha, Box, Button } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import decimalIcon from "../../../commons/resources/icons/decimal.svg";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
@@ -9,6 +9,7 @@ import { formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/he
 import DetailHeader from "../../commons/DetailHeader";
 import ScriptModal from "../../ScriptModal";
 import { CardItem, WrapTitle } from "./styles";
+import { OverviewMetadataTokenContext } from "~/pages/TokenDetail";
 
 interface ITokenOverview {
   data: IToken | null;
@@ -18,7 +19,8 @@ interface ITokenOverview {
 const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
-  const decimalToken = data?.decimals || 0;
+  const decimalToken = data?.decimals || data?.metadata?.decimals || 0;
+  const { txCountRealtime } = useContext(OverviewMetadataTokenContext);
   const listItem = [
     {
       title: "",
@@ -102,9 +104,8 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
         </Box>
       ),
       icon: exchageIcon,
-      value: numberWithCommas(data?.txCount)
+      value: numberWithCommas(txCountRealtime || data?.txCount)
     },
-
     {
       title: (
         <Box display={"flex"} alignItems='center'>

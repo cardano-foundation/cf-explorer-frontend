@@ -23,11 +23,14 @@ import Table, { Column } from "../commons/Table";
 import { AssetName } from "../../pages/Token/styles";
 import { details } from "../../commons/routers";
 import { debounce } from "lodash";
+import { WrappModalScrollBar } from "../commons/Table/styles";
+import { useTheme } from "@mui/material";
 
 const TokenAutocomplete = ({ address }: { address: string }) => {
   const [openModalToken, setOpenModalToken] = useState(false);
   const [selected, setSelected] = useState("");
   const [search, setSearch] = useState("");
+  const theme = useTheme();
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
   const { data, loading, total } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
     page: 0,
@@ -50,6 +53,29 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
             <Box maxHeight='200px' component={"img"} src={EmptyIcon}></Box>
           </Box>
         }
+        ListboxProps={{
+          sx(theme) {
+            return {
+              "&::-webkit-scrollbar": {
+                width: "5px"
+              },
+              "&::-webkit-scrollbar-track": {
+                background: "transparent"
+              },
+              "&::-webkit-scrollbar-thumb": {
+                background: "transparent"
+              },
+              "&:hover": {
+                "&::-webkit-scrollbar-thumb": {
+                  background: theme.palette.grey[300]
+                },
+                "&::-webkit-scrollbar-track": {
+                  background: theme.palette.grey[100]
+                }
+              }
+            }
+          },
+        }}
         renderOption={(propss, option: WalletAddress["tokens"][number] | string) => {
           if (typeof option === "string") {
             return (
@@ -68,7 +94,9 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                     component={Button}
                     width='100%'
                     textTransform={"inherit"}
-                    onClick={() => setOpenModalToken(true)}
+                    onClick={() => {
+                      setOpenModalToken(true)
+                    }}
                   >
                     See more
                   </Box>
@@ -120,12 +148,12 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
 export default TokenAutocomplete;
 
 const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => void; address: string }) => {
-  const [{ page, size }, setPagination] = useState({ page: 1, size: 10 });
+  const [{ page, size }, setPagination] = useState({ page: 0, size: 50 });
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
   const { data, ...fetchData } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
-    page: page - 1,
+    page,
     size
   });
 
@@ -134,7 +162,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
       title: "#",
       key: "#",
       minWidth: "50px",
-      render: (r, index) => numberWithCommas((page - 1) * size + index + 1)
+      render: (r, index) => numberWithCommas((page) * size + index + 1)
     },
     {
       title: "Icon",
@@ -182,7 +210,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             onKeyUp={(e) => {
               if (e.key === "Enter") {
                 setSearch(value);
-                setPagination({ page: 1, size: 10 });
+                setPagination({ page: 0, size: 50 });
               }
             }}
           />
@@ -190,7 +218,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             <Image src={HeaderSearchIcon} alt='Search' />
           </SubmitButton>
         </SearchContainer>
-        <Box sx={{ overflowY: "scroll" }}>
+        <WrappModalScrollBar>
           <Table
             {...fetchData}
             data={data || []}
@@ -200,10 +228,10 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
               page,
               size,
               total: fetchData.total,
-              onChange: (page, size) => setPagination({ page, size })
+              onChange: (page, size) => setPagination({ page: page - 1, size })
             }}
           />
-        </Box>
+        </WrappModalScrollBar>
       </ModalContainer>
     </Modal>
   );

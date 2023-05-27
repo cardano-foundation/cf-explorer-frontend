@@ -83,7 +83,8 @@ export const Value = styled("div")(({ theme }) => ({
   overflowWrap: "anywhere",
   color: theme.palette.primary.contrastText,
   [theme.breakpoints.down("sm")]: {
-    fontSize: "0.75rem"
+    fontSize: "1.25rem",
+    padding: "0 10px"
   }
 }));
 

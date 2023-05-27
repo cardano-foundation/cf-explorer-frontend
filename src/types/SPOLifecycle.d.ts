@@ -100,7 +100,18 @@ interface WalletActivityIF {
   amount: number;
   fee: number;
   time: string;
-  type: "SENT" | "RECEIVED" | "FEE_PAID" | "CERTIFICATE_FEE_PAID" | "CERTIFICATE_DEPOSIT_PAID";
+  type:
+    | "SENT"
+    | "RECEIVED"
+    | "FEE_PAID"
+    | "CERTIFICATE_FEE_PAID"
+    | "CERTIFICATE_DEPOSIT_PAID"
+    | "CERTIFICATE_HOLD_PAID"
+    | "CERTIFICATE_HOLD_DEPOSIT_REFUNDED"
+    | "REWARD_WITHDRAWN"
+    | "REWARD_WITHDRAWN_AND_CERTIFICATE_HOLD_PAID"
+    | "REWARD_WITHDRAWN_AND_CERTIFICATE_HOLD_DEPOSIT_REFUNDED"
+    | "UNKNOWN";
   status: "FAIL" | "SUCCESS" | "PENDING";
 }
 interface RewardActivityIF {
@@ -128,7 +139,7 @@ interface IDashboardResponse {
   stakeKeyReportId: number;
   createdAt: string;
   reportName: string;
-  status: string;
+  status: "IN_PROGRESS" | "GENERATED" | "FAILED" | "EXPIRED";
   type: "STAKE_KEY" | "POOL_ID";
 }
 

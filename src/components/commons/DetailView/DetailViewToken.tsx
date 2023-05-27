@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
 import { PeopleIcon, PolicyWhiteIcon, TransactionIcon, UnionTokenIcon } from "~/commons/resources";
@@ -57,6 +57,15 @@ type DetailViewTokenProps = {
 const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
   const { token: data, handleClose, tokenId } = props;
   const theme = useTheme();
+
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+
+    return () => {
+      document.body.style.overflowY = "scroll";
+    };
+  }, []);
+
   if (!data)
     return (
       <ViewDetailDrawer anchor='right' open={!!tokenId} hideBackdrop variant='permanent'>

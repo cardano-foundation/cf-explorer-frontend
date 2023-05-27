@@ -102,9 +102,6 @@ export const StyledList = styled(Box)(({ theme }) => ({
   alignItems: "center",
   marginBottom: 20,
   [theme.breakpoints.down("sm")]: {
-    alignItems: "center",
-    "& > p": {
-      marginRight: 20
-    }
+    alignItems: "center"
   }
 }));

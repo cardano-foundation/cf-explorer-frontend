@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import {
@@ -75,6 +75,14 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
   const { hash, handleClose } = props;
   const { data } = useFetch<Transaction>(hash ? `${API.TRANSACTION.DETAIL}/${hash}` : ``);
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
+
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+
+    return () => {
+      document.body.style.overflowY = "scroll";
+    };
+  }, []);
 
   if (!data)
     return (

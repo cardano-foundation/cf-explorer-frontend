@@ -19,6 +19,7 @@ const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ title, script, ...p
           <img src={closeIcon} alt='icon close' />
         </ButtonClose>
         <Box
+          mb={3}
           textAlign={"left"}
           color={({ palette }) => palette.grey[700]}
           fontSize='1.5rem'
@@ -28,9 +29,6 @@ const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ title, script, ...p
           {title}
         </Box>
 
-        <Box mt={2} mb={1} color={({ palette }) => palette.grey[500]}>
-          Policy script:
-        </Box>
         <ViewJson>
           <JsonViewer
             value={script || ""}

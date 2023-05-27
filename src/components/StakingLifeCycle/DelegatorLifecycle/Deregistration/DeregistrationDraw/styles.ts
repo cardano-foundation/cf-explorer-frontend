@@ -58,6 +58,7 @@ export const StyledCertificateShape = styled(CertificateShape)<{ sidebar?: numbe
   width: 220,
   height: 220,
   margin: "auto",
+  border: `2px solid ${theme.palette.border.block}`,
   [theme.breakpoints.down("sm")]: {
     width: 140,
     height: 199

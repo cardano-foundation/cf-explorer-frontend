@@ -30,7 +30,10 @@ const WalletActivity: React.FC = () => {
     CERTIFICATE_DEPOSIT_PAID: "Certificate deposit paid",
     CERTIFICATE_HOLD_PAID: "Certificate hold paid",
     CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "Certificate hold deposit refunded",
-    REWARD_WITHDRAWN: "Reward withdrawn"
+    REWARD_WITHDRAWN: "Reward withdrawn",
+    REWARD_WITHDRAWN_AND_CERTIFICATE_HOLD_PAID: "Reward withdrawn and certificate hold paid",
+    REWARD_WITHDRAWN_AND_CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "Reward withrawn and cetificate hod deposit refunded",
+    UNKNOWN: "Unknown"
   };
 
   const columns: Column<WalletActivityIF>[] = [

@@ -30,17 +30,19 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
     paddingTop: 0
   },
   [theme.breakpoints.down("sm")]: {
-    width: "80%",
+    width: "100%",
     borderRight: "none",
     borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    minHeight: "0px",
 
-    div: {
+    "& > div": {
       width: "100%",
-      height: "80%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+      padding: "0 10px",
+      margin: "25px 0"
     }
   }
 }));
@@ -61,17 +63,20 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
     paddingTop: 0
   },
   [theme.breakpoints.down("sm")]: {
-    width: "80%",
+    width: "100%",
     borderRight: "none",
     borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    minHeight: "0",
 
-    div: {
+    "& > div": {
       width: "100%",
-      height: "80%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+      padding: "0 10px",
+      margin: "25px 0",
+      borderRight: `1px solid ${alpha(theme.palette.common.white, 0.06)}`
     }
   }
 }));

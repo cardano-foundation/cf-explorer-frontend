@@ -13,7 +13,6 @@ import { UnionTokenIcon, PeopleIcon, TransactionIcon } from "../../../commons/re
 import CustomIcon from "../../commons/CustomIcon";
 import { useScreen } from "~/commons/hooks/useScreen";
 
-
 interface ITokenTableData {
   totalSupply?: number;
   metadata?: ITokenMetadata;

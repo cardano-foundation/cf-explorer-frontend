@@ -131,7 +131,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile }) =
         history.push(details.spo(search, "timeline"));
         callback?.();
       } else {
-        setError("No records found!");
+        setError("No results found");
         setShowErrorMobile && setShowErrorMobile(true);
         setShowOption(true);
       }

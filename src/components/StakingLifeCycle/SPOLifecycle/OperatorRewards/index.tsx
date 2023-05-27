@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/material";
 import { useMemo, useRef, useState } from "react";
-import { ADAOrangeIcon } from "../../../../commons/resources";
+import { ADAOrangeBorderIcon } from "../../../../commons/resources";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { details } from "../../../../commons/routers";
 import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
@@ -17,6 +17,7 @@ import CardanoSystem from "~/components/commons/CardanoSystem";
 import SPOHolder from "~/components/commons/SPOHolder";
 import DrawPath from "~/components/commons/DrawPath";
 import { LineArrowItem } from "~/components/commons/LineArrow";
+import { WrappModalScrollBar } from "~/components/commons/Table/styles";
 
 const OperatorReward = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -53,7 +54,7 @@ const OperatorReward = () => {
       <DrawContainer>
         <CardanoSystem ref={cadarnoSystemRef} />
         <ADAOperator ref={operatorRef} onClick={() => setOpenModal(true)}>
-          <ADAOrangeIcon />
+          <ADAOrangeBorderIcon />
           <ADATitle>Operator Rewards</ADATitle>
         </ADAOperator>
         <SPOHolder
@@ -115,7 +116,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: ()
   return (
     <StyledModal width={600} {...props} title='Operator rewards received'>
       <Box>
-        <Box maxHeight={"75vh"} overflow={"auto"}>
+        <WrappModalScrollBar>
           <StyledTable
             {...fetchData}
             columns={columns}
@@ -127,7 +128,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: ()
               onChange: (page, size) => setPagination({ page: page - 1, size })
             }}
           />
-        </Box>
+        </WrappModalScrollBar>
       </Box>
     </StyledModal>
   );

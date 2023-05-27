@@ -67,7 +67,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   }, []);
 
   const onChangeAddress = useCallback((e: any) => {
-    const regex = /^[a-zA-Z0-9]*$/;
+    const regex = /^[a-zA-Z0-9_]*$/;
     if (!regex.test(e.target.value)) return;
     setAddress(e.target.value);
     setError("");
@@ -141,7 +141,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       handleCloseModal={handleCloseModal}
       paddingX={isMobile ? "10px" : "40px"}
       paddingY={isMobile ? "20px" : "30px"}
-      overflowY='unset'
+      contentStyle={{ overflowY: "unset" }}
     >
       <Container>
         <ModalTitle>

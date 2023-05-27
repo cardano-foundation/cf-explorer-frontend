@@ -66,12 +66,21 @@ export const StyledInput = styled(Input)<{ home: number }>`
   box-shadow: none !important;
   border-radius: 0;
   font-size: var(--font-size-text-large);
-  ${(props) =>
-    !props.home &&
-    `
-  transform-origin: left center;
-  transform: scale(0.75);
-  `}
+  ${({ theme }) => theme.breakpoints.up("sm")} {
+    ${(props) =>
+      !props.home &&
+      `
+      font-size: var(--font-size-text-small);
+    `}
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    ${(props) =>
+      !props.home &&
+      `
+    transform-origin: left center;
+    transform: scale(0.75);
+    `}
+  }
   width: 100%;
   border-left: 2px solid ${(props) => props.theme.palette.border.main};
   ${({ theme }) => theme.breakpoints.down("sm")} {
