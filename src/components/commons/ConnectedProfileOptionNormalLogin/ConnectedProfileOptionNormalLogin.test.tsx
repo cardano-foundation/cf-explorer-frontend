@@ -11,6 +11,7 @@ const userData: UserDataType = {
   avatar: "",
   email: "",
   wallet: "",
+  address: "",
   username: "username",
   sizeBookmark: 0,
   sizeNote: 0,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReportGeneratedPoolDetailTabs from "../../components/ReportGeneratedPoolDetail";
 import { Container } from "@mui/material";
 import { BackButton, BackText } from "../../components/commons/DetailHeader/styles";
@@ -8,6 +8,11 @@ import { useHistory } from "react-router-dom";
 
 const ReportGeneratedPoolDetail = () => {
   const history = useHistory();
+
+  useEffect(() => {
+    document.title = "Pool Report Detail | Cardano Explorer";
+  }, []);
+
   return (
     <Container>
       <TopHeader>

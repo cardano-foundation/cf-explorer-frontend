@@ -11,6 +11,11 @@ export default function VerifyEmail() {
   const path = useLocation();
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    document.title = "Verify Email | Cardano Explorer";
+  }, []);
+
   const handleVerify = async (code: string) => {
     try {
       const response = await verifyActive({ code });

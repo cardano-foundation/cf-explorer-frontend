@@ -9,7 +9,7 @@ import { ReactComponent as TokenIcon } from "../../../commons/resources/icons/to
 import { ReactComponent as AssetHolderIcon } from "../../../commons/resources/icons/assetHolder.svg";
 import { formatDateTimeLocal, getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
-import { LinkComponent, TitleTab, StyledTabList } from "./styles";
+import { LinkComponent, TitleTab, StyledTabList, StyledBoxContainer } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { API } from "../../../commons/utils/api";
 
@@ -119,13 +119,13 @@ const PolicyTable = () => {
 
   const handleChange = (event: React.SyntheticEvent, tab: TABS) => {
     setActiveTab(tab);
-    history.push({ search: stringify({ page: 1, size: 10 }) });
+    history.push({ search: stringify({ page: 1, size: 50 }) });
   };
 
   const fetchData = useFetchList<PolicyHolder | TokenPolicys>(`${API.POLICY}/${policyId}/${activeTab}`, pageInfo);
 
   return (
-    <Box mt={4}>
+    <StyledBoxContainer>
       <TabContext value={activeTab}>
         <Box style={{ borderBottom: `1px solid ${theme.palette.border.secondary}` }}>
           <StyledTabList
@@ -166,7 +166,7 @@ const PolicyTable = () => {
           </TabPanel>
         ))}
       </TabContext>
-    </Box>
+    </StyledBoxContainer>
   );
 };
 

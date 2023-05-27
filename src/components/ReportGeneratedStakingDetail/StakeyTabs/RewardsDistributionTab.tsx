@@ -57,10 +57,7 @@ const RewardsDistributionTab = () => {
   return (
     <>
       <Box display='flex' alignItems='center' justifyContent='space-between' mt={3}>
-        <WrapWalletLabel>
-          <GreenWalletIcon mr={1} />
-          <AdaValue value={data.reduce((current, item) => current + item.amount, 0)} />
-        </WrapWalletLabel>
+        <Box />
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}

@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   NextButton,
@@ -34,92 +34,105 @@ import {
 import { ButtonText } from "../DelegatorLifecycle/styles";
 import Deregistration from "./Deregistration";
 import OperatorReward from "./OperatorRewards";
-import PoolUpdates from "./PoolUpdates";
 import Registration from "./Registration";
+import PoollUpdates from "./PoolUpdates";
+import { ListTabResponseSPO } from "~/pages/SPOLifecycle";
 interface StepperProps {
   icon: React.ReactNode;
   title: string;
   component: React.ReactNode;
   description: React.ReactNode;
   key: SPOStep;
+  keyCheckShow: string;
 }
 
-const SPOLifecycle = ({
-  containerPosition,
-  currentStep,
-  setCurrentStep,
-  handleResize
-}: {
-  containerPosition: {
-    top?: number;
-    left?: number;
-  };
-  handleResize: () => void;
+interface ListTabResponse {
+  [key: string]: boolean;
+  isRegistration: boolean;
+  isUpdate: boolean;
+  isReward: boolean;
+  isDeRegistration: boolean;
+}
+
+interface Props {
   currentStep: number;
   setCurrentStep: (step: number) => void;
-}) => {
-  const { poolId = "" } = useParams<{
-    poolId: string;
-  }>();
+  renderTabsSPO?: ListTabResponseSPO;
+}
+
+const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => {
+  const { poolId = "" } = useParams<{ poolId: string }>();
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
   const history = useHistory();
   const { isMobile } = useScreen();
+
   const stepper: StepperProps[] = [
     {
       icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
       title: "Registration",
-      component: <Registration handleResize={handleResize} containerPosition={containerPosition} />,
+      component: <Registration />,
       description: (
         <RegistrationProcessDescription
           open={openDescriptionModal}
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "registration"
+      key: "registration",
+      keyCheckShow: "isRegistration"
     },
     {
       icon: <PoolUpdateIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
       title: "Pool Updates",
-      component: <PoolUpdates handleResize={handleResize} containerPosition={containerPosition} />,
+      component: <PoollUpdates />,
       description: (
         <SPOInvolvementInDelegationDescription
           open={openDescriptionModal}
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "pool-updates"
+      key: "pool-updates",
+      keyCheckShow: "isUpdate"
     },
     {
       icon: <OperatorRewardIcon width={"25px"} height={"25px"} fill={currentStep >= 2 ? "#fff" : "#98A2B3"} />,
       title: "Operator Rewards",
-      component: <OperatorReward handleResize={handleResize} containerPosition={containerPosition} />,
+      component: <OperatorReward />,
       description: (
         <WithdrawingFundProcessDescription
           open={openDescriptionModal}
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "operator-rewards"
+      key: "operator-rewards",
+      keyCheckShow: "isReward"
     },
     {
       icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
       title: "Deregistration",
-      component: <Deregistration handleResize={handleResize} containerPosition={containerPosition} />,
+      component: <Deregistration />,
       description: (
         <DeregistrationProcessDescription
           open={openDescriptionModal}
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
       ),
-      key: "deregistration"
+      key: "deregistration",
+      keyCheckShow: "isDeRegistration"
     }
   ];
+
+  if (!renderTabsSPO) return null;
 
   return (
     <StyledComponent>
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
-          <Step component={"span"} key={idx} active={+(currentStep === idx)}>
+          <Step
+            component={"span"}
+            key={idx}
+            active={+(currentStep === idx)}
+            display={renderTabsSPO[step.keyCheckShow] ? "block" : "none"}
+          >
             <StepButton
               active={+(currentStep === idx)}
               onClick={() => {

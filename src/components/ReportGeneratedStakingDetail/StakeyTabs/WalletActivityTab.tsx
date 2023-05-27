@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
-import React, { useContext, useState } from "react";
+import { useState } from "react";
 import Table, { Column } from "../../commons/Table";
-import { Status, TextAmountReward } from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
+import { Amount, Status, TextAmountReward } from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
 import CustomIcon from "../../commons/CustomIcon";
 import { ADAsigntIC, AIconGreen } from "../../../commons/resources";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../commons/utils/helper";
@@ -10,16 +10,15 @@ import { details } from "../../../commons/routers";
 
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { API } from "../../../commons/utils/api";
-import { useLocation, useParams } from "react-router-dom";
-import { StakingDetailContext } from "..";
+import { useParams } from "react-router-dom";
 import { ADAValueLabel } from "../../StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
 
 const trxType = {
   SENT: "ADA sent from wallet",
-  RECEIVED: "ADA received from wallet",
+  RECEIVED: "ADA received",
   FEE_PAID: "Transaction fee paid",
   CERTIFICATE_FEE_PAID: "Certificate fee paid",
-  CERTIFICATE_DEPOSIT_PAID: "Certificate deposit paid"
+  CERTIFICATE_DEPOSIT_PAID: "Certificate hold paid"
 };
 
 const WalletActitityTab = () => {
@@ -37,7 +36,9 @@ const WalletActitityTab = () => {
       minWidth: "100px",
       render: (r) => (
         <Box display='flex' alignItems='center'>
-          <TextAmountReward>{formatADAFull(r.amount)}</TextAmountReward>
+          <Amount type={r.amount > 0 ? "up" : "down"}>
+            {r.amount > 0 ? "+" : ""}{formatADAFull(r.amount)}
+          </Amount>
           <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
         </Box>
       )

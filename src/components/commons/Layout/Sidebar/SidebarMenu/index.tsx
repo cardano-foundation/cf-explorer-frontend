@@ -184,7 +184,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               ...(pathname === href ||
-                              (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1]))
+                              (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
+                              (href === "/time-line" &&
+                                (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
                                 ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
@@ -206,7 +208,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                               open={sidebar ? 1 : 0}
                               active={
                                 pathname === href ||
-                                (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1]))
+                                (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
+                                (href === "/time-line" &&
+                                  (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
                                   ? 1
                                   : 0
                               }
@@ -225,7 +229,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
           sx={{
             margin: "10px 0px 10px 30px",
             width: sidebar ? 200 : 25,
-            transition: "width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms"
+            transition: "width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms",
+            [theme.breakpoints.down("md")]: {
+              marginLeft: "20px"
+            }
           }}
         />
         {footerMenus.map((item, index) => {
@@ -293,7 +300,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   {sidebar &&
                     (children?.length ? (
                       <IconMenu component={"span"}>
-                        {`menu-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
+                        {`footer-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
                       </IconMenu>
                     ) : null)}
                 </ListItem>

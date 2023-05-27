@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
-import { AIcon } from "../../../commons/resources";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -13,10 +12,11 @@ import {
   numberWithCommas
 } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
-import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
+import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { API } from "../../../commons/utils/api";
 import ADAicon from "../../commons/ADAIcon";
+import { OverviewMetadataTokenContext } from "~/pages/TokenDetail";
 
 interface ITokenTransaction {
   tokenId: string;
@@ -128,6 +128,12 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       }
     }
   ];
+
+  const { setTxCountRealtime } = useContext(OverviewMetadataTokenContext);
+
+  useEffect(() => {
+    setTxCountRealtime(fetchData.total);
+  }, [fetchData.total, setTxCountRealtime]);
 
   return (
     <Table

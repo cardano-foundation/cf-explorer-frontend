@@ -52,11 +52,12 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hide
         {!hideInputLabel ? (isSend ? "Sent " : "Received ") : ""}Token
       </OptionSelect>
       {tokens.map((token, idx) => {
+        const isNegative = token.assetQuantity <= 0;
         const tokenName = token.assetName || token.assetId;
         const shortTokenName = token.assetName ? getShortHash(tokenName) : getShortWallet(tokenName);
         const isTokenNameLong = tokenName.length > 20;
         return (
-          <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token.assetId))}>
+          <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token?.assetId))}>
             <Box>
               {isTokenNameLong ? (
                 <CustomTooltip title={tokenName} placement='top'>
@@ -67,7 +68,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hide
               )}
             </Box>
             <Box fontWeight={"bold"} fontSize={"14px"}>
-              {!hideMathChar ? `${type === "down" ? "-" : "+"} ` : isSend || hideInputLabel ? "" : "+"}
+              {isNegative || hideMathChar ? "" : "+"}
               {`${numberWithCommas(token.assetQuantity) || ""}`}
             </Box>
           </OptionSelect>

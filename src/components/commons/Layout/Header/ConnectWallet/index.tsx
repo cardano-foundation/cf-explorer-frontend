@@ -35,6 +35,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
   });
   const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
   const [openSyncBookmark, setOpenSyncBookmark] = useState(false);
+  console.log("🚀 ~ file: index.tsx:38 ~ openSyncBookmark:", openSyncBookmark);
   const [signature, setSignature] = React.useState("");
   const [submitting, setSubmitting] = useState(false);
   const [isSign, setIsSign] = useState(isConnected);
@@ -79,12 +80,16 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
         localStorage.setItem("refreshToken", data.refreshToken);
-        localStorage.setItem("walletId", data.walletId);
+        localStorage.setItem("walletId", data.address);
         localStorage.setItem("email", data.email);
         localStorage.setItem("loginType", "connectWallet");
         const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
         setUserData({ ...userInfo.data, loginType: "connectWallet" });
-        if ((((JSON.parse(localStorage?.bookmark) as Bookmark[]) || [])?.filter((r) => !r.id) || []).length > 0) {
+        setOpenSyncBookmark(true);
+        if (
+          (((JSON.parse(localStorage.getItem("bookmark") || "") as Bookmark[]) || [])?.filter((r) => !r.id) || [])
+            .length > 0
+        ) {
           setOpenSyncBookmark(true);
         } else {
           const { data } = await getAllBookmarks(NETWORK_TYPES[NETWORK]);
@@ -97,7 +102,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         setModalRegister(true);
       }
       onSuccess?.();
-      window.location.reload();
     } catch (error) {
       disconnect();
       removeAuthInfo();
@@ -134,14 +138,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
     return (
       <>
         <ConnectedProfileOption isConnected={isConnected} disconnect={disconnect} stakeAddress={stakeAddress} />
-
-        <SyncBookmarkModal
-          open={openSyncBookmark}
-          handleCloseModal={() => {
-            setOpenSyncBookmark(false);
-          }}
-          loadingSubmit={submitting}
-        />
       </>
     );
   }

@@ -1,4 +1,4 @@
-import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui, alpha } from "@mui/material";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   height: "35px",
@@ -94,5 +94,13 @@ export const InfoGroup = styled(Box)(({ theme }) => ({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     gap: 5
+  }
+}));
+
+export const StyledContainerModal = styled(Box)(({ theme }) => ({
+  backgroundColor: alpha(theme.palette.grey[300], 0.1),
+  padding: 24,
+  [theme.breakpoints.down("md")]: {
+    padding: "15px !important"
   }
 }));

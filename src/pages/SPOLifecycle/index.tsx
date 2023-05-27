@@ -24,9 +24,8 @@ import {
 import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staking/ChartMode.svg";
 import { ReactComponent as TableMode } from "../../commons/resources/icons/Staking/TableMode.svg";
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
-import Tablular from "../../components/StakingLifeCycle/SPOLifecycle/Tablular";
+import Tabular from "../../components/StakingLifeCycle/SPOLifecycle/Tablular";
 import CustomTooltip from "../../components/commons/CustomTooltip";
-import { useScreen } from "../../commons/hooks/useScreen";
 import { details } from "../../commons/routers";
 import useAuth from "~/commons/hooks/useAuth";
 import { useSelector } from "react-redux";
@@ -36,12 +35,28 @@ import useFetch from "~/commons/hooks/useFetch";
 import PoolDetailContext from "~/components/StakingLifeCycle/SPOLifecycle/PoolDetailContext";
 import NoRecord from "~/components/commons/NoRecord";
 
+interface Params {
+  poolId: string;
+  mode: ViewMode;
+  tab: SPOStep;
+}
+
+export interface ListTabResponseSPO {
+  [key: string]: boolean;
+  isRegistration: boolean;
+  isUpdate: boolean;
+  isReward: boolean;
+  isDeRegistration: boolean;
+}
+
+const MODES: ViewMode[] = ["timeline", "tabular"];
+
 const SPOLifecycle = () => {
-  const {
-    poolId = "",
-    mode = "timeline",
-    tab = "registration"
-  } = useParams<{ poolId: string; mode: ViewMode; tab: SPOStep }>();
+  const { poolId = "", mode = "timeline", tab = "registration" } = useParams<Params>();
+
+  useEffect(() => {
+    document.title = `Staking Delegation Lifecycle ${poolId} | Cardano Explorer`;
+  }, [poolId]);
 
   const tabList = {
     registration: 0,
@@ -53,49 +68,30 @@ const SPOLifecycle = () => {
 
   const { data, error, initialized } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : "");
 
-  const [currentStep, setCurrentStep] = useState(tabList[tab || "registration"] || 0);
+  const { data: renderTabsSPO } = useFetch<ListTabResponseSPO>(`${API.SPO_LIFECYCLE.TABS(poolId)}`);
 
-  const { isMobile } = useScreen();
+  const validTab: SPOStep = tabList[tab] >= 0 ? tab : "registration";
+  const validMode: ViewMode = MODES.find((item) => item === mode) || "timeline";
+
+  const [currentStep, setCurrentStep] = useState(tabList[validTab]);
+
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {
-    setCurrentStep(tabList[tab || "registration"] || 0);
-  }, [tab]);
+    setCurrentStep(tabList[validTab]);
+  }, [validTab]);
 
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
   const history = useHistory();
   const theme = useTheme();
   const { sidebar } = useSelector(({ user }: RootState) => user);
-  const [containerPosition, setContainerPosition] = useState<{ top?: number; left?: number }>({
-    top: undefined,
-    left: undefined
-  });
-
-  useEffect(() => {
-    if (containerRef.current) {
-      const position = (containerRef.current as any)?.getBoundingClientRect();
-      setContainerPosition({ top: position.top, left: position.left });
-    }
-  }, [containerRef.current]);
-
-  const handleResize = () => {
-    if (containerRef.current) {
-      const position = (containerRef.current as any).getBoundingClientRect();
-      setContainerPosition({ top: position.top, left: position.left });
-    }
-  };
-  useEffect(() => {
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const changeMode = (mode: ViewMode) => {
-    history.push(details.spo(poolId, mode, tab));
+    history.push(details.spo(poolId, mode, validTab));
   };
 
-  if (!initialized && !error) return null;
+  if ((!initialized && !error) || !renderTabsSPO) return null;
   if (error || !data || !data.poolId) return <NoRecord />;
 
   return (
@@ -114,32 +110,31 @@ const SPOLifecycle = () => {
           </LifeCycleHeader>
           <BoxItemStyled sidebar={+sidebar}>
             <BoxSwitchContainer sidebar={+sidebar}>
-              <LabelSwitch>Switch to {mode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
+              <LabelSwitch>Switch to {validMode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
               <SwitchGroup>
-                <ButtonSwitch active={+(mode === "timeline")} onClick={() => changeMode("timeline")}>
-                  <ChartMode fill={mode === "timeline" ? theme.palette.common.white : theme.palette.grey[500]} />
+                <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
+                  <ChartMode fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.grey[500]} />
                 </ButtonSwitch>
-                <ButtonSwitch active={+(mode === "tabular")} onClick={() => changeMode("tabular")}>
-                  <TableMode fill={mode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
+                <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
+                  <TableMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            {mode === "tabular" && (
+            {validMode === "tabular" && (
               <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
                 Compose report
               </ButtonReport>
             )}
           </BoxItemStyled>
         </BoxContainerStyled>
-        {mode === "timeline" ? (
+        {validMode === "timeline" ? (
           <SPOLifecycleComponent
-            handleResize={handleResize}
-            containerPosition={containerPosition}
             currentStep={currentStep}
             setCurrentStep={setCurrentStep}
+            renderTabsSPO={renderTabsSPO}
           />
         ) : (
-          <Tablular />
+          <Tabular renderTabsSPO={renderTabsSPO} />
         )}
         <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
       </StyledContainer>

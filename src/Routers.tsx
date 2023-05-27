@@ -42,9 +42,9 @@ import VerifyEmail from "./pages/VerifyEmail";
 
 import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
+import StakingLifeCycleSearch from "./pages/StakingLifeCycleSearch";
 
 const Routes: React.FC = () => {
-  //TODO: lấy SPO
   return (
     <Switch>
       <Route path={routers.SIGN_IN} exact component={SignIn} />
@@ -82,6 +82,7 @@ const Routes: React.FC = () => {
       <Route path={routers.SPO_LIFECYCLE} exact component={SPOLifecycle} />
       <Route path={routers.SPO_SEARCH} exact component={SPOSearch} />
       <Route path={routers.DELEGATOR_SEARCH} exact component={DelegatorSearch} />
+      <Route path={routers.STAKING_LIFECYCLE_SEARCH} exact component={StakingLifeCycleSearch} />
       <Route path={routers.ACCOUNT}>
         <AccountLayout>
           <Switch>

@@ -1,0 +1,166 @@
+import { Box, BoxProps, styled, IconButton } from "@mui/material";
+import { Link, useHistory } from "react-router-dom";
+import React, { forwardRef, useRef } from "react";
+import { SPOHolderIconUrl, SPOInfo, SPOKey, PolygonSPOUrl } from "~/commons/resources";
+import PolygonShape from "../PolygonShape";
+import CustomTooltip from "~/components/commons/CustomTooltip";
+import { getShortWallet } from "~/commons/utils/helper";
+import { details } from "~/commons/routers";
+import CopyButton from "../CopyButton";
+import { isArray } from "lodash";
+import PopperStyled from "../PopperStyled";
+import { StakeKeyItem, StakeKeyItemList } from "./styles";
+interface ISPOPropsData {
+  poolName?: string;
+  poolView?: string;
+  stakeKeys?: string[] | string;
+}
+interface ISPOProps extends BoxProps {
+  data: ISPOPropsData;
+}
+
+export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...props }, boxRef) => {
+  const { poolName, poolView, stakeKeys } = data;
+  const SPOInfoRef = useRef(null);
+  const SPOKeyRef = useRef(null);
+  const history = useHistory();
+  const rewardAccounts = isArray(stakeKeys) ? stakeKeys : [stakeKeys];
+  console.log("rewardAccounts: ", rewardAccounts);
+  return (
+    <PolygonShapeSPO {...props} ref={boxRef}>
+      <SPOImage src={SPOHolderIconUrl} alt='SPO image' />
+      <SPOTitle>SPO</SPOTitle>
+      <Box>
+        <CustomTooltip title={poolName}>
+          <PoolName> {poolName}</PoolName>
+        </CustomTooltip>
+        <CustomTooltip
+          wOpacity={false}
+          componentsProps={{
+            transition: {
+              style: {
+                backgroundColor: "white",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                padding: "10px"
+              }
+            },
+            arrow: { style: { color: "white" } }
+          }}
+          title={
+            <Box>
+              <Box display={"flex"} alignItems={"center"}>
+                <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                  Pool ID:
+                </Box>
+                <PoolNamePopup to={details.delegation(poolView)}>{getShortWallet(poolView || "")}</PoolNamePopup>
+                <CopyButton text={poolView} />
+              </Box>
+              <Box display={"flex"} alignItems={"center"}>
+                <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                  Pool name:
+                </Box>
+                <PoolNamePopup to={details.delegation(poolView)}>{poolName}</PoolNamePopup>
+              </Box>
+            </Box>
+          }
+        >
+          <ButtonSPO
+            ref={SPOInfoRef}
+            component={IconButton}
+            left={"33%"}
+            onClick={() => {
+              SPOInfoRef?.current && history.push(details.delegation(poolView));
+            }}
+          >
+            <SPOInfo />
+          </ButtonSPO>
+        </CustomTooltip>
+        <CustomTooltip
+          wOpacity={false}
+          componentsProps={{
+            transition: {
+              style: {
+                backgroundColor: "white",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                padding: "10px"
+              }
+            },
+            arrow: { style: { color: "white" } }
+          }}
+          title={
+            rewardAccounts.length > 0 && (
+              <StakeKeyItemList>
+                {rewardAccounts.map((item) => (
+                  <StakeKeyItem key={item}>
+                    <SPOKey fill='#108AEF' />
+                    <PoolNamePopup to={details.stake(item)}>{getShortWallet(item)}</PoolNamePopup>
+                    <CopyButton text={item} />
+                  </StakeKeyItem>
+                ))}
+              </StakeKeyItemList>
+            )
+          }
+        >
+          <ButtonSPO ref={SPOKeyRef} component={IconButton}>
+            <SPOKey fill='#438F68' />
+          </ButtonSPO>
+        </CustomTooltip>
+      </Box>
+    </PolygonShapeSPO>
+  );
+});
+
+SPOHolder.displayName = "SPOHolder";
+export default SPOHolder;
+
+const PolygonShapeSPO = styled(PolygonShape)(({ theme }) => ({
+  height: "250px",
+  width: 190,
+  position: "relative",
+  backgroundImage: `url(${PolygonSPOUrl})`
+}));
+
+export const SPOImage = styled("img")(() => ({
+  position: "absolute",
+  top: "10%",
+  width: 100,
+  height: 100
+}));
+
+export const SPOTitle = styled(Box)(() => ({
+  position: "absolute",
+  top: "55%"
+}));
+
+export const PoolName = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: "64%",
+  left: "50%",
+  bottom: "30%",
+  color: theme.palette.grey[400],
+  fontWeight: 500,
+  transform: "translate(-50%, 0)",
+  maxWidth: "70%",
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis"
+}));
+export const ButtonSPO = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  bottom: "12%",
+  padding: 0,
+  zIndex: 3
+}));
+export const PoolNamePopup = styled(Link)(({ theme }) => ({
+  fontSize: "1.125rem",
+  color: `${theme.palette.blue[800]} !important`,
+  textDecoration: "underline !important",
+  fontWeight: 500,
+  margin: `0 ${theme.spacing(1)}`,
+  maxWidth: 180,
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  flex: 1,
+  textAlign: "left",
+}));

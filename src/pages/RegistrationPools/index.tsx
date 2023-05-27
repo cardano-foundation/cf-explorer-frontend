@@ -45,12 +45,13 @@ const RegistrationPools = () => {
   }, [poolType]);
 
   const onChangeTab = (e: React.SyntheticEvent, poolType: POOL_TYPE) => {
+    setSort("");
     history.push(routers.REGISTRATION_POOLS.replace(":poolType", poolType));
   };
 
   const columns: Column<Registration>[] = [
     {
-      title: "Trx Hash",
+      title: "Tx Hash",
       key: "bk.time",
       render: (pool) => {
         return (
@@ -117,7 +118,7 @@ const RegistrationPools = () => {
       key: "stakeKey",
       render: (pool) => (
         <>
-          {pool.stakeKey?.map((stakeKey) => (
+          {pool.stakeKey?.slice(0, 2).map((stakeKey) => (
             <StakeKey key={stakeKey}>
               <CustomTooltip title={stakeKey}>
                 <StyledLink to={details.stake(stakeKey)}>{getShortWallet(stakeKey)}</StyledLink>

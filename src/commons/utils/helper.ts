@@ -34,14 +34,19 @@ export const formatPrice = (value?: string | number, abbreviations: string[] = L
   return `${newValue && newValue[0]}${syntax ?? `x 10^${exponential}`}`;
 };
 
+// export const numberWithCommas = (value?: number | string, decimal = 0) => {
+//   if (!value) return "0";
+//   const formated = Number(value)
+//     .toFixed(decimal)
+//     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+//   return formated.replace(/^(-)?0+(?=\d)/, "$1");
+// };
 export const numberWithCommas = (value?: number | string, decimal = 0) => {
   if (!value) return "0";
-  const formated = Number(value)
-    .toFixed(decimal)
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  return formated.replace(/^(-)?0+(?=\d)/, "$1");
+  const [integerPart, decimalPart] = String(parseFloat(Number(value).toFixed(decimal))).split(".");
+  const formattedIntegerPart = integerPart.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  return decimalPart ? `${formattedIntegerPart}.${decimalPart}` : formattedIntegerPart;
 };
-
 export const formatADA = (
   value?: string | number,
   abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS,
@@ -128,7 +133,7 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
     localStorage.setItem("token", data.token);
     localStorage.setItem("username", data.username);
     localStorage.setItem("refreshToken", data.refreshToken);
-    localStorage.setItem("walletId", data.walletId);
+    localStorage.setItem("walletId", data.address);
     localStorage.setItem("email", data.email);
     localStorage.setItem("login-type", "normal");
 
@@ -151,7 +156,7 @@ export const getEpochSlotNo = (data: IDataEpoch) => {
   if (data.status === "FINISHED") {
     return MAX_SLOT_EPOCH;
   }
-  return moment().diff(moment(data.startTime), "seconds");
+  return moment().diff(moment(data.startTime).toISOString(), "seconds");
 };
 
 export function formatHash(hash: string): string {

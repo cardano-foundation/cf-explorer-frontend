@@ -63,7 +63,7 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
   }[bgType];
   const { sidebar } = useSelector(({ user }: RootState) => user);
   return (
-    <Grid item xs={12} md={sidebar ? 12 : 6} lg={6}>
+    <Grid item sm={sidebar ? 12 : 6} md={6} lg={6} width={"100%"}>
       <CardOverview>
         <Icon component={bg} />
         <Box display='flex' alignItems='center' gap='12px'>
@@ -148,7 +148,7 @@ const TabularOverview: React.FC = () => {
       <ViewMoreAddressModal
         showFullHash={true}
         onItemClick={onOwnerItemClick}
-        title='Pool Owner'
+        title='Owner Account'
         open={open}
         items={data?.stakeKeys}
         onClose={() => setOpen(false)}

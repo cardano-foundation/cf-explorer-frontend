@@ -16,7 +16,14 @@ export const SideBar = styled(Box)(({ theme }) => ({
   borderRight: `1px solid ${theme.palette.grey[50]}`,
   display: "flex",
   flexDirection: "column",
-  justifyContent: "space-between"
+  justifyContent: "space-between",
+  width: "20%",
+  [theme.breakpoints.down("sm")]: {
+    width: "100%"
+  },
+  [theme.breakpoints.down("md")]: {
+    width: "100%"
+  }
 }));
 
 export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
@@ -24,14 +31,34 @@ export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => 
   display: "block",
   backgroundColor: active ? alpha(theme.palette.primary.main, 0.1) : theme.palette.background.paper,
   color: `${active ? theme.palette.primary.main : theme.palette.grey[400]} !important`,
-  fontWeight: "bold"
+  fontWeight: "bold",
+  [theme.breakpoints.down("md")]: {
+    display: "none"
+  }
 }));
 
-export const NavItemMobile = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
+export const WrapItemMobile = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    display: "flex",
+    backgroundColor: "#E7E8EA",
+    borderRadius: "8px"
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    margin: "0 23px",
+    justifyContent: "space-between"
+  }
+}));
+
+export const NavItemMobile = styled(Link)<{ active: boolean; }>(({ theme, active }) => ({
+  [theme.breakpoints.down("md")]: {
+    display: "block"
+  },
   textAlign: "center",
   fontWeight: 700,
   fontSize: "14px",
   lineHeight: "16px",
+  display: "none",
   color: `${active ? theme.palette.common.white : theme.palette.grey[400]} !important`,
   backgroundColor: active ? theme.palette.primary.main : "#E7E8EA",
   padding: "10px 17px",
@@ -39,17 +66,20 @@ export const NavItemMobile = styled(Link)<{ active: boolean }>(({ theme, active 
   whiteSpace: "nowrap",
   overflow: "hidden",
   [theme.breakpoints.down("sm")]: {
-    padding: "10px 15px",
+    width: "100%",
     fontSize: "13px",
-  }
+    padding: "10px 0px",
+  },
 }));
 
+
+
 export const StyledUsername = styled(Box)`
-  max- width: 200px;
-padding - left: ${({ theme }) => theme.spacing(1)};
-padding - right: ${({ theme }) => theme.spacing(1)};
-overflow: hidden;
-text - overflow: ellipsis;
+  max-width: 200px;
+  padding-left: ${({ theme }) => theme.spacing(1)};
+  padding-right: ${({ theme }) => theme.spacing(1)};
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const StyledButton = styled("span")(({ theme }) => ({
@@ -82,3 +112,10 @@ export const ModalTitle = styled("h3")`
 font - family: var(--font - family - title);
 margin - top: 0px;
 `;
+
+export const MissingItemWrapper = styled(Box)(({ theme }) => ({
+  display: "none",
+  [theme.breakpoints.up("md")]: {
+    display: "block"
+  }
+}));

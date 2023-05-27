@@ -20,6 +20,7 @@ import DropdownTokens from "../../../commons/DropdownTokens";
 import Table, { Column } from "../../../commons/Table";
 import { SmallText } from "../../../share/styled";
 import { Img, StyledContainer, StyledLink } from "./styles";
+import { TransferIcon } from "~/commons/resources";
 
 const TransactionTab = () => {
   const { stakeId } = useParams<{ stakeId: string }>();
@@ -73,11 +74,23 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
 
       render: (transaction) => {
         const type = transaction?.balance >= 0 ? "up" : "down";
+        if(!transaction?.balance) {
+          console.log(transaction?.blockNo)
+        }
+        const isTransferType = transaction?.tokens.some((t) => {
+          return (t.quantity < 0 && transaction?.balance >= 0) || (t.quantity >= 0 && transaction?.balance < 0);
+        });
         return (
           <Box display={"flex"}>
-            <Box width={50} display={transaction?.balance ? "" : "none"}>
-              <Img src={type !== "up" ? receiveImg : sendImg} alt='send icon' />
-            </Box>
+            {isTransferType ? (
+              <Box width={40} ml={"2px"} mr={"8px"}>
+                <TransferIcon style={{ scale: "1.15" }} />
+              </Box>
+            ) : (
+              <Box width={50} display={transaction?.balance !== null ? "" : "none"}>
+                <Img src={type !== "up" ? receiveImg : sendImg} alt='send icon' />
+              </Box>
+            )}
             <Box display={"grid"}>
               <CustomTooltip title={transaction.hash}>
                 <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
@@ -146,14 +159,16 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
         let tokens: Token[] = [];
         if (transaction.tokens && transaction.tokens.length > 0) {
           tokens = transaction.tokens.map((token) => ({
-            assetId: token.addressId.toString(),
+            assetId: token.fingerprint,
             assetQuantity: token.quantity,
             assetName: token.displayName
           }));
         }
         return (
           <Box display={"flex"} alignItems={"center"}>
-            {transaction.tokens && transaction.tokens.length > 0 && <DropdownTokens tokens={tokens} type={type} />}
+            {transaction.tokens && transaction.tokens.length > 0 && (
+              <DropdownTokens tokens={tokens} type={type} hideInputLabel />
+            )}
           </Box>
         );
       }

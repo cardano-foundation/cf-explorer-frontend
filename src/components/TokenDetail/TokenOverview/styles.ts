@@ -199,8 +199,10 @@ export const CardInfoOverview = styled(Box)(({ theme }) => ({
 export const CardItem = styled(Box)(({ theme }) => ({
   maxWidth: "max-content",
   borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-  paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(2),
+  [theme.breakpoints.up("sm")]: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
+  },
   ":first-of-type": {
     borderLeft: "none"
   }

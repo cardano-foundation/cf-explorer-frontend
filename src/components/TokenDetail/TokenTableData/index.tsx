@@ -15,9 +15,10 @@ import { useScreen } from "~/commons/hooks/useScreen";
 
 interface ITokenTableData {
   totalSupply?: number;
+  metadata?: ITokenMetadata;
 }
 
-const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
+const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata }) => {
   const history = useHistory();
   const { tabActive = "transactions", tokenId } = useParams<{ tabActive: keyof Transaction; tokenId: string }>();
   const theme = useTheme();
@@ -28,25 +29,25 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
     children: React.ReactNode;
     icon: React.ReactElement;
   }[] = [
-      {
-        key: "transactions",
-        label: "Transactions",
-        children: <TokenTransaction tokenId={tokenId} />,
-        icon: <CustomIcon icon={TransactionIcon} width={20} fill={theme.palette.grey[300]} />
-      },
-      {
-        key: "topHolders",
-        label: "Top Holders",
-        children: <TokenTopHolder tokenId={tokenId} totalSupply={totalSupply} />,
-        icon: <PeopleIcon />
-      },
-      {
-        key: "tokenMint",
-        label: "Minting",
-        children: <TokenMinting tokenId={tokenId} />,
-        icon: <UnionTokenIcon />
-      }
-    ];
+    {
+      key: "transactions",
+      label: "Transactions",
+      children: <TokenTransaction tokenId={tokenId} />,
+      icon: <CustomIcon icon={TransactionIcon} width={20} fill={theme.palette.grey[300]} />
+    },
+    {
+      key: "topHolders",
+      label: "Top Holders",
+      children: <TokenTopHolder tokenId={tokenId} totalSupply={totalSupply} />,
+      icon: <PeopleIcon />
+    },
+    {
+      key: "tokenMint",
+      label: "Minting",
+      children: <TokenMinting tokenId={tokenId} metadata={metadata} />,
+      icon: <UnionTokenIcon />
+    }
+  ];
 
   const handleChange = (event: React.SyntheticEvent, tab: keyof Transaction) => {
     history.push(details.token(tokenId, tab));
@@ -57,7 +58,11 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
         onChange={handleChange}
         variant='scrollable'
         TabIndicatorProps={{
-          sx: { background: (theme) => theme.palette.primary.main, color: (theme) => theme.palette.primary.main }
+          sx: {
+            background: (theme) => theme.palette.primary.main,
+            color: (theme) => theme.palette.primary.main,
+            height: 3
+          }
         }}
         sx={isTablet ? { borderBottom: "1px solid #E0E0E0", width: isMobile ? "calc(100% - 30px)" : "auto" } : {}}
       >
@@ -78,14 +83,12 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply }) => {
           />
         ))}
       </TabList>
-      {
-        tabs.map((item) => (
-          <TabPanel key={item.key} value={item.key} style={{ padding: 0, paddingTop: 12 }}>
-            {item.children}
-          </TabPanel>
-        ))
-      }
-    </TabContext >
+      {tabs.map((item) => (
+        <TabPanel key={item.key} value={item.key} style={{ padding: 0, paddingTop: 12 }}>
+          {item.children}
+        </TabPanel>
+      ))}
+    </TabContext>
   );
 };
 

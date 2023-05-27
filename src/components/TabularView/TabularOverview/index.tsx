@@ -13,7 +13,7 @@ import {
   WalletGreenIcon
 } from "../../../commons/resources/index";
 import { details } from "../../../commons/routers";
-import { formatADAFull } from "../../../commons/utils/helper";
+import { formatADAFull, getShortHash } from "../../../commons/utils/helper";
 import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
 import ADAicon from "../../commons/ADAIcon";
 import {
@@ -66,7 +66,7 @@ const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
 
   return (
-    <Grid item xs={12} lg={sidebar ? 12 : 6} xl={6}>
+    <Grid item sm={sidebar ? 12 : 6} md={6} lg={6} width={"100%"}>
       <CardOverview>
         <Icon component={BgGray} />
         <CardContent>
@@ -93,9 +93,9 @@ const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
 const TabularOverview: React.FC = () => {
   const data = useContext(DelegatorDetailContext);
   const [open, setOpen] = useState(false);
-  const { isTablet } = useScreen();
+
   return (
-    <Grid container spacing={2} columnSpacing={isTablet ? "0px" : ""}>
+    <Grid container spacing={2}>
       <GridItem
         title='Payment Wallet'
         mainIcon={<PaymentWallet />}
@@ -125,7 +125,7 @@ const TabularOverview: React.FC = () => {
         mainIcon={<DelegationTo />}
         value={
           <Box component={Link} to={details.delegation(data?.pool?.poolId)} display='flex' alignItems='center'>
-            <CardValue>{data?.pool?.poolName}</CardValue>
+            <CardValue>{data?.pool?.poolName || getShortHash(data?.pool?.poolId || "")}</CardValue>
           </Box>
         }
       />

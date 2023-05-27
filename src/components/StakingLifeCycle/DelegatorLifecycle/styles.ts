@@ -4,6 +4,9 @@ export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   width: "100%",
   padding: `0 0 ${theme.spacing(3)}`,
   borderBottom: `3px solid ${active ? theme.palette.green[600] : theme.palette.grey[200]}`,
+  [theme.breakpoints.down("lg")]: {
+    minWidth: "190px"
+  },
   [theme.breakpoints.down("sm")]: {
     padding: "16px 30px"
   }
@@ -25,7 +28,7 @@ export const TitleStep = styled(Box)<{ currentstep: number; index: number }>(({ 
   fontWeight: "bold",
   fontSize: "0.875rem",
   marginTop: theme.spacing(1),
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     whiteSpace: "nowrap"
   }
 }));
@@ -96,17 +99,29 @@ export const StyledBox = styled(Box)`
   align-items: center;
   justify-content: flex-start;
   gap: 6px;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    & > p:nth-of-type(1) {
+      width: min-content;
+    }
+  }
 `;
 
 export const DescriptionText = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.black,
-  marginBottom: "4px",
   fontSize: "18px",
+  lineHeight: "21px",
   [theme.breakpoints.down("sm")]: {
-    fontSize: "14px"
+    fontSize: "14px",
+    paddingTop: "0.5px"
   }
 }));
 
 export const ButtonText = styled(Typography)`
   font-weight: 700;
 `;
+export const StyledGroupButton = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    paddingTop: "30px",
+    borderTop: `1px solid ${alpha(theme.palette.grey[200], 1)}`
+  }
+}));

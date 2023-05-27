@@ -50,7 +50,6 @@ export const TRow = styled("tr")<{ selected?: number }>`
   width: 100%;
   padding: 10px 0;
   font-size: 14px;
-  cursor: pointer;
   position: relative;
   background-color: ${({ selected, theme }) => (selected ? theme.palette.background.neutral : "transparent")};
   &:hover {
@@ -66,6 +65,7 @@ export const TCol = styled("td")<{
   minWidth?: number | string;
   maxWidth?: number | string;
   hiddenBorder?: boolean;
+  selected?: number;
 }>`
   border-bottom: ${({ hiddenBorder, theme }) => (hiddenBorder ? "none" : `1px solid ${theme.palette.grey[200]}`)};
   width: ${({ width }) => (typeof width === "number" ? `${width}px` : width || "max-content")};
@@ -77,7 +77,7 @@ export const TCol = styled("td")<{
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.text.primary};
   padding: 24px 20px;
-  background: ${(props) => props.theme.palette.common.white};
+  background: ${(props) => props.selected ? props.theme.palette.background.neutral : props.theme.palette.common.white};
 `;
 
 export const TBody = styled("tbody")`
@@ -109,6 +109,29 @@ export const TotalNumber = styled("span")`
   font-weight: 500;
 `;
 
+export const WrappModalScrollBar = styled(Box)(({theme}) => `
+overflow-y: scroll;
+max-height: 75vh;
+&::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: ${theme.palette.grey[300]};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${theme.palette.grey[100]};
+    }
+  }
+`);
+
 export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number }>(
   ({ maxHeight, height, theme }) => `
   overflow-x: auto;
@@ -124,15 +147,38 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number
   ${theme.breakpoints.down("sm")} {
     padding: 0;
   }
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: ${theme.palette.grey[300]};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${theme.palette.grey[100]};
+    }
+  }
 `
 );
 
-export const TableFullWidth = styled("table")`
+export const TableFullWidth = styled("table")(
+  ({ theme }) => `
   border-collapse: separate;
   border-spacing: 0;
   min-width: 100%;
   width: max-content;
-`;
+  ${theme.breakpoints.down("sm")} {
+    position: relative;
+  }
+`
+);
 
 export const InputNumber = styled("input")<{ length: number }>(({ theme, length }) => ({
   width: length + "ch !important",

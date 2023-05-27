@@ -83,10 +83,11 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     input: false,
     output: false
   });
-  const { isTablet } = useScreen();
+  const { isMobile } = useScreen();
+
   const getHashLabel = () => {
     if (type === "BLOCK") return "Block Id";
-    if (type === "STAKE_KEY") return "Token Id";
+    if (type === "STAKE_KEY") return "Stake key";
     if (type === "POOL") return "Pool Id";
     if (type === "TOKEN") return "Token ID";
   };
@@ -95,6 +96,10 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
   const hashLabel = getHashLabel();
 
   const numberOfItems = listItem.length;
+
+  const handleClickItem = (link: string) => {
+    history.push(link);
+  };
   if (loading) {
     return (
       <HeaderDetailContainer>
@@ -155,7 +160,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           {hash && (
             <SlotLeader>
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
-              {isTablet ? (
+              {isMobile ? (
                 <CustomTooltip title={hash}>
                   <SlotLeaderValue>{getShortHash(hash)}</SlotLeaderValue>
                 </CustomTooltip>
@@ -223,7 +228,24 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                       PaperProps: {
                         sx: {
                           borderRadius: 2,
-                          marginTop: 0.5
+                          marginTop: 0.5,
+                          "&::-webkit-scrollbar": {
+                            width: "5px"
+                          },
+                          "&::-webkit-scrollbar-track": {
+                            background: "transparent"
+                          },
+                          "&::-webkit-scrollbar-thumb": {
+                            background: "transparent"
+                          },
+                          "&:hover": {
+                            "&::-webkit-scrollbar-thumb": {
+                              background: theme.palette.grey[300]
+                            },
+                            "&::-webkit-scrollbar-track": {
+                              background: theme.palette.grey[100]
+                            }
+                          }
                         }
                       }
                     }}
@@ -235,7 +257,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                       item?.dataSearch?.map((item, index) => (
                         <StyledMenuItem
                           onClick={() => {
-                            //To do
+                            handleClickItem(details.token(item?.assetId))
                           }}
                           key={index}
                         >
@@ -268,7 +290,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
         onClick={() => setOpenBackdrop({ input: false, output: false })}
         open={openBackdrop.input || openBackdrop.output}
       />
-    </HeaderDetailContainer>
+    </HeaderDetailContainer >
   );
 };
 

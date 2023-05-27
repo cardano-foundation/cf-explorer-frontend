@@ -10,7 +10,7 @@ import { AdaValue } from "../../../../TabularView/StakeTab/Tabs/StakeRegistratio
 import CustomTooltip from "../../../../commons/CustomTooltip";
 import Table, { Column } from "../../../../commons/Table";
 import { StyledLink } from "../../../../share/styled";
-import { PoolUpdateModal } from "../../PoolUpdates";
+import { PoolUpdateModal } from "../../PoolUpdates/PoolUpdateModal";
 import { ClickAbleLink } from "./styles";
 
 const PoolUpdateTab = () => {
@@ -73,13 +73,7 @@ const PoolUpdateTab = () => {
 
   return (
     <Box>
-      <PoolUpdateModal
-        data={selectedValue}
-        open={!!selectedValue}
-        handleCloseModal={() => {
-          setSelectedValue(null);
-        }}
-      />
+      <PoolUpdateModal data={selectedValue} open={!!selectedValue} onClose={() => setSelectedValue(null)} />
       <Table
         {...fetchData}
         columns={columns}

@@ -67,12 +67,13 @@ const StakeTab = () => {
   ];
 
   return (
-    <Box mt={4}>
+    <Box>
       <TabContext value={tabActive}>
         <WrapperTabList>
           <StyledTabList
             onChange={handleChange}
             TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
+            variant='scrollable'
           >
             {tabs.map(({ icon: Icon, key, label }) => (
               <Tab

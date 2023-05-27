@@ -16,7 +16,7 @@ export const BackText = styled("small")`
 export const FilterContainer = styled(Box)(({ theme }) => ({
   width: 300,
   backgroundColor: theme.palette.common.white,
-  zIndex: 10,
+  zIndex: 1000,
   position: "absolute",
   top: "calc(100% + 10px)",
   right: 0,
@@ -67,5 +67,20 @@ export const ApplyFilterButton = styled(Button)(({ theme }) => ({
   },
   ":disabled": {
     background: alpha(theme.palette.grey[700], 0.3)
+  }
+}));
+
+export const UpdatableParameters = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+
+  ".title": {
+    fontWeight: "bold",
+    fontSize: "1.25rem",
+    textAlign: "left",
+    [`@media screen and (max-width: ${theme.breakpoints.values.sm}px)`]: {
+      width: "50%"
+    }
   }
 }));

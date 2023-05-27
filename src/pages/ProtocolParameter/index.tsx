@@ -6,7 +6,8 @@ import {
   BackButton,
   BackText,
   ButtonFilter,
-  FilterContainer
+  FilterContainer,
+  UpdatableParameters
 } from "./styles";
 import styled from "@emotion/styled";
 import _ from "lodash";
@@ -41,6 +42,7 @@ import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
 import { Link } from "react-router-dom";
 import { details } from "~/commons/routers";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 const ProtocolParameter: React.FC = () => {
   const [fixedColumnKeys, { push: pushFixedColumnKeys }] = useList<string>([]);
@@ -61,7 +63,7 @@ const ProtocolParameter: React.FC = () => {
 
     dataLastest && [...Object.keys(dataFixed || {})].map((k) => pushFixedColumnKeys(k));
   }, [dataFixed, dataLastest]);
-
+,
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Protocol Parameters | Cardano Explorer`;
@@ -115,19 +117,41 @@ const ProtocolParameter: React.FC = () => {
     ...columnsMap
   ];
 
-  const fixedColumn = (fixedColumnKeys || []).map((k) => ({
-    title: k,
-    key: k,
-    render: (r: any) => {
-      return (
-        <Box component={Box} justifyItems={"flex-start"} textTransform={"capitalize"}>
-          <Box maxWidth={300} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
-            {typeof r[k] === "object" ? JSON.stringify(r[k]) : r[k]}
+  const fixedColumn = [
+    {
+      title: "Timestamp",
+      key: "Timestamp",
+      render: (r: any) => {
+        return (
+          <Box component={Box} justifyItems={"flex-start"} textTransform={"capitalize"}>
+            <Box maxWidth={300} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
+              {r?.timestamp ? formatDateTimeLocal(r.timestamp || "") : ""}
+            </Box>
           </Box>
-        </Box>
-      );
-    }
-  }));
+        );
+      }
+    },
+    ...(fixedColumnKeys || [])
+      .map((k) => {
+        if (k === "timestamp") {
+          return false;
+        }
+        return {
+          title: k,
+          key: k,
+          render: (r: any) => {
+            return (
+              <Box component={Box} justifyItems={"flex-start"} textTransform={"capitalize"}>
+                <Box maxWidth={300} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
+                  {typeof r[k] === "object" ? JSON.stringify(r[k]) : r[k]}
+                </Box>
+              </Box>
+            );
+          }
+        };
+      })
+      .filter((k) => k)
+  ];
   const variableColumn = columnsFull.filter((c) => variableColumnList.includes(c.key));
 
   return (
@@ -146,10 +170,8 @@ const ProtocolParameter: React.FC = () => {
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
-                <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                  <Box fontWeight={"bold"} fontSize={"1.25rem"}>
-                    Updatable Parameters
-                  </Box>
+                <UpdatableParameters>
+                  <Box className='title'>Updatable Parameters</Box>
                   <Box
                     component={Button}
                     variant='contained'
@@ -157,10 +179,11 @@ const ProtocolParameter: React.FC = () => {
                     fontWeight={"bold"}
                     fontSize={"0.875rem"}
                     onClick={() => setShowHistory(true)}
+                    className='button'
                   >
                     View update history
                   </Box>
-                </Box>
+                </UpdatableParameters>
                 {loadingLastest && (
                   <Box
                     component={Skeleton}
@@ -187,7 +210,10 @@ const ProtocolParameter: React.FC = () => {
                     />
                   )}
                   {!loadingFixed && (
-                    <Table columns={fixedColumn} data={dataFixed !== null && dataFixed ? [dataFixed] : []} />
+                    <Table
+                      columns={fixedColumn as Column<any>[]}
+                      data={dataFixed !== null && dataFixed ? [dataFixed] : []}
+                    />
                   )}
                 </Box>
               </Box>
@@ -219,11 +245,11 @@ const ProtocolParameterHistory = () => {
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
     [key: string]: any;
   }>([]);
-
+  const { isMobile } = useScreen();
   const [columnTitle, { push: pushColumnTitle, clear: clearColumnTitle }] = useList<string>([]);
   const [dataTable, setDataTable] = useState<{ [key: string]: any }[]>([]);
   const [columnsTable, setColumnsTable] = useState<Column<TProtocolParam & { params: string }>[]>([]);
-
+  const [sort, setSort] = useState("");
   const [showFilter, setShowFiter] = useState(false);
   const [resetFilter, setResetFilter] = useState<boolean>(false);
   const [sortTimeFilter, setSortTimeFilter] = useState<"FirstLast" | "LastFirst" | "">("");
@@ -314,19 +340,61 @@ const ProtocolParameterHistory = () => {
       title: "Parameter Name",
       key: "ParameterName",
       fixed: true,
+      minWidth: 200,
       render: (r: TProtocolParam & { params: string }) => {
         return <Box p={"24px 20px"}>{r?.params}</Box>;
       }
+      // sort: ({ columnKey, sortValue }) => {
+      //   sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      // }
     },
     ...columnsMap
   ];
 
   useUpdateEffect(() => {
     if (dataHistory) {
-      clearColumnTitle();
+      
+      
+      ();
       getTitleColumn(dataHistory);
     }
   }, [JSON.stringify(dataHistory)]);
+
+  // useEffect(() => {
+  //   if (sort === "") {
+  //     setDataTableSort(dataTable);
+  //   }
+  //   if (sort.split(",")[1] === "DESC") {
+  //     setDataTableSort(
+  //       dataHistoryMapping.sort(function (a, b) {
+  //         const paramsA = a.params.toUpperCase();
+  //         const paramsB = b.params.toUpperCase();
+  //         if (paramsA < paramsB) {
+  //           return -1;
+  //         }
+  //         if (paramsA > paramsB) {
+  //           return 1;
+  //         }
+  //         return 0;
+  //       })
+  //     );
+  //   }
+  //   if (sort.split(",")[1] === "ASC") {
+  //     setDataTableSort(
+  //       dataHistoryMapping.sort(function (a, b) {
+  //         const paramsA = a.params.toUpperCase();
+  //         const paramsB = b.params.toUpperCase();
+  //         if (paramsA > paramsB) {
+  //           return -1;
+  //         }
+  //         if (paramsA < paramsB) {
+  //           return 1;
+  //         }
+  //         return 0;
+  //       })
+  //     );
+  //   }
+  // }, [sort]);
 
   useUpdateEffect(() => {
     if (columnTitle) {
@@ -520,7 +588,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                 <ProtocolParam />
                 <Box ml={1}>Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ""}</Box>
               </Box>
-              <Box>{expanded === "params" ? <IoIosArrowDown /> : <IoIosArrowUp />}</Box>
+              <Box>{expanded === "params" ? <IoIosArrowUp /> : <IoIosArrowDown />}</Box>
             </Box>
           </AccordionSummary>
           <AccordionDetails>

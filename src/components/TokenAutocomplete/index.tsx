@@ -23,6 +23,7 @@ import Table, { Column } from "../commons/Table";
 import { AssetName } from "../../pages/Token/styles";
 import { details } from "../../commons/routers";
 import { debounce } from "lodash";
+import { WrappModalScrollBar } from "../commons/Table/styles";
 
 const TokenAutocomplete = ({ address }: { address: string }) => {
   const [openModalToken, setOpenModalToken] = useState(false);
@@ -68,7 +69,9 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                     component={Button}
                     width='100%'
                     textTransform={"inherit"}
-                    onClick={() => setOpenModalToken(true)}
+                    onClick={() => {
+                      setOpenModalToken(true)
+                    }}
                   >
                     See more
                   </Box>
@@ -120,12 +123,12 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
 export default TokenAutocomplete;
 
 const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => void; address: string }) => {
-  const [{ page, size }, setPagination] = useState({ page: 1, size: 10 });
+  const [{ page, size }, setPagination] = useState({ page: 0, size: 50 });
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
   const { data, ...fetchData } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
-    page: page - 1,
+    page,
     size
   });
 
@@ -134,7 +137,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
       title: "#",
       key: "#",
       minWidth: "50px",
-      render: (r, index) => numberWithCommas((page - 1) * size + index + 1)
+      render: (r, index) => numberWithCommas((page) * size + index + 1)
     },
     {
       title: "Icon",
@@ -182,7 +185,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             onKeyUp={(e) => {
               if (e.key === "Enter") {
                 setSearch(value);
-                setPagination({ page: 1, size: 10 });
+                setPagination({ page: 0, size: 50 });
               }
             }}
           />
@@ -190,7 +193,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             <Image src={HeaderSearchIcon} alt='Search' />
           </SubmitButton>
         </SearchContainer>
-        <Box>
+        <WrappModalScrollBar>
           <Table
             {...fetchData}
             data={data || []}
@@ -200,10 +203,10 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
               page,
               size,
               total: fetchData.total,
-              onChange: (page, size) => setPagination({ page, size })
+              onChange: (page, size) => setPagination({ page: page - 1, size })
             }}
           />
-        </Box>
+        </WrappModalScrollBar>
       </ModalContainer>
     </Modal>
   );

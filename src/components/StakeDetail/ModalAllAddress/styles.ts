@@ -4,17 +4,20 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   position: "relative",
   top: "50%",
   left: "50%",
-  transform: "translate(-50%, -50%)",
+  transform: "translate(-50%, -51%)",
   width: "min(80vw, 600px)",
+  backfaceVisibility: "hidden",
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
   borderRadius: 10,
   textAlign: "left",
-  maxHeight: "90vh",
+  maxHeight: "70vh",
   overflowY: "auto",
   "::-webkit-scrollbar": {
-    width: "16px"
+    width: "8px"
   },
+  willChange: "transform",
+  "-webkit-font-smoothing": "subpixel-antialiased",
 
   "::-webkit-scrollbar-thumb": {
     background: theme.palette.grey["A400"],
@@ -29,6 +32,10 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
       background: theme.palette.grey[400],
       backgroundClip: "padding-box"
     }
+  },
+
+  [`@media screen and (max-width: ${theme.breakpoints.values.md}px)`]: {
+    marginTop: theme.spacing(4)
   }
 }));
 export const ButtonClose = styled(Button)(({ theme }) => ({

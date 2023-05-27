@@ -29,15 +29,33 @@ import { details } from "../../commons/routers";
 import { ButtonClose } from "../../components/ScriptModal/styles";
 import { CloseIcon } from "../../commons/resources";
 import useToast from "../../commons/hooks/useToast";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 type TAction = {
   onClick: () => void;
 };
 
 const ViewButton: React.FC<TAction> = ({ onClick }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { isTablet } = useScreen();
+
   return (
-    <CustomTooltip placement='top' title='View private note'>
-      <ActionButton onClick={onClick} typeButton='View'>
+    <CustomTooltip
+      onClose={() => setIsOpen(false)}
+      onOpen={() => {
+        if (!isTablet) return;
+        setIsOpen(true);
+      }}
+      placement='top'
+      title='View private note'
+    >
+      <ActionButton
+        onClick={() => {
+          if (isOpen && isTablet) return;
+          onClick();
+        }}
+        typeButton='View'
+      >
         <Expand />
       </ActionButton>
     </CustomTooltip>
@@ -45,9 +63,26 @@ const ViewButton: React.FC<TAction> = ({ onClick }) => {
 };
 
 const RemoveButton: React.FC<TAction> = ({ onClick }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { isTablet } = useScreen();
+
   return (
-    <CustomTooltip placement='top' title='Remove note'>
-      <ActionButton onClick={onClick} typeButton='Remove'>
+    <CustomTooltip
+      onClose={() => setIsOpen(false)}
+      onOpen={() => {
+        if (!isTablet) return;
+        setIsOpen(true);
+      }}
+      placement='top'
+      title='Remove note'
+    >
+      <ActionButton
+        onClick={() => {
+          if (isOpen && isTablet) return;
+          onClick();
+        }}
+        typeButton='Remove'
+      >
         <Warning />
       </ActionButton>
     </CustomTooltip>
@@ -85,7 +120,11 @@ const PrivateNotes = () => {
     setLoadingDelete(true);
     try {
       await removePrivateNote(note.id);
-      toast.success(<Box>Delete transaction private note <Box>{getShortHash(note.txHash || "")} successfully</Box></Box>);
+      toast.success(
+        <Box>
+          Delete transaction private note <Box>{getShortHash(note.txHash || "")} successfully</Box>
+        </Box>
+      );
       setSelected(null);
       refresh();
     } catch (error) {
@@ -141,8 +180,13 @@ const PrivateNotes = () => {
     <Container overflow={"auto"}>
       <Header>
         <Title>My Transaction Private Notes</Title>
-        <AddButton onClick={() => setOpenModal(true)} endIcon={<Plus />}>
-          Add
+        <AddButton onClick={() => setOpenModal(true)}>
+          <Box lineHeight={1} mr={"4px"}>
+            Add
+          </Box>
+          <Box lineHeight={1}>
+            <Plus width={"14px"} />
+          </Box>
         </AddButton>
       </Header>
       <Box overflow={"auto"} height='100%'>

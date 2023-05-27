@@ -6,14 +6,19 @@ interface Props {
 }
 export function RegistrationProcessDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title='The registration process' handleCloseModal={handleCloseModal} open={open}>
+    <StyledModal
+      contentStyle={{ paddingRight: "5px" }}
+      title='The registration process'
+      handleCloseModal={handleCloseModal}
+      open={open}
+    >
       <WrapContent>
         <ContentContainer>
-          <Watermark />
           <NormalDescription>
             When a delegator wants to obtain a staking certificate from the Cardano protocol, the following steps occur:
           </NormalDescription>
           <BoxDetails>
+            <Watermark />
             <NormalDescription>
               <NumberParagraph>1.</NumberParagraph>
               The delegator selects a staking pool to delegate their funds to. This is done through a wallet or a

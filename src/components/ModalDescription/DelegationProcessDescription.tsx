@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import StyledModal from "../commons/StyledModal";
 import { BoxDetails, ContentContainer, NormalDescription, NumberParagraph, Watermark, WrapContent } from "./styles";
 
@@ -14,6 +13,7 @@ export function DelegationProcessDescription({ open, handleCloseModal }: Props) 
       handleCloseModal={handleCloseModal}
       open={open}
       data-testid='close-modal-button'
+      contentStyle={{ paddingRight: "5px" }}
     >
       <WrapContent>
         <ContentContainer>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { CgClose } from "react-icons/cg";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
-import { CubeIcon, RocketIcon } from "../../../commons/resources";
+import { BlockIcon, CubeIcon, RocketIcon } from "../../../commons/resources";
 import ProgressCircle from "../ProgressCircle";
 import {
   CloseButton,
@@ -31,7 +31,6 @@ import {
   ViewDetailHeader
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
-import { HiOutlineCube } from "react-icons/hi2";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
 import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
@@ -66,6 +65,14 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
       });
     }
   }, [data, callback]);
+
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+
+    return () => {
+      document.body.style.overflowY = "scroll";
+    };
+  }, []);
 
   if (!data)
     return (
@@ -209,7 +216,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
             <DetailLink to={details.epoch(epochNo)}>
               <DetailLabel style={{ fontSize: 18 }}>
                 <DetailLinkIcon>
-                  <HiOutlineCube />
+                  <BlockIcon />
                 </DetailLinkIcon>
                 Blocks
               </DetailLabel>

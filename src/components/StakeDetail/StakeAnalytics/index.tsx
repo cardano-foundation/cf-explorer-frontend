@@ -14,7 +14,8 @@ import {
   Title,
   ValueInfo,
   Wrapper,
-  CustomButton
+  CustomButton,
+  StyledGrid
 } from "./styles";
 import moment from "moment";
 import { useParams } from "react-router-dom";
@@ -50,8 +51,8 @@ const StakeAnalytics: React.FC = () => {
   const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
     `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
   );
-  const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.STAKE.MIN_MAX_BALANCE}/${stakeId}`);
-
+  const { data: balanceRaw, loading: balanceLoading } = useFetch<number[]>(`${API.STAKE.MIN_MAX_BALANCE}/${stakeId}`);
+  const balance = balanceRaw?.length ? balanceRaw : [0, 0];
   const dataBalanceChart = data?.map((i) => {
     const value = BigNumber(i.value).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
@@ -60,7 +61,6 @@ const StakeAnalytics: React.FC = () => {
     data?.map((i) => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
   const minBalance = Math.min(...(balance || []));
   const maxBalance = Math.max(...(balance || []), 0);
-
   const dataRewardChart = dataReward?.map((i) => {
     const value = BigNumber(i.value).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
@@ -162,7 +162,8 @@ const StakeAnalytics: React.FC = () => {
                       labels: {
                         style: {
                           fontSize: 12
-                        }
+                        },
+                        rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null
                       }
                     },
                     legend: { enabled: false },
@@ -192,12 +193,12 @@ const StakeAnalytics: React.FC = () => {
             )}
           </ChartBox>
         </Grid>
-        <Grid item xs={24} lg={6}>
-          <BoxInfo height={"100%"} space={(categoriesBalance || categoriesReward).length ? 36 : 16}>
+        <StyledGrid item xs={24} lg={6}>
+          <BoxInfo>
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems='center' justifyContent={"center"}>
                 <Box>
-                  <img src={HighestIcon} width={"20%"} alt='heighest icon' />
+                  <img src={HighestIcon} alt='heighest icon' />
                   <Title>{tab === "BALANCE" ? "Highest Balance" : "Highest Reward"}</Title>
                   <CustomTooltip title={numberWithCommas(maxBalance || 0)}>
                     <ValueInfo>
@@ -216,7 +217,7 @@ const StakeAnalytics: React.FC = () => {
             <Box flex={1}>
               <BoxInfoItem display={"flex"} alignItems='center' justifyContent={"center"}>
                 <Box>
-                  <img src={LowestIcon} width={"20%"} alt='lowest icon' />
+                  <img src={LowestIcon} alt='lowest icon' />
                   <Title>{tab === "BALANCE" ? "Lowest Balance" : "Lowest Reward"}</Title>
                   <CustomTooltip title={numberWithCommas(minBalance || 0)}>
                     <ValueInfo>
@@ -233,7 +234,7 @@ const StakeAnalytics: React.FC = () => {
               </BoxInfoItem>
             </Box>
           </BoxInfo>
-        </Grid>
+        </StyledGrid>
       </Wrapper>
     </Card>
   );

@@ -1,5 +1,5 @@
 import { Box, FormGroup } from "@mui/material";
-import { useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { EmailIcon } from "../../commons/resources";
 import { routers } from "../../commons/routers";
@@ -47,6 +47,11 @@ export default function ForgotPassword() {
   });
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    document.title = "Forgot Password";
+  }, []);
+
   const getError = (name: string, value: string) => {
     let error = "";
     switch (name) {
@@ -102,7 +107,6 @@ export default function ForgotPassword() {
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const error = checkError();
-    console.log("error : ", error);
     if (error) return;
     handleForgotPassword(formData.email.value);
   };

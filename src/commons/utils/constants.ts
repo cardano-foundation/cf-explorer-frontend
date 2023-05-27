@@ -8,31 +8,49 @@ export const STORAGE_KEYS = {
   NETWORK: "network"
 };
 
+export enum NETWORKS {
+  mainnet = "mainnet",
+  preprod = "preprod",
+  preview = "preview",
+  testnet = "testnet"
+}
+
 export const SUPPORTED_WALLETS: Wallet[] = [
   {
     name: "Flint",
     icon: FlintIcon,
-    link: "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj"
+    link: "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj",
+    networks: [NETWORKS.mainnet]
   },
   {
     name: "Nami",
     icon: NamiIcon,
-    link: "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo"
+    link: "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
+    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview, NETWORKS.testnet]
   },
   {
     name: "Eternl",
     icon: EternlIcon,
-    link: "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka"
+    link: "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka",
+    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview, NETWORKS.testnet]
   },
   {
     name: "Yoroi",
     icon: YoroiIcon,
-    link: "https://chrome.google.com/webstore/detail/yoroi/ffnbelfdoeiohenkjibnmadjiehjhajb"
+    link: "https://chrome.google.com/webstore/detail/yoroi/ffnbelfdoeiohenkjibnmadjiehjhajb",
+    networks: [NETWORKS.mainnet]
+  },
+  {
+    name: "Yoroi",
+    icon: YoroiIcon,
+    link: "https://chrome.google.com/webstore/detail/yoroi-nightly/poonlenmfdfbjfeeballhiibknlknepo",
+    networks: [NETWORKS.testnet, NETWORKS.preprod]
   },
   {
     name: "Typhon",
     icon: TyphonIcon,
-    link: "https://chrome.google.com/webstore/detail/typhon-wallet/kfdniefadaanbjodldohaedphafoffoh"
+    link: "https://chrome.google.com/webstore/detail/typhon-wallet/kfdniefadaanbjodldohaedphafoffoh",
+    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview, NETWORKS.testnet]
   }
 ];
 
@@ -44,13 +62,6 @@ export enum EPOCH_STATUS {
 }
 
 export const MAX_SLOT_EPOCH = 432000;
-
-export enum NETWORKS {
-  mainnet = "mainnet",
-  preprod = "preprod",
-  preview = "preview",
-  testnet = "testnet"
-}
 
 export enum NETWORK_NAMES {
   mainnet = "Mainnet",

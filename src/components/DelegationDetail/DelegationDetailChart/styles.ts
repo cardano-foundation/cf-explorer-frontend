@@ -64,32 +64,27 @@ export const Item = styled(Grid)(({ theme }) => ({
   }
 }));
 
-export const AnalyticsTitle = styled(Box)(({ theme }) => ({
+export const AnalyticsTitle = styled("h2")(({ theme }) => ({
   margin: "40px 0 15px",
   width: "max-content",
-  borderBottom: `2px solid ${theme.palette.green[600]}`,
   [theme.breakpoints.down("sm")]: {
     margin: "30px 0 15px"
-  },
-  "& h2": {
-    margin: 0
   }
 }));
-export const Title = styled("div")`
-  color: ${({ theme }) => theme.palette.grey[400]};
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-title);
-  color: ${(props) => props.theme.palette.primary.contrastText};
-`;
+export const Title = styled(Box)(({ theme }) => ({
+  fontWeight: "bold",
+  color: theme.palette.primary.contrastText,
+  padding: `${theme.spacing(2)} 0`
+}));
 
 export const Value = styled("div")(({ theme }) => ({
-  fontWeight: "var(--font-weight-bold)",
-  fontFamily: "var(--font-family-title)",
-  fontSize: 32,
-  lineHeight: "47px",
+  fontWeight: "bold",
+  fontSize: "2rem",
+  overflowWrap: "anywhere",
   color: theme.palette.primary.contrastText,
   [theme.breakpoints.down("sm")]: {
-    fontSize: 12
+    fontSize: "1.25rem",
+    padding: "0 10px"
   }
 }));
 

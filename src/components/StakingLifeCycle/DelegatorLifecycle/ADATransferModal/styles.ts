@@ -88,6 +88,12 @@ export const StyledLink = styled(Link)`
   }
 `;
 
+export const StyledLinkKey = styled(Link)`
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+`;
+
 export const OverviewIcon = styled(Box)`
   border-radius: 49px;
   background: ${(props) => props.theme.palette.green[600_10]};
@@ -98,9 +104,10 @@ export const OverviewIcon = styled(Box)`
   align-items: center;
 `;
 
-export const Amount = styled(Box)<{ type: "REWARD_RECEIVED" | "REWARD_WITHDRAWN" }>(({ type, theme }) => ({
-  color: type === "REWARD_RECEIVED" ? theme.palette.success.main : theme.palette.error.main,
+export const Amount = styled(Box)<{ type: "up" | "down" }>(({ type, theme }) => ({
+  color: type === "up" ? theme.palette.success.main : theme.palette.error.main,
   display: "flex",
   alignItems: "center",
-  gap: 5
+  gap: 5,
+  marginRight: "5px"
 }));

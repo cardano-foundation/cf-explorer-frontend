@@ -33,6 +33,7 @@ interface SPORegistration {
   poolUpdateId: number;
   txHash: string;
   fee: number;
+  poolHold: number;
   time: string;
   margin: number;
 }
@@ -118,6 +119,7 @@ interface PoolInfo {
   status: "ACTIVE" | "INACTIVE" | "RETIRING";
   epochNo: number;
   stakeKeys: string[];
+  rewardAccounts: string;
 }
 
 interface IDashboardResponse {
@@ -126,7 +128,7 @@ interface IDashboardResponse {
   stakeKeyReportId: number;
   createdAt: string;
   reportName: string;
-  status: string;
+  status: "IN_PROGRESS" | "GENERATED" | "FAILED" | "EXPIRED";
   type: "STAKE_KEY" | "POOL_ID";
 }
 

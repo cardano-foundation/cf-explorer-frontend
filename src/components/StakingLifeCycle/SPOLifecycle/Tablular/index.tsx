@@ -4,7 +4,6 @@ import PoolRegistrationTab from "./Tabs/PoolRegistrationTab";
 import PoolUpdateTab from "./Tabs/PoolUpdateTab";
 import DeregsitrationTab from "./Tabs/DeregsitrationTab";
 import OperatorRewardTab from "./Tabs/OperatorReward";
-import CustomIcon from "../../../commons/CustomIcon";
 import {
   DeredistrationIcon,
   OperatorRewardIcon,
@@ -14,52 +13,72 @@ import {
 import TabularOverview from "./TabularOverview";
 import { useHistory, useParams } from "react-router";
 import { details } from "../../../../commons/routers";
+import { ListTabResponseSPO } from "~/pages/SPOLifecycle";
+import { useEffect, useState } from "react";
 
 interface SPOTabItem extends StakeTabItem {
   key: SPOStep;
+  keyCheckShow: string;
 }
 
 const tabs: SPOTabItem[] = [
   {
     icon: RegistrationIcon,
-    label: "Pool Registration",
+    label: "Registration",
     key: "registration",
-    component: <PoolRegistrationTab />
+    component: <PoolRegistrationTab />,
+    keyCheckShow: "isRegistration"
   },
   {
     icon: PoolUpdateIcon,
     label: "Pool Update",
     key: "pool-updates",
-    component: <PoolUpdateTab />
+    component: <PoolUpdateTab />,
+    keyCheckShow: "isUpdate"
   },
   {
     icon: OperatorRewardIcon,
     label: "Operator Rewards",
     key: "operator-rewards",
-    component: <OperatorRewardTab />
+    component: <OperatorRewardTab />,
+    keyCheckShow: "isReward"
   },
   {
     icon: DeredistrationIcon,
     label: "Deregistration",
     key: "deregistration",
-    component: <DeregsitrationTab />
+    component: <DeregsitrationTab />,
+    keyCheckShow: "isDeRegistration"
   }
 ];
 
-const Tablular = () => {
+interface ITabular {
+  renderTabsSPO?: ListTabResponseSPO;
+}
+
+const Tabular = ({ renderTabsSPO }: ITabular) => {
   const { poolId = "", tab = "registration" } = useParams<{ poolId: string; tab: SPOStep }>();
   const history = useHistory();
+
+  const [listTabs, setListTabs] = useState<SPOTabItem[]>(tabs);
 
   const onChangeTab = (tab: any) => {
     history.push(details.spo(poolId, "tabular", tab));
   };
 
+  useEffect(() => {
+    if (renderTabsSPO) {
+      const filteredList = tabs.filter((tab: SPOTabItem) => renderTabsSPO[tab.keyCheckShow]);
+      setListTabs(filteredList);
+    }
+  }, [renderTabsSPO]);
+
   return (
     <Box mt={5}>
       <TabularOverview />
-      <StakeTab tabs={tabs} initTab={tab} onChangeTab={onChangeTab} />
+      <StakeTab tabs={listTabs} initTab={tab} onChangeTab={onChangeTab} />
     </Box>
   );
 };
 
-export default Tablular;
+export default Tabular;

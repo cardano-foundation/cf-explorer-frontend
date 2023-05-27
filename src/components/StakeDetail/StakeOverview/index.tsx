@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
-import { details } from "../../../commons/routers";
-import delegatedIcon from "../../../commons/resources/icons/delegated.svg";
-import totalStakeIcon from "../../../commons/resources/icons/totalStake.svg";
-import rewardIcon from "../../../commons/resources/icons/reward.svg";
-import rewardWithdrawIcon from "../../../commons/resources/icons/rewardWithdraw.svg";
-import { formatADAFull } from "../../../commons/utils/helper";
-import { ButtonModal, StyledFlexValue, StyledLink, TitleCard } from "./styles";
+import { details } from "~/commons/routers";
+import delegatedIcon from "~/commons/resources/icons/delegated.svg";
+import totalStakeIcon from "~/commons/resources/icons/totalStake.svg";
+import rewardIcon from "~/commons/resources/icons/reward.svg";
+import rewardWithdrawIcon from "~/commons/resources/icons/rewardWithdraw.svg";
+import { formatADAFull, getShortWallet } from "~/commons/utils/helper";
+import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleValue } from "./styles";
 import { useParams } from "react-router-dom";
 import ModalAllAddress from "../ModalAllAddress";
-import CustomTooltip from "../../commons/CustomTooltip";
-import DetailHeader from "../../commons/DetailHeader";
-import ADAicon from "../../commons/ADAIcon";
+import CustomTooltip from "~/components/commons/CustomTooltip";
+import DetailHeader from "~/components/commons/DetailHeader";
+import ADAicon from "~/components/commons/ADAIcon";
 
 interface Props {
   data: IStakeKeyDetail | null;
@@ -20,6 +20,22 @@ interface Props {
 const StakeOverview: React.FC<Props> = ({ data, loading }) => {
   const [open, setOpen] = useState(false);
   const { stakeId } = useParams<{ stakeId: string }>();
+
+  const poolName = data?.pool?.poolName || "";
+  const ticketName = data?.pool?.tickerName || "";
+  const poolId = data?.pool?.poolId || "";
+
+  const delegateTooltip = data?.pool
+    ? ticketName || poolName
+      ? `${ticketName} - ${poolName}`
+      : poolId
+    : "Not delegated to any pool";
+
+  const delegateTo = data?.pool
+    ? ticketName || poolName
+      ? `${ticketName} - ${poolName}`
+      : getShortWallet(poolId)
+    : "Not delegated to any pool";
   const listOverview = [
     {
       icon: delegatedIcon,
@@ -29,10 +45,10 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <CustomTooltip title={`${data?.pool?.tickerName || ""} - ${data?.pool?.poolName || ""}`}>
-          <StyledLink to={details.delegation(data?.pool?.poolId)}>
-            {data?.pool?.tickerName || ""} - {data?.pool?.poolName || ""}
-          </StyledLink>
+        <CustomTooltip sx={{ width: "100%" }} title={delegateTooltip}>
+          <StyledLinkTo isTo={!!data?.pool} to={data?.pool?.poolId ? details.delegation(data?.pool?.poolId) : "#"}>
+            <TitleValue>{delegateTo}</TitleValue>
+          </StyledLinkTo>
         </CustomTooltip>
       )
     },
@@ -49,7 +65,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
             <Box component={"span"}>{formatADAFull(data?.totalStake)}</Box>
             <ADAicon />
           </StyledFlexValue>
-          <Box>
+          <Box sx={{ color: "blue" }}>
             <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>
           </Box>
           <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={stakeId} />

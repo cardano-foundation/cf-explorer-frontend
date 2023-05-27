@@ -23,6 +23,10 @@ const ContractDetail: React.FC = () => {
     document.title = `Contract ${address} | Cardano Explorer`;
   }, [address]);
 
+  if (!initialized) {
+    return null;
+  }
+
   if ((initialized && !data) || error) return <NoRecord />;
 
   return (

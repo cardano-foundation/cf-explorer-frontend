@@ -1,85 +1,13 @@
-import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui, Grid, alpha } from "@mui/material";
 import { Link } from "react-router-dom";
+import CertificateShape from "~/components/commons/CertificateShape";
+import CopyButton from "~/components/commons/CopyButton";
 
-export const HoldBox = styled(Box)(({ theme }) => ({
-  width: "200px",
-  height: "35px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.green[600]}`,
-  borderRadius: "10px",
-  marginRight: theme.spacing(5),
-  position: "relative",
-  background: theme.palette.common.white,
-  top: "-70px",
-  "::after": {
-    content: '"POOL HOLD"',
-    borderRadius: "4px",
-    fontWeight: "bold",
-    color: theme.palette.common.white,
-    padding: "6px 8px",
-    fontSize: "14px",
-    position: "absolute",
-    top: "-50%",
-    left: theme.spacing(2),
-    background: theme.palette.green[600],
-    transform: " translate(0, 60%)"
-  },
-  "@media screen and (max-width: 1270px)": {
-    top: "0px",
-    width: "155px",
-    margin: "0px",
-    marginRight: "-6px",
-    fontSize: "16px",
-    padding: "12px 8px"
-  }
-}));
-export const FeeBox = styled(Box)(({ theme }) => ({
-  width: "200px",
-  height: "35px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[600]}`,
-  borderRadius: "10px",
-  background: theme.palette.common.white,
-  marginRight: theme.spacing(5),
-  position: "relative",
-  "::after": {
-    content: '"FEES"',
-    borderRadius: "4px",
-    fontWeight: "bold",
-    color: theme.palette.common.white,
-    padding: "6px 8px",
-    fontSize: "14px",
-    position: "absolute",
-    top: "-50%",
-    left: theme.spacing(2),
-    background: theme.palette.red[600],
-    transform: " translate(0, 60%)"
-  },
-  "@media screen and (max-width: 1270px)": {
-    width: "155px",
-    marginRight: "0px",
-    position: "absolute",
-    bottom: "0px",
-    left: "-35px",
-    fontSize: "16px",
-    padding: "12px 8px"
-  }
-}));
-
-export const IconButton = styled(IconButtonMui)(({ theme }) => ({
-  background: theme.palette.grey[100]
-}));
-export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
+export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0
 }));
 
-export const Info = styled(Box)(({ theme }) => ({
+export const Info = styled(Box)(() => ({
   display: "flex",
   alignItems: "center"
 }));
@@ -92,12 +20,6 @@ export const InfoText = styled(Box)(({ theme }) => ({
   cursor: "pointer"
 }));
 
-export const HoldBoxText = styled(Box)(({ theme }) => ({
-  fontSize: "18px",
-  fontWeight: "bold",
-  color: theme.palette.common.black
-}));
-
 export const CustomLink = styled(Link)(({ theme }) => ({
   fontWeight: 600,
   fontSize: "0.875rem",
@@ -107,16 +29,9 @@ export const CustomLink = styled(Link)(({ theme }) => ({
   }
 }));
 
-export const DetailRetirement = styled(Box)(({ theme }) => ({
+export const DetailRetirement = styled(Box)(() => ({
   fontSize: "0.875rem",
   fontWeight: 600
-}));
-
-export const StyledBox = styled(Box)(({ theme }) => ({
-  ".list-images": {
-    maxWidth: "390px",
-    margin: "0px auto"
-  }
 }));
 
 export const StepInfo = styled(Box)(({ theme }) => ({
@@ -141,5 +56,115 @@ export const InfoGroup = styled(Box)(({ theme }) => ({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     gap: 5
+  }
+}));
+
+export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-start",
+  width: "calc(100% + 30px)",
+  height: "max-content",
+  position: "relative",
+  margin: "0px -15px",
+  marginTop: 35,
+  [theme.breakpoints.down("lg")]: {
+    margin: "auto",
+    width: "100%"
+  },
+  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+    flexDirection: "column",
+    alignItems: "center",
+    margin: "auto",
+    maxWidth: 540,
+    minWidth: 540
+  },
+  [theme.breakpoints.down("sm")]: {
+    maxWidth: 320,
+    minWidth: 320
+  }
+}));
+export const MiddleGroup = styled(Box)<{ sidebar?: number; hold?: number }>(({ theme, sidebar, hold }) => ({
+  display: "flex",
+  justifyContent: "space-around",
+  width: "max-content",
+  flexDirection: "column",
+  gap: hold ? 25 : 90,
+  paddingTop: hold ? 5 : 75,
+
+  [theme.breakpoints.down("lg")]: {
+    gap: 10
+  },
+  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+    flexDirection: "row-reverse",
+    maxWidth: 536,
+    gap: 30,
+    paddingTop: 46,
+    paddingBottom: 35,
+    alignItems: hold ? "unset" : "center"
+  },
+  [theme.breakpoints.down("sm")]: {
+    maxWidth: 320,
+    minWidth: 320,
+    gap: 10
+  }
+}));
+
+export const BoxGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+  display: "flex",
+  flexDirection: "column",
+  height: "100%",
+  width: "max-content",
+  maxWidth: 530,
+  minWidth: 530,
+  margin: "auto",
+  "& > div": {
+    display: "flex",
+    width: "100%"
+  },
+  "& > div:nth-of-type(2)": {
+    justifyContent: "flex-end"
+  },
+
+  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+    maxWidth: 287,
+    minWidth: 287,
+    margin: 0,
+    gap: 78,
+    "& > div:nth-of-type(1)": {
+      justifyContent: "flex-end"
+    },
+    "& > div:nth-of-type(2)": {
+      justifyContent: "flex-start"
+    }
+  },
+  [theme.breakpoints.down("sm")]: {
+    maxWidth: 178,
+    minWidth: 178
+  }
+}));
+
+export const StyledCertificateShape = styled(CertificateShape)(({ theme }) => ({
+  width: 220,
+  height: 220,
+  margin: "auto",
+  border: `2px solid ${theme.palette.border.block}`,
+  [theme.breakpoints.down("sm")]: {
+    width: 140
+  }
+}));
+export const StyledCopyButton = styled(CopyButton)`
+  margin-left: 5px;
+`;
+export const StyledGridItem = styled(Grid)(({ theme }) => ({
+  "& > div": {
+    background: `${alpha(theme.palette.grey[300], 0.1)}`,
+    padding: 24
+  },
+  [theme.breakpoints.down("sm")]: {
+    "& > div": {
+      minHeight: "59px",
+      padding: 15
+    }
   }
 }));

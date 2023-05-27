@@ -15,48 +15,73 @@ import RewardsDistributionTab from "../../../TabularView/StakeTab/Tabs/RewardsDi
 import StakeRegistrationTab from "../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
 import WithdrawalHistoryTab from "../../../TabularView/StakeTab/Tabs/WithdrawalHistoryTab";
 import TabularOverview from "../../../TabularView/TabularOverview";
+import { ListStakeKeyResponse } from "~/pages/DelegatorLifecycle";
+import { useEffect, useState } from "react";
 
-const tabs: {
+interface ITabularTab {
   icon: React.FC;
   label: React.ReactNode;
   key: TTabularTabKey;
   component: React.ReactNode;
-}[] = [
+  keyCheckShow: string;
+}
+
+const tabs: ITabularTab[] = [
   {
     icon: RegistrationIcon,
-    label: "Stake Key Registration",
+    label: "Registration",
     key: "registration",
-    component: <StakeRegistrationTab />
+    component: <StakeRegistrationTab />,
+    keyCheckShow: "hasRegistration"
   },
   {
     icon: DelegationIcon,
     label: "Delegation History",
     key: "delegation",
-    component: <DelegationTab />
+    component: <DelegationTab />,
+    keyCheckShow: "hasDelegation"
   },
   {
     icon: RewardsDistributionIcon,
     label: "Rewards Distribution",
     key: "rewards",
-    component: <RewardsDistributionTab />
+    component: <RewardsDistributionTab />,
+    keyCheckShow: "hashRewards"
   },
   {
     icon: RewardsWithdrawalIcon,
     label: "Withdrawal History",
     key: "withdrawal-history",
-    component: <WithdrawalHistoryTab />
+    component: <WithdrawalHistoryTab />,
+    keyCheckShow: "hasWithdrawal"
   },
   {
     icon: DeredistrationIcon,
     label: "Deregistration",
     key: "deregistration",
-    component: <DeregistrationTab />
+    component: <DeregistrationTab />,
+    keyCheckShow: "hasDeRegistration"
   }
 ];
 
-const Tablular = () => {
+interface ITabularProps {
+  tabsRenderConfig?: ListStakeKeyResponse;
+}
+
+const Tabular = ({ tabsRenderConfig }: ITabularProps) => {
   const { stakeId = "", tab = "registration" } = useParams<{ stakeId: string; tab: DelegationStep }>();
+  const [listTabs, setListTabs] = useState<ITabularTab[]>(tabs);
   const history = useHistory();
+
+  useEffect(() => {
+    if (tabsRenderConfig) {
+      const filteredTabs = tabs.filter((tab: ITabularTab) => tabsRenderConfig[tab.keyCheckShow]);
+      setListTabs(filteredTabs);
+    }
+  }, [tabsRenderConfig]);
+
+  if (!tabsRenderConfig) return null;
+
   const onChangeTab = (tab: any) => {
     history.push(details.staking(stakeId, "tabular", tab));
   };
@@ -64,9 +89,9 @@ const Tablular = () => {
   return (
     <Box mt={5}>
       <TabularOverview />
-      <StakeTab tabs={tabs} initTab={tab} onChangeTab={onChangeTab} />
+      <StakeTab tabs={listTabs} initTab={tab} onChangeTab={onChangeTab} />
     </Box>
   );
 };
 
-export default Tablular;
+export default Tabular;

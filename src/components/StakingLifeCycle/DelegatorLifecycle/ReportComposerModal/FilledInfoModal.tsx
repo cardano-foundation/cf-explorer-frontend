@@ -141,6 +141,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       handleCloseModal={handleCloseModal}
       paddingX={isMobile ? "10px" : "40px"}
       paddingY={isMobile ? "20px" : "30px"}
+      contentStyle={{ overflowY: "unset" }}
     >
       <Container>
         <ModalTitle>
@@ -148,7 +149,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
         </ModalTitle>
         <StyledStack>
           <StyledLabel>Report name</StyledLabel>
-          <StyledTextField placeholder='Filled report name' value={reportName} onChange={onChangeReportName} />
+          <StyledTextField placeholder='Enter report name' value={reportName} onChange={onChangeReportName} />
         </StyledStack>
         <Box sx={{ marginBottom: "20px" }}>
           <StyledLabel>Address details</StyledLabel>
@@ -179,7 +180,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
           <Container>
             <StyledStack>
               <StyledLabel>Select a date range</StyledLabel>
-              <CustomDatePicker dateRange={dateRange} setDateRange={setDateRange} />
+              <CustomDatePicker dateRange={dateRange} setDateRange={setDateRange} hideFuture />
             </StyledStack>
           </Container>
         )}
@@ -197,7 +198,6 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             />
           </Box>
         )}
-        <TextWarning>The earliest 1,000 transactions within the selected range will be exported</TextWarning>
         <StyledStack>
           <StyledButton disabled={isDisabledButton} onClick={handleSubmit}>
             Next
