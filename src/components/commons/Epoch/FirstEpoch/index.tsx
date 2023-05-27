@@ -75,19 +75,19 @@ export default function FirstEpoch({ data: currentEpochData }: IProps) {
       icon: timeIcon,
       title: (
         <Box display={"flex"} alignItems='center'>
-          <TitleCard mr={1}> End Time</TitleCard>
+          <TitleCard mr={1}> Start Time</TitleCard>
         </Box>
       ),
-      value: <Box component={"span"}>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Box>
+      value: <Box component={"span"}>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Box>
     },
     {
       icon: timeIcon,
       title: (
         <Box display={"flex"} alignItems='center'>
-          <TitleCard mr={1}> Start Time</TitleCard>
+          <TitleCard mr={1}> End Time</TitleCard>
         </Box>
       ),
-      value: <Box component={"span"}>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Box>
+      value: <Box component={"span"}>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Box>
     }
   ];
   return (
