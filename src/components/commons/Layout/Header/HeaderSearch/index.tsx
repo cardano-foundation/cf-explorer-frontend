@@ -98,6 +98,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile }) =
   const [{ search, filter }, setValues] = useState<FormValues>({ ...intitalValue });
   const [showOption, setShowOption] = useState(false);
   const [error, setError] = useState("");
+  const { sidebar } = useSelector(({ user }: RootState) => user);
   useEffect(() => {
     if (!search) {
       setShowOption(false);
@@ -173,7 +174,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile }) =
   const { isMobile } = useScreen();
 
   return (
-    <Box position={"relative"} component={Form} onSubmit={handleSearch} home={home ? 1 : 0}>
+    <Form onSubmit={handleSearch} home={+home} sidebar={+sidebar}>
       <Backdrop sx={{ backgroundColor: "unset" }} open={showOption} onClick={() => setShowOption(false)} />
       <StyledSelect
         data-testid='all-filters-dropdown'
@@ -219,7 +220,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile }) =
       <SubmitButton type='submit' home={home ? 1 : 0} disabled={!search}>
         <Image src={HeaderSearchIcon} alt='search' home={home ? 1 : 0} />
       </SubmitButton>
-    </Box>
+    </Form>
   );
 };
 

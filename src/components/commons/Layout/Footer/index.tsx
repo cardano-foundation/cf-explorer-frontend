@@ -2,7 +2,6 @@ import React from "react";
 import { styled, Container } from "@mui/material";
 import { APP_VERSION } from "../../../../commons/utils/constants";
 import FooterMenu from "../Sidebar/FooterMenu";
-import { useScreen } from "../../../../commons/hooks/useScreen";
 
 const StyledFooter = styled("footer")`
   height: 60px;
@@ -41,13 +40,11 @@ const Copyright = styled("small")`
 `;
 
 const Footer: React.FC = () => {
-  const { isTablet } = useScreen();
   return (
     <StyledFooter>
       <FooterContainer>
-        {isTablet && <FooterMenu forceShow={true} />}
+        <FooterMenu bottom={true} />
         <Copyright>
-          {" "}
           &copy; {new Date().getFullYear()} Cardano Blockchain Explorer. All rights reserved. Version: {APP_VERSION}
         </Copyright>
       </FooterContainer>

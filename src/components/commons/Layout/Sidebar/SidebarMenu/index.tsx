@@ -7,28 +7,23 @@ import {
   SubMenu,
   SubMenuText,
   itemStyle,
-  StyledCollapse,
   IconMenu,
-  WrapNetwork
+  SidebarMenuContainer,
+  FooterMenuContainer
 } from "./styles";
-import { Box, Collapse, Divider, Drawer, ListItem, useTheme } from "@mui/material";
+import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
 import { isExtenalLink } from "../../../../../commons/utils/helper";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
-import SelectNetwork from "../../Header/SelectNetwork";
 import { useWindowSize } from "react-use";
 import { setSidebar } from "../../../../../stores/user";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../stores/types";
 import FooterMenu from "../FooterMenu";
 import CustomTooltip from "../../../CustomTooltip";
-import { useScreen } from "../../../../../commons/hooks/useScreen";
-import { LogoLink, NavBarLogo } from "../styles";
-import { LogoFullIcon } from "../../../../../commons/resources";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const pathname = history.location.pathname;
-  const { isTablet } = useScreen();
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { width } = useWindowSize(0);
   const theme = useTheme();
@@ -48,9 +43,11 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   };
 
   const [active, setActive] = useState<string | null>(getActive());
+
   useEffect(() => {
     if (!sidebar) setActive(null);
   }, [sidebar]);
+
   useEffect(() => {
     if (pathname === "/") setActive(null);
   }, [pathname]);
@@ -71,9 +68,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     if (!sidebar) setSidebar(true);
   };
 
-  const MenuElement = () => {
-    return (
-      <Menu open={sidebar ? 1 : 0}>
+  return (
+    <SidebarMenuContainer>
+      <Menu>
         {menus.map((item, index) => {
           const { href, title, children, icon, tooltip } = item;
           const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;
@@ -84,7 +81,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   isExtenalLink(href) ? (
                     <ListItem
                       button
-                      onClick={(e) => window.open(href, "_blank")}
+                      onClick={() => window.open(href, "_blank")}
                       sx={(theme) => itemStyle(theme, sidebar)}
                     >
                       {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
@@ -162,7 +159,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           <ListItem
                             key={subIndex}
                             button
-                            onClick={(e) => window.open(href, "_blank")}
+                            onClick={() => window.open(href, "_blank")}
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               paddingLeft: "70px",
@@ -243,7 +240,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 isExtenalLink(href) ? (
                   <ListItem
                     button
-                    onClick={(e) => window.open(href, "_blank")}
+                    onClick={() => window.open(href, "_blank")}
                     sx={(theme) => itemStyle(theme, sidebar)}
                   >
                     {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
@@ -315,7 +312,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           <ListItem
                             key={subIndex}
                             button
-                            onClick={(e) => window.open(href, "_blank")}
+                            onClick={() => window.open(href, "_blank")}
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               paddingLeft: "70px",
@@ -365,49 +362,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
           );
         })}
       </Menu>
-    );
-  };
-
-  if (isTablet) {
-    return (
-      <Drawer open={sidebar} onClose={() => setSidebar(false)}>
-        <Box position='relative' height='100vh' display={"flex"} flexDirection={"column"}>
-          <Box p='16px'>
-            <LogoLink to='/'>
-              <NavBarLogo src={LogoFullIcon} alt='logo desktop' />
-            </LogoLink>
-          </Box>
-          <MenuElement />
-          <WrapNetwork>
-            <SelectNetwork />
-          </WrapNetwork>
-        </Box>
-      </Drawer>
-    );
-  }
-
-  return (
-    <>
-      <Drawer open={isTablet && sidebar} onClose={() => setSidebar(false)}>
-        <Box position='relative' height='100%'>
-          <Box p='16px'>
-            <LogoLink to='/'>
-              <NavBarLogo src={LogoFullIcon} alt='logo desktop' />
-            </LogoLink>
-          </Box>
-          <MenuElement />
-          <WrapNetwork>
-            <SelectNetwork />
-          </WrapNetwork>
-        </Box>
-      </Drawer>
-      {!isTablet && (
-        <StyledCollapse in={width >= theme.breakpoints.values.md ? true : sidebar} timeout='auto' unmountOnExit>
-          <MenuElement />
-          <FooterMenu />
-        </StyledCollapse>
-      )}
-    </>
+      <FooterMenuContainer>
+        <FooterMenu />
+      </FooterMenuContainer>
+    </SidebarMenuContainer>
   );
 };
 
