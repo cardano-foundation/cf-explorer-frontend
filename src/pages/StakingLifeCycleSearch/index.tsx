@@ -14,13 +14,13 @@ const StakingLifeCycleSearch = () => {
   const [error, setError] = useState<string>("");
   const hanldeSearch = () => {
     if (!value) {
-      setError("No records found!");
+      setError("No results found");
     }
     if (value.startsWith("stake")) {
       history.push(details.staking(value, "timeline"));
     } else if (value.startsWith("pool")) {
       history.push(details.spo(value, "timeline"));
-    } else setError("No records found!");
+    } else setError("No results found");
   };
   return (
     <StyledContainer>
