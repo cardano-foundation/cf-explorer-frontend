@@ -67,7 +67,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   }, []);
 
   const onChangeAddress = useCallback((e: any) => {
-    const regex = /^[a-zA-Z0-9]*$/;
+    const regex = /^[a-zA-Z0-9_]*$/;
     if (!regex.test(e.target.value)) return;
     setAddress(e.target.value);
     setError("");
