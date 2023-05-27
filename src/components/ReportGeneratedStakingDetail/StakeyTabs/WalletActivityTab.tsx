@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 import { useState } from "react";
 import Table, { Column } from "../../commons/Table";
-import { Status, TextAmountReward } from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
+import { Amount, Status, TextAmountReward } from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
 import CustomIcon from "../../commons/CustomIcon";
 import { ADAsigntIC, AIconGreen } from "../../../commons/resources";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../commons/utils/helper";
@@ -36,7 +36,9 @@ const WalletActitityTab = () => {
       minWidth: "100px",
       render: (r) => (
         <Box display='flex' alignItems='center'>
-          <TextAmountReward>{formatADAFull(r.amount)}</TextAmountReward>
+          <Amount type={r.amount > 0 ? "up" : "down"}>
+            {r.amount > 0 ? "+" : ""}{formatADAFull(r.amount)}
+          </Amount>
           <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
         </Box>
       )

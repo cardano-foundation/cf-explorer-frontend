@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
-import sendImg from "~/commons/resources/images/sendImg.svg";
-import receiveImg from "~/commons/resources/images/receiveImg.svg";
+import receiveImg from "../../commons/resources/images/receiveImg.svg";
+import sendImg from "../../commons/resources/images/sendImg.svg";
 import useFetchList from "~/commons/hooks/useFetchList";
 import { useScreen } from "~/commons/hooks/useScreen";
 import { details } from "~/commons/routers";
@@ -70,16 +70,17 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
 
       render: (transaction) => {
         const type = transaction.balance >= 0 ? "up" : "down";
-        const hasSentToken = transaction?.tokens.some((t) => t.quantity < 0);
-        const hasReceivedToken = transaction?.tokens.some((t) => t.quantity > 0);
+        const isTransferType = transaction?.tokens.some((t) => {
+          return (t.quantity < 0 && transaction?.balance >= 0) || (t.quantity >= 0 && transaction?.balance < 0);
+        });
         return (
           <Box display={"flex"}>
-            {hasSentToken && hasReceivedToken ? (
+            {isTransferType ? (
               <Box width={40} ml={"2px"} mr={"8px"}>
                 <TransferIcon style={{ scale: "1.15" }} />
               </Box>
             ) : (
-              <Box width={50} display={transaction?.balance ? "" : "none"}>
+              <Box width={50} display={transaction?.balance !== null ? "" : "none"}>
                 <Img src={type !== "up" ? receiveImg : sendImg} alt='send icon' />
               </Box>
             )}
