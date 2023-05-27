@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { CubeIcon, RocketIcon } from "../../../commons/resources";
@@ -68,6 +68,14 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
     }
     return CONFIRMATION_STATUS.LOW;
   };
+
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+
+    return () => {
+      document.body.style.overflowY = "scroll";
+    };
+  }, []);
 
   if (!data)
     return (

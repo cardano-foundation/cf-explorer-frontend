@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { DelegationHistoryMainIcon, FileEditIcon, LightningIcon } from "../../../commons/resources";
 import {
@@ -35,7 +35,7 @@ import {
   WrapDetailInfo
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
-import { BiChevronRight, BiInfoCircle } from "react-icons/bi";
+import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
 import { formatADAFull, getShortWallet } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
@@ -82,6 +82,15 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
   const { data } = useFetch<IStakeKeyDetail>(stakeId ? `${API.STAKE.DETAIL}/${stakeId}` : ``);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
+
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+
+    return () => {
+      document.body.style.overflowY = "scroll";
+    };
+  }, []);
+
   if (!data)
     return (
       <ViewDetailDrawer anchor='right' open={!!stakeId} hideBackdrop variant='permanent'>

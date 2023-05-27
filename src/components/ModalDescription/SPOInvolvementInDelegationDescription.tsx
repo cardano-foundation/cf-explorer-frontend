@@ -7,7 +7,12 @@ interface Props {
 
 export function SPOInvolvementInDelegationDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title='The SPO’s involvement in delegation' handleCloseModal={handleCloseModal} open={open}>
+    <StyledModal
+      contentStyle={{ paddingRight: "5px" }}
+      title='The SPO’s involvement in delegation'
+      handleCloseModal={handleCloseModal}
+      open={open}
+    >
       <WrapContent>
         <ContentContainer>
           <Watermark />
