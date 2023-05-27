@@ -37,6 +37,7 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration", onC
             TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
             scrollButtons='auto'
             variant='scrollable'
+            visibleScrollbar={true}
           >
             {tabs.map(({ icon: Icon, key, label }) => (
               <Tab
