@@ -20,10 +20,7 @@ export const Header = styled(Box)(({ theme }) => ({
 }));
 
 export const ItemContent = styled(Box)(({ theme }) => ({
-  display: "flex",
-  [theme.breakpoints.down("md")]: {
-    flexDirection: "column"
-  }
+  display: "flex"
 }));
 
 export const ItemFooter = styled(Box)(({ theme }) => ({
