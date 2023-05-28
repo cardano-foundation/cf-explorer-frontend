@@ -64,7 +64,6 @@ const Card = ({
                 <Box width={50}>
                   <Img src={type === "down" ? receiveImg : sendImg} alt='send icon' />
                 </Box>
-                {isTablet ? <Box>{type === "down" ? "From" : "To"}:</Box> : null}
               </Box>
               <Box display='flex' width={"100%"} alignItems={"center"}>
                 <Box width={"100%"} display='flex' flexDirection='column' justifyContent='center' paddingTop='5px'>
@@ -73,7 +72,6 @@ const Card = ({
                       justifyContent={"space-between"}
                       width={"100%"}
                       display='flex'
-                      flexDirection={isMobile ? "column" : "row"}
                       paddingBottom='5px'
                       alignItems='center'
                     >
@@ -99,11 +97,9 @@ const Card = ({
                     </Box>
                   )}
                   <Box display={"flex"} justifyContent='space-between' alignItems={"center"}>
-                    {!isTablet ? (
-                      <Box display={"flex"} alignItems='center' justifyContent={"flex-start"} pr={1}>
-                        {type === "down" ? "From" : "To"}:
-                      </Box>
-                    ) : null}
+                    <Box display={"flex"} alignItems='center' justifyContent={"flex-start"} pr={1}>
+                      {type === "down" ? "From" : "To"}:
+                    </Box>
                     <Box display={"flex"} justifyContent='space-between' flex={"1"} alignItems={"center"}>
                       <Box
                         display={"flex"}

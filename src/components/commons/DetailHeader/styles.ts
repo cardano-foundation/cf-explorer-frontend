@@ -27,6 +27,9 @@ export const BackButton = styled(Box)`
     position: relative;
     top: 5px;
   }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    margin-top: 0px;
+  }
 `;
 
 export const BackText = styled("small")`
