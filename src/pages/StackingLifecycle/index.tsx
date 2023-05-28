@@ -163,7 +163,7 @@ const Dashboard: React.FC = () => {
       key: "status",
       minWidth: "100px",
       render(data) {
-        return <Status status={data.status}>{data.status}</Status>;
+        return <Status status={data?.status}>{data?.status.replace("_", " ")}</Status>;
       }
     },
     {
@@ -175,19 +175,10 @@ const Dashboard: React.FC = () => {
           <Box width='100%' textAlign='right'>
             {onDownload === data.id ? (
               <CircularProgress size={22} color='primary' />
-            ) : data.status === "EXPIRED" ? (
-              <CustomTooltip title='Report file only available for 7 days after created'>
-                <Box display={"inline-block"}>
-                  <Box component={IconButton} textTransform={"capitalize"} disabled>
-                    <CustomIcon icon={DownloadGreenIcon} width={24} />
-                  </Box>
-                </Box>
-              </CustomTooltip>
-            ) : (
+            ) : data.status === "GENERATED" ? (
               <Box
                 component={IconButton}
                 textTransform={"capitalize"}
-                disabled={data.status !== "GENERATED"}
                 onClick={() =>
                   downloadReportDashboard(
                     data.stakeKeyReportId ? data.stakeKeyReportId : data.poolReportId,
@@ -199,6 +190,8 @@ const Dashboard: React.FC = () => {
               >
                 <CustomIcon icon={DownloadGreenIcon} width={24} />
               </Box>
+            ) : (
+              <></>
             )}
           </Box>
         );
