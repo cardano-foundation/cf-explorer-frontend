@@ -34,7 +34,7 @@ import useFetch from "~/commons/hooks/useFetch";
 import { API } from "~/commons/utils/api";
 import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "~/types/protocol";
 import ParseScriptModal from "~/components/ParseScriptModal";
-import { DateRangeIcon, FilterIcon, ProtocolParam, ResetIcon } from "~/commons/resources";
+import { DateRangeIcon, EmptyIcon, FilterIcon, ProtocolParam, ResetIcon } from "~/commons/resources";
 import DateRangeModal from "~/components/FilterReport/DateRangeModal";
 import { formatDateTimeLocal } from "~/commons/utils/helper";
 import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
@@ -412,7 +412,30 @@ const ProtocolParameterHistory = () => {
           </Box>
         }
       >
-        <TableStyled columns={columnsTable} data={dataTable} loading={loading} />
+        {columnsTable?.length > 1 && <TableStyled columns={columnsTable} data={dataTable} loading={loading} />}
+        {columnsTable?.length === 1 && (
+          <Box textAlign={"center"}>
+            <Box component={"img"} src={EmptyIcon} mt={3} />
+            <Box
+              component={Button}
+              width={"200px"}
+              textTransform={"capitalize"}
+              onClick={() => {
+                setResetFilter(true);
+                setShowFiter(false);
+              }}
+              mx={"auto"}
+              display={"flex"}
+              alignItems={"center"}
+              mt={3}
+              mb={2}
+              color={`#108AEF !important`}
+            >
+              <Box mr={1}>Reset</Box>
+              <ResetIcon />
+            </Box>
+          </Box>
+        )}
       </Card>
     </Box>
   );
