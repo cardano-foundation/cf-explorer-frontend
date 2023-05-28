@@ -114,7 +114,7 @@ const PoolLifecycle = () => {
       key: "status",
       minWidth: "100px",
       render(data) {
-        return <Status status={data.status}>{data.status}</Status>;
+        return <Status status={data.status}>{data?.status.replace("_", " ")}</Status>;
       }
     },
     {
@@ -127,17 +127,7 @@ const PoolLifecycle = () => {
           <Box width='100%' textAlign='center'>
             {onDownload === data.reportId ? (
               <CircularProgress size={22} color='primary' />
-            ) : data.status === "EXPIRED" ? (
-              <Box width='100%' textAlign='center'>
-                <CustomTooltip title='Report file only available for 7 days after created'>
-                  <Box display={"inline-block"}>
-                    <Box component={IconButton} disabled>
-                      <CustomIcon icon={DownloadGreenIcon} width={24} />
-                    </Box>
-                  </Box>
-                </CustomTooltip>
-              </Box>
-            ) : (
+            ) : data.status === "GENERATED" ? (
               <Box
                 component={IconButton}
                 display={"block"}
@@ -148,6 +138,8 @@ const PoolLifecycle = () => {
               >
                 <CustomIcon icon={DownloadGreenIcon} width={24} />
               </Box>
+            ) : (
+              <></>
             )}
           </Box>
         );

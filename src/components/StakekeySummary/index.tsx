@@ -114,7 +114,7 @@ const StakekeySummary = () => {
       key: "status",
       minWidth: "100px",
       render(data) {
-        return <Status status={data.status}>{data.status}</Status>;
+        return <Status status={data.status}>{data?.status.replace("_", " ")}</Status>;
       }
     },
     {
@@ -123,17 +123,7 @@ const StakekeySummary = () => {
       maxWidth: "50px",
       minWidth: "50px",
       render(data) {
-        return data.status === "EXPIRED" ? (
-          <Box width='100%' textAlign='center'>
-            <CustomTooltip title='Report file only available for 7 days after created'>
-              <Box display={"inline-block"}>
-                <Box component={IconButton} disabled>
-                  <CustomIcon icon={DownloadGreenIcon} width={24} />
-                </Box>
-              </Box>
-            </CustomTooltip>
-          </Box>
-        ) : (
+        return data.status === "GENERATED" ? (
           <Box width='100%' textAlign='center'>
             <Box
               component={IconButton}
@@ -146,6 +136,8 @@ const StakekeySummary = () => {
               <CustomIcon icon={DownloadGreenIcon} width={24} />
             </Box>
           </Box>
+        ) : (
+          <></>
         );
       }
     }
