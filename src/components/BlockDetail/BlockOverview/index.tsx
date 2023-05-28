@@ -15,9 +15,10 @@ import ADAicon from "../../commons/ADAIcon";
 interface BlockOverviewProps {
   data: BlockDetail | null;
   loading: boolean;
+  lastUpdated: number;
 }
 
-const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
+const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdated }) => {
   const renderConfirmationTag = () => {
     if (data && data.confirmation) {
       if (data.confirmation <= 2) {
@@ -123,6 +124,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading }) => {
       hash={data?.hash}
       bookmarkData={`${data?.blockNo || ""}`}
       title={"Block detail"}
+      lastUpdated={lastUpdated}
       epoch={
         data && {
           no: data.epochNo,

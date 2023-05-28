@@ -1,4 +1,4 @@
-import { styled, Container } from "@mui/material";
+import { styled, Container, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
@@ -14,6 +14,27 @@ export const StyledContainer = styled(Container)`
     margin-top: 0px !important;
   }
 `;
+
+export const Actions = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  flexWrap: "wrap",
+  marginTop: -10
+}));
+
+export const PageSize = styled(Box)(() => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: 3
+}));
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.grey[400],
+  display: "block",
+  margin: "12px 0px"
+}));
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;

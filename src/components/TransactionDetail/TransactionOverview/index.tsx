@@ -26,9 +26,10 @@ import { useScreen } from "../../../commons/hooks/useScreen";
 interface Props {
   data: Transaction | null;
   loading: boolean;
+  lastUpdated: number;
 }
 
-const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
+const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const [openListInput, setOpenListInput] = useState(false);
   const [openListOutput, setOpenListOutput] = useState(false);
@@ -251,6 +252,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       }
       listItem={listOverview}
       loading={loading}
+      lastUpdated={lastUpdated}
     />
   );
 };

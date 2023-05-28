@@ -28,7 +28,8 @@ import {
   StyledSelect,
   StyledMenuItem,
   WrapHeader,
-  EpochDetail
+  EpochDetail,
+  TimeDuration
 } from "./styles";
 import { details } from "../../../commons/routers";
 import Bookmark from "../BookmarkIcon";
@@ -40,12 +41,14 @@ import { BiChevronDown } from "react-icons/bi";
 import { getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import { useScreen } from "../../../commons/hooks/useScreen";
 import CustomTooltip from "../CustomTooltip";
+import FormNowMessage from "../FormNowMessage";
 
 interface DetailHeaderProps {
   type: Bookmark["type"];
   bookmarkData?: string;
   loading: boolean;
   title: number | string;
+  lastUpdated?: number;
   hash?: string;
   transactionStatus?: keyof typeof TransactionStatus;
   stakeKeyStatus?: StakeStatus;
@@ -74,7 +77,8 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     transactionStatus,
     bookmarkData,
     stakeKeyStatus,
-    isHideButtonBack
+    isHideButtonBack,
+    lastUpdated
   } = props;
   const history = useHistory();
   const theme = useTheme();
@@ -170,6 +174,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               <SlotLeaderCopy text={hash} />
             </SlotLeader>
           )}
+          <TimeDuration>
+            <FormNowMessage time={lastUpdated} />
+          </TimeDuration>
         </Box>
         {epoch ? (
           <EpochDetail class-name='123'>
@@ -257,7 +264,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                       item?.dataSearch?.map((item, index) => (
                         <StyledMenuItem
                           onClick={() => {
-                            handleClickItem(details.token(item?.assetId))
+                            handleClickItem(details.token(item?.assetId));
                           }}
                           key={index}
                         >
@@ -290,7 +297,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
         onClick={() => setOpenBackdrop({ input: false, output: false })}
         open={openBackdrop.input || openBackdrop.output}
       />
-    </HeaderDetailContainer >
+    </HeaderDetailContainer>
   );
 };
 

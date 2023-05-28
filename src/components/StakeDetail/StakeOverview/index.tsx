@@ -16,8 +16,9 @@ import ADAicon from "~/components/commons/ADAIcon";
 interface Props {
   data: IStakeKeyDetail | null;
   loading: boolean;
+  lastUpdated: number;
 }
-const StakeOverview: React.FC<Props> = ({ data, loading }) => {
+const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
   const [open, setOpen] = useState(false);
   const { stakeId } = useParams<{ stakeId: string }>();
 
@@ -111,6 +112,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       stakeKeyStatus={data?.status}
       listItem={listOverview}
       loading={loading}
+      lastUpdated={lastUpdated}
     />
   );
 };

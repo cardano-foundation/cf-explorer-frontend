@@ -47,6 +47,7 @@ export const WrapHeader = styled(Box)(({ theme }) => ({
 export const HeaderContainer = styled(Box)`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 `;
 
 export const HeaderTitle = styled("h2")`
@@ -465,4 +466,10 @@ export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   "&:hover": {
     backgroundColor: "rgba(67, 143, 104, 0.1)"
   }
+}));
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.grey[400],
+  display: "block",
+  marginBottom: 10
 }));

@@ -13,7 +13,7 @@ import {
 } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
-import { StyledContainer, StyledLink } from "./styles";
+import { StyledContainer, StyledLink, TimeDuration } from "./styles";
 import Table, { Column } from "../../components/commons/Table";
 import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
@@ -22,6 +22,7 @@ import { RootState } from "../../stores/types";
 import { API } from "../../commons/utils/api";
 import ADAicon from "../../components/commons/ADAIcon";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
+import FormNowMessage from "~/components/commons/FormNowMessage";
 
 const Transactions: React.FC = () => {
   const { search } = useLocation();
@@ -99,7 +100,15 @@ const Transactions: React.FC = () => {
 
   return (
     <StyledContainer>
-      <Card title={"Contracts"} underline={false}>
+      <Card
+        title={"Contracts"}
+        underline={false}
+        extra={
+          <TimeDuration>
+            <FormNowMessage time={fetchData.lastUpdated} />
+          </TimeDuration>
+        }
+      >
         <Table
           {...fetchData}
           columns={columns}

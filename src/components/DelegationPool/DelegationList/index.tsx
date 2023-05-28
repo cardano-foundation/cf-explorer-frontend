@@ -11,6 +11,7 @@ import { Box } from "@mui/material";
 import CustomTooltip from "../../commons/CustomTooltip";
 import RateWithIcon from "../../commons/RateWithIcon";
 import { API } from "../../../commons/utils/api";
+import { REFRESH_TIMES } from "../../../commons/utils/constants";
 
 const DelegationLists: React.FC = () => {
   const history = useHistory();
@@ -20,12 +21,12 @@ const DelegationLists: React.FC = () => {
   const [size, setSize] = useState(50);
   const [sort, setSort] = useState<string>("");
   const tableRef = useRef(null);
-  const fetchData = useFetchList<Delegators>(API.DELEGATION.POOL_LIST, {
-    page: page - 1,
-    size,
-    search,
-    sort
-  });
+  const fetchData = useFetchList<Delegators>(
+    API.DELEGATION.POOL_LIST,
+    { page: page - 1, size, search, sort },
+    false,
+    REFRESH_TIMES.POOLS
+  );
   const { search: locationSearch } = useLocation();
   const pageInfo = getPageInfo(locationSearch);
 

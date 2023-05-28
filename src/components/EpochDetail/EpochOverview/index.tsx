@@ -13,9 +13,10 @@ import ADAicon from "../../commons/ADAIcon";
 interface EpochOverviewProps {
   data: IDataEpoch | null;
   loading: boolean;
+  lastUpdated: number;
 }
 
-const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
+const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdated }) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const slot = data && data?.no === currentEpoch?.no ? currentEpoch.slot : MAX_SLOT_EPOCH;
 
@@ -84,6 +85,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading }) => {
       type='EPOCH'
       bookmarkData={`${data?.no || ""}`}
       title={"Epoch detail"}
+      lastUpdated={lastUpdated}
       epoch={
         data && {
           no: data.no,
