@@ -91,7 +91,7 @@ const SPOLifecycle = () => {
     history.push(details.spo(poolId, mode, validTab));
   };
 
-  if ((!initialized && !error) || !renderTabsSPO) return null;
+  if (!initialized && !error) return null;
   if (error || !data || !data.poolId) return <NoRecord />;
 
   return (
@@ -127,15 +127,20 @@ const SPOLifecycle = () => {
             )}
           </BoxItemStyled>
         </BoxContainerStyled>
-        {validMode === "timeline" ? (
-          <SPOLifecycleComponent
-            currentStep={currentStep}
-            setCurrentStep={setCurrentStep}
-            renderTabsSPO={renderTabsSPO}
-          />
-        ) : (
-          <Tabular renderTabsSPO={renderTabsSPO} />
+        {renderTabsSPO && (
+          <>
+            {validMode === "timeline" ? (
+              <SPOLifecycleComponent
+                currentStep={currentStep}
+                setCurrentStep={setCurrentStep}
+                renderTabsSPO={renderTabsSPO}
+              />
+            ) : (
+              <Tabular renderTabsSPO={renderTabsSPO} />
+            )}
+          </>
         )}
+
         <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
       </StyledContainer>
     </PoolDetailContext.Provider>
