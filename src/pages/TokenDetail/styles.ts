@@ -20,7 +20,7 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
       paddingRight: "0px"
     },
     "& > div:nth-of-type(n+3)": {
-      paddingLeft: "16px !important"
+      padding: "0px 16px !important"
     },
     "& h2": {
       paddingLeft: "0px"
