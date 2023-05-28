@@ -43,7 +43,7 @@ export const formatPrice = (value?: string | number, abbreviations: string[] = L
 // };
 export const numberWithCommas = (value?: number | string, decimal = 0) => {
   if (!value) return "0";
-  const [integerPart, decimalPart] = String(parseFloat(Number(value).toFixed(decimal))).split(".");
+  const [integerPart, decimalPart] = Number(value).toFixed(decimal).split(".");
   const formattedIntegerPart = integerPart.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   return decimalPart ? `${formattedIntegerPart}.${decimalPart}` : formattedIntegerPart;
 };
@@ -167,4 +167,9 @@ export function formatHash(hash: string): string {
 
 export const truncateCustom = (text: string, first = 4, last = 8) => {
   return `${text.slice(0, first)}...${text.slice(-last)}`;
+};
+
+export const formatAmount = (amount: number | string, decimal = 0) => {
+  if (!amount) return "0";
+  return new BigNumber(amount).div(10 ** decimal).toFormat();
 };

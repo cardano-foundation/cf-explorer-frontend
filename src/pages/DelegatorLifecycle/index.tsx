@@ -87,7 +87,7 @@ const DelegatorLifecycle = () => {
   const changeMode = (mode: ViewMode) => {
     history.push(details.staking(stakeId, mode, validTab));
   };
-  if ((!initialized && !error) || !dataTabsConfig) return null;
+  if (!initialized && !error) return null;
 
   if (error || !data) return <NoRecord />;
 
@@ -124,15 +124,20 @@ const DelegatorLifecycle = () => {
             )}
           </BoxItemStyled>
         </BoxContainerStyled>
-        {validMode === "timeline" ? (
-          <DelegatorLifecycleComponent
-            currentStep={currentStep}
-            setCurrentStep={setCurrentStep}
-            tabsRenderConfig={dataTabsConfig}
-          />
-        ) : (
-          <Tabular tabsRenderConfig={dataTabsConfig} />
+        {dataTabsConfig && (
+          <>
+            {validMode === "timeline" ? (
+              <DelegatorLifecycleComponent
+                currentStep={currentStep}
+                setCurrentStep={setCurrentStep}
+                tabsRenderConfig={dataTabsConfig}
+              />
+            ) : (
+              <Tabular tabsRenderConfig={dataTabsConfig} />
+            )}
+          </>
         )}
+
         <ReportComposerModal open={open} handleCloseModal={() => setOpen(false)} />
       </StyledContainer>
     </DelegatorDetailContext.Provider>
