@@ -12,7 +12,7 @@ import { DATETIME_PARTTEN } from "../../../StackingFilter/DateRangeModal";
 import { FilterDateLabel } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles";
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import Table, { Column } from "../../../commons/Table";
-import { GreenWalletIcon } from "../../TabularOverview";
+import { GreenWalletIcon } from "~/components/commons/GreenWalletIcon";
 import { StyledLink, WrapWalletLabel, WrapperDelegationTab } from "../styles";
 import { AdaValue } from "./StakeRegistrationTab";
 

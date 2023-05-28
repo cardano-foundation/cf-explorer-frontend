@@ -1,69 +1,87 @@
-import { Box, Button, Typography, styled } from "@mui/material";
-import { PaymentWallet } from "~/commons/resources";
+import { Box, Button, Card, Typography, styled } from "@mui/material";
+import { AdaLogoIcon } from "~/components/commons/ADAIcon";
 
-export const CardOverview = styled(Box)`
-  background: white;
-  border-radius: 12px;
-  height: 120px;
-  display: flex;
-  flex: wrap;
-  padding: 0 25px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.03);
-  & > svg {
-    position: absolute;
-    width: 127px;
-    height: 120px;
-    left: 0;
+export const CardList = styled(Box)(() => ({
+  display: "flex",
+  flexWrap: "wrap",
+  gap: "20px 15px",
+  width: "100%"
+}));
+
+export const CardItem = styled(Card)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+  display: "flex",
+  alignItems: "center",
+  padding: "20px 25px",
+  boxSizing: "border-box",
+  gap: 20,
+  flex: 1,
+  boxShadow: theme.shadow.card,
+  borderRadius: 12,
+  minWidth: "calc(50% - 10px)",
+  overflow: "hidden",
+  [theme.breakpoints.down("lg")]: {
+    minWidth: sidebar ? "100%" : "calc(50% - 10px)"
+  },
+  [theme.breakpoints.down("md")]: {
+    minWidth: "100%"
   }
-`;
+}));
+
+export const ItemIcon = styled("img")(() => ({
+  width: 80,
+  height: 80
+}));
 
 export const CardContent = styled(Box)(() => ({
   display: "flex",
+  justifyContent: "space-between",
   alignItems: "center",
-  gap: "12px",
-  width: "100%",
-  padding: "15px 0px"
+  gap: 10,
+  flex: 1,
+  boxSizing: "border-box",
+  flexWrap: "wrap"
 }));
 
-export const WrapIcon = styled(Box)(() => ({
-  width: 95,
-  marginRight: 12,
+export const CardInfo = styled(Box)(() => ({
   display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-start"
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: 8,
+  flex: 1
 }));
 
 export const CardTitle = styled(Typography)(({ theme }) => ({
-  fontWeight: theme.typography.fontWeightBold,
-  fontSize: "1rem",
+  fontWeight: 700,
+  fontSize: 16,
+  lineHeight: "19px",
   color: theme.palette.grey[400],
-  marginBottom: 4,
-  [theme.breakpoints.down("md")]: {
-    fontSize: "0.785rem"
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 14,
+    lineHeight: "16px"
   }
 }));
 
 export const CardValue = styled(Typography)(({ theme }) => ({
-  fontWeight: theme.typography.fontWeightBold,
-  fontSize: 16,
-  color: theme.palette.grey[700]
-}));
-
-export const WalletBox = styled(Box)(({ theme }) => ({
-  display: " block",
-  [theme.breakpoints.down("md")]: {
-    display: "none"
+  fontWeight: 700,
+  fontSize: 24,
+  lineHeight: "23px",
+  color: theme.palette.grey[700],
+  whiteSpace: "nowrap",
+  wordBreak: "break-all",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 20,
+    lineHeight: "23px",
+    whiteSpace: "wrap",
+    wordBreak: "break-all"
   }
 }));
 
-export const StyledPaymentWalletIcon = styled(PaymentWallet)(({ theme }) => ({
-  [theme.breakpoints.down("md")]: {
-    transform: "scale(0.8)"
-  },
+export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
+  fontSize: 18,
+  marginLeft: 8,
   [theme.breakpoints.down("sm")]: {
-    transform: "none"
+    marginLeft: 5,
+    fontSize: 16
   }
 }));
 
@@ -71,42 +89,11 @@ export const TransferButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.main,
   color: theme.palette.common.white,
   fontSize: 14,
-  fontWeight: theme.typography.fontWeightBold,
-  padding: "10px 16px",
+  fontWeight: 700,
+  lineHeight: "16px",
+  padding: "8px 16px",
   borderRadius: 8,
   textTransform: "unset",
   boxShadow: "none",
-  width: "160px",
-  [theme.breakpoints.down("md")]: {
-    padding: "6px 12px",
-    width: "min(100%, 160px)",
-    fontSize: 10,
-  },
-  [theme.breakpoints.down("sm")]: {
-    padding: "6px 16px",
-    width: "160px",
-    fontSize: 14,
-  }
+  width: "max-content"
 }));
-
-export const WrapFlex = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  flexWrap: "wrap",
-  gap: "5px",
-  flex: 1
-}));
-
-export const WrapWalletIcon = styled(Box)`
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-  background: rgba(67, 143, 104, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  & > svg {
-    width: 17px;
-    height: 17px;
-  }
-`;

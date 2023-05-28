@@ -12,10 +12,10 @@ import { FilterDateLabel } from "../../../StakingLifeCycle/DelegatorLifecycle/De
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
-import { GreenWalletIcon } from "../../TabularOverview";
 import { StyledLink, TableSubTitle, WrapWalletLabel, WrapperDelegationTab } from "../styles";
 import { AdaValue } from "./StakeRegistrationTab";
 import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import { GreenWalletIcon } from "~/components/commons/GreenWalletIcon";
 
 const WithdrawalHistoryTab = () => {
   const detailData = useContext(DelegatorDetailContext);
