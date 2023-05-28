@@ -218,10 +218,10 @@ const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen }) => 
   const { userData } = useSelector(({ user }: RootState) => user);
 
   useEffect(() => {
-    if (stakeAddress === null && selectedWallet) {
+    if (stakeKey === null && selectedWallet) {
       handleClick(selectedWallet as SupportedWallets, true);
     }
-  }, [stakeAddress]);
+  }, [stakeKey]);
 
   const handleSubmitWallet = async () => {
     if (!stakeKey) return;
