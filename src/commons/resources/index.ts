@@ -78,7 +78,9 @@ import AdaHolderIconUrl from "./images/ada-holder.png";
 import PaymentWalletUrl from "./images/payment-wallet.png";
 import SPOHolderIconUrl from "./images/spo-holder.png";
 import PolygonSPOUrl from "./images/polygon-spo.png";
-import RewardBoxIcon from "./images/reward-box-icon.png";
+import RewardAccountIconUrl from "./images/reward-box-icon.png";
+import DelegationToIconUrl from "./images/delegation-to.png";
+import RewardWithdrawnIconUrl from "./images/reward-withdrawn.png";
 
 import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
 import { ReactComponent as FilterIcon } from "./icons/filter.svg";
@@ -178,7 +180,9 @@ export {
   PaymentWalletUrl,
   SPOHolderIconUrl,
   PolygonSPOUrl,
-  RewardBoxIcon
+  RewardAccountIconUrl,
+  DelegationToIconUrl,
+  RewardWithdrawnIconUrl
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";

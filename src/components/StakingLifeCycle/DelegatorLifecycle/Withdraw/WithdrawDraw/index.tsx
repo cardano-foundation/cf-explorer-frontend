@@ -24,7 +24,6 @@ import {
   StyledAdaLogoIcon
 } from "./styles";
 import { formatADA, formatDateTimeLocal, getShortHash } from "../../../../../commons/utils/helper";
-import moment from "moment";
 import { useHistory, useParams } from "react-router-dom";
 import CustomTooltip from "../../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../../SPOLifecycle/Registration/styles";
@@ -35,7 +34,7 @@ import {
   TimeIcon,
   PaymentWalletUrl,
   WalletIconRewardGreen,
-  RewardBoxIcon
+  RewardAccountIconUrl
 } from "~/commons/resources";
 import { LineArrowItem } from "~/components/commons/LineArrow";
 import DrawPath from "~/components/commons/DrawPath";
@@ -186,7 +185,7 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
             </PaymentWalletInfo>
           </PaymentWalletContainer>
           <PaymentWalletContainer>
-            <PaymentWalletIcon src={RewardBoxIcon} alt='PaymentWallet' />
+            <PaymentWalletIcon src={RewardAccountIconUrl} alt='PaymentWallet' />
             <PaymentWalletInfo>
               <PaymentWalletTitle>Reward Account</PaymentWalletTitle>
               <PaymentWalletValueContainer>

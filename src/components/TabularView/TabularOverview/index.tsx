@@ -1,42 +1,29 @@
-import { Box, BoxProps, Grid, Icon } from "@mui/material";
+import { Box, Icon } from "@mui/material";
 import { useContext, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
-import { useScreen } from "../../../commons/hooks/useScreen";
 import {
-  BgGray,
-  DelegationTo,
-  PaymentWallet,
-  RewardAccount,
-  RewardWithdrawn,
-  TransactionIcon,
-  WalletGreenIcon
+  DelegationToIconUrl,
+  PaymentWalletUrl,
+  RewardAccountIconUrl,
+  RewardWithdrawnIconUrl,
+  TransactionIcon
 } from "../../../commons/resources/index";
 import { details } from "../../../commons/routers";
 import { formatADAFull, getShortHash } from "../../../commons/utils/helper";
 import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
-import ADAicon from "../../commons/ADAIcon";
 import {
   CardContent,
-  CardOverview,
+  CardInfo,
+  CardList,
+  CardItem,
   CardTitle,
   CardValue,
-  StyledPaymentWalletIcon,
-  TransferButton,
-  WalletBox,
-  WrapFlex,
-  WrapIcon,
-  WrapWalletIcon
+  ItemIcon,
+  StyledAdaLogoIcon,
+  TransferButton
 } from "./styles";
 import { useSelector } from "react-redux";
-
-export const GreenWalletIcon = (props: BoxProps) => {
-  return (
-    <WrapWalletIcon {...props}>
-      <Icon component={WalletGreenIcon} />
-    </WrapWalletIcon>
-  );
-};
 
 type TCardAmount = {
   amount?: number;
@@ -44,15 +31,10 @@ type TCardAmount = {
 
 const CardAmount = ({ amount }: TCardAmount) => {
   return (
-    <Box display='flex' alignItems='center' gap='10px'>
-      <WalletBox>
-        <GreenWalletIcon />
-      </WalletBox>
-      <CardValue>
-        {formatADAFull(amount)}
-        <ADAicon pl={"8px"} />
-      </CardValue>
-    </Box>
+    <CardValue>
+      {formatADAFull(amount)}
+      <StyledAdaLogoIcon />
+    </CardValue>
   );
 };
 
@@ -60,34 +42,23 @@ type TGridItem = {
   action?: React.ReactNode;
   title: string;
   value: React.ReactNode;
-  mainIcon: React.ReactNode;
+  iconUrl: string;
 };
 
-const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
+const GridItem = ({ title, action, value, iconUrl }: TGridItem) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
 
   return (
-    <Grid item sm={sidebar ? 12 : 6} md={6} lg={6} width={"100%"}>
-      <CardOverview>
-        <Icon component={BgGray} />
-        <CardContent>
-          <WrapIcon>{mainIcon}</WrapIcon>
-          <WrapFlex>
-            <Box textAlign='start'>
-              <CardTitle>{title}</CardTitle>
-              {value}
-            </Box>
-            {action ? (
-              <Box display='flex' alignItems='center'>
-                {action}
-              </Box>
-            ) : (
-              <Box />
-            )}
-          </WrapFlex>
-        </CardContent>
-      </CardOverview>
-    </Grid>
+    <CardItem sidebar={+sidebar}>
+      <ItemIcon src={iconUrl} alt='title' />
+      <CardContent>
+        <CardInfo>
+          <CardTitle>{title}</CardTitle>
+          {value}
+        </CardInfo>
+        {action}
+      </CardContent>
+    </CardItem>
   );
 };
 
@@ -96,10 +67,10 @@ const TabularOverview: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Grid container spacing={2}>
+    <CardList>
       <GridItem
         title='Payment Wallet'
-        mainIcon={<StyledPaymentWalletIcon />}
+        iconUrl={PaymentWalletUrl}
         value={<CardAmount amount={Math.max(data?.totalStake || 0, 0)} />}
         action={
           <TransferButton
@@ -113,17 +84,17 @@ const TabularOverview: React.FC = () => {
       />
       <GridItem
         title='Reward Account'
-        mainIcon={<RewardAccount />}
+        iconUrl={RewardAccountIconUrl}
         value={<CardAmount amount={Math.max(data?.rewardAvailable || 0, 0)} />}
       />
       <GridItem
         title='Rewards Withdrawn'
-        mainIcon={<RewardWithdrawn />}
+        iconUrl={RewardWithdrawnIconUrl}
         value={<CardAmount amount={data?.rewardWithdrawn} />}
       />
       <GridItem
         title='Delegating To'
-        mainIcon={<DelegationTo />}
+        iconUrl={DelegationToIconUrl}
         value={
           <Box component={Link} to={details.delegation(data?.pool?.poolId)} display='flex' alignItems='center'>
             <CardValue>{data?.pool?.poolName || getShortHash(data?.pool?.poolId || "")}</CardValue>
@@ -131,7 +102,7 @@ const TabularOverview: React.FC = () => {
         }
       />
       <ADATransferModal open={open} handleCloseModal={() => setOpen(false)} />
-    </Grid>
+    </CardList>
   );
 };
 
