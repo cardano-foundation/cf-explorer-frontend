@@ -36,6 +36,7 @@ export const CardTitle = styled(Typography)(({ theme }) => ({
 }));
 
 export const CardValue = styled(Typography)<{ color?: string }>(({ theme, ...rest }) => ({
+  whiteSpace: "nowrap",
   fontWeight: theme.typography.fontWeightBold,
   fontSize: 16,
   color: rest.color ? rest.color : theme.palette.grey[700]
@@ -70,6 +71,7 @@ export const WrapWalletIcon = styled(Box)`
 export const ClickAbleLink = styled(Link)`
   color: ${({ theme }) => theme.palette.blue[800]} !important;
   cursor: pointer;
+  white-space: nowrap;
 `;
 
 export const ViewMoreButton = styled(IconButton)`
