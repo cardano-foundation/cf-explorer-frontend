@@ -1,5 +1,5 @@
 import { Box, CircularProgress, Input, useTheme } from "@mui/material";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import {
   Label,
   StyledAction,
@@ -217,6 +217,12 @@ const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen }) => 
   const [loadingStake, setLoadingStake] = useState(false);
   const { userData } = useSelector(({ user }: RootState) => user);
 
+  useEffect(() => {
+    if (stakeAddress === null && selectedWallet) {
+      handleClick(selectedWallet as SupportedWallets, true);
+    }
+  }, [stakeAddress]);
+
   const handleSubmitWallet = async () => {
     if (!stakeKey) return;
 
@@ -247,25 +253,27 @@ const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen }) => 
     setOpen(false);
     setStakeKey(null);
   };
-  const handleClick = (name: SupportedWallets) => {
-    setLoadingStake(true);
+  const handleClick = (name: SupportedWallets, loading = true) => {
+    loading && setLoadingStake(true);
+
     connect(
       name,
       () => {
         setStakeKey(stakeAddress);
-        setLoadingStake(false);
+        loading && setLoadingStake(false);
       },
       (e) => {
-        setLoadingStake(false);
+        loading && setLoadingStake(false);
         if (e.name === "EnablementFailedError") {
-          toast.error(
-            `You are currently connect to ${
-              NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()
-            }, please switch to  ${NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()}!`
-          );
+          loading &&
+            toast.error(
+              `You are currently connect to ${
+                NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()
+              }, please switch to  ${NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()}!`
+            );
           return;
         }
-        toast.error("Something went wrong!");
+        loading && toast.error("Something went wrong!");
       }
     );
   };

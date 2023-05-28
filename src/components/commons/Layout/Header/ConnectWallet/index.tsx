@@ -64,7 +64,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
   const handleSignIn = async (signature: string, nonce: NonceObject | null) => {
     try {
       setSignature(signature);
-      if (nonce?.message === "SS_0") {
+      if (nonce?.nonce) {
         const payload = {
           address: stakeAddress || "",
           signature,
