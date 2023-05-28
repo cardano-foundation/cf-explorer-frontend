@@ -25,7 +25,6 @@ const StyledModal: React.FC<IProps> = ({
   contentStyle = {}
 }) => {
   const { isMobile } = useScreen();
-  const { sidebar } = useSelector(({ user }: RootState) => user);
 
   return (
     <Modal open={open}>
@@ -35,7 +34,6 @@ const StyledModal: React.FC<IProps> = ({
         paddingX={paddingX || (isMobile ? "10px" : "40px")}
         paddingY={paddingY || (isMobile ? "20px" : "50px")}
         viewwidth={isMobile ? 92 : 70}
-        sidebar={sidebar}
       >
         <CloseButton saving={0} onClick={() => handleCloseModal()} data-testid='close-modal-button'>
           <IoMdClose />

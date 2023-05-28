@@ -1,7 +1,7 @@
 import { Box, IconButton, styled } from "@mui/material";
 
 export const ModalContainer = styled(Box)<{ width?: number | string; viewwidth?: string | number; sidebar?: boolean }>(
-  ({ theme, width, viewwidth, sidebar }) => ({
+  ({ theme, width, viewwidth }) => ({
     position: "relative",
     top: "50%",
     left: "50%",
@@ -21,9 +21,6 @@ export const ModalContainer = styled(Box)<{ width?: number | string; viewwidth?:
       maxHeight: "80vh",
       display: "flex",
       flexDirection: "column"
-    },
-    [theme.breakpoints.up("md")]: {
-      left: sidebar ? "calc(50% + 130px)" : "calc(50% + 85px)"
     }
   })
 );
