@@ -16,7 +16,7 @@ export const BackText = styled("small")`
 export const FilterContainer = styled(Box)(({ theme }) => ({
   width: 300,
   backgroundColor: theme.palette.common.white,
-  zIndex: 1000,
+  zIndex: 15,
   position: "absolute",
   top: "calc(100% + 10px)",
   right: 0,

@@ -210,11 +210,20 @@ export default ProtocolParameter;
 
 const ProtocolParameterHistory = () => {
   const [filterParams, setFilterParams] = useState<string[]>([]);
+  const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const { data: dataHistory, loading } = useFetch<ProtocolHistory>(
     `${API.PROTOCOL_PARAMETER.HISTORY}/${
       filterParams.length === 29 || filterParams.length === 0
         ? "ALL"
         : filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]).join(",")
+    } ${
+      _.isEmpty(dateRangeFilter)
+        ? ""
+        : `?startTime=${moment(dateRangeFilter.toDate).utc().format("YYYY/MM/DD HH:mm:ss")}&endTime=${moment(
+            dateRangeFilter.fromDate
+          )
+            .utc()
+            .format("YYYY/MM/DD HH:mm:ss")}`
     }`
   );
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
@@ -228,11 +237,10 @@ const ProtocolParameterHistory = () => {
   const [showFilter, setShowFiter] = useState(false);
   const [resetFilter, setResetFilter] = useState<boolean>(false);
   const [sortTimeFilter, setSortTimeFilter] = useState<"FirstLast" | "LastFirst" | "">("");
-  const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
 
   const getTitleColumn = (data: ProtocolHistory | null) => {
     data &&
-      data.epochChanges.map(({ endEpoch, startEpoch }) => {
+      (data.epochChanges || [])?.map(({ endEpoch, startEpoch }) => {
         return endEpoch === startEpoch
           ? pushColumnTitle(`Epoch ${startEpoch}`)
           : pushColumnTitle(`Epoch ${endEpoch} - ${startEpoch}`);
@@ -254,27 +262,6 @@ const ProtocolParameterHistory = () => {
         }
       }
     }
-  };
-
-  const filterDataByTime = (data: { [key: string]: any }[], start: string, end: string) => {
-    const column: string[] = [];
-    const startDate = moment(start, "YYYY/MM/DD hh:mm:ss");
-    const endDate = moment(end, "YYYY/MM/DD hh:mm:ss");
-    data.filter((d) => {
-      for (const key in d) {
-        if (
-          d[key] &&
-          d[key]?.time &&
-          moment(d[key]?.time, "YYYY/MM/DD hh:mm:ss").isBetween(startDate, endDate, null, "[]")
-        ) {
-          if (!column.includes(key)) {
-            column.push(key);
-          }
-        }
-      }
-    });
-    setColumnsTable([columnsFull[0], ...columnsFull.filter((c) => column.includes(c.title as string))]);
-    return column;
   };
 
   const columnsMap = columnTitle.map((t) => ({
@@ -304,7 +291,7 @@ const ProtocolParameterHistory = () => {
               : "#"
           }
         >
-          {r[t].status === "ADDED" ? (
+          {r[t]?.status === "ADDED" ? (
             <CustomTooltip title='No transaction'>
               <Box>{r[t] ? (r[t]?.value ? r[t]?.value : r[t]?.value === 0 ? 0 : "") : ""}</Box>
             </CustomTooltip>
@@ -348,15 +335,7 @@ const ProtocolParameterHistory = () => {
       getDataColumn(dataHistory);
       setColumnsTable([...columnsFull]);
     }
-  }, [JSON.stringify(columnTitle)]);
-
-  useUpdateEffect(() => {
-    if (!_.isEmpty(dateRangeFilter)) {
-      filterDataByTime(dataHistoryMapping, dateRangeFilter.fromDate || "", dateRangeFilter.toDate || "");
-    } else {
-      setColumnsTable([...columnsFull]);
-    }
-  }, [JSON.stringify(dateRangeFilter)]);
+  }, [JSON.stringify(columnTitle), JSON.stringify(dataHistory)]);
 
   useUpdateEffect(() => {
     setDataTable([...dataHistoryMapping].slice(1));
@@ -373,19 +352,10 @@ const ProtocolParameterHistory = () => {
   }, [resetFilter]);
 
   useUpdateEffect(() => {
-    if (_.isEmpty(dateRangeFilter)) {
-      if (sortTimeFilter === "FirstLast") {
-        setColumnsTable([columnsFull[0], ...columnsFull.slice(1).reverse()]);
-      }
-      if (sortTimeFilter === "LastFirst" || sortTimeFilter === "") {
-        setColumnsTable([...columnsFull]);
-      }
-    } else {
-      setColumnsTable([columnsTable[0], ...columnsTable.slice(1).reverse()]);
-    }
+    setColumnsTable([columnsTable[0], ...columnsTable.slice(1).reverse()]);
   }, [sortTimeFilter]);
 
-  if (loading || dataTable.length === 0) {
+  if (loading) {
     return (
       <Box component={Skeleton} mt={2} borderRadius={({ spacing }) => spacing(2)} variant='rectangular' height={400} />
     );
@@ -427,8 +397,7 @@ const ProtocolParameterHistory = () => {
           </Box>
         }
       >
-        {columnsTable?.length > 1 && <TableStyled columns={columnsTable} data={dataTable} loading={loading} />}
-        {columnsTable?.length === 1 && (
+        {columnsTable?.length === 1 && !loading && (
           <Box textAlign={"center"}>
             <Box component={"img"} src={EmptyIcon} mt={3} />
             <Box
@@ -451,6 +420,7 @@ const ProtocolParameterHistory = () => {
             </Box>
           </Box>
         )}
+        {columnsTable?.length > 1 && <TableStyled columns={columnsTable} data={dataTable} loading={loading} />}
       </Card>
     </Box>
   );
