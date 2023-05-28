@@ -56,7 +56,7 @@ export const Watermark = styled("span")`
   aspect-ratio: 1;
   max-height: 100%;
   left: 0;
-  top: 0;
+  top: 70px;
   bottom: 0;
   &::after {
     content: "FOR \\a ILLUSTRION \\a ONLY";
