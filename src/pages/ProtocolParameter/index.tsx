@@ -41,6 +41,7 @@ import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
 import { Link } from "react-router-dom";
 import { details } from "~/commons/routers";
+import CustomTooltip from "~/components/commons/CustomTooltip";
 
 const ProtocolParameter: React.FC = () => {
   const [fixedColumnKeys, { push: pushFixedColumnKeys }] = useList<string>([]);
@@ -303,7 +304,21 @@ const ProtocolParameterHistory = () => {
               : "#"
           }
         >
-          {r[t] ? r[t]?.value || "" : ""}
+          {r[t].status === "ADDED" ? (
+            <CustomTooltip title='No transaction'>
+              <Box>{r[t] ? (r[t]?.value ? r[t]?.value : r[t]?.value === 0 ? 0 : "") : ""}</Box>
+            </CustomTooltip>
+          ) : r[t] ? (
+            r[t]?.value ? (
+              r[t]?.value
+            ) : r[t]?.value === 0 ? (
+              0
+            ) : (
+              ""
+            )
+          ) : (
+            ""
+          )}
         </Box>
       );
     }
