@@ -9,13 +9,14 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import DetailViewStakeKey from "../../components/commons/DetailView/DetailViewStakeKey";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
-import { StyledContainer, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
+import { StyledContainer, StyledLink, StyledTab, StyledTabs, TabLabel, TimeDuration } from "./styles";
 import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import SelectedIcon from "../../components/commons/SelectedIcon";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
 import { useScreen } from "../../commons/hooks/useScreen";
 import { Box } from "@mui/material";
+import FormNowMessage from "~/components/commons/FormNowMessage";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",
@@ -120,6 +121,9 @@ const Stake = () => {
             <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
             <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
           </StyledTabs>
+          <TimeDuration>
+            <FormNowMessage time={fetchData.lastUpdated} />
+          </TimeDuration>
           <Table
             {...fetchData}
             columns={columns}

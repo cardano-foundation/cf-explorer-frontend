@@ -3,6 +3,7 @@ import { Box, Grid, alpha, styled } from "@mui/material";
 export const EpochCard = styled(Box)(({ theme }) => ({
   display: "flex",
   backgroundColor: theme.palette.common.white,
+  cursor: "pointer",
   borderRadius: 12,
   padding: 24,
   marginBottom: 24,
@@ -12,6 +13,7 @@ export const EpochCard = styled(Box)(({ theme }) => ({
 }));
 
 export const Container = styled(Box)(({ theme }) => ({
+  cursor: "pointer",
   "& > div > div:first-of-type": {
     display: "none"
   },

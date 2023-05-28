@@ -5,6 +5,7 @@ import React, { ReactNode } from "react";
 const CardContainer = styled(Box)`
   background-color: transparent;
   border-radius: var(--border-radius);
+  position: relative;
 `;
 
 const Header = styled(Box)`

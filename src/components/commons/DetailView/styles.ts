@@ -519,3 +519,11 @@ export const ButtonModal = styled(Button)(({ theme }) => ({
     textDecoration: "underline"
   }
 }));
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.grey[400],
+  display: "block",
+  textAlign: "left",
+  flex: 1,
+  padding: 10
+}));

@@ -14,9 +14,10 @@ import moment from "moment";
 
 interface IProps {
   data: IDataEpoch;
+  onClick: (_: any, r: IDataEpoch, index: number) => void;
 }
 
-export default function FirstEpoch({ data: currentEpochData }: IProps) {
+export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) {
   const theme = useTheme();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   if (!currentEpochData) return null;
@@ -91,7 +92,7 @@ export default function FirstEpoch({ data: currentEpochData }: IProps) {
     }
   ];
   return (
-    <Container>
+    <Container onClick={() => onClick(currentEpochData, currentEpochData, 0)}>
       <DetailHeader isHideButtonBack={true} loading={false} listItem={listOverview} type='EPOCH' title={" "} />
     </Container>
   );

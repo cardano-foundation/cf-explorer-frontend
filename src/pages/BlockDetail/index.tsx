@@ -11,7 +11,7 @@ import { REFRESH_TIMES } from "../../commons/utils/constants";
 const BlockDetail = () => {
   const { blockId } = useParams<{ blockId: string }>();
   const { state } = useLocation<{ data?: BlockDetail }>();
-  const { data, loading, initialized, error } = useFetch<BlockDetail>(
+  const { data, loading, initialized, error, lastUpdated } = useFetch<BlockDetail>(
     `${API.BLOCK.DETAIL}/${blockId}`,
     state?.data,
     false,
@@ -31,7 +31,7 @@ const BlockDetail = () => {
 
   return (
     <StyledContainer>
-      <BlockOverview data={data} loading={loading} />
+      <BlockOverview data={data} loading={loading} lastUpdated={lastUpdated} />
       <TransactionListsFull underline={true} url={`${API.BLOCK.DETAIL}/${blockId}/txs`} />
     </StyledContainer>
   );
