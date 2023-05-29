@@ -4,10 +4,10 @@ import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { BsFillCaretDownFill } from "react-icons/bs";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward, IoMdClose } from "react-icons/io";
 import { DateRangeIcon } from "../../commons/resources";
 import "./index.css";
-import { SelectDateButton, StyledDatePicker, WrapCustomDatePicker } from "./styles";
+import { CloseButtonLeft, CloseButtonRight, SelectDateButton, StyledDatePicker, WrapCustomDatePicker } from "./styles";
 import useComponentVisible from "~/commons/hooks/useComponentVisible";
 
 export type IDate = Date | null;
@@ -124,7 +124,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
     <Box position={"relative"} ref={ref}>
       <CustomInput />
       {isComponentVisible && (
-        <>
+        <Box position={"relative"} zIndex={open ? 20 : -1}>
           <WrapContainerPickerStart>
             <StyledDatePicker
               open={open}
@@ -203,7 +203,10 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
                       </MyGrid>
                     </HiddenScroll>
                   )}
-                  <Box>
+                  <Box position={"relative"}>
+                    <CloseButtonLeft saving={0} onClick={() => setOpen(false)} data-testid='close-modal-button'>
+                      <IoMdClose />
+                    </CloseButtonLeft>
                     <IconButton onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
                       <IoIosArrowBack size={"18px"} />
                     </IconButton>
@@ -297,7 +300,10 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
                       </MyGrid>
                     </HiddenScroll>
                   )}
-                  <Box>
+                  <Box position={"relative"}>
+                    <CloseButtonRight saving={0} onClick={() => setOpen(false)} data-testid='close-modal-button'>
+                      <IoMdClose />
+                    </CloseButtonRight>
                     <IconButton onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
                       <IoIosArrowBack size={"18px"} />
                     </IconButton>
@@ -309,7 +315,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
               )}
             />
           </WrapContainerPickerEnd>
-        </>
+        </Box>
       )}
     </Box>
   );

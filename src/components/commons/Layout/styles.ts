@@ -72,6 +72,7 @@ export const openedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.enteringScreen
   }),
   [theme.breakpoints.down("md")]: {
+    zIndex: 1302,
     minWidth: 0,
     height: "100vh",
     maxHeight: "fill-available"
@@ -89,6 +90,7 @@ export const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen
   }),
   [theme.breakpoints.down("md")]: {
+    zIndex: 1302,
     width: 0,
     height: "100vh",
     maxHeight: "fill-available"
@@ -102,9 +104,6 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
   boxSizing: "border-box",
   borderRightWidth: 0,
   boxShadow: theme.shadow.draw,
-  [theme.breakpoints.down("md")]: {
-    zIndex: 1302,
-  },
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme)
