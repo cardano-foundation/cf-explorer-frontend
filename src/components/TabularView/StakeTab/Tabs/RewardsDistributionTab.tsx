@@ -36,9 +36,11 @@ const RewardsDistributionTab = () => {
       title: "Rewards Paid",
       key: "paid",
       minWidth: "120px",
-      render: (r) => (<AmountADARow>
-        +{formatADAFull(r.amount)} <ADAicon color='#333333' />
-      </AmountADARow>)
+      render: (r) => (
+        <AmountADARow>
+          +{formatADAFull(r.amount)} <ADAicon color='#333333' />
+        </AmountADARow>
+      )
     },
     {
       title: "Timestamp",
@@ -62,14 +64,7 @@ const RewardsDistributionTab = () => {
     sort: sort || params.sort
   });
   const { total, data } = fetchData;
-  const filterLabel = useMemo(() => {
-    if (params.fromDate && params.toDate)
-      return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
-        .utc(params.toDate, DATETIME_PARTTEN)
-        .local()
-        .format("MM/DD/YYYY")}`;
-    if (params.txHash) return `Searching for : ${params.txHash}`;
-  }, [params]);
+
   return (
     <>
       <WrapperDelegationTab>
@@ -82,8 +77,8 @@ const RewardsDistributionTab = () => {
           <WrapFilterDescription>
             Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}
           </WrapFilterDescription>
-          {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
           <StackingFilter
+            fullFilter={false}
             filterValue={params}
             onFilterValueChange={(params) => {
               setParams((pre) => ({

@@ -100,14 +100,14 @@ const ProtocolParameter: React.FC = () => {
 
   const columnsFull: Column<TProtocolParam>[] = [
     {
-      title: "Epoch",
+      title: "Last updated in epoch",
       key: "startEpoch",
       render: (r: TProtocolParam) => {
         return r?.epochChange?.startEpoch || 0;
       }
     },
     {
-      title: "Last Updated",
+      title: "Timestamp",
       key: "startEpoch",
       render: (r: TProtocolParam) => {
         return r?.timestamp ? formatDateTimeLocal(r.timestamp || "") : "";

@@ -83,14 +83,6 @@ const WithdrawalHistoryTab = () => {
     sort: sort || params?.sort
   });
   const { total, data } = fetchData;
-  const filterLabel = useMemo(() => {
-    if (params.fromDate && params.toDate)
-      return ` Filter by: ${moment.utc(params.fromDate, DATETIME_PARTTEN).local().format("MM/DD/YYYY")} - ${moment
-        .utc(params.toDate, DATETIME_PARTTEN)
-        .local()
-        .format("MM/DD/YYYY")}`;
-    if (params.txHash) return `Searching for : ${params.txHash}`;
-  }, [params]);
 
   return (
     <>
@@ -104,7 +96,7 @@ const WithdrawalHistoryTab = () => {
           <WrapFilterDescription>
             Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}
           </WrapFilterDescription>
-          {filterLabel && <FilterDateLabel>{filterLabel}</FilterDateLabel>}
+
           <StackingFilter
             filterValue={params}
             onFilterValueChange={(params) => {

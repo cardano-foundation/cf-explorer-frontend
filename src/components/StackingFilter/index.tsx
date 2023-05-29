@@ -30,25 +30,6 @@ interface StakingOption extends Option {
   addition?: React.FC<any>;
 }
 
-const filterOptions: StakingOption[] = [
-  {
-    label: "Latest - First",
-    icon: <CustomIcon icon={ArrowFromTopIcon} fill='currentColor' width={20} />,
-    value: "latest"
-  },
-  {
-    label: "First - Latest",
-    icon: <CustomIcon icon={ArrowFromBottomIcon} fill='currentColor' width={20} />,
-    value: "first"
-  },
-  { label: "Date range", icon: <CustomIcon icon={CalenderIcon} fill='currentColor' width={20} />, value: "dateRange" },
-  {
-    label: "Search transaction",
-    icon: <CustomIcon icon={SearchIcon} stroke='currentColor' width={22} />,
-    value: "search"
-  }
-];
-
 export interface FilterParams {
   sort?: string;
   fromDate?: string;
@@ -60,14 +41,43 @@ export interface StackingFilterProps {
   onFilterValueChange?: (params: FilterParams) => void;
   filterValue?: FilterParams;
   sortKey?: string;
+  fullFilter?: boolean;
 }
 
-const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, filterValue, sortKey = "time" }) => {
+const StackingFilter: React.FC<StackingFilterProps> = ({
+  onFilterValueChange,
+  filterValue,
+  sortKey = "time",
+  fullFilter = true
+}) => {
   const [open, setOpen] = useState(false);
   const [isOpenSelectRange, setIsOpenSelectRange] = useState(false);
   const [openSearchTransaction, setOpenSearchTransaction] = useState(false);
   const [selected, setSelected] = useState("");
   const [textSearch, setTextSearch] = useState("");
+
+  const filterOptions: StakingOption[] = [
+    {
+      label: "Latest - First",
+      icon: <CustomIcon icon={ArrowFromTopIcon} fill='currentColor' width={20} />,
+      value: "latest"
+    },
+    {
+      label: "First - Latest",
+      icon: <CustomIcon icon={ArrowFromBottomIcon} fill='currentColor' width={20} />,
+      value: "first"
+    },
+    {
+      label: "Date range",
+      icon: <CustomIcon icon={CalenderIcon} fill='currentColor' width={20} />,
+      value: "dateRange"
+    },
+    {
+      label: "Search transaction",
+      icon: <CustomIcon icon={SearchIcon} stroke='currentColor' width={22} />,
+      value: "search"
+    }
+  ];
 
   const onClickAway = () => {
     setOpen(false);
@@ -128,7 +138,7 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
         {open && filterOptions && (
           <FilterContent>
             <MenuList>
-              {filterOptions.map((option) => (
+              {(fullFilter ? filterOptions : filterOptions.slice(0, 2)).map((option) => (
                 <FilterMenuItem
                   active={+(option.value === selected)}
                   key={option.value}
