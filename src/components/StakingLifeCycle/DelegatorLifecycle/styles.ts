@@ -84,6 +84,7 @@ export const TabTitle = styled(Typography)(({ theme }) => ({
 
 export const StepHeader = styled(Typography)(({ theme }) => ({
   display: "flex",
+  flexWrap: "wrap",
   justifyContent: "space-between",
   alignItems: "center",
   marginTop: 40,
