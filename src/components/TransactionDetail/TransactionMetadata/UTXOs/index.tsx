@@ -6,7 +6,7 @@ import receiveImg from "~/commons/resources/images/receiveImg.svg";
 import sendImg from "~/commons/resources/images/sendImg.svg";
 import { details } from "~/commons/routers";
 import { formatADAFull, getShortHash, getShortWallet } from "~/commons/utils/helper";
-import { Header, Img, Item, ItemContent, ItemFooter } from "./styles";
+import { Header, Img, Item, ItemContent, ItemFooter, WrapInfo, WrapUTXOs } from "./styles";
 import { useScreen } from "~/commons/hooks/useScreen";
 import ADAicon from "~/components/commons/ADAIcon";
 import CustomTooltip from "~/components/commons/CustomTooltip";
@@ -65,16 +65,10 @@ const Card = ({
                   <Img src={type === "down" ? receiveImg : sendImg} alt='send icon' />
                 </Box>
               </Box>
-              <Box display='flex' width={"100%"} alignItems={"center"}>
+              <WrapInfo>
                 <Box width={"100%"} display='flex' flexDirection='column' justifyContent='center' paddingTop='5px'>
-                  {type === "down" && (
-                    <Box
-                      justifyContent={"space-between"}
-                      width={"100%"}
-                      display='flex'
-                      paddingBottom='5px'
-                      alignItems='center'
-                    >
+                  {type === "down" ? (
+                    <WrapUTXOs>
                       <Box mr={3} minWidth={200}>
                         <Box display={"flex"} justifyContent='flex-start' alignItems={"center"}>
                           <Box pr={1}>UTXO:</Box>
@@ -94,8 +88,8 @@ const Card = ({
                           <CopyButton text={item.txHash} />
                         </Box>
                       </Box>
-                    </Box>
-                  )}
+                    </WrapUTXOs>
+                  ) : <Box />}
                   <Box display={"flex"} justifyContent='space-between' alignItems={"center"}>
                     <Box display={"flex"} alignItems='center' justifyContent={"flex-start"} pr={1}>
                       {type === "down" ? "From" : "To"}:
@@ -188,7 +182,7 @@ const Card = ({
                     )}
                   </Box>
                 </Box>
-              </Box>
+              </WrapInfo>
             </ItemContent>
           </Item>
         ))}

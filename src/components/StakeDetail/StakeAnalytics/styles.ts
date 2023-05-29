@@ -14,16 +14,11 @@ export const BoxInfo = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   textAlign: "center",
-  height: "100%",
   [theme.breakpoints.down("lg")]: {
-    flexDirection: "row",
-    padding: "27px 10px"
+    flexDirection: "row"
   },
   [theme.breakpoints.down("sm")]: {
-    "&:first-of-type": {
-      borderBottom: "none",
-      borderRight: `1px solid ${alpha(theme.palette.common.white, 0.06)}`
-    }
+    flexDirection: "row"
   }
 }));
 
@@ -56,19 +51,24 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("lg")]: {
     borderTop: "none",
     width: "100%",
+    minHeight: "200px",
+    height: "100%",
     paddingTop: 0
   },
   [theme.breakpoints.down("sm")]: {
     width: "100%",
     borderRight: "none",
-    paddingLeft: "10px",
+    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    minHeight: "0px",
 
     "& > div": {
       width: "100%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+      padding: "0 10px",
+      margin: "25px 0"
     }
   }
 }));
@@ -83,18 +83,26 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("lg")]: {
     borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
     height: "100%",
-    width: "100%",
     borderBottom: "none",
+    width: "100%",
+    minHeight: "200px",
     paddingTop: 0
   },
   [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    borderRight: "none",
+    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    minHeight: "0",
+
     "& > div": {
       width: "100%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "space-between",
-      paddingRight: "10px"
+      padding: "0 10px",
+      margin: "25px 0",
+      borderRight: `1px solid ${alpha(theme.palette.common.white, 0.06)}`
     }
   }
 }));
@@ -109,8 +117,12 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   fontSize: "2rem",
   margin: "0 auto",
   overflowWrap: "anywhere",
+  [theme.breakpoints.down("md")]: {
+    padding: "0 10px"
+  },
   [theme.breakpoints.down("sm")]: {
-    fontSize: "1.25rem"
+    fontSize: "1.25rem",
+    padding: "0 10px"
   }
 }));
 

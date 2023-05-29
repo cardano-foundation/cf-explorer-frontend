@@ -7,6 +7,7 @@ import CopyButton from "../commons/CopyButton";
 import useFetch from "../../commons/hooks/useFetch";
 import { details } from "../../commons/routers";
 import { API } from "../../commons/utils/api";
+import StyledModal from "../commons/StyledModal";
 
 interface ScriptModalProps {
   open: boolean;
@@ -17,11 +18,8 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
   const { data, loading } = useFetch<PolicyDetail>(policy && `${API.POLICY}/${policy && policy}`);
   const theme = useTheme();
   return (
-    <Modal {...props}>
-      <ModalContainer>
-        <ButtonClose onClick={props.onClose}>
-          <img src={closeIcon} alt='icon close' />
-        </ButtonClose>
+    <StyledModal open={props.open} handleCloseModal={props.onClose}>
+      <>
         <Box
           textAlign={"left"}
           color={({ palette }) => palette.grey[700]}
@@ -88,8 +86,8 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
             </ViewJson>
           </>
         )}
-      </ModalContainer>
-    </Modal>
+      </>
+    </StyledModal>
   );
 };
 

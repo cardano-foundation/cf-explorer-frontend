@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Modal } from "@mui/material";
-import { ButtonClose, ModalContainer } from "./styles";
+import { ButtonClose, ModalContainer, WrapContent } from "./styles";
 import closeIcon from "../../../commons/resources/icons/closeIcon.svg";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import Table, { Column } from "../../commons/Table";
@@ -10,6 +10,8 @@ import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { StyledLink } from "~/components/share/styled";
+import StyledModal from "~/components/commons/StyledModal";
+import { useScreen } from "~/commons/hooks/useScreen";
 
 interface ModalAllAddressProps {
   open: boolean;
@@ -21,6 +23,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
   const history = useHistory();
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(50);
+  const { isMobile, isTablet, isGalaxyFoldSmall } = useScreen();
   const fetchData = useFetchList<Addresses>(`${API.STAKE.DETAIL}/${stake}/list-address`, { page: page - 1, size });
 
   const columns: Column<Addresses>[] = [
@@ -49,20 +52,17 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
       key: "Balance"
     }
   ];
+  const maxHeightCalc = `calc(80vh - ${
+    isTablet ? "290px" : isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"
+  })`;
 
   return (
-    <Modal {...props}>
-      <ModalContainer px={4}>
-        <ButtonClose onClick={props.onClose}>
-          <img src={closeIcon} alt='icon close' />
-        </ButtonClose>
-        <Box textAlign={"left"} fontSize='1.5rem' fontWeight='bold' fontFamily={'"Roboto", sans-serif '}>
-          Addresses list
-        </Box>
-        <Box>
+    <StyledModal open={props.open} handleCloseModal={props.onClose} title="Addresses list" width={"600px"} contentStyle={{ overflowY: "unset" }}>
+      <WrapContent>
           <Table
             {...fetchData}
             columns={columns}
+            maxHeight={maxHeightCalc}
             total={{ title: "Total Epochs", count: fetchData.total }}
             pagination={{
               onChange(page, size) {
@@ -73,9 +73,8 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
             }}
             onClickRow={(_, r) => history.push(details.address(r.address || ""))}
           />
-        </Box>
-      </ModalContainer>
-    </Modal>
+      </WrapContent>
+    </StyledModal>
   );
 };
 

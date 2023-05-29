@@ -7,6 +7,7 @@ import themes from "./themes";
 import { useLocation } from "react-router-dom";
 import { SystemLoader } from "./components/SystemLoader";
 import { routers } from "./commons/routers";
+import ToastContainer from "./components/commons/Layout/ToastContainer";
 interface Props {
   children: React.ReactNode;
 }
@@ -25,6 +26,7 @@ const AppContainer: React.FC<Props> = (props) => {
   return (
     <ThemeProvider theme={themes[theme]}>
       <SystemLoader />
+      <ToastContainer />
       <div data-theme={theme}>
         {excludedRoutes.includes(location.pathname) ? <>{children}</> : <CustomLayout>{children}</CustomLayout>}
       </div>

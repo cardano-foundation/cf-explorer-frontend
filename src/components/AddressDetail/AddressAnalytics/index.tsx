@@ -140,10 +140,12 @@ const AddressAnalytics: React.FC = () => {
         <Grid item xs={24} lg={6}>
           <BoxInfo height={"100%"} space={categories.length ? 36 : 16}>
             <Box flex={1}>
-              <BoxInfoItemRight display={"flex"} alignItems='center' justifyContent={"center"}>
+              <BoxInfoItemRight display={"flex"} justifyContent={"center"}>
                 <Box>
-                  <img src={HighestIcon} alt='heighest icon' />
-                  <Title>Highest Balance</Title>
+                  <Box minHeight={"90px"}>
+                    <img src={HighestIcon} alt='heighest icon' />
+                    <Title>Highest Balance</Title>
+                  </Box>
                   <ValueInfo>
                     {balanceLoading ? <SkeletonUI variant='rectangular' /> : formatADAFull(maxBalance)}
                   </ValueInfo>
@@ -151,10 +153,12 @@ const AddressAnalytics: React.FC = () => {
               </BoxInfoItemRight>
             </Box>
             <Box flex={1}>
-              <BoxInfoItem display={"flex"} alignItems='center' justifyContent={"center"}>
+              <BoxInfoItem display={"flex"} justifyContent={"center"}>
                 <Box>
-                  <img src={LowestIcon} alt='lowest icon' />
-                  <Title>Lowest Balance</Title>
+                  <Box minHeight={"90px"}>
+                    <img src={LowestIcon} alt='lowest icon' />
+                    <Title>Lowest Balance</Title>
+                  </Box>
                   <ValueInfo>
                     {balanceLoading ? <SkeletonUI variant='rectangular' /> : formatADAFull(minBalance)}
                   </ValueInfo>

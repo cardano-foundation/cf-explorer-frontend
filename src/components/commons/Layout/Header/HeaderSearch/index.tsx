@@ -119,9 +119,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const checkIncludesPath = (paths: Option["paths"]) => paths?.find((path) => path?.split("/")[1] === currentPath);
 
   useEffect(() => {
-    console.log(options);
     const filter: FilterParams = options.find((item) => checkIncludesPath(item.paths))?.value || "all";
-    console.log(filter);
     if ("/" + currentPath !== routers.SEARCH) setValues({ ...intitalValue, filter });
     setError("");
     setShowErrorMobile && setShowErrorMobile(false);

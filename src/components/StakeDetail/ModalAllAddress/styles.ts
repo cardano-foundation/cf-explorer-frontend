@@ -38,6 +38,28 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
     marginTop: theme.spacing(4)
   }
 }));
+
+export const WrapContent = styled(Box)`
+  max-height: calc(100% - 220px);
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: ${(props) => props.theme.palette.grey[300]};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${(props) => props.theme.palette.grey[100]};
+    }
+  }
+`;
+
 export const ButtonClose = styled(Button)(({ theme }) => ({
   position: "absolute",
   top: theme.spacing(2),

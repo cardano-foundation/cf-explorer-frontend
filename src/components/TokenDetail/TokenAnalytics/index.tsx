@@ -52,13 +52,13 @@ const AddressAnalytics: React.FC = () => {
     data?.map((i) => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
   const minBalance = data
     ? data.reduce(function (prev, current) {
-        return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
-      })
+      return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
+    })
     : { date: "", value: 0 };
   const maxBalance = data
     ? data.reduce(function (prev, current) {
-        return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
-      })
+      return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
+    })
     : { date: "", value: 0 };
 
   return (
@@ -149,12 +149,14 @@ const AddressAnalytics: React.FC = () => {
             </ChartBox>
           </Grid>
           <Grid item xs={24} lg={6}>
-            <BoxInfo space={0}>
+            <BoxInfo height={"100%"} space={0}>
               <Box flex={1}>
-                <BoxInfoItemRight display={"flex"} alignItems='center' justifyContent={"center"}>
+                <BoxInfoItemRight display={"flex"} justifyContent={"center"}>
                   <Box>
-                    <img src={HighestIcon} alt='heighest icon' />
-                    <Title>Highest Volume</Title>
+                    <Box minHeight={"90px"}>
+                      <img src={HighestIcon} alt='heighest icon' />
+                      <Title>Highest Volume</Title>
+                    </Box>
                     <CustomTooltip title={numberWithCommas(maxBalance.value || 0)}>
                       <ValueInfo>
                         {loading ? <SkeletonUI variant='rectangular' /> : numberWithCommas(maxBalance.value || 0)}
@@ -164,10 +166,12 @@ const AddressAnalytics: React.FC = () => {
                 </BoxInfoItemRight>
               </Box>
               <Box flex={1}>
-                <BoxInfoItem display={"flex"} alignItems='center' justifyContent={"center"}>
+                <BoxInfoItem display={"flex"} justifyContent={"center"}>
                   <Box>
-                    <img src={LowestIcon} alt='lowest icon' />
-                    <Title>Lowest Volume</Title>
+                    <Box minHeight={"90px"}>
+                      <img src={LowestIcon} alt='lowest icon' />
+                      <Title>Lowest Volume</Title>
+                    </Box>
                     <CustomTooltip title={numberWithCommas(minBalance.value || 0)}>
                       <ValueInfo>
                         {loading ? <SkeletonUI variant='rectangular' /> : numberWithCommas(minBalance.value || 0)}

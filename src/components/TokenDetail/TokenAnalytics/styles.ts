@@ -1,7 +1,7 @@
 import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
 
 export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
-  height: `calc(100% - ${space}px)`,
+  // height: `calc(100% - ${space}px)`,
   background: theme.palette.secondary.dark,
   borderRadius: "10px",
   color: theme.palette.primary.contrastText,
@@ -12,8 +12,6 @@ export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
     flexDirection: "row"
   },
   [theme.breakpoints.down("sm")]: {
-    padding: "27px 0",
-    height: "calc(100% - 54px)",
     flexDirection: "row"
   }
 }));
@@ -23,15 +21,16 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
   width: "80%",
   margin: "0 auto",
   overflow: "hidden",
+  alignItems: "center",
   [theme.breakpoints.down("lg")]: {
+    alignItems: "flex-start",
     borderTop: "none",
     width: "100%",
-    minHeight: "200px",
+    minHeight: "160px",
     height: "100%",
-    paddingTop: 0
   },
   [theme.breakpoints.down("sm")]: {
-    minHeight: "150px"
+    minHeight: "150px",
   }
 }));
 
@@ -42,17 +41,18 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   margin: "0 auto",
   borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
   overflow: "hidden",
+  alignItems: "center",
   [theme.breakpoints.down("lg")]: {
+    alignItems: "flex-start",
     borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
     height: "100%",
     borderBottom: "none",
     width: "100%",
-    minHeight: "200px",
-    paddingTop: 0
+    minHeight: "160px",
   },
   [theme.breakpoints.down("sm")]: {
     borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
-    minHeight: "150px"
+    minHeight: "150px",
   }
 }));
 
@@ -69,6 +69,10 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   fontSize: "2rem",
   margin: "0 auto",
   overflowWrap: "anywhere",
+  padding: "0 18px",
+  [theme.breakpoints.down("md")]: {
+    padding: "0 10px"
+  },
   [theme.breakpoints.down("sm")]: {
     fontSize: "1.25rem",
     padding: "0 10px"
