@@ -51,6 +51,7 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
         <DateRangePickerContainer>
           <DesktopDatePicker
             value={toMoment(value?.fromDate)}
+            disableFuture
             onChange={(mDate) =>
               setValue((pre) => {
                 return { ...pre, fromDate: mDate?.format("YYYY/MM/DD HH:mm:ss") };
@@ -60,6 +61,7 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
           <Box>-</Box>
           <DesktopDatePicker
             value={toMoment(value?.toDate)}
+            disableFuture
             onChange={(mDate) => setValue((pre) => ({ ...pre, toDate: mDate?.format("YYYY/MM/DD 23:59:59") }))}
           />
         </DateRangePickerContainer>
