@@ -9,7 +9,7 @@ import useFetch from "~/commons/hooks/useFetch";
 import CustomTooltip from "~/components/commons/CustomTooltip";
 import CopyButton from "~/components/commons/CopyButton";
 import { details } from "~/commons/routers";
-import { formatADA, getShortHash, getShortWallet, numberWithCommas } from "~/commons/utils/helper";
+import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "~/commons/utils/helper";
 
 interface CertificateItemType {
   label: React.ReactNode;
@@ -102,7 +102,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
       label: "Pledge",
       content: (
         <Value>
-          {formatADA(data?.pledge)}
+          {formatADAFull(data?.pledge)}
           <StyledAdaLogoIcon />
         </Value>
       )
@@ -111,7 +111,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
       label: "Cost",
       content: (
         <Value>
-          {formatADA(data?.cost)}
+          {formatADAFull(data?.cost)}
           <StyledAdaLogoIcon />
         </Value>
       )

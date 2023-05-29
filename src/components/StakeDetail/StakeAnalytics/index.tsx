@@ -21,7 +21,7 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../commons/hooks/useFetch";
 import Card from "../../commons/Card";
-import { formatADA, formatPrice, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADAFull, formatPrice, numberWithCommas } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { BigNumber } from "bignumber.js";
 import { API } from "../../../commons/utils/api";
@@ -205,9 +205,9 @@ const StakeAnalytics: React.FC = () => {
                       {balanceLoading ? (
                         <SkeletonUI variant='rectangular' />
                       ) : tab === "BALANCE" ? (
-                        formatADA(maxBalance)
+                        formatADAFull(maxBalance)
                       ) : (
-                        formatADA(maxReward.value)
+                        formatADAFull(maxReward.value)
                       )}
                     </ValueInfo>
                   </CustomTooltip>
@@ -224,9 +224,9 @@ const StakeAnalytics: React.FC = () => {
                       {balanceLoading ? (
                         <SkeletonUI variant='rectangular' />
                       ) : tab === "BALANCE" ? (
-                        formatADA(minBalance)
+                        formatADAFull(minBalance)
                       ) : (
-                        formatADA(minReward.value)
+                        formatADAFull(minReward.value)
                       )}
                     </ValueInfo>
                   </CustomTooltip>

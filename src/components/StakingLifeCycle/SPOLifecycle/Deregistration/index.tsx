@@ -18,7 +18,7 @@ import {
   StyledGridItem
 } from "./styles";
 import RecentDeregistrations from "./RecentDeregistrations";
-import { formatADA, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import moment from "moment";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { details } from "../../../../commons/routers";
@@ -200,7 +200,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
           <Info>
             <ADAGreen />
             <InfoText>
-              {formatADA(selected?.poolHold ? selected?.poolHold - selected?.fee : selected?.fee || 0)}
+              {formatADAFull(selected?.poolHold ? selected?.poolHold - selected?.fee : selected?.fee || 0)}
             </InfoText>
           </Info>
           <Info>

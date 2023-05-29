@@ -23,7 +23,7 @@ import {
   StyledFeeBox,
   StyledAdaLogoIcon
 } from "./styles";
-import { formatADA, formatDateTimeLocal, getShortHash } from "../../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../../../commons/utils/helper";
 import { useHistory, useParams } from "react-router-dom";
 import CustomTooltip from "../../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../../SPOLifecycle/Registration/styles";
@@ -160,7 +160,7 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
           </Info>
           <Info>
             <ADAGreen />
-            <InfoText>{formatADA(amount || 0)}</InfoText>
+            <InfoText>{formatADAFull(amount || 0)}</InfoText>
           </Info>
           <Info>
             <TimeIcon />
@@ -178,7 +178,7 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
               <PaymentWalletValueContainer>
                 <PaymentWalletIconBox>
                   <WalletIconRewardGreen />
-                  <PaymentWalleValue>{formatADA(stakeTotalAmount || 0)}</PaymentWalleValue>
+                  <PaymentWalleValue>{formatADAFull(stakeTotalAmount || 0)}</PaymentWalleValue>
                   <StyledAdaLogoIcon />
                 </PaymentWalletIconBox>
               </PaymentWalletValueContainer>
@@ -191,7 +191,7 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
               <PaymentWalletValueContainer>
                 <PaymentWalletIconBox>
                   <WalletIconRewardGreen />
-                  <PaymentWalleValue>{formatADA(stakeRewardAvailable || 0)}</PaymentWalleValue>
+                  <PaymentWalleValue>{formatADAFull(stakeRewardAvailable || 0)}</PaymentWalleValue>
                   <StyledAdaLogoIcon />
                 </PaymentWalletIconBox>
               </PaymentWalletValueContainer>

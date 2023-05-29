@@ -3,7 +3,7 @@ import { useMemo, useRef, useState } from "react";
 import { ADAOrangeBorderIcon } from "../../../../commons/resources";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { details } from "../../../../commons/routers";
-import { formatADA, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { useParams } from "react-router-dom";
 import { API } from "../../../../commons/utils/api";
@@ -98,7 +98,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: ()
       minWidth: "50px",
       render: (r) => (
         <ADAAmount>
-          {formatADA(r.amount)} <ADAicon />
+          {formatADAFull(r.amount)} <ADAicon />
         </ADAAmount>
       )
     },
