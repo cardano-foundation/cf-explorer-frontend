@@ -23,13 +23,16 @@ import {
   BlankImage,
   RowItem,
   HeaderStatus,
+  Actions,
+  TimeDuration,
 } from "./style";
 import useFetch from "../../../commons/hooks/useFetch";
 import { TRANSACTION_STATUS } from "../../../commons/utils/constants";
 import { useScreen } from "../../../commons/hooks/useScreen";
+import moment from "moment";
 
 const LatestTransactions: React.FC = () => {
-  const { data, initialized } = useFetch<CurrentTransactions[]>(
+  const { data, initialized, lastUpdated } = useFetch<CurrentTransactions[]>(
     API.TRANSACTION.CURRENT,
     undefined,
     false,
@@ -42,7 +45,10 @@ const LatestTransactions: React.FC = () => {
     <TransactionContainer>
       <Header>
         <Title>Latest Transactions</Title>
-        <ViewAllButton to={routers.TRANSACTION_LIST} />
+        <Actions>
+          <TimeDuration>Last updated {moment(lastUpdated).fromNow()}</TimeDuration>
+          <ViewAllButton to={routers.TRANSACTION_LIST} />
+        </Actions>
       </Header>
       {
         <Grid container spacing={{ sm: 2 }}>

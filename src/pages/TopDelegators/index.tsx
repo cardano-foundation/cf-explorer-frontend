@@ -10,13 +10,16 @@ import Card from "../../components/commons/Card";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table from "../../components/commons/Table";
 import { Column } from "../../types/table";
-import { PerPage, StyledContainer, StyledLink } from "./styles";
+import { Actions, PageSize, PerPage, StyledContainer, StyledLink, TimeDuration } from "./styles";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
+import moment from "moment";
+
+const perPages = [10, 20, 50, 100];
 
 const TopDelegators = () => {
   const history = useHistory();
   const [pageSize, setPageSize] = useState("50");
-  const { error, data, initialized, loading } = useFetchList<Contracts>(
+  const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
     API.STAKE.TOP_DELEGATOR,
     { page: 0, size: +pageSize },
     false,
@@ -68,25 +71,25 @@ const TopDelegators = () => {
 
   return (
     <StyledContainer>
-      <Card
-        title="Top delegators"
-        extra={
-          <Box display="flex" alignItems="center">
+      <Card title="Top delegators">
+        <Actions>
+          <TimeDuration>Last updated {moment(lastUpdated).fromNow()}</TimeDuration>
+          <PageSize>
             <Select
               value={pageSize}
               onChange={event => setPageSize(event.target.value)}
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
             >
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={50}>50</MenuItem>
-              <MenuItem value={100}>100</MenuItem>
+              {perPages.map(item => (
+                <MenuItem key={item} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
             </Select>
             <PerPage>Per page</PerPage>
-          </Box>
-        }
-      >
+          </PageSize>
+        </Actions>
         <Table
           onClickRow={(_, r) => history.push(details.stake(r.stakeKey))}
           data={data}

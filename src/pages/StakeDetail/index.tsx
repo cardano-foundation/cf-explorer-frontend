@@ -13,7 +13,7 @@ const StakeDetail: React.FC = () => {
   const mainRef = useRef(document.querySelector("#main"));
   const { stakeId } = useParams<{ stakeId: string }>();
   const { state } = useLocation<{ data?: IStakeKeyDetail }>();
-  const { data, initialized, error } = useFetch<IStakeKeyDetail>(
+  const { data, initialized, error, lastUpdated } = useFetch<IStakeKeyDetail>(
     `${API.STAKE.DETAIL}/${stakeId}`,
     state?.data,
     false,
@@ -30,7 +30,7 @@ const StakeDetail: React.FC = () => {
 
   return (
     <StyledContainer>
-      <StakeKeyOverview data={data} loading={!initialized} />
+      <StakeKeyOverview data={data} loading={!initialized} lastUpdated={lastUpdated} />
       <StakeAnalytics />
       <StakeTab />
     </StyledContainer>

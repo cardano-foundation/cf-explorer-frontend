@@ -13,11 +13,12 @@ import {
 } from "../../commons/utils/helper";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table, { Column } from "../../components/commons/Table";
-import { RegistrationContainer, StakeKey, StyledLink, StyledTab, StyledTabs, TabLabel } from "./styles";
+import { RegistrationContainer, StakeKey, StyledLink, StyledTab, StyledTabs, TabLabel, TimeDuration } from "./styles";
 import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import { Box } from "@mui/material";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
+import moment from "moment";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",
@@ -142,6 +143,7 @@ const RegistrationPools = () => {
         <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
         <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
       </StyledTabs>
+      <TimeDuration>Last updated {moment(fetchData.lastUpdated).fromNow()}</TimeDuration>
       <Box>
         <Table
           {...fetchData}
