@@ -20,7 +20,7 @@ export const CardOverview = styled(Box)`
   }
 `;
 
-export const WrapIcon = styled(Box)(() => ({
+export const WrapIcon = styled(Box)(({ theme }) => ({
   width: 95,
   marginRight: 12,
   display: "flex",
@@ -36,7 +36,8 @@ export const CardTitle = styled(Typography)(({ theme }) => ({
 }));
 
 export const CardValue = styled(Typography)<{ color?: string }>(({ theme, ...rest }) => ({
-  whiteSpace: "nowrap",
+  overflowWrap: "anywhere",
+  whiteSpace: "break-spaces",
   fontWeight: theme.typography.fontWeightBold,
   fontSize: 16,
   color: rest.color ? rest.color : theme.palette.grey[700]
@@ -108,3 +109,9 @@ export const DotsIcon = styled(Box)`
     background-color: #667085;
   }
 `;
+
+export const StyledBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  gap: "12px"
+}));

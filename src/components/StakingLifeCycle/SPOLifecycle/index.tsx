@@ -46,14 +46,6 @@ interface StepperProps {
   keyCheckShow: string;
 }
 
-interface ListTabResponse {
-  [key: string]: boolean;
-  isRegistration: boolean;
-  isUpdate: boolean;
-  isReward: boolean;
-  isDeRegistration: boolean;
-}
-
 interface Props {
   currentStep: number;
   setCurrentStep: (step: number) => void;

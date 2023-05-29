@@ -19,6 +19,7 @@ import {
   CardValue,
   ClickAbleLink,
   DotsIcon,
+  StyledBox,
   ViewMoreButton,
   WrapIcon,
   WrapWalletIcon
@@ -66,13 +67,13 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
     <Grid item sm={sidebar ? 12 : 6} md={6} lg={6} width={"100%"}>
       <CardOverview>
         <Icon component={bg} />
-        <Box display='flex' alignItems='center' gap='12px'>
+        <StyledBox>
           <WrapIcon>{mainIcon}</WrapIcon>
           <Box textAlign='start'>
             <CardTitle>{title}</CardTitle>
             {value}
           </Box>
-        </Box>
+        </StyledBox>
         {action}
       </CardOverview>
     </Grid>
@@ -104,7 +105,7 @@ const TabularOverview: React.FC = () => {
           bgType='white'
           mainIcon={<StatusIC />}
           value={
-            <Box display='flex' alignItems='center'>
+            <Box display='flex' alignItems='center' flexWrap={"wrap"}>
               <CardValue color={STATUS[data?.status ?? "ACTIVE"][1]}>{STATUS[data?.status ?? "ACTIVE"][0]} :</CardValue>
               <ClickAbleLink to={details.epoch(data?.epochNo)}>&nbsp; Epoch {data?.epochNo}</ClickAbleLink>
             </Box>
