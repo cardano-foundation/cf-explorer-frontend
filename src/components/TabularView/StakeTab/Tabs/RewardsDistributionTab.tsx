@@ -65,8 +65,6 @@ const RewardsDistributionTab = () => {
         .utc(params.toDate, DATETIME_PARTTEN)
         .local()
         .format("MM/DD/YYYY")}`;
-    if (params.sort && params.sort.length >= 2)
-      return `${params.sort[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
     if (params.txHash) return `Searching for : ${params.txHash}`;
   }, [params]);
   return (
