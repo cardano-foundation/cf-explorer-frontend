@@ -35,8 +35,8 @@ import RewardsWithdrawal from "./Withdraw";
 import ADATransferModal from "./ADATransferModal";
 import {
   DelegationProcessDescription,
-  DeregistrationProcessDescription,
-  RegistrationProcessDescription,
+  DeregistrationDelegatorProcessDescription,
+  RegistrationDelegatorProcessDescription,
   RewardDistributionProcessDescription,
   WithdrawingFundProcessDescription
 } from "../../ModalDescription";
@@ -74,7 +74,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       title: "Registration",
       component: <Registration />,
       description: (
-        <RegistrationProcessDescription
+        <RegistrationDelegatorProcessDescription
           open={openDescriptionModal}
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
@@ -126,7 +126,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       title: "Deregistration",
       component: <Deregistration />,
       description: (
-        <DeregistrationProcessDescription
+        <DeregistrationDelegatorProcessDescription
           open={openDescriptionModal}
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
