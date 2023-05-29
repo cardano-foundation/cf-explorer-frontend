@@ -26,10 +26,10 @@ import {
 } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import {
-  DeregistrationProcessDescription,
-  RegistrationProcessDescription,
+  DeregistrationSPOProcessDescription,
+  RegistrationSPOProcessDescription,
   SPOInvolvementInDelegationDescription,
-  WithdrawingFundProcessDescription
+  OperatorRewards
 } from "../../ModalDescription";
 import { ButtonText } from "../DelegatorLifecycle/styles";
 import Deregistration from "./Deregistration";
@@ -72,7 +72,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       title: "Registration",
       component: <Registration />,
       description: (
-        <RegistrationProcessDescription
+        <RegistrationSPOProcessDescription
           open={openDescriptionModal}
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
@@ -98,10 +98,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       title: "Operator Rewards",
       component: <OperatorReward />,
       description: (
-        <WithdrawingFundProcessDescription
-          open={openDescriptionModal}
-          handleCloseModal={() => setOpenDescriptionModal(false)}
-        />
+        <OperatorRewards open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />
       ),
       key: "operator-rewards",
       keyCheckShow: "isReward"
@@ -111,7 +108,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       title: "Deregistration",
       component: <Deregistration />,
       description: (
-        <DeregistrationProcessDescription
+        <DeregistrationSPOProcessDescription
           open={openDescriptionModal}
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
