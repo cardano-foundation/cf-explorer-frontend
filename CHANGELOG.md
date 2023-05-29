@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.3.4](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.3.3...v0.3.4) (2023-05-29)
+
+
+### Bug Fixes
+
+* fixing broken yarn packs ([de1dad5](https://github.com/cardano-foundation/cf-explorer-frontend/commit/de1dad524d32fcbe247ddaf2ad467147d00ca038))
+* merging the conflicts from remote ([1c05fc9](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1c05fc9d040fd0fb1e1d972bc9348e2e02ee2a2a))
+* merging the conflicts from remote ([b13dc53](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b13dc5389dc5fb310b8a32dc4a5f9bdae93d3471))
+* removing mistakely added package craco by sotatek ([9a31e78](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9a31e78d5d62563bab9f70e2f1a034ac9ee575dd))
+
 ## [0.3.3](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.3.2...v0.3.3) (2023-05-16)
 
 
