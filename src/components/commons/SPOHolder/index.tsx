@@ -25,7 +25,6 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
   const SPOKeyRef = useRef(null);
   const history = useHistory();
   const rewardAccounts = isArray(stakeKeys) ? stakeKeys : [stakeKeys];
-  console.log("rewardAccounts: ", rewardAccounts);
   return (
     <PolygonShapeSPO {...props} ref={boxRef}>
       <SPOImage src={SPOHolderIconUrl} alt='SPO image' />

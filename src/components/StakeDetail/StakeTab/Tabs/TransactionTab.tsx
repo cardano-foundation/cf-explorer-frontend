@@ -74,9 +74,6 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
 
       render: (transaction) => {
         const type = transaction?.balance >= 0 ? "up" : "down";
-        if(!transaction?.balance) {
-          console.log(transaction?.blockNo)
-        }
         const isTransferType = transaction?.tokens.some((t) => {
           return (t.quantity < 0 && transaction?.balance >= 0) || (t.quantity >= 0 && transaction?.balance < 0);
         });
