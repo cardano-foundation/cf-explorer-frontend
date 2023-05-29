@@ -112,7 +112,9 @@ const ReportGeneratedStakingDetailTabs = () => {
           <CustomTooltip title={reportDetail.data?.reportName}>
             <Headline collapsed={1}>{reportDetail.data?.reportName} </Headline>
           </CustomTooltip>
-          <Headline>{reportDetail.data?.reportName} </Headline>
+          <CustomTooltip title={reportDetail.data?.reportName}>
+            <Headline>{reportDetail.data?.reportName} </Headline>
+          </CustomTooltip>
           <StakeTab tabs={displayedTabs} initTab={initTab} />
         </>
       )}

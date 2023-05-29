@@ -1,7 +1,7 @@
 import StyledModal from "../../../commons/StyledModal";
-import { Container, ModalTitle, StyledBackButton, StyledButton, StyledStack } from "./styles";
+import { Container, ModalTitle, StyledBackButton, StyledButton, StyledFormLabel, StyledStack } from "./styles";
 import { useMemo, useState } from "react";
-import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack } from "@mui/material";
+import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Stack } from "@mui/material";
 import { IPropsModal, STEPS } from ".";
 import { ReportType } from "./FilledInfoModal";
 import { get } from "lodash";
@@ -102,7 +102,7 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
               <Box key={key}>
                 <FormControl sx={{ width: "100%" }}>
                   <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                    <FormLabel id='demo-controlled-radio-buttons-group'>{label}</FormLabel>
+                    <StyledFormLabel>{label}</StyledFormLabel>
                     <RadioGroup
                       aria-labelledby={key}
                       name={key}

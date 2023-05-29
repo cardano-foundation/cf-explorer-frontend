@@ -49,6 +49,13 @@ export interface ListTabResponseSPO {
   isDeRegistration: boolean;
 }
 
+const renderTabsSPO: ListTabResponseSPO = {
+  isRegistration: true,
+  isUpdate: true,
+  isReward: true,
+  isDeRegistration: true
+};
+
 const MODES: ViewMode[] = ["timeline", "tabular"];
 
 const SPOLifecycle = () => {
@@ -67,8 +74,6 @@ const SPOLifecycle = () => {
   };
 
   const { data, error, initialized } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : "");
-
-  const { data: renderTabsSPO } = useFetch<ListTabResponseSPO>(`${API.SPO_LIFECYCLE.TABS(poolId)}`);
 
   const validTab: SPOStep = tabList[tab] >= 0 ? tab : "registration";
   const validMode: ViewMode = MODES.find((item) => item === mode) || "timeline";
