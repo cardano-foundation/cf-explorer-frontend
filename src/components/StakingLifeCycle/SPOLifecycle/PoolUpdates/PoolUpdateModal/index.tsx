@@ -31,7 +31,7 @@ import ViewMoreThreeDots from "~/components/commons/ViewMoreThreeDots";
 import CustomTooltip from "~/components/commons/CustomTooltip";
 import CopyButton from "~/components/commons/CopyButton";
 import { details } from "~/commons/routers";
-import { formatADA, getShortHash, getShortWallet, numberWithCommas } from "~/commons/utils/helper";
+import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "~/commons/utils/helper";
 import { CertUpdate, ChangeIcon, EmptyIcon, PoolCert } from "~/commons/resources";
 import { TabContext, TabList } from "@mui/lab";
 
@@ -210,12 +210,12 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       content: (
         <>
           <Value>
-            {formatADA(data?.pledge)}
+            {formatADAFull(data?.pledge)}
             <StyledAdaLogoIcon />
           </Value>
           {data?.previousPledge !== null && (
             <MinimumText>
-              Previous: {formatADA(data?.previousPledge || 0)} <MinimumAdaLogoIcon />
+              Previous: {formatADAFull(data?.previousPledge || 0)} <MinimumAdaLogoIcon />
             </MinimumText>
           )}
         </>
@@ -226,7 +226,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       label: "Cost",
       content: (
         <Value>
-          {formatADA(data?.cost)}
+          {formatADAFull(data?.cost)}
           <StyledAdaLogoIcon />
         </Value>
       )
@@ -293,7 +293,7 @@ const PoolCertificateUpdate = ({ data }: { data: PoolUpdateDetail | null }) => {
             <CardBox>
               <MinimumText>OLD</MinimumText>
               <Value>
-                {formatADA(data?.previousPledge)}
+                {formatADAFull(data?.previousPledge)}
                 <StyledAdaLogoIcon />
               </Value>
             </CardBox>
@@ -303,7 +303,7 @@ const PoolCertificateUpdate = ({ data }: { data: PoolUpdateDetail | null }) => {
             <CardBox>
               <MinimumText>NEW</MinimumText>
               <Value>
-                {formatADA(data?.pledge)}
+                {formatADAFull(data?.pledge)}
                 <StyledAdaLogoIcon />
               </Value>
             </CardBox>

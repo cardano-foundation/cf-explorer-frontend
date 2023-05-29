@@ -8,7 +8,7 @@ import { FilterParams } from "~/components/StackingFilter";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
-import { formatADA, formatDateTimeLocal, getShortHash } from "../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../../commons/utils/helper";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import StyledModal from "../../../commons/StyledModal";
@@ -88,7 +88,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
           </Info>
           <Info>
             <ADAGreen />
-            <InfoText>{formatADA(Math.abs(selected.deposit) - selected.fee || 0)}</InfoText>
+            <InfoText>{formatADAFull(Math.abs(selected.deposit) - selected.fee || 0)}</InfoText>
           </Info>
           <Info>
             <TimeIcon />

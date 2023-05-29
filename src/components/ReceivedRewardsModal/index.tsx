@@ -17,7 +17,7 @@ import StyledModal from "../commons/StyledModal";
 import { useParams } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { API } from "../../commons/utils/api";
-import { formatADA, formatADAFull, formatDateTimeLocal } from "../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal } from "../../commons/utils/helper";
 import ADAicon from "../commons/ADAIcon";
 import { details } from "../../commons/routers";
 import { useScreen } from "~/commons/hooks/useScreen";
@@ -90,7 +90,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
           <RewardBalanceHeader>
             <RewardBalance>
               <ReceidvedRewardsIC />
-              <RewardBalanceTitle>Reward Balance: {formatADA(reward)}</RewardBalanceTitle>
+              <RewardBalanceTitle>Reward Balance: {formatADAFull(reward)}</RewardBalanceTitle>
               <ADAicon />
             </RewardBalance>
           </RewardBalanceHeader>
