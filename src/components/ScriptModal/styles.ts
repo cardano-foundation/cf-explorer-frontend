@@ -35,10 +35,28 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   backgroundColor: `${alpha(theme.palette.grey[300], 0.1)}`,
   borderRadius: 10,
   padding: theme.spacing(2),
-
+  maxHeight: "50vh",
+  [theme.breakpoints.up("md")]: {
   "& .MuiSvgIcon-root": {
     display: "none !important"
-  }
+  },
+  "&::-webkit-scrollbar": {
+    width: "5px"
+  },
+  "&::-webkit-scrollbar-track": {
+    background: "transparent"
+  },
+  "&::-webkit-scrollbar-thumb": {
+    background: "transparent"
+  },
+  "&:hover": {
+    "&::-webkit-scrollbar-thumb": {
+      background: theme.palette.grey[300]
+    },
+    "&::-webkit-scrollbar-track": {
+      background: theme.palette.grey[100]
+    }
+  }}
 }));
 
 export const ButtonLink = styled(Link)(({ theme }) => ({
