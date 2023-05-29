@@ -59,7 +59,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       render(data, index) {
         return (
           <AmountADARow>
-            {formatADAFull(data.amount)} <ADAicon color='#333333' />
+            +{formatADAFull(data.amount)} <ADAicon color='#333333' />
           </AmountADARow>
         );
       }

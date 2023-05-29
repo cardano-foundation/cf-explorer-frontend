@@ -1,8 +1,22 @@
 import { alpha, Avatar, Box, CircularProgress, IconButton, useTheme } from "@mui/material";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { MdChevronRight } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { Redirect, useLocation } from "react-router-dom";
+import { getShortWallet } from "~/commons/utils/helper";
+import { useScreen } from "../../../../commons/hooks/useScreen";
+import useToast from "../../../../commons/hooks/useToast";
+import editAva from "../../../../commons/resources/icons/editAva.svg";
+import { ReactComponent as ReportDiscord } from "../../../../commons/resources/icons/reportDiscord.svg";
+import { ReactComponent as ReportMail } from "../../../../commons/resources/icons/reportMail.svg";
 import { routers } from "../../../../commons/routers";
+import { uploadAxios } from "../../../../commons/utils/axios";
+import { NETWORK, NETWORK_TYPES } from "../../../../commons/utils/constants";
+import { getInfo } from "../../../../commons/utils/userRequest";
 import { RootState } from "../../../../stores/types";
+import { setUserData } from "../../../../stores/user";
+import CustomTooltip from "../../CustomTooltip";
+import StyledModal from "../../StyledModal";
 import {
   ContentBox,
   MissingItemWrapper,
@@ -17,20 +31,6 @@ import {
   WrapItemMobile,
   Wrapper
 } from "./styled";
-import editAva from "../../../../commons/resources/icons/editAva.svg";
-import { Redirect, useLocation } from "react-router-dom";
-import { MdChevronRight } from "react-icons/md";
-import { setUserData } from "../../../../stores/user";
-import { getInfo } from "../../../../commons/utils/userRequest";
-import { NETWORK_TYPES, NETWORK } from "../../../../commons/utils/constants";
-import { uploadAxios } from "../../../../commons/utils/axios";
-import { ReactComponent as ReportDiscord } from "../../../../commons/resources/icons/reportDiscord.svg";
-import { ReactComponent as ReportMail } from "../../../../commons/resources/icons/reportMail.svg";
-import CustomTooltip from "../../CustomTooltip";
-import useToast from "../../../../commons/hooks/useToast";
-import StyledModal from "../../StyledModal";
-import { useScreen } from "../../../../commons/hooks/useScreen";
-import { getShortWallet } from "~/commons/utils/helper";
 interface Props {
   children: React.ReactNode;
 }
@@ -189,11 +189,9 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                       display='flex'
                       alignItems={"center"}
                       justifyContent='space-between'
-                      py={2}
-                      mx={4}
                       borderBottom={`1px solid${alpha(theme.palette.common.black, 0.07)}`}
                     >
-                      <Box>{route.title}</Box>
+                      <Box pl={"20px"}>{route.title}</Box>
                       <MdChevronRight
                         size={25}
                         color={route.to === pathname ? theme.palette.primary.main : theme.palette.text.hint}
