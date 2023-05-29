@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import { setOnDetailView, setSidebar } from "../../../stores/user";
 import { RootState } from "../../../stores/types";
 import CustomTooltip from "../CustomTooltip";
-import ToastContainer from "./ToastContainer";
 import { useHistory } from "react-router-dom";
 
 interface Props {
@@ -49,7 +48,6 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
         </Main>
         <Footer />
       </MainContainer>
-      <ToastContainer />
     </Layout>
   );
 };
