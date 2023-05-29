@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { ADADisnableIcon, ADAOrangeIcon } from "~/commons/resources";
 import CardanoSystem from "~/components/commons/CardanoSystem";
@@ -21,7 +21,10 @@ const RewarsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data, 
   const adaAmountSecondRef = useRef(null);
   const holderRef = useRef(null);
   const rewardAccountRef = useRef(null);
-  const isRewardPool = (data?.rewardPools || []).length > 0;
+  const [isRewardPool, setIsRewardPool] = useState(true);
+  useEffect(() => {
+    setIsRewardPool((data?.rewardPools || []).length > 0);
+  }, [JSON.stringify(data)]);
 
   const paths = useMemo((): LineArrowItem[] => {
     adaAmountFirstRef;
@@ -69,7 +72,7 @@ const RewarsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data, 
         arrow: { 0: "top", lg: "left" }
       }
     ];
-  }, []);
+  }, [isRewardPool]);
 
   const { sidebar } = useSelector(({ user }: RootState) => user);
   return (
