@@ -1,17 +1,17 @@
-import React from "react";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Box, Tab, useTheme } from "@mui/material";
 import { stringify } from "qs";
+import React from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
-import { details } from "../../../commons/routers";
-import { ReactComponent as TokenIcon } from "../../../commons/resources/icons/tokenIcon.svg";
 import { ReactComponent as AssetHolderIcon } from "../../../commons/resources/icons/assetHolder.svg";
-import { formatDateTimeLocal, getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
-import Table, { Column } from "../../commons/Table";
-import { LinkComponent, TitleTab, StyledTabList, StyledBoxContainer } from "./styles";
-import CustomTooltip from "../../commons/CustomTooltip";
+import { ReactComponent as TokenIcon } from "../../../commons/resources/icons/tokenIcon.svg";
+import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
+import { formatDateTimeLocal, formatNumberDivByDecimals, getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import CustomTooltip from "../../commons/CustomTooltip";
+import Table, { Column } from "../../commons/Table";
+import { LinkComponent, StyledBoxContainer, StyledTabList, TitleTab } from "./styles";
 
 enum TABS {
   TOKENS = "tokens",
@@ -45,7 +45,10 @@ const columnsToken: Column<TokenPolicys>[] = [
     title: "Total Supply",
     key: "totalSupply",
     minWidth: "150px",
-    render: (r) => <Box component={"span"}>{numberWithCommas(r.supply)}</Box>
+    render: (r) => {
+      const decimalToken = r?.metadata?.decimals || 0;
+      return <Box component={"span"}>{formatNumberDivByDecimals(r?.supply, decimalToken)}</Box>;
+    },
   },
   {
     title: "Total Transactions",

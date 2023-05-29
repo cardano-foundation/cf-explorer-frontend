@@ -41,12 +41,19 @@ export const formatPrice = (value?: string | number, abbreviations: string[] = L
 //     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 //   return formated.replace(/^(-)?0+(?=\d)/, "$1");
 // };
-export const numberWithCommas = (value?: number | string, decimal = 0) => {
+export const numberWithCommas = (value?: number | string, decimal = 6) => {
   if (!value) return "0";
   const bnValue = new BigNumber(value);
-  const [integerPart, decimalPart] = bnValue.toFixed(decimal).split(".");
+  const [integerPart, decimalPart] = bnValue.toFixed(decimal, BigNumber.ROUND_DOWN).split(".");
   const formattedIntegerPart = integerPart.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  return decimalPart ? `${formattedIntegerPart}.${decimalPart}` : formattedIntegerPart;
+
+  if (decimalPart) {
+    const formattedDecimalPart = decimalPart.replace(/0+$/, "");
+    if (formattedDecimalPart !== "") {
+      return `${formattedIntegerPart}.${formattedDecimalPart}`;
+    }
+  }
+  return formattedIntegerPart;
 };
 export const formatADA = (
   value?: string | number,
@@ -77,6 +84,11 @@ export const formatADAFull = (value?: string | number, limit = 6): string => {
   const realAda = new BigNumber(value).div(10 ** 6);
   return numberWithCommas(realAda.toFixed(limit).toString(), limit);
 };
+
+export const formatNumberDivByDecimals = (value?: string | number | BigNumber, decimals = 6) => {
+  if (!value) return `0`;
+  return numberWithCommas(new BigNumber(value).div(new BigNumber(10).exponentiatedBy(decimals)).toString())
+}
 
 export const exchangeADAToUSD = (value: number | string, rate: number, isFull?: boolean) => {
   if (!value) return 0;

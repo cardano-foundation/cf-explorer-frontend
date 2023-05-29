@@ -1,20 +1,20 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
+import { useEffect, useRef, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { details } from "../../commons/routers";
+import { formatDateTimeLocal, formatNumberDivByDecimals, getPageInfo, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
-import { details } from "../../commons/routers";
-import { formatDateTimeLocal, getPageInfo, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
 
-import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { AssetName, Logo, StyledContainer, TimeDuration } from "./styles";
-import CustomTooltip from "../../components/commons/CustomTooltip";
-import { API } from "../../commons/utils/api";
-import SelectedIcon from "../../components/commons/SelectedIcon";
-import { REFRESH_TIMES } from "../../commons/utils/constants";
 import FormNowMessage from "~/components/commons/FormNowMessage";
+import useFetchList from "../../commons/hooks/useFetchList";
+import { API } from "../../commons/utils/api";
+import { REFRESH_TIMES } from "../../commons/utils/constants";
+import CustomTooltip from "../../components/commons/CustomTooltip";
+import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
+import SelectedIcon from "../../components/commons/SelectedIcon";
+import { AssetName, Logo, StyledContainer, TimeDuration } from "./styles";
 
 const Tokens = () => {
   const [token, setToken] = useState<IToken | null>(null);
@@ -89,7 +89,10 @@ const Tokens = () => {
       title: "Total Supply",
       key: "supply",
       minWidth: "150px",
-      render: (r) => numberWithCommas(r?.supply),
+      render: (r) => {
+        const decimalToken = r?.decimals || r?.metadata?.decimals || 0;
+        return formatNumberDivByDecimals(r?.supply, decimalToken);
+      },
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }

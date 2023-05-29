@@ -144,7 +144,7 @@ const Card = ({
                                   color={(theme) => theme.palette.secondary.main}
                                   mr={1}
                                 >
-                                  {getShortHash(item?.stakeAddress)}
+                                  {getShortWallet(item?.stakeAddress)}
                                 </Box>
                               </CustomTooltip>
                             </Link>
