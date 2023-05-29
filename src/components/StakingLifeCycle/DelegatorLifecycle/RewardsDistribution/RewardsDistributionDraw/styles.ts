@@ -90,7 +90,7 @@ export const AdaAmountWrapper = styled(Box)<{ sidebar?: number }>(({ theme, side
     gap: 55
   },
   [theme.breakpoints.down("sm")]: {
-    gap: 128
+    gap: 118
   }
 }));
 
@@ -119,7 +119,7 @@ export const RewardBoxImg = styled("img")(() => ({
   height: 100
 }));
 
-export const RewardValue = styled(Box)(({ theme }) => ({
+export const RewardValue = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
   gap: 5
@@ -129,4 +129,12 @@ export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
   fontSize: 11,
   color: theme.palette.text.secondary,
   marginBottom: ".125em"
+}));
+
+export const AdaBox = styled(Box)(() => ({
+  width: 70,
+  height: 70,
+  display: "flex",
+  justifyItems: "center",
+  alignItems: "center"
 }));
