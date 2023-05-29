@@ -1,5 +1,7 @@
 import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
 import CertificateShape from "~/components/commons/CertificateShape";
+import FeeBox from "~/components/commons/FeeBox";
+import HoldBox from "~/components/commons/HoldBox";
 
 export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0
@@ -90,7 +92,7 @@ export const MiddleGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }
   [theme.breakpoints.down("sm")]: {
     maxWidth: 320,
     minWidth: 320,
-    gap: 33
+    gap: 20
   }
 }));
 
@@ -122,5 +124,20 @@ export const StyledCertificateShape = styled(CertificateShape)(({ theme }) => ({
   border: `2px solid ${theme.palette.border.block}`,
   [theme.breakpoints.down("sm")]: {
     width: 140
+  }
+}));
+
+export const StyledHoldBox = styled(HoldBox)(({ theme }) => ({
+  "::after": {
+    content: '"POOL HOLD"'
+  },
+  [theme.breakpoints.down("sm")]: {
+    minWidth: "calc(100% - 16px)"
+  }
+}));
+
+export const StyledFeeBox = styled(FeeBox)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    minWidth: "calc(100% - 16px)"
   }
 }));

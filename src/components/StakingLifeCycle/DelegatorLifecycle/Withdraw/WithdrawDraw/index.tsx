@@ -94,20 +94,18 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
         startPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
         end: paymentRef,
         endPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        endOffset: { 0: [86, 0], sm: [97, 0], lg: [0, -70] },
         startOffset: { 0: [0, -15], lg: [0] },
         arrow: { 0: "bottom", lg: "right" },
-        autoAlign: { 0: "end-vertical", lg: "end-horizontal" }
+        autoAlign: { 0: "start-vertical", lg: "start-horizontal" }
       },
       {
         start: paymentRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
         end: withDrawnRef,
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-        startOffset: { 0: [-86, 0], sm: [-97, 0], lg: [0, 70] },
         endOffset: { 0: [0, -15], lg: [0] },
         arrow: { 0: "top", lg: "left" },
-        autoAlign: { 0: "start-vertical", lg: "start-horizontal" }
+        autoAlign: { 0: "end-vertical", lg: "end-horizontal" }
       },
       {
         start: feeRef,
@@ -123,16 +121,18 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
         startPosition: { 0: ["right", "top"], lg: ["left", "middle"] },
         end: feeRef,
         endPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        startOffset: { 0: [-25, 45], sm: [-15, 45], lg: [15, 0] },
-        arrow: { 0: "bottom", lg: "right" }
+        startOffset: { 0: [0, 45], lg: [15, 0] },
+        arrow: { 0: "bottom", lg: "right" },
+        autoAlign: { 0: "end-vertical", lg: "none" }
       },
       {
         start: withDrawnRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
         end: cadarnoSystemRef,
         endPosition: { 0: ["left", "top"], lg: ["left", "middle"] },
-        endOffset: { 0: [25, 45], sm: [15, 45], lg: [15, 70] },
-        arrow: { 0: "top", lg: "left" }
+        endOffset: { 0: [0, 45], sm: [0, 45], lg: [15] },
+        arrow: { 0: "top", lg: "left" },
+        autoAlign: { 0: "start-vertical", lg: "start-horizontal" }
       }
     ];
   }, []);

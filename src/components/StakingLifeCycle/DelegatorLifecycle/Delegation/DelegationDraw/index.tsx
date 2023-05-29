@@ -14,7 +14,7 @@ export interface IDelegationDrawProps {
 const DelegationDraw: React.FC<IDelegationDrawProps> = ({ data, toggleCertificateModal }) => {
   const adaHolderRef = useRef(null);
   const feeRef = useRef(null);
-  const registrationRef = useRef(null);
+  const certificateRef = useRef(null);
   const cadarnoSystemRef = useRef(null);
 
   const { sidebar } = useSelector(({ user }: RootState) => user);
@@ -26,38 +26,42 @@ const DelegationDraw: React.FC<IDelegationDrawProps> = ({ data, toggleCertificat
         startPosition: { 0: ["right", "bottom"], sm: ["right", "middle"], md: ["center", "middle"] },
         end: feeRef,
         endPosition: { 0: ["center", "top"], sm: ["center", "top"], md: ["left", "middle"] },
-        startOffset: { 0: [-23, -50], sm: [-10, 0], md: [0] },
-        endOffset: { 0: [3, 0], sm: [0, 10], md: [20] },
+        startOffset: { 0: [-25, -40], sm: [-10, 0], md: [0] },
+        endOffset: { sm: [0, 10], md: [20] },
         fold: { sm: "horizontal", md: "none" },
-        arrow: { 0: "top" }
+        arrow: { 0: "top" },
+        autoAlign: { 0: "start-vertical", sm: "none" }
       },
       {
         start: feeRef,
         startPosition: { 0: ["center", "bottom"], sm: ["center", "bottom"], md: ["center", "middle"] },
         end: cadarnoSystemRef,
         endPosition: { 0: ["right", "top"], sm: ["right", "middle"], md: ["left", "middle"] },
-        endOffset: { 0: [-26, 36], sm: [-10, 0], md: [10, 0] },
-        startOffset: { 0: [0], sm: [0], md: [0] },
+        endOffset: { 0: [-25, 40], sm: [-10, 0], md: [10, 0] },
+        startOffset: { sm: [0], md: [0] },
         fold: { sm: "vertical", md: "horizontal" },
-        arrow: { 0: "top", sm: "right", md: "left" }
+        arrow: { 0: "top", sm: "right", md: "left" },
+        autoAlign: { 0: "end-vertical", sm: "none" }
       },
       {
         start: adaHolderRef,
         startPosition: { 0: ["left", "bottom"], sm: ["left", "middle"], md: ["center", "middle"] },
-        end: registrationRef,
+        end: certificateRef,
         endPosition: { 0: ["center", "top"], md: ["left", "middle"] },
-        startOffset: { 0: [20.2, -50], sm: [10, 0], md: [0] },
-        endOffset: { 0: [0], sm: [0], md: [0] },
-        fold: { sm: "horizontal", md: "vertical" }
+        startOffset: { 0: [25, -40], sm: [10, 0], md: [0] },
+        endOffset: { sm: [0], md: [0] },
+        fold: { sm: "horizontal", md: "vertical" },
+        autoAlign: { 0: "start-vertical", sm: "none" }
       },
       {
-        start: registrationRef,
+        start: certificateRef,
         startPosition: { 0: ["center", "bottom"], md: ["right", "middle"] },
         end: cadarnoSystemRef,
         endPosition: { 0: ["left", "top"], sm: ["left", "middle"], md: ["center", "bottom"] },
-        endOffset: { 0: [20.4, 36], sm: [10], md: [0, 3] },
+        endOffset: { 0: [25, 40], sm: [10], md: [0, 3] },
         arrow: { 0: "top", sm: "left", md: "bottom" },
-        fold: { xs: "none", sm: "vertical", md: "horizontal" }
+        fold: { xs: "none", sm: "vertical", md: "horizontal" },
+        autoAlign: { 0: "end-vertical", sm: "none" }
       }
     ];
   }, []);
@@ -66,7 +70,7 @@ const DelegationDraw: React.FC<IDelegationDrawProps> = ({ data, toggleCertificat
       <StyledAdaHolder ref={adaHolderRef} value={data?.stakeTotalAmount} />
       <MiddleGroup sidebar={+sidebar}>
         <FeeBox ref={feeRef} value={data?.fee || 0} txHash={data?.txHash || ""} />
-        <StyledCertificateShape onClick={toggleCertificateModal} ref={registrationRef}>
+        <StyledCertificateShape onClick={toggleCertificateModal} ref={certificateRef}>
           Delegation Certificate
         </StyledCertificateShape>
       </MiddleGroup>

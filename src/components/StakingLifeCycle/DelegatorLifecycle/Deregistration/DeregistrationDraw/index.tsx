@@ -34,35 +34,37 @@ const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCe
         end: certificateRef,
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
         startOffset: { 0: [22, -40], sm: [10, 0], lg: [0] },
-        endOffset: { 0: [0, 0], lg: [0, 0] },
-        fold: { sm: "horizontal", lg: "vertical" }
+        fold: { sm: "horizontal", lg: "vertical" },
+        autoAlign: { 0: "start-vertical", sm: "none" }
       },
       {
         start: certificateRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
         end: cadarnoSystemRef,
         endPosition: { 0: ["left", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
-        startOffset: { 0: [0, 0] },
-        endOffset: { 0: [21.6, 44], sm: [10, 0], lg: [0] },
+        endOffset: { 0: [22, 40], sm: [10, 0], lg: [0] },
         arrow: { 0: "top", sm: "left", lg: "bottom" },
-        fold: { sm: "vertical", lg: "horizontal" }
+        fold: { sm: "vertical", lg: "horizontal" },
+        autoAlign: { 0: "end-vertical", sm: "none" }
       },
       {
         start: adaHolderRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
         end: feeRef,
         endPosition: { 0: ["left", "top"], lg: ["left", "middle"] },
-        startOffset: { 0: [0], lg: [-8, 0] },
-        endOffset: { 0: [15.1, 0], sm: [46, 0], lg: [0, 0] }
+        startOffset: { lg: [-8, 0] },
+        endOffset: { sm: [46, 0], lg: [0] },
+        autoAlign: { 0: "start-vertical", md: "none" }
       },
       {
         start: feeRef,
         startPosition: { 0: ["left", "top"], sm: ["left", "bottom"], lg: ["right", "middle"] },
         end: cadarnoSystemRef,
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-        startOffset: { 0: [15.1, 0], sm: [46, 0], lg: [0, 0] },
-        endOffset: { 0: [0], lg: [8, 0] },
-        arrow: { 0: "top", lg: "left" }
+        startOffset: { sm: [46, 0], lg: [0] },
+        endOffset: { lg: [8, 0] },
+        arrow: { 0: "top", lg: "left" },
+        autoAlign: { 0: "end-vertical", md: "none" }
       },
       {
         start: cadarnoSystemRef,
@@ -70,7 +72,7 @@ const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCe
         end: holdRef,
         endPosition: { 0: ["right", "bottom"], sm: ["center", "bottom"], lg: ["right", "middle"] },
         startOffset: { 0: [-6, 0], sm: [-10, 0], lg: [10, 54] },
-        endOffset: { 0: [-16, 0], sm: [0, 0], lg: [0, 0] },
+        endOffset: { 0: [-16, 0], sm: [0, 0] },
         fold: { 0: "horizontal", lg: "none" }
       },
       {
@@ -78,7 +80,7 @@ const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCe
         startPosition: { 0: ["right", "top"], sm: ["center", "top"], lg: ["left", "middle"] },
         end: adaHolderRef,
         endPosition: { 0: ["right", "middle"], lg: ["right", "top"] },
-        startOffset: { 0: [-16, 0], sm: [0, 0], lg: [0] },
+        startOffset: { 0: [-16, 0], sm: [0] },
         endOffset: { 0: [-12, 0], lg: [-16, 54.2] },
         fold: { 0: "vertical", lg: "none" },
         arrow: { 0: "right" }

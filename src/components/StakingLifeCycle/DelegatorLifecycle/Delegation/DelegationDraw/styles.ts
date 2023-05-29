@@ -48,8 +48,8 @@ export const MiddleGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }
     alignItems: "center"
   },
   [theme.breakpoints.down("sm")]: {
-    maxWidth: 320,
-    minWidth: 320,
+    maxWidth: 330,
+    minWidth: 330,
     gap: 33
   }
 }));
