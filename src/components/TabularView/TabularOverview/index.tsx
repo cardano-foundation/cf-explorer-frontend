@@ -1,4 +1,4 @@
-import { Box, Icon } from "@mui/material";
+import { Box, Grid, Icon } from "@mui/material";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
@@ -67,42 +67,50 @@ const TabularOverview: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <CardList>
-      <GridItem
-        title='Payment Wallet'
-        iconUrl={PaymentWalletUrl}
-        value={<CardAmount amount={Math.max(data?.totalStake || 0, 0)} />}
-        action={
-          <TransferButton
-            onClick={() => setOpen(true)}
-            variant='contained'
-            startIcon={<Icon fill='white' component={TransactionIcon} />}
-          >
-            ADA Transfers
-          </TransferButton>
-        }
-      />
-      <GridItem
-        title='Reward Account'
-        iconUrl={RewardAccountIconUrl}
-        value={<CardAmount amount={Math.max(data?.rewardAvailable || 0, 0)} />}
-      />
-      <GridItem
-        title='Rewards Withdrawn'
-        iconUrl={RewardWithdrawnIconUrl}
-        value={<CardAmount amount={data?.rewardWithdrawn} />}
-      />
-      <GridItem
-        title='Delegating To'
-        iconUrl={DelegationToIconUrl}
-        value={
-          <Box component={Link} to={details.delegation(data?.pool?.poolId)} display='flex' alignItems='center'>
-            <CardValue>{data?.pool?.poolName || getShortHash(data?.pool?.poolId || "")}</CardValue>
-          </Box>
-        }
-      />
+    <Grid container spacing={2}>
+      <Grid item xs={12} sm={6}>
+        <GridItem
+          title='Payment Wallet'
+          iconUrl={PaymentWalletUrl}
+          value={<CardAmount amount={Math.max(data?.totalStake || 0, 0)} />}
+          action={
+            <TransferButton
+              onClick={() => setOpen(true)}
+              variant='contained'
+              startIcon={<Icon fill='white' component={TransactionIcon} />}
+            >
+              ADA Transfers
+            </TransferButton>
+          }
+        />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <GridItem
+          title='Reward Account'
+          iconUrl={RewardAccountIconUrl}
+          value={<CardAmount amount={Math.max(data?.rewardAvailable || 0, 0)} />}
+        />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <GridItem
+          title='Rewards Withdrawn'
+          iconUrl={RewardWithdrawnIconUrl}
+          value={<CardAmount amount={data?.rewardWithdrawn} />}
+        />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <GridItem
+          title='Delegating To'
+          iconUrl={DelegationToIconUrl}
+          value={
+            <Box component={Link} to={details.delegation(data?.pool?.poolId)} display='flex' alignItems='center'>
+              <CardValue>{data?.pool?.poolName || getShortHash(data?.pool?.poolId || "")}</CardValue>
+            </Box>
+          }
+        />
+      </Grid>
       <ADATransferModal open={open} handleCloseModal={() => setOpen(false)} />
-    </CardList>
+    </Grid>
   );
 };
 
