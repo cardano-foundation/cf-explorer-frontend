@@ -26,10 +26,10 @@ import {
 } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import {
-  DeregistrationProcessDescription,
-  RegistrationProcessDescription,
+  DeregistrationSPOProcessDescription,
+  RegistrationSPOProcessDescription,
   SPOInvolvementInDelegationDescription,
-  WithdrawingFundProcessDescription
+  OperatorRewards
 } from "../../ModalDescription";
 import { ButtonText } from "../DelegatorLifecycle/styles";
 import Deregistration from "./Deregistration";
@@ -44,14 +44,6 @@ interface StepperProps {
   description: React.ReactNode;
   key: SPOStep;
   keyCheckShow: string;
-}
-
-interface ListTabResponse {
-  [key: string]: boolean;
-  isRegistration: boolean;
-  isUpdate: boolean;
-  isReward: boolean;
-  isDeRegistration: boolean;
 }
 
 interface Props {
@@ -72,7 +64,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       title: "Registration",
       component: <Registration />,
       description: (
-        <RegistrationProcessDescription
+        <RegistrationSPOProcessDescription
           open={openDescriptionModal}
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />
@@ -98,10 +90,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       title: "Operator Rewards",
       component: <OperatorReward />,
       description: (
-        <WithdrawingFundProcessDescription
-          open={openDescriptionModal}
-          handleCloseModal={() => setOpenDescriptionModal(false)}
-        />
+        <OperatorRewards open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />
       ),
       key: "operator-rewards",
       keyCheckShow: "isReward"
@@ -111,7 +100,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       title: "Deregistration",
       component: <Deregistration />,
       description: (
-        <DeregistrationProcessDescription
+        <DeregistrationSPOProcessDescription
           open={openDescriptionModal}
           handleCloseModal={() => setOpenDescriptionModal(false)}
         />

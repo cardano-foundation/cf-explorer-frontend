@@ -56,7 +56,7 @@ const RewardsDistributionTab = () => {
   const fetchData = useFetchList<RewardDistributionItem>(stakeId ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) : "", {
     ...pageInfo,
     ...params,
-    sort
+    sort: sort || params.sort
   });
   const { total, data } = fetchData;
   const filterLabel = useMemo(() => {
@@ -65,8 +65,6 @@ const RewardsDistributionTab = () => {
         .utc(params.toDate, DATETIME_PARTTEN)
         .local()
         .format("MM/DD/YYYY")}`;
-    if (params.sort && params.sort.length >= 2)
-      return `${params.sort[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
     if (params.txHash) return `Searching for : ${params.txHash}`;
   }, [params]);
   return (
@@ -87,10 +85,10 @@ const RewardsDistributionTab = () => {
             onFilterValueChange={(params) => {
               setParams((pre) => ({
                 fromDate: undefined,
-                sort: undefined,
                 toDate: undefined,
                 txHash: undefined,
-                ...params
+                ...params,
+                sort: params?.sort ? params?.sort.replace("time", "id") : undefined
               }));
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}

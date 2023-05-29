@@ -24,12 +24,20 @@ export const CardItem = styled(Card)<{ sidebar?: number }>(({ theme, sidebar }) 
   },
   [theme.breakpoints.down("md")]: {
     minWidth: "100%"
+  },
+  [theme.breakpoints.between("sm", "lg")]: {
+    padding: "20px",
+    height: 140
   }
 }));
 
-export const ItemIcon = styled("img")(() => ({
+export const ItemIcon = styled("img")(({ theme }) => ({
   width: 80,
-  height: 80
+  height: 80,
+  [theme.breakpoints.between("sm", "lg")]: {
+    width: 60,
+    height: 60
+  }
 }));
 
 export const CardContent = styled(Box)(() => ({
@@ -58,7 +66,8 @@ export const CardTitle = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     fontSize: 14,
     lineHeight: "16px"
-  }
+  },
+  whiteSpace: "nowrap"
 }));
 
 export const CardValue = styled(Typography)(({ theme }) => ({

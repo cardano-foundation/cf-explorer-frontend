@@ -6,12 +6,13 @@ import { StyledCard, StyledImg, StyledLinearProgress, StyledSkeleton, TimeDurati
 import { details } from "~/commons/routers";
 import { API } from "~/commons/utils/api";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "~/commons/utils/constants";
-import { formatADA, numberWithCommas } from "~/commons/utils/helper";
+import { formatADA, formatADAFull, numberWithCommas } from "~/commons/utils/helper";
 import useFetch from "~/commons/hooks/useFetch";
 import { useScreen } from "~/commons/hooks/useScreen";
 import { useSelector } from "react-redux";
 import Card from "~/components/commons/Card";
 import FormNowMessage from "~/components/commons/FormNowMessage";
+import CustomTooltip from "~/components/commons/CustomTooltip";
 
 const OverViews: React.FC = () => {
   const { data, loading, lastUpdated } = useFetch<OverViewDelegation>(
@@ -102,7 +103,9 @@ const OverViews: React.FC = () => {
           <StyledCard.Container sx={{ justifyContent: "space-between" }}>
             <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>
               <StyledCard.Title>Live Stake</StyledCard.Title>
-              <StyledCard.Value>{formatADA(data?.liveStake)}</StyledCard.Value>
+              <CustomTooltip title={formatADAFull(data?.liveStake)}>
+                <StyledCard.Value>{formatADA(data?.liveStake)}</StyledCard.Value>
+              </CustomTooltip>
             </StyledCard.Content>
             <StyledCard.Content style={{}}>
               <StyledCard.Title>Delegators</StyledCard.Title>

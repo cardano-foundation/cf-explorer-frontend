@@ -5,7 +5,10 @@ export const NormalDescription = styled(Box)`
   font-weight: 400;
   line-height: 21px;
   z-index: 2;
-  font-size: 14px;
+  font-size: 16px;
+  & span {
+    font-weight: 700;
+  }
 `;
 export const NumberParagraph = styled(Box)`
   position: absolute;

@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { DelegationProcessDescription } from "./DelegationProcessDescription";
-import { DeregistrationProcessDescription } from "./DeregistrationProcessDescription";
-import { RegistrationProcessDescription } from "./RegistrationProcessDescription";
+import { DeregistrationDelegatorProcessDescription } from "./DeregistrationDelegatorProcessDescription";
+import { RegistrationDelegatorProcessDescription } from "./RegistrationDelegatorProcessDescription";
 import { RewardDistributionProcessDescription } from "./RewardDistributionProcessDescription";
 import { SPOInvolvementInDelegationDescription } from "./SPOInvolvementInDelegationDescription";
 import { WithdrawingFundProcessDescription } from "./WithdrawingFundProcessDescription";
@@ -17,9 +17,9 @@ describe("ModalDescription", () => {
     expect(handleCloseModal).toHaveBeenCalled();
   });
 
-  it("Render DeregistrationProcessDescription modal", async () => {
+  it("Render DeregistrationDelegatorProcessDescription modal", async () => {
     const handleCloseModal = jest.fn();
-    render(<DeregistrationProcessDescription open={true} handleCloseModal={handleCloseModal} />);
+    render(<DeregistrationDelegatorProcessDescription open={true} handleCloseModal={handleCloseModal} />);
     const element = screen.getByText(/The deregistration process/i);
     expect(element).toBeInTheDocument();
     await userEvent.click(screen.getByTestId("close-modal-button"));
@@ -28,7 +28,7 @@ describe("ModalDescription", () => {
 
   it("Render RegistrationProcessDescription modal", async () => {
     const handleCloseModal = jest.fn();
-    render(<RegistrationProcessDescription open={true} handleCloseModal={handleCloseModal} />);
+    render(<RegistrationDelegatorProcessDescription open={true} handleCloseModal={handleCloseModal} />);
     const element = screen.getByText(/The registration process/i);
     expect(element).toBeInTheDocument();
     await userEvent.click(screen.getByTestId("close-modal-button"));

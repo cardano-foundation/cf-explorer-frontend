@@ -4,20 +4,20 @@ interface Props {
   open: boolean;
   handleCloseModal: () => void;
 }
-export function WithdrawingFundProcessDescription({ open, handleCloseModal }: Props) {
+export function DeregistrationDelegatorProcessDescription({ open, handleCloseModal }: Props) {
   return (
     <StyledModal
       contentStyle={{ paddingRight: "5px" }}
-      title='Reward withdrawal'
+      title='Deregistration'
       handleCloseModal={handleCloseModal}
       open={open}
     >
       <WrapContent>
         <ContentContainer>
           <NormalDescription>
-            Rewards on a reward account can be withdrawn to a payment address at any time by using the reward account as
-            an input to a transaction. This transaction follows the Unspent-Transaction-Output (UTXO) architecture,
-            taking the current balance of the reward account as the input amount.
+            The stake address deregistration certificate contains the stake address that should be deregistered.
+            Registering a stake address creates a corresponding reward account, which is deleted when the stake address
+            is deregistered. The hold paid during registration is then released.
           </NormalDescription>
         </ContentContainer>
       </WrapContent>

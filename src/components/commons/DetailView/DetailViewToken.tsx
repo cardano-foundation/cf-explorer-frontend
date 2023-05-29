@@ -1,10 +1,11 @@
+import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
 import { PeopleIcon, PolicyWhiteIcon, TransactionIcon, UnionTokenIcon } from "~/commons/resources";
 import { details } from "~/commons/routers";
-import { formatDateTimeLocal, getShortWallet, numberWithCommas } from "~/commons/utils/helper";
+import { formatDateTimeLocal, formatNumberDivByDecimals, getShortWallet, numberWithCommas } from "~/commons/utils/helper";
 import CopyButton from "../CopyButton";
 import CustomTooltip from "../CustomTooltip";
 import ViewAllButton from "../ViewAllButton";
@@ -46,7 +47,6 @@ import {
   ViewDetailHeader,
   ViewDetailScroll
 } from "./styles";
-import { useTheme } from "@emotion/react";
 
 type DetailViewTokenProps = {
   token: IToken | null;
@@ -183,7 +183,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             <TokenHeaderInfo>
               <TokenTotalSupply>
                 <TokenInfoLabel>Total Supply</TokenInfoLabel>
-                <TokenInfoValue>{numberWithCommas(data.supply)}</TokenInfoValue>
+                <TokenInfoValue>{formatNumberDivByDecimals(data?.supply, data?.metadata?.decimals)}</TokenInfoValue>
               </TokenTotalSupply>
               <TokenDecimal>
                 <TokenInfoLabel>Decimal</TokenInfoLabel>

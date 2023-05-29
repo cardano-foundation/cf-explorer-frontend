@@ -1,16 +1,16 @@
 import { alpha, Box, Button } from "@mui/material";
+import BigNumber from "bignumber.js";
 import React, { useContext, useState } from "react";
+import { OverviewMetadataTokenContext } from "~/pages/TokenDetail";
 import decimalIcon from "../../../commons/resources/icons/decimal.svg";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
 import exchageIcon from "../../../commons/resources/icons/Union.svg";
-import { formatDateTimeLocal, numberWithCommas } from "../../../commons/utils/helper";
+import { formatDateTimeLocal, formatNumberDivByDecimals, numberWithCommas } from "../../../commons/utils/helper";
 import DetailHeader from "../../commons/DetailHeader";
 import ScriptModal from "../../ScriptModal";
 import { CardItem, WrapTitle } from "./styles";
-import { OverviewMetadataTokenContext } from "~/pages/TokenDetail";
-import BigNumber from "bignumber.js";
 BigNumber.config({ DECIMAL_PLACES: 40 });
 
 interface ITokenOverview {
@@ -93,7 +93,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
     },
     {
       title: <WrapTitle>Total Supply</WrapTitle>,
-      value: <Box component={"span"}>{numberWithCommas(new BigNumber(data?.supply || 0).times(new BigNumber(10).exponentiatedBy(-decimalToken)).toString(), 6)}</Box>,
+      value: <Box component={"span"}>{formatNumberDivByDecimals(data?.supply, decimalToken)}</Box>,
       icon: slotIcon
     },
     { title: <WrapTitle>Decimal</WrapTitle>, icon: decimalIcon, value: decimalToken },

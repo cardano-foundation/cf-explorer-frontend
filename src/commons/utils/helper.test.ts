@@ -1,4 +1,4 @@
-import { getShortWallet, formatAmount } from "./helper";
+import { getShortWallet, formatAmount, numberWithCommas } from "./helper";
 
 describe("helper getShortWallet", () => {
   it("get short return correct value", () => {
@@ -26,5 +26,10 @@ describe("helper formatAmountToken", () => {
   it("should divided by decimal", () => {
     expect(formatAmount(1234000000, 5)).toEqual("12,340");
     expect(formatAmount(1234000000, 5)).toEqual("12,340");
+  });
+  it("should return correct value with decimal", () => {
+    expect(numberWithCommas(1234)).toEqual("1,234");
+    expect(numberWithCommas(1.250255985)).toEqual("1.250255");
+    expect(numberWithCommas(1.250000)).toEqual("1.25");
   });
 });

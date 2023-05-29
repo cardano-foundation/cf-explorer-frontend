@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const StyledLinearProgress = styled(LinearProgress)`
   display: inline-block;
-  width: 100%;
+  width: 150px;
   height: 8px;
   border-radius: 34px;
   background: ${(props) => alpha(props.theme.palette.common.black, 0.1)};

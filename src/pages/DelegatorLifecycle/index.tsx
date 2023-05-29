@@ -52,6 +52,14 @@ export interface ListStakeKeyResponse {
 
 const MODES: ViewMode[] = ["timeline", "tabular"];
 
+const dataTabsConfig = {
+  hasDeRegistration: true,
+  hasDelegation: true,
+  hasRegistration: true,
+  hasWithdrawal: true,
+  hashRewards: true
+};
+
 const DelegatorLifecycle = () => {
   const { stakeId = "", mode = "timeline", tab = "registration" } = useParams<Params>();
   const tabList: { [key in DelegationStep]: number } & { tablular: null } = {
@@ -74,7 +82,6 @@ const DelegatorLifecycle = () => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { isLoggedIn } = useAuth();
   const { data, error, initialized } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
-  const { data: dataTabsConfig } = useFetch<ListStakeKeyResponse>(API.STAKE_LIFECYCLE.TABS(stakeId));
 
   useEffect(() => {
     setCurrentStep(tabList[validTab]);

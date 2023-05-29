@@ -22,12 +22,13 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
   width: "80%",
   margin: "0 auto",
   overflow: "hidden",
+  alignItems: "center",
   [theme.breakpoints.down("lg")]: {
+    alignItems: "flex-start",
     borderTop: "none",
     width: "100%",
-    minHeight: "200px",
+    minHeight: "160px",
     height: "100%",
-    paddingTop: 0
   },
   [theme.breakpoints.down("sm")]: {
     width: "100%",
@@ -41,8 +42,7 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "space-between",
-      padding: "0 10px",
-      margin: "25px 0"
+      padding: "0 10px 20px 10px",
     }
   }
 }));
@@ -54,13 +54,14 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   margin: "0 auto",
   borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
   overflow: "hidden",
+  alignItems: "center",
   [theme.breakpoints.down("lg")]: {
+    alignItems: "flex-start",
     borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
     height: "100%",
     borderBottom: "none",
     width: "100%",
-    minHeight: "200px",
-    paddingTop: 0
+    minHeight: "160px",
   },
   [theme.breakpoints.down("sm")]: {
     width: "100%",
@@ -74,8 +75,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "space-between",
-      padding: "0 10px",
-      margin: "25px 0",
+      padding: "0 10px 20px 10px",
       borderRight: `1px solid ${alpha(theme.palette.common.white, 0.06)}`
     }
   }
@@ -91,6 +91,7 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   fontSize: "2rem",
   margin: "0 auto",
   overflowWrap: "anywhere",
+  padding: "0 18px",
   [theme.breakpoints.down("md")]: {
     padding: "0 10px"
   },

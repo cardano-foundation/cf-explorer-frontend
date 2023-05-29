@@ -1,3 +1,4 @@
+import { IconButton } from "@mui/material";
 import { Box, styled } from "@mui/material";
 import DatePicker from "react-datepicker";
 
@@ -62,3 +63,38 @@ export const WrapCustomDatePicker = styled(Box)(({ theme }) => ({
   fontSize: "16px",
   fontWeight: 400
 }));
+
+export const CloseButtonLeft = styled(IconButton)<{ saving: number }>`
+  position: absolute;
+  top: -10px;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid ${(props) => props.theme.palette.grey["A100"]};
+  cursor: ${(props) => (props.saving ? `wait` : `pointer`)};
+  &:hover {
+    ${(props) => (props.saving ? `background: none;` : ``)}
+  }
+  @media (min-width: 750px) {
+    display: none;
+  }
+`;
+
+
+export const CloseButtonRight = styled(IconButton)<{ saving: number }>`
+  position: absolute;
+  top: -10px;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid ${(props) => props.theme.palette.grey["A100"]};
+  cursor: ${(props) => (props.saving ? `wait` : `pointer`)};
+  &:hover {
+    ${(props) => (props.saving ? `background: none;` : ``)}
+  }
+  @media (max-width: 750px) {
+    display: none;
+  }
+`;

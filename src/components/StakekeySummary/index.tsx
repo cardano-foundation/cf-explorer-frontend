@@ -2,9 +2,8 @@ import { useState } from "react";
 import Table, { Column } from "../commons/Table";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { API } from "../../commons/utils/api";
-import { Box, Button, IconButton, styled } from "@mui/material";
+import { Box, IconButton, styled } from "@mui/material";
 import moment from "moment";
-import { TextOverFlow } from "../StakingLifeCycle/DelegatorLifecycle/ReportComposerModal/styles";
 import { defaultAxiosDownload } from "../../commons/utils/axios";
 import { useHistory } from "react-router-dom";
 import { details } from "../../commons/routers";
@@ -12,6 +11,7 @@ import CustomIcon from "../commons/CustomIcon";
 import { DownloadGreenIcon } from "~/commons/resources";
 import { formatDateTimeLocal } from "~/commons/utils/helper";
 import CustomTooltip from "../commons/CustomTooltip";
+import { StyledBox } from "./styles";
 
 export const EVENTS: { [key in keyof IReportStaking]?: string } = {
   eventDelegation: "Delegation",
@@ -81,9 +81,9 @@ const StakekeySummary = () => {
       maxWidth: "300px",
       render(data) {
         return (
-          <Box textOverflow='unset' whiteSpace='break-spaces' sx={{ wordBreak: "break-word", lineHeight: 1.5 }}>
-            {data.reportName}
-          </Box>
+          <CustomTooltip title={data.reportName}>
+            <StyledBox>{data.reportName}</StyledBox>
+          </CustomTooltip>
         );
       }
     },

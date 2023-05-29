@@ -1,4 +1,4 @@
-import { styled, Stack, Box, Button, TextField, Slider } from "@mui/material";
+import { styled, Stack, Box, Button, TextField, Slider, FormLabel } from "@mui/material";
 import { SelectMui } from "../../../commons/Table/styles";
 
 export const Container = styled(Box)(({ theme }) => ({
@@ -243,4 +243,10 @@ export const StyledSlider = styled(Slider)`
   }
 
   margin-bottom: 12px;
+`;
+
+export const StyledFormLabel = styled(FormLabel)`
+  &.Mui-focused {
+    color: ${(props) => props.theme.palette.grey[500]};
+  }
 `;

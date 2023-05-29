@@ -47,7 +47,7 @@ const TopDelegationPools = () => {
     {
       title: "Reward",
       key: "reward",
-      render: (r) => <RateWithIcon value={r.reward} multiple={100} />
+      render: (r) => <RateWithIcon value={r.reward} multiple={1} />
     },
     {
       title: "Fee (A)",
@@ -68,16 +68,22 @@ const TopDelegationPools = () => {
     {
       title: "Saturation",
       key: "output",
-      render: (r) => (
-        <ProgressContainer>
-          <CustomTooltip title={`${r.saturation}%`}>
-            <ProgressTitle>{formatPercent(r.saturation / 100)}</ProgressTitle>
-          </CustomTooltip>
-          <CustomTooltip title={`${r.saturation}%`}>
-            <StyledLinearProgress variant='determinate' value={r.saturation} style={{ width: 150 }} />
-          </CustomTooltip>
-        </ProgressContainer>
-      )
+      render: (r) => {
+        return (
+          <ProgressContainer>
+            <CustomTooltip title={`${r.saturation}%`}>
+              <ProgressTitle>{formatPercent(r.saturation / 100)}</ProgressTitle>
+            </CustomTooltip>
+            <CustomTooltip title={`${r.saturation}%`}>
+              <StyledLinearProgress
+                variant='determinate'
+                value={r.saturation > 100 ? 100 : r.saturation}
+                style={{ width: 150 }}
+              />
+            </CustomTooltip>
+          </ProgressContainer>
+        );
+      }
     }
   ];
   return (

@@ -9,12 +9,12 @@ export const defaultReportTab = "stake";
 const tabItems: TabsItem[] = [
   {
     value: "stake-key",
-    label: "Stake Key summary",
+    label: "Stake Key report",
     component: <StakekeySummary />
   },
   {
     value: "pools",
-    label: "Pool lifecycle",
+    label: "Pool report",
     component: <PoolLifecycle />
   }
 ];

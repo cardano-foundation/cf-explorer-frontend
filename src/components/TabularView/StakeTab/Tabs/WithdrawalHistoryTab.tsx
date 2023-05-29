@@ -80,7 +80,7 @@ const WithdrawalHistoryTab = () => {
   const fetchData = useFetchList<WithdrawalHistoryItem>(stakeId ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "", {
     ...pageInfo,
     ...params,
-    sort
+    sort: sort || params?.sort
   });
   const { total, data } = fetchData;
   const filterLabel = useMemo(() => {
@@ -89,8 +89,6 @@ const WithdrawalHistoryTab = () => {
         .utc(params.toDate, DATETIME_PARTTEN)
         .local()
         .format("MM/DD/YYYY")}`;
-    if (params.sort && params.sort.length >= 2)
-      return `${params.sort[1] === "DESC" ? "Sort by: Latest - First" : "Sort by: First - Latest"}`;
     if (params.txHash) return `Searching for : ${params.txHash}`;
   }, [params]);
 
@@ -112,10 +110,10 @@ const WithdrawalHistoryTab = () => {
             onFilterValueChange={(params) => {
               setParams((pre) => ({
                 fromDate: undefined,
-                sort: undefined,
                 toDate: undefined,
                 txHash: undefined,
-                ...params
+                ...params,
+                sort: params?.sort ? params?.sort.replace("time", "id") : undefined
               }));
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}

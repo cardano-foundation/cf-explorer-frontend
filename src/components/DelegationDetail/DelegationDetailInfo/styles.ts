@@ -128,7 +128,7 @@ export const InfoTitle = styled(Box)`
   align-items: flex-start;
   justify-content: space-between;
   font-size: 14px;
-
+  flex-wrap: wrap;
   margin-top: 14px;
   margin-bottom: 5px;
   cursor: pointer;
@@ -146,7 +146,9 @@ export const InfoValue = styled(Box)(({ theme }) => ({
   fontSize: 18,
   [theme.breakpoints.down("sm")]: {
     fontSize: 16
-  }
+  },
+  // display: "flex",
+  // flexDirection: "column",
 }));
 
 export const StyledLinearProgress = styled(LinearProgress)`
@@ -168,6 +170,7 @@ export const FlexGap10 = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: 10,
+  overflowWrap: "anywhere",
   [theme.breakpoints.down("sm")]: {
     fontSize: 11
   }

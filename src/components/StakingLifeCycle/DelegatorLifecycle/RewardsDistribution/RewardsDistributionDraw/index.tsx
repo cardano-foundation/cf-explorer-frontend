@@ -21,7 +21,8 @@ const RewarsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data, 
   const adaAmountSecondRef = useRef(null);
   const holderRef = useRef(null);
   const rewardAccountRef = useRef(null);
-  const isRewardPool = (data?.rewardPools || []).length > 0;
+
+  const isRewardPool = data?.rewardPools?.length || 0 > 0;
 
   const paths = useMemo((): LineArrowItem[] => {
     return [
@@ -70,7 +71,7 @@ const RewarsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data, 
         arrow: { 0: "top", lg: "left" }
       }
     ];
-  }, []);
+  }, [isRewardPool]);
 
   const { sidebar } = useSelector(({ user }: RootState) => user);
   return (
