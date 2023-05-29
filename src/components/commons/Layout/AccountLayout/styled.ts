@@ -29,6 +29,9 @@ export const SideBar = styled(Box)(({ theme }) => ({
 export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
   textAlign: "left",
   display: "block",
+  width: "100%",
+  padding: "10px 0",
+  margin: "auto",
   backgroundColor: active ? alpha(theme.palette.primary.main, 0.1) : theme.palette.background.paper,
   color: `${active ? theme.palette.primary.main : theme.palette.grey[400]} !important`,
   fontWeight: "bold",
@@ -38,8 +41,10 @@ export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => 
 }));
 
 export const WrapItemMobile = styled(Box)(({ theme }) => ({
+  width: "100%",
   [theme.breakpoints.down("md")]: {
     display: "flex",
+    width: "unset",
     backgroundColor: "#E7E8EA",
     borderRadius: "8px"
   },

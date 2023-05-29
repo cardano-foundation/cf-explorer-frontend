@@ -44,7 +44,7 @@ export const TotalTransaction = styled(Typography)`
 
 export const AmountADARow = styled(Typography)`
   font-size: 14px;
-  color: #f75e5e;
+  color: ${(props) => props.theme.palette.primary.main};
   display: flex;
   gap: 10px;
   align-items: center;

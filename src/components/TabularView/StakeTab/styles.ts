@@ -128,3 +128,11 @@ export const WrapperDelegationTab = styled(Box)`
     gap: 10px;
   }
 `;
+
+export const AmountADARow = styled(Box)`
+  font-size: 14px;
+  color: ${(props) => props.theme.palette.primary.main};
+  display: flex;
+  gap: 10px;
+  align-items: center;
+`;

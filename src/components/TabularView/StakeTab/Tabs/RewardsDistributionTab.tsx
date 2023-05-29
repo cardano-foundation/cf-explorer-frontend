@@ -6,15 +6,16 @@ import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifec
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
-import { formatDateTimeLocal, getPageInfo } from "../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo } from "../../../../commons/utils/helper";
 import StackingFilter, { FilterParams } from "../../../StackingFilter";
 import { DATETIME_PARTTEN } from "../../../StackingFilter/DateRangeModal";
 import { FilterDateLabel } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles";
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import Table, { Column } from "../../../commons/Table";
 import { GreenWalletIcon } from "~/components/commons/GreenWalletIcon";
-import { StyledLink, WrapWalletLabel, WrapperDelegationTab } from "../styles";
+import { AmountADARow, StyledLink, WrapWalletLabel, WrapperDelegationTab } from "../styles";
 import { AdaValue } from "./StakeRegistrationTab";
+import ADAicon from "~/components/commons/ADAIcon";
 
 const RewardsDistributionTab = () => {
   const detailData = useContext(DelegatorDetailContext);
@@ -35,7 +36,9 @@ const RewardsDistributionTab = () => {
       title: "Rewards Paid",
       key: "paid",
       minWidth: "120px",
-      render: (r) => <AdaValue limit={5} value={r.amount} />
+      render: (r) => (<AmountADARow>
+        +{formatADAFull(r.amount)} <ADAicon color='#333333' />
+      </AmountADARow>)
     },
     {
       title: "Timestamp",
