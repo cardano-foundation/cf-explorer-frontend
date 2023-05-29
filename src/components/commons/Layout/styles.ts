@@ -102,7 +102,9 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
   boxSizing: "border-box",
   borderRightWidth: 0,
   boxShadow: theme.shadow.draw,
-  zIndex: 1302,
+  [theme.breakpoints.down("md")]: {
+    zIndex: 1302,
+  },
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme)

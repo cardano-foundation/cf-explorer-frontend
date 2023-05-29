@@ -4,11 +4,11 @@ export const StyledContainer = styled(Box)`
   text-align: left;
 `;
 
-export const GridWrapper = styled(Grid)`
-  min-height: 400px;
-  padding: 0 0 0 0;
-  text-align: left;
-`;
+export const GridWrapper =  styled(Grid)(({ theme }) => ({
+  borderRadius: 10,
+  minHeight: "400px",
+  textAlign: "left"
+}));
 
 export const Tab = styled("div")`
   display: inline-block;
@@ -27,6 +27,87 @@ export const Button = styled("button")<{ active: number }>`
   font-size: 16px;
   line-height: 24px;
 `;
+
+export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
+  // height: `calc(100% - ${space}px)`,
+  background: theme.palette.secondary.dark,
+  borderRadius: "10px",
+  color: theme.palette.primary.contrastText,
+  display: "flex",
+  flexDirection: "column",
+  textAlign: "center",
+  [theme.breakpoints.down("lg")]: {
+    flexDirection: "row"
+  },
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "row"
+  }
+}));
+
+export const BoxInfoItem = styled(Box)(({ theme }) => ({
+  height: "100%",
+  paddingTop: theme.spacing(2),
+  width: "80%",
+  margin: "0 auto",
+  overflow: "hidden",
+  [theme.breakpoints.down("lg")]: {
+    borderTop: "none",
+    width: "100%",
+    minHeight: "200px",
+    height: "100%",
+    paddingTop: 0
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    borderRight: "none",
+    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    minHeight: "0px",
+
+    "& > div": {
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: "0 10px",
+      margin: "25px 0"
+    }
+  }
+}));
+
+export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
+  height: "100%",
+  paddingTop: theme.spacing(2),
+  width: "80%",
+  margin: "0 auto",
+  borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+  overflow: "hidden",
+  [theme.breakpoints.down("lg")]: {
+    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    height: "100%",
+    borderBottom: "none",
+    width: "100%",
+    minHeight: "200px",
+    paddingTop: 0
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    borderRight: "none",
+    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    minHeight: "0",
+
+    "& > div": {
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: "0 10px",
+      margin: "25px 0",
+      borderRight: `1px solid ${alpha(theme.palette.common.white, 0.06)}`
+    }
+  }
+}));
 
 export const ChartContainer = styled("div")`
   padding-top: 20px;
@@ -82,6 +163,9 @@ export const Value = styled("div")(({ theme }) => ({
   fontSize: "2rem",
   overflowWrap: "anywhere",
   color: theme.palette.primary.contrastText,
+  [theme.breakpoints.down("md")]: {
+    padding: "0 10px"
+  },
   [theme.breakpoints.down("sm")]: {
     fontSize: "1.25rem",
     padding: "0 10px"

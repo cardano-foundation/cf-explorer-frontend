@@ -19,6 +19,25 @@ export const Header = styled(Box)(({ theme }) => ({
   }
 }));
 
+export const WrapInfo = styled(Box)(({ theme }) => ({
+  display: "flex",
+  width: "100%",
+  alignItems: "center",
+}));
+
+export const WrapUTXOs = styled(Box)(({ theme }) => ({
+  justifyContent: "space-between",
+  width: "100%",
+  display: 'flex',
+  flexDirection: "row",
+  paddingBottom: '5px',
+  alignItems: 'center',
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+    alignItems: "flex-start"
+  },
+}));
+
 export const ItemContent = styled(Box)(({ theme }) => ({
   display: "flex"
 }));

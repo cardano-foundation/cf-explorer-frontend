@@ -7,6 +7,9 @@ import { HighestIcon, LowestIcon } from "~/commons/resources";
 import useFetch from "~/commons/hooks/useFetch";
 import {
   AnalyticsTitle,
+  BoxInfo,
+  BoxInfoItem,
+  BoxInfoItemRight,
   Button,
   ChartContainer,
   GridRight,
@@ -32,8 +35,8 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   return (
     <StyledContainer>
       <AnalyticsTitle>Analytics</AnalyticsTitle>
-      <GridWrapper container columns={12} spacing={3}>
-        <Grid item xs={12} lg={9}>
+      <GridWrapper container columns={24} spacing='35px'>
+        <Grid item xs={24} lg={18}>
           <Box>
             <Button
               active={selected === "epochChart" ? 1 : 0}
@@ -108,39 +111,43 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
             )}
           </ChartContainer>
         </Grid>
-        <Grid item xs={12} lg={3} display='flex' flexDirection='column'>
-          <GridRight
-            container
-            columns={12}
-            space={categories.length ? (categories.find((item) => item > 99) ? 50 : 36) : 16}
-          >
-            <Item item xs={6} sm={6} lg={12}>
-              <img src={HighestIcon} alt='heighest icon' />
-              <Title>{selected === "epochChart" ? "Highest stake" : "Highest number of delegators"}</Title>
-              <Value>
-                {loading || !data?.[selected] ? (
-                  <SkeletonUI variant='rectangular' />
-                ) : selected === "epochChart" ? (
-                  formatADAFull(data[selected].highest)
-                ) : (
-                  data[selected].highest
-                )}
-              </Value>
-            </Item>
-            <Item item xs={6} sm={6} lg={12}>
-              <img src={LowestIcon} alt='lowest icon' />
-              <Title>{selected === "epochChart" ? "Lowest stake" : "Lowest number of delegators"}</Title>
-              <Value>
-                {loading || !data ? (
-                  <SkeletonUI variant='rectangular' />
-                ) : selected === "epochChart" ? (
-                  formatADAFull(data[selected].lowest)
-                ) : (
-                  data[selected].lowest
-                )}
-              </Value>
-            </Item>
-          </GridRight>
+        <Grid item xs={24} lg={6}>
+          <BoxInfo height={"100%"} space={categories.length ? 36 : 16}>
+            <Box flex={1}>
+              <BoxInfoItemRight display={"flex"} alignItems='center' justifyContent={"center"}>
+                <Box>
+                  <img src={HighestIcon} alt='heighest icon' />
+                  <Title>{selected === "epochChart" ? "Highest stake" : "Highest number of delegators"}</Title>
+                  <Value>
+                    {loading || !data?.[selected] ? (
+                      <SkeletonUI variant='rectangular' />
+                    ) : selected === "epochChart" ? (
+                      formatADAFull(data[selected].highest)
+                    ) : (
+                      data[selected].highest
+                    )}
+                  </Value>
+                </Box>
+              </BoxInfoItemRight>
+            </Box>
+            <Box flex={1}>
+              <BoxInfoItem display={"flex"} alignItems='center' justifyContent={"center"}>
+                <Box>
+                  <img src={LowestIcon} alt='lowest icon' />
+                  <Title>{selected === "epochChart" ? "Lowest stake" : "Lowest number of delegators"}</Title>
+                  <Value>
+                    {loading || !data ? (
+                      <SkeletonUI variant='rectangular' />
+                    ) : selected === "epochChart" ? (
+                      formatADAFull(data[selected].lowest)
+                    ) : (
+                      data[selected].lowest
+                    )}
+                  </Value>
+                </Box>
+              </BoxInfoItem>
+            </Box>
+          </BoxInfo>
         </Grid>
       </GridWrapper>
     </StyledContainer>

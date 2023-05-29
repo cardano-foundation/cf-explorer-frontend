@@ -69,6 +69,9 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   fontSize: "2rem",
   margin: "0 auto",
   overflowWrap: "anywhere",
+  [theme.breakpoints.down("md")]: {
+    padding: "0 10px"
+  },
   [theme.breakpoints.down("sm")]: {
     fontSize: "1.25rem",
     padding: "0 10px"

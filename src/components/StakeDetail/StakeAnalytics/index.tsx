@@ -193,8 +193,8 @@ const StakeAnalytics: React.FC = () => {
             )}
           </ChartBox>
         </Grid>
-        <StyledGrid item xs={24} lg={6}>
-          <BoxInfo>
+        <Grid item xs={24} lg={6}>
+          <BoxInfo height={"100%"}>
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems='center' justifyContent={"center"}>
                 <Box>
@@ -234,7 +234,7 @@ const StakeAnalytics: React.FC = () => {
               </BoxInfoItem>
             </Box>
           </BoxInfo>
-        </StyledGrid>
+        </Grid>
       </Wrapper>
     </Card>
   );

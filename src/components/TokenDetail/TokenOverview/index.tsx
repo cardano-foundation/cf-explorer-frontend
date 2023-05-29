@@ -10,6 +10,8 @@ import DetailHeader from "../../commons/DetailHeader";
 import ScriptModal from "../../ScriptModal";
 import { CardItem, WrapTitle } from "./styles";
 import { OverviewMetadataTokenContext } from "~/pages/TokenDetail";
+import BigNumber from "bignumber.js";
+BigNumber.config({ DECIMAL_PLACES: 40 });
 
 interface ITokenOverview {
   data: IToken | null;
@@ -91,7 +93,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
     },
     {
       title: <WrapTitle>Total Supply</WrapTitle>,
-      value: <Box component={"span"}>{numberWithCommas((data?.supply || 0) * 10 ** -decimalToken)}</Box>,
+      value: <Box component={"span"}>{numberWithCommas(new BigNumber(data?.supply || 0).times(new BigNumber(10).exponentiatedBy(-decimalToken)).toString(), 6)}</Box>,
       icon: slotIcon
     },
     { title: <WrapTitle>Decimal</WrapTitle>, icon: decimalIcon, value: decimalToken },
