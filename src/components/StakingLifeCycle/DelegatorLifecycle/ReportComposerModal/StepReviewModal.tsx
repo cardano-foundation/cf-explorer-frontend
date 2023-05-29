@@ -16,17 +16,15 @@ import {
 import { IPropsModal, STEPS } from ".";
 import moment from "moment";
 import { EVENTS_NAME } from "./StepEventsModal";
-import { PencilIcon } from "../../../../commons/resources";
 import { ReportType } from "./FilledInfoModal";
 import { generateStakeKeyReport, generateStakePoolReport } from "../../../../commons/utils/userRequest";
 import useToast from "../../../../commons/hooks/useToast";
 import { useHistory } from "react-router-dom";
-import { details, routers } from "../../../../commons/routers";
+import { details } from "../../../../commons/routers";
 import { useState } from "react";
 import { getEventType } from "../../../StakekeySummary";
 import { getPoolEventType } from "../../../PoolLifecycle";
 import { useScreen } from "../../../../commons/hooks/useScreen";
-import CustomTooltip from "~/components/commons/CustomTooltip";
 
 const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaultParams, gotoStep }) => {
   const toast = useToast();
@@ -134,7 +132,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           all the details correctly?
         </TextRequired>
         <Stack marginBottom='35px'>
-          {list.map(({ label, value, step }) => {
+          {list.map(({ label, value }) => {
             return (
               <OverViewItem key={label}>
                 <OverViewValue>
@@ -143,7 +141,6 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
                     <TextValueReview>{value}</TextValueReview>
                   </TextOverFlow>
                 </OverViewValue>
-                <PencilIcon style={{ paddingLeft: "10px" }} onClick={() => gotoStep?.(step as number)} />
               </OverViewItem>
             );
           })}
