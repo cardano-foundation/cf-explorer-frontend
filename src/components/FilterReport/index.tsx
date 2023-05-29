@@ -1,7 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Option } from "../commons/Filter";
 import CustomIcon from "../commons/CustomIcon";
-import { ArrowFromBottomIcon, ArrowFromTopIcon, CalenderIcon, FilterIC, SearchIcon } from "../../commons/resources";
+import {
+  ArrowFromBottomIcon,
+  ArrowFromTopIcon,
+  CalenderIcon,
+  FilterIC,
+  ResetIcon,
+  SearchIcon
+} from "../../commons/resources";
 
 import { ClickAwayListener, IconButton, ListItemIcon, MenuList } from "@mui/material";
 
@@ -18,6 +25,8 @@ import DateRangeModal, { DATETIME_PARTTEN } from "./DateRangeModal";
 import { AdditionContainer } from "./styles";
 import { StyledListItemIcon } from "../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import moment from "moment";
+import { Box } from "@mui/material";
+import { Button } from "@mui/material";
 
 interface StakingOption extends Option {
   addition?: React.FC<any>;
@@ -166,6 +175,22 @@ const FilterReport: React.FC<StackingFilterProps> = ({ onFilterValueChange, filt
                 />
               )}
             </AdditionContainer>
+            <Box
+              component={Button}
+              width={"100%"}
+              textTransform={"capitalize"}
+              display={"flex"}
+              alignItems={"center"}
+              color={`#108AEF !important`}
+              onClick={() => {
+                onFilterValueChange?.({ fromDate: undefined, sort: undefined, toDate: undefined, txHash: undefined });
+                setOpen(false);
+                setSelected("");
+              }}
+            >
+              <Box mr={1}>Reset</Box>
+              <ResetIcon />
+            </Box>
           </FilterContent>
         )}
       </FilterContainer>
