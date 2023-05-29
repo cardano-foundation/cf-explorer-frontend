@@ -28,6 +28,7 @@ import {
   AllowSearchButton,
   StyledSelect,
   StyledMenuItem,
+  TimeDuration,
 } from "./styles";
 import { details, routers } from "../../../commons/routers";
 import Bookmark from "../BookmarkIcon";
@@ -37,12 +38,14 @@ import { useHistory } from "react-router-dom";
 import { SearchIcon } from "../../../commons/resources";
 import { BiChevronDown } from "react-icons/bi";
 import { numberWithCommas } from "../../../commons/utils/helper";
+import moment from "moment";
 
 interface DetailHeaderProps {
   type: Bookmark["type"];
   bookmarkData?: string;
   loading: boolean;
   title: number | string;
+  lastUpdated?: number;
   hash?: string;
   transactionStatus?: keyof typeof TransactionStatus;
   stakeKeyStatus?: StakeStatus;
@@ -58,7 +61,8 @@ interface DetailHeaderProps {
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = props => {
-  const { loading, listItem, epoch, type, title, hash, transactionStatus, bookmarkData, stakeKeyStatus } = props;
+  const { loading, listItem, epoch, type, title, hash, transactionStatus, bookmarkData, stakeKeyStatus, lastUpdated } =
+    props;
   const history = useHistory();
   const theme = useTheme();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
@@ -133,6 +137,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = props => {
               <SlotLeaderCopy text={hash} />
             </SlotLeader>
           )}
+          {!!lastUpdated && <TimeDuration>Last updated {moment(lastUpdated).fromNow()}</TimeDuration>}
         </Box>
         {epoch ? (
           <Box>

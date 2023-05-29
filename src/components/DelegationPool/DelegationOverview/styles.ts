@@ -63,3 +63,15 @@ export const StyledCard = {
     color: ${props => props.theme.palette.primary.main};
   `,
 };
+
+export const TimeDuration = styled("small")<{ mobile?: number }>(({ theme, mobile }) => ({
+  color: theme.palette.grey[400],
+  display: mobile ? "none" : "block",
+  textAlign: "left",
+  paddingTop: "1rem",
+  [theme.breakpoints.down("sm")]: {
+    display: mobile ? "block" : "none",
+    paddingTop: 0,
+    margin: "-20px 0px 20px",
+  },
+}));

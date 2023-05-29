@@ -16,11 +16,11 @@ const StyledContainer = styled(Container)`
 const Transaction: React.FC = () => {
   const { trxHash } = useParams<{ trxHash: string }>();
   const { state } = useLocation<{ data?: Transaction }>();
-  const { data, initialized, error } = useFetch<Transaction>(
+  const { data, initialized, error, lastUpdated } = useFetch<Transaction>(
     `${API.TRANSACTION.DETAIL}/${trxHash}`,
     state?.data,
     false,
-    REFRESH_TIMES.EPOCH_DETAIL
+    REFRESH_TIMES.TRANSACTION_DETAIL
   );
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const Transaction: React.FC = () => {
 
   return (
     <StyledContainer>
-      <TransactionOverview data={data} loading={!initialized} />
+      <TransactionOverview data={data} loading={!initialized} lastUpdated={lastUpdated} />
       <Box>
         {!initialized ? (
           <Card>

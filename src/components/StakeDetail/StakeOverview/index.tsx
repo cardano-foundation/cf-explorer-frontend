@@ -6,12 +6,7 @@ import totalStakeIcon from "../../../commons/resources/icons/totalStake.svg";
 import rewardIcon from "../../../commons/resources/icons/reward.svg";
 import rewardWithdrawIcon from "../../../commons/resources/icons/rewardWithdraw.svg";
 import { formatADAFull } from "../../../commons/utils/helper";
-import {
-  ButtonModal,
-  StyledFlexValue,
-  StyledLink,
-  TitleCard,
-} from "./styles";
+import { ButtonModal, StyledFlexValue, StyledLink, TitleCard } from "./styles";
 import { useParams } from "react-router-dom";
 import ModalAllAddress from "../ModalAllAddress";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -21,8 +16,9 @@ import ADAicon from "../../commons/ADAIcon";
 interface Props {
   data: IStakeKeyDetail | null;
   loading: boolean;
+  lastUpdated: number;
 }
-const StakeOverview: React.FC<Props> = ({ data, loading }) => {
+const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
   const [open, setOpen] = useState(false);
   const { stakeId } = useParams<{ stakeId: string }>();
   const listOverview = [
@@ -100,6 +96,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading }) => {
       stakeKeyStatus={data?.status}
       listItem={listOverview}
       loading={loading}
+      lastUpdated={lastUpdated}
     />
   );
 };

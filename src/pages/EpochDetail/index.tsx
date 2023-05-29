@@ -12,7 +12,7 @@ const EpochDetail: React.FC = () => {
   const { epochId } = useParams<{ epochId: string }>();
   const { state } = useLocation<{ data?: IDataEpoch }>();
 
-  const { data, initialized, error } = useFetch<IDataEpoch>(
+  const { data, initialized, error, lastUpdated } = useFetch<IDataEpoch>(
     `${API.EPOCH.DETAIL}/${epochId}`,
     state?.data,
     false,
@@ -28,7 +28,7 @@ const EpochDetail: React.FC = () => {
 
   return (
     <StyledContainer>
-      <EpochOverview data={data} loading={!initialized} />
+      <EpochOverview data={data} loading={!initialized} lastUpdated={lastUpdated} />
       <EpochBlockList epochId={epochId} />
     </StyledContainer>
   );

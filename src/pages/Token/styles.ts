@@ -37,3 +37,9 @@ export const StyledSelect = styled(Select)`
     font-size: 20px;
   }
 `;
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.grey[400],
+  display: "block",
+  marginTop: "1rem",
+}));
