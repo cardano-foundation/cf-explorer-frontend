@@ -53,10 +53,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "selenium-test": "concurrently \"npm start\" \"wait-on http://localhost:3000 && cd .. && cd cf-qa-testsuite && gradle clean test && kill-port 1102\"",
-    "eject": "craco eject",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test": "start-server-and-test start localhost:3000 cypress:run"
