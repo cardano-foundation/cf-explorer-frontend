@@ -4,11 +4,13 @@ import { useParams } from "react-router-dom";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { details } from "../../../../../commons/routers";
 import { API } from "../../../../../commons/utils/api";
-import { formatDateTimeLocal, formatHash } from "../../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../../../commons/utils/helper";
 import { AdaValue } from "../../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
 import CustomTooltip from "../../../../commons/CustomTooltip";
 import Table, { Column } from "../../../../commons/Table";
 import { StyledLink } from "../../../../share/styled";
+import ADAicon from "~/components/commons/ADAIcon";
+import { AmountADARow } from "./styles";
 
 const OperatorRewardTab = () => {
   const { poolId = "" } = useParams<{ poolId: string }>();
@@ -41,7 +43,9 @@ const OperatorRewardTab = () => {
       key: "amount",
       title: "Operator Reward ADA",
       render(data) {
-        return <AdaValue limit={5} value={data.amount} />;
+        return (<AmountADARow>
+          +{formatADAFull(data.amount)} <ADAicon color='#333333' />
+        </AmountADARow>)
       }
     },
     {

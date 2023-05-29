@@ -98,7 +98,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: ()
       minWidth: "50px",
       render: (r) => (
         <ADAAmount>
-          {formatADAFull(r.amount)} <ADAicon />
+          +{formatADAFull(r.amount)} <ADAicon />
         </ADAAmount>
       )
     },
