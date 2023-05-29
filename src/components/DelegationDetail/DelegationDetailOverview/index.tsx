@@ -14,7 +14,7 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
   const overviewData = {
     Reward: `${data?.reward || 0}%`,
     Fee: formatPercent(data?.margin),
-    ROS: formatPercent(data?.ros),
+    ROS: formatPercent(data?.ros ? data?.ros / 100 : 0),
     "Pledge(A)": formatADAFull(data?.pledge),
     "Cost(A)": formatADAFull(data?.cost),
     "Epoch Block": data?.epochBlock || 0,
