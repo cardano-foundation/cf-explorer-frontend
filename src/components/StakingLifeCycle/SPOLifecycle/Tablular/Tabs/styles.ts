@@ -11,6 +11,14 @@ export const ADAValueFieldContainer = styled(Box)`
   align-items: flex-start;
 `;
 
+export const AmountADARow = styled(Box)`
+  font-size: 14px;
+  color: ${(props) => props.theme.palette.primary.main};
+  display: flex;
+  gap: 10px;
+  align-items: center;
+`;
+
 export const ADAValueLabel = styled(Typography)`
   font-size: 14px;
   color: ${(props) => props.theme.palette.text.primary};

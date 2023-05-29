@@ -21,7 +21,8 @@ import {
   CardValue,
   ItemIcon,
   StyledAdaLogoIcon,
-  TransferButton
+  TransferButton,
+  NoDelegatedStakePool
 } from "./styles";
 import { useSelector } from "react-redux";
 
@@ -102,10 +103,12 @@ const TabularOverview: React.FC = () => {
         <GridItem
           title='Delegating To'
           iconUrl={DelegationToIconUrl}
-          value={
+          value={data?.pool?.poolId ? (
             <Box component={Link} to={details.delegation(data?.pool?.poolId)} display='flex' alignItems='center'>
               <CardValue>{data?.pool?.poolName || getShortHash(data?.pool?.poolId || "")}</CardValue>
-            </Box>
+            </Box>) : (
+            <NoDelegatedStakePool>Not delegated to any pool</NoDelegatedStakePool>
+          )
           }
         />
       </Grid>
