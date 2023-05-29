@@ -158,6 +158,9 @@ export const Main = styled(Box)<{ open: number; sidebar: number }>(({ theme, sid
   overflowY: "auto",
   width: `calc(100vw - ${(open ? 461 : 0) + (sidebar ? 260 : 85)}px)`,
   height: "calc(100vh - 61px)",
+  [theme.breakpoints.down("lg")]: {
+    width: `calc(100vw - ${sidebar ? 260 : 85}px)`
+  },
   [theme.breakpoints.down("md")]: {
     paddingTop: 80,
     width: "100vw",
