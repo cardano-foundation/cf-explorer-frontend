@@ -246,7 +246,10 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           </Item>
           <Item item xs={6} md={3}>
             <InfoValue>
-              <StyledLinearProgress variant='determinate' value={data?.saturation || 0} />
+              <StyledLinearProgress
+                variant='determinate'
+                value={data?.saturation ? (data?.saturation > 100 ? 100 : data?.saturation) : 0}
+              />
               <Box
                 display='flex'
                 flexDirection={isGalaxyFoldSmall ? "column" : "row"}
@@ -257,7 +260,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 <Box component={"span"} mt={1} style={{ fontSize: "14px", fontWeight: "400", opacity: "0.5" }}>
                   Saturation
                 </Box>
-                <Box fontSize={16}>{formatPercent(data?.saturation || 0)}</Box>
+                <Box fontSize={16}>{formatPercent(data?.saturation ? data?.saturation / 100 : 0)}</Box>
               </Box>
             </InfoValue>
           </Item>

@@ -69,7 +69,7 @@ const DelegationEpochList = ({
       title: "ROS",
       key: "ros",
       minWidth: "120px",
-      render: (data) => formatPercent(data.ros || 0)
+      render: (data) => formatPercent(data.ros ? data.ros / 100 : 0)
     }
   ];
 
