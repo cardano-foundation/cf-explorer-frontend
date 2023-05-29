@@ -81,9 +81,21 @@ const StakekeySummary = () => {
       maxWidth: "300px",
       render(data) {
         return (
-          <Box textOverflow='unset' whiteSpace='break-spaces' sx={{ wordBreak: "break-word", lineHeight: 1.5 }}>
-            {data.reportName}
-          </Box>
+          <CustomTooltip title={data.reportName}>
+            <Box
+              textOverflow='unset'
+              whiteSpace='break-spaces'
+              sx={{
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                lineHeight: 1.5,
+                overflow: "hidden"
+              }}
+            >
+              {data.reportName}
+            </Box>
+          </CustomTooltip>
         );
       }
     },

@@ -101,7 +101,9 @@ const ReportGeneratedPoolDetailTabs = () => {
           <CustomTooltip title={reportDetail.data?.reportHistory.reportName}>
             <Headline collapsed={1}>{reportDetail.data?.reportHistory.reportName} </Headline>
           </CustomTooltip>
-          <Headline>{reportDetail.data?.reportHistory.reportName} </Headline>
+          <CustomTooltip title={reportDetail.data?.reportHistory.reportName}>
+            <Headline>{reportDetail.data?.reportHistory.reportName} </Headline>
+          </CustomTooltip>
           <StakeTab tabs={displayedTabs} initTab={initTab} />
         </>
       )}
