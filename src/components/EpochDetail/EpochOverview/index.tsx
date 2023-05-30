@@ -71,7 +71,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       ),
       value: (
         <>
-          {moment(formatDateTimeLocal(data?.endTime || "")).diff(moment()) > 0 ? slot : MAX_SLOT_EPOCH}/
+          {moment(data?.endTime).diff(moment()) > 0 ? slot : MAX_SLOT_EPOCH}/
           <Box component={"span"} fontWeight='400'>
             {MAX_SLOT_EPOCH}
           </Box>
@@ -91,8 +91,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
         data && {
           no: data.no,
           slot: slot,
-          status: data.status,
-          endTime: data.endTime
+          status: data.status
         }
       }
     />
