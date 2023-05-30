@@ -22,7 +22,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   if (!currentEpochData) return null;
   const progress =
-    moment(formatDateTimeLocal(currentEpochData.endTime)).diff(moment()) >= 0
+    moment(currentEpochData.endTime).diff(moment()) >= 0
       ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
       : 100;
   const listOverview = [
@@ -68,10 +68,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       ),
       value: (
         <Box component={"span"}>
-          {moment(formatDateTimeLocal(currentEpochData.endTime)).diff(moment()) >= 0
-            ? currentEpoch?.slot
-            : MAX_SLOT_EPOCH}
-          /{MAX_SLOT_EPOCH}
+          {moment(currentEpochData.endTime).diff(moment()) >= 0 ? currentEpoch?.slot : MAX_SLOT_EPOCH}/{MAX_SLOT_EPOCH}
         </Box>
       )
     },
