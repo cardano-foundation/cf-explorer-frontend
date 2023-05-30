@@ -1,6 +1,6 @@
 import { Box, BoxProps, styled } from "@mui/material";
 import React, { forwardRef } from "react";
-import { PolygonWhiteIconUrl } from "~/commons/resources";
+import { PolygonWhiteIconUrl } from "src/commons/resources";
 
 const PolygonBox = styled(Box)(({ theme }) => ({
   display: "flex",

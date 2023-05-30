@@ -2,12 +2,12 @@ import { alpha, Box } from "@mui/material";
 import { LabelStatus, StyledLink } from "../styles";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
-import useFetchList from "~/commons/hooks/useFetchList";
-import { formatDateTimeLocal, getPageInfo, getShortHash } from "~/commons/utils/helper";
-import Table, { Column } from "~/components/commons/Table";
-import CustomTooltip from "~/components/commons/CustomTooltip";
-import { details } from "~/commons/routers";
-import { API } from "~/commons/utils/api";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import Table, { Column } from "src/components/commons/Table";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
 
 const StakeHistoryTab = ({ isMobile = false }) => {
   const { stakeId } = useParams<{ stakeId: string }>();

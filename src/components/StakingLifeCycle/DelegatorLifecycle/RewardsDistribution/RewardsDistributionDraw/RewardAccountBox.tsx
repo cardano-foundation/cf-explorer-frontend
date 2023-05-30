@@ -1,6 +1,6 @@
 import { BoxProps, Typography } from "@mui/material";
-import { RewardAccountIconUrl, WalletIconRewardGreen } from "~/commons/resources";
-import { formatADAFull } from "~/commons/utils/helper";
+import { RewardAccountIconUrl, WalletIconRewardGreen } from "src/commons/resources";
+import { formatADAFull } from "src/commons/utils/helper";
 import {
   ClickAbleButton,
   RewardAccountCcontainer,

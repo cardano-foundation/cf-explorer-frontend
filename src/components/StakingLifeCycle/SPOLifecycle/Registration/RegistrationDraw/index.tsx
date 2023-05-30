@@ -17,14 +17,14 @@ import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../../..
 import { useHistory } from "react-router-dom";
 import CustomTooltip from "../../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../../SPOLifecycle/Registration/styles";
-import { BackIcon, AddressIcon, ADAGreen, TimeIcon } from "~/commons/resources";
-import { LineArrowItem } from "~/components/commons/LineArrow";
-import DrawPath from "~/components/commons/DrawPath";
+import { BackIcon, AddressIcon, ADAGreen, TimeIcon } from "src/commons/resources";
+import { LineArrowItem } from "src/components/commons/LineArrow";
+import DrawPath from "src/components/commons/DrawPath";
 import { useSelector } from "react-redux";
-import CardanoSystem from "~/components/commons/CardanoSystem";
-import { details } from "~/commons/routers";
+import CardanoSystem from "src/components/commons/CardanoSystem";
+import { details } from "src/commons/routers";
 import { StyledLink } from "../../styles";
-import SPOHolder from "~/components/commons/SPOHolder";
+import SPOHolder from "src/components/commons/SPOHolder";
 
 interface ISPOPropsData {
   poolName?: string;

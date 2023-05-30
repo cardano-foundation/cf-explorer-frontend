@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link as LinkDom } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
-import { FilterParams } from "~/components/StackingFilter";
+import { FilterParams } from "src/components/StackingFilter";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "../../../../commons/resources";
 import { details } from "../../../../commons/routers";

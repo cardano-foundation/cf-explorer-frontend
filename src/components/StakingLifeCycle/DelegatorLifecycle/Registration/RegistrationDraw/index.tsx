@@ -17,16 +17,16 @@ import moment from "moment";
 import { useHistory } from "react-router-dom";
 import CustomTooltip from "../../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../../SPOLifecycle/Registration/styles";
-import { BackIcon, AddressIcon, ADAGreen, TimeIcon } from "~/commons/resources";
-import { LineArrowItem } from "~/components/commons/LineArrow";
-import DrawPath from "~/components/commons/DrawPath";
+import { BackIcon, AddressIcon, ADAGreen, TimeIcon } from "src/commons/resources";
+import { LineArrowItem } from "src/components/commons/LineArrow";
+import DrawPath from "src/components/commons/DrawPath";
 import { useSelector } from "react-redux";
-import AdaHolder from "~/components/commons/AdaHolder";
-import CardanoSystem from "~/components/commons/CardanoSystem";
-import HoldBox from "~/components/commons/HoldBox";
-import FeeBox from "~/components/commons/FeeBox";
+import AdaHolder from "src/components/commons/AdaHolder";
+import CardanoSystem from "src/components/commons/CardanoSystem";
+import HoldBox from "src/components/commons/HoldBox";
+import FeeBox from "src/components/commons/FeeBox";
 import { StyledLink } from "../styles";
-import { details } from "~/commons/routers";
+import { details } from "src/commons/routers";
 
 interface Props {
   selected: RegistrationItem;

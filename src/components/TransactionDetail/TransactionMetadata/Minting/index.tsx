@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import { Column } from "~/components/commons/Table";
-import ScriptModal from "~/components/ScriptModal";
+import { Column } from "src/components/commons/Table";
+import ScriptModal from "src/components/ScriptModal";
 import { Amount, AssetName, LogoEmpty, TableMinting } from "./styles";
-import { PolicyScriptIcon } from "~/commons/resources";
-import { Logo } from "~/pages/Token/styles";
+import { PolicyScriptIcon } from "src/commons/resources";
+import { Logo } from "src/pages/Token/styles";
 
 interface MintingProps {
   data: Transaction["mints"] | null;

@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import moment from "moment";
 import { useContext, useMemo, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
@@ -12,10 +12,10 @@ import { DATETIME_PARTTEN } from "../../../StackingFilter/DateRangeModal";
 import { FilterDateLabel } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles";
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import Table, { Column } from "../../../commons/Table";
-import { GreenWalletIcon } from "~/components/commons/GreenWalletIcon";
+import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
 import { AmountADARow, StyledLink, WrapWalletLabel, WrapperDelegationTab } from "../styles";
 import { AdaValue } from "./StakeRegistrationTab";
-import ADAicon from "~/components/commons/ADAIcon";
+import ADAicon from "src/components/commons/ADAIcon";
 
 const RewardsDistributionTab = () => {
   const detailData = useContext(DelegatorDetailContext);

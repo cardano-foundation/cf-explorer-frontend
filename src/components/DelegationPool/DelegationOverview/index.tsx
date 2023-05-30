@@ -1,18 +1,18 @@
 import { Box, Grid } from "@mui/material";
 import moment from "moment";
 import React from "react";
-import { CurentEpochIcon, LiveStakeIcon, RocketBackground } from "~/commons/resources";
+import { CurentEpochIcon, LiveStakeIcon, RocketBackground } from "src/commons/resources";
 import { StyledCard, StyledImg, StyledLinearProgress, StyledSkeleton, TimeDuration } from "./styles";
-import { details } from "~/commons/routers";
-import { API } from "~/commons/utils/api";
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "~/commons/utils/constants";
-import { formatADA, formatADAFull, numberWithCommas } from "~/commons/utils/helper";
-import useFetch from "~/commons/hooks/useFetch";
-import { useScreen } from "~/commons/hooks/useScreen";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { formatADA, formatADAFull, numberWithCommas } from "src/commons/utils/helper";
+import useFetch from "src/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
 import { useSelector } from "react-redux";
-import Card from "~/components/commons/Card";
-import FormNowMessage from "~/components/commons/FormNowMessage";
-import CustomTooltip from "~/components/commons/CustomTooltip";
+import Card from "src/components/commons/Card";
+import FormNowMessage from "src/components/commons/FormNowMessage";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 const OverViews: React.FC = () => {
   const { data, loading, lastUpdated } = useFetch<OverViewDelegation>(

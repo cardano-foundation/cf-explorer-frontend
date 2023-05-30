@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Column } from "~/components/commons/Table";
+import { Column } from "src/components/commons/Table";
 import { TableProtocol } from "./styles";
 import { Box, Button } from "@mui/material";
-import ParseScriptModal from "~/components/ParseScriptModal";
+import ParseScriptModal from "src/components/ParseScriptModal";
 
 interface IProps {
   data: TProtocolMerge[];

@@ -20,7 +20,7 @@ import DropdownTokens from "../../../commons/DropdownTokens";
 import Table, { Column } from "../../../commons/Table";
 import { SmallText } from "../../../share/styled";
 import { Img, StyledContainer, StyledLink } from "./styles";
-import { TransferIcon } from "~/commons/resources";
+import { TransferIcon } from "src/commons/resources";
 
 const TransactionTab = () => {
   const { stakeId } = useParams<{ stakeId: string }>();

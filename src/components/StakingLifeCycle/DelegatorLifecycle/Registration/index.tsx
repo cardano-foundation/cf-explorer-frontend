@@ -9,7 +9,7 @@ import { API } from "../../../../commons/utils/api";
 import { details } from "../../../../commons/routers";
 import CopyButton from "../../../commons/CopyButton";
 import { RegistrationDraw } from "./RegistrationDraw";
-import { FilterParams } from "~/components/StackingFilter";
+import { FilterParams } from "src/components/StackingFilter";
 
 const Registration = () => {
   const [selected, setSelected] = useState<RegistrationItem | null>(null);

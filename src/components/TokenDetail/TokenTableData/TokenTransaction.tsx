@@ -16,7 +16,7 @@ import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { API } from "../../../commons/utils/api";
 import ADAicon from "../../commons/ADAIcon";
-import { OverviewMetadataTokenContext } from "~/pages/TokenDetail";
+import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
 
 interface ITokenTransaction {
   tokenId: string;

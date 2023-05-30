@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
-import { details } from "~/commons/routers";
-import delegatedIcon from "~/commons/resources/icons/delegated.svg";
-import totalStakeIcon from "~/commons/resources/icons/totalStake.svg";
-import rewardIcon from "~/commons/resources/icons/reward.svg";
-import rewardWithdrawIcon from "~/commons/resources/icons/rewardWithdraw.svg";
-import { formatADAFull, getShortWallet } from "~/commons/utils/helper";
+import { details } from "src/commons/routers";
+import delegatedIcon from "src/commons/resources/icons/delegated.svg";
+import totalStakeIcon from "src/commons/resources/icons/totalStake.svg";
+import rewardIcon from "src/commons/resources/icons/reward.svg";
+import rewardWithdrawIcon from "src/commons/resources/icons/rewardWithdraw.svg";
+import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
 import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleValue } from "./styles";
 import { useParams } from "react-router-dom";
 import ModalAllAddress from "../ModalAllAddress";
-import CustomTooltip from "~/components/commons/CustomTooltip";
-import DetailHeader from "~/components/commons/DetailHeader";
-import ADAicon from "~/components/commons/ADAIcon";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import DetailHeader from "src/components/commons/DetailHeader";
+import ADAicon from "src/components/commons/ADAIcon";
 
 interface Props {
   data: IStakeKeyDetail | null;

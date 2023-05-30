@@ -12,7 +12,7 @@ import Table from "../../components/commons/Table";
 import { Column } from "../../types/table";
 import { Actions, PageSize, PerPage, StyledContainer, StyledLink, TimeDuration } from "./styles";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
-import FormNowMessage from "~/components/commons/FormNowMessage";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
 const perPages = [10, 20, 50, 100];
 

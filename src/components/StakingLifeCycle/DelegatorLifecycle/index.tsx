@@ -43,7 +43,7 @@ import {
 import { useHistory, useParams } from "react-router-dom";
 import { details } from "../../../commons/routers";
 import { useScreen } from "../../../commons/hooks/useScreen";
-import { ListStakeKeyResponse } from "~/pages/DelegatorLifecycle";
+import { ListStakeKeyResponse } from "src/pages/DelegatorLifecycle";
 interface StepperProps {
   icon: React.ReactNode;
   title: string;

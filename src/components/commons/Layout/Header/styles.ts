@@ -1,6 +1,6 @@
 import { Box, Button, Container, styled } from "@mui/material";
 import { Link } from "react-router-dom";
-import { MenuIcon } from "~/commons/resources";
+import { MenuIcon } from "src/commons/resources";
 
 export const HeaderContainer = styled("header")`
   color: ${(props) => props.theme.palette.text.primary};

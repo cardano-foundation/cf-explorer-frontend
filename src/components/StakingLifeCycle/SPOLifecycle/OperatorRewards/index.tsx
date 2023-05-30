@@ -13,11 +13,11 @@ import useFetchList from "../../../../commons/hooks/useFetchList";
 import moment from "moment";
 import ADAicon from "../../../commons/ADAIcon";
 import { StyledLink, DrawContainer, ADAOperator, ADATitle, ADAAmount, StyledEpoch } from "./styles";
-import CardanoSystem from "~/components/commons/CardanoSystem";
-import SPOHolder from "~/components/commons/SPOHolder";
-import DrawPath from "~/components/commons/DrawPath";
-import { LineArrowItem } from "~/components/commons/LineArrow";
-import { WrappModalScrollBar } from "~/components/commons/Table/styles";
+import CardanoSystem from "src/components/commons/CardanoSystem";
+import SPOHolder from "src/components/commons/SPOHolder";
+import DrawPath from "src/components/commons/DrawPath";
+import { LineArrowItem } from "src/components/commons/LineArrow";
+import { WrappModalScrollBar } from "src/components/commons/Table/styles";
 
 const OperatorReward = () => {
   const [openModal, setOpenModal] = useState(false);

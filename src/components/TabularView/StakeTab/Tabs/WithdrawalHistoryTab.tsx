@@ -14,8 +14,8 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
 import { StyledLink, TableSubTitle, WrapWalletLabel, WrapperDelegationTab } from "../styles";
 import { AdaValue } from "./StakeRegistrationTab";
-import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
-import { GreenWalletIcon } from "~/components/commons/GreenWalletIcon";
+import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
 
 const WithdrawalHistoryTab = () => {
   const detailData = useContext(DelegatorDetailContext);

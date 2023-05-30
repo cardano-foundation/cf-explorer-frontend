@@ -35,7 +35,7 @@ import {
 import useFetch from "../../../commons/hooks/useFetch";
 
 import { useScreen } from "../../../commons/hooks/useScreen";
-import FormNowMessage from "~/components/commons/FormNowMessage";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
 const LatestTransactions: React.FC = () => {
   const { data, initialized, lastUpdated } = useFetch<CurrentTransactions[]>(

@@ -22,13 +22,13 @@ import { routers } from "../../../commons/routers";
 import { useScreen } from "../../../commons/hooks/useScreen";
 import { GoCheck } from "react-icons/go";
 import { IoMdClose } from "react-icons/io";
-import { getShortWallet, regexEmail } from "~/commons/utils/helper";
-import useToast from "~/commons/hooks/useToast";
-import { editInfo, getInfo } from "~/commons/utils/userRequest";
-import { setUserData } from "~/stores/user";
-import { NETWORK, NETWORKS, NETWORK_TYPES, SUPPORTED_WALLETS } from "~/commons/utils/constants";
-import StyledModal from "~/components/commons/StyledModal";
-import StorageUtils from "~/commons/utils/storage";
+import { getShortWallet, regexEmail } from "src/commons/utils/helper";
+import useToast from "src/commons/hooks/useToast";
+import { editInfo, getInfo } from "src/commons/utils/userRequest";
+import { setUserData } from "src/stores/user";
+import { NETWORK, NETWORKS, NETWORK_TYPES, SUPPORTED_WALLETS } from "src/commons/utils/constants";
+import StyledModal from "src/components/commons/StyledModal";
+import StorageUtils from "src/commons/utils/storage";
 import { NetworkType, isWalletInstalled, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import {
   GroupFlex,
@@ -37,11 +37,11 @@ import {
   WalletIcon,
   WalletItem,
   WalletName
-} from "~/components/commons/ConnectWalletModal/style";
+} from "src/components/commons/ConnectWalletModal/style";
 import { MdOutlineFileDownload } from "react-icons/md";
-import { SupportedWallets, Wallet } from "~/types/user";
-import { StyledDarkLoadingButton } from "~/components/share/styled";
-import CustomTooltip from "~/components/commons/CustomTooltip";
+import { SupportedWallets, Wallet } from "src/types/user";
+import { StyledDarkLoadingButton } from "src/components/share/styled";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 type TRowItem = {
   label: string;

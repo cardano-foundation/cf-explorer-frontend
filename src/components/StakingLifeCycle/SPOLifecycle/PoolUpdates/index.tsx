@@ -18,7 +18,7 @@ import { details } from "../../../../commons/routers";
 import { DescriptionText } from "../../DelegatorLifecycle/styles";
 import { useUpdateEffect } from "react-use";
 import { useSelector } from "react-redux";
-import { EmptyRecord } from "~/components/commons/Table";
+import { EmptyRecord } from "src/components/commons/Table";
 import { PoolUpdatesDraw } from "./PoolUpdatesDraw";
 import PoolUpdateModal from "./PoolUpdateModal";
 

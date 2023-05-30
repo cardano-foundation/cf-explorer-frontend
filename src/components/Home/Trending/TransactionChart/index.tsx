@@ -6,7 +6,7 @@ import { Box, Grid, alpha, useTheme } from "@mui/material";
 import { API } from "../../../../commons/utils/api";
 import { BoxInfo, ColorChart, InfoItem, Skeleton, Tab, Tabs, Title, TransactionContainer, WrapHeader } from "./styles";
 import { numberWithCommas } from "../../../../commons/utils/helper";
-import { useScreen } from "~/commons/hooks/useScreen";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 interface TransactionChartIF {
   date: string;

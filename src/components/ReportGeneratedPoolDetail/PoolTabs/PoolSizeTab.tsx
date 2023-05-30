@@ -10,9 +10,9 @@ import { StyledLink } from "../../share/styled";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { API } from "../../../commons/utils/api";
 import { useParams } from "react-router-dom";
-import useFetch from "~/commons/hooks/useFetch";
+import useFetch from "src/commons/hooks/useFetch";
 import { useUpdateEffect } from "react-use";
-import { details } from "~/commons/routers";
+import { details } from "src/commons/routers";
 
 const PoolSizeTab = () => {
   const { reportId = "" } = useParams<{ reportId: string }>();

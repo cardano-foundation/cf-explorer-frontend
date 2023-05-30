@@ -1,7 +1,7 @@
 import { TabList } from "@mui/lab";
 import { Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
-import breakpoints from "~/themes/breakpoints";
+import breakpoints from "src/themes/breakpoints";
 
 export const TitleTab = styled(Box)<{ active?: boolean }>(({ active, theme }) => ({
   fontWeight: "bold",

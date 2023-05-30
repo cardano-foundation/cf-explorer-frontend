@@ -2,14 +2,14 @@ import { Grid } from "@mui/material";
 import BigNumber from "bignumber.js";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "~/commons/resources";
-import { details } from "~/commons/routers";
-import { API } from "~/commons/utils/api";
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "~/commons/utils/constants";
-import { formatADA, formatADAFull, numberWithCommas } from "~/commons/utils/helper";
-import { RootState } from "~/stores/types";
-import CustomTooltip from "~/components/commons/CustomTooltip";
-import RateWithIcon from "~/components/commons/RateWithIcon";
+import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { formatADA, formatADAFull, numberWithCommas } from "src/commons/utils/helper";
+import { RootState } from "src/stores/types";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import RateWithIcon from "src/components/commons/RateWithIcon";
 import {
   AdaPrice,
   Content,
@@ -29,8 +29,8 @@ import {
   XValue
 } from "./style";
 import moment from "moment";
-import { useScreen } from "~/commons/hooks/useScreen";
-import useFetch from "~/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
+import useFetch from "src/commons/hooks/useFetch";
 
 const SkeletonBox = () => (
   <Item>

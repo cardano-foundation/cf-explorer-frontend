@@ -1,11 +1,11 @@
 import { Box, useTheme } from "@mui/material";
-import { ExchangeIcon } from "~/commons/resources";
-import cubeIcon from "~/commons/resources/icons/blockIcon.svg";
-import slotIcon from "~/commons/resources/icons/slot.svg";
-import timeIcon from "~/commons/resources/icons/time.svg";
-import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "~/commons/utils/constants";
-import { formatDateTimeLocal } from "~/commons/utils/helper";
-import { Status } from "~/pages/Epoch/styles";
+import { ExchangeIcon } from "src/commons/resources";
+import cubeIcon from "src/commons/resources/icons/blockIcon.svg";
+import slotIcon from "src/commons/resources/icons/slot.svg";
+import timeIcon from "src/commons/resources/icons/time.svg";
+import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
+import { Status } from "src/pages/Epoch/styles";
 import DetailHeader from "../../DetailHeader";
 import ProgressCircle from "../../ProgressCircle";
 import { Container, EpochNumber, EpochProgress, TitleCard } from "./styles";

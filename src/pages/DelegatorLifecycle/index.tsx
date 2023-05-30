@@ -28,11 +28,11 @@ import { ReactComponent as TableMode } from "../../commons/resources/icons/Staki
 import { details } from "../../commons/routers";
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import CustomTooltip from "../../components/commons/CustomTooltip";
-import useAuth from "~/commons/hooks/useAuth";
-import useFetch from "~/commons/hooks/useFetch";
-import { API } from "~/commons/utils/api";
-import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
-import NoRecord from "~/components/commons/NoRecord";
+import useAuth from "src/commons/hooks/useAuth";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import NoRecord from "src/components/commons/NoRecord";
 import { useSelector } from "react-redux";
 
 interface Params {

@@ -1,12 +1,12 @@
 import { Box, Grid } from "@mui/material";
-import CopyButton from "~/components/commons/CopyButton";
+import CopyButton from "src/components/commons/CopyButton";
 import { TextLabel, TextNormal, TextRightValue, TextValue } from "./styles";
-import Link from "~/components/commons/Link";
-import { getShortHash, getShortWallet } from "~/commons/utils/helper";
-import { AdaValue } from "~/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
-import { details } from "~/commons/routers";
-import { useScreen } from "~/commons/hooks/useScreen";
-import CustomTooltip from "~/components/commons/CustomTooltip";
+import Link from "src/components/commons/Link";
+import { getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { AdaValue } from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import { details } from "src/commons/routers";
+import { useScreen } from "src/commons/hooks/useScreen";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 type TProps = {
   data: TPoolCertificated;

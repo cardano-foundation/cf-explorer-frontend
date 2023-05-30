@@ -15,7 +15,7 @@ import RewardsDistributionTab from "../../../TabularView/StakeTab/Tabs/RewardsDi
 import StakeRegistrationTab from "../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
 import WithdrawalHistoryTab from "../../../TabularView/StakeTab/Tabs/WithdrawalHistoryTab";
 import TabularOverview from "../../../TabularView/TabularOverview";
-import { ListStakeKeyResponse } from "~/pages/DelegatorLifecycle";
+import { ListStakeKeyResponse } from "src/pages/DelegatorLifecycle";
 import { useEffect, useState } from "react";
 
 interface ITabularTab {

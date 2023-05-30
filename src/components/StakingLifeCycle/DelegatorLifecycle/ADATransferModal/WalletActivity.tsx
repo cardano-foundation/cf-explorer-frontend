@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useScreen } from "~/commons/hooks/useScreen";
+import { useScreen } from "src/commons/hooks/useScreen";
 import useFetch from "../../../../commons/hooks/useFetch";
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { AIconGreen } from "../../../../commons/resources";

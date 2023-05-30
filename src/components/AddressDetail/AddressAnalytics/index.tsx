@@ -23,7 +23,7 @@ import { formatADAFull, formatPrice } from "../../../commons/utils/helper";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { BigNumber } from "bignumber.js";
 import { API } from "../../../commons/utils/api";
-import { useScreen } from "~/commons/hooks/useScreen";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 type AnalyticsData = { date: string; value: number };
 

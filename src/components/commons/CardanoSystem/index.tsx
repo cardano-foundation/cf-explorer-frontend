@@ -1,6 +1,6 @@
 import { BoxProps } from "@mui/material";
 import React, { forwardRef } from "react";
-import { CardanoSystemIcon } from "~/commons/resources";
+import { CardanoSystemIcon } from "src/commons/resources";
 import PolygonShape from "../PolygonShape";
 import CustomIcon from "../CustomIcon";
 

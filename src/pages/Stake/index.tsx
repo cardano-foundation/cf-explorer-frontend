@@ -16,7 +16,7 @@ import SelectedIcon from "../../components/commons/SelectedIcon";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
 import { useScreen } from "../../commons/hooks/useScreen";
 import { Box } from "@mui/material";
-import FormNowMessage from "~/components/commons/FormNowMessage";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",

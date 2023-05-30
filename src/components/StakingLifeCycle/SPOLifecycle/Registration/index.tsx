@@ -4,7 +4,7 @@ import RecentRegistrations from "./RecentRegistrations";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { API } from "../../../../commons/utils/api";
 import { useParams } from "react-router";
-import { FilterParams } from "~/components/StackingFilter";
+import { FilterParams } from "src/components/StackingFilter";
 import { RegistrationDraw } from "./RegistrationDraw";
 import { RegistrationCertificateModal } from "./RegistrationCertificateModal";
 

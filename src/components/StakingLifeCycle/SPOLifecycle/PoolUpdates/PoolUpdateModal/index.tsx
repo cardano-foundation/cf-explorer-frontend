@@ -26,13 +26,13 @@ import {
   UpdateList,
   Value
 } from "./styles";
-import ViewMoreAddressModal from "~/components/ViewMoreAddressModal";
-import ViewMoreThreeDots from "~/components/commons/ViewMoreThreeDots";
-import CustomTooltip from "~/components/commons/CustomTooltip";
-import CopyButton from "~/components/commons/CopyButton";
-import { details } from "~/commons/routers";
-import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "~/commons/utils/helper";
-import { CertUpdate, ChangeIcon, EmptyIcon, PoolCert } from "~/commons/resources";
+import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
+import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import CopyButton from "src/components/commons/CopyButton";
+import { details } from "src/commons/routers";
+import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { CertUpdate, ChangeIcon, EmptyIcon, PoolCert } from "src/commons/resources";
 import { TabContext, TabList } from "@mui/lab";
 
 interface CertificateItemType {

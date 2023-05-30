@@ -9,7 +9,7 @@ import { defaultAxiosDownload } from "../../commons/utils/axios";
 import { useHistory } from "react-router-dom";
 import { details } from "../../commons/routers";
 import CustomIcon from "../commons/CustomIcon";
-import { formatDateTimeLocal } from "~/commons/utils/helper";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 import CustomTooltip from "../commons/CustomTooltip";
 import { StyledBox } from "../StakekeySummary/styles";
 

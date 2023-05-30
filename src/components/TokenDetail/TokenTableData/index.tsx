@@ -11,7 +11,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { details } from "../../../commons/routers";
 import { UnionTokenIcon, PeopleIcon, TransactionIcon } from "../../../commons/resources";
 import CustomIcon from "../../commons/CustomIcon";
-import { useScreen } from "~/commons/hooks/useScreen";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 interface ITokenTableData {
   totalSupply?: number;

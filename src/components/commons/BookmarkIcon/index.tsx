@@ -6,7 +6,7 @@ import { ReactComponent as Bookmarked } from "../../../commons/resources/icons/B
 import { addBookmark, deleteBookmark } from "../../../commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
 import useToast from "../../../commons/hooks/useToast";
-import useAuth from "~/commons/hooks/useAuth";
+import useAuth from "src/commons/hooks/useAuth";
 
 interface BookmarkButtonProps {
   keyword: string;

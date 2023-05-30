@@ -1,7 +1,7 @@
 import { Box, Grid, Icon } from "@mui/material";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import {
   DelegationToIconUrl,
   PaymentWalletUrl,

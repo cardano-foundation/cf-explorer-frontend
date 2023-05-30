@@ -17,9 +17,9 @@ import {
   Toggle,
   NetworkContainer
 } from "./styles";
-import { LogoIcon, SearchIcon } from "~/commons/resources";
+import { LogoIcon, SearchIcon } from "src/commons/resources";
 import TopSearch from "../Sidebar/TopSearch";
-import { setSidebar } from "~/stores/user";
+import { setSidebar } from "src/stores/user";
 
 const Header: React.FC<RouteComponentProps> = (props) => {
   const { history } = props;

@@ -1,6 +1,6 @@
 import { Box, BoxProps, styled } from "@mui/material";
 import React, { forwardRef } from "react";
-import { CertificateIcon } from "~/commons/resources";
+import { CertificateIcon } from "src/commons/resources";
 import CustomIcon from "../CustomIcon";
 
 const CertificateBox = styled(Box)(({ theme }) => ({

@@ -22,7 +22,7 @@ import CustomTooltip from "../../commons/CustomTooltip";
 import { Box } from "@mui/system";
 import { API } from "../../../commons/utils/api";
 import { REFRESH_TIMES } from "../../../commons/utils/constants";
-import FormNowMessage from "~/components/commons/FormNowMessage";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
 const TopDelegationPools = () => {
   const { data, loading, initialized, lastUpdated } = useFetch<DelegationPool[]>(

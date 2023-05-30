@@ -1,19 +1,19 @@
 import { Link, useHistory } from "react-router-dom";
 import { Grid, Box, useTheme } from "@mui/material";
-import { exchangeADAToUSD, formatADAFull, getShortWallet } from "~/commons/utils/helper";
-import Card from "~/components/commons/Card";
-import useFetch from "~/commons/hooks/useFetch";
-import CardAddress from "~/components/share/CardAddress";
-import { details } from "~/commons/routers";
+import { exchangeADAToUSD, formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import Card from "src/components/commons/Card";
+import useFetch from "src/commons/hooks/useFetch";
+import CardAddress from "src/components/share/CardAddress";
+import { details } from "src/commons/routers";
 import { useSelector } from "react-redux";
-import { RootState } from "~/stores/types";
+import { RootState } from "src/stores/types";
 import { useEffect, useState } from "react";
-import { API } from "~/commons/utils/api";
-import BookmarkButton from "~/components/commons/BookmarkIcon";
-import TokenAutocomplete from "~/components/TokenAutocomplete";
+import { API } from "src/commons/utils/api";
+import BookmarkButton from "src/components/commons/BookmarkIcon";
+import TokenAutocomplete from "src/components/TokenAutocomplete";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { BackButton, BackText, StyledBoxCard, TitleText, WrapHeader } from "./styles";
-import ADAicon from "~/components/commons/ADAIcon";
+import ADAicon from "src/components/commons/ADAIcon";
 
 interface Props {
   data: WalletAddress | null;

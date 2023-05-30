@@ -2,7 +2,7 @@ import { Box, styled } from "@mui/material";
 import { SearchDelegatorIcon } from "../../commons/resources";
 import { Link } from "react-router-dom";
 import { routers } from "../../commons/routers";
-import useAuth from "~/commons/hooks/useAuth";
+import useAuth from "src/commons/hooks/useAuth";
 import { useEffect } from "react";
 
 const DelegatorSearch = () => {

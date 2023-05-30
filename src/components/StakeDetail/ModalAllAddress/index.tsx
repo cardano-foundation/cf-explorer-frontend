@@ -9,9 +9,9 @@ import { Link, useHistory } from "react-router-dom";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
 import CustomTooltip from "../../commons/CustomTooltip";
-import { StyledLink } from "~/components/share/styled";
-import StyledModal from "~/components/commons/StyledModal";
-import { useScreen } from "~/commons/hooks/useScreen";
+import { StyledLink } from "src/components/share/styled";
+import StyledModal from "src/components/commons/StyledModal";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 interface ModalAllAddressProps {
   open: boolean;

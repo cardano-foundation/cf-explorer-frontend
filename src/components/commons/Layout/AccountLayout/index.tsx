@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { MdChevronRight } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Redirect, useLocation } from "react-router-dom";
-import { getShortWallet } from "~/commons/utils/helper";
+import { getShortWallet } from "src/commons/utils/helper";
 import { useScreen } from "../../../../commons/hooks/useScreen";
 import useToast from "../../../../commons/hooks/useToast";
 import editAva from "../../../../commons/resources/icons/editAva.svg";

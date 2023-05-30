@@ -9,7 +9,7 @@ import { AdaValue } from "../../../../TabularView/StakeTab/Tabs/StakeRegistratio
 import CustomTooltip from "../../../../commons/CustomTooltip";
 import Table, { Column } from "../../../../commons/Table";
 import { StyledLink } from "../../../../share/styled";
-import ADAicon from "~/components/commons/ADAIcon";
+import ADAicon from "src/components/commons/ADAIcon";
 import { AmountADARow } from "./styles";
 
 const OperatorRewardTab = () => {

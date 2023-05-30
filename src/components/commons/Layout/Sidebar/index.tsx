@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { LogoFullIcon, LogoIcon } from "~/commons/resources";
-import { NETWORK, NETWORK_NAMES } from "~/commons/utils/constants";
-import { RootState } from "~/stores/types";
+import { LogoFullIcon, LogoIcon } from "src/commons/resources";
+import { NETWORK, NETWORK_NAMES } from "src/commons/utils/constants";
+import { RootState } from "src/stores/types";
 import SidebarMenu from "./SidebarMenu";
 import { NavbarContainer, NavBarLogo, LogoLink, NetworkName, HeaderTop, NavbarMenuBottom } from "./styles";
 import SelectNetwork from "../Header/SelectNetwork";

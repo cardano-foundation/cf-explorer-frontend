@@ -10,7 +10,7 @@ import CustomTooltip from "../../components/commons/CustomTooltip";
 import { API } from "../../commons/utils/api";
 import ADAicon from "../../components/commons/ADAIcon";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
-import FormNowMessage from "~/components/commons/FormNowMessage";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
 const perPages = [10, 20, 50, 100];
 

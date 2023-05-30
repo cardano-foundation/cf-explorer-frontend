@@ -1,7 +1,7 @@
 import { Box, styled, IconButton as IconButtonMui, alpha } from "@mui/material";
 import { Link } from "react-router-dom";
-import { AdaLogoIcon } from "~/components/commons/ADAIcon";
-import CertificateShape from "~/components/commons/CertificateShape";
+import { AdaLogoIcon } from "src/components/commons/ADAIcon";
+import CertificateShape from "src/components/commons/CertificateShape";
 
 export const MiddleGroup = styled(Box)(({ theme }) => ({
   display: "flex",

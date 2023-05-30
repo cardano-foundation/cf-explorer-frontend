@@ -26,22 +26,22 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import moment from "moment";
 
-import Card from "~/components/commons/Card";
-import Table from "~/components/commons/Table";
-import { Column } from "~/types/table";
-import { PROTOCOL_TYPE } from "~/commons/utils/constants";
-import useFetch from "~/commons/hooks/useFetch";
-import { API } from "~/commons/utils/api";
-import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "~/types/protocol";
-import ParseScriptModal from "~/components/ParseScriptModal";
-import { DateRangeIcon, EmptyIcon, FilterIcon, ProtocolParam, ResetIcon } from "~/commons/resources";
-import DateRangeModal from "~/components/FilterReport/DateRangeModal";
-import { formatDateTimeLocal } from "~/commons/utils/helper";
+import Card from "src/components/commons/Card";
+import Table from "src/components/commons/Table";
+import { Column } from "src/types/table";
+import { PROTOCOL_TYPE } from "src/commons/utils/constants";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "src/types/protocol";
+import ParseScriptModal from "src/components/ParseScriptModal";
+import { DateRangeIcon, EmptyIcon, FilterIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
+import DateRangeModal from "src/components/FilterReport/DateRangeModal";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
 import { Link } from "react-router-dom";
-import { details } from "~/commons/routers";
-import CustomTooltip from "~/components/commons/CustomTooltip";
+import { details } from "src/commons/routers";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 const ProtocolParameter: React.FC = () => {
   const [fixedColumnKeys, { push: pushFixedColumnKeys }] = useList<string>([]);

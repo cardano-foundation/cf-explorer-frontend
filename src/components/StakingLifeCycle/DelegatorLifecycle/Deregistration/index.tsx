@@ -4,7 +4,7 @@ import { Link as LinkDom, useHistory, useParams } from "react-router-dom";
 
 import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "../../../../commons/resources";
 
-import { FilterParams } from "~/components/StackingFilter";
+import { FilterParams } from "src/components/StackingFilter";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";

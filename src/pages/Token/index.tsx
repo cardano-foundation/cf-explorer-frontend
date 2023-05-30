@@ -7,7 +7,7 @@ import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
 
-import FormNowMessage from "~/components/commons/FormNowMessage";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { API } from "../../commons/utils/api";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
