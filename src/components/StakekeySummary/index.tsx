@@ -81,7 +81,7 @@ const StakekeySummary = () => {
       maxWidth: "300px",
       render(data) {
         return (
-          <CustomTooltip title={`${data.reportName}.replaceAll("-", " ")`}>
+          <CustomTooltip title={`${data.reportName}`.replaceAll("-", " ")}>
             <StyledBox>{`${data.reportName}`.replaceAll("-", " ")}</StyledBox>
           </CustomTooltip>
         );
