@@ -49,7 +49,11 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
       setUsername("");
       localStorage.clear();
       // setUser({ ...user, userData: {} });
-      window.location.reload();
+      if (window.location.pathname.includes("report-generated")) {
+        history.push(routers.STAKING_LIFECYCLE);
+      } else {
+        window.location.reload();
+      }
     }
   };
 

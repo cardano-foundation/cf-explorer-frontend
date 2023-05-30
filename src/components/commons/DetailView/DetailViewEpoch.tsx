@@ -42,6 +42,7 @@ import { useSelector } from "react-redux";
 import ViewAllButton from "../ViewAllButton";
 import ADAicon from "../ADAIcon";
 import FormNowMessage from "../FormNowMessage";
+import moment from "moment";
 
 type DetailViewEpochProps = {
   epochNo: number;
@@ -146,7 +147,12 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
       </ViewDetailDrawer>
     );
 
-  const slot = data.no === currentEpoch?.no ? currentEpoch.slot : MAX_SLOT_EPOCH;
+  const slot =
+    data.no === currentEpoch?.no
+      ? moment(data?.endTime).diff(moment()) >= 0
+        ? currentEpoch.slot
+        : MAX_SLOT_EPOCH
+      : MAX_SLOT_EPOCH;
 
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
   return (

@@ -134,7 +134,7 @@ const Epoch: React.FC = () => {
     setEpoch(null);
     setSelected(null);
   };
-  
+
   const latestEpoch = fetchDataLatestEpoch.data[0];
 
   return (
