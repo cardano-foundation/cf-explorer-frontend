@@ -41,7 +41,7 @@ const SummaryItems = ({
           <Icon src={type === "down" ? receiveImg : sendImg} alt='send icon' />
         </Box>
         <Box flex={1} pt='4px'>
-          <Box display={"flex"} alignItems='center' justifyContent={"flex-start"} >
+          <Box display={"flex"} alignItems='center' justifyContent={"flex-start"}>
             <Box width={"100%"} display='flex' alignItems={"center"} justifyContent='center' flexWrap={"wrap"}>
               <Box display={"flex"} justifyContent='flex-start' alignItems={"center"} pr={1} mb={1}>
                 {type === "down" ? "From" : "To"}:{" "}
@@ -74,14 +74,10 @@ const SummaryItems = ({
             width='100%'
             mb={1}
           >
-            <Box
-              display='flex'
-              justifyContent={"space-between"}
-              alignItems={ "baseline"}
-              pr={1}
-              flexDirection={"row"}
-            >
-              <Box pr={1} whiteSpace={"nowrap"}>{type === "down" ? "ADA sent:" : "ADA received:"} </Box>
+            <Box display='flex' justifyContent={"space-between"} alignItems={"baseline"} pr={1} flexDirection={"row"}>
+              <Box pr={1} whiteSpace={"nowrap"}>
+                {type === "down" ? "ADA sent:" : "ADA received:"}{" "}
+              </Box>
               <Box display='flex' justifyContent={"space-between"} alignItems='center'>
                 <Box
                   component={"span"}
@@ -98,11 +94,13 @@ const SummaryItems = ({
           </Box>
         </Box>
       </Box>
-      {(item.tokens && item.tokens.length > 0) ? (
+      {item.tokens && item.tokens.length > 0 ? (
         <Box display={"flex"} alignItems={"center"} ml={isMobile ? "50px" : 0}>
           <DropdownTokens tokens={item.tokens} type={type} />
         </Box>
-      ): <Box />}
+      ) : (
+        <Box />
+      )}
     </Box>
   );
 };

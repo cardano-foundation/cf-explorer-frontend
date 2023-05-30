@@ -85,7 +85,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
         </Box>
       ),
       value: (
-        <Box component={"span"}>
+        <Box data-testid="block-details-total-output-in-ada" component={"span"}>
           {formatADAFull(data?.totalOutput)} <ADAicon />
         </Box>
       )

@@ -112,7 +112,11 @@ const TransactionList: React.FC<TransactionListProps> = ({
   ];
   const { pathname } = window.location;
   return (
-    <Card title={pathname === "/transactions" ? "Transactions" : ""} underline={underline}>
+    <Card
+      data-testid="transactions-card"
+      title={pathname === "/transactions" ? "Transactions" : ""}
+      underline={underline}
+    >
       <Table
         {...fetchData}
         columns={columns}

@@ -2,7 +2,13 @@ import { stringify } from "qs";
 import { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { details } from "../../commons/routers";
-import { formatDateTimeLocal, formatNumberDivByDecimals, getPageInfo, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
+import {
+  formatDateTimeLocal,
+  formatNumberDivByDecimals,
+  getPageInfo,
+  getShortWallet,
+  numberWithCommas
+} from "../../commons/utils/helper";
 import Card from "../../components/commons/Card";
 import Table, { Column } from "../../components/commons/Table";
 import { setOnDetailView } from "../../stores/user";
