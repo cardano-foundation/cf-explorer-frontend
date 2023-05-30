@@ -45,7 +45,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, set
     if (initialized && data.length === 1 && isNoFilter) {
       history.push(details.staking(poolId, "timeline", "registration", data?.[0]?.txHash));
     }
-  }, [params]);
+  }, [params, poolId]);
 
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);

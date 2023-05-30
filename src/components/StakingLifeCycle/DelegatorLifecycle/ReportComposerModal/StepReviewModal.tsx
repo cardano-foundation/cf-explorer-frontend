@@ -137,9 +137,9 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
               <OverViewItem key={label}>
                 <OverViewValue>
                   <TextLabelReview>{label}</TextLabelReview>
-                  <TextOverFlow>
-                    <TextValueReview>{value}</TextValueReview>
-                  </TextOverFlow>
+                  <TextValueReview>
+                    <TextOverFlow>{value} </TextOverFlow>
+                  </TextValueReview>
                 </OverViewValue>
               </OverViewItem>
             );

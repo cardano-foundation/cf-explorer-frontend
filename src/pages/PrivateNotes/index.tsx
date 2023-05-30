@@ -21,7 +21,7 @@ import { useLocation } from "react-router-dom";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { ReactComponent as Expand } from "../../commons/resources/icons/expand.svg";
 import { ReactComponent as Warning } from "../../commons/resources/icons/warning.svg";
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from "@mui/material";
+import { Box, Dialog, DialogActions, IconButton, DialogContentText } from "@mui/material";
 import { removePrivateNote } from "../../commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
 import { details } from "../../commons/routers";
@@ -56,7 +56,9 @@ const ViewButton: React.FC<TAction> = ({ onClick }) => {
         }}
         typeButton='View'
       >
-        <Expand />
+        <IconButton>
+          <Expand />
+        </IconButton>
       </ActionButton>
     </CustomTooltip>
   );
@@ -83,7 +85,9 @@ const RemoveButton: React.FC<TAction> = ({ onClick }) => {
         }}
         typeButton='Remove'
       >
-        <Warning />
+        <IconButton>
+          <Warning />
+        </IconButton>
       </ActionButton>
     </CustomTooltip>
   );
