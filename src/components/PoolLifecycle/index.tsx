@@ -2,8 +2,7 @@ import { useState } from "react";
 import Table, { Column } from "../commons/Table";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { API } from "../../commons/utils/api";
-import { Box, Button, CircularProgress, IconButton, styled } from "@mui/material";
-import { TextOverFlow } from "../StakingLifeCycle/DelegatorLifecycle/ReportComposerModal/styles";
+import { Box, CircularProgress, IconButton, styled } from "@mui/material";
 import { DownloadGreenIcon } from "../../commons/resources";
 import { lowerCase, startCase } from "lodash";
 import { defaultAxiosDownload } from "../../commons/utils/axios";
@@ -12,6 +11,7 @@ import { details } from "../../commons/routers";
 import CustomIcon from "../commons/CustomIcon";
 import { formatDateTimeLocal } from "~/commons/utils/helper";
 import CustomTooltip from "../commons/CustomTooltip";
+import { StyledBox } from "../StakekeySummary/styles";
 
 // Registration, Deregistration, Protocol Update,...
 export const EVENTS: { [key in keyof IPoolReportList]?: string } = {
@@ -79,9 +79,9 @@ const PoolLifecycle = () => {
       maxWidth: "300px",
       render(data) {
         return (
-          <Box textOverflow='unset' whiteSpace='break-spaces' sx={{ wordBreak: "break-word", lineHeight: 1.5 }}>
-            {data.reportName}
-          </Box>
+          <CustomTooltip title={data.reportName}>
+            <StyledBox>{data.reportName}</StyledBox>
+          </CustomTooltip>
         );
       }
     },
