@@ -79,8 +79,8 @@ const PoolLifecycle = () => {
       maxWidth: "300px",
       render(data) {
         return (
-          <CustomTooltip title={data.reportName}>
-            <StyledBox>{data.reportName}</StyledBox>
+          <CustomTooltip title={`${data.reportName}`.replaceAll("-", " ")}>
+            <StyledBox>{`${data.reportName}`.replaceAll("-", " ")}</StyledBox>
           </CustomTooltip>
         );
       }
