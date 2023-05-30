@@ -121,6 +121,20 @@ export default function SignUp() {
         ) {
           error =
             "Password has to be from 8 to 30 characters and must contain at least 1 number, 1 special character, 1 uppercase and 1 lowercase letter";
+        } else if (value === formData.confirmPassword.value) {
+          setFormData({
+            name: "confirmPassword",
+            value: formData.confirmPassword.value,
+            touched: true,
+            error: ""
+          });
+        } else if (value !== formData.confirmPassword.value) {
+          setFormData({
+            name: "confirmPassword",
+            value: formData.confirmPassword.value,
+            touched: true,
+            error: "Confirm Password does not match"
+          });
         }
         break;
       case "confirmPassword":
@@ -136,6 +150,20 @@ export default function SignUp() {
           // eslint-disable-next-line no-useless-escape
         } else if (!/^[\w-\.+!#$%&'*/=?^_`{|]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
           error = "Invalid Email";
+        } else if (value === formData.confirmEmail.value) {
+          setFormData({
+            name: "confirmEmail",
+            value: formData.confirmEmail.value,
+            touched: true,
+            error: ""
+          });
+        } else if (value !== formData.confirmEmail.value) {
+          setFormData({
+            name: "confirmEmail",
+            value: formData.confirmEmail.value,
+            touched: true,
+            error: "Confirm Password does not match"
+          });
         }
         break;
       case "confirmEmail":
