@@ -4,7 +4,7 @@ import Highcharts from "highcharts";
 import moment from "moment";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useScreen } from "~/commons/hooks/useScreen";
+import { useScreen } from "src/commons/hooks/useScreen";
 import useFetch from "../../../commons/hooks/useFetch";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { API } from "../../../commons/utils/api";

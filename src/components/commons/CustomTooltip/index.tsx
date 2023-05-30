@@ -1,5 +1,5 @@
 import { Tooltip, TooltipProps, useTheme } from "@mui/material";
-import { useScreen } from "~/commons/hooks/useScreen";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 interface Props extends TooltipProps {
   wOpacity?: boolean;

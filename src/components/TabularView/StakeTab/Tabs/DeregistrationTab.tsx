@@ -9,8 +9,8 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
 import { StyledLink, TableSubTitle } from "../styles";
 import { AdaValue } from "./StakeRegistrationTab";
-import { EyeIcon } from "~/commons/resources";
-import { DeregistrationCertificateModal } from "~/components/StakingLifeCycle/DelegatorLifecycle/Deregistration";
+import { EyeIcon } from "src/commons/resources";
+import { DeregistrationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Deregistration";
 
 const DeregistrationTab = () => {
   const theme = useTheme();

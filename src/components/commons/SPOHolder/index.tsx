@@ -1,11 +1,11 @@
 import { Box, BoxProps, styled, IconButton } from "@mui/material";
 import { Link, useHistory } from "react-router-dom";
 import React, { forwardRef, useRef } from "react";
-import { SPOHolderIconUrl, SPOInfo, SPOKey, PolygonSPOUrl } from "~/commons/resources";
+import { SPOHolderIconUrl, SPOInfo, SPOKey, PolygonSPOUrl } from "src/commons/resources";
 import PolygonShape from "../PolygonShape";
-import CustomTooltip from "~/components/commons/CustomTooltip";
-import { getShortWallet } from "~/commons/utils/helper";
-import { details } from "~/commons/routers";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { getShortWallet } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
 import CopyButton from "../CopyButton";
 import { isArray } from "lodash";
 import PopperStyled from "../PopperStyled";

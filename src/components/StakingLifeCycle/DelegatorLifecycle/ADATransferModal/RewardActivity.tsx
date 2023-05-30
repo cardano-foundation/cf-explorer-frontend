@@ -11,7 +11,7 @@ import { AIconGreen } from "../../../../commons/resources";
 import { Box, styled } from "@mui/material";
 import UserInfo from "./UserInfo";
 import useFetch from "../../../../commons/hooks/useFetch";
-import { useScreen } from "~/commons/hooks/useScreen";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 const RewardActivity: React.FC = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();

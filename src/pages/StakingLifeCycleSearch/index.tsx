@@ -3,7 +3,7 @@ import { Box, styled, Button } from "@mui/material";
 import { HeaderSearchIcon } from "../../commons/resources";
 import { ReactComponent as Search } from "../../commons/resources/icons/Staking/Search.svg";
 import { useHistory } from "react-router-dom";
-import { details } from "~/commons/routers";
+import { details } from "src/commons/routers";
 
 const StakingLifeCycleSearch = () => {
   const history = useHistory();

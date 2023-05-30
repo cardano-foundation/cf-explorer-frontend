@@ -27,13 +27,13 @@ import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLife
 import Tabular from "../../components/StakingLifeCycle/SPOLifecycle/Tablular";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { details } from "../../commons/routers";
-import useAuth from "~/commons/hooks/useAuth";
+import useAuth from "src/commons/hooks/useAuth";
 import { useSelector } from "react-redux";
 import { useTheme } from "@emotion/react";
-import { API } from "~/commons/utils/api";
-import useFetch from "~/commons/hooks/useFetch";
-import PoolDetailContext from "~/components/StakingLifeCycle/SPOLifecycle/PoolDetailContext";
-import NoRecord from "~/components/commons/NoRecord";
+import { API } from "src/commons/utils/api";
+import useFetch from "src/commons/hooks/useFetch";
+import PoolDetailContext from "src/components/StakingLifeCycle/SPOLifecycle/PoolDetailContext";
+import NoRecord from "src/components/commons/NoRecord";
 
 interface Params {
   poolId: string;

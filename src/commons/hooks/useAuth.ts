@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { RootState } from "~/stores/types";
+import { RootState } from "src/stores/types";
 
 const useAuth = () => {
   const { userData } = useSelector(({ user }: RootState) => user);

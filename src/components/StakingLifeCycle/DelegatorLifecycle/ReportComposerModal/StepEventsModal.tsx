@@ -14,7 +14,7 @@ import {
   SubText,
   TextRequired
 } from "./styles";
-import { useScreen } from "~/commons/hooks/useScreen";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 export enum RatioGroupValue {
   yes = "YES",

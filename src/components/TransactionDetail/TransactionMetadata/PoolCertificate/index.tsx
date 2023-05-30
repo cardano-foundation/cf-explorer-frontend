@@ -2,11 +2,11 @@ import React from "react";
 import { CardHeader, TextLabel, TextValue } from "./styles";
 import StakeKeyBox from "./StakeKeyBox";
 import { Box, Grid, useTheme } from "@mui/material";
-import CopyButton from "~/components/commons/CopyButton";
-import { getShortHash, getShortWallet } from "~/commons/utils/helper";
-import { details } from "~/commons/routers";
-import CustomTooltip from "~/components/commons/CustomTooltip";
-import Link from "~/components/commons/Link";
+import CopyButton from "src/components/commons/CopyButton";
+import { getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Link from "src/components/commons/Link";
 
 interface IProps {
   data: Transaction["poolCertificates"] | null;

@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import RecentWithdraws from "./RecentWithdraws";
 import { WithdrawnDraw } from "./WithdrawDraw";
-import { FilterParams } from "~/components/StackingFilter";
+import { FilterParams } from "src/components/StackingFilter";
 
 const Withdraw = () => {
   const [selected, setSelected] = useState<WithdrawItem | null>(null);

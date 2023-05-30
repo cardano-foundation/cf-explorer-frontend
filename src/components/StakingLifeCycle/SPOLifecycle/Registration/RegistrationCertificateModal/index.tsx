@@ -2,14 +2,14 @@ import { Box, Skeleton } from "@mui/material";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { FakeLink, Item, ItemList, Label, LineData, StyledAdaLogoIcon, StyledLink, StyledModal, Value } from "./styles";
-import ViewMoreAddressModal from "~/components/ViewMoreAddressModal";
-import ViewMoreThreeDots from "~/components/commons/ViewMoreThreeDots";
-import { API } from "~/commons/utils/api";
-import useFetch from "~/commons/hooks/useFetch";
-import CustomTooltip from "~/components/commons/CustomTooltip";
-import CopyButton from "~/components/commons/CopyButton";
-import { details } from "~/commons/routers";
-import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "~/commons/utils/helper";
+import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
+import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
+import { API } from "src/commons/utils/api";
+import useFetch from "src/commons/hooks/useFetch";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import CopyButton from "src/components/commons/CopyButton";
+import { details } from "src/commons/routers";
+import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
 
 interface CertificateItemType {
   label: React.ReactNode;

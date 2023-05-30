@@ -18,7 +18,7 @@ import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import { Box } from "@mui/material";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
-import FormNowMessage from "~/components/commons/FormNowMessage";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",

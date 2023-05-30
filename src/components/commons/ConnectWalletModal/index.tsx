@@ -19,7 +19,7 @@ import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wall
 import { MdOutlineFileDownload } from "react-icons/md";
 import useToast from "../../../commons/hooks/useToast";
 import StyledModal from "../StyledModal";
-import StorageUtils from "~/commons/utils/storage";
+import StorageUtils from "src/commons/utils/storage";
 import { boolean } from "yargs";
 
 interface IProps {

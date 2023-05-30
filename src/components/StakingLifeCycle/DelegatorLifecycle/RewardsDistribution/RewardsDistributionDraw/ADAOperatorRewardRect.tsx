@@ -1,6 +1,6 @@
 import React from "react";
 import { DisableAbleLabel, FacingImg, RectBox } from "./styles";
-import { InfoIcon, SPOHolderIconUrl } from "~/commons/resources";
+import { InfoIcon, SPOHolderIconUrl } from "src/commons/resources";
 import { Box } from "@mui/material";
 export interface IADAOperatorRewardRectProps {
   disabled?: boolean;

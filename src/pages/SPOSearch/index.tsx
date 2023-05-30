@@ -3,7 +3,7 @@ import { SearchSPOIcon } from "../../commons/resources";
 import { Link, useHistory } from "react-router-dom";
 import { routers } from "../../commons/routers";
 import { useScreen } from "../../commons/hooks/useScreen";
-import useAuth from "~/commons/hooks/useAuth";
+import useAuth from "src/commons/hooks/useAuth";
 import { useEffect } from "react";
 
 const SPOSearch = () => {

@@ -26,12 +26,12 @@ import CopyButton from "../../../commons/CopyButton";
 import StyledModal from "../../../commons/StyledModal";
 import { StyledLink } from "../styles";
 import { useSelector } from "react-redux";
-import SPOHolder from "~/components/commons/SPOHolder";
-import HoldBoxSPO from "~/components/commons/HoldBoxSPO";
-import FeeBoxSPO from "~/components/commons/FeeBoxSPO";
-import CardanoSystem from "~/components/commons/CardanoSystem";
-import { LineArrowItem } from "~/components/commons/LineArrow";
-import DrawPath from "~/components/commons/DrawPath";
+import SPOHolder from "src/components/commons/SPOHolder";
+import HoldBoxSPO from "src/components/commons/HoldBoxSPO";
+import FeeBoxSPO from "src/components/commons/FeeBoxSPO";
+import CardanoSystem from "src/components/commons/CardanoSystem";
+import { LineArrowItem } from "src/components/commons/LineArrow";
+import DrawPath from "src/components/commons/DrawPath";
 import { AditionalLabel } from "./RecentDeregistrations/styles";
 
 const Deregistration = () => {

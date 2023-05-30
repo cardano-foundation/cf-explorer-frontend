@@ -1,7 +1,7 @@
 import { Box, styled, IconButton as IconButtonMui, Grid, alpha } from "@mui/material";
 import { Link } from "react-router-dom";
-import CertificateShape from "~/components/commons/CertificateShape";
-import CopyButton from "~/components/commons/CopyButton";
+import CertificateShape from "src/components/commons/CertificateShape";
+import CopyButton from "src/components/commons/CopyButton";
 
 export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0

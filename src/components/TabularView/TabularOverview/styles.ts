@@ -1,5 +1,5 @@
 import { Box, Button, Card, Typography, styled } from "@mui/material";
-import { AdaLogoIcon } from "~/components/commons/ADAIcon";
+import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 
 export const CardList = styled(Box)(() => ({
   display: "flex",

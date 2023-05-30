@@ -16,7 +16,7 @@ import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { StyledLink } from "../../share/styled";
 import { ReportGeneratedPoolDetailContext } from "..";
-import RegistrationCertificateModal from "~/components/StakingLifeCycle/SPOLifecycle/Registration/RegistrationCertificateModal";
+import RegistrationCertificateModal from "src/components/StakingLifeCycle/SPOLifecycle/Registration/RegistrationCertificateModal";
 
 const PoolRegistrationTab = () => {
   const { reportId = "" } = useParams<{ reportId: string }>();

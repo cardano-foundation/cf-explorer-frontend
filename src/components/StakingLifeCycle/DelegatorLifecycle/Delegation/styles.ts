@@ -1,5 +1,5 @@
 import { Typography, Box, styled, IconButton as IconButtonMui } from "@mui/material";
-import ADAicon from "~/components/commons/ADAIcon";
+import ADAicon from "src/components/commons/ADAIcon";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   width: "200px",

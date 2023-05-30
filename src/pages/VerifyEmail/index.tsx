@@ -4,7 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { routers } from "../../commons/routers";
 import { verifyActive } from "../../commons/utils/userRequest";
 import { Container, Label, Title, WrapButton, WrapContent, WrapForm } from "./styles";
-import { FailIcon, SuccessIcon } from "~/commons/resources";
+import { FailIcon, SuccessIcon } from "src/commons/resources";
 
 export default function VerifyEmail() {
   const history = useHistory();

@@ -1,14 +1,14 @@
 import { useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
-import { ADADisnableIcon, ADAOrangeIcon } from "~/commons/resources";
-import CardanoSystem from "~/components/commons/CardanoSystem";
-import DrawPath from "~/components/commons/DrawPath";
-import { LineArrowItem } from "~/components/commons/LineArrow";
+import { ADADisnableIcon, ADAOrangeIcon } from "src/commons/resources";
+import CardanoSystem from "src/components/commons/CardanoSystem";
+import DrawPath from "src/components/commons/DrawPath";
+import { LineArrowItem } from "src/components/commons/LineArrow";
 import ADAHolderRect from "./ADAHolderRect";
 import ADAOperatorRewardRect from "./ADAOperatorRewardRect";
 import RewardAccountBox from "./RewardAccountBox";
 import { AdaAmountWrapper, AdaBox, DrawContainer, HolderWrapper } from "./styles";
-import CustomIcon from "~/components/commons/CustomIcon";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 export interface IRewarsDistributionDrawProps {
   data?: IStakeKeyDetail | null;

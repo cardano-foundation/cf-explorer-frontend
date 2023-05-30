@@ -6,11 +6,11 @@ import HomeStatistic from "../../components/Home/Statistic";
 import TopDelegationPools from "../../components/Home/TopDelegationPools";
 import HomeTrending from "../../components/Home/Trending";
 import { useAsync, useLocalStorage } from "react-use";
-import { getAllBookmarks } from "~/commons/utils/userRequest";
+import { getAllBookmarks } from "src/commons/utils/userRequest";
 import { async } from "q";
-import { NETWORK, NETWORK_TYPES } from "~/commons/utils/constants";
-import SyncBookmarkModal from "~/components/commons/Layout/Header/SyncBookmarkModal";
-import useAuth from "~/commons/hooks/useAuth";
+import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
+import SyncBookmarkModal from "src/components/commons/Layout/Header/SyncBookmarkModal";
+import useAuth from "src/commons/hooks/useAuth";
 
 const HomeContainer = styled(Container)`
   padding-top: 30px;

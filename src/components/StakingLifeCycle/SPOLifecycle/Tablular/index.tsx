@@ -13,7 +13,7 @@ import {
 import TabularOverview from "./TabularOverview";
 import { useHistory, useParams } from "react-router";
 import { details } from "../../../../commons/routers";
-import { ListTabResponseSPO } from "~/pages/SPOLifecycle";
+import { ListTabResponseSPO } from "src/pages/SPOLifecycle";
 import { useEffect, useState } from "react";
 
 interface SPOTabItem extends StakeTabItem {

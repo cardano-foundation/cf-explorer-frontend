@@ -1,14 +1,14 @@
 import React from "react";
 
-import { CloseIcon } from "~/commons/resources";
-import { details } from "~/commons/routers";
-import { getShortWallet } from "~/commons/utils/helper";
+import { CloseIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { getShortWallet } from "src/commons/utils/helper";
 
 import CopyButton from "../CopyButton";
 import CustomTooltip from "../CustomTooltip";
 
 import { ButtonClose, DropdownList, DropdownTitle, InfoValue, ListDropdownContainer } from "./styles";
-import { StyledLink } from "~/components/share/styled";
+import { StyledLink } from "src/components/share/styled";
 
 interface IDropdownDetailProps {
   title: string;

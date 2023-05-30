@@ -3,17 +3,17 @@ import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import receiveImg from "../../commons/resources/images/receiveImg.svg";
 import sendImg from "../../commons/resources/images/sendImg.svg";
-import useFetchList from "~/commons/hooks/useFetchList";
-import { useScreen } from "~/commons/hooks/useScreen";
-import { details } from "~/commons/routers";
-import { API } from "~/commons/utils/api";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { useScreen } from "src/commons/hooks/useScreen";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
 import {
   formatADAFull,
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
   numberWithCommas
-} from "~/commons/utils/helper";
+} from "src/commons/utils/helper";
 import ADAicon from "../commons/ADAIcon";
 import Card from "../commons/Card";
 import CustomTooltip from "../commons/CustomTooltip";
@@ -21,7 +21,7 @@ import DropdownTokens from "../commons/DropdownTokens";
 import Table, { Column } from "../commons/Table";
 import { SmallText } from "../share/styled";
 import { Img, StyledLink } from "./styles";
-import { TransferIcon } from "~/commons/resources";
+import { TransferIcon } from "src/commons/resources";
 
 interface AddressTransactionListProps {
   underline?: boolean;

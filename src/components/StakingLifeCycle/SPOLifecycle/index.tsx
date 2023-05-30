@@ -36,7 +36,7 @@ import Deregistration from "./Deregistration";
 import OperatorReward from "./OperatorRewards";
 import Registration from "./Registration";
 import PoollUpdates from "./PoolUpdates";
-import { ListTabResponseSPO } from "~/pages/SPOLifecycle";
+import { ListTabResponseSPO } from "src/pages/SPOLifecycle";
 interface StepperProps {
   icon: React.ReactNode;
   title: string;

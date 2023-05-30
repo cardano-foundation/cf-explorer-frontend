@@ -8,7 +8,7 @@ import { IoIosArrowBack, IoIosArrowForward, IoMdClose } from "react-icons/io";
 import { DateRangeIcon } from "../../commons/resources";
 import "./index.css";
 import { CloseButtonLeft, CloseButtonRight, SelectDateButton, StyledDatePicker, WrapCustomDatePicker } from "./styles";
-import useComponentVisible from "~/commons/hooks/useComponentVisible";
+import useComponentVisible from "src/commons/hooks/useComponentVisible";
 
 export type IDate = Date | null;
 

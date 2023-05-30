@@ -8,7 +8,7 @@ import { Box } from "@mui/material";
 import RewardActivity from "./RewardActivity";
 import { BalanceIcon, RewardsIcon } from "../../../../commons/resources";
 import CustomIcon from "../../../commons/CustomIcon";
-import { useScreen } from "~/commons/hooks/useScreen";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 interface IProps {
   open: boolean;

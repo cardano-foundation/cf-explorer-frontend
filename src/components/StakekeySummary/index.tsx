@@ -8,8 +8,8 @@ import { defaultAxiosDownload } from "../../commons/utils/axios";
 import { useHistory } from "react-router-dom";
 import { details } from "../../commons/routers";
 import CustomIcon from "../commons/CustomIcon";
-import { DownloadGreenIcon } from "~/commons/resources";
-import { formatDateTimeLocal } from "~/commons/utils/helper";
+import { DownloadGreenIcon } from "src/commons/resources";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 import CustomTooltip from "../commons/CustomTooltip";
 import { StyledBox } from "./styles";
 

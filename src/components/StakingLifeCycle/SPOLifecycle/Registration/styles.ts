@@ -1,6 +1,6 @@
 import { styled } from "@mui/material";
 import CopyButton from "../../../commons/CopyButton";
-import CustomModal from "~/components/commons/CustomModal";
+import CustomModal from "src/components/commons/CustomModal";
 
 export const StyledModal = styled(CustomModal)(() => ({}));
 

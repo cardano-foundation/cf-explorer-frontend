@@ -1,7 +1,7 @@
 import { Box, styled, IconButton as IconButtonMui, alpha } from "@mui/material";
-import { AdaLogoIcon } from "~/components/commons/ADAIcon";
-import FeeBox from "~/components/commons/FeeBox";
-import HoldBox from "~/components/commons/HoldBox";
+import { AdaLogoIcon } from "src/components/commons/ADAIcon";
+import FeeBox from "src/components/commons/FeeBox";
+import HoldBox from "src/components/commons/HoldBox";
 
 export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
   padding: 0

@@ -29,7 +29,7 @@ import { details } from "../../commons/routers";
 import { ButtonClose } from "../../components/ScriptModal/styles";
 import { CloseIcon } from "../../commons/resources";
 import useToast from "../../commons/hooks/useToast";
-import { useScreen } from "~/commons/hooks/useScreen";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 type TAction = {
   onClick: () => void;

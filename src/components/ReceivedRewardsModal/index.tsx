@@ -20,7 +20,7 @@ import { API } from "../../commons/utils/api";
 import { formatADAFull, formatDateTimeLocal } from "../../commons/utils/helper";
 import ADAicon from "../commons/ADAIcon";
 import { details } from "../../commons/routers";
-import { useScreen } from "~/commons/hooks/useScreen";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 interface ReceivedReward {
   amount: string;

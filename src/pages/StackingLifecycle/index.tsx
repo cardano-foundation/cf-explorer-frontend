@@ -21,8 +21,8 @@ import {
   TitleHead,
   WrapReportName
 } from "./styles";
-import CustomIcon from "~/components/commons/CustomIcon";
-import CustomTooltip from "~/components/commons/CustomTooltip";
+import CustomIcon from "src/components/commons/CustomIcon";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 const cardList = [
   {

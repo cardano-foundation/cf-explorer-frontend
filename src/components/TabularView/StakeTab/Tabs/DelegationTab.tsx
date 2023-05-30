@@ -8,13 +8,13 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
 import { AdaValue } from "./StakeRegistrationTab";
-import { GreenWalletIcon } from "~/components/commons/GreenWalletIcon";
+import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import { useContext, useState } from "react";
 import StackingFilter, { FilterParams } from "../../../StackingFilter";
 import { EyeIcon } from "../../../../commons/resources";
 import { DelegationCertificateModal } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation";
-import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 
 const DelegationTab = () => {
   const detailData = useContext(DelegatorDetailContext);

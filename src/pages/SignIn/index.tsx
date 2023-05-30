@@ -2,7 +2,7 @@ import { Box, Checkbox, FormControlLabel, FormGroup, FormHelperText, IconButton,
 import { useEffect, useReducer, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
-import useAuth from "~/commons/hooks/useAuth";
+import useAuth from "src/commons/hooks/useAuth";
 import useToast from "../../commons/hooks/useToast";
 import { HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
 import { routers } from "../../commons/routers";

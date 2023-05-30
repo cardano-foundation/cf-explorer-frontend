@@ -4,7 +4,7 @@ import { TabContext, TabPanel } from "@mui/lab";
 import { Headline, StyledTabList, TabHead, TitleTab } from "./styles";
 import CustomIcon from "../../commons/CustomIcon";
 import { useScreen } from "../../../commons/hooks/useScreen";
-import { StakingDetailContext } from "~/components/ReportGeneratedStakingDetail";
+import { StakingDetailContext } from "src/components/ReportGeneratedStakingDetail";
 
 export interface StakeTabItem {
   icon: React.FC;

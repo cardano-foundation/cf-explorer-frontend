@@ -10,19 +10,19 @@ import {
   RewardIcon,
   TickerIcon,
   UserIcon
-} from "~/commons/resources";
-import { details } from "~/commons/routers";
+} from "src/commons/resources";
+import { details } from "src/commons/routers";
 import {
   formatADAFull,
   formatDateTimeLocal,
   formatPercent,
   getShortHash,
   getShortWallet
-} from "~/commons/utils/helper";
-import BookmarkButton from "~/components/commons/BookmarkIcon";
-import CopyButton from "~/components/commons/CopyButton";
-import CustomTooltip from "~/components/commons/CustomTooltip";
-import DropdownDetail from "~/components/commons/DropdownDetail";
+} from "src/commons/utils/helper";
+import BookmarkButton from "src/components/commons/BookmarkIcon";
+import CopyButton from "src/components/commons/CopyButton";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import DropdownDetail from "src/components/commons/DropdownDetail";
 
 import {
   BackButton,

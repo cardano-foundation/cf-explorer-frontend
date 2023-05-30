@@ -1,17 +1,17 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import feeImg from "~/commons/resources/images/dola.svg";
-import receiveImg from "~/commons/resources/images/receiveImg.svg";
-import sendImg from "~/commons/resources/images/sendImg.svg";
-import { details } from "~/commons/routers";
-import { formatADAFull, getShortHash, getShortWallet } from "~/commons/utils/helper";
+import feeImg from "src/commons/resources/images/dola.svg";
+import receiveImg from "src/commons/resources/images/receiveImg.svg";
+import sendImg from "src/commons/resources/images/sendImg.svg";
+import { details } from "src/commons/routers";
+import { formatADAFull, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import { Header, Img, Item, ItemContent, ItemFooter, WrapInfo, WrapUTXOs } from "./styles";
-import { useScreen } from "~/commons/hooks/useScreen";
-import ADAicon from "~/components/commons/ADAIcon";
-import CustomTooltip from "~/components/commons/CustomTooltip";
-import CopyButton from "~/components/commons/CopyButton";
-import DropdownTokens from "~/components/commons/DropdownTokens";
+import { useScreen } from "src/commons/hooks/useScreen";
+import ADAicon from "src/components/commons/ADAIcon";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import CopyButton from "src/components/commons/CopyButton";
+import DropdownTokens from "src/components/commons/DropdownTokens";
 
 interface Props {
   data: Transaction["utxOs"] | null;

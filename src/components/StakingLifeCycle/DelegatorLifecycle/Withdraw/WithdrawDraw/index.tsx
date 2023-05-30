@@ -35,15 +35,15 @@ import {
   PaymentWalletUrl,
   WalletIconRewardGreen,
   RewardAccountIconUrl
-} from "~/commons/resources";
-import { LineArrowItem } from "~/components/commons/LineArrow";
-import DrawPath from "~/components/commons/DrawPath";
+} from "src/commons/resources";
+import { LineArrowItem } from "src/components/commons/LineArrow";
+import DrawPath from "src/components/commons/DrawPath";
 import { useSelector } from "react-redux";
-import AdaHolder from "~/components/commons/AdaHolder";
-import CardanoSystem from "~/components/commons/CardanoSystem";
-import useFetch from "~/commons/hooks/useFetch";
-import { API } from "~/commons/utils/api";
-import { details } from "~/commons/routers";
+import AdaHolder from "src/components/commons/AdaHolder";
+import CardanoSystem from "src/components/commons/CardanoSystem";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import { details } from "src/commons/routers";
 import { StyledLink } from "../../Registration/styles";
 
 export interface WithdrawDetail {

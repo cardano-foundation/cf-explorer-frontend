@@ -3,7 +3,7 @@ import React from "react";
 import { Box, Tabs } from "@mui/material";
 import { StyledTab, StyledTabs, TabContent, TabHeader, TabLabel } from "./styles";
 import { useHistory, useParams } from "react-router-dom";
-import { details } from "~/commons/routers";
+import { details } from "src/commons/routers";
 
 export interface TabsItem {
   value: string;

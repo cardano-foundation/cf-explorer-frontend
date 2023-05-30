@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import { useScreen } from "~/commons/hooks/useScreen";
-import { details } from "~/commons/routers";
-import { StyledLink } from "~/components/share/styled";
+import { useScreen } from "src/commons/hooks/useScreen";
+import { details } from "src/commons/routers";
+import { StyledLink } from "src/components/share/styled";
 import { AIconGreen, BalanceIcon, HashtagIcon } from "../../../../commons/resources";
 import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
 import CopyButton from "../../../commons/CopyButton";

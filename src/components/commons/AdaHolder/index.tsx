@@ -1,9 +1,9 @@
 import { BoxProps } from "@mui/material";
 import React, { forwardRef } from "react";
-import { AdaHolderIconUrl } from "~/commons/resources";
+import { AdaHolderIconUrl } from "src/commons/resources";
 import PolygonShape from "../PolygonShape";
 import { AdaHolderImage, AdaHolderValue, StyledAdaLogoIcon } from "./styles";
-import { formatADAFull } from "~/commons/utils/helper";
+import { formatADAFull } from "src/commons/utils/helper";
 
 export interface IAdaHolderProps extends BoxProps {
   value?: number;

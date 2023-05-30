@@ -1,12 +1,12 @@
 import React from "react";
-import sendImg from "~/commons/resources/images/sendImg.svg";
-import { getShortWallet } from "~/commons/utils/helper";
-import { details } from "~/commons/routers";
-import CopyButton from "~/components/commons/CopyButton";
+import sendImg from "src/commons/resources/images/sendImg.svg";
+import { getShortWallet } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import CopyButton from "src/components/commons/CopyButton";
 import { Box } from "@mui/material";
-import CustomTooltip from "~/components/commons/CustomTooltip";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 import { AddressLink, Header, ItemContainer, StatusIcon, StyledItem, Wrapper } from "./styles";
-import { useScreen } from "~/commons/hooks/useScreen";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 interface DelegationProps {
   data: Transaction["delegations"] | null;
