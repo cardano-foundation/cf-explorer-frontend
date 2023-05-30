@@ -1,9 +1,10 @@
 import { Box, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
-import { useReducer, useState, useEffect } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { FailIcon, HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
+import { routers } from "../../commons/routers";
+import { resetPassword } from "../../commons/utils/userRequest";
 import {
-  AlertCustom,
   Container,
   FormHelperTextCustom,
   InputCustom,
@@ -15,8 +16,6 @@ import {
   WrapInput,
   WrapTitle
 } from "./styles";
-import { routers } from "../../commons/routers";
-import { resetPassword } from "../../commons/utils/userRequest";
 
 interface IForm {
   password: {

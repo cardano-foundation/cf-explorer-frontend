@@ -135,7 +135,7 @@ export default function ForgotPassword() {
         <FormGroup>
           {!success ? (
             <WrapForm>
-              {error ? <AlertCustom severity='error'>Invalid email information.</AlertCustom> : null}
+              {error ? <Box pt={"24px"}><AlertCustom severity='error'>Invalid email information.</AlertCustom></Box> : null}
               <WrapInput>
                 <Label>Email</Label>
                 <InputCustom

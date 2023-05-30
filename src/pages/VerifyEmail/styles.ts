@@ -152,11 +152,3 @@ export const WrapSignUp = styled(Box)`
   color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
-export const AlertCustom = styled(Alert)`
-  border-color: ${({ theme }) => theme.palette.error.main};
-  border-style: solid;
-  border-width: 1px;
-  color: ${({ theme }) => theme.palette.text.primary};
-  padding: 0 16px;
-  background: "#FFF7F7";
-`;
