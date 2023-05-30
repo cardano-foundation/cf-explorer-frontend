@@ -128,7 +128,7 @@ export default function SignUp() {
             touched: true,
             error: ""
           });
-        } else if (value !== formData.confirmPassword.value) {
+        } else if (formData.confirmPassword.value && value !== formData.confirmPassword.value) {
           setFormData({
             name: "confirmPassword",
             value: formData.confirmPassword.value,
@@ -157,12 +157,12 @@ export default function SignUp() {
             touched: true,
             error: ""
           });
-        } else if (value !== formData.confirmEmail.value) {
+        } else if (formData.confirmEmail.value && value !== formData.confirmEmail.value) {
           setFormData({
             name: "confirmEmail",
             value: formData.confirmEmail.value,
             touched: true,
-            error: "Confirm Password does not match"
+            error: "Confirm Email does not match"
           });
         }
         break;
