@@ -42,7 +42,7 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, timeout?: numbe
   );
 
   useEffect(() => {
-    if (timeout) {
+    if (timeout && !loading) {
       const interval = setInterval(async () => {
         if (!document.hidden) {
           await fetch();
@@ -64,7 +64,7 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, timeout?: numbe
         window.removeEventListener("focus", onFocus);
       };
     }
-  }, [fetch, timeout]);
+  }, [fetch, timeout, loading]);
 
   useEffect(() => {
     fetch(true);

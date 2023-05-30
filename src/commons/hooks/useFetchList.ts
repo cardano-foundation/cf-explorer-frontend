@@ -63,7 +63,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
   );
 
   useEffect(() => {
-    if (timeout) {
+    if (timeout && !loading) {
       const interval = setInterval(async () => {
         if (!document.hidden) {
           await getList();
@@ -85,7 +85,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
         window.removeEventListener("focus", onFocus);
       };
     }
-  }, [getList, timeout]);
+  }, [getList, timeout, loading]);
 
   useEffect(() => {
     getList(true);
