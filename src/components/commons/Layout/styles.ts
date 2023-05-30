@@ -67,15 +67,15 @@ export const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   minWidth: drawerCollaspWidth,
   overflowY: "unset",
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen
-  }),
   [theme.breakpoints.down("md")]: {
     zIndex: 1302,
     minWidth: 0,
     height: "100vh",
-    maxHeight: "fill-available"
+    maxHeight: "fill-available",
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen
+    })
   },
   [theme.breakpoints.down("sm")]: {
     width: drawerWidthMobile
@@ -85,15 +85,15 @@ export const openedMixin = (theme: Theme): CSSObject => ({
 export const closedMixin = (theme: Theme): CSSObject => ({
   overflowY: "unset",
   width: drawerCollaspWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen
-  }),
   [theme.breakpoints.down("md")]: {
     zIndex: 1302,
     width: 0,
     height: "100vh",
-    maxHeight: "fill-available"
+    maxHeight: "fill-available",
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
   }
 });
 
