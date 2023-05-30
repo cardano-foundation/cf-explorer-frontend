@@ -1,4 +1,4 @@
-import { Container, styled } from "@mui/material";
+import { Container, Skeleton, styled } from "@mui/material";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
   padding: "30px 0 40px",
@@ -29,3 +29,15 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
     marginTop: "0px !important"
   }
 }));
+
+export const AnalyticSkeleton = styled(Skeleton)`
+  height: 300px;
+  width: 100%;
+  border-radius: 4px;
+`;
+
+export const DataTableSkeleton = styled(Skeleton)`
+  height: 300px;
+  width: 100%;
+  border-radius: 4px;
+`;

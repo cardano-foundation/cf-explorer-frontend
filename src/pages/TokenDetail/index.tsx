@@ -6,7 +6,7 @@ import NoRecord from "../../components/commons/NoRecord";
 import TokenOverview from "../../components/TokenDetail/TokenOverview";
 import TokenTableData from "../../components/TokenDetail/TokenTableData";
 import TokenAnalytics from "../../components/TokenDetail/TokenAnalytics";
-import { StyledContainer } from "./styles";
+import { AnalyticSkeleton, DataTableSkeleton, StyledContainer } from "./styles";
 
 interface IOverviewMetadataContext {
   txCountRealtime: number;
@@ -34,10 +34,6 @@ const TokenDetail: React.FC = () => {
     document.title = `Token ${tokenId} | Cardano Explorer`;
     mainRef.current?.scrollTo(0, 0);
   }, [tokenId]);
-
-  if (!initialized) {
-    return null;
-  }
 
   if ((initialized && !data) || error) return <NoRecord />;
 
