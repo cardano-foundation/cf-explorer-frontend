@@ -54,6 +54,9 @@ html {
     color: var(--text-color);
     & > iframe {
       pointer-events: none;
+      &#jsd-widget {
+        pointer-events: all;
+      }
     }
   }
 
@@ -136,4 +139,3 @@ html {
     padding: 0;
   }
 }
-
