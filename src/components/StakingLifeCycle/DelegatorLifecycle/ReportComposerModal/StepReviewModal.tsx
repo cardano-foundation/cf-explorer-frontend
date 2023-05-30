@@ -92,7 +92,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
   const list = [
     {
       label: "Report name",
-      value: <TextOverFlow>{step1.reportName}</TextOverFlow>,
+      value: <TextOverFlow>{`${step1.reportName}`.replaceAll("-", " ")}</TextOverFlow>,
       step: STEPS.step1
     },
     {

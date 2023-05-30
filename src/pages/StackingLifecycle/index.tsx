@@ -149,11 +149,11 @@ const Dashboard: React.FC = () => {
       minWidth: "150px",
       render(data) {
         if (data.reportName.length <= 20) {
-          return <WrapReportName>{data.reportName}</WrapReportName>;
+          return <WrapReportName>{`${data.reportName}`.replaceAll("-", " ")}</WrapReportName>;
         }
         return (
-          <CustomTooltip title={data.reportName}>
-            <WrapReportName>{data.reportName}</WrapReportName>
+          <CustomTooltip title={`${data.reportName}`.replaceAll("-", " ")}>
+            <WrapReportName>{`${data.reportName}`.replaceAll("-", " ")}</WrapReportName>
           </CustomTooltip>
         );
       }

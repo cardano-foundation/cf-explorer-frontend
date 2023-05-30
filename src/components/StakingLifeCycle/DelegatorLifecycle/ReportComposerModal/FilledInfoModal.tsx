@@ -35,12 +35,14 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   const [errorReportField, setErrorReportField] = useState("");
 
   const onChangeReportName = (e: any) => {
-    const text = e.target.value as string;
-    setReportName(text as ReportType);
-    if (text.trim().length > 200) {
-      setErrorReportField("Report name can not exceed 200 characters");
-    } else {
-      setErrorReportField("");
+    if (/^[a-zA-Z0-9\s]*$/.test(e.target.value)) {
+      const text = e.target.value as string;
+      setReportName(text as ReportType);
+      if (text.trim().length > 200) {
+        setErrorReportField("Report name can not exceed 200 characters");
+      } else {
+        setErrorReportField("");
+      }
     }
   };
 
@@ -61,7 +63,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       reportType,
       address,
       dateRange,
-      reportName,
+      reportName: reportName.replaceAll(" ", "-"),
       epochRange
     });
     gotoStep?.(STEPS.step2);
