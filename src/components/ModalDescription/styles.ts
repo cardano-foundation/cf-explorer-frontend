@@ -9,6 +9,7 @@ export const NormalDescription = styled(Box)`
   & span {
     font-weight: 700;
   }
+  padding-right: 8px;
 `;
 export const NumberParagraph = styled(Box)`
   position: absolute;

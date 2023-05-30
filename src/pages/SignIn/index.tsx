@@ -198,7 +198,9 @@ export default function SignIn() {
               <IoMdClose />
             </CloseButton>
             {invalidInfomation ? (
-              <AlertCustom severity='error'>Incorrect Emaill Address or Password</AlertCustom>
+              <Box pt={"24px"}>
+                <AlertCustom severity='error'>Incorrect Emaill Address or Password</AlertCustom>
+              </Box>
             ) : null}
             <WrapInput>
               <Label>Email Address</Label>
