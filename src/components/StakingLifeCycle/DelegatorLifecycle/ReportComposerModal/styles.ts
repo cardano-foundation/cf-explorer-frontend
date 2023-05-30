@@ -203,14 +203,12 @@ export const TextValueReview = styled("div")`
   }
 `;
 
-export const TextOverFlow = styled("div")`
+export const TextOverFlow = styled(Box)`
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: auto;
   max-width: 100%;
   width: 300px;
   text-align: right;
-  white-space: nowrap;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     text-align: left;
   }

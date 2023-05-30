@@ -132,13 +132,13 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           all the details correctly?
         </TextRequired>
         <Stack marginBottom='35px'>
-          {list.map(({ label, value }) => {
+          {list.map(({ label, value }, idx) => {
             return (
               <OverViewItem key={label}>
                 <OverViewValue>
                   <TextLabelReview>{label}</TextLabelReview>
                   <TextValueReview>
-                    <TextOverFlow>{value} </TextOverFlow>
+                    <TextOverFlow whiteSpace={idx === list.length - 1 ? "normal" : "nowrap"}>{value} </TextOverFlow>
                   </TextValueReview>
                 </OverViewValue>
               </OverViewItem>
