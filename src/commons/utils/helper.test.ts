@@ -30,6 +30,7 @@ describe("helper formatAmountToken", () => {
   it("should return correct value with decimal", () => {
     expect(numberWithCommas(1234)).toEqual("1,234");
     expect(numberWithCommas(1.250255985)).toEqual("1.250255");
-    expect(numberWithCommas(1.25)).toEqual("1.25");
+    // eslint-disable-next-line prettier/prettier
+    expect(numberWithCommas(1.250000)).toEqual("1.25");
   });
 });

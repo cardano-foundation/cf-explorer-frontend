@@ -147,8 +147,6 @@ export const InfoValue = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     fontSize: 16
   }
-  // display: "flex",
-  // flexDirection: "column",
 }));
 
 export const StyledLinearProgress = styled(LinearProgress)`
