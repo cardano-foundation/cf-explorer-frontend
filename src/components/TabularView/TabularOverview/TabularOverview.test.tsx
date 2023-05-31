@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react";
-import { render } from "../../../test-utils";
+import { render } from "src/test-utils";
 import TabularOverview from ".";
 
 describe("TabularOverview", () => {

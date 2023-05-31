@@ -1,7 +1,7 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import PopoverStyled from ".";
-import React, { useRef } from "react";
+import { render } from "src/test-utils";
 
 test("Render popover button", async () => {
   const buttonRef = {

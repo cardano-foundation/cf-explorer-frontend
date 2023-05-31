@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import OverviewStaking from ".";
 import { formatADAFull, getShortHash } from "../../../commons/utils/helper";
 import moment from "moment";
-import { render } from "../../../test-utils";
+import { render } from "src/test-utils";
 
 const item: RegistrationItem = {
   txHash: "f0cc0767ea4cf06ce45a85db8f17f930576af1b06f327b8d9d5d25c17f962166",

@@ -248,14 +248,14 @@ export const OptionsSearch = ({ show, home, value, handleSearch, error }: Option
       {!error && (
         <>
           {+value <= (currentEpoch?.no || 0) && (
-            <Option onClick={() => submitSearch("epochs")}>
+            <Option onClick={() => submitSearch("epochs")} data-testid="option-search-epoch">
               <Box>
                 Search for an epoch <ValueOption> {value}</ValueOption>
               </Box>
               <GoChevronRight />
             </Option>
           )}
-          <Option onClick={() => submitSearch("blocks")}>
+          <Option onClick={() => submitSearch("blocks")} data-testid="option-search-block">
             <Box>
               Search for a block by number <ValueOption>{value}</ValueOption>
             </Box>
