@@ -38,10 +38,11 @@ import { RootState } from "../../../stores/types";
 import { useHistory } from "react-router-dom";
 import { EmptyIcon, SearchIcon } from "../../../commons/resources";
 import { BiChevronDown } from "react-icons/bi";
-import { getShortHash, numberWithCommas } from "../../../commons/utils/helper";
+import { formatDateTimeLocal, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
 import { useScreen } from "../../../commons/hooks/useScreen";
 import CustomTooltip from "../CustomTooltip";
 import FormNowMessage from "../FormNowMessage";
+import moment from "moment";
 
 interface DetailHeaderProps {
   type: Bookmark["type"];
@@ -184,7 +185,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               size={100}
               pathWidth={8}
               percent={
-                currentEpoch && (epoch?.no || 0) < currentEpoch?.no ? 100 : ((epoch?.slot || 0) / MAX_SLOT_EPOCH) * 100
+                currentEpoch && (epoch?.no || 0) === currentEpoch?.no
+                  ? ((moment(formatDateTimeLocal(epoch?.endTime || "")).diff(moment()) > 0
+                      ? epoch?.slot
+                      : MAX_SLOT_EPOCH) /
+                      MAX_SLOT_EPOCH) *
+                    100
+                  : 100
               }
             >
               <EpochNumber is_epoch={+(type === "EPOCH")} to={details.epoch(epoch.no || 0)}>

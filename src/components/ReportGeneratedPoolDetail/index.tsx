@@ -98,11 +98,11 @@ const ReportGeneratedPoolDetailTabs = () => {
         <SkeletonUI variant='rectangular' style={{ height: "400px" }} />
       ) : (
         <>
-          <CustomTooltip title={reportDetail.data?.reportHistory.reportName}>
-            <Headline collapsed={1}>{reportDetail.data?.reportHistory.reportName} </Headline>
+          <CustomTooltip title={`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")}>
+            <Headline collapsed={1}>{`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")} </Headline>
           </CustomTooltip>
-          <CustomTooltip title={reportDetail.data?.reportHistory.reportName}>
-            <Headline>{reportDetail.data?.reportHistory.reportName} </Headline>
+          <CustomTooltip title={`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")}>
+            <Headline>{`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")} </Headline>
           </CustomTooltip>
           <StakeTab tabs={displayedTabs} initTab={initTab} />
         </>

@@ -10,6 +10,7 @@ import { Box } from "@mui/material";
 import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
 import { useSelector } from "react-redux";
 import ADAicon from "../../commons/ADAIcon";
+import moment from "moment";
 interface EpochOverviewProps {
   data: IDataEpoch | null;
   loading: boolean;
@@ -70,7 +71,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       ),
       value: (
         <>
-          {slot}/
+          {moment(formatDateTimeLocal(data?.endTime || "")).diff(moment()) > 0 ? slot : MAX_SLOT_EPOCH}/
           <Box component={"span"} fontWeight='400'>
             {MAX_SLOT_EPOCH}
           </Box>
@@ -90,7 +91,8 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
         data && {
           no: data.no,
           slot: slot,
-          status: data.status
+          status: data.status,
+          endTime: data.endTime
         }
       }
     />

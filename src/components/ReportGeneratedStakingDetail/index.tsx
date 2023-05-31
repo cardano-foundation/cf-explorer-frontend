@@ -109,11 +109,11 @@ const ReportGeneratedStakingDetailTabs = () => {
         <SkeletonUI variant='rectangular' style={{ height: "400px" }} />
       ) : (
         <>
-          <CustomTooltip title={reportDetail.data?.reportName}>
-            <Headline collapsed={1}>{reportDetail.data?.reportName} </Headline>
+          <CustomTooltip title={`${reportDetail.data?.reportName}`.replaceAll("-", " ")}>
+            <Headline collapsed={1}>{`${reportDetail.data?.reportName}`.replaceAll("-", " ")} </Headline>
           </CustomTooltip>
-          <CustomTooltip title={reportDetail.data?.reportName}>
-            <Headline>{reportDetail.data?.reportName} </Headline>
+          <CustomTooltip title={`${reportDetail.data?.reportName}`.replaceAll("-", " ")}>
+            <Headline>{`${reportDetail.data?.reportName}`.replaceAll("-", " ")} </Headline>
           </CustomTooltip>
           <StakeTab tabs={displayedTabs} initTab={initTab} />
         </>
