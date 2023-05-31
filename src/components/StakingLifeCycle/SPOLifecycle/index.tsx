@@ -125,7 +125,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
             <StepButton
               active={+(currentStep === idx)}
               onClick={() => {
-                history.push(details.spo(poolId, "timeline", step.key));
+                history.replace(details.spo(poolId, "timeline", step.key));
                 setCurrentStep(idx);
               }}
             >
@@ -151,7 +151,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         {currentStep > 0 && (
           <PreviousButton
             onClick={() => {
-              history.push(details.spo(poolId, "timeline", stepper[currentStep - 1]?.key));
+              history.replace(details.spo(poolId, "timeline", stepper[currentStep - 1]?.key));
               setCurrentStep(currentStep - 1);
             }}
           >
@@ -166,7 +166,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
             if (currentStep === stepper.length - 1) {
               history.push(details.spo(poolId, "tabular"));
             } else {
-              history.push(details.spo(poolId, "timeline", stepper[currentStep + 1]?.key));
+              history.replace(details.spo(poolId, "timeline", stepper[currentStep + 1]?.key));
               setCurrentStep(currentStep + 1);
             }
           }}

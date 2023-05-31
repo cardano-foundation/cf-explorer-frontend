@@ -39,7 +39,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
 
   const handleChange = (event: React.SyntheticEvent, tab: keyof Transaction) => {
     (tabRef as any)?.current.scrollIntoView();
-    history.push(details.transaction(data?.tx?.hash, tab));
+    history.replace(details.transaction(data?.tx?.hash, tab));
   };
 
   const protocolsMergeData: TProtocolMerge[] = useMemo(() => {

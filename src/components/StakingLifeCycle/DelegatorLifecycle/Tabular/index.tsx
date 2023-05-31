@@ -83,7 +83,7 @@ const Tabular = ({ tabsRenderConfig }: ITabularProps) => {
   if (!tabsRenderConfig) return null;
 
   const onChangeTab = (tab: any) => {
-    history.push(details.staking(stakeId, "tabular", tab));
+    history.replace(details.staking(stakeId, "tabular", tab));
   };
 
   return (

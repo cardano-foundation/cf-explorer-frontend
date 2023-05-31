@@ -43,7 +43,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, set
   useEffect(() => {
     const isNoFilter = !params?.fromDate && !params?.toDate && !params?.txHash && !params?.sort;
     if (initialized && data.length === 1 && isNoFilter) {
-      history.push(details.staking(poolId, "timeline", "registration", data?.[0]?.txHash));
+      history.replace(details.staking(poolId, "timeline", "registration", data?.[0]?.txHash));
     }
   }, [params, poolId]);
 
@@ -53,7 +53,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, set
   }, [txHash, data]);
 
   const handleSelect = (registration: SPORegistration) => {
-    history.push(details.spo(poolId, "timeline", "registration", registration.txHash));
+    history.replace(details.spo(poolId, "timeline", "registration", registration.txHash));
   };
   useUpdateEffect(() => {
     if (
