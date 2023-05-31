@@ -51,7 +51,7 @@ const RewardsDistributionTab = () => {
 
   return (
     <>
-      <Box display='flex' alignItems='center' justifyContent='space-between' mt={3}>
+      <Box display="flex" alignItems="center" justifyContent="space-between" mt={3}>
         <Box />
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>

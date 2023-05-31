@@ -9,7 +9,7 @@ interface Props {
 
 export function DelegationProcessDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title='Delegation' handleCloseModal={handleCloseModal} open={open} data-testid='close-modal-button'>
+    <StyledModal title="Delegation" handleCloseModal={handleCloseModal} open={open} data-testid="close-modal-button">
       <WrapContent>
         <ContentContainer>
           <NormalDescription>

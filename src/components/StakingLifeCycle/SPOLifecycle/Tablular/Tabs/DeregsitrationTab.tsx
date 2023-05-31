@@ -61,10 +61,10 @@ const DeregsitrationTab = () => {
           <Box>
             <AdaValue limit={5} value={data.totalFee} />
             <TableSubTitle>
-              <Box display='flex' mt={1} alignItems='center' lineHeight='1'>
-                <AdaValue limit={1} color={theme.palette.grey[400]} value={data.poolHold} gap='3px' fontSize='12px' />
-                <Box mx='3px'>/</Box>
-                <AdaValue color={theme.palette.grey[400]} value={data.fee} gap='3px' fontSize='12px' />
+              <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+                <AdaValue limit={1} color={theme.palette.grey[400]} value={data.poolHold} gap="3px" fontSize="12px" />
+                <Box mx="3px">/</Box>
+                <AdaValue color={theme.palette.grey[400]} value={data.fee} gap="3px" fontSize="12px" />
               </Box>
             </TableSubTitle>
           </Box>

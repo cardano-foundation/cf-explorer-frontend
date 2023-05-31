@@ -8,7 +8,7 @@ export function WithdrawingFundProcessDescription({ open, handleCloseModal }: Pr
   return (
     <StyledModal
       contentStyle={{ paddingRight: "5px" }}
-      title='Reward withdrawal'
+      title="Reward withdrawal"
       handleCloseModal={handleCloseModal}
       open={open}
     >

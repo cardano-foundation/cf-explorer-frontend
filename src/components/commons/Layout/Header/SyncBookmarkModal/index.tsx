@@ -37,7 +37,7 @@ const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, handleClose
 
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal}>
-      <Box textAlign='center'>
+      <Box textAlign="center">
         <ModalTitle>Notify</ModalTitle>
         <Description>
           {!data && !message && (
@@ -53,10 +53,10 @@ const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, handleClose
             <></>
           )}
         </Description>
-        <Box display={"flex"} justifyContent='center' gap={2}>
+        <Box display={"flex"} justifyContent="center" gap={2}>
           <StyledButton onClick={handleCloseModal}>Close</StyledButton>
           {!message && (
-            <StyledDarkLoadingButton loading={loading} loadingPosition='end' onClick={hanldeSyncBookmark}>
+            <StyledDarkLoadingButton loading={loading} loadingPosition="end" onClick={hanldeSyncBookmark}>
               Sync
             </StyledDarkLoadingButton>
           )}

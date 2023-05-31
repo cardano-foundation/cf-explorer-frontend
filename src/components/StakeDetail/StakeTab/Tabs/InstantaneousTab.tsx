@@ -34,7 +34,7 @@ const columns: Column<Instantaneous>[] = [
     render: (r) => (
       <Box>
         <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
-        <Box marginTop='5px'>
+        <Box marginTop="5px">
           <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
         </Box>
       </Box>

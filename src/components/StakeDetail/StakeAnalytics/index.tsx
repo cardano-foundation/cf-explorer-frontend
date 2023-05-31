@@ -84,10 +84,10 @@ const StakeAnalytics: React.FC = () => {
       )
     : { epoch: 0, value: 0 };
   return (
-    <Card title='Analytics' pt={5}>
-      <Wrapper container columns={24} spacing='35px'>
+    <Card title="Analytics" pt={5}>
+      <Wrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
-          <Grid spacing={2} container alignItems='center' justifyContent={"space-between"}>
+          <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
             {isMobile ? (
               <Grid item xs={12} sm={6}>
                 <Box>
@@ -127,7 +127,7 @@ const StakeAnalytics: React.FC = () => {
           </Grid>
           <ChartBox>
             {loading || loadingReward ? (
-              <SkeletonUI variant='rectangular' style={{ height: "375px" }} />
+              <SkeletonUI variant="rectangular" style={{ height: "375px" }} />
             ) : (
               <Box position={"relative"}>
                 <HighchartsReact
@@ -196,14 +196,14 @@ const StakeAnalytics: React.FC = () => {
         <Grid item xs={24} lg={6}>
           <BoxInfo height={"100%"}>
             <Box flex={1}>
-              <BoxInfoItemRight display={"flex"} alignItems='center' justifyContent={"center"}>
+              <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
-                  <img src={HighestIcon} alt='heighest icon' />
+                  <img src={HighestIcon} alt="heighest icon" />
                   <Title>{tab === "BALANCE" ? "Highest Balance" : "Highest Reward"}</Title>
                   <CustomTooltip title={numberWithCommas(maxBalance || 0)}>
                     <ValueInfo>
                       {balanceLoading ? (
-                        <SkeletonUI variant='rectangular' />
+                        <SkeletonUI variant="rectangular" />
                       ) : tab === "BALANCE" ? (
                         formatADAFull(maxBalance)
                       ) : (
@@ -215,14 +215,14 @@ const StakeAnalytics: React.FC = () => {
               </BoxInfoItemRight>
             </Box>
             <Box flex={1}>
-              <BoxInfoItem display={"flex"} alignItems='center' justifyContent={"center"}>
+              <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
-                  <img src={LowestIcon} alt='lowest icon' />
+                  <img src={LowestIcon} alt="lowest icon" />
                   <Title>{tab === "BALANCE" ? "Lowest Balance" : "Lowest Reward"}</Title>
                   <CustomTooltip title={numberWithCommas(minBalance || 0)}>
                     <ValueInfo>
                       {balanceLoading ? (
-                        <SkeletonUI variant='rectangular' />
+                        <SkeletonUI variant="rectangular" />
                       ) : tab === "BALANCE" ? (
                         formatADAFull(minBalance)
                       ) : (

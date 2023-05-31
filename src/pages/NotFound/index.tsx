@@ -50,7 +50,7 @@ const NotFound = () => {
 
   return (
     <NotFoundContainer>
-      <Image src={NotFoundIcon} alt='404' />
+      <Image src={NotFoundIcon} alt="404" />
       <Title>Sorry! The page you’re looking for cannot be found.</Title>
       <BackToHome to={routers.HOME}>Back to home</BackToHome>
     </NotFoundContainer>

@@ -47,7 +47,7 @@ const Tokens = () => {
       title: "Icon",
       key: "icon",
       minWidth: "50px",
-      render: (r) => (r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt='icon' /> : "")
+      render: (r) => (r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : "")
     },
     {
       title: "Asset Name",
@@ -133,7 +133,7 @@ const Tokens = () => {
   return (
     <StyledContainer>
       <Card
-        title='Token List'
+        title="Token List"
         extra={
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />
@@ -145,7 +145,7 @@ const Tokens = () => {
           data={data}
           columns={columns}
           total={{ title: "Total", count: fetchData.total }}
-          defaultSort='txCount,DESC'
+          defaultSort="txCount,DESC"
           pagination={{
             ...pageInfo,
             total: fetchData.total,

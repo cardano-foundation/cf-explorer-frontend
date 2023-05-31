@@ -143,7 +143,7 @@ const ProtocolParameter: React.FC = () => {
       )}
       {showHistory && <ProtocolParameterHistory />}
       {!showHistory && (
-        <Card marginTitle='0px' title={"Protocol parameters"} textAlign={"left"}>
+        <Card marginTitle="0px" title={"Protocol parameters"} textAlign={"left"}>
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
@@ -153,7 +153,7 @@ const ProtocolParameter: React.FC = () => {
                   </Box>
                   <Box
                     component={Button}
-                    variant='contained'
+                    variant="contained"
                     textTransform={"capitalize"}
                     fontWeight={"bold"}
                     fontSize={"0.875rem"}
@@ -167,7 +167,7 @@ const ProtocolParameter: React.FC = () => {
                     component={Skeleton}
                     mt={2}
                     borderRadius={({ spacing }) => spacing(2)}
-                    variant='rectangular'
+                    variant="rectangular"
                     height={280}
                   />
                 )}
@@ -183,7 +183,7 @@ const ProtocolParameter: React.FC = () => {
                       component={Skeleton}
                       mt={2}
                       borderRadius={({ spacing }) => spacing(2)}
-                      variant='rectangular'
+                      variant="rectangular"
                       height={280}
                     />
                   )}
@@ -200,7 +200,7 @@ const ProtocolParameter: React.FC = () => {
         open={!!costModelScript}
         onClose={() => setCostModelScript("")}
         script={costModelScript}
-        title='CostModel'
+        title="CostModel"
       />
     </Container>
   );
@@ -290,7 +290,7 @@ const ProtocolParameterHistory = () => {
           }
         >
           {r[t]?.status === "ADDED" ? (
-            <CustomTooltip title='No transaction'>
+            <CustomTooltip title="No transaction">
               <Box>{r[t] ? (r[t]?.value ? r[t]?.value : r[t]?.value === 0 ? 0 : "") : ""}</Box>
             </CustomTooltip>
           ) : r[t] ? (
@@ -355,21 +355,21 @@ const ProtocolParameterHistory = () => {
 
   if (loading) {
     return (
-      <Box component={Skeleton} mt={2} borderRadius={({ spacing }) => spacing(2)} variant='rectangular' height={400} />
+      <Box component={Skeleton} mt={2} borderRadius={({ spacing }) => spacing(2)} variant="rectangular" height={400} />
     );
   }
 
   return (
     <Box>
       <Card
-        marginTitle='0px'
+        marginTitle="0px"
         title={"Protocol parameters update history"}
         textAlign={"left"}
         extra={
           <Box position={"relative"}>
             <Box
               component={Button}
-              variant='text'
+              variant="text"
               textTransform={"capitalize"}
               bgcolor={({ palette }) => alpha(palette.green[600], 0.1)}
               px={2}
@@ -481,7 +481,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   };
   return (
     <FilterContainer padding={2} pt={5}>
-      <CloseButton saving={0} onClick={() => setShowFiter(false)} data-testid='close-modal-button'>
+      <CloseButton saving={0} onClick={() => setShowFiter(false)} data-testid="close-modal-button">
         <IoMdClose />
       </CloseButton>
       <Box display={"flex"} flexDirection={"column"}>

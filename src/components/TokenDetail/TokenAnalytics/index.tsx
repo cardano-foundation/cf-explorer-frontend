@@ -52,21 +52,21 @@ const AddressAnalytics: React.FC = () => {
     data?.map((i) => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
   const minBalance = data
     ? data.reduce(function (prev, current) {
-      return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
-    })
+        return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
+      })
     : { date: "", value: 0 };
   const maxBalance = data
     ? data.reduce(function (prev, current) {
-      return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
-    })
+        return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
+      })
     : { date: "", value: 0 };
 
   return (
     <Box pt={isMobile ? 0 : "20px"}>
-      <Card title='Analytics' py={4}>
-        <Wrapper container columns={24} spacing='35px'>
+      <Card title="Analytics" py={4}>
+        <Wrapper container columns={24} spacing="35px">
           <Grid item xs={24} lg={18}>
-            <Grid spacing={2} container alignItems='center' justifyContent={"space-between"}>
+            <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
               <Grid item xs={4} sm={4}>
                 <ButtonTitle>Volume</ButtonTitle>
               </Grid>
@@ -82,7 +82,7 @@ const AddressAnalytics: React.FC = () => {
             </Grid>
             <ChartBox>
               {loading ? (
-                <SkeletonUI variant='rectangular' style={{ height: "375px", display: "block" }} />
+                <SkeletonUI variant="rectangular" style={{ height: "375px", display: "block" }} />
               ) : (
                 <Box position={"relative"}>
                   <HighchartsReact
@@ -154,12 +154,12 @@ const AddressAnalytics: React.FC = () => {
                 <BoxInfoItemRight display={"flex"} justifyContent={"center"}>
                   <Box>
                     <Box minHeight={"90px"}>
-                      <img src={HighestIcon} alt='heighest icon' />
+                      <img src={HighestIcon} alt="heighest icon" />
                       <Title>Highest Volume</Title>
                     </Box>
                     <CustomTooltip title={numberWithCommas(maxBalance.value || 0)}>
                       <ValueInfo>
-                        {loading ? <SkeletonUI variant='rectangular' /> : numberWithCommas(maxBalance.value || 0)}
+                        {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(maxBalance.value || 0)}
                       </ValueInfo>
                     </CustomTooltip>
                   </Box>
@@ -169,12 +169,12 @@ const AddressAnalytics: React.FC = () => {
                 <BoxInfoItem display={"flex"} justifyContent={"center"}>
                   <Box>
                     <Box minHeight={"90px"}>
-                      <img src={LowestIcon} alt='lowest icon' />
+                      <img src={LowestIcon} alt="lowest icon" />
                       <Title>Lowest Volume</Title>
                     </Box>
                     <CustomTooltip title={numberWithCommas(minBalance.value || 0)}>
                       <ValueInfo>
-                        {loading ? <SkeletonUI variant='rectangular' /> : numberWithCommas(minBalance.value || 0)}
+                        {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(minBalance.value || 0)}
                       </ValueInfo>
                     </CustomTooltip>
                   </Box>

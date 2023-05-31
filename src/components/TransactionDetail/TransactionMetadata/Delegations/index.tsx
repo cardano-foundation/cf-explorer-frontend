@@ -20,9 +20,9 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
       {data?.map((item) => (
         <StyledItem key={item.address}>
           <ItemContainer>
-            <Box display='flex' alignItems='center'>
+            <Box display="flex" alignItems="center">
               <Box width={50}>
-                <StatusIcon src={sendImg} alt='wallet icon' />
+                <StatusIcon src={sendImg} alt="wallet icon" />
               </Box>
               {isTablet ? <span>From: </span> : null}
             </Box>

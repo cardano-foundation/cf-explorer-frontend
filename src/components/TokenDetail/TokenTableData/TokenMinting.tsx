@@ -3,7 +3,13 @@ import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
-import { formatAmount, formatDateTimeLocal, getPageInfo, getShortHash, numberWithCommas } from "src/commons/utils/helper";
+import {
+  formatAmount,
+  formatDateTimeLocal,
+  getPageInfo,
+  getShortHash,
+  numberWithCommas
+} from "src/commons/utils/helper";
 import { API } from "src/commons/utils/api";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";

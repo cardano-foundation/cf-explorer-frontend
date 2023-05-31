@@ -18,7 +18,7 @@ export const Header = styled(Box)`
   align-items: center;
   margin-bottom: 0.5rem;
   gap: 10px;
-  ${props => props.theme.breakpoints.down("sm")} {
+  ${(props) => props.theme.breakpoints.down("sm")} {
     margin-bottom: 1.5rem;
   }
 `;
@@ -45,7 +45,7 @@ export const Actions = styled(Box)(() => ({
   justifyContent: "flex-end",
   alignItems: "center",
   gap: 15,
-  position: "relative",
+  position: "relative"
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
@@ -56,8 +56,8 @@ export const TimeDuration = styled("small")(({ theme }) => ({
     top: "100%",
     right: 0,
     paddingTop: 10,
-    whiteSpace: "nowrap",
-  },
+    whiteSpace: "nowrap"
+  }
 }));
 
 export const DelegateTable = styled(Table)`

@@ -46,15 +46,15 @@ const ViewButton: React.FC<TAction> = ({ onClick }) => {
         if (!isTablet) return;
         setIsOpen(true);
       }}
-      placement='top'
-      title='View private note'
+      placement="top"
+      title="View private note"
     >
       <ActionButton
         onClick={() => {
           if (isOpen && isTablet) return;
           onClick();
         }}
-        typeButton='View'
+        typeButton="View"
       >
         <IconButton>
           <Expand />
@@ -75,15 +75,15 @@ const RemoveButton: React.FC<TAction> = ({ onClick }) => {
         if (!isTablet) return;
         setIsOpen(true);
       }}
-      placement='top'
-      title='Remove note'
+      placement="top"
+      title="Remove note"
     >
       <ActionButton
         onClick={() => {
           if (isOpen && isTablet) return;
           onClick();
         }}
-        typeButton='Remove'
+        typeButton="Remove"
       >
         <IconButton>
           <Warning />
@@ -172,7 +172,7 @@ const PrivateNotes = () => {
       key: "action",
       minWidth: "40px",
       render: (item) => (
-        <Box display='flex' justifyContent={"flex-end"}>
+        <Box display="flex" justifyContent={"flex-end"}>
           <ViewButton onClick={() => handleClickViewDetail(item)} />
           <RemoveButton onClick={() => setSelected(item)} />
         </Box>
@@ -193,10 +193,10 @@ const PrivateNotes = () => {
           </Box>
         </AddButton>
       </Header>
-      <Box overflow={"auto"} height='100%'>
+      <Box overflow={"auto"} height="100%">
         <StyledTable
           style={{ overflow: "auto" }}
-          emptyClassName='empty-content-table'
+          emptyClassName="empty-content-table"
           columns={columns}
           data={data ?? []}
           pagination={{
@@ -228,7 +228,7 @@ const PrivateNotes = () => {
           Confirmation Required
         </Box>
         <ButtonClose disabled={loadingDelete} onClick={() => setSelected(null)}>
-          <img src={CloseIcon} alt='icon close' />
+          <img src={CloseIcon} alt="icon close" />
         </ButtonClose>
         <Box>
           <DialogContentText color={(theme) => theme.palette.text.secondary} fontSize={"1.125rem"}>
@@ -243,7 +243,7 @@ const PrivateNotes = () => {
             <DeleteButton
               loading={loadingDelete}
               onClick={() => selected && handleClickRemoveNote(selected)}
-              variant='contained'
+              variant="contained"
             >
               Continue
             </DeleteButton>

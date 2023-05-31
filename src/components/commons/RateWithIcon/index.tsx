@@ -46,7 +46,7 @@ const RateWithIcon = ({ value, size, multiple = 1 }: Props) => {
   return (
     <CustomTooltip title={`${sign > 0 ? "+" : ""}${multiplied.toNumber()}`}>
       <PriceRate size={size}>
-        <ImageRate sign={sign} src={sign > 0 ? UpGreenIcon : DownRedIcon} alt='rate' />
+        <ImageRate sign={sign} src={sign > 0 ? UpGreenIcon : DownRedIcon} alt="rate" />
         <PriceValue sign={sign}>
           {sign > 0 ? "+" : ""}
           {multiplied.toFixed(2, BigNumber.ROUND_DOWN).toString().replace(".", ",")} %

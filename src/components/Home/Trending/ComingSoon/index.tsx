@@ -26,9 +26,9 @@ const Title = styled("h3")`
 
 const ComingSoon: React.FC = () => {
   return (
-    <CustomTooltip title='Exciting things incoming'>
+    <CustomTooltip title="Exciting things incoming">
       <ComingSoonContainer>
-        <Image src={ComingSoonIcon} alt='News' />
+        <Image src={ComingSoonIcon} alt="News" />
         <Title>News</Title>
       </ComingSoonContainer>
     </CustomTooltip>

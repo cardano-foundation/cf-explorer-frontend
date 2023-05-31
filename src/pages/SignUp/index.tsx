@@ -288,10 +288,10 @@ export default function SignUp() {
                   }
                   fullWidth
                   value={formData.email.value}
-                  name='email'
+                  name="email"
                   onChange={handleChange}
                   error={Boolean(formData.email.error && formData.email.touched)}
-                  placeholder='A confirmation code will be sent to this address'
+                  placeholder="A confirmation code will be sent to this address"
                 />
                 {formData.email.error && formData.email.touched ? (
                   <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
@@ -307,10 +307,10 @@ export default function SignUp() {
                   }
                   fullWidth
                   value={formData.confirmEmail.value}
-                  name='confirmEmail'
+                  name="confirmEmail"
                   onChange={handleChange}
                   error={Boolean(formData.confirmEmail.error && formData.confirmEmail.touched)}
-                  placeholder='Re-enter Your email address'
+                  placeholder="Re-enter Your email address"
                 />
                 {formData.confirmEmail.error && formData.confirmEmail.touched ? (
                   <FormHelperTextCustom error>{formData.confirmEmail.error}</FormHelperTextCustom>
@@ -327,16 +327,16 @@ export default function SignUp() {
                   type={showPassword ? "text" : "password"}
                   fullWidth
                   endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton aria-label='toggle password visibility' onClick={handleTogglePassword}>
+                    <InputAdornment position="end">
+                      <IconButton aria-label="toggle password visibility" onClick={handleTogglePassword}>
                         {showPassword ? <ShowIcon /> : <HideIcon />}
                       </IconButton>
                     </InputAdornment>
                   }
-                  name='password'
+                  name="password"
                   onChange={handleChange}
                   error={Boolean(formData.password.error && formData.password.touched)}
-                  placeholder='Password'
+                  placeholder="Password"
                 />
                 {formData.password.error && formData.password.touched ? (
                   <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom>
@@ -353,16 +353,16 @@ export default function SignUp() {
                   fullWidth
                   type={showConfirmPassword ? "text" : "password"}
                   endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton aria-label='toggle password visibility' onClick={handleToggleConfirmPassword}>
+                    <InputAdornment position="end">
+                      <IconButton aria-label="toggle password visibility" onClick={handleToggleConfirmPassword}>
                         {showConfirmPassword ? <ShowIcon /> : <HideIcon />}
                       </IconButton>
                     </InputAdornment>
                   }
-                  name='confirmPassword'
+                  name="confirmPassword"
                   onChange={handleChange}
                   error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
-                  placeholder='Confirm Password'
+                  placeholder="Confirm Password"
                 />
                 {formData.confirmPassword.error && formData.confirmPassword.touched ? (
                   <FormHelperTextCustom error>{formData.confirmPassword.error}</FormHelperTextCustom>
@@ -380,7 +380,7 @@ export default function SignUp() {
                           opacity: "1"
                         }
                       }}
-                      size='medium'
+                      size="medium"
                     />
                   }
                   label={
@@ -390,7 +390,7 @@ export default function SignUp() {
                   }
                 />
               </Box>
-              <WrapButton variant='contained' fullWidth onClick={handleSubmit} disabled={!enableButton}>
+              <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>
                 Create an Account
               </WrapButton>
             </WrapForm>
@@ -412,7 +412,7 @@ export default function SignUp() {
                   </LabelInfo>
                 </Box>
               </Box>
-              <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.SIGN_IN)}>
+              <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
                 Sign In
               </WrapButton>
             </FormGroup>

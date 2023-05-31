@@ -181,23 +181,23 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     <Form onSubmit={handleSearch} home={+home} sidebar={+sidebar}>
       <Backdrop sx={{ backgroundColor: "unset" }} open={showOption} onClick={() => setShowOption(false)} />
       <StyledSelect
-        data-testid='all-filters-dropdown'
+        data-testid="all-filters-dropdown"
         onChange={handleChangeFilter}
         value={filter}
         IconComponent={BiChevronDown}
         home={home ? 1 : 0}
       >
         {options.map(({ value, label }) => (
-          <SelectOption data-testid='filter-options' key={value} value={value} home={home ? 1 : 0}>
+          <SelectOption data-testid="filter-options" key={value} value={value} home={home ? 1 : 0}>
             {label}
           </SelectOption>
         ))}
       </StyledSelect>
       <StyledInput
-        data-testid='search-bar'
+        data-testid="search-bar"
         home={home ? 1 : 0}
         required
-        type='search'
+        type="search"
         value={search}
         spellCheck={false}
         placeholder={
@@ -221,8 +221,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
       <OptionsSearch error={error} home={home} show={showOption} value={search} handleSearch={handleSearch} />
 
-      <SubmitButton type='submit' home={home ? 1 : 0} disabled={!search}>
-        <Image src={HeaderSearchIcon} alt='search' home={home ? 1 : 0} />
+      <SubmitButton type="submit" home={home ? 1 : 0} disabled={!search}>
+        <Image src={HeaderSearchIcon} alt="search" home={home ? 1 : 0} />
       </SubmitButton>
     </Form>
   );

@@ -33,16 +33,16 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   return (
     <Layout sidebar={+sidebar}>
       <BackDrop isShow={+sidebar} onClick={handleToggle} />
-      <Drawer variant='permanent' open={sidebar} ModalProps={{ keepMounted: true }}>
-        <CustomTooltip placement='right' title={sidebar ? `Collapse` : `Expand`}>
-          <ToggleMenu onClick={handleToggle} type='button'>
+      <Drawer variant="permanent" open={sidebar} ModalProps={{ keepMounted: true }}>
+        <CustomTooltip placement="right" title={sidebar ? `Collapse` : `Expand`}>
+          <ToggleMenu onClick={handleToggle} type="button">
             <ArrowCollapse> {sidebar ? <FaArrowLeft /> : <FaArrowRight />}</ArrowCollapse>
           </ToggleMenu>
         </CustomTooltip>
         <Sidebar />
       </Drawer>
       <MainContainer>
-        <Main id='main' component='main' open={onDetailView ? 1 : 0} sidebar={sidebar ? 1 : 0}>
+        <Main id="main" component="main" open={onDetailView ? 1 : 0} sidebar={sidebar ? 1 : 0}>
           <Header />
           {children}
         </Main>

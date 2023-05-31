@@ -24,29 +24,29 @@ const OverviewStaking: React.FC<Props> = ({ item, ...props }) => {
   const { hash, amount, time, onClick } = props;
 
   return (
-    <Card onClick={() => onClick(item)} data-testid='overview-staking'>
+    <Card onClick={() => onClick(item)} data-testid="overview-staking">
       <Box display={"flex"}>
         <OverviewIcon>
-          <CustomIcon icon={HashtagIcon} width={17} fill='currentColor' color={(theme) => theme.palette.primary.main} />
+          <CustomIcon icon={HashtagIcon} width={17} fill="currentColor" color={(theme) => theme.palette.primary.main} />
         </OverviewIcon>
         <Box marginLeft={"10px"}>
-          <OverviewTitle data-testid='overview-staking-hash'>{getShortHash(hash)}</OverviewTitle>
+          <OverviewTitle data-testid="overview-staking-hash">{getShortHash(hash)}</OverviewTitle>
         </Box>
       </Box>
       <Box display={"flex"}>
         <OverviewIcon>
-          <CustomIcon icon={AIconGreen} height={17} fill='currentColor' color={(theme) => theme.palette.primary.main} />
+          <CustomIcon icon={AIconGreen} height={17} fill="currentColor" color={(theme) => theme.palette.primary.main} />
         </OverviewIcon>
         <Box marginLeft={"10px"}>
-          <OverviewTitle data-testid='overview-staking-amount'>{formatADAFull(amount)}</OverviewTitle>
+          <OverviewTitle data-testid="overview-staking-amount">{formatADAFull(amount)}</OverviewTitle>
         </Box>
       </Box>
       <Box display={"flex"}>
         <OverviewIcon>
-          <CustomIcon icon={TimerIcon} width={17} fill='currentColor' color={(theme) => theme.palette.primary.main} />
+          <CustomIcon icon={TimerIcon} width={17} fill="currentColor" color={(theme) => theme.palette.primary.main} />
         </OverviewIcon>
         <Box marginLeft={"10px"}>
-          <OverviewTitle data-testid='overview-staking-time'>{formatDateTimeLocal(time)}</OverviewTitle>
+          <OverviewTitle data-testid="overview-staking-time">{formatDateTimeLocal(time)}</OverviewTitle>
         </Box>
       </Box>
     </Card>

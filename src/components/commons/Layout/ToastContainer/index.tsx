@@ -45,7 +45,7 @@ const ToastContainer: React.FC = () => {
                 warning: <MdOutlineWarningAmber color={theme.palette.info.dark} />
               }}
               severity={severity}
-              variant='standard'
+              variant="standard"
               borderColor={color}
               background={background}
               onClose={() => removeToast(id)}

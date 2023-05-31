@@ -27,7 +27,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
   const rewardAccounts = isArray(stakeKeys) ? stakeKeys : [stakeKeys];
   return (
     <PolygonShapeSPO {...props} ref={boxRef}>
-      <SPOImage src={SPOHolderIconUrl} alt='SPO image' />
+      <SPOImage src={SPOHolderIconUrl} alt="SPO image" />
       <SPOTitle>SPO</SPOTitle>
       <Box>
         <CustomTooltip title={poolName}>
@@ -48,14 +48,14 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
           title={
             <Box>
               <Box display={"flex"} alignItems={"center"}>
-                <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
                   Pool ID:
                 </Box>
                 <PoolNamePopup to={details.delegation(poolView)}>{getShortWallet(poolView || "")}</PoolNamePopup>
                 <CopyButton text={poolView} />
               </Box>
               <Box display={"flex"} alignItems={"center"}>
-                <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
                   Pool name:
                 </Box>
                 <PoolNamePopup to={details.delegation(poolView)}>{poolName}</PoolNamePopup>
@@ -91,7 +91,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
               <StakeKeyItemList>
                 {rewardAccounts.map((item) => (
                   <StakeKeyItem key={item}>
-                    <SPOKey fill='#108AEF' />
+                    <SPOKey fill="#108AEF" />
                     <PoolNamePopup to={details.stake(item)}>{getShortWallet(item)}</PoolNamePopup>
                     <CopyButton text={item} />
                   </StakeKeyItem>
@@ -101,7 +101,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
           }
         >
           <ButtonSPO ref={SPOKeyRef} component={IconButton}>
-            <SPOKey fill='#438F68' />
+            <SPOKey fill="#438F68" />
           </ButtonSPO>
         </CustomTooltip>
       </Box>
@@ -161,5 +161,5 @@ export const PoolNamePopup = styled(Link)(({ theme }) => ({
   overflow: "hidden",
   textOverflow: "ellipsis",
   flex: 1,
-  textAlign: "left",
+  textAlign: "left"
 }));

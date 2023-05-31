@@ -59,7 +59,7 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
 
   return (
     <Box>
-      <StyledButton aria-describedby={id} type='button' onClick={handleClick}>
+      <StyledButton aria-describedby={id} type="button" onClick={handleClick}>
         <Span>{getShortWallet(stakeAddress || "")}</Span>
       </StyledButton>
       <WrapContent

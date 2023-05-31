@@ -66,10 +66,10 @@ const WithdrawalHistoryTab = () => {
         <Box>
           <AdaValue limit={5} value={r.value - r.fee} />
           <TableSubTitle>
-            <Box display='flex' mt={1} alignItems='center' lineHeight='1'>
-              <AdaValue limit={1} color={theme.palette.grey[400]} value={r.value} gap='3px' fontSize='12px' />
-              <Box mx='3px'>/</Box>
-              <AdaValue color={theme.palette.grey[400]} value={r.fee} gap='3px' fontSize='12px' />
+            <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+              <AdaValue limit={1} color={theme.palette.grey[400]} value={r.value} gap="3px" fontSize="12px" />
+              <Box mx="3px">/</Box>
+              <AdaValue color={theme.palette.grey[400]} value={r.fee} gap="3px" fontSize="12px" />
             </Box>
           </TableSubTitle>
         </Box>

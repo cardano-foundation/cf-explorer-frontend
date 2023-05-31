@@ -12,7 +12,7 @@ export interface IAdaHolderProps extends BoxProps {
 export const AdaHolder: React.FC<IAdaHolderProps> = forwardRef(({ children, value, ...props }, boxRef) => {
   return (
     <PolygonShape {...props} ref={boxRef}>
-      <AdaHolderImage src={AdaHolderIconUrl} alt='AdaHolderIconUrl' />
+      <AdaHolderImage src={AdaHolderIconUrl} alt="AdaHolderIconUrl" />
       ADA Holder
       {value && (
         <AdaHolderValue>

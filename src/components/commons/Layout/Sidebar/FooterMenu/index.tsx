@@ -98,10 +98,10 @@ const FooterMenu = ({ bottom = false }: TProps) => {
           <ListItem
             key={index}
             button
-            component='a'
+            component="a"
             href={href}
-            target='_blank'
-            rel='noreferrer'
+            target="_blank"
+            rel="noreferrer"
             title={title}
             sx={(theme) => itemStyle(theme, +sidebar, +bottom)}
           >
@@ -110,12 +110,12 @@ const FooterMenu = ({ bottom = false }: TProps) => {
         );
       })}
 
-      <CustomTooltip placement='right' title='Expand'>
+      <CustomTooltip placement="right" title="Expand">
         <ListItem
           button
-          component='a'
-          target='_blank'
-          rel='noreferrer'
+          component="a"
+          target="_blank"
+          rel="noreferrer"
           sx={(theme) => expandStyle(theme, +sidebar, +bottom)}
           onClick={() => setSidebar(true)}
         >

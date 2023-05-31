@@ -85,7 +85,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
               </Box>
             ) : (
               <Box width={50} display={transaction?.balance !== null ? "" : "none"}>
-                <Img src={type !== "up" ? receiveImg : sendImg} alt='send icon' />
+                <Img src={type !== "up" ? receiveImg : sendImg} alt="send icon" />
               </Box>
             )}
             <Box display={"grid"}>
@@ -120,7 +120,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       key: "fee",
       minWidth: 120,
       render: (r) => (
-        <Box display='inline-flex' alignItems='center'>
+        <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.fee)}</Box>
           <ADAicon />
         </Box>
@@ -133,7 +133,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       render: (transaction) => {
         const isUp = transaction?.balance >= 0;
         return (
-          <Box display='inline-flex' alignItems='center'>
+          <Box display="inline-flex" alignItems="center">
             {transaction?.balance ? (
               <>
                 <Box mr={1} color={isUp ? "success.main" : "error.main"}>
@@ -186,7 +186,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
           }}
           onClickRow={onClickRow}
           selected={selected}
-          className='transactions-table'
+          className="transactions-table"
         />
       </Card>
     </StyledContainer>

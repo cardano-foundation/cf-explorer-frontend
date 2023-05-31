@@ -180,7 +180,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       </Box>
 
       <StyledGroupButton
-        display='flex'
+        display="flex"
         flexDirection={isMobile ? "column" : "row"}
         justifyContent={isMobile ? "center" : "space-between"}
       >
@@ -207,7 +207,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
               setCurrentStep(currentStep + 1);
             }
           }}
-          variant='contained'
+          variant="contained"
         >
           <ButtonText fontSize={isMobile ? 14 : 16}>
             Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}

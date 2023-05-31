@@ -32,7 +32,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
 
   return (
     <Box>
-      <OverViewContainer display={"flex"} justifyContent='space-between' alignItems={"center"}>
+      <OverViewContainer display={"flex"} justifyContent="space-between" alignItems={"center"}>
         <Box>
           <BackButton onClick={history.goBack}>
             <HiArrowLongLeft />
@@ -43,7 +43,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
           </HeaderContainer>
           <SlotLeaderContainer>
             {loading ? (
-              <SlotLeaderSkeleton variant='rectangular' />
+              <SlotLeaderSkeleton variant="rectangular" />
             ) : (
               <Box>
                 <SlotLeader>
@@ -59,20 +59,20 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
         <CardItem
           color={(theme) => theme.palette.primary.main}
-          fontWeight='bold'
+          fontWeight="bold"
           fontFamily={'"Roboto", sans-serif'}
           fontSize={"1.125rem"}
-          component='button'
+          component="button"
           border={"none"}
-          bgcolor='transparent'
+          bgcolor="transparent"
           padding={0}
           onClick={() => setOpenModal(true)}
           style={{ cursor: "pointer" }}
         >
           <Box>
-            <img src={policyIcon} alt='' width={"40%"} />
+            <img src={policyIcon} alt="" width={"40%"} />
           </Box>
-          <Box display={"flex"} flexDirection='column' height={"100%"} justifyContent='space-between'>
+          <Box display={"flex"} flexDirection="column" height={"100%"} justifyContent="space-between">
             <Box>Policy Script</Box>
           </Box>
         </CardItem>

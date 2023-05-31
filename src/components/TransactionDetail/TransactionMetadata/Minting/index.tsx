@@ -24,7 +24,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
         return (
           <AssetName>
             {r?.metadata?.logo ? (
-              <Logo src={`data:/image/png;base64,${r?.metadata?.logo}`} alt='icon' />
+              <Logo src={`data:/image/png;base64,${r?.metadata?.logo}`} alt="icon" />
             ) : (
               <LogoEmpty />
             )}

@@ -71,7 +71,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, set
   if (txHash) return null;
 
   return (
-    <StyledContainer data-testid='recent-registration'>
+    <StyledContainer data-testid="recent-registration">
       <StyledList>
         <DescriptionText sx={{ mr: 0 }}>Registration List</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
@@ -97,7 +97,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, set
       <GridBox sidebar={+sidebar}>
         {loading &&
           [...new Array(12)].map((i, ii) => (
-            <Skeleton key={ii} style={{ borderRadius: 12 }} variant='rectangular' width={300} height={185} />
+            <Skeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
           ))}
 
         {!loading &&

@@ -25,7 +25,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
     {
       icon: timeIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Start time </TitleCard>
         </Box>
       ),
@@ -34,7 +34,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
     {
       icon: timeIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>End time </TitleCard>
         </Box>
       ),
@@ -43,7 +43,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
     {
       icon: outputIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Total Output</TitleCard>
         </Box>
       ),
@@ -56,7 +56,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
     {
       icon: cubeIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Block</TitleCard>
         </Box>
       ),
@@ -65,14 +65,14 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
     {
       icon: slotIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Slot</TitleCard>
         </Box>
       ),
       value: (
         <>
           {moment(formatDateTimeLocal(data?.endTime || "")).diff(moment()) > 0 ? slot : MAX_SLOT_EPOCH}/
-          <Box component={"span"} fontWeight='400'>
+          <Box component={"span"} fontWeight="400">
             {MAX_SLOT_EPOCH}
           </Box>
         </>
@@ -83,7 +83,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
     <DetailHeader
       loading={loading}
       listItem={listOverview}
-      type='EPOCH'
+      type="EPOCH"
       bookmarkData={`${data?.no || ""}`}
       title={"Epoch detail"}
       lastUpdated={lastUpdated}

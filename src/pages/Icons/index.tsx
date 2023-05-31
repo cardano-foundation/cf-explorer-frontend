@@ -175,7 +175,7 @@ const Item = ({ name, Icon }: { name: string; Icon: React.FunctionComponent<Reac
                   <IconBox
                     key={idx}
                     border={`1px solid ${Object.is(props, item) ? "blue" : "none"}`}
-                    title='Click to view code'
+                    title="Click to view code"
                     onClick={() => setProps(item)}
                   >
                     <CustomIcon icon={Icon} width={item.width} color={color} fill={fill} stroke={stroke} />

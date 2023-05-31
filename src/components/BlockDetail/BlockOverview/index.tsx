@@ -35,7 +35,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
     {
       icon: timeIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Created At </TitleCard>
         </Box>
       ),
@@ -44,7 +44,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
     {
       icon: txConfirm,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Confirmation</TitleCard>
         </Box>
       ),
@@ -58,7 +58,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
     {
       icon: exchageIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction</TitleCard>
         </Box>
       ),
@@ -67,7 +67,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
     {
       icon: exchageAltIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction Fees </TitleCard>
         </Box>
       ),
@@ -80,7 +80,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
     {
       icon: outputIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Total Output in ADA</TitleCard>
         </Box>
       ),
@@ -93,7 +93,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
     {
       icon: cubeIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Block</TitleCard>
         </Box>
       ),
@@ -102,14 +102,14 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
     {
       icon: slotIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Slot</TitleCard>
         </Box>
       ),
       value: (
         <>
           {data?.epochSlotNo || 0}
-          <Box component={"span"} fontWeight='400'>
+          <Box component={"span"} fontWeight="400">
             /{MAX_SLOT_EPOCH}
           </Box>
         </>
@@ -120,7 +120,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
     <DetailHeader
       loading={loading}
       listItem={listOverview}
-      type='BLOCK'
+      type="BLOCK"
       hash={data?.hash}
       bookmarkData={`${data?.blockNo || ""}`}
       title={"Block detail"}

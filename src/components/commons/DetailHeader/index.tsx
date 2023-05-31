@@ -116,7 +116,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
         )}
         <HeaderContainer>
           <HeaderTitle>
-            <HeaderTitleSkeleton variant='rectangular' />
+            <HeaderTitleSkeleton variant="rectangular" />
           </HeaderTitle>
         </HeaderContainer>
         <DetailsInfo container items_length={numberOfItems}>
@@ -132,10 +132,10 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                 key={index}
                 isDetailToken={isDetailToken}
               >
-                <IconSkeleton variant='circular' />
-                <DetailValueSkeleton variant='rectangular' />
+                <IconSkeleton variant="circular" />
+                <DetailValueSkeleton variant="rectangular" />
                 <ValueCard>
-                  <DetailLabelSkeleton variant='rectangular' />
+                  <DetailLabelSkeleton variant="rectangular" />
                 </ValueCard>
               </CardItem>
             );
@@ -148,7 +148,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
   return (
     <HeaderDetailContainer>
       <WrapHeader>
-        <Box width='100%'>
+        <Box width="100%">
           {isHideButtonBack === true ? null : (
             <BackButton onClick={history.goBack}>
               <HiArrowLongLeft />
@@ -180,7 +180,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           </TimeDuration>
         </Box>
         {epoch ? (
-          <EpochDetail class-name='123'>
+          <EpochDetail class-name="123">
             <ProgressCircle
               size={100}
               pathWidth={8}
@@ -218,8 +218,8 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               key={index}
               isDetailToken={isDetailToken}
             >
-              <Box position='relative' display={item.hideHeader ? "none" : ""}>
-                <img src={item.icon} alt='' height={20} />
+              <Box position="relative" display={item.hideHeader ? "none" : ""}>
+                <img src={item.icon} alt="" height={20} />
                 {item.allowSearch && keyItem && (
                   <AllowSearchButton
                     onClick={() => {

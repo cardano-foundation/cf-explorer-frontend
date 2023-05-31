@@ -170,7 +170,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
               setCurrentStep(currentStep + 1);
             }
           }}
-          variant='contained'
+          variant="contained"
         >
           <ButtonText>
             Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}

@@ -151,4 +151,3 @@ export const WrapSignUp = styled(Box)`
   line-height: 19px;
   color: ${({ theme }) => theme.palette.secondary.main};
 `;
-

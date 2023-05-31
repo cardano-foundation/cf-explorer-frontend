@@ -119,11 +119,11 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
   ];
 
   return (
-    <StyledModal {...props} title='Pool registration certificate'>
+    <StyledModal {...props} title="Pool registration certificate">
       <ViewMoreAddressModal
         showFullHash={true}
         maxWidth={680}
-        title='Pool Owner'
+        title="Pool Owner"
         open={!!selectedOwner.length}
         onClose={() => setSelectedOwner([])}
         items={selectedOwner}
@@ -136,12 +136,12 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
               {extra ? (
                 <Box>
                   <Label>{label}</Label>
-                  {data ? content : <Skeleton variant='rectangular' />}
+                  {data ? content : <Skeleton variant="rectangular" />}
                 </Box>
               ) : (
                 <>
                   <Label>{label}</Label>
-                  {data ? content : <Skeleton variant='rectangular' />}
+                  {data ? content : <Skeleton variant="rectangular" />}
                 </>
               )}
               {extra}

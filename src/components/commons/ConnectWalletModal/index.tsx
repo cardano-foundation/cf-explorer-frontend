@@ -62,7 +62,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
     return isModal ? (
       <StyledModal
         open
-        title='Connect to a wallet'
+        title="Connect to a wallet"
         handleCloseModal={
           walletConnecting
             ? () => {

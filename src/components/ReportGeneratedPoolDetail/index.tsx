@@ -95,7 +95,7 @@ const ReportGeneratedPoolDetailTabs = () => {
       }}
     >
       {reportDetail.loading ? (
-        <SkeletonUI variant='rectangular' style={{ height: "400px" }} />
+        <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
       ) : (
         <>
           <CustomTooltip title={`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")}>

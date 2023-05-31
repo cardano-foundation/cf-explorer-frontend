@@ -66,11 +66,11 @@ type DetailViewTransactionProps = {
 const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] = [
   { key: "summary", label: "Summary", icon: <DelegationHistoryMainIcon /> },
   { key: "utxOs", label: "UTXOs", icon: <CgArrowsExchange /> },
-  { key: "contracts", label: "Contracts", icon: <DetailLinkImage src={FileEditIcon} alt='contact' /> },
-  { key: "collaterals", label: "Collateral", icon: <DetailLinkImage src={USDIcon} alt='contact' /> },
-  { key: "notes", label: "Notes", icon: <DetailLinkImage src={NoteEditIcon} alt='contact' /> },
-  { key: "withdrawals", label: "Withdrawal", icon: <DetailLinkImage src={WithdrawlIcon} alt='contact' /> },
-  { key: "mints", label: "Minting", icon: <DetailLinkImage src={MintingIcon} alt='contact' /> }
+  { key: "contracts", label: "Contracts", icon: <DetailLinkImage src={FileEditIcon} alt="contact" /> },
+  { key: "collaterals", label: "Collateral", icon: <DetailLinkImage src={USDIcon} alt="contact" /> },
+  { key: "notes", label: "Notes", icon: <DetailLinkImage src={NoteEditIcon} alt="contact" /> },
+  { key: "withdrawals", label: "Withdrawal", icon: <DetailLinkImage src={WithdrawlIcon} alt="contact" /> },
+  { key: "mints", label: "Minting", icon: <DetailLinkImage src={MintingIcon} alt="contact" /> }
 ];
 
 const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
@@ -93,10 +93,10 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
 
   if (!data)
     return (
-      <ViewDetailDrawer anchor='right' open={!!hash} hideBackdrop variant='permanent'>
+      <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
         <ViewDetailHeader>
-          <ViewAllButton tooltipTitle='View Detail' to={details.transaction(hash)} />
-          <CustomTooltip title='Close'>
+          <ViewAllButton tooltipTitle="View Detail" to={details.transaction(hash)} />
+          <CustomTooltip title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -105,25 +105,25 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
         <ViewDetailContainer>
           <ViewDetailScroll>
             <HeaderContainer>
-              <ProgressSkeleton variant='circular' />
+              <ProgressSkeleton variant="circular" />
             </HeaderContainer>
             <ListItem>
               <Item>
-                <IconSkeleton variant='circular' />
+                <IconSkeleton variant="circular" />
                 <ItemName>
-                  <DetailValueSkeleton variant='rectangular' />
+                  <DetailValueSkeleton variant="rectangular" />
                 </ItemName>
                 <ItemValue>
-                  <DetailLabelSkeleton variant='rectangular' />
+                  <DetailLabelSkeleton variant="rectangular" />
                 </ItemValue>
               </Item>
               <Item>
-                <IconSkeleton variant='circular' />
+                <IconSkeleton variant="circular" />
                 <ItemName>
-                  <DetailValueSkeleton variant='rectangular' />
+                  <DetailValueSkeleton variant="rectangular" />
                 </ItemName>
                 <ItemValue>
-                  <DetailLabelSkeleton variant='rectangular' />
+                  <DetailLabelSkeleton variant="rectangular" />
                 </ItemValue>
               </Item>
             </ListItem>
@@ -132,10 +132,10 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
                 return (
                   <DetailsInfoItem key={index}>
                     <DetailLabel>
-                      <DetailValueSkeleton variant='rectangular' />
+                      <DetailValueSkeleton variant="rectangular" />
                     </DetailLabel>
                     <DetailValue>
-                      <DetailLabelSkeleton variant='rectangular' />
+                      <DetailLabelSkeleton variant="rectangular" />
                     </DetailValue>
                   </DetailsInfoItem>
                 );
@@ -146,10 +146,10 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
                 <Group key={index}>
                   <DetailsInfoItem>
                     <DetailLabel>
-                      <DetailValueSkeleton variant='rectangular' />
+                      <DetailValueSkeleton variant="rectangular" />
                     </DetailLabel>
                     <DetailValue>
-                      <DetailLabelSkeleton variant='rectangular' />
+                      <DetailLabelSkeleton variant="rectangular" />
                     </DetailValue>
                   </DetailsInfoItem>
                 </Group>
@@ -178,13 +178,13 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
   };
 
   return (
-    <ViewDetailDrawer anchor='right' open={!!hash} hideBackdrop variant='permanent'>
+    <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
       <ViewDetailHeader>
-        <ViewAllButton tooltipTitle='View Detail' to={details.transaction(hash)} />
+        <ViewAllButton tooltipTitle="View Detail" to={details.transaction(hash)} />
         <TimeDuration>
           <FormNowMessage time={lastUpdated} />
         </TimeDuration>
-        <CustomTooltip title='Close'>
+        <CustomTooltip title="Close">
           <CloseButton onClick={handleClose}>
             <CgClose />
           </CloseButton>
@@ -195,7 +195,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
           <HeaderContainer>
             <ProgressCircle
               size={150}
-              pathLineCap='butt'
+              pathLineCap="butt"
               pathWidth={4}
               trailWidth={2}
               percent={
@@ -211,12 +211,12 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
           </HeaderContainer>
           <ListItem>
             <Item>
-              <Icon src={CubeIcon} alt='socket' />
+              <Icon src={CubeIcon} alt="socket" />
               <ItemName>Block</ItemName>
               <ItemValue>{data.tx.blockNo}</ItemValue>
             </Item>
             <Item>
-              <Icon src={RocketIcon} alt='socket' />
+              <Icon src={RocketIcon} alt="socket" />
               <ItemName>slot</ItemName>
               <ItemValue>
                 {data.tx.epochSlot}
@@ -228,7 +228,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
             <DetailsInfoItem>
               <DetailLabel>Transaction hash</DetailLabel>
               <DetailValue>
-                <CustomTooltip title={hash} placement='top-start'>
+                <CustomTooltip title={hash} placement="top-start">
                   <StyledLink to={details.transaction(hash)}>{getShortHash(hash)}</StyledLink>
                 </CustomTooltip>
                 <CopyButton text={hash} />
@@ -238,7 +238,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               <DetailsInfoItem>
                 <DetailLabel>Input</DetailLabel>
                 <DetailValue>
-                  <CustomTooltip title={input} placement='top-start'>
+                  <CustomTooltip title={input} placement="top-start">
                     <StyledLink to={details.address(input)}>{getShortWallet(input)}</StyledLink>
                   </CustomTooltip>
                   <CopyButton text={input} />
@@ -249,7 +249,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               <DetailsInfoItem>
                 <DetailLabel>Output</DetailLabel>
                 <DetailValue>
-                  <CustomTooltip title={output} placement='top-start'>
+                  <CustomTooltip title={output} placement="top-start">
                     <StyledLink to={details.address(output)}>{getShortWallet(output)}</StyledLink>
                   </CustomTooltip>
                   <CopyButton text={output} />

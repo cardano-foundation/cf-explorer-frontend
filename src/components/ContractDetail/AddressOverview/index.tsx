@@ -78,13 +78,13 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
   ];
 
   return (
-    <Card title='Contract Detail'>
+    <Card title="Contract Detail">
       <GridContainer container spacing={2}>
         <GridItem item xs={12} md={6}>
-          <Box overflow='hidden' borderRadius={3} height={"100%"}>
+          <Box overflow="hidden" borderRadius={3} height={"100%"}>
             <CardAddress
               title={"Wallet address"}
-              type='left'
+              type="left"
               address={data?.address || ""}
               item={itemLeft}
               loading={loading}
@@ -92,10 +92,10 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
           </Box>
         </GridItem>
         <GridItem item xs={12} md={6}>
-          <Box overflow='hidden' borderRadius={3} height={"100%"}>
+          <Box overflow="hidden" borderRadius={3} height={"100%"}>
             <CardAddress
               title={"Controlled stake key"}
-              type='right'
+              type="right"
               address={dataStake?.stakeAddress || ""}
               item={itemRight}
               loading={loading || loadingStake}

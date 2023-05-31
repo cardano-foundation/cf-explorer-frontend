@@ -32,7 +32,7 @@ const ViewAllButton: React.FC<ViewAllButtonProps> = ({ tooltipTitle = "View All"
   return (
     <CustomTooltip placement={placement} title={tooltipTitle}>
       <StyledLink {...props}>
-        <ViewAllImage src={SeeMoreIcon} alt='view all' />
+        <ViewAllImage src={SeeMoreIcon} alt="view all" />
       </StyledLink>
     </CustomTooltip>
   );

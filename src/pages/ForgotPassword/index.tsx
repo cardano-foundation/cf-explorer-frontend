@@ -135,7 +135,11 @@ export default function ForgotPassword() {
         <FormGroup>
           {!success ? (
             <WrapForm>
-              {error ? <Box pt={"24px"}><AlertCustom severity='error'>Invalid email information.</AlertCustom></Box> : null}
+              {error ? (
+                <Box pt={"24px"}>
+                  <AlertCustom severity="error">Invalid email information.</AlertCustom>
+                </Box>
+              ) : null}
               <WrapInput>
                 <Label>Email</Label>
                 <InputCustom
@@ -144,13 +148,13 @@ export default function ForgotPassword() {
                       <EmailIcon />
                     </Box>
                   }
-                  name='email'
+                  name="email"
                   inputRef={emailInputRef}
                   value={formData.email.value}
                   onChange={handleChange}
                   onBlur={checkError}
                   fullWidth
-                  placeholder='Email'
+                  placeholder="Email"
                   error={Boolean(formData.email.error && formData.email.touched)}
                 />
                 {formData.email.error && formData.email.touched ? (
@@ -158,7 +162,7 @@ export default function ForgotPassword() {
                 ) : null}
               </WrapInput>
               <WrapButton
-                variant='contained'
+                variant="contained"
                 fullWidth
                 onClick={handleSubmit}
                 disabled={loading || !!formData.email.error}

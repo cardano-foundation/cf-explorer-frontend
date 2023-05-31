@@ -8,7 +8,7 @@ export function DeregistrationDelegatorProcessDescription({ open, handleCloseMod
   return (
     <StyledModal
       contentStyle={{ paddingRight: "5px" }}
-      title='Deregistration'
+      title="Deregistration"
       handleCloseModal={handleCloseModal}
       open={open}
     >

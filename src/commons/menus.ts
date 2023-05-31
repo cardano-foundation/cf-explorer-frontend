@@ -52,7 +52,7 @@ export const menus: Menu[] = [
     icon: StakingLifecycleIcon,
     children: [
       { title: "Dashboard", href: routers.STAKING_LIFECYCLE },
-      { title: "Timeline", href: routers.STAKING_LIFECYCLE_SEARCH },
+      { title: "Timeline", href: routers.STAKING_LIFECYCLE_SEARCH }
     ]
   },
   {

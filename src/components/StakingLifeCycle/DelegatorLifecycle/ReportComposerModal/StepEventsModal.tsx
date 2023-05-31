@@ -127,7 +127,7 @@ const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
         <ModalTitle sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</ModalTitle>
         <SubText>{isPoolReport ? "Pool Report by event" : "Staking lifecycle events"}</SubText>
         <TextRequired>Select as required</TextRequired>
-        <Box display={"flex"} flexWrap={"wrap"} gap='10px' marginTop='20px' marginBottom='40px'>
+        <Box display={"flex"} flexWrap={"wrap"} gap="10px" marginTop="20px" marginBottom="40px">
           {events.map(({ label, value }) => {
             return (
               <ButtonEvent

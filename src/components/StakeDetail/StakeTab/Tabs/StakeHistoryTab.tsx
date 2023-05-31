@@ -41,7 +41,7 @@ const StakeHistoryTab = ({ isMobile = false }) => {
       render: (r) => (
         <Box>
           <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
-          <Box marginTop='10px'>
+          <Box marginTop="10px">
             <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
           </Box>
         </Box>

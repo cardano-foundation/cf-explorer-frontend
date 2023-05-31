@@ -69,7 +69,7 @@ const DelegationTab = () => {
   ];
   return (
     <>
-      <Box display='flex' alignItems='center' justifyContent='space-between' mt={4}>
+      <Box display="flex" alignItems="center" justifyContent="space-between" mt={4}>
         <Box />
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>

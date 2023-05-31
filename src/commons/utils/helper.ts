@@ -87,8 +87,8 @@ export const formatADAFull = (value?: string | number, limit = 6): string => {
 
 export const formatNumberDivByDecimals = (value?: string | number | BigNumber, decimals = 6) => {
   if (!value) return `0`;
-  return numberWithCommas(new BigNumber(value).div(new BigNumber(10).exponentiatedBy(decimals)).toString())
-}
+  return numberWithCommas(new BigNumber(value).div(new BigNumber(10).exponentiatedBy(decimals)).toString());
+};
 
 export const exchangeADAToUSD = (value: number | string, rate: number, isFull?: boolean) => {
   if (!value) return 0;

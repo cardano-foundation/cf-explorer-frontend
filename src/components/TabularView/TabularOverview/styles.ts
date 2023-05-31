@@ -88,7 +88,7 @@ export const CardValue = styled(Typography)(({ theme }) => ({
 export const NoDelegatedStakePool = styled(Box)(({ theme }) => ({
   color: theme.palette.red[700],
   fontWeight: 500,
-  fontSize: 16,
+  fontSize: 16
 }));
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({

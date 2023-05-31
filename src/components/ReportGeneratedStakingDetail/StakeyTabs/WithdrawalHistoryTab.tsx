@@ -43,10 +43,10 @@ const columns: Column<WithdrawItem>[] = [
       <Box>
         <AdaValue value={r.value + r.fee} />
         <TableSubTitle>
-          <Box display='flex' mt={1} alignItems='center' lineHeight='1'>
-            <AdaValue value={r.value} gap='3px' fontSize='12px' />
-            <Box mx='3px'>/</Box>
-            <AdaValue value={r.fee} gap='3px' fontSize='12px' />
+          <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+            <AdaValue value={r.value} gap="3px" fontSize="12px" />
+            <Box mx="3px">/</Box>
+            <AdaValue value={r.fee} gap="3px" fontSize="12px" />
           </Box>
         </TableSubTitle>
       </Box>
@@ -76,7 +76,7 @@ const WithdrawalHistoryTab = () => {
 
   return (
     <>
-      <Box display='flex' alignItems='center' justifyContent='space-between' mt={3}>
+      <Box display="flex" alignItems="center" justifyContent="space-between" mt={3}>
         <Box />
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>

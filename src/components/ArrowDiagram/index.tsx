@@ -107,12 +107,12 @@ const ArrowDiagram: React.FC<ArrowDiagramProps> = ({
   return (
     <>
       <defs>
-        <marker id='arrowhead' markerWidth='10' markerHeight='8' refX='6' refY='4' orient='auto'>
-          <svg width='10' height='8' viewBox='0 0 12 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="6" refY="4" orient="auto">
+          <svg width="10" height="8" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
-              opacity='0.15'
-              d='M10.8839 10.8839C11.372 10.3957 11.372 9.60427 10.8839 9.11612L2.92893 1.16117C2.44078 0.67301 1.64932 0.67301 1.16117 1.16117C0.67301 1.64932 0.67301 2.44078 1.16117 2.92893L8.23223 10L1.16117 17.0711C0.67301 17.5592 0.67301 18.3507 1.16117 18.8388C1.64932 19.327 2.44078 19.327 2.92893 18.8388L10.8839 10.8839ZM9 11.25H10V8.75H9V11.25Z'
-              fill='black'
+              opacity="0.15"
+              d="M10.8839 10.8839C11.372 10.3957 11.372 9.60427 10.8839 9.11612L2.92893 1.16117C2.44078 0.67301 1.64932 0.67301 1.16117 1.16117C0.67301 1.64932 0.67301 2.44078 1.16117 2.92893L8.23223 10L1.16117 17.0711C0.67301 17.5592 0.67301 18.3507 1.16117 18.8388C1.64932 19.327 2.44078 19.327 2.92893 18.8388L10.8839 10.8839ZM9 11.25H10V8.75H9V11.25Z"
+              fill="black"
             />
           </svg>
         </marker>
@@ -125,9 +125,9 @@ const ArrowDiagram: React.FC<ArrowDiagramProps> = ({
         y1={coords.from?.y}
         x2={props.x}
         y2={props.y}
-        stroke='#00000015'
-        strokeWidth='3'
-        markerEnd='url(#arrowhead)'
+        stroke="#00000015"
+        strokeWidth="3"
+        markerEnd="url(#arrowhead)"
       />
     </>
   );

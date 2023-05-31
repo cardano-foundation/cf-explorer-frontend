@@ -85,7 +85,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       key: "fee",
       minWidth: 120,
       render: (r) => (
-        <Box display='inline-flex' alignItems='center'>
+        <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.fee)}</Box>
           <ADAicon />
         </Box>
@@ -99,7 +99,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       minWidth: 120,
       key: "outSum",
       render: (r) => (
-        <Box display='inline-flex' alignItems='center'>
+        <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
           <ADAicon />
           {hash === r.hash && <SelectedIcon />}

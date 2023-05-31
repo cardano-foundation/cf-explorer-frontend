@@ -1,11 +1,7 @@
 import { Box, Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 
-
-import {
-  StyledContainer,
-  StyledList,
-  GridBox} from "./styles";
+import { StyledContainer, StyledList, GridBox } from "./styles";
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { API } from "../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../StackingFilter";
@@ -133,7 +129,7 @@ export const PoollUpdatesList = ({
       <GridBox sidebar={+sidebar}>
         {loading &&
           [...new Array(12)].map((i, ii) => (
-            <Skeleton key={ii} style={{ borderRadius: 12 }} variant='rectangular' width={300} height={185} />
+            <Skeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
           ))}
         {!loading &&
           data.map((item, ii) => {

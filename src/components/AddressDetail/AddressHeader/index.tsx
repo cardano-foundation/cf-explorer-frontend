@@ -37,7 +37,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: "ADA Balance",
       value: (
-        <Box display='flex' alignItems='center'>
+        <Box display="flex" alignItems="center">
           {formatADAFull(data?.balance)}
           <ADAicon pl={"8px"} />
         </Box>
@@ -89,12 +89,12 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     <Card>
       <WrapHeader>
         <BackButton onClick={history.goBack}>
-          <HiArrowLongLeft fontSize='16px' />
+          <HiArrowLongLeft fontSize="16px" />
           <BackText>Back</BackText>
         </BackButton>
         <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
           <TitleText>Address Detail</TitleText>
-          <BookmarkButton keyword={data?.address || ""} type='ADDRESS' />
+          <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
         </Box>
       </WrapHeader>
       <Grid container spacing={2}>
@@ -102,7 +102,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           <StyledBoxCard>
             <CardAddress
               title={"Wallet address"}
-              type='left'
+              type="left"
               address={data?.address || ""}
               item={itemLeft}
               loading={loading}
@@ -113,7 +113,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           <StyledBoxCard>
             <CardAddress
               title={"Stake address"}
-              type='right'
+              type="right"
               address={data?.stakeAddress || ""}
               item={itemRight}
               loading={loading || loadingStake}

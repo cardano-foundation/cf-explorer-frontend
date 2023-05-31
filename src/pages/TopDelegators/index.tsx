@@ -71,7 +71,7 @@ const TopDelegators = () => {
 
   return (
     <StyledContainer>
-      <Card title='Top delegators'>
+      <Card title="Top delegators">
         <Actions>
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />

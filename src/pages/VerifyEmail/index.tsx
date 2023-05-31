@@ -53,7 +53,7 @@ export default function VerifyEmail() {
             <WrapForm alignItems={"center"}>
               <SuccessIcon />
               <Title mb={3}>You has successfully verified the account</Title>
-              <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.SIGN_IN)}>
+              <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
                 Sign In
               </WrapButton>
             </WrapForm>
@@ -65,7 +65,7 @@ export default function VerifyEmail() {
                 <Label mb={1}>There's been an error in the verify process</Label>
                 <Label>This URL is either incorrect or has expired.</Label>
               </Box>
-              <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.HOME)}>
+              <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.HOME)}>
                 Go to Dashboard
               </WrapButton>
             </WrapForm>

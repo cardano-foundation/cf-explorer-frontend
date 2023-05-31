@@ -124,12 +124,12 @@ const StakekeySummary = () => {
       minWidth: "50px",
       render(data) {
         return data.status === "GENERATED" ? (
-          <Box width='100%' textAlign='center'>
+          <Box width="100%" textAlign="center">
             <Box
               component={IconButton}
               display={"block"}
               disabled={data.status !== "GENERATED"}
-              margin='auto'
+              margin="auto"
               textTransform={"capitalize"}
               onClick={() => downloadFn(data.id, data.reportName, "EXCEL")}
             >

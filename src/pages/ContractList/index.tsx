@@ -62,7 +62,7 @@ const Transactions: React.FC = () => {
       key: "balance",
       minWidth: 60,
       render: (r) => (
-        <Box display='inline-flex' alignItems='center'>
+        <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.balance)}</Box>
           <ADAicon />
         </Box>
@@ -77,7 +77,7 @@ const Transactions: React.FC = () => {
       minWidth: 120,
       render: (r) => (
         <CustomTooltip title={exchangeADAToUSD(r.balance, adaRate, true)}>
-          <Box display='inline-flex' alignItems='center'>
+          <Box display="inline-flex" alignItems="center">
             {exchangeADAToUSD(r.balance, adaRate, true)}
           </Box>
         </CustomTooltip>
@@ -88,7 +88,7 @@ const Transactions: React.FC = () => {
       minWidth: 120,
       key: "txCount",
       render: (r) => (
-        <Box display='flex' alignItems='center'>
+        <Box display="flex" alignItems="center">
           {numberWithCommas(r.txCount)}
         </Box>
       ),

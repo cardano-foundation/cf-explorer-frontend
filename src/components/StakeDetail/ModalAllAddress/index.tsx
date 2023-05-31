@@ -38,7 +38,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
       minWidth: 120,
       render: (r, idx) => (
         <StyledLink to={details.address(r.address)}>
-          <CustomTooltip title={r.address || ""} placement='top-start'>
+          <CustomTooltip title={r.address || ""} placement="top-start">
             <Box component={"span"}>{getShortWallet(r.address)}</Box>
           </CustomTooltip>
         </StyledLink>
@@ -57,22 +57,28 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
   })`;
 
   return (
-    <StyledModal open={props.open} handleCloseModal={props.onClose} title="Addresses list" width={"600px"} contentStyle={{ overflowY: "unset" }}>
+    <StyledModal
+      open={props.open}
+      handleCloseModal={props.onClose}
+      title="Addresses list"
+      width={"600px"}
+      contentStyle={{ overflowY: "unset" }}
+    >
       <WrapContent>
-          <Table
-            {...fetchData}
-            columns={columns}
-            maxHeight={maxHeightCalc}
-            total={{ title: "Total Epochs", count: fetchData.total }}
-            pagination={{
-              onChange(page, size) {
-                setPage(page);
-                setSize(size);
-              },
-              total: fetchData.total
-            }}
-            onClickRow={(_, r) => history.push(details.address(r.address || ""))}
-          />
+        <Table
+          {...fetchData}
+          columns={columns}
+          maxHeight={maxHeightCalc}
+          total={{ title: "Total Epochs", count: fetchData.total }}
+          pagination={{
+            onChange(page, size) {
+              setPage(page);
+              setSize(size);
+            },
+            total: fetchData.total
+          }}
+          onClickRow={(_, r) => history.push(details.address(r.address || ""))}
+        />
       </WrapContent>
     </StyledModal>
   );

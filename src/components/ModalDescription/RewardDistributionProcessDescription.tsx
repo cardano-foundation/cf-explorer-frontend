@@ -9,7 +9,7 @@ export function RewardDistributionProcessDescription({ open, handleCloseModal }:
   return (
     <StyledModal
       contentStyle={{ paddingRight: "5px" }}
-      title='Rewards distribution'
+      title="Rewards distribution"
       handleCloseModal={handleCloseModal}
       open={open}
     >

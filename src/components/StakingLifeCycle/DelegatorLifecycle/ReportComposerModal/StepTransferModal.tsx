@@ -113,12 +113,12 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
                         <FormControlLabel
                           value={RatioGroupValue.yes}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
-                          label='Yes'
+                          label="Yes"
                         />
                         <FormControlLabel
                           value={RatioGroupValue.no}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
-                          label='No'
+                          label="No"
                         />
                       </Stack>
                     </RadioGroup>

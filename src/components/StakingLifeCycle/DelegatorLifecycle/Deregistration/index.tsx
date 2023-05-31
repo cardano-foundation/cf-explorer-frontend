@@ -78,7 +78,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
 
         <InfoGroup>
           <Info>
-            <AddressIcon fill='#438F68' />
+            <AddressIcon fill="#438F68" />
             <CustomTooltip title={selected.txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(selected.txHash)}>{getShortHash(selected.txHash || "")}</StyledLink>
@@ -112,9 +112,9 @@ export const DeregistrationCertificateModal = ({
   const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
 
   return (
-    <StyledModal {...props} width={550} title='Deregistration certificate'>
+    <StyledModal {...props} width={550} title="Deregistration certificate">
       <Box>
-        {loading && <Skeleton variant='rectangular' width={500} height={90} />}
+        {loading && <Skeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
           <StyledContainerModal>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>

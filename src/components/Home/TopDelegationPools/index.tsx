@@ -54,7 +54,7 @@ const TopDelegationPools = () => {
       key: "fee",
       render: (r) => (
         <CustomTooltip title={`${r.feePercent * 100 || 0}% (${formatADAFull(r.feeAmount)} A)`}>
-          <Box display='inline-block'>
+          <Box display="inline-block">
             {formatPercent(r.feePercent || 0)} ({formatADAFull(r.feeAmount)} A)
           </Box>
         </CustomTooltip>
@@ -63,7 +63,7 @@ const TopDelegationPools = () => {
     {
       title: "Declared Pledge (A)",
       key: "declaredPledge",
-      render: (r) => <Box display='inline-block'>{formatADAFull(r.pledge)}</Box>
+      render: (r) => <Box display="inline-block">{formatADAFull(r.pledge)}</Box>
     },
     {
       title: "Saturation",
@@ -76,7 +76,7 @@ const TopDelegationPools = () => {
             </CustomTooltip>
             <CustomTooltip title={`${r.saturation}%`}>
               <StyledLinearProgress
-                variant='determinate'
+                variant="determinate"
                 value={r.saturation > 100 ? 100 : r.saturation}
                 style={{ width: 150 }}
               />

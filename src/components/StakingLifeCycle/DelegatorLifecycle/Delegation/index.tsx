@@ -92,20 +92,20 @@ const DelegationTimeline = ({ selected, showBackButton = false }: Props) => {
 
           <InfoGroup sidebar={+sidebar}>
             <Info>
-              <AddressIcon fill='#438F68' />
-              <Box component={Skeleton} variant='rectangular' width={145} height={18} />
+              <AddressIcon fill="#438F68" />
+              <Box component={Skeleton} variant="rectangular" width={145} height={18} />
             </Info>
             <Info>
               <ADAGreen />
-              <Box component={Skeleton} variant='rectangular' width={60} height={18} />
+              <Box component={Skeleton} variant="rectangular" width={60} height={18} />
             </Info>
             <Info>
               <TimeIcon />
-              <Box component={Skeleton} variant='rectangular' width={130} height={18} />
+              <Box component={Skeleton} variant="rectangular" width={130} height={18} />
             </Info>
           </InfoGroup>
         </StepInfo>
-        <Box component={Skeleton} width={"100%"} height={400} variant='rectangular' borderRadius={12} />
+        <Box component={Skeleton} width={"100%"} height={400} variant="rectangular" borderRadius={12} />
       </Box>
     );
   }
@@ -122,7 +122,7 @@ const DelegationTimeline = ({ selected, showBackButton = false }: Props) => {
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill='#438F68' />
+            <AddressIcon fill="#438F68" />
             <CustomTooltip title={data?.txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(data?.txHash)}>{getShortHash(data?.txHash || "")}</StyledLink>
@@ -168,14 +168,14 @@ export const DelegationCertificateModal = ({
   );
 
   return (
-    <StyledModal {...props} title='Delegation certificate'>
+    <StyledModal {...props} title="Delegation certificate">
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Pool ID
             </Box>
-            {loading && <Skeleton variant='rectangular' />}
+            {loading && <Skeleton variant="rectangular" />}
             {data && !loading && (
               <Box>
                 <CustomTooltip title={data?.poolId}>
@@ -191,7 +191,7 @@ export const DelegationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Pool Name
             </Box>
-            {loading && <Skeleton variant='rectangular' />}
+            {loading && <Skeleton variant="rectangular" />}
             {data && !loading && (
               <Box>
                 <Link to={details.delegation(data?.poolId || "")}>{data?.poolName || ""}</Link>{" "}
@@ -204,7 +204,7 @@ export const DelegationCertificateModal = ({
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
               Stake Key
             </Box>
-            {loading && <Skeleton variant='rectangular' />}
+            {loading && <Skeleton variant="rectangular" />}
             {data && !loading && (
               <Box>
                 <CustomTooltip title={stake}>

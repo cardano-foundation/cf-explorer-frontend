@@ -81,7 +81,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
               </Box>
             ) : (
               <Box width={50} display={transaction?.balance !== null ? "" : "none"}>
-                <Img src={type !== "up" ? receiveImg : sendImg} alt='send icon' />
+                <Img src={type !== "up" ? receiveImg : sendImg} alt="send icon" />
               </Box>
             )}
             <Box display={"grid"}>
@@ -112,7 +112,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       key: "fee",
       minWidth: 120,
       render: (transaction) => (
-        <Box display='inline-flex' alignItems='center'>
+        <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(transaction.fee)}</Box>
           <ADAicon />
         </Box>
@@ -125,7 +125,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       render: (transaction) => {
         const isUp = transaction.balance >= 0;
         return (
-          <Box display='inline-flex' alignItems='center'>
+          <Box display="inline-flex" alignItems="center">
             <Box mr={1} color={isUp ? "success.main" : "error.main"}>
               {!isUp ? `` : `+`}
               {formatADAFull(transaction.balance)}

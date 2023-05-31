@@ -199,7 +199,7 @@ export default function SignIn() {
             </CloseButton>
             {invalidInfomation ? (
               <Box pt={"24px"}>
-                <AlertCustom severity='error'>Incorrect Emaill Address or Password</AlertCustom>
+                <AlertCustom severity="error">Incorrect Emaill Address or Password</AlertCustom>
               </Box>
             ) : null}
             <WrapInput>
@@ -211,11 +211,11 @@ export default function SignIn() {
                     <UserCustomIcon />
                   </Box>
                 }
-                name='email'
+                name="email"
                 value={formData.email.value}
                 onChange={handleChange}
                 fullWidth
-                placeholder='Email Address'
+                placeholder="Email Address"
               />
               {formData.email.error && formData.email.touched ? (
                 <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
@@ -230,18 +230,18 @@ export default function SignIn() {
                   </Box>
                 }
                 fullWidth
-                name='password'
+                name="password"
                 value={formData.password.value}
                 endAdornment={
-                  <InputAdornment position='end'>
-                    <IconButton aria-label='toggle password visibility' onClick={handleTogglePassword}>
+                  <InputAdornment position="end">
+                    <IconButton aria-label="toggle password visibility" onClick={handleTogglePassword}>
                       {showPassword ? <ShowIcon /> : <HideIcon />}
                     </IconButton>
                   </InputAdornment>
                 }
                 onChange={handleChange}
                 type={showPassword ? "text" : "password"}
-                placeholder='Password'
+                placeholder="Password"
                 error={Boolean(formData.password.error && formData.password.touched)}
               />
               {formData.password.error && formData.password.touched ? (
@@ -258,7 +258,7 @@ export default function SignIn() {
                         opacity: "1"
                       }
                     }}
-                    size='medium'
+                    size="medium"
                     checked={rememberMe}
                     onChange={handleRememberMeChange}
                   />
@@ -273,7 +273,7 @@ export default function SignIn() {
                 Forgot your password?
               </ForgotPassword>
             </Box>
-            <WrapButton variant='contained' fullWidth onClick={handleSubmit} disabled={!enableButton}>
+            <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>
               Log in
             </WrapButton>
             <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
@@ -284,7 +284,7 @@ export default function SignIn() {
             <ConnectWallet
               onSuccess={handleLoginSuccess}
               customButton={({ handleClick }) => (
-                <WrapButtonConnectWallet variant='outlined' fullWidth onClick={handleClick}>
+                <WrapButtonConnectWallet variant="outlined" fullWidth onClick={handleClick}>
                   Connect Wallet
                 </WrapButtonConnectWallet>
               )}

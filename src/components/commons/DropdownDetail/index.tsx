@@ -23,7 +23,7 @@ const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, m
   return (
     <ListDropdownContainer minWidth={minWidth} ref={ref}>
       <ButtonClose onClick={close}>
-        <img src={CloseIcon} alt='icon close' />
+        <img src={CloseIcon} alt="icon close" />
       </ButtonClose>
       <DropdownTitle>{title}</DropdownTitle>
       <DropdownList>

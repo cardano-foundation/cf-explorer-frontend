@@ -130,7 +130,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
 
   if (isConnected && isSign) {
     return (
-      <StyledButton type='button'>
+      <StyledButton type="button">
         <Spin size={20} />
         <Span>Re-Connecting</Span>
       </StyledButton>
@@ -138,13 +138,13 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
   }
 
   return (
-    <Box position='relative'>
+    <Box position="relative">
       <Backdrop sx={{ backgroundColor: "unset" }} open={openModal} onClick={() => setOpenModal(false)} />
       {customButton ? (
         customButton({ handleClick })
       ) : (
-        <StyledButton type='button' onClick={handleClick}>
-          <Image src={WalletIcon} alt='wallet' />
+        <StyledButton type="button" onClick={handleClick}>
+          <Image src={WalletIcon} alt="wallet" />
           <Span>Connect Wallet</Span>
         </StyledButton>
       )}

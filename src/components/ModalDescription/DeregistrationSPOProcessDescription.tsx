@@ -7,7 +7,7 @@ interface Props {
 }
 export function DeregistrationSPOProcessDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title='Deregistration' handleCloseModal={handleCloseModal} open={open}>
+    <StyledModal title="Deregistration" handleCloseModal={handleCloseModal} open={open}>
       <WrapContent>
         <ContentContainer>
           <NormalDescription>

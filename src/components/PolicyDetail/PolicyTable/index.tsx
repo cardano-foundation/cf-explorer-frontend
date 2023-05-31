@@ -8,7 +8,13 @@ import { ReactComponent as AssetHolderIcon } from "../../../commons/resources/ic
 import { ReactComponent as TokenIcon } from "../../../commons/resources/icons/tokenIcon.svg";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
-import { formatDateTimeLocal, formatNumberDivByDecimals, getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import {
+  formatDateTimeLocal,
+  formatNumberDivByDecimals,
+  getPageInfo,
+  getShortWallet,
+  numberWithCommas
+} from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { LinkComponent, StyledBoxContainer, StyledTabList, TitleTab } from "./styles";
@@ -48,7 +54,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     render: (r) => {
       const decimalToken = r?.metadata?.decimals || 0;
       return <Box component={"span"}>{formatNumberDivByDecimals(r?.supply, decimalToken)}</Box>;
-    },
+    }
   },
   {
     title: "Total Transactions",
@@ -141,7 +147,7 @@ const PolicyTable = () => {
                 value={key}
                 label={
                   <Box>
-                    <Box display={"flex"} alignItems='center'>
+                    <Box display={"flex"} alignItems="center">
                       <Icon fill={activeTab === key ? theme.palette.primary.main : theme.palette.text.hint} />
                       <TitleTab pl={1} active={activeTab === key}>
                         {label}

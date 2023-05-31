@@ -77,7 +77,8 @@ export const TCol = styled("td")<{
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.text.primary};
   padding: 24px 20px;
-  background: ${(props) => props.selected ? props.theme.palette.background.neutral : props.theme.palette.common.white};
+  background: ${(props) =>
+    props.selected ? props.theme.palette.background.neutral : props.theme.palette.common.white};
 `;
 
 export const TBody = styled("tbody")`
@@ -109,7 +110,8 @@ export const TotalNumber = styled("span")`
   font-weight: 500;
 `;
 
-export const WrappModalScrollBar = styled(Box)(({theme}) => `
+export const WrappModalScrollBar = styled(Box)(
+  ({ theme }) => `
 overflow-y: scroll;
 max-height: 75vh;
 &::-webkit-scrollbar {
@@ -130,7 +132,8 @@ max-height: 75vh;
       background: ${theme.palette.grey[100]};
     }
   }
-`);
+`
+);
 
 export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number }>(
   ({ maxHeight, height, theme }) => `

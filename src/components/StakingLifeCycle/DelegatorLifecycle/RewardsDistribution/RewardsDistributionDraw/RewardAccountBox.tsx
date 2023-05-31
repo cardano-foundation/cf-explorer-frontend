@@ -20,7 +20,7 @@ const RewardAccountBox: React.FC<IRewardAccountBoxProps> = forwardRef(({ value, 
   return (
     <RewardAccountCcontainer ref={boxRef}>
       <RewardBoxImg src={RewardAccountIconUrl} />
-      <Typography fontWeight={700} fontSize={20} width='100% !important'>
+      <Typography fontWeight={700} fontSize={20} width="100% !important">
         Reward Account
       </Typography>
       <RewardValueLabel>

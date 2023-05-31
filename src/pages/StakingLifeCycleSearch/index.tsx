@@ -34,7 +34,7 @@ const StakingLifeCycleSearch = () => {
       <Box>
         <SearchContainer mx={"auto"}>
           <StyledInput
-            placeholder='Search Stake key, Pools'
+            placeholder="Search Stake key, Pools"
             onChange={(e) => {
               setValue(e.target.value);
               setError("");
@@ -47,7 +47,7 @@ const StakingLifeCycleSearch = () => {
             }}
           />
           <SubmitButton onClick={hanldeSearch}>
-            <Image src={HeaderSearchIcon} alt='Search' />
+            <Image src={HeaderSearchIcon} alt="Search" />
           </SubmitButton>
         </SearchContainer>
         <Box color={({ palette }) => palette.red[700]}>{error}</Box>

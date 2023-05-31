@@ -106,7 +106,7 @@ const ReportGeneratedStakingDetailTabs = () => {
       value={{ stakeKey: reportDetail.data?.stakeKey ?? "", reportName: reportDetail.data?.reportName ?? "" }}
     >
       {reportDetail.loading ? (
-        <SkeletonUI variant='rectangular' style={{ height: "400px" }} />
+        <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
       ) : (
         <>
           <CustomTooltip title={`${reportDetail.data?.reportName}`.replaceAll("-", " ")}>

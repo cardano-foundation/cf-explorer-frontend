@@ -33,7 +33,7 @@ const ContractDetail: React.FC = () => {
     <StyledContainer>
       <WrapHeader textAlign={"left"}>
         <BackButton onClick={history.goBack}>
-          <HiArrowLongLeft fontSize='16px' />
+          <HiArrowLongLeft fontSize="16px" />
           <BackText>Back</BackText>
         </BackButton>
       </WrapHeader>

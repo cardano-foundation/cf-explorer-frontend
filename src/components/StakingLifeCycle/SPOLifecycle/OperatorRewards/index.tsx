@@ -114,7 +114,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: ()
     }
   ];
   return (
-    <StyledModal width={600} {...props} title='Operator rewards received'>
+    <StyledModal width={600} {...props} title="Operator rewards received">
       <Box>
         <WrappModalScrollBar>
           <StyledTable

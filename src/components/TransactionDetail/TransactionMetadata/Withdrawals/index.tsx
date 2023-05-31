@@ -25,14 +25,14 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
       {data?.map((item) => (
         <StyledItem key={item.stakeAddressFrom}>
           <ItemContainer>
-            <Box display='flex' alignItems='center'>
+            <Box display="flex" alignItems="center">
               <Box width={50}>
-                <StatusIcon src={sendImg} alt='wallet icon' />
+                <StatusIcon src={sendImg} alt="wallet icon" />
               </Box>
               {isMobile ? <span>From: </span> : null}
             </Box>
-            <Box width='100%' sx={{ overflowX: "scroll", overflowY: "hidden" }}>
-              <Box flex={1} display='flex' justifyContent='space-between'>
+            <Box width="100%" sx={{ overflowX: "scroll", overflowY: "hidden" }}>
+              <Box flex={1} display="flex" justifyContent="space-between">
                 <Box minWidth={120}>
                   {!isMobile ? <span>From: </span> : null}
                   <CustomTooltip title={item.stakeAddressFrom}>
@@ -42,13 +42,13 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                   </CustomTooltip>
                   <CopyButton text={item.stakeAddressFrom || ""} />
                 </Box>
-                <Box minWidth='max-content' maxWidth='50%'>
+                <Box minWidth="max-content" maxWidth="50%">
                   <Amount>+ {formatADAFull(item?.amount)}</Amount>
                   <ADAicon ml={"3px"} />
                 </Box>
               </Box>
               <Box display={"flex"} flexDirection={isMobile ? "column" : "row"}>
-                <Box minWidth='1.75rem'>To:</Box>
+                <Box minWidth="1.75rem">To:</Box>
                 <Box flex={1}>
                   {item?.addressTo.map((address, idx) => {
                     return (

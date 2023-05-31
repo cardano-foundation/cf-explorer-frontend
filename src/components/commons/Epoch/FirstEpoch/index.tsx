@@ -35,10 +35,10 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
         </EpochNumber>
       ),
       value: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <ProgressCircle
             size={100}
-            pathLineCap='butt'
+            pathLineCap="butt"
             pathWidth={6}
             trailWidth={6}
             percent={Number(progress)}
@@ -53,7 +53,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
     {
       icon: cubeIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Block </TitleCard>
         </Box>
       ),
@@ -62,7 +62,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
     {
       icon: slotIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Slot</TitleCard>
         </Box>
       ),
@@ -78,7 +78,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
     {
       icon: timeIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Start Time</TitleCard>
         </Box>
       ),
@@ -87,7 +87,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
     {
       icon: timeIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> End Time</TitleCard>
         </Box>
       ),
@@ -96,7 +96,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
   ];
   return (
     <Container onClick={() => onClick(currentEpochData, currentEpochData, 0)}>
-      <DetailHeader isHideButtonBack={true} loading={false} listItem={listOverview} type='EPOCH' title={" "} />
+      <DetailHeader isHideButtonBack={true} loading={false} listItem={listOverview} type="EPOCH" title={" "} />
     </Container>
   );
 }

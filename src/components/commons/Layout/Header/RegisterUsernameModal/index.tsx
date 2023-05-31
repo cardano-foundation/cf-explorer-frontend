@@ -82,7 +82,7 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIs
         <Label required={true}>Username</Label>
         <br />
         <StyledInput
-          placeholder='Username'
+          placeholder="Username"
           value={value}
           style={{ width: "100%" }}
           onChange={(e) => {

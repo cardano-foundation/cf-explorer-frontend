@@ -7,7 +7,7 @@ interface Props {
 }
 export function RegistrationDelegatorProcessDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title='Registration' handleCloseModal={handleCloseModal} open={open}>
+    <StyledModal title="Registration" handleCloseModal={handleCloseModal} open={open}>
       <WrapContent>
         <ContentContainer>
           <NormalDescription>
