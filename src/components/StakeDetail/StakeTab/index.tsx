@@ -25,7 +25,7 @@ const StakeTab = () => {
   const { isMobile } = useScreen();
 
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
-    history.push({ pathname: details.stake(stakeId || "", tab) });
+    history.replace({ pathname: details.stake(stakeId || "", tab) });
   };
 
   const tabs: {

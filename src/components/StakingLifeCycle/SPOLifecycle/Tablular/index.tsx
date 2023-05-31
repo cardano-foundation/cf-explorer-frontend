@@ -63,7 +63,7 @@ const Tabular = ({ renderTabsSPO }: ITabular) => {
   const [listTabs, setListTabs] = useState<SPOTabItem[]>(tabs);
 
   const onChangeTab = (tab: any) => {
-    history.push(details.spo(poolId, "tabular", tab));
+    history.replace(details.spo(poolId, "tabular", tab));
   };
 
   useEffect(() => {

@@ -153,7 +153,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
                 active={+(currentStep === idx)}
                 onClick={() => {
                   setCurrentStep(idx);
-                  history.push(details.staking(stakeId, "timeline", step.key));
+                  history.replace(details.staking(stakeId, "timeline", step.key));
                 }}
               >
                 {step.icon}

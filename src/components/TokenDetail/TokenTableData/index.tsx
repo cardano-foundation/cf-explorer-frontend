@@ -50,7 +50,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata }) =>
   ];
 
   const handleChange = (event: React.SyntheticEvent, tab: keyof Transaction) => {
-    history.push(details.token(tokenId, tab));
+    history.replace(details.token(tokenId, tab));
   };
   return (
     <TabContext value={tabActive}>

@@ -37,7 +37,7 @@ const DelegationDetail: React.FC = () => {
   };
 
   const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
+    history.replace({ search: stringify(query) });
   };
 
   const { data, loading, initialized, error } = useFetch<DelegationOverview>(

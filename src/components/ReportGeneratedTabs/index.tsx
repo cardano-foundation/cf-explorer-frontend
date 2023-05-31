@@ -19,7 +19,7 @@ const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
   const { tab } = useParams<{ tab: "stake-key" | "pools" }>();
   const history = useHistory();
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
-    history.push(details.generated_report(newValue));
+    history.replace(details.generated_report(newValue));
   };
 
   return (
