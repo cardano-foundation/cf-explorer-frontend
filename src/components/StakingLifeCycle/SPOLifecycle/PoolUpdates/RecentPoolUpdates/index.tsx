@@ -52,7 +52,7 @@ const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null
       <StyledList>
         <DescriptionText>Recent Updates</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
-          <WrapFilterDescription>
+          <WrapFilterDescription data-testid="showing">
             Showing {data.length} {data.length > 1 ? "results" : "result"}
           </WrapFilterDescription>
           <StackingFilter

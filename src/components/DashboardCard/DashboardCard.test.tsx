@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createMemoryHistory } from "history";
 import DashboardCard from ".";
-import { render } from "../../test-utils";
+import { render } from "src/test-utils";
 
 const props = {
   to: "/mock-new-page",

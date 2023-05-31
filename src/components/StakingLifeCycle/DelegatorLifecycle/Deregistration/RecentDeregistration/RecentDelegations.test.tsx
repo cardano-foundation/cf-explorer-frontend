@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import RecentDeregistration from ".";
+import { render } from "src/test-utils";
 
 import Router from "react-router";
 
