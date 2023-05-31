@@ -103,7 +103,7 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill='#438F68' />
+            <AddressIcon fill="#438F68" />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash || "")}</StyledLink>

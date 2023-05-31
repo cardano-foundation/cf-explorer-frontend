@@ -124,7 +124,6 @@ const Dashboard: React.FC = () => {
       })
       .catch((e) => {
         // To do
-        console.log(e.message || "");
       })
       .finally(() => {
         setOnDownload(false);
@@ -172,9 +171,9 @@ const Dashboard: React.FC = () => {
       minWidth: "30px",
       render(data) {
         return (
-          <Box width='100%' textAlign='right'>
+          <Box width="100%" textAlign="right">
             {onDownload === data.id ? (
-              <CircularProgress size={22} color='primary' />
+              <CircularProgress size={22} color="primary" />
             ) : data.status === "GENERATED" ? (
               <Box
                 component={IconButton}

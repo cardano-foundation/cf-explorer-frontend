@@ -129,10 +129,10 @@ const OverviewTab = () => {
   };
 
   return (
-    <Box textAlign='left'>
+    <Box textAlign="left">
       <TextNote>Below are the username, email and overview information for your account</TextNote>
       <RowItem
-        label='Your email address '
+        label="Your email address"
         value={userData?.email}
         isTablet={isTablet}
         action={
@@ -162,26 +162,26 @@ const OverviewTab = () => {
           )
         }
         isInput={showInput}
-        placeholder='Enter your email'
+        placeholder="Enter your email"
         setvalueInput={setEmail}
         valueInput={email}
       />
       <RowItem
-        label='Private Notes'
+        label="Private Notes"
         value={`${userData?.sizeNote} out of 2000 available limit`}
         action={<Search onClick={() => history.push(routers.PRIVATE_NOTES)} />}
         isTablet={isTablet}
       />
       <RowItem
-        label='Address Bookmark'
+        label="Address Bookmark"
         value={`${userData?.sizeBookmark} out of 2000 available limit`}
         action={<Search onClick={() => history.push(routers.BOOKMARK)} />}
         isTablet={isTablet}
       />
       <RowItem
-        label='Wallet'
+        label="Wallet"
         value={
-          <Box display='inline-flex' alignItems='center'>
+          <Box display="inline-flex" alignItems="center">
             <CustomTooltip title={userData?.wallet || userData?.address}>
               <WalletAddress>{userData?.wallet || userData?.address}</WalletAddress>
             </CustomTooltip>
@@ -192,7 +192,7 @@ const OverviewTab = () => {
         action={!userData?.wallet && !userData?.address ? <Edit onClick={() => setOpenModal(true)} /> : <></>}
       />
       <RowItem
-        label='Last Login'
+        label="Last Login"
         value={moment(userData?.lastLogin).format("MM/DD/YYYY hh:mm:ss")}
         isTablet={isTablet}
       />
@@ -207,6 +207,7 @@ interface ConnectWalletModal {
   open: boolean;
   setOpen: (open: boolean) => void;
 }
+
 const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen }) => {
   const { stakeAddress, connect, disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET

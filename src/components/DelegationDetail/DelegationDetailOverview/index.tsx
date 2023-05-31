@@ -28,8 +28,8 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
           {Object.keys(overviewData).map((i, ii) => {
             return (
               <Grid item xs={24} sm={12} md={8} key={ii} xl={6}>
-                <Box borderRadius={10} overflow='hidden'>
-                  <Skeleton variant='rectangular' height={115} />
+                <Box borderRadius={10} overflow="hidden">
+                  <Skeleton variant="rectangular" height={115} />
                 </Box>
               </Grid>
             );

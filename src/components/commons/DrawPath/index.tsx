@@ -31,7 +31,7 @@ export const DrawPath: React.FC<Props> = ({ paths }) => {
   }, [width, sidebar]);
 
   return (
-    <DrawPathContainer ref={ref} xmlns='http://www.w3.org/2000/svg' style={{ width: size[0], height: size[1] }}>
+    <DrawPathContainer ref={ref} xmlns="http://www.w3.org/2000/svg" style={{ width: size[0], height: size[1] }}>
       {paths.map((path, index) => (
         <LineArrow key={index} {...path} parent={ref} />
       ))}

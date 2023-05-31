@@ -50,7 +50,7 @@ export default function FilterButton(props: FilterButtonProps) {
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
-        anchorReference='anchorPosition'
+        anchorReference="anchorPosition"
         anchorPosition={{ top: 260, left: 1510 }}
         anchorOrigin={{
           vertical: "bottom",

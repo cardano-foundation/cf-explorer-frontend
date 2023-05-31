@@ -30,7 +30,7 @@ export default function ProtocolHistoryModal({ open, protocolType, handleCloseMo
       <>
         <ModalTitle>Protocol Parameter Change</ModalTitle>
         <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label='sticky table'>
+          <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
                 <StyledTableHeadCell>Transaction Hash</StyledTableHeadCell>

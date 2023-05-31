@@ -78,7 +78,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
     {
       icon: txInputIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1} height={24}>
             Input{" "}
             {data?.utxOs && data?.utxOs?.inputs?.length > 1 && (
@@ -106,7 +106,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
           {openListInput && (
             <DropdownDetail
               minWidth={isMobile ? 160 : 200}
-              title='Address list'
+              title="Address list"
               value={data?.utxOs?.inputs.map((i) => i.address) || []}
               close={() => setOpenListInput(false)}
             />
@@ -121,7 +121,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
     {
       icon: txOutputIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1} height={24}>
             Output{" "}
             {data?.utxOs && data?.utxOs?.outputs?.length > 1 && (
@@ -149,7 +149,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
           {openListOutput && (
             <DropdownDetail
               minWidth={isMobile ? 160 : 200}
-              title='Address list'
+              title="Address list"
               value={data?.utxOs?.outputs.map((i) => i.address) || []}
               close={() => setOpenListOutput(false)}
             />
@@ -163,7 +163,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
     {
       icon: timeIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Time </TitleCard>
         </Box>
       ),
@@ -172,7 +172,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
     {
       icon: txConfirm,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Confirmation</TitleCard>
         </Box>
       ),
@@ -186,7 +186,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
     {
       icon: totalOutput,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Total Output</TitleCard>
         </Box>
       ),
@@ -199,7 +199,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
     {
       icon: exchageAltIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction Fees </TitleCard>
         </Box>
       ),
@@ -212,7 +212,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
     {
       icon: cubeIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
             {" "}
             Block
@@ -224,7 +224,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
     {
       icon: slotIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
             Slot
           </TitleCard>
@@ -239,7 +239,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
   ];
   return (
     <DetailHeader
-      type='TRANSACTION'
+      type="TRANSACTION"
       bookmarkData={data?.tx.hash || ""}
       title={"Transaction detail"}
       hash={data?.tx.hash}

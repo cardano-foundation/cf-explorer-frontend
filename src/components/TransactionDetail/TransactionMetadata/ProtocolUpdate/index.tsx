@@ -83,7 +83,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
         open={!!costModelScript}
         onClose={() => setCostModelScript("")}
         script={costModelScript}
-        title='CostModel'
+        title="CostModel"
       />
     </>
   );

@@ -44,8 +44,8 @@ const Transaction: React.FC = () => {
       <Box>
         {!initialized ? (
           <Card>
-            <Skeleton variant='rectangular' style={{ borderRadius: 10, height: 50, marginBottom: 10 }} />
-            <Skeleton variant='rectangular' style={{ borderRadius: 10, minHeight: 350 }} />
+            <Skeleton variant="rectangular" style={{ borderRadius: 10, height: 50, marginBottom: 10 }} />
+            <Skeleton variant="rectangular" style={{ borderRadius: 10, minHeight: 350 }} />
           </Card>
         ) : (
           <TransactionMetadata data={data} loading={!initialized} />

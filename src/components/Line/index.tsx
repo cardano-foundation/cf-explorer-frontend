@@ -106,8 +106,8 @@ const Line: React.FC<LineProps> = ({
       y1={coords.from?.y}
       x2={props.x}
       y2={props.y}
-      stroke='#00000015'
-      strokeWidth='3'
+      stroke="#00000015"
+      strokeWidth="3"
     />
   );
 };

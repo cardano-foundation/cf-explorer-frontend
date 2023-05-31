@@ -16,14 +16,14 @@ const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ title, script, ...p
     <Modal {...props}>
       <ModalContainer>
         <ButtonClose onClick={props.onClose}>
-          <img src={closeIcon} alt='icon close' />
+          <img src={closeIcon} alt="icon close" />
         </ButtonClose>
         <Box
           mb={3}
           textAlign={"left"}
           color={({ palette }) => palette.grey[700]}
-          fontSize='1.5rem'
-          fontWeight='bold'
+          fontSize="1.5rem"
+          fontWeight="bold"
           fontFamily={'"Roboto", sans-serif '}
         >
           {title}

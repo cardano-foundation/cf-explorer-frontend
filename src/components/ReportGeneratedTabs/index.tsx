@@ -23,7 +23,7 @@ const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
   };
 
   return (
-    <Box data-testid='report-generated-tabs'>
+    <Box data-testid="report-generated-tabs">
       <TabContext value={tab || "stake-key"}>
         <TabHeader>
           <Tabs style={{ flex: 1 }}>
@@ -33,9 +33,9 @@ const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
                 onChange={handleChange}
                 sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}` }}
                 TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
-                scrollButtons='auto'
-                variant='scrollable'
-                aria-label='lab API tabs example'
+                scrollButtons="auto"
+                variant="scrollable"
+                aria-label="lab API tabs example"
               >
                 {tabsItem.map((item) => (
                   <StyledTab

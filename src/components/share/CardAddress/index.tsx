@@ -29,7 +29,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
   if (loading) {
     return (
       <CardItem padding={0}>
-        <Skeleton variant='rectangular' height={"100%"} width='100%' />
+        <Skeleton variant="rectangular" height={"100%"} width="100%" />
       </CardItem>
     );
   }
@@ -37,8 +37,8 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
     return (
       <CardItemStyled>
         <TitleDetail paddingBottom={(props) => props.spacing(2)}>{title}</TitleDetail>
-        <Box width={"100%"} display='flex' alignItems='center' justifyContent='center'>
-          <img alt='icon' src={EmptyIcon} />
+        <Box width={"100%"} display="flex" alignItems="center" justifyContent="center">
+          <img alt="icon" src={EmptyIcon} />
         </Box>
       </CardItemStyled>
     );
@@ -60,7 +60,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
             <ItemDetail key={ii}>
               {i.title && (
                 <RowItem>
-                  <img src={infoIcon} alt='info icon' />
+                  <img src={infoIcon} alt="info icon" />
                   <LabelItem>{i.title}</LabelItem>
                 </RowItem>
               )}

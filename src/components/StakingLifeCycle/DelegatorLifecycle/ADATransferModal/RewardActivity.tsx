@@ -37,7 +37,7 @@ const RewardActivity: React.FC = () => {
               ? `+${formatADAFull(r.amount)}`
               : `-${formatADAFull(r.amount)}`
             : 0}
-          <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
+          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
         </Amount>
       )
     },
@@ -69,7 +69,7 @@ const RewardActivity: React.FC = () => {
   })`;
   return (
     <Box>
-      <UserInfo acitve='reward' total={fetchData.total} reward={data?.rewardAvailable || 0} stake={stakeId} />
+      <UserInfo acitve="reward" total={fetchData.total} reward={data?.rewardAvailable || 0} stake={stakeId} />
       <StyledTable
         {...fetchData}
         columns={columns}

@@ -57,9 +57,9 @@ export const RegistrationCertificateModal = ({
   const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
 
   return (
-    <StyledModal width={550} {...props} title='Registration certificate'>
+    <StyledModal width={550} {...props} title="Registration certificate">
       <StyledContainerModal>
-        {loading && <Skeleton variant='rectangular' width={500} height={90} />}
+        {loading && <Skeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
           <Box>
             <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>

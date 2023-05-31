@@ -52,7 +52,7 @@ const PopperStyled = (props: Props) => {
         {showCloseButton && (
           <Box
             onClick={handleClose}
-            position='absolute'
+            position="absolute"
             top={0}
             right={0}
             width={20}
@@ -67,7 +67,7 @@ const PopperStyled = (props: Props) => {
               alignItems: "center"
             }}
           >
-            <CustomIcon icon={CloseLineIcon} width={14} fill='black' />
+            <CustomIcon icon={CloseLineIcon} width={14} fill="black" />
           </Box>
         )}
         {content}

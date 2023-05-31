@@ -30,9 +30,9 @@ const PoolSizeTab = () => {
       key: "size",
       minWidth: "100px",
       render: (r) => (
-        <Box display='flex' alignItems='center'>
+        <Box display="flex" alignItems="center">
           <TextAmountReward>{formatADAFull(r.size || 0)}</TextAmountReward>
-          <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
+          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
         </Box>
       )
     },
@@ -41,9 +41,9 @@ const PoolSizeTab = () => {
       key: "fees",
       minWidth: "140px",
       render: (r) => (
-        <Box display='flex' alignItems='center'>
+        <Box display="flex" alignItems="center">
           <TextAmountReward>{formatADAFull(r.fee)}</TextAmountReward>
-          <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
+          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
         </Box>
       )
     },

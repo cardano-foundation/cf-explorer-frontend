@@ -70,14 +70,14 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         </BackButton>
         <HeaderContainer>
           <HeaderTitle>
-            <HeaderTitleSkeleton variant='rectangular' />
+            <HeaderTitleSkeleton variant="rectangular" />
           </HeaderTitle>
         </HeaderContainer>
         <PoolId>
-          <PoolIdSkeleton variant='rectangular' />
+          <PoolIdSkeleton variant="rectangular" />
         </PoolId>
-        <Box borderRadius={10} overflow='hidden'>
-          <Skeleton variant='rectangular' height={250} width='100%' />
+        <Box borderRadius={10} overflow="hidden">
+          <Skeleton variant="rectangular" height={250} width="100%" />
         </Box>
       </HeaderDetailContainer>
     );
@@ -93,7 +93,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <CustomTooltip title={data?.poolName || poolId}>
           <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
         </CustomTooltip>
-        <BookmarkButton keyword={poolId} type='POOL' />
+        <BookmarkButton keyword={poolId} type="POOL" />
       </HeaderContainer>
       <PoolId>
         <CustomTooltip title={poolId}>
@@ -107,21 +107,21 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       <DataContainer>
         <StyledGrid container>
           <Item item xs={6} md={3} top={1}>
-            <StyledImg src={TickerIcon} alt='Ticker Icon' />
+            <StyledImg src={TickerIcon} alt="Ticker Icon" />
             <InfoTitle>
               <StyledTitle>Ticker</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.tickerName || ""}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
-            <StyledImg src={CalendarIcon} alt='Calendar Icon' />
+            <StyledImg src={CalendarIcon} alt="Calendar Icon" />
             <InfoTitle>
               <StyledTitle>Created date</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
-            <StyledImg src={RewardIcon} alt='Reward Icon' />
+            <StyledImg src={RewardIcon} alt="Reward Icon" />
             <InfoTitle>
               <Box>
                 <StyledTitle>Reward Account</StyledTitle>
@@ -160,14 +160,14 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
 
             {isOpenReward && (
               <DropdownDetail
-                title='Reward account list'
+                title="Reward account list"
                 value={data?.rewardAccounts || []}
                 close={() => setOpenReward(false)}
               />
             )}
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
-            <StyledImg src={UserIcon} alt='User Icon' />
+            <StyledImg src={UserIcon} alt="User Icon" />
             <InfoTitle>
               <Box>
                 <StyledTitle>Owner Account</StyledTitle>{" "}
@@ -206,7 +206,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
 
             {isOpenOwner && (
               <DropdownDetail
-                title='Owner address list'
+                title="Owner address list"
                 value={data?.ownerAccounts || []}
                 close={() => setOpenOwner(false)}
                 isStakeDetail={true}
@@ -214,7 +214,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             )}
           </Item>
           <Item item xs={6} md={3}>
-            <StyledImg src={DropIcon} alt='Drop Icon' />
+            <StyledImg src={DropIcon} alt="Drop Icon" />
             <InfoTitle>
               <StyledTitle>Pool size</StyledTitle>
             </InfoTitle>
@@ -226,7 +226,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <StyledImg src={HighestIcon} alt='Highest Icon' />
+            <StyledImg src={HighestIcon} alt="Highest Icon" />
             <InfoTitle>
               <StyledTitle>Stake limit</StyledTitle>
             </InfoTitle>
@@ -238,7 +238,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <StyledImg src={DelegatorIcon} alt='Delegator Icon' />
+            <StyledImg src={DelegatorIcon} alt="Delegator Icon" />
             <InfoTitle>
               <StyledTitle>Delegators</StyledTitle>
             </InfoTitle>
@@ -247,15 +247,15 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3}>
             <InfoValue>
               <StyledLinearProgress
-                variant='determinate'
+                variant="determinate"
                 value={data?.saturation ? (data?.saturation > 100 ? 100 : data?.saturation) : 0}
               />
               <Box
-                display='flex'
+                display="flex"
                 flexDirection={isGalaxyFoldSmall ? "column" : "row"}
-                justifyContent='space-between'
+                justifyContent="space-between"
                 alignItems={isGalaxyFoldSmall ? "flex-start" : "flex-end"}
-                marginTop='9px'
+                marginTop="9px"
               >
                 <Box component={"span"} mt={1} style={{ fontSize: "14px", fontWeight: "400", opacity: "0.5" }}>
                   Saturation

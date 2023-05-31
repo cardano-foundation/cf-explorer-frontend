@@ -76,14 +76,14 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
           const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;
           return (
             <React.Fragment key={index}>
-              <CustomTooltip key={index} title={tooltipTitle} placement='right'>
+              <CustomTooltip key={index} title={tooltipTitle} placement="right">
                 {href ? (
                   isExtenalLink(href) ? (
                     <ListItem
                       data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                       button
-                      onClick={e => window.open(href, "_blank")}
-                      sx={theme => itemStyle(theme, sidebar)}
+                      onClick={(e) => window.open(href, "_blank")}
+                      sx={(theme) => itemStyle(theme, sidebar)}
                     >
                       {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
                       <MenuText primary={title} open={sidebar ? 1 : 0} />
@@ -153,7 +153,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 )}
               </CustomTooltip>
               {children?.length ? (
-                <Collapse in={`menu-${index}` === active} timeout='auto' unmountOnExit>
+                <Collapse in={`menu-${index}` === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
                       const { href, title, icon } = subItem;
@@ -308,7 +308,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 </ListItem>
               )}
               {children?.length ? (
-                <Collapse in={`footer-${index}` === active} timeout='auto' unmountOnExit>
+                <Collapse in={`footer-${index}` === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
                       const { href, title, icon } = subItem;

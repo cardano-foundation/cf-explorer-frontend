@@ -66,10 +66,10 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
           />
         </DateRangePickerContainer>
         <DatePickerFooter>
-          <Button disabled={isValid} variant='contained' onClick={onSubmit}>
+          <Button disabled={isValid} variant="contained" onClick={onSubmit}>
             OK
           </Button>
-          <Button variant='outlined' onClick={() => onClose?.()}>
+          <Button variant="outlined" onClick={() => onClose?.()}>
             Cancel
           </Button>
         </DatePickerFooter>

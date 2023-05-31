@@ -9,7 +9,7 @@ export function OperatorRewards({ open, handleCloseModal }: Props) {
   return (
     <StyledModal
       contentStyle={{ paddingRight: "5px" }}
-      title='Operator rewards'
+      title="Operator rewards"
       handleCloseModal={handleCloseModal}
       open={open}
     >

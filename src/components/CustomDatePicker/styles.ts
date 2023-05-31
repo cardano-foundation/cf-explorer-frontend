@@ -30,7 +30,7 @@ export const StyledDatePicker = styled(DatePicker)`
     color: white;
   }
 
-  &.react-datepicker__day--in-selecting-range{
+  &.react-datepicker__day--in-selecting-range {
     background-color: yellow !important;
     color: white;
   }
@@ -81,7 +81,6 @@ export const CloseButtonLeft = styled(IconButton)<{ saving: number }>`
   }
 `;
 
-
 export const CloseButtonRight = styled(IconButton)<{ saving: number }>`
   position: absolute;
   top: -10px;
@@ -98,3 +97,80 @@ export const CloseButtonRight = styled(IconButton)<{ saving: number }>`
     display: none;
   }
 `;
+
+export const MyGrid = styled(Box)(({ theme }) => ({
+  display: "grid",
+  gridTemplateColumns: "repeat(4, 1fr)",
+  gridGap: "8px",
+  padding: "10px 6px"
+}));
+
+export const WrapContainerPickerStart = styled(Box)`
+  position: absolute;
+  @media (min-width: 750px) {
+    top: 66%;
+    left: -10%;
+  }
+  @media (max-width: 750px) {
+    top: -350px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+  }
+`;
+export const WrapContainerPickerEnd = styled(Box)`
+  position: absolute;
+  @media (min-width: 750px) {
+    top: 66%;
+    right: 49%;
+  }
+  @media (max-width: 750px) {
+    top: 300px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+  }
+`;
+
+export const HiddenScroll = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  left: "-10%",
+  width: "fit-content",
+  height: "200px",
+  overflow: "auto",
+  backgroundColor: "#fff",
+  boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.12)",
+  borderRadius: "8px",
+  zIndex: 1,
+  "&::-webkit-scrollbar": {
+    width: "5px"
+  },
+  "&::-webkit-scrollbar-track": {
+    background: "transparent"
+  },
+  "&::-webkit-scrollbar-thumb": {
+    background: "transparent"
+  },
+  "&:hover": {
+    "&::-webkit-scrollbar-thumb": {
+      background: theme.palette.grey[300]
+    },
+    "&::-webkit-scrollbar-track": {
+      background: theme.palette.grey[100]
+    }
+  }
+}));
+
+export const SelectYear = styled(Box)<{ isActive: number }>(({ theme, isActive }) => ({
+  padding: "8px 16px",
+  cursor: "pointer",
+  borderRadius: "18px",
+  backgroundColor: isActive ? theme.palette.primary.main : "transparent",
+  color: isActive ? "#fff" : theme.palette.text.primary,
+  "&:hover": {
+    backgroundColor: isActive ? theme.palette.primary.main : theme.palette.grey[100]
+  }
+}));

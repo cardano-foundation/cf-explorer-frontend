@@ -129,7 +129,7 @@ const DelegationDetail: React.FC = () => {
                   value={key}
                   style={{ padding: "12px 0px", marginRight: 40 }}
                   label={
-                    <Box display={"flex"} alignItems='center'>
+                    <Box display={"flex"} alignItems="center">
                       <Icon fill={key === tab ? theme.palette.primary.main : theme.palette.text.hint} />
                       <TitleTab pl={1} active={+(key === tab)}>
                         {label}

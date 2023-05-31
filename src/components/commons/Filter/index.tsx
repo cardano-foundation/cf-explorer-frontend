@@ -45,7 +45,7 @@ const Filter: React.FC<FilterProps> = ({ options, onOptionChange }) => {
                 icon={FilterIC}
                 width={18}
                 color={(theme) => theme.palette.primary.main}
-                fill='currentColor'
+                fill="currentColor"
               />
             </FilterIconContainer>
           }

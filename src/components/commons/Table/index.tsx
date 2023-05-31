@@ -53,7 +53,7 @@ type TEmptyRecord = {
 };
 export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
   <Empty className={className}>
-    <EmtyImage src={EmptyIcon} alt='no data' />
+    <EmtyImage src={EmptyIcon} alt="no data" />
   </Empty>
 );
 
@@ -160,7 +160,7 @@ const TableRow = <T extends ColumnType>({
       {columns.map((column, idx) => {
         return (
           <TCol
-            className='tb-col'
+            className="tb-col"
             key={idx}
             ref={colRef}
             minWidth={column.minWidth}
@@ -205,9 +205,9 @@ const TableBody = <T extends ColumnType>({
               width={"100%"}
               height={"100%"}
               zIndex={1000}
-              display='flex'
-              justifyContent='center'
-              alignItems='self-start'
+              display="flex"
+              justifyContent="center"
+              alignItems="self-start"
             >
               <Box pt={"20%"}>
                 <CircularProgress />
@@ -264,11 +264,11 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
 
   return (
     <TFooter>
-      <Box display={"flex"} alignItems='center' margin='15px 0px'>
+      <Box display={"flex"} alignItems="center" margin="15px 0px">
         {pagination?.total && pagination.total > 10 ? (
-          <Box display='flex' alignItems='center'>
+          <Box display="flex" alignItems="center">
             <SelectMui
-              size='small'
+              size="small"
               onChange={(e: any) => {
                 setSize(+e.target.value);
                 setPage(1);
@@ -283,7 +283,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
               <MenuItem value={50}>50</MenuItem>
               <MenuItem value={100}>100</MenuItem>
             </SelectMui>
-            <Box component={"span"} ml={1} fontSize='0.875rem'>
+            <Box component={"span"} ml={1} fontSize="0.875rem">
               Per page
             </Box>
           </Box>
@@ -291,7 +291,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
           ""
         )}
         {total?.count ? (
-          <Box ml={"20px"} fontSize='0.875rem'>
+          <Box ml={"20px"} fontSize="0.875rem">
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> {`Result${total.count > 1 ? "s" : ""}`}
           </Box>
         ) : (
@@ -359,7 +359,7 @@ const Table: React.FC<TableProps> = ({
 
   const isSelectAll = useMemo(() => data?.length === selectedItems.length, [data, selectedItems]);
   return (
-    <Box className={className || ""} style={style} data-testid='table-common'>
+    <Box className={className || ""} style={style} data-testid="table-common">
       <TableTopHeader
         onFilterChange={onFilterChange}
         renderAction={(items) => renderAction?.(items, clearSelection)}
@@ -546,7 +546,7 @@ const PaginationCustom = ({
                 }
               }}
             />
-            <Box component={"span"} color={(theme) => theme.palette.grey[400]} fontSize='0.875rem'>
+            <Box component={"span"} color={(theme) => theme.palette.grey[400]} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
               {numberWithCommas((page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size)} of{" "}
               {numberWithCommas(pagination?.total || 0)}

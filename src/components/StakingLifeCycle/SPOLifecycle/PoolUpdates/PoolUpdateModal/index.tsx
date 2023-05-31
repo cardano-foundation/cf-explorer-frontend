@@ -77,14 +77,14 @@ export const PoolUpdateModal = ({ data, ...props }: Props) => {
   const isUpdated = data?.previousMargin !== data?.margin || data?.previousPledge !== data?.pledge;
 
   return (
-    <StyledModal {...props} title='Pool certificate'>
+    <StyledModal {...props} title="Pool certificate">
       {isUpdated ? (
         <TabContext value={tabActive}>
           <TabContainer>
             <TabList
               onChange={handleChange}
-              variant='scrollable'
-              scrollButtons='auto'
+              variant="scrollable"
+              scrollButtons="auto"
               TabIndicatorProps={{
                 sx: {
                   background: (theme) => theme.palette.primary.main,
@@ -240,12 +240,12 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
             {extra ? (
               <Box>
                 <Label>{label}</Label>
-                {data ? content : <Skeleton variant='rectangular' />}
+                {data ? content : <Skeleton variant="rectangular" />}
               </Box>
             ) : (
               <>
                 <Label>{label}</Label>
-                {data ? content : <Skeleton variant='rectangular' />}
+                {data ? content : <Skeleton variant="rectangular" />}
               </>
             )}
             {extra}
@@ -255,7 +255,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       <ViewMoreAddressModal
         showFullHash={true}
         maxWidth={680}
-        title='Pool Owner'
+        title="Pool Owner"
         open={!!selectedOwner.length}
         onClose={() => setSelectedOwner([])}
         items={selectedOwner}

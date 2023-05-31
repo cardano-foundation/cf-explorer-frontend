@@ -82,19 +82,6 @@ import RewardAccountIconUrl from "./images/reward-box-icon.png";
 import DelegationToIconUrl from "./images/delegation-to.png";
 import RewardWithdrawnIconUrl from "./images/reward-withdrawn.png";
 
-import { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
-import { ReactComponent as FilterIcon } from "./icons/filter.svg";
-import { ReactComponent as SearchNormalIcon } from "./icons/search-normal.svg";
-import { ReactComponent as IconRefresh } from "./icons/IconRefresh.svg";
-import { ReactComponent as IconThreeDot } from "./icons/IconThreeDot.svg";
-export { ReactComponent as ListOfReportsIC } from "./icons/list-of-report.svg";
-export { ReactComponent as WatchlistIC } from "./icons/watchlist.svg";
-export { ReactComponent as DownloadWhiteIC } from "./icons/download-white-ic.svg";
-export { ReactComponent as DownloadBlueIC } from "./icons/download-blue-ic.svg";
-
-export { ReactComponent as ReceidvedRewardsIC } from "./icons/received-rewards-ic.svg";
-export { ReactComponent as ADAsigntIC } from "./icons/ada-sight-ic.svg";
-
 export {
   LogoFullIcon,
   LogoIcon,
@@ -170,11 +157,6 @@ export {
   SaveOffIcon,
   LinkOff,
   User2,
-  PolicyScriptIcon,
-  SearchNormalIcon,
-  FilterIcon,
-  IconRefresh,
-  IconThreeDot,
   PolygonWhiteIconUrl,
   AdaHolderIconUrl,
   PaymentWalletUrl,
@@ -192,7 +174,17 @@ export { ReactComponent as EndPage } from "./icons/endPagePagination.svg";
 export { ReactComponent as PrevPage } from "./icons/prevPagePagination.svg";
 export { ReactComponent as NextPage } from "./icons/nextPagePagination.svg";
 export { ReactComponent as DownIcon } from "./icons/down.svg";
-
+export { ReactComponent as PolicyScriptIcon } from "./icons/script.svg";
+export { ReactComponent as FilterIcon } from "./icons/filter.svg";
+export { ReactComponent as SearchNormalIcon } from "./icons/search-normal.svg";
+export { ReactComponent as IconRefresh } from "./icons/IconRefresh.svg";
+export { ReactComponent as IconThreeDot } from "./icons/IconThreeDot.svg";
+export { ReactComponent as ListOfReportsIC } from "./icons/list-of-report.svg";
+export { ReactComponent as WatchlistIC } from "./icons/watchlist.svg";
+export { ReactComponent as DownloadWhiteIC } from "./icons/download-white-ic.svg";
+export { ReactComponent as DownloadBlueIC } from "./icons/download-blue-ic.svg";
+export { ReactComponent as ReceidvedRewardsIC } from "./icons/received-rewards-ic.svg";
+export { ReactComponent as ADAsigntIC } from "./icons/ada-sight-ic.svg";
 export { ReactComponent as ProtocolUpdateIcon } from "./icons/protocolUpdate.svg";
 export { ReactComponent as StakeCertificates } from "./icons/stakeCertificate.svg";
 export { ReactComponent as DelegationIcon } from "./icons/Staking/DelegationIcon.svg";

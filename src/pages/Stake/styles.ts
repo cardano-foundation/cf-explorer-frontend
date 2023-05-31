@@ -60,6 +60,6 @@ export const TimeDuration = styled("small")(({ theme }) => ({
     textAlign: "left",
     marginTop: 15,
     top: "unset",
-    right: "unset",
-  },
+    right: "unset"
+  }
 }));

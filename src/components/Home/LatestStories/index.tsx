@@ -60,7 +60,7 @@ const LatestStories = () => {
                       <ItemTitle>{title}</ItemTitle>
                     </Box>
                     <Time>
-                      <TimeIcon src={CalenderPaleIcon} alt='calender pale' />
+                      <TimeIcon src={CalenderPaleIcon} alt="calender pale" />
                       {moment(createdDate).format("MM/DD/YYYY")}
                     </Time>
                   </Detail>

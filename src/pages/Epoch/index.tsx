@@ -36,8 +36,8 @@ const Epoch: React.FC = () => {
       minWidth: "50px",
       render: (r) => (
         <Link to={details.epoch(r.no || 0)}>
-          <Box textAlign='center'>
-            <Box width={41} margin='auto'>
+          <Box textAlign="center">
+            <Box width={41} margin="auto">
               <ProgressCircle
                 size={41}
                 pathWidth={5}

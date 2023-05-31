@@ -131,7 +131,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
           Before proceeding with your report creation, we just want to double-check and confirm that you’ve filled out
           all the details correctly?
         </TextRequired>
-        <Stack marginBottom='35px'>
+        <Stack marginBottom="35px">
           {list.map(({ label, value }, idx) => {
             return (
               <OverViewItem key={label}>
@@ -158,7 +158,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
             onClick={handleGenerateReport}
             sx={{ fontSize: `${isMobile ? "14px" : "16px"}` }}
           >
-            {loading && <CircularProgress color='info' size={20} />}Generate report
+            {loading && <CircularProgress color="info" size={20} />}Generate report
           </StyledButton>
         </StyledStack>
       </Container>

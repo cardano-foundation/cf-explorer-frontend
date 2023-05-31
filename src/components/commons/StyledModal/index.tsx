@@ -35,7 +35,7 @@ const StyledModal: React.FC<IProps> = ({
         paddingY={paddingY || (isMobile ? "20px" : "50px")}
         viewwidth={isMobile ? 92 : 70}
       >
-        <CloseButton saving={0} onClick={() => handleCloseModal()} data-testid='close-modal-button'>
+        <CloseButton saving={0} onClick={() => handleCloseModal()} data-testid="close-modal-button">
           <IoMdClose />
         </CloseButton>
         {title && (

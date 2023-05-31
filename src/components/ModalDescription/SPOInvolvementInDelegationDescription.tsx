@@ -10,7 +10,7 @@ export function SPOInvolvementInDelegationDescription({ open, handleCloseModal }
   return (
     <StyledModal
       contentStyle={{ paddingRight: "5px" }}
-      title='Pool updates'
+      title="Pool updates"
       handleCloseModal={handleCloseModal}
       open={open}
     >

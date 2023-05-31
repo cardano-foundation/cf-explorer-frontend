@@ -146,7 +146,7 @@ export const InfoValue = styled(Box)(({ theme }) => ({
   fontSize: 18,
   [theme.breakpoints.down("sm")]: {
     fontSize: 16
-  },
+  }
   // display: "flex",
   // flexDirection: "column",
 }));

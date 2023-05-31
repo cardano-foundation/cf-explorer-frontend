@@ -147,7 +147,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
             TabIndicatorProps={{
               sx: { background: (theme) => theme.palette.primary.main, color: (theme) => theme.palette.primary.main }
             }}
-            variant='scrollable'
+            variant="scrollable"
             scrollButtons={false}
           >
             {items?.map(({ key, icon: Icon, label }) => (
@@ -156,7 +156,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
                 value={key}
                 style={{ padding: "12px 0px", marginRight: 40 }}
                 label={
-                  <Box display={"flex"} alignItems='center'>
+                  <Box display={"flex"} alignItems="center">
                     <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.text.hint} />
                     <TitleTab pl={1} active={+(key === tabActive)}>
                       {label}

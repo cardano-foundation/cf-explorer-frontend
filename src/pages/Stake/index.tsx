@@ -110,7 +110,7 @@ const Stake = () => {
 
   return (
     <StyledContainer>
-      <Box className='stake-list'>
+      <Box className="stake-list">
         <Card>
           <StyledTabs
             value={poolType}

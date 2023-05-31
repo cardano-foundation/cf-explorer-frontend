@@ -52,18 +52,18 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
             onChange={onChangeTab}
             sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}`, color: "red" }}
             TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
-            scrollButtons='auto'
-            variant='scrollable'
+            scrollButtons="auto"
+            variant="scrollable"
           >
             <StyledTab
               value={ActivityType.WALLET}
               label={
-                <Box display='flex' alignItems='center' justifyContent={"center"}>
+                <Box display="flex" alignItems="center" justifyContent={"center"}>
                   <CustomIcon
                     icon={BalanceIcon}
                     width={23}
                     color={(theme) => theme.palette.primary.main}
-                    stroke='currentColor'
+                    stroke="currentColor"
                   />
                   <CustomTab>Wallet Activity</CustomTab>
                 </Box>
@@ -72,12 +72,12 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
             <StyledTab
               value={ActivityType.REWARDS}
               label={
-                <Box display='flex' alignItems='center' justifyContent={"center"}>
+                <Box display="flex" alignItems="center" justifyContent={"center"}>
                   <CustomIcon
                     icon={RewardsIcon}
                     width={23}
                     color={(theme) => theme.palette.primary.main}
-                    fill='currentColor'
+                    fill="currentColor"
                   />
                   <CustomTab>Rewards Activity</CustomTab>
                 </Box>

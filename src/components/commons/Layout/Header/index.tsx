@@ -37,8 +37,8 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           <HeaderSearch home={home} />
         </HeaderMain>
         <HeaderTop collasped={+onDetailView}>
-          <HeaderLogoLink to='/'>
-            <HeaderLogo src={LogoIcon} alt='logo desktop' />
+          <HeaderLogoLink to="/">
+            <HeaderLogo src={LogoIcon} alt="logo desktop" />
           </HeaderLogoLink>
           <SideBarRight>
             <NetworkContainer>

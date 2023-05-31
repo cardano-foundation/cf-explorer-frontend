@@ -63,13 +63,13 @@ const StakeKeyBox = ({ data }: TProps) => {
     <Box py={"15px"}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Box display='flex' flexDirection='column' gap='15px'>
+          <Box display="flex" flexDirection="column" gap="15px">
             {(leftRow || []).map(({ label, value, isHyperLink, originValue, linkTo, isMultipleValue }) => {
               return (
-                <Box key={label} display='flex' alignItems='flex-start'>
+                <Box key={label} display="flex" alignItems="flex-start">
                   <TextLabel>{label}: </TextLabel>
                   {isMultipleValue ? (
-                    <Box display='flex' flexDirection='column'>
+                    <Box display="flex" flexDirection="column">
                       {value.map((item, index) => (
                         <Box key={index} display={"flex"}>
                           <CustomTooltip title={item}>
@@ -95,10 +95,10 @@ const StakeKeyBox = ({ data }: TProps) => {
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Box display='flex' flexDirection='column' gap='15px'>
+          <Box display="flex" flexDirection="column" gap="15px">
             {(rightRow || []).map(({ label, value }) => {
               return (
-                <Box key={label} display='flex'>
+                <Box key={label} display="flex">
                   <TextLabel>{label}: </TextLabel>
                   <TextRightValue>{value}</TextRightValue>
                 </Box>

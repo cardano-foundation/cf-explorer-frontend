@@ -37,9 +37,9 @@ const LoginButton = () => {
   }
 
   return (
-    <Box position='relative'>
-      <StyledButton type='button' onClick={handleClick}>
-        <Image src={WalletIcon} alt='wallet' />
+    <Box position="relative">
+      <StyledButton type="button" onClick={handleClick}>
+        <Image src={WalletIcon} alt="wallet" />
         <Span>Sign In</Span>
       </StyledButton>
     </Box>

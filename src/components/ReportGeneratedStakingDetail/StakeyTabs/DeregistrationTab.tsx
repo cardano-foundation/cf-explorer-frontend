@@ -41,10 +41,10 @@ const columns: Column<DeregistrationItem>[] = [
       <Box>
         <AdaValue value={-r.deposit - r.fee} />
         <TableSubTitle>
-          <Box display='flex' mt={1} alignItems='center' lineHeight='1'>
-            <AdaValue value={-r.deposit} gap='3px' fontSize='12px' />
-            <Box mx='3px'>/</Box>
-            <AdaValue value={r.fee} gap='3px' fontSize='12px' />
+          <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+            <AdaValue value={-r.deposit} gap="3px" fontSize="12px" />
+            <Box mx="3px">/</Box>
+            <AdaValue value={r.fee} gap="3px" fontSize="12px" />
           </Box>
         </TableSubTitle>
       </Box>

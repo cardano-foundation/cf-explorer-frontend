@@ -9,7 +9,7 @@ import { details } from "../../../commons/routers";
 const PopupStaking = ({ hash }: { hash: string }) => {
   return (
     <Box display={"flex"} alignItems={"center"}>
-      <AddressIcon fill='#108AEF' />
+      <AddressIcon fill="#108AEF" />
       <Hash to={details.transaction(hash)}>{getShortHash(hash)}</Hash>
       <CopyButton text={hash} />
     </Box>

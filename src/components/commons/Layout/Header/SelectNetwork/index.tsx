@@ -77,14 +77,14 @@ const SelectNetwork: React.FC = () => {
 
   return (
     <StyledSelect
-      data-testid='network-selection-dropdown'
+      data-testid="network-selection-dropdown"
       onChange={handleChange}
       value={NETWORK}
       IconComponent={BiChevronDown}
       MenuProps={{ style: { zIndex: 1303 } }}
     >
       {Object.entries(NETWORK_NAMES).map(([value, name]) => (
-        <MenuItem data-testid='network-options' key={value} value={value}>
+        <MenuItem data-testid="network-options" key={value} value={value}>
           {name}
         </MenuItem>
       ))}

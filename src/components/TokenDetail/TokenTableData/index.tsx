@@ -56,7 +56,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata }) =>
     <TabContext value={tabActive}>
       <TabList
         onChange={handleChange}
-        variant='scrollable'
+        variant="scrollable"
         TabIndicatorProps={{
           sx: {
             background: (theme) => theme.palette.primary.main,
@@ -72,9 +72,9 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata }) =>
             value={key}
             style={{ padding: "12px 0px", marginRight: 40 }}
             icon={icon}
-            iconPosition='start'
+            iconPosition="start"
             label={
-              <Box display={"flex"} alignItems='center'>
+              <Box display={"flex"} alignItems="center">
                 <TitleTab pl={1} active={key === tabActive}>
                   {label}
                 </TitleTab>

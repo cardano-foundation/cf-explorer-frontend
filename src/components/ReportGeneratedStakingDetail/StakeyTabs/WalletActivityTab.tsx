@@ -41,12 +41,12 @@ const WalletActitityTab = () => {
       key: "outSum",
       minWidth: "100px",
       render: (r) => (
-        <Box display='flex' alignItems='center'>
+        <Box display="flex" alignItems="center">
           <Amount type={r.amount > 0 ? "up" : "down"}>
             {r.amount > 0 ? "+" : ""}
             {formatADAFull(r.amount)}
           </Amount>
-          <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
+          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
         </Box>
       )
     },
@@ -94,7 +94,7 @@ const WalletActitityTab = () => {
     <Box mt={2}>
       <StyledTable
         {...fetchData}
-        tableTitle=''
+        tableTitle=""
         columns={columns}
         total={{ title: "Total Epochs", count: fetchData.total }}
         pagination={{

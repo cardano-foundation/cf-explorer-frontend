@@ -85,9 +85,9 @@ const DelegationLists: React.FC = () => {
       key: "Saturation",
       render: (r) => (
         <CustomTooltip title={r.saturation ? r.saturation : 0}>
-          <Box display='flex' alignItems='center' justifyContent={"space-between"}>
+          <Box display="flex" alignItems="center" justifyContent={"space-between"}>
             <Box component={"span"}>{formatPercent(r.saturation / 100) || `0%`}</Box>
-            <StyledLinearProgress variant='determinate' value={r.saturation > 100 ? 100 : r.saturation} />
+            <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : r.saturation} />
           </Box>
         </CustomTooltip>
       )
@@ -98,7 +98,7 @@ const DelegationLists: React.FC = () => {
     <>
       <SearchContainer ref={tableRef}>
         <StyledInput
-          placeholder='Search Pools'
+          placeholder="Search Pools"
           onChange={(e) => setValue(e.target.value)}
           value={value}
           onKeyUp={(e) => {
@@ -109,7 +109,7 @@ const DelegationLists: React.FC = () => {
           }}
         />
         <SubmitButton onClick={() => setSearch(value)}>
-          <Image src={HeaderSearchIcon} alt='Search' />
+          <Image src={HeaderSearchIcon} alt="Search" />
         </SubmitButton>
       </SearchContainer>
       <Table

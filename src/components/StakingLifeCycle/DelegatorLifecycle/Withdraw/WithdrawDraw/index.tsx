@@ -150,7 +150,7 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
 
         <InfoGroup>
           <Info>
-            <AddressIcon fill='#438F68' />
+            <AddressIcon fill="#438F68" />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash || "")}</StyledLink>
@@ -172,7 +172,7 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
         <AdaHolder ref={adaHolderRef} />
         <AccountContainer ref={paymentRef} sidebar={+sidebar}>
           <PaymentWalletContainer>
-            <PaymentWalletIcon src={PaymentWalletUrl} alt='PaymentWallet' />
+            <PaymentWalletIcon src={PaymentWalletUrl} alt="PaymentWallet" />
             <PaymentWalletInfo>
               <PaymentWalletTitle>Payment Wallet</PaymentWalletTitle>
               <PaymentWalletValueContainer>
@@ -185,7 +185,7 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
             </PaymentWalletInfo>
           </PaymentWalletContainer>
           <PaymentWalletContainer>
-            <PaymentWalletIcon src={RewardAccountIconUrl} alt='PaymentWallet' />
+            <PaymentWalletIcon src={RewardAccountIconUrl} alt="PaymentWallet" />
             <PaymentWalletInfo>
               <PaymentWalletTitle>Reward Account</PaymentWalletTitle>
               <PaymentWalletValueContainer>

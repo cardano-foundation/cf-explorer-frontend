@@ -133,7 +133,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
         <StyledDarkLoadingButton
           loading={loading}
           disabled={!privateNote?.value || !txHash?.value || !!txHash?.error}
-          loadingPosition='end'
+          loadingPosition="end"
           onClick={handleSubmitData}
           fullWidth={isTablet}
         >

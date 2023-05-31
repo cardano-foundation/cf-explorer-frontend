@@ -43,9 +43,11 @@ const OperatorRewardTab = () => {
       key: "amount",
       title: "Operator Reward ADA",
       render(data) {
-        return (<AmountADARow>
-          +{formatADAFull(data.amount)} <ADAicon color='#333333' />
-        </AmountADARow>)
+        return (
+          <AmountADARow>
+            +{formatADAFull(data.amount)} <ADAicon color="#333333" />
+          </AmountADARow>
+        );
       }
     },
     {

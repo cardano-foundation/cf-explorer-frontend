@@ -27,7 +27,7 @@ interface IAdaValue extends BoxProps {
 
 export const AdaValue = ({ value, gap = "8px", fontSize, ...props }: IAdaValue) => {
   return (
-    <Box {...props} display='flex' alignItems='center' gap={gap} fontSize={fontSize}>
+    <Box {...props} display="flex" alignItems="center" gap={gap} fontSize={fontSize}>
       {formatADAFull(value)}
       <ADAicon fontSize={fontSize} />
     </Box>
@@ -75,10 +75,10 @@ const StakingRegistrationTab = () => {
         <Box>
           <AdaValue value={r.deposit + r.fee} />
           <TableSubTitle>
-            <Box display='flex' mt={1} alignItems='center' lineHeight='1'>
-              <AdaValue value={r.deposit} gap='3px' fontSize='12px' />
+            <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+              <AdaValue value={r.deposit} gap="3px" fontSize="12px" />
               <Box mx={1}>/</Box>
-              <AdaValue value={r.fee} gap='3px' fontSize='12px' />
+              <AdaValue value={r.fee} gap="3px" fontSize="12px" />
             </Box>
           </TableSubTitle>
         </Box>

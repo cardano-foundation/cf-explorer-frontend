@@ -97,14 +97,14 @@ const AccountSettingTab: React.FC = () => {
   };
 
   return (
-    <Box textAlign='left'>
+    <Box textAlign="left">
       <RowItem
-        label='Connected Wallet '
+        label="Connected Wallet "
         value={wallet.value}
         errorMsg={wallet.errorMsg}
         onChangeValue={(event) => setWallet({ value: event.target.value, errorMsg: "" })}
         action={onTransferWallet}
-        field='wallet'
+        field="wallet"
       />
     </Box>
   );

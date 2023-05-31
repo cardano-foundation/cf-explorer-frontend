@@ -187,7 +187,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill='#438F68' />
+            <AddressIcon fill="#438F68" />
             <CustomTooltip title={selected?.txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(selected?.txHash)}>
@@ -226,7 +226,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
                 />
               </Box>
             )}
-            <Box display='flex' justifyContent={isPoolHold ? "unset" : "center"}>
+            <Box display="flex" justifyContent={isPoolHold ? "unset" : "center"}>
               <FeeBoxSPO sidebar={sidebar} ref={feeRef} value={selected?.fee || ""} txHash={selected?.txHash || ""} />
             </Box>
           </BoxGroup>
@@ -256,7 +256,7 @@ export const DeregistrationCertificateModal = ({
   handleCloseModal: () => void;
 }) => {
   return (
-    <StyledModal {...props} title='Deregistration certificate'>
+    <StyledModal {...props} title="Deregistration certificate">
       <Grid container spacing={1}>
         <StyledGridItem item xs={6}>
           <Box>

@@ -58,8 +58,9 @@ const PoolLifecycle = () => {
         document.body.appendChild(link);
         link.click();
       })
-      //To do
-      .catch((e) => console.log(e))
+      .catch((e) => {
+        //To do
+      })
       .finally(() => {
         setOnDownload(false);
       });
@@ -124,14 +125,14 @@ const PoolLifecycle = () => {
       minWidth: "30px",
       render(data) {
         return (
-          <Box width='100%' textAlign='center'>
+          <Box width="100%" textAlign="center">
             {onDownload === data.reportId ? (
-              <CircularProgress size={22} color='primary' />
+              <CircularProgress size={22} color="primary" />
             ) : data.status === "GENERATED" ? (
               <Box
                 component={IconButton}
                 display={"block"}
-                margin='auto'
+                margin="auto"
                 disabled={data.status !== "GENERATED"}
                 textTransform={"capitalize"}
                 onClick={() => downloadFn(data.reportId, data.reportName, "EXCEL")}

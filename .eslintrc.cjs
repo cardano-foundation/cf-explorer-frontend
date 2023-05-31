@@ -49,7 +49,7 @@ module.exports = {
         useTabs: false,
         singleQuote: false,
         printWidth: 120,
-        jsxSingleQuote: true
+        jsxSingleQuote: false
       }
     ]
   }

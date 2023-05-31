@@ -47,7 +47,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hide
         }
       }}
     >
-      <OptionSelect sx={{ display: "none" }} value='default'>
+      <OptionSelect sx={{ display: "none" }} value="default">
         {" "}
         {!hideInputLabel ? (isSend ? "Sent " : "Received ") : ""}Token
       </OptionSelect>
@@ -60,7 +60,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hide
           <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token?.assetId))}>
             <Box>
               {isTokenNameLong ? (
-                <CustomTooltip title={tokenName} placement='top'>
+                <CustomTooltip title={tokenName} placement="top">
                   <Box>{shortTokenName}</Box>
                 </CustomTooltip>
               ) : (

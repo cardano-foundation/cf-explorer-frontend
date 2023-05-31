@@ -50,7 +50,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
         onChange={(e, value) => typeof value !== "string" && setSelected(value?.fingerprint || "")}
         noOptionsText={
           <Box>
-            <Box maxHeight='200px' component={"img"} src={EmptyIcon}></Box>
+            <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
           </Box>
         }
         ListboxProps={{
@@ -73,29 +73,29 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                   background: theme.palette.grey[100]
                 }
               }
-            }
-          },
+            };
+          }
         }}
         renderOption={(propss, option: WalletAddress["tokens"][number] | string) => {
           if (typeof option === "string") {
             return (
               <Option key={"more"} {...propss} onClick={() => null} active={0}>
                 <Box
-                  display='flex'
+                  display="flex"
                   alignItems={"center"}
-                  justifyContent='center'
+                  justifyContent="center"
                   width={"100%"}
                   fontSize={"14px"}
                   padding={0}
-                  gap='10px'
-                  minHeight='34px'
+                  gap="10px"
+                  minHeight="34px"
                 >
                   <Box
                     component={Button}
-                    width='100%'
+                    width="100%"
                     textTransform={"inherit"}
                     onClick={() => {
-                      setOpenModalToken(true)
+                      setOpenModalToken(true);
                     }}
                   >
                     See more
@@ -107,37 +107,37 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
           return (
             <Option key={option.fingerprint} {...propss} active={selected === option.fingerprint ? 1 : 0}>
               <Box
-                display='flex'
+                display="flex"
                 alignItems={"center"}
-                justifyContent='space-between'
+                justifyContent="space-between"
                 width={"100%"}
                 fontSize={"14px"}
                 padding={0}
-                gap='10px'
-                minHeight='34px'
+                gap="10px"
+                minHeight="34px"
               >
-                <Box display='flex' alignItems={"center"} overflow='hidden' gap='10px'>
+                <Box display="flex" alignItems={"center"} overflow="hidden" gap="10px">
                   <Box>
                     {option?.metadata?.logo ? (
-                      <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt='icon' />
+                      <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt="icon" />
                     ) : (
                       <LogoEmpty />
                     )}
                   </Box>
                   <CustomTooltip title={`${option.displayName || ""} #${option.name || option.fingerprint}`}>
-                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth='150px'>
+                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="150px">
                       {option.displayName || ""} #{option.name || option.fingerprint}
                     </Box>
                   </CustomTooltip>
                 </Box>
-                <Box fontWeight={"bold"} flex={1} textAlign='right'>
+                <Box fontWeight={"bold"} flex={1} textAlign="right">
                   {numberWithCommas(option.quantity)}
                 </Box>
               </Box>
             </Option>
           );
         }}
-        renderInput={(params) => <StyledTextField {...params} placeholder='Search Token' />}
+        renderInput={(params) => <StyledTextField {...params} placeholder="Search Token" />}
         popupIcon={<BiChevronDown />}
       />
       <ModalToken address={address} open={openModalToken} onClose={() => setOpenModalToken(false)} />
@@ -162,14 +162,14 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
       title: "#",
       key: "#",
       minWidth: "50px",
-      render: (r, index) => numberWithCommas((page) * size + index + 1)
+      render: (r, index) => numberWithCommas(page * size + index + 1)
     },
     {
       title: "Icon",
       key: "icon",
       minWidth: "50px",
       render: (r) =>
-        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt='icon' /> : <LogoEmpty />
+        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />
     },
     {
       title: "Name",
@@ -197,14 +197,14 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
     <Modal open={open} onClose={onClose}>
       <ModalContainer>
         <ButtonClose onClick={onClose}>
-          <img src={CloseIcon} alt='icon close' />
+          <img src={CloseIcon} alt="icon close" />
         </ButtonClose>
-        <Box textAlign={"left"} fontSize='1.5rem' fontWeight='bold' fontFamily={'"Roboto", sans-serif '}>
+        <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Roboto", sans-serif '}>
           Token List
         </Box>
         <SearchContainer mt={2} mb={1}>
           <StyledInput
-            placeholder='Search tokens'
+            placeholder="Search tokens"
             onChange={(e) => setValue(e.target.value)}
             value={value}
             onKeyUp={(e) => {
@@ -215,7 +215,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             }}
           />
           <SubmitButton onClick={() => setSearch(value)}>
-            <Image src={HeaderSearchIcon} alt='Search' />
+            <Image src={HeaderSearchIcon} alt="Search" />
           </SubmitButton>
         </SearchContainer>
         <WrappModalScrollBar>

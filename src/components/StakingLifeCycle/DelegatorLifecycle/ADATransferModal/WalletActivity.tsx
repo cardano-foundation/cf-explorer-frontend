@@ -42,11 +42,11 @@ const WalletActivity: React.FC = () => {
       key: "outSum",
       minWidth: "100px",
       render: (r) => (
-        <Box display='flex' alignItems='center'>
+        <Box display="flex" alignItems="center">
           <Amount type={r.amount > 0 ? "up" : "down"}>
             {r.amount > 0 ? `+${formatADAFull(r.amount)}` : formatADAFull(r.amount)}
           </Amount>
-          <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
+          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
         </Box>
       )
     },
@@ -84,7 +84,7 @@ const WalletActivity: React.FC = () => {
   })`;
   return (
     <Box>
-      <UserInfo acitve='wallet' total={fetchData.total} reward={data?.totalStake || 0} stake={stakeId} />
+      <UserInfo acitve="wallet" total={fetchData.total} reward={data?.totalStake || 0} stake={stakeId} />
       <StyledTable
         {...fetchData}
         maxHeight={maxHeightCalc}

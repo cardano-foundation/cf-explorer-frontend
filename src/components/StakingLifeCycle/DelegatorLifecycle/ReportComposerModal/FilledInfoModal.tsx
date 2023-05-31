@@ -92,7 +92,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
         </ModalTitle>
         <StyledStack>
           <StyledLabel>Report name</StyledLabel>
-          <StyledTextField placeholder='Enter report name' value={reportName} onChange={onChangeReportName} />
+          <StyledTextField placeholder="Enter report name" value={reportName} onChange={onChangeReportName} />
         </StyledStack>
         {reportType === ReportType.StakeKeyReport && (
           <Container>
@@ -109,7 +109,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
               getAriaLabel={() => "Minimum distance"}
               value={epochRange}
               onChange={handleChangeEpochRange}
-              valueLabelDisplay='auto'
+              valueLabelDisplay="auto"
               disableSwap
               min={0}
               max={currentEpoch?.no || 0}

@@ -59,22 +59,22 @@ const StackingFilter: React.FC<StackingFilterProps> = ({
   const filterOptions: StakingOption[] = [
     {
       label: "Latest - First",
-      icon: <CustomIcon icon={ArrowFromTopIcon} fill='currentColor' width={20} />,
+      icon: <CustomIcon icon={ArrowFromTopIcon} fill="currentColor" width={20} />,
       value: "latest"
     },
     {
       label: "First - Latest",
-      icon: <CustomIcon icon={ArrowFromBottomIcon} fill='currentColor' width={20} />,
+      icon: <CustomIcon icon={ArrowFromBottomIcon} fill="currentColor" width={20} />,
       value: "first"
     },
     {
       label: "Date range",
-      icon: <CustomIcon icon={CalenderIcon} fill='currentColor' width={20} />,
+      icon: <CustomIcon icon={CalenderIcon} fill="currentColor" width={20} />,
       value: "dateRange"
     },
     {
       label: "Search transaction",
-      icon: <CustomIcon icon={SearchIcon} stroke='currentColor' width={22} />,
+      icon: <CustomIcon icon={SearchIcon} stroke="currentColor" width={22} />,
       value: "search"
     }
   ];
@@ -128,7 +128,7 @@ const StackingFilter: React.FC<StackingFilterProps> = ({
                 icon={FilterIC}
                 width={18}
                 color={(theme) => theme.palette.primary.main}
-                fill='currentColor'
+                fill="currentColor"
               />
             </FilterIconContainer>
           }

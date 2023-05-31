@@ -173,7 +173,7 @@ const Bookmark = () => {
       key: "Action",
       minWidth: 120,
       render: (data, index) => (
-        <Box display='flex' justifyContent={"flex-end"}>
+        <Box display="flex" justifyContent={"flex-end"}>
           <IconButton onClick={() => setSelected(data.keyword || "")}>
             <DeleteBookmark fontSize={10} />
           </IconButton>
@@ -341,7 +341,7 @@ const Bookmark = () => {
           <TabList
             onChange={handleChange}
             TabIndicatorProps={{ sx: { style: { background: (theme) => theme.palette.primary.main }, height: 3 } }}
-            variant='scrollable'
+            variant="scrollable"
             scrollButtons={false}
           >
             {tabs.map(({ key, label }) => (
@@ -350,7 +350,7 @@ const Bookmark = () => {
                 value={key}
                 label={
                   <Box>
-                    <Box display={"flex"} alignItems='center'>
+                    <Box display={"flex"} alignItems="center">
                       <TitleTab pl={1} active={key === activeTab}>
                         {label}
                       </TitleTab>
@@ -375,7 +375,7 @@ const Bookmark = () => {
         }}
       >
         <ButtonClose disabled={loadingDelete} onClick={() => setSelected(null)}>
-          <img src={CloseIcon} alt='icon close' />
+          <img src={CloseIcon} alt="icon close" />
         </ButtonClose>
         <Box textAlign={"center"} pt={5} pb={2}>
           <QuestionConfirm />
@@ -390,13 +390,13 @@ const Bookmark = () => {
         </Box>
         <DialogActions>
           <Box width={"100%"} display={"flex"} pt={2} pb={3} flexDirection={"row"} justifyContent={"center"}>
-            <CancelButton disabled={loadingDelete} onClick={handleClose} variant='outlined'>
+            <CancelButton disabled={loadingDelete} onClick={handleClose} variant="outlined">
               Cancel
             </CancelButton>
             <DeleteButton
               loading={loadingDelete}
               onClick={() => selected && deleteBookMark(selected)}
-              variant='contained'
+              variant="contained"
             >
               Continue
             </DeleteButton>
