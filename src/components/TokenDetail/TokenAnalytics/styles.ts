@@ -87,7 +87,7 @@ export const Wrapper = styled(Grid)(({ theme }) => ({
 
 export const ButtonTitle = styled("button")(({ theme }) => ({
   border: "none",
-  borderRadius: 10,
+  borderRadius: 5,
   padding: "8px 30px",
   fontWeight: "bold",
   fontSize: "1rem",

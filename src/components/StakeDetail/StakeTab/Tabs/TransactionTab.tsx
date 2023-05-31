@@ -116,7 +116,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: "Fee",
+      title: "Fees",
       key: "fee",
       minWidth: 120,
       render: (r) => (

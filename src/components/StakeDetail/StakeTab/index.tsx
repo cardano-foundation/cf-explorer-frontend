@@ -4,9 +4,9 @@ import { TabContext, TabPanel } from "@mui/lab";
 import {
   DelegationHistoryIcon,
   StakeKeyHistoryIcon,
-  WithdrawHistoryIcon,
   InstantaneousHistoryIcon,
-  TransactionIcon
+  TransactionIcon,
+  WithdrawalHistoryIcon
 } from "../../../commons/resources";
 import { StyledTabList, TitleTab, WrapperTabList } from "./styles";
 import { useHistory, useParams } from "react-router-dom";
@@ -47,7 +47,7 @@ const StakeTab = () => {
       component: <StakeHistoryTab isMobile={isMobile} />
     },
     {
-      icon: WithdrawHistoryIcon,
+      icon: WithdrawalHistoryIcon,
       label: "Withdrawal History",
       key: "withdrawal",
       component: <WithdrawalHistoryTab />

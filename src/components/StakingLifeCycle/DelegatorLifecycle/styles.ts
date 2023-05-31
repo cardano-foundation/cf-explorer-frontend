@@ -69,6 +69,7 @@ export const ADATransfersButton = styled(Button)(({ theme }) => ({
   borderRadius: "8px",
   textTransform: "capitalize",
   fontWeight: "bold",
+  minWidth: 115,
   ":hover": {
     background: alpha(theme.palette.green[600], 0.8)
   },
@@ -104,6 +105,11 @@ export const StyledBox = styled(Box)`
     & > p:nth-of-type(1) {
       white-space: nowrap;
       width: min-content;
+    }
+  }
+  ${({ theme }) => theme.breakpoints.down(365)} {
+    & > p:nth-of-type(1) {
+      white-space: break-spaces;
     }
   }
 `;
