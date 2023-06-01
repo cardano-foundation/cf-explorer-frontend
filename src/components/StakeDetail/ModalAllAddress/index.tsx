@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Box, Modal } from "@mui/material";
 import { ButtonClose, ModalContainer, WrapContent } from "./styles";
-import closeIcon from "../../../commons/resources/icons/closeIcon.svg";
 import useFetchList from "../../../commons/hooks/useFetchList";
 import Table, { Column } from "../../commons/Table";
 import { formatADAFull, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";

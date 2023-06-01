@@ -2,7 +2,6 @@ import { Box, Skeleton, useTheme, Modal } from "@mui/material";
 
 import { JsonViewer } from "@textea/json-viewer";
 import { ButtonClose, ButtonLink, ModalContainer, ViewJson } from "./styles";
-import closeIcon from "../../commons/resources/icons/closeIcon.svg";
 import CopyButton from "../commons/CopyButton";
 import useFetch from "../../commons/hooks/useFetch";
 import { details } from "../../commons/routers";

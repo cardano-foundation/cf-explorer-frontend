@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import feeImg from "src/commons/resources/images/dola.svg";
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { details } from "src/commons/routers";

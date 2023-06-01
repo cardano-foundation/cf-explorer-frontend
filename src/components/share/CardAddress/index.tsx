@@ -1,8 +1,7 @@
 import React from "react";
 import CopyButton from "../../commons/CopyButton";
-import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import { Box, Skeleton } from "@mui/material";
-import { EmptyIcon } from "../../../commons/resources";
+import { EmptyIcon, InfoIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import {
   AddressGroup,
@@ -16,6 +15,7 @@ import {
   TokenAddress,
   ValueItem
 } from "./styles";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 interface DetailCardProps {
   title: string;
@@ -60,7 +60,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
             <ItemDetail key={ii}>
               {i.title && (
                 <RowItem>
-                  <img src={infoIcon} alt="info icon" />
+                  <CustomIcon icon={InfoIcon} width={22} />
                   <LabelItem>{i.title}</LabelItem>
                 </RowItem>
               )}
