@@ -112,7 +112,7 @@ export const TotalNumber = styled("span")`
 
 export const WrappModalScrollBar = styled(Box)(({theme}) => `
   overflow-y: auto;
-  max-height: 75vh;
+  max-height: 70vh;
   padding-right: 5px;
   &::-webkit-scrollbar {
     width: 5px;
