@@ -21,8 +21,6 @@ import {
   Label
 } from "./styles";
 
-import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staking/ChartMode.svg";
-import { ReactComponent as TableMode } from "../../commons/resources/icons/Staking/TableMode.svg";
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import Tabular from "../../components/StakingLifeCycle/SPOLifecycle/Tablular";
 import CustomTooltip from "../../components/commons/CustomTooltip";
@@ -34,6 +32,7 @@ import { API } from "src/commons/utils/api";
 import useFetch from "src/commons/hooks/useFetch";
 import PoolDetailContext from "src/components/StakingLifeCycle/SPOLifecycle/PoolDetailContext";
 import NoRecord from "src/components/commons/NoRecord";
+import { ChartMode, TableMode } from "src/commons/resources";
 
 interface Params {
   poolId: string;

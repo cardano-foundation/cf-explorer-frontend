@@ -23,8 +23,6 @@ import {
   Label
 } from "./styles";
 
-import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staking/ChartMode.svg";
-import { ReactComponent as TableMode } from "../../commons/resources/icons/Staking/TableMode.svg";
 import { details } from "../../commons/routers";
 import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import CustomTooltip from "../../components/commons/CustomTooltip";
@@ -34,6 +32,7 @@ import { API } from "src/commons/utils/api";
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import NoRecord from "src/components/commons/NoRecord";
 import { useSelector } from "react-redux";
+import { ChartMode, TableMode } from "src/commons/resources";
 
 interface Params {
   stakeId: string;

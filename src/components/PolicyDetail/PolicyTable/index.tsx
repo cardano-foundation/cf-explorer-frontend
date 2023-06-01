@@ -4,8 +4,6 @@ import { stringify } from "qs";
 import React from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "../../../commons/hooks/useFetchList";
-import { ReactComponent as AssetHolderIcon } from "../../../commons/resources/icons/assetHolder.svg";
-import { ReactComponent as TokenIcon } from "../../../commons/resources/icons/tokenIcon.svg";
 import { details } from "../../../commons/routers";
 import { API } from "../../../commons/utils/api";
 import {
@@ -18,6 +16,7 @@ import {
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { LinkComponent, StyledBoxContainer, StyledTabList, TitleTab } from "./styles";
+import { AssetHolderIcon, TokenIcon } from "src/commons/resources";
 
 enum TABS {
   TOKENS = "tokens",

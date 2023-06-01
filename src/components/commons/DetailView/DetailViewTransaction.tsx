@@ -5,7 +5,7 @@ import {
   CubeIcon,
   DelegationHistoryMainIcon,
   FileEditIcon,
-  MintingIcon,
+  MintingIconUrl,
   NoteEditIcon,
   RocketIcon,
   USDIcon,
@@ -70,7 +70,7 @@ const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] 
   { key: "collaterals", label: "Collateral", icon: <DetailLinkImage src={USDIcon} alt="contact" /> },
   { key: "notes", label: "Notes", icon: <DetailLinkImage src={NoteEditIcon} alt="contact" /> },
   { key: "withdrawals", label: "Withdrawal", icon: <DetailLinkImage src={WithdrawlIcon} alt="contact" /> },
-  { key: "mints", label: "Minting", icon: <DetailLinkImage src={MintingIcon} alt="contact" /> }
+  { key: "mints", label: "Minting", icon: <DetailLinkImage src={MintingIconUrl} alt="contact" /> }
 ];
 
 const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {

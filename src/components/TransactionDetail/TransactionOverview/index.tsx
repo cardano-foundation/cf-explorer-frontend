@@ -5,15 +5,16 @@ import { formatADAFull, formatDateTimeLocal, getShortWallet } from "../../../com
 import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { Box, IconButton, useTheme } from "@mui/material";
 import { ConfirmStatus, MaxSlot, StyledLink, TitleCard } from "./styles";
-import infoIcon from "../../../commons/resources/images/infoIcon.svg";
-import timeIcon from "../../../commons/resources/icons/time.svg";
-import exchageAltIcon from "../../../commons/resources/icons/exchangeArrow.svg";
-import txConfirm from "../../../commons/resources/icons/txConfirm.svg";
-import totalOutput from "../../../commons/resources/icons/totalOutput.svg";
-import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";
-import slotIcon from "../../../commons/resources/icons/slot.svg";
-import txInputIcon from "../../../commons/resources/icons/txInput.svg";
-import txOutputIcon from "../../../commons/resources/icons/txOutput.svg";
+import {
+  timeIconUrl,
+  exchageAltIconUrl,
+  txConfirmUrl,
+  totalOutputUrl,
+  cubeIconUrl,
+  slotIconUrl,
+  txInputIconUrl,
+  txOutputIconUrl
+} from "src/commons/resources";
 import CopyButton from "../../commons/CopyButton";
 import { details } from "../../../commons/routers";
 import DropdownDetail from "../../commons/DropdownDetail";
@@ -76,7 +77,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
 
   const listOverview = [
     {
-      icon: txInputIcon,
+      icon: txInputIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1} height={24}>
@@ -119,7 +120,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       key: "input"
     },
     {
-      icon: txOutputIcon,
+      icon: txOutputIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1} height={24}>
@@ -161,7 +162,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       key: "output"
     },
     {
-      icon: timeIcon,
+      icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Time </TitleCard>
@@ -170,7 +171,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       value: formatDateTimeLocal(data?.tx?.time || "")
     },
     {
-      icon: txConfirm,
+      icon: txConfirmUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Confirmation</TitleCard>
@@ -184,7 +185,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       )
     },
     {
-      icon: totalOutput,
+      icon: totalOutputUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Total Output</TitleCard>
@@ -197,7 +198,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       )
     },
     {
-      icon: exchageAltIcon,
+      icon: exchageAltIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction Fees </TitleCard>
@@ -210,7 +211,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       )
     },
     {
-      icon: cubeIcon,
+      icon: cubeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
@@ -222,7 +223,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       value: <StyledLink to={details.block(data?.tx?.blockNo || 0)}>{data?.tx?.blockNo || 0}</StyledLink>
     },
     {
-      icon: slotIcon,
+      icon: slotIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>

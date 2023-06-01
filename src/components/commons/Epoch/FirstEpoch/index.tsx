@@ -1,8 +1,5 @@
 import { Box, useTheme } from "@mui/material";
-import { ExchangeIcon } from "src/commons/resources";
-import cubeIcon from "src/commons/resources/icons/blockIcon.svg";
-import slotIcon from "src/commons/resources/icons/slot.svg";
-import timeIcon from "src/commons/resources/icons/time.svg";
+import { ExchangeIcon, cubeIconUrl, slotIconUrl, timeIconUrl } from "src/commons/resources";
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 import { Status } from "src/pages/Epoch/styles";
@@ -51,7 +48,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       )
     },
     {
-      icon: cubeIcon,
+      icon: cubeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Block </TitleCard>
@@ -60,7 +57,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       value: <Box component={"span"}>{currentEpochData?.blkCount}</Box>
     },
     {
-      icon: slotIcon,
+      icon: slotIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Slot</TitleCard>
@@ -76,7 +73,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       )
     },
     {
-      icon: timeIcon,
+      icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Start Time</TitleCard>
@@ -85,7 +82,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       value: <Box component={"span"}>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Box>
     },
     {
-      icon: timeIcon,
+      icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> End Time</TitleCard>
