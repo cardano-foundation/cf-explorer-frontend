@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, LinkProps } from "react-router-dom";
 import { alpha, styled, TooltipProps } from "@mui/material";
-import { SeeMoreIcon } from "../../../commons/resources";
+
+import { SeeMoreIcon } from "src/commons/resources";
+
 import CustomTooltip from "../CustomTooltip";
 
 const StyledLink = styled(Link)`

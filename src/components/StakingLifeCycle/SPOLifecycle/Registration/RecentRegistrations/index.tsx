@@ -2,6 +2,9 @@
 import { Box, Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
+import { useUpdateEffect } from "react-use";
+import { useSelector } from "react-redux";
+
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../../StackingFilter";
@@ -10,8 +13,6 @@ import { EmptyRecord, FooterTable } from "../../../../commons/Table";
 import { GridBox, WrapFilterDescription, StyledList, StyledContainer } from "./styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
 import { details } from "../../../../../commons/routers";
-import { useUpdateEffect } from "react-use";
-import { useSelector } from "react-redux";
 
 interface Props {
   onSelect: (registration: SPORegistration | null) => void;

@@ -4,7 +4,10 @@ import Highcharts from "highcharts";
 import moment from "moment";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { HighchartsReact } from "highcharts-react-official";
+
 import { useScreen } from "src/commons/hooks/useScreen";
+
 import useFetch from "../../../commons/hooks/useFetch";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { API } from "../../../commons/utils/api";
@@ -24,7 +27,6 @@ import {
   ValueInfo,
   Wrapper
 } from "./styles";
-import { HighchartsReact } from "highcharts-react-official";
 
 type AnalyticsData = { date: string; value: number };
 

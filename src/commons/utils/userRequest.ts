@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios";
+
 import { UserDataType } from "../../types/user";
 import defaultAxios, { authAxios, defaultAxiosDownload } from "./axios";
 import { API } from "./api";

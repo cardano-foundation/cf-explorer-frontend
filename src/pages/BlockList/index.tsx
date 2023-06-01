@@ -1,20 +1,23 @@
 import { useEffect, useState, useRef } from "react";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
-import useFetchList from "../../commons/hooks/useFetchList";
+
+import { Column } from "src/types/table";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { details } from "src/commons/routers";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import { setOnDetailView } from "src/stores/user";
+import DetailViewBlock from "src/components/commons/DetailView/DetailViewBlock";
+import Card from "src/components/commons/Card";
+import Table from "src/components/commons/Table";
+import { API } from "src/commons/utils/api";
+import SelectedIcon from "src/components/commons/SelectedIcon";
+import Link from "src/components/commons/Link";
+import ADAicon from "src/components/commons/ADAIcon";
+import useFetchList from "src/commons/hooks/useFetchList";
+
 import { PriceWrapper, StyledColorBlueDard, StyledContainer, StyledLink } from "./styles";
-import { Column } from "../../types/table";
-import CustomTooltip from "../../components/commons/CustomTooltip";
-import { details } from "../../commons/routers";
-import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../commons/utils/helper";
-import { setOnDetailView } from "../../stores/user";
-import DetailViewBlock from "../../components/commons/DetailView/DetailViewBlock";
-import Card from "../../components/commons/Card";
-import Table from "../../components/commons/Table";
-import { API } from "../../commons/utils/api";
-import SelectedIcon from "../../components/commons/SelectedIcon";
-import Link from "../../components/commons/Link";
-import ADAicon from "../../components/commons/ADAIcon";
+
 const BlockList = () => {
   const { search } = useLocation();
   const history = useHistory();

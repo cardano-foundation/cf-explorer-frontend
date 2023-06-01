@@ -1,10 +1,8 @@
 import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import DetailHeader from "../../commons/DetailHeader";
-import { formatADAFull, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { Box, IconButton, useTheme } from "@mui/material";
-import { ConfirmStatus, MaxSlot, StyledLink, TitleCard } from "./styles";
+import { BiShowAlt } from "react-icons/bi";
+
 import {
   timeIconUrl,
   exchageAltIconUrl,
@@ -15,14 +13,18 @@ import {
   txInputIconUrl,
   txOutputIconUrl
 } from "src/commons/resources";
-import CopyButton from "../../commons/CopyButton";
-import { details } from "../../../commons/routers";
-import DropdownDetail from "../../commons/DropdownDetail";
-import { BiShowAlt } from "react-icons/bi";
-import { RootState } from "../../../stores/types";
-import CustomTooltip from "../../commons/CustomTooltip";
-import ADAicon from "../../commons/ADAIcon";
-import { useScreen } from "../../../commons/hooks/useScreen";
+import { formatADAFull, formatDateTimeLocal, getShortWallet } from "src/commons/utils/helper";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { details } from "src/commons/routers";
+import { RootState } from "src/stores/types";
+import { useScreen } from "src/commons/hooks/useScreen";
+import DetailHeader from "src/components/commons/DetailHeader";
+import CopyButton from "src/components/commons/CopyButton";
+import DropdownDetail from "src/components/commons/DropdownDetail";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import ADAicon from "src/components/commons/ADAIcon";
+
+import { ConfirmStatus, MaxSlot, StyledLink, TitleCard } from "./styles";
 
 interface Props {
   data: Transaction | null;

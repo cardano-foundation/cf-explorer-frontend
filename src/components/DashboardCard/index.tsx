@@ -1,6 +1,7 @@
 import React from "react";
-import { CardContent, SubTitle, Title, TitleGroup, Card, IconContainer } from "./styles";
 import { Link } from "react-router-dom";
+
+import { CardContent, SubTitle, Title, TitleGroup, Card, IconContainer } from "./styles";
 
 export interface DashboardCardProps {
   leftIcon?: React.ReactNode;

@@ -1,6 +1,8 @@
 import { Box, BoxProps, styled } from "@mui/material";
 import React, { forwardRef } from "react";
+
 import { CertificateIcon } from "src/commons/resources";
+
 import CustomIcon from "../CustomIcon";
 
 const CertificateBox = styled(Box)(({ theme }) => ({
@@ -22,12 +24,6 @@ const CertificateBox = styled(Box)(({ theme }) => ({
   borderRadius: 12,
   boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.03)",
   cursor: "pointer"
-}));
-
-const StyledImage = styled("img")(() => ({
-  width: 100,
-  height: 100,
-  aspectRatio: 1
 }));
 
 export const CertificateShape: React.FC<BoxProps> = forwardRef(({ children, ...props }, boxRef) => {

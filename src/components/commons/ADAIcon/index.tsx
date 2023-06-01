@@ -1,4 +1,5 @@
 import { Box, styled } from "@mui/material";
+
 import { OfficialAdaIcon } from "../../../commons/resources";
 
 const ADAicon = ({ ...props }) => {

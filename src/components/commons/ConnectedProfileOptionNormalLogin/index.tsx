@@ -1,11 +1,13 @@
+import React, { useState } from "react";
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
-import { LinkOff, User2 } from "../../../commons/resources/index";
-import { routers } from "../../../commons/routers";
-import { getShortWallet, removeAuthInfo } from "../../../commons/utils/helper";
-import { signOut } from "../../../commons/utils/userRequest";
+import { useHistory } from "react-router-dom";
+
+import { LinkOff, User2 } from "src/commons/resources/index";
+import { routers } from "src/commons/routers";
+import { removeAuthInfo } from "src/commons/utils/helper";
+import { signOut } from "src/commons/utils/userRequest";
+
 import { Content, Disconnect, Icon, Name, Profile, Span, StyledButton, WrapContent } from "./style";
 
 interface IProps {

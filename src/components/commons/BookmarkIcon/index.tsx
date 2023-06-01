@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Box, CircularProgress, IconButton, useTheme } from "@mui/material";
 import { useLocalStorage } from "react-use";
-import { addBookmark, deleteBookmark } from "../../../commons/utils/userRequest";
-import { NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
-import useToast from "../../../commons/hooks/useToast";
+import { Box, CircularProgress, IconButton, useTheme } from "@mui/material";
+
+import { addBookmark, deleteBookmark } from "src/commons/utils/userRequest";
+import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
+import useToast from "src/commons/hooks/useToast";
 import useAuth from "src/commons/hooks/useAuth";
 import { BookmarkIcon, Bookmarked } from "src/commons/resources";
 

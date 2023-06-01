@@ -1,13 +1,15 @@
 import React from "react";
-import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import DetailHeader from "../../commons/DetailHeader";
-import { timeIconUrl, outputIconUrl, cubeIconUrl, slotIconUrl } from "src/commons/resources";
-import { TitleCard } from "../../BlockDetail/BlockOverview/styles";
 import { Box } from "@mui/material";
-import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
 import { useSelector } from "react-redux";
-import ADAicon from "../../commons/ADAIcon";
 import moment from "moment";
+
+import { timeIconUrl, outputIconUrl, cubeIconUrl, slotIconUrl } from "src/commons/resources";
+import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import DetailHeader from "src/components/commons/DetailHeader";
+import { TitleCard } from "src/components/BlockDetail/BlockOverview/styles";
+import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
+
 interface EpochOverviewProps {
   data: IDataEpoch | null;
   loading: boolean;

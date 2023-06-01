@@ -1,5 +1,18 @@
-import { Box, CircularProgress, Stack } from "@mui/material";
-import StyledModal from "../../../commons/StyledModal";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import moment from "moment";
+import { CircularProgress, Stack } from "@mui/material";
+
+import StyledModal from "src/components/commons/StyledModal";
+import { generateStakeKeyReport, generateStakePoolReport } from "src/commons/utils/userRequest";
+import useToast from "src/commons/hooks/useToast";
+import { details } from "src/commons/routers";
+import { getEventType } from "src/components/StakekeySummary";
+import { getPoolEventType } from "src/components/PoolLifecycle";
+import { useScreen } from "src/commons/hooks/useScreen";
+
+import { EVENTS_NAME } from "./StepEventsModal";
+import { ReportType } from "./FilledInfoModal";
 import {
   Container,
   ModalTitle,
@@ -13,18 +26,8 @@ import {
   TextRequired,
   TextValueReview
 } from "./styles";
+
 import { IPropsModal, STEPS } from ".";
-import moment from "moment";
-import { EVENTS_NAME } from "./StepEventsModal";
-import { ReportType } from "./FilledInfoModal";
-import { generateStakeKeyReport, generateStakePoolReport } from "../../../../commons/utils/userRequest";
-import useToast from "../../../../commons/hooks/useToast";
-import { useHistory } from "react-router-dom";
-import { details } from "../../../../commons/routers";
-import { useState } from "react";
-import { getEventType } from "../../../StakekeySummary";
-import { getPoolEventType } from "../../../PoolLifecycle";
-import { useScreen } from "../../../../commons/hooks/useScreen";
 
 const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaultParams, gotoStep }) => {
   const toast = useToast();

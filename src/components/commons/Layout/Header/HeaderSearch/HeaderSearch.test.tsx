@@ -1,7 +1,9 @@
 import { fireEvent, screen } from "@testing-library/react";
-import HeaderSearch, { OptionsSearch } from ".";
 import userEvent from "@testing-library/user-event";
+
 import { render } from "src/test-utils";
+
+import HeaderSearch, { OptionsSearch } from ".";
 
 describe("HeaderSearch", () => {
   it("should render header search", () => {

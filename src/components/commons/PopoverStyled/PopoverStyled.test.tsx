@@ -1,7 +1,9 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import PopoverStyled from ".";
+
 import { render } from "src/test-utils";
+
+import PopoverStyled from ".";
 
 test("Render popover button", async () => {
   const buttonRef = {
@@ -11,7 +13,7 @@ test("Render popover button", async () => {
   render(
     <PopoverStyled
       render={({ handleClick }) => (
-        <button ref={buttonRef} onClick={(e) => buttonRef.current && handleClick(buttonRef.current)}>
+        <button ref={buttonRef} onClick={() => buttonRef.current && handleClick(buttonRef.current)}>
           Button
         </button>
       )}
@@ -28,7 +30,7 @@ test("ATest click popover button", async () => {
   render(
     <PopoverStyled
       render={({ handleClick }) => (
-        <button ref={buttonRef} onClick={(e) => buttonRef.current && handleClick(buttonRef.current)}>
+        <button ref={buttonRef} onClick={() => buttonRef.current && handleClick(buttonRef.current)}>
           Button
         </button>
       )}

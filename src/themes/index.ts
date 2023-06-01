@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material";
+
 import { ThemeType } from "../types/user";
 import breakpoints from "./breakpoints";
 import palette, { CustomPalette } from "./palette";

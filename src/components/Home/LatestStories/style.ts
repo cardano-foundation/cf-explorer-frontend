@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/material";
-import Slider from "react-slick";
-import { BoxRaised } from "../../commons/BoxRaised";
+
+import { BoxRaised } from "src/components/commons/BoxRaised";
 
 export const LatestStoriesContainer = styled(Box)`
   text-align: center;

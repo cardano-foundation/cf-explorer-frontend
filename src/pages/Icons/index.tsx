@@ -1,8 +1,9 @@
-import { Container, Modal, TextareaAutosize, Theme, styled, useTheme } from "@mui/material";
-import * as icons from "../../commons/resources";
-import CustomIcon from "../../components/commons/CustomIcon";
-import { Box } from "@mui/system";
 import { useState } from "react";
+import { Box } from "@mui/system";
+import { Container, Modal, TextareaAutosize, Theme, styled, useTheme } from "@mui/material";
+
+import * as icons from "src/commons/resources";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 const StyledContainer = styled(Container)`
   padding: 20px 0 40px;

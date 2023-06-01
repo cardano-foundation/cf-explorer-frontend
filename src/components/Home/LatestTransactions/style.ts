@@ -1,6 +1,7 @@
 import { Box, styled } from "@mui/material";
-import { BoxRaised } from "../../commons/BoxRaised";
-import { TRANSACTION_STATUS } from "../../../commons/utils/constants";
+
+import { BoxRaised } from "src/components/commons/BoxRaised";
+import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 
 export const TransactionContainer = styled(Box)`
   margin-bottom: 24px;

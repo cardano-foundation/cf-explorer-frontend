@@ -2,8 +2,9 @@ import React, { useCallback, useState, useEffect } from "react";
 import { Backdrop, Box } from "@mui/material";
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { useSelector } from "react-redux";
-import { WalletIcon } from "../../../../../commons/resources";
-import { RootState } from "../../../../../stores/types";
+
+import { WalletIcon } from "src/commons/resources";
+import { RootState } from "src/stores/types";
 import {
   setModalRegister,
   setModalSignMessage,
@@ -11,18 +12,17 @@ import {
   setNonce,
   setAddress,
   setUserData
-} from "../../../../../stores/user";
-import ConnectedProfileOption from "../../../ConnectedProfileOption";
-import ConnectWalletModal from "../../../ConnectWalletModal";
-import RegisterUsernameModal from "../RegisterUsernameModal";
+} from "src/stores/user";
+import { getInfo, getNonce, signIn } from "src/commons/utils/userRequest";
+import { NETWORK, NETWORKS, NETWORK_TYPES } from "src/commons/utils/constants";
+import { removeAuthInfo } from "src/commons/utils/helper";
+import useToast from "src/commons/hooks/useToast";
+import ConnectedProfileOption from "src/components/commons/ConnectedProfileOption";
+import ConnectWalletModal from "src/components/commons/ConnectWalletModal";
+
 import { Image, Span, Spin, StyledButton } from "./styles";
-import { getAllBookmarks, getInfo, getNonce, signIn } from "../../../../../commons/utils/userRequest";
-import { NETWORK, NETWORKS, NETWORK_TYPES } from "../../../../../commons/utils/constants";
+import RegisterUsernameModal from "../RegisterUsernameModal";
 import SignMessageModal from "../SignMessageModal";
-import SyncBookmarkModal from "../SyncBookmarkModal";
-import { useLocalStorage } from "react-use";
-import { removeAuthInfo } from "../../../../../commons/utils/helper";
-import useToast from "../../../../../commons/hooks/useToast";
 interface Props {
   customButton?: ({ handleClick }: { handleClick: () => void }) => React.ReactNode;
   onSuccess?: () => void;
@@ -33,11 +33,11 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect, enabledWallet } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
-  const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
   const [signature, setSignature] = React.useState("");
   const [submitting, setSubmitting] = useState(false);
   const [isSign, setIsSign] = useState(isConnected);
   const toast = useToast();
+
   useEffect(() => {
     window.onbeforeunload = function () {
       if (!localStorage.getItem("token")) {
@@ -105,7 +105,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         await signMessage(
           nonceValue.nonce,
           (signature) => handleSignIn(signature, nonceValue),
-          (error: Error) => {
+          () => {
             toast.error("User rejected the request!");
             setModalSignMessage(false);
             disconnect();

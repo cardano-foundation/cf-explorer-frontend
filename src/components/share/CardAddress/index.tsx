@@ -1,8 +1,11 @@
 import React from "react";
-import CopyButton from "../../commons/CopyButton";
 import { Box, Skeleton } from "@mui/material";
-import { EmptyIcon, InfoIcon } from "../../../commons/resources";
-import { details } from "../../../commons/routers";
+
+import { EmptyIcon, InfoIcon } from "src/commons/resources";
+import CopyButton from "src/components/commons/CopyButton";
+import { details } from "src/commons/routers";
+import CustomIcon from "src/components/commons/CustomIcon";
+
 import {
   AddressGroup,
   AddressLink,
@@ -15,7 +18,6 @@ import {
   TokenAddress,
   ValueItem
 } from "./styles";
-import CustomIcon from "src/components/commons/CustomIcon";
 
 interface DetailCardProps {
   title: string;

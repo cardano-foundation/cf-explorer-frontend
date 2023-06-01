@@ -3,15 +3,17 @@ import { useState } from "react";
 import { Link as LinkDom } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
+
 import { FilterParams } from "src/components/StackingFilter";
-import useFetch from "../../../../commons/hooks/useFetch";
-import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "../../../../commons/resources";
-import { details } from "../../../../commons/routers";
-import { API } from "../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import CopyButton from "../../../commons/CopyButton";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import StyledModal from "../../../commons/StyledModal";
+import useFetch from "src/commons/hooks/useFetch";
+import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import CopyButton from "src/components/commons/CopyButton";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import StyledModal from "src/components/commons/StyledModal";
+
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 import DelegationDraw from "./DelegationDraw";
 import RecentDelegations from "./RecentDelegations";

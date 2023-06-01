@@ -1,6 +1,10 @@
 import { Box, IconButton, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+
+import { EyeIcon } from "src/commons/resources";
+import { DeregistrationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Deregistration";
+
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
@@ -9,8 +13,6 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
 import { StyledLink, TableSubTitle } from "../styles";
 import { AdaValue } from "./StakeRegistrationTab";
-import { EyeIcon } from "src/commons/resources";
-import { DeregistrationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Deregistration";
 
 const DeregistrationTab = () => {
   const theme = useTheme();
@@ -72,7 +74,7 @@ const DeregistrationTab = () => {
       title: "Certificate",
       key: "txHash",
       minWidth: "120px",
-      render: (r) => (
+      render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
           <EyeIcon style={{ transform: "scale(.8)" }} />
         </IconButton>

@@ -1,10 +1,12 @@
-import { Container } from "@mui/material";
-import ReportGeneratedDetailTabs from "../../components/ReportGeneratedStakingDetail";
-import { BackButton, BackText } from "../../components/commons/DetailHeader/styles";
-import { HiArrowLongLeft } from "react-icons/hi2";
-import { TopHeader } from "../ReportGeneratedPoolDetail/styles";
-import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
+import { Container } from "@mui/material";
+import { useHistory } from "react-router-dom";
+import { HiArrowLongLeft } from "react-icons/hi2";
+
+import ReportGeneratedDetailTabs from "src/components/ReportGeneratedStakingDetail";
+import { BackButton, BackText } from "src/components/commons/DetailHeader/styles";
+
+import { TopHeader } from "../ReportGeneratedPoolDetail/styles";
 
 const ReportGeneratedStakingDetail = () => {
   const history = useHistory();

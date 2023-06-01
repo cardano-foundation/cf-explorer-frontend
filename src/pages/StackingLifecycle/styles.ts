@@ -1,5 +1,6 @@
 import { Box, Button, Container, Grid, styled } from "@mui/material";
-import Table from "../../components/commons/Table";
+
+import Table from "src/components/commons/Table";
 
 export const DashboardCardList = styled(Box)`
   display: flex;

@@ -1,19 +1,21 @@
+import { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Grid, Box, useTheme } from "@mui/material";
+import { useSelector } from "react-redux";
+import { HiArrowLongLeft } from "react-icons/hi2";
+
 import { exchangeADAToUSD, formatADAFull, getShortWallet } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import useFetch from "src/commons/hooks/useFetch";
 import CardAddress from "src/components/share/CardAddress";
 import { details } from "src/commons/routers";
-import { useSelector } from "react-redux";
 import { RootState } from "src/stores/types";
-import { useEffect, useState } from "react";
 import { API } from "src/commons/utils/api";
 import BookmarkButton from "src/components/commons/BookmarkIcon";
 import TokenAutocomplete from "src/components/TokenAutocomplete";
-import { HiArrowLongLeft } from "react-icons/hi2";
-import { BackButton, BackText, StyledBoxCard, TitleText, WrapHeader } from "./styles";
 import ADAicon from "src/components/commons/ADAIcon";
+
+import { BackButton, BackText, StyledBoxCard, TitleText, WrapHeader } from "./styles";
 
 interface Props {
   data: WalletAddress | null;

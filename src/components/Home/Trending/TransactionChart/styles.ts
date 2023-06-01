@@ -1,5 +1,7 @@
 import { Box, Button, Skeleton as SkeletonMUI, styled } from "@mui/material";
-import { BoxRaised } from "../../../commons/BoxRaised";
+
+import { BoxRaised } from "src/components/commons/BoxRaised";
+
 import { TypeChart } from ".";
 
 export const Tabs = styled(Box)(({ theme }) => ({
@@ -100,7 +102,7 @@ export const BoxInfo = styled(Box)(({ theme }) => ({
     gap: 20
   }
 }));
-export const InfoItem = styled(Box)(({ theme }) => ({
+export const InfoItem = styled(Box)(() => ({
   display: "flex",
   alignItems: "center"
 }));

@@ -1,20 +1,20 @@
-import { Box, Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
-
-import { StyledContainer, StyledList, GridBox } from "./styles";
-import useFetchList from "../../../../commons/hooks/useFetchList";
-import { API } from "../../../../commons/utils/api";
-import StackingFilter, { FilterParams } from "../../../StackingFilter";
-import { WrapFilterDescription } from "../../DelegatorLifecycle/Registration/RecentRegistrations/styles";
-import OverviewStaking from "../../../commons/OverviewStaking";
-import { useHistory, useParams } from "react-router";
-import useFetch from "../../../../commons/hooks/useFetch";
-import { details } from "../../../../commons/routers";
-
-import { DescriptionText } from "../../DelegatorLifecycle/styles";
+import { Box, Skeleton } from "@mui/material";
 import { useUpdateEffect } from "react-use";
 import { useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
+import StackingFilter, { FilterParams } from "src/components/StackingFilter";
+import OverviewStaking from "src/components/commons/OverviewStaking";
+import useFetch from "src/commons/hooks/useFetch";
+import { details } from "src/commons/routers";
 import { EmptyRecord } from "src/components/commons/Table";
+
+import { WrapFilterDescription } from "../../DelegatorLifecycle/Registration/RecentRegistrations/styles";
+import { DescriptionText } from "../../DelegatorLifecycle/styles";
+import { StyledContainer, StyledList, GridBox } from "./styles";
 import { PoolUpdatesDraw } from "./PoolUpdatesDraw";
 import PoolUpdateModal from "./PoolUpdateModal";
 

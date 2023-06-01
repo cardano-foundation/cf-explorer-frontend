@@ -1,6 +1,8 @@
 import React from "react";
 import { styled, Container } from "@mui/material";
-import { APP_VERSION } from "../../../../commons/utils/constants";
+
+import { APP_VERSION } from "src/commons/utils/constants";
+
 import FooterMenu from "../Sidebar/FooterMenu";
 
 const StyledFooter = styled("footer")`

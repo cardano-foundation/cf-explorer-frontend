@@ -1,5 +1,6 @@
 import { Box, styled } from "@mui/material";
-import { AddressIcon } from "../../../commons/resources";
+
+import { AddressIcon } from "src/commons/resources";
 
 export const AddressIconCustom = styled(AddressIcon)`
   path {

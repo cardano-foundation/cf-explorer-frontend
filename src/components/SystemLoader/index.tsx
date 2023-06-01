@@ -1,10 +1,12 @@
 import { useEffect, useRef } from "react";
 import { useLocalStorage } from "react-use";
+
+import useAuth from "src/commons/hooks/useAuth";
+
 import useFetch from "../../commons/hooks/useFetch";
 import { API, USER_API } from "../../commons/utils/api";
 import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES, REFRESH_TIMES } from "../../commons/utils/constants";
 import { setCurrentEpoch, setUsdMarket } from "../../stores/system";
-import useAuth from "src/commons/hooks/useAuth";
 
 export const SystemLoader = () => {
   const { isLoggedIn } = useAuth();

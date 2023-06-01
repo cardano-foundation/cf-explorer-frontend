@@ -1,6 +1,18 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Box, PaginationRenderItemParams, IconButton, MenuItem, styled, CircularProgress, alpha } from "@mui/material";
-import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
+import { useUpdateEffect } from "react-use";
+import { useParams } from "react-router-dom";
+
+import { handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
+import {
+  ColumnType,
+  FooterTableProps,
+  TableHeaderProps,
+  TableProps,
+  TableRowProps,
+  TableTopHeaderProps
+} from "src/types/table";
+import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DownIcon,
   EmptyIcon,
@@ -12,7 +24,8 @@ import {
   SortTableDown,
   SortTableUp,
   SortTableUpDown
-} from "../../../commons/resources";
+} from "src/commons/resources";
+
 import {
   Empty,
   EmtyImage,
@@ -35,18 +48,7 @@ import {
   TableCustomTitle,
   StyledPagination
 } from "./styles";
-import {
-  ColumnType,
-  FooterTableProps,
-  TableHeaderProps,
-  TableProps,
-  TableRowProps,
-  TableTopHeaderProps
-} from "../../../types/table";
-import { useUpdateEffect } from "react-use";
-import { useParams } from "react-router-dom";
 import Filter from "../Filter";
-import { useScreen } from "../../../commons/hooks/useScreen";
 
 type TEmptyRecord = {
   className?: string;
@@ -154,7 +156,7 @@ const TableRow = <T extends ColumnType>({
     <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
       {selectable && (
         <TCol>
-          <TableCheckBox checked={isSelected?.(row)} onChange={(e) => toggleSelection?.(row)} />
+          <TableCheckBox checked={isSelected?.(row)} onChange={() => toggleSelection?.(row)} />
         </TCol>
       )}
       {columns.map((column, idx) => {
@@ -532,7 +534,7 @@ const PaginationCustom = ({
                   setInputPage(+e.target.value);
                 }
               }}
-              onBlur={(e) => {
+              onBlur={() => {
                 setInputPage(page);
               }}
               disabled={loading}

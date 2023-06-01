@@ -1,5 +1,4 @@
-import { IconButton } from "@mui/material";
-import { Box, styled } from "@mui/material";
+import { IconButton, Box, styled } from "@mui/material";
 import DatePicker from "react-datepicker";
 
 export const StyledDatePicker = styled(DatePicker)`
@@ -98,7 +97,7 @@ export const CloseButtonRight = styled(IconButton)<{ saving: number }>`
   }
 `;
 
-export const MyGrid = styled(Box)(({ theme }) => ({
+export const MyGrid = styled(Box)(() => ({
   display: "grid",
   gridTemplateColumns: "repeat(4, 1fr)",
   gridGap: "8px",

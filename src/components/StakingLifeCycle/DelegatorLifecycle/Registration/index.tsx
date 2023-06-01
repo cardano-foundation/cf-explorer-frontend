@@ -1,15 +1,17 @@
-import { Box, Skeleton } from "@mui/material";
 import { useState } from "react";
-import { StakeLink, StyledContainerModal } from "./styles";
-import RecentRegistrations from "./RecentRegistrations";
-import StyledModal from "../../../commons/StyledModal";
+import { Box, Skeleton } from "@mui/material";
 import { useParams } from "react-router-dom";
-import useFetch from "../../../../commons/hooks/useFetch";
-import { API } from "../../../../commons/utils/api";
-import { details } from "../../../../commons/routers";
-import CopyButton from "../../../commons/CopyButton";
-import { RegistrationDraw } from "./RegistrationDraw";
+
+import StyledModal from "src/components/commons/StyledModal";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import { details } from "src/commons/routers";
+import CopyButton from "src/components/commons/CopyButton";
 import { FilterParams } from "src/components/StackingFilter";
+
+import RecentRegistrations from "./RecentRegistrations";
+import { RegistrationDraw } from "./RegistrationDraw";
+import { StakeLink, StyledContainerModal } from "./styles";
 
 const Registration = () => {
   const [selected, setSelected] = useState<RegistrationItem | null>(null);
