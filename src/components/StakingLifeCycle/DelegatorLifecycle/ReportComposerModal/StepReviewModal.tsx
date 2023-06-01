@@ -1,5 +1,16 @@
-import { Box, CircularProgress, Stack } from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
+import moment from "moment";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { IPropsModal, STEPS } from ".";
+import { useScreen } from "../../../../commons/hooks/useScreen";
+import useToast from "../../../../commons/hooks/useToast";
+import { details } from "../../../../commons/routers";
+import { generateStakeKeyReport, generateStakePoolReport } from "../../../../commons/utils/userRequest";
+import { getPoolEventType } from "../../../PoolLifecycle";
+import { getEventType } from "../../../StakekeySummary";
 import StyledModal from "../../../commons/StyledModal";
+import { EVENTS_NAME, ReportType } from "./FilledInfoModal";
 import {
   Container,
   ModalTitle,
@@ -13,57 +24,42 @@ import {
   TextRequired,
   TextValueReview
 } from "./styles";
-import { IPropsModal, STEPS } from ".";
-import moment from "moment";
-import { EVENTS_NAME } from "./StepEventsModal";
-import { ReportType } from "./FilledInfoModal";
-import { generateStakeKeyReport, generateStakePoolReport } from "../../../../commons/utils/userRequest";
-import useToast from "../../../../commons/hooks/useToast";
-import { useHistory } from "react-router-dom";
-import { details } from "../../../../commons/routers";
-import { useState } from "react";
-import { getEventType } from "../../../StakekeySummary";
-import { getPoolEventType } from "../../../PoolLifecycle";
-import { useScreen } from "../../../../commons/hooks/useScreen";
 
-const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaultParams, gotoStep }) => {
+const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params, gotoStep }) => {
   const toast = useToast();
   const [loading, setLoading] = useState(false);
-  const [step1, step2, step3] = defaultParams || [];
 
   const history = useHistory();
   const { isMobile } = useScreen();
   const handleGenerateReport = async () => {
     setLoading(true);
     try {
-      const [step1, step2, step3] = defaultParams || {};
-      // eslint-disable-next-line no-unsafe-optional-chaining
-      const [start, end] = step1?.dateRange;
-
-      let defaultReportName = `Report_stake_${step1.address}_${moment(start).format("MM/DD/yyyy")}_${moment(end).format(
+      const start = params?.dateRange ? params?.dateRange[0] : null;
+      const end = params?.dateRange ? params?.dateRange[1] : null;
+      let defaultReportName = `Report_stake_${params.address}_${moment(start).format("MM/DD/yyyy")}_${moment(end).format(
         "MM/DD/yyyy"
       )}`;
       if (isPoolReport) {
-        defaultReportName = `Report_pool_${step1.address}_${step1.epochRange[0]}_${step1.epochRange[1]}`;
+        defaultReportName = `Report_pool_${params.address}_${params.epochRange[0]}_${params.epochRange[1]}`;
         const paramsStakeKeyReport = {
-          ...getPoolEventType(step3?.eventsKey),
-          poolId: step1.address,
-          reportName: step1.reportName || defaultReportName,
-          isPoolSize: step2.poolSize === "YES",
-          isFeesPaid: step2.feesPaid === "YES",
-          event: step3?.eventsKey,
-          epochRanges: step1.epochRange
+          ...getPoolEventType(params?.eventsKey),
+          poolId: params.address,
+          reportName: params.reportName || defaultReportName,
+          isPoolSize: params.poolSize === "YES",
+          isFeesPaid: params.feesPaid === "YES",
+          event: params?.eventsKey,
+          epochRanges: params.epochRange
         };
         await generateStakePoolReport(paramsStakeKeyReport);
       } else {
-        const events = step3?.eventsKey?.map((event: string) => ({ type: event }));
+        const events = params?.eventsKey?.map((event: string) => ({ type: event }));
         const paramsStakeKeyReport = {
-          stakeKey: step1.address,
-          reportName: step1.reportName || defaultReportName,
+          stakeKey: params.address,
+          reportName: params.reportName || defaultReportName,
           fromDate: moment(start).format("yyyy/MM/DD hh:mm:ss"),
           toDate: moment(end).format("yyyy/MM/D hh:mm:ss"),
-          isADATransfer: step2.adaTransfers === "YES",
-          isFeesPaid: step2.feesPaid === "YES",
+          isADATransfer: params.adaTransfers === "YES",
+          isFeesPaid: params.feesPaid === "YES",
           ...getEventType(events.map((item: { type: string }) => item.type))
         };
         await generateStakeKeyReport(paramsStakeKeyReport);
@@ -81,46 +77,36 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
     setLoading(false);
   };
 
-  const [start, end] = step1.dateRange || [];
-  const [epochStart, epochEnd] = step1.epochRange || [];
-  const events = EVENTS_NAME.filter(({ value }) => step3?.eventsKey?.includes(value))
+  const [start, end] = params.dateRange || [];
+  const [epochStart, epochEnd] = params.epochRange || [];
+  const events = EVENTS_NAME.filter(({ value }) => params?.eventsKey?.includes(value))
     .map(({ label }) => label)
     .join(", ");
 
-  const isPoolReport = step1.reportType === ReportType.PoolReport;
+  const isPoolReport = params.reportType === ReportType.PoolReport;
 
   const list = [
     {
       label: "Report name",
-      value: <TextOverFlow>{`${step1.reportName}`.replaceAll("-", " ")}</TextOverFlow>,
-      step: STEPS.step1
+      value: <TextOverFlow>{`${params.reportName}`.replaceAll("-", " ")}</TextOverFlow>,
     },
     {
       label: isPoolReport ? "Epoch range" : "Date range",
       value: isPoolReport
         ? `Epoch ${epochStart} -  Epoch ${epochEnd}`
         : `${moment(start).format("MM/DD/yyyy")} - ${moment(end).format("MM/DD/yyyy")}`,
-      step: STEPS.step1
     },
     {
       label: isPoolReport ? "Pool ID" : "Stake key details",
-      value: <TextOverFlow>{step1.address}</TextOverFlow>,
-      step: STEPS.step1
+      value: <TextOverFlow>{params.address}</TextOverFlow>,
     },
     {
       label: isPoolReport ? "Pool size" : "ADA transfers",
-      value: isPoolReport ? step2.poolSize : step2.adaTransfers,
-      step: STEPS.step2
+      value: isPoolReport ? params.poolSize : params.adaTransfers,
     },
-    // {
-    //   label: "Fees paid",
-    //   value: step2.feesPaid,
-    //   step: STEPS.step2
-    // },
     {
       label: isPoolReport ? "Pool Report by event" : "Staking lifecycle events",
       value: events,
-      step: STEPS.step3
     }
   ];
   return (
