@@ -6,6 +6,7 @@ import { TabListStyled, TabTitle } from "./styles";
 import TokenTransaction from "./TokenTransaction";
 import { useHistory, useParams } from "react-router-dom";
 import { details } from "src/commons/routers";
+import ScriptTab from "./ScriptTab";
 
 const ContractDetailContent: React.FC = () => {
   const { tabActive = "transaction", address } = useParams<{
@@ -31,6 +32,18 @@ const ContractDetailContent: React.FC = () => {
       ),
       key: "transaction",
       children: <TokenTransaction />
+    },
+    {
+      label: (
+        <TabTitle className={tabActive === "transcript" ? "active" : ""}>
+          <Box display={"flex"} alignItems='center'>
+            <UtxoIcon fill={tabActive === "transcript" ? theme.palette.primary.main : theme.palette.text.hint} />
+            <Box pl={1}>Script</Box>
+          </Box>
+        </TabTitle>
+      ),
+      key: "transcript",
+      children: <ScriptTab />
     }
   ];
 
@@ -47,7 +60,8 @@ const ContractDetailContent: React.FC = () => {
               label={item.label}
               value={item.key}
               sx={{
-                padding: "12px 0"
+                padding: "12px 0px",
+                marginRight: "24px"
               }}
             />
           ))}

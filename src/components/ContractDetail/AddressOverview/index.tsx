@@ -11,6 +11,7 @@ import CardAddress from "../../share/CardAddress";
 import TokenAutocomplete from "../../TokenAutocomplete";
 import { GridContainer, GridItem, Pool, StyledAAmount } from "./styles";
 import ADAicon from "../../commons/ADAIcon";
+import VerifyScript from "src/components/VerifyScript";
 
 interface Props {
   data: WalletAddress | null;
@@ -18,9 +19,11 @@ interface Props {
 }
 
 const AddressOverview: React.FC<Props> = ({ data, loading }) => {
-  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
-    data?.stakeAddress ? `${API.STAKE.DETAIL}/${data?.stakeAddress}` : ""
-  );
+  const {
+    data: dataStake,
+    loading: loadingStake,
+    refresh
+  } = useFetch<WalletStake>(data?.stakeAddress ? `${API.STAKE.DETAIL}/${data?.stakeAddress}` : "");
   const { adaRate } = useSelector(({ system }: RootState) => system);
 
   const itemLeft = [
@@ -78,7 +81,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
   ];
 
   return (
-    <Card title='Contract Detail'>
+    <Card title={<VerifyScript verified={!!data?.verifiedContract} refresh={refresh} />}>
       <GridContainer container spacing={2}>
         <GridItem item xs={12} md={6}>
           <Box overflow='hidden' borderRadius={3} height={"100%"}>
