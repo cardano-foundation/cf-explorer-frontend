@@ -106,8 +106,10 @@ const TabularOverview: React.FC = () => {
           mainIcon={<StatusIC />}
           value={
             <Box display="flex" alignItems="center" flexWrap={"wrap"}>
-              <CardValue color={STATUS[data?.status ?? "ACTIVE"][1]}>{STATUS[data?.status ?? "ACTIVE"][0]} :</CardValue>
-              <ClickAbleLink to={details.epoch(data?.epochNo)}>&nbsp; Epoch {data?.epochNo}</ClickAbleLink>
+              <CardValue color={STATUS[data?.status ?? "ACTIVE"][1]}>
+                {STATUS[data?.status ?? "ACTIVE"][0]} :{"  "}
+              </CardValue>
+              <ClickAbleLink to={details.epoch(data?.epochNo)}> Epoch {data?.epochNo}</ClickAbleLink>
             </Box>
           }
         />
