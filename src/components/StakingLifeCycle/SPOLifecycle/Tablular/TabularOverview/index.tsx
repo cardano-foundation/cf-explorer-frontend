@@ -22,6 +22,7 @@ import {
   StyledBox,
   ViewMoreButton,
   WrapIcon,
+  WrapStatus,
   WrapWalletIcon
 } from "./styles";
 import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
@@ -105,10 +106,10 @@ const TabularOverview: React.FC = () => {
           bgType="white"
           mainIcon={<StatusIC />}
           value={
-            <Box display="flex" alignItems="center" flexWrap={"wrap"}>
-              <CardValue color={STATUS[data?.status ?? "ACTIVE"][1]}>{STATUS[data?.status ?? "ACTIVE"][0]} :</CardValue>
+            <WrapStatus>
+              <CardValue color={STATUS[data?.status ?? "ACTIVE"][1]}>{STATUS[data?.status ?? "ACTIVE"][0]}:</CardValue>
               <ClickAbleLink to={details.epoch(data?.epochNo)}>&nbsp; Epoch {data?.epochNo}</ClickAbleLink>
-            </Box>
+            </WrapStatus>
           }
         />
         <GridItem

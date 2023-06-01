@@ -14,6 +14,7 @@ import {
   ProgressTitle,
   StyledLinearProgress,
   TimeDuration,
+  TimeDurationSm,
   Title,
   TopDelegateContainer
 } from "./style";
@@ -97,6 +98,9 @@ const TopDelegationPools = () => {
           <ViewAllButton to={routers.DELEGATION_POOLS} />
         </Actions>
       </Header>
+      <TimeDurationSm>
+        <FormNowMessage time={lastUpdated} />
+      </TimeDurationSm>
       <DelegateTable
         loading={loading}
         initialized={initialized}

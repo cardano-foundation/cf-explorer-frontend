@@ -27,7 +27,11 @@ export const CardItem = styled(Card)<{ sidebar?: number }>(({ theme, sidebar }) 
   },
   [theme.breakpoints.between("sm", "lg")]: {
     padding: "20px",
-    height: 140
+    height: 140,
+    overflowX: "auto",
+    "&::-webkit-scrollbar": {
+      height: "0"
+    },
   }
 }));
 

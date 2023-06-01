@@ -26,7 +26,24 @@ export const StyledTabs = styled(Tabs)`
       gap: 30px;
     }
   }
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    border-bottom: 1px solid ${(props) => props.theme.palette.border.main};
+    width: 100%;
+  }
 `;
+
+export const WrapHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  borderBottom: `1px solid ${theme.palette.border.main}`,
+  [theme.breakpoints.down("md")]: {
+    alignItems: "flex-start",
+    borderBottom: "none",
+    flexDirection: "column"
+  }
+}));
 
 export const StyledTab = styled(Tab)`
   color: ${(props) => props.theme.palette.grey[400]};
@@ -45,10 +62,7 @@ export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.grey[400],
   display: "block",
   textAlign: "right",
-  position: "absolute",
   width: "max-content",
-  top: 60,
-  right: 24,
   lineHeight: 1,
   marginTop: "0.5rem",
   [theme.breakpoints.down("sm")]: {

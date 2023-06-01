@@ -30,7 +30,8 @@ import {
   RowItem,
   HeaderStatus,
   Actions,
-  TimeDuration
+  TimeDuration,
+  TimeDurationSm
 } from "./style";
 import useFetch from "../../../commons/hooks/useFetch";
 
@@ -58,6 +59,9 @@ const LatestTransactions: React.FC = () => {
           <ViewAllButton to={routers.TRANSACTION_LIST} />
         </Actions>
       </Header>
+      <TimeDurationSm>
+        <FormNowMessage time={lastUpdated} />
+      </TimeDurationSm>
       {
         <Grid container spacing={{ sm: 2 }}>
           {!initialized
