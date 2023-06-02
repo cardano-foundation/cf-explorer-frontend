@@ -1,6 +1,7 @@
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { parse } from "qs";
+
 import { setUserData } from "../../stores/user";
 import { getInfo, signIn } from "./userRequest";
 import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES } from "./constants";

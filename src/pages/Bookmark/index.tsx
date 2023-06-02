@@ -1,22 +1,23 @@
-import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Dialog, DialogActions, DialogContentText, IconButton, Tab } from "@mui/material";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { Column } from "../../types/table";
-import { CancelButton, DeleteButton, StyledTable, TitleTab, WrapTab } from "./Styles";
-import { ReactComponent as DeleteBookmark } from "../../commons/resources/icons/deleteBookmark.svg";
-import { ReactComponent as QuestionConfirm } from "../../commons/resources/icons/questionConfirm.svg";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { Box, Dialog, DialogActions, DialogContentText, IconButton } from "@mui/material";
+import moment from "moment";
 import { Link } from "react-router-dom";
-import { details } from "../../commons/routers";
-import { getShortHash, getShortWallet } from "../../commons/utils/helper";
 import { useLocalStorage } from "react-use";
-import { deleteBookmark } from "../../commons/utils/userRequest";
-import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
-import useToast from "../../commons/hooks/useToast";
-import { ButtonClose } from "../../components/ScriptModal/styles";
-import { CloseIcon } from "../../commons/resources";
-import { useScreen } from "../../commons/hooks/useScreen";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { Column } from "src/types/table";
+import { ReactComponent as DeleteBookmark } from "src/commons/resources/icons/deleteBookmark.svg";
+import { ReactComponent as QuestionConfirm } from "src/commons/resources/icons/questionConfirm.svg";
+import { details } from "src/commons/routers";
+import { getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { deleteBookmark } from "src/commons/utils/userRequest";
+import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
+import useToast from "src/commons/hooks/useToast";
+import { ButtonClose } from "src/components/ScriptModal/styles";
+import { CloseIcon } from "src/commons/resources";
+
+import { CancelButton, DeleteButton, StyledTable, TitleTab, WrapTab } from "./Styles";
 
 const Bookmark = () => {
   const [bookmarks, setBookmarks] = useLocalStorage<Bookmark[]>("bookmark", []);
@@ -172,7 +173,7 @@ const Bookmark = () => {
       title: <Box textAlign={"right"}>Action</Box>,
       key: "Action",
       minWidth: 120,
-      render: (data, index) => (
+      render: (data) => (
         <Box display="flex" justifyContent={"flex-end"}>
           <IconButton onClick={() => setSelected(data.keyword || "")}>
             <DeleteBookmark fontSize={10} />

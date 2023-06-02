@@ -1,9 +1,11 @@
-import { TabContext } from "@mui/lab";
 import React from "react";
+import { TabContext } from "@mui/lab";
 import { Box, Tabs } from "@mui/material";
-import { StyledTab, StyledTabs, TabContent, TabHeader, TabLabel } from "./styles";
 import { useHistory, useParams } from "react-router-dom";
+
 import { details } from "src/commons/routers";
+
+import { StyledTab, StyledTabs, TabContent, TabHeader, TabLabel } from "./styles";
 
 export interface TabsItem {
   value: string;

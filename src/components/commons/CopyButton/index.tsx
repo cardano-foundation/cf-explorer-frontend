@@ -1,9 +1,11 @@
-import { IconButton, IconButtonProps, styled, TooltipProps } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { BiCheckCircle } from "react-icons/bi";
+import { IconButton, IconButtonProps, styled, TooltipProps } from "@mui/material";
 import { useCopyToClipboard } from "react-use";
-import CustomTooltip from "../CustomTooltip";
+import { BiCheckCircle } from "react-icons/bi";
+
 import { CopyIconSquareUrl } from "src/commons/resources";
+
+import CustomTooltip from "../CustomTooltip";
 
 const Button = styled(IconButton)`
   color: ${(props) => props.theme.palette.text.primary};

@@ -1,4 +1,5 @@
 import { Box, BoxProps, Icon, styled } from "@mui/material";
+
 import { WalletGreenIcon } from "src/commons/resources";
 
 export const WrapWalletIcon = styled(Box)`

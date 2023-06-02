@@ -1,6 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import { details } from "../../../../commons/routers";
@@ -20,7 +21,7 @@ const SummaryItems = ({
   type?: "up" | "down";
 }) => {
   const theme = useTheme();
-  const { isMobile, isGalaxyFoldSmall } = useScreen();
+  const { isMobile } = useScreen();
   return (
     <Box
       display={"flex"}

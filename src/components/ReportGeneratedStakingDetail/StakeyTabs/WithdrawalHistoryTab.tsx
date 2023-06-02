@@ -1,17 +1,18 @@
-import { Box } from "@mui/material";
-import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../commons/utils/helper";
-import { TableSubTitle } from "../../TabularView/StakeTab/styles";
-import CustomTooltip from "../../commons/CustomTooltip";
-import Table, { Column } from "../../commons/Table";
-import { StyledLink } from "../../share/styled";
-import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { API } from "../../../commons/utils/api";
-import { FilterParams } from "../../StackingFilter";
-import { WrapFilterDescription } from "../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
-import { details } from "../../../commons/routers";
-import { AdaValue } from "../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import { Box } from "@mui/material";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table, { Column } from "src/components/commons/Table";
+import { StyledLink } from "src/components/share/styled";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
+import { FilterParams } from "src/components/StackingFilter";
+import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
+import { details } from "src/commons/routers";
+import { AdaValue } from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
 
 const columns: Column<WithdrawItem>[] = [
   {
@@ -59,7 +60,7 @@ const WithdrawalHistoryTab = () => {
   const { search } = useLocation();
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
-  const [params, setParams] = useState<FilterParams>({
+  const [params] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
     toDate: undefined,
@@ -72,7 +73,7 @@ const WithdrawalHistoryTab = () => {
       ...params
     }
   );
-  const { total, data } = fetchData;
+  const { total } = fetchData;
 
   return (
     <>

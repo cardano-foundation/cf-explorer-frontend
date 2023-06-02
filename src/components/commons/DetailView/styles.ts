@@ -1,7 +1,9 @@
 import { alpha, Box, Button, Drawer, IconButton, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { CONFIRMATION_STATUS, STAKE_KEY_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
+
+import { CONFIRMATION_STATUS, STAKE_KEY_STATUS, TRANSACTION_STATUS } from "src/commons/utils/constants";
+
 import { BoxRaised } from "../BoxRaised";
 
 export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
@@ -380,7 +382,7 @@ export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatu
   padding: 5px 10px;
   border-radius: 2px;
 `;
-export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status?: keyof typeof CONFIRMATION_STATUS }>`
   color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.HIGH:
@@ -511,7 +513,7 @@ export const LogoEmpty = styled(Box)`
   display:inline-block;
   padding:3px: 10px;
 `;
-export const ButtonModal = styled(Button)(({ theme }) => ({
+export const ButtonModal = styled(Button)(() => ({
   textTransform: "capitalize",
   padding: 0,
   textDecoration: "underline",

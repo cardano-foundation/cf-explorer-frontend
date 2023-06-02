@@ -1,5 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { Box } from "@mui/material";
 
 import {
@@ -12,7 +12,11 @@ import {
   PreviousIcon,
   InfoIcon,
   TranferIcon
-} from "../../../commons/resources";
+} from "src/commons/resources";
+import { ListStakeKeyResponse } from "src/pages/DelegatorLifecycle";
+import { details } from "src/commons/routers";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import {
   ADATransfersButton,
   ButtonText,
@@ -26,7 +30,6 @@ import {
   TitleStep,
   StyledGroupButton
 } from "./styles";
-
 import Registration from "./Registration";
 import Delegation from "./Delegation";
 import RewardsDistribution from "./RewardsDistribution";
@@ -40,10 +43,7 @@ import {
   RewardDistributionProcessDescription,
   WithdrawingFundProcessDescription
 } from "../../ModalDescription";
-import { useHistory, useParams } from "react-router-dom";
-import { details } from "../../../commons/routers";
-import { useScreen } from "../../../commons/hooks/useScreen";
-import { ListStakeKeyResponse } from "src/pages/DelegatorLifecycle";
+
 interface StepperProps {
   icon: React.ReactNode;
   title: string;

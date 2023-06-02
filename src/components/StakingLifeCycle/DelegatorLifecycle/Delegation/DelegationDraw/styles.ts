@@ -1,4 +1,5 @@
 import { Box, styled } from "@mui/material";
+
 import AdaHolder from "src/components/commons/AdaHolder";
 import CertificateShape from "src/components/commons/CertificateShape";
 import HoldBox from "src/components/commons/HoldBox";

@@ -1,9 +1,11 @@
-import { Box, FormGroup } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
+import { Box, FormGroup } from "@mui/material";
 import { useHistory } from "react-router-dom";
-import { EmailIcon } from "../../commons/resources";
-import { routers } from "../../commons/routers";
-import { forgotPassword } from "../../commons/utils/userRequest";
+
+import { EmailIcon } from "src/commons/resources";
+import { routers } from "src/commons/routers";
+import { forgotPassword } from "src/commons/utils/userRequest";
+
 import {
   AlertCustom,
   Container,

@@ -1,18 +1,19 @@
+import React from "react";
 import { Box, Grid } from "@mui/material";
 import moment from "moment";
-import React from "react";
+import { useSelector } from "react-redux";
+
 import { CurentEpochIcon, LiveStakeIcon, RocketBackground } from "src/commons/resources";
-import { StyledCard, StyledImg, StyledLinearProgress, StyledSkeleton, TimeDuration } from "./styles";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import { formatADA, formatADAFull, numberWithCommas } from "src/commons/utils/helper";
 import useFetch from "src/commons/hooks/useFetch";
-import { useScreen } from "src/commons/hooks/useScreen";
-import { useSelector } from "react-redux";
 import Card from "src/components/commons/Card";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+
+import { StyledCard, StyledImg, StyledLinearProgress, StyledSkeleton, TimeDuration } from "./styles";
 
 const OverViews: React.FC = () => {
   const { data, loading, lastUpdated } = useFetch<OverViewDelegation>(

@@ -96,7 +96,7 @@ export const WrapWalletLabel = styled(Box)(() => ({
 }));
 
 export const TabHead = styled(Box)<{ active?: number }>(
-  ({ active, theme }) => `
+  ({ active }) => `
   color: ${active ? "#438F68" : "#98A2B3"} !important;
 `
 );

@@ -1,21 +1,20 @@
 import { Box } from "@mui/material";
-import moment from "moment";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
+import ADAicon from "src/components/commons/ADAIcon";
+
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
 import { formatADAFull, formatDateTimeLocal, getPageInfo } from "../../../../commons/utils/helper";
 import StackingFilter, { FilterParams } from "../../../StackingFilter";
-import { DATETIME_PARTTEN } from "../../../StackingFilter/DateRangeModal";
-import { FilterDateLabel } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation/styles";
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import Table, { Column } from "../../../commons/Table";
-import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
 import { AmountADARow, StyledLink, WrapWalletLabel, WrapperDelegationTab } from "../styles";
 import { AdaValue } from "./StakeRegistrationTab";
-import ADAicon from "src/components/commons/ADAIcon";
 
 const RewardsDistributionTab = () => {
   const detailData = useContext(DelegatorDetailContext);
@@ -63,7 +62,7 @@ const RewardsDistributionTab = () => {
     ...params,
     sort: sort || params.sort
   });
-  const { total, data } = fetchData;
+  const { total } = fetchData;
 
   return (
     <>
@@ -81,7 +80,7 @@ const RewardsDistributionTab = () => {
             fullFilter={false}
             filterValue={params}
             onFilterValueChange={(params) => {
-              setParams((pre) => ({
+              setParams(() => ({
                 fromDate: undefined,
                 toDate: undefined,
                 txHash: undefined,

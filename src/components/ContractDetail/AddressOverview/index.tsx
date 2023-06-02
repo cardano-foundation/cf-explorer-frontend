@@ -1,16 +1,18 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
-import useFetch from "../../../commons/hooks/useFetch";
-import { details } from "../../../commons/routers";
-import { API } from "../../../commons/utils/api";
-import { exchangeADAToUSD, formatADAFull, getShortWallet } from "../../../commons/utils/helper";
-import { RootState } from "../../../stores/types";
-import Card from "../../commons/Card";
-import CardAddress from "../../share/CardAddress";
-import TokenAutocomplete from "../../TokenAutocomplete";
+
+import useFetch from "src/commons/hooks/useFetch";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { exchangeADAToUSD, formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { RootState } from "src/stores/types";
+import CardAddress from "src/components/share/CardAddress";
+import Card from "src/components/commons/Card";
+import TokenAutocomplete from "src/components/TokenAutocomplete";
+import ADAicon from "src/components/commons/ADAIcon";
+
 import { GridContainer, GridItem, Pool, StyledAAmount } from "./styles";
-import ADAicon from "../../commons/ADAIcon";
 
 interface Props {
   data: WalletAddress | null;

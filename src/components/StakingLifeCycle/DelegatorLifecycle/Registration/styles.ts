@@ -1,9 +1,10 @@
 import { Box, styled, IconButton as IconButtonMui, alpha } from "@mui/material";
 import { Link } from "react-router-dom";
+
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 import CertificateShape from "src/components/commons/CertificateShape";
 
-export const MiddleGroup = styled(Box)(({ theme }) => ({
+export const MiddleGroup = styled(Box)(() => ({
   display: "flex",
   justifyContent: "space-around",
   marginTop: 40,
@@ -105,7 +106,7 @@ export const IconButton = styled(IconButtonMui)(({ theme }) => ({
   background: theme.palette.grey[100]
 }));
 
-export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
+export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0
 }));
 

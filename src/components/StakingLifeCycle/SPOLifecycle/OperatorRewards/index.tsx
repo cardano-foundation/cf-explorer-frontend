@@ -1,23 +1,25 @@
-import { Box, styled } from "@mui/material";
 import { useMemo, useRef, useState } from "react";
-import { ADAOrangeBorderIcon } from "../../../../commons/resources";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import { details } from "../../../../commons/routers";
-import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
-import useFetch from "../../../../commons/hooks/useFetch";
+import { Box, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { API } from "../../../../commons/utils/api";
-import StyledModal from "../../../commons/StyledModal";
-import Table, { Column } from "../../../commons/Table";
-import useFetchList from "../../../../commons/hooks/useFetchList";
 import moment from "moment";
-import ADAicon from "../../../commons/ADAIcon";
-import { StyledLink, DrawContainer, ADAOperator, ADATitle, ADAAmount, StyledEpoch } from "./styles";
+
+import { ADAOrangeBorderIcon } from "src/commons/resources";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { details } from "src/commons/routers";
+import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import StyledModal from "src/components/commons/StyledModal";
+import Table, { Column } from "src/components/commons/Table";
+import useFetchList from "src/commons/hooks/useFetchList";
+import ADAicon from "src/components/commons/ADAIcon";
 import CardanoSystem from "src/components/commons/CardanoSystem";
 import SPOHolder from "src/components/commons/SPOHolder";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import { WrappModalScrollBar } from "src/components/commons/Table/styles";
+
+import { StyledLink, DrawContainer, ADAOperator, ADATitle, ADAAmount, StyledEpoch } from "./styles";
 
 const OperatorReward = () => {
   const [openModal, setOpenModal] = useState(false);

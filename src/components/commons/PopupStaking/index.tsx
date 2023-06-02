@@ -1,10 +1,11 @@
 import { Box, styled } from "@mui/material";
-import { AddressIcon } from "../../../commons/resources";
-import { getShortHash } from "../../../commons/utils/helper";
-import CopyButton from "../CopyButton";
-
 import { Link } from "react-router-dom";
-import { details } from "../../../commons/routers";
+
+import { AddressIcon } from "src/commons/resources";
+import { getShortHash } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+
+import CopyButton from "../CopyButton";
 
 const PopupStaking = ({ hash }: { hash: string }) => {
   return (

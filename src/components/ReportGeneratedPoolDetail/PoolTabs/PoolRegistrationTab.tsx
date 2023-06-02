@@ -1,22 +1,24 @@
-import { Box, IconButton } from "@mui/material";
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { ADAsigntIC, EyeIcon } from "../../../commons/resources";
-import { details } from "../../../commons/routers";
-import { API } from "../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../commons/utils/helper";
+import { Box, IconButton } from "@mui/material";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { ADAsigntIC, EyeIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { formatADAFull, formatDateTimeLocal, formatHash } from "src/commons/utils/helper";
 import {
   ADAValueFieldContainer,
   ADAValueLabel,
   ADAValueSubLabel
-} from "../../StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
-import CustomIcon from "../../commons/CustomIcon";
-import CustomTooltip from "../../commons/CustomTooltip";
-import Table, { Column } from "../../commons/Table";
-import { StyledLink } from "../../share/styled";
-import { ReportGeneratedPoolDetailContext } from "..";
+} from "src/components/StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table, { Column } from "src/components/commons/Table";
+import { StyledLink } from "src/components/share/styled";
 import RegistrationCertificateModal from "src/components/StakingLifeCycle/SPOLifecycle/Registration/RegistrationCertificateModal";
+
+import { ReportGeneratedPoolDetailContext } from "..";
 
 const PoolRegistrationTab = () => {
   const { reportId = "" } = useParams<{ reportId: string }>();

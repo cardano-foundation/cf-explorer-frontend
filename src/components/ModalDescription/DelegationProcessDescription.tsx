@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+
 import StyledModal from "../commons/StyledModal";
 import { ContentContainer, NormalDescription, WrapContent } from "./styles";
 
