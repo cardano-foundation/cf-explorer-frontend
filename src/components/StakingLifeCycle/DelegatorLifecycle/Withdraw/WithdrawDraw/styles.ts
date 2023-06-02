@@ -11,7 +11,8 @@ export const IconButtonBack = styled(IconButtonMui)(() => ({
 export const Info = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  marginLeft: theme.spacing(2)
+  marginLeft: theme.spacing(2),
+  width: "max-content"
 }));
 
 export const InfoText = styled(Box)(({ theme }) => ({
