@@ -6,6 +6,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { ReactComponent as UtxoIcon } from "src/commons/resources/images/utxoIcon.svg";
 import { details } from "src/commons/routers";
 import ScriptTab from "./ScriptTab";
+import { ScriptIcon } from "src/commons/resources";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import TokenTransaction from "./TokenTransaction";
 import { TabListStyled, TabTitle } from "./styles";
@@ -39,7 +41,12 @@ const ContractDetailContent: React.FC = () => {
       label: (
         <TabTitle className={tabActive === "transcript" ? "active" : ""}>
           <Box display={"flex"} alignItems='center'>
-            <UtxoIcon fill={tabActive === "transcript" ? theme.palette.primary.main : theme.palette.text.hint} />
+            <CustomIcon
+              icon={ScriptIcon}
+              width={24}
+              fill='currentColor'
+              color={tabActive === "transcript" ? theme.palette.primary.main : theme.palette.text.hint}
+            />
             <Box pl={1}>Script</Box>
           </Box>
         </TabTitle>

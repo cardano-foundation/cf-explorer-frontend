@@ -59,7 +59,7 @@ export const ModalTitle = styled(Typography)`
 export const VerifyButton = styled(Box)<{ disabled: boolean }>`
   font-weight: 700;
   font-size: 16px;
-  line-height: 19px;
+  line-height: 24px;
   text-align: center;
   color: #ffffff;
   background: #13152f;
