@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Box } from "@mui/material";
+
 import FilledInfoModal from "./FilledInfoModal";
 import StepReviewModal from "./StepReviewModal";
 
@@ -13,7 +14,7 @@ export interface IPropsModal {
 
 export enum STEPS {
   step1 = 1,
-  step2 = 2,
+  step2 = 2
 }
 
 const ReportComposerModal = ({ open, handleCloseModal }: IPropsModal) => {
@@ -40,12 +41,8 @@ const ReportComposerModal = ({ open, handleCloseModal }: IPropsModal) => {
         gotoStep={gotoStep}
       />
       {currentStep === STEPS.step2 && (
-        <StepReviewModal
-          open
-          handleCloseModal={handleCloseModal}
-          params={params}
-          gotoStep={gotoStep}
-        />)}
+        <StepReviewModal open handleCloseModal={handleCloseModal} params={params} gotoStep={gotoStep} />
+      )}
     </Box>
   );
 };

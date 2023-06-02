@@ -1,17 +1,26 @@
-import { ButtonEvent, ModalTitle, StyledButton, StyledFormLabel, StyledLabel, StyledSlider, StyledStack, SubText, TextError, TextRequired } from "./styles";
-
 import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Stack } from "@mui/material";
 import { useMemo, useState } from "react";
-
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import CustomDatePicker, { IDateRange } from "../../../CustomDatePicker";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { Container } from "src/components/Account/ActivityLogModal/styles";
 import { StyledTextField } from "src/components/TokenAutocomplete/styles";
 import StyledModal from "src/components/commons/StyledModal";
 
+import CustomDatePicker, { IDateRange } from "../../../CustomDatePicker";
+import {
+  ButtonEvent,
+  ModalTitle,
+  StyledButton,
+  StyledFormLabel,
+  StyledLabel,
+  StyledSlider,
+  StyledStack,
+  SubText,
+  TextError,
+  TextRequired
+} from "./styles";
 
 import { IPropsModal, STEPS } from ".";
 
@@ -85,7 +94,6 @@ export const EVENTS_NAME = [
     type: ReportType.PoolReport
   }
 ];
-
 
 type IEpochRange = [number, number];
 
@@ -179,7 +187,6 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       setEventsKey([...eventsKey, id]);
     }
   };
-
 
   const events = EVENTS_NAME.filter((event) => {
     return reportType === ReportType.PoolReport

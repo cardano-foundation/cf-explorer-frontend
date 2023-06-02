@@ -2,7 +2,7 @@ import { CircularProgress, Stack } from "@mui/material";
 import moment from "moment";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { IPropsModal, STEPS } from ".";
+
 import { useScreen } from "../../../../commons/hooks/useScreen";
 import useToast from "../../../../commons/hooks/useToast";
 import { details } from "../../../../commons/routers";
@@ -25,6 +25,8 @@ import {
   TextValueReview
 } from "./styles";
 
+import { IPropsModal, STEPS } from ".";
+
 const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params, gotoStep }) => {
   const toast = useToast();
   const [loading, setLoading] = useState(false);
@@ -36,9 +38,9 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
     try {
       const start = params?.dateRange ? params?.dateRange[0] : null;
       const end = params?.dateRange ? params?.dateRange[1] : null;
-      let defaultReportName = `Report_stake_${params.address}_${moment(start).format("MM/DD/yyyy")}_${moment(end).format(
-        "MM/DD/yyyy"
-      )}`;
+      let defaultReportName = `Report_stake_${params.address}_${moment(start).format("MM/DD/yyyy")}_${moment(
+        end
+      ).format("MM/DD/yyyy")}`;
       if (isPoolReport) {
         defaultReportName = `Report_pool_${params.address}_${params.epochRange[0]}_${params.epochRange[1]}`;
         const paramsStakeKeyReport = {
@@ -88,25 +90,25 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
   const list = [
     {
       label: "Report name",
-      value: <TextOverFlow>{`${params.reportName}`.replaceAll("-", " ")}</TextOverFlow>,
+      value: <TextOverFlow>{`${params.reportName}`.replaceAll("-", " ")}</TextOverFlow>
     },
     {
       label: isPoolReport ? "Epoch range" : "Date range",
       value: isPoolReport
         ? `Epoch ${epochStart} -  Epoch ${epochEnd}`
-        : `${moment(start).format("MM/DD/yyyy")} - ${moment(end).format("MM/DD/yyyy")}`,
+        : `${moment(start).format("MM/DD/yyyy")} - ${moment(end).format("MM/DD/yyyy")}`
     },
     {
       label: isPoolReport ? "Pool ID" : "Stake key details",
-      value: <TextOverFlow>{params.address}</TextOverFlow>,
+      value: <TextOverFlow>{params.address}</TextOverFlow>
     },
     {
       label: isPoolReport ? "Pool size" : "ADA transfers",
-      value: isPoolReport ? params.poolSize : params.adaTransfers,
+      value: isPoolReport ? params.poolSize : params.adaTransfers
     },
     {
       label: isPoolReport ? "Pool Report by event" : "Staking lifecycle events",
-      value: events,
+      value: events
     }
   ];
   return (
