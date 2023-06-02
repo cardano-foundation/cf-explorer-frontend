@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosError, AxiosInstance } from "axios";
 import qs from "qs";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { authAxios, defaultAxios } from "../utils/axios";
@@ -30,6 +30,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
   const [currentPage, setCurrentPage] = useState(params.page ?? 0);
   const [totalPage, setTotalPage] = useState(0);
   const [total, setTotal] = useState(0);
+  const [refreshLoading, setRefreshLoading] = useState(false);
   const lastFetch = useRef<number>(Date.now());
 
   const getList = useCallback(
@@ -39,7 +40,8 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
       if (url.search("http://") === 0 || url.search("https://") === 0) {
         service = axios;
       }
-      needLoading && setLoading(true);
+      if (needLoading) setLoading(true);
+      else setRefreshLoading(true);
       try {
         const baseURL = url.split("?")[0];
         const lastURL = url.split("?")[1];
@@ -50,42 +52,38 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
         setTotalPage(res.data.totalPages);
         setTotal(res.data.totalItems);
         setInitialized(true);
-      } catch (error: any) {
+      } catch (error) {
         setData([]);
         setInitialized(true);
-        setError(error?.response?.data?.message || error?.message);
+        if (error instanceof AxiosError) setError(error?.response?.data?.message || error?.message);
+        else if (typeof error === "string") setError(error);
       }
-      needLoading && setLoading(false);
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      lastFetch.current = Date.now();
+      if (needLoading) setLoading(false);
+      else setRefreshLoading(false);
     },
-    [url, ...Object.values(params || {})]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [url, isAuth, ...Object.values(params || {})]
   );
 
   useEffect(() => {
-    if (timeout && !loading) {
-      const interval = setInterval(async () => {
-        if (!document.hidden) {
-          await getList();
-          lastFetch.current = Date.now();
-        }
-      }, timeout * 1000);
-
+    if (timeout && !loading && !refreshLoading) {
       const onFocus = async () => {
-        if (lastFetch.current + timeout * 1000 <= Date.now()) {
-          await getList();
-          lastFetch.current = Date.now();
-        }
+        if (lastFetch.current + timeout * 1000 <= Date.now()) getList();
       };
 
       window.addEventListener("focus", onFocus);
 
+      const timeoutId = setTimeout(() => {
+        if (!document.hidden) getList();
+      }, timeout * 1000);
+
       return () => {
-        clearInterval(interval);
+        clearTimeout(timeoutId);
         window.removeEventListener("focus", onFocus);
       };
     }
-  }, [getList, timeout, loading]);
+  }, [getList, timeout, loading, refreshLoading]);
 
   useEffect(() => {
     getList(true);
