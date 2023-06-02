@@ -19,9 +19,6 @@ export const Header = styled(Box)`
   align-items: center;
   margin-bottom: 0.5rem;
   gap: 10px;
-  ${(props) => props.theme.breakpoints.down("sm")} {
-    margin-bottom: 1.5rem;
-  }
 `;
 
 export const Title = styled("h3")`
@@ -49,21 +46,27 @@ export const Actions = styled(Box)(() => ({
   position: "relative"
 }));
 
+
 export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.grey[400],
   display: "block",
   [theme.breakpoints.down("sm")]: {
-    position: "absolute",
-    top: "100%",
-    right: 0,
-    paddingTop: 10,
-    whiteSpace: "nowrap"
+    display: "none",
+  }
+}));
+
+export const TimeDurationSm = styled("small")(({ theme }) => ({
+  color: theme.palette.grey[400],
+  display: "none",
+  [theme.breakpoints.down("sm")]: {
+    display: "block",
+    marginBottom: "0.5rem",
   }
 }));
 
 export const DelegateTable = styled(Table)`
-  overflow: hidden;
-  & > div {
+& > div {
+    overflow-y: hidden;
     padding: 0;
     border: none;
   }
@@ -108,7 +111,7 @@ export const PoolName = styled(Link)`
 
 export const ProgressContainer = styled("div")`
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
 `;
 export const ProgressTitle = styled("div")`
