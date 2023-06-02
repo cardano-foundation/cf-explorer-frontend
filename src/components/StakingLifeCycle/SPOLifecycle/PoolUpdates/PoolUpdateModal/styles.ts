@@ -1,8 +1,9 @@
 import { Box, styled, alpha, Tab } from "@mui/material";
-import CustomModal from "src/components/commons/CustomModal";
-import { Link } from "react-router-dom";
-import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 import { TabPanel } from "@mui/lab";
+import { Link } from "react-router-dom";
+
+import { AdaLogoIcon } from "src/components/commons/ADAIcon";
+import CustomModal from "src/components/commons/CustomModal";
 
 export const StyledModal = styled(CustomModal)(() => ({}));
 
@@ -148,7 +149,7 @@ export const MinimumText = styled(Box)(({ theme }) => ({
   marginTop: 5
 }));
 
-export const SupperMinimumText = styled(MinimumText)(({ theme }) => ({
+export const SupperMinimumText = styled(MinimumText)(() => ({
   fontSize: 10,
   lineHeight: "12px"
 }));

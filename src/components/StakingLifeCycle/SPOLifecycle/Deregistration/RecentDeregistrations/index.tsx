@@ -1,17 +1,18 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Box, Skeleton } from "@mui/material";
 import { useHistory, useParams } from "react-router";
-import useFetchList from "../../../../../commons/hooks/useFetchList";
-import { API } from "../../../../../commons/utils/api";
-import StackingFilter, { FilterParams } from "../../../../StackingFilter";
-import OverviewStaking from "../../../../commons/OverviewStaking";
-import { EmptyRecord, FooterTable } from "../../../../commons/Table";
-import { GridBox, WrapFilterDescription, StyledContainer, StyledList } from "./styles";
-import { DescriptionText } from "../../../DelegatorLifecycle/styles";
-import { details } from "../../../../../commons/routers";
 import { useUpdateEffect } from "react-use";
 import { useSelector } from "react-redux";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
+import StackingFilter, { FilterParams } from "src/components/StackingFilter";
+import OverviewStaking from "src/components/commons/OverviewStaking";
+import { EmptyRecord, FooterTable } from "src/components/commons/Table";
+import { details } from "src/commons/routers";
+
+import { GridBox, WrapFilterDescription, StyledContainer, StyledList } from "./styles";
+import { DescriptionText } from "../../../DelegatorLifecycle/styles";
 
 interface Props {
   onSelect: (registration: SPODeregistration | null) => void;
@@ -78,7 +79,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, setShowBackButton })
           <StackingFilter
             filterValue={params}
             onFilterValueChange={(params) => {
-              setParams((pre) => ({
+              setParams(() => ({
                 fromDate: undefined,
                 sort: undefined,
                 toDate: undefined,

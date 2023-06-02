@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Box, styled, Button } from "@mui/material";
-import { HeaderSearchIcon } from "../../commons/resources";
-import { ReactComponent as Search } from "../../commons/resources/icons/Staking/Search.svg";
 import { useHistory } from "react-router-dom";
+import { Box, styled, Button } from "@mui/material";
+
+import { HeaderSearchIcon } from "src/commons/resources";
+import { ReactComponent as Search } from "src/commons/resources/icons/Staking/Search.svg";
 import { details } from "src/commons/routers";
 
 const StakingLifeCycleSearch = () => {

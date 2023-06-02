@@ -1,6 +1,16 @@
-import { Box, Skeleton } from "@mui/material";
 import { useState } from "react";
+import { Box, Skeleton } from "@mui/material";
+import { TabContext, TabList } from "@mui/lab";
 import { useHistory } from "react-router-dom";
+
+import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
+import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import CopyButton from "src/components/commons/CopyButton";
+import { details } from "src/commons/routers";
+import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { CertUpdate, ChangeIcon, PoolCert } from "src/commons/resources";
+
 import {
   CardBox,
   ChangeBox,
@@ -13,7 +23,6 @@ import {
   MinimumAdaLogoIcon,
   MinimumText,
   StyledAdaLogoIcon,
-  StyledEmptyIcon,
   StyledLink,
   StyledModal,
   StyledTab,
@@ -26,14 +35,6 @@ import {
   UpdateList,
   Value
 } from "./styles";
-import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
-import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import CopyButton from "src/components/commons/CopyButton";
-import { details } from "src/commons/routers";
-import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
-import { CertUpdate, ChangeIcon, EmptyIcon, PoolCert } from "src/commons/resources";
-import { TabContext, TabList } from "@mui/lab";
 
 interface CertificateItemType {
   label: React.ReactNode;

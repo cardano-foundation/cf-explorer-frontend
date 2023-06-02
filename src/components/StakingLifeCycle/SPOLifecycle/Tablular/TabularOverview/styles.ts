@@ -20,7 +20,7 @@ export const CardOverview = styled(Box)`
   }
 `;
 
-export const WrapIcon = styled(Box)(({ theme }) => ({
+export const WrapIcon = styled(Box)(() => ({
   width: 95,
   marginRight: 12,
   display: "flex",
@@ -110,7 +110,7 @@ export const DotsIcon = styled(Box)`
   }
 `;
 
-export const StyledBox = styled(Box)(({ theme }) => ({
+export const StyledBox = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
   gap: "12px"

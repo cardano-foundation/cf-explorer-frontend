@@ -1,4 +1,5 @@
 import { Box, Typography, styled } from "@mui/material";
+
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 
 export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({

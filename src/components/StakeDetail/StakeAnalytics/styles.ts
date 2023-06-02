@@ -126,7 +126,7 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const Wrapper = styled(Grid)(({ theme }) => ({
+export const Wrapper = styled(Grid)(() => ({
   borderRadius: 10,
   minHeight: "400px",
   textAlign: "left"

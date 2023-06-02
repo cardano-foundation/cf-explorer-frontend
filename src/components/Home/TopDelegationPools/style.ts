@@ -1,7 +1,8 @@
 import { alpha, Box, LinearProgress, styled } from "@mui/material";
 import { Link } from "react-router-dom";
-import { BoxRaised } from "../../commons/BoxRaised";
-import Table from "../../commons/Table";
+
+import { BoxRaised } from "src/components/commons/BoxRaised";
+import Table from "src/components/commons/Table";
 
 export const TopDelegateContainer = styled(BoxRaised)`
   margin-bottom: 24px;

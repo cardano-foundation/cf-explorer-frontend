@@ -1,8 +1,9 @@
 import { styled } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "react-use";
-import LineArrow, { LineArrowItem } from "../LineArrow";
 import { useSelector } from "react-redux";
+
+import LineArrow, { LineArrowItem } from "../LineArrow";
 
 const DrawPathContainer = styled("svg")(() => ({
   top: 0,

@@ -1,21 +1,17 @@
+import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import StakeTab, { StakeTabItem } from "../../../TabularView/StakeTab";
+import { useHistory, useParams } from "react-router";
+
+import StakeTab, { StakeTabItem } from "src/components/TabularView/StakeTab";
+import { DeredistrationIcon, OperatorRewardIcon, PoolUpdateIcon, RegistrationIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { ListTabResponseSPO } from "src/pages/SPOLifecycle";
+
+import TabularOverview from "./TabularOverview";
 import PoolRegistrationTab from "./Tabs/PoolRegistrationTab";
 import PoolUpdateTab from "./Tabs/PoolUpdateTab";
 import DeregsitrationTab from "./Tabs/DeregsitrationTab";
 import OperatorRewardTab from "./Tabs/OperatorReward";
-import {
-  DeredistrationIcon,
-  OperatorRewardIcon,
-  PoolUpdateIcon,
-  RegistrationIcon
-} from "../../../../commons/resources";
-import TabularOverview from "./TabularOverview";
-import { useHistory, useParams } from "react-router";
-import { details } from "../../../../commons/routers";
-import { ListTabResponseSPO } from "src/pages/SPOLifecycle";
-import { useEffect, useState } from "react";
-
 interface SPOTabItem extends StakeTabItem {
   key: SPOStep;
   keyCheckShow: string;

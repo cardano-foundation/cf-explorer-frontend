@@ -1,10 +1,12 @@
 import { Box, CircularProgress, FormGroup } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { routers } from "../../commons/routers";
-import { verifyActive } from "../../commons/utils/userRequest";
-import { Container, Label, Title, WrapButton, WrapContent, WrapForm } from "./styles";
+
+import { routers } from "src/commons/routers";
+import { verifyActive } from "src/commons/utils/userRequest";
 import { FailIcon, SuccessIcon } from "src/commons/resources";
+
+import { Container, Label, Title, WrapButton, WrapContent, WrapForm } from "./styles";
 
 export default function VerifyEmail() {
   const history = useHistory();

@@ -1,7 +1,9 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import StackingFilter from ".";
+
 import { render } from "src/test-utils";
+
+import StackingFilter from ".";
 
 test("Render StackingFilter", async () => {
   const onFilterValueChange = jest.fn();

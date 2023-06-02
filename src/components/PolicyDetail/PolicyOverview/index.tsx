@@ -1,7 +1,14 @@
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
-import CopyButton from "../../commons/CopyButton";
+
+import { truncateCustom } from "src/commons/utils/helper";
+import { useScreen } from "src/commons/hooks/useScreen";
+import policyIcon from "src/commons/resources/icons/policyIcon.svg";
+import ScriptModal from "src/components/ScriptModal";
+import CopyButton from "src/components/commons/CopyButton";
+
 import {
   BackButton,
   BackText,
@@ -13,12 +20,6 @@ import {
   SlotLeaderContainer,
   SlotLeaderSkeleton
 } from "./styles";
-import { useHistory } from "react-router-dom";
-import React, { useState } from "react";
-
-import ScriptModal from "../../ScriptModal";
-import { truncateCustom } from "../../../commons/utils/helper";
-import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface Props {
   data: PolicyDetail | null;

@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
+import { useParams } from "react-router-dom";
+
 import { details } from "src/commons/routers";
 import delegatedIcon from "src/commons/resources/icons/delegated.svg";
 import totalStakeIcon from "src/commons/resources/icons/totalStake.svg";
 import rewardIcon from "src/commons/resources/icons/reward.svg";
 import rewardWithdrawIcon from "src/commons/resources/icons/rewardWithdraw.svg";
 import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
-import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleValue } from "./styles";
-import { useParams } from "react-router-dom";
-import ModalAllAddress from "../ModalAllAddress";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailHeader from "src/components/commons/DetailHeader";
 import ADAicon from "src/components/commons/ADAIcon";
+
+import ModalAllAddress from "../ModalAllAddress";
+import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleValue } from "./styles";
 
 interface Props {
   data: IStakeKeyDetail | null;

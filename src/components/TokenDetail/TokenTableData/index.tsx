@@ -1,17 +1,17 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { Box, Tab, useTheme } from "@mui/material";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import TokenTransaction from "./TokenTransaction";
-
 import { TitleTab } from "./styles";
 import TokenTopHolder from "./TokenTopHolder";
 import TokenMinting from "./TokenMinting";
-import { Box, Tab, useTheme } from "@mui/material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { details } from "../../../commons/routers";
 import { UnionTokenIcon, PeopleIcon, TransactionIcon } from "../../../commons/resources";
 import CustomIcon from "../../commons/CustomIcon";
-import { useScreen } from "src/commons/hooks/useScreen";
 
 interface ITokenTableData {
   totalSupply?: number;

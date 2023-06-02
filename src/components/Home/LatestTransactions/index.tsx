@@ -1,19 +1,24 @@
 import { Box, Grid, Skeleton } from "@mui/material";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
-import { details, routers } from "../../../commons/routers";
-import { API } from "../../../commons/utils/api";
-import { REFRESH_TIMES, TRANSACTION_STATUS } from "../../../commons/utils/constants";
+
+import { BlankBlueIcon, ADAIcon } from "src/commons/resources";
+import { details, routers } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { REFRESH_TIMES, TRANSACTION_STATUS } from "src/commons/utils/constants";
 import {
   formatADAFull,
   formatDateTimeLocal,
   getShortHash,
   getShortWallet,
   handleClicktWithoutAnchor
-} from "../../../commons/utils/helper";
-import CustomTooltip from "../../commons/CustomTooltip";
-import ViewAllButton from "../../commons/ViewAllButton";
+} from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import ViewAllButton from "src/components/commons/ViewAllButton";
+import useFetch from "src/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
+import FormNowMessage from "src/components/commons/FormNowMessage";
+
 import {
   Hash,
   Header,
@@ -33,10 +38,6 @@ import {
   TimeDuration,
   TimeDurationSm
 } from "./style";
-import useFetch from "../../../commons/hooks/useFetch";
-
-import { useScreen } from "../../../commons/hooks/useScreen";
-import FormNowMessage from "src/components/commons/FormNowMessage";
 
 const LatestTransactions: React.FC = () => {
   const { data, initialized, lastUpdated } = useFetch<CurrentTransactions[]>(

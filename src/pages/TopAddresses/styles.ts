@@ -15,7 +15,7 @@ export const StyledContainer = styled(Container)`
   }
 `;
 
-export const Actions = styled(Box)(({ theme }) => ({
+export const Actions = styled(Box)(() => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",

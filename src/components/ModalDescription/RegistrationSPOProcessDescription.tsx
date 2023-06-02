@@ -1,6 +1,8 @@
 import { Typography } from "@mui/material";
+
 import StyledModal from "../commons/StyledModal";
 import { ContentContainer, NormalDescription, WrapContent } from "./styles";
+
 interface Props {
   open: boolean;
   handleCloseModal: () => void;

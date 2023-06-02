@@ -1,22 +1,24 @@
+import React from "react";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Box, Tab, useTheme } from "@mui/material";
 import { stringify } from "qs";
-import React from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { details } from "../../../commons/routers";
-import { API } from "../../../commons/utils/api";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
 import {
   formatDateTimeLocal,
   formatNumberDivByDecimals,
   getPageInfo,
   getShortWallet,
   numberWithCommas
-} from "../../../commons/utils/helper";
-import CustomTooltip from "../../commons/CustomTooltip";
-import Table, { Column } from "../../commons/Table";
-import { LinkComponent, StyledBoxContainer, StyledTabList, TitleTab } from "./styles";
+} from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table, { Column } from "src/components/commons/Table";
 import { AssetHolderIcon, TokenIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+
+import { LinkComponent, StyledBoxContainer, StyledTabList, TitleTab } from "./styles";
 
 enum TABS {
   TOKENS = "tokens",

@@ -2,10 +2,12 @@ import { Box, useTheme } from "@mui/material";
 import { useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useHistory } from "react-router-dom";
-import { details } from "../../../commons/routers";
-import { getShortHash, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+
+import { details } from "src/commons/routers";
+import { getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import { CustomSelect, OptionSelect } from "./styles";
-import { useScreen } from "../../../commons/hooks/useScreen";
 import CustomTooltip from "../CustomTooltip";
 
 interface IDropdownTokens {
@@ -15,7 +17,7 @@ interface IDropdownTokens {
   hideMathChar?: boolean;
 }
 
-const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hideInputLabel, hideMathChar }) => {
+const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hideMathChar }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const history = useHistory();
   const isSend = tokens[0].assetQuantity < 0;

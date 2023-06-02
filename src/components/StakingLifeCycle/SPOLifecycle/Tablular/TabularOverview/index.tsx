@@ -1,6 +1,8 @@
 import { Box, BoxProps, Grid, Icon } from "@mui/material";
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import {
   BgBlue,
   BgCardWhite,
@@ -11,8 +13,12 @@ import {
   ReewardAvalible,
   StatusIC,
   WalletGreenIcon
-} from "../../../../../commons/resources";
-import { formatADAFull, getShortWallet } from "../../../../../commons/utils/helper";
+} from "src/commons/resources";
+import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
+import { details } from "src/commons/routers";
+
+import PoolDetailContext from "../../PoolDetailContext";
 import {
   CardOverview,
   CardTitle,
@@ -25,10 +31,6 @@ import {
   WrapStatus,
   WrapWalletIcon
 } from "./styles";
-import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
-import { details } from "../../../../../commons/routers";
-import PoolDetailContext from "../../PoolDetailContext";
-import { useSelector } from "react-redux";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (

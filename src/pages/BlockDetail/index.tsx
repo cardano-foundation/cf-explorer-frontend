@@ -1,12 +1,14 @@
-import { useLocation, useParams } from "react-router-dom";
-import TransactionListsFull from "../../components/TransactionListsFull";
-import BlockOverview from "../../components/BlockDetail/BlockOverview";
-import useFetch from "../../commons/hooks/useFetch";
-import { StyledContainer } from "./styles";
-import NoRecord from "../../components/commons/NoRecord";
 import { useEffect } from "react";
-import { API } from "../../commons/utils/api";
-import { REFRESH_TIMES } from "../../commons/utils/constants";
+import { useLocation, useParams } from "react-router-dom";
+
+import TransactionListsFull from "src/components/TransactionListsFull";
+import BlockOverview from "src/components/BlockDetail/BlockOverview";
+import useFetch from "src/commons/hooks/useFetch";
+import NoRecord from "src/components/commons/NoRecord";
+import { API } from "src/commons/utils/api";
+import { REFRESH_TIMES } from "src/commons/utils/constants";
+
+import { StyledContainer } from "./styles";
 
 const BlockDetail = () => {
   const { blockId } = useParams<{ blockId: string }>();

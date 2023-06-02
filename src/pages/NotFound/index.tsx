@@ -1,8 +1,9 @@
 import { Container, styled } from "@mui/material";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { NotFoundIcon } from "../../commons/resources";
-import { routers } from "../../commons/routers";
+
+import { NotFoundIcon } from "src/commons/resources";
+import { routers } from "src/commons/routers";
 
 const NotFoundContainer = styled(Container)`
   display: flex;

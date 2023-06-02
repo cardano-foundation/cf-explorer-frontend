@@ -2,6 +2,8 @@ import { Grid } from "@mui/material";
 import BigNumber from "bignumber.js";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import moment from "moment";
+
 import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
@@ -10,6 +12,9 @@ import { formatADA, formatADAFull, numberWithCommas } from "src/commons/utils/he
 import { RootState } from "src/stores/types";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import RateWithIcon from "src/components/commons/RateWithIcon";
+import { useScreen } from "src/commons/hooks/useScreen";
+import useFetch from "src/commons/hooks/useFetch";
+
 import {
   AdaPrice,
   Content,
@@ -28,9 +33,6 @@ import {
   XSmall,
   XValue
 } from "./style";
-import moment from "moment";
-import { useScreen } from "src/commons/hooks/useScreen";
-import useFetch from "src/commons/hooks/useFetch";
 
 const SkeletonBox = () => (
   <Item>
