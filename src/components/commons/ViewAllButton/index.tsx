@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, LinkProps } from "react-router-dom";
 import { alpha, styled, TooltipProps } from "@mui/material";
-import { SeeMoreIcon } from "../../../commons/resources";
+
+import { SeeMoreIcon } from "src/commons/resources";
+
 import CustomTooltip from "../CustomTooltip";
 
 const StyledLink = styled(Link)`
@@ -32,7 +34,7 @@ const ViewAllButton: React.FC<ViewAllButtonProps> = ({ tooltipTitle = "View All"
   return (
     <CustomTooltip placement={placement} title={tooltipTitle}>
       <StyledLink {...props}>
-        <ViewAllImage src={SeeMoreIcon} alt='view all' />
+        <ViewAllImage src={SeeMoreIcon} alt="view all" />
       </StyledLink>
     </CustomTooltip>
   );

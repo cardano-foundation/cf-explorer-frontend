@@ -1,7 +1,8 @@
 import { Box, styled, alpha } from "@mui/material";
-import CustomModal from "~/components/commons/CustomModal";
 import { Link } from "react-router-dom";
-import { AdaLogoIcon } from "~/components/commons/ADAIcon";
+
+import CustomModal from "src/components/commons/CustomModal";
+import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 
 export const StyledModal = styled(CustomModal)(() => ({}));
 
@@ -62,7 +63,7 @@ export const StyledLink = styled(Link)(({ theme }) => ({
   }
 }));
 
-export const FakeLink = styled(Box)(({ theme }) => ({
+export const VRFKeyText = styled(Box)(({ theme }) => ({
   fontSize: 14,
   lineHeight: "22px",
   color: theme.palette.blue[800],
@@ -75,7 +76,7 @@ export const FakeLink = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const Value = styled(FakeLink)(({ theme }) => ({
+export const Value = styled(VRFKeyText)(({ theme }) => ({
   color: theme.palette.common.black,
   display: "flex",
   alignItems: "center",

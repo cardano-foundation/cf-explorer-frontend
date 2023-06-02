@@ -1,4 +1,5 @@
 import { styled, Stack, Box, Button, TextField, Slider, FormLabel } from "@mui/material";
+
 import { SelectMui } from "../../../commons/Table/styles";
 
 export const Container = styled(Box)(({ theme }) => ({
@@ -203,14 +204,12 @@ export const TextValueReview = styled("div")`
   }
 `;
 
-export const TextOverFlow = styled("div")`
+export const TextOverFlow = styled(Box)`
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: auto;
   max-width: 100%;
   width: 300px;
   text-align: right;
-  white-space: nowrap;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     text-align: left;
   }

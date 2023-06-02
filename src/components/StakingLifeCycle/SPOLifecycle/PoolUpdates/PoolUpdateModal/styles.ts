@@ -1,8 +1,9 @@
 import { Box, styled, alpha, Tab } from "@mui/material";
-import CustomModal from "~/components/commons/CustomModal";
-import { Link } from "react-router-dom";
-import { AdaLogoIcon } from "~/components/commons/ADAIcon";
 import { TabPanel } from "@mui/lab";
+import { Link } from "react-router-dom";
+
+import { AdaLogoIcon } from "src/components/commons/ADAIcon";
+import CustomModal from "src/components/commons/CustomModal";
 
 export const StyledModal = styled(CustomModal)(() => ({}));
 
@@ -91,7 +92,7 @@ export const StyledLink = styled(Link)(({ theme }) => ({
   }
 }));
 
-export const FakeLink = styled(Box)(({ theme }) => ({
+export const VRFKeyText = styled(Box)(({ theme }) => ({
   fontSize: 14,
   lineHeight: "22px",
   color: theme.palette.blue[800],
@@ -104,7 +105,7 @@ export const FakeLink = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const Value = styled(FakeLink)(({ theme }) => ({
+export const Value = styled(VRFKeyText)(({ theme }) => ({
   color: theme.palette.common.black
 }));
 
@@ -148,7 +149,7 @@ export const MinimumText = styled(Box)(({ theme }) => ({
   marginTop: 5
 }));
 
-export const SupperMinimumText = styled(MinimumText)(({ theme }) => ({
+export const SupperMinimumText = styled(MinimumText)(() => ({
   fontSize: 10,
   lineHeight: "12px"
 }));

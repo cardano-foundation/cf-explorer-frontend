@@ -1,14 +1,27 @@
-import { Box, IconButton, styled, useTheme } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { range } from "lodash";
 import moment from "moment";
-import { useEffect, useRef, useState } from "react";
-import "react-datepicker/dist/react-datepicker.css";
 import { BsFillCaretDownFill } from "react-icons/bs";
 import { IoIosArrowBack, IoIosArrowForward, IoMdClose } from "react-icons/io";
-import { DateRangeIcon } from "../../commons/resources";
+
+import { DateRangeIcon } from "src/commons/resources";
+import useComponentVisible from "src/commons/hooks/useComponentVisible";
+
+import {
+  CloseButtonLeft,
+  CloseButtonRight,
+  HiddenScroll,
+  MyGrid,
+  SelectDateButton,
+  SelectYear,
+  StyledDatePicker,
+  WrapContainerPickerEnd,
+  WrapContainerPickerStart,
+  WrapCustomDatePicker
+} from "./styles";
+import "react-datepicker/dist/react-datepicker.css";
 import "./index.css";
-import { CloseButtonLeft, CloseButtonRight, SelectDateButton, StyledDatePicker, WrapCustomDatePicker } from "./styles";
-import useComponentVisible from "~/commons/hooks/useComponentVisible";
 
 export type IDate = Date | null;
 
@@ -130,8 +143,8 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
               open={open}
               key={"datePickerStart"}
               maxDate={hideFuture ? endDate || lastDayOfCurrentMonth : endDate}
-              calendarClassName='start-date-picker'
-              placeholderText='MM/DD/YYYY'
+              calendarClassName="start-date-picker"
+              placeholderText="MM/DD/YYYY"
               selected={startDate}
               customInput={<Box />}
               onChange={(update: any) => {
@@ -161,50 +174,29 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
                     </IconButton>
                   </Box>
                   {openModalPickYear1 && (
-                    <HiddenScroll
-                      ref={modalRef}
-                      position={"absolute"}
-                      top={"50%"}
-                      left={"-10%"}
-                      width={"fit-content"}
-                      height={"200px"}
-                      overflow={"auto"}
-                      bgcolor={"#fff"}
-                      boxShadow={"0px 4px 16px rgba(0, 0, 0, 0.12)"}
-                      borderRadius={"8px"}
-                      zIndex={1}
-                    >
+                    <HiddenScroll ref={modalRef}>
                       <MyGrid>
                         {years.map((year) => {
                           const isActive = year === getYear(date);
                           return (
-                            <Box
+                            <SelectYear
+                              isActive={isActive ? 1 : 0}
                               ref={isActive ? activeYeah1Ref : null}
                               key={year}
                               onClick={() => {
                                 changeYear(year);
                                 setOpenModalPickYear1(false);
                               }}
-                              sx={{
-                                padding: "8px 16px",
-                                cursor: "pointer",
-                                borderRadius: "18px",
-                                backgroundColor: isActive ? theme.palette.primary.main : "transparent",
-                                color: isActive ? "#fff" : theme.palette.text.primary,
-                                "&:hover": {
-                                  backgroundColor: isActive ? theme.palette.primary.main : theme.palette.grey[100]
-                                }
-                              }}
                             >
                               {year}
-                            </Box>
+                            </SelectYear>
                           );
                         })}
                       </MyGrid>
                     </HiddenScroll>
                   )}
                   <Box position={"relative"}>
-                    <CloseButtonLeft saving={0} onClick={() => setOpen(false)} data-testid='close-modal-button'>
+                    <CloseButtonLeft saving={0} onClick={() => setOpen(false)} data-testid="close-modal-button">
                       <IoMdClose />
                     </CloseButtonLeft>
                     <IconButton onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
@@ -220,12 +212,12 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
           </WrapContainerPickerStart>
           <WrapContainerPickerEnd>
             <StyledDatePicker
-              placeholderText='MM/DD/YYYY'
+              placeholderText="MM/DD/YYYY"
               minDate={startDate}
               maxDate={hideFuture ? lastDayOfCurrentMonth : null}
               selected={endDate}
               customInput={<Box />}
-              calendarClassName='end-date-picker'
+              calendarClassName="end-date-picker"
               key={"datePickerEnd"}
               onChange={(update: any) => {
                 setDateRange([startDate, update]);
@@ -258,50 +250,29 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
                     </IconButton>
                   </Box>
                   {openModalPickYear2 && (
-                    <HiddenScroll
-                      ref={modalRef}
-                      position={"absolute"}
-                      top={"50%"}
-                      left={"-10%"}
-                      width={"fit-content"}
-                      height={"200px"}
-                      overflow={"auto"}
-                      bgcolor={"#fff"}
-                      boxShadow={"0px 4px 16px rgba(0, 0, 0, 0.12)"}
-                      borderRadius={"8px"}
-                      zIndex={1}
-                    >
+                    <HiddenScroll>
                       <MyGrid>
                         {years.map((year) => {
                           const isActive = year === getYear(date);
                           return (
-                            <Box
+                            <SelectYear
+                              isActive={isActive ? 1 : 0}
                               ref={isActive ? activeYeah2Ref : null}
                               key={year}
                               onClick={() => {
                                 changeYear(year);
                                 setOpenModalPickYear2(false);
                               }}
-                              sx={{
-                                padding: "8px 16px",
-                                cursor: "pointer",
-                                borderRadius: "18px",
-                                backgroundColor: isActive ? theme.palette.primary.main : "transparent",
-                                color: isActive ? "#fff" : theme.palette.text.primary,
-                                "&:hover": {
-                                  backgroundColor: isActive ? theme.palette.primary.main : theme.palette.grey[100]
-                                }
-                              }}
                             >
                               {year}
-                            </Box>
+                            </SelectYear>
                           );
                         })}
                       </MyGrid>
                     </HiddenScroll>
                   )}
                   <Box position={"relative"}>
-                    <CloseButtonRight saving={0} onClick={() => setOpen(false)} data-testid='close-modal-button'>
+                    <CloseButtonRight saving={0} onClick={() => setOpen(false)} data-testid="close-modal-button">
                       <IoMdClose />
                     </CloseButtonRight>
                     <IconButton onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
@@ -320,59 +291,5 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
     </Box>
   );
 };
-const MyGrid = styled(Box)(({ theme }) => ({
-  display: "grid",
-  gridTemplateColumns: "repeat(4, 1fr)",
-  gridGap: "8px",
-  padding: "10px 6px"
-}));
 
-const WrapContainerPickerStart = styled(Box)`
-  position: absolute;
-  @media (min-width: 750px) {
-    top: 66%;
-    left: -10%;
-  }
-  @media (max-width: 750px) {
-    top: -350px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-  }
-`;
-const WrapContainerPickerEnd = styled(Box)`
-  position: absolute;
-  @media (min-width: 750px) {
-    top: 66%;
-    right: 49%;
-  }
-  @media (max-width: 750px) {
-    top: 300px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-  }
-`;
-
-const HiddenScroll = styled(Box)(({ theme }) => ({
-  "&::-webkit-scrollbar": {
-    width: "5px"
-  },
-  "&::-webkit-scrollbar-track": {
-    background: "transparent"
-  },
-  "&::-webkit-scrollbar-thumb": {
-    background: "transparent"
-  },
-  "&:hover": {
-    "&::-webkit-scrollbar-thumb": {
-      background: theme.palette.grey[300]
-    },
-    "&::-webkit-scrollbar-track": {
-      background: theme.palette.grey[100]
-    }
-  }
-}));
 export default CustomDatePicker;

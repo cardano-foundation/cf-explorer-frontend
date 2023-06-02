@@ -1,7 +1,8 @@
 import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
-import CertificateShape from "~/components/commons/CertificateShape";
 
-export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
+import CertificateShape from "src/components/commons/CertificateShape";
+
+export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0
 }));
 

@@ -1,6 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import { details } from "../../../../commons/routers";
@@ -20,7 +21,7 @@ const SummaryItems = ({
   type?: "up" | "down";
 }) => {
   const theme = useTheme();
-  const { isMobile, isGalaxyFoldSmall } = useScreen();
+  const { isMobile } = useScreen();
   return (
     <Box
       display={"flex"}
@@ -38,23 +39,23 @@ const SummaryItems = ({
     >
       <Box display={"flex"} justifyContent={"space-between"} sx={{ overflowX: "auto", overflowY: "hidden" }}>
         <Box width={50}>
-          <Icon src={type === "down" ? receiveImg : sendImg} alt='send icon' />
+          <Icon src={type === "down" ? receiveImg : sendImg} alt="send icon" />
         </Box>
-        <Box flex={1} pt='4px'>
-          <Box display={"flex"} alignItems='center' justifyContent={"flex-start"} >
-            <Box width={"100%"} display='flex' alignItems={"center"} justifyContent='center' flexWrap={"wrap"}>
-              <Box display={"flex"} justifyContent='flex-start' alignItems={"center"} pr={1} mb={1}>
+        <Box flex={1} pt="4px">
+          <Box display={"flex"} alignItems="center" justifyContent={"flex-start"}>
+            <Box width={"100%"} display="flex" alignItems={"center"} justifyContent="center" flexWrap={"wrap"}>
+              <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} pr={1} mb={1}>
                 {type === "down" ? "From" : "To"}:{" "}
               </Box>
-              <Box display={"flex"} justifyContent='flex-start' alignItems={"center"} flex={1} mb={1}>
-                <Box display={"flex"} justifyContent='flex-start' alignItems={"center"} flexWrap={"nowrap"}>
+              <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} flex={1} mb={1}>
+                <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} flexWrap={"nowrap"}>
                   <Link
                     to={item.address.startsWith("stake") ? details.stake(item.address) : details.address(item.address)}
                   >
                     <CustomTooltip title={item.address}>
                       <Box
                         color={(theme) => theme.palette.blue[800]}
-                        fontWeight='bold'
+                        fontWeight="bold"
                         fontFamily={"var(--font-family-text)"}
                       >
                         {getShortWallet(item.address)}
@@ -71,23 +72,19 @@ const SummaryItems = ({
             flexDirection={isMobile ? "column" : "row"}
             alignItems={isMobile ? "flex-start" : "center"}
             justifyContent={"space-between"}
-            width='100%'
+            width="100%"
             mb={1}
           >
-            <Box
-              display='flex'
-              justifyContent={"space-between"}
-              alignItems={ "baseline"}
-              pr={1}
-              flexDirection={"row"}
-            >
-              <Box pr={1} whiteSpace={"nowrap"}>{type === "down" ? "ADA sent:" : "ADA received:"} </Box>
-              <Box display='flex' justifyContent={"space-between"} alignItems='center'>
+            <Box display="flex" justifyContent={"space-between"} alignItems={"baseline"} pr={1} flexDirection={"row"}>
+              <Box pr={1} whiteSpace={"nowrap"}>
+                {type === "down" ? "ADA sent:" : "ADA received:"}{" "}
+              </Box>
+              <Box display="flex" justifyContent={"space-between"} alignItems="center">
                 <Box
                   component={"span"}
-                  whiteSpace='nowrap'
+                  whiteSpace="nowrap"
                   color={(theme) => (type === "up" ? theme.palette.success.main : theme.palette.error.main)}
-                  fontWeight='bold'
+                  fontWeight="bold"
                   mr={1}
                 >
                   {type === "down" ? `${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
@@ -98,11 +95,13 @@ const SummaryItems = ({
           </Box>
         </Box>
       </Box>
-      {(item.tokens && item.tokens.length > 0) ? (
+      {item.tokens && item.tokens.length > 0 ? (
         <Box display={"flex"} alignItems={"center"} ml={isMobile ? "50px" : 0}>
           <DropdownTokens tokens={item.tokens} type={type} />
         </Box>
-      ): <Box />}
+      ) : (
+        <Box />
+      )}
     </Box>
   );
 };

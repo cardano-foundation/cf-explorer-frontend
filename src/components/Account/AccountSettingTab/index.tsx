@@ -1,19 +1,14 @@
+import { useState } from "react";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useCallback, useState } from "react";
-
-import { RootState } from "../../../stores/types";
-import { StyledButton, StyledHelper, StyledInput, StyledLabel, StyledRowItem, WrapRowItem } from "./styles";
-import { editInfo, existEmail, existUserName, getInfo } from "../../../commons/utils/userRequest";
-import { regexEmail, removeAuthInfo, alphaNumeric } from "../../../commons/utils/helper";
-
-import { setUserData } from "../../../stores/user";
-import { NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
-import { routers } from "../../../commons/routers";
 import { useHistory } from "react-router-dom";
-import useToast from "../../../commons/hooks/useToast";
-import { useScreen } from "../../../commons/hooks/useScreen";
+
+import { useScreen } from "src/commons/hooks/useScreen";
+import { removeAuthInfo } from "src/commons/utils/helper";
+import { routers } from "src/commons/routers";
+
+import { StyledButton, StyledHelper, StyledInput, StyledLabel, StyledRowItem, WrapRowItem } from "./styles";
 
 type TRowItem = {
   label: string;
@@ -97,14 +92,14 @@ const AccountSettingTab: React.FC = () => {
   };
 
   return (
-    <Box textAlign='left'>
+    <Box textAlign="left">
       <RowItem
-        label='Connected Wallet '
+        label="Connected Wallet "
         value={wallet.value}
         errorMsg={wallet.errorMsg}
         onChangeValue={(event) => setWallet({ value: event.target.value, errorMsg: "" })}
         action={onTransferWallet}
-        field='wallet'
+        field="wallet"
       />
     </Box>
   );

@@ -1,5 +1,6 @@
 import StyledModal from "../commons/StyledModal";
 import { ContentContainer, NormalDescription, WrapContent } from "./styles";
+
 interface Props {
   open: boolean;
   handleCloseModal: () => void;
@@ -8,7 +9,7 @@ export function DeregistrationDelegatorProcessDescription({ open, handleCloseMod
   return (
     <StyledModal
       contentStyle={{ paddingRight: "5px" }}
-      title='Deregistration'
+      title="Deregistration"
       handleCloseModal={handleCloseModal}
       open={open}
     >

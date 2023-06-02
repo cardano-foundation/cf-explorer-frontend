@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
-import { details } from "~/commons/routers";
-import delegatedIcon from "~/commons/resources/icons/delegated.svg";
-import totalStakeIcon from "~/commons/resources/icons/totalStake.svg";
-import rewardIcon from "~/commons/resources/icons/reward.svg";
-import rewardWithdrawIcon from "~/commons/resources/icons/rewardWithdraw.svg";
-import { formatADAFull, getShortWallet } from "~/commons/utils/helper";
-import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleValue } from "./styles";
 import { useParams } from "react-router-dom";
+
+import { details } from "src/commons/routers";
+import delegatedIcon from "src/commons/resources/icons/delegated.svg";
+import totalStakeIcon from "src/commons/resources/icons/totalStake.svg";
+import rewardIcon from "src/commons/resources/icons/reward.svg";
+import rewardWithdrawIcon from "src/commons/resources/icons/rewardWithdraw.svg";
+import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import DetailHeader from "src/components/commons/DetailHeader";
+import ADAicon from "src/components/commons/ADAIcon";
+
 import ModalAllAddress from "../ModalAllAddress";
-import CustomTooltip from "~/components/commons/CustomTooltip";
-import DetailHeader from "~/components/commons/DetailHeader";
-import ADAicon from "~/components/commons/ADAIcon";
+import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleValue } from "./styles";
 
 interface Props {
   data: IStakeKeyDetail | null;
@@ -41,7 +43,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
     {
       icon: delegatedIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Delegated to </TitleCard>
         </Box>
       ),
@@ -56,7 +58,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
     {
       icon: totalStakeIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Total Stake</TitleCard>
         </Box>
       ),
@@ -76,7 +78,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
     {
       icon: rewardIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Reward available </TitleCard>
         </Box>
       ),
@@ -90,7 +92,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
     {
       icon: rewardWithdrawIcon,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Reward withdrawn </TitleCard>
         </Box>
       ),
@@ -105,9 +107,9 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
 
   return (
     <DetailHeader
-      type='STAKE_KEY'
+      type="STAKE_KEY"
       bookmarkData={data?.stakeAddress || ""}
-      title='Stake Key Details'
+      title="Stake Key Details"
       hash={data?.stakeAddress}
       stakeKeyStatus={data?.status}
       listItem={listOverview}

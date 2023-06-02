@@ -1,21 +1,23 @@
 import { stringify } from "qs";
 import { useEffect, useState, useRef } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../commons/utils/constants";
-import { formatADAFull, formatDateTimeLocal, getEpochSlotNo, getPageInfo } from "../../commons/utils/helper";
-import { details } from "../../commons/routers";
-import Card from "../../components/commons/Card";
-import Table, { Column } from "../../components/commons/Table";
-import { Blocks, StyledContainer, Output, StyledColorBlueDard, Status } from "./styles";
-import { setOnDetailView } from "../../stores/user";
-import DetailViewEpoch from "../../components/commons/DetailView/DetailViewEpoch";
 import { Box, useTheme } from "@mui/material";
-import { API } from "../../commons/utils/api";
-import SelectedIcon from "../../components/commons/SelectedIcon";
-import ADAicon from "../../components/commons/ADAIcon";
-import ProgressCircle from "../../components/commons/ProgressCircle";
-import FirstEpoch from "../../components/commons/Epoch/FirstEpoch";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { formatADAFull, formatDateTimeLocal, getEpochSlotNo, getPageInfo } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import Card from "src/components/commons/Card";
+import Table, { Column } from "src/components/commons/Table";
+import { setOnDetailView } from "src/stores/user";
+import DetailViewEpoch from "src/components/commons/DetailView/DetailViewEpoch";
+import { API } from "src/commons/utils/api";
+import SelectedIcon from "src/components/commons/SelectedIcon";
+import ADAicon from "src/components/commons/ADAIcon";
+import ProgressCircle from "src/components/commons/ProgressCircle";
+import FirstEpoch from "src/components/commons/Epoch/FirstEpoch";
+
+import { Blocks, StyledContainer, Output, StyledColorBlueDard, Status } from "./styles";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -36,8 +38,8 @@ const Epoch: React.FC = () => {
       minWidth: "50px",
       render: (r) => (
         <Link to={details.epoch(r.no || 0)}>
-          <Box textAlign='center'>
-            <Box width={41} margin='auto'>
+          <Box textAlign="center">
+            <Box width={41} margin="auto">
               <ProgressCircle
                 size={41}
                 pathWidth={5}
@@ -134,7 +136,7 @@ const Epoch: React.FC = () => {
     setEpoch(null);
     setSelected(null);
   };
-  
+
   const latestEpoch = fetchDataLatestEpoch.data[0];
 
   return (

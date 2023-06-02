@@ -2,10 +2,12 @@ import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment 
 import { useEffect, useReducer, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
-import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "../../commons/resources";
-import { routers } from "../../commons/routers";
-import { signUp } from "../../commons/utils/userRequest";
-import { AlertCustom } from "../ForgotPassword/styles";
+
+import useAuth from "src/commons/hooks/useAuth";
+import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "src/commons/resources";
+import { routers } from "src/commons/routers";
+import { signUp } from "src/commons/utils/userRequest";
+
 import {
   CloseButton,
   Container,
@@ -24,7 +26,6 @@ import {
   WrapSignUp,
   WrapTitle
 } from "./styles";
-import useAuth from "~/commons/hooks/useAuth";
 
 interface IForm {
   password: {
@@ -126,6 +127,20 @@ export default function SignUp() {
         ) {
           error =
             "Password has to be from 8 to 30 characters and must contain at least 1 number, 1 special character, 1 uppercase and 1 lowercase letter";
+        } else if (value === formData.confirmPassword.value) {
+          setFormData({
+            name: "confirmPassword",
+            value: formData.confirmPassword.value,
+            touched: true,
+            error: ""
+          });
+        } else if (formData.confirmPassword.value && value !== formData.confirmPassword.value) {
+          setFormData({
+            name: "confirmPassword",
+            value: formData.confirmPassword.value,
+            touched: true,
+            error: "Confirm Password does not match"
+          });
         }
         break;
       case "confirmPassword":
@@ -141,6 +156,20 @@ export default function SignUp() {
           // eslint-disable-next-line no-useless-escape
         } else if (!/^[\w-\.+!#$%&'*/=?^_`{|]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
           error = "Invalid Email";
+        } else if (value === formData.confirmEmail.value) {
+          setFormData({
+            name: "confirmEmail",
+            value: formData.confirmEmail.value,
+            touched: true,
+            error: ""
+          });
+        } else if (formData.confirmEmail.value && value !== formData.confirmEmail.value) {
+          setFormData({
+            name: "confirmEmail",
+            value: formData.confirmEmail.value,
+            touched: true,
+            error: "Confirm Email does not match"
+          });
         }
         break;
       case "confirmEmail":
@@ -261,10 +290,10 @@ export default function SignUp() {
                   }
                   fullWidth
                   value={formData.email.value}
-                  name='email'
+                  name="email"
                   onChange={handleChange}
                   error={Boolean(formData.email.error && formData.email.touched)}
-                  placeholder='A confirmation code will be sent to this address'
+                  placeholder="A confirmation code will be sent to this address"
                 />
                 {formData.email.error && formData.email.touched ? (
                   <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
@@ -280,10 +309,10 @@ export default function SignUp() {
                   }
                   fullWidth
                   value={formData.confirmEmail.value}
-                  name='confirmEmail'
+                  name="confirmEmail"
                   onChange={handleChange}
                   error={Boolean(formData.confirmEmail.error && formData.confirmEmail.touched)}
-                  placeholder='Re-enter Your email address'
+                  placeholder="Re-enter Your email address"
                 />
                 {formData.confirmEmail.error && formData.confirmEmail.touched ? (
                   <FormHelperTextCustom error>{formData.confirmEmail.error}</FormHelperTextCustom>
@@ -300,16 +329,16 @@ export default function SignUp() {
                   type={showPassword ? "text" : "password"}
                   fullWidth
                   endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton aria-label='toggle password visibility' onClick={handleTogglePassword}>
+                    <InputAdornment position="end">
+                      <IconButton aria-label="toggle password visibility" onClick={handleTogglePassword}>
                         {showPassword ? <ShowIcon /> : <HideIcon />}
                       </IconButton>
                     </InputAdornment>
                   }
-                  name='password'
+                  name="password"
                   onChange={handleChange}
                   error={Boolean(formData.password.error && formData.password.touched)}
-                  placeholder='Password'
+                  placeholder="Password"
                 />
                 {formData.password.error && formData.password.touched ? (
                   <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom>
@@ -326,16 +355,16 @@ export default function SignUp() {
                   fullWidth
                   type={showConfirmPassword ? "text" : "password"}
                   endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton aria-label='toggle password visibility' onClick={handleToggleConfirmPassword}>
+                    <InputAdornment position="end">
+                      <IconButton aria-label="toggle password visibility" onClick={handleToggleConfirmPassword}>
                         {showConfirmPassword ? <ShowIcon /> : <HideIcon />}
                       </IconButton>
                     </InputAdornment>
                   }
-                  name='confirmPassword'
+                  name="confirmPassword"
                   onChange={handleChange}
                   error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
-                  placeholder='Confirm Password'
+                  placeholder="Confirm Password"
                 />
                 {formData.confirmPassword.error && formData.confirmPassword.touched ? (
                   <FormHelperTextCustom error>{formData.confirmPassword.error}</FormHelperTextCustom>
@@ -353,7 +382,7 @@ export default function SignUp() {
                           opacity: "1"
                         }
                       }}
-                      size='medium'
+                      size="medium"
                     />
                   }
                   label={
@@ -363,7 +392,7 @@ export default function SignUp() {
                   }
                 />
               </Box>
-              <WrapButton variant='contained' fullWidth onClick={handleSubmit} disabled={!enableButton}>
+              <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>
                 Create an Account
               </WrapButton>
             </WrapForm>
@@ -385,7 +414,7 @@ export default function SignUp() {
                   </LabelInfo>
                 </Box>
               </Box>
-              <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.SIGN_IN)}>
+              <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
                 Sign In
               </WrapButton>
             </FormGroup>

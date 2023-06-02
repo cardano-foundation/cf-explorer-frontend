@@ -3,11 +3,6 @@ enum TransactionStatus {
   SUCCESS = "SUCCESS",
   PENDDING = "PENDDING"
 }
-enum ConfirmationStatus {
-  MEDIUM = "MEDIUM",
-  LOW = "LOW",
-  HIGH = "HIGH"
-}
 
 interface Transactions {
   hash: string;

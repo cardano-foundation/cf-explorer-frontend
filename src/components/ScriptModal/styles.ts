@@ -37,26 +37,27 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   padding: theme.spacing(2),
   maxHeight: "50vh",
   [theme.breakpoints.up("md")]: {
-  "& .MuiSvgIcon-root": {
-    display: "none !important"
-  },
-  "&::-webkit-scrollbar": {
-    width: "5px"
-  },
-  "&::-webkit-scrollbar-track": {
-    background: "transparent"
-  },
-  "&::-webkit-scrollbar-thumb": {
-    background: "transparent"
-  },
-  "&:hover": {
-    "&::-webkit-scrollbar-thumb": {
-      background: theme.palette.grey[300]
+    "& .MuiSvgIcon-root": {
+      display: "none !important"
+    },
+    "&::-webkit-scrollbar": {
+      width: "5px"
     },
     "&::-webkit-scrollbar-track": {
-      background: theme.palette.grey[100]
+      background: "transparent"
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: "transparent"
+    },
+    "&:hover": {
+      "&::-webkit-scrollbar-thumb": {
+        background: theme.palette.grey[300]
+      },
+      "&::-webkit-scrollbar-track": {
+        background: theme.palette.grey[100]
+      }
     }
-  }}
+  }
 }));
 
 export const ButtonLink = styled(Link)(({ theme }) => ({

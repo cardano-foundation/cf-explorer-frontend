@@ -1,17 +1,18 @@
-import { useHistory, useLocation } from "react-router-dom";
 import { useState, useRef } from "react";
-
-import Table, { Column } from "../../commons/Table";
-import { formatADAFull, formatPercent, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
-import { details } from "../../../commons/routers";
-import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
-import { HeaderSearchIcon } from "../../../commons/resources";
-import useFetchList from "../../../commons/hooks/useFetchList";
+import { useHistory, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
-import CustomTooltip from "../../commons/CustomTooltip";
-import RateWithIcon from "../../commons/RateWithIcon";
-import { API } from "../../../commons/utils/api";
-import { REFRESH_TIMES } from "../../../commons/utils/constants";
+
+import Table, { Column } from "src/components/commons/Table";
+import { formatADAFull, formatPercent, getPageInfo, getShortWallet } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import { HeaderSearchIcon } from "src/commons/resources";
+import useFetchList from "src/commons/hooks/useFetchList";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import RateWithIcon from "src/components/commons/RateWithIcon";
+import { API } from "src/commons/utils/api";
+import { REFRESH_TIMES } from "src/commons/utils/constants";
+
+import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 
 const DelegationLists: React.FC = () => {
   const history = useHistory();
@@ -85,9 +86,9 @@ const DelegationLists: React.FC = () => {
       key: "Saturation",
       render: (r) => (
         <CustomTooltip title={r.saturation ? r.saturation : 0}>
-          <Box display='flex' alignItems='center' justifyContent={"space-between"}>
+          <Box display="flex" alignItems="center" justifyContent={"space-between"}>
             <Box component={"span"}>{formatPercent(r.saturation / 100) || `0%`}</Box>
-            <StyledLinearProgress variant='determinate' value={r.saturation > 100 ? 100 : r.saturation} />
+            <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : r.saturation} />
           </Box>
         </CustomTooltip>
       )
@@ -98,7 +99,7 @@ const DelegationLists: React.FC = () => {
     <>
       <SearchContainer ref={tableRef}>
         <StyledInput
-          placeholder='Search Pools'
+          placeholder="Search Pools"
           onChange={(e) => setValue(e.target.value)}
           value={value}
           onKeyUp={(e) => {
@@ -109,7 +110,7 @@ const DelegationLists: React.FC = () => {
           }}
         />
         <SubmitButton onClick={() => setSearch(value)}>
-          <Image src={HeaderSearchIcon} alt='Search' />
+          <Image src={HeaderSearchIcon} alt="Search" />
         </SubmitButton>
       </SearchContainer>
       <Table

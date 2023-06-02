@@ -1,6 +1,7 @@
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { parse } from "qs";
+
 import { setUserData } from "../../stores/user";
 import { getInfo, signIn } from "./userRequest";
 import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES } from "./constants";
@@ -34,13 +35,6 @@ export const formatPrice = (value?: string | number, abbreviations: string[] = L
   return `${newValue && newValue[0]}${syntax ?? `x 10^${exponential}`}`;
 };
 
-// export const numberWithCommas = (value?: number | string, decimal = 0) => {
-//   if (!value) return "0";
-//   const formated = Number(value)
-//     .toFixed(decimal)
-//     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-//   return formated.replace(/^(-)?0+(?=\d)/, "$1");
-// };
 export const numberWithCommas = (value?: number | string, decimal = 6) => {
   if (!value) return "0";
   const bnValue = new BigNumber(value);
@@ -55,6 +49,7 @@ export const numberWithCommas = (value?: number | string, decimal = 6) => {
   }
   return formattedIntegerPart;
 };
+
 export const formatADA = (
   value?: string | number,
   abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS,
@@ -87,8 +82,8 @@ export const formatADAFull = (value?: string | number, limit = 6): string => {
 
 export const formatNumberDivByDecimals = (value?: string | number | BigNumber, decimals = 6) => {
   if (!value) return `0`;
-  return numberWithCommas(new BigNumber(value).div(new BigNumber(10).exponentiatedBy(decimals)).toString())
-}
+  return numberWithCommas(new BigNumber(value).div(new BigNumber(10).exponentiatedBy(decimals)).toString());
+};
 
 export const exchangeADAToUSD = (value: number | string, rate: number, isFull?: boolean) => {
   if (!value) return 0;

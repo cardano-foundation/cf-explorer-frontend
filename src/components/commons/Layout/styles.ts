@@ -6,7 +6,7 @@ const drawerWidth = 260;
 const drawerWidthMobile = 240;
 const drawerCollaspWidth = 85;
 
-export const Layout = styled(Box)<{ sidebar: number }>`
+export const Layout = styled(Box) <{ sidebar: number }>`
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -51,6 +51,8 @@ export const BackDrop = styled("div", { shouldForwardProp: (prop) => prop !== "i
     left: 0,
     right: 0,
     bottom: 0,
+    height: "120vh",
+    width: "100vw",
     display: "none",
     [theme.breakpoints.down("md")]: {
       background: alpha(theme.palette.common.black, 0.4),
@@ -67,15 +69,15 @@ export const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   minWidth: drawerCollaspWidth,
   overflowY: "unset",
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen
-  }),
   [theme.breakpoints.down("md")]: {
     zIndex: 1302,
     minWidth: 0,
     height: "100vh",
-    maxHeight: "fill-available"
+    maxHeight: "fill-available",
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen
+    })
   },
   [theme.breakpoints.down("sm")]: {
     width: drawerWidthMobile
@@ -85,15 +87,15 @@ export const openedMixin = (theme: Theme): CSSObject => ({
 export const closedMixin = (theme: Theme): CSSObject => ({
   overflowY: "unset",
   width: drawerCollaspWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen
-  }),
   [theme.breakpoints.down("md")]: {
     zIndex: 1302,
     width: 0,
     height: "100vh",
-    maxHeight: "fill-available"
+    maxHeight: "fill-available",
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
   }
 });
 

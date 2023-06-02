@@ -1,8 +1,22 @@
 import React, { useEffect } from "react";
 import { CgClose } from "react-icons/cg";
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
-import { BlockIcon, CubeIcon, RocketIcon } from "../../../commons/resources";
+import { BiChevronRight } from "react-icons/bi";
+import { useSelector } from "react-redux";
+import moment from "moment";
+
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { BlockIcon, CubeIcon, RocketIcon } from "src/commons/resources";
+import useFetch from "src/commons/hooks/useFetch";
+import { details } from "src/commons/routers";
+import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
+import { API } from "src/commons/utils/api";
+
 import ProgressCircle from "../ProgressCircle";
+import ViewMoreButton from "../ViewMoreButton";
+import CustomTooltip from "../CustomTooltip";
+import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
+import FormNowMessage from "../FormNowMessage";
 import {
   CloseButton,
   EpochNumber,
@@ -31,17 +45,6 @@ import {
   ViewDetailHeader,
   TimeDuration
 } from "./styles";
-import useFetch from "../../../commons/hooks/useFetch";
-import { BiChevronRight } from "react-icons/bi";
-import { details } from "../../../commons/routers";
-import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
-import ViewMoreButton from "../ViewMoreButton";
-import CustomTooltip from "../CustomTooltip";
-import { API } from "../../../commons/utils/api";
-import { useSelector } from "react-redux";
-import ViewAllButton from "../ViewAllButton";
-import ADAicon from "../ADAIcon";
-import FormNowMessage from "../FormNowMessage";
 
 type DetailViewEpochProps = {
   epochNo: number;
@@ -78,10 +81,10 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
 
   if (!data)
     return (
-      <ViewDetailDrawer anchor='right' open hideBackdrop variant='permanent'>
+      <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
         <ViewDetailHeader>
-          <ViewAllButton tooltipTitle='View Detail' to={details.epoch(epochNo)} />
-          <CustomTooltip title='Close'>
+          <ViewAllButton tooltipTitle="View Detail" to={details.epoch(epochNo)} />
+          <CustomTooltip title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -90,25 +93,25 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
         <ViewDetailContainer>
           <ViewDetailScroll>
             <HeaderContainer>
-              <ProgressSkeleton variant='circular' />
+              <ProgressSkeleton variant="circular" />
             </HeaderContainer>
             <ListItem>
               <Item>
-                <IconSkeleton variant='circular' />
+                <IconSkeleton variant="circular" />
                 <ItemName>
-                  <DetailValueSkeleton variant='rectangular' />
+                  <DetailValueSkeleton variant="rectangular" />
                 </ItemName>
                 <ItemValue>
-                  <DetailLabelSkeleton variant='rectangular' />
+                  <DetailLabelSkeleton variant="rectangular" />
                 </ItemValue>
               </Item>
               <Item>
-                <IconSkeleton variant='circular' />
+                <IconSkeleton variant="circular" />
                 <ItemName>
-                  <DetailValueSkeleton variant='rectangular' />
+                  <DetailValueSkeleton variant="rectangular" />
                 </ItemName>
                 <ItemValue>
-                  <DetailLabelSkeleton variant='rectangular' />
+                  <DetailLabelSkeleton variant="rectangular" />
                 </ItemValue>
               </Item>
             </ListItem>
@@ -117,10 +120,10 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
                 return (
                   <DetailsInfoItem key={index}>
                     <DetailLabel>
-                      <DetailValueSkeleton variant='rectangular' />
+                      <DetailValueSkeleton variant="rectangular" />
                     </DetailLabel>
                     <DetailValue>
-                      <DetailLabelSkeleton variant='rectangular' />
+                      <DetailLabelSkeleton variant="rectangular" />
                     </DetailValue>
                   </DetailsInfoItem>
                 );
@@ -131,10 +134,10 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
                 <Group key={index}>
                   <DetailsInfoItem>
                     <DetailLabel>
-                      <DetailValueSkeleton variant='rectangular' />
+                      <DetailValueSkeleton variant="rectangular" />
                     </DetailLabel>
                     <DetailValue>
-                      <DetailLabelSkeleton variant='rectangular' />
+                      <DetailLabelSkeleton variant="rectangular" />
                     </DetailValue>
                   </DetailsInfoItem>
                 </Group>
@@ -146,17 +149,22 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
       </ViewDetailDrawer>
     );
 
-  const slot = data.no === currentEpoch?.no ? currentEpoch.slot : MAX_SLOT_EPOCH;
+  const slot =
+    data.no === currentEpoch?.no
+      ? moment(formatDateTimeLocal(data?.endTime)).diff(moment()) >= 0
+        ? currentEpoch.slot
+        : MAX_SLOT_EPOCH
+      : MAX_SLOT_EPOCH;
 
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
   return (
-    <ViewDetailDrawer anchor='right' open hideBackdrop variant='permanent'>
+    <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
       <ViewDetailHeader>
-        <ViewAllButton tooltipTitle='View Detail' to={details.epoch(epochNo)} />
+        <ViewAllButton tooltipTitle="View Detail" to={details.epoch(epochNo)} />
         <TimeDuration>
           <FormNowMessage time={lastUpdated} />
         </TimeDuration>
-        <CustomTooltip title='Close'>
+        <CustomTooltip title="Close">
           <CloseButton onClick={handleClose}>
             <CgClose />
           </CloseButton>
@@ -167,7 +175,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           <HeaderContainer>
             <ProgressCircle
               size={150}
-              pathLineCap='butt'
+              pathLineCap="butt"
               pathWidth={4}
               trailWidth={2}
               percent={progress}
@@ -179,12 +187,12 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           </HeaderContainer>
           <ListItem>
             <Item>
-              <Icon src={CubeIcon} alt='socket' />
+              <Icon src={CubeIcon} alt="socket" />
               <ItemName>Block</ItemName>
               <ItemValue>{data.blkCount}</ItemValue>
             </Item>
             <Item>
-              <Icon src={RocketIcon} alt='socket' />
+              <Icon src={RocketIcon} alt="socket" />
               <ItemName>slot</ItemName>
               <ItemValue>
                 {slot}

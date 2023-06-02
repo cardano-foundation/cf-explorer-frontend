@@ -1,5 +1,6 @@
 import { Alert, Box, Button, Divider, FormHelperText, Input, styled } from "@mui/material";
-import { User2RC } from "../../commons/resources";
+
+import { User2RC } from "src/commons/resources";
 
 export const Container = styled(Box)`
   display: flex;
@@ -152,4 +153,7 @@ export const AlertCustom = styled(Alert)`
   color: ${({ theme }) => theme.palette.text.primary};
   padding: 0 16px;
   background: "#FFF7F7";
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    font-size: 12px;
+  }
 `;

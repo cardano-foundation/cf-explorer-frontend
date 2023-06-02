@@ -1,7 +1,8 @@
 import { BoxProps, IconButtonProps, Modal, ModalProps } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
-import { CloseButton, ContentContainer, ModalContainer, WrapTitle } from "./styles";
 import { forwardRef } from "react";
+
+import { CloseButton, ContentContainer, ModalContainer, WrapTitle } from "./styles";
 
 interface Props extends Omit<BoxProps, "title"> {
   open: boolean;
@@ -19,7 +20,7 @@ export const CustomModal: React.FC<Props> = forwardRef((props, ref) => {
     <Modal open={open}>
       <ModalContainer>
         {closeButton || (
-          <CloseButton {...closeButtonProps} onClick={onClose} data-testid='close-modal-button'>
+          <CloseButton {...closeButtonProps} onClick={onClose} data-testid="close-modal-button">
             <IoMdClose />
           </CloseButton>
         )}

@@ -1,8 +1,9 @@
 import { Box, Grid } from "@mui/material";
+import { Link } from "react-router-dom";
+
 import CopyButton from "../../../commons/CopyButton";
 import { TextLabel, TextValue } from "./styles";
 import { getShortWallet } from "../../../../commons/utils/helper";
-import { Link } from "react-router-dom";
 import { details } from "../../../../commons/routers";
 import CustomTooltip from "../../../commons/CustomTooltip";
 

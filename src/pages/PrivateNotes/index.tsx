@@ -1,4 +1,24 @@
 import { useEffect, useState } from "react";
+import { Box, Dialog, DialogActions, IconButton, DialogContentText } from "@mui/material";
+import { useLocation } from "react-router-dom";
+
+import { ReactComponent as QuestionConfirm } from "src/commons/resources/icons/questionConfirm.svg";
+import { ReactComponent as Plus } from "src/commons/resources/icons/plus.svg";
+import { formatDateTime, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import useFetchList from "src/commons/hooks/useFetchList";
+import AddPrivateNoteModal from "src/components/Account/AddPrivateNoteModal";
+import { Column } from "src/types/table";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { ReactComponent as Expand } from "src/commons/resources/icons/expand.svg";
+import { ReactComponent as Warning } from "src/commons/resources/icons/warning.svg";
+import { removePrivateNote } from "src/commons/utils/userRequest";
+import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
+import { details } from "src/commons/routers";
+import { ButtonClose } from "src/components/ScriptModal/styles";
+import { CloseIcon } from "src/commons/resources";
+import useToast from "src/commons/hooks/useToast";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import {
   ActionButton,
   AddButton,
@@ -11,25 +31,6 @@ import {
   StyledTable,
   Title
 } from "./styles";
-import { ReactComponent as QuestionConfirm } from "../../commons/resources/icons/questionConfirm.svg";
-import { ReactComponent as Plus } from "../../commons/resources/icons/plus.svg";
-import { formatDateTime, getPageInfo, getShortHash } from "../../commons/utils/helper";
-import useFetchList from "../../commons/hooks/useFetchList";
-import AddPrivateNoteModal from "../../components/Account/AddPrivateNoteModal";
-import { Column } from "../../types/table";
-import { useLocation } from "react-router-dom";
-import CustomTooltip from "../../components/commons/CustomTooltip";
-import { ReactComponent as Expand } from "../../commons/resources/icons/expand.svg";
-import { ReactComponent as Warning } from "../../commons/resources/icons/warning.svg";
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from "@mui/material";
-import { removePrivateNote } from "../../commons/utils/userRequest";
-import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
-import { details } from "../../commons/routers";
-
-import { ButtonClose } from "../../components/ScriptModal/styles";
-import { CloseIcon } from "../../commons/resources";
-import useToast from "../../commons/hooks/useToast";
-import { useScreen } from "~/commons/hooks/useScreen";
 
 type TAction = {
   onClick: () => void;
@@ -46,17 +47,19 @@ const ViewButton: React.FC<TAction> = ({ onClick }) => {
         if (!isTablet) return;
         setIsOpen(true);
       }}
-      placement='top'
-      title='View private note'
+      placement="top"
+      title="View private note"
     >
       <ActionButton
         onClick={() => {
           if (isOpen && isTablet) return;
           onClick();
         }}
-        typeButton='View'
+        typeButton="View"
       >
-        <Expand />
+        <IconButton>
+          <Expand />
+        </IconButton>
       </ActionButton>
     </CustomTooltip>
   );
@@ -73,17 +76,19 @@ const RemoveButton: React.FC<TAction> = ({ onClick }) => {
         if (!isTablet) return;
         setIsOpen(true);
       }}
-      placement='top'
-      title='Remove note'
+      placement="top"
+      title="Remove note"
     >
       <ActionButton
         onClick={() => {
           if (isOpen && isTablet) return;
           onClick();
         }}
-        typeButton='Remove'
+        typeButton="Remove"
       >
-        <Warning />
+        <IconButton>
+          <Warning />
+        </IconButton>
       </ActionButton>
     </CustomTooltip>
   );
@@ -168,7 +173,7 @@ const PrivateNotes = () => {
       key: "action",
       minWidth: "40px",
       render: (item) => (
-        <Box display='flex' justifyContent={"flex-end"}>
+        <Box display="flex" justifyContent={"flex-end"}>
           <ViewButton onClick={() => handleClickViewDetail(item)} />
           <RemoveButton onClick={() => setSelected(item)} />
         </Box>
@@ -189,10 +194,10 @@ const PrivateNotes = () => {
           </Box>
         </AddButton>
       </Header>
-      <Box overflow={"auto"} height='100%'>
+      <Box overflow={"auto"} height="100%">
         <StyledTable
           style={{ overflow: "auto" }}
-          emptyClassName='empty-content-table'
+          emptyClassName="empty-content-table"
           columns={columns}
           data={data ?? []}
           pagination={{
@@ -224,7 +229,7 @@ const PrivateNotes = () => {
           Confirmation Required
         </Box>
         <ButtonClose disabled={loadingDelete} onClick={() => setSelected(null)}>
-          <img src={CloseIcon} alt='icon close' />
+          <img src={CloseIcon} alt="icon close" />
         </ButtonClose>
         <Box>
           <DialogContentText color={(theme) => theme.palette.text.secondary} fontSize={"1.125rem"}>
@@ -239,7 +244,7 @@ const PrivateNotes = () => {
             <DeleteButton
               loading={loadingDelete}
               onClick={() => selected && handleClickRemoveNote(selected)}
-              variant='contained'
+              variant="contained"
             >
               Continue
             </DeleteButton>

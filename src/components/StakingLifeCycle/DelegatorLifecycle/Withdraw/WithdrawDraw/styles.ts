@@ -1,9 +1,10 @@
 import { Box, styled, IconButton as IconButtonMui, alpha } from "@mui/material";
-import { AdaLogoIcon } from "~/components/commons/ADAIcon";
-import FeeBox from "~/components/commons/FeeBox";
-import HoldBox from "~/components/commons/HoldBox";
 
-export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
+import { AdaLogoIcon } from "src/components/commons/ADAIcon";
+import FeeBox from "src/components/commons/FeeBox";
+import HoldBox from "src/components/commons/HoldBox";
+
+export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0
 }));
 
@@ -124,7 +125,7 @@ export const PaymentWalletTitle = styled(Box)(({ theme }) => ({
   marginBottom: 5
 }));
 
-export const PaymentWalletValueContainer = styled(Box)(({ theme }) => ({
+export const PaymentWalletValueContainer = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
   gap: 8

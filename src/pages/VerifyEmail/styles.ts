@@ -1,5 +1,6 @@
-import { Alert, Box, Button, Divider, FormHelperText, Input, styled } from "@mui/material";
-import { User2RC } from "../../commons/resources";
+import { Box, Button, Divider, FormHelperText, Input, styled } from "@mui/material";
+
+import { User2RC } from "src/commons/resources";
 
 export const Container = styled(Box)`
   display: flex;
@@ -150,13 +151,4 @@ export const WrapSignUp = styled(Box)`
   font-size: 16px;
   line-height: 19px;
   color: ${({ theme }) => theme.palette.secondary.main};
-`;
-
-export const AlertCustom = styled(Alert)`
-  border-color: ${({ theme }) => theme.palette.error.main};
-  border-style: solid;
-  border-width: 1px;
-  color: ${({ theme }) => theme.palette.text.primary};
-  padding: 0 16px;
-  background: "#FFF7F7";
 `;

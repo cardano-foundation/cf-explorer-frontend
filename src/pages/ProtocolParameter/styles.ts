@@ -46,12 +46,12 @@ export const ButtonFilter = styled(Button)(({ theme }) => ({
   pading: "12px 0"
 }));
 
-export const AccordionContainer = styled(Accordion)(({ theme }) => ({
+export const AccordionContainer = styled(Accordion)(() => ({
   boxShadow: "none",
   textAlign: "left",
   width: "100%"
 }));
-export const AccordionSummary = styled(AccordionSummaryMUI)(({ theme }) => ({
+export const AccordionSummary = styled(AccordionSummaryMUI)(() => ({
   padding: "0 8px !important",
   textAlign: "left"
 }));

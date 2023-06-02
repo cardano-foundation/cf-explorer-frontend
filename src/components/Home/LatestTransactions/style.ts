@@ -1,6 +1,7 @@
 import { Box, styled } from "@mui/material";
-import { BoxRaised } from "../../commons/BoxRaised";
-import { TRANSACTION_STATUS } from "../../../commons/utils/constants";
+
+import { BoxRaised } from "src/components/commons/BoxRaised";
+import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 
 export const TransactionContainer = styled(Box)`
   margin-bottom: 24px;
@@ -18,6 +19,9 @@ export const Header = styled(Box)`
   ${({ theme }) => theme.breakpoints.down("md")} {
     padding: 0 15px;
     margin-bottom: 2.5rem;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    margin-bottom: 0.5rem;
   }
 `;
 
@@ -50,11 +54,17 @@ export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.grey[400],
   display: "block",
   [theme.breakpoints.down("sm")]: {
-    position: "absolute",
-    top: "100%",
-    right: 0,
-    paddingTop: 10,
-    whiteSpace: "nowrap"
+    display: "none",
+  }
+}));
+
+export const TimeDurationSm = styled("small")(({ theme }) => ({
+  color: theme.palette.grey[400],
+  display: "none",
+  [theme.breakpoints.down("sm")]: {
+    display: "block",
+    marginBottom: "1.5rem",
+    padding: "0 15px"
   }
 }));
 
@@ -125,6 +135,7 @@ export const BlockNo = styled("small")`
   font-style: normal;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
+  color: black;
 `;
 
 export const WalletAddress = styled("small")`

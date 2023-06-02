@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { footerMenus, menus } from "../../../../../commons/menus";
+import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import { useWindowSize } from "react-use";
+import { useSelector } from "react-redux";
+import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
+
+import { footerMenus, menus } from "src/commons/menus";
+import { isExtenalLink } from "src/commons/utils/helper";
+import { setSidebar } from "src/stores/user";
+import { RootState } from "src/stores/types";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+
+import FooterMenu from "../FooterMenu";
 import {
   Menu,
   MenuIcon,
@@ -11,16 +23,6 @@ import {
   SidebarMenuContainer,
   FooterMenuContainer
 } from "./styles";
-import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
-import { isExtenalLink } from "../../../../../commons/utils/helper";
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { Link, RouteComponentProps, withRouter } from "react-router-dom";
-import { useWindowSize } from "react-use";
-import { setSidebar } from "../../../../../stores/user";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../../stores/types";
-import FooterMenu from "../FooterMenu";
-import CustomTooltip from "../../../CustomTooltip";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const pathname = history.location.pathname;
@@ -76,10 +78,11 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
           const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;
           return (
             <React.Fragment key={index}>
-              <CustomTooltip key={index} title={tooltipTitle} placement='right'>
+              <CustomTooltip key={index} title={tooltipTitle} placement="right">
                 {href ? (
                   isExtenalLink(href) ? (
                     <ListItem
+                      data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                       button
                       onClick={() => window.open(href, "_blank")}
                       sx={(theme) => itemStyle(theme, sidebar)}
@@ -90,6 +93,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   ) : (
                     <ListItem
                       button
+                      data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                       component={Link}
                       to={href}
                       selected={pathname === href}
@@ -112,6 +116,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 ) : (
                   <ListItem
                     button
+                    data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                     onClick={() => children?.length && handleOpen(`menu-${index}`)}
                     sx={(theme) => ({
                       ...itemStyle(theme, sidebar),
@@ -150,13 +155,14 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 )}
               </CustomTooltip>
               {children?.length ? (
-                <Collapse in={`menu-${index}` === active} timeout='auto' unmountOnExit>
+                <Collapse in={`menu-${index}` === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
                       const { href, title, icon } = subItem;
                       return href ? (
                         isExtenalLink(href) ? (
                           <ListItem
+                            data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                             key={subIndex}
                             button
                             onClick={() => window.open(href, "_blank")}
@@ -173,6 +179,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           </ListItem>
                         ) : (
                           <ListItem
+                            data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                             key={subIndex}
                             button
                             component={Link}
@@ -303,7 +310,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 </ListItem>
               )}
               {children?.length ? (
-                <Collapse in={`footer-${index}` === active} timeout='auto' unmountOnExit>
+                <Collapse in={`footer-${index}` === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
                       const { href, title, icon } = subItem;

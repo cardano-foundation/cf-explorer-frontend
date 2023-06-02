@@ -3,20 +3,20 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { MdChevronRight } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Redirect, useLocation } from "react-router-dom";
-import { getShortWallet } from "~/commons/utils/helper";
-import { useScreen } from "../../../../commons/hooks/useScreen";
-import useToast from "../../../../commons/hooks/useToast";
-import editAva from "../../../../commons/resources/icons/editAva.svg";
-import { ReactComponent as ReportDiscord } from "../../../../commons/resources/icons/reportDiscord.svg";
-import { ReactComponent as ReportMail } from "../../../../commons/resources/icons/reportMail.svg";
-import { routers } from "../../../../commons/routers";
-import { uploadAxios } from "../../../../commons/utils/axios";
-import { NETWORK, NETWORK_TYPES } from "../../../../commons/utils/constants";
-import { getInfo } from "../../../../commons/utils/userRequest";
-import { RootState } from "../../../../stores/types";
-import { setUserData } from "../../../../stores/user";
-import CustomTooltip from "../../CustomTooltip";
-import StyledModal from "../../StyledModal";
+
+import { getShortWallet } from "src/commons/utils/helper";
+import { useScreen } from "src/commons/hooks/useScreen";
+import useToast from "src/commons/hooks/useToast";
+import editAva from "src/commons/resources/icons/editAva.svg";
+import { ReactComponent as ReportDiscord } from "src/commons/resources/icons/reportDiscord.svg";
+import { ReactComponent as ReportMail } from "src/commons/resources/icons/reportMail.svg";
+import { routers } from "src/commons/routers";
+import { uploadAxios } from "src/commons/utils/axios";
+import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
+import { getInfo } from "src/commons/utils/userRequest";
+import { RootState } from "src/stores/types";
+import { setUserData } from "src/stores/user";
+
 import {
   ContentBox,
   MissingItemWrapper,
@@ -31,6 +31,8 @@ import {
   WrapItemMobile,
   Wrapper
 } from "./styled";
+import StyledModal from "../../StyledModal";
+import CustomTooltip from "../../CustomTooltip";
 interface Props {
   children: React.ReactNode;
 }
@@ -42,17 +44,13 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   const theme = useTheme();
   const [openReportModal, setOpenReportModal] = useState(false);
   const [isUploadAvatar, setIsUploadAvatar] = useState(false);
-  const [firstLoad, setFirstLoad] = useState(true);
-  const [openFullname, setOpenFullname] = useState(false);
+
   const fetchUserInfo = useCallback(async () => {
     try {
-      setFirstLoad(true);
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
       setUserData({ ...response.data, loginType: userData?.loginType || "" });
     } catch (error) {
       //To do
-    } finally {
-      setFirstLoad(false);
     }
   }, []);
 
@@ -94,7 +92,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
     return <Redirect to={routers.HOME} />;
   }
   const MissingData = () => (
-    <MissingItemWrapper px={3} pb={4} fontSize='0.75rem'>
+    <MissingItemWrapper px={3} pb={4} fontSize="0.75rem">
       Missing any data? click{" "}
       <StyledButton
         sx={{
@@ -111,12 +109,12 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
     <SideBar>
       <Box>
         <Box>
-          <Box pt={4} textAlign='center' display={"flex"} justifyContent='center'>
+          <Box pt={4} textAlign="center" display={"flex"} justifyContent="center">
             <Box position={"relative"}>
               {!isUploadAvatar && (
                 <Avatar
                   src={userData?.avatar}
-                  alt='avatar'
+                  alt="avatar"
                   sx={{ height: "100px", width: "100px", textAlign: "center" }}
                 />
               )}
@@ -126,25 +124,25 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                   width={"100px"}
                   bgcolor={alpha(theme.palette.common.black, 0.1)}
                   borderRadius={"50%"}
-                  display='flex'
-                  alignItems='center'
-                  justifyContent='center'
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
                 >
                   <CircularProgress />
                 </Box>
               )}
               <Box
                 component={IconButton}
-                position='absolute'
-                bottom='0'
-                right='0'
+                position="absolute"
+                bottom="0"
+                right="0"
                 p={0}
                 onClick={() => uploadImgRef.current && (uploadImgRef.current as any).click()}
               >
-                <Box component={"img"} src={editAva} alt='editava' />
+                <Box component={"img"} src={editAva} alt="editava" />
                 <input
-                  accept='image/*'
-                  type='file'
+                  accept="image/*"
+                  type="file"
                   ref={uploadImgRef}
                   onChange={hanldeUploadImage}
                   style={{ display: "none" }}
@@ -153,13 +151,13 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
             </Box>
           </Box>
           {userData?.loginType === "connectWallet" ? (
-            <CustomTooltip title={userData?.address || ""} placement='bottom'>
-              <StyledUsername component={"h4"} pt={1} m='auto'>
+            <CustomTooltip title={userData?.address || ""} placement="bottom">
+              <StyledUsername component={"h4"} pt={1} m="auto">
                 {getShortWallet(userData?.address)}
               </StyledUsername>
             </CustomTooltip>
           ) : (
-            <StyledUsername component={"h4"} pt={1} m='auto'>
+            <StyledUsername component={"h4"} pt={1} m="auto">
               {userData?.email}
             </StyledUsername>
           )}
@@ -186,9 +184,9 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                   </NavItemMobile>
                   <NavItem to={route.to} active={route.to === pathname} key={index}>
                     <Box
-                      display='flex'
+                      display="flex"
                       alignItems={"center"}
-                      justifyContent='space-between'
+                      justifyContent="space-between"
                       borderBottom={`1px solid${alpha(theme.palette.common.black, 0.07)}`}
                     >
                       <Box pl={"20px"}>{route.title}</Box>
@@ -209,7 +207,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   );
   return (
     <Wrapper>
-      <Box component={"h2"} textAlign='left'>
+      <Box component={"h2"} textAlign="left">
         Account Overview
       </Box>
       <ContentBox>
@@ -224,13 +222,13 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
         </Box>
       ) : null}
       <StyledModal open={openReportModal} handleCloseModal={() => setOpenReportModal(false)}>
-        <Box textAlign='center'>
+        <Box textAlign="center">
           <ModalTitle>
             Having a problem?
             <br />
             Contact us via these channels
           </ModalTitle>
-          <Box display={"flex"} gap={2} justifyContent='center'>
+          <Box display={"flex"} gap={2} justifyContent="center">
             <StyledButtonReport>
               <ReportDiscord />
             </StyledButtonReport>
@@ -243,7 +241,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
               onClick={() => {
                 setOpenReportModal(false);
               }}
-              variant='outlined'
+              variant="outlined"
             >
               Close
             </StyledButtonClose>

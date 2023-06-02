@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { formatADAFull, formatDateTimeLocal } from "../../../../commons/utils/helper";
-import useFetchList from "../../../../commons/hooks/useFetchList";
-import { API } from "../../../../commons/utils/api";
-import Table, { Column } from "../../../commons/Table";
-import { details } from "../../../../commons/routers";
-import { Amount, StyledLink } from "./styles";
-import CustomIcon from "../../../commons/CustomIcon";
-import { AIconGreen } from "../../../../commons/resources";
 import { Box, styled } from "@mui/material";
+
+import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
+import Table, { Column } from "src/components/commons/Table";
+import { details } from "src/commons/routers";
+import CustomIcon from "src/components/commons/CustomIcon";
+import { AIconGreen } from "src/commons/resources";
+import useFetch from "src/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import UserInfo from "./UserInfo";
-import useFetch from "../../../../commons/hooks/useFetch";
-import { useScreen } from "~/commons/hooks/useScreen";
+import { Amount, StyledLink } from "./styles";
 
 const RewardActivity: React.FC = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
@@ -37,7 +39,7 @@ const RewardActivity: React.FC = () => {
               ? `+${formatADAFull(r.amount)}`
               : `-${formatADAFull(r.amount)}`
             : 0}
-          <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
+          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
         </Amount>
       )
     },
@@ -67,9 +69,10 @@ const RewardActivity: React.FC = () => {
   const maxHeightCalc = `calc(70vh - ${
     isTablet ? "290px" : isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"
   })`;
+  
   return (
     <Box>
-      <UserInfo acitve='reward' total={fetchData.total} reward={data?.rewardAvailable || 0} stake={stakeId} />
+      <UserInfo acitve="reward" total={fetchData.total} reward={data?.rewardAvailable || 0} stake={stakeId} />
       <StyledTable
         {...fetchData}
         columns={columns}

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-
-import TransactionList from "../../components/TransactionLists";
 import { Container } from "@mui/material";
-import { setOnDetailView } from "../../stores/user";
-import DetailViewTransaction from "../../components/commons/DetailView/DetailViewTransaction";
 import styled from "@emotion/styled";
-import { API } from "../../commons/utils/api";
+
+import TransactionList from "src/components/TransactionLists";
+import { setOnDetailView } from "src/stores/user";
+import DetailViewTransaction from "src/components/commons/DetailView/DetailViewTransaction";
+import { API } from "src/commons/utils/api";
 
 const StyledContainer = styled(Container)`
   padding: 20px 16px 40px;

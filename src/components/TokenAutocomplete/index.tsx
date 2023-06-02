@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Autocomplete, Box, Button, Modal } from "@mui/material";
 import { BiChevronDown } from "react-icons/bi";
+import { debounce } from "lodash";
 
 import { CloseIcon, EmptyIcon, HeaderSearchIcon } from "../../commons/resources";
 import { getShortWallet, numberWithCommas } from "../../commons/utils/helper";
@@ -22,15 +23,12 @@ import { API } from "../../commons/utils/api";
 import Table, { Column } from "../commons/Table";
 import { AssetName } from "../../pages/Token/styles";
 import { details } from "../../commons/routers";
-import { debounce } from "lodash";
 import { WrappModalScrollBar } from "../commons/Table/styles";
-import { useTheme } from "@mui/material";
 
 const TokenAutocomplete = ({ address }: { address: string }) => {
   const [openModalToken, setOpenModalToken] = useState(false);
   const [selected, setSelected] = useState("");
   const [search, setSearch] = useState("");
-  const theme = useTheme();
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
   const { data, loading, total } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
     page: 0,
@@ -50,7 +48,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
         onChange={(e, value) => typeof value !== "string" && setSelected(value?.fingerprint || "")}
         noOptionsText={
           <Box>
-            <Box maxHeight='200px' component={"img"} src={EmptyIcon}></Box>
+            <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
           </Box>
         }
         ListboxProps={{
@@ -73,29 +71,29 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                   background: theme.palette.grey[100]
                 }
               }
-            }
-          },
+            };
+          }
         }}
         renderOption={(propss, option: WalletAddress["tokens"][number] | string) => {
           if (typeof option === "string") {
             return (
               <Option key={"more"} {...propss} onClick={() => null} active={0}>
                 <Box
-                  display='flex'
+                  display="flex"
                   alignItems={"center"}
-                  justifyContent='center'
+                  justifyContent="center"
                   width={"100%"}
                   fontSize={"14px"}
                   padding={0}
-                  gap='10px'
-                  minHeight='34px'
+                  gap="10px"
+                  minHeight="34px"
                 >
                   <Box
                     component={Button}
-                    width='100%'
+                    width="100%"
                     textTransform={"inherit"}
                     onClick={() => {
-                      setOpenModalToken(true)
+                      setOpenModalToken(true);
                     }}
                   >
                     See more
@@ -107,37 +105,37 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
           return (
             <Option key={option.fingerprint} {...propss} active={selected === option.fingerprint ? 1 : 0}>
               <Box
-                display='flex'
+                display="flex"
                 alignItems={"center"}
-                justifyContent='space-between'
+                justifyContent="space-between"
                 width={"100%"}
                 fontSize={"14px"}
                 padding={0}
-                gap='10px'
-                minHeight='34px'
+                gap="10px"
+                minHeight="34px"
               >
-                <Box display='flex' alignItems={"center"} overflow='hidden' gap='10px'>
+                <Box display="flex" alignItems={"center"} overflow="hidden" gap="10px">
                   <Box>
                     {option?.metadata?.logo ? (
-                      <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt='icon' />
+                      <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt="icon" />
                     ) : (
                       <LogoEmpty />
                     )}
                   </Box>
                   <CustomTooltip title={`${option.displayName || ""} #${option.name || option.fingerprint}`}>
-                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth='150px'>
+                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="150px">
                       {option.displayName || ""} #{option.name || option.fingerprint}
                     </Box>
                   </CustomTooltip>
                 </Box>
-                <Box fontWeight={"bold"} flex={1} textAlign='right'>
+                <Box fontWeight={"bold"} flex={1} textAlign="right">
                   {numberWithCommas(option.quantity)}
                 </Box>
               </Box>
             </Option>
           );
         }}
-        renderInput={(params) => <StyledTextField {...params} placeholder='Search Token' />}
+        renderInput={(params) => <StyledTextField {...params} placeholder="Search Token" />}
         popupIcon={<BiChevronDown />}
       />
       <ModalToken address={address} open={openModalToken} onClose={() => setOpenModalToken(false)} />
@@ -162,14 +160,14 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
       title: "#",
       key: "#",
       minWidth: "50px",
-      render: (r, index) => numberWithCommas((page) * size + index + 1)
+      render: (r, index) => numberWithCommas(page * size + index + 1)
     },
     {
       title: "Icon",
       key: "icon",
       minWidth: "50px",
       render: (r) =>
-        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt='icon' /> : <LogoEmpty />
+        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />
     },
     {
       title: "Name",
@@ -197,14 +195,14 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
     <Modal open={open} onClose={onClose}>
       <ModalContainer>
         <ButtonClose onClick={onClose}>
-          <img src={CloseIcon} alt='icon close' />
+          <img src={CloseIcon} alt="icon close" />
         </ButtonClose>
-        <Box textAlign={"left"} fontSize='1.5rem' fontWeight='bold' fontFamily={'"Roboto", sans-serif '}>
+        <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Roboto", sans-serif '}>
           Token List
         </Box>
         <SearchContainer mt={2} mb={1}>
           <StyledInput
-            placeholder='Search tokens'
+            placeholder="Search tokens"
             onChange={(e) => setValue(e.target.value)}
             value={value}
             onKeyUp={(e) => {
@@ -215,7 +213,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             }}
           />
           <SubmitButton onClick={() => setSearch(value)}>
-            <Image src={HeaderSearchIcon} alt='Search' />
+            <Image src={HeaderSearchIcon} alt="Search" />
           </SubmitButton>
         </SearchContainer>
         <WrappModalScrollBar>
@@ -224,6 +222,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             data={data || []}
             columns={columns}
             total={{ title: "Total", count: fetchData.total }}
+            maxHeight={"55vh"}
             pagination={{
               page,
               size,

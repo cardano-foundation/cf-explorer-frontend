@@ -1,14 +1,16 @@
 import { Box } from "@mui/material";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
-import useFetchList from "~/commons/hooks/useFetchList";
-import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "~/commons/utils/helper";
-import Table, { Column } from "~/components/commons/Table";
-import CustomTooltip from "~/components/commons/CustomTooltip";
-import { details } from "~/commons/routers";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import Table, { Column } from "src/components/commons/Table";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import ADAicon from "src/components/commons/ADAIcon";
+
 import { StyledLink } from "../styles";
-import { API } from "~/commons/utils/api";
-import ADAicon from "~/components/commons/ADAIcon";
 
 const columns: Column<WithdrawalHistory>[] = [
   {
@@ -34,7 +36,7 @@ const columns: Column<WithdrawalHistory>[] = [
     render: (r) => (
       <Box>
         <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
-        <Box marginTop='10px'>
+        <Box marginTop="10px">
           <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
         </Box>
       </Box>

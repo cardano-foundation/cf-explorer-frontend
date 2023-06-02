@@ -37,7 +37,15 @@ module.exports = {
     "react/prop-types": "off",
     "react/no-unescaped-entities": 0,
     "import/no-named-as-default": 0,
-    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-unused-vars": "error",
+    "import/order": [
+      "error",
+      {
+        groups: [["builtin", "external"], ["internal"], ["parent", "sibling"], "unknown"],
+        pathGroups: [{ pattern: "commons/**", group: "unknown" }],
+        "newlines-between": "always"
+      }
+    ],
     "prettier/prettier": [
       "warn",
       {
@@ -49,7 +57,7 @@ module.exports = {
         useTabs: false,
         singleQuote: false,
         printWidth: 120,
-        jsxSingleQuote: true
+        jsxSingleQuote: false
       }
     ]
   }

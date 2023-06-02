@@ -1,16 +1,18 @@
-import { Box, IconButton, useTheme } from "@mui/material";
 import { useState } from "react";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { useParams } from "react-router-dom";
-import useFetchList from "../../../../../commons/hooks/useFetchList";
-import { EyeIcon } from "../../../../../commons/resources";
-import { details } from "../../../../../commons/routers";
-import { API } from "../../../../../commons/utils/api";
-import { getShortHash } from "../../../../../commons/utils/helper";
-import { AdaValue } from "../../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
-import { TableSubTitle } from "../../../../TabularView/StakeTab/styles";
-import CustomTooltip from "../../../../commons/CustomTooltip";
-import Table, { Column } from "../../../../commons/Table";
-import { StyledLink } from "../../../../share/styled";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { EyeIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { getShortHash } from "src/commons/utils/helper";
+import { AdaValue } from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table, { Column } from "src/components/commons/Table";
+import { StyledLink } from "src/components/share/styled";
+
 import { DeregistrationCertificateModal } from "../../Deregistration";
 
 const DeregsitrationTab = () => {
@@ -61,10 +63,10 @@ const DeregsitrationTab = () => {
           <Box>
             <AdaValue limit={5} value={data.totalFee} />
             <TableSubTitle>
-              <Box display='flex' mt={1} alignItems='center' lineHeight='1'>
-                <AdaValue limit={1} color={theme.palette.grey[400]} value={data.poolHold} gap='3px' fontSize='12px' />
-                <Box mx='3px'>/</Box>
-                <AdaValue color={theme.palette.grey[400]} value={data.fee} gap='3px' fontSize='12px' />
+              <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+                <AdaValue limit={1} color={theme.palette.grey[400]} value={data.poolHold} gap="3px" fontSize="12px" />
+                <Box mx="3px">/</Box>
+                <AdaValue color={theme.palette.grey[400]} value={data.fee} gap="3px" fontSize="12px" />
               </Box>
             </TableSubTitle>
           </Box>

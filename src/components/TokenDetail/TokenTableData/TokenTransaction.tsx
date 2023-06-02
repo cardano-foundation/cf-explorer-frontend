@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
+
+import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
+
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
 import {
@@ -16,7 +19,6 @@ import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { API } from "../../../commons/utils/api";
 import ADAicon from "../../commons/ADAIcon";
-import { OverviewMetadataTokenContext } from "~/pages/TokenDetail";
 
 interface ITokenTransaction {
   tokenId: string;
@@ -68,7 +70,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       title: "Addresses",
       key: "addresses",
       minWidth: "200px",
-      render(r, index) {
+      render(r) {
         return (
           <>
             <Flex>

@@ -1,5 +1,6 @@
 import { Box, Button, Card, Typography, styled } from "@mui/material";
-import { AdaLogoIcon } from "~/components/commons/ADAIcon";
+
+import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 
 export const CardList = styled(Box)(() => ({
   display: "flex",
@@ -27,7 +28,11 @@ export const CardItem = styled(Card)<{ sidebar?: number }>(({ theme, sidebar }) 
   },
   [theme.breakpoints.between("sm", "lg")]: {
     padding: "20px",
-    height: 140
+    height: 140,
+    overflowX: "auto",
+    "&::-webkit-scrollbar": {
+      height: "0"
+    },
   }
 }));
 
@@ -88,7 +93,7 @@ export const CardValue = styled(Typography)(({ theme }) => ({
 export const NoDelegatedStakePool = styled(Box)(({ theme }) => ({
   color: theme.palette.red[700],
   fontWeight: 500,
-  fontSize: 16,
+  fontSize: 16
 }));
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({

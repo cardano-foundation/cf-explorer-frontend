@@ -55,7 +55,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
 export const IconButton = styled(IconButtonMui)(({ theme }) => ({
   background: theme.palette.grey[100]
 }));
-export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
+export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0
 }));
 
@@ -82,7 +82,7 @@ export const Price = styled(Box)(({ theme }) => ({
 export const WalletButton = styled(IconButton)(({ theme }) => ({
   background: alpha(theme.palette.common.white, 0.1)
 }));
-export const WalletBox = styled(Box)(({ theme }) => ({
+export const WalletBox = styled(Box)(() => ({
   transform: "translateX(-50%)",
   position: "absolute",
   bottom: 50,
@@ -90,7 +90,7 @@ export const WalletBox = styled(Box)(({ theme }) => ({
   display: "flex"
 }));
 
-export const RewarWallet = styled(Box)(({ theme }) => ({
+export const RewarWallet = styled(Box)(() => ({
   position: "absolute",
   left: "50%",
   bottom: "15%",

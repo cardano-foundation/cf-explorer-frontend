@@ -1,6 +1,8 @@
 import { Box, BoxProps, Grid, Icon } from "@mui/material";
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import {
   BgBlue,
   BgCardWhite,
@@ -11,8 +13,12 @@ import {
   ReewardAvalible,
   StatusIC,
   WalletGreenIcon
-} from "../../../../../commons/resources";
-import { formatADAFull, getShortWallet } from "../../../../../commons/utils/helper";
+} from "src/commons/resources";
+import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
+import { details } from "src/commons/routers";
+
+import PoolDetailContext from "../../PoolDetailContext";
 import {
   CardOverview,
   CardTitle,
@@ -22,12 +28,9 @@ import {
   StyledBox,
   ViewMoreButton,
   WrapIcon,
+  WrapStatus,
   WrapWalletIcon
 } from "./styles";
-import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
-import { details } from "../../../../../commons/routers";
-import PoolDetailContext from "../../PoolDetailContext";
-import { useSelector } from "react-redux";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -69,7 +72,7 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
         <Icon component={bg} />
         <StyledBox>
           <WrapIcon>{mainIcon}</WrapIcon>
-          <Box textAlign='start'>
+          <Box textAlign="start">
             <CardTitle>{title}</CardTitle>
             {value}
           </Box>
@@ -91,42 +94,42 @@ const TabularOverview: React.FC = () => {
     <Box>
       <Grid container spacing={2}>
         <GridItem
-          title='Pool Size'
-          bgType='white'
+          title="Pool Size"
+          bgType="white"
           mainIcon={<PoolsizeIcon />}
           value={
-            <Box display='flex' alignItems='center'>
+            <Box display="flex" alignItems="center">
               <CardValue>{formatADAFull(data?.poolSize)} ₳</CardValue>
             </Box>
           }
         />
         <GridItem
-          title='Status'
-          bgType='white'
+          title="Status"
+          bgType="white"
           mainIcon={<StatusIC />}
           value={
-            <Box display='flex' alignItems='center' flexWrap={"wrap"}>
-              <CardValue color={STATUS[data?.status ?? "ACTIVE"][1]}>{STATUS[data?.status ?? "ACTIVE"][0]} :</CardValue>
+            <WrapStatus>
+              <CardValue color={STATUS[data?.status ?? "ACTIVE"][1]}>{STATUS[data?.status ?? "ACTIVE"][0]}:</CardValue>
               <ClickAbleLink to={details.epoch(data?.epochNo)}>&nbsp; Epoch {data?.epochNo}</ClickAbleLink>
-            </Box>
+            </WrapStatus>
           }
         />
         <GridItem
-          title='Rewards Available'
-          bgType='white'
+          title="Rewards Available"
+          bgType="white"
           mainIcon={<ReewardAvalible />}
           value={
-            <Box display='flex' alignItems='center'>
+            <Box display="flex" alignItems="center">
               <CardValue>{formatADAFull(data?.rewardAvailable)} ₳</CardValue>
             </Box>
           }
         />
         <GridItem
-          title='Owner Account'
-          bgType='white'
+          title="Owner Account"
+          bgType="white"
           mainIcon={<OwnerAccIC />}
           value={
-            <Box display='flex' alignItems='center'>
+            <Box display="flex" alignItems="center">
               <CardValue>
                 <ClickAbleLink
                   to={details.stake((data?.stakeKeys && data?.stakeKeys.length && data.stakeKeys[0]) || "#")}
@@ -149,7 +152,7 @@ const TabularOverview: React.FC = () => {
       <ViewMoreAddressModal
         showFullHash={true}
         onItemClick={onOwnerItemClick}
-        title='Owner Account'
+        title="Owner Account"
         open={open}
         items={data?.stakeKeys}
         onClose={() => setOpen(false)}

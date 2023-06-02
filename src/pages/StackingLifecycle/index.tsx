@@ -1,17 +1,21 @@
 import { Box, CircularProgress, Container, Grid, IconButton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { useScreen } from "../../commons/hooks/useScreen";
-import { DownloadGreenIcon, FilterIC, ListOfReportsIC, WatchlistIC } from "../../commons/resources";
-import { details, routers } from "../../commons/routers";
-import { API } from "../../commons/utils/api";
-import { defaultAxiosDownload } from "../../commons/utils/axios";
-import { formatDateTimeLocal } from "../../commons/utils/helper";
-import DashboardCard from "../../components/DashboardCard";
-import FilterReport from "../../components/FilterReport";
-import { WrapFilterDescription } from "../../components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
-import { Column } from "../../components/commons/Table";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { useScreen } from "src/commons/hooks/useScreen";
+import { DownloadGreenIcon, FilterIC, ListOfReportsIC, WatchlistIC } from "src/commons/resources";
+import { details, routers } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { defaultAxiosDownload } from "src/commons/utils/axios";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
+import DashboardCard from "src/components/DashboardCard";
+import FilterReport from "src/components/FilterReport";
+import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { Column } from "src/components/commons/Table";
+
 import {
   FilterHead,
   GridContainer,
@@ -21,8 +25,6 @@ import {
   TitleHead,
   WrapReportName
 } from "./styles";
-import CustomIcon from "~/components/commons/CustomIcon";
-import CustomTooltip from "~/components/commons/CustomTooltip";
 
 const cardList = [
   {
@@ -122,9 +124,8 @@ const Dashboard: React.FC = () => {
         document.body.appendChild(link);
         link.click();
       })
-      .catch((e) => {
+      .catch(() => {
         // To do
-        console.log(e.message || "");
       })
       .finally(() => {
         setOnDownload(false);
@@ -149,11 +150,11 @@ const Dashboard: React.FC = () => {
       minWidth: "150px",
       render(data) {
         if (data.reportName.length <= 20) {
-          return <WrapReportName>{data.reportName}</WrapReportName>;
+          return <WrapReportName>{`${data.reportName}`.replaceAll("-", " ")}</WrapReportName>;
         }
         return (
-          <CustomTooltip title={data.reportName}>
-            <WrapReportName>{data.reportName}</WrapReportName>
+          <CustomTooltip title={`${data.reportName}`.replaceAll("-", " ")}>
+            <WrapReportName>{`${data.reportName}`.replaceAll("-", " ")}</WrapReportName>
           </CustomTooltip>
         );
       }
@@ -172,9 +173,9 @@ const Dashboard: React.FC = () => {
       minWidth: "30px",
       render(data) {
         return (
-          <Box width='100%' textAlign='right'>
+          <Box width="100%" textAlign="right">
             {onDownload === data.id ? (
-              <CircularProgress size={22} color='primary' />
+              <CircularProgress size={22} color="primary" />
             ) : data.status === "GENERATED" ? (
               <Box
                 component={IconButton}

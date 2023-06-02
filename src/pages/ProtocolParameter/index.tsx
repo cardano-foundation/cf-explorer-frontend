@@ -1,13 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  AccordionContainer,
-  AccordionSummary,
-  ApplyFilterButton,
-  BackButton,
-  BackText,
-  ButtonFilter,
-  FilterContainer
-} from "./styles";
+import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import _ from "lodash";
 import {
@@ -25,23 +17,32 @@ import { useList, useUpdateEffect } from "react-use";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import moment from "moment";
-
-import Card from "~/components/commons/Card";
-import Table from "~/components/commons/Table";
-import { Column } from "~/types/table";
-import { PROTOCOL_TYPE } from "~/commons/utils/constants";
-import useFetch from "~/commons/hooks/useFetch";
-import { API } from "~/commons/utils/api";
-import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "~/types/protocol";
-import ParseScriptModal from "~/components/ParseScriptModal";
-import { DateRangeIcon, EmptyIcon, FilterIcon, ProtocolParam, ResetIcon } from "~/commons/resources";
-import DateRangeModal from "~/components/FilterReport/DateRangeModal";
-import { formatDateTimeLocal } from "~/commons/utils/helper";
 import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
-import { Link } from "react-router-dom";
-import { details } from "~/commons/routers";
-import CustomTooltip from "~/components/commons/CustomTooltip";
+
+import Card from "src/components/commons/Card";
+import Table from "src/components/commons/Table";
+import { Column } from "src/types/table";
+import { PROTOCOL_TYPE } from "src/commons/utils/constants";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "src/types/protocol";
+import ParseScriptModal from "src/components/ParseScriptModal";
+import { DateRangeIcon, EmptyIcon, FilterIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
+import DateRangeModal from "src/components/FilterReport/DateRangeModal";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+
+import {
+  AccordionContainer,
+  AccordionSummary,
+  ApplyFilterButton,
+  BackButton,
+  BackText,
+  ButtonFilter,
+  FilterContainer
+} from "./styles";
 
 const ProtocolParameter: React.FC = () => {
   const [fixedColumnKeys, { push: pushFixedColumnKeys }] = useList<string>([]);
@@ -70,7 +71,7 @@ const ProtocolParameter: React.FC = () => {
 
   const theme = useTheme();
 
-  const columnsMap = Object.keys(PROTOCOL_TYPE).map((k, idx) => ({
+  const columnsMap = Object.keys(PROTOCOL_TYPE).map((k) => ({
     title: k,
     key: k,
     render: (r: TProtocolParam) => {
@@ -143,7 +144,7 @@ const ProtocolParameter: React.FC = () => {
       )}
       {showHistory && <ProtocolParameterHistory />}
       {!showHistory && (
-        <Card marginTitle='0px' title={"Protocol parameters"} textAlign={"left"}>
+        <Card marginTitle="0px" title={"Protocol parameters"} textAlign={"left"}>
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
@@ -153,7 +154,7 @@ const ProtocolParameter: React.FC = () => {
                   </Box>
                   <Box
                     component={Button}
-                    variant='contained'
+                    variant="contained"
                     textTransform={"capitalize"}
                     fontWeight={"bold"}
                     fontSize={"0.875rem"}
@@ -167,7 +168,7 @@ const ProtocolParameter: React.FC = () => {
                     component={Skeleton}
                     mt={2}
                     borderRadius={({ spacing }) => spacing(2)}
-                    variant='rectangular'
+                    variant="rectangular"
                     height={280}
                   />
                 )}
@@ -183,7 +184,7 @@ const ProtocolParameter: React.FC = () => {
                       component={Skeleton}
                       mt={2}
                       borderRadius={({ spacing }) => spacing(2)}
-                      variant='rectangular'
+                      variant="rectangular"
                       height={280}
                     />
                   )}
@@ -200,7 +201,7 @@ const ProtocolParameter: React.FC = () => {
         open={!!costModelScript}
         onClose={() => setCostModelScript("")}
         script={costModelScript}
-        title='CostModel'
+        title="CostModel"
       />
     </Container>
   );
@@ -290,7 +291,7 @@ const ProtocolParameterHistory = () => {
           }
         >
           {r[t]?.status === "ADDED" ? (
-            <CustomTooltip title='No transaction'>
+            <CustomTooltip title="No transaction">
               <Box>{r[t] ? (r[t]?.value ? r[t]?.value : r[t]?.value === 0 ? 0 : "") : ""}</Box>
             </CustomTooltip>
           ) : r[t] ? (
@@ -355,21 +356,21 @@ const ProtocolParameterHistory = () => {
 
   if (loading) {
     return (
-      <Box component={Skeleton} mt={2} borderRadius={({ spacing }) => spacing(2)} variant='rectangular' height={400} />
+      <Box component={Skeleton} mt={2} borderRadius={({ spacing }) => spacing(2)} variant="rectangular" height={400} />
     );
   }
 
   return (
     <Box>
       <Card
-        marginTitle='0px'
+        marginTitle="0px"
         title={"Protocol parameters update history"}
         textAlign={"left"}
         extra={
           <Box position={"relative"}>
             <Box
               component={Button}
-              variant='text'
+              variant="text"
               textTransform={"capitalize"}
               bgcolor={({ palette }) => alpha(palette.green[600], 0.1)}
               px={2}
@@ -481,7 +482,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   };
   return (
     <FilterContainer padding={2} pt={5}>
-      <CloseButton saving={0} onClick={() => setShowFiter(false)} data-testid='close-modal-button'>
+      <CloseButton saving={0} onClick={() => setShowFiter(false)} data-testid="close-modal-button">
         <IoMdClose />
       </CloseButton>
       <Box display={"flex"} flexDirection={"column"}>

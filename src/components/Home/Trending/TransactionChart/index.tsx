@@ -1,12 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import useFetch from "../../../../commons/hooks/useFetch";
 import { Box, Grid, alpha, useTheme } from "@mui/material";
-import { API } from "../../../../commons/utils/api";
+
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import { numberWithCommas } from "src/commons/utils/helper";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import { BoxInfo, ColorChart, InfoItem, Skeleton, Tab, Tabs, Title, TransactionContainer, WrapHeader } from "./styles";
-import { numberWithCommas } from "../../../../commons/utils/helper";
-import { useScreen } from "~/commons/hooks/useScreen";
 
 interface TransactionChartIF {
   date: string;
@@ -64,10 +66,10 @@ const TransactionChart: React.FC = () => {
     return (
       <Grid container spacing={2}>
         <Grid item xs={12} lg={9}>
-          <Skeleton variant='rectangular' height={"300px"} style={{ borderRadius: 10 }} />
+          <Skeleton variant="rectangular" height={"300px"} style={{ borderRadius: 10 }} />
         </Grid>
         <Grid item xs={12} lg={3}>
-          <Skeleton variant='rectangular' height={"300px"} />
+          <Skeleton variant="rectangular" height={"300px"} />
         </Grid>
       </Grid>
     );
@@ -186,12 +188,12 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
   if (!data) return <></>;
   return (
     <Box width={"100%"} minHeight={"250px"} height={250}>
-      <ResponsiveContainer width='100%' height='100%'>
+      <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           height={500}
           width={500}
           data={data}
-          stackOffset='expand'
+          stackOffset="expand"
           margin={{
             top: 10,
             right: 20,
@@ -199,28 +201,28 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
             bottom: 0
           }}
         >
-          <CartesianGrid strokeDasharray='3 3' />
-          <XAxis dataKey='date' tickFormatter={(date: string) => formatX(date, range)} />
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" tickFormatter={(date: string) => formatX(date, range)} />
           <YAxis tickFormatter={toPercent} />
           <Tooltip content={(o: any) => renderTooltipContent(o, range)} />
           <Area
-            type='monotone'
-            dataKey='metadata'
-            stackId='1'
+            type="monotone"
+            dataKey="metadata"
+            stackId="1"
             stroke={theme.palette.green[600]}
             fill={theme.palette.green[600]}
           />
           <Area
-            type='monotone'
-            dataKey='smartContract'
-            stackId='1'
+            type="monotone"
+            dataKey="smartContract"
+            stackId="1"
             stroke={theme.palette.blue[800]}
             fill={theme.palette.blue[800]}
           />
           <Area
-            type='monotone'
-            dataKey='simpleTransactions'
-            stackId='1'
+            type="monotone"
+            dataKey="simpleTransactions"
+            stackId="1"
             stroke={theme.palette.yellow[600]}
             fill={theme.palette.yellow[600]}
           />

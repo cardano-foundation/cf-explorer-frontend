@@ -1,6 +1,9 @@
 import { BoxProps, Typography } from "@mui/material";
-import { RewardAccountIconUrl, WalletIconRewardGreen } from "~/commons/resources";
-import { formatADAFull } from "~/commons/utils/helper";
+import { forwardRef } from "react";
+
+import { RewardAccountIconUrl, WalletIconRewardGreen } from "src/commons/resources";
+import { formatADAFull } from "src/commons/utils/helper";
+
 import {
   ClickAbleButton,
   RewardAccountCcontainer,
@@ -9,7 +12,6 @@ import {
   RewardValueLabel,
   StyledAdaLogoIcon
 } from "./styles";
-import { forwardRef } from "react";
 
 export interface IRewardAccountBoxProps extends BoxProps {
   value?: number;
@@ -20,7 +22,7 @@ const RewardAccountBox: React.FC<IRewardAccountBoxProps> = forwardRef(({ value, 
   return (
     <RewardAccountCcontainer ref={boxRef}>
       <RewardBoxImg src={RewardAccountIconUrl} />
-      <Typography fontWeight={700} fontSize={20} width='100% !important'>
+      <Typography fontWeight={700} fontSize={20} width="100% !important">
         Reward Account
       </Typography>
       <RewardValueLabel>

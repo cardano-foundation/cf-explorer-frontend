@@ -1,22 +1,24 @@
 import React from "react";
 import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
+import { useHistory, useParams } from "react-router-dom";
+
 import {
   DelegationHistoryIcon,
   StakeKeyHistoryIcon,
   WithdrawHistoryIcon,
   InstantaneousHistoryIcon,
   TransactionIcon
-} from "../../../commons/resources";
-import { StyledTabList, TitleTab, WrapperTabList } from "./styles";
-import { useHistory, useParams } from "react-router-dom";
+} from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import DelegationHistoryTab from "./Tabs/DelegationHistoryTab";
 import StakeHistoryTab from "./Tabs/StakeHistoryTab";
 import WithdrawalHistoryTab from "./Tabs/WithdrawalHistoryTab";
 import InstantaneousTab from "./Tabs/InstantaneousTab";
 import TransactionTab from "./Tabs/TransactionTab";
-import { details } from "../../../commons/routers";
-import { useScreen } from "../../../commons/hooks/useScreen";
+import { StyledTabList, TitleTab, WrapperTabList } from "./styles";
 
 const StakeTab = () => {
   const { stakeId, tabActive = "delegation" } = useParams<{ stakeId: string; tabActive?: TabStakeDetail }>();
@@ -25,7 +27,7 @@ const StakeTab = () => {
   const { isMobile } = useScreen();
 
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
-    history.push({ pathname: details.stake(stakeId || "", tab) });
+    history.replace({ pathname: details.stake(stakeId || "", tab) });
   };
 
   const tabs: {
@@ -73,7 +75,7 @@ const StakeTab = () => {
           <StyledTabList
             onChange={handleChange}
             TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
-            variant='scrollable'
+            variant="scrollable"
           >
             {tabs.map(({ icon: Icon, key, label }) => (
               <Tab
@@ -81,7 +83,7 @@ const StakeTab = () => {
                 value={key}
                 style={{ padding: "12px 0px", marginRight: 40 }}
                 label={
-                  <Box display={"flex"} alignItems='center'>
+                  <Box display={"flex"} alignItems="center">
                     <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.text.hint} />
                     <TitleTab pl={1} active={key === tabActive}>
                       {label}

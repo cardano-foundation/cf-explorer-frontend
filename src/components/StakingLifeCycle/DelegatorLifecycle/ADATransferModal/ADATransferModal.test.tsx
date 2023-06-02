@@ -1,8 +1,10 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ADATransferModal from ".";
 import ReactRouter from "react-router";
-import { render } from "../../../../test-utils";
+
+import { render } from "src/test-utils";
+
+import ADATransferModal from ".";
 
 test("should render ADATransferModal modal", async () => {
   const handleCloseModal = jest.fn();

@@ -1,8 +1,7 @@
 import { MenuItem, Select, alpha, Box, styled } from "@mui/material";
-
 import { Link } from "react-router-dom";
 
-export const Img = styled("img")(({ theme }) => ({
+export const Img = styled("img")(() => ({
   paddingRight: "10px",
   width: "35px"
 }));
@@ -19,26 +18,26 @@ export const Header = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const WrapInfo = styled(Box)(({ theme }) => ({
+export const WrapInfo = styled(Box)(() => ({
   display: "flex",
   width: "100%",
-  alignItems: "center",
+  alignItems: "center"
 }));
 
 export const WrapUTXOs = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   width: "100%",
-  display: 'flex',
+  display: "flex",
   flexDirection: "row",
-  paddingBottom: '5px',
-  alignItems: 'center',
+  paddingBottom: "5px",
+  alignItems: "center",
   [theme.breakpoints.down("md")]: {
     flexDirection: "column",
     alignItems: "flex-start"
-  },
+  }
 }));
 
-export const ItemContent = styled(Box)(({ theme }) => ({
+export const ItemContent = styled(Box)(() => ({
   display: "flex"
 }));
 

@@ -1,9 +1,11 @@
 import { useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
-import AdaHolder from "~/components/commons/AdaHolder";
-import CardanoSystem from "~/components/commons/CardanoSystem";
-import DrawPath from "~/components/commons/DrawPath";
-import { LineArrowItem } from "~/components/commons/LineArrow";
+
+import AdaHolder from "src/components/commons/AdaHolder";
+import CardanoSystem from "src/components/commons/CardanoSystem";
+import DrawPath from "src/components/commons/DrawPath";
+import { LineArrowItem } from "src/components/commons/LineArrow";
+
 import {
   BoxGroup,
   DrawContainer,

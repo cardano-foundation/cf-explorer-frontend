@@ -1,28 +1,28 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useLocation, useHistory } from "react-router-dom";
-import useFetchList from "../../commons/hooks/useFetchList";
-
 import { stringify } from "qs";
 import { Box } from "@mui/material";
+import { useLocation, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import useFetchList from "src/commons/hooks/useFetchList";
 import {
   exchangeADAToUSD,
   formatADAFull,
   getPageInfo,
   getShortWallet,
   numberWithCommas
-} from "../../commons/utils/helper";
-import { details } from "../../commons/routers";
-import { AIcon } from "../../commons/resources";
+} from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import Table, { Column } from "src/components/commons/Table";
+import Card from "src/components/commons/Card";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { RootState } from "src/stores/types";
+import { API } from "src/commons/utils/api";
+import ADAicon from "src/components/commons/ADAIcon";
+import { REFRESH_TIMES } from "src/commons/utils/constants";
+import FormNowMessage from "src/components/commons/FormNowMessage";
+
 import { StyledContainer, StyledLink, TimeDuration } from "./styles";
-import Table, { Column } from "../../components/commons/Table";
-import Card from "../../components/commons/Card";
-import CustomTooltip from "../../components/commons/CustomTooltip";
-import { useSelector } from "react-redux";
-import { RootState } from "../../stores/types";
-import { API } from "../../commons/utils/api";
-import ADAicon from "../../components/commons/ADAIcon";
-import { REFRESH_TIMES } from "../../commons/utils/constants";
-import FormNowMessage from "~/components/commons/FormNowMessage";
 
 const Transactions: React.FC = () => {
   const { search } = useLocation();
@@ -62,7 +62,7 @@ const Transactions: React.FC = () => {
       key: "balance",
       minWidth: 60,
       render: (r) => (
-        <Box display='inline-flex' alignItems='center'>
+        <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.balance)}</Box>
           <ADAicon />
         </Box>
@@ -77,7 +77,7 @@ const Transactions: React.FC = () => {
       minWidth: 120,
       render: (r) => (
         <CustomTooltip title={exchangeADAToUSD(r.balance, adaRate, true)}>
-          <Box display='inline-flex' alignItems='center'>
+          <Box display="inline-flex" alignItems="center">
             {exchangeADAToUSD(r.balance, adaRate, true)}
           </Box>
         </CustomTooltip>
@@ -88,7 +88,7 @@ const Transactions: React.FC = () => {
       minWidth: 120,
       key: "txCount",
       render: (r) => (
-        <Box display='flex' alignItems='center'>
+        <Box display="flex" alignItems="center">
           {numberWithCommas(r.txCount)}
         </Box>
       ),

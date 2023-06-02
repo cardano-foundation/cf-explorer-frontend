@@ -1,6 +1,7 @@
 import { alpha, Box, Button, Container, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
+
 import CopyButton from "../../commons/CopyButton";
 
 export const HeaderDetailContainer = styled(Container)`

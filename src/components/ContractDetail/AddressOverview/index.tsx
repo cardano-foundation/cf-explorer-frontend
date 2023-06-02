@@ -1,16 +1,18 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
-import useFetch from "../../../commons/hooks/useFetch";
-import { details } from "../../../commons/routers";
-import { API } from "../../../commons/utils/api";
-import { exchangeADAToUSD, formatADAFull, getShortWallet } from "../../../commons/utils/helper";
-import { RootState } from "../../../stores/types";
-import Card from "../../commons/Card";
-import CardAddress from "../../share/CardAddress";
-import TokenAutocomplete from "../../TokenAutocomplete";
+
+import useFetch from "src/commons/hooks/useFetch";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { exchangeADAToUSD, formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { RootState } from "src/stores/types";
+import CardAddress from "src/components/share/CardAddress";
+import Card from "src/components/commons/Card";
+import TokenAutocomplete from "src/components/TokenAutocomplete";
+import ADAicon from "src/components/commons/ADAIcon";
+
 import { GridContainer, GridItem, Pool, StyledAAmount } from "./styles";
-import ADAicon from "../../commons/ADAIcon";
 
 interface Props {
   data: WalletAddress | null;
@@ -78,13 +80,13 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
   ];
 
   return (
-    <Card title='Contract Detail'>
+    <Card title="Contract Detail">
       <GridContainer container spacing={2}>
         <GridItem item xs={12} md={6}>
-          <Box overflow='hidden' borderRadius={3} height={"100%"}>
+          <Box overflow="hidden" borderRadius={3} height={"100%"}>
             <CardAddress
               title={"Wallet address"}
-              type='left'
+              type="left"
               address={data?.address || ""}
               item={itemLeft}
               loading={loading}
@@ -92,10 +94,10 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
           </Box>
         </GridItem>
         <GridItem item xs={12} md={6}>
-          <Box overflow='hidden' borderRadius={3} height={"100%"}>
+          <Box overflow="hidden" borderRadius={3} height={"100%"}>
             <CardAddress
               title={"Controlled stake key"}
-              type='right'
+              type="right"
               address={dataStake?.stakeAddress || ""}
               item={itemRight}
               loading={loading || loadingStake}
