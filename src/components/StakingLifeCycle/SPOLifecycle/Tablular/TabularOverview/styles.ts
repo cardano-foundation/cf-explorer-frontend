@@ -115,3 +115,9 @@ export const StyledBox = styled(Box)(() => ({
   alignItems: "center",
   gap: "12px"
 }));
+
+export const WrapStatus = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  minWidth: 140,
+}));

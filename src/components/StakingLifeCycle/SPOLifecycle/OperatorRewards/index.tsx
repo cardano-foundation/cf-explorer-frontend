@@ -123,6 +123,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: ()
             {...fetchData}
             columns={columns}
             total={{ title: "Total Epochs", count: fetchData.total }}
+            maxHeight={"60vh"}
             pagination={{
               page,
               size,

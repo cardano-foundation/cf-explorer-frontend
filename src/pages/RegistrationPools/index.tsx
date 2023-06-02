@@ -20,7 +20,16 @@ import NoRecord from "src/components/commons/NoRecord";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { RegistrationContainer, StakeKey, StyledLink, StyledTab, StyledTabs, TabLabel, TimeDuration } from "./styles";
+import {
+  RegistrationContainer,
+  StakeKey,
+  StyledLink,
+  StyledTab,
+  StyledTabs,
+  TabLabel,
+  TimeDuration,
+  WrapHeader
+} from "./styles";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",
@@ -137,18 +146,19 @@ const RegistrationPools = () => {
 
   return (
     <RegistrationContainer>
-      <StyledTabs
-        value={poolType}
-        onChange={onChangeTab}
-        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}` }}
-        TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
-      >
-        <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
-        <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
-      </StyledTabs>
-      <TimeDuration>
-        <FormNowMessage time={fetchData.lastUpdated} />
-      </TimeDuration>
+      <WrapHeader>
+        <StyledTabs
+          value={poolType}
+          onChange={onChangeTab}
+          TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
+        >
+          <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
+          <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
+        </StyledTabs>
+        <TimeDuration>
+          <FormNowMessage time={fetchData.lastUpdated} />
+        </TimeDuration>
+      </WrapHeader>
       <Box>
         <Table
           {...fetchData}

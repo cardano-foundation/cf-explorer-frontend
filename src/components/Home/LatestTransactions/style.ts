@@ -20,6 +20,9 @@ export const Header = styled(Box)`
     padding: 0 15px;
     margin-bottom: 2.5rem;
   }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    margin-bottom: 0.5rem;
+  }
 `;
 
 export const Title = styled("h3")`
@@ -51,11 +54,17 @@ export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.grey[400],
   display: "block",
   [theme.breakpoints.down("sm")]: {
-    position: "absolute",
-    top: "100%",
-    right: 0,
-    paddingTop: 10,
-    whiteSpace: "nowrap"
+    display: "none",
+  }
+}));
+
+export const TimeDurationSm = styled("small")(({ theme }) => ({
+  color: theme.palette.grey[400],
+  display: "none",
+  [theme.breakpoints.down("sm")]: {
+    display: "block",
+    marginBottom: "1.5rem",
+    padding: "0 15px"
   }
 }));
 
