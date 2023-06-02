@@ -3,12 +3,11 @@ import React from "react";
 import { CloseIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { getShortWallet } from "src/commons/utils/helper";
+import { StyledLink } from "src/components/share/styled";
 
 import CopyButton from "../CopyButton";
 import CustomTooltip from "../CustomTooltip";
-
 import { ButtonClose, DropdownList, DropdownTitle, InfoValue, ListDropdownContainer } from "./styles";
-import { StyledLink } from "src/components/share/styled";
 
 interface IDropdownDetailProps {
   title: string;

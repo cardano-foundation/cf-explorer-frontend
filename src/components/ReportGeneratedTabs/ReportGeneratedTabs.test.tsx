@@ -1,11 +1,13 @@
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ReportGeneratedTabs, { TabsItem } from ".";
 import { createMemoryHistory } from "history";
-import { render } from "src/test-utils";
-import { details } from "src/commons/routers";
 import { Router } from "react-router-dom";
 import ReactRouter from "react-router";
+
+import { render } from "src/test-utils";
+import { details } from "src/commons/routers";
+
+import ReportGeneratedTabs, { TabsItem } from ".";
 
 const tabsItem: TabsItem[] = [
   { value: "stake-key", label: "This is tab 1", component: <div>This is component 1</div> },

@@ -1,11 +1,13 @@
-import { Box } from "@mui/material";
 import { useState } from "react";
-import RecentRegistrations from "./RecentRegistrations";
-import useFetch from "../../../../commons/hooks/useFetch";
-import { API } from "../../../../commons/utils/api";
+import { Box } from "@mui/material";
 import { useParams } from "react-router";
+
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
 import { FilterParams } from "src/components/StackingFilter";
+
 import { RegistrationDraw } from "./RegistrationDraw";
+import RecentRegistrations from "./RecentRegistrations";
 import { RegistrationCertificateModal } from "./RegistrationCertificateModal";
 
 const Registration = () => {

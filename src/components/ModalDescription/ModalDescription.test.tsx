@@ -1,6 +1,8 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
 import { render } from "src/test-utils";
+
 import { DelegationProcessDescription } from "./DelegationProcessDescription";
 import { DeregistrationDelegatorProcessDescription } from "./DeregistrationDelegatorProcessDescription";
 import { RegistrationDelegatorProcessDescription } from "./RegistrationDelegatorProcessDescription";

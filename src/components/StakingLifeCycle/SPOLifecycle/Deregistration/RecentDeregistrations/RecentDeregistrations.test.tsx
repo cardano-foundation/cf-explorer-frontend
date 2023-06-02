@@ -1,8 +1,9 @@
-import { cleanup, screen, waitFor } from "@testing-library/react";
-import RecentDeregistrations from ".";
-import defaultAxios from "src/commons/utils/axios";
-import { render } from "src/test-utils";
 import Router from "react-router";
+
+import { render } from "src/test-utils";
+import defaultAxios from "src/commons/utils/axios";
+
+import RecentDeregistrations from ".";
 
 const txHash = "f0cc0767ea4cf06ce45a85db8f17f930576af1b06f327b8d9d5d25c17f962166";
 const time = new Date().toString();

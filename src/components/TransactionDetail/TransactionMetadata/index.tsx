@@ -1,6 +1,23 @@
 import React, { useMemo, useRef } from "react";
 import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { useHistory, useParams } from "react-router-dom";
+
+import { details } from "src/commons/routers";
+import {
+  CollateralIcon,
+  ContractIcon,
+  TransactionDelegationIcon,
+  MintingIcon,
+  NoteIcon,
+  ProtocolUpdateIcon,
+  RewardsDistributionIcon,
+  StakeCertificates,
+  SummaryIcon,
+  UtxoIcon,
+  WithdrawalIcon
+} from "src/commons/resources";
+
 import "./index.css";
 import UTXO from "./UTXOs";
 import Summary from "./Summary";
@@ -9,19 +26,8 @@ import Collaterals from "./Collaterals";
 import Withdrawals from "./Withdrawals";
 import Delegations from "./Delegations";
 import Minting from "./Minting";
-import { ReactComponent as SummaryIcon } from "../../../commons/resources/images/summaryIcon.svg";
-import { ReactComponent as UtxoIcon } from "../../../commons/resources/images/utxoIcon.svg";
-import { ReactComponent as ContractIcon } from "../../../commons/resources/images/contractIcon.svg";
-import { ReactComponent as CollateralIcon } from "../../../commons/resources/images/collateralIcon.svg";
-import { ReactComponent as NoteIcon } from "../../../commons/resources/images/noteIcon.svg";
-import { ReactComponent as WithdrawalIcon } from "../../../commons/resources/images/WithdrawalIcon.svg";
-import { ReactComponent as MintingIcon } from "../../../commons/resources/images/mintingIcon.svg";
-import { ReactComponent as DelegationIcon } from "../../../commons/resources/images/DelegationIcon.svg";
-import { useHistory, useParams } from "react-router-dom";
-import { details } from "../../../commons/routers";
 import { TitleTab } from "./styles";
 import PoolCertificate from "./PoolCertificate";
-import { ProtocolUpdateIcon, RewardsDistributionIcon, StakeCertificates } from "../../../commons/resources";
 import ProtocolUpdate from "./ProtocolUpdate";
 import StakeCertificate from "./StakeCertificate";
 
@@ -30,7 +36,7 @@ interface TransactionMetadataProps {
   loading: boolean;
 }
 
-const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading }) => {
+const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
   let { tabActive = "summary" } = useParams<{ tabActive: keyof Transaction }>();
   const history = useHistory();
   const theme = useTheme();
@@ -106,7 +112,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading
     },
     {
       key: "delegations",
-      icon: DelegationIcon,
+      icon: TransactionDelegationIcon,
       label: `Delegations(${data?.delegations?.length || 0})`,
       children: <Delegations data={data?.delegations} />
     },

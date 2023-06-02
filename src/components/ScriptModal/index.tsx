@@ -1,13 +1,13 @@
-import { Box, Skeleton, useTheme, Modal } from "@mui/material";
-
+import { Box, Skeleton, useTheme } from "@mui/material";
 import { JsonViewer } from "@textea/json-viewer";
-import { ButtonClose, ButtonLink, ModalContainer, ViewJson } from "./styles";
-import closeIcon from "../../commons/resources/icons/closeIcon.svg";
-import CopyButton from "../commons/CopyButton";
-import useFetch from "../../commons/hooks/useFetch";
-import { details } from "../../commons/routers";
-import { API } from "../../commons/utils/api";
-import StyledModal from "../commons/StyledModal";
+
+import CopyButton from "src/components/commons/CopyButton";
+import useFetch from "src/commons/hooks/useFetch";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import StyledModal from "src/components/commons/StyledModal";
+
+import { ButtonLink, ViewJson } from "./styles";
 
 interface ScriptModalProps {
   open: boolean;

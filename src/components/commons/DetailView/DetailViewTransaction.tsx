@@ -1,17 +1,32 @@
 import React, { useEffect } from "react";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
+import { BiChevronRight } from "react-icons/bi";
+import { useSelector } from "react-redux";
+
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import {
   CubeIcon,
   DelegationHistoryMainIcon,
   FileEditIcon,
-  MintingIcon,
+  MintingIconUrl,
   NoteEditIcon,
   RocketIcon,
   USDIcon,
   WithdrawlIcon
-} from "../../../commons/resources";
+} from "src/commons/resources";
+import useFetch from "src/commons/hooks/useFetch";
+import { details } from "src/commons/routers";
+import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { RootState } from "src/stores/types";
+import { API } from "src/commons/utils/api";
+
 import ProgressCircle from "../ProgressCircle";
+import ViewMoreButton from "../ViewMoreButton";
+import CustomTooltip from "../CustomTooltip";
+import CopyButton from "../CopyButton";
+import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
+import FormNowMessage from "../FormNowMessage";
 import {
   CloseButton,
   EpochNumber,
@@ -45,19 +60,6 @@ import {
   ViewDetailHeader,
   TimeDuration
 } from "./styles";
-import useFetch from "../../../commons/hooks/useFetch";
-import { BiChevronRight } from "react-icons/bi";
-import { details } from "../../../commons/routers";
-import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../commons/utils/helper";
-import ViewMoreButton from "../ViewMoreButton";
-import CustomTooltip from "../CustomTooltip";
-import CopyButton from "../CopyButton";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../stores/types";
-import { API } from "../../../commons/utils/api";
-import ViewAllButton from "../ViewAllButton";
-import ADAicon from "../ADAIcon";
-import FormNowMessage from "../FormNowMessage";
 
 type DetailViewTransactionProps = {
   hash: string;
@@ -70,7 +72,7 @@ const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] 
   { key: "collaterals", label: "Collateral", icon: <DetailLinkImage src={USDIcon} alt="contact" /> },
   { key: "notes", label: "Notes", icon: <DetailLinkImage src={NoteEditIcon} alt="contact" /> },
   { key: "withdrawals", label: "Withdrawal", icon: <DetailLinkImage src={WithdrawlIcon} alt="contact" /> },
-  { key: "mints", label: "Minting", icon: <DetailLinkImage src={MintingIcon} alt="contact" /> }
+  { key: "mints", label: "Minting", icon: <DetailLinkImage src={MintingIconUrl} alt="contact" /> }
 ];
 
 const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {

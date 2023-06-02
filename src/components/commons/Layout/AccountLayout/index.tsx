@@ -3,20 +3,20 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { MdChevronRight } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Redirect, useLocation } from "react-router-dom";
+
 import { getShortWallet } from "src/commons/utils/helper";
-import { useScreen } from "../../../../commons/hooks/useScreen";
-import useToast from "../../../../commons/hooks/useToast";
-import editAva from "../../../../commons/resources/icons/editAva.svg";
-import { ReactComponent as ReportDiscord } from "../../../../commons/resources/icons/reportDiscord.svg";
-import { ReactComponent as ReportMail } from "../../../../commons/resources/icons/reportMail.svg";
-import { routers } from "../../../../commons/routers";
-import { uploadAxios } from "../../../../commons/utils/axios";
-import { NETWORK, NETWORK_TYPES } from "../../../../commons/utils/constants";
-import { getInfo } from "../../../../commons/utils/userRequest";
-import { RootState } from "../../../../stores/types";
-import { setUserData } from "../../../../stores/user";
-import CustomTooltip from "../../CustomTooltip";
-import StyledModal from "../../StyledModal";
+import { useScreen } from "src/commons/hooks/useScreen";
+import useToast from "src/commons/hooks/useToast";
+import editAva from "src/commons/resources/icons/editAva.svg";
+import { ReactComponent as ReportDiscord } from "src/commons/resources/icons/reportDiscord.svg";
+import { ReactComponent as ReportMail } from "src/commons/resources/icons/reportMail.svg";
+import { routers } from "src/commons/routers";
+import { uploadAxios } from "src/commons/utils/axios";
+import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
+import { getInfo } from "src/commons/utils/userRequest";
+import { RootState } from "src/stores/types";
+import { setUserData } from "src/stores/user";
+
 import {
   ContentBox,
   MissingItemWrapper,
@@ -31,6 +31,8 @@ import {
   WrapItemMobile,
   Wrapper
 } from "./styled";
+import StyledModal from "../../StyledModal";
+import CustomTooltip from "../../CustomTooltip";
 interface Props {
   children: React.ReactNode;
 }
@@ -42,17 +44,13 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   const theme = useTheme();
   const [openReportModal, setOpenReportModal] = useState(false);
   const [isUploadAvatar, setIsUploadAvatar] = useState(false);
-  const [firstLoad, setFirstLoad] = useState(true);
-  const [openFullname, setOpenFullname] = useState(false);
+
   const fetchUserInfo = useCallback(async () => {
     try {
-      setFirstLoad(true);
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
       setUserData({ ...response.data, loginType: userData?.loginType || "" });
     } catch (error) {
       //To do
-    } finally {
-      setFirstLoad(false);
     }
   }, []);
 

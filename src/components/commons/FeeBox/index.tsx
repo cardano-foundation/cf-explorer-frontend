@@ -1,4 +1,5 @@
 import { styled } from "@mui/material";
+
 import HoldBox from "../HoldBox";
 
 export const FeeBox = styled(HoldBox)(() => ({

@@ -1,4 +1,3 @@
-import React from "react";
 import Table, { Column } from "../commons/Table";
 import { getDummyData } from "./dummy-data";
 
@@ -13,35 +12,35 @@ const columns: Column<ReportGeneratedColumn>[] = [
   {
     key: "column1",
     title: "Column #1",
-    render(data, index) {
+    render(data) {
       return data.column1;
     }
   },
   {
     key: "column2",
     title: "Column #2",
-    render(data, index) {
+    render(data) {
       return data.column1;
     }
   },
   {
     key: "column3",
     title: "Column #3",
-    render(data, index) {
+    render(data) {
       return data.column1;
     }
   },
   {
     key: "column4",
     title: "Column #4",
-    render(data, index) {
+    render(data) {
       return data.column1;
     }
   }
 ];
 
 const ReportGeneratedTable = () => {
-  const data = getDummyData(20);
+  const data = getDummyData();
   return (
     <Table
       columns={columns}

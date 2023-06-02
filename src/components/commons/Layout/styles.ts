@@ -6,7 +6,7 @@ const drawerWidth = 260;
 const drawerWidthMobile = 240;
 const drawerCollaspWidth = 85;
 
-export const Layout = styled(Box)<{ sidebar: number }>`
+export const Layout = styled(Box) <{ sidebar: number }>`
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -51,6 +51,8 @@ export const BackDrop = styled("div", { shouldForwardProp: (prop) => prop !== "i
     left: 0,
     right: 0,
     bottom: 0,
+    height: "120vh",
+    width: "100vw",
     display: "none",
     [theme.breakpoints.down("md")]: {
       background: alpha(theme.palette.common.black, 0.4),

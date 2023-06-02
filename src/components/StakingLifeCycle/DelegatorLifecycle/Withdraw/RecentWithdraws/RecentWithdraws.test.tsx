@@ -1,7 +1,9 @@
-import { screen } from "@testing-library/react";
-import RecentWithdraws from ".";
 import Router from "react-router";
+import { screen } from "@testing-library/react";
+
 import { render } from "src/test-utils";
+
+import RecentWithdraws from ".";
 
 describe("RecentWithdraws", () => {
   it("should render RecentWithdraws call mock api", async () => {

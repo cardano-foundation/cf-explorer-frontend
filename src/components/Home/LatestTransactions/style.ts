@@ -1,6 +1,7 @@
 import { Box, styled } from "@mui/material";
-import { BoxRaised } from "../../commons/BoxRaised";
-import { TRANSACTION_STATUS } from "../../../commons/utils/constants";
+
+import { BoxRaised } from "src/components/commons/BoxRaised";
+import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 
 export const TransactionContainer = styled(Box)`
   margin-bottom: 24px;
@@ -134,6 +135,7 @@ export const BlockNo = styled("small")`
   font-style: normal;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
+  color: black;
 `;
 
 export const WalletAddress = styled("small")`

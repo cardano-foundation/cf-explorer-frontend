@@ -5,7 +5,7 @@ export const LinkComponent = styled(Link)(({ theme }) => ({
   color: `${theme.palette.secondary.main} !important`
 }));
 
-export const ModalTitle = styled(Box)(({ theme }) => ({
+export const ModalTitle = styled(Box)(() => ({
   fontSize: "var(--font-size-title)",
   fontWeight: 700,
   marginTop: "-24px",

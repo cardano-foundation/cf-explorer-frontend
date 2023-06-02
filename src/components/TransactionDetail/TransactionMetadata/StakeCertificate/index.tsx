@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, useTheme } from "@mui/material";
+
 import StakeKeyBox from "./StakeKeyBox";
 import { CardHeader } from "../PoolCertificate/styles";
 

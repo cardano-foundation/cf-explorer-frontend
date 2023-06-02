@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
-import ReportGeneratedPoolDetailTabs from "../../components/ReportGeneratedPoolDetail";
-import { Container } from "@mui/material";
-import { BackButton, BackText } from "../../components/commons/DetailHeader/styles";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { TopHeader } from "./styles";
 import { useHistory } from "react-router-dom";
+import { Container } from "@mui/material";
+
+import ReportGeneratedPoolDetailTabs from "src/components/ReportGeneratedPoolDetail";
+import { BackButton, BackText } from "src/components/commons/DetailHeader/styles";
+
+import { TopHeader } from "./styles";
 
 const ReportGeneratedPoolDetail = () => {
   const history = useHistory();

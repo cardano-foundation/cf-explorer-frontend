@@ -1,7 +1,9 @@
-import { screen } from "@testing-library/react";
-import RecentRegistrations from ".";
 import Router from "react-router";
+import { screen } from "@testing-library/react";
+
 import { render } from "src/test-utils";
+
+import RecentRegistrations from ".";
 
 test("should render SPO RecentRegistrations call mock api", async () => {
   jest.spyOn(Router, "useParams").mockReturnValue({

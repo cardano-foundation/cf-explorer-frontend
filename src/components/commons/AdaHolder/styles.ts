@@ -1,4 +1,5 @@
 import { Typography, styled } from "@mui/material";
+
 import { AdaLogoIcon } from "../ADAIcon";
 
 export const AdaHolderImage = styled("img")(() => ({

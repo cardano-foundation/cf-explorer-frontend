@@ -1,16 +1,15 @@
 import React from "react";
-import { MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import DetailHeader from "../../commons/DetailHeader";
-import timeIcon from "../../../commons/resources/icons/time.svg";
-import outputIcon from "../../../commons/resources/icons/outputIcon.svg";
-import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";
-import slotIcon from "../../../commons/resources/icons/slot.svg";
-import { TitleCard } from "../../BlockDetail/BlockOverview/styles";
 import { Box } from "@mui/material";
-import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
 import { useSelector } from "react-redux";
-import ADAicon from "../../commons/ADAIcon";
 import moment from "moment";
+
+import { timeIconUrl, outputIconUrl, cubeIconUrl, slotIconUrl } from "src/commons/resources";
+import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import DetailHeader from "src/components/commons/DetailHeader";
+import { TitleCard } from "src/components/BlockDetail/BlockOverview/styles";
+import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
+
 interface EpochOverviewProps {
   data: IDataEpoch | null;
   loading: boolean;
@@ -23,7 +22,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
 
   const listOverview = [
     {
-      icon: timeIcon,
+      icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Start time </TitleCard>
@@ -32,7 +31,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       value: formatDateTimeLocal(data?.startTime || "")
     },
     {
-      icon: timeIcon,
+      icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>End time </TitleCard>
@@ -41,7 +40,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       value: formatDateTimeLocal(data?.endTime || "")
     },
     {
-      icon: outputIcon,
+      icon: outputIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Total Output</TitleCard>
@@ -54,7 +53,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       )
     },
     {
-      icon: cubeIcon,
+      icon: cubeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Block</TitleCard>
@@ -63,7 +62,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       value: data?.blkCount || 0
     },
     {
-      icon: slotIcon,
+      icon: slotIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Slot</TitleCard>

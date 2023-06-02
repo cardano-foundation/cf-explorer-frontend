@@ -1,8 +1,10 @@
 import { screen } from "@testing-library/react";
-import ReceivedRewardsModal from ".";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
+
 import { render } from "src/test-utils";
+
+import ReceivedRewardsModal from ".";
 
 describe("test received reward modal", () => {
   test("Render ReceivedRewardsModal modal", async () => {

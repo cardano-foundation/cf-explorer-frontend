@@ -1,25 +1,26 @@
 import { stringify } from "qs";
 import { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { details } from "../../commons/routers";
+
+import { details } from "src/commons/routers";
 import {
   formatDateTimeLocal,
   formatNumberDivByDecimals,
   getPageInfo,
   getShortWallet,
   numberWithCommas
-} from "../../commons/utils/helper";
-import Card from "../../components/commons/Card";
-import Table, { Column } from "../../components/commons/Table";
-import { setOnDetailView } from "../../stores/user";
-
+} from "src/commons/utils/helper";
+import Card from "src/components/commons/Card";
+import Table, { Column } from "src/components/commons/Table";
+import { setOnDetailView } from "src/stores/user";
 import FormNowMessage from "src/components/commons/FormNowMessage";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { API } from "../../commons/utils/api";
-import { REFRESH_TIMES } from "../../commons/utils/constants";
-import CustomTooltip from "../../components/commons/CustomTooltip";
-import DetailViewToken from "../../components/commons/DetailView/DetailViewToken";
-import SelectedIcon from "../../components/commons/SelectedIcon";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
+import { REFRESH_TIMES } from "src/commons/utils/constants";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import DetailViewToken from "src/components/commons/DetailView/DetailViewToken";
+import SelectedIcon from "src/components/commons/SelectedIcon";
+
 import { AssetName, Logo, StyledContainer, TimeDuration } from "./styles";
 
 const Tokens = () => {

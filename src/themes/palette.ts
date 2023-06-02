@@ -1,4 +1,5 @@
 import { alpha } from "@mui/material";
+
 import { ThemeType } from "../types/user";
 
 export const createGradient = (deg: number, startColor: string, endColor: string, start = 0, end = 100): string => {
