@@ -1,7 +1,8 @@
 import { alpha, Box, LinearProgress, styled } from "@mui/material";
 import { Link } from "react-router-dom";
-import { BoxRaised } from "../../commons/BoxRaised";
-import Table from "../../commons/Table";
+
+import { BoxRaised } from "src/components/commons/BoxRaised";
+import Table from "src/components/commons/Table";
 
 export const TopDelegateContainer = styled(BoxRaised)`
   margin-bottom: 24px;
@@ -18,9 +19,6 @@ export const Header = styled(Box)`
   align-items: center;
   margin-bottom: 0.5rem;
   gap: 10px;
-  ${(props) => props.theme.breakpoints.down("sm")} {
-    margin-bottom: 1.5rem;
-  }
 `;
 
 export const Title = styled("h3")`
@@ -52,17 +50,22 @@ export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.grey[400],
   display: "block",
   [theme.breakpoints.down("sm")]: {
-    position: "absolute",
-    top: "100%",
-    right: 0,
-    paddingTop: 10,
-    whiteSpace: "nowrap"
+    display: "none"
+  }
+}));
+
+export const TimeDurationSm = styled("small")(({ theme }) => ({
+  color: theme.palette.grey[400],
+  display: "none",
+  [theme.breakpoints.down("sm")]: {
+    display: "block",
+    marginBottom: "0.5rem"
   }
 }));
 
 export const DelegateTable = styled(Table)`
-  overflow: hidden;
   & > div {
+    overflow-y: hidden;
     padding: 0;
     border: none;
   }

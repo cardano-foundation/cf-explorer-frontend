@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
+
 import { PeopleIcon, PolicyWhiteIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import {
@@ -11,6 +12,7 @@ import {
   getShortWallet,
   numberWithCommas
 } from "src/commons/utils/helper";
+
 import CopyButton from "../CopyButton";
 import CustomTooltip from "../CustomTooltip";
 import ViewAllButton from "../ViewAllButton";

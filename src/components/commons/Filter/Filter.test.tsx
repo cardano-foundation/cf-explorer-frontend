@@ -1,7 +1,9 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Filter, { Option } from ".";
+
 import { render } from "src/test-utils";
+
+import Filter, { Option } from ".";
 
 export const filterOtions: Option[] = [
   {

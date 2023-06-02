@@ -1,4 +1,5 @@
-import DetailHeader from "../../commons/DetailHeader";
+import { Box } from "@mui/material";
+
 import {
   timeIconUrl,
   exchageIconUrl,
@@ -8,11 +9,12 @@ import {
   txConfirmUrl,
   slotIconUrl
 } from "src/commons/resources";
-import { Box } from "@mui/material";
+import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import ADAicon from "src/components/commons/ADAIcon";
+import DetailHeader from "src/components/commons/DetailHeader";
+
 import { ConfirmStatus, TitleCard, WrapConfirmation } from "./styles";
-import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import ADAicon from "../../commons/ADAIcon";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;

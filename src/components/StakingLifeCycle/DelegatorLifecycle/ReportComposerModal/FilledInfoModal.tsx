@@ -1,17 +1,19 @@
-import { Container } from "../../../Account/ActivityLogModal/styles";
-import { StyledTextField } from "../../../TokenAutocomplete/styles";
-import StyledModal from "../../../commons/StyledModal";
 import { ButtonEvent, ModalTitle, StyledButton, StyledFormLabel, StyledLabel, StyledSlider, StyledStack, SubText, TextError, TextRequired } from "./styles";
 
-import { Box, FormControl, FormControlLabel, RadioGroup, Stack } from "@mui/material";
+import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Stack } from "@mui/material";
 import { useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { IPropsModal, STEPS } from ".";
-import { useScreen } from "../../../../commons/hooks/useScreen";
 
-import { Radio } from "@mui/material";
+import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import CustomDatePicker, { IDateRange } from "../../../CustomDatePicker";
+
+import { useScreen } from "src/commons/hooks/useScreen";
+import { Container } from "src/components/Account/ActivityLogModal/styles";
+import { StyledTextField } from "src/components/TokenAutocomplete/styles";
+import StyledModal from "src/components/commons/StyledModal";
+
+
+import { IPropsModal, STEPS } from ".";
 
 export enum ReportType {
   PoolReport = "POOL_REPORT",
@@ -226,7 +228,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     gotoStep?.(STEPS.step2);
   };
 
-  const handleChangeEpochRange = (event: Event, newValue: number | number[], activeThumb: number) => {
+  const handleChangeEpochRange = (event: Event, newValue: number | number[]) => {
     if (!Array.isArray(newValue)) {
       return;
     }

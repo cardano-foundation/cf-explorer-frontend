@@ -2,8 +2,10 @@ import { useState } from "react";
 import Popover from "@mui/material/Popover";
 import List from "@mui/material/List";
 import { Box } from "@mui/material";
+
+import { FilterIcon } from "src/commons/resources";
+
 import { OutlineButton, WrapPopoverContent } from "./styles";
-import { FilterIcon } from "../../../commons/resources";
 
 interface FilterItem {
   label: string;
@@ -20,8 +22,8 @@ export default function FilterButton(props: FilterButtonProps) {
   const { options: initialOptions, defaultOption } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selected, setSelected] = useState(defaultOption); // default selected option
-  const [options, setOptions] = useState(initialOptions);
+  const [, setSelected] = useState(defaultOption); // default selected option
+  const [options] = useState(initialOptions);
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);

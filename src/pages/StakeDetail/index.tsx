@@ -1,13 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import useFetch from "../../commons/hooks/useFetch";
-import { API } from "../../commons/utils/api";
-import NoRecord from "../../components/commons/NoRecord";
-import StakeKeyOverview from "../../components/StakeDetail/StakeOverview";
-import StakeTab from "../../components/StakeDetail/StakeTab";
-import StakeAnalytics from "../../components/StakeDetail/StakeAnalytics";
+
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import NoRecord from "src/components/commons/NoRecord";
+import StakeKeyOverview from "src/components/StakeDetail/StakeOverview";
+import StakeTab from "src/components/StakeDetail/StakeTab";
+import StakeAnalytics from "src/components/StakeDetail/StakeAnalytics";
+import { REFRESH_TIMES } from "src/commons/utils/constants";
+
 import { StyledContainer } from "./styles";
-import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const StakeDetail: React.FC = () => {
   const mainRef = useRef(document.querySelector("#main"));

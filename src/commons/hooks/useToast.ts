@@ -1,4 +1,5 @@
 import { AlertProps } from "@mui/material";
+
 import { addToast, removeToast } from "../../stores/toast";
 
 type ToastFn = (message: React.ReactNode) => void;

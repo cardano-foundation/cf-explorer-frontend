@@ -2,6 +2,18 @@ import React, { useState } from "react";
 import { Box, Grid, useTheme } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
+import moment from "moment";
+import { useParams } from "react-router-dom";
+import { BigNumber } from "bignumber.js";
+
+import useFetch from "src/commons/hooks/useFetch";
+import Card from "src/components/commons/Card";
+import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
+import { HighestIcon, LowestIcon } from "src/commons/resources";
+import { API } from "src/commons/utils/api";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import {
   BoxInfo,
   BoxInfoItem,
@@ -14,19 +26,8 @@ import {
   Title,
   ValueInfo,
   Wrapper,
-  CustomButton,
-  StyledGrid
+  CustomButton
 } from "./styles";
-import moment from "moment";
-import { useParams } from "react-router-dom";
-import useFetch from "../../../commons/hooks/useFetch";
-import Card from "../../commons/Card";
-import { formatADAFull, formatPrice, numberWithCommas } from "../../../commons/utils/helper";
-import { HighestIcon, LowestIcon } from "../../../commons/resources";
-import { BigNumber } from "bignumber.js";
-import { API } from "../../../commons/utils/api";
-import CustomTooltip from "../../commons/CustomTooltip";
-import { useScreen } from "../../../commons/hooks/useScreen";
 
 type AnalyticsBalance = { date: string; value: number };
 type AnalyticsReward = {

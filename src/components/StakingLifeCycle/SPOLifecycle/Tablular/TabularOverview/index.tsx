@@ -1,6 +1,8 @@
 import { Box, BoxProps, Grid, Icon } from "@mui/material";
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import {
   BgBlue,
   BgCardWhite,
@@ -11,8 +13,12 @@ import {
   ReewardAvalible,
   StatusIC,
   WalletGreenIcon
-} from "../../../../../commons/resources";
-import { formatADAFull, getShortWallet } from "../../../../../commons/utils/helper";
+} from "src/commons/resources";
+import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
+import { details } from "src/commons/routers";
+
+import PoolDetailContext from "../../PoolDetailContext";
 import {
   CardOverview,
   CardTitle,
@@ -22,12 +28,9 @@ import {
   StyledBox,
   ViewMoreButton,
   WrapIcon,
+  WrapStatus,
   WrapWalletIcon
 } from "./styles";
-import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
-import { details } from "../../../../../commons/routers";
-import PoolDetailContext from "../../PoolDetailContext";
-import { useSelector } from "react-redux";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -105,10 +108,10 @@ const TabularOverview: React.FC = () => {
           bgType="white"
           mainIcon={<StatusIC />}
           value={
-            <Box display="flex" alignItems="center" flexWrap={"wrap"}>
-              <CardValue color={STATUS[data?.status ?? "ACTIVE"][1]}>{STATUS[data?.status ?? "ACTIVE"][0]} :</CardValue>
+            <WrapStatus>
+              <CardValue color={STATUS[data?.status ?? "ACTIVE"][1]}>{STATUS[data?.status ?? "ACTIVE"][0]}:</CardValue>
               <ClickAbleLink to={details.epoch(data?.epochNo)}>&nbsp; Epoch {data?.epochNo}</ClickAbleLink>
-            </Box>
+            </WrapStatus>
           }
         />
         <GridItem

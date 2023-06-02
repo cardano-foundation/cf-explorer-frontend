@@ -1,11 +1,16 @@
+import React from "react";
 import { TabContext, TabPanel } from "@mui/lab";
 import { alpha, Box, Tab, useTheme } from "@mui/material";
-import React from "react";
-import { ReactComponent as UtxoIcon } from "src/commons/resources/images/utxoIcon.svg";
-import { TabListStyled, TabTitle } from "./styles";
-import TokenTransaction from "./TokenTransaction";
 import { useHistory, useParams } from "react-router-dom";
+
+import { ReactComponent as UtxoIcon } from "src/commons/resources/images/utxoIcon.svg";
 import { details } from "src/commons/routers";
+import { ScriptIcon } from "src/commons/resources";
+import CustomIcon from "src/components/commons/CustomIcon";
+
+import ScriptTab from "./ScriptTab";
+import TokenTransaction from "./TokenTransaction";
+import { TabListStyled, TabTitle } from "./styles";
 
 const ContractDetailContent: React.FC = () => {
   const { tabActive = "transaction", address } = useParams<{
@@ -31,6 +36,23 @@ const ContractDetailContent: React.FC = () => {
       ),
       key: "transaction",
       children: <TokenTransaction />
+    },
+    {
+      label: (
+        <TabTitle className={tabActive === "transcript" ? "active" : ""}>
+          <Box display={"flex"} alignItems="center">
+            <CustomIcon
+              icon={ScriptIcon}
+              width={24}
+              fill="currentColor"
+              color={tabActive === "transcript" ? theme.palette.primary.main : theme.palette.text.hint}
+            />
+            <Box pl={1}>Script</Box>
+          </Box>
+        </TabTitle>
+      ),
+      key: "transcript",
+      children: <ScriptTab />
     }
   ];
 
@@ -47,7 +69,8 @@ const ContractDetailContent: React.FC = () => {
               label={item.label}
               value={item.key}
               sx={{
-                padding: "12px 0"
+                padding: "12px 0px",
+                marginRight: "24px"
               }}
             />
           ))}

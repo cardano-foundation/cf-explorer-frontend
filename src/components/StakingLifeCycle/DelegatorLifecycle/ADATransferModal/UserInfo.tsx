@@ -1,12 +1,14 @@
 import { Box } from "@mui/material";
+
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
 import { StyledLink } from "src/components/share/styled";
-import { AIconGreen, BalanceIcon, HashtagIcon } from "../../../../commons/resources";
-import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
-import CopyButton from "../../../commons/CopyButton";
-import CustomIcon from "../../../commons/CustomIcon";
-import CustomTooltip from "../../../commons/CustomTooltip";
+import { AIconGreen, BalanceIcon, HashtagIcon } from "src/commons/resources";
+import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import CopyButton from "src/components/commons/CopyButton";
+import CustomIcon from "src/components/commons/CustomIcon";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+
 import { OverviewIcon, TextTx, TextUserInfo } from "./styles";
 
 const UserInfo = ({

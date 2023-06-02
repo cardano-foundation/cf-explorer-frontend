@@ -1,4 +1,4 @@
-import { Popover, Button, styled, Box } from "@mui/material";
+import { styled, Box } from "@mui/material";
 
 export const GridBox = styled("div")<{ sidebar?: number }>(({ theme, sidebar }) => ({
   display: "grid",

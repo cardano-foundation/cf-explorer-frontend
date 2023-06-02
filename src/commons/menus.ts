@@ -1,10 +1,10 @@
 import { FaDiscord, FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
+
 import {
   BlockChainMenuIcon,
   BrowseIcon,
   DelegatePoolMenuIcon,
-  MediumIcon,
   ResourcesIcon,
   StakingLifecycleIcon,
   ProtocolParameterIcon

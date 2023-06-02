@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { Box, Container, Skeleton, styled } from "@mui/material";
-import TransactionOverview from "../../components/TransactionDetail/TransactionOverview";
-import TransactionMetadata from "../../components/TransactionDetail/TransactionMetadata";
-import useFetch from "../../commons/hooks/useFetch";
-import Card from "../../components/commons/Card";
-import NoRecord from "../../components/commons/NoRecord";
-import { API } from "../../commons/utils/api";
-import { REFRESH_TIMES } from "../../commons/utils/constants";
+
+import TransactionOverview from "src/components/TransactionDetail/TransactionOverview";
+import TransactionMetadata from "src/components/TransactionDetail/TransactionMetadata";
+import useFetch from "src/commons/hooks/useFetch";
+import Card from "src/components/commons/Card";
+import NoRecord from "src/components/commons/NoRecord";
+import { API } from "src/commons/utils/api";
+import { REFRESH_TIMES } from "src/commons/utils/constants";
 
 const StyledContainer = styled(Container)`
   padding: 30px 16px 40px;

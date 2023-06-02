@@ -1,7 +1,10 @@
 import { Box, Grid, Icon } from "@mui/material";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+
 import {
   DelegationToIconUrl,
   PaymentWalletUrl,
@@ -15,7 +18,6 @@ import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATrans
 import {
   CardContent,
   CardInfo,
-  CardList,
   CardItem,
   CardTitle,
   CardValue,
@@ -24,7 +26,6 @@ import {
   TransferButton,
   NoDelegatedStakePool
 } from "./styles";
-import { useSelector } from "react-redux";
 
 type TCardAmount = {
   amount?: number;

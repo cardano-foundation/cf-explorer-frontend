@@ -1,10 +1,11 @@
 import React, { ReactElement } from "react";
 import { render, RenderOptions } from "@testing-library/react";
 import { ThemeProvider } from "@mui/material";
-import themes from "./themes";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { Provider } from "react-redux";
+
+import themes from "./themes";
 import store from "./stores";
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {

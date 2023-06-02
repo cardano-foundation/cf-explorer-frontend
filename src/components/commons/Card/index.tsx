@@ -15,6 +15,7 @@ const Header = styled(Box)`
 `;
 
 const Title = styled("h2")<{ underline: number; marginTitle?: string }>`
+  width: 100%;
   text-align: left;
   padding-bottom: 8px;
   position: relative;
@@ -44,7 +45,7 @@ interface CardProps extends Omit<BoxProps, "title"> {
   marginTitle?: string;
 }
 
-const Card: React.FC<CardProps> = ({ title, marginTitle, children, underline = false, extra, ...props }) => {
+const Card: React.FC<CardProps> = ({ title, marginTitle, children, underline = false, extra }) => {
   return (
     // <CardContainer {...props}>
     <CardContainer>

@@ -1,13 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  AccordionContainer,
-  AccordionSummary,
-  ApplyFilterButton,
-  BackButton,
-  BackText,
-  ButtonFilter,
-  FilterContainer
-} from "./styles";
+import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import _ from "lodash";
 import {
@@ -25,6 +17,8 @@ import { useList, useUpdateEffect } from "react-use";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import moment from "moment";
+import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
+import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
 
 import Card from "src/components/commons/Card";
 import Table from "src/components/commons/Table";
@@ -37,11 +31,18 @@ import ParseScriptModal from "src/components/ParseScriptModal";
 import { DateRangeIcon, EmptyIcon, FilterIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
 import DateRangeModal from "src/components/FilterReport/DateRangeModal";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
-import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
-import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
-import { Link } from "react-router-dom";
 import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+
+import {
+  AccordionContainer,
+  AccordionSummary,
+  ApplyFilterButton,
+  BackButton,
+  BackText,
+  ButtonFilter,
+  FilterContainer
+} from "./styles";
 
 const ProtocolParameter: React.FC = () => {
   const [fixedColumnKeys, { push: pushFixedColumnKeys }] = useList<string>([]);
@@ -70,7 +71,7 @@ const ProtocolParameter: React.FC = () => {
 
   const theme = useTheme();
 
-  const columnsMap = Object.keys(PROTOCOL_TYPE).map((k, idx) => ({
+  const columnsMap = Object.keys(PROTOCOL_TYPE).map((k) => ({
     title: k,
     key: k,
     render: (r: TProtocolParam) => {

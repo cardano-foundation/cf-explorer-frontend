@@ -1,5 +1,29 @@
 import { Box } from "@mui/material";
 import { useRef, useMemo } from "react";
+import { useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import {
+  BackIcon,
+  AddressIcon,
+  ADAGreen,
+  TimeIcon,
+  PaymentWalletUrl,
+  WalletIconRewardGreen,
+  RewardAccountIconUrl
+} from "src/commons/resources";
+import { LineArrowItem } from "src/components/commons/LineArrow";
+import DrawPath from "src/components/commons/DrawPath";
+import AdaHolder from "src/components/commons/AdaHolder";
+import CardanoSystem from "src/components/commons/CardanoSystem";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import { details } from "src/commons/routers";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { StyledCopyButton } from "src/components/StakingLifeCycle/SPOLifecycle/Registration/styles";
+
+import { StyledLink } from "../../Registration/styles";
 import {
   DrawContainer,
   BoxGroup,
@@ -23,28 +47,6 @@ import {
   StyledFeeBox,
   StyledAdaLogoIcon
 } from "./styles";
-import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../../../commons/utils/helper";
-import { useHistory, useParams } from "react-router-dom";
-import CustomTooltip from "../../../../commons/CustomTooltip";
-import { StyledCopyButton } from "../../../SPOLifecycle/Registration/styles";
-import {
-  BackIcon,
-  AddressIcon,
-  ADAGreen,
-  TimeIcon,
-  PaymentWalletUrl,
-  WalletIconRewardGreen,
-  RewardAccountIconUrl
-} from "src/commons/resources";
-import { LineArrowItem } from "src/components/commons/LineArrow";
-import DrawPath from "src/components/commons/DrawPath";
-import { useSelector } from "react-redux";
-import AdaHolder from "src/components/commons/AdaHolder";
-import CardanoSystem from "src/components/commons/CardanoSystem";
-import useFetch from "src/commons/hooks/useFetch";
-import { API } from "src/commons/utils/api";
-import { details } from "src/commons/routers";
-import { StyledLink } from "../../Registration/styles";
 
 export interface WithdrawDetail {
   amount: number;

@@ -1,7 +1,9 @@
 import { alpha, Box, Button } from "@mui/material";
 import BigNumber from "bignumber.js";
 import React, { useContext, useState } from "react";
+
 import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
+
 import decimalIcon from "../../../commons/resources/icons/decimal.svg";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";

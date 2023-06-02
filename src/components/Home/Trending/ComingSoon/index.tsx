@@ -1,8 +1,9 @@
-import { styled } from "@mui/material";
 import React from "react";
-import { ComingSoonIcon } from "../../../../commons/resources";
-import { BoxRaised } from "../../../commons/BoxRaised";
-import CustomTooltip from "../../../commons/CustomTooltip";
+import { styled } from "@mui/material";
+
+import { ComingSoonIcon } from "src/commons/resources";
+import { BoxRaised } from "src/components/commons/BoxRaised";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 const ComingSoonContainer = styled(BoxRaised)`
   display: flex;

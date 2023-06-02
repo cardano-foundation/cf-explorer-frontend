@@ -1,13 +1,13 @@
-import { Container, styled } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import LatestStories from "../../components/Home/LatestStories";
-import LatestTransactions from "../../components/Home/LatestTransactions";
-import HomeStatistic from "../../components/Home/Statistic";
-import TopDelegationPools from "../../components/Home/TopDelegationPools";
-import HomeTrending from "../../components/Home/Trending";
+import { Container, styled } from "@mui/material";
 import { useAsync, useLocalStorage } from "react-use";
+
+import LatestStories from "src/components/Home/LatestStories";
+import LatestTransactions from "src/components/Home/LatestTransactions";
+import HomeStatistic from "src/components/Home/Statistic";
+import TopDelegationPools from "src/components/Home/TopDelegationPools";
+import HomeTrending from "src/components/Home/Trending";
 import { getAllBookmarks } from "src/commons/utils/userRequest";
-import { async } from "q";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
 import SyncBookmarkModal from "src/components/commons/Layout/Header/SyncBookmarkModal";
 import useAuth from "src/commons/hooks/useAuth";

@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import { Box, Modal } from "@mui/material";
-import { ButtonClose, ModalContainer, WrapContent } from "./styles";
-import useFetchList from "../../../commons/hooks/useFetchList";
-import Table, { Column } from "../../commons/Table";
-import { formatADAFull, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
-import { Link, useHistory } from "react-router-dom";
-import { details } from "../../../commons/routers";
-import { API } from "../../../commons/utils/api";
-import CustomTooltip from "../../commons/CustomTooltip";
+import { Box } from "@mui/material";
+import { useHistory } from "react-router-dom";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import Table, { Column } from "src/components/commons/Table";
+import { formatADAFull, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 import { StyledLink } from "src/components/share/styled";
 import StyledModal from "src/components/commons/StyledModal";
 import { useScreen } from "src/commons/hooks/useScreen";
 
+import { WrapContent } from "./styles";
 interface ModalAllAddressProps {
   open: boolean;
   onClose: () => void;
@@ -35,7 +36,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
     {
       title: "Addresses",
       minWidth: 120,
-      render: (r, idx) => (
+      render: (r) => (
         <StyledLink to={details.address(r.address)}>
           <CustomTooltip title={r.address || ""} placement="top-start">
             <Box component={"span"}>{getShortWallet(r.address)}</Box>
@@ -47,7 +48,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
     {
       title: "Balance",
       minWidth: 80,
-      render: (r, idx) => <Box component={"span"}>{formatADAFull(r.balance)}</Box>,
+      render: (r) => <Box component={"span"}>{formatADAFull(r.balance)}</Box>,
       key: "Balance"
     }
   ];

@@ -1,5 +1,6 @@
 import { styled, Box } from "@mui/material";
 import { Link } from "react-router-dom";
+
 import breakpoints from "src/themes/breakpoints";
 
 export const TitleDetail = styled(Box)`

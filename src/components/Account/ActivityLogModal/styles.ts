@@ -1,5 +1,6 @@
 import { Box, styled } from "@mui/material";
-import Table from "../../commons/Table";
+
+import Table from "src/components/commons/Table";
 
 export const Container = styled(Box)``;
 

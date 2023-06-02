@@ -1,8 +1,10 @@
 import { screen } from "@testing-library/react";
 import Router from "react-router";
-import DelegatorLifecycle from ".";
+
 import { render } from "src/test-utils";
 import { ListStakeKeyResponse } from "src/pages/DelegatorLifecycle";
+
+import DelegatorLifecycle from ".";
 
 const tabConfig: ListStakeKeyResponse = {
   hasDeRegistration: true,

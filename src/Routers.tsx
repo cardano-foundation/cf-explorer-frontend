@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { routers, details } from "./commons/routers";
+
+import { routers } from "./commons/routers";
 import Home from "./pages/Home";
 import BlockList from "./pages/BlockList";
 import BlockDetail from "./pages/BlockDetail";

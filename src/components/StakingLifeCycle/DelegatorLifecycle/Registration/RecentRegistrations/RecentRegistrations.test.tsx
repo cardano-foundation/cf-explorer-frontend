@@ -1,7 +1,9 @@
 import { screen } from "@testing-library/react";
-import RecentRegistrations from ".";
 import Router from "react-router";
+
 import { render } from "src/test-utils";
+
+import RecentRegistrations from ".";
 
 test("should render RecentRegistrations call mock api", async () => {
   const onSelect = jest.fn();
