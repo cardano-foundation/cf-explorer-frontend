@@ -5,8 +5,8 @@ import { useHistory, useParams } from "react-router-dom";
 
 import { ReactComponent as UtxoIcon } from "src/commons/resources/images/utxoIcon.svg";
 import { details } from "src/commons/routers";
-import ScriptTab from "./ScriptTab";
 
+import ScriptTab from "./ScriptTab";
 import TokenTransaction from "./TokenTransaction";
 import { TabListStyled, TabTitle } from "./styles";
 

@@ -1,8 +1,9 @@
+import { useState } from "react";
+
 import { IPropsModal } from "../StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import StyledModal from "../commons/StyledModal";
 import { Container, ErrorMessage, ModalTitle, VerifyButton } from "./styles";
 import CustomTextArea from "../commons/CustomTextArea";
-import { useState } from "react";
 
 interface IVerifyScriptProps extends IPropsModal {
   onSubmit: (script: string) => void;

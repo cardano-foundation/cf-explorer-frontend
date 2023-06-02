@@ -1,5 +1,6 @@
 import { Box, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
+
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 
