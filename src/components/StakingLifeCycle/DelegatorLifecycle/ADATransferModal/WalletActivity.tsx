@@ -13,7 +13,7 @@ import CustomIcon from "src/components/commons/CustomIcon";
 import Table, { Column } from "src/components/commons/Table";
 
 import UserInfo from "./UserInfo";
-import { Amount, Status, StyledLink } from "./styles";
+import { Amount, Status, StyledBoxTransaction, StyledLink } from "./styles";
 
 const WalletActivity: React.FC = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
@@ -72,7 +72,7 @@ const WalletActivity: React.FC = () => {
       title: "Transaction Type",
       key: "transactionCount",
       minWidth: "100px",
-      render: (r) => <Box>{trxType[r.type]}</Box>
+      render: (r) => <StyledBoxTransaction>{trxType[r.type]}</StyledBoxTransaction>
     },
     {
       title: "Status",
