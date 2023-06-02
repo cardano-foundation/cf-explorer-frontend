@@ -1,8 +1,9 @@
+import { useState } from "react";
+
 import { IPropsModal } from "../StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import StyledModal from "../commons/StyledModal";
 import { Container, ErrorMessage, ModalTitle, VerifyButton } from "./styles";
 import CustomTextArea from "../commons/CustomTextArea";
-import { useState } from "react";
 
 interface IVerifyScriptProps extends IPropsModal {
   onSubmit: (script: string) => void;
@@ -21,7 +22,7 @@ const VerifySCriptModal = ({ open, handleCloseModal, onSubmit, error, loading = 
     <StyledModal open={open} handleCloseModal={handleCloseModal} paddingY={"30px"}>
       <Container>
         <ModalTitle>Verify Script</ModalTitle>
-        <CustomTextArea maxRows={10} placeholder='Input Native script' value={value} onChange={handleChange} />
+        <CustomTextArea maxRows={10} placeholder="Input Native script" value={value} onChange={handleChange} />
         <ErrorMessage>{error}</ErrorMessage>
         <VerifyButton disabled={loading} onClick={() => onSubmit(value)}>
           Verify Script

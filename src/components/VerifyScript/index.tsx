@@ -1,11 +1,13 @@
 import { useCallback, useContext, useState } from "react";
-import { BannerSuccess, StyledVerifyButton, VerifyScriptContainer } from "./styles";
-import VerifySCriptModal from "./VerifyScriptModal";
-import { defaultAxios } from "src/commons/utils/axios";
-import { API } from "src/commons/utils/api";
 import { useParams } from "react-router-dom";
 import { Box } from "@mui/material";
+
+import { defaultAxios } from "src/commons/utils/axios";
+import { API } from "src/commons/utils/api";
 import { VerifyScriptContext } from "src/pages/ContractDetail";
+
+import VerifySCriptModal from "./VerifyScriptModal";
+import { BannerSuccess, StyledVerifyButton, VerifyScriptContainer } from "./styles";
 
 export interface IVerifyScript {
   verified: boolean;
