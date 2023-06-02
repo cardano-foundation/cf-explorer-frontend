@@ -99,7 +99,7 @@ const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null
             ...pageInfo,
             onChange: (page, size) => setPageInfo((pre) => ({ ...pre, page: page - 1, size }))
           }}
-          loading={loading || false}
+          loading={loading}
         />
       )}
     </StyledContainer>

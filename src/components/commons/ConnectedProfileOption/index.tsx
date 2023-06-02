@@ -43,7 +43,7 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
         username: localStorage.getItem("username") || ""
       });
     } catch (error) {
-      //To Do
+      console.log(error);
     } finally {
       disconnect();
       removeAuthInfo();

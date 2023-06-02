@@ -14,7 +14,7 @@ export const StyledColorBlueDard = styled("span")`
   color: ${(props) => props.theme.palette.text.primary};
 `;
 
-export const FakedLink = styled("span")`
+export const EpochNo = styled("span")`
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.secondary.main};
 `;

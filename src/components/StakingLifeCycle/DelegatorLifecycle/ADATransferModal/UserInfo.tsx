@@ -23,6 +23,7 @@ const UserInfo = ({
   acitve: "wallet" | "reward";
 }) => {
   const { isTablet } = useScreen();
+  
   return (
     <Box display={"flex"} justifyContent={"space-between"} margin={"7px 0"} flexDirection={isTablet ? "column" : "row"}>
       <Box display={"flex"} flexDirection={isTablet ? "column" : "row"}>

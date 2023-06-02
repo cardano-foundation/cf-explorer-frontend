@@ -92,7 +92,7 @@ export const StyledLink = styled(Link)(({ theme }) => ({
   }
 }));
 
-export const FakeLink = styled(Box)(({ theme }) => ({
+export const VRFKeyText = styled(Box)(({ theme }) => ({
   fontSize: 14,
   lineHeight: "22px",
   color: theme.palette.blue[800],
@@ -105,7 +105,7 @@ export const FakeLink = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const Value = styled(FakeLink)(({ theme }) => ({
+export const Value = styled(VRFKeyText)(({ theme }) => ({
   color: theme.palette.common.black
 }));
 

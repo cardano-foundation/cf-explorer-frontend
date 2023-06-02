@@ -58,15 +58,14 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test-all": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll",
-    "jest-test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watch",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll",
     "lint": "eslint --ext ts,tsx src/",
     "lint:fix": "eslint --fix --ext ts,tsx src/",
     "prettier": "prettier --check \"src/**/(*.tsx|*.ts|*.css|*.scss)\"",
     "prettier:fix": "prettier --write \"src/**/(*.tsx|*.ts|*.css|*.scss)\"",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test": "start-server-and-test start localhost:3000 cypress:run"
+    "e2e-test": "start-server-and-test start localhost:3000 cypress:run"
   },
   "eslintConfig": {
     "extends": [

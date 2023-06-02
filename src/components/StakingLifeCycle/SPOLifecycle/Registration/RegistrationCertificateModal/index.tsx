@@ -11,7 +11,7 @@ import CopyButton from "src/components/commons/CopyButton";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
 
-import { FakeLink, Item, ItemList, Label, LineData, StyledAdaLogoIcon, StyledLink, StyledModal, Value } from "./styles";
+import { VRFKeyText, Item, ItemList, Label, LineData, StyledAdaLogoIcon, StyledLink, StyledModal, Value } from "./styles";
 
 interface CertificateItemType {
   label: React.ReactNode;
@@ -62,7 +62,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
       content: (
         <LineData>
           <CustomTooltip title={data?.vrfKey}>
-            <FakeLink>{getShortHash(data?.vrfKey || "")}</FakeLink>
+            <VRFKeyText>{getShortHash(data?.vrfKey || "")}</VRFKeyText>
           </CustomTooltip>
           <CopyButton text={data?.vrfKey || ""} />
         </LineData>

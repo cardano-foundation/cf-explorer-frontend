@@ -35,13 +35,6 @@ export const formatPrice = (value?: string | number, abbreviations: string[] = L
   return `${newValue && newValue[0]}${syntax ?? `x 10^${exponential}`}`;
 };
 
-// export const numberWithCommas = (value?: number | string, decimal = 0) => {
-//   if (!value) return "0";
-//   const formated = Number(value)
-//     .toFixed(decimal)
-//     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-//   return formated.replace(/^(-)?0+(?=\d)/, "$1");
-// };
 export const numberWithCommas = (value?: number | string, decimal = 6) => {
   if (!value) return "0";
   const bnValue = new BigNumber(value);
@@ -56,6 +49,7 @@ export const numberWithCommas = (value?: number | string, decimal = 6) => {
   }
   return formattedIntegerPart;
 };
+
 export const formatADA = (
   value?: string | number,
   abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS,
