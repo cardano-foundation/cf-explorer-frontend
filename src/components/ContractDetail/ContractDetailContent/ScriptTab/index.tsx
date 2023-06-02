@@ -1,8 +1,10 @@
 import { Box, styled } from "@mui/material";
+import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
+import { CONTRACT_ADDRESS_TYPE, VerifyScriptContext } from "src/pages/ContractDetail";
 
 const StyleScript = styled("pre")``;
 
@@ -33,7 +35,17 @@ const ScriptType = styled(Box)`
 
 const ScriptTab = () => {
   const { address } = useParams<{ address: string }>();
-  const { data } = useFetch(API.CONTRACTS.SCRIPT(address));
+  const { data, refresh } = useFetch(API.CONTRACTS.SCRIPT(address));
+  const { dispatch }: any = useContext(VerifyScriptContext);
+
+  useEffect(() => {
+    if (refresh && dispatch) {
+      dispatch({
+        type: CONTRACT_ADDRESS_TYPE.SET_REFRESH_SCRIPT_TAB,
+        payload: refresh
+      });
+    }
+  }, [refresh, dispatch]);
 
   return (
     <Wapper>

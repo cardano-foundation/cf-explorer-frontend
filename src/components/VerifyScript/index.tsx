@@ -1,24 +1,26 @@
-import { useCallback, useState } from "react";
-import { Box } from "@mui/material";
+import { useCallback, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Box } from "@mui/material";
 
 import { defaultAxios } from "src/commons/utils/axios";
 import { API } from "src/commons/utils/api";
+import { VerifyScriptContext } from "src/pages/ContractDetail";
 
 import VerifySCriptModal from "./VerifyScriptModal";
 import { BannerSuccess, StyledVerifyButton, VerifyScriptContainer } from "./styles";
 
 export interface IVerifyScript {
   verified: boolean;
-  refresh: () => void;
 }
 
-export const VerifyScript = ({ verified, refresh }: IVerifyScript) => {
+export const VerifyScript = ({ verified }: IVerifyScript) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const { address } = useParams<{ address: string }>();
   const [loading, setLoading] = useState<boolean>(false);
   const [showBanner, setShowBanner] = useState<boolean>(false);
+
+  const { refreshOverviewAddress, refreshScriptTab } = useContext(VerifyScriptContext);
 
   const handleClickVerifyButton = useCallback(() => {
     if (verified) return;
@@ -36,17 +38,22 @@ export const VerifyScript = ({ verified, refresh }: IVerifyScript) => {
         throw Error("");
       }
       setLoading(true);
-      const res = await defaultAxios.post(API.CONTRACTS.VERIFY_SCRIPT(address, encodeURI(script)));
+      const res = await defaultAxios.post(API.CONTRACTS.VERIFY_SCRIPT, {
+        address,
+        script
+      });
       if (res?.data as boolean) {
-        await refresh();
+        refreshOverviewAddress();
+        refreshScriptTab?.();
         setShowBanner(true);
+        setTimeout(() => setShowBanner(false), 3000);
         handleCloseModal();
       } else {
         throw Error("");
       }
     } catch (err) {
-      setErrorMessage("Invalid script, please try again");
       console.error(err);
+      setErrorMessage("Invalid script, please try again");
     } finally {
       setLoading(false);
     }

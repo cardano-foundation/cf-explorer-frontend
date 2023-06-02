@@ -14,6 +14,7 @@ const CustomTextArea = styled(TextareaAutosize)`
   padding: 12px 14px;
   box-sizing: border-box;
   font-family: inherit;
+  overflow-y: auto !important;
 `;
 
 export default CustomTextArea;

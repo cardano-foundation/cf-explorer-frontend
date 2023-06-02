@@ -46,12 +46,11 @@ export const Actions = styled(Box)(() => ({
   position: "relative"
 }));
 
-
 export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.grey[400],
   display: "block",
   [theme.breakpoints.down("sm")]: {
-    display: "none",
+    display: "none"
   }
 }));
 
@@ -60,12 +59,12 @@ export const TimeDurationSm = styled("small")(({ theme }) => ({
   display: "none",
   [theme.breakpoints.down("sm")]: {
     display: "block",
-    marginBottom: "0.5rem",
+    marginBottom: "0.5rem"
   }
 }));
 
 export const DelegateTable = styled(Table)`
-& > div {
+  & > div {
     overflow-y: hidden;
     padding: 0;
     border: none;

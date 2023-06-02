@@ -106,7 +106,7 @@ export const API = {
     PREPORT_EPOCH_SIZE: (reportId: number | string) => `pool-report/detail/${reportId}/epoch-size`
   },
   CONTRACTS: {
-    VERIFY_SCRIPT: (address: string, script: string) => `contracts/verify/native?address=${address}&script=${script}`,
+    VERIFY_SCRIPT: `contracts/verify/native`,
     SCRIPT: (address: string) => `contracts/${address}/script`
   }
 };
