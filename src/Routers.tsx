@@ -43,6 +43,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
 import StakingLifeCycleSearch from "./pages/StakingLifeCycleSearch";
+import Icons from "./pages/Icons";
 
 const Routes: React.FC = () => {
   return (
@@ -94,6 +95,7 @@ const Routes: React.FC = () => {
           </Switch>
         </AccountLayout>
       </Route>
+      <Route path={"/icons"} component={Icons} />
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );
