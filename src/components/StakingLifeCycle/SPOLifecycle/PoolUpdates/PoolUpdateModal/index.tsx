@@ -14,7 +14,7 @@ import { CertUpdate, ChangeIcon, PoolCert } from "src/commons/resources";
 import {
   CardBox,
   ChangeBox,
-  FakeLink,
+  VRFKeyText,
   HistoryList,
   Item,
   ItemList,
@@ -159,7 +159,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       content: (
         <LineData>
           <CustomTooltip title={data?.vrfKey}>
-            <FakeLink>{getShortHash(data?.vrfKey || "")}</FakeLink>
+            <VRFKeyText>{getShortHash(data?.vrfKey || "")}</VRFKeyText>
           </CustomTooltip>
           <CopyButton text={data?.vrfKey || ""} />
         </LineData>

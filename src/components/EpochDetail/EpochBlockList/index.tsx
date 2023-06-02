@@ -11,7 +11,7 @@ import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 
-import { FakedLink, StyledOutput, StyledColorBlueDard, StyledContainer, StyledLink } from "./styles";
+import { EpochNo, StyledOutput, StyledColorBlueDard, StyledContainer, StyledLink } from "./styles";
 
 interface IEpochBlockList {
   epochId: string;
@@ -54,26 +54,13 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       minWidth: "100px",
       render: (r) => (
         <>
-          <FakedLink>{r.slotNo}</FakedLink>
+          <EpochNo>{r.slotNo}</EpochNo>
           <div>
             {r.epochNo}/{r.epochSlotNo || 0}
           </div>
         </>
       )
     },
-    // {
-    //   title: "Created by",
-    //   key: "createdBy",
-    //   minWidth: "100px",
-    //   render: r => (
-    //     <>
-    //       Input:
-    //       <CustomTooltip title={r.slotLeader}>
-    //         <StyledLink to={details.address(r.slotLeader)}>{getShortWallet(r.slotLeader)}</StyledLink>
-    //       </CustomTooltip>
-    //     </>
-    //   ),
-    // },
     {
       title: "Transactions",
       key: "blkCount",

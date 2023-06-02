@@ -42,9 +42,7 @@ const AddressAnalytics: React.FC = () => {
   const { tokenId } = useParams<{ tokenId: string }>();
   const { isMobile } = useScreen();
   const theme = useTheme();
-  // Change path API
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
-  // const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${tokenId}`);
   const dataChart = data?.map((i) => {
     const value = BigNumber(i.value);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);

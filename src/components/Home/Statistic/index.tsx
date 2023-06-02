@@ -71,9 +71,7 @@ const HomeStatistic = () => {
   return (
     <StatisticContainer container spacing={2} justifyContent="space-between" alignItems="stretch">
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
-        {!usdMarket || !btcMarket?.[0] ? (
-          <SkeletonBox />
-        ) : (
+        {usdMarket && btcMarket?.[0] ? (
           <Item data-testid="ada-price-box">
             <ItemIcon
               style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
@@ -92,12 +90,12 @@ const HomeStatistic = () => {
               </TimeDuration>
             </Content>
           </Item>
+        ) : (
+          <SkeletonBox />
         )}
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
-        {!usdMarket ? (
-          <SkeletonBox />
-        ) : (
+        {usdMarket ? (
           <Item data-testid="market-cap-box">
             <ItemIcon
               style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
@@ -111,12 +109,12 @@ const HomeStatistic = () => {
               <TimeDuration>Last updated {moment(usdMarket.last_updated).fromNow()} </TimeDuration>
             </Content>
           </Item>
+        ) : (
+          <SkeletonBox />
         )}
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
-        {!currentEpoch ? (
-          <SkeletonBox />
-        ) : (
+        {currentEpoch ? (
           <Item data-testid="current-epoch-box">
             <Link to={details.epoch(currentEpoch?.no)}>
               <Content>
@@ -148,12 +146,12 @@ const HomeStatistic = () => {
               </Content>
             </Link>
           </Item>
+        ) : (
+          <SkeletonBox />
         )}
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
-        {!data || !usdMarket ? (
-          <SkeletonBox />
-        ) : (
+        {data && usdMarket ? (
           <Item data-testid="live-stake-box">
             <Content>
               <ItemIcon
@@ -201,6 +199,8 @@ const HomeStatistic = () => {
               </CustomTooltip>
             </Content>
           </Item>
+        ) : (
+          <SkeletonBox />
         )}
       </Grid>
     </StatisticContainer>

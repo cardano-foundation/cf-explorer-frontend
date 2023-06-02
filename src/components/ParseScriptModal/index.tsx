@@ -33,7 +33,6 @@ const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ title, script, ...p
         <ViewJson>
           <JsonViewer
             value={script || ""}
-            // value={JSON.parse(script || "")}
             displayObjectSize={false}
             displayDataTypes={false}
             enableClipboard={false}

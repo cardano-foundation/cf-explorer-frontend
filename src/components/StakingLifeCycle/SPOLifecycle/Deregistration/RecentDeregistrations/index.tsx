@@ -123,7 +123,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, setShowBackButton })
             ...pageInfo,
             onChange: (page, size) => setPageInfo((pre) => ({ ...pre, page: page - 1, size }))
           }}
-          loading={loading || false}
+          loading={loading}
         />
       )}
     </StyledContainer>

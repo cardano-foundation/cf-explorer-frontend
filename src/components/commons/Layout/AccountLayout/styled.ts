@@ -112,8 +112,8 @@ export const StyledButtonClose = styled(Button)(({ theme }) => ({
 }));
 
 export const ModalTitle = styled("h3")`
-font - family: var(--font - family - title);
-margin - top: 0px;
+  font-family: var(--font-family-title);
+  margin-top: 0px;
 `;
 
 export const MissingItemWrapper = styled(Box)(({ theme }) => ({

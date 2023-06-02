@@ -115,11 +115,6 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defaul
       value: isPoolReport ? step2.poolSize : step2.adaTransfers,
       step: STEPS.step2
     },
-    // {
-    //   label: "Fees paid",
-    //   value: step2.feesPaid,
-    //   step: STEPS.step2
-    // },
     {
       label: isPoolReport ? "Pool Report by event" : "Staking lifecycle events",
       value: events,

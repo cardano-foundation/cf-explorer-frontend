@@ -82,7 +82,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
                 <TransferIcon style={{ scale: "1.15" }} />
               </Box>
             ) : (
-              <Box width={50} display={transaction?.balance !== null ? "" : "none"}>
+              <Box width={50} display={transaction?.balance === null ? "none" : ""}>
                 <Img src={type !== "up" ? receiveImg : sendImg} alt="send icon" />
               </Box>
             )}
