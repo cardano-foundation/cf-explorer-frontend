@@ -1,11 +1,12 @@
+import { useEffect, useState } from "react";
 import { Container, styled } from "@mui/material";
 import { parse } from "qs";
-import { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
-import { details } from "../../commons/routers";
 import CircularProgress from "@mui/material/CircularProgress";
-import defaultAxios from "../../commons/utils/axios";
-import NoRecord from "../../components/commons/NoRecord";
+import { useHistory, useLocation } from "react-router-dom";
+
+import { details } from "src/commons/routers";
+import defaultAxios from "src/commons/utils/axios";
+import NoRecord from "src/components/commons/NoRecord";
 
 const SearchResultContainer = styled(Container)`
   display: flex;
@@ -16,7 +17,7 @@ const SearchResultContainer = styled(Container)`
 `;
 
 const Title = styled("h3")`
-  color: ${props => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[400]};
   margin-bottom: 2rem;
   font-weight: var(--font-weight-normal);
 `;
@@ -94,7 +95,9 @@ const SearchResult = () => {
               if (url === "addresses" && (res.data as WalletAddress)?.isContract)
                 return Promise.resolve({ url: "contract", data: res.data });
               if (res.data) return Promise.resolve({ url, data: res.data });
-            } catch {}
+            } catch {
+              //To do
+            }
             return Promise.reject();
           })
         );
@@ -102,7 +105,9 @@ const SearchResult = () => {
         const navigate = createNavigator(url);
 
         if (navigate) return history.replace(navigate(value), { data });
-      } catch {}
+      } catch {
+        //To do
+      }
 
       setLoading(false);
     };

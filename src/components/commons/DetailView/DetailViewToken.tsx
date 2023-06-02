@@ -1,53 +1,59 @@
-import React from "react";
-import { CgArrowsExchange, CgClose } from "react-icons/cg";
-import { PolicyWhiteIcon } from "../../../commons/resources";
+import { useTheme } from "@emotion/react";
+import { Box } from "@mui/material";
+import React, { useEffect } from "react";
+import { BiChevronRight } from "react-icons/bi";
+import { CgClose } from "react-icons/cg";
+
+import { PeopleIcon, PolicyWhiteIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import {
+  formatDateTimeLocal,
+  formatNumberDivByDecimals,
+  getShortWallet,
+  numberWithCommas
+} from "src/commons/utils/helper";
+
+import CopyButton from "../CopyButton";
+import CustomTooltip from "../CustomTooltip";
+import ViewAllButton from "../ViewAllButton";
+import ViewMoreButton from "../ViewMoreButton";
 import {
   CloseButton,
-  ViewDetailContainer,
-  DetailsInfoItem,
   DetailLabel,
-  DetailValue,
-  InfoIcon,
   DetailLabelSkeleton,
-  DetailValueSkeleton,
-  IconSkeleton,
-  ViewDetailDrawer,
-  Group,
   DetailLink,
   DetailLinkIcon,
-  DetailLinkRight,
-  StyledLink,
   DetailLinkName,
-  TokenContainer,
-  TokenTitle,
-  TokenHeaderContainer,
-  TokenTitleIcon,
-  TokenMetaData,
-  TokenInfo,
-  TokenName,
-  TokenIcon,
+  DetailLinkRight,
+  DetailValue,
+  DetailValueSkeleton,
+  DetailsInfoItem,
+  Group,
+  IconSkeleton,
   MetaData,
-  TokenHeaderInfo,
-  TokenTotalSupply,
-  TokenInfoLabel,
-  TokenInfoValue,
+  StyledLink,
+  TokenContainer,
   TokenDecimal,
+  TokenDetailIcon,
   TokenDetailInfo,
   TokenDetailName,
-  TokenDetailIcon,
   TokenHeader,
-  ViewDetailScroll,
-  LogoEmpty,
+  TokenHeaderContainer,
+  TokenHeaderInfo,
+  TokenIcon,
+  TokenInfo,
+  TokenInfoLabel,
+  TokenInfoValue,
+  TokenMetaData,
+  TokenName,
+  TokenTitle,
+  TokenTitleIcon,
+  TokenTotalSupply,
+  ViewDetailContainer,
+  ViewDetailDrawer,
   ViewDetailHeader,
+  ViewDetailScroll
 } from "./styles";
-import { BiChevronRight } from "react-icons/bi";
-import { details } from "../../../commons/routers";
-import { formatDateTimeLocal, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
-import ViewMoreButton from "../ViewMoreButton";
-import CustomTooltip from "../CustomTooltip";
-import CopyButton from "../CopyButton";
-import { Box } from "@mui/material";
-import ViewAllButton from "../ViewAllButton";
 
 type DetailViewTokenProps = {
   token: IToken | null;
@@ -55,8 +61,17 @@ type DetailViewTokenProps = {
   handleClose: () => void;
 };
 
-const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
+const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
   const { token: data, handleClose, tokenId } = props;
+  const theme = useTheme();
+
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+
+    return () => {
+      document.body.style.overflowY = "scroll";
+    };
+  }, []);
 
   if (!data)
     return (
@@ -175,7 +190,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
             <TokenHeaderInfo>
               <TokenTotalSupply>
                 <TokenInfoLabel>Total Supply</TokenInfoLabel>
-                <TokenInfoValue>{numberWithCommas(data.supply)}</TokenInfoValue>
+                <TokenInfoValue>{formatNumberDivByDecimals(data?.supply, data?.metadata?.decimals)}</TokenInfoValue>
               </TokenTotalSupply>
               <TokenDecimal>
                 <TokenInfoLabel>Decimal</TokenInfoLabel>
@@ -238,9 +253,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
           <Group>
             <DetailLink to={details.token(tokenId)}>
               <DetailLabel>
-                {/* <DetailLinkIcon>
-                  <CgArrowsExchange />
-                </DetailLinkIcon> */}
+                <DetailLinkIcon>
+                  <TransactionIcon fill={theme.palette.green[600]} />
+                </DetailLinkIcon>
                 <DetailLinkName>Transactions</DetailLinkName>
               </DetailLabel>
               <DetailValue>
@@ -253,9 +268,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
           <Group>
             <DetailLink to={details.token(tokenId, "topHolders")}>
               <DetailLabel>
-                {/* <DetailLinkIcon>
-                  <CgArrowsExchange />
-                </DetailLinkIcon> */}
+                <DetailLinkIcon>
+                  <PeopleIcon fill={theme.palette.green[600]} />
+                </DetailLinkIcon>
                 <DetailLinkName>Top Holders</DetailLinkName>
               </DetailLabel>
               <DetailValue>
@@ -268,9 +283,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = props => {
           <Group>
             <DetailLink to={details.token(tokenId, "tokenMint")}>
               <DetailLabel>
-                {/* <DetailLinkIcon>
-                  <CgArrowsExchange />
-                </DetailLinkIcon> */}
+                <DetailLinkIcon>
+                  <UnionTokenIcon fill={theme.palette.green[600]} />
+                </DetailLinkIcon>
                 <DetailLinkName>Token Mint</DetailLinkName>
               </DetailLabel>
               <DetailValue>

@@ -1,6 +1,6 @@
-import { alpha, Box } from "@mui/material";
-import { styled } from "@mui/material";
-import { CONFIRMATION_STATUS } from "../../../commons/utils/constants";
+import { alpha, Box, styled } from "@mui/material";
+
+import { CONFIRMATION_STATUS } from "src/commons/utils/constants";
 
 export const Flex = styled("div")`
   display: flex;
@@ -10,7 +10,7 @@ export const Flex = styled("div")`
 
 export const StyledLink = styled("span")`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
 `;
 
 export const StyledSpan = styled("span")`
@@ -23,10 +23,10 @@ export const StyledImage = styled("img")`
 `;
 export const TitleCard = styled(Box)(({ theme }) => ({
   color: alpha(theme.palette.common.black, 0.5),
-  fontSize: "0.875rem",
+  fontSize: "0.875rem"
 }));
 
-export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status?: keyof typeof CONFIRMATION_STATUS }>`
   color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.HIGH:
@@ -53,3 +53,9 @@ export const ConfirmStatus = styled("small")<{ status?: keyof typeof Confirmatio
   padding: 5px 10px;
   border-radius: 2px;
 `;
+
+export const WrapConfirmation = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    paddingTop: "5px"
+  }
+}));

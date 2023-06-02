@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 
 export const Title = styled("h3")<{ active: number }>`
-  background: ${props => props.theme.palette.common.white};
+  background: ${(props) => props.theme.palette.common.white};
   padding: 25px;
   margin-bottom: 0px;
   color: ${({ theme, active }) => (active ? theme.palette.text.dark : theme.palette.text.hint)};
@@ -14,5 +14,5 @@ export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => (
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.common.black : theme.palette.text.hint,
+  color: active ? theme.palette.common.black : theme.palette.text.hint
 }));

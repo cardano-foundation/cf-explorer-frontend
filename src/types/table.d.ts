@@ -1,5 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import React from "react";
-import { Option } from "../components/commons/Filter";
+
+import { Option } from "src/components/commons/Filter";
+
 export interface ColumnType {
   [key: string | number | symbol]: any;
 }
@@ -11,6 +15,8 @@ export interface Column<T extends ColumnType = any> {
   minWidth?: number | string;
   isHiddenBorder?: boolean;
   maxWidth?: number | string;
+  fixed?: boolean;
+  leftFixed?: number | string;
   render?: (data: T, index: number) => ReactNode;
   sort?: ({ columnKey, sortValue }: { columnKey: string; sortValue: string }) => void;
 }
@@ -80,7 +86,7 @@ export interface TableProps<T extends ColumnType = any> {
   renderAction?: (items, clearSelection: () => void) => React.ReactElement;
   onFilterChange?: (value: any, option?: Option) => void;
   isShowingResult?: boolean;
-  maxHeight?: number | string; 
+  maxHeight?: number | string;
 }
 
 export interface FooterTableProps {

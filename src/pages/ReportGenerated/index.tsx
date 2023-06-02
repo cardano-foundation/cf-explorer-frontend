@@ -1,21 +1,29 @@
+import { useEffect } from "react";
 import { Container } from "@mui/material";
-import ReportGeneratedTabs, { TabsItem } from "../../components/ReportGeneratedTabs";
-import StakekeySummary from "../../components/StakekeySummary";
-import PoolLifecycle from "../../components/Pool Lifecycle";
+
+import ReportGeneratedTabs, { TabsItem } from "src/components/ReportGeneratedTabs";
+import StakekeySummary from "src/components/StakekeySummary";
+import PoolLifecycle from "src/components/PoolLifecycle";
+
+export const defaultReportTab = "stake";
 
 const tabItems: TabsItem[] = [
   {
-    value: "1",
-    label: "Stake Key summary",
-    component: <StakekeySummary />,
+    value: "stake-key",
+    label: "Stake Key reports",
+    component: <StakekeySummary />
   },
   {
-    value: "2",
-    label: "Pool lifecycle",
-    component: <PoolLifecycle />,
-  },
+    value: "pools",
+    label: "Pool reports",
+    component: <PoolLifecycle />
+  }
 ];
 const ReportGenerated = () => {
+  useEffect(() => {
+    document.title = "Report Generated | Cardano Explorer";
+  }, []);
+
   return (
     <Container>
       <ReportGeneratedTabs tabsItem={tabItems} />

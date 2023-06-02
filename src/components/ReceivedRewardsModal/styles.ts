@@ -1,5 +1,4 @@
 import { Box, Modal, Typography, styled } from "@mui/material";
-import StyledModal from "../commons/StyledModal";
 import { Link } from "react-router-dom";
 
 export const Container = styled(Box);
@@ -44,7 +43,7 @@ export const TotalTransaction = styled(Typography)`
 
 export const AmountADARow = styled(Typography)`
   font-size: 14px;
-  color: #f75e5e;
+  color: ${(props) => props.theme.palette.primary.main};
   display: flex;
   gap: 10px;
   align-items: center;

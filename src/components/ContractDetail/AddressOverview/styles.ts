@@ -1,6 +1,5 @@
-import { alpha, Paper, TextField } from "@mui/material";
-import { styled, Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import { alpha, Paper, TextField, styled, Box, Grid } from "@mui/material";
 
 export const StyledAAmount = styled(Box)`
   display: flex;
@@ -10,7 +9,7 @@ export const StyledTextField = styled(TextField)`
   .MuiInputBase-root {
     padding: 0 9px;
     height: 40px;
-    border: 1.5px solid var(--border-color);
+    border: 1.5px solid ${({ theme }) => theme.palette.border.main};
     border-radius: 8px;
   }
   .MuiInputBase-input {
@@ -23,7 +22,7 @@ export const StyledTextField = styled(TextField)`
 
 export const WrapPaperDropdown = styled(Paper)`
   border-radius: 8px;
-  box-shadow: ${props => props.theme.shadow.dropdown};
+  box-shadow: ${(props) => props.theme.shadow.dropdown};
   padding: 8px 0;
   & > .MuiAutocomplete-listbox {
     padding: 0px;
@@ -33,7 +32,7 @@ export const WrapPaperDropdown = styled(Paper)`
 export const Pool = styled(Link)`
   max-width: 200px;
   text-overflow: hidden;
-  color: ${props => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
   font-weight: bold;
   &:hover {
     cursor: pointer;
@@ -48,7 +47,10 @@ export const Logo = styled("img")`
 export const LogoEmpty = styled(Box)`
   width: 25px;
   height: 25px;
-  background: ${props => alpha(props.theme.palette.common.white, 0.6)};
+  background: ${(props) => alpha(props.theme.palette.common.white, 0.6)};
   border-radius: 50%;
-  border: 1px solid ${props => props.theme.palette.border.main};
+  border: 1px solid ${(props) => props.theme.palette.border.main};
 `;
+
+export const GridContainer = styled(Grid)``;
+export const GridItem = styled(Grid)``;

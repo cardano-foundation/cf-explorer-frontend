@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/material";
-import Slider from "react-slick";
-import { BoxRaised } from "../../commons/BoxRaised";
+
+import { BoxRaised } from "src/components/commons/BoxRaised";
 
 export const LatestStoriesContainer = styled(Box)`
   text-align: center;
@@ -14,7 +14,7 @@ export const Header = styled(Box)`
   margin-bottom: 1.5rem;
   padding: 0 20px;
   gap: 10px;
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 0 15px;
   }
 `;
@@ -32,68 +32,19 @@ export const Title = styled("h3")`
     content: "";
     width: 50px;
     height: 4px;
-    background: var(--color-green-light);
-  }
-`;
-
-export const StyledSlider = styled(Slider)`
-  @media screen and (max-width: 539px) {
-    margin-bottom: 40px;
-  }
-  div[class*="slick-list"] {
-    margin: 0 -10px;
-
-    div[class*="slick-slide"] > div {
-      padding: 0 10px;
-    }
-  }
-  ul[class*="slick-dots"] {
-    li {
-      margin: 0;
-      width: 16px;
-      height: 16px;
-      button {
-        position: relative;
-        text-align: center;
-        width: 16px;
-        height: 16px;
-        padding: 5px;
-
-        &::before {
-          content: "";
-          position: absolute;
-          width: 6px;
-          height: 6px;
-          border-radius: 6px;
-          background: ${props => props.theme.palette.grey[300]};
-          opacity: 0.3;
-          top: 50%;
-          left: 50%;
-          transform: translateY(-50%) translateX(-50%);
-        }
-      }
-      &[class*="slick-active"] {
-        button::before {
-          width: 8px;
-          height: 8px;
-          background: ${props => props.theme.palette.primary.main};
-          opacity: 1;
-        }
-      }
-    }
+    background: ${({ theme }) => theme.palette.primary.main};
   }
 `;
 
 export const Item = styled(BoxRaised)`
   display: flex;
   gap: 15px;
-  margin-bottom: 15px;
   text-align: left;
   overflow: hidden;
   &:hover {
-    box-shadow: ${props => props.theme.shadow.card};
+    box-shadow: ${(props) => props.theme.shadow.card};
   }
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px}) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 15px;
   }
 `;
@@ -104,7 +55,7 @@ export const Image = styled("img")`
   height: 80px;
   min-width: 80px;
   border-radius: 5px;
-  background-color: ${props => props.theme.palette.background.default};
+  background-color: ${(props) => props.theme.palette.background.default};
 `;
 export const Detail = styled(Box)`
   overflow: hidden;
@@ -123,8 +74,8 @@ export const Author = styled("h6")`
   -webkit-line-clamp: 3;
   overflow: hidden;
   font-family: var(--font-family-text);
-  color: ${props => props.theme.palette.primary.main};
-  background-color: ${props => props.theme.palette.success.light};
+  color: ${(props) => props.theme.palette.primary.main};
+  background-color: ${(props) => props.theme.palette.success.light};
   padding: 3px 4.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -153,7 +104,7 @@ export const Time = styled("h5")`
   gap: 6px;
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-normal);
-  color: ${props => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[400]};
   margin: 0;
 `;
 export const TimeIcon = styled("img")`

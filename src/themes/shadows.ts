@@ -1,4 +1,5 @@
-import { alpha, createTheme } from "@mui/material";
+import { alpha } from "@mui/material";
+
 import { ThemeType } from "../types/user";
 import palette from "./palette";
 
@@ -11,13 +12,13 @@ export const createShadow = (color: string) => {
     )}`,
     dropdown: `0px 4px 30px ${alpha(color, 0.1)}`,
     draw: `0px 1px 20px ${alpha(color, 0.05)}`,
-    4: `0px 4px 50px ${alpha(color, 0.05)}`,
+    4: `0px 4px 50px ${alpha(color, 0.05)}`
   };
 };
 
 const shadows: { [key in ThemeType]: ReturnType<typeof createShadow> } = {
   light: createShadow(palette.light.common.black),
-  dark: createShadow(palette.light.common.white),
+  dark: createShadow(palette.light.common.white)
 };
 
 export default shadows;

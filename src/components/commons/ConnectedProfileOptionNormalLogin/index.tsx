@@ -1,17 +1,19 @@
+import React, { useState } from "react";
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
-import { LinkOff, User2 } from "../../../commons/resources/index";
-import { routers } from "../../../commons/routers";
-import { getShortWallet, removeAuthInfo } from "../../../commons/utils/helper";
-import { signOut } from "../../../commons/utils/userRequest";
+import { useHistory } from "react-router-dom";
+
+import { LinkOff, User2 } from "src/commons/resources/index";
+import { routers } from "src/commons/routers";
+import { removeAuthInfo } from "src/commons/utils/helper";
+import { signOut } from "src/commons/utils/userRequest";
+
 import { Content, Disconnect, Icon, Name, Profile, Span, StyledButton, WrapContent } from "./style";
 
 interface IProps {
   userData: any;
 }
-const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({userData}) => {
+const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
   const [, setUsername] = useLocalStorage<string>("username", "");
@@ -29,27 +31,31 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({userData}) => {
   const open = Boolean(anchorEl);
   const id = open ? "profile-popover" : undefined;
 
-
   const handleDisconnect = async () => {
     try {
       await signOut({
         refreshJwt: localStorage.getItem("refreshToken") || "",
-        username: localStorage.getItem("username") || "",
+        username: localStorage.getItem("username") || ""
       });
     } catch (error) {
+      console.log(error);
     } finally {
       removeAuthInfo();
       setBookmark([]);
       setUsername("");
       setUser({ ...user, userData: {} });
-      // window.location.reload();
+      if (window.location.pathname.includes("report-generated")) {
+        history.push(routers.STAKING_LIFECYCLE);
+      } else {
+        window.location.reload();
+      }
     }
   };
 
   return (
     <Box>
       <StyledButton aria-describedby={id} type="button" onClick={handleClick}>
-        <Span>{(userData.username)}</Span>
+        <Span> {userData?.email?.split("@")[0]}</Span>
       </StyledButton>
       <WrapContent
         id={id}
@@ -58,11 +64,11 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({userData}) => {
         onClose={handleClose}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "right",
+          horizontal: "right"
         }}
         transformOrigin={{
           vertical: "top",
-          horizontal: "right",
+          horizontal: "right"
         }}
       >
         <Content>

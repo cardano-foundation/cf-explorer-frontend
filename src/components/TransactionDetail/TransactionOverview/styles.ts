@@ -1,19 +1,20 @@
 import { styled, Box, alpha } from "@mui/material";
 import { Link } from "react-router-dom";
+
 import { CONFIRMATION_STATUS } from "../../../commons/utils/constants";
 
 export const TitleCard = styled(Box)(({ theme }) => ({
   color: alpha(theme.palette.common.black, 0.5),
   fontSize: "0.875rem",
-  minHeight: 20,
+  minHeight: 20
 }));
 
 export const MaxSlot = styled("span")(({ theme }) => ({
   color: alpha(theme.palette.common.black, 0.5),
-  fontWeight: "400",
+  fontWeight: "400"
 }));
 
-export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status?: keyof typeof CONFIRMATION_STATUS }>`
   color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.HIGH:
@@ -42,5 +43,5 @@ export const ConfirmStatus = styled("small")<{ status?: keyof typeof Confirmatio
 `;
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
 `;

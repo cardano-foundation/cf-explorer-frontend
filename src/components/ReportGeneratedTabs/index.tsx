@@ -1,9 +1,11 @@
-import { TabContext, TabList } from "@mui/lab";
-import { Box, Tab, Tabs } from "@mui/material";
-import React, { useState } from "react";
-import { TabContent, TabHeader, TabLabel } from "./styles";
-import { DownloadButtonAll } from "../../pages/StackingLifecycle/styles";
-import { DownloadWhiteIC } from "../../commons/resources";
+import React from "react";
+import { TabContext } from "@mui/lab";
+import { Box, Tabs } from "@mui/material";
+import { useHistory, useParams } from "react-router-dom";
+
+import { details } from "src/commons/routers";
+
+import { StyledTab, StyledTabs, TabContent, TabHeader, TabLabel } from "./styles";
 
 export interface TabsItem {
   value: string;
@@ -16,32 +18,40 @@ interface ReportGeneratedProps {
 }
 
 const ReportGeneratedTabs: React.FC<ReportGeneratedProps> = ({ tabsItem }) => {
-  const [value, setValue] = useState("1");
-
+  const { tab } = useParams<{ tab: "stake-key" | "pools" }>();
+  const history = useHistory();
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
+    history.replace(details.generated_report(newValue));
   };
 
   return (
-    <Box>
-      <TabContext value={value}>
+    <Box data-testid="report-generated-tabs">
+      <TabContext value={tab || "stake-key"}>
         <TabHeader>
-          <Tabs>
-            <Box>
-              <TabList onChange={handleChange} aria-label="lab API tabs example">
-                {tabsItem.map(item => (
-                  <Tab
+          <Tabs style={{ flex: 1 }}>
+            <Box width={"100%"}>
+              <StyledTabs
+                value={tab || "stake-key"}
+                onChange={handleChange}
+                sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}` }}
+                TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
+                scrollButtons="auto"
+                variant="scrollable"
+                aria-label="lab API tabs example"
+              >
+                {tabsItem.map((item) => (
+                  <StyledTab
                     key={item.value}
                     value={item.value}
-                    label={<TabLabel active={value === item.value}>{item.label}</TabLabel>}
+                    label={<TabLabel active={+(tab === item.value)}>{item.label}</TabLabel>}
                   />
                 ))}
-              </TabList>
+              </StyledTabs>
             </Box>
           </Tabs>
         </TabHeader>
 
-        {tabsItem.map(item => (
+        {tabsItem.map((item) => (
           <TabContent key={item.value} value={item.value}>
             {item.component}
           </TabContent>

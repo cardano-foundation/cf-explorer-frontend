@@ -1,9 +1,10 @@
 import { Box } from "@mui/material";
-import moment from "moment";
 import React from "react";
-import { AIconGreen, HashtagIcon, TimerIcon } from "../../../commons/resources";
-import { formatADAFull, getShortHash } from "../../../commons/utils/helper";
-import { OverviewIcon, OverviewTitle, WrapContainer } from "./styles";
+
+import { AIconGreen, HashtagIcon, TimerIcon } from "src/commons/resources";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+
+import { OverviewIcon, OverviewTitle, Card } from "./styles";
 import CustomIcon from "../CustomIcon";
 
 interface Props {
@@ -25,32 +26,32 @@ const OverviewStaking: React.FC<Props> = ({ item, ...props }) => {
   const { hash, amount, time, onClick } = props;
 
   return (
-    <WrapContainer onClick={() => onClick(item)}>
+    <Card onClick={() => onClick(item)} data-testid="overview-staking">
       <Box display={"flex"}>
         <OverviewIcon>
-          <CustomIcon icon={HashtagIcon} width={17} fill="currentColor" color={theme => theme.palette.primary.main} />
+          <CustomIcon icon={HashtagIcon} width={17} fill="currentColor" color={(theme) => theme.palette.primary.main} />
         </OverviewIcon>
         <Box marginLeft={"10px"}>
-          <OverviewTitle>{getShortHash(hash)}</OverviewTitle>
+          <OverviewTitle data-testid="overview-staking-hash">{getShortHash(hash)}</OverviewTitle>
         </Box>
       </Box>
       <Box display={"flex"}>
         <OverviewIcon>
-          <CustomIcon icon={AIconGreen} height={17} fill="currentColor" color={theme => theme.palette.primary.main} />
+          <CustomIcon icon={AIconGreen} height={17} fill="currentColor" color={(theme) => theme.palette.primary.main} />
         </OverviewIcon>
         <Box marginLeft={"10px"}>
-          <OverviewTitle>{formatADAFull(amount)}</OverviewTitle>
+          <OverviewTitle data-testid="overview-staking-amount">{formatADAFull(amount)}</OverviewTitle>
         </Box>
       </Box>
       <Box display={"flex"}>
         <OverviewIcon>
-          <CustomIcon icon={TimerIcon} width={17} fill="currentColor" color={theme => theme.palette.primary.main} />
+          <CustomIcon icon={TimerIcon} width={17} fill="currentColor" color={(theme) => theme.palette.primary.main} />
         </OverviewIcon>
         <Box marginLeft={"10px"}>
-          <OverviewTitle>{moment(time).format("MM/DD/YYYY HH:mm:ss")}</OverviewTitle>
+          <OverviewTitle data-testid="overview-staking-time">{formatDateTimeLocal(time)}</OverviewTitle>
         </Box>
       </Box>
-    </WrapContainer>
+    </Card>
   );
 };
 

@@ -1,4 +1,5 @@
 import { Box, Button, IconButton, Typography, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const CardOverview = styled(Box)`
   background: white;
@@ -24,33 +25,34 @@ export const WrapIcon = styled(Box)(() => ({
   marginRight: 12,
   display: "flex",
   alignItems: "center",
-  justifyContent: "flex-start",
+  justifyContent: "flex-start"
 }));
 
 export const CardTitle = styled(Typography)(({ theme }) => ({
   fontWeight: theme.typography.fontWeightBold,
   fontSize: 14,
-  color: theme.palette.grey[500],
-  marginBottom: 4,
+  color: theme.palette.grey[400],
+  marginBottom: 4
 }));
 
-export const CardValue = styled(Typography)<{color?: string}>(({ theme ,...rest}) => ({
+export const CardValue = styled(Typography)<{ color?: string }>(({ theme, ...rest }) => ({
+  overflowWrap: "anywhere",
+  whiteSpace: "break-spaces",
   fontWeight: theme.typography.fontWeightBold,
   fontSize: 16,
-  color: rest.color ? rest.color : theme.palette.grey[700],
-  
+  color: rest.color ? rest.color : theme.palette.grey[700]
 }));
 
 export const TransferButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.main,
-  color: "var(--text-color-reverse)",
+  color: theme.palette.common.white,
   fontSize: 14,
   fontWeight: theme.typography.fontWeightBold,
   padding: "0 16px",
   height: 38,
   borderRadius: 8,
   textTransform: "unset",
-  boxShadow: "none",
+  boxShadow: "none"
 }));
 
 export const WrapWalletIcon = styled(Box)`
@@ -67,12 +69,55 @@ export const WrapWalletIcon = styled(Box)`
   }
 `;
 
-export const ClickAbleLink = styled(Typography)`
-  color: #108AEF;
+export const ClickAbleLink = styled(Link)`
+  color: ${({ theme }) => theme.palette.blue[800]} !important;
   cursor: pointer;
+  white-space: nowrap;
 `;
 
 export const ViewMoreButton = styled(IconButton)`
   padding: 14px;
-  background-color: #E3E5E9;
+  background-color: #e3e5e9;
 `;
+
+export const DotsIcon = styled(Box)`
+  border-radius: 50%;
+  background-color: #667085;
+  width: 3.6px;
+  height: 3.6px;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 3.6px;
+    height: 3.6px;
+    right: -7px;
+    top: 0px;
+    border-radius: 50%;
+    background-color: #667085;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 3.6px;
+    height: 3.6px;
+    left: -7px;
+    top: 0px;
+    border-radius: 50%;
+    background-color: #667085;
+  }
+`;
+
+export const StyledBox = styled(Box)(() => ({
+  display: "flex",
+  alignItems: "center",
+  gap: "12px"
+}));
+
+export const WrapStatus = styled(Box)(() => ({
+  display: "flex",
+  alignItems: "center",
+  minWidth: 140,
+}));

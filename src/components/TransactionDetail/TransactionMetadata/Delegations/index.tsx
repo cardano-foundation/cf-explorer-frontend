@@ -1,10 +1,13 @@
 import React from "react";
-import sendImg from "../../../../commons/resources/images/sendImg.svg";
-import { getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import { details } from "../../../../commons/routers";
-import CopyButton from "../../../commons/CopyButton";
 import { Box } from "@mui/material";
-import CustomTooltip from "../../../commons/CustomTooltip";
+
+import sendImg from "src/commons/resources/images/sendImg.svg";
+import { getShortWallet } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import CopyButton from "src/components/commons/CopyButton";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import { AddressLink, Header, ItemContainer, StatusIcon, StyledItem, Wrapper } from "./styles";
 
 interface DelegationProps {
@@ -12,18 +15,22 @@ interface DelegationProps {
 }
 
 const Delegations: React.FC<DelegationProps> = ({ data }) => {
+  const { isTablet } = useScreen();
   return (
     <Wrapper>
-      <Header>Wallet Addresses</Header>
-      {data?.map(item => (
+      <Header>Address Stake Key</Header>
+      {data?.map((item) => (
         <StyledItem key={item.address}>
           <ItemContainer>
-            <Box width={50}>
-              <StatusIcon src={sendImg} alt="wallet icon" />
+            <Box display="flex" alignItems="center">
+              <Box width={50}>
+                <StatusIcon src={sendImg} alt="wallet icon" />
+              </Box>
+              {isTablet ? <span>From: </span> : null}
             </Box>
             <Box width={"100%"}>
               <Box>
-                <span>From: </span>
+                {!isTablet ? <span>From: </span> : null}
                 <CustomTooltip title={item.address}>
                   <AddressLink to={details.stake(item.address)}>{getShortWallet(item.address || "")}</AddressLink>
                 </CustomTooltip>
@@ -32,7 +39,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
               <Box>
                 Pool ID:{" "}
                 <CustomTooltip title={item.poolId}>
-                  <AddressLink to={details.delegation(item.poolId)}>{getShortHash(item.poolId || "")}</AddressLink>
+                  <AddressLink to={details.delegation(item.poolId)}>{getShortWallet(item.poolId || "")}</AddressLink>
                 </CustomTooltip>
                 <CopyButton text={item.poolId || ""} />
               </Box>

@@ -7,7 +7,7 @@ export const StyledTitle = styled("h3")`
 export const Span = styled("span")`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.palette.primary.contrastText};
+  color: ${(props) => props.theme.palette.primary.contrastText};
   white-space: nowrap;
   line-height: 1;
 `;
@@ -19,16 +19,16 @@ export const TextNote = styled(Box)`
 
 export const Label = styled(FormLabel)`
   font-size: 0.875rem;
-  color: var(--text-color);
+  color: ${({ theme }) => theme.palette.text.primary};
   margin-top: 20px;
   .MuiFormLabel-asterisk {
-    color: var(--color-red);
+    color: #dd4343;
   }
 `;
 
 export const TextError = styled(FormHelperText)`
   margin-top: 0px;
-  color: ${props => props.theme.palette.error.main};
+  color: ${(props) => props.theme.palette.error.main};
   font-size: 14px;
 `;
 

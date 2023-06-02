@@ -6,7 +6,7 @@ export const StyledStack = styled(Stack)(() => ({
   right: 30,
   zIndex: 9999,
   alignItems: "flex-end",
-  pointerEvents: "none",
+  pointerEvents: "none"
 }));
 
 export const StyledAlert = styled(Alert)<{ background: string; borderColor: string }>(
@@ -18,12 +18,12 @@ export const StyledAlert = styled(Alert)<{ background: string; borderColor: stri
     color: theme.palette.text.secondary,
     backgroundColor: theme.palette.background.paper,
     backgroundImage: `linear-gradient(0deg, ${background} 0%, ${background} 100%)`,
-    border: "1px solid " + borderColor,
+    border: "1px solid " + borderColor
   })
 );
 
 export const StyledTitle = styled(AlertTitle)(({ theme }) => ({
   textAlign: "left",
   fontWeight: "bold",
-  color: theme.palette.text.primary,
+  color: theme.palette.text.primary
 }));

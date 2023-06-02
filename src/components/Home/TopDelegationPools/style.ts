@@ -1,13 +1,14 @@
 import { alpha, Box, LinearProgress, styled } from "@mui/material";
 import { Link } from "react-router-dom";
-import { BoxRaised } from "../../commons/BoxRaised";
-import Table from "../../commons/Table";
+
+import { BoxRaised } from "src/components/commons/BoxRaised";
+import Table from "src/components/commons/Table";
 
 export const TopDelegateContainer = styled(BoxRaised)`
   margin-bottom: 24px;
   padding: 20px;
   text-align: left;
-  @media screen and (max-width: 539px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 20px 15px;
   }
 `;
@@ -18,9 +19,6 @@ export const Header = styled(Box)`
   align-items: center;
   margin-bottom: 0.5rem;
   gap: 10px;
-  ${props => props.theme.breakpoints.down("sm")} {
-    margin-bottom: 1.5rem;
-  }
 `;
 
 export const Title = styled("h3")`
@@ -36,7 +34,7 @@ export const Title = styled("h3")`
     content: "";
     width: 50px;
     height: 4px;
-    background: var(--color-green-light);
+    background: ${({ theme }) => theme.palette.primary.main};
   }
 `;
 
@@ -45,30 +43,43 @@ export const Actions = styled(Box)(() => ({
   justifyContent: "flex-end",
   alignItems: "center",
   gap: 15,
-  position: "relative",
+  position: "relative"
 }));
+
 
 export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.grey[400],
   display: "block",
   [theme.breakpoints.down("sm")]: {
-    position: "absolute",
-    top: "100%",
-    right: 0,
-    paddingTop: 10,
-    whiteSpace: "nowrap",
-  },
+    display: "none",
+  }
+}));
+
+export const TimeDurationSm = styled("small")(({ theme }) => ({
+  color: theme.palette.grey[400],
+  display: "none",
+  [theme.breakpoints.down("sm")]: {
+    display: "block",
+    marginBottom: "0.5rem",
+  }
 }));
 
 export const DelegateTable = styled(Table)`
-  overflow-x: auto;
+& > div {
+    overflow-y: hidden;
+    padding: 0;
+    border: none;
+  }
+  * {
+    box-shadow: none !important;
+  }
   table {
     tr {
       th {
         background-color: transparent !important;
         border-bottom-width: 2px !important;
         font-size: var(--font-size-text-small) !important;
-        color: var(--title-color) !important;
+        color: ${({ theme }) => theme.palette.text.hint} !important;
         font-weight: var(--font-weight-bold) !important;
 
         &::before {
@@ -78,7 +89,7 @@ export const DelegateTable = styled(Table)`
       td {
         cursor: pointer;
         font-size: var(--font-size-text-small);
-        border-bottom: 1px solid ${props => props.theme.palette.border.main};
+        border-bottom: 1px solid ${(props) => props.theme.palette.border.main};
         border-radius: 0 !important;
       }
       &:last-child {
@@ -95,12 +106,12 @@ export const DelegateTable = styled(Table)`
 
 export const PoolName = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
 `;
 
 export const ProgressContainer = styled("div")`
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
 `;
 export const ProgressTitle = styled("div")`
@@ -109,10 +120,10 @@ export const ProgressTitle = styled("div")`
 
 export const StyledProgress = styled("div")<{ value: number; width?: number }>`
   position: relative;
-  width: ${props => (typeof props.width === "number" ? `${props.width}px` : props.width || "100%")};
+  width: ${(props) => (typeof props.width === "number" ? `${props.width}px` : props.width || "100%")};
   height: 12px;
   margin-left: 8px;
-  background: ${props => props.theme.palette.grey[200]};
+  background: ${(props) => props.theme.palette.grey[200]};
   border-radius: 6px;
   &::after {
     content: "";
@@ -121,8 +132,8 @@ export const StyledProgress = styled("div")<{ value: number; width?: number }>`
     left: 0;
     height: 100%;
     border-radius: 6px;
-    width: ${props => props.value}%;
-    background: ${props => props.theme.palette.gradient[0]};
+    width: ${(props) => props.value}%;
+    background: ${(props) => props.theme.palette.gradient[0]};
   }
 `;
 
@@ -131,10 +142,10 @@ export const StyledLinearProgress = styled(LinearProgress)`
   width: 100%;
   height: 8px;
   border-radius: 8px;
-  background: ${props => alpha(props.theme.palette.common.black, 0.1)};
+  background: ${(props) => alpha(props.theme.palette.common.black, 0.1)};
   margin-left: 8px;
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 8px;
-    background: ${props => props.theme.palette.gradient[0]};
+    background: ${(props) => props.theme.palette.gradient[0]};
   }
 `;

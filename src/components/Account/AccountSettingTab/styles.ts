@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, FormHelperText, FormLabel, InputBase, styled } from "@mui/material";
+import { Box, FormHelperText, FormLabel, InputBase, styled } from "@mui/material";
 
 export const WrapRowItem = styled(Box)`
   position: relative;
@@ -8,7 +8,6 @@ export const StyledRowItem = styled(Box)`
   display: flex;
   align-items: center;
   height: 40px;
-  margin-bottom: 40px;
   margin-top: 4px;
 `;
 
@@ -24,7 +23,7 @@ export const StyledHelper = styled(FormHelperText)`
 `;
 
 export const StyledInput = styled(InputBase)`
-  border: 1.5px solid ${props => props.theme.palette.border.main};
+  border: 1.5px solid ${(props) => props.theme.palette.border.main};
   border-radius: 8px;
   height: 40px;
   padding: 12px 14px;
@@ -39,9 +38,9 @@ export const StyledButton = styled(LoadingButton)`
   padding: 0 20px;
   font-size: var(--font-size-text-small);
   font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.palette.primary.main};
+  color: ${(props) => props.theme.palette.primary.main};
   font-family: var(--font-family-title);
   text-transform: unset;
-  border: 2px solid ${props => props.theme.palette.primary.main};
+  border: 2px solid ${(props) => props.theme.palette.primary.main};
   border-radius: 6px;
 `;

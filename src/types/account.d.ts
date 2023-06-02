@@ -24,7 +24,7 @@ type TEditPrivateNote = {
 
 type TEditUser = {
   email?: string;
-  username?: string;
+  address?: string;
 };
 
 type TGetInfo = {
@@ -73,23 +73,22 @@ type TSignOut = {
 };
 
 type TSignUp = {
-  username: string;
   email: string;
   password: string;
   role: string;
-}
+};
 
 type TVerifyActive = {
   code: string;
-}
+};
 
 type TForgotPassword = {
   email: string;
-}
+};
 type TResetPassword = {
   code: string;
   password: string;
-}
+};
 
 interface NonceObject {
   message: "SS_0" | "SS_1";
