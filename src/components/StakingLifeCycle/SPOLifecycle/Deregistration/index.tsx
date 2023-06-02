@@ -93,13 +93,13 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
         },
         {
           start: SPOHolderRef,
-          startPosition: { 0: ["right", "middle"], lg: ["center", "bottom"] },
+          startPosition: { 0: ["left", "bottom"], sm: ["left", "middle"], lg: ["center", "bottom"] },
           end: deregistrationRef,
           endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-          startOffset: { 0: [0], lg: [0, 0] },
+          startOffset: { 0: [4, -54], sm: [0], lg: [0, 0] },
           endOffset: { 0: [0, 30], lg: [0] },
           arrow: { 0: "top", lg: "left" },
-          fold: { 0: "horizontal", lg: "vertical" }
+          fold: { 0: "none", sm: "horizontal", lg: "vertical" }
         },
         {
           start: deregistrationRef,
@@ -107,7 +107,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
           end: cadarnoSystemRef,
           endPosition: { 0: ["center", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
           startOffset: { 0: [0], lg: [0, 0] },
-          endOffset: { 0: [-94, 45], sm: [10, 0], lg: [0] },
+          endOffset: { 0: [-94, 50], sm: [10, 0], lg: [0] },
           arrow: { 0: "top", sm: "left", lg: "bottom" },
           fold: { 0: "none", sm: "vertical", lg: "horizontal" }
         },
