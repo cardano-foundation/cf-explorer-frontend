@@ -19,11 +19,9 @@ interface Props {
 }
 
 const AddressOverview: React.FC<Props> = ({ data, loading }) => {
-  const {
-    data: dataStake,
-    loading: loadingStake,
-    refresh
-  } = useFetch<WalletStake>(data?.stakeAddress ? `${API.STAKE.DETAIL}/${data?.stakeAddress}` : "");
+  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
+    data?.stakeAddress ? `${API.STAKE.DETAIL}/${data?.stakeAddress}` : ""
+  );
   const { adaRate } = useSelector(({ system }: RootState) => system);
 
   const itemLeft = [
@@ -81,7 +79,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
   ];
 
   return (
-    <Card title={<VerifyScript verified={!!data?.verifiedContract} refresh={refresh} />}>
+    <Card title={<VerifyScript verified={!!data?.verifiedContract} />}>
       <GridContainer container spacing={2}>
         <GridItem item xs={12} md={6}>
           <Box overflow='hidden' borderRadius={3} height={"100%"}>

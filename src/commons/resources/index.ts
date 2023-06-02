@@ -291,3 +291,4 @@ export { ReactComponent as ADADisnableIcon } from "./icons/Staking/ADADisnableIc
 export { ReactComponent as DelegationHistoryMainIcon } from "./icons/delegationHistoryGreen.svg";
 export { ReactComponent as BlockIcon } from "./icons/blockIcon.svg";
 export { ReactComponent as ADAOrangeBorderIcon } from "./icons/Staking/ADAOrangeBorderIcon.svg";
+export { ReactComponent as ScriptIcon } from "./icons/u_book.svg";

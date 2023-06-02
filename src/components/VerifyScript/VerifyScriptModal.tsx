@@ -21,7 +21,7 @@ const VerifySCriptModal = ({ open, handleCloseModal, onSubmit, error, loading = 
     <StyledModal open={open} handleCloseModal={handleCloseModal} paddingY={"30px"}>
       <Container>
         <ModalTitle>Verify Script</ModalTitle>
-        <CustomTextArea maxRows={10} placeholder='Input  Native script' value={value} onChange={handleChange} />
+        <CustomTextArea maxRows={10} placeholder='Input Native script' value={value} onChange={handleChange} />
         <ErrorMessage>{error}</ErrorMessage>
         <VerifyButton disabled={loading} onClick={() => onSubmit(value)}>
           Verify Script

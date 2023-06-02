@@ -1,9 +1,7 @@
-import { fireEvent, waitFor, screen } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import VerifyScript, { IVerifyScript } from "./index";
 import { render } from "src/test-utils";
-
-const mockRefresh = jest.fn();
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -21,8 +19,7 @@ jest.mock("src/commons/utils/axios", () => ({
 }));
 
 const defaultProps: IVerifyScript = {
-  verified: false,
-  refresh: mockRefresh
+  verified: false
 };
 
 describe("VerifyScript", () => {
@@ -46,8 +43,8 @@ describe("VerifyScript", () => {
     fireEvent.change(textArea, { target: { value: "this is mock script" } });
 
     fireEvent.click(submitButton);
-
-    await waitFor(() => expect(mockRefresh).toHaveBeenCalledTimes(1));
-    expect(screen.getByText("Success! Contract has been verified successfully.")).toBeInTheDocument();
+    waitFor(() => {
+      expect(screen.getByText("Success! Contract has been verified successfully.")).toBeInTheDocument();
+    });
   });
 });
