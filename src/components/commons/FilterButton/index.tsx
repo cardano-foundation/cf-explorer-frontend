@@ -1,9 +1,11 @@
-import { useState } from 'react';
-import Popover from '@mui/material/Popover';
-import List from '@mui/material/List';
-import { Box } from '@mui/material';
-import { OutlineButton, WrapPopoverContent } from './styles';
-import { FilterIcon } from '../../../commons/resources';
+import { useState } from "react";
+import Popover from "@mui/material/Popover";
+import List from "@mui/material/List";
+import { Box } from "@mui/material";
+
+import { FilterIcon } from "src/commons/resources";
+
+import { OutlineButton, WrapPopoverContent } from "./styles";
 
 interface FilterItem {
   label: string;
@@ -20,8 +22,8 @@ export default function FilterButton(props: FilterButtonProps) {
   const { options: initialOptions, defaultOption } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selected, setSelected] = useState(defaultOption); // default selected option
-  const [options, setOptions] = useState(initialOptions);
+  const [, setSelected] = useState(defaultOption); // default selected option
+  const [options] = useState(initialOptions);
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -53,22 +55,22 @@ export default function FilterButton(props: FilterButtonProps) {
         anchorReference="anchorPosition"
         anchorPosition={{ top: 260, left: 1510 }}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: "bottom",
+          horizontal: "left"
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
+          vertical: "top",
+          horizontal: "left"
         }}
         sx={{
-          '& .MuiPopover-paper': {
-            borderRadius: '12px',
+          "& .MuiPopover-paper": {
+            borderRadius: "12px"
           }
         }}
       >
         <List>
-          {options.map((option: FilterItem) => (
-            <WrapPopoverContent onClick={() => handleOptionClick(option.value)}>
+          {options.map((option: FilterItem, idx) => (
+            <WrapPopoverContent onClick={() => handleOptionClick(option.value)} key={idx}>
               <Box marginRight={"5px"} display={"flex"} alignItems={"center"}>
                 {option.icon}
               </Box>

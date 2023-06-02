@@ -1,9 +1,9 @@
-import React from 'react'
-import { Icon } from './styles'
+import React from "react";
 
-const SVGIcon: React.FC<React.DetailedHTMLProps<
-React.ImgHTMLAttributes<HTMLImageElement>,
-HTMLImageElement
->> = (props) => <Icon {...props} />
+import { Icon } from "./styles";
 
-export default SVGIcon
+const SVGIcon: React.FC<React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>> = (
+  props
+) => <Icon {...props} />;
+
+export default SVGIcon;

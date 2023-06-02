@@ -30,6 +30,6 @@ jobs:
         run: npm ci
 
       - name: 🎳 Run tests
-        run: npm test
+        run: npm e2e-test
     env:
       EXPLORER_API_MAINNET_URL: ${{ secrets.EXPLORER_API_MAINNET_URL }}

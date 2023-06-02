@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction, Store } from "@reduxjs/toolkit";
+
 import breakpoints from "../themes/breakpoints";
 import { SupportedWallets, ThemeType, UserDataType, UserStoreType } from "../types/user";
 
@@ -20,7 +21,7 @@ const initialState: UserStoreType = {
   onDetailView: false,
   modalRegister: false,
   modalSignMessage: false,
-  nonce: null,
+  nonce: null
 };
 
 const storeWallet = createSlice({
@@ -29,53 +30,53 @@ const storeWallet = createSlice({
   reducers: {
     setTheme: (state, action: PayloadAction<ThemeType>) => ({
       ...state,
-      theme: action.payload,
+      theme: action.payload
     }),
     setUserData: (state, action: PayloadAction<UserDataType | null>) => ({
       ...state,
-      userData: action.payload,
+      userData: action.payload
     }),
     setChainID: (state, action: PayloadAction<string | null>) => ({
       ...state,
-      chainID: action.payload,
+      chainID: action.payload
     }),
     setWallet: (state, action: PayloadAction<SupportedWallets | null>) => ({
       ...state,
-      wallet: action.payload,
+      wallet: action.payload
     }),
     setAddress: (state, action: PayloadAction<string | null>) => ({
       ...state,
-      address: action.payload,
+      address: action.payload
     }),
     setProvider: (state, action: PayloadAction<any>) => ({
       ...state,
-      provider: action.payload,
+      provider: action.payload
     }),
     setOpenModal: (state, action: PayloadAction<boolean>) => ({
       ...state,
-      openModal: action.payload,
+      openModal: action.payload
     }),
     setSidebar: (state, action: PayloadAction<boolean>) => ({
       ...state,
-      sidebar: action.payload,
+      sidebar: action.payload
     }),
     setOnDetailView: (state, action: PayloadAction<boolean>) => ({
       ...state,
-      onDetailView: action.payload,
+      onDetailView: action.payload
     }),
     setModalRegister: (state, action: PayloadAction<boolean>) => ({
       ...state,
-      modalRegister: action.payload,
+      modalRegister: action.payload
     }),
     setModalSignMessage: (state, action: PayloadAction<boolean>) => ({
       ...state,
-      modalSignMessage: action.payload,
+      modalSignMessage: action.payload
     }),
     setNonce: (state, action: PayloadAction<NonceObject | null>) => ({
       ...state,
-      nonce: action.payload,
-    }),
-  },
+      nonce: action.payload
+    })
+  }
 });
 
 export const setTheme = (theme: ThemeType) => {

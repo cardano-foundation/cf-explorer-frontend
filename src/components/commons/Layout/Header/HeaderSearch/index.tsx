@@ -1,11 +1,15 @@
 import React, { FormEvent, useState, useEffect } from "react";
-import { Backdrop, Box, Button, SelectChangeEvent } from "@mui/material";
-import { useHistory, useLocation } from "react-router-dom";
-import { HeaderSearchIcon } from "../../../../../commons/resources";
-import { details, routers } from "../../../../../commons/routers";
+import { Backdrop, Box, SelectChangeEvent } from "@mui/material";
 import { stringify } from "qs";
 import { BiChevronDown } from "react-icons/bi";
 import { GoChevronRight } from "react-icons/go";
+import { useSelector } from "react-redux";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+
+import { HeaderSearchIcon } from "src/commons/resources";
+import { details, routers } from "src/commons/routers";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import {
   Form,
   Image,
@@ -15,13 +19,9 @@ import {
   StyledInput,
   StyledSelect,
   SubmitButton,
-  ValueOption,
+  ValueOption
 } from "./style";
-import { useSelector } from "react-redux";
 
-interface Props {
-  home: boolean;
-}
 interface FormValues {
   filter: FilterParams;
   search: string;
@@ -35,104 +35,133 @@ interface Option {
 }
 const intitalValue: FormValues = {
   filter: "all",
-  search: "",
+  search: ""
 };
 
 const options: Option[] = [
   {
     value: "all",
-    label: "All Filters",
+    label: "All Filters"
   },
   {
     value: "epochs",
     label: "Epochs",
-    paths: [routers.EPOCH_LIST],
+    paths: [routers.EPOCH_LIST, routers.EPOCH_DETAIL],
+    detail: details.epoch
   },
   {
     value: "blocks",
     label: "Blocks",
-    paths: [routers.BLOCK_LIST],
+    paths: [routers.BLOCK_LIST, routers.BLOCK_DETAIL],
+    detail: details.block
   },
   {
     value: "txs",
     label: "Transactions",
-    paths: [routers.TRANSACTION_LIST],
+    paths: [routers.TRANSACTION_LIST, routers.TRANSACTION_DETAIL],
+    detail: details.transaction
   },
   {
     value: "tokens",
     label: "Tokens",
-    paths: [routers.TOKEN_LIST],
+    paths: [routers.TOKEN_LIST, routers.TOKEN_DETAIL],
+    detail: details.token
   },
   {
     value: "stakes",
     label: "Stake keys",
-    paths: [routers.STAKE_LIST, routers.TOP_DELEGATOR],
+    paths: [routers.STAKE_LIST, routers.TOP_DELEGATOR, routers.STAKE_DETAIL],
+    detail: details.stake
   },
   {
     value: "addresses",
     label: "Addresses",
-    paths: [routers.ADDRESS_LIST, routers.CONTRACT_LIST],
+    paths: [routers.ADDRESS_LIST, routers.CONTRACT_LIST, routers.ADDRESS_DETAIL],
+    detail: details.address
   },
   {
     value: "delegations/pool-detail-header",
     label: "Pools",
-    paths: [routers.DELEGATION_POOLS, routers.REGISTRATION_POOLS],
+    paths: [routers.DELEGATION_POOLS, routers.DELEGATION_POOL_DETAIL],
+    detail: details.delegation
   },
   {
-    value: "delegation-lifecycle",
-    label: "Delegation Lifecycle",
-    paths: [routers.DELEGATOR_LIFECYCLE],
-    detail: details.staking,
-  },
-  {
-    value: "spo-lifecycle",
-    label: "SPO Lifecycle",
-    paths: [routers.SPO_LIFECYCLE],
-    detail: details.spo,
-  },
+    value: "lifecycle",
+    label: "Lifecycle",
+    paths: [
+      routers.STAKING_LIFECYCLE_SEARCH,
+      routers.SPO_LIFECYCLE,
+      routers.DELEGATOR_LIFECYCLE,
+      routers.STAKING_LIFECYCLE
+    ]
+  }
 ];
 
-const HeaderSearch: React.FC<Props> = ({ home }) => {
-  const history = useHistory();
+interface Props extends RouteComponentProps {
+  home: boolean;
+  callback?: () => void;
+  setShowErrorMobile?: (show: boolean) => void;
+}
+
+const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, history }) => {
   const [{ search, filter }, setValues] = useState<FormValues>({ ...intitalValue });
   const [showOption, setShowOption] = useState(false);
+  const [error, setError] = useState("");
+  const { sidebar } = useSelector(({ user }: RootState) => user);
   useEffect(() => {
     if (!search) {
       setShowOption(false);
     }
-    if (filter !== "all") {
-      setShowOption(false);
-    }
   }, [search, filter]);
 
+  const currentPath = history.location.pathname.split("/")[1];
+  const checkIncludesPath = (paths: Option["paths"]) => paths?.find((path) => path?.split("/")[1] === currentPath);
+
   useEffect(() => {
-    const currentPath = history.location.pathname.split("/")[1];
-
-    const checkIncludesPath = (paths: Option["paths"]) => paths?.find(path => path?.split("/")[1] === currentPath);
-
-    const filter: FilterParams = options.find(item => checkIncludesPath(item.paths))?.value || "all";
-
-    setValues({ ...intitalValue, filter });
+    const filter: FilterParams = options.find((item) => checkIncludesPath(item.paths))?.value || "all";
+    if ("/" + currentPath !== routers.SEARCH) setValues({ ...intitalValue, filter });
+    setError("");
+    setShowErrorMobile && setShowErrorMobile(false);
   }, [history.location.pathname]);
 
-  const handleSearch = (e?: FormEvent, filterParams?: FilterParams) => {
+  const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
-    const detail = options.find(item => item.value === filter)?.detail;
-    if (detail) return history.push(detail(search));
+    const option = options.find((item) => item.value === filter);
+
+    if (option?.value === "lifecycle") {
+      if (search.startsWith("stake")) {
+        history.push(details.staking(search, "timeline"));
+        callback?.();
+      } else if (search.startsWith("pool")) {
+        history.push(details.spo(search, "timeline"));
+        callback?.();
+      } else {
+        setError("No results found");
+        setShowErrorMobile && setShowErrorMobile(true);
+        setShowOption(true);
+      }
+      return;
+    }
+    callback?.();
+    if (option?.detail) return history.push(option?.detail(search));
     if (search) {
-      history.push(
-        `${routers.SEARCH}?${stringify({ search, filter: filterParams || (filter !== "all" ? filter : undefined) })}`
-      );
-      setValues({ ...intitalValue });
+      const params = { search, filter: filterParams || (filter !== "all" ? filter : undefined) };
+      history.push(`${routers.SEARCH}?${stringify(params)}`);
+      setError("");
+      setShowErrorMobile && setShowErrorMobile(false);
     }
   };
 
   const handleChangeFilter = (e: SelectChangeEvent<unknown>) => {
     setValues({ search, filter: e.target.value as Option["value"] });
+    setError("");
+    setShowErrorMobile && setShowErrorMobile(false);
   };
 
   const handleChangeSearch = (e?: React.ChangeEvent) => {
     setValues({ filter, search: (e?.target as HTMLInputElement)?.value });
+    setError("");
+    setShowErrorMobile && setShowErrorMobile(false);
     onFocus((e?.target as HTMLInputElement)?.value);
   };
   const onFocus = (newValue?: string) => {
@@ -143,8 +172,12 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
     }
   };
 
+  const isStakingLifecycle = checkIncludesPath([routers.DELEGATOR_LIFECYCLE, routers.SPO_LIFECYCLE]);
+
+  const { isMobile } = useScreen();
+
   return (
-    <Box position={"relative"} component={Form} onSubmit={handleSearch} home={home ? 1 : 0}>
+    <Form onSubmit={handleSearch} home={+home} sidebar={+sidebar}>
       <Backdrop sx={{ backgroundColor: "unset" }} open={showOption} onClick={() => setShowOption(false)} />
       <StyledSelect
         data-testid="all-filters-dropdown"
@@ -166,53 +199,74 @@ const HeaderSearch: React.FC<Props> = ({ home }) => {
         type="search"
         value={search}
         spellCheck={false}
-        placeholder={home ? "Search transactions, address, blocks, epochs, pools..." : "Search ..."}
+        placeholder={
+          home && !isMobile
+            ? "Search transactions, address, blocks, epochs, pools..."
+            : isStakingLifecycle && !isMobile
+            ? "Search Stake key, Pool ID or Pool Name"
+            : "Search ..."
+        }
+        title={
+          home && !isMobile
+            ? "Search transactions, address, blocks, epochs, pools..."
+            : isStakingLifecycle && !isMobile
+            ? "Search Stake key, Pool ID or Pool Name"
+            : "Search ..."
+        }
         onChange={handleChangeSearch}
         disableUnderline
         onFocus={() => onFocus()}
       />
-      <OptionsSearch home={home} show={showOption} value={search} handleSearch={handleSearch} />
+
+      <OptionsSearch error={error} home={home} show={showOption} value={search} handleSearch={handleSearch} />
+
       <SubmitButton type="submit" home={home ? 1 : 0} disabled={!search}>
         <Image src={HeaderSearchIcon} alt="search" home={home ? 1 : 0} />
       </SubmitButton>
-    </Box>
+    </Form>
   );
 };
 
-export default HeaderSearch;
+export default withRouter(HeaderSearch);
 
-const OptionsSearch = ({
-  show,
-  home,
-  value,
-  handleSearch,
-}: {
+interface OptionProps {
   show: boolean;
   home: boolean;
   value: string;
+  error: string;
   handleSearch: (e?: FormEvent, filterParams?: FilterParams) => void;
-}) => {
+}
+
+export const OptionsSearch = ({ show, home, value, handleSearch, error }: OptionProps) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-  const submitSearch = (filter: FilterParams) => {
-    handleSearch(undefined, filter);
-  };
+
+  const submitSearch = (filter: FilterParams) => handleSearch(undefined, filter);
 
   return (
     <OptionsWrapper display={show ? "block" : "none"} home={+home}>
-      {+value <= (currentEpoch?.no || 0) && (
-        <Option onClick={() => submitSearch("epochs")}>
-          <Box>
-            Search for an epoch <ValueOption> {value}</ValueOption>
-          </Box>
-          <GoChevronRight />
-        </Option>
+      {!error && (
+        <>
+          {+value <= (currentEpoch?.no || 0) && (
+            <Option onClick={() => submitSearch("epochs")} data-testid="option-search-epoch">
+              <Box>
+                Search for an epoch <ValueOption> {value}</ValueOption>
+              </Box>
+              <GoChevronRight />
+            </Option>
+          )}
+          <Option onClick={() => submitSearch("blocks")} data-testid="option-search-block">
+            <Box>
+              Search for a block by number <ValueOption>{value}</ValueOption>
+            </Box>
+            <GoChevronRight />
+          </Option>
+        </>
       )}
-      <Option onClick={() => submitSearch("blocks")}>
-        <Box>
-          Search for a block by number <ValueOption>{value}</ValueOption>
+      {!!error && (
+        <Box component={Option} color={({ palette }) => palette.red[700]} justifyContent={"center"}>
+          <Box>{error}</Box>
         </Box>
-        <GoChevronRight />
-      </Option>
+      )}
     </OptionsWrapper>
   );
 };

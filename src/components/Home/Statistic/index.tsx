@@ -1,17 +1,20 @@
 import { Grid } from "@mui/material";
 import BigNumber from "bignumber.js";
-import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import useFetch from "../../../commons/hooks/useFetch";
-import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "../../../commons/resources";
-import { details } from "../../../commons/routers";
-import { API } from "../../../commons/utils/api";
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
-import { formatADA, formatADAFull, numberWithCommas } from "../../../commons/utils/helper";
-import { RootState } from "../../../stores/types";
-import CustomTooltip from "../../commons/CustomTooltip";
-import RateWithIcon from "../../commons/RateWithIcon";
+import moment from "moment";
+
+import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { formatADA, formatADAFull, numberWithCommas } from "src/commons/utils/helper";
+import { RootState } from "src/stores/types";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import RateWithIcon from "src/components/commons/RateWithIcon";
+import { useScreen } from "src/commons/hooks/useScreen";
+import useFetch from "src/commons/hooks/useFetch";
+
 import {
   AdaPrice,
   Content,
@@ -28,12 +31,8 @@ import {
   Title,
   Value,
   XSmall,
-  XValue,
+  XValue
 } from "./style";
-import moment from "moment";
-import { useScreen } from "../../../commons/hooks/useScreen";
-
-interface Props {}
 
 const SkeletonBox = () => (
   <Item>
@@ -49,7 +48,7 @@ const SkeletonBox = () => (
 
 const MILION = 10 ** 6;
 
-const HomeStatistic: React.FC<Props> = () => {
+const HomeStatistic = () => {
   const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
   const { data: btcMarket } = useFetch<CardanoMarket[]>(
@@ -67,16 +66,19 @@ const HomeStatistic: React.FC<Props> = () => {
   const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
   const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
 
-  const { isMobile } = useScreen();
+  const { isMobile, isGalaxyFoldSmall } = useScreen();
 
   return (
-    <StatisticContainer container spacing={2}>
-      <Grid item xl lg={3} sm={6} xs={6}>
-        {!usdMarket || !btcMarket?.[0] ? (
-          <SkeletonBox />
-        ) : (
+    <StatisticContainer container spacing={2} justifyContent="space-between" alignItems="stretch">
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
+        {usdMarket && btcMarket?.[0] ? (
           <Item data-testid="ada-price-box">
-            <ItemIcon data-testid="ada-price-icon" src={AdaPriceIcon} alt="Ada Price" />
+            <ItemIcon
+              style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
+              data-testid="ada-price-icon"
+              src={AdaPriceIcon}
+              alt="Ada Price"
+            />
             <Content>
               <Name data-testid="ada-price-box-title">Ada Price</Name>
               <Title data-testid="ada-current-price">${usdMarket.current_price}</Title>
@@ -88,30 +90,40 @@ const HomeStatistic: React.FC<Props> = () => {
               </TimeDuration>
             </Content>
           </Item>
+        ) : (
+          <SkeletonBox />
         )}
       </Grid>
-      <Grid item xl lg={3} sm={6} xs={6}>
-        {!usdMarket ? (
-          <SkeletonBox />
-        ) : (
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
+        {usdMarket ? (
           <Item data-testid="market-cap-box">
-            <ItemIcon data-testid="market-cap-icon" src={MarketCapIcon} alt="Market cap" />
+            <ItemIcon
+              style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
+              data-testid="market-cap-icon"
+              src={MarketCapIcon}
+              alt="Market cap"
+            />
             <Content>
               <Name data-testid="market-cap-box-title">Market cap</Name>
               <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
               <TimeDuration>Last updated {moment(usdMarket.last_updated).fromNow()} </TimeDuration>
             </Content>
           </Item>
+        ) : (
+          <SkeletonBox />
         )}
       </Grid>
-      <Grid item xl lg={3} sm={6} xs={6}>
-        {!currentEpoch ? (
-          <SkeletonBox />
-        ) : (
-          <Link to={details.epoch(currentEpoch?.no)}>
-            <Item data-testid="current-epoch-box">
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
+        {currentEpoch ? (
+          <Item data-testid="current-epoch-box">
+            <Link to={details.epoch(currentEpoch?.no)}>
               <Content>
-                <ItemIcon data-testid="current-epoch-icon" src={CurentEpochIcon} alt="Curent Epoch" />
+                <ItemIcon
+                  style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
+                  data-testid="current-epoch-icon"
+                  src={CurentEpochIcon}
+                  alt="Curent Epoch"
+                />
                 <Name data-testid="current-epoch-box-title">Current Epoch</Name>
                 <XSmall data-testid="epoch-label">Epoch: </XSmall>
                 {isMobile ? <br /> : null}
@@ -132,17 +144,22 @@ const HomeStatistic: React.FC<Props> = () => {
                   <b>{numberWithCommas(currentEpoch?.account)}</b>
                 </XValue>
               </Content>
-            </Item>
-          </Link>
+            </Link>
+          </Item>
+        ) : (
+          <SkeletonBox />
         )}
       </Grid>
-      <Grid item xl lg={3} sm={6} xs={6}>
-        {!data || !usdMarket ? (
-          <SkeletonBox />
-        ) : (
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
+        {data && usdMarket ? (
           <Item data-testid="live-stake-box">
             <Content>
-              <ItemIcon data-testid="live-stake-icon" src={LiveStakeIcon} alt="Total ADA Stake" />
+              <ItemIcon
+                style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
+                data-testid="live-stake-icon"
+                src={LiveStakeIcon}
+                alt="Total ADA Stake"
+              />
               <Name data-testid="live-stake-box-title">Live Stake</Name>
               <CustomTooltip title={formatADAFull(liveStake)}>
                 <Title>{formatADA(liveStake)}</Title>
@@ -182,6 +199,8 @@ const HomeStatistic: React.FC<Props> = () => {
               </CustomTooltip>
             </Content>
           </Item>
+        ) : (
+          <SkeletonBox />
         )}
       </Grid>
     </StatisticContainer>

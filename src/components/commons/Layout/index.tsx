@@ -1,15 +1,16 @@
 import * as React from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+import { setOnDetailView, setSidebar } from "src/stores/user";
+import { RootState } from "src/stores/types";
+
 import Header from "./Header";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { Drawer, Layout, ToggleMenu, Main, BackDrop, MainContainer } from "./styles";
-import { useSelector } from "react-redux";
-import { setOnDetailView, setSidebar } from "../../../stores/user";
-import { RootState } from "../../../stores/types";
+import { Drawer, Layout, ToggleMenu, Main, BackDrop, MainContainer, ArrowCollapse } from "./styles";
 import CustomTooltip from "../CustomTooltip";
-import ToastContainer from "./ToastContainer";
-import { useHistory } from "react-router-dom";
 
 interface Props {
   children: React.ReactNode;
@@ -32,12 +33,12 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   const handleToggle = () => setSidebar(!sidebar);
 
   return (
-    <Layout>
-      <BackDrop isShow={sidebar ? 1 : 0} onClick={handleToggle} />
-      <Drawer variant="permanent" open={sidebar}>
+    <Layout sidebar={+sidebar}>
+      <BackDrop isShow={+sidebar} onClick={handleToggle} />
+      <Drawer variant="permanent" open={sidebar} ModalProps={{ keepMounted: true }}>
         <CustomTooltip placement="right" title={sidebar ? `Collapse` : `Expand`}>
           <ToggleMenu onClick={handleToggle} type="button">
-            {sidebar ? <FaArrowLeft /> : <FaArrowRight />}
+            <ArrowCollapse> {sidebar ? <FaArrowLeft /> : <FaArrowRight />}</ArrowCollapse>
           </ToggleMenu>
         </CustomTooltip>
         <Sidebar />
@@ -49,7 +50,6 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
         </Main>
         <Footer />
       </MainContainer>
-      <ToastContainer />
     </Layout>
   );
 };

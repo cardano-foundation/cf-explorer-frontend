@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-
-import TransactionList from "../../components/TransactionLists";
-import { Container, useTheme } from "@mui/material";
-import { useWindowSize } from "react-use";
-import { setOnDetailView } from "../../stores/user";
-import { details } from "../../commons/routers";
-import DetailViewTransaction from "../../components/commons/DetailView/DetailViewTransaction";
+import { Container } from "@mui/material";
 import styled from "@emotion/styled";
-import { API } from "../../commons/utils/api";
+
+import TransactionList from "src/components/TransactionLists";
+import { setOnDetailView } from "src/stores/user";
+import DetailViewTransaction from "src/components/commons/DetailView/DetailViewTransaction";
+import { API } from "src/commons/utils/api";
 
 const StyledContainer = styled(Container)`
-  padding: 20px 0 40px;
+  padding: 20px 16px 40px;
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+    padding-top: 10px;
+    margin-top: 0px !important;
+  }
 `;
 
-interface Props {}
-
-const Transactions: React.FC<Props> = () => {
+const Transactions = () => {
   const [hash, setHash] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
-  const { width } = useWindowSize();
-  const theme = useTheme();
-  const history = useHistory();
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -29,11 +25,9 @@ const Transactions: React.FC<Props> = () => {
   }, []);
 
   const openDetail = (_: any, r: Transactions, index: number) => {
-    if (width >= theme.breakpoints.values.md) {
-      setOnDetailView(true);
-      setHash(r.hash);
-      setSelected(index);
-    } else history.push(details.transaction(r.hash));
+    setOnDetailView(true);
+    setHash(r.hash);
+    setSelected(index);
   };
 
   const handleClose = () => {
@@ -42,17 +36,19 @@ const Transactions: React.FC<Props> = () => {
     setSelected(null);
   };
   return (
-    <StyledContainer>
-      <TransactionList
-        url={API.TRANSACTION.LIST}
-        openDetail={openDetail}
-        selected={selected}
-        showTabView
-        hash={hash}
-        handleClose={handleClose}
-      />
+    <>
+      <StyledContainer>
+        <TransactionList
+          url={API.TRANSACTION.LIST}
+          openDetail={openDetail}
+          selected={selected}
+          showTabView
+          hash={hash}
+          handleClose={handleClose}
+        />
+      </StyledContainer>
       {hash && <DetailViewTransaction hash={hash} handleClose={handleClose} />}
-    </StyledContainer>
+    </>
   );
 };
 

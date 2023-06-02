@@ -10,13 +10,13 @@ export const Status = styled("span")`
 `;
 
 export const Active = styled(Status)`
-  background: ${props => props.theme.palette.success.light};
-  color: ${props => props.theme.palette.success.main};
+  background: ${(props) => props.theme.palette.success.light};
+  color: ${(props) => props.theme.palette.success.main};
 `;
 
 export const Deactive = styled(Status)`
-  background: ${props => props.theme.palette.green[800_10]};
-  color: ${props => props.theme.palette.grey[400]};
+  background: ${(props) => props.theme.palette.green[800_10]};
+  color: ${(props) => props.theme.palette.grey[400]};
 `;
 
 export const Title = styled("div")`
@@ -32,7 +32,7 @@ export const Flex = styled("div")`
 
 export const StyledLink = styled("span")`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
 `;
 
 export const BackButton = styled("button")`
@@ -45,9 +45,14 @@ export const BackButton = styled("button")`
   cursor: pointer;
   padding: 0;
   font-family: "Roboto", sans-serif;
+  ${({ theme }) => theme.breakpoints.down("xl")} {
+    svg {
+      fill: ${(props) => props.theme.palette.grey[500]} !important;
+    }
+  }
 `;
 export const BackText = styled("small")`
-  color: ${props => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.text.secondary};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -57,7 +62,7 @@ export const HeaderContainer = styled(Box)`
 `;
 
 export const HeaderTitle = styled("h2")`
-  color: ${props => props.theme.palette.common.black};
+  color: ${(props) => props.theme.palette.common.black};
   font-size: 2.25rem;
   margin: 0.5rem 0;
 `;
@@ -82,7 +87,7 @@ export const SlotLeaderSkeleton = styled(Skeleton)`
 export const SlotLeader = styled(Box)`
   margin-top: 0px;
   font-weight: bold;
-  color: ${props => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.main};
   display: flex;
   align-items: center;
 `;
@@ -90,7 +95,7 @@ export const SlotLeader = styled(Box)`
 export const ViewMetaData = styled(Link)`
   display: block;
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.palette.text.primary}!important;
+  color: ${(props) => props.theme.palette.text.primary}!important;
   text-decoration: underline !important;
 `;
 export const LabelStatus = styled(Box)(({ theme }) => ({
@@ -101,7 +106,7 @@ export const LabelStatus = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "0.875rem",
   borderRadius: 4,
-  height: "60%",
+  height: "60%"
 }));
 
 export const CardInfoOverview = styled(Box)(({ theme }) => ({
@@ -112,23 +117,23 @@ export const CardInfoOverview = styled(Box)(({ theme }) => ({
   boxShadow: theme.shadow.card,
   borderRadius: 10,
   marginTop: theme.spacing(2),
-  flexWrap: "wrap",
+  flexWrap: "wrap"
 }));
 
 export const CardItem = styled(Box)(({ theme }) => ({
   padding: `${theme.spacing(2)} ${theme.spacing(5)}`,
   background: theme.palette.background.paper,
-  borderRadius: 10,
+  borderRadius: 10
 }));
 
 export const TitleCard = styled(Box)(({ theme }) => ({
   color: `${alpha(theme.palette.common.black, 0.5)}`,
-  fontSize: "0.875rem",
+  fontSize: "0.875rem"
 }));
 export const ValueCard = styled(Box)(({ theme }) => ({
   color: theme.palette.common.black,
   fontSize: "1rem",
-  fontWeight: "bold",
+  fontWeight: "bold"
 }));
 
 export const ButtonView = styled(Link)(({ theme }) => ({
@@ -138,7 +143,7 @@ export const ButtonView = styled(Link)(({ theme }) => ({
   fontWeight: "bold",
   textTransform: "capitalize",
   color: `${theme.palette.secondary.main} !important`,
-  fontFamily: "Roboto, sans-serif",
+  fontFamily: "Roboto, sans-serif"
 }));
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
@@ -153,7 +158,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   width: "min(80vw, 600px)",
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
-  borderRadius: 10,
+  borderRadius: 10
 }));
 
 export const ButtonClose = styled(Button)(({ theme }) => ({
@@ -164,7 +169,7 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
   height: 30,
   borderRadius: "50%",
   padding: 0,
-  minWidth: 0,
+  minWidth: 0
 }));
 
 export const ViewJson = styled(Box)(({ theme }) => ({
@@ -176,6 +181,26 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(2),
 
   "& .MuiSvgIcon-root": {
-    display: "none !important",
-  },
+    display: "none !important"
+  }
+}));
+export const OverViewContainer = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    "& > *": {
+      width: "100%"
+    },
+    "& h2": {
+      fontSize: "24px",
+      marginBottom: "0px"
+    },
+    "& > button": {
+      height: "100px",
+      flexDirection: "column",
+      alignItems: "center"
+    },
+    "& > button > div": {
+      height: "auto"
+    }
+  }
 }));

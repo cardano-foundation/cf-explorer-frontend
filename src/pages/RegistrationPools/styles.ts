@@ -7,29 +7,49 @@ export const StakeKey = styled(Box)`
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
 `;
 
-export const RegistrationContainer = styled(Container)`
-  padding: 30px 0px 40px;
-  text-align: left;
-  position: relative;
-`;
+export const RegistrationContainer = styled(Container)(({ theme }) => ({
+  padding: "30px 0px 40px",
+  textAlign: "left",
+  position: "relative",
+  [theme.breakpoints.down("md")]: {
+    padding: "25px 16px 30px"
+  }
+}));
 
 export const StyledTabs = styled(Tabs)`
   .MuiTabs-flexContainer {
     gap: 50px;
-    @media screen and (max-width: 1023px) {
+    ${({ theme }) => theme.breakpoints.down("md")} {
       gap: 30px;
     }
   }
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    border-bottom: 1px solid ${(props) => props.theme.palette.border.main};
+    width: 100%;
+  }
 `;
 
+export const WrapHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  borderBottom: `1px solid ${theme.palette.border.main}`,
+  [theme.breakpoints.down("md")]: {
+    alignItems: "flex-start",
+    borderBottom: "none",
+    flexDirection: "column"
+  }
+}));
+
 export const StyledTab = styled(Tab)`
-  color: ${props => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[400]};
   padding: 0;
   &.Mui-selected {
-    color: ${props => props.theme.palette.text.primary};
+    color: ${(props) => props.theme.palette.text.primary};
   }
 `;
 
@@ -42,10 +62,7 @@ export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.grey[400],
   display: "block",
   textAlign: "right",
-  position: "absolute",
   width: "max-content",
-  top: 60,
-  right: 24,
   lineHeight: 1,
   marginTop: "0.5rem",
   [theme.breakpoints.down("sm")]: {
@@ -54,6 +71,6 @@ export const TimeDuration = styled("small")(({ theme }) => ({
     textAlign: "left",
     marginTop: 10,
     top: "unset",
-    right: "unset",
-  },
+    right: "unset"
+  }
 }));

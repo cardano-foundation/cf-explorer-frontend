@@ -1,21 +1,33 @@
-import { Box } from "@mui/material";
-import { Container } from "../../../Account/ActivityLogModal/styles";
-import StyledModal from "../../../commons/StyledModal";
-import { ButtonEvent, ModalTitle, StyledBackButton, StyledButton, StyledStack, SubText, TextRequired } from "./styles";
 import { useState } from "react";
-import { IPropsModal, STEPS } from ".";
-import { ReportType } from "./FilledInfoModal";
+import { Box } from "@mui/material";
 import { get } from "lodash";
+
+import StyledModal from "src/components/commons/StyledModal";
+import { useScreen } from "src/commons/hooks/useScreen";
+
+import { ReportType } from "./FilledInfoModal";
+import {
+  Container,
+  ButtonEvent,
+  ModalTitle,
+  StyledBackButton,
+  StyledButton,
+  StyledStack,
+  SubText,
+  TextRequired
+} from "./styles";
+
+import { IPropsModal, STEPS } from ".";
 
 export enum RatioGroupValue {
   yes = "YES",
   no = "NO",
-  unTicked = "UN_TICKED",
+  unTicked = "UN_TICKED"
 }
 
 export enum OptionTransfer {
   adaTransfer = "ADA_TRANSFER",
-  feesPaid = "FEES_PAID",
+  feesPaid = "FEES_PAID"
 }
 
 const SELECT_ALL = "SELECT_ALL";
@@ -23,60 +35,60 @@ const SELECT_ALL = "SELECT_ALL";
 export const EVENTS_NAME = [
   {
     label: "All",
-    value: SELECT_ALL,
+    value: SELECT_ALL
   },
   {
     label: "Registration",
     value: "REGISTRATION",
-    type: ReportType.StakeKeyReport,
+    type: ReportType.StakeKeyReport
   },
 
   {
     label: "Rewards",
     value: "REWARDS",
-    type: ReportType.StakeKeyReport,
+    type: ReportType.StakeKeyReport
   },
   {
     label: "Delegation",
     value: "DELEGATION",
-    type: ReportType.StakeKeyReport,
+    type: ReportType.StakeKeyReport
   },
   {
     label: "Withdraw funds",
     value: "WITHDRAWAL",
-    type: ReportType.StakeKeyReport,
+    type: ReportType.StakeKeyReport
   },
   {
     label: "Deregistration",
     value: "DEREGISTRATION",
-    type: ReportType.StakeKeyReport,
+    type: ReportType.StakeKeyReport
   },
   {
     label: "Registration",
     value: "registration",
-    type: ReportType.PoolReport,
-  },
-  {
-    label: "Delegate",
-    value: "delegate",
-    type: ReportType.PoolReport,
-  },
-  {
-    label: "Reward",
-    value: "reward",
-    type: ReportType.PoolReport,
+    type: ReportType.PoolReport
   },
   {
     label: "Pool Update",
     value: "pool_update",
-    type: ReportType.PoolReport,
+    type: ReportType.PoolReport
   },
+  {
+    label: "Reward",
+    value: "reward",
+    type: ReportType.PoolReport
+  },
+  {
+    label: "Deregistration",
+    value: "deregistration",
+    type: ReportType.PoolReport
+  }
 ];
 
 const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, saveParams, gotoStep, defaultParams }) => {
   const [eventsKey, setEventsKey] = useState<Array<string>>([]);
   const [step1] = defaultParams || [];
-
+  const { isMobile } = useScreen();
   const handleSelectEvent = (id: string) => {
     const allEventByType = EVENTS_NAME.filter(({ type }) => type === get(defaultParams, "0.reportType"));
 
@@ -99,31 +111,31 @@ const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
 
   const handleSubmit = () => {
     saveParams?.({
-      eventsKey,
+      eventsKey
     });
     gotoStep?.(STEPS.step4);
   };
 
-  const events = EVENTS_NAME.filter(event => {
+  const events = EVENTS_NAME.filter((event) => {
     return step1.reportType === ReportType.PoolReport
       ? event.type !== ReportType.StakeKeyReport
       : event.type !== ReportType.PoolReport;
   });
-
-  console.log({ eventsKey });
+  const isAll = eventsKey.length === events.length - 1;
+  const isPoolReport = step1.reportType === ReportType.PoolReport;
 
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
       <Container>
-        <ModalTitle>Report composer</ModalTitle>
-        <SubText>Staking lifecycle events</SubText>
+        <ModalTitle sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</ModalTitle>
+        <SubText>{isPoolReport ? "Pool Report by event" : "Staking lifecycle events"}</SubText>
         <TextRequired>Select as required</TextRequired>
-        <Box display={"flex"} flexWrap={"wrap"} gap="10px" marginTop={"20px"}>
+        <Box display={"flex"} flexWrap={"wrap"} gap="10px" marginTop="20px" marginBottom="40px">
           {events.map(({ label, value }) => {
             return (
               <ButtonEvent
                 key={`${label}_${value}`}
-                isSelected={eventsKey.includes(value)}
+                active={Boolean((value === SELECT_ALL && isAll) || eventsKey.includes(value))}
                 onClick={() => handleSelectEvent(value)}
               >
                 {label}
@@ -131,9 +143,9 @@ const StepEventsModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             );
           })}
         </Box>
-        <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={"20px"}>
+        <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={"20px"} mt={2}>
           <StyledBackButton onClick={() => gotoStep?.(STEPS.step2)}>Previous</StyledBackButton>
-          <StyledButton isDisabled={!eventsKey.length} onClick={handleSubmit}>
+          <StyledButton disabled={!eventsKey.length} onClick={handleSubmit}>
             Compose report
           </StyledButton>
         </StyledStack>

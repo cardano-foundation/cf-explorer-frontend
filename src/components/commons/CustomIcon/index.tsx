@@ -4,7 +4,7 @@ import { Box, BoxProps, styled } from "@mui/material";
 const IconBox = styled(Box)(() => ({
   display: "inline-flex",
   justifyContent: "center",
-  alignItems: "center",
+  alignItems: "center"
 }));
 
 interface DefaultProps extends BoxProps {
@@ -40,7 +40,7 @@ interface DefaultProps extends BoxProps {
 type Props = DefaultProps & Required<{ width: number } | { height: number }>;
 
 const CustomIcon: React.FC<Props> = React.forwardRef((props: Props, boxRef) => {
-  const { id, icon, width, height, originWidth, originHeight, fill, stroke, ...otherProps } = props;
+  const { icon, width, height, originWidth, originHeight, fill, stroke, ...otherProps } = props;
   const ref = useRef<SVGSVGElement | null>(null);
   const [svgWidth, setSvgWidth] = useState<number | undefined>(originWidth);
   const [svgHeight, setSvgWheight] = useState<number | undefined>(originHeight);
@@ -56,10 +56,10 @@ const CustomIcon: React.FC<Props> = React.forwardRef((props: Props, boxRef) => {
   const scaleX = svgWidth && (width || 0) / svgWidth;
   const scaleY = svgHeight && (height || 0) / svgHeight;
 
-  const StyledIcon = styled(icon, { shouldForwardProp: props => props !== "ref" })<{ ref?: React.Ref<unknown> }>(
+  const StyledIcon = styled(icon, { shouldForwardProp: (props) => props !== "ref" })<{ ref?: React.Ref<unknown> }>(
     () => ({
       transform: scaleX || scaleY ? `scale(${scaleX || scaleY},${scaleY || scaleX})` : "none",
-      path: { fill, stroke },
+      path: { fill, stroke }
     })
   );
   return (
@@ -74,5 +74,5 @@ const CustomIcon: React.FC<Props> = React.forwardRef((props: Props, boxRef) => {
     </IconBox>
   );
 });
-
+CustomIcon.displayName = "CustomIcon";
 export default CustomIcon;

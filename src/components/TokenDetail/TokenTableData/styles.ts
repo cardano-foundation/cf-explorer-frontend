@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 export const StyledSelect = styled(Select)`
   font-family: var(--font-family-text);
-  background: ${props => props.theme.palette.common.white};
-  color: ${props => props.theme.palette.text.secondary};
+  background: ${(props) => props.theme.palette.common.white};
+  color: ${(props) => props.theme.palette.text.secondary};
   border-radius: 8px;
   min-width: 250px;
   & > div {
@@ -18,15 +18,15 @@ export const StyledSelect = styled(Select)`
     border: none !important;
   }
   & > svg {
-    color: ${props => props.theme.palette.text.secondary};
+    color: ${(props) => props.theme.palette.text.secondary};
     font-size: 20px;
   }
 `;
 
-export const OptionSelect = styled("option")(({ theme }) => ({
+export const OptionSelect = styled("option")(() => ({
   padding: "6px 0",
   textAlign: "center",
-  height: "40px",
+  height: "40px"
 }));
 
 export const Bold = styled("span")`
@@ -41,13 +41,13 @@ export const StyledLink = styled(Link)`
   display: inline-block;
   font-family: var(--font-family-text) !important;
   font-size: var(--font-size-text-small);
-  color: ${props => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
   margin-bottom: 5px;
 `;
 
 export const SmallText = styled("small")`
   display: inline-block;
-  color: ${props => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.text.secondary};
   margin-bottom: 5px;
 `;
 
@@ -78,7 +78,7 @@ export const TopHolder = {
   TopHolderHash,
   TopHolderBalance,
   TopHolderShare,
-  StyledImg: PriceIcon,
+  StyledImg: PriceIcon
 };
 
 /* Minting */
@@ -90,7 +90,7 @@ export const Minting = {
   MintingIndex,
   MintingHash,
   MintingBalance,
-  StyledImg: PriceIcon,
+  StyledImg: PriceIcon
 };
 
 export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
@@ -98,5 +98,5 @@ export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => 
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.common.black : theme.palette.text.hint,
+  color: active ? theme.palette.common.black : theme.palette.text.hint
 }));

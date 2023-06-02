@@ -5,65 +5,76 @@ import StorageUtils from "./storage";
 export const STORAGE_KEYS = {
   THEME: "dark",
   USER_INFO: "user_info",
-  NETWORK: "network",
+  NETWORK: "network"
 };
+
+export enum NETWORKS {
+  mainnet = "mainnet",
+  preprod = "preprod",
+  preview = "preview",
+  testnet = "testnet"
+}
 
 export const SUPPORTED_WALLETS: Wallet[] = [
   {
     name: "Flint",
     icon: FlintIcon,
     link: "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj",
+    networks: [NETWORKS.mainnet]
   },
   {
     name: "Nami",
     icon: NamiIcon,
     link: "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
+    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview, NETWORKS.testnet]
   },
   {
     name: "Eternl",
     icon: EternlIcon,
     link: "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka",
+    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview, NETWORKS.testnet]
   },
   {
     name: "Yoroi",
     icon: YoroiIcon,
     link: "https://chrome.google.com/webstore/detail/yoroi/ffnbelfdoeiohenkjibnmadjiehjhajb",
+    networks: [NETWORKS.mainnet]
+  },
+  {
+    name: "Yoroi",
+    icon: YoroiIcon,
+    link: "https://chrome.google.com/webstore/detail/yoroi-nightly/poonlenmfdfbjfeeballhiibknlknepo",
+    networks: [NETWORKS.testnet, NETWORKS.preprod]
   },
   {
     name: "Typhon",
     icon: TyphonIcon,
     link: "https://chrome.google.com/webstore/detail/typhon-wallet/kfdniefadaanbjodldohaedphafoffoh",
-  },
+    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview, NETWORKS.testnet]
+  }
 ];
 
 export enum EPOCH_STATUS {
   FINISHED = "Finished",
   REWARDING = "Rewarding",
   IN_PROGRESS = "In Progress",
-  SYNCING = "Syncing",
+  SYNCING = "Syncing"
 }
 
 export const MAX_SLOT_EPOCH = 432000;
-
-export enum NETWORKS {
-  mainnet = "mainnet",
-  preprod = "preprod",
-  preview = "preview",
-  testnet = "testnet",
-}
 
 export enum NETWORK_NAMES {
   mainnet = "Mainnet",
   preprod = "Preprod",
   preview = "Preview",
-  testnet = "Testnet",
+  testnet = "Testnet"
 }
 
 export enum NETWORK_TYPES {
   mainnet = "MAIN_NET",
   preprod = "PRE_PROD",
   preview = "PREVIEW",
-  testnet = "TEST_NET",
+  testnet = "TEST_NET"
 }
 
 export const NETWORK: NETWORKS = StorageUtils.getNetwork();
@@ -71,17 +82,17 @@ export const NETWORK: NETWORKS = StorageUtils.getNetwork();
 export enum TRANSACTION_STATUS {
   FAIL = "FAIL",
   SUCCESS = "SUCCESS",
-  PENDDING = "PENDDING",
+  PENDDING = "PENDDING"
 }
 export enum CONFIRMATION_STATUS {
   MEDIUM = "MEDIUM",
   LOW = "LOW",
-  HIGH = "HIGH",
+  HIGH = "HIGH"
 }
 
 export enum STAKE_KEY_STATUS {
   ACTIVE = "ACTIVE",
-  DEACTIVATED = "DEACTIVATED",
+  DEACTIVATED = "DEACTIVATED"
 }
 export const APP_VERSION = process.env.REACT_APP_VERSION;
 export const TESTNET_API_URL = process.env.REACT_APP_TESTNET_API_URL;
@@ -130,7 +141,7 @@ export enum ACCOUNT_ERROR {
   INVALID_VERIFY_CODE = "CC_21",
   VERIFY_CODE_NOT_PENDING = "CC_22",
   EMAIL_IS_ALREADY_EXIST = "CC_23",
-  USERNAME_OR_PASSWORD_INVALID = "CC_24",
+  USERNAME_OR_PASSWORD_INVALID = "CC_24"
 }
 
 // unit second
@@ -150,37 +161,37 @@ export enum REFRESH_TIMES {
   POOLS = 20,
   STAKE_REGISTRATION = 20,
   POOL_REGISTRATIONS = 20,
-  TOP_DELEGATORS = 20,
+  TOP_DELEGATORS = 20
 }
 
-export const PROTOCOL_TYPE: any = {
-  minFeeA: "MIN_FEE_A ",
-  minFeeB: "MIN_FEE_B ",
-  maxBlockSize: "MAX_BLOCK_SIZE ",
-  maxTxSize: "MAX_TX_SIZE ",
-  maxBhSize: "MAX_BH_SIZE ",
-  keyDeposit: "KEY_DEPOSIT ",
-  poolDeposit: "POOL_DEPOSIT ",
-  maxEpoch: "MAX_EPOXH ",
-  optimalPoolCount: "OPTIMAL_POOL_COUNT ",
-  influence: "INFLUENCER ",
-  monetaryExpandRate: "MONETARY_EXPAND_RATE ",
-  treasuryGrowthRate: "TREASURY_GROWTH_RATE ",
-  decentralisation: "DECENTRALISATION ",
-  entropy: "ENTROPY ",
-  protocolMajor: "PROTOCOL_MAJOR ",
-  protocolMinor: "PROTOCOL_MINOR ",
-  minUtxoValue: "MINT_UTXO_VALUE ",
-  minPoolCost: "MINT_POOL_COST ",
-  costModel: "COST_MODEL ",
-  priceMem: "PRICE_MEM ",
-  priceStep: "PRICE_STEP ",
-  maxTxExMem: "MAX_TX_EX_MEM ",
-  maxTxExSteps: "MAX_TX_EX_STEPS ",
-  maxBlockExMem: "MAX_BLOCK_EX_MEM ",
-  maxBlockExSteps: "MAX_BLOCK_EX_STEPS ",
-  maxValSize: "MAX_VAL_SIZE ",
-  collateralPercent: "COLLATERAL_PERCENT ",
-  maxCollateralInputs: "MAX_COLLATERAL_INPUTS ",
-  coinsPerUtxoSize: "COINS_PER_UTXO_SIZE ",
+export const PROTOCOL_TYPE = {
+  minFeeA: "MIN_FEE_A",
+  minFeeB: "MIN_FEE_B",
+  maxBlockSize: "MAX_BLOCK_SIZE",
+  maxTxSize: "MAX_TX_SIZE",
+  maxBhSize: "MAX_BH_SIZE",
+  keyDeposit: "KEY_DEPOSIT",
+  poolDeposit: "POOL_DEPOSIT",
+  maxEpoch: "MAX_EPOCH",
+  optimalPoolCount: "OPTIMAL_POOL_COUNT",
+  influence: "INFLUENCE",
+  monetaryExpandRate: "MONETARY_EXPAND_RATE",
+  treasuryGrowthRate: "TREASURY_GROWTH_RATE",
+  decentralisation: "DECENTRALISATION",
+  entropy: "ENTROPY",
+  protocolMajor: "PROTOCOL_MAJOR",
+  protocolMinor: "PROTOCOL_MINOR",
+  minUtxoValue: "MIN_UTXO_VALUE",
+  minPoolCost: "MIN_POOL_COST",
+  costModel: "COST_MODEL",
+  priceMem: "PRICE_MEM",
+  priceStep: "PRICE_STEP",
+  maxTxExMem: "MAX_TX_EX_MEM",
+  maxTxExSteps: "MAX_TX_EX_STEPS",
+  maxBlockExMem: "MAX_BLOCK_EX_MEM",
+  maxBlockExSteps: "MAX_BLOCK_EX_STEPS",
+  maxValSize: "MAX_VAL_SIZE",
+  collateralPercent: "COLLATERAL_PERCENT",
+  maxCollateralInputs: "MAX_COLLATERAL_INPUTS",
+  coinsPerUtxoSize: "COINS_PER_UTXO_SIZE"
 };

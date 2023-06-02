@@ -1,25 +1,30 @@
-import { Box } from "@mui/material";
 import { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import useFetchList from "../../../../../commons/hooks/useFetchList";
-import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, formatHash } from "../../../../../commons/utils/helper";
-import Table, { Column } from "../../../../commons/Table";
-import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, ClickAbleLink, VerticalRow } from "./styles";
-import CustomIcon from "../../../../commons/CustomIcon";
-import { ADAsigntIC } from "../../../../../commons/resources";
-import { details } from "../../../../../commons/routers";
-import CustomTooltip from "../../../../commons/CustomTooltip";
-import { StyledLink } from "../../../../share/styled";
+import { Box, IconButton, useTheme } from "@mui/material";
+import { useParams } from "react-router-dom";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { EyeIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { getShortHash } from "src/commons/utils/helper";
+import { AdaValue } from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table, { Column } from "src/components/commons/Table";
+import { StyledLink } from "src/components/share/styled";
+
+import { DeregistrationCertificateModal } from "../../Deregistration";
 
 const DeregsitrationTab = () => {
+  const theme = useTheme();
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [params, setParams] = useState({
     page: 0,
-    size: 10,
+    size: 50
   });
 
   const [sort, setSort] = useState<string>("");
+  const [selected, setSelected] = useState<SPODeregistration | null>(null);
 
   const columns: Column<SPODeregistrationTabpular>[] = [
     {
@@ -28,10 +33,10 @@ const DeregsitrationTab = () => {
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>
-            <StyledLink to={details.transaction(data.txHash)}>{formatHash(data.txHash)}</StyledLink>
+            <StyledLink to={details.transaction(data.txHash)}>{getShortHash(data.txHash)}</StyledLink>
           </CustomTooltip>
         );
-      },
+      }
     },
     {
       key: "time",
@@ -41,47 +46,49 @@ const DeregsitrationTab = () => {
       },
       render(data) {
         return data.time;
-      },
+      }
     },
     {
       key: "fee",
-      title: "ADA Value",
+      title: (
+        <Box>
+          ADA Value
+          <Box fontSize={"0.75rem"} fontWeight={"normal"}>
+            Hold/Fees
+          </Box>
+        </Box>
+      ),
       render(data) {
         return (
-          <ADAValueFieldContainer>
-            <ADAValueLabel>
-              {formatADAFull(data.totalFee)} <CustomIcon icon={ADAsigntIC} width={12} />{" "}
-            </ADAValueLabel>
-            <ADAValueSubLabel>
-              {formatADAFull(data.poolHold)} <CustomIcon icon={ADAsigntIC} width={11} /> / {formatADAFull(data.fee)}{" "}
-              <CustomIcon icon={ADAsigntIC} width={11} />{" "}
-            </ADAValueSubLabel>
-          </ADAValueFieldContainer>
+          <Box>
+            <AdaValue limit={5} value={data.totalFee} />
+            <TableSubTitle>
+              <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+                <AdaValue limit={1} color={theme.palette.grey[400]} value={data.poolHold} gap="3px" fontSize="12px" />
+                <Box mx="3px">/</Box>
+                <AdaValue color={theme.palette.grey[400]} value={data.fee} gap="3px" fontSize="12px" />
+              </Box>
+            </TableSubTitle>
+          </Box>
         );
-      },
+      }
     },
     {
-      key: "owner",
-      title: "Owner",
-      render(data) {
-        return data.stakeKeys.map((item, index) => (
-          <VerticalRow key={index}>
-            <CustomTooltip  title={item}>
-              <StyledLink to={details.stake(item)} key={index}>
-                {formatHash(item)}
-              </StyledLink>
-            </CustomTooltip>
-          </VerticalRow>
-        ));
-      },
-    },
+      key: "Certificate",
+      title: "Certificate",
+      render: (data) => (
+        <IconButton onClick={() => setSelected(data)}>
+          <EyeIcon style={{ transform: "scale(.8)" }} />
+        </IconButton>
+      )
+    }
   ];
 
   const fetchData = useFetchList<SPODeregistrationTabpular>(
     poolId ? API.SPO_LIFECYCLE.SPO_DEREGISTRATION(poolId) : "",
     {
       ...params,
-      sort,
+      sort
     }
   );
 
@@ -92,14 +99,15 @@ const DeregsitrationTab = () => {
         columns={columns}
         total={{
           title: "Pool Registration",
-          count: fetchData.total,
+          count: fetchData.total
         }}
         pagination={{
           ...params,
           total: fetchData.total,
-          onChange: (page, size) => setParams({ page, size }),
+          onChange: (page, size) => setParams({ page: page - 1, size })
         }}
       />
+      <DeregistrationCertificateModal data={selected} open={!!selected} handleCloseModal={() => setSelected(null)} />
     </Box>
   );
 };

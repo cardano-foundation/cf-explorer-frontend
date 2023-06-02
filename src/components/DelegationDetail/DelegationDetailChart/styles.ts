@@ -4,11 +4,11 @@ export const StyledContainer = styled(Box)`
   text-align: left;
 `;
 
-export const GridWrapper = styled(Grid)`
-  min-height: 400px;
-  padding: 0 0 0 0;
-  text-align: left;
-`;
+export const GridWrapper = styled(Grid)(() => ({
+  borderRadius: 10,
+  minHeight: "400px",
+  textAlign: "left"
+}));
 
 export const Tab = styled("div")`
   display: inline-block;
@@ -28,64 +28,151 @@ export const Button = styled("button")<{ active: number }>`
   line-height: 24px;
 `;
 
+export const BoxInfo = styled(Box)<{ space: number }>(({ theme }) => ({
+  background: theme.palette.secondary.dark,
+  borderRadius: "10px",
+  color: theme.palette.primary.contrastText,
+  display: "flex",
+  flexDirection: "column",
+  textAlign: "center",
+  [theme.breakpoints.down("lg")]: {
+    flexDirection: "row"
+  },
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "row"
+  }
+}));
+
+export const BoxInfoItem = styled(Box)(({ theme }) => ({
+  height: "100%",
+  paddingTop: theme.spacing(2),
+  width: "80%",
+  margin: "0 auto",
+  overflow: "hidden",
+  [theme.breakpoints.down("lg")]: {
+    borderTop: "none",
+    width: "100%",
+    minHeight: "200px",
+    height: "100%",
+    paddingTop: 0
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    borderRight: "none",
+    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    minHeight: "0px",
+
+    "& > div": {
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: "0 10px",
+      margin: "25px 0"
+    }
+  }
+}));
+
+export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
+  height: "100%",
+  paddingTop: theme.spacing(2),
+  width: "80%",
+  margin: "0 auto",
+  borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+  overflow: "hidden",
+  [theme.breakpoints.down("lg")]: {
+    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    height: "100%",
+    borderBottom: "none",
+    width: "100%",
+    minHeight: "200px",
+    paddingTop: 0
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    borderRight: "none",
+    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    minHeight: "0",
+
+    "& > div": {
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: "0 10px",
+      margin: "25px 0",
+      borderRight: `1px solid ${alpha(theme.palette.common.white, 0.06)}`
+    }
+  }
+}));
+
 export const ChartContainer = styled("div")`
   padding-top: 20px;
 `;
 
-export const GridRight = styled(Grid)<{ space: number }>`
-  flex: 1;
-  max-height: calc(100% - ${props => props.space}px);
-  background: ${props => props.theme.palette.text.secondary};
-  border-radius: 12px;
-  box-shadow: ${props => props.theme.shadow.card};
-  padding: 0px 20px;
-  @media screen and (min-width: 540px) and (max-width: 1370px) {
-    padding: 25px 0px;
+export const GridRight = styled(Grid)<{ space: number }>(({ theme, space }) => ({
+  flex: 1,
+  maxHeight: `calc(100% - ${space}px)`,
+  background: theme.palette.text.secondary,
+  borderRadius: 12,
+  boxShadow: theme.shadow.card,
+  padding: "0px 20px",
+  [theme.breakpoints.down("lg")]: {
+    padding: "25px 0px",
+    maxHeight: "unset"
   }
-  @media screen and (max-width: 1370px) {
-    max-height: unset;
-  }
-`;
+}));
 
-export const Item = styled(Grid)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  padding: 25px 0px;
+export const Item = styled(Grid)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "column",
+  textAlign: "center",
+  padding: "25px 0px",
 
-  &:first-of-type {
-    border-bottom: 1px solid ${props => alpha(props.theme.palette.common.white, 0.06)};
-  }
-  @media screen and (min-width: 540px) and (max-width: 1370px) {
-    padding: 0px 20px;
-    &:first-of-type {
-      border-bottom: none;
-      border-right: 1px solid ${props => alpha(props.theme.palette.common.white, 0.06)};
+  "&:first-of-type": {
+    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.06)}`
+  },
+  [theme.breakpoints.down("sm")]: {
+    "&:first-of-type": {
+      borderBottom: "none",
+      borderRight: `1px solid ${alpha(theme.palette.common.white, 0.06)}`
     }
   }
-`;
-export const AnalyticsTitle = styled("h2")`
-  margin: 50px 0 15px;
-`;
-export const Title = styled("div")`
-  color: var(--text-color-pale);
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-title);
-  color: ${props => props.theme.palette.primary.contrastText};
-`;
+}));
 
-export const Value = styled("div")`
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-title);
-  font-size: 32px;
-  line-height: 47px;
-  color: ${props => props.theme.palette.primary.contrastText};
-`;
+export const AnalyticsTitle = styled("h2")(({ theme }) => ({
+  margin: "40px 0 15px",
+  width: "max-content",
+  [theme.breakpoints.down("sm")]: {
+    margin: "30px 0 15px"
+  }
+}));
+export const Title = styled(Box)(({ theme }) => ({
+  fontWeight: "bold",
+  color: theme.palette.primary.contrastText,
+  padding: `${theme.spacing(2)} 0`
+}));
+
+export const Value = styled("div")(({ theme }) => ({
+  fontWeight: "bold",
+  fontSize: "2rem",
+  overflowWrap: "anywhere",
+  color: theme.palette.primary.contrastText,
+  [theme.breakpoints.down("md")]: {
+    padding: "0 10px"
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.25rem",
+    padding: "0 10px"
+  }
+}));
 
 export const Horizon = styled("div")`
   width: 100%;
   opacity: 0.07;
-  border: 1px solid ${props => props.theme.palette.common.white};
+  border: 1px solid ${(props) => props.theme.palette.common.white};
 `;

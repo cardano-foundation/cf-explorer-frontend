@@ -1,10 +1,10 @@
-import store from '.';
+import store from ".";
 
-export * from 'react-redux';
+export * from "react-redux";
 
 export type RootState = ReturnType<typeof store.getState>;
 
-declare module 'react-redux' {
+declare module "react-redux" {
   export function useSelector<TSelected = unknown>(
     selector: (state: RootState) => TSelected,
     equalityFn?: (left: TSelected, right: TSelected) => boolean

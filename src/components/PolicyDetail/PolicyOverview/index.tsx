@@ -1,21 +1,25 @@
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
-import CopyButton from "../../commons/CopyButton";
+
+import { truncateCustom } from "src/commons/utils/helper";
+import { useScreen } from "src/commons/hooks/useScreen";
+import policyIcon from "src/commons/resources/icons/policyIcon.svg";
+import ScriptModal from "src/components/ScriptModal";
+import CopyButton from "src/components/commons/CopyButton";
+
 import {
   BackButton,
   BackText,
   CardItem,
   HeaderContainer,
   HeaderTitle,
+  OverViewContainer,
   SlotLeader,
   SlotLeaderContainer,
-  SlotLeaderSkeleton,
+  SlotLeaderSkeleton
 } from "./styles";
-import { useHistory } from "react-router-dom";
-import React, { useState } from "react";
-
-import ScriptModal from "../../ScriptModal";
 
 interface Props {
   data: PolicyDetail | null;
@@ -25,10 +29,11 @@ interface Props {
 const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
+  const { isMobile, isTablet } = useScreen();
 
   return (
     <Box>
-      <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
+      <OverViewContainer display={"flex"} justifyContent="space-between" alignItems={"center"}>
         <Box>
           <BackButton onClick={history.goBack}>
             <HiArrowLongLeft />
@@ -43,17 +48,18 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
             ) : (
               <Box>
                 <SlotLeader>
-                  <Box fontWeight={400} color={theme => theme.palette.text.secondary}>
+                  <Box fontWeight={400} color={(theme) => theme.palette.text.secondary}>
                     Policy ID:{" "}
                   </Box>{" "}
-                  <Box ml={2}>{data?.policyId}</Box> <CopyButton text={data?.policyId} />
+                  <Box ml={2}>{isMobile || isTablet ? truncateCustom(data?.policyId ?? "", 5, 5) : data?.policyId}</Box>{" "}
+                  <CopyButton text={data?.policyId} />
                 </SlotLeader>
               </Box>
             )}
           </SlotLeaderContainer>
         </Box>
         <CardItem
-          color={theme => theme.palette.primary.main}
+          color={(theme) => theme.palette.primary.main}
           fontWeight="bold"
           fontFamily={'"Roboto", sans-serif'}
           fontSize={"1.125rem"}
@@ -71,7 +77,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
             <Box>Policy Script</Box>
           </Box>
         </CardItem>
-      </Box>
+      </OverViewContainer>
 
       <ScriptModal open={openModal} onClose={() => setOpenModal(false)} policy={data?.policyId || ""} />
     </Box>

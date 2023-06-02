@@ -3,6 +3,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+
 import { RootState } from "./types";
 import userReducer, { setStoreUser } from "./user";
 import userReducer2, { setStoreUser2 } from "./user2";
@@ -18,13 +19,13 @@ const setStore = (store: Store) => {
 const persistConfig = {
   key: "root",
   storage: storage,
-  whitelist: [],
+  whitelist: []
 };
 
 const userPersistConfig = {
   key: "user",
   storage: storage,
-  blacklist: ["onDetailView", "openModal", "modalSignMessage", "modalRegister"],
+  blacklist: ["onDetailView", "openModal", "modalSignMessage", "modalRegister"]
 };
 
 export const getStore = (): Store<RootState> => {
@@ -38,7 +39,7 @@ const appReducer = combineReducers({
   user: persistReducer(userPersistConfig, userReducer),
   user2: userReducer2,
   system: systemReducer,
-  toast: toastReducer,
+  toast: toastReducer
 });
 
 const rootReducer = (state: any, action: any) => appReducer(state, action);

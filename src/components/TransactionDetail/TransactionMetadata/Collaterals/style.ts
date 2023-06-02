@@ -2,7 +2,7 @@ import { alpha, Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Wrapper = styled(Box)`
-  background: ${props => props.theme.palette.common.white};
+  background: ${(props) => props.theme.palette.common.white};
   padding: 25px;
 `;
 export const Header = styled(Box)`
@@ -10,14 +10,14 @@ export const Header = styled(Box)`
   justify-content: space-between;
   font-size: var(--font-size-text-small);
   font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.palette.text.hint};
-  border-bottom: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)};
+  color: ${(props) => props.theme.palette.text.hint};
+  border-bottom: 1px solid ${(props) => alpha(props.theme.palette.common.black, 0.1)};
   padding-bottom: 8px;
 `;
 
-export const Img = styled("img")(({ theme }) => ({
+export const Img = styled("img")(() => ({
   paddingRight: "10px",
-  width: "35px",
+  width: "35px"
 }));
 
 export const TokenLink = styled(Link)(({ theme }) => ({
@@ -31,17 +31,41 @@ export const TokenLink = styled(Link)(({ theme }) => ({
   lineHeight: "1.5rem",
   fontWeight: "bold",
   display: "inline",
-  whiteSpace: "nowrap",
+  whiteSpace: "nowrap"
 }));
 
 export const Item = styled(Box)(({ theme }) => ({
   textAlign: "left",
   padding: "10px 0px",
-  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`
 }));
-export const ItemBox = styled(Box)(({ theme }) => ({
+export const ItemBox = styled(Box)(() => ({
   "> *:last-child > div": {
     padding: "10px 0 0",
-    borderBottom: "none",
-  },
+    borderBottom: "none"
+  }
+}));
+
+export const ItemContent = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+    alignItems: "flex-start"
+  }
+}));
+
+export const WrapToken = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-start",
+  flexWrap: "wrap",
+  width: "auto",
+  [theme.breakpoints.down("md")]: {
+    wordBreak: "break-all",
+    "& > a": {
+      whiteSpace: "unset",
+      margin: 0
+    }
+  }
 }));

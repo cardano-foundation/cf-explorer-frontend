@@ -1,14 +1,29 @@
-import { Box, Button, Divider, FormHelperText, styled } from "@mui/material";
-import { User2RC } from "../../commons/resources";
-import { Input } from "@mui/material";
+import { Box, Button, Divider, FormHelperText, IconButton, Input, styled } from "@mui/material";
+
+import { User2RC } from "src/commons/resources";
 
 export const Container = styled(Box)`
   display: flex;
   background-color: ${({ theme }) => theme.palette.grey[200]};
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  min-width: 100vw;
   justify-content: center;
   align-items: center;
+  padding: 30px 0;
+`;
+
+export const CloseButton = styled(IconButton)<{ saving: number }>`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid ${(props) => props.theme.palette.grey["A100"]};
+  cursor: ${(props) => (props.saving ? `wait` : `pointer`)};
+  &:hover {
+    ${(props) => (props.saving ? `background: none;` : ``)}
+  }
 `;
 
 export const WrapContent = styled(Box)`
@@ -41,13 +56,14 @@ export const WrapForm = styled(Box)(({ theme }) => ({
   background: theme.palette.common.white,
   borderRadius: "12px",
   display: "flex",
+  position: "relative",
   flexDirection: "column",
-  gap: "25px",
-  width: "min(80vw,420px)",
+  gap: "10px",
+  width: "min(74vw,420px)",
   padding: "35px 40px 40px",
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down("md")]: {
     padding: "20px 15px",
-    gap: "15px",
+    gap: "15px"
   }
 }));
 
@@ -67,7 +83,7 @@ export const Label = styled(Box)`
   opacity: 0.8;
 `;
 
-export const ForgotPassword = styled('span')`
+export const ForgotPassword = styled("span")`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
@@ -108,12 +124,30 @@ export const WrapDivider = styled(Divider)`
   background-color: ${({ theme }) => theme.palette.grey[300]};
 `;
 
+export const Title = styled(Box)`
+  font-weight: 700;
+  font-size: 20px;
+  color: ${({ theme }) => theme.palette.grey[500]};
+`;
+
 export const WrapOr = styled(Box)`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
   color: ${({ theme }) => theme.palette.grey[300]};
   text-transform: uppercase;
+`;
+
+export const WrapEmail = styled("span")`
+  font-weight: 400;
+  font-size: 16px;
+  color: ${({ theme }) => theme.palette.secondary.main};
+`;
+
+export const LabelInfo = styled(Box)`
+  font-weight: 400;
+  font-size: 16px;
+  color: ${({ theme }) => theme.palette.grey[400]};
 `;
 
 export const WrapSignUp = styled(Box)`
@@ -124,20 +158,22 @@ export const WrapSignUp = styled(Box)`
   color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
-export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !== "error" })<{ error?: boolean }>(({ theme, error }) => ({
-  borderRadius: "8px",
-  borderWidth: "1px",
-  borderStyle: "solid",
-  borderColor: error ? "#DD4343" : theme.palette.grey[300],
-  "&::before": {
-    display: "none",
-  },
-  "&::after": {
-    display: "none",
-  },
-  padding: "5px 10px",
-  backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : "",
-}));
+export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !== "error" })<{ error?: boolean }>(
+  ({ theme, error }) => ({
+    borderRadius: "8px",
+    borderWidth: "1px",
+    borderStyle: "solid",
+    borderColor: error ? "#DD4343" : theme.palette.grey[300],
+    "&::before": {
+      display: "none"
+    },
+    "&::after": {
+      display: "none"
+    },
+    padding: "5px 10px",
+    backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : ""
+  })
+);
 
 export const FormHelperTextCustom = styled(FormHelperText)`
   font-size: 14px

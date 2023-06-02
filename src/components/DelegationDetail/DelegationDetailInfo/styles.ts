@@ -1,10 +1,12 @@
 import { alpha, Box, Button, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
-import { Link } from "react-router-dom";
 
-export const HeaderDetailContainer = styled(Box)`
-  text-align: left;
-  position: relative;
-`;
+export const HeaderDetailContainer = styled(Box)(({ theme }) => ({
+  textAlign: "left",
+  position: "relative",
+  [theme.breakpoints.down("md")]: {
+    paddingTop: 32
+  }
+}));
 
 export const BackButton = styled(Box)`
   display: inline-flex;
@@ -15,7 +17,7 @@ export const BackButton = styled(Box)`
 `;
 
 export const BackText = styled("small")`
-  color: ${props => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.text.secondary};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -25,7 +27,7 @@ export const HeaderContainer = styled(Box)`
 `;
 
 export const HeaderTitle = styled("h2")`
-  color: ${props => props.theme.palette.common.black};
+  color: ${(props) => props.theme.palette.common.black};
   font-size: 2.25rem;
   margin: 0.5rem 0;
   max-width: 75%;
@@ -56,13 +58,13 @@ export const PoolIdSkeleton = styled(Skeleton)`
 
 export const PoolIdLabel = styled("small")`
   font-family: var(--font-family-text);
-  color: ${props => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.text.secondary};
 `;
 
 export const PoolIdValue = styled("small")`
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.main};
   white-space: pre-wrap;
   display: inline-block;
   word-break: break-word;
@@ -70,36 +72,45 @@ export const PoolIdValue = styled("small")`
   margin-right: 5px;
 `;
 
-export const DataContainer = styled("div")`
-  background: ${props => props.theme.palette.background.paper};
-  display: flex;
-  flex-direction: column;
-  box-shadow: ${props => props.theme.shadow[4]};
-  border-radius: 12px;
-  padding: 30px 25px;
-`;
-
-export const Item = styled(Grid)<{ top?: number }>`
-  position: relative;
-  padding: ${({ top }) => (top ? 0 : 20)}px 25px ${({ top }) => (top ? 20 : 0)}px;
-  border-left: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)};
-  border-bottom: ${({ top, theme }) => (top ? `1px solid ${alpha(theme.palette.common.black, 0.1)}` : "none")};
-
-  &:first-of-type {
-    border-left: 0;
-    padding-left: 0;
+export const DataContainer = styled("div")(({ theme }) => ({
+  background: theme.palette.background.paper,
+  display: "flex",
+  flexDirection: "column",
+  boxShadow: theme.shadow[4],
+  borderRadius: 12,
+  padding: "30px 25px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "24px 15px"
   }
+}));
 
-  &:last-child {
-    border-right: 0;
-    padding-right: 0;
-  }
+export const Item = styled(Grid)<{ top?: number }>(({ top, theme }) => ({
+  position: "relative",
+  padding: top ? "0 25px 20px" : "20px 25px 0",
+  borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  borderBottom: top ? `1px solid ${alpha(theme.palette.common.black, 0.1)}` : "none",
 
-  @media (max-width: 1023px) {
-    padding: 20px 25px !important;
-    border: 1px solid ${props => alpha(props.theme.palette.common.black, 0.1)} !important;
+  "&:first-of-type, &:nth-of-type(5)": {
+    borderLeft: 0,
+    paddingLeft: 0
+  },
+  [theme.breakpoints.down("md")]: {
+    borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+    padding: 15,
+    paddingRight: 0,
+    "&:nth-of-type(2n + 1)": {
+      borderLeft: "0 !important",
+      paddingLeft: "0 !important"
+    },
+    "&:nth-of-type(1),&:nth-of-type(2)": {
+      paddingTop: "0 !important"
+    },
+    "&:nth-of-type(7),&:nth-of-type(8)": {
+      borderBottom: "0 !important",
+      paddingBottom: "0 !important"
+    }
   }
-`;
+}));
 
 export const StyledImg = styled("img")`
   margin-right: 8px;
@@ -117,7 +128,7 @@ export const InfoTitle = styled(Box)`
   align-items: flex-start;
   justify-content: space-between;
   font-size: 14px;
-
+  flex-wrap: wrap;
   margin-top: 14px;
   margin-bottom: 5px;
   cursor: pointer;
@@ -130,31 +141,38 @@ export const StyledTitle = styled("span")`
   opacity: 0.5;
 `;
 
-export const InfoValue = styled(Box)`
-  font-weight: var(--font-weight-bold);
-  font-size: 18px;
-`;
+export const InfoValue = styled(Box)(({ theme }) => ({
+  fontWeight: "var(--font-weight-bold)",
+  fontSize: 18,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 16
+  }
+}));
 
 export const StyledLinearProgress = styled(LinearProgress)`
   margin-top: 10px;
   width: 100%;
   height: 10px;
   border-radius: 34px;
-  background: ${props => alpha(props.theme.palette.common.black, 0.1)};
+  background: ${(props) => alpha(props.theme.palette.common.black, 0.1)};
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${props => props.theme.palette.gradient[0]};
+    background: ${(props) => props.theme.palette.gradient[0]};
   }
 `;
 
 export const StyledGrid = styled(Grid)``;
 
-export const FlexGap10 = styled("div")`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
+export const FlexGap10 = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  gap: 10,
+  overflowWrap: "anywhere",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 11
+  }
+}));
 
 export const SavingImg = styled("img")`
   position: absolute;
@@ -169,4 +187,9 @@ export const ButtonViewAll = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
   fontWeight: "bold",
   opacity: 0.5,
+  [theme.breakpoints.down("sm")]: {
+    position: "absolute",
+    top: 15,
+    left: 50
+  }
 }));

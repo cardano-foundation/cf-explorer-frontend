@@ -1,38 +1,37 @@
-import { Box, Collapse, List, ListItemText, styled, Theme } from "@mui/material";
+import { Box, List, ListItemText, styled, Theme } from "@mui/material";
 import { SystemStyleObject } from "@mui/system";
 
-export const StyledCollapse = styled(Collapse)`
-  @media screen and (max-width: 1023px) {
-    max-height: calc(100vh - 80px);
-    overflow-x: hidden;
-    overflow-y: auto;
+export const SidebarMenuContainer = styled(Box)(({ theme }) => ({
+  height: "calc(100% - 60px)",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  [theme.breakpoints.down("sm")]: {
+    height: "calc(100% - 120px)"
   }
-`;
+}));
 
-export const Menu = styled(List)<{ open: number }>`
-  max-height: calc(100vh - 181px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  margin-bottom: 5px;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  &:hover::-webkit-scrollbar {
-    display: block;
-  }
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.md}px) {
-    max-height: unset;
-  }
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
-    & > div,
-    & > a {
-      padding-left: 16px;
-    }
-    & ul > a {
-      padding-left: 40px;
+export const Menu = styled(List)(({ theme }) => ({
+  maxHeight: "calc(100vh - 181px)",
+  overflowY: "auto",
+  overflowX: "hidden",
+  marginBottom: "5px",
+  "&::-webkit-scrollbar": {
+    display: "none"
+  },
+  "&:hover::-webkit-scrollbar": {
+    display: "block"
+  },
+
+  [theme.breakpoints.down("md")]: {
+    maxHeight: "unset"
+  },
+  [theme.breakpoints.down("sm")]: {
+    "& ul > a": {
+      paddingLeft: "59px"
     }
   }
-`;
+}));
 
 export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<Theme> => ({
   minHeight: 48,
@@ -41,19 +40,19 @@ export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<The
   position: "relative",
   marginBottom: "5px",
   justifyContent: sidebar ? "initial" : "center",
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
-    padding: "8px 20px 8px 30px",
-    marginBottom: 0,
-  },
+  [theme.breakpoints.down("md")]: {
+    padding: "8px 20px",
+    marginBottom: 0
+  }
 });
 
 export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; text?: number; disable?: number }>`
   width: 24px;
   height: 24px;
   min-width: 24px;
-  margin-right: ${props => (props.iconOnly ? 0 : 15)}px;
-  filter: ${props => (props.active ? (props.text ? `none` : `brightness(5)`) : `grayscale(1)`)};
-  @media screen and (max-width: 1023px) {
+  margin-right: ${(props) => (props.iconOnly ? 0 : 15)}px;
+  filter: ${(props) => (props.active ? (props.text ? `none` : `brightness(5)`) : `grayscale(1)`)};
+  ${({ theme }) => theme.breakpoints.down("md")} {
     margin-right: 15px;
   }
 `;
@@ -63,8 +62,8 @@ export const SubMenu = styled(List)<{ isActive?: number }>`
 `;
 
 export const MenuText = styled(ListItemText)<{ open?: number; active?: number; text?: number; disable?: number }>`
-  opacity: ${props => (props.open ? 1 : 0)};
-  width: ${props => (props.open ? "unset" : 0)};
+  opacity: ${(props) => (props.open ? 1 : 0)};
+  width: ${(props) => (props.open ? "unset" : 0)};
   * {
     font-family: var(--font-family-title) !important;
     font-weight: var(--font-weight-bold) !important;
@@ -79,7 +78,7 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
     white-space: break-spaces;
     width: 165px;
   }
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     opacity: 1;
     width: unset;
   }
@@ -92,33 +91,17 @@ export const SubMenuText = styled(MenuText)`
   }
 `;
 
-export const NavbarMenuBottom = styled("div")`
-  display: none;
-  @media screen and (max-width: 1023px) {
-    display: flex;
-    align-items: center;
-    gap: 10px 20px;
-    flex-wrap: wrap;
-    padding: 0px 20px 10px;
-    margin-bottom: 10px;
+export const FooterMenuContainer = styled(Box)(({ theme }) => ({
+  display: "block",
+  [theme.breakpoints.down("md")]: {
+    display: "none"
   }
-`;
+}));
 
-export const IconMenu = styled(Box)(({ theme }) => ({
+export const IconMenu = styled(Box)(() => ({
   position: "absolute",
   zIndex: 10,
   top: "50%",
   left: "210px",
-  transform: "translate(0, -50%)",
+  transform: "translate(0, -50%)"
 }));
-
-export const WrapNetwork = styled(Box)`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 16px;
-  & > div {
-    width: 100%;
-  }
-`

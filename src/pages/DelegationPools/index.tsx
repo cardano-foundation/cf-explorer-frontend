@@ -1,16 +1,15 @@
-import OverViews from "../../components/DelegationPool/DelegationOverview";
-import { Horizon, StyledContainer } from "./styles";
-import DelegationLists from "../../components/DelegationPool/DelegationList";
 import { useEffect } from "react";
 
-interface DelegationsProps {}
+import OverViews from "src/components/DelegationPool/DelegationOverview";
+import DelegationLists from "src/components/DelegationPool/DelegationList";
 
-const Delegations: React.FC<DelegationsProps> = () => {
+import { Horizon, StyledContainer } from "./styles";
 
-  useEffect(() => { 
+const Delegations = () => {
+  useEffect(() => {
     document.title = `Delegation Pools | Cardano Explorer`;
   }, []);
-  
+
   return (
     <StyledContainer>
       <OverViews />
