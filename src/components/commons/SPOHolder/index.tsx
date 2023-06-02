@@ -1,14 +1,15 @@
 import { Box, BoxProps, styled, IconButton } from "@mui/material";
 import { Link, useHistory } from "react-router-dom";
 import React, { forwardRef, useRef } from "react";
+import { isArray } from "lodash";
+
 import { SPOHolderIconUrl, SPOInfo, SPOKey, PolygonSPOUrl } from "src/commons/resources";
-import PolygonShape from "../PolygonShape";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { getShortWallet } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
+
+import PolygonShape from "../PolygonShape";
 import CopyButton from "../CopyButton";
-import { isArray } from "lodash";
-import PopperStyled from "../PopperStyled";
 import { StakeKeyItem, StakeKeyItemList } from "./styles";
 interface ISPOPropsData {
   poolName?: string;
@@ -19,7 +20,7 @@ interface ISPOProps extends BoxProps {
   data: ISPOPropsData;
 }
 
-export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...props }, boxRef) => {
+export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, boxRef) => {
   const { poolName, poolView, stakeKeys } = data;
   const SPOInfoRef = useRef(null);
   const SPOKeyRef = useRef(null);
@@ -112,7 +113,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
 SPOHolder.displayName = "SPOHolder";
 export default SPOHolder;
 
-const PolygonShapeSPO = styled(PolygonShape)(({ theme }) => ({
+const PolygonShapeSPO = styled(PolygonShape)(() => ({
   height: "250px",
   width: 190,
   position: "relative",
@@ -144,7 +145,7 @@ export const PoolName = styled(Box)(({ theme }) => ({
   overflow: "hidden",
   textOverflow: "ellipsis"
 }));
-export const ButtonSPO = styled(Box)(({ theme }) => ({
+export const ButtonSPO = styled(Box)(() => ({
   position: "absolute",
   bottom: "12%",
   padding: 0,

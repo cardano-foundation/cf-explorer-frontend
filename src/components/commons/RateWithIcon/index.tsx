@@ -1,7 +1,9 @@
 import { Box, styled } from "@mui/material";
-import { DownRedIcon, UpGreenIcon } from "../../../commons/resources";
-import CustomTooltip from "../CustomTooltip";
 import { BigNumber } from "bignumber.js";
+
+import { DownRedIcon, UpGreenIcon } from "src/commons/resources";
+
+import CustomTooltip from "../CustomTooltip";
 
 const PriceRate = styled(Box)<{ size?: string | number }>`
   display: inline-flex;

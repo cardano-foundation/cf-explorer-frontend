@@ -1,13 +1,15 @@
 import { Box, useTheme } from "@mui/material";
+import { useSelector } from "react-redux";
+import moment from "moment";
+
 import { ExchangeIcon, cubeIconUrl, slotIconUrl, timeIconUrl } from "src/commons/resources";
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 import { Status } from "src/pages/Epoch/styles";
-import DetailHeader from "../../DetailHeader";
-import ProgressCircle from "../../ProgressCircle";
+
 import { Container, EpochNumber, EpochProgress, TitleCard } from "./styles";
-import { useSelector } from "react-redux";
-import moment from "moment";
+import ProgressCircle from "../../ProgressCircle";
+import DetailHeader from "../../DetailHeader";
 
 interface IProps {
   data: IDataEpoch;

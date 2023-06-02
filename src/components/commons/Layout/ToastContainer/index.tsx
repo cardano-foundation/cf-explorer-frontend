@@ -6,7 +6,9 @@ import {
   MdOutlineWarningAmber
 } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { removeToast } from "../../../../stores/toast";
+
+import { removeToast } from "src/stores/toast";
+
 import { StyledAlert, StyledStack, StyledTitle } from "./styles";
 
 const ToastContainer: React.FC = () => {
@@ -33,7 +35,7 @@ const ToastContainer: React.FC = () => {
     <>
       <StyledStack spacing={2}>
         {toasts.map((item, idx) => {
-          const { id, severity, message, duration } = item;
+          const { id, severity, message } = item;
           const { title, color, background } = getProps(severity);
           return (
             <StyledAlert

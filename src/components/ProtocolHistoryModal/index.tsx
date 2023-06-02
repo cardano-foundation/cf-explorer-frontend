@@ -1,12 +1,14 @@
-import { API } from "../../commons/utils/api";
-import StyledModal from "../commons/StyledModal";
-import useFetch from "../../commons/hooks/useFetch";
-import { TProtocolItem } from "../../types/protocol";
-import { formatDateTime, getShortHash } from "../../commons/utils/helper";
-import { details } from "../../commons/routers";
-import { LinkComponent, ModalTitle, StyledTableCell, StyledTableHeadCell } from "./styles";
-import { Table, TableBody, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Table, TableBody, TableContainer, TableHead, TableRow } from "@mui/material";
+
+import { API } from "src/commons/utils/api";
+import StyledModal from "src/components/commons/StyledModal";
+import useFetch from "src/commons/hooks/useFetch";
+import { TProtocolItem } from "src/types/protocol";
+import { formatDateTime, getShortHash } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+
+import { LinkComponent, ModalTitle, StyledTableCell, StyledTableHeadCell } from "./styles";
 interface IProps {
   open: boolean;
   handleCloseModal: () => void;

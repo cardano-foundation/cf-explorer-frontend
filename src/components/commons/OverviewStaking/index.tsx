@@ -1,7 +1,9 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { AIconGreen, HashtagIcon, TimerIcon } from "../../../commons/resources";
-import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../commons/utils/helper";
+
+import { AIconGreen, HashtagIcon, TimerIcon } from "src/commons/resources";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+
 import { OverviewIcon, OverviewTitle, Card } from "./styles";
 import CustomIcon from "../CustomIcon";
 

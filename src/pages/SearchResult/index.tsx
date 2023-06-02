@@ -1,11 +1,12 @@
+import { useEffect, useState } from "react";
 import { Container, styled } from "@mui/material";
 import { parse } from "qs";
-import { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
-import { details } from "../../commons/routers";
 import CircularProgress from "@mui/material/CircularProgress";
-import defaultAxios from "../../commons/utils/axios";
-import NoRecord from "../../components/commons/NoRecord";
+import { useHistory, useLocation } from "react-router-dom";
+
+import { details } from "src/commons/routers";
+import defaultAxios from "src/commons/utils/axios";
+import NoRecord from "src/components/commons/NoRecord";
 
 const SearchResultContainer = styled(Container)`
   display: flex;

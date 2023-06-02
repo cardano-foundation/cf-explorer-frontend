@@ -1,11 +1,13 @@
+import React from "react";
 import { TabContext, TabPanel } from "@mui/lab";
 import { alpha, Box, Tab, useTheme } from "@mui/material";
-import React from "react";
-import { ReactComponent as UtxoIcon } from "src/commons/resources/images/utxoIcon.svg";
-import { TabListStyled, TabTitle } from "./styles";
-import TokenTransaction from "./TokenTransaction";
 import { useHistory, useParams } from "react-router-dom";
+
+import { ReactComponent as UtxoIcon } from "src/commons/resources/images/utxoIcon.svg";
 import { details } from "src/commons/routers";
+
+import TokenTransaction from "./TokenTransaction";
+import { TabListStyled, TabTitle } from "./styles";
 
 const ContractDetailContent: React.FC = () => {
   const { tabActive = "transaction", address } = useParams<{

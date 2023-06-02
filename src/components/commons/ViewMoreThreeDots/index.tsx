@@ -1,5 +1,4 @@
-import { Box, IconButton, styled } from "@mui/material";
-import { IconButtonProps } from "@mui/material";
+import { IconButtonProps, Box, IconButton, styled } from "@mui/material";
 import React, { forwardRef } from "react";
 
 export const Button = styled(IconButton)(({ theme }) => ({

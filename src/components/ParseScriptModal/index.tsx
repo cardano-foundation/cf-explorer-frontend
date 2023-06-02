@@ -1,7 +1,9 @@
 import { Box, useTheme, Modal } from "@mui/material";
 import { JsonViewer } from "@textea/json-viewer";
-import { ButtonClose, ModalContainer, ViewJson } from "./styles";
+
 import { CloseIcon } from "src/commons/resources";
+
+import { ButtonClose, ModalContainer, ViewJson } from "./styles";
 
 interface ParseScriptModalProps {
   open: boolean;

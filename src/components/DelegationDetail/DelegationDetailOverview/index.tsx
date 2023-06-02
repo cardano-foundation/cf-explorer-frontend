@@ -1,7 +1,7 @@
 import { Box, Grid, Skeleton } from "@mui/material";
 import React from "react";
 
-import { formatADAFull, formatPercent, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADAFull, formatPercent, numberWithCommas } from "src/commons/utils/helper";
 
 import { Item, StyledContainer, Title, Value } from "./styles";
 

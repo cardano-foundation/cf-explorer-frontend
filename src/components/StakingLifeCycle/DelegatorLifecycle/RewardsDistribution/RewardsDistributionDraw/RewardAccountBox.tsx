@@ -1,6 +1,9 @@
 import { BoxProps, Typography } from "@mui/material";
+import { forwardRef } from "react";
+
 import { RewardAccountIconUrl, WalletIconRewardGreen } from "src/commons/resources";
 import { formatADAFull } from "src/commons/utils/helper";
+
 import {
   ClickAbleButton,
   RewardAccountCcontainer,
@@ -9,7 +12,6 @@ import {
   RewardValueLabel,
   StyledAdaLogoIcon
 } from "./styles";
-import { forwardRef } from "react";
 
 export interface IRewardAccountBoxProps extends BoxProps {
   value?: number;

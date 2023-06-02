@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { footerMenus, menus } from "../../../../../commons/menus";
+import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import { useWindowSize } from "react-use";
+import { useSelector } from "react-redux";
+import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
+
+import { footerMenus, menus } from "src/commons/menus";
+import { isExtenalLink } from "src/commons/utils/helper";
+import { setSidebar } from "src/stores/user";
+import { RootState } from "src/stores/types";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+
+import FooterMenu from "../FooterMenu";
 import {
   Menu,
   MenuIcon,
@@ -11,16 +23,6 @@ import {
   SidebarMenuContainer,
   FooterMenuContainer
 } from "./styles";
-import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
-import { isExtenalLink } from "../../../../../commons/utils/helper";
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { Link, RouteComponentProps, withRouter } from "react-router-dom";
-import { useWindowSize } from "react-use";
-import { setSidebar } from "../../../../../stores/user";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../../stores/types";
-import FooterMenu from "../FooterMenu";
-import CustomTooltip from "../../../CustomTooltip";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const pathname = history.location.pathname;
@@ -82,7 +84,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     <ListItem
                       data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                       button
-                      onClick={(e) => window.open(href, "_blank")}
+                      onClick={() => window.open(href, "_blank")}
                       sx={(theme) => itemStyle(theme, sidebar)}
                     >
                       {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}

@@ -1,6 +1,7 @@
+import { useCallback, useEffect, useRef, useState } from "react";
 import axios, { AxiosInstance } from "axios";
 import qs from "qs";
-import { useCallback, useEffect, useRef, useState } from "react";
+
 import { authAxios, defaultAxios } from "../utils/axios";
 
 interface Params {

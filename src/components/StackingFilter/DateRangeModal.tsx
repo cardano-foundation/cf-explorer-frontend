@@ -1,9 +1,10 @@
+import React, { useEffect, useMemo, useState } from "react";
 import { Box, Button } from "@mui/material";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import moment from "moment";
-import React, { useEffect, useMemo, useState } from "react";
+
 import StyledModal from "../commons/StyledModal";
 import { DatePickerFooter, DateRangePickerContainer } from "./styles";
 

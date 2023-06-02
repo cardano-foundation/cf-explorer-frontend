@@ -15,7 +15,7 @@ export const Header = styled(Box)`
   padding-bottom: 8px;
 `;
 
-export const Img = styled("img")(({ theme }) => ({
+export const Img = styled("img")(() => ({
   paddingRight: "10px",
   width: "35px"
 }));
@@ -39,7 +39,7 @@ export const Item = styled(Box)(({ theme }) => ({
   padding: "10px 0px",
   borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`
 }));
-export const ItemBox = styled(Box)(({ theme }) => ({
+export const ItemBox = styled(Box)(() => ({
   "> *:last-child > div": {
     padding: "10px 0 0",
     borderBottom: "none"

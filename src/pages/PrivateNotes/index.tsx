@@ -1,4 +1,24 @@
 import { useEffect, useState } from "react";
+import { Box, Dialog, DialogActions, IconButton, DialogContentText } from "@mui/material";
+import { useLocation } from "react-router-dom";
+
+import { ReactComponent as QuestionConfirm } from "src/commons/resources/icons/questionConfirm.svg";
+import { ReactComponent as Plus } from "src/commons/resources/icons/plus.svg";
+import { formatDateTime, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import useFetchList from "src/commons/hooks/useFetchList";
+import AddPrivateNoteModal from "src/components/Account/AddPrivateNoteModal";
+import { Column } from "src/types/table";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { ReactComponent as Expand } from "src/commons/resources/icons/expand.svg";
+import { ReactComponent as Warning } from "src/commons/resources/icons/warning.svg";
+import { removePrivateNote } from "src/commons/utils/userRequest";
+import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
+import { details } from "src/commons/routers";
+import { ButtonClose } from "src/components/ScriptModal/styles";
+import { CloseIcon } from "src/commons/resources";
+import useToast from "src/commons/hooks/useToast";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import {
   ActionButton,
   AddButton,
@@ -11,25 +31,6 @@ import {
   StyledTable,
   Title
 } from "./styles";
-import { ReactComponent as QuestionConfirm } from "../../commons/resources/icons/questionConfirm.svg";
-import { ReactComponent as Plus } from "../../commons/resources/icons/plus.svg";
-import { formatDateTime, getPageInfo, getShortHash } from "../../commons/utils/helper";
-import useFetchList from "../../commons/hooks/useFetchList";
-import AddPrivateNoteModal from "../../components/Account/AddPrivateNoteModal";
-import { Column } from "../../types/table";
-import { useLocation } from "react-router-dom";
-import CustomTooltip from "../../components/commons/CustomTooltip";
-import { ReactComponent as Expand } from "../../commons/resources/icons/expand.svg";
-import { ReactComponent as Warning } from "../../commons/resources/icons/warning.svg";
-import { Box, Dialog, DialogActions, IconButton, DialogContentText } from "@mui/material";
-import { removePrivateNote } from "../../commons/utils/userRequest";
-import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
-import { details } from "../../commons/routers";
-
-import { ButtonClose } from "../../components/ScriptModal/styles";
-import { CloseIcon } from "../../commons/resources";
-import useToast from "../../commons/hooks/useToast";
-import { useScreen } from "src/commons/hooks/useScreen";
 
 type TAction = {
   onClick: () => void;

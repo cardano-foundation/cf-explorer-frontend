@@ -2,10 +2,12 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
-import ConnectedProfileOptionNormalLogin from ".";
-import { UserDataType } from "../../../types/user";
-import { routers } from "../../../commons/routers";
+
+import { UserDataType } from "src/types/user";
+import { routers } from "src/commons/routers";
 import { render } from "src/test-utils";
+
+import ConnectedProfileOptionNormalLogin from ".";
 
 const userData: UserDataType = {
   avatar: "",

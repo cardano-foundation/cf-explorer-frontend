@@ -1,25 +1,20 @@
-import { BoxProps, IconButton, Box } from "@mui/material";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortHash,
-  getShortWallet
-} from "../../../commons/utils/helper";
-import ADAicon from "../../commons/ADAIcon";
-
-import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useContext, useState } from "react";
-import CustomTooltip from "../../commons/CustomTooltip";
-import { StyledLink } from "../../share/styled";
-import { TableSubTitle } from "../../TabularView/StakeTab/styles";
-import { details } from "../../../commons/routers";
-import useFetchList from "../../../commons/hooks/useFetchList";
-import Table, { Column } from "../../commons/Table";
-import { API } from "../../../commons/utils/api";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import { BoxProps, IconButton, Box } from "@mui/material";
+
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { StyledLink } from "src/components/share/styled";
+import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
+import { details } from "src/commons/routers";
+import useFetchList from "src/commons/hooks/useFetchList";
+import Table, { Column } from "src/components/commons/Table";
+import { API } from "src/commons/utils/api";
+import { EyeIcon } from "src/commons/resources";
+import { RegistrationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Registration";
+
 import { StakingDetailContext } from "..";
-import { EyeIcon } from "../../../commons/resources";
-import { RegistrationCertificateModal } from "../../StakingLifeCycle/DelegatorLifecycle/Registration";
 
 interface IAdaValue extends BoxProps {
   value: number | string;
@@ -88,7 +83,7 @@ const StakingRegistrationTab = () => {
       title: "Certificate",
       key: "stakeId",
       minWidth: "120px",
-      render: (r) => (
+      render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
           <EyeIcon style={{ transform: "scale(.8)" }} />
         </IconButton>

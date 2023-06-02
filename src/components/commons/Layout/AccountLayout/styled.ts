@@ -1,7 +1,7 @@
 import { styled, Box, Container, alpha, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const Wrapper = styled(Container)(({ theme }) => ({}));
+export const Wrapper = styled(Container)(() => ({}));
 export const ContentBox = styled(Box)(({ theme }) => ({
   display: "flex",
   background: theme.palette.background.paper,

@@ -1,7 +1,9 @@
 import { screen } from "@testing-library/react";
-import PoollUpdatesList from ".";
-import { render } from "src/test-utils";
 import Router from "react-router";
+
+import { render } from "src/test-utils";
+
+import PoollUpdatesList from ".";
 
 describe("Pool Updates", () => {
   it("should render SPO PoollUpdatesList coponents", async () => {

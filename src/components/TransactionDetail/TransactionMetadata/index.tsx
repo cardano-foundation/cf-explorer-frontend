@@ -1,18 +1,9 @@
 import React, { useMemo, useRef } from "react";
 import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import "./index.css";
-import UTXO from "./UTXOs";
-import Summary from "./Summary";
-import Contracts from "./Contracts";
-import Collaterals from "./Collaterals";
-import Withdrawals from "./Withdrawals";
-import Delegations from "./Delegations";
-import Minting from "./Minting";
 import { useHistory, useParams } from "react-router-dom";
-import { details } from "../../../commons/routers";
-import { TitleTab } from "./styles";
-import PoolCertificate from "./PoolCertificate";
+
+import { details } from "src/commons/routers";
 import {
   CollateralIcon,
   ContractIcon,
@@ -25,7 +16,18 @@ import {
   SummaryIcon,
   UtxoIcon,
   WithdrawalIcon
-} from "../../../commons/resources";
+} from "src/commons/resources";
+
+import "./index.css";
+import UTXO from "./UTXOs";
+import Summary from "./Summary";
+import Contracts from "./Contracts";
+import Collaterals from "./Collaterals";
+import Withdrawals from "./Withdrawals";
+import Delegations from "./Delegations";
+import Minting from "./Minting";
+import { TitleTab } from "./styles";
+import PoolCertificate from "./PoolCertificate";
 import ProtocolUpdate from "./ProtocolUpdate";
 import StakeCertificate from "./StakeCertificate";
 
@@ -34,7 +36,7 @@ interface TransactionMetadataProps {
   loading: boolean;
 }
 
-const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data, loading }) => {
+const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
   let { tabActive = "summary" } = useParams<{ tabActive: keyof Transaction }>();
   const history = useHistory();
   const theme = useTheme();

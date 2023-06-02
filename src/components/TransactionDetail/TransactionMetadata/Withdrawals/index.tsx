@@ -1,14 +1,15 @@
 import React from "react";
 import { Box } from "@mui/material";
+
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
-import { AddressLink, Amount, ItemContainer, StatusIcon, StyledItem, Wrapper, Header } from "./styles";
-
 import { useScreen } from "src/commons/hooks/useScreen";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
+
+import { AddressLink, Amount, ItemContainer, StatusIcon, StyledItem, Wrapper, Header } from "./styles";
 
 interface WithdrawalsProps {
   data: Transaction["withdrawals"] | null;

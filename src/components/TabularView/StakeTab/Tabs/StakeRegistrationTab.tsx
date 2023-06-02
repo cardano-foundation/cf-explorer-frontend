@@ -1,6 +1,7 @@
 import { Box, BoxProps, IconButton, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { EyeIcon } from "../../../../commons/resources";
 import { details } from "../../../../commons/routers";
@@ -85,7 +86,7 @@ const StakeRegistrationTab = () => {
       title: "Certificate",
       key: "stakeId",
       minWidth: "120px",
-      render: (r) => (
+      render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
           <EyeIcon style={{ transform: "scale(.8)" }} />
         </IconButton>

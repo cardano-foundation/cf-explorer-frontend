@@ -1,8 +1,9 @@
 import { Box, Modal, ModalProps, SxProps } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
-import { useScreen } from "../../../commons/hooks/useScreen";
+
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import { CloseButton, ContentContainer, ModalContainer, WrapTitle } from "./styles";
-import { useSelector } from "react-redux";
 
 interface IProps extends ModalProps {
   handleCloseModal: () => void;

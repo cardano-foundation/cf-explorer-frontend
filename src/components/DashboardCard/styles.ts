@@ -1,5 +1,4 @@
 import { styled, Box } from "@mui/material";
-import breakpoints from "../../themes/breakpoints";
 
 export const CardContent = styled(Box)`
   display: flex;
@@ -54,7 +53,7 @@ export const Card = styled(Box)`
 `;
 
 export const IconContainer = styled(Box)(
-  ({ theme }) => `
+  () => `
     display: flex;
     flex-direction: column;
     justify-content: center;

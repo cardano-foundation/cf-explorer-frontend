@@ -1,8 +1,9 @@
 import { screen } from "@testing-library/react";
-import RecentDeregistration from ".";
+import Router from "react-router";
+
 import { render } from "src/test-utils";
 
-import Router from "react-router";
+import RecentDeregistration from ".";
 
 describe("RecentDeregistrations", () => {
   test("should render RecentDeregistration call mock api", async () => {

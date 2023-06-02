@@ -1,8 +1,22 @@
 import React, { useEffect } from "react";
 import { CgClose } from "react-icons/cg";
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
-import { BlockIcon, CubeIcon, RocketIcon } from "../../../commons/resources";
+import { BiChevronRight } from "react-icons/bi";
+import { useSelector } from "react-redux";
+import moment from "moment";
+
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { BlockIcon, CubeIcon, RocketIcon } from "src/commons/resources";
+import useFetch from "src/commons/hooks/useFetch";
+import { details } from "src/commons/routers";
+import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
+import { API } from "src/commons/utils/api";
+
 import ProgressCircle from "../ProgressCircle";
+import ViewMoreButton from "../ViewMoreButton";
+import CustomTooltip from "../CustomTooltip";
+import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
+import FormNowMessage from "../FormNowMessage";
 import {
   CloseButton,
   EpochNumber,
@@ -31,18 +45,6 @@ import {
   ViewDetailHeader,
   TimeDuration
 } from "./styles";
-import useFetch from "../../../commons/hooks/useFetch";
-import { BiChevronRight } from "react-icons/bi";
-import { details } from "../../../commons/routers";
-import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
-import ViewMoreButton from "../ViewMoreButton";
-import CustomTooltip from "../CustomTooltip";
-import { API } from "../../../commons/utils/api";
-import { useSelector } from "react-redux";
-import ViewAllButton from "../ViewAllButton";
-import ADAicon from "../ADAIcon";
-import FormNowMessage from "../FormNowMessage";
-import moment from "moment";
 
 type DetailViewEpochProps = {
   epochNo: number;

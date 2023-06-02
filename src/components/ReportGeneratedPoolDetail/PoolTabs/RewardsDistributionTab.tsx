@@ -1,16 +1,17 @@
-import { Box } from "@mui/material";
 import { useState } from "react";
+import { Box } from "@mui/material";
 import { useParams } from "react-router-dom";
-import Table, { Column } from "../../commons/Table";
-import { StyledLink } from "../../share/styled";
-import { details } from "../../../commons/routers";
-import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../commons/utils/helper";
-import { ADAValueLabel } from "../../StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
-import CustomIcon from "../../commons/CustomIcon";
-import { ADAsigntIC } from "../../../commons/resources";
-import CustomTooltip from "../../commons/CustomTooltip";
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { API } from "../../../commons/utils/api";
+
+import Table, { Column } from "src/components/commons/Table";
+import { StyledLink } from "src/components/share/styled";
+import { details } from "src/commons/routers";
+import { formatADAFull, formatDateTimeLocal, formatHash } from "src/commons/utils/helper";
+import { ADAValueLabel } from "src/components/StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
+import { ADAsigntIC } from "src/commons/resources";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
 
 const RewardsDistributionTab = () => {
   const { reportId = "" } = useParams<{ reportId: string }>();
