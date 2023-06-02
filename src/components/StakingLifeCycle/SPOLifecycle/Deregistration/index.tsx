@@ -1,7 +1,24 @@
-import { alpha, Box, Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
+import { useSelector } from "react-redux";
 import { useRef, useState, useMemo } from "react";
 import { useHistory } from "react-router-dom";
-import { BackIcon, AddressIcon, ADAGreen, TimeIcon } from "../../../../commons/resources";
+
+import { BackIcon, AddressIcon, ADAGreen, TimeIcon } from "src/commons/resources";
+import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { details } from "src/commons/routers";
+import CopyButton from "src/components/commons/CopyButton";
+import StyledModal from "src/components/commons/StyledModal";
+import SPOHolder from "src/components/commons/SPOHolder";
+import HoldBoxSPO from "src/components/commons/HoldBoxSPO";
+import FeeBoxSPO from "src/components/commons/FeeBoxSPO";
+import CardanoSystem from "src/components/commons/CardanoSystem";
+import { LineArrowItem } from "src/components/commons/LineArrow";
+import DrawPath from "src/components/commons/DrawPath";
+
+import { StyledLink } from "../styles";
+import { AditionalLabel } from "./RecentDeregistrations/styles";
+import RecentDeregistrations from "./RecentDeregistrations";
 import {
   CustomLink,
   DetailRetirement,
@@ -17,22 +34,6 @@ import {
   StyledCopyButton,
   StyledGridItem
 } from "./styles";
-import RecentDeregistrations from "./RecentDeregistrations";
-import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import moment from "moment";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import { details } from "../../../../commons/routers";
-import CopyButton from "../../../commons/CopyButton";
-import StyledModal from "../../../commons/StyledModal";
-import { StyledLink } from "../styles";
-import { useSelector } from "react-redux";
-import SPOHolder from "src/components/commons/SPOHolder";
-import HoldBoxSPO from "src/components/commons/HoldBoxSPO";
-import FeeBoxSPO from "src/components/commons/FeeBoxSPO";
-import CardanoSystem from "src/components/commons/CardanoSystem";
-import { LineArrowItem } from "src/components/commons/LineArrow";
-import DrawPath from "src/components/commons/DrawPath";
-import { AditionalLabel } from "./RecentDeregistrations/styles";
 
 const Deregistration = () => {
   const [selected, setSelected] = useState<SPODeregistration | null>(null);
@@ -187,7 +188,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill='#438F68' />
+            <AddressIcon fill="#438F68" />
             <CustomTooltip title={selected?.txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(selected?.txHash)}>
@@ -226,7 +227,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
                 />
               </Box>
             )}
-            <Box display='flex' justifyContent={isPoolHold ? "unset" : "center"}>
+            <Box display="flex" justifyContent={isPoolHold ? "unset" : "center"}>
               <FeeBoxSPO sidebar={sidebar} ref={feeRef} value={selected?.fee || ""} txHash={selected?.txHash || ""} />
             </Box>
           </BoxGroup>
@@ -256,7 +257,7 @@ export const DeregistrationCertificateModal = ({
   handleCloseModal: () => void;
 }) => {
   return (
-    <StyledModal {...props} title='Deregistration certificate'>
+    <StyledModal {...props} title="Deregistration certificate">
       <Grid container spacing={1}>
         <StyledGridItem item xs={6}>
           <Box>

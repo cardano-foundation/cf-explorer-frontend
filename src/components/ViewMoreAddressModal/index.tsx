@@ -1,6 +1,7 @@
 import React from "react";
+import { List } from "@mui/material";
+
 import StyledModal from "../commons/StyledModal";
-import { List, ListItem, ListItemText } from "@mui/material";
 import CopyButton from "../commons/CopyButton";
 import { ModalTitle, StyledListItem, StyledListItemText } from "./styles";
 import { formatHash } from "../../commons/utils/helper";

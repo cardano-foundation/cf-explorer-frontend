@@ -1,6 +1,8 @@
 import { Typography } from "@mui/material";
+
 import StyledModal from "../commons/StyledModal";
 import { ContentContainer, NormalDescription, WrapContent } from "./styles";
+
 interface Props {
   open: boolean;
   handleCloseModal: () => void;
@@ -9,7 +11,7 @@ export function OperatorRewards({ open, handleCloseModal }: Props) {
   return (
     <StyledModal
       contentStyle={{ paddingRight: "5px" }}
-      title='Operator rewards'
+      title="Operator rewards"
       handleCloseModal={handleCloseModal}
       open={open}
     >

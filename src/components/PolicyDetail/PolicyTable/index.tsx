@@ -1,16 +1,23 @@
+import React from "react";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Box, Tab, useTheme } from "@mui/material";
 import { stringify } from "qs";
-import React from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { ReactComponent as AssetHolderIcon } from "../../../commons/resources/icons/assetHolder.svg";
-import { ReactComponent as TokenIcon } from "../../../commons/resources/icons/tokenIcon.svg";
-import { details } from "../../../commons/routers";
-import { API } from "../../../commons/utils/api";
-import { formatDateTimeLocal, formatNumberDivByDecimals, getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
-import CustomTooltip from "../../commons/CustomTooltip";
-import Table, { Column } from "../../commons/Table";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
+import {
+  formatDateTimeLocal,
+  formatNumberDivByDecimals,
+  getPageInfo,
+  getShortWallet,
+  numberWithCommas
+} from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table, { Column } from "src/components/commons/Table";
+import { AssetHolderIcon, TokenIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+
 import { LinkComponent, StyledBoxContainer, StyledTabList, TitleTab } from "./styles";
 
 enum TABS {
@@ -48,7 +55,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     render: (r) => {
       const decimalToken = r?.metadata?.decimals || 0;
       return <Box component={"span"}>{formatNumberDivByDecimals(r?.supply, decimalToken)}</Box>;
-    },
+    }
   },
   {
     title: "Total Transactions",
@@ -141,7 +148,7 @@ const PolicyTable = () => {
                 value={key}
                 label={
                   <Box>
-                    <Box display={"flex"} alignItems='center'>
+                    <Box display={"flex"} alignItems="center">
                       <Icon fill={activeTab === key ? theme.palette.primary.main : theme.palette.text.hint} />
                       <TitleTab pl={1} active={activeTab === key}>
                         {label}

@@ -1,8 +1,9 @@
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import Router from "react-router";
+
+import { render } from "src/test-utils";
+import defaultAxios from "src/commons/utils/axios";
+
 import RecentDeregistrations from ".";
-import defaultAxios from "../../../../../commons/utils/axios";
-import { getShortHash } from "../../../../../commons/utils/helper";
 
 const txHash = "f0cc0767ea4cf06ce45a85db8f17f930576af1b06f327b8d9d5d25c17f962166";
 const time = new Date().toString();
@@ -21,23 +22,19 @@ const fakeUserResponse: SPODeregistration[] = [
   }
 ];
 
-afterEach(() => {
-  cleanup();
+beforeEach(() => {
+  jest.clearAllMocks();
 });
 
 test("check RecentDeregistrations call mock api", async () => {
   const onSelect = jest.fn();
+  jest.spyOn(Router, "useParams").mockReturnValue({ poolId: "1" });
   const mockFetchData = jest.spyOn(defaultAxios, "get").mockImplementation(async () => {
     return Promise.resolve({
       json: () => Promise.resolve(fakeUserResponse)
     });
   });
 
-  // render(<RecentDeregistrations onSelect={onSelect} />);
-  // expect(mockFetchData).toHaveBeenCalled();
-  // await waitFor(async() => {
-  //   expect(screen.getByText(getShortHash(txHash))).toBeInTheDocument();
-  //   await userEvent.click(screen.getByText(getShortHash(txHash)));
-  //   expect(onSelect).toHaveBeenCalled();
-  // });
+  render(<RecentDeregistrations onSelect={onSelect} />);
+  expect(mockFetchData).toHaveBeenCalled();
 });

@@ -1,7 +1,9 @@
 import { Box } from "@mui/material";
+
+import { getShortHash } from "src/commons/utils/helper";
+import { CopyIcon } from "src/commons/resources";
+
 import { AddressIconCustom, CopyContainer, HashText } from "./styles";
-import { getShortHash } from "../../../commons/utils/helper";
-import { CopyIcon } from "../../../commons/resources";
 
 interface TransactionHashProps {
   hash: string;

@@ -1,6 +1,7 @@
 import React from "react";
-import TransactionChart from "./TransactionChart";
 import { Grid } from "@mui/material";
+
+import TransactionChart from "./TransactionChart";
 
 const HomeTrending = () => {
   return (

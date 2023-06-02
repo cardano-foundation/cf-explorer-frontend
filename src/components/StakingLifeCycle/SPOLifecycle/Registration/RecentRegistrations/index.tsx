@@ -2,6 +2,9 @@
 import { Box, Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
+import { useUpdateEffect } from "react-use";
+import { useSelector } from "react-redux";
+
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
 import StackingFilter, { FilterParams } from "../../../../StackingFilter";
@@ -10,8 +13,6 @@ import { EmptyRecord, FooterTable } from "../../../../commons/Table";
 import { GridBox, WrapFilterDescription, StyledList, StyledContainer } from "./styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
 import { details } from "../../../../../commons/routers";
-import { useUpdateEffect } from "react-use";
-import { useSelector } from "react-redux";
 
 interface Props {
   onSelect: (registration: SPORegistration | null) => void;
@@ -43,7 +44,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, set
   useEffect(() => {
     const isNoFilter = !params?.fromDate && !params?.toDate && !params?.txHash && !params?.sort;
     if (initialized && data.length === 1 && isNoFilter) {
-      history.push(details.staking(poolId, "timeline", "registration", data?.[0]?.txHash));
+      history.replace(details.staking(poolId, "timeline", "registration", data?.[0]?.txHash));
     }
   }, [params, poolId]);
 
@@ -53,7 +54,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, set
   }, [txHash, data]);
 
   const handleSelect = (registration: SPORegistration) => {
-    history.push(details.spo(poolId, "timeline", "registration", registration.txHash));
+    history.replace(details.spo(poolId, "timeline", "registration", registration.txHash));
   };
   useUpdateEffect(() => {
     if (
@@ -97,7 +98,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, set
       <GridBox sidebar={+sidebar}>
         {loading &&
           [...new Array(12)].map((i, ii) => (
-            <Skeleton key={ii} style={{ borderRadius: 12 }} variant='rectangular' width={300} height={185} />
+            <Skeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
           ))}
 
         {!loading &&

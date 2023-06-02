@@ -1,17 +1,18 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import feeImg from "src/commons/resources/images/dola.svg";
+
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortHash, getShortWallet } from "src/commons/utils/helper";
-import { Header, Img, Item, ItemContent, ItemFooter, WrapInfo, WrapUTXOs } from "./styles";
 import { useScreen } from "src/commons/hooks/useScreen";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import CopyButton from "src/components/commons/CopyButton";
 import DropdownTokens from "src/components/commons/DropdownTokens";
+
+import { Header, Img, Item, ItemContent, ItemFooter, WrapInfo, WrapUTXOs } from "./styles";
 
 interface Props {
   data: Transaction["utxOs"] | null;
@@ -21,8 +22,8 @@ interface Props {
 const UTXO: React.FC<Props> = ({ data, fee }) => {
   return (
     <div>
-      <Card type='down' items={data?.inputs} />
-      <Card type='up' items={data?.outputs} fee={fee} />
+      <Card type="down" items={data?.inputs} />
+      <Card type="up" items={data?.outputs} fee={fee} />
     </div>
   );
 };
@@ -31,8 +32,7 @@ export default UTXO;
 
 const Card = ({
   type,
-  items,
-  fee
+  items
 }: {
   type: "up" | "down";
   items?: Required<Transaction>["utxOs"]["inputs"];
@@ -44,14 +44,14 @@ const Card = ({
       return prv + item.value;
     }, 0);
 
-  const { isTablet, isMobile } = useScreen();
+  const { isMobile } = useScreen();
   return (
     <Box textAlign={"left"} mb={1} sx={{ background: (theme) => theme.palette.background.paper }}>
-      <Header fontWeight='bold'>
-        <Box color={(theme) => theme.palette.text.dark} fontSize={"1rem"} lineHeight='19px' mb='2px'>
+      <Header fontWeight="bold">
+        <Box color={(theme) => theme.palette.text.dark} fontSize={"1rem"} lineHeight="19px" mb="2px">
           {type === "down" ? "Input" : "Output"}
         </Box>
-        <Box color={(theme) => theme.palette.text.hint} display='flex' justifyContent='space-between'>
+        <Box color={(theme) => theme.palette.text.hint} display="flex" justifyContent="space-between">
           <Box>Wallet Addresses</Box>
           <Box>Amount</Box>
         </Box>
@@ -60,23 +60,23 @@ const Card = ({
         {items?.map((item, index) => (
           <Item key={index}>
             <ItemContent sx={{ overflowX: "auto", overflowY: "hidden" }}>
-              <Box display='flex' alignItems='center'>
+              <Box display="flex" alignItems="center">
                 <Box width={50}>
-                  <Img src={type === "down" ? receiveImg : sendImg} alt='send icon' />
+                  <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />
                 </Box>
               </Box>
               <WrapInfo>
-                <Box width={"100%"} display='flex' flexDirection='column' justifyContent='center' paddingTop='5px'>
+                <Box width={"100%"} display="flex" flexDirection="column" justifyContent="center" paddingTop="5px">
                   {type === "down" ? (
                     <WrapUTXOs>
                       <Box mr={3} minWidth={200}>
-                        <Box display={"flex"} justifyContent='flex-start' alignItems={"center"}>
+                        <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
                           <Box pr={1}>UTXO:</Box>
                           <Link to={details.transaction(item.txHash)}>
                             <CustomTooltip title={item.txHash}>
                               <Box
                                 component={"span"}
-                                fontWeight='bold'
+                                fontWeight="bold"
                                 fontFamily={"var(--font-family-text)"}
                                 color={(theme) => theme.palette.secondary.main}
                                 mr={1}
@@ -89,24 +89,26 @@ const Card = ({
                         </Box>
                       </Box>
                     </WrapUTXOs>
-                  ) : <Box />}
-                  <Box display={"flex"} justifyContent='space-between' alignItems={"center"}>
-                    <Box display={"flex"} alignItems='center' justifyContent={"flex-start"} pr={1}>
+                  ) : (
+                    <Box />
+                  )}
+                  <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
+                    <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1}>
                       {type === "down" ? "From" : "To"}:
                     </Box>
-                    <Box display={"flex"} justifyContent='space-between' flex={"1"} alignItems={"center"}>
+                    <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"}>
                       <Box
                         display={"flex"}
-                        justifyContent='flex-start'
+                        justifyContent="flex-start"
                         alignItems={"center"}
-                        flexWrap='nowrap'
+                        flexWrap="nowrap"
                         width={"auto"}
                       >
                         <Link to={details.address(item.address)}>
                           <CustomTooltip title={item.address}>
                             <Box
                               color={(theme) => theme.palette.secondary.main}
-                              fontWeight='bold'
+                              fontWeight="bold"
                               fontFamily={"var(--font-family-text)"}
                               mr={1}
                             >
@@ -122,15 +124,15 @@ const Card = ({
                     <Box
                       justifyContent={"space-between"}
                       width={"100%"}
-                      display='flex'
+                      display="flex"
                       flexDirection={isMobile ? "column" : "row"}
-                      paddingTop='5px'
+                      paddingTop="5px"
                     >
                       <Box mr={3} minWidth={180}>
                         <Box
                           display={"flex"}
                           flexDirection={isMobile ? "column" : "row"}
-                          justifyContent='flex-start'
+                          justifyContent="flex-start"
                           alignItems={isMobile ? "flex-start" : "center"}
                         >
                           <Box pr={1}>Stake Address: </Box>
@@ -139,7 +141,7 @@ const Card = ({
                               <CustomTooltip title={item?.stakeAddress}>
                                 <Box
                                   component={"span"}
-                                  fontWeight='bold'
+                                  fontWeight="bold"
                                   fontFamily={"var(--font-family-text)"}
                                   color={(theme) => theme.palette.secondary.main}
                                   mr={1}
@@ -158,16 +160,16 @@ const Card = ({
                 <Box display={"flex"} alignItems={"end"} flexDirection={"column"}>
                   <Box
                     display={"flex"}
-                    justifyContent='flex-start'
+                    justifyContent="flex-start"
                     alignItems={"center"}
-                    flexWrap='nowrap'
+                    flexWrap="nowrap"
                     width={"auto"}
                   >
                     <Box
                       component={"span"}
-                      whiteSpace='nowrap'
+                      whiteSpace="nowrap"
                       color={(theme) => (type === "up" ? theme.palette.primary.main : theme.palette.error.main)}
-                      fontWeight='bold'
+                      fontWeight="bold"
                       mr={1}
                     >
                       {type === "down" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
@@ -190,7 +192,7 @@ const Card = ({
       <ItemFooter>
         <Box fontWeight={"bold"}>Total {type === "down" ? "Input" : "Output"}</Box>
         <div>
-          <Box fontWeight={"bold"} component='span' pr={1}>
+          <Box fontWeight={"bold"} component="span" pr={1}>
             {type === "down" ? `-${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}
           </Box>
           <ADAicon />

@@ -1,16 +1,16 @@
 import React, { useMemo, createContext } from "react";
-import { DeredistrationIcon, OperatorRewardIcon, PoolUpdateIcon, RegistrationIcon } from "../../commons/resources";
-import { ReactComponent as WalletIcon } from "../../commons/resources/icons/WalletOutline.svg";
+import { useParams } from "react-router-dom";
+
+import { DeredistrationIcon, OperatorRewardIcon, PoolUpdateIcon, RegistrationIcon } from "src/commons/resources";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import { ReactComponent as WalletIcon } from "src/commons/resources/icons/WalletOutline.svg";
 
 import StakeTab from "../TabularView/StakeTab";
-
 import DeregsitrationTab from "./PoolTabs/DeregsitrationTab";
 import PoolRegistrationTab from "./PoolTabs/PoolRegistrationTab";
 import ProtocolUpdateTab from "./PoolTabs/ProtocolUpdateTab";
 import RewardsDistributionTab from "./PoolTabs/RewardsDistributionTab";
-import { useParams } from "react-router-dom";
-import useFetch from "../../commons/hooks/useFetch";
-import { API } from "../../commons/utils/api";
 import PoolSizeTab from "./PoolTabs/PoolSizeTab";
 import { SkeletonUI } from "../TokenDetail/TokenAnalytics/styles";
 import { getPoolEventList } from "../PoolLifecycle";
@@ -95,14 +95,14 @@ const ReportGeneratedPoolDetailTabs = () => {
       }}
     >
       {reportDetail.loading ? (
-        <SkeletonUI variant='rectangular' style={{ height: "400px" }} />
+        <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
       ) : (
         <>
-          <CustomTooltip title={reportDetail.data?.reportHistory.reportName}>
-            <Headline collapsed={1}>{reportDetail.data?.reportHistory.reportName} </Headline>
+          <CustomTooltip title={`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")}>
+            <Headline collapsed={1}>{`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")} </Headline>
           </CustomTooltip>
-          <CustomTooltip title={reportDetail.data?.reportHistory.reportName}>
-            <Headline>{reportDetail.data?.reportHistory.reportName} </Headline>
+          <CustomTooltip title={`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")}>
+            <Headline>{`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")} </Headline>
           </CustomTooltip>
           <StakeTab tabs={displayedTabs} initTab={initTab} />
         </>

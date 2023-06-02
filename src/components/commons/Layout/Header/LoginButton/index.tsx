@@ -1,10 +1,12 @@
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { WalletIcon } from "../../../../../commons/resources";
-import { routers } from "../../../../../commons/routers";
-import { RootState } from "../../../../../stores/types";
-import ConnectedProfileOptionNormalLogin from "../../../ConnectedProfileOptionNormalLogin";
+
+import { WalletIcon } from "src/commons/resources";
+import { routers } from "src/commons/routers";
+import { RootState } from "src/stores/types";
+import ConnectedProfileOptionNormalLogin from "src/components/commons/ConnectedProfileOptionNormalLogin";
+
 import ConnectWallet from "../ConnectWallet";
 import { Image, Span, StyledButton } from "./styles";
 
@@ -37,9 +39,9 @@ const LoginButton = () => {
   }
 
   return (
-    <Box position='relative'>
-      <StyledButton type='button' onClick={handleClick}>
-        <Image src={WalletIcon} alt='wallet' />
+    <Box position="relative">
+      <StyledButton type="button" onClick={handleClick}>
+        <Image src={WalletIcon} alt="wallet" />
         <Span>Sign In</Span>
       </StyledButton>
     </Box>

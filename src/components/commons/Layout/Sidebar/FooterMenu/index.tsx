@@ -1,12 +1,13 @@
 import React from "react";
-import { socials } from "../../../../../commons/menus";
-import { List, styled, ListItem, SxProps, Theme } from "@mui/material";
+import { List, styled, ListItem, Theme } from "@mui/material";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../../stores/types";
 import { RiShareLine } from "react-icons/ri";
-import { setSidebar } from "../../../../../stores/user";
-import CustomTooltip from "../../../CustomTooltip";
 import { SystemStyleObject } from "@mui/system";
+
+import { socials } from "src/commons/menus";
+import { RootState } from "src/stores/types";
+import { setSidebar } from "src/stores/user";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 export const Menu = styled(List)<{ open: number; bottom: number }>`
   position: absolute;
@@ -98,10 +99,10 @@ const FooterMenu = ({ bottom = false }: TProps) => {
           <ListItem
             key={index}
             button
-            component='a'
+            component="a"
             href={href}
-            target='_blank'
-            rel='noreferrer'
+            target="_blank"
+            rel="noreferrer"
             title={title}
             sx={(theme) => itemStyle(theme, +sidebar, +bottom)}
           >
@@ -110,12 +111,12 @@ const FooterMenu = ({ bottom = false }: TProps) => {
         );
       })}
 
-      <CustomTooltip placement='right' title='Expand'>
+      <CustomTooltip placement="right" title="Expand">
         <ListItem
           button
-          component='a'
-          target='_blank'
-          rel='noreferrer'
+          component="a"
+          target="_blank"
+          rel="noreferrer"
           sx={(theme) => expandStyle(theme, +sidebar, +bottom)}
           onClick={() => setSidebar(true)}
         >

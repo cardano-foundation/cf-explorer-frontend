@@ -1,18 +1,20 @@
-import { Box, Button, MenuItem, Select } from "@mui/material";
+import { Box, MenuItem, Select } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { details } from "../../commons/routers";
-import { API } from "../../commons/utils/api";
-import { formatADAFull, getShortWallet, numberWithCommas } from "../../commons/utils/helper";
-import ADAicon from "../../components/commons/ADAIcon";
-import Card from "../../components/commons/Card";
-import CustomTooltip from "../../components/commons/CustomTooltip";
-import Table from "../../components/commons/Table";
-import { Column } from "../../types/table";
-import { Actions, PageSize, PerPage, StyledContainer, StyledLink, TimeDuration } from "./styles";
-import { REFRESH_TIMES } from "../../commons/utils/constants";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { formatADAFull, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
+import Card from "src/components/commons/Card";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table from "src/components/commons/Table";
+import { Column } from "src/types/table";
+import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+
+import { Actions, PageSize, PerPage, StyledContainer, StyledLink, TimeDuration } from "./styles";
 
 const perPages = [10, 20, 50, 100];
 
@@ -41,7 +43,7 @@ const TopDelegators = () => {
       title: "Stake key Addresses",
       minWidth: 120,
       key: "addresses",
-      render: (r, idx) => (
+      render: (r) => (
         <CustomTooltip title={r.stakeKey}>
           <StyledLink to={details.stake(r.stakeKey)}>{getShortWallet(r.stakeKey)}</StyledLink>
         </CustomTooltip>
@@ -50,7 +52,7 @@ const TopDelegators = () => {
     {
       title: "Pool",
       key: "pool",
-      render: (r, idx) => (
+      render: (r) => (
         <CustomTooltip title={r.poolName || r.poolId}>
           <StyledLink to={details.delegation(r.poolId)}>
             {r.poolName || `Pool [${getShortWallet(r.poolId)}]`}
@@ -61,7 +63,7 @@ const TopDelegators = () => {
     {
       title: "Stake amount",
       key: "Stakeamount",
-      render: (r, idx) => (
+      render: (r) => (
         <Box component={"span"}>
           {formatADAFull(r.balance)} <ADAicon />
         </Box>
@@ -71,7 +73,7 @@ const TopDelegators = () => {
 
   return (
     <StyledContainer>
-      <Card title='Top delegators'>
+      <Card title="Top delegators">
         <Actions>
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />

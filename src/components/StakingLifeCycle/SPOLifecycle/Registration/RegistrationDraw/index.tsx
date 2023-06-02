@@ -1,5 +1,19 @@
-import { Box } from "@mui/material";
 import { useRef, useMemo } from "react";
+import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { BackIcon, AddressIcon, ADAGreen, TimeIcon } from "src/commons/resources";
+import { LineArrowItem } from "src/components/commons/LineArrow";
+import DrawPath from "src/components/commons/DrawPath";
+import CardanoSystem from "src/components/commons/CardanoSystem";
+import { details } from "src/commons/routers";
+import SPOHolder from "src/components/commons/SPOHolder";
+
+import { StyledCopyButton } from "../../../SPOLifecycle/Registration/styles";
+import { StyledLink } from "../../styles";
 import {
   DrawContainer,
   BoxGroup,
@@ -13,18 +27,6 @@ import {
   StyledHoldBox,
   StyledFeeBox
 } from "./styles";
-import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../../../commons/utils/helper";
-import { useHistory } from "react-router-dom";
-import CustomTooltip from "../../../../commons/CustomTooltip";
-import { StyledCopyButton } from "../../../SPOLifecycle/Registration/styles";
-import { BackIcon, AddressIcon, ADAGreen, TimeIcon } from "src/commons/resources";
-import { LineArrowItem } from "src/components/commons/LineArrow";
-import DrawPath from "src/components/commons/DrawPath";
-import { useSelector } from "react-redux";
-import CardanoSystem from "src/components/commons/CardanoSystem";
-import { details } from "src/commons/routers";
-import { StyledLink } from "../../styles";
-import SPOHolder from "src/components/commons/SPOHolder";
 
 interface ISPOPropsData {
   poolName?: string;
@@ -113,7 +115,7 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
 
         <InfoGroup>
           <Info>
-            <AddressIcon fill='#438F68' />
+            <AddressIcon fill="#438F68" />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(data?.txHash)}>{getShortHash(txHash || "")}</StyledLink>

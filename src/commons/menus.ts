@@ -1,10 +1,10 @@
 import { FaDiscord, FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
+
 import {
   BlockChainMenuIcon,
   BrowseIcon,
   DelegatePoolMenuIcon,
-  MediumIcon,
   ResourcesIcon,
   StakingLifecycleIcon,
   ProtocolParameterIcon
@@ -52,7 +52,7 @@ export const menus: Menu[] = [
     icon: StakingLifecycleIcon,
     children: [
       { title: "Dashboard", href: routers.STAKING_LIFECYCLE },
-      { title: "Timeline", href: routers.STAKING_LIFECYCLE_SEARCH },
+      { title: "Timeline", href: routers.STAKING_LIFECYCLE_SEARCH }
     ]
   },
   {

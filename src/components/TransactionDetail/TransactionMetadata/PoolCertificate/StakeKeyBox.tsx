@@ -1,19 +1,19 @@
 import { Box, Grid } from "@mui/material";
+
 import CopyButton from "src/components/commons/CopyButton";
-import { TextLabel, TextNormal, TextRightValue, TextValue } from "./styles";
 import Link from "src/components/commons/Link";
 import { getShortHash, getShortWallet } from "src/commons/utils/helper";
 import { AdaValue } from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
 import { details } from "src/commons/routers";
-import { useScreen } from "src/commons/hooks/useScreen";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+
+import { TextLabel, TextRightValue, TextValue } from "./styles";
 
 type TProps = {
   data: TPoolCertificated;
 };
 
 const StakeKeyBox = ({ data }: TProps) => {
-  const { isGalaxyFoldSmall } = useScreen();
   const leftRow = [
     {
       label: "Pool Id",
@@ -63,13 +63,13 @@ const StakeKeyBox = ({ data }: TProps) => {
     <Box py={"15px"}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Box display='flex' flexDirection='column' gap='15px'>
+          <Box display="flex" flexDirection="column" gap="15px">
             {(leftRow || []).map(({ label, value, isHyperLink, originValue, linkTo, isMultipleValue }) => {
               return (
-                <Box key={label} display='flex' alignItems='flex-start'>
+                <Box key={label} display="flex" alignItems="flex-start">
                   <TextLabel>{label}: </TextLabel>
                   {isMultipleValue ? (
-                    <Box display='flex' flexDirection='column'>
+                    <Box display="flex" flexDirection="column">
                       {value.map((item, index) => (
                         <Box key={index} display={"flex"}>
                           <CustomTooltip title={item}>
@@ -95,10 +95,10 @@ const StakeKeyBox = ({ data }: TProps) => {
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Box display='flex' flexDirection='column' gap='15px'>
+          <Box display="flex" flexDirection="column" gap="15px">
             {(rightRow || []).map(({ label, value }) => {
               return (
-                <Box key={label} display='flex'>
+                <Box key={label} display="flex">
                   <TextLabel>{label}: </TextLabel>
                   <TextRightValue>{value}</TextRightValue>
                 </Box>

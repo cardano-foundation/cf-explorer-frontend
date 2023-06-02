@@ -1,17 +1,17 @@
-import { Box, styled } from "@mui/material";
 import { useState } from "react";
-import Table, { Column } from "../../commons/Table";
-import { Amount, Status, TextAmountReward } from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
-import CustomIcon from "../../commons/CustomIcon";
-import { ADAsigntIC, AIconGreen } from "../../../commons/resources";
-import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../commons/utils/helper";
-import { StyledLink } from "../../share/styled";
-import { details } from "../../../commons/routers";
-
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { API } from "../../../commons/utils/api";
+import { Box, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { ADAValueLabel } from "../../StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
+
+import Table, { Column } from "src/components/commons/Table";
+import { Amount, Status } from "src/components/StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
+import { ADAsigntIC, AIconGreen } from "src/commons/resources";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import { StyledLink } from "src/components/share/styled";
+import { details } from "src/commons/routers";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
+import { ADAValueLabel } from "src/components/StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
 
 const trxType = {
   SENT: "ADA sent from wallet",
@@ -41,12 +41,12 @@ const WalletActitityTab = () => {
       key: "outSum",
       minWidth: "100px",
       render: (r) => (
-        <Box display='flex' alignItems='center'>
+        <Box display="flex" alignItems="center">
           <Amount type={r.amount > 0 ? "up" : "down"}>
             {r.amount > 0 ? "+" : ""}
             {formatADAFull(r.amount)}
           </Amount>
-          <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
+          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
         </Box>
       )
     },
@@ -94,7 +94,7 @@ const WalletActitityTab = () => {
     <Box mt={2}>
       <StyledTable
         {...fetchData}
-        tableTitle=''
+        tableTitle=""
         columns={columns}
         total={{ title: "Total Epochs", count: fetchData.total }}
         pagination={{

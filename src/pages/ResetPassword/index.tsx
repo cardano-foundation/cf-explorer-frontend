@@ -1,9 +1,11 @@
 import { Box, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
 import { useEffect, useReducer, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { FailIcon, HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
-import { routers } from "../../commons/routers";
-import { resetPassword } from "../../commons/utils/userRequest";
+
+import { FailIcon, HideIcon, LockIcon, ShowIcon } from "src/commons/resources";
+import { routers } from "src/commons/routers";
+import { resetPassword } from "src/commons/utils/userRequest";
+
 import {
   Container,
   FormHelperTextCustom,
@@ -168,10 +170,10 @@ export default function ResetPassword() {
                       <LockIcon />
                     </Box>
                   }
-                  name='password'
+                  name="password"
                   endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton aria-label='toggle password visibility' onClick={handleTogglePassword}>
+                    <InputAdornment position="end">
+                      <IconButton aria-label="toggle password visibility" onClick={handleTogglePassword}>
                         {showPassword ? <ShowIcon /> : <HideIcon />}
                       </IconButton>
                     </InputAdornment>
@@ -179,7 +181,7 @@ export default function ResetPassword() {
                   onChange={handleChange}
                   fullWidth
                   type={showPassword ? "text" : "password"}
-                  placeholder='New Password'
+                  placeholder="New Password"
                   error={Boolean(formData.password.error && formData.password.touched)}
                 />
                 {formData.password.error && formData.password.touched ? (
@@ -195,31 +197,31 @@ export default function ResetPassword() {
                     </Box>
                   }
                   fullWidth
-                  name='confirmPassword'
+                  name="confirmPassword"
                   onChange={handleChange}
                   type={showConfirmPassword ? "text" : "password"}
                   endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton aria-label='toggle password visibility' onClick={handleToggleConfirmPassword}>
+                    <InputAdornment position="end">
+                      <IconButton aria-label="toggle password visibility" onClick={handleToggleConfirmPassword}>
                         {showConfirmPassword ? <ShowIcon /> : <HideIcon />}
                       </IconButton>
                     </InputAdornment>
                   }
-                  placeholder='Confirm Password'
+                  placeholder="Confirm Password"
                   error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
                 />
                 {formData.confirmPassword.error && formData.confirmPassword.touched ? (
                   <FormHelperText error>{formData.confirmPassword.error}</FormHelperText>
                 ) : null}
               </WrapInput>
-              <WrapButton variant='contained' fullWidth onClick={handleSubmit} disabled={loading}>
+              <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={loading}>
                 Submit
               </WrapButton>
             </WrapForm>
           ) : !error ? (
             <WrapForm>
               <Label>Your password has been reset successfully</Label>
-              <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.SIGN_IN)}>
+              <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
                 Sign In
               </WrapButton>
             </WrapForm>
@@ -231,7 +233,7 @@ export default function ResetPassword() {
                 <Label mb={1}>There's been an error in the verify process</Label>
                 <Label>This URL is either incorrect or has expired.</Label>
               </Box>
-              <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.HOME)}>
+              <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.HOME)}>
                 Go to Dashboard
               </WrapButton>
             </WrapForm>

@@ -1,5 +1,4 @@
 import { Button, alpha, Box, Container, IconButton, styled } from "@mui/material";
-
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
@@ -23,7 +22,7 @@ export const BoxContainerStyled = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const LifeCycleHeader = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const LifeCycleHeader = styled(Box)<{ sidebar?: number }>(() => ({
   textAlign: "left"
 }));
 
@@ -44,7 +43,7 @@ export const AddressLine = styled(Box)(({ theme }) => ({
   color: theme.palette.text.secondary
 }));
 
-export const Label = styled("small")(({ theme }) => ({
+export const Label = styled("small")(() => ({
   lineHeight: 1
 }));
 

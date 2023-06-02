@@ -1,8 +1,22 @@
 import React, { useState } from "react";
 import { Backdrop, Box, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import moment from "moment";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { BiChevronDown } from "react-icons/bi";
+
+import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { details } from "src/commons/routers";
+import { RootState } from "src/stores/types";
+import { EmptyIcon, SearchIcon } from "src/commons/resources";
+import { formatDateTimeLocal, getShortHash, numberWithCommas } from "src/commons/utils/helper";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import ProgressCircle from "../ProgressCircle";
+import Bookmark from "../BookmarkIcon";
+import CustomTooltip from "../CustomTooltip";
+import FormNowMessage from "../FormNowMessage";
 import {
   BackButton,
   BackText,
@@ -31,17 +45,6 @@ import {
   EpochDetail,
   TimeDuration
 } from "./styles";
-import { details } from "../../../commons/routers";
-import Bookmark from "../BookmarkIcon";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../stores/types";
-import { useHistory } from "react-router-dom";
-import { EmptyIcon, SearchIcon } from "../../../commons/resources";
-import { BiChevronDown } from "react-icons/bi";
-import { getShortHash, numberWithCommas } from "../../../commons/utils/helper";
-import { useScreen } from "../../../commons/hooks/useScreen";
-import CustomTooltip from "../CustomTooltip";
-import FormNowMessage from "../FormNowMessage";
 
 interface DetailHeaderProps {
   type: Bookmark["type"];
@@ -115,7 +118,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
         )}
         <HeaderContainer>
           <HeaderTitle>
-            <HeaderTitleSkeleton variant='rectangular' />
+            <HeaderTitleSkeleton variant="rectangular" />
           </HeaderTitle>
         </HeaderContainer>
         <DetailsInfo container items_length={numberOfItems}>
@@ -131,10 +134,10 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                 key={index}
                 isDetailToken={isDetailToken}
               >
-                <IconSkeleton variant='circular' />
-                <DetailValueSkeleton variant='rectangular' />
+                <IconSkeleton variant="circular" />
+                <DetailValueSkeleton variant="rectangular" />
                 <ValueCard>
-                  <DetailLabelSkeleton variant='rectangular' />
+                  <DetailLabelSkeleton variant="rectangular" />
                 </ValueCard>
               </CardItem>
             );
@@ -147,7 +150,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
   return (
     <HeaderDetailContainer>
       <WrapHeader>
-        <Box width='100%'>
+        <Box width="100%">
           {isHideButtonBack === true ? null : (
             <BackButton onClick={history.goBack}>
               <HiArrowLongLeft />
@@ -179,12 +182,18 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           </TimeDuration>
         </Box>
         {epoch ? (
-          <EpochDetail class-name='123'>
+          <EpochDetail class-name="123">
             <ProgressCircle
               size={100}
               pathWidth={8}
               percent={
-                currentEpoch && (epoch?.no || 0) < currentEpoch?.no ? 100 : ((epoch?.slot || 0) / MAX_SLOT_EPOCH) * 100
+                currentEpoch && (epoch?.no || 0) === currentEpoch?.no
+                  ? ((moment(formatDateTimeLocal(epoch?.endTime || "")).diff(moment()) > 0
+                      ? epoch?.slot
+                      : MAX_SLOT_EPOCH) /
+                      MAX_SLOT_EPOCH) *
+                    100
+                  : 100
               }
             >
               <EpochNumber is_epoch={+(type === "EPOCH")} to={details.epoch(epoch.no || 0)}>
@@ -211,8 +220,8 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               key={index}
               isDetailToken={isDetailToken}
             >
-              <Box position='relative' display={item.hideHeader ? "none" : ""}>
-                <img src={item.icon} alt='' height={20} />
+              <Box position="relative" display={item.hideHeader ? "none" : ""}>
+                <img src={item.icon} alt="" height={20} />
                 {item.allowSearch && keyItem && (
                   <AllowSearchButton
                     onClick={() => {

@@ -1,15 +1,16 @@
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import { details } from "../../../commons/routers";
-import { formatDateTimeLocal, getPageInfo } from "../../../commons/utils/helper";
-import { AdaValue } from "../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
-import Table, { Column } from "../../commons/Table";
-import { StyledLink } from "../../share/styled";
 import { useState } from "react";
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { FilterParams } from "../../StackingFilter";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { Box } from "@mui/material";
-import { WrapFilterDescription } from "../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
-import { API } from "../../../commons/utils/api";
+
+import { details } from "src/commons/routers";
+import { formatDateTimeLocal, getPageInfo } from "src/commons/utils/helper";
+import { AdaValue } from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import Table, { Column } from "src/components/commons/Table";
+import { StyledLink } from "src/components/share/styled";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { FilterParams } from "src/components/StackingFilter";
+import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
+import { API } from "src/commons/utils/api";
 
 const columns: Column<RewardDistributionItem>[] = [
   {
@@ -37,7 +38,7 @@ const RewardsDistributionTab = () => {
   const { search } = useLocation();
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
-  const [params, setParams] = useState<FilterParams>({
+  const [params] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
     toDate: undefined,
@@ -47,11 +48,11 @@ const RewardsDistributionTab = () => {
     ...pageInfo,
     ...params
   });
-  const { total, data } = fetchData;
+  const { total } = fetchData;
 
   return (
     <>
-      <Box display='flex' alignItems='center' justifyContent='space-between' mt={3}>
+      <Box display="flex" alignItems="center" justifyContent="space-between" mt={3}>
         <Box />
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>

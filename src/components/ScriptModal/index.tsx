@@ -1,13 +1,13 @@
-import { Box, Skeleton, useTheme, Modal } from "@mui/material";
-
+import { Box, Skeleton, useTheme } from "@mui/material";
 import { JsonViewer } from "@textea/json-viewer";
-import { ButtonClose, ButtonLink, ModalContainer, ViewJson } from "./styles";
-import closeIcon from "../../commons/resources/icons/closeIcon.svg";
-import CopyButton from "../commons/CopyButton";
-import useFetch from "../../commons/hooks/useFetch";
-import { details } from "../../commons/routers";
-import { API } from "../../commons/utils/api";
-import StyledModal from "../commons/StyledModal";
+
+import CopyButton from "src/components/commons/CopyButton";
+import useFetch from "src/commons/hooks/useFetch";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import StyledModal from "src/components/commons/StyledModal";
+
+import { ButtonLink, ViewJson } from "./styles";
 
 interface ScriptModalProps {
   open: boolean;
@@ -23,16 +23,16 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
         <Box
           textAlign={"left"}
           color={({ palette }) => palette.grey[700]}
-          fontSize='1.5rem'
-          fontWeight='bold'
+          fontSize="1.5rem"
+          fontWeight="bold"
           fontFamily={'"Roboto", sans-serif '}
         >
           Policy ID
         </Box>
         <Box display={"flex"} flexDirection={"column"} gap={2} mt={2}>
           {loading && (
-            <Box height={40} width='100%' borderRadius={10} overflow='hidden'>
-              <Skeleton height={"100%"} width='100%' variant='rectangular' />
+            <Box height={40} width="100%" borderRadius={10} overflow="hidden">
+              <Skeleton height={"100%"} width="100%" variant="rectangular" />
             </Box>
           )}
           {!loading && (
@@ -42,8 +42,8 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
             </Box>
           )}
           {loading && (
-            <Box height={20} width='100%' borderRadius={10} overflow='hidden'>
-              <Skeleton height={"100%"} width='100%' variant='rectangular' />
+            <Box height={20} width="100%" borderRadius={10} overflow="hidden">
+              <Skeleton height={"100%"} width="100%" variant="rectangular" />
             </Box>
           )}
           {!loading && (
@@ -51,15 +51,15 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
               <Box component={"span"} color={({ palette }) => palette.grey[500]}>
                 Total Token:
               </Box>
-              <Box component={"span"} ml={2} fontWeight='bold' color={({ palette }) => palette.common.black}>
+              <Box component={"span"} ml={2} fontWeight="bold" color={({ palette }) => palette.common.black}>
                 {data?.totalToken || 0}
               </Box>
             </Box>
           )}
 
           {loading && (
-            <Box height={150} width='100%' borderRadius={10} overflow='hidden'>
-              <Skeleton height={"100%"} width='100%' variant='rectangular' />
+            <Box height={150} width="100%" borderRadius={10} overflow="hidden">
+              <Skeleton height={"100%"} width="100%" variant="rectangular" />
             </Box>
           )}
           {!loading && (

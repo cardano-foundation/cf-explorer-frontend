@@ -1,22 +1,24 @@
-import { stringify } from "qs";
 import React, { useEffect, useRef, useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { details, routers } from "../../commons/routers";
-import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "../../commons/utils/helper";
-import Card from "../../components/commons/Card";
-import CustomTooltip from "../../components/commons/CustomTooltip";
-import DetailViewStakeKey from "../../components/commons/DetailView/DetailViewStakeKey";
-import Table, { Column } from "../../components/commons/Table";
-import { setOnDetailView } from "../../stores/user";
-import { StyledContainer, StyledLink, StyledTab, StyledTabs, TabLabel, TimeDuration } from "./styles";
-import { API } from "../../commons/utils/api";
-import NoRecord from "../../components/commons/NoRecord";
-import SelectedIcon from "../../components/commons/SelectedIcon";
-import { REFRESH_TIMES } from "../../commons/utils/constants";
-import { useScreen } from "../../commons/hooks/useScreen";
+import { stringify } from "qs";
 import { Box } from "@mui/material";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { details, routers } from "src/commons/routers";
+import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import Card from "src/components/commons/Card";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import DetailViewStakeKey from "src/components/commons/DetailView/DetailViewStakeKey";
+import Table, { Column } from "src/components/commons/Table";
+import { setOnDetailView } from "src/stores/user";
+import { API } from "src/commons/utils/api";
+import NoRecord from "src/components/commons/NoRecord";
+import SelectedIcon from "src/components/commons/SelectedIcon";
+import { REFRESH_TIMES } from "src/commons/utils/constants";
+import { useScreen } from "src/commons/hooks/useScreen";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+
+import { StyledContainer, StyledLink, StyledTab, StyledTabs, TabLabel, TimeDuration } from "./styles";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",
@@ -110,7 +112,7 @@ const Stake = () => {
 
   return (
     <StyledContainer>
-      <Box className='stake-list'>
+      <Box className="stake-list">
         <Card>
           <StyledTabs
             value={poolType}

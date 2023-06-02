@@ -1,6 +1,7 @@
 import { Box, BoxProps, IconButton, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { EyeIcon } from "../../../../commons/resources";
 import { details } from "../../../../commons/routers";
@@ -19,7 +20,7 @@ interface IAdaValue extends BoxProps {
 
 export const AdaValue = ({ value, gap = "8px", fontSize, color, limit, ...props }: IAdaValue) => {
   return (
-    <Box {...props} color={color} display='flex' alignItems='center' gap={gap} fontSize={fontSize}>
+    <Box {...props} color={color} display="flex" alignItems="center" gap={gap} fontSize={fontSize}>
       {formatADAFull(value, limit)}
       <ADAicon style={{ color }} fontSize={fontSize} />
     </Box>
@@ -72,10 +73,10 @@ const StakeRegistrationTab = () => {
         <Box>
           <AdaValue limit={5} value={r.deposit + r.fee} />
           <TableSubTitle>
-            <Box display='flex' mt={1} alignItems='center' lineHeight='1'>
-              <AdaValue limit={1} value={r.deposit} color={theme.palette.grey[400]} gap='3px' fontSize='12px' />
+            <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+              <AdaValue limit={1} value={r.deposit} color={theme.palette.grey[400]} gap="3px" fontSize="12px" />
               <Box mx={1}>/</Box>
-              <AdaValue value={r.fee} color={theme.palette.grey[400]} gap='3px' fontSize='12px' />
+              <AdaValue value={r.fee} color={theme.palette.grey[400]} gap="3px" fontSize="12px" />
             </Box>
           </TableSubTitle>
         </Box>
@@ -85,7 +86,7 @@ const StakeRegistrationTab = () => {
       title: "Certificate",
       key: "stakeId",
       minWidth: "120px",
-      render: (r) => (
+      render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
           <EyeIcon style={{ transform: "scale(.8)" }} />
         </IconButton>

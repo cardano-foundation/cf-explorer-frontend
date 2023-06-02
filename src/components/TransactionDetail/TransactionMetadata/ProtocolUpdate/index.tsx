@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Column } from "src/components/commons/Table";
-import { TableProtocol } from "./styles";
 import { Box, Button } from "@mui/material";
+
+import { Column } from "src/components/commons/Table";
 import ParseScriptModal from "src/components/ParseScriptModal";
+
+import { TableProtocol } from "./styles";
 
 interface IProps {
   data: TProtocolMerge[];
@@ -25,7 +27,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
       isHiddenBorder: true,
       key: "previousValue",
       minWidth: "40px",
-      render: (r, index) => {
+      render: (r) => {
         return (
           <Box
             component={r.protocol === "costModel" ? Button : Box}
@@ -52,7 +54,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
       key: "updatedValue",
       minWidth: "40px",
       isHiddenBorder: true,
-      render: (r, index) => {
+      render: (r) => {
         return (
           <Box
             component={r.protocol === "costModel" ? Button : Box}
@@ -83,7 +85,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
         open={!!costModelScript}
         onClose={() => setCostModelScript("")}
         script={costModelScript}
-        title='CostModel'
+        title="CostModel"
       />
     </>
   );

@@ -1,9 +1,21 @@
 import { useHistory, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { useTheme } from "@emotion/react";
 
-import { getShortWallet } from "../../commons/utils/helper";
-import CopyButton from "../../components/commons/CopyButton";
-import SPOLifecycleComponent from "../../components/StakingLifeCycle/SPOLifecycle";
+import { getShortWallet } from "src/commons/utils/helper";
+import CopyButton from "src/components/commons/CopyButton";
+import SPOLifecycleComponent from "src/components/StakingLifeCycle/SPOLifecycle";
+import ReportComposerModal from "src/components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
+import Tabular from "src/components/StakingLifeCycle/SPOLifecycle/Tablular";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { details } from "src/commons/routers";
+import useAuth from "src/commons/hooks/useAuth";
+import { API } from "src/commons/utils/api";
+import useFetch from "src/commons/hooks/useFetch";
+import PoolDetailContext from "src/components/StakingLifeCycle/SPOLifecycle/PoolDetailContext";
+import NoRecord from "src/components/commons/NoRecord";
+import { ChartMode, TableMode } from "src/commons/resources";
 
 import {
   BoxContainerStyled,
@@ -20,20 +32,6 @@ import {
   StyledContainer,
   Label
 } from "./styles";
-
-import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staking/ChartMode.svg";
-import { ReactComponent as TableMode } from "../../commons/resources/icons/Staking/TableMode.svg";
-import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
-import Tabular from "../../components/StakingLifeCycle/SPOLifecycle/Tablular";
-import CustomTooltip from "../../components/commons/CustomTooltip";
-import { details } from "../../commons/routers";
-import useAuth from "src/commons/hooks/useAuth";
-import { useSelector } from "react-redux";
-import { useTheme } from "@emotion/react";
-import { API } from "src/commons/utils/api";
-import useFetch from "src/commons/hooks/useFetch";
-import PoolDetailContext from "src/components/StakingLifeCycle/SPOLifecycle/PoolDetailContext";
-import NoRecord from "src/components/commons/NoRecord";
 
 interface Params {
   poolId: string;

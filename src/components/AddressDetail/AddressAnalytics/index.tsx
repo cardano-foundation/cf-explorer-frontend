@@ -2,6 +2,17 @@ import React, { useState } from "react";
 import { Box, Grid, useTheme } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
+import moment from "moment";
+import { useParams } from "react-router-dom";
+import { BigNumber } from "bignumber.js";
+
+import useFetch from "src/commons/hooks/useFetch";
+import Card from "src/components/commons/Card";
+import { formatADAFull, formatPrice } from "src/commons/utils/helper";
+import { HighestIcon, LowestIcon } from "src/commons/resources";
+import { API } from "src/commons/utils/api";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import {
   BoxInfo,
   BoxInfoItem,
@@ -15,15 +26,6 @@ import {
   ValueInfo,
   Wrapper
 } from "./styles";
-import moment from "moment";
-import { useParams } from "react-router-dom";
-import useFetch from "../../../commons/hooks/useFetch";
-import Card from "../../commons/Card";
-import { formatADAFull, formatPrice } from "../../../commons/utils/helper";
-import { HighestIcon, LowestIcon } from "../../../commons/resources";
-import { BigNumber } from "bignumber.js";
-import { API } from "../../../commons/utils/api";
-import { useScreen } from "src/commons/hooks/useScreen";
 
 type AnalyticsData = { date: string; value: number };
 
@@ -52,10 +54,10 @@ const AddressAnalytics: React.FC = () => {
   const maxBalance = Math.max(...(balance || []), 0);
 
   return (
-    <Card title='Analytics'>
-      <Wrapper container columns={24} spacing='35px'>
+    <Card title="Analytics">
+      <Wrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
-          <Grid spacing={2} container alignItems='center' justifyContent={"space-between"}>
+          <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
             <Grid item xs={4} sm={6}>
               <ButtonTitle>Balance</ButtonTitle>
             </Grid>
@@ -71,7 +73,7 @@ const AddressAnalytics: React.FC = () => {
           </Grid>
           <ChartBox>
             {loading ? (
-              <SkeletonUI variant='rectangular' style={{ height: "400px" }} />
+              <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
               <Box position={"relative"}>
                 <HighchartsReact
@@ -143,11 +145,11 @@ const AddressAnalytics: React.FC = () => {
               <BoxInfoItemRight display={"flex"} justifyContent={"center"}>
                 <Box>
                   <Box minHeight={"90px"}>
-                    <img src={HighestIcon} alt='heighest icon' />
+                    <img src={HighestIcon} alt="heighest icon" />
                     <Title>Highest Balance</Title>
                   </Box>
                   <ValueInfo>
-                    {balanceLoading ? <SkeletonUI variant='rectangular' /> : formatADAFull(maxBalance)}
+                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance)}
                   </ValueInfo>
                 </Box>
               </BoxInfoItemRight>
@@ -156,11 +158,11 @@ const AddressAnalytics: React.FC = () => {
               <BoxInfoItem display={"flex"} justifyContent={"center"}>
                 <Box>
                   <Box minHeight={"90px"}>
-                    <img src={LowestIcon} alt='lowest icon' />
+                    <img src={LowestIcon} alt="lowest icon" />
                     <Title>Lowest Balance</Title>
                   </Box>
                   <ValueInfo>
-                    {balanceLoading ? <SkeletonUI variant='rectangular' /> : formatADAFull(minBalance)}
+                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance)}
                   </ValueInfo>
                 </Box>
               </BoxInfoItem>

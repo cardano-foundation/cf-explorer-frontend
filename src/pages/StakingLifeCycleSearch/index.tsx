@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Box, styled, Button } from "@mui/material";
-import { HeaderSearchIcon } from "../../commons/resources";
-import { ReactComponent as Search } from "../../commons/resources/icons/Staking/Search.svg";
 import { useHistory } from "react-router-dom";
+import { Box, styled, Button } from "@mui/material";
+
+import { HeaderSearchIcon } from "src/commons/resources";
+import { ReactComponent as Search } from "src/commons/resources/icons/Staking/Search.svg";
 import { details } from "src/commons/routers";
 
 const StakingLifeCycleSearch = () => {
@@ -34,7 +35,7 @@ const StakingLifeCycleSearch = () => {
       <Box>
         <SearchContainer mx={"auto"}>
           <StyledInput
-            placeholder='Search Stake key, Pools'
+            placeholder="Search Stake key, Pools"
             onChange={(e) => {
               setValue(e.target.value);
               setError("");
@@ -47,7 +48,7 @@ const StakingLifeCycleSearch = () => {
             }}
           />
           <SubmitButton onClick={hanldeSearch}>
-            <Image src={HeaderSearchIcon} alt='Search' />
+            <Image src={HeaderSearchIcon} alt="Search" />
           </SubmitButton>
         </SearchContainer>
         <Box color={({ palette }) => palette.red[700]}>{error}</Box>

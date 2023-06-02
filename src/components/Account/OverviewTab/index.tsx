@@ -1,5 +1,39 @@
-import { Box, CircularProgress, Input, useTheme } from "@mui/material";
 import { ReactElement, useEffect, useState } from "react";
+import { Box, CircularProgress, Input, useTheme } from "@mui/material";
+import { useSelector } from "react-redux";
+import moment from "moment";
+import { useHistory } from "react-router-dom";
+import { GoCheck } from "react-icons/go";
+import { IoMdClose } from "react-icons/io";
+import { NetworkType, isWalletInstalled, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { MdOutlineFileDownload } from "react-icons/md";
+
+import { getShortWallet, regexEmail } from "src/commons/utils/helper";
+import { editInfo, getInfo } from "src/commons/utils/userRequest";
+import { NETWORK, NETWORKS, NETWORK_TYPES, SUPPORTED_WALLETS } from "src/commons/utils/constants";
+import StorageUtils from "src/commons/utils/storage";
+import { setUserData } from "src/stores/user";
+import {
+  GroupFlex,
+  InstallButton,
+  Title,
+  WalletIcon,
+  WalletItem,
+  WalletName
+} from "src/components/commons/ConnectWalletModal/style";
+import StyledModal from "src/components/commons/StyledModal";
+import useToast from "src/commons/hooks/useToast";
+import { SupportedWallets, Wallet } from "src/types/user";
+import { StyledDarkLoadingButton } from "src/components/share/styled";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { ReactComponent as Edit } from "src/commons/resources/icons/pen.svg";
+import { ReactComponent as Search } from "src/commons/resources/icons/search.svg";
+import questionConfirm from "src/commons/resources/icons/questionConfirm.svg";
+import { RootState } from "src/stores/types";
+import { routers } from "src/commons/routers";
+import CopyButton from "src/components/commons/CopyButton";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import {
   Label,
   StyledAction,
@@ -10,38 +44,6 @@ import {
   WalletAddress,
   WrapInfoItemMobile
 } from "./styles";
-import { ReactComponent as Edit } from "../../../commons/resources/icons/pen.svg";
-import { ReactComponent as Search } from "../../../commons/resources/icons/search.svg";
-import questionConfirm from "../../../commons/resources/icons/questionConfirm.svg";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../stores/types";
-import moment from "moment";
-import CopyButton from "../../commons/CopyButton";
-import { useHistory } from "react-router-dom";
-import { routers } from "../../../commons/routers";
-import { useScreen } from "../../../commons/hooks/useScreen";
-import { GoCheck } from "react-icons/go";
-import { IoMdClose } from "react-icons/io";
-import { getShortWallet, regexEmail } from "src/commons/utils/helper";
-import useToast from "src/commons/hooks/useToast";
-import { editInfo, getInfo } from "src/commons/utils/userRequest";
-import { setUserData } from "src/stores/user";
-import { NETWORK, NETWORKS, NETWORK_TYPES, SUPPORTED_WALLETS } from "src/commons/utils/constants";
-import StyledModal from "src/components/commons/StyledModal";
-import StorageUtils from "src/commons/utils/storage";
-import { NetworkType, isWalletInstalled, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
-import {
-  GroupFlex,
-  InstallButton,
-  Title,
-  WalletIcon,
-  WalletItem,
-  WalletName
-} from "src/components/commons/ConnectWalletModal/style";
-import { MdOutlineFileDownload } from "react-icons/md";
-import { SupportedWallets, Wallet } from "src/types/user";
-import { StyledDarkLoadingButton } from "src/components/share/styled";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 
 type TRowItem = {
   label: string;
@@ -129,10 +131,10 @@ const OverviewTab = () => {
   };
 
   return (
-    <Box textAlign='left'>
+    <Box textAlign="left">
       <TextNote>Below are the username, email and overview information for your account</TextNote>
       <RowItem
-        label='Your email address '
+        label="Your email address"
         value={userData?.email}
         isTablet={isTablet}
         action={
@@ -162,26 +164,26 @@ const OverviewTab = () => {
           )
         }
         isInput={showInput}
-        placeholder='Enter your email'
+        placeholder="Enter your email"
         setvalueInput={setEmail}
         valueInput={email}
       />
       <RowItem
-        label='Private Notes'
+        label="Private Notes"
         value={`${userData?.sizeNote} out of 2000 available limit`}
         action={<Search onClick={() => history.push(routers.PRIVATE_NOTES)} />}
         isTablet={isTablet}
       />
       <RowItem
-        label='Address Bookmark'
+        label="Address Bookmark"
         value={`${userData?.sizeBookmark} out of 2000 available limit`}
         action={<Search onClick={() => history.push(routers.BOOKMARK)} />}
         isTablet={isTablet}
       />
       <RowItem
-        label='Wallet'
+        label="Wallet"
         value={
-          <Box display='inline-flex' alignItems='center'>
+          <Box display="inline-flex" alignItems="center">
             <CustomTooltip title={userData?.wallet || userData?.address}>
               <WalletAddress>{userData?.wallet || userData?.address}</WalletAddress>
             </CustomTooltip>
@@ -192,7 +194,7 @@ const OverviewTab = () => {
         action={!userData?.wallet && !userData?.address ? <Edit onClick={() => setOpenModal(true)} /> : <></>}
       />
       <RowItem
-        label='Last Login'
+        label="Last Login"
         value={moment(userData?.lastLogin).format("MM/DD/YYYY hh:mm:ss")}
         isTablet={isTablet}
       />
@@ -207,6 +209,7 @@ interface ConnectWalletModal {
   open: boolean;
   setOpen: (open: boolean) => void;
 }
+
 const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen }) => {
   const { stakeAddress, connect, disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET

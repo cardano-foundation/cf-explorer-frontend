@@ -1,4 +1,5 @@
 import { alpha, Box, styled } from "@mui/material";
+
 import Table from "../../../commons/Table";
 
 export const AssetName = styled(Box)`

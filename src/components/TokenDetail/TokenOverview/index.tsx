@@ -1,7 +1,9 @@
 import { alpha, Box, Button } from "@mui/material";
 import BigNumber from "bignumber.js";
 import React, { useContext, useState } from "react";
+
 import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
+
 import decimalIcon from "../../../commons/resources/icons/decimal.svg";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
@@ -29,21 +31,21 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       value: (
         <CardItem display={"flex"} gap={2} flex={3} mt={"-30px"} paddingLeft={0} paddingRight={0}>
           <Box>
-            <img src={policyIcon} alt='' />
+            <img src={policyIcon} alt="" />
           </Box>
-          <Box display={"flex"} flexDirection='column' height={"80%"} justifyContent='space-between'>
+          <Box display={"flex"} flexDirection="column" height={"80%"} justifyContent="space-between">
             <Box
               color={(theme) => theme.palette.primary.main}
-              fontWeight='bold'
+              fontWeight="bold"
               fontFamily={'"Roboto", sans-serif'}
               fontSize={"1.125rem"}
               component={Button}
               border={"none"}
-              bgcolor='transparent'
+              bgcolor="transparent"
               textTransform={"capitalize"}
               padding={0}
               justifyContent={"flex-start"}
-              textAlign='left'
+              textAlign="left"
               onClick={() => {
                 setOpenModal(true);
                 setPolicyId(data?.policy || "");
@@ -55,7 +57,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
             <Box>
               <Box
                 display={"flex"}
-                alignItems='center'
+                alignItems="center"
                 fontWeight={"bold"}
                 mb={1}
                 color={({ palette }) => palette.common.black}
@@ -70,7 +72,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
                     width={"auto"}
                     height={36}
                     src={`data:image/png;base64,${data.metadata.logo}`}
-                    alt='logo icon'
+                    alt="logo icon"
                     ml={1}
                   />
                 ) : (
@@ -79,7 +81,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
               </Box>
               <Box
                 display={"flex"}
-                alignItems='center'
+                alignItems="center"
                 fontSize={"0.75rem"}
                 color={(theme) => alpha(theme.palette.common.black, 0.5)}
               >
@@ -99,7 +101,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
     { title: <WrapTitle>Decimal</WrapTitle>, icon: decimalIcon, value: decimalToken },
     {
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1} width={"max-content"}>
             <WrapTitle>Total Transactions</WrapTitle>
           </Box>
@@ -110,7 +112,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
     },
     {
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
             <WrapTitle>Number of Holders</WrapTitle>
           </Box>
@@ -121,7 +123,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
     },
     {
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
             <WrapTitle>Total Volume</WrapTitle>
           </Box>
@@ -132,7 +134,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
     },
     {
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
             <WrapTitle>Volume 24H</WrapTitle>
           </Box>
@@ -143,7 +145,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
     },
     {
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
             <WrapTitle>Created</WrapTitle>
           </Box>
@@ -157,7 +159,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   return (
     <Box textAlign={"left"}>
       <DetailHeader
-        type='TOKEN'
+        type="TOKEN"
         title={data?.displayName || ""}
         hash={data?.fingerprint}
         listItem={listItem}

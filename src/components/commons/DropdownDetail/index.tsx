@@ -3,12 +3,11 @@ import React from "react";
 import { CloseIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { getShortWallet } from "src/commons/utils/helper";
+import { StyledLink } from "src/components/share/styled";
 
 import CopyButton from "../CopyButton";
 import CustomTooltip from "../CustomTooltip";
-
 import { ButtonClose, DropdownList, DropdownTitle, InfoValue, ListDropdownContainer } from "./styles";
-import { StyledLink } from "src/components/share/styled";
 
 interface IDropdownDetailProps {
   title: string;
@@ -23,7 +22,7 @@ const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, m
   return (
     <ListDropdownContainer minWidth={minWidth} ref={ref}>
       <ButtonClose onClick={close}>
-        <img src={CloseIcon} alt='icon close' />
+        <img src={CloseIcon} alt="icon close" />
       </ButtonClose>
       <DropdownTitle>{title}</DropdownTitle>
       <DropdownList>

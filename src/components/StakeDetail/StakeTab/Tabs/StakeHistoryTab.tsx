@@ -1,13 +1,15 @@
 import { alpha, Box } from "@mui/material";
-import { LabelStatus, StyledLink } from "../styles";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
+
 import useFetchList from "src/commons/hooks/useFetchList";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import Table, { Column } from "src/components/commons/Table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
+
+import { LabelStatus, StyledLink } from "../styles";
 
 const StakeHistoryTab = ({ isMobile = false }) => {
   const { stakeId } = useParams<{ stakeId: string }>();
@@ -41,7 +43,7 @@ const StakeHistoryTab = ({ isMobile = false }) => {
       render: (r) => (
         <Box>
           <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
-          <Box marginTop='10px'>
+          <Box marginTop="10px">
             <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
           </Box>
         </Box>

@@ -1,9 +1,10 @@
-import { Box, styled } from "@mui/material";
-import { SearchDelegatorIcon } from "../../commons/resources";
-import { Link } from "react-router-dom";
-import { routers } from "../../commons/routers";
-import useAuth from "src/commons/hooks/useAuth";
 import { useEffect } from "react";
+import { Box, styled } from "@mui/material";
+import { Link } from "react-router-dom";
+
+import { SearchDelegatorIcon } from "src/commons/resources";
+import { routers } from "src/commons/routers";
+import useAuth from "src/commons/hooks/useAuth";
 
 const DelegatorSearch = () => {
   const { isLoggedIn } = useAuth();

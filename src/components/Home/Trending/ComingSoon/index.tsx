@@ -1,8 +1,9 @@
-import { styled } from "@mui/material";
 import React from "react";
-import { ComingSoonIcon } from "../../../../commons/resources";
-import { BoxRaised } from "../../../commons/BoxRaised";
-import CustomTooltip from "../../../commons/CustomTooltip";
+import { styled } from "@mui/material";
+
+import { ComingSoonIcon } from "src/commons/resources";
+import { BoxRaised } from "src/components/commons/BoxRaised";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 const ComingSoonContainer = styled(BoxRaised)`
   display: flex;
@@ -26,9 +27,9 @@ const Title = styled("h3")`
 
 const ComingSoon: React.FC = () => {
   return (
-    <CustomTooltip title='Exciting things incoming'>
+    <CustomTooltip title="Exciting things incoming">
       <ComingSoonContainer>
-        <Image src={ComingSoonIcon} alt='News' />
+        <Image src={ComingSoonIcon} alt="News" />
         <Title>News</Title>
       </ComingSoonContainer>
     </CustomTooltip>

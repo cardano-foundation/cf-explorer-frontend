@@ -1,10 +1,12 @@
 import { Box, CircularProgress, FormGroup } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { routers } from "../../commons/routers";
-import { verifyActive } from "../../commons/utils/userRequest";
-import { Container, Label, Title, WrapButton, WrapContent, WrapForm } from "./styles";
+
+import { routers } from "src/commons/routers";
+import { verifyActive } from "src/commons/utils/userRequest";
 import { FailIcon, SuccessIcon } from "src/commons/resources";
+
+import { Container, Label, Title, WrapButton, WrapContent, WrapForm } from "./styles";
 
 export default function VerifyEmail() {
   const history = useHistory();
@@ -53,7 +55,7 @@ export default function VerifyEmail() {
             <WrapForm alignItems={"center"}>
               <SuccessIcon />
               <Title mb={3}>You has successfully verified the account</Title>
-              <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.SIGN_IN)}>
+              <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
                 Sign In
               </WrapButton>
             </WrapForm>
@@ -65,7 +67,7 @@ export default function VerifyEmail() {
                 <Label mb={1}>There's been an error in the verify process</Label>
                 <Label>This URL is either incorrect or has expired.</Label>
               </Box>
-              <WrapButton variant='contained' fullWidth onClick={() => history.push(routers.HOME)}>
+              <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.HOME)}>
                 Go to Dashboard
               </WrapButton>
             </WrapForm>

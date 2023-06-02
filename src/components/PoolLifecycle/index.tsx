@@ -1,19 +1,19 @@
 import { useState } from "react";
-import Table, { Column } from "../commons/Table";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { API } from "../../commons/utils/api";
 import { Box, CircularProgress, IconButton, styled } from "@mui/material";
-import { DownloadGreenIcon } from "../../commons/resources";
-import { lowerCase, startCase } from "lodash";
-import { defaultAxiosDownload } from "../../commons/utils/axios";
 import { useHistory } from "react-router-dom";
-import { details } from "../../commons/routers";
-import CustomIcon from "../commons/CustomIcon";
-import { formatDateTimeLocal } from "src/commons/utils/helper";
-import CustomTooltip from "../commons/CustomTooltip";
-import { StyledBox } from "../StakekeySummary/styles";
+import { lowerCase, startCase } from "lodash";
 
-// Registration, Deregistration, Protocol Update,...
+import Table, { Column } from "src/components/commons/Table";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
+import { DownloadGreenIcon } from "src/commons/resources";
+import { defaultAxiosDownload } from "src/commons/utils/axios";
+import { details } from "src/commons/routers";
+import CustomIcon from "src/components/commons/CustomIcon";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { StyledBox } from "src/components/StakekeySummary/styles";
+
 export const EVENTS: { [key in keyof IPoolReportList]?: string } = {
   eventDeregistration: "deregistration",
   eventPoolUpdate: "pool_update",
@@ -58,8 +58,9 @@ const PoolLifecycle = () => {
         document.body.appendChild(link);
         link.click();
       })
-      //To do
-      .catch((e) => console.log(e))
+      .catch(() => {
+        //To do
+      })
       .finally(() => {
         setOnDownload(false);
       });
@@ -124,14 +125,14 @@ const PoolLifecycle = () => {
       minWidth: "30px",
       render(data) {
         return (
-          <Box width='100%' textAlign='center'>
+          <Box width="100%" textAlign="center">
             {onDownload === data.reportId ? (
-              <CircularProgress size={22} color='primary' />
+              <CircularProgress size={22} color="primary" />
             ) : data.status === "GENERATED" ? (
               <Box
                 component={IconButton}
                 display={"block"}
-                margin='auto'
+                margin="auto"
                 disabled={data.status !== "GENERATED"}
                 textTransform={"capitalize"}
                 onClick={() => downloadFn(data.reportId, data.reportName, "EXCEL")}

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Box, Popper, styled } from "@mui/material";
-import { CloseLineIcon } from "../../../commons/resources";
+
+import { CloseLineIcon } from "src/commons/resources";
+
 import CustomIcon from "../CustomIcon";
 
 const StyledPopper = styled(Popper)(() => ({
@@ -52,7 +54,7 @@ const PopperStyled = (props: Props) => {
         {showCloseButton && (
           <Box
             onClick={handleClose}
-            position='absolute'
+            position="absolute"
             top={0}
             right={0}
             width={20}
@@ -67,7 +69,7 @@ const PopperStyled = (props: Props) => {
               alignItems: "center"
             }}
           >
-            <CustomIcon icon={CloseLineIcon} width={14} fill='black' />
+            <CustomIcon icon={CloseLineIcon} width={14} fill="black" />
           </Box>
         )}
         {content}

@@ -1,15 +1,17 @@
-import { Box } from "@mui/material";
-import { details } from "../../../commons/routers";
-import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../commons/utils/helper";
-import CustomTooltip from "../../commons/CustomTooltip";
-import Table, { Column } from "../../commons/Table";
-import { StyledLink } from "../../share/styled";
-import { TableSubTitle } from "../../TabularView/StakeTab/styles";
-import { AdaValue } from "./StakingRegistrationTab";
-import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { API } from "../../../commons/utils/api";
+import { Box } from "@mui/material";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+
+import { details } from "src/commons/routers";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table, { Column } from "src/components/commons/Table";
+import { StyledLink } from "src/components/share/styled";
+import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
+
+import { AdaValue } from "./StakingRegistrationTab";
 
 const columns: Column<DeregistrationItem>[] = [
   {
@@ -41,10 +43,10 @@ const columns: Column<DeregistrationItem>[] = [
       <Box>
         <AdaValue value={-r.deposit - r.fee} />
         <TableSubTitle>
-          <Box display='flex' mt={1} alignItems='center' lineHeight='1'>
-            <AdaValue value={-r.deposit} gap='3px' fontSize='12px' />
-            <Box mx='3px'>/</Box>
-            <AdaValue value={r.fee} gap='3px' fontSize='12px' />
+          <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+            <AdaValue value={-r.deposit} gap="3px" fontSize="12px" />
+            <Box mx="3px">/</Box>
+            <AdaValue value={r.fee} gap="3px" fontSize="12px" />
           </Box>
         </TableSubTitle>
       </Box>

@@ -2,11 +2,12 @@ import { Box, Container, Tab, useTheme } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { parse, stringify } from "qs";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+
 import useFetch from "src/commons/hooks/useFetch";
 import DelegationDetailInfo from "src/components/DelegationDetail/DelegationDetailInfo";
 import DelegationDetailOverview from "src/components/DelegationDetail/DelegationDetailOverview";
 import DelegationDetailChart from "src/components/DelegationDetail/DelegationDetailChart";
-import { TabsContainer, TitleTab } from "./styles";
 import {
   DelegationEpochList,
   DelegationStakingDelegatorsList
@@ -14,8 +15,9 @@ import {
 import useFetchList from "src/commons/hooks/useFetchList";
 import NoRecord from "src/components/commons/NoRecord";
 import { API } from "src/commons/utils/api";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { StakingDelegators, StakeKeyHistoryIcon } from "src/commons/resources";
+
+import { TabsContainer, TitleTab } from "./styles";
 
 const DelegationDetail: React.FC = () => {
   const { poolId } = useParams<{ poolId: string }>();
@@ -37,7 +39,7 @@ const DelegationDetail: React.FC = () => {
   };
 
   const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
+    history.replace({ search: stringify(query) });
   };
 
   const { data, loading, initialized, error } = useFetch<DelegationOverview>(
@@ -129,7 +131,7 @@ const DelegationDetail: React.FC = () => {
                   value={key}
                   style={{ padding: "12px 0px", marginRight: 40 }}
                   label={
-                    <Box display={"flex"} alignItems='center'>
+                    <Box display={"flex"} alignItems="center">
                       <Icon fill={key === tab ? theme.palette.primary.main : theme.palette.text.hint} />
                       <TitleTab pl={1} active={+(key === tab)}>
                         {label}

@@ -1,6 +1,8 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
+import { useRef } from "react";
+
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import {
@@ -16,7 +18,6 @@ import { Label, StyledLink, StyledContainer } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
 import ADAicon from "../commons/ADAIcon";
-import { useRef } from "react";
 
 interface TransactionListFullProps {
   underline?: boolean;
@@ -86,7 +87,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       title: "Addresses",
       key: "address",
       minWidth: 120,
-      render(r, index) {
+      render(r) {
         return (
           <div>
             <Box display={"flex"}>
@@ -136,7 +137,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       key: "fee",
       minWidth: 120,
       render: (r) => (
-        <Box display='inline-flex' alignItems='center'>
+        <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.fee)}</Box>
           <ADAicon />
         </Box>
@@ -147,7 +148,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       minWidth: 120,
       key: "ouput",
       render: (r) => (
-        <Box display='inline-flex' alignItems='center'>
+        <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
           <ADAicon />
         </Box>
@@ -172,7 +173,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
           }}
           onClickRow={onClickRow}
           selected={selected}
-          className='transactions-table'
+          className="transactions-table"
         />
       </Card>
     </StyledContainer>

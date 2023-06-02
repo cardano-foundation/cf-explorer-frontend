@@ -1,18 +1,20 @@
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import { details } from "../../../commons/routers";
-import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../commons/utils/helper";
-import CustomTooltip from "../../commons/CustomTooltip";
-import Table, { Column } from "../../commons/Table";
-import { StyledLink } from "../../share/styled";
-import { AdaValue } from "./StakingRegistrationTab";
 import { useContext, useState } from "react";
-import { FilterParams } from "../../StackingFilter";
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { API } from "../../../commons/utils/api";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { Box, IconButton } from "@mui/material";
-import { WrapFilterDescription } from "../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
-import { EyeIcon } from "../../../commons/resources";
-import { DelegationCertificateModal } from "../../StakingLifeCycle/DelegatorLifecycle/Delegation";
+
+import { details } from "src/commons/routers";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table, { Column } from "src/components/commons/Table";
+import { StyledLink } from "src/components/share/styled";
+import { FilterParams } from "src/components/StackingFilter";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
+import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
+import { EyeIcon } from "src/commons/resources";
+import { DelegationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Delegation";
+
+import { AdaValue } from "./StakingRegistrationTab";
 import { StakingDetailContext } from "..";
 
 const DelegationTab = () => {
@@ -22,7 +24,7 @@ const DelegationTab = () => {
   const { search } = useLocation();
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
-  const [params, setParams] = useState<FilterParams>({
+  const [params] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
     toDate: undefined,
@@ -32,7 +34,7 @@ const DelegationTab = () => {
     ...pageInfo,
     ...params
   });
-  const { total, data } = fetchData;
+  const { total } = fetchData;
   const columns: Column<DelegationItem>[] = [
     {
       title: "Transaction Hash",
@@ -69,7 +71,7 @@ const DelegationTab = () => {
   ];
   return (
     <>
-      <Box display='flex' alignItems='center' justifyContent='space-between' mt={4}>
+      <Box display="flex" alignItems="center" justifyContent="space-between" mt={4}>
         <Box />
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>

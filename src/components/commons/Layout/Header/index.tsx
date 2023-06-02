@@ -1,6 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+
+import { LogoIcon, SearchIcon } from "src/commons/resources";
+import { setSidebar } from "src/stores/user";
+
+import TopSearch from "../Sidebar/TopSearch";
 import HeaderSearch from "./HeaderSearch";
 import LoginButton from "./LoginButton";
 import SelectNetwork from "./SelectNetwork";
@@ -17,9 +22,6 @@ import {
   Toggle,
   NetworkContainer
 } from "./styles";
-import { LogoIcon, SearchIcon } from "src/commons/resources";
-import TopSearch from "../Sidebar/TopSearch";
-import { setSidebar } from "src/stores/user";
 
 const Header: React.FC<RouteComponentProps> = (props) => {
   const { history } = props;
@@ -37,8 +39,8 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           <HeaderSearch home={home} />
         </HeaderMain>
         <HeaderTop collasped={+onDetailView}>
-          <HeaderLogoLink to='/'>
-            <HeaderLogo src={LogoIcon} alt='logo desktop' />
+          <HeaderLogoLink to="/">
+            <HeaderLogo src={LogoIcon} alt="logo desktop" />
           </HeaderLogoLink>
           <SideBarRight>
             <NetworkContainer>

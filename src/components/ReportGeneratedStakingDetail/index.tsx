@@ -1,4 +1,6 @@
 import React, { useMemo, createContext } from "react";
+import { useParams } from "react-router-dom";
+
 import {
   DelegationIcon,
   DeredistrationIcon,
@@ -6,18 +8,16 @@ import {
   RewardsDistributionIcon,
   RewardsWithdrawalIcon,
   TranferIcon
-} from "../../commons/resources";
+} from "src/commons/resources";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
 
-import { useParams } from "react-router-dom";
 import StakeTab from "../TabularView/StakeTab";
 import DelegationTab from "./StakeyTabs/DelegationTab";
 import DeregistrationTab from "./StakeyTabs/DeregistrationTab";
 import RewardsDistributionTab from "./StakeyTabs/RewardsDistributionTab";
 import StakingRegistrationTab from "./StakeyTabs/StakingRegistrationTab";
 import WithdrawalHistoryTab from "./StakeyTabs/WithdrawalHistoryTab";
-
-import useFetch from "../../commons/hooks/useFetch";
-import { API } from "../../commons/utils/api";
 import WalletActitityTab from "./StakeyTabs/WalletActivityTab";
 import { getEventList } from "../StakekeySummary";
 import { SkeletonUI } from "../TokenDetail/TokenAnalytics/styles";
@@ -106,14 +106,14 @@ const ReportGeneratedStakingDetailTabs = () => {
       value={{ stakeKey: reportDetail.data?.stakeKey ?? "", reportName: reportDetail.data?.reportName ?? "" }}
     >
       {reportDetail.loading ? (
-        <SkeletonUI variant='rectangular' style={{ height: "400px" }} />
+        <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
       ) : (
         <>
-          <CustomTooltip title={reportDetail.data?.reportName}>
-            <Headline collapsed={1}>{reportDetail.data?.reportName} </Headline>
+          <CustomTooltip title={`${reportDetail.data?.reportName}`.replaceAll("-", " ")}>
+            <Headline collapsed={1}>{`${reportDetail.data?.reportName}`.replaceAll("-", " ")} </Headline>
           </CustomTooltip>
-          <CustomTooltip title={reportDetail.data?.reportName}>
-            <Headline>{reportDetail.data?.reportName} </Headline>
+          <CustomTooltip title={`${reportDetail.data?.reportName}`.replaceAll("-", " ")}>
+            <Headline>{`${reportDetail.data?.reportName}`.replaceAll("-", " ")} </Headline>
           </CustomTooltip>
           <StakeTab tabs={displayedTabs} initTab={initTab} />
         </>

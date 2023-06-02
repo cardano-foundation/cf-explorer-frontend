@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { routers, details } from "./commons/routers";
+
+import { routers } from "./commons/routers";
 import Home from "./pages/Home";
 import BlockList from "./pages/BlockList";
 import BlockDetail from "./pages/BlockDetail";
@@ -39,7 +40,6 @@ import ResetPassword from "./pages/ResetPassword";
 import StackingLifecycle from "./pages/StackingLifecycle";
 import ReportGenerated from "./pages/ReportGenerated";
 import VerifyEmail from "./pages/VerifyEmail";
-
 import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
 import StakingLifeCycleSearch from "./pages/StakingLifeCycleSearch";

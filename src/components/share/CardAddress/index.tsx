@@ -1,9 +1,11 @@
 import React from "react";
-import CopyButton from "../../commons/CopyButton";
-import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import { Box, Skeleton } from "@mui/material";
-import { EmptyIcon } from "../../../commons/resources";
-import { details } from "../../../commons/routers";
+
+import { EmptyIcon, InfoIcon } from "src/commons/resources";
+import CopyButton from "src/components/commons/CopyButton";
+import { details } from "src/commons/routers";
+import CustomIcon from "src/components/commons/CustomIcon";
+
 import {
   AddressGroup,
   AddressLink,
@@ -29,7 +31,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
   if (loading) {
     return (
       <CardItem padding={0}>
-        <Skeleton variant='rectangular' height={"100%"} width='100%' />
+        <Skeleton variant="rectangular" height={"100%"} width="100%" />
       </CardItem>
     );
   }
@@ -37,8 +39,8 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
     return (
       <CardItemStyled>
         <TitleDetail paddingBottom={(props) => props.spacing(2)}>{title}</TitleDetail>
-        <Box width={"100%"} display='flex' alignItems='center' justifyContent='center'>
-          <img alt='icon' src={EmptyIcon} />
+        <Box width={"100%"} display="flex" alignItems="center" justifyContent="center">
+          <img alt="icon" src={EmptyIcon} />
         </Box>
       </CardItemStyled>
     );
@@ -60,7 +62,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
             <ItemDetail key={ii}>
               {i.title && (
                 <RowItem>
-                  <img src={infoIcon} alt='info icon' />
+                  <CustomIcon icon={InfoIcon} width={22} />
                   <LabelItem>{i.title}</LabelItem>
                 </RowItem>
               )}

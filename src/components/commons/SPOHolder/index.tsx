@@ -1,14 +1,15 @@
 import { Box, BoxProps, styled, IconButton } from "@mui/material";
 import { Link, useHistory } from "react-router-dom";
 import React, { forwardRef, useRef } from "react";
+import { isArray } from "lodash";
+
 import { SPOHolderIconUrl, SPOInfo, SPOKey, PolygonSPOUrl } from "src/commons/resources";
-import PolygonShape from "../PolygonShape";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { getShortWallet } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
+
+import PolygonShape from "../PolygonShape";
 import CopyButton from "../CopyButton";
-import { isArray } from "lodash";
-import PopperStyled from "../PopperStyled";
 import { StakeKeyItem, StakeKeyItemList } from "./styles";
 interface ISPOPropsData {
   poolName?: string;
@@ -19,7 +20,7 @@ interface ISPOProps extends BoxProps {
   data: ISPOPropsData;
 }
 
-export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...props }, boxRef) => {
+export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, boxRef) => {
   const { poolName, poolView, stakeKeys } = data;
   const SPOInfoRef = useRef(null);
   const SPOKeyRef = useRef(null);
@@ -27,7 +28,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
   const rewardAccounts = isArray(stakeKeys) ? stakeKeys : [stakeKeys];
   return (
     <PolygonShapeSPO {...props} ref={boxRef}>
-      <SPOImage src={SPOHolderIconUrl} alt='SPO image' />
+      <SPOImage src={SPOHolderIconUrl} alt="SPO image" />
       <SPOTitle>SPO</SPOTitle>
       <Box>
         <CustomTooltip title={poolName}>
@@ -48,14 +49,14 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
           title={
             <Box>
               <Box display={"flex"} alignItems={"center"}>
-                <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
                   Pool ID:
                 </Box>
                 <PoolNamePopup to={details.delegation(poolView)}>{getShortWallet(poolView || "")}</PoolNamePopup>
                 <CopyButton text={poolView} />
               </Box>
               <Box display={"flex"} alignItems={"center"}>
-                <Box fontSize='1.125rem' color={({ palette }) => palette.grey[400]}>
+                <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
                   Pool name:
                 </Box>
                 <PoolNamePopup to={details.delegation(poolView)}>{poolName}</PoolNamePopup>
@@ -91,7 +92,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
               <StakeKeyItemList>
                 {rewardAccounts.map((item) => (
                   <StakeKeyItem key={item}>
-                    <SPOKey fill='#108AEF' />
+                    <SPOKey fill="#108AEF" />
                     <PoolNamePopup to={details.stake(item)}>{getShortWallet(item)}</PoolNamePopup>
                     <CopyButton text={item} />
                   </StakeKeyItem>
@@ -101,7 +102,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
           }
         >
           <ButtonSPO ref={SPOKeyRef} component={IconButton}>
-            <SPOKey fill='#438F68' />
+            <SPOKey fill="#438F68" />
           </ButtonSPO>
         </CustomTooltip>
       </Box>
@@ -112,7 +113,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ children, data, ...p
 SPOHolder.displayName = "SPOHolder";
 export default SPOHolder;
 
-const PolygonShapeSPO = styled(PolygonShape)(({ theme }) => ({
+const PolygonShapeSPO = styled(PolygonShape)(() => ({
   height: "250px",
   width: 190,
   position: "relative",
@@ -144,7 +145,7 @@ export const PoolName = styled(Box)(({ theme }) => ({
   overflow: "hidden",
   textOverflow: "ellipsis"
 }));
-export const ButtonSPO = styled(Box)(({ theme }) => ({
+export const ButtonSPO = styled(Box)(() => ({
   position: "absolute",
   bottom: "12%",
   padding: 0,
@@ -161,5 +162,5 @@ export const PoolNamePopup = styled(Link)(({ theme }) => ({
   overflow: "hidden",
   textOverflow: "ellipsis",
   flex: 1,
-  textAlign: "left",
+  textAlign: "left"
 }));

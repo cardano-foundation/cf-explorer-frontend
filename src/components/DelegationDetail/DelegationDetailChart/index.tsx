@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Grid, Skeleton, styled, Box, useTheme } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
+
 import { formatADAFull, formatPrice } from "src/commons/utils/helper";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+
 import {
   AnalyticsTitle,
   BoxInfo,
@@ -12,14 +15,11 @@ import {
   BoxInfoItemRight,
   Button,
   ChartContainer,
-  GridRight,
   GridWrapper,
-  Item,
   StyledContainer,
   Title,
   Value
 } from "./styles";
-import { API } from "src/commons/utils/api";
 
 interface DelegationDetailChartProps {
   poolId: string;
@@ -35,7 +35,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   return (
     <StyledContainer>
       <AnalyticsTitle>Analytics</AnalyticsTitle>
-      <GridWrapper container columns={24} spacing='35px'>
+      <GridWrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Box>
             <Button
@@ -51,7 +51,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
           </Box>
           <ChartContainer>
             {loading ? (
-              <SkeletonUI variant='rectangular' height={280} />
+              <SkeletonUI variant="rectangular" height={280} />
             ) : (
               <Box position={"relative"}>
                 <HighchartsReact
@@ -114,13 +114,13 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
         <Grid item xs={24} lg={6}>
           <BoxInfo height={"100%"} space={categories.length ? 36 : 16}>
             <Box flex={1}>
-              <BoxInfoItemRight display={"flex"} alignItems='center' justifyContent={"center"}>
+              <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
-                  <img src={HighestIcon} alt='heighest icon' />
+                  <img src={HighestIcon} alt="heighest icon" />
                   <Title>{selected === "epochChart" ? "Highest stake" : "Highest number of delegators"}</Title>
                   <Value>
                     {loading || !data?.[selected] ? (
-                      <SkeletonUI variant='rectangular' />
+                      <SkeletonUI variant="rectangular" />
                     ) : selected === "epochChart" ? (
                       formatADAFull(data[selected].highest)
                     ) : (
@@ -131,13 +131,13 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
               </BoxInfoItemRight>
             </Box>
             <Box flex={1}>
-              <BoxInfoItem display={"flex"} alignItems='center' justifyContent={"center"}>
+              <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
-                  <img src={LowestIcon} alt='lowest icon' />
+                  <img src={LowestIcon} alt="lowest icon" />
                   <Title>{selected === "epochChart" ? "Lowest stake" : "Lowest number of delegators"}</Title>
                   <Value>
                     {loading || !data ? (
-                      <SkeletonUI variant='rectangular' />
+                      <SkeletonUI variant="rectangular" />
                     ) : selected === "epochChart" ? (
                       formatADAFull(data[selected].lowest)
                     ) : (

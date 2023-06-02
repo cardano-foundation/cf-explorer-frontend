@@ -1,11 +1,14 @@
-import StyledModal from "../../../commons/StyledModal";
-import { Container, ModalTitle, StyledBackButton, StyledButton, StyledFormLabel, StyledStack } from "./styles";
 import { useMemo, useState } from "react";
-import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Stack } from "@mui/material";
-import { IPropsModal, STEPS } from ".";
-import { ReportType } from "./FilledInfoModal";
 import { get } from "lodash";
-import { useScreen } from "../../../../commons/hooks/useScreen";
+import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Stack } from "@mui/material";
+
+import StyledModal from "src/components/commons/StyledModal";
+import { useScreen } from "src/commons/hooks/useScreen";
+
+import { ReportType } from "./FilledInfoModal";
+import { Container, ModalTitle, StyledBackButton, StyledButton, StyledFormLabel, StyledStack } from "./styles";
+
+import { IPropsModal, STEPS } from ".";
 
 export enum RatioGroupValue {
   yes = "YES",
@@ -113,12 +116,12 @@ const StepTransferModal: React.FC<IPropsModal> = ({ open, handleCloseModal, defa
                         <FormControlLabel
                           value={RatioGroupValue.yes}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
-                          label='Yes'
+                          label="Yes"
                         />
                         <FormControlLabel
                           value={RatioGroupValue.no}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
-                          label='No'
+                          label="No"
                         />
                       </Stack>
                     </RadioGroup>

@@ -1,9 +1,11 @@
 import moment from "moment";
-import { details } from "../../../commons/routers";
-import { getShortHash } from "../../../commons/utils/helper";
-import StyledModal from "../../commons/StyledModal";
-import { Column } from "../../commons/Table";
-import { SmallText, StyledLink } from "../../share/styled";
+
+import StyledModal from "src/components/commons/StyledModal";
+import { details } from "src/commons/routers";
+import { getShortHash } from "src/commons/utils/helper";
+import { Column } from "src/components/commons/Table";
+import { SmallText, StyledLink } from "src/components/share/styled";
+
 import { Container, Title } from "./styles";
 
 interface IProps {
@@ -19,7 +21,7 @@ type TActivityLog = {
   userAction: string;
 };
 const ActivityLogModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
-  // const { data: activitiesLog } = useFetch<TActivityLog[]>(USER_API.ACTIVITY_LOG, undefined, true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const columns: Column<TActivityLog>[] = [
     {
       title: "Time",

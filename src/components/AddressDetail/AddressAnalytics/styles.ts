@@ -1,7 +1,6 @@
 import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
 
-export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
-  // height: `calc(100% - ${space}px)`,
+export const BoxInfo = styled(Box)<{ space: number }>(({ theme }) => ({
   background: theme.palette.secondary.dark,
   borderRadius: "10px",
   color: theme.palette.primary.contrastText,
@@ -28,7 +27,7 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
     borderTop: "none",
     width: "100%",
     minHeight: "160px",
-    height: "100%",
+    height: "100%"
   },
   [theme.breakpoints.down("sm")]: {
     width: "100%",
@@ -42,7 +41,7 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "space-between",
-      padding: "0 10px 20px 10px",
+      padding: "0 10px 20px 10px"
     }
   }
 }));
@@ -61,7 +60,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
     height: "100%",
     borderBottom: "none",
     width: "100%",
-    minHeight: "160px",
+    minHeight: "160px"
   },
   [theme.breakpoints.down("sm")]: {
     width: "100%",
@@ -101,7 +100,7 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const Wrapper = styled(Grid)(({ theme }) => ({
+export const Wrapper = styled(Grid)(() => ({
   borderRadius: 10,
   minHeight: "400px",
   textAlign: "left"

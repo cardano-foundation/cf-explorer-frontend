@@ -1,5 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { Box } from "@mui/material";
 
 import {
@@ -12,7 +12,11 @@ import {
   PreviousIcon,
   InfoIcon,
   TranferIcon
-} from "../../../commons/resources";
+} from "src/commons/resources";
+import { ListStakeKeyResponse } from "src/pages/DelegatorLifecycle";
+import { details } from "src/commons/routers";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import {
   ADATransfersButton,
   ButtonText,
@@ -26,7 +30,6 @@ import {
   TitleStep,
   StyledGroupButton
 } from "./styles";
-
 import Registration from "./Registration";
 import Delegation from "./Delegation";
 import RewardsDistribution from "./RewardsDistribution";
@@ -40,10 +43,7 @@ import {
   RewardDistributionProcessDescription,
   WithdrawingFundProcessDescription
 } from "../../ModalDescription";
-import { useHistory, useParams } from "react-router-dom";
-import { details } from "../../../commons/routers";
-import { useScreen } from "../../../commons/hooks/useScreen";
-import { ListStakeKeyResponse } from "src/pages/DelegatorLifecycle";
+
 interface StepperProps {
   icon: React.ReactNode;
   title: string;
@@ -153,7 +153,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
                 active={+(currentStep === idx)}
                 onClick={() => {
                   setCurrentStep(idx);
-                  history.push(details.staking(stakeId, "timeline", step.key));
+                  history.replace(details.staking(stakeId, "timeline", step.key));
                 }}
               >
                 {step.icon}
@@ -180,7 +180,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       </Box>
 
       <StyledGroupButton
-        display='flex'
+        display="flex"
         flexDirection={isMobile ? "column" : "row"}
         justifyContent={isMobile ? "center" : "space-between"}
       >
@@ -207,7 +207,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
               setCurrentStep(currentStep + 1);
             }
           }}
-          variant='contained'
+          variant="contained"
         >
           <ButtonText fontSize={isMobile ? 14 : 16}>
             Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}

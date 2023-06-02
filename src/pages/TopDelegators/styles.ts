@@ -19,7 +19,7 @@ export const PerPage = styled("div")`
   margin-left: 8px;
 `;
 
-export const Actions = styled(Box)(({ theme }) => ({
+export const Actions = styled(Box)(() => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",

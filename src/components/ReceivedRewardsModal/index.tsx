@@ -1,4 +1,17 @@
 import React, { useState } from "react";
+import { Box } from "@mui/material";
+import { useParams } from "react-router-dom";
+
+import { ReceidvedRewardsIC } from "src/commons/resources";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
+import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import { useScreen } from "src/commons/hooks/useScreen";
+
+import Table, { Column } from "../commons/Table";
+import StyledModal from "../commons/StyledModal";
+import ADAicon from "../commons/ADAIcon";
 import {
   AmountADARow,
   EpochRow,
@@ -10,17 +23,6 @@ import {
   RewardBalanceTitle,
   TableContainer
 } from "./styles";
-import Table, { Column } from "../commons/Table";
-import { Box } from "@mui/material";
-import { ReceidvedRewardsIC } from "../../commons/resources";
-import StyledModal from "../commons/StyledModal";
-import { useParams } from "react-router-dom";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { API } from "../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal } from "../../commons/utils/helper";
-import ADAicon from "../commons/ADAIcon";
-import { details } from "../../commons/routers";
-import { useScreen } from "src/commons/hooks/useScreen";
 
 interface ReceivedReward {
   amount: string;
@@ -28,7 +30,7 @@ interface ReceivedReward {
   time: string;
 }
 
-export function getDumyData(n: number) {
+export function getDumyData() {
   return Array.from(Array(10)).map((item, i) => ({
     amountADA: "234154851.36871",
     epoch: 76543 + i,
@@ -56,10 +58,10 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
     {
       key: "amount",
       title: "Amount ADA",
-      render(data, index) {
+      render(data) {
         return (
           <AmountADARow>
-            +{formatADAFull(data.amount)} <ADAicon color='#333333' />
+            +{formatADAFull(data.amount)} <ADAicon color="#333333" />
           </AmountADARow>
         );
       }
@@ -67,17 +69,17 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
     {
       key: "epoch",
       title: "Epoch",
-      render(data, index) {
+      render(data) {
         return <EpochRow to={details.epoch(data.epoch)}>{data.epoch}</EpochRow>;
       }
     },
     {
       key: "time",
       title: "Date",
-      sort: ({ columnKey, sortValue }) => {
+      sort: ({ sortValue }) => {
         sortValue ? setSort(`id,${sortValue}`) : setSort("");
       },
-      render(data, index) {
+      render(data) {
         return <Box>{formatDateTimeLocal(data.time)}</Box>;
       }
     }

@@ -1,22 +1,23 @@
+import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useHistory, useParams } from "react-router";
+
 import {
   DelegationIcon,
   DeredistrationIcon,
   RegistrationIcon,
   RewardsDistributionIcon,
   RewardsWithdrawalIcon
-} from "../../../../commons/resources";
-import { details } from "../../../../commons/routers";
-import StakeTab from "../../../TabularView/StakeTab";
-import DelegationTab from "../../../TabularView/StakeTab/Tabs/DelegationTab";
-import DeregistrationTab from "../../../TabularView/StakeTab/Tabs/DeregistrationTab";
-import RewardsDistributionTab from "../../../TabularView/StakeTab/Tabs/RewardsDistributionTab";
-import StakeRegistrationTab from "../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
-import WithdrawalHistoryTab from "../../../TabularView/StakeTab/Tabs/WithdrawalHistoryTab";
-import TabularOverview from "../../../TabularView/TabularOverview";
+} from "src/commons/resources";
+import { details } from "src/commons/routers";
+import StakeTab from "src/components/TabularView/StakeTab";
+import DelegationTab from "src/components/TabularView/StakeTab/Tabs/DelegationTab";
+import DeregistrationTab from "src/components/TabularView/StakeTab/Tabs/DeregistrationTab";
+import RewardsDistributionTab from "src/components/TabularView/StakeTab/Tabs/RewardsDistributionTab";
+import StakeRegistrationTab from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import WithdrawalHistoryTab from "src/components/TabularView/StakeTab/Tabs/WithdrawalHistoryTab";
+import TabularOverview from "src/components/TabularView/TabularOverview";
 import { ListStakeKeyResponse } from "src/pages/DelegatorLifecycle";
-import { useEffect, useState } from "react";
 
 interface ITabularTab {
   icon: React.FC;
@@ -83,7 +84,7 @@ const Tabular = ({ tabsRenderConfig }: ITabularProps) => {
   if (!tabsRenderConfig) return null;
 
   const onChangeTab = (tab: any) => {
-    history.push(details.staking(stakeId, "tabular", tab));
+    history.replace(details.staking(stakeId, "tabular", tab));
   };
 
   return (

@@ -1,17 +1,17 @@
-import { Box, Skeleton, styled } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { useState } from "react";
-import { Link as LinkDom, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
-import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "../../../../commons/resources";
-
+import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
 import { FilterParams } from "src/components/StackingFilter";
-import useFetch from "../../../../commons/hooks/useFetch";
-import { details } from "../../../../commons/routers";
-import { API } from "../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../../commons/utils/helper";
-import CopyButton from "../../../commons/CopyButton";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import StyledModal from "../../../commons/StyledModal";
+import useFetch from "src/commons/hooks/useFetch";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import CopyButton from "src/components/commons/CopyButton";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import StyledModal from "src/components/commons/StyledModal";
+
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
 import { StakeLink, StyledLink } from "../Registration/styles";
 import DeregistrationDraw from "./DeregistrationDraw";
@@ -78,7 +78,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
 
         <InfoGroup>
           <Info>
-            <AddressIcon fill='#438F68' />
+            <AddressIcon fill="#438F68" />
             <CustomTooltip title={selected.txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(selected.txHash)}>{getShortHash(selected.txHash || "")}</StyledLink>
@@ -112,9 +112,9 @@ export const DeregistrationCertificateModal = ({
   const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
 
   return (
-    <StyledModal {...props} width={550} title='Deregistration certificate'>
+    <StyledModal {...props} width={550} title="Deregistration certificate">
       <Box>
-        {loading && <Skeleton variant='rectangular' width={500} height={90} />}
+        {loading && <Skeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
           <StyledContainerModal>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>

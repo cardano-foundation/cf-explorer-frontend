@@ -1,7 +1,7 @@
 import { Box, Skeleton } from "@mui/material";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { FakeLink, Item, ItemList, Label, LineData, StyledAdaLogoIcon, StyledLink, StyledModal, Value } from "./styles";
+
 import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
 import { API } from "src/commons/utils/api";
@@ -10,6 +10,8 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import CopyButton from "src/components/commons/CopyButton";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+
+import { FakeLink, Item, ItemList, Label, LineData, StyledAdaLogoIcon, StyledLink, StyledModal, Value } from "./styles";
 
 interface CertificateItemType {
   label: React.ReactNode;
@@ -119,11 +121,11 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
   ];
 
   return (
-    <StyledModal {...props} title='Pool registration certificate'>
+    <StyledModal {...props} title="Pool registration certificate">
       <ViewMoreAddressModal
         showFullHash={true}
         maxWidth={680}
-        title='Pool Owner'
+        title="Pool Owner"
         open={!!selectedOwner.length}
         onClose={() => setSelectedOwner([])}
         items={selectedOwner}
@@ -136,12 +138,12 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
               {extra ? (
                 <Box>
                   <Label>{label}</Label>
-                  {data ? content : <Skeleton variant='rectangular' />}
+                  {data ? content : <Skeleton variant="rectangular" />}
                 </Box>
               ) : (
                 <>
                   <Label>{label}</Label>
-                  {data ? content : <Skeleton variant='rectangular' />}
+                  {data ? content : <Skeleton variant="rectangular" />}
                 </>
               )}
               {extra}

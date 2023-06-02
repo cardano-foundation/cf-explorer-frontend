@@ -1,11 +1,13 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useHistory } from "react-router-dom";
-import { details } from "../../../commons/routers";
-import { getShortHash, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+
+import { details } from "src/commons/routers";
+import { getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import { CustomSelect, OptionSelect } from "./styles";
-import { useScreen } from "../../../commons/hooks/useScreen";
 import CustomTooltip from "../CustomTooltip";
 
 interface IDropdownTokens {
@@ -15,10 +17,11 @@ interface IDropdownTokens {
   hideMathChar?: boolean;
 }
 
-const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hideInputLabel, hideMathChar }) => {
+const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hideMathChar }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const history = useHistory();
   const isSend = tokens[0].assetQuantity < 0;
+  const theme = useTheme();
   const handleClickItem = (link: string) => {
     history.push(link);
   };
@@ -42,12 +45,29 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hide
         PaperProps: {
           sx: {
             borderRadius: 2,
-            marginTop: 0.5
+            marginTop: 0.5,
+            "&::-webkit-scrollbar": {
+              width: "5px"
+            },
+            "&::-webkit-scrollbar-track": {
+              background: "transparent"
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "transparent"
+            },
+            "&:hover": {
+              "&::-webkit-scrollbar-thumb": {
+                background: theme.palette.grey[300]
+              },
+              "&::-webkit-scrollbar-track": {
+                background: theme.palette.grey[100]
+              }
+            }
           }
         }
       }}
     >
-      <OptionSelect sx={{ display: "none" }} value='default'>
+      <OptionSelect sx={{ display: "none" }} value="default">
         {" "}
         {!hideInputLabel ? (isSend ? "Sent " : "Received ") : ""}Token
       </OptionSelect>
@@ -60,7 +80,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, type = "down", hide
           <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token?.assetId))}>
             <Box>
               {isTokenNameLong ? (
-                <CustomTooltip title={tokenName} placement='top'>
+                <CustomTooltip title={tokenName} placement="top">
                   <Box>{shortTokenName}</Box>
                 </CustomTooltip>
               ) : (
