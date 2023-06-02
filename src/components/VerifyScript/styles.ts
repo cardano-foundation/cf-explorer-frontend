@@ -13,7 +13,7 @@ export const VerifyScriptContainer = styled(Box)`
   margin-bottom: 10px;
 `;
 
-export const StyledVerifyButton = styled(Box)<{ verified: boolean }>(({ theme, verified }) => ({
+export const StyledVerifyButton = styled(Box)<{ verified: boolean }>(({ verified }) => ({
   color: verified ? "#438F68" : "#FFFFFF",
   background: verified ? "rgba(67, 143, 104, 0.2)" : "#344054",
   cursor: "pointer",
