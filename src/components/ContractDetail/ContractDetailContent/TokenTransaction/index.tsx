@@ -7,55 +7,54 @@ import {
   getPageInfo,
   getShortHash,
   getShortWallet,
-  numberWithCommas,
-} from "../../../../commons/utils/helper";
-import Table, { Column } from "../../../commons/Table";
-import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import useFetchList from "../../../../commons/hooks/useFetchList";
-import { details } from "../../../../commons/routers";
-import { AIcon } from "../../../../commons/resources";
-import { API } from "../../../../commons/utils/api";
-import ADAicon from "../../../commons/ADAIcon";
+  numberWithCommas
+} from "src/commons/utils/helper";
+import Table, { Column } from "src/components/commons/Table";
+import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import ADAicon from "src/components/commons/ADAIcon";
 
 const columns: Column<Transactions>[] = [
   {
     title: "#",
     key: "id",
     minWidth: "40px",
-    render: (data, index) => <SmallText>{numberWithCommas(index + 1)}</SmallText>,
+    render: (data, index) => <SmallText>{numberWithCommas(index + 1)}</SmallText>
   },
   {
-    title: "Trx Hash",
+    title: "Tx Hash",
     key: "trxhash",
     minWidth: "200px",
 
-    render: r => (
+    render: (r) => (
       <>
         <CustomTooltip title={r.hash}>
           <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
         </CustomTooltip>
       </>
-    ),
+    )
   },
   {
     title: "Time",
     key: "time",
     minWidth: "180px",
 
-    render: r => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>,
+    render: (r) => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
   },
   {
     title: "Block",
     key: "block",
     minWidth: "120px",
-    render: r => (
+    render: (r) => (
       <>
         <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
         <br />
         <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/<SmallText>{r.epochSlotNo} </SmallText>
       </>
-    ),
+    )
   },
   {
     title: "Addresses",
@@ -88,30 +87,30 @@ const columns: Column<Transactions>[] = [
           </Flex>
         </>
       );
-    },
+    }
   },
   {
     title: "Fees",
     key: "fee",
     minWidth: "120px",
-    render: r => (
+    render: (r) => (
       <PriceValue>
         <SmallText>{formatADAFull(r.fee)}</SmallText>
         <ADAicon mb={"5px"} pl={"8px"} />
       </PriceValue>
-    ),
+    )
   },
   {
     title: "Output",
     minWidth: "120px",
     key: "ouput",
-    render: r => (
+    render: (r) => (
       <PriceValue>
         <SmallText>{formatADAFull(r.totalOutput)}</SmallText>
         <ADAicon mb={"5px"} pl={"8px"} />
       </PriceValue>
-    ),
-  },
+    )
+  }
 ];
 
 const TokenTransaction: React.FC = () => {
@@ -130,7 +129,7 @@ const TokenTransaction: React.FC = () => {
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+        onChange: (page, size) => history.push({ search: stringify({ page, size }) })
       }}
     />
   );

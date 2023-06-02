@@ -32,12 +32,12 @@ const PopoverStyled = (props: Props) => {
         onClose={handleClose}
         anchorOrigin={{
           vertical: "top",
-          horizontal: "center",
+          horizontal: "center"
         }}
         disableScrollLock={true}
         transformOrigin={{
           vertical: "bottom",
-          horizontal: "center",
+          horizontal: "center"
         }}
         sx={{
           "& .MuiPopover-paper": {
@@ -53,9 +53,9 @@ const PopoverStyled = (props: Props) => {
               height: 12,
               bottom: -6,
               transform: "rotate(45deg)",
-              left: "calc(50% - 6px)",
-            },
-          },
+              left: "calc(50% - 6px)"
+            }
+          }
         }}
       >
         {showCloseButton && (
@@ -69,11 +69,11 @@ const PopoverStyled = (props: Props) => {
             sx={{
               transform: "translateX(50%) translateY(-50%)",
               cursor: "pointer",
-              background: theme => theme.palette.grey[200],
+              background: (theme) => theme.palette.grey[200],
               borderRadius: "50%",
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              alignItems: "center"
             }}
           >
             <CustomIcon icon={CloseLineIcon} width={14} fill="black" />

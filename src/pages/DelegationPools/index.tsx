@@ -3,14 +3,11 @@ import { Horizon, StyledContainer } from "./styles";
 import DelegationLists from "../../components/DelegationPool/DelegationList";
 import { useEffect } from "react";
 
-interface DelegationsProps {}
-
-const Delegations: React.FC<DelegationsProps> = () => {
-
-  useEffect(() => { 
+const Delegations = () => {
+  useEffect(() => {
     document.title = `Delegation Pools | Cardano Explorer`;
   }, []);
-  
+
   return (
     <StyledContainer>
       <OverViews />

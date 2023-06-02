@@ -17,6 +17,7 @@ interface ArrowDiagramProps {
 
   isCentalHorizontal?: boolean;
   isCentalVertical?: boolean;
+  isCentalHorizontalFrom?: boolean;
   dashed?: boolean;
 }
 
@@ -32,10 +33,11 @@ const ArrowDiagram: React.FC<ArrowDiagramProps> = ({
   isCentalHorizontal = true,
   isCentalVertical = true,
   dashed = false,
+  isCentalHorizontalFrom = false
 }) => {
   const [coords, setCoords] = useState<{ from: { x?: number; y?: number }; to: { x?: number; y?: number } }>({
     from: {},
-    to: {},
+    to: {}
   });
   const [angle, setAngle] = useState(0);
   const [distance, setDistance] = useState(0);
@@ -47,12 +49,12 @@ const ArrowDiagram: React.FC<ArrowDiagramProps> = ({
 
     const fromCenter = {
       x: (fromRect as any)?.left + (fromRect as any)?.width / 2 - (containerPosition.left || 0),
-      y: (fromRect as any)?.top + (fromRect as any)?.height / 2 - (containerPosition.top || 0),
+      y: (fromRect as any)?.top + (fromRect as any)?.height / 2 - (containerPosition.top || 0)
     };
 
     const toCenter = {
       x: (toRect as any)?.left + (toRect as any)?.width / 2 - (containerPosition.left || 0),
-      y: (toRect as any)?.top + (toRect as any)?.height / 2 - (containerPosition.top || 0),
+      y: (toRect as any)?.top + (toRect as any)?.height / 2 - (containerPosition.top || 0)
     };
 
     // Tính toán góc giữa đường nối và trục hoành
@@ -77,13 +79,13 @@ const ArrowDiagram: React.FC<ArrowDiagramProps> = ({
 
     setCoords({
       from: {
-        x: xFrom,
-        y: isCentalVertical ? yFrom : yTo,
+        x: isCentalHorizontalFrom ? xTo : xFrom,
+        y: isCentalVertical ? yFrom : yTo
       },
       to: {
         x: xTo,
-        y: isCentalHorizontal ? yTo : yFrom,
-      },
+        y: isCentalHorizontal ? yTo : yFrom
+      }
     });
   };
 
@@ -99,7 +101,7 @@ const ArrowDiagram: React.FC<ArrowDiagramProps> = ({
     from: { x: coords.from?.x, y: coords.from?.y },
     to: { x: coords.to?.x, y: coords.to?.y },
     transform: `translate(-50%, -50%) rotate(${angle}rad)`,
-    length: distance,
+    length: distance
   });
 
   return (

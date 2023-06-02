@@ -10,7 +10,7 @@ import {
   setOpenModal,
   setNonce,
   setAddress,
-  setUserData,
+  setUserData
 } from "../../../../../stores/user";
 import ConnectedProfileOption from "../../../ConnectedProfileOption";
 import ConnectWalletModal from "../../../ConnectWalletModal";
@@ -31,10 +31,9 @@ interface Props {
 const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
   const { openModal, modalRegister, modalSignMessage, nonce } = useSelector(({ user }: RootState) => user);
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect, enabledWallet } = useCardano({
-    limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
+    limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
   const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
-  const [openSyncBookmark, setOpenSyncBookmark] = useState(false);
   const [signature, setSignature] = React.useState("");
   const [submitting, setSubmitting] = useState(false);
   const [isSign, setIsSign] = useState(isConnected);
@@ -65,11 +64,11 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
   const handleSignIn = async (signature: string, nonce: NonceObject | null) => {
     try {
       setSignature(signature);
-      if (nonce?.message === "SS_0") {
+      if (nonce?.nonce) {
         const payload = {
           address: stakeAddress || "",
           signature,
-          type: 1,
+          type: 1
         };
         const response = await signIn(payload);
 
@@ -79,25 +78,16 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
         localStorage.setItem("refreshToken", data.refreshToken);
-        localStorage.setItem("walletId", data.walletId);
+        localStorage.setItem("walletId", data.address);
         localStorage.setItem("email", data.email);
         localStorage.setItem("loginType", "connectWallet");
         const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-        setUserData({...userInfo.data, loginType: "connectWallet"});
-        if ((((JSON.parse(localStorage?.bookmark) as Bookmark[]) || [])?.filter(r => !r.id) || []).length > 0) {
-          setOpenSyncBookmark(true);
-        } else {
-          const { data } = await getAllBookmarks(NETWORK_TYPES[NETWORK]);
-          if (data) {
-            setBookmark(data);
-          }
-        }
+        setUserData({ ...userInfo.data, loginType: "connectWallet" });
       } else {
         setAddress(stakeAddress);
         setModalRegister(true);
       }
       onSuccess?.();
-      window.location.reload();
     } catch (error) {
       disconnect();
       removeAuthInfo();
@@ -114,7 +104,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         setNonce(nonceValue);
         await signMessage(
           nonceValue.nonce,
-          signature => handleSignIn(signature, nonceValue),
+          (signature) => handleSignIn(signature, nonceValue),
           (error: Error) => {
             toast.error("User rejected the request!");
             setModalSignMessage(false);
@@ -134,14 +124,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
     return (
       <>
         <ConnectedProfileOption isConnected={isConnected} disconnect={disconnect} stakeAddress={stakeAddress} />
-
-        <SyncBookmarkModal
-          open={openSyncBookmark}
-          handleCloseModal={() => {
-            setOpenSyncBookmark(false);
-          }}
-          loadingSubmit={submitting}
-        />
       </>
     );
   }

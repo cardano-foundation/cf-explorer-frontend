@@ -15,18 +15,16 @@ import {
   StyledLinearProgress,
   TimeDuration,
   Title,
-  TopDelegateContainer,
+  TopDelegateContainer
 } from "./style";
 import RateWithIcon from "../../commons/RateWithIcon";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { Box } from "@mui/system";
 import { API } from "../../../commons/utils/api";
 import { REFRESH_TIMES } from "../../../commons/utils/constants";
-import moment from "moment";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
-interface Props {}
-
-const TopDelegationPools: React.FC<Props> = () => {
+const TopDelegationPools = () => {
   const { data, loading, initialized, lastUpdated } = useFetch<DelegationPool[]>(
     `${API.DELEGATION.TOP}?page=1&size=4`,
     undefined,
@@ -39,55 +37,63 @@ const TopDelegationPools: React.FC<Props> = () => {
     {
       title: "Pool",
       key: "name",
-      render: r => <PoolName to={`/delegation-pool/${r.poolId}`}>{r.poolName || r.poolId}</PoolName>,
+      render: (r) => <PoolName to={`/delegation-pool/${r.poolId}`}>{r.poolName || r.poolId}</PoolName>
     },
     {
       title: "Pool size (A)",
       key: "size",
-      render: r => formatADAFull(r.poolSize || 0),
+      render: (r) => formatADAFull(r.poolSize || 0)
     },
     {
       title: "Reward",
       key: "reward",
-      render: r => <RateWithIcon value={r.reward} multiple={100} />,
+      render: (r) => <RateWithIcon value={r.reward} multiple={1} />
     },
     {
       title: "Fee (A)",
       key: "fee",
-      render: r => (
+      render: (r) => (
         <CustomTooltip title={`${r.feePercent * 100 || 0}% (${formatADAFull(r.feeAmount)} A)`}>
           <Box display="inline-block">
             {formatPercent(r.feePercent || 0)} ({formatADAFull(r.feeAmount)} A)
           </Box>
         </CustomTooltip>
-      ),
+      )
     },
     {
       title: "Declared Pledge (A)",
       key: "declaredPledge",
-      render: r => <Box display="inline-block">{formatADAFull(r.pledge)}</Box>,
+      render: (r) => <Box display="inline-block">{formatADAFull(r.pledge)}</Box>
     },
     {
       title: "Saturation",
       key: "output",
-      render: r => (
-        <ProgressContainer>
-          <CustomTooltip title={`${r.saturation}%`}>
-            <ProgressTitle>{formatPercent(r.saturation / 100)}</ProgressTitle>
-          </CustomTooltip>
-          <CustomTooltip title={`${r.saturation}%`}>
-            <StyledLinearProgress variant="determinate" value={r.saturation} style={{ width: 150 }} />
-          </CustomTooltip>
-        </ProgressContainer>
-      ),
-    },
+      render: (r) => {
+        return (
+          <ProgressContainer>
+            <CustomTooltip title={`${r.saturation}%`}>
+              <ProgressTitle>{formatPercent(r.saturation / 100)}</ProgressTitle>
+            </CustomTooltip>
+            <CustomTooltip title={`${r.saturation}%`}>
+              <StyledLinearProgress
+                variant="determinate"
+                value={r.saturation > 100 ? 100 : r.saturation}
+                style={{ width: 150 }}
+              />
+            </CustomTooltip>
+          </ProgressContainer>
+        );
+      }
+    }
   ];
   return (
     <TopDelegateContainer>
       <Header>
         <Title>Top Delegation Pools</Title>
         <Actions>
-          <TimeDuration>Last updated {moment(lastUpdated).fromNow()}</TimeDuration>
+          <TimeDuration>
+            <FormNowMessage time={lastUpdated} />
+          </TimeDuration>
           <ViewAllButton to={routers.DELEGATION_POOLS} />
         </Actions>
       </Header>

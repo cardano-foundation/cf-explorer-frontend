@@ -1,63 +1,79 @@
-import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, Input, InputAdornment } from "@mui/material";
-import { EmailIcon, HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
-import { Container, ForgotPassword, FormHelperTextCustom, InputCustom, Label, UserCustomIcon, WrapButton, WrapContent, WrapForm, WrapHintText, WrapInput, WrapSignUp, WrapTitle } from "./styles";
-import { useHistory } from 'react-router-dom';
+import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment } from "@mui/material";
+import { useEffect, useReducer, useRef, useState } from "react";
+import { IoMdClose } from "react-icons/io";
+import { useHistory } from "react-router-dom";
+import useAuth from "src/commons/hooks/useAuth";
+import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "../../commons/resources";
 import { routers } from "../../commons/routers";
-import { useEffect, useReducer, useState } from "react";
 import { signUp } from "../../commons/utils/userRequest";
-import { handleSignIn } from "../../commons/utils/helper";
+import {
+  CloseButton,
+  Container,
+  ForgotPassword,
+  FormHelperTextCustom,
+  InputCustom,
+  Label,
+  LabelInfo,
+  Title,
+  WrapButton,
+  WrapContent,
+  WrapEmail,
+  WrapForm,
+  WrapHintText,
+  WrapInput,
+  WrapSignUp,
+  WrapTitle
+} from "./styles";
 
 interface IForm {
-  username: {
-    value: string;
-    error?: string;
-    touched?: boolean;
-  };
   password: {
     value: string;
     error?: string;
     touched?: boolean;
-  },
+  };
   email: {
     value: string;
     error?: string;
     touched?: boolean;
-  },
+  };
   confirmPassword: {
     value: string;
     error?: string;
     touched?: boolean;
-  },
+  };
   confirmEmail: {
     value: string;
     error?: string;
     touched?: boolean;
-  }
+  };
 }
 const formReducer = (state: IForm, event: any) => {
   return {
     ...state,
     [event.name]: {
-      value: event.value || '',
+      value: event.value || "",
       error: event.error || !event.value,
-      touched: event.touched,
+      touched: event.touched
     }
-  }
-}
+  };
+};
 export default function SignUp() {
   const history = useHistory();
+  const emailTextField = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState(false);
+  const { isLoggedIn } = useAuth();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [checkedAgree, setCheckedAgree] = useState(false);
-  const [checkedSubcribe, setCheckedSubcribe] = useState(false);
+
+  useEffect(() => {
+    document.title = "Sign Up | Cardano Explorer";
+  }, []);
+
   const handleChangeAgree = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCheckedAgree(event.target.checked);
-  };
-  const handleChangeSubcribe = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCheckedSubcribe(event.target.checked);
   };
   const handleTogglePassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -66,58 +82,95 @@ export default function SignUp() {
     setShowConfirmPassword((prevState) => !prevState);
   };
   const [formData, setFormData] = useReducer(formReducer, {
-    username: {
-      value: '',
-    },
     password: {
-      value: '',
+      value: ""
     },
     email: {
-      value: '',
+      value: ""
     },
     confirmPassword: {
-      value: '',
+      value: ""
     },
     confirmEmail: {
-      value: ''
+      value: ""
     }
   });
+
+  const enableButton = Object.values(formData).every((value) => value.touched) && !error && checkedAgree && !loading;
+
   useEffect(() => {
-    setError(Boolean(formData.username.error || formData.password.error || formData.email.error || formData.confirmPassword.error || formData.confirmEmail.error));
+    if (isLoggedIn) {
+      history.push(routers.HOME);
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    setError(
+      Boolean(
+        formData.password.error || formData.email.error || formData.confirmPassword.error || formData.confirmEmail.error
+      )
+    );
   }, [formData]);
 
   const getError = (name: string, value: string) => {
     let error = "";
     switch (name) {
-      case 'username':
-        if (!value) {
-          error = "Please enter Username";
-        } else if (value.length < 5 || value.length > 30 || !/^[a-zA-Z0-9]+$/.test(value)) {
-          error = "Username has to be from 5 to 30 characters in length, only alphanumeric characters allowed";
-        }
-        break;
-      case 'password':
+      case "password":
         if (!value) {
           error = "Please enter your Password";
-        } else if (value.length < 8 || value.length > 30 || !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/.test(value)) {
-          error = "Password must contain at least 8 characters, including upper lowercase number and special character";
+        } else if (
+          value.length < 8 ||
+          value.length > 30 ||
+          !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/.test(value)
+        ) {
+          error =
+            "Password has to be from 8 to 30 characters and must contain at least 1 number, 1 special character, 1 uppercase and 1 lowercase letter";
+        } else if (value === formData.confirmPassword.value) {
+          setFormData({
+            name: "confirmPassword",
+            value: formData.confirmPassword.value,
+            touched: true,
+            error: ""
+          });
+        } else if (formData.confirmPassword.value && value !== formData.confirmPassword.value) {
+          setFormData({
+            name: "confirmPassword",
+            value: formData.confirmPassword.value,
+            touched: true,
+            error: "Confirm Password does not match"
+          });
         }
         break;
-      case 'confirmPassword':
+      case "confirmPassword":
         if (!value) {
           error = "Please enter your Confirm Password";
         } else if (value !== formData.password.value) {
           error = "Confirm Password does not match";
         }
         break;
-      case 'email':
+      case "email":
         if (!value) {
           error = "Please enter your Email";
-        } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
+          // eslint-disable-next-line no-useless-escape
+        } else if (!/^[\w-\.+!#$%&'*/=?^_`{|]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
           error = "Invalid Email";
+        } else if (value === formData.confirmEmail.value) {
+          setFormData({
+            name: "confirmEmail",
+            value: formData.confirmEmail.value,
+            touched: true,
+            error: ""
+          });
+        } else if (formData.confirmEmail.value && value !== formData.confirmEmail.value) {
+          setFormData({
+            name: "confirmEmail",
+            value: formData.confirmEmail.value,
+            touched: true,
+            error: "Confirm Email does not match"
+          });
         }
         break;
-      case 'confirmEmail':
+      case "confirmEmail":
         if (!value) {
           error = "Please enter your Confirm Email";
         } else if (value !== formData.email.value) {
@@ -127,7 +180,7 @@ export default function SignUp() {
       default:
     }
     return error;
-  }
+  };
 
   const handleChange = (event: any) => {
     setFormData({
@@ -136,58 +189,59 @@ export default function SignUp() {
       touched: true,
       error: getError(event.target.name, event.target.value)
     });
-  }
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-    const errorUsername = getError('username', formData.username.value);
-    const errorPassword = getError('password', formData.password.value);
-    const errorEmail = getError('email', formData.email.value);
-    const errorConfirmPassword = getError('confirmPassword', formData.confirmPassword.value);
-    const errorConfirmEmail = getError('confirmEmail', formData.confirmEmail.value);
-    if (errorUsername) {
-      setFormData({
-        name: 'username',
-        touched: true,
-        error: errorUsername,
-      })
-    }
-    if (errorPassword) {
-      setFormData({
-        name: 'password',
-        touched: true,
-        error: errorPassword,
-      })
-    }
-    if (errorEmail) {
-      setFormData({
-        name: 'email',
-        touched: true,
-        error: errorEmail,
-      })
-    }
-    if (errorConfirmPassword) {
-      setFormData({
-        name: 'confirmPassword',
-        touched: true,
-        error: errorConfirmPassword,
-      })
-    }
-    if (errorConfirmEmail) {
-      setFormData({
-        name: 'confirmEmail',
-        touched: true,
-        error: errorConfirmEmail,
-      })
-    }
-    if (error) return;
-    handleSignUp(formData.email.value, formData.password.value, formData.username.value);
+  };
+
+  function handleClose() {
+    history.push(routers.HOME);
   }
 
-  const handleSignUp = async (email: string, password: string, username: string) => {
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+    let hasError = false;
+    const errorPassword = getError("password", formData.password.value);
+    const errorEmail = getError("email", formData.email.value);
+    const errorConfirmPassword = getError("confirmPassword", formData.confirmPassword.value);
+    const errorConfirmEmail = getError("confirmEmail", formData.confirmEmail.value);
+    if (errorPassword) {
+      hasError = true;
+      setFormData({
+        name: "password",
+        touched: true,
+        error: errorPassword
+      });
+    }
+    if (errorEmail) {
+      hasError = true;
+      setFormData({
+        name: "email",
+        touched: true,
+        error: errorEmail
+      });
+    }
+    if (errorConfirmPassword) {
+      hasError = true;
+      setFormData({
+        name: "confirmPassword",
+        touched: true,
+        error: errorConfirmPassword
+      });
+    }
+    if (errorConfirmEmail) {
+      hasError = true;
+      setFormData({
+        name: "confirmEmail",
+        touched: true,
+        error: errorConfirmEmail
+      });
+    }
+    if (hasError) return;
+    handleSignUp(formData.email.value, formData.password.value);
+  };
+
+  const handleSignUp = async (email: string, password: string) => {
     try {
       setLoading(true);
       const payload = {
-        username,
         password,
         email,
         role: "ROLE_USER"
@@ -197,195 +251,174 @@ export default function SignUp() {
         setSuccess(true);
         return;
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      if (error.response.data.errorCode === "CC_23") {
+        setFormData({
+          name: "email",
+          touched: true,
+          error: error.response.data.errorMessage,
+          value: formData.email.value
+        });
+      }
     } finally {
       setLoading(false);
     }
-  }
+  };
   return (
     <Container>
-      <WrapContent>
-        <WrapTitle>
-          Sign up
-        </WrapTitle>
-        <WrapHintText>
-          Already have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_IN)}>Sign In Here</WrapSignUp>
-        </WrapHintText>
-        <FormGroup>
-          {
-            !success ?
-              (
-                <WrapForm>
-                  <WrapInput>
-                    <Label>
-                      Username
-                    </Label>
-                    <InputCustom
-                      startAdornment={
-                        <Box paddingRight={"10px"} paddingTop={"5px"}>
-                          <UserCustomIcon />
-                        </Box>
-                      }
-                      fullWidth
-                      name="username"
-                      onChange={handleChange}
-                      error={Boolean(formData.username.error && formData.username.touched)}
-                      placeholder="Username"
+      {!success ? (
+        <WrapContent>
+          <WrapTitle>Sign up</WrapTitle>
+          <WrapHintText>
+            Already have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_IN)}>Sign In Here</WrapSignUp>
+          </WrapHintText>
+          <FormGroup>
+            <WrapForm>
+              <CloseButton saving={0} onClick={() => handleClose()}>
+                <IoMdClose />
+              </CloseButton>
+              <WrapInput>
+                <Label>Email Address</Label>
+                <InputCustom
+                  inputRef={emailTextField}
+                  startAdornment={
+                    <Box paddingRight={"10px"} paddingTop={"7px"} paddingBottom={"2px"}>
+                      <EmailIcon />
+                    </Box>
+                  }
+                  fullWidth
+                  value={formData.email.value}
+                  name="email"
+                  onChange={handleChange}
+                  error={Boolean(formData.email.error && formData.email.touched)}
+                  placeholder="A confirmation code will be sent to this address"
+                />
+                {formData.email.error && formData.email.touched ? (
+                  <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
+                ) : null}
+              </WrapInput>
+              <WrapInput>
+                <Label>Confirm Email Address</Label>
+                <InputCustom
+                  startAdornment={
+                    <Box paddingRight={"10px"} paddingTop={"7px"} paddingBottom={"2px"}>
+                      <EmailIcon />
+                    </Box>
+                  }
+                  fullWidth
+                  value={formData.confirmEmail.value}
+                  name="confirmEmail"
+                  onChange={handleChange}
+                  error={Boolean(formData.confirmEmail.error && formData.confirmEmail.touched)}
+                  placeholder="Re-enter Your email address"
+                />
+                {formData.confirmEmail.error && formData.confirmEmail.touched ? (
+                  <FormHelperTextCustom error>{formData.confirmEmail.error}</FormHelperTextCustom>
+                ) : null}
+              </WrapInput>
+              <WrapInput>
+                <Label>Password</Label>
+                <InputCustom
+                  startAdornment={
+                    <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
+                      <LockIcon />
+                    </Box>
+                  }
+                  type={showPassword ? "text" : "password"}
+                  fullWidth
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton aria-label="toggle password visibility" onClick={handleTogglePassword}>
+                        {showPassword ? <ShowIcon /> : <HideIcon />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  name="password"
+                  onChange={handleChange}
+                  error={Boolean(formData.password.error && formData.password.touched)}
+                  placeholder="Password"
+                />
+                {formData.password.error && formData.password.touched ? (
+                  <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom>
+                ) : null}
+              </WrapInput>
+              <WrapInput>
+                <Label>Confirm Password</Label>
+                <InputCustom
+                  startAdornment={
+                    <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
+                      <LockIcon />
+                    </Box>
+                  }
+                  fullWidth
+                  type={showConfirmPassword ? "text" : "password"}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton aria-label="toggle password visibility" onClick={handleToggleConfirmPassword}>
+                        {showConfirmPassword ? <ShowIcon /> : <HideIcon />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  name="confirmPassword"
+                  onChange={handleChange}
+                  error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
+                  placeholder="Confirm Password"
+                />
+                {formData.confirmPassword.error && formData.confirmPassword.touched ? (
+                  <FormHelperTextCustom error>{formData.confirmPassword.error}</FormHelperTextCustom>
+                ) : null}
+              </WrapInput>
+              <Box display={"flex"}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={checkedAgree}
+                      onChange={handleChangeAgree}
+                      sx={{
+                        opacity: "0.15",
+                        "&.Mui-checked": {
+                          opacity: "1"
+                        }
+                      }}
+                      size="medium"
                     />
-                    {(formData.username.error && formData.username.touched) ? <FormHelperTextCustom error>{formData.username.error}</FormHelperTextCustom> : null}
-                  </WrapInput>
-                  <WrapInput>
-                    <Label>
-                      Email Address
-                    </Label>
-                    <InputCustom
-                      startAdornment={
-                        <Box paddingRight={"10px"} paddingTop={"7px"} paddingBottom={"2px"}>
-                          <EmailIcon />
-                        </Box>
-                      }
-                      fullWidth
-                      name="email"
-                      onChange={handleChange}
-                      error={Boolean(formData.email.error && formData.email.touched)}
-                      placeholder="A confirmation code will be sent to this address"
-                    />
-                    {(formData.email.error && formData.email.touched) ? <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom> : null}
-                  </WrapInput>
-                  <WrapInput>
-                    <Label>
-                      Confirm Email Address
-                    </Label>
-                    <InputCustom
-                      startAdornment={
-                        <Box paddingRight={"10px"} paddingTop={"7px"} paddingBottom={"2px"}>
-                          <EmailIcon />
-                        </Box>
-                      }
-                      fullWidth
-                      name="confirmEmail"
-                      onChange={handleChange}
-                      error={Boolean(formData.confirmEmail.error && formData.confirmEmail.touched)}
-                      placeholder="Re-enter Your email address"
-                    />
-                    {(formData.confirmEmail.error && formData.confirmEmail.touched) ? <FormHelperTextCustom error>
-                      {formData.confirmEmail.error}
-                    </FormHelperTextCustom> : null}
-                  </WrapInput>
-                  <WrapInput>
-                    <Label>
-                      Password
-                    </Label>
-                    <InputCustom
-                      startAdornment={
-                        <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
-                          <LockIcon />
-                        </Box>
-                      }
-                      type={showPassword ? 'text' : 'password'}
-                      fullWidth
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleTogglePassword}
-                          >
-                            {showPassword ? <ShowIcon /> : <HideIcon />}
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                      name="password"
-                      onChange={handleChange}
-                      error={Boolean(formData.password.error && formData.password.touched)}
-                      placeholder="Password"
-                    />
-                    {(formData.password.error && formData.password.touched) ? <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom> : null}
-                  </WrapInput>
-                  <WrapInput>
-                    <Label>
-                      Confirm Password
-                    </Label>
-                    <InputCustom
-                      startAdornment={
-                        <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
-                          <LockIcon />
-                        </Box>
-                      }
-                      fullWidth
-                      type={showConfirmPassword ? "text" : "password"}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleToggleConfirmPassword}
-                          >
-                            {showConfirmPassword ? <ShowIcon /> : <HideIcon />}
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                      name="confirmPassword"
-                      onChange={handleChange}
-                      error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
-                      placeholder="Confirm Password"
-                    />
-                    {(formData.confirmPassword.error && formData.confirmPassword.touched) ? <FormHelperTextCustom error>{formData.confirmPassword.error}</FormHelperTextCustom> : null}
-                  </WrapInput>
-                  <Box display={'flex'}>
-                    <FormControlLabel control={
-                      <Checkbox
-                        checked={checkedAgree}
-                        onChange={handleChangeAgree}
-                        sx={{
-                          opacity: "0.15",
-                          "&.Mui-checked": {
-                            opacity: "1",
-                          }
-                        }}
-                        size="medium"
-                      />
-                    }
-                      label={
-                        <Box fontSize={"14px"} fontWeight={400} display={"flex"} alignItems={'baseline'} gap={"5px"}>
-                          I agree to the <ForgotPassword>Terms of Service</ForgotPassword>
-                        </Box>
-                      }
-                    />
-                  </Box>
-                  <Box display={'flex'} marginBottom={'10px'}>
-                    <FormControlLabel control={
-                      <Checkbox
-                        checked={checkedSubcribe}
-                        onChange={handleChangeSubcribe}
-                        sx={{
-                          opacity: "0.15",
-                          "&.Mui-checked": {
-                            opacity: "1",
-                          }
-                        }}
-                        size="medium"
-                      />
-                    }
-                      label={
-                        <Box fontSize={"14px"} fontWeight={400} textAlign={'left'}>
-                          I would like to receive the Cardano Explorer newsletter
-                          and understand that I can <ForgotPassword>unsubcribe</ForgotPassword> at any time
-                        </Box>
-                      }
-                    />
-                  </Box>
-                  <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={loading || !checkedAgree}>
-                    Create an Account
-                  </WrapButton>
-                </WrapForm>) : (
-                <WrapForm>
-                  <Label>
-                    Please check your email to confirm your account
-                  </Label>
-                </WrapForm>
-              )}
-        </FormGroup>
-      </WrapContent>
-    </Container >
-  )
+                  }
+                  label={
+                    <Box fontSize={"14px"} fontWeight={400} display={"flex"} alignItems={"baseline"} gap={"5px"}>
+                      I agree to the <ForgotPassword>Terms of Service</ForgotPassword>
+                    </Box>
+                  }
+                />
+              </Box>
+              <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>
+                Create an Account
+              </WrapButton>
+            </WrapForm>
+          </FormGroup>
+        </WrapContent>
+      ) : (
+        <WrapContent>
+          <WrapForm>
+            <FormGroup>
+              <Box textAlign={"center"}>
+                <SuccessIcon />
+                <Box paddingY={"15px"}>
+                  <Title>Verify Your Account</Title>
+                </Box>
+                <Box paddingBottom={"30px"}>
+                  <LabelInfo>
+                    Click on the link we sent to <WrapEmail>{formData.email.value}</WrapEmail> to finish your account
+                    setup.
+                  </LabelInfo>
+                </Box>
+              </Box>
+              <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
+                Sign In
+              </WrapButton>
+            </FormGroup>
+          </WrapForm>
+        </WrapContent>
+      )}
+    </Container>
+  );
 }

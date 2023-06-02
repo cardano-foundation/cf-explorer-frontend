@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
 import {
   CubeIcon,
+  DelegationHistoryMainIcon,
   FileEditIcon,
-  MintingIcon,
+  MintingIconUrl,
   NoteEditIcon,
   RocketIcon,
   USDIcon,
-  WithdrawlIcon,
+  WithdrawlIcon
 } from "../../../commons/resources";
 import ProgressCircle from "../ProgressCircle";
 import {
@@ -22,7 +23,6 @@ import {
   DetailValue,
   Icon,
   BlockDefault,
-  InfoIcon,
   DetailLabelSkeleton,
   DetailValueSkeleton,
   IconSkeleton,
@@ -43,9 +43,9 @@ import {
   DetailLinkImage,
   ViewDetailScroll,
   ViewDetailHeader,
+  TimeDuration
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
-import { TbFileCheck } from "react-icons/tb";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "../../../commons/utils/helper";
@@ -57,25 +57,39 @@ import { RootState } from "../../../stores/types";
 import { API } from "../../../commons/utils/api";
 import ViewAllButton from "../ViewAllButton";
 import ADAicon from "../ADAIcon";
+import FormNowMessage from "../FormNowMessage";
 
 type DetailViewTransactionProps = {
   hash: string;
   handleClose: () => void;
 };
 const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] = [
-  { key: "summary", label: "Summary", icon: <TbFileCheck /> },
+  { key: "summary", label: "Summary", icon: <DelegationHistoryMainIcon /> },
   { key: "utxOs", label: "UTXOs", icon: <CgArrowsExchange /> },
   { key: "contracts", label: "Contracts", icon: <DetailLinkImage src={FileEditIcon} alt="contact" /> },
-  { key: "collaterals", label: "Collaterals", icon: <DetailLinkImage src={USDIcon} alt="contact" /> },
+  { key: "collaterals", label: "Collateral", icon: <DetailLinkImage src={USDIcon} alt="contact" /> },
   { key: "notes", label: "Notes", icon: <DetailLinkImage src={NoteEditIcon} alt="contact" /> },
-  { key: "withdrawals", label: "Withdrawals", icon: <DetailLinkImage src={WithdrawlIcon} alt="contact" /> },
-  { key: "mints", label: "Minting", icon: <DetailLinkImage src={MintingIcon} alt="contact" /> },
+  { key: "withdrawals", label: "Withdrawal", icon: <DetailLinkImage src={WithdrawlIcon} alt="contact" /> },
+  { key: "mints", label: "Minting", icon: <DetailLinkImage src={MintingIconUrl} alt="contact" /> }
 ];
 
-const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
+const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
   const { hash, handleClose } = props;
-  const { data } = useFetch<Transaction>(hash ? `${API.TRANSACTION.DETAIL}/${hash}` : ``);
+  const { data, lastUpdated } = useFetch<Transaction>(
+    hash ? `${API.TRANSACTION.DETAIL}/${hash}` : ``,
+    undefined,
+    false,
+    REFRESH_TIMES.TRANSACTION_DETAIL
+  );
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
+
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+
+    return () => {
+      document.body.style.overflowY = "scroll";
+    };
+  }, []);
 
   if (!data)
     return (
@@ -167,6 +181,9 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = props => {
     <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
       <ViewDetailHeader>
         <ViewAllButton tooltipTitle="View Detail" to={details.transaction(hash)} />
+        <TimeDuration>
+          <FormNowMessage time={lastUpdated} />
+        </TimeDuration>
         <CustomTooltip title="Close">
           <CloseButton onClick={handleClose}>
             <CgClose />

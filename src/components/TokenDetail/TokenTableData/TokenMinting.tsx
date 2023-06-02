@@ -1,19 +1,26 @@
 import { stringify } from "qs";
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { details } from "../../../commons/routers";
-import { formatDateTimeLocal, getPageInfo, getShortHash, numberWithCommas } from "../../../commons/utils/helper";
-import { API } from "../../../commons/utils/api";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
+import {
+  formatAmount,
+  formatDateTimeLocal,
+  getPageInfo,
+  getShortHash,
+  numberWithCommas
+} from "src/commons/utils/helper";
+import { API } from "src/commons/utils/api";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { PriceValue, SmallText, StyledLink } from "./styles";
 
 interface ITokenMinting {
   tokenId: string;
+  metadata?: ITokenMetadata;
 }
 
-const TokenMinting: React.FC<ITokenMinting> = ({ tokenId }) => {
+const TokenMinting: React.FC<ITokenMinting> = ({ tokenId, metadata }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -25,36 +32,34 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tokenId }) => {
       title: "#",
       key: "id",
       minWidth: "40px",
-      render: (data, index) => (
-        <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
-      ),
+      render: (data, index) => <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
     },
     {
-      title: "Trx Hash",
+      title: "Tx Hash",
       key: "trxHash",
       minWidth: "200px",
-      render: r => (
+      render: (r) => (
         <CustomTooltip title={r.txHash}>
           <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
         </CustomTooltip>
-      ),
+      )
     },
     {
       title: "Amount minted",
       key: "amountMinted",
       minWidth: "200px",
-      render: r => (
+      render: (r) => (
         <PriceValue>
-          <SmallText>{numberWithCommas(r.amount)}</SmallText>
+          <SmallText>{formatAmount(r.amount, metadata?.decimals)}</SmallText>
         </PriceValue>
-      ),
+      )
     },
     {
       title: "Time",
       key: "time",
       minWidth: "200px",
-      render: r => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>,
-    },
+      render: (r) => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
+    }
   ];
 
   return (
@@ -65,7 +70,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tokenId }) => {
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+        onChange: (page, size) => history.push({ search: stringify({ page, size }) })
       }}
       onClickRow={(_, r: ITokenMintingTable) => history.push(details.transaction(r.txHash))}
     />

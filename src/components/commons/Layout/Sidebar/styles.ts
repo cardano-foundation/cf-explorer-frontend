@@ -1,58 +1,65 @@
-import styled from "@emotion/styled";
+import { Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
-import { MenuIcon } from "../../../../commons/resources";
 import { NETWORKS } from "../../../../commons/utils/constants";
-import { Button, Box } from "@mui/material";
 
-export const NavbarContainer = styled.nav`
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  padding: 25px 0px 60px;
-  text-align: left;
-  @media screen and (max-width: 1023px) {
-    height: auto;
-    background-color: ${props => props.theme.palette.background.paper};
-    padding: 0px;
+export const NavbarContainer = styled("nav")<{ vh: number }>(({ theme, vh }) => ({
+  position: "relative",
+  width: "100%",
+  height: "100vh",
+  minHeight: vh,
+  maxHeight: "fill-available",
+  overflow: "hidden",
+  padding: "25px 0px 60px",
+  textAlign: "left",
+  boxSizing: "border-box",
+  [theme.breakpoints.down("md")]: {
+    backgroundColor: theme.palette.background.paper,
+    padding: "16px 0px"
   }
-`;
+}));
 
 export const HeaderTop = styled("div")`
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 998;
-  @media screen and (max-width: 1023px) {
-    padding: 15px;
+  height: 80px ${({ theme }) => theme.breakpoints.down("md")} {
+    padding: 16px;
+    height: 76px;
   }
 `;
 
 export const LogoLink = styled(Link)<{ open?: number }>`
   position: relative;
   display: block;
-  margin-left: ${props => (props.open ? 30 : 15)}px;
+  margin-left: ${(props) => (props.open ? 30 : 15)}px;
   margin-bottom: 30px;
   width: max-content;
   height: 50px;
-  @media screen and (max-width: 1023px) {
-    margin: 0;
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    height: 44px;
+    width: 155px;
+    margin-left: 16px;
+    margin-bottom: 16px;
   }
 `;
 
-export const NavBarLogo = styled.img`
-  height: 50px;
-  width: auto;
-`;
+export const NavBarLogo = styled("img")<{ sidebar: number }>(({ theme }) => ({
+  height: 50,
+  width: "auto",
+  [theme.breakpoints.down("md")]: {
+    height: 44
+  }
+}));
 
-export const NetworkName = styled.small<{ network: keyof typeof NETWORKS }>`
+export const NetworkName = styled("small")<{ network: keyof typeof NETWORKS; sidebar?: number }>`
   position: absolute;
   bottom: 2px;
   right: 0;
   transform: translateY(50%);
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-title);
-  color: ${props => {
+  color: ${(props) => {
     switch (props.network) {
       case NETWORKS.mainnet: {
         return props.theme.palette.primary.main;
@@ -69,28 +76,23 @@ export const NetworkName = styled.small<{ network: keyof typeof NETWORKS }>`
     }
   }};
   text-transform: uppercase;
+  display: ${({ sidebar }) => (sidebar ? "block" : "none")};
 `;
 
-export const Toggle = styled.i`
-  width: 20px;
-  height: 24px;
-  background-image: url(${MenuIcon});
-  background-repeat: no-repeat;
-  background-position: center;
-  display: none;
-  @media screen and (max-width: 1023px) {
-    display: block;
+export const NavbarMenuBottom = styled(Box)<{ sidebar: number }>(({ theme, sidebar }) => ({
+  position: "absolute",
+  left: 0,
+  bottom: 0,
+  width: sidebar ? 240 : 0,
+  overflow: "hidden",
+  boxSizing: "border-box",
+  display: "none",
+  [theme.breakpoints.down("sm")]: {
+    display: "block",
+    padding: "16px 20px 20px",
+    boxSizing: "border-box",
+    "& > div": {
+      width: "100%"
+    }
   }
-`;
-
-export const SearchButton = styled(Button)(() => ({
-  padding: 0,
-  minWidth: 0,
-  marginInline: 16,
 }));
-export const HumburgerArea = styled(Box)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-`;

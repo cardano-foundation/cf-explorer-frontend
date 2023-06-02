@@ -7,4 +7,4 @@ export const ModalTitle = styled("h3")`
 export const Description = styled(Box)`
   margin-bottom: 35px;
   font-size: var(--font-size-text-small);
-`
+`;

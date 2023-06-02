@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import { UserDataType } from "../../types/user";
 import defaultAxios, { authAxios, defaultAxiosDownload } from "./axios";
+import { API } from "./api";
 //user
 export const signOut = (payload: TSignOut) => authAxios.post("auth/sign-out", payload);
 export const signIn = (payload: TSignIn) => authAxios.post("auth/sign-in", payload);
@@ -20,6 +21,7 @@ export const existEmail = (payload: TCheckExistEmail) => authAxios.get("user/exi
 export const existUserName = (payload: TCheckExistUsername) =>
   authAxios.get("user/exist-username", { params: payload });
 //note
+export const checkTrxHash = (payload: string) => defaultAxios.get(API.TRANSACTION.DETAIL + "/" + payload);
 export const addPrivateNote = (payload: TAddPrivateNote) => authAxios.post("note/add", payload);
 export const editPrivateNote = (payload: TEditPrivateNote) => authAxios.put("note/edit", {}, { params: payload });
 export const removePrivateNote = (noteId: number) => authAxios.delete(`note/delete/${noteId}`);
@@ -28,7 +30,7 @@ export const addBookmark = (payload: Bookmark) =>
   authAxios.post<any, AxiosResponse<Bookmark, any>>("/bookmark/add", payload);
 export const addListBookmark = (payload: Bookmark[]) =>
   authAxios.post<any, AxiosResponse<{ passNumber: number; failNumber: number }, any>>("/bookmark/add-list", {
-    bookMarks: payload,
+    bookMarks: payload
   });
 export const deleteBookmark = (id: number) => authAxios.delete("/bookmark/delete/" + id);
 export const getAllBookmarks = (network: string) =>

@@ -15,7 +15,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
   borderRadius: 10,
-  textAlign: "left",
+  textAlign: "left"
 }));
 
 export const ButtonClose = styled(Button)(({ theme }) => ({
@@ -26,7 +26,7 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
   height: 30,
   borderRadius: "50%",
   padding: 0,
-  minWidth: 0,
+  minWidth: 0
 }));
 
 export const ViewJson = styled(Box)(({ theme }) => ({
@@ -35,10 +35,29 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   backgroundColor: `${alpha(theme.palette.grey[300], 0.1)}`,
   borderRadius: 10,
   padding: theme.spacing(2),
-
-  "& .MuiSvgIcon-root": {
-    display: "none !important",
-  },
+  maxHeight: "50vh",
+  [theme.breakpoints.up("md")]: {
+    "& .MuiSvgIcon-root": {
+      display: "none !important"
+    },
+    "&::-webkit-scrollbar": {
+      width: "5px"
+    },
+    "&::-webkit-scrollbar-track": {
+      background: "transparent"
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: "transparent"
+    },
+    "&:hover": {
+      "&::-webkit-scrollbar-thumb": {
+        background: theme.palette.grey[300]
+      },
+      "&::-webkit-scrollbar-track": {
+        background: theme.palette.grey[100]
+      }
+    }
+  }
 }));
 
 export const ButtonLink = styled(Link)(({ theme }) => ({
@@ -48,5 +67,5 @@ export const ButtonLink = styled(Link)(({ theme }) => ({
   textAlign: "left",
   wordBreak: "break-all",
   marginTop: theme.spacing(2),
-  display: "inline",
+  display: "inline"
 }));

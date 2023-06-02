@@ -23,8 +23,8 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     top: "-50%",
     left: theme.spacing(2),
     background: theme.palette.red[600],
-    transform: " translate(0, 60%)",
-  },
+    transform: " translate(0, 60%)"
+  }
 }));
 export const FeeBox = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -48,46 +48,46 @@ export const FeeBox = styled(Box)(({ theme }) => ({
     top: "-50%",
     left: theme.spacing(2),
     background: theme.palette.red[600],
-    transform: " translate(0, 60%)",
-  },
+    transform: " translate(0, 60%)"
+  }
 }));
 
 export const IconButton = styled(IconButtonMui)(({ theme }) => ({
-  background: theme.palette.grey[100],
+  background: theme.palette.grey[100]
 }));
 export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
-  padding: 0,
+  padding: 0
 }));
 
 export const Info = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  marginLeft: theme.spacing(2),
+  marginLeft: theme.spacing(2)
 }));
 export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   marginLeft: theme.spacing(1),
   fontWeight: 600,
-  fontSize: "14px",
+  fontSize: "14px"
 }));
 export const Price = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   marginLeft: theme.spacing(1),
   fontSize: "14px",
-  color: theme.palette.common.white,
+  color: theme.palette.common.white
 }));
 
 export const WalletButton = styled(IconButton)(({ theme }) => ({
-  background: alpha(theme.palette.common.white, 0.1),
+  background: alpha(theme.palette.common.white, 0.1)
 }));
 export const WalletBox = styled(Box)(({ theme }) => ({
   transform: "translateX(-50%)",
   position: "absolute",
   bottom: 50,
   left: "50%",
-  display: "flex",
+  display: "flex"
 }));
 
 export const RewarWallet = styled(Box)(({ theme }) => ({
@@ -96,5 +96,5 @@ export const RewarWallet = styled(Box)(({ theme }) => ({
   bottom: "15%",
   display: "flex",
   alignItems: "center",
-  transform: "translateX(-50%)",
+  transform: "translateX(-50%)"
 }));

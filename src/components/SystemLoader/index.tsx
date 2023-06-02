@@ -1,17 +1,13 @@
 import { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
 import { useLocalStorage } from "react-use";
 import useFetch from "../../commons/hooks/useFetch";
 import { API, USER_API } from "../../commons/utils/api";
 import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES, REFRESH_TIMES } from "../../commons/utils/constants";
-import { getInfo } from "../../commons/utils/userRequest";
 import { setCurrentEpoch, setUsdMarket } from "../../stores/system";
-import { RootState } from "../../stores/types";
-import { setUserData } from "../../stores/user";
+import useAuth from "src/commons/hooks/useAuth";
 
 export const SystemLoader = () => {
-  const { userData } = useSelector(({ user }: RootState) => user);
-  const isLogin = !!userData?.username;
+  const { isLoggedIn } = useAuth();
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
   const { data: currentEpoch } = useFetch<EpochCurrentType>(
     `${API.EPOCH.CURRENT_EPOCH}`,
@@ -26,7 +22,12 @@ export const SystemLoader = () => {
     REFRESH_TIMES.CURRENT_PRICE_USD
   );
 
-  const { data: dataBookmark } = useFetch<string[]>(isLogin ? USER_API.BOOKMARK : "", undefined, true);
+  const { data: dataBookmark } = useFetch<string[]>(
+    isLoggedIn ? `${USER_API.BOOKMARK}?network=${NETWORK_TYPES[NETWORK]}` : "",
+    undefined,
+    true,
+    REFRESH_TIMES.EPOCH_DETAIL_VIEW
+  );
   const startTime = useRef(Date.now());
 
   useEffect(() => {
@@ -35,7 +36,8 @@ export const SystemLoader = () => {
       const { no, slot, totalSlot, account } = currentEpoch;
       const interval = setInterval(() => {
         const newSlot = slot + Math.floor((Date.now() - startTime.current) / 1000);
-        const newNo = newSlot >= MAX_SLOT_EPOCH ? no + 1 : no;
+        const isCrawlerStop = newSlot - MAX_SLOT_EPOCH > REFRESH_TIMES.CURRENT_EPOCH;
+        const newNo = newSlot >= MAX_SLOT_EPOCH && !isCrawlerStop ? no + 1 : no;
         setCurrentEpoch({ slot: newSlot % MAX_SLOT_EPOCH, no: newNo, totalSlot, account });
       }, 1000);
       return () => clearInterval(interval);
@@ -48,7 +50,8 @@ export const SystemLoader = () => {
 
   useEffect(() => {
     if (dataBookmark) setBookmark(dataBookmark);
-  }, [dataBookmark, setBookmark]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(dataBookmark)]);
 
   useEffect(() => {
     if (currentEpoch) setCurrentEpoch(currentEpoch);

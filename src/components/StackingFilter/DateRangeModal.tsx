@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DesktopDatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import moment from "moment";
 import React, { useEffect, useMemo, useState } from "react";
@@ -21,40 +21,48 @@ export interface DateRangeModalProps {
 
 export const DATETIME_PARTTEN = `YYYY/MM/DD HH:mm:ss`;
 
-const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeChange, open,...rest }) => {
+const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeChange, open, ...rest }) => {
   const [value, setValue] = useState<DateRange>();
 
   useEffect(() => {
     const { value } = rest;
-    setValue({ fromDate: toLocal(value?.fromDate), toDate: toLocal(value?.toDate) });
+    if (value?.fromDate && value?.toDate) {
+      setValue({ fromDate: toLocal(value?.fromDate), toDate: toLocal(value?.toDate) });
+    }
   }, [rest.value]);
 
   const toLocal = (date?: string) => {
-    return date ? moment.utc(date, DATETIME_PARTTEN).local().format(DATETIME_PARTTEN) : undefined;;
+    return date ? moment.utc(date, DATETIME_PARTTEN).local().format(DATETIME_PARTTEN) : undefined;
   };
 
-  const toMoment = (date?: string) => date ? moment(date, DATETIME_PARTTEN) : null;
+  const toMoment = (date?: string) => (date ? moment(date, DATETIME_PARTTEN) : null);
 
   const onSubmit = () => {
     onDateRangeChange({ fromDate: value?.fromDate, toDate: value?.toDate });
     onClose?.();
   };
 
-  const isValid = useMemo(() => !(value?.fromDate && value?.toDate), [value])
+  const isValid = useMemo(() => {
+    return !(value?.fromDate && value?.toDate) || moment(value?.fromDate).isAfter(moment(value?.toDate));
+  }, [value]);
   return (
     <StyledModal open={open} handleCloseModal={() => onClose?.()}>
       <LocalizationProvider dateAdapter={AdapterMoment}>
         <DateRangePickerContainer>
-          <DatePicker
+          <DesktopDatePicker
             value={toMoment(value?.fromDate)}
-            onChange={mDate => setValue(pre => {
-              return ({ ...pre, fromDate: mDate?.format('YYYY/MM/DD HH:mm:ss') })
-            })}
+            disableFuture
+            onChange={(mDate) =>
+              setValue((pre) => {
+                return { ...pre, fromDate: mDate?.format("YYYY/MM/DD HH:mm:ss") };
+              })
+            }
           />
           <Box>-</Box>
-          <DatePicker
+          <DesktopDatePicker
             value={toMoment(value?.toDate)}
-            onChange={mDate => setValue(pre => ({ ...pre, toDate: mDate?.format('YYYY/MM/DD 23:59:59') }))}
+            disableFuture
+            onChange={(mDate) => setValue((pre) => ({ ...pre, toDate: mDate?.format("YYYY/MM/DD 23:59:59") }))}
           />
         </DateRangePickerContainer>
         <DatePickerFooter>

@@ -7,7 +7,7 @@ export const setStoreToast = (store: Store) => {
 };
 
 const initialState: ToastStoreType = {
-  toasts: [],
+  toasts: []
 };
 
 const storeWallet = createSlice({
@@ -16,13 +16,13 @@ const storeWallet = createSlice({
   reducers: {
     addToast: (state, action: PayloadAction<Required<ToastItem>>) => ({
       ...state,
-      toasts: [action.payload, ...state.toasts],
+      toasts: [action.payload, ...state.toasts]
     }),
     removeToast: (state, action: PayloadAction<number>) => ({
       ...state,
-      toasts: state.toasts.filter(item => item.id !== action.payload),
-    }),
-  },
+      toasts: state.toasts.filter((item) => item.id !== action.payload)
+    })
+  }
 });
 
 export const addToast = (toast: Required<ToastItem>) => {

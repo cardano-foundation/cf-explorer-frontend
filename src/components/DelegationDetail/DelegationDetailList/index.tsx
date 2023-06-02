@@ -7,7 +7,7 @@ import {
   formatDateTimeLocal,
   formatPercent,
   getShortWallet,
-  numberWithCommas,
+  numberWithCommas
 } from "../../../commons/utils/helper";
 import CopyButton from "../../commons/CopyButton";
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -18,7 +18,7 @@ const DelegationEpochList = ({
   data,
   loading,
   total,
-  initialized,
+  initialized
 }: {
   data: DelegationEpoch[] | null;
   loading: boolean;
@@ -37,47 +37,46 @@ const DelegationEpochList = ({
       title: "Epoch",
       key: "epoch",
       minWidth: "120px",
-      render: r => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>,
+      render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
     },
     {
       title: "Blocks",
       key: "block",
       minWidth: "120px",
-      render: data => <StyledLink to={details.block(data.block)}>{numberWithCommas(data.block)}</StyledLink>,
+      render: (data) => numberWithCommas(data.block)
     },
     {
       title: "Stake Amount (A)",
       key: "stakeAmount",
       minWidth: "120px",
 
-      render: data => <Box component={"span"}>{formatADAFull(data.stakeAmount)}</Box>,
+      render: (data) => <Box component={"span"}>{formatADAFull(data.stakeAmount)}</Box>
     },
     {
       title: "Delegator Rewards (A)",
       key: "delegatorReward",
       minWidth: "120px",
-      render: data => <Box component={"span"}>{formatADAFull(data.delegators)}</Box>,
+      render: (data) => <Box component={"span"}>{formatADAFull(data.delegators)}</Box>
     },
     {
       title: "Fees (A)",
       key: "fees",
       minWidth: "120px",
 
-      render: data => <Box component={"span"}>{formatADAFull(data.fee)}</Box>,
+      render: (data) => <Box component={"span"}>{formatADAFull(data.fee)}</Box>
     },
     {
       title: "ROS",
       key: "ros",
       minWidth: "120px",
-      render: data => formatPercent(data.ros || 0),
-    },
+      render: (data) => formatPercent(data.ros ? data.ros / 100 : 0)
+    }
   ];
 
   return (
     <Table
       columns={columns}
       data={data || []}
-      onClickRow={(_, r) => history.push(details.epoch(r.epoch))}
       total={{ count: total, title: "Total Token List" }}
       loading={loading}
       initialized={initialized}
@@ -86,7 +85,7 @@ const DelegationEpochList = ({
           setQuery({ tab: query.tab, page, size });
         },
         page: query.page ? +query.page - 1 : 0,
-        total: total,
+        total: total
       }}
     />
   );
@@ -97,7 +96,7 @@ const DelegationStakingDelegatorsList = ({
   initialized,
   loading,
   total,
-  scrollEffect,
+  scrollEffect
 }: {
   data: StakingDelegators[] | null;
   loading: boolean;
@@ -115,13 +114,13 @@ const DelegationStakingDelegatorsList = ({
     {
       title: "No",
       key: "no",
-      render: (r, idx) => idx + 1,
+      render: (r, idx) => idx + 1
     },
     {
       title: "Delegator",
       key: "delegator",
       minWidth: "50px",
-      render: data =>
+      render: (data) =>
         data.view && (
           <div style={{ display: "flex", alignItems: "center" }}>
             <CustomTooltip title={data.view || ""}>
@@ -129,26 +128,26 @@ const DelegationStakingDelegatorsList = ({
             </CustomTooltip>
             <CopyButton text={data.view || ""} />
           </div>
-        ),
+        )
     },
     {
       title: "Total Value (A)",
       key: "value",
       minWidth: "120px",
-      render: data => <Box component={"span"}>{formatADAFull(data.totalStake)}</Box>,
+      render: (data) => <Box component={"span"}>{formatADAFull(data.totalStake)}</Box>
     },
     {
       title: "Staked Time",
       key: "stakedTime",
       minWidth: "120px",
-      render: data => formatDateTimeLocal(data.time || ""),
+      render: (data) => formatDateTimeLocal(data.time || "")
     },
     {
       title: "Fees (A)",
       key: "fees",
       minWidth: "120px",
-      render: data => <Box component={"span"}>{formatADAFull(data.fee)}</Box>,
-    },
+      render: (data) => <Box component={"span"}>{formatADAFull(data.fee)}</Box>
+    }
   ];
 
   return (
@@ -163,7 +162,7 @@ const DelegationStakingDelegatorsList = ({
           setQuery({ tab: query.tab, page, size });
         },
         page: query.page ? +query.page - 1 : 0,
-        total: total,
+        total: total
       }}
       onClickRow={(e, r) => {
         history.push(details.stake(r.view));

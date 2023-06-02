@@ -1,20 +1,21 @@
 import React from "react";
 import CopyButton from "../../commons/CopyButton";
-import infoIcon from "../../../commons/resources/images/infoIcon.svg";
 import { Box, Skeleton } from "@mui/material";
-import { EmptyIcon } from "../../../commons/resources";
+import { EmptyIcon, InfoIcon } from "../../../commons/resources";
 import { details } from "../../../commons/routers";
 import {
   AddressGroup,
   AddressLink,
   CardItem,
+  CardItemStyled,
   ItemDetail,
   LabelItem,
   RowItem,
   TitleDetail,
   TokenAddress,
-  ValueItem,
+  ValueItem
 } from "./styles";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 interface DetailCardProps {
   title: string;
@@ -34,16 +35,16 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
   }
   if (type === "right" && !address) {
     return (
-      <CardItem padding={props => props.spacing(4)}>
-        <TitleDetail paddingBottom={props => props.spacing(2)}>{title}</TitleDetail>
+      <CardItemStyled>
+        <TitleDetail paddingBottom={(props) => props.spacing(2)}>{title}</TitleDetail>
         <Box width={"100%"} display="flex" alignItems="center" justifyContent="center">
           <img alt="icon" src={EmptyIcon} />
         </Box>
-      </CardItem>
+      </CardItemStyled>
     );
   }
   return (
-    <CardItem padding={props => props.spacing(4)}>
+    <CardItemStyled>
       <TitleDetail>{title}</TitleDetail>
       <AddressGroup>
         {type === "left" ? (
@@ -59,7 +60,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
             <ItemDetail key={ii}>
               {i.title && (
                 <RowItem>
-                  <img src={infoIcon} alt="info icon" />
+                  <CustomIcon icon={InfoIcon} width={22} />
                   <LabelItem>{i.title}</LabelItem>
                 </RowItem>
               )}
@@ -68,7 +69,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
           );
         })}
       </Box>
-    </CardItem>
+    </CardItemStyled>
   );
 };
 

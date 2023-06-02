@@ -5,7 +5,11 @@ interface IBodyReportStakeKey {
   toDate: string;
   isADATransfer: boolean;
   isFeesPaid: boolean;
-  stakingLifeCycleEvents: string[];
+  eventDelegation: boolean;
+  eventDeregistration: boolean;
+  eventRegistration: boolean;
+  eventRewards: boolean;
+  eventWithdrawal: boolean;
 }
 
 interface IBodyReportStakePool {
@@ -27,7 +31,7 @@ interface IStakeKeySummary {
   isADATransfer: boolean;
   isFeesPaid: boolean;
   status: string;
-  stakingLifeCycleEvents: any;
+  stakingLifeCycleEvents: { type: string }[];
 }
 
 interface IPoolReportList {
@@ -35,7 +39,55 @@ interface IPoolReportList {
   epochRanges: number[];
   toDate: string;
   isPoolSize: boolean;
-  isFreePaid: boolean;
+  isFeesPaid: boolean;
   event: string;
   reportId: number;
+  eventDeregistration: boolean;
+  eventPoolUpdate: boolean;
+  eventRegistration: boolean;
+  eventReward: boolean;
+  poolView: string;
+  createdAt: string;
+  status: "IN_PROGRESS" | "GENERATED" | "FAILED" | "EXPIRED";
+  reportHistory: {
+    id: number;
+    storageKey: string;
+    reportName: string;
+    username: string;
+    createdAt: string;
+    status: string;
+    type: string;
+  };
+}
+
+interface IADATransferReport {
+  txHash: string;
+  amount: number;
+  time: string;
+  fee: number;
+  type: "SENT" | "RECEIVED" | "FEE_PAID" | "CERTIFICATE_FEE_PAID" | "CERTIFICATE_DEPOSIT_PAID";
+  status: "FAIL" | "SUCCESS" | "PENDING";
+}
+
+interface IReportStaking {
+  eventDelegation: boolean;
+  eventDeregistration: boolean;
+  eventRegistration: boolean;
+  eventRewards: boolean;
+  eventWithdrawal: boolean;
+  id: number;
+  stakeKey: string;
+  createdAt: string;
+  username: string;
+  reportName: string;
+  fromDate: string;
+  toDate: string;
+  isADATransfer: boolean;
+  isFeesPaid: boolean;
+  status: "IN_PROGRESS" | "GENERATED" | "FAILED" | "EXPIRED";
+}
+
+interface IPoolReportSummary {
+  event: string;
+  reportName: string;
 }

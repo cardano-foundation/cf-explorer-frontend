@@ -9,7 +9,7 @@ import {
   SmallText,
   StyledLink,
   StyledTable,
-  Title,
+  Title
 } from "./styles";
 import { ReactComponent as QuestionConfirm } from "../../commons/resources/icons/questionConfirm.svg";
 import { ReactComponent as Plus } from "../../commons/resources/icons/plus.svg";
@@ -21,34 +21,73 @@ import { useLocation } from "react-router-dom";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import { ReactComponent as Expand } from "../../commons/resources/icons/expand.svg";
 import { ReactComponent as Warning } from "../../commons/resources/icons/warning.svg";
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { Box, Dialog, DialogActions, IconButton, DialogContentText } from "@mui/material";
 import { removePrivateNote } from "../../commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
 import { details } from "../../commons/routers";
-import { DialogContentText } from "@mui/material";
+
 import { ButtonClose } from "../../components/ScriptModal/styles";
 import { CloseIcon } from "../../commons/resources";
 import useToast from "../../commons/hooks/useToast";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 type TAction = {
   onClick: () => void;
 };
 
 const ViewButton: React.FC<TAction> = ({ onClick }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { isTablet } = useScreen();
+
   return (
-    <CustomTooltip placement="top" title="View private note">
-      <ActionButton onClick={onClick} typeButton="View">
-        <Expand />
+    <CustomTooltip
+      onClose={() => setIsOpen(false)}
+      onOpen={() => {
+        if (!isTablet) return;
+        setIsOpen(true);
+      }}
+      placement="top"
+      title="View private note"
+    >
+      <ActionButton
+        onClick={() => {
+          if (isOpen && isTablet) return;
+          onClick();
+        }}
+        typeButton="View"
+      >
+        <IconButton>
+          <Expand />
+        </IconButton>
       </ActionButton>
     </CustomTooltip>
   );
 };
 
 const RemoveButton: React.FC<TAction> = ({ onClick }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { isTablet } = useScreen();
+
   return (
-    <CustomTooltip placement="top" title="Remove note">
-      <ActionButton onClick={onClick} typeButton="Remove">
-        <Warning />
+    <CustomTooltip
+      onClose={() => setIsOpen(false)}
+      onOpen={() => {
+        if (!isTablet) return;
+        setIsOpen(true);
+      }}
+      placement="top"
+      title="Remove note"
+    >
+      <ActionButton
+        onClick={() => {
+          if (isOpen && isTablet) return;
+          onClick();
+        }}
+        typeButton="Remove"
+      >
+        <IconButton>
+          <Warning />
+        </IconButton>
       </ActionButton>
     </CustomTooltip>
   );
@@ -76,7 +115,7 @@ const PrivateNotes = () => {
     setCurrentNote({
       hash: note.txHash,
       note: note.note,
-      id: note.id,
+      id: note.id
     });
     setOpenModal(true);
   };
@@ -85,7 +124,11 @@ const PrivateNotes = () => {
     setLoadingDelete(true);
     try {
       await removePrivateNote(note.id);
-      toast.success(`Delete transaction private note ${getShortHash(note.txHash || "")} successfully`);
+      toast.success(
+        <Box>
+          Delete transaction private note <Box>{getShortHash(note.txHash || "")} successfully</Box>
+        </Box>
+      );
       setSelected(null);
       refresh();
     } catch (error) {
@@ -106,7 +149,7 @@ const PrivateNotes = () => {
       key: "privateNote",
       minWidth: "40px",
       maxWidth: "300px",
-      render: item => (
+      render: (item) => (
         <>
           <CustomTooltip title={item.txHash}>
             <StyledLink to={details.transaction(item.txHash)}>
@@ -115,34 +158,39 @@ const PrivateNotes = () => {
           </CustomTooltip>
           <SmallText>{item.note}</SmallText>
         </>
-      ),
+      )
     },
     {
       title: "Added On",
       key: "addedOn",
       minWidth: "40px",
       maxWidth: "250px",
-      render: item => formatDateTime(item.createdDate),
+      render: (item) => formatDateTime(item.createdDate)
     },
     {
       title: <Box textAlign={"right"}>Action</Box>,
       key: "action",
       minWidth: "40px",
-      render: item => (
+      render: (item) => (
         <Box display="flex" justifyContent={"flex-end"}>
           <ViewButton onClick={() => handleClickViewDetail(item)} />
           <RemoveButton onClick={() => setSelected(item)} />
         </Box>
-      ),
-    },
+      )
+    }
   ];
 
   return (
     <Container overflow={"auto"}>
       <Header>
         <Title>My Transaction Private Notes</Title>
-        <AddButton onClick={() => setOpenModal(true)} endIcon={<Plus />}>
-          Add
+        <AddButton onClick={() => setOpenModal(true)}>
+          <Box lineHeight={1} mr={"4px"}>
+            Add
+          </Box>
+          <Box lineHeight={1}>
+            <Plus width={"14px"} />
+          </Box>
         </AddButton>
       </Header>
       <Box overflow={"auto"} height="100%">
@@ -157,7 +205,7 @@ const PrivateNotes = () => {
             onChange: (page, size) => {
               setPage(page - 1);
               setSize(size);
-            },
+            }
           }}
         />
       </Box>
@@ -170,7 +218,7 @@ const PrivateNotes = () => {
       <Dialog
         open={!!selected}
         PaperProps={{
-          style: { borderRadius: 20, width: 550 },
+          style: { borderRadius: 20, width: 550, padding: "0 2px" }
         }}
       >
         <Box textAlign={"center"} pt={5} pb={2}>
@@ -183,14 +231,14 @@ const PrivateNotes = () => {
           <img src={CloseIcon} alt="icon close" />
         </ButtonClose>
         <Box>
-          <DialogContentText color={theme => theme.palette.text.secondary} fontSize={"1.125rem"}>
+          <DialogContentText color={(theme) => theme.palette.text.secondary} fontSize={"1.125rem"}>
             Are you sure to remove transaction private note {getShortHash(selected?.txHash || "")} ?
           </DialogContentText>
         </Box>
         <DialogActions>
           <Box flex={1} pt={2} pb={3}>
-            <CancelButton disabled={loadingDelete} autoFocus onClick={() => setSelected(null)}>
-              Cancel
+            <CancelButton disabled={loadingDelete} onClick={() => setSelected(null)}>
+              Close
             </CancelButton>
             <DeleteButton
               loading={loadingDelete}

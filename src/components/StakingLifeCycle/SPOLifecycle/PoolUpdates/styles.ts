@@ -1,74 +1,47 @@
-import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
+import { Box, styled } from "@mui/material";
 
-export const HoldBox = styled(Box)(({ theme }) => ({
-  width: "200px",
-  height: "35px",
+export const StyledContainer = styled(Box)(({ theme }) => ({
+  marginTop: 25,
+  [theme.breakpoints.down("sm")]: {
+    marginTop: 15
+  }
+}));
+
+export const StyledList = styled(Box)(({ theme }) => ({
   display: "flex",
-  alignItems: "center",
   justifyContent: "space-between",
-  padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[600]}`,
-  borderRadius: "10px",
-  marginRight: theme.spacing(5),
-  position: "relative",
-  background: theme.palette.common.white,
-  "::after": {
-    content: '"HOLD"',
-    borderRadius: "4px",
-    fontWeight: "bold",
-    color: theme.palette.common.white,
-    padding: "6px 8px",
-    fontSize: "14px",
-    position: "absolute",
-    top: "-50%",
-    left: theme.spacing(2),
-    background: theme.palette.red[600],
-    transform: " translate(0, 60%)",
-  },
-}));
-export const FeeBox = styled(Box)(({ theme }) => ({
-  width: "184px",
-  height: "35px",
-  display: "flex",
   alignItems: "center",
-  justifyContent: "space-between",
-  padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[600]}`,
-  borderRadius: "10px",
-  background: theme.palette.common.white,
-  position: "relative",
-  marginLeft: "10px",
-  "::after": {
-    content: '"FEES"',
-    borderRadius: "4px",
-    fontWeight: "bold",
-    color: theme.palette.common.white,
-    padding: "6px 8px",
-    fontSize: "14px",
-    position: "absolute",
-    top: "-50%",
-    left: theme.spacing(2),
-    background: theme.palette.red[600],
-    transform: " translate(0, 60%)",
-  },
+  marginBottom: 20,
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "center"
+  }
 }));
 
-export const IconButton = styled(IconButtonMui)(({ theme }) => ({
-  background: theme.palette.grey[100],
-}));
-export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
-  padding: 0,
-}));
-
-export const Info = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  marginLeft: theme.spacing(2),
-}));
-export const InfoText = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  marginLeft: theme.spacing(1),
-  fontWeight: 600,
-  fontSize: "14px",
+export const GridBox = styled("div")<{ sidebar?: number }>(({ theme, sidebar }) => ({
+  display: "grid",
+  gridTemplateColumns: "repeat(4, 1fr)",
+  gridTemplateRows: "repeat(2, 1fr)",
+  gridGap: "20px 10px",
+  [theme.breakpoints.down("xl")]: {
+    gridTemplateColumns: `repeat(${sidebar ? 3 : 4}, 1fr)`,
+    gridTemplateRows: `repeat(${sidebar ? 3 : 4}, 1fr)`
+  },
+  [theme.breakpoints.down("lg")]: {
+    gridTemplateColumns: `repeat(${sidebar ? 2 : 3}, 1fr)`,
+    gridTemplateRows: `repeat(${sidebar ? 2 : 3}, 1fr)`
+  },
+  [theme.breakpoints.down("md")]: {
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gridTemplateRows: "repeat(4, 1fr)"
+  },
+  [theme.breakpoints.down("sm")]: {
+    gridTemplateColumns: "1fr",
+    gridTemplateRows: "auto",
+    "& > span": {
+      width: "100% !important"
+    },
+    "& > div": {
+      maxWidth: "100%"
+    }
+  }
 }));

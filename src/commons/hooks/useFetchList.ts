@@ -52,6 +52,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
         setInitialized(true);
       } catch (error: any) {
         setData([]);
+        setInitialized(true);
         setError(error?.response?.data?.message || error?.message);
       }
       needLoading && setLoading(false);
@@ -100,7 +101,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
     currentPage,
     refresh: getList,
     update: setData,
-    lastUpdated: lastFetch.current,
+    lastUpdated: lastFetch.current
   };
 };
 

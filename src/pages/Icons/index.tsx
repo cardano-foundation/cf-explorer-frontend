@@ -1,8 +1,8 @@
-import { Container, Input, Modal, TextareaAutosize, Theme, styled, useTheme } from "@mui/material";
+import { Container, Modal, TextareaAutosize, Theme, styled, useTheme } from "@mui/material";
 import * as icons from "../../commons/resources";
 import CustomIcon from "../../components/commons/CustomIcon";
 import { Box } from "@mui/system";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 const StyledContainer = styled(Container)`
   padding: 20px 0 40px;
@@ -64,13 +64,13 @@ const styleList: StyleItem[] = [
   { width: 60, stroke: "currentColor" },
   { width: 60, stroke: "secondary" },
   { width: 60, stroke: "primary" },
-  { width: 60, stroke: "red" },
+  { width: 60, stroke: "red" }
 ];
 
 const Item = ({ name, Icon }: { name: string; Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>> }) => {
   const [open, setOpen] = useState(false);
   const [props, setProps] = useState<StyleItem>({
-    width: 60,
+    width: 60
   });
   const theme = useTheme();
   const importTheme = `const theme = useTheme();\n`;
@@ -135,12 +135,12 @@ const Item = ({ name, Icon }: { name: string; Icon: React.FunctionComponent<Reac
                 marginBottom: "20px",
                 fontSize: 14,
                 padding: 15,
-                resize: "vertical",
+                resize: "vertical"
               }}
               minRows={3}
             />
             <Box display={"flex"} flexWrap={"wrap"} gap={"20px"} sx={{ background: "#dfdfdf", padding: "30px" }}>
-              {styleList.map(item => {
+              {styleList.map((item, idx) => {
                 let color: string | ((theme: Theme) => string) | undefined = item.color;
                 switch (item.color) {
                   case "primary":
@@ -173,6 +173,7 @@ const Item = ({ name, Icon }: { name: string; Icon: React.FunctionComponent<Reac
                 }
                 return (
                   <IconBox
+                    key={idx}
                     border={`1px solid ${Object.is(props, item) ? "blue" : "none"}`}
                     title="Click to view code"
                     onClick={() => setProps(item)}
@@ -212,7 +213,7 @@ const ItemConvert = ({ name, Icon }: { name: string; Icon: string }) => {
                 marginBottom: "20px",
                 fontSize: 14,
                 padding: 15,
-                resize: "vertical",
+                resize: "vertical"
               }}
               minRows={3}
             />

@@ -20,7 +20,7 @@ interface IProps {
 }
 const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIsSign }) => {
   const { disconnect } = useCardano({
-    limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET,
+    limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
   const { wallet, address } = useSelector(({ user }: RootState) => user);
   const [errorMessage, setErrorMessage] = useState("");
@@ -41,8 +41,8 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIs
           networkType: NETWORK_TYPES[NETWORK],
           networkId: NETWORK_TYPES[NETWORK],
           walletName: wallet?.toUpperCase(),
-          signature,
-        },
+          signature
+        }
       };
       const { data: isExistUsername } = await existUserName({ username: value });
       if (!isExistUsername) {
@@ -50,7 +50,7 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIs
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
         localStorage.setItem("refreshToken", data.refreshToken);
-        localStorage.setItem("walletId", data.walletId);
+        localStorage.setItem("walletId", data.address);
         localStorage.setItem("email", data.email);
         setIsSign(true);
         setModalRegister(false);
@@ -85,8 +85,8 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIs
           placeholder="Username"
           value={value}
           style={{ width: "100%" }}
-          onChange={e => {
-            let val = e.target.value;
+          onChange={(e) => {
+            const val = e.target.value;
             if (alphaNumeric.test(val) || val.length < 5 || val.length > 30) {
               setErrorMessage("Please enter a valid username");
             } else {

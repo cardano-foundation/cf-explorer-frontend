@@ -1,12 +1,14 @@
 import React from "react";
 import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
-import { ReactComponent as DelegationHistoryIcon } from "../../../commons/resources/icons/delegationHistory.svg";
-import { ReactComponent as StakeKeyHistoryIcon } from "../../../commons/resources/icons/stateKeyHistory.svg";
-import { ReactComponent as WithdrawHistoryIcon } from "../../../commons/resources/icons/withdrawHistory.svg";
-import { ReactComponent as InstantaneousHistoryIcon } from "../../../commons/resources/icons/instantaneousHistory.svg";
-import { ReactComponent as TransactionIcon } from "../../../commons/resources/icons/transactionIcon.svg";
-import { StyledTabList, TitleTab } from "./styles";
+import {
+  DelegationHistoryIcon,
+  StakeKeyHistoryIcon,
+  WithdrawHistoryIcon,
+  InstantaneousHistoryIcon,
+  TransactionIcon
+} from "../../../commons/resources";
+import { StyledTabList, TitleTab, WrapperTabList } from "./styles";
 import { useHistory, useParams } from "react-router-dom";
 import DelegationHistoryTab from "./Tabs/DelegationHistoryTab";
 import StakeHistoryTab from "./Tabs/StakeHistoryTab";
@@ -14,61 +16,64 @@ import WithdrawalHistoryTab from "./Tabs/WithdrawalHistoryTab";
 import InstantaneousTab from "./Tabs/InstantaneousTab";
 import TransactionTab from "./Tabs/TransactionTab";
 import { details } from "../../../commons/routers";
-
-const tabs: {
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  label: React.ReactNode;
-  key: TabStakeDetail;
-  component: React.ReactNode;
-}[] = [
-  {
-    icon: DelegationHistoryIcon,
-    label: "Delegation History",
-    key: "delegation",
-    component: <DelegationHistoryTab />,
-  },
-  {
-    icon: StakeKeyHistoryIcon,
-    label: "Stake Key History",
-    key: "stake-key",
-    component: <StakeHistoryTab />,
-  },
-  {
-    icon: WithdrawHistoryIcon,
-    label: "Withdrawal History",
-    key: "withdrawal",
-    component: <WithdrawalHistoryTab />,
-  },
-  {
-    icon: InstantaneousHistoryIcon,
-    label: "Instantaneous Rewards",
-    key: "instantaneous",
-    component: <InstantaneousTab />,
-  },
-  {
-    icon: TransactionIcon,
-    label: "Transactions",
-    key: "transactions",
-    component: <TransactionTab />,
-  },
-];
+import { useScreen } from "../../../commons/hooks/useScreen";
 
 const StakeTab = () => {
   const { stakeId, tabActive = "delegation" } = useParams<{ stakeId: string; tabActive?: TabStakeDetail }>();
   const history = useHistory();
   const theme = useTheme();
+  const { isMobile } = useScreen();
 
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
-    history.push({ pathname: details.stake(stakeId || "", tab) });
+    history.replace({ pathname: details.stake(stakeId || "", tab) });
   };
 
+  const tabs: {
+    icon: React.FC<React.SVGProps<SVGSVGElement>>;
+    label: React.ReactNode;
+    key: TabStakeDetail;
+    component: React.ReactNode;
+  }[] = [
+    {
+      icon: DelegationHistoryIcon,
+      label: "Delegation History",
+      key: "delegation",
+      component: <DelegationHistoryTab isMobile={isMobile} />
+    },
+    {
+      icon: StakeKeyHistoryIcon,
+      label: "Stake Key History",
+      key: "stake-key",
+      component: <StakeHistoryTab isMobile={isMobile} />
+    },
+    {
+      icon: WithdrawHistoryIcon,
+      label: "Withdrawal History",
+      key: "withdrawal",
+      component: <WithdrawalHistoryTab />
+    },
+    {
+      icon: InstantaneousHistoryIcon,
+      label: "Instantaneous Rewards",
+      key: "instantaneous",
+      component: <InstantaneousTab />
+    },
+    {
+      icon: TransactionIcon,
+      label: "Transactions",
+      key: "transactions",
+      component: <TransactionTab />
+    }
+  ];
+
   return (
-    <Box mt={4}>
+    <Box>
       <TabContext value={tabActive}>
-        <Box sx={{ borderBottom: theme => `1px solid ${theme.palette.border.secondary}` }}>
+        <WrapperTabList>
           <StyledTabList
             onChange={handleChange}
             TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
+            variant="scrollable"
           >
             {tabs.map(({ icon: Icon, key, label }) => (
               <Tab
@@ -86,8 +91,8 @@ const StakeTab = () => {
               />
             ))}
           </StyledTabList>
-        </Box>
-        {tabs.map(item => (
+        </WrapperTabList>
+        {tabs.map((item) => (
           <TabPanel key={item.key} value={item.key} style={{ padding: 0 }}>
             {item.component}
           </TabPanel>

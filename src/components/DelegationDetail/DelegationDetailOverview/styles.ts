@@ -10,8 +10,8 @@ export const Item = styled("div")`
   align-items: center;
   gap: 10px;
   justify-content: center;
-  background: ${props => props.theme.palette.background.neutral};
-  box-shadow: ${props => props.theme.shadow.card};
+  background: ${(props) => props.theme.palette.background.neutral};
+  box-shadow: ${(props) => props.theme.shadow.card};
   border-radius: 12px;
   padding: 24px;
 `;
@@ -19,12 +19,15 @@ export const Item = styled("div")`
 export const Title = styled("span")`
   font-family: var(--font-family-title);
   line-height: 24px;
-  color: ${props => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[400]};
 `;
 
-export const Value = styled("span")`
-  font-family: var(--font-family-title);
-  font-weight: 700;
-  font-size: 22px;
-  line-height: 33px;
-`;
+export const Value = styled("span")(({ theme }) => ({
+  fontWeight: "var(--font-weight-bold)",
+  fontSize: 22,
+  lineHeight: "33px",
+  fontFamily: "var(--font-family-title)",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 14
+  }
+}));

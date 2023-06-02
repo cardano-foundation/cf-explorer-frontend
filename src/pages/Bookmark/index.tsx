@@ -4,7 +4,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import useFetchList from "../../commons/hooks/useFetchList";
 import { Column } from "../../types/table";
-import { CancelButton, DeleteButton, StyledTable, TitleTab } from "./Styles";
+import { CancelButton, DeleteButton, StyledTable, TitleTab, WrapTab } from "./Styles";
 import { ReactComponent as DeleteBookmark } from "../../commons/resources/icons/deleteBookmark.svg";
 import { ReactComponent as QuestionConfirm } from "../../commons/resources/icons/questionConfirm.svg";
 import { Link } from "react-router-dom";
@@ -16,6 +16,7 @@ import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
 import useToast from "../../commons/hooks/useToast";
 import { ButtonClose } from "../../components/ScriptModal/styles";
 import { CloseIcon } from "../../commons/resources";
+import { useScreen } from "../../commons/hooks/useScreen";
 
 const Bookmark = () => {
   const [bookmarks, setBookmarks] = useLocalStorage<Bookmark[]>("bookmark", []);
@@ -32,7 +33,7 @@ const Bookmark = () => {
       type: activeTab,
       page: page,
       size,
-      network: NETWORK_TYPES[NETWORK],
+      network: NETWORK_TYPES[NETWORK]
     },
     true
   );
@@ -44,14 +45,14 @@ const Bookmark = () => {
   const deleteBookMark = async (keyword: string) => {
     try {
       setLoadingDelete(true);
-      const selectedBookmark = data?.find(d => d.keyword === keyword);
+      const selectedBookmark = data?.find((d) => d.keyword === keyword);
       if (selectedBookmark?.id) {
         await deleteBookmark(selectedBookmark?.id);
         setSelected(null);
         setLoadingDelete(false);
-        setBookmarks(bookmarks?.filter(r => r.keyword !== keyword));
+        setBookmarks(bookmarks?.filter((r) => r.keyword !== keyword));
         refresh();
-        toast.success("Successfully!");
+        toast.success("Delete bookmark successfully!");
       }
     } catch (error) {
       setSelected(null);
@@ -74,96 +75,98 @@ const Bookmark = () => {
       title: "Address",
       key: "Address",
       minWidth: 120,
-      render: data => (
+      render: (data) => (
         <Box
           component={Link}
           to={details.address(data.keyword)}
-          color={theme => `${theme.palette.secondary.main} !important`}
+          color={(theme) => `${theme.palette.secondary.main} !important`}
         >
           {getShortWallet(data.keyword)}
         </Box>
-      ),
+      )
     },
     TRANSACTION: {
       title: "Tnx Hash",
       key: "Transaction",
       minWidth: 120,
-      render: data => (
+      render: (data) => (
         <Box
           component={Link}
           to={details.transaction(data.keyword)}
-          color={theme => `${theme.palette.secondary.main} !important`}
+          color={(theme) => `${theme.palette.secondary.main} !important`}
         >
           {getShortHash(data.keyword)}
         </Box>
-      ),
+      )
     },
     BLOCK: {
       title: "Block ID",
       key: "Block",
       minWidth: 120,
-      render: data => (
+      render: (data) => (
         <Box
           component={Link}
           to={details.block(data.keyword)}
-          color={theme => `${theme.palette.secondary.main} !important`}
+          color={(theme) => `${theme.palette.secondary.main} !important`}
         >
           {data.keyword}
         </Box>
-      ),
+      )
     },
     EPOCH: {
       title: "EPOCH #",
       key: "Epoch",
       minWidth: 120,
-      render: data => (
+      render: (data) => (
         <Box
           component={Link}
           to={details.epoch(data.keyword)}
-          color={theme => `${theme.palette.secondary.main} !important`}
+          color={(theme) => `${theme.palette.secondary.main} !important`}
         >
           {data.keyword}
         </Box>
-      ),
+      )
     },
     POOL: {
       title: "Pool ID",
       key: "Pool",
       minWidth: 120,
-      render: data => (
+      render: (data) => (
         <Box
           component={Link}
           to={details.delegation(data.keyword)}
-          color={theme => `${theme.palette.secondary.main} !important`}
+          color={(theme) => `${theme.palette.secondary.main} !important`}
         >
-          {data.keyword}
+          {getShortWallet(data.keyword)}
         </Box>
-      ),
+      )
     },
     STAKE_KEY: {
       title: "Stake Key",
       key: "StakeKey",
       minWidth: 120,
-      render: data => (
+      render: (data) => (
         <Box
           component={Link}
           to={details.stake(data.keyword)}
-          color={theme => `${theme.palette.secondary.main} !important`}
+          color={(theme) => `${theme.palette.secondary.main} !important`}
         >
           {getShortWallet(data.keyword)}
         </Box>
-      ),
-    },
+      )
+    }
   };
   const columns: Column<Bookmark>[] = [
     {
-      ...colDynamic[activeTab as any],
+      ...colDynamic[activeTab as any]
     },
     {
       title: "Added On",
       key: "Added On",
       minWidth: 120,
-      render: data => moment(data.createdDate).format("MM/DD/YYYY hh:mm:ss"),
+      render: (data) => {
+        return moment(data.createdDate).utc().format("MM/DD/YYYY HH:mm:ss");
+      }
     },
     {
       title: <Box textAlign={"right"}>Action</Box>,
@@ -175,8 +178,8 @@ const Bookmark = () => {
             <DeleteBookmark fontSize={10} />
           </IconButton>
         </Box>
-      ),
-    },
+      )
+    }
   ];
 
   const tabs: {
@@ -201,10 +204,10 @@ const Bookmark = () => {
             onChange: (page, size) => {
               setPage(page - 1);
               setSize(size);
-            },
+            }
           }}
         />
-      ),
+      )
     },
     {
       label: "Transaction",
@@ -223,10 +226,10 @@ const Bookmark = () => {
             onChange: (page, size) => {
               setPage(page - 1);
               setSize(size);
-            },
+            }
           }}
         />
-      ),
+      )
     },
     {
       label: "Block",
@@ -245,10 +248,10 @@ const Bookmark = () => {
             onChange: (page, size) => {
               setPage(page - 1);
               setSize(size);
-            },
+            }
           }}
         />
-      ),
+      )
     },
     {
       label: "Epoch",
@@ -263,14 +266,14 @@ const Bookmark = () => {
             onChange: (page, size) => {
               setPage(page - 1);
               setSize(size);
-            },
+            }
           }}
           columns={columns}
           data={data || []}
           error={error}
           loading={loading}
         />
-      ),
+      )
     },
     {
       label: "Pool",
@@ -289,10 +292,10 @@ const Bookmark = () => {
             onChange: (page, size) => {
               setPage(page - 1);
               setSize(size);
-            },
+            }
           }}
         />
-      ),
+      )
     },
     {
       label: "Stake Key",
@@ -311,11 +314,11 @@ const Bookmark = () => {
             onChange: (page, size) => {
               setPage(page - 1);
               setSize(size);
-            },
+            }
           }}
         />
-      ),
-    },
+      )
+    }
   ];
 
   const renderIdSelected = (keyword: string) => {
@@ -334,13 +337,15 @@ const Bookmark = () => {
   return (
     <Box>
       <TabContext value={activeTab}>
-        <Box sx={{ borderBottom: theme => `1px solid ${theme.palette.border.secondary}` }}>
+        <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.secondary}` }}>
           <TabList
             onChange={handleChange}
-            TabIndicatorProps={{ sx: { style: { background: theme => theme.palette.primary.main } } }}
+            TabIndicatorProps={{ sx: { style: { background: (theme) => theme.palette.primary.main }, height: 3 } }}
+            variant="scrollable"
+            scrollButtons={false}
           >
             {tabs.map(({ key, label }) => (
-              <Tab
+              <WrapTab
                 key={key}
                 value={key}
                 label={
@@ -356,7 +361,7 @@ const Bookmark = () => {
             ))}
           </TabList>
         </Box>
-        {tabs.map(item => (
+        {tabs.map((item) => (
           <TabPanel key={item.key} value={item.key} style={{ padding: 0 }}>
             {item.component}
           </TabPanel>
@@ -366,7 +371,7 @@ const Bookmark = () => {
       <Dialog
         open={!!selected}
         PaperProps={{
-          style: { borderRadius: 20, width: 550 },
+          style: { borderRadius: 20, width: 550 }
         }}
       >
         <ButtonClose disabled={loadingDelete} onClick={() => setSelected(null)}>
@@ -384,8 +389,8 @@ const Bookmark = () => {
           </DialogContentText>
         </Box>
         <DialogActions>
-          <Box flex={1} pt={2} pb={3}>
-            <CancelButton disabled={loadingDelete} autoFocus onClick={handleClose} variant="outlined">
+          <Box width={"100%"} display={"flex"} pt={2} pb={3} flexDirection={"row"} justifyContent={"center"}>
+            <CancelButton disabled={loadingDelete} onClick={handleClose} variant="outlined">
               Cancel
             </CancelButton>
             <DeleteButton

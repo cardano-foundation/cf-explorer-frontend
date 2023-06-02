@@ -13,7 +13,7 @@ interface FetchReturnType<T> {
 
 const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, timeout?: number): FetchReturnType<T> => {
   const [data, setData] = useState<T | null>(initial || null);
-  const [initialized, setInitialized] = useState<boolean>(false);
+  const [initialized, setInitialized] = useState<boolean>(!!initial || false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const lastFetch = useRef<number>(Date.now());
@@ -32,6 +32,7 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, timeout?: numbe
         setError(null);
         setInitialized(true);
       } catch (error: any) {
+        setInitialized(true);
         setData(null);
         setError(error?.response?.data?.message || error?.message);
       }

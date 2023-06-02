@@ -9,14 +9,14 @@ import {
   getPageInfo,
   getShortHash,
   getShortWallet,
-  numberWithCommas,
+  numberWithCommas
 } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
-import { AIcon } from "../../commons/resources";
-import { Label, StyledLink } from "./styles";
+import { Label, StyledLink, StyledContainer } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
 import ADAicon from "../commons/ADAIcon";
+import { useRef } from "react";
 
 interface TransactionListFullProps {
   underline?: boolean;
@@ -31,12 +31,13 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   url,
   openDetail,
   selected,
-  showTitle = true,
+  showTitle = true
 }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Transactions>(url, pageInfo);
+  const mainRef = useRef(document.querySelector("#main"));
 
   const onClickRow = (_: any, r: Transactions, index: number) => {
     if (openDetail) return openDetail(_, r, index);
@@ -48,27 +49,27 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       title: "#",
       key: "id",
       minWidth: 30,
-      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0),
+      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)
     },
     {
       title: "Tx Hash",
       key: "txhash",
       minWidth: 120,
 
-      render: r => (
+      render: (r) => (
         <div>
           <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
           <Box mt={1}>{formatDateTimeLocal(r.time || "")}</Box>
         </div>
-      ),
+      )
     },
     {
       title: "Block",
       key: "block",
       minWidth: 120,
-      render: r => (
+      render: (r) => (
         <Box>
           <Box>
             <StyledLink to={details.block(r.blockNo || r.blockHash)}>
@@ -79,7 +80,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
           </Box>
         </Box>
-      ),
+      )
     },
     {
       title: "Addresses",
@@ -128,47 +129,53 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             </Box>
           </div>
         );
-      },
+      }
     },
     {
       title: "Fee",
       key: "fee",
       minWidth: 120,
-      render: r => (
+      render: (r) => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.fee)}</Box>
-            <ADAicon />
+          <ADAicon />
         </Box>
-      ),
+      )
     },
     {
       title: "Output in ADA",
       minWidth: 120,
       key: "ouput",
-      render: r => (
+      render: (r) => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
-            <ADAicon />
+          <ADAicon />
         </Box>
-      ),
-    },
+      )
+    }
   ];
 
   return (
-    <Card title={showTitle ? "Transactions" : ""} underline={underline}>
-      <Table
-        {...fetchData}
-        columns={columns}
-        total={{ count: fetchData.total, title: "Total Transactions" }}
-        pagination={{
-          ...pageInfo,
-          total: fetchData.total,
-          onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
-        }}
-        onClickRow={onClickRow}
-        selected={selected}
-      />
-    </Card>
+    <StyledContainer>
+      <Card title={showTitle ? "Transactions" : ""} underline={underline}>
+        <Table
+          {...fetchData}
+          columns={columns}
+          total={{ count: fetchData.total, title: "Total Transactions" }}
+          pagination={{
+            ...pageInfo,
+            total: fetchData.total,
+            onChange: (page, size) => {
+              history.push({ search: stringify({ page, size }) });
+              mainRef.current?.scrollTo(0, 0);
+            }
+          }}
+          onClickRow={onClickRow}
+          selected={selected}
+          className="transactions-table"
+        />
+      </Card>
+    </StyledContainer>
   );
 };
 

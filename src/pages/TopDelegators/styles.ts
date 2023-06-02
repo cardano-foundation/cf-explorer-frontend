@@ -12,28 +12,30 @@ export const StyledContainer = styled(Container)`
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${props => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
 `;
 
 export const PerPage = styled("div")`
   margin-left: 8px;
 `;
 
-export const Actions = styled(Box)(() => ({
+export const Actions = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  marginTop: -30,
+  flexWrap: "wrap",
+  marginTop: -10
 }));
 
 export const PageSize = styled(Box)(() => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
+  marginBottom: 3
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.grey[400],
   display: "block",
-  marginRight: 15,
+  margin: "12px 0px"
 }));

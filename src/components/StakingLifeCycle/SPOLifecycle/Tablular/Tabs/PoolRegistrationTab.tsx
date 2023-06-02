@@ -1,26 +1,29 @@
-import { Box } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, formatHash } from "../../../../../commons/utils/helper";
+import { formatDateTimeLocal, getShortHash } from "../../../../../commons/utils/helper";
 
-import Table, { Column } from "../../../../commons/Table";
-import { ADAValueFieldContainer, ADAValueLabel, ADAValueSubLabel, ClickAbleLink, VerticalRow } from "./styles";
-import CustomIcon from "../../../../commons/CustomIcon";
-import { ADAsigntIC } from "../../../../../commons/resources";
+import { EyeIcon } from "../../../../../commons/resources";
 import { details } from "../../../../../commons/routers";
+import { AdaValue } from "../../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import { TableSubTitle } from "../../../../TabularView/StakeTab/styles";
 import CustomTooltip from "../../../../commons/CustomTooltip";
+import Table, { Column } from "../../../../commons/Table";
 import { StyledLink } from "../../../../share/styled";
+import { RegistrationCertificateModal } from "../../Registration/RegistrationCertificateModal";
 
 const PoolRegistrationTab = () => {
+  const theme = useTheme();
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [params, setParams] = useState({
     page: 0,
-    size: 10,
+    size: 50
   });
 
   const [sort, setSort] = useState<string>("");
+  const [selected, setSelected] = useState<number | null>(null);
 
   const columns: Column<SPORegistrationTabpular>[] = [
     {
@@ -29,10 +32,10 @@ const PoolRegistrationTab = () => {
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>
-            <StyledLink to={details.transaction(data.txHash)}>{formatHash(data.txHash)}</StyledLink>
+            <StyledLink to={details.transaction(data.txHash)}>{getShortHash(data.txHash)}</StyledLink>
           </CustomTooltip>
         );
-      },
+      }
     },
     {
       key: "time",
@@ -42,45 +45,49 @@ const PoolRegistrationTab = () => {
       },
       render(data) {
         return formatDateTimeLocal(data.time);
-      },
+      }
     },
     {
       key: "fee",
-      title: "ADA Value",
+      title: (
+        <Box>
+          ADA Value
+          <Box fontSize={"0.75rem"} fontWeight={"normal"}>
+            Hold/Fees
+          </Box>
+        </Box>
+      ),
       render(data) {
         return (
-          <ADAValueFieldContainer>
-            <ADAValueLabel>
-              {formatADAFull(data.totalFee)} <CustomIcon icon={ADAsigntIC} width={12} />{" "}
-            </ADAValueLabel>
-            <ADAValueSubLabel>
-              {formatADAFull(data.deposit)} <CustomIcon icon={ADAsigntIC} width={11} /> / {formatADAFull(data.fee)}
-              <CustomIcon icon={ADAsigntIC} width={11} />{" "}
-            </ADAValueSubLabel>
-          </ADAValueFieldContainer>
+          <Box>
+            <AdaValue limit={5} value={data.totalFee} />
+            <TableSubTitle>
+              <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+                <AdaValue limit={1} color={theme.palette.grey[400]} value={data.deposit} gap="3px" fontSize="12px" />
+                <Box mx="3px">/</Box>
+                <AdaValue color={theme.palette.grey[400]} value={data.fee} gap="3px" fontSize="12px" />
+              </Box>
+            </TableSubTitle>
+          </Box>
         );
-      },
+      }
     },
     {
-      key: "stakeKeys",
-      title: "Owner",
-      render(data) {
-        return data.stakeKeys.map((item, index) => (
-          <VerticalRow key={index}>
-            <CustomTooltip title={item}>
-              <StyledLink to={details.stake(item)}>{formatHash(item)}</StyledLink>
-            </CustomTooltip>
-          </VerticalRow>
-        ));
-      },
-    },
+      key: "Certificate",
+      title: "Certificate",
+      render: (data) => (
+        <IconButton onClick={() => setSelected(data?.poolUpdateId || 0)}>
+          <EyeIcon style={{ transform: "scale(.8)" }} />
+        </IconButton>
+      )
+    }
   ];
 
   const fetchData = useFetchList<SPORegistrationTabpular>(
     poolId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_LIST(poolId) : "",
     {
       ...params,
-      sort,
+      sort
     }
   );
 
@@ -91,13 +98,19 @@ const PoolRegistrationTab = () => {
         columns={columns}
         total={{
           title: "Pool Registration",
-          count: fetchData.total,
+          count: fetchData.total
         }}
         pagination={{
           ...params,
           total: fetchData.total,
-          onChange: (page, size) => setParams({ page, size }),
+          onChange: (page, size) => setParams({ page: page - 1, size })
         }}
+      />
+      <RegistrationCertificateModal
+        poolUpdateId={selected || 0}
+        open={!!selected}
+        onClose={() => setSelected(null)}
+        poolId={poolId}
       />
     </Box>
   );

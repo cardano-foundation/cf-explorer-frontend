@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import moment from "moment";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import useFetch from "../../../../commons/hooks/useFetch";
 import { Box, Grid, alpha, useTheme } from "@mui/material";
 import { API } from "../../../../commons/utils/api";
 import { BoxInfo, ColorChart, InfoItem, Skeleton, Tab, Tabs, Title, TransactionContainer, WrapHeader } from "./styles";
-import { formatDateTimeLocal } from "../../../../commons/utils/helper";
+import { numberWithCommas } from "../../../../commons/utils/helper";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 interface TransactionChartIF {
   date: string;
-  txs: number;
-  simpleTxs: number;
-  complexTxs: number;
+  simpleTransactions: number;
+  smartContract: number;
+  metadata: number;
 }
 
 type Time = "ONE_DAY" | "ONE_WEEK" | "TWO_WEEK" | "ONE_MONTH";
@@ -20,134 +20,45 @@ export type TypeChart = "trx" | "simple" | "complex";
 
 const TransactionChart: React.FC = () => {
   const [rangeTime, setRangeTime] = useState<Time>("ONE_DAY");
-
+  const { isMobile } = useScreen();
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     ONE_DAY: {
       label: "1d",
-      displayName: "today",
+      displayName: "today"
     },
     ONE_WEEK: {
       label: "1w",
-      displayName: "in week",
+      displayName: "in week"
     },
     TWO_WEEK: {
       label: "2w",
-      displayName: "in two week",
+      displayName: "in two week"
     },
     ONE_MONTH: {
       label: "1m",
-      displayName: "in month",
-    },
-  };
-
-  const formatTime = (type: Time) => {
-    switch (type) {
-      case "ONE_DAY":
-        return "HH:mm";
-      default:
-        return "DD/MM";
+      displayName: "in month"
     }
   };
 
   const { data, loading } = useFetch<TransactionChartIF[]>(`${API.TRANSACTION.GRAPH}/${rangeTime}`);
-  const categories = (data || []).map(item => moment(formatDateTimeLocal(item.date)).format(formatTime(rangeTime)));
 
-  const dataTxs = (data || []).map(item => [formatDateTimeLocal(item.date), item.txs]);
-  const dataComplexTxs = (data || []).map(item => [formatDateTimeLocal(item.date), item.complexTxs]);
-  const dataSimpleTxs = (data || []).map(item => [formatDateTimeLocal(item.date), item.simpleTxs]);
-
-  const sumTxs = (data || []).reduce((prev, item) => prev + item.txs, 0);
-  const sumComplexTxs = (data || []).reduce((prev, item) => prev + item.complexTxs, 0);
-  const sumSimpleTxs = (data || []).reduce((prev, item) => prev + item.simpleTxs, 0);
+  const sumSimple = (data || []).reduce((prev, item) => prev + item.simpleTransactions, 0);
+  const sumMetadata = (data || []).reduce((prev, item) => prev + item.metadata, 0);
+  const sumSmartContract = (data || []).reduce((prev, item) => prev + item.smartContract, 0);
 
   const dataOverview = [
-    { key: "trx", title: "Total  transaction", value: sumTxs },
-    { key: "simple", title: "Simple transaction", value: sumSimpleTxs },
-    { key: "complex", title: "Complex transaction", value: sumComplexTxs },
+    { key: "trx", title: "Simple  transactions", value: sumSimple || 0 },
+    { key: "simple", title: "Smart contracts", value: sumSmartContract || 0 },
+    {
+      key: "complex",
+      title: (
+        <Box textAlign={"left"}>
+          Metadata <Box fontSize={"0.6875rem"}>(Without smart contracts)</Box>
+        </Box>
+      ),
+      value: sumMetadata || 0
+    }
   ];
-
-  const theme = useTheme();
-
-  const options: Highcharts.Options = {
-    chart: { type: "areaspline", height: 300, style: { fontFamily: "Roboto, sans-serif" } },
-    title: { text: "" },
-    yAxis: {
-      title: { text: null },
-      lineWidth: 2,
-      lineColor: theme.palette.border.main,
-      gridLineWidth: 0,
-    },
-    xAxis: {
-      categories,
-      lineWidth: 2,
-      lineColor: theme.palette.border.main,
-      plotLines: [],
-      angle: 0,
-      type: "datetime",
-      labels: {
-        overflow: "allow",
-        rotation: 0,
-        align: "left",
-        format: "{value:%Y}",
-        step: 1,
-      },
-    },
-    legend: { enabled: false },
-    credits: { enabled: false },
-    series: [
-      {
-        name: "",
-        pointPlacement: "on",
-        type: "areaspline",
-        marker: { enabled: false },
-        lineWidth: 2,
-        color: theme.palette.yellow[600],
-        tooltip: { valuePrefix: "Total transaction: " },
-        fillColor: {
-          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-          stops: [
-            [0, alpha(theme.palette.yellow[600], 0.5)],
-            [1, alpha(theme.palette.green[600], 0)],
-          ],
-        },
-        data: dataTxs,
-      },
-      {
-        name: "",
-        pointPlacement: "on",
-        type: "areaspline",
-        marker: { enabled: false },
-        lineWidth: 1.5,
-        color: theme.palette.green[600],
-        tooltip: { valuePrefix: "Complex transaction: " },
-        fillColor: {
-          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-          stops: [
-            [0, alpha(theme.palette.green[600], 0.5)],
-            [1, alpha(theme.palette.green[600], 0)],
-          ],
-        },
-        data: dataComplexTxs,
-      },
-      {
-        name: "",
-        pointPlacement: "on",
-        type: "areaspline",
-        marker: { enabled: false },
-        lineWidth: 2,
-        tooltip: { valuePrefix: "Simple transaction: " },
-        color: theme.palette.blue[800],
-        fillColor: {
-          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-          stops: [
-            [0, alpha(theme.palette.blue[800], 0.5)],
-            [1, alpha(theme.palette.green[800], 0)],
-          ],
-        },
-        data: dataSimpleTxs,
-      },
-    ],
-  };
 
   const renderLoading = () => {
     return (
@@ -165,8 +76,8 @@ const TransactionChart: React.FC = () => {
     <TransactionContainer>
       <WrapHeader>
         <Title>Transaction {optionsTime[rangeTime].displayName}</Title>
-        <Tabs>
-          {Object.keys(optionsTime).map(option => {
+        <Tabs width={isMobile ? "100%" : "auto"}>
+          {Object.keys(optionsTime).map((option) => {
             return (
               <Tab
                 key={optionsTime[option as Time].label}
@@ -183,17 +94,27 @@ const TransactionChart: React.FC = () => {
       {!loading && (
         <Grid container spacing={2}>
           <Grid item xs={12} lg={9}>
-            <HighchartsReact highcharts={Highcharts} options={options} />
+            <Chart data={data} range={rangeTime} />
           </Grid>
           <Grid item xs={12} lg={3}>
             <BoxInfo>
-              {dataOverview.map(item => (
+              <Box fontWeight={"bold"} fontSize={"1.5rem"}>
+                Transaction Types
+              </Box>
+              {dataOverview.map((item) => (
                 <InfoItem key={item.key}>
                   <ColorChart type={item.key as TypeChart} />
                   <Box>
-                    <Box color={({ palette }) => palette.grey[400]}>{item.title}</Box>
-                    <Box textAlign={"left"} color={({ palette }) => palette.green[700]} fontWeight={"bold"}>
-                      {item.value}
+                    <Box color={({ palette }) => palette.grey[400]} fontSize={"0.8125rem"}>
+                      {item.title}
+                    </Box>
+                    <Box
+                      textAlign={"left"}
+                      color={({ palette }) => palette.green[700]}
+                      fontWeight={"bold"}
+                      fontSize={"1.6rem"}
+                    >
+                      {numberWithCommas(item.value)}
                     </Box>
                   </Box>
                 </InfoItem>
@@ -207,3 +128,104 @@ const TransactionChart: React.FC = () => {
 };
 
 export default TransactionChart;
+
+const toPercent = (decimal: number) => `${(decimal * 100).toFixed()}%`;
+const formatTimeX = (date: Time) => {
+  switch (date) {
+    case "ONE_DAY":
+      return "HH:mm";
+    case "ONE_WEEK":
+    case "TWO_WEEK":
+    case "ONE_MONTH":
+      return "MM/DD";
+
+    default:
+      break;
+  }
+};
+const formatX = (date: string, range: Time) => moment(date).format(formatTimeX(range));
+
+const getPercent = (value: number, total: number) => {
+  const ratio = total > 0 ? value / total : 0;
+
+  return toPercent(ratio);
+};
+
+const renderTooltipContent = (o: any, range: Time) => {
+  const { payload = [], label } = o;
+  const nameTooltips = {
+    simpleTransactions: "Simple transactions",
+    smartContract: "Smart contracts",
+    metadata: "Metadata"
+  };
+  const total = (payload || []).reduce((result: number, entry: any) => result + entry.value, 0);
+  return (
+    <Box>
+      <Box p={1} bgcolor={alpha("#000", 0.8)} borderRadius={"8px"} textAlign={"left"}>
+        <Box color={({ palette }) => palette.common.white} textAlign={"center"}>{`${moment(label).format(
+          formatTimeX(range)
+        )}`}</Box>
+        {(payload || []).reverse().map((entry: any, index: number) => (
+          <Box key={`item-${index}`} mt={1}>
+            <Box color={({ palette }) => alpha(palette.common.white, 0.7)} fontSize={"0.75rem"}>{`${
+              nameTooltips[entry.name as keyof typeof nameTooltips]
+            }`}</Box>
+            <Box fontWeight={"bold"} style={{ color: entry.color }}>{`${numberWithCommas(entry.value)} (${getPercent(
+              entry.value,
+              total
+            )})`}</Box>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  );
+};
+
+const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time }) => {
+  const theme = useTheme();
+  if (!data) return <></>;
+  return (
+    <Box width={"100%"} minHeight={"250px"} height={250}>
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart
+          height={500}
+          width={500}
+          data={data}
+          stackOffset="expand"
+          margin={{
+            top: 10,
+            right: 20,
+            left: 0,
+            bottom: 0
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" tickFormatter={(date: string) => formatX(date, range)} />
+          <YAxis tickFormatter={toPercent} />
+          <Tooltip content={(o: any) => renderTooltipContent(o, range)} />
+          <Area
+            type="monotone"
+            dataKey="metadata"
+            stackId="1"
+            stroke={theme.palette.green[600]}
+            fill={theme.palette.green[600]}
+          />
+          <Area
+            type="monotone"
+            dataKey="smartContract"
+            stackId="1"
+            stroke={theme.palette.blue[800]}
+            fill={theme.palette.blue[800]}
+          />
+          <Area
+            type="monotone"
+            dataKey="simpleTransactions"
+            stackId="1"
+            stroke={theme.palette.yellow[600]}
+            fill={theme.palette.yellow[600]}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </Box>
+  );
+};

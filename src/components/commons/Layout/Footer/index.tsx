@@ -2,13 +2,12 @@ import React from "react";
 import { styled, Container } from "@mui/material";
 import { APP_VERSION } from "../../../../commons/utils/constants";
 import FooterMenu from "../Sidebar/FooterMenu";
-import { useScreen } from "../../../../commons/hooks/useScreen";
 
 const StyledFooter = styled("footer")`
   height: 60px;
   padding: 0px 10px;
-  border-top: 1px solid ${props => props.theme.palette.border.main};
-  @media screen and (max-width: 1023px) {
+  border-top: 1px solid ${(props) => props.theme.palette.border.main};
+  ${({ theme }) => theme.breakpoints.down("md")} {
     height: unset;
     padding: 10px;
   }
@@ -21,33 +20,31 @@ const FooterContainer = styled(Container)`
   flex-wrap: wrap;
   height: 60px;
   max-width: unset !important;
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     height: unset;
   }
 `;
 
 const Copyright = styled("small")`
-  color: ${props => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[400]};
   font-family: var(--font-family-title);
   ::first-letter {
     font-size: 1em;
     vertical-align: top;
     margin-right: 2px;
   }
-  @media screen and (max-width: 1023px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     width: 100%;
     text-align: center;
   }
 `;
 
 const Footer: React.FC = () => {
-  const { isMobile } = useScreen();
   return (
     <StyledFooter>
       <FooterContainer>
-        {isMobile && <FooterMenu forceShow={true} />}
+        <FooterMenu bottom={true} />
         <Copyright>
-          {" "}
           &copy; {new Date().getFullYear()} Cardano Blockchain Explorer. All rights reserved. Version: {APP_VERSION}
         </Copyright>
       </FooterContainer>

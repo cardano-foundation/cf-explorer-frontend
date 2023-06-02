@@ -17,7 +17,7 @@ export enum STEPS {
   step1 = 1,
   step2 = 2,
   step3 = 3,
-  step4 = 4,
+  step4 = 4
 }
 
 const ReportComposerModal = ({ open, handleCloseModal }: IPropsModal) => {
@@ -41,7 +41,7 @@ const ReportComposerModal = ({ open, handleCloseModal }: IPropsModal) => {
   const defaultParams = [paramsStep1, paramsStep2, paramsStep3];
 
   return (
-    <Box>
+    <Box data-testid="report-compose-modal">
       <FilledInfoModal
         open={currentStep === STEPS.step1}
         handleCloseModal={handleCloseModal}

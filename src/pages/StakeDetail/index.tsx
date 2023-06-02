@@ -13,7 +13,7 @@ const StakeDetail: React.FC = () => {
   const mainRef = useRef(document.querySelector("#main"));
   const { stakeId } = useParams<{ stakeId: string }>();
   const { state } = useLocation<{ data?: IStakeKeyDetail }>();
-  const { data, initialized, error, lastUpdated } = useFetch<IStakeKeyDetail>(
+  const { data, loading, initialized, error, lastUpdated } = useFetch<IStakeKeyDetail>(
     `${API.STAKE.DETAIL}/${stakeId}`,
     state?.data,
     false,
@@ -26,11 +26,15 @@ const StakeDetail: React.FC = () => {
     mainRef.current?.scrollTo(0, 0);
   }, [stakeId]);
 
+  if (!initialized) {
+    return null;
+  }
+
   if ((initialized && !data) || error) return <NoRecord />;
 
   return (
     <StyledContainer>
-      <StakeKeyOverview data={data} loading={!initialized} lastUpdated={lastUpdated} />
+      <StakeKeyOverview data={data} loading={loading} lastUpdated={lastUpdated} />
       <StakeAnalytics />
       <StakeTab />
     </StyledContainer>

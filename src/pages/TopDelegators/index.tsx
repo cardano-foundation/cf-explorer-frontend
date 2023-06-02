@@ -12,7 +12,7 @@ import Table from "../../components/commons/Table";
 import { Column } from "../../types/table";
 import { Actions, PageSize, PerPage, StyledContainer, StyledLink, TimeDuration } from "./styles";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
-import moment from "moment";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
 const perPages = [10, 20, 50, 100];
 
@@ -35,7 +35,7 @@ const TopDelegators = () => {
       title: "#",
       minWidth: 30,
       key: "index",
-      render: (r, idx) => numberWithCommas(idx + 1),
+      render: (r, idx) => numberWithCommas(idx + 1)
     },
     {
       title: "Stake key Addresses",
@@ -45,7 +45,7 @@ const TopDelegators = () => {
         <CustomTooltip title={r.stakeKey}>
           <StyledLink to={details.stake(r.stakeKey)}>{getShortWallet(r.stakeKey)}</StyledLink>
         </CustomTooltip>
-      ),
+      )
     },
     {
       title: "Pool",
@@ -56,7 +56,7 @@ const TopDelegators = () => {
             {r.poolName || `Pool [${getShortWallet(r.poolId)}]`}
           </StyledLink>
         </CustomTooltip>
-      ),
+      )
     },
     {
       title: "Stake amount",
@@ -65,23 +65,25 @@ const TopDelegators = () => {
         <Box component={"span"}>
           {formatADAFull(r.balance)} <ADAicon />
         </Box>
-      ),
-    },
+      )
+    }
   ];
 
   return (
     <StyledContainer>
       <Card title="Top delegators">
         <Actions>
-          <TimeDuration>Last updated {moment(lastUpdated).fromNow()}</TimeDuration>
+          <TimeDuration>
+            <FormNowMessage time={lastUpdated} />
+          </TimeDuration>
           <PageSize>
             <Select
               value={pageSize}
-              onChange={event => setPageSize(event.target.value)}
+              onChange={(event) => setPageSize(event.target.value)}
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
             >
-              {perPages.map(item => (
+              {perPages.map((item) => (
                 <MenuItem key={item} value={item}>
                   {item}
                 </MenuItem>

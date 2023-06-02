@@ -6,7 +6,7 @@ export const StyledButton = styled(ButtonBase)`
   align-items: center;
   padding: 12px 20px;
   gap: 8px;
-  background: ${props => props.theme.palette.text.primary};
+  background: ${(props) => props.theme.palette.text.primary};
   border-radius: 8px;
   cursor: pointer;
   height: auto;
@@ -19,7 +19,7 @@ export const StyledButton = styled(ButtonBase)`
 export const Span = styled("span")`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.palette.primary.contrastText};
+  color: ${(props) => props.theme.palette.primary.contrastText};
   white-space: nowrap;
   line-height: 1;
 `;
@@ -29,5 +29,5 @@ export const Image = styled("img")`
   height: 24px;
 `;
 export const Spin = styled(CircularProgress)`
-  color: ${props => props.theme.palette.primary.contrastText};
+  color: ${(props) => props.theme.palette.primary.contrastText};
 `;

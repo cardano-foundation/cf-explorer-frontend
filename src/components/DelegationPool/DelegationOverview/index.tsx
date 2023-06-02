@@ -1,14 +1,18 @@
 import { Box, Grid } from "@mui/material";
 import moment from "moment";
 import React from "react";
-import useFetch from "../../../commons/hooks/useFetch";
-import { CurentEpochIcon, LiveStakeIcon, RocketBackground } from "../../../commons/resources";
-import { details } from "../../../commons/routers";
-import { API } from "../../../commons/utils/api";
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
-import { formatADAFull, numberWithCommas } from "../../../commons/utils/helper";
+import { CurentEpochIcon, LiveStakeIcon, RocketBackground } from "src/commons/resources";
 import { StyledCard, StyledImg, StyledLinearProgress, StyledSkeleton, TimeDuration } from "./styles";
-import Card from "../../commons/Card";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { formatADA, formatADAFull, numberWithCommas } from "src/commons/utils/helper";
+import useFetch from "src/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
+import { useSelector } from "react-redux";
+import Card from "src/components/commons/Card";
+import FormNowMessage from "src/components/commons/FormNowMessage";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 const OverViews: React.FC = () => {
   const { data, loading, lastUpdated } = useFetch<OverViewDelegation>(
@@ -17,40 +21,47 @@ const OverViews: React.FC = () => {
     false,
     REFRESH_TIMES.POOLS
   );
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
 
   if (loading) {
     return (
-      <Card title="Delegation Pools Explorer">
-        <Grid container spacing={2}>
-          <Grid item xl={4} md={6} xs={12}>
-            <StyledSkeleton variant="rectangular" />
-          </Grid>
-          <Grid item xl={4} md={6} xs={12}>
-            <StyledSkeleton variant="rectangular" />
-          </Grid>
-          <Grid item xl={4} md={6} xs={12}>
-            <StyledSkeleton variant="rectangular" />
-          </Grid>
+      <Grid container spacing={2}>
+        <Grid item xl={4} md={6} xs={12}>
+          <StyledSkeleton variant="rectangular" />
         </Grid>
-      </Card>
+        <Grid item xl={4} md={6} xs={12}>
+          <StyledSkeleton variant="rectangular" />
+        </Grid>
+        <Grid item xl={4} md={6} xs={12}>
+          <StyledSkeleton variant="rectangular" />
+        </Grid>
+      </Grid>
     );
   }
-
-  const duration = moment.duration(data?.countDownEndTime || 0, "seconds");
-
+  const now = moment();
+  const duration = moment.duration(
+    data?.countDownEndTime ? data.countDownEndTime + now.utcOffset() * 60 * 1000 : 0,
+    "millisecond"
+  );
   return (
     <Card
       title="Delegation Pools Explorer"
-      extra={<TimeDuration>Last updated {moment(lastUpdated).fromNow()}</TimeDuration>}
+      extra={
+        <TimeDuration>
+          <FormNowMessage time={lastUpdated} />
+        </TimeDuration>
+      }
     >
-      <TimeDuration mobile={1}>Last updated {moment(lastUpdated).fromNow()}</TimeDuration>
+      <TimeDuration mobile={1}>
+        <FormNowMessage time={lastUpdated} />
+      </TimeDuration>
       <Grid container spacing={2}>
         <Grid item xl={4} md={6} xs={12}>
           <StyledCard.Container>
             <StyledCard.Content>
               <StyledCard.Title>Epoch</StyledCard.Title>
               <StyledCard.Link to={details.epoch(data?.epochNo)}>{data?.epochNo}</StyledCard.Link>
-              <Box component="span" sx={{ color: theme => theme.palette.grey[400] }}>
+              <Box component="span" sx={{ color: (theme) => theme.palette.grey[400], textAlign: "left" }}>
                 End in:{" "}
                 <StyledCard.Comment>
                   {duration.days()} day {duration.hours()} hours {duration.minutes()} minutes
@@ -63,16 +74,16 @@ const OverViews: React.FC = () => {
         <Grid item xl={4} md={6} xs={12}>
           <Box>
             <Box
-              bgcolor={theme => theme.palette.common.white}
-              boxShadow={theme => theme.shadow.card}
+              bgcolor={(theme) => theme.palette.common.white}
+              boxShadow={(theme) => theme.shadow.card}
               borderRadius="12px"
             >
               <StyledCard.Container style={{ boxShadow: "none" }}>
                 <StyledCard.Content>
                   <StyledCard.Title>Slot</StyledCard.Title>
                   <StyledCard.Value>
-                    {data?.epochSlotNo}
-                    <Box component="span" sx={{ color: theme => theme.palette.text.hint, fontWeight: "400" }}>
+                    {currentEpoch?.slot}
+                    <Box component="span" sx={{ color: (theme) => theme.palette.text.hint, fontWeight: "400" }}>
                       / {MAX_SLOT_EPOCH}
                     </Box>
                   </StyledCard.Value>
@@ -80,22 +91,27 @@ const OverViews: React.FC = () => {
                 <StyledImg src={RocketBackground} alt="Rocket" />
               </StyledCard.Container>
               <Box position={"relative"} top={-30} px={4}>
-                <StyledLinearProgress variant="determinate" value={((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100} />
+                <StyledLinearProgress
+                  variant="determinate"
+                  value={((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100}
+                />
               </Box>
             </Box>
           </Box>
         </Grid>
         <Grid item xl={4} md={6} xs={12}>
-          <StyledCard.Container>
-            <StyledCard.Content style={{ flex: 1 }}>
+          <StyledCard.Container sx={{ justifyContent: "space-between" }}>
+            <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>
               <StyledCard.Title>Live Stake</StyledCard.Title>
-              <StyledCard.Value>{formatADAFull(data?.liveStake)}</StyledCard.Value>
+              <CustomTooltip title={formatADAFull(data?.liveStake)}>
+                <StyledCard.Value>{formatADA(data?.liveStake)}</StyledCard.Value>
+              </CustomTooltip>
             </StyledCard.Content>
-            <StyledCard.Content style={{ flex: 1 }}>
+            <StyledCard.Content style={{}}>
               <StyledCard.Title>Delegators</StyledCard.Title>
               <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
             </StyledCard.Content>
-            <Box flex={"1"}>
+            <Box>
               <StyledImg src={LiveStakeIcon} alt="Rocket" />
             </Box>
           </StyledCard.Container>

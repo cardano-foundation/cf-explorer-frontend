@@ -1,67 +1,114 @@
-import { Box, Button, Typography, styled } from "@mui/material";
+import { Box, Button, Card, Typography, styled } from "@mui/material";
+import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 
-export const CardOverview = styled(Box)`
-  background: white;
-  border-radius: 12px;
-  height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 25px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.03);
-  & > svg {
-    position: absolute;
-    width: 127px;
-    height: 120px;
-    left: 0;
-  }
-`;
+export const CardList = styled(Box)(() => ({
+  display: "flex",
+  flexWrap: "wrap",
+  gap: "20px 15px",
+  width: "100%"
+}));
 
-export const WrapIcon = styled(Box)(() => ({
-  width: 95,
-  marginRight: 12,
+export const CardItem = styled(Card)<{ sidebar?: number }>(({ theme, sidebar }) => ({
   display: "flex",
   alignItems: "center",
-  justifyContent: "flex-start",
+  padding: "20px 25px",
+  boxSizing: "border-box",
+  gap: 20,
+  flex: 1,
+  boxShadow: theme.shadow.card,
+  borderRadius: 12,
+  minWidth: "calc(50% - 10px)",
+  overflow: "hidden",
+  [theme.breakpoints.down("lg")]: {
+    minWidth: sidebar ? "100%" : "calc(50% - 10px)"
+  },
+  [theme.breakpoints.down("md")]: {
+    minWidth: "100%"
+  },
+  [theme.breakpoints.between("sm", "lg")]: {
+    padding: "20px",
+    height: 140
+  }
+}));
+
+export const ItemIcon = styled("img")(({ theme }) => ({
+  width: 80,
+  height: 80,
+  [theme.breakpoints.between("sm", "lg")]: {
+    width: 60,
+    height: 60
+  }
+}));
+
+export const CardContent = styled(Box)(() => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  gap: 10,
+  flex: 1,
+  boxSizing: "border-box",
+  flexWrap: "wrap"
+}));
+
+export const CardInfo = styled(Box)(() => ({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: 8,
+  flex: 1
 }));
 
 export const CardTitle = styled(Typography)(({ theme }) => ({
-  fontWeight: theme.typography.fontWeightBold,
-  fontSize: 14,
-  color: theme.palette.grey[500],
-  marginBottom: 4,
+  fontWeight: 700,
+  fontSize: 16,
+  lineHeight: "19px",
+  color: theme.palette.grey[400],
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 14,
+    lineHeight: "16px"
+  },
+  whiteSpace: "nowrap"
 }));
 
 export const CardValue = styled(Typography)(({ theme }) => ({
-  fontWeight: theme.typography.fontWeightBold,
-  fontSize: 16,
+  fontWeight: 700,
+  fontSize: 24,
+  lineHeight: "23px",
   color: theme.palette.grey[700],
+  whiteSpace: "nowrap",
+  wordBreak: "break-all",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 20,
+    lineHeight: "23px",
+    whiteSpace: "wrap",
+    wordBreak: "break-all"
+  }
+}));
+
+export const NoDelegatedStakePool = styled(Box)(({ theme }) => ({
+  color: theme.palette.red[700],
+  fontWeight: 500,
+  fontSize: 16
+}));
+
+export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
+  fontSize: 18,
+  marginLeft: 8,
+  [theme.breakpoints.down("sm")]: {
+    marginLeft: 5,
+    fontSize: 16
+  }
 }));
 
 export const TransferButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.main,
-  color: "var(--text-color-reverse)",
+  color: theme.palette.common.white,
   fontSize: 14,
-  fontWeight: theme.typography.fontWeightBold,
-  padding: "0 16px",
-  height: 38,
+  fontWeight: 700,
+  lineHeight: "16px",
+  padding: "8px 16px",
   borderRadius: 8,
   textTransform: "unset",
   boxShadow: "none",
+  width: "max-content"
 }));
-
-export const WrapWalletIcon = styled(Box)`
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-  background: rgba(67, 143, 104, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  & > svg {
-    width: 17px;
-    height: 17px;
-  }
-`;

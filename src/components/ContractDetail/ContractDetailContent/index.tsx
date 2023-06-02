@@ -1,11 +1,11 @@
-import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { TabContext, TabPanel } from "@mui/lab";
 import { alpha, Box, Tab, useTheme } from "@mui/material";
 import React from "react";
-import { ReactComponent as UtxoIcon } from "../../../commons/resources/images/utxoIcon.svg";
-import { TabTitle } from "./styles";
+import { ReactComponent as UtxoIcon } from "src/commons/resources/images/utxoIcon.svg";
+import { TabListStyled, TabTitle } from "./styles";
 import TokenTransaction from "./TokenTransaction";
 import { useHistory, useParams } from "react-router-dom";
-import { details } from "../../../commons/routers";
+import { details } from "src/commons/routers";
 
 const ContractDetailContent: React.FC = () => {
   const { tabActive = "transaction", address } = useParams<{
@@ -30,25 +30,32 @@ const ContractDetailContent: React.FC = () => {
         </TabTitle>
       ),
       key: "transaction",
-      children: <TokenTransaction />,
-    },
+      children: <TokenTransaction />
+    }
   ];
 
   return (
     <TabContext value={tabActive}>
       <Box>
-        <TabList
+        <TabListStyled
           onChange={handleChange}
-          TabIndicatorProps={{ sx: { background: theme => theme.palette.primary.main, height: 3 } }}
+          TabIndicatorProps={{ sx: { background: (theme) => theme.palette.primary.main, height: 3 } }}
         >
-          {tabs?.map(item => (
-            <Tab key={item.key} label={item.label} value={item.key} />
+          {tabs?.map((item) => (
+            <Tab
+              key={item.key}
+              label={item.label}
+              value={item.key}
+              sx={{
+                padding: "12px 0"
+              }}
+            />
           ))}
-        </TabList>
+        </TabListStyled>
       </Box>
-      {tabs.map(item => (
+      {tabs.map((item) => (
         <TabPanel
-          sx={{ padding: 0, borderTop: theme => `1px solid ${alpha(theme.palette.green[800], 0.1)}` }}
+          sx={{ padding: 0, borderTop: (theme) => `1px solid ${alpha(theme.palette.green[800], 0.1)}` }}
           key={item.key}
           value={item.key}
         >

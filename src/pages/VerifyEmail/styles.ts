@@ -4,10 +4,17 @@ import { User2RC } from "../../commons/resources";
 export const Container = styled(Box)`
   display: flex;
   background-color: ${({ theme }) => theme.palette.grey[200]};
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  min-width: 100vw;
   justify-content: center;
   align-items: center;
+  padding: 30px 0;
+`;
+
+export const Title = styled(Box)`
+  font-weight: 700;
+  font-size: 20px;
+  color: ${({ theme }) => theme.palette.grey[500]};
 `;
 
 export const WrapContent = styled(Box)`
@@ -44,9 +51,9 @@ export const WrapForm = styled(Box)(({ theme }) => ({
   gap: "25px",
   width: "min(80vw,420px)",
   padding: "35px 40px 40px",
-  [theme.breakpoints.down(theme.breakpoints.values.md)]: {
+  [theme.breakpoints.down("md")]: {
     padding: "20px 15px",
-    gap: "15px",
+    gap: "15px"
   }
 }));
 
@@ -59,20 +66,22 @@ export const WrapInput = styled(Box)`
   align-items: flex-start;
 `;
 
-export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !== "error" })<{ error?: boolean }>(({ theme, error }) => ({
-  borderRadius: "8px",
-  borderWidth: "1px",
-  borderStyle: "solid",
-  borderColor: error ? "#DD4343" : theme.palette.grey[300],
-  "&::before": {
-    display: "none",
-  },
-  "&::after": {
-    display: "none",
-  },
-  padding: "5px 10px",
-  backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : "",
-}));
+export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !== "error" })<{ error?: boolean }>(
+  ({ theme, error }) => ({
+    borderRadius: "8px",
+    borderWidth: "1px",
+    borderStyle: "solid",
+    borderColor: error ? "#DD4343" : theme.palette.grey[300],
+    "&::before": {
+      display: "none"
+    },
+    "&::after": {
+      display: "none"
+    },
+    padding: "5px 10px",
+    backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : ""
+  })
+);
 
 export const FormHelperTextCustom = styled(FormHelperText)`
   font-size: 14px
@@ -108,6 +117,7 @@ export const WrapButton = styled(Button)`
   font-size: 16px;
   line-height: 19px;
   text-align: center;
+  text-transform: none;
 `;
 
 export const WrapButtonConnectWallet = styled(Button)`
@@ -140,13 +150,4 @@ export const WrapSignUp = styled(Box)`
   font-size: 16px;
   line-height: 19px;
   color: ${({ theme }) => theme.palette.secondary.main};
-`;
-
-export const AlertCustom = styled(Alert)`
-  border-color: ${({ theme }) => theme.palette.error.main};
-  border-style: solid;
-  border-width: 1px;
-  color: ${({ theme }) => theme.palette.text.primary};
-  padding: 0 16px;
-  background: "#FFF7F7";
 `;

@@ -15,7 +15,7 @@ export const Header = styled(Box)`
   margin-bottom: 1.5rem;
   padding: 0 20px;
   gap: 10px;
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     padding: 0 15px;
     margin-bottom: 2.5rem;
   }
@@ -34,7 +34,7 @@ export const Title = styled("h3")`
     content: "";
     width: 50px;
     height: 4px;
-    background: var(--color-green-light);
+    background: ${({ theme }) => theme.palette.primary.main};
   }
 `;
 
@@ -43,7 +43,7 @@ export const Actions = styled(Box)(() => ({
   justifyContent: "flex-end",
   alignItems: "center",
   gap: 15,
-  position: "relative",
+  position: "relative"
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
@@ -54,8 +54,8 @@ export const TimeDuration = styled("small")(({ theme }) => ({
     top: "100%",
     right: 0,
     paddingTop: 10,
-    whiteSpace: "nowrap",
-  },
+    whiteSpace: "nowrap"
+  }
 }));
 
 export const Item = styled(BoxRaised)`
@@ -68,9 +68,9 @@ export const Item = styled(BoxRaised)`
   cursor: pointer;
   height: calc(100% - 56px);
   &:hover {
-    box-shadow: ${props => props.theme.shadow.card};
+    box-shadow: ${(props) => props.theme.shadow.card};
   }
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     padding: 20px 15px;
   }
 `;
@@ -80,14 +80,14 @@ export const ItemHeader = styled(Box)`
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     justify-content: flex-start;
   }
 `;
 export const RowItem = styled(Box)`
   line-height: 1;
-  margin-top: ${props => props.theme.spacing(1)};
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+  margin-top: ${(props) => props.theme.spacing(1)};
+  ${({ theme }) => theme.breakpoints.down("md")} {
     margin-top: 0;
     margin-right: 10px;
   }
@@ -96,7 +96,7 @@ export const RowItem = styled(Box)`
 
 export const PriceImage = styled("img")`
   height: 45px;
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     height: 30px;
   }
 `;
@@ -108,7 +108,7 @@ export const PriveValue = styled("span")`
 `;
 
 export const ItemDetail = styled("div")`
-  color: var(--text-color-pale);
+  color: ${({ theme }) => theme.palette.grey[400]};
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -117,7 +117,7 @@ export const ItemDetail = styled("div")`
 export const Hash = styled("small")`
   font-style: normal;
   font-weight: var(--font-weight-bold);
-  color: ${props => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.main};
   font-family: var(--font-family-text);
 `;
 
@@ -128,7 +128,7 @@ export const BlockNo = styled("small")`
 `;
 
 export const WalletAddress = styled("small")`
-  color: ${props => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.main};
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-bold);
 `;
@@ -181,7 +181,7 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
   font-size: 0.8125rem;
   line-height: 1;
   width: min-content;
-  @media screen and (max-width: ${props => props.theme.breakpoints.values.sm}px}) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     padding: 3px 3px;
     font-size: 0.75rem;
   }

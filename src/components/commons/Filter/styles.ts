@@ -16,13 +16,26 @@ export const FilterButton = styled(Button)`
 export const FilterContent = styled(Box)`
   position: absolute;
   right: 0px;
-  top: calc(100% + 6px);
-  background-color: #fff;
+  top: calc(100% + 11px);
+  background-color: ${({ theme }) => theme.palette.common.white};
   min-width: 200px;
   border-radius: 6px;
   padding: 6px 0px;
   z-index: 10;
   box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
+  &::before {
+    content: "";
+    display: block;
+    background: ${({ theme }) => theme.palette.common.white};
+    z-index: 9;
+    position: absolute;
+    top: -6px;
+    right: 32px;
+    width: 14px;
+    height: 16px;
+    transform: rotate(45deg);
+    box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
+  }
 `;
 
 export const FilterContainer = styled(Box)`

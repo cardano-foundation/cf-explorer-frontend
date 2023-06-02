@@ -23,5 +23,5 @@ const Hash = styled(Link)(({ theme }) => ({
   color: `${theme.palette.blue[800]} !important`,
   textDecoration: "underline !important",
   fontWeight: 500,
-  margin: `0 ${theme.spacing(1)}`,
+  margin: `0 ${theme.spacing(1)}`
 }));

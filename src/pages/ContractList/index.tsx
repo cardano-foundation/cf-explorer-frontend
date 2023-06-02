@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import useFetchList from "../../commons/hooks/useFetchList";
-import { useHistory } from "react-router-dom";
+
 import { stringify } from "qs";
 import { Box } from "@mui/material";
 import {
@@ -9,7 +9,7 @@ import {
   formatADAFull,
   getPageInfo,
   getShortWallet,
-  numberWithCommas,
+  numberWithCommas
 } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { AIcon } from "../../commons/resources";
@@ -22,7 +22,7 @@ import { RootState } from "../../stores/types";
 import { API } from "../../commons/utils/api";
 import ADAicon from "../../components/commons/ADAIcon";
 import { REFRESH_TIMES } from "../../commons/utils/constants";
-import moment from "moment";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
 const Transactions: React.FC = () => {
   const { search } = useLocation();
@@ -42,26 +42,26 @@ const Transactions: React.FC = () => {
       title: "#",
       key: "id",
       minWidth: 30,
-      render: (_, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0),
+      render: (_, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)
     },
     {
       title: "Contract Addresses",
       key: "trxhash",
       minWidth: 120,
 
-      render: r => (
+      render: (r) => (
         <div>
           <CustomTooltip title={r.address}>
             <StyledLink to={details.contract(r.address)}>{getShortWallet(r.address)}</StyledLink>
           </CustomTooltip>
         </div>
-      ),
+      )
     },
     {
       title: "Balance",
       key: "balance",
       minWidth: 60,
-      render: r => (
+      render: (r) => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.balance)}</Box>
           <ADAicon />
@@ -69,33 +69,33 @@ const Transactions: React.FC = () => {
       ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+      }
     },
     {
       title: "Value",
       key: "value",
       minWidth: 120,
-      render: r => (
+      render: (r) => (
         <CustomTooltip title={exchangeADAToUSD(r.balance, adaRate, true)}>
           <Box display="inline-flex" alignItems="center">
             {exchangeADAToUSD(r.balance, adaRate, true)}
           </Box>
         </CustomTooltip>
-      ),
+      )
     },
     {
       title: "Transaction Count",
       minWidth: 120,
       key: "txCount",
-      render: r => (
+      render: (r) => (
         <Box display="flex" alignItems="center">
-          {r.txCount}
+          {numberWithCommas(r.txCount)}
         </Box>
       ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
-    },
+      }
+    }
   ];
 
   return (
@@ -103,7 +103,11 @@ const Transactions: React.FC = () => {
       <Card
         title={"Contracts"}
         underline={false}
-        extra={<TimeDuration>Last updated {moment(fetchData.lastUpdated).fromNow()}</TimeDuration>}
+        extra={
+          <TimeDuration>
+            <FormNowMessage time={fetchData.lastUpdated} />
+          </TimeDuration>
+        }
       >
         <Table
           {...fetchData}
@@ -115,7 +119,7 @@ const Transactions: React.FC = () => {
             onChange: (page, size) => {
               history.push({ search: stringify({ page, size }) });
               mainRef.current?.scrollTo(0, 0);
-            },
+            }
           }}
         />
       </Card>

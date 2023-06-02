@@ -1,4 +1,5 @@
 import { Box, Button, Container, Grid, styled } from "@mui/material";
+import Table from "../../components/commons/Table";
 
 export const DashboardCardList = styled(Box)`
   display: flex;
@@ -20,6 +21,15 @@ export const DownloadButtonAll = styled(Button)`
 
 export const GridContainer = styled(Grid)`
   margin-bottom: 35px;
+  & > div > div {
+    height: 100%;
+  }
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    padding-top: 30px;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    padding-top: 0px;
+  }
 `;
 
 export const Status = styled("span")<{ status: string }>`
@@ -28,8 +38,32 @@ export const Status = styled("span")<{ status: string }>`
   padding: 7.5px 11.5px;
   border-radius: 2px;
   text-transform: uppercase;
-  background-color: ${({ status }) => (status === "GENERATED" ? "rgba(16, 138, 239, 0.2)" : "rgba(255, 168, 0, 0.2)")};
-  color: ${({ status }) => (status === "GENERATED" ? "#108AEF" : "#FFA800")};
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case "EXPIRED":
+      case "FAILED":
+        return theme.palette.error.light;
+      case "GENERATED":
+        return theme.palette.success.light;
+      case "IN_PROGRESS":
+        return theme.palette.warning.light;
+      default:
+        return theme.palette.success.light;
+    }
+  }};
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case "EXPIRED":
+      case "FAILED":
+        return theme.palette.error.main;
+      case "GENERATED":
+        return theme.palette.success.main;
+      case "IN_PROGRESS":
+        return theme.palette.warning.main;
+      default:
+        return theme.palette.success.main;
+    }
+  }};
 `;
 
 export const TextHeadline = styled("span")`
@@ -38,4 +72,44 @@ export const TextHeadline = styled("span")`
   line-height: 38px;
   color: #000000;
   margin-bottom: 14px;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    font-size: 24px;
+    line-height: 28.13px;
+  }
+`;
+
+export const TitleHead = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
+
+export const FilterHead = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    width: 100%;
+    justify-content: space-between;
+  }
+`;
+export const StackingLifecycleTable = styled(Table)`
+  & > div {
+    padding: 0;
+    border: none;
+  }
+`;
+
+export const WrapReportName = styled(Box)`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20ch;
 `;

@@ -1,12 +1,12 @@
 enum TransactionStatus {
   FAIL = "FAIL",
   SUCCESS = "SUCCESS",
-  PENDDING = "PENDDING",
+  PENDDING = "PENDDING"
 }
 enum ConfirmationStatus {
   MEDIUM = "MEDIUM",
   LOW = "LOW",
-  HIGH = "HIGH",
+  HIGH = "HIGH"
 }
 
 interface Transactions {
@@ -21,6 +21,29 @@ interface Transactions {
   fee: number;
   totalOutput: number;
   time: string;
+  balance: number;
+  tokens: TransactionToken[];
+}
+
+interface TransactionToken {
+  address: string;
+  addressId: number;
+  displayName: string;
+  fingerprint: string;
+  name: string;
+  policy: string;
+  quantity: number;
+}
+
+interface Token {
+  assetName: string;
+  assetQuantity: number;
+  assetId: string;
+  policy?: {
+    policyId: string;
+    totalToken: number;
+    policyScript: string;
+  };
 }
 interface CurrentTransactions {
   blockNo: number;
@@ -81,15 +104,17 @@ type TPoolCertificated = {
     ipv4: string;
     ipv6: string;
     port: number;
-  };
+  }[];
   rewardAccount: string;
-  type: string;
+  type: "POOL_REGISTRATION" | "POOL_DEREGISTRATION";
   vrfKey: string;
+  epoch: number;
 };
 
 type TStakeCertificated = {
   stakeAddress: string;
-}
+  type: "STAKE_REGISTRATION" | "STAKE_DEREGISTRATION";
+};
 
 interface Transaction {
   tx: {
@@ -105,34 +130,11 @@ interface Transaction {
     maxEpochSlot: number;
   };
   summary: {
-    stakeAddressTxInputs: {
+    stakeAddress: {
       address: string;
       value: number;
-      tokens: {
-        assetName: string;
-        assetQuantity: number;
-        assetId: string;
-        policy: {
-          policyId: string;
-          totalToken: number;
-          policyScript: string;
-        };
-      }[];
-    }[];
-
-    stakeAddressTxOutputs: {
-      address: string;
-      value: number;
-      tokens: {
-        assetName: string;
-        assetQuantity: number;
-        assetId: string;
-        policy: {
-          policyId: string;
-          totalToken: number;
-          policyScript: string;
-        };
-      }[];
+      fee?: number;
+      tokens: Token[];
     }[];
   };
   contracts?: {
@@ -151,35 +153,15 @@ interface Transaction {
       address: string;
       value: number;
       txHash: string;
-      tokens: [
-        {
-          assetName: string;
-          assetQuantity: number;
-          assetId: string;
-          policy: {
-            policyId: string;
-            totalToken: number;
-            policyScript: string;
-          };
-        }
-      ];
+      tokens: Token[];
+      stakeAddress?: string;
     }[];
     outputs: {
       address: string;
       value: number;
       txHash: string;
-      tokens: [
-        {
-          assetName: string;
-          assetQuantity: number;
-          assetId: string;
-          policy: {
-            policyId: string;
-            totalToken: number;
-            policyScript: string;
-          };
-        }
-      ];
+      tokens: Token[];
+      stakeAddress?: string;
     }[];
   };
   mints?: {
@@ -215,16 +197,7 @@ interface CollateralResponses {
   index: string;
   txHash: string;
   value: number;
-  tokens: {
-    assetName: string;
-    assetQuantity: number;
-    assetId: string;
-    policy: {
-      policyId: string;
-      totalToken: number;
-      policyScript: string;
-    };
-  }[];
+  tokens: Token[];
 }
 
 type TProtocolMerge = {

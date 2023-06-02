@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { CgClose } from "react-icons/cg";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
-import { CubeIcon, RocketIcon } from "../../../commons/resources";
+import { BlockIcon, CubeIcon, RocketIcon } from "../../../commons/resources";
 import ProgressCircle from "../ProgressCircle";
 import {
   CloseButton,
@@ -14,7 +14,6 @@ import {
   DetailValue,
   Icon,
   BlockDefault,
-  InfoIcon,
   DetailLabelSkeleton,
   DetailValueSkeleton,
   IconSkeleton,
@@ -30,10 +29,9 @@ import {
   DetailLinkRight,
   ViewDetailScroll,
   ViewDetailHeader,
-  TimeDuration,
+  TimeDuration
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
-import { HiOutlineCube } from "react-icons/hi2";
 import { BiChevronRight } from "react-icons/bi";
 import { details } from "../../../commons/routers";
 import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
@@ -43,6 +41,7 @@ import { API } from "../../../commons/utils/api";
 import { useSelector } from "react-redux";
 import ViewAllButton from "../ViewAllButton";
 import ADAicon from "../ADAIcon";
+import FormNowMessage from "../FormNowMessage";
 import moment from "moment";
 
 type DetailViewEpochProps = {
@@ -62,13 +61,21 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
 
   useEffect(() => {
     if (data) {
-      callback(list => {
-        const index = list.findIndex(item => item.no === data?.no);
+      callback((list) => {
+        const index = list.findIndex((item) => item.no === data?.no);
         if (index >= 0) list[index] = { ...list[index], ...data };
         return [...list];
       });
     }
   }, [data, callback]);
+
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+
+    return () => {
+      document.body.style.overflowY = "scroll";
+    };
+  }, []);
 
   if (!data)
     return (
@@ -140,14 +147,21 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
       </ViewDetailDrawer>
     );
 
-  const slot = data.no === currentEpoch?.no ? currentEpoch.slot : MAX_SLOT_EPOCH;
+  const slot =
+    data.no === currentEpoch?.no
+      ? moment(formatDateTimeLocal(data?.endTime)).diff(moment()) >= 0
+        ? currentEpoch.slot
+        : MAX_SLOT_EPOCH
+      : MAX_SLOT_EPOCH;
 
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
   return (
     <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
       <ViewDetailHeader>
         <ViewAllButton tooltipTitle="View Detail" to={details.epoch(epochNo)} />
-        {!!lastUpdated && <TimeDuration>Last updated {moment(lastUpdated).fromNow()}</TimeDuration>}
+        <TimeDuration>
+          <FormNowMessage time={lastUpdated} />
+        </TimeDuration>
         <CustomTooltip title="Close">
           <CloseButton onClick={handleClose}>
             <CgClose />
@@ -186,16 +200,20 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           </ListItem>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>Start time</DetailLabel>
+              <DetailLabel>Start Timestamp</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.startTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>End time</DetailLabel>
+              <DetailLabel>End Timestamp</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.endTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Blocks</DetailLabel>
               <DetailValue>{data.blkCount}</DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>Tx Count</DetailLabel>
+              <DetailValue>{data.txCount}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Total Output</DetailLabel>
@@ -209,7 +227,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
             <DetailLink to={details.epoch(epochNo)}>
               <DetailLabel style={{ fontSize: 18 }}>
                 <DetailLinkIcon>
-                  <HiOutlineCube />
+                  <BlockIcon />
                 </DetailLinkIcon>
                 Blocks
               </DetailLabel>

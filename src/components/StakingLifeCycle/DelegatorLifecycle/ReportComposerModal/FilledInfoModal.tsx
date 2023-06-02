@@ -1,85 +1,70 @@
 import { Container } from "../../../Account/ActivityLogModal/styles";
 import { StyledTextField } from "../../../TokenAutocomplete/styles";
-import { StyledGroupField } from "./styles";
 import StyledModal from "../../../commons/StyledModal";
-import {
-  ModalTitle,
-  StyledAddressSelect,
-  StyledButton,
-  StyledLabel,
-  StyledSelect,
-  StyledStack,
-  TextWarning,
-} from "./styles";
-import { DownIcon } from "../../../../commons/resources";
-import { useCallback, useMemo, useState } from "react";
-import { Box, MenuItem, Slider } from "@mui/material";
-import CustomDatePicker, { IDateRange } from "../../../CustomDatePicker";
-import { IPropsModal, STEPS } from ".";
+import { ModalTitle, StyledButton, StyledLabel, StyledStack, TextError, StyledSlider } from "./styles";
+
+import { Box } from "@mui/material";
+import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
+import { IPropsModal, STEPS } from ".";
+import { useScreen } from "../../../../commons/hooks/useScreen";
+
+import CustomDatePicker, { IDateRange } from "../../../CustomDatePicker";
+import { useHistory, useParams } from "react-router-dom";
 
 export enum ReportType {
-  ChooseReport = "CHOOSE_REPORT",
   PoolReport = "POOL_REPORT",
-  StakeKeyReport = "STAKE_KEY_REPORT",
+  StakeKeyReport = "STAKE_KEY_REPORT"
 }
-
-const options = [
-  {
-    value: ReportType.ChooseReport,
-    label: "Choose report",
-  },
-  {
-    value: ReportType.PoolReport,
-    label: "Pool report",
-  },
-  {
-    value: ReportType.StakeKeyReport,
-    label: "Stake key report",
-  },
-];
 
 type IEpochRange = [number, number];
 
 const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, saveParams, gotoStep }) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const history = useHistory();
 
-  const [reportType, setReportType] = useState<ReportType>(ReportType.ChooseReport);
-  const [address, setAddress] = useState<string>("");
+  const isDelegatorPage = history.location.pathname.includes("/delegator-lifecycle/");
+  const { poolId, stakeId } = useParams<{ poolId: string; stakeId: string }>();
+
+  const reportType: ReportType = isDelegatorPage ? ReportType.StakeKeyReport : ReportType.PoolReport;
+  const address = poolId || stakeId;
+
   const [dateRange, setDateRange] = useState<IDateRange>([null, null]);
   const [reportName, setReportName] = useState<string>("");
   const [epochRange, setEpochRange] = useState<IEpochRange>([30, 50]);
+  const [errorReportField, setErrorReportField] = useState("");
 
-  const onChangeReportType = useCallback((e: any) => {
-    setReportType(e.target.value as ReportType);
-  }, []);
+  const onChangeReportName = (e: any) => {
+    if (/^[a-zA-Z0-9_\s]*$/.test(e.target.value)) {
+      const text = e.target.value as string;
+      setReportName(text as ReportType);
+      if (text.trim().length > 200) {
+        setErrorReportField("Report name can not exceed 200 characters");
+      } else {
+        setErrorReportField("");
+      }
+    }
+  };
 
-  const onChangeReportName = useCallback((e: any) => {
-    setReportName(e.target.value as ReportType);
-  }, []);
-
-  const onChangeAddress = useCallback((e: any) => {
-    setAddress(e.target.value);
-  }, []);
+  const { isMobile } = useScreen();
 
   const isDisabledButton = useMemo(() => {
+    if (errorReportField) return true;
     const [startDate, endDate] = dateRange;
-    if (reportType === ReportType.ChooseReport) return true;
-
     if (reportType === ReportType.StakeKeyReport) {
       return !address?.trim() || !startDate || !endDate;
     } else {
       return !address?.trim();
     }
-  }, [address, dateRange, reportType]);
+  }, [address, dateRange, reportType, errorReportField]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     saveParams?.({
       reportType,
       address,
       dateRange,
-      reportName,
-      epochRange,
+      reportName: reportName.replaceAll(" ", "-"),
+      epochRange
     });
     gotoStep?.(STEPS.step2);
   };
@@ -94,58 +79,46 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   };
 
   return (
-    <StyledModal open={open} handleCloseModal={handleCloseModal} width={555}>
+    <StyledModal
+      open={open}
+      handleCloseModal={handleCloseModal}
+      paddingX={isMobile ? "10px" : "40px"}
+      paddingY={isMobile ? "20px" : "30px"}
+      contentStyle={{ overflowY: "unset" }}
+    >
       <Container>
-        <ModalTitle>Report composer</ModalTitle>
+        <ModalTitle>
+          <Box sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</Box>
+        </ModalTitle>
         <StyledStack>
           <StyledLabel>Report name</StyledLabel>
-          <StyledTextField placeholder="Filled report name" value={reportName} onChange={onChangeReportName} />
+          <StyledTextField placeholder="Enter report name" value={reportName} onChange={onChangeReportName} />
         </StyledStack>
-        <Box sx={{ marginBottom: "20px" }}>
-          <StyledLabel>Address details</StyledLabel>
-          <StyledAddressSelect display={"flex"}>
-            <StyledSelect size="small" onChange={onChangeReportType} value={reportType} IconComponent={DownIcon}>
-              {options.map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </StyledSelect>
-            <StyledGroupField
-              onChange={onChangeAddress}
-              value={address}
-              sx={{ flexGrow: 1 }}
-              placeholder="Address details"
-            />
-          </StyledAddressSelect>
-        </Box>
         {reportType === ReportType.StakeKeyReport && (
           <Container>
             <StyledStack>
               <StyledLabel>Select a date range</StyledLabel>
-              <CustomDatePicker dateRange={dateRange} setDateRange={setDateRange} />
+              <CustomDatePicker dateRange={dateRange} setDateRange={setDateRange} hideFuture />
             </StyledStack>
           </Container>
         )}
         {reportType === ReportType.PoolReport && (
           <Box sx={{ marginBottom: "20px" }}>
             <StyledLabel>Select a epoch range</StyledLabel>
-            <Slider
+            <StyledSlider
               getAriaLabel={() => "Minimum distance"}
               value={epochRange}
               onChange={handleChangeEpochRange}
-              valueLabelDisplay="on"
+              valueLabelDisplay="auto"
               disableSwap
               min={0}
               max={currentEpoch?.no || 0}
             />
           </Box>
         )}
-        {!address && (
-          <TextWarning>The earliest 1,000 transactions within the selected range will be exported</TextWarning>
-        )}
+        {errorReportField && <TextError>{errorReportField}</TextError>}
         <StyledStack>
-          <StyledButton isDisabled={isDisabledButton} onClick={handleSubmit}>
+          <StyledButton disabled={isDisabledButton} onClick={handleSubmit}>
             Next
           </StyledButton>
         </StyledStack>

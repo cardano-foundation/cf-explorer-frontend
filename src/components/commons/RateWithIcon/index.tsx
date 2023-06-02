@@ -8,6 +8,7 @@ const PriceRate = styled(Box)<{ size?: string | number }>`
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
+  margin-right: 10px;
   font-size: ${({ size }) => {
     if (typeof size === "number") return `${size}px`;
     if (typeof size === "string") return size;
@@ -26,7 +27,7 @@ const PriceValue = styled("span")<{ sign: number }>`
 `;
 
 const PriceNoValue = styled("span")`
-  color: ${props => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.text.primary};
   margin-left: 28px;
   font-weight: var(--font-weight-bold);
 `;

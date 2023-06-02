@@ -17,7 +17,6 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
   const [, setUsername] = useLocalStorage<string>("username", "");
-  const [user, setUser] = useLocalStorage("persist:user", {});
 
   const history = useHistory();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -39,9 +38,10 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
     try {
       await signOut({
         refreshJwt: localStorage.getItem("refreshToken") || "",
-        username: localStorage.getItem("username") || "",
+        username: localStorage.getItem("username") || ""
       });
     } catch (error) {
+      //To Do
     } finally {
       disconnect();
       removeAuthInfo();
@@ -49,7 +49,11 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
       setUsername("");
       localStorage.clear();
       // setUser({ ...user, userData: {} });
-      window.location.reload();
+      if (window.location.pathname.includes("report-generated")) {
+        history.push(routers.STAKING_LIFECYCLE);
+      } else {
+        window.location.reload();
+      }
     }
   };
 
@@ -65,11 +69,11 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
         onClose={handleClose}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "right",
+          horizontal: "right"
         }}
         transformOrigin={{
           vertical: "top",
-          horizontal: "right",
+          horizontal: "right"
         }}
       >
         <Content>

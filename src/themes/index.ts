@@ -1,5 +1,4 @@
-import { alpha, Breakpoints, createTheme, Shadows } from "@mui/material";
-import { Typography } from "@mui/material/styles/createTypography";
+import { createTheme } from "@mui/material";
 import { ThemeType } from "../types/user";
 import breakpoints from "./breakpoints";
 import palette, { CustomPalette } from "./palette";
@@ -21,7 +20,7 @@ const lightTheme: CustomTheme = {
   typography: typography,
   breakpoints: breakpoints,
   mode: "light",
-  isDark: false,
+  isDark: false
 };
 
 const darkTheme: CustomTheme = {
@@ -30,16 +29,25 @@ const darkTheme: CustomTheme = {
   typography: typography,
   breakpoints: breakpoints,
   mode: "dark",
-  isDark: false,
+  isDark: false
 };
-
 declare module "@mui/material" {
-  interface Theme extends CustomTheme {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface Theme extends CustomTheme {
+    palette: CustomPalette;
+    shadow: typeof shadows.light;
+    typography: typeof typography;
+    mode: ThemeType;
+    isDark: boolean;
+  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface ThemeOptions extends CustomTheme {}
 }
 
 declare module "@emotion/react" {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface Theme extends CustomTheme {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface ThemeOptions extends CustomTheme {}
 }
 
@@ -48,7 +56,7 @@ const dark = createTheme(darkTheme);
 
 const themes: { [key in ThemeType]: typeof light } = {
   light,
-  dark,
+  dark
 };
 
 export default themes;

@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { CgArrowsExchange, CgClose } from "react-icons/cg";
-import { FileEditIcon, LightningIcon } from "../../../commons/resources";
+import React, { useEffect, useState } from "react";
+import { CgClose } from "react-icons/cg";
+import { DelegationHistoryMainIcon, FileEditIcon, LightningIcon } from "../../../commons/resources";
 import {
   CloseButton,
   ViewDetailContainer,
   DetailsInfoItem,
   DetailLabel,
   DetailValue,
-  InfoIcon,
   DetailLabelSkeleton,
   DetailValueSkeleton,
   IconSkeleton,
@@ -33,6 +32,7 @@ import {
   DelegatedDetail,
   ButtonModal,
   ViewDetailHeader,
+  WrapDetailInfo
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
@@ -42,7 +42,6 @@ import ViewMoreButton from "../ViewMoreButton";
 import { ReactComponent as StakeKeyHistoryIcon } from "../../../commons/resources/icons/stateKeyHistory.svg";
 import { ReactComponent as TransactionIcon } from "../../../commons/resources/icons/exchangeArrow.svg";
 import CustomTooltip from "../CustomTooltip";
-import { TbFileCheck } from "react-icons/tb";
 import CopyButton from "../CopyButton";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
@@ -50,33 +49,47 @@ import ModalAllAddress from "../../StakeDetail/ModalAllAddress";
 import { API } from "../../../commons/utils/api";
 import ViewAllButton from "../ViewAllButton";
 import ADAicon from "../ADAIcon";
+import { useTheme } from "@emotion/react";
 
 type DetailViewStakeKeyProps = {
   stakeId: string;
   handleClose: () => void;
 };
 const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
-  { key: "delegation", label: "Delegation History", icon: <TbFileCheck /> },
+  {
+    key: "delegation",
+    label: "Delegation History",
+    icon: <DelegationHistoryMainIcon style={{ padding: "2px 4px 2px 2px" }} />
+  },
   {
     key: "stake-key",
     label: "Stake Key History",
     icon: (
       <StakeKeyHistoryIcon fill="#438F68" width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
-    ),
+    )
   },
   { key: "withdrawal", label: "Withdrawal History", icon: <DetailLinkImage src={FileEditIcon} alt="withdrawal" /> },
   { key: "instantaneous", label: "Instantaneous Rewards", icon: <DetailLinkImage src={LightningIcon} alt="rewards" /> },
   {
     key: "transactions",
     label: "Transactions",
-    icon: <TransactionIcon width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />,
-  },
+    icon: <TransactionIcon width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
+  }
 ];
 
-const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
+const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
   const { stakeId, handleClose } = props;
   const { data } = useFetch<IStakeKeyDetail>(stakeId ? `${API.STAKE.DETAIL}/${stakeId}` : ``);
   const [open, setOpen] = useState(false);
+  const theme = useTheme();
+
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+
+    return () => {
+      document.body.style.overflowY = "scroll";
+    };
+  }, []);
 
   if (!data)
     return (
@@ -171,27 +184,35 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
           </StakeKeyHeader>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>Status</DetailLabel>
+              <WrapDetailInfo>
+                <DetailLabel>Status</DetailLabel>
+              </WrapDetailInfo>
               <DetailValue>
                 <StakeKeyStatus status={data.status}>{data.status}</StakeKeyStatus>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Reward available</DetailLabel>
+              <WrapDetailInfo>
+                <DetailLabel>Reward available</DetailLabel>
+              </WrapDetailInfo>
               <DetailValue>
                 {formatADAFull(data.rewardAvailable)}
                 <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Reward withdrawn</DetailLabel>
+              <WrapDetailInfo>
+                <DetailLabel>Reward withdrawn</DetailLabel>
+              </WrapDetailInfo>
               <DetailValue>
                 {formatADAFull(data.rewardWithdrawn)}
                 <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Delegated to</DetailLabel>
+              <WrapDetailInfo>
+                <DetailLabel>Delegated to</DetailLabel>
+              </WrapDetailInfo>
               <CustomTooltip title={poolName}>
                 <Box component={Link} display="inline-block" to={details.delegation(data.pool?.poolId)}>
                   <DelegatedDetail>{poolName}</DelegatedDetail>
@@ -199,14 +220,23 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = props => {
               </CustomTooltip>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Total Stake</DetailLabel>
+              <WrapDetailInfo>
+                <DetailLabel>Total Stake</DetailLabel>
+              </WrapDetailInfo>
               <DetailValue>
                 {formatADAFull(data.totalStake)}
                 <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <Box textAlign={"right"}>
-              <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>
+              <ButtonModal
+                sx={{
+                  color: theme.palette.secondary.main
+                }}
+                onClick={() => setOpen(true)}
+              >
+                View all addresses
+              </ButtonModal>
             </Box>
             <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={stakeId} />
           </Group>

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
 import { CubeIcon, RocketIcon } from "../../../commons/resources";
 import ProgressCircle from "../ProgressCircle";
 import {
@@ -14,7 +14,6 @@ import {
   DetailValue,
   Icon,
   BlockDefault,
-  InfoIcon,
   DetailLabelSkeleton,
   DetailValueSkeleton,
   IconSkeleton,
@@ -30,9 +29,10 @@ import {
   DetailLinkRight,
   StyledLink,
   DetailLinkName,
-  ViewDetailScroll,
   ViewDetailHeader,
   ConfirmStatus,
+  ViewDetailScroll,
+  TimeDuration
 } from "./styles";
 import useFetch from "../../../commons/hooks/useFetch";
 import { BiChevronRight } from "react-icons/bi";
@@ -46,15 +46,21 @@ import { RootState } from "../../../stores/types";
 import { API } from "../../../commons/utils/api";
 import ViewAllButton from "../ViewAllButton";
 import ADAicon from "../ADAIcon";
+import FormNowMessage from "../FormNowMessage";
 
 type DetailViewBlockProps = {
   blockNo: number | string;
   handleClose: () => void;
 };
 
-const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
+const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
   const { blockNo, handleClose } = props;
-  const { data } = useFetch<BlockDetail>(`${API.BLOCK.DETAIL}/${blockNo}`);
+  const { data, lastUpdated } = useFetch<BlockDetail>(
+    `${API.BLOCK.DETAIL}/${blockNo}`,
+    undefined,
+    false,
+    REFRESH_TIMES.BLOCK_DETAIL
+  );
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
 
   const renderConfirmationTag = () => {
@@ -69,6 +75,14 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
     }
     return CONFIRMATION_STATUS.LOW;
   };
+
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+
+    return () => {
+      document.body.style.overflowY = "scroll";
+    };
+  }, []);
 
   if (!data)
     return (
@@ -144,6 +158,9 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = props => {
     <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
       <ViewDetailHeader>
         <ViewAllButton tooltipTitle="View Detail" to={details.block(blockNo)} />
+        <TimeDuration>
+          <FormNowMessage time={lastUpdated} />
+        </TimeDuration>
         <CustomTooltip title="Close">
           <CloseButton onClick={handleClose}>
             <CgClose />

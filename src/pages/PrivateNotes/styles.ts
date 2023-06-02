@@ -5,52 +5,85 @@ import { LoadingButton } from "@mui/lab";
 
 export const Container = styled(Box)``;
 
-export const Header = styled(Box)`
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  font-family: var(--font-family-title);
-  font-size: var(--font-size-text-x-large);
-  font-weight: var(--font-weight-bold);
-  padding-bottom: 8px;
-  border-bottom: 1px solid ${props => alpha(props.theme.palette.green[800], 0.1)};
-`;
+export const Header = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "end",
+  fontFamily: "var(--font-family-title)",
+  fontSize: "var(--font-size-text-x-large)",
+  fontWeight: "var(--font-weight-bold)",
+  paddingBottom: "8px",
+  borderBottom: `1px solid ${alpha(theme.palette.green[800], 0.1)}`,
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "center"
+  }
+}));
 
-export const Title = styled("span")`
-  line-height: 1;
-  color: ${props => props.theme.palette.common.black};
-`;
+export const Title = styled("span")(({ theme }) => ({
+  lineHeight: 1,
+  color: theme.palette.common.black,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "14px"
+  },
+  "@media (max-width: 355px)": {
+    fontSize: "12px"
+  }
+}));
 
-export const AddButton = styled(Button)`
-  background-color: ${props => props.theme.palette.primary.main};
-  color: ${props => props.theme.palette.primary.contrastText};
-  padding: 0 20px;
-  text-transform: unset;
-  height: 32px;
-  border-radius: 6px;
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-title);
-  &:hover {
-    background-color: ${props => props.theme.palette.primary.main};
+export const AddButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.primary.contrastText,
+  padding: "0 20px",
+  textTransform: "unset",
+  alignItems: "center",
+  height: "32px",
+  borderRadius: "6px",
+  fontWeight: "var(--font-weight-bold)",
+  fontFamily: "var(--font-family-title)",
+  "&:hover": {
+    backgroundColor: theme.palette.primary.main
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "14px",
+    height: "28px",
+    lineHeight: "28px"
   }
-`;
-
-export const StyledTable = styled(Table)`
-  & .empty-content-table {
-    top: unset;
+}));
+// & .empty-content-table {
+//   top: unset;
+// }
+// thead tr th {
+//   font-size: var(--font-size-text-x-small);
+//   padding: 10px 20px;
+// }
+// tbody tr {
+//   padding: 0;
+//   height: 60px;
+// }
+// tbody tr td {
+//   padding: 0 20px;
+// }
+export const StyledTable = styled(Table)(({ theme }) => ({
+  "& .empty-content-table": {
+    top: "unset"
+  },
+  "& thead tr th": {
+    fontSize: "var(--font-size-text-x-small)",
+    padding: "10px 20px"
+  },
+  "& tbody tr": {
+    padding: 0,
+    height: "60px"
+  },
+  "& tbody tr td": {
+    padding: "0 20px"
+  },
+  [theme.breakpoints.down("sm")]: {
+    "& > div": {
+      border: "none"
+    }
   }
-  thead tr th {
-    font-size: var(--font-size-text-x-small);
-    padding: 10px 20px;
-  }
-  tbody tr {
-    padding: 0;
-    height: 60px;
-  }
-  tbody tr td {
-    padding: 0 20px;
-  }
-`;
+}));
 
 export const ActionButton = styled("button")<{ typeButton: string }>`
   width: 30px;
@@ -70,18 +103,18 @@ export const StyledLink = styled(Link)`
   display: block;
   text-decoration: none;
   font-family: var(--font-family-text);
-  color: ${props => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
   font-weight: var(--font-weight-normal);
   &:hover {
     font-family: var(--font-family-text);
-    color: ${props => props.theme.palette.secondary.main};
+    color: ${(props) => props.theme.palette.secondary.main};
   }
 `;
 
 export const SmallText = styled("small")`
   display: block;
   white-space: nowrap;
-  color: ${props => props.theme.palette.grey[500]};
+  color: ${(props) => props.theme.palette.grey[500]};
   margin-top: 4px;
 `;
 export const CancelButton = styled(Button)(({ theme }) => ({
@@ -92,8 +125,8 @@ export const CancelButton = styled(Button)(({ theme }) => ({
   padding: "6px 35px",
   border: `2px solid ${theme.palette.border.hint}`,
   ":hover": {
-    border: `2px solid ${theme.palette.border.hint}`,
-  },
+    border: `2px solid ${theme.palette.border.hint}`
+  }
 }));
 
 export const DeleteButton = styled(LoadingButton)(({ theme }) => ({
@@ -103,6 +136,6 @@ export const DeleteButton = styled(LoadingButton)(({ theme }) => ({
   fontWeight: "bold",
   color: theme.palette.common.white,
   ":hover": {
-    background: theme.palette.grey[700],
-  },
+    background: theme.palette.grey[700]
+  }
 }));

@@ -1,15 +1,15 @@
-import { alpha, Box, styled } from "@mui/material";
+import { Box } from "@mui/material";
 
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import { formatADAFull, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import { AIcon } from "../../../../commons/resources";
 import { details } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import { Header, Img, Item, ItemBox, TokenLink, Wrapper } from "./style";
+import { Header, Img, Item, ItemBox, ItemContent, TokenLink, WrapToken, Wrapper } from "./style";
 import ADAicon from "../../../commons/ADAIcon";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
 interface CollateralProps {
   data: Transaction["collaterals"] | null;
@@ -33,19 +33,25 @@ const Collaterals: React.FC<CollateralProps> = ({ data }) => {
 export default Collaterals;
 
 const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "input" | "output" }) => {
+  const { isTablet, isMobile } = useScreen();
   return (
     <Box>
-      {data?.map(item => (
+      {data?.map((item) => (
         <Item key={item.address}>
-          <Box display={"flex"} alignItems="center">
-            <Box width={50}>
-              <Img src={type === "input" ? receiveImg : sendImg} alt="send icon" />
+          <ItemContent>
+            <Box display="flex" alignItems="center">
+              <Box width={50}>
+                <Img src={type === "input" ? receiveImg : sendImg} alt="send icon" />
+              </Box>
+              {isTablet ? <Box>{type === "input" ? "From" : "To"}:</Box> : null}
             </Box>
             <Box width={"100%"}>
               <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
-                <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1}>
-                  {type === "input" ? "From" : "To"}:
-                </Box>
+                {!isTablet ? (
+                  <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1}>
+                    {type === "input" ? "From" : "To"}:
+                  </Box>
+                ) : null}
                 <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"}>
                   <Box
                     display={"flex"}
@@ -57,7 +63,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                     <Link to={details.address(item.address)}>
                       <CustomTooltip title={item.address}>
                         <Box
-                          color={theme => theme.palette.secondary.main}
+                          color={(theme) => theme.palette.secondary.main}
                           fontWeight="bold"
                           fontFamily={"var(--font-family-text)"}
                         >
@@ -77,7 +83,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                     <Box
                       component={"span"}
                       whiteSpace="nowrap"
-                      color={theme => (type === "output" ? theme.palette.primary.main : theme.palette.error.main)}
+                      color={(theme) => (type === "output" ? theme.palette.primary.main : theme.palette.error.main)}
                       fontWeight="bold"
                       mr={1}
                     >
@@ -87,7 +93,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                   </Box>
                 </Box>
               </Box>
-              <Box justifyContent={"space-between"} alignItems="center" width={"100%"} display="flex">
+              <Box justifyContent={"space-between"} alignItems={"flex-start"} width={"100%"} display="flex">
                 <Box mr={3}>
                   {type === "input" && (
                     <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
@@ -97,7 +103,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                             component={"span"}
                             fontWeight="bold"
                             fontFamily={"var(--font-family-text)"}
-                            color={theme => theme.palette.secondary.main}
+                            color={(theme) => theme.palette.secondary.main}
                             mr={1}
                           >
                             {getShortHash(item.txHash)}
@@ -109,26 +115,19 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                   )}
                 </Box>
                 <Box display={"flex"} alignItems="center" justifyContent={"space-between"}>
-                  <Box overflow={"hidden"} display="flex" flexWrap={"wrap"} gap={1}>
+                  <Box overflow={"hidden"} display="flex" justifyContent={"flex-end"} flexWrap={"wrap"} gap={1}>
                     {(item?.tokens || []).map((token, idx) => (
-                      <Box
-                        key={idx}
-                        display="flex"
-                        justifyContent={"flex-start"}
-                        alignItems="center"
-                        flexWrap={"nowrap"}
-                        width="auto"
-                      >
+                      <WrapToken key={idx}>
                         <TokenLink to={details.token(token.assetId)}>
                           {token.assetName || getShortWallet(token.assetId)}
                         </TokenLink>
-                      </Box>
+                      </WrapToken>
                     ))}
                   </Box>
                 </Box>
               </Box>
             </Box>
-          </Box>
+          </ItemContent>
         </Item>
       ))}
     </Box>

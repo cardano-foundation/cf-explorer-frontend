@@ -1,7 +1,7 @@
 import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
 
 export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
-  height: `calc(100% - ${space}px)`,
+  // height: `calc(100% - ${space}px)`,
   background: theme.palette.secondary.dark,
   borderRadius: "10px",
   color: theme.palette.primary.contrastText,
@@ -9,26 +9,29 @@ export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
   flexDirection: "column",
   textAlign: "center",
   [theme.breakpoints.down("lg")]: {
-    flexDirection: "row",
+    flexDirection: "row"
   },
   [theme.breakpoints.down("sm")]: {
-    flexDirection: "column",
-  },
+    flexDirection: "row"
+  }
 }));
-
 export const BoxInfoItem = styled(Box)(({ theme }) => ({
   height: "100%",
   paddingTop: theme.spacing(2),
   width: "80%",
   margin: "0 auto",
   overflow: "hidden",
+  alignItems: "center",
   [theme.breakpoints.down("lg")]: {
+    alignItems: "flex-start",
     borderTop: "none",
     width: "100%",
-    minHeight: "200px",
-    height: "100%",
-    paddingTop: 0,
+    minHeight: "160px",
+    height: "100%"
   },
+  [theme.breakpoints.down("sm")]: {
+    minHeight: "150px"
+  }
 }));
 
 export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
@@ -38,24 +41,27 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   margin: "0 auto",
   borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
   overflow: "hidden",
+  alignItems: "center",
   [theme.breakpoints.down("lg")]: {
+    alignItems: "flex-start",
     borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
     height: "100%",
     borderBottom: "none",
     width: "100%",
-    minHeight: "200px",
-    paddingTop: 0,
+    minHeight: "160px"
   },
   [theme.breakpoints.down("sm")]: {
-    width: "80%",
-    borderRight: "none",
-    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
-  },
+    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    minHeight: "150px"
+  }
 }));
 
 export const Title = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   padding: `${theme.spacing(2)} 0`,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1rem"
+  }
 }));
 
 export const ValueInfo = styled(Box)(({ theme }) => ({
@@ -63,12 +69,20 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   fontSize: "2rem",
   margin: "0 auto",
   overflowWrap: "anywhere",
+  padding: "0 18px",
+  [theme.breakpoints.down("md")]: {
+    padding: "0 10px"
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.25rem",
+    padding: "0 10px"
+  }
 }));
 
 export const Wrapper = styled(Grid)(({ theme }) => ({
   borderRadius: 10,
   minHeight: "400px",
-  textAlign: "left",
+  textAlign: "left"
 }));
 
 export const ButtonTitle = styled("button")(({ theme }) => ({
@@ -81,26 +95,41 @@ export const ButtonTitle = styled("button")(({ theme }) => ({
   color: theme.palette.primary.contrastText,
   backgroundColor: theme.palette.primary.main,
   fontFamily: "var(--font-family-title)",
+  [theme.breakpoints.down("sm")]: {
+    width: "80px !important",
+    height: "28px !important",
+    padding: 0,
+    borderRadius: "5px"
+  }
 }));
 
 export const ChartBox = styled(Box)(({ theme }) => ({
-  paddingTop: theme.spacing(3),
+  paddingTop: theme.spacing(3)
 }));
 
 export const SkeletonUI = styled(Skeleton)(({ theme }) => ({
   paddingTop: theme.spacing(3),
   marginRight: theme.spacing(2),
-  borderRadius: 10,
+  borderRadius: 10
 }));
 
 export const Tabs = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up("md")]: {
-    textAlign: "end",
+    textAlign: "end"
   },
   [theme.breakpoints.down("md")]: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "flex-end"
   },
+  [theme.breakpoints.down("sm")]: {
+    "& button": {
+      width: "40px !important",
+      height: "28px !important",
+      padding: "0px !important",
+      minWidth: "auto",
+      borderRadius: "5px"
+    }
+  }
 }));
 
 export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
@@ -111,4 +140,14 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   fontWeight: "bold",
   backgroundColor: active ? theme.palette.primary.main : "none",
+  [theme.breakpoints.down("lg")]: {
+    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
+    backgroundColor: active ? `${theme.palette.primary.main} !important` : "none"
+  },
+  [theme.breakpoints.down("md")]: {
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText
+    }
+  }
 }));

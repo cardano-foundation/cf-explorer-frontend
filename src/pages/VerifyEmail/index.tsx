@@ -1,16 +1,21 @@
 import { Box, CircularProgress, FormGroup } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from "react-router-dom";
 import { routers } from "../../commons/routers";
 import { verifyActive } from "../../commons/utils/userRequest";
-import { Container, Label, WrapButton, WrapContent, WrapForm } from "./styles";
-
+import { Container, Label, Title, WrapButton, WrapContent, WrapForm } from "./styles";
+import { FailIcon, SuccessIcon } from "src/commons/resources";
 
 export default function VerifyEmail() {
   const history = useHistory();
   const path = useLocation();
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    document.title = "Verify Email | Cardano Explorer";
+  }, []);
+
   const handleVerify = async (code: string) => {
     try {
       const response = await verifyActive({ code });
@@ -20,44 +25,53 @@ export default function VerifyEmail() {
       setLoading(false);
       setSuccess(false);
     }
-  }
+  };
   useEffect(() => {
     const params = new URLSearchParams(path.search);
-    const code = params.get('code');
+    const code = params.get("code");
     if (code) {
       handleVerify(code);
+    } else {
+      history.push(routers.HOME);
     }
-  }, [path.search])
+  }, [path.search]);
   return (
     <Container>
       <WrapContent>
         <FormGroup>
-          {
-            loading ? (<WrapForm>
-              <Box textAlign={'center'}>
-                <CircularProgress sx={{
-                  color: 'grey',
-                }}/>
+          {loading ? (
+            <WrapForm>
+              <Box textAlign={"center"}>
+                <CircularProgress
+                  sx={{
+                    color: "grey"
+                  }}
+                />
               </Box>
-            </WrapForm>) :
-              success ?
-                (<WrapForm>
-                  <Label mb={3}>
-                    Success
-                  </Label>
-                  <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
-                    Sign In
-                  </WrapButton>
-                </WrapForm>)
-                : (
-                  <WrapForm>
-                    <Label>
-                      Something went wrong
-                    </Label>
-                  </WrapForm>
-                )}
+            </WrapForm>
+          ) : success ? (
+            <WrapForm alignItems={"center"}>
+              <SuccessIcon />
+              <Title mb={3}>You has successfully verified the account</Title>
+              <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
+                Sign In
+              </WrapButton>
+            </WrapForm>
+          ) : (
+            <WrapForm alignItems={"center"}>
+              <FailIcon />
+              <Title>Verify Failed</Title>
+              <Box>
+                <Label mb={1}>There's been an error in the verify process</Label>
+                <Label>This URL is either incorrect or has expired.</Label>
+              </Box>
+              <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.HOME)}>
+                Go to Dashboard
+              </WrapButton>
+            </WrapForm>
+          )}
         </FormGroup>
       </WrapContent>
-    </Container >
-  )
+    </Container>
+  );
 }

@@ -1,26 +1,42 @@
+import { Box, useTheme } from "@mui/material";
 import React from "react";
-import { Box } from "@mui/material";
-import sendImg from "../../../../commons/resources/images/sendImg.svg";
-import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
-import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
-import Alert from '@mui/material/Alert';
-import CopyButton from "../../../commons/CopyButton";
-import { details } from "../../../../commons/routers";
 import { Link } from "react-router-dom";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import { Icon, TokenLink } from "./styles";
+import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
+import sendImg from "../../../../commons/resources/images/sendImg.svg";
+import { details } from "../../../../commons/routers";
+import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
 import ADAicon from "../../../commons/ADAIcon";
+import CopyButton from "../../../commons/CopyButton";
+import CustomTooltip from "../../../commons/CustomTooltip";
+import DropdownTokens from "../../../commons/DropdownTokens";
+import { Icon } from "./styles";
+import { useScreen } from "../../../../commons/hooks/useScreen";
 
 const SummaryItems = ({
   item,
-  type,
+  type
 }: {
-  item: Transaction["summary"]["stakeAddressTxInputs"][number];
+  item: Transaction["summary"]["stakeAddress"][number];
   type?: "up" | "down";
 }) => {
+  const theme = useTheme();
+  const { isMobile, isGalaxyFoldSmall } = useScreen();
   return (
-    <Box textAlign={"left"} px={3} py={2} sx={{ background: theme => theme.palette.background.paper }} mb={2}>
-      <Box display={"flex"}>
+    <Box
+      display={"flex"}
+      flexDirection={isMobile ? "column" : "row"}
+      justifyContent={"space-between"}
+      sx={{
+        background: (theme) => theme.palette.background.paper,
+        px: 3,
+        py: 2,
+        mb: 1,
+        [theme.breakpoints.down("sm")]: {
+          px: 2
+        }
+      }}
+    >
+      <Box display={"flex"} justifyContent={"space-between"} sx={{ overflowX: "auto", overflowY: "hidden" }}>
         <Box width={50}>
           <Icon src={type === "down" ? receiveImg : sendImg} alt="send icon" />
         </Box>
@@ -37,7 +53,7 @@ const SummaryItems = ({
                   >
                     <CustomTooltip title={item.address}>
                       <Box
-                        color={theme => theme.palette.text.primary}
+                        color={(theme) => theme.palette.blue[800]}
                         fontWeight="bold"
                         fontFamily={"var(--font-family-text)"}
                       >
@@ -50,42 +66,41 @@ const SummaryItems = ({
               </Box>
             </Box>
           </Box>
-          <Box display={"flex"} alignItems="center" justifyContent={"space-between"} width="100%" mb={1}>
-            <Box display="flex" justifyContent={"space-between"} alignItems="center" pr={1}>
-              {type === "down" ? "ADA sent:" : "ADA received:"}{" "}
-            </Box>
-            <Box flex={1} display="flex" justifyContent={"space-between"} alignItems="center">
-              <Box>
+          <Box
+            display={"flex"}
+            flexDirection={isMobile ? "column" : "row"}
+            alignItems={isMobile ? "flex-start" : "center"}
+            justifyContent={"space-between"}
+            width="100%"
+            mb={1}
+          >
+            <Box display="flex" justifyContent={"space-between"} alignItems={"baseline"} pr={1} flexDirection={"row"}>
+              <Box pr={1} whiteSpace={"nowrap"}>
+                {type === "down" ? "ADA sent:" : "ADA received:"}{" "}
+              </Box>
+              <Box display="flex" justifyContent={"space-between"} alignItems="center">
                 <Box
                   component={"span"}
                   whiteSpace="nowrap"
-                  color={theme => (type === "up" ? theme.palette.success.main : theme.palette.error.main)}
+                  color={(theme) => (type === "up" ? theme.palette.success.main : theme.palette.error.main)}
                   fontWeight="bold"
                   mr={1}
                 >
-                  {type === "down" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
+                  {type === "down" ? `${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
                 </Box>
                 <ADAicon />
               </Box>
             </Box>
           </Box>
-          {item.tokens && item.tokens.length > 0 && (
-            <Box display={"flex"} alignItems="center" flexWrap={"wrap"}>
-              <Box component={"span"}> {type === "down" ? "Token sent:" : "Token received:"} </Box>
-
-              {item.tokens.map((token, idx) => (
-                <Box key={idx} width="auto" component={"span"}>
-                  <TokenLink to={details.token(token.assetId)}>
-                    {token.assetName || getShortWallet(token.assetId)}
-                    {`(${type === "down" ? "-" : "+"}${token.assetQuantity || ""})`}
-                  </TokenLink>
-                </Box>
-              ))}
-              {/* </Box> */}
-            </Box>
-          )}
         </Box>
       </Box>
+      {item.tokens && item.tokens.length > 0 ? (
+        <Box display={"flex"} alignItems={"center"} ml={isMobile ? "50px" : 0}>
+          <DropdownTokens tokens={item.tokens} type={type} />
+        </Box>
+      ) : (
+        <Box />
+      )}
     </Box>
   );
 };
@@ -94,25 +109,12 @@ interface SummaryProps {
   data: Transaction["summary"] | null;
 }
 const Summary: React.FC<SummaryProps> = ({ data }) => {
-  const txInputs = data?.stakeAddressTxInputs;
-  const txOutputs = data?.stakeAddressTxOutputs;
   return (
     <Box>
-      {!txInputs ? (
-        <Alert variant="outlined" severity="error" sx={{ marginBottom: 1, color: '#13152f !important' }}>
-          No data found on Input transactions!
-        </Alert>
-      ) : (
-        txInputs?.map((tx, key) => <SummaryItems key={key} item={tx} type="down" />)
-      )}
-
-      {!txOutputs ? (
-        <Alert variant="outlined" severity="error" sx={{ color: '#13152f !important' }}>
-          No data found on Output transactions!
-        </Alert>
-      ) : (
-        txOutputs?.map((tx, key) => <SummaryItems key={key} item={tx} type="up" />)
-      )}
+      {data?.stakeAddress?.map((tx, key) => {
+        const type = tx.value >= 0 ? "up" : "down";
+        return <SummaryItems key={key} item={tx} type={type} />;
+      })}
     </Box>
   );
 };
