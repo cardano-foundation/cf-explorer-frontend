@@ -13,7 +13,7 @@ import {
 } from "../../commons/utils/helper";
 import CustomTooltip from "../../components/commons/CustomTooltip";
 import Table, { Column } from "../../components/commons/Table";
-import { RegistrationContainer, StakeKey, StyledLink, StyledTab, StyledTabs, TabLabel, TimeDuration } from "./styles";
+import { RegistrationContainer, StakeKey, StyledLink, StyledTab, StyledTabs, TabLabel, TimeDuration, WrapHeader } from "./styles";
 import { API } from "../../commons/utils/api";
 import NoRecord from "../../components/commons/NoRecord";
 import { Box } from "@mui/material";
@@ -135,18 +135,19 @@ const RegistrationPools = () => {
 
   return (
     <RegistrationContainer>
-      <StyledTabs
-        value={poolType}
-        onChange={onChangeTab}
-        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}` }}
-        TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
-      >
-        <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
-        <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
-      </StyledTabs>
-      <TimeDuration>
-        <FormNowMessage time={fetchData.lastUpdated} />
-      </TimeDuration>
+      <WrapHeader>
+        <StyledTabs
+          value={poolType}
+          onChange={onChangeTab}
+          TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
+        >
+          <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
+          <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
+        </StyledTabs>
+        <TimeDuration>
+          <FormNowMessage time={fetchData.lastUpdated} />
+        </TimeDuration>
+      </WrapHeader>
       <Box>
         <Table
           {...fetchData}

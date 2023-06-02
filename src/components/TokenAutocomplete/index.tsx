@@ -224,6 +224,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             data={data || []}
             columns={columns}
             total={{ title: "Total", count: fetchData.total }}
+            maxHeight={"55vh"}
             pagination={{
               page,
               size,
