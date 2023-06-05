@@ -1,7 +1,6 @@
 import React from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
-
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -11,13 +10,12 @@ import {
   numberWithCommas
 } from "src/commons/utils/helper";
 import Table, { Column } from "src/components/commons/Table";
+import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
-
-import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
 
 const columns: Column<Transactions>[] = [
   {
@@ -62,7 +60,7 @@ const columns: Column<Transactions>[] = [
     title: "Addresses",
     key: "addresses",
     minWidth: "200px",
-    render(r) {
+    render(r, index) {
       return (
         <>
           <Flex>
