@@ -1,15 +1,16 @@
-import { CircularProgress, Stack } from "@mui/material";
-import moment from "moment";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { CircularProgress, Stack } from "@mui/material";
+import moment from "moment";
 
-import { useScreen } from "../../../../commons/hooks/useScreen";
-import useToast from "../../../../commons/hooks/useToast";
-import { details } from "../../../../commons/routers";
-import { generateStakeKeyReport, generateStakePoolReport } from "../../../../commons/utils/userRequest";
-import { getPoolEventType } from "../../../PoolLifecycle";
-import { getEventType } from "../../../StakekeySummary";
-import StyledModal from "../../../commons/StyledModal";
+import { useScreen } from "src/commons/hooks/useScreen";
+import useToast from "src/commons/hooks/useToast";
+import { details } from "src/commons/routers";
+import { generateStakeKeyReport, generateStakePoolReport } from "src/commons/utils/userRequest";
+import { getPoolEventType } from "src/components/PoolLifecycle";
+import { getEventType } from "src/components/StakekeySummary";
+import StyledModal from "src/components/commons/StyledModal";
+
 import { EVENTS_NAME, ReportType } from "./FilledInfoModal";
 import {
   Container,

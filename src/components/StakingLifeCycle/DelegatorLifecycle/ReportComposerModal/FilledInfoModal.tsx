@@ -1,14 +1,12 @@
-import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Stack } from "@mui/material";
 import { useMemo, useState } from "react";
-import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Box, FormControl, FormControlLabel, RadioGroup, Stack, Radio } from "@mui/material";
 
-import { useScreen } from "src/commons/hooks/useScreen";
-import { Container } from "src/components/Account/ActivityLogModal/styles";
-import { StyledTextField } from "src/components/TokenAutocomplete/styles";
 import StyledModal from "src/components/commons/StyledModal";
+import { useScreen } from "src/commons/hooks/useScreen";
+import CustomDatePicker, { IDateRange } from "src/components/CustomDatePicker";
 
-import CustomDatePicker, { IDateRange } from "../../../CustomDatePicker";
 import {
   ButtonEvent,
   ModalTitle,
@@ -17,6 +15,7 @@ import {
   StyledLabel,
   StyledSlider,
   StyledStack,
+  StyledTextField,
   SubText,
   TextError,
   TextRequired
@@ -252,7 +251,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       paddingY={isMobile ? "20px" : "30px"}
       contentStyle={{ overflowY: "unset" }}
     >
-      <Container>
+      <Box>
         <ModalTitle>
           <Box sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</Box>
         </ModalTitle>
@@ -261,12 +260,10 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
           <StyledTextField placeholder="Enter report name" value={reportName} onChange={onChangeReportName} />
         </StyledStack>
         {reportType === ReportType.StakeKeyReport && (
-          <Container>
-            <StyledStack>
-              <StyledLabel>Select a date range</StyledLabel>
-              <CustomDatePicker dateRange={dateRange} setDateRange={setDateRange} hideFuture />
-            </StyledStack>
-          </Container>
+          <StyledStack>
+            <StyledLabel>Select a date range</StyledLabel>
+            <CustomDatePicker dateRange={dateRange} setDateRange={setDateRange} hideFuture />
+          </StyledStack>
         )}
         {reportType === ReportType.PoolReport && (
           <Box sx={{ marginBottom: "20px" }}>
@@ -337,7 +334,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             Next
           </StyledButton>
         </StyledStack>
-      </Container>
+      </Box>
     </StyledModal>
   );
 };
