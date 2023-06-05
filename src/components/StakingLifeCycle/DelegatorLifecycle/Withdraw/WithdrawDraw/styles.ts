@@ -11,7 +11,9 @@ export const IconButtonBack = styled(IconButtonMui)(() => ({
 export const Info = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  marginLeft: theme.spacing(2)
+  [theme.breakpoints.up("md")]: {
+    marginLeft: theme.spacing(2)
+  }
 }));
 
 export const InfoText = styled(Box)(({ theme }) => ({
@@ -19,7 +21,11 @@ export const InfoText = styled(Box)(({ theme }) => ({
   alignItems: "center",
   marginLeft: theme.spacing(1),
   fontWeight: 600,
-  fontSize: "14px"
+  fontSize: "14px",
+  [theme.breakpoints.down("lg")]: {
+    marginLeft: 0,
+    whiteSpace: "nowrap"
+  }
 }));
 
 export const StepInfo = styled(Box)(({ theme }) => ({
