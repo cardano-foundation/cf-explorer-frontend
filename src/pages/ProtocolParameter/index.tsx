@@ -177,7 +177,7 @@ const ProtocolParameter: React.FC = () => {
               <Box pt={"30px"}>
                 <Box>
                   <Box textAlign={"left"} fontWeight={"bold"} fontSize={"1.25rem"}>
-                    Non-updatable Parameters
+                    Global Constants
                   </Box>
                   {loadingFixed && (
                     <Box
