@@ -2,18 +2,22 @@ import React, { createContext, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { HiArrowLongLeft } from "react-icons/hi2";
 
-import useFetch from "../../commons/hooks/useFetch";
-import { API } from "../../commons/utils/api";
-import NoRecord from "../../components/commons/NoRecord";
-import AddressOverview from "../../components/ContractDetail/AddressOverview";
-import ContractDetailContent from "../../components/ContractDetail/ContractDetailContent";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import NoRecord from "src/components/commons/NoRecord";
+import AddressOverview from "src/components/ContractDetail/AddressOverview";
+import ContractDetailContent from "src/components/ContractDetail/ContractDetailContent";
+
 import { BackButton, BackText, StyledContainer, WrapHeader } from "./styles";
-
-
 export const VerifyScriptContext = createContext({
   refreshScriptTab: () => null,
   refreshOverviewAddress: () => null
 });
+
+interface IAction {
+  type: string;
+  payload: any;
+}
 
 interface IAction {
   type: string;

@@ -1,7 +1,9 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import VerifyScript, { IVerifyScript } from "./index";
+
 import { render } from "src/test-utils";
+
+import VerifyScript, { IVerifyScript } from "./index";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),

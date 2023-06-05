@@ -1,8 +1,9 @@
-import React from "react"
 import { fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import VerifyScriptModal from "./VerifyScriptModal";
+
 import { render } from "src/test-utils";
+
+import VerifyScriptModal from "./VerifyScriptModal";
 
 describe("VerifyScriptModal", () => {
   const handleCloseModal = jest.fn();
