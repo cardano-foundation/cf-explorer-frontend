@@ -47,7 +47,7 @@ export const THeader = styled("th")`
   z-index: 2;
 `;
 
-export const TRow = styled("tr")<{ selected?: number }>`
+export const TRow = styled("tr") <{ selected?: number }>`
   width: 100%;
   padding: 10px 0;
   font-size: 14px;
@@ -61,7 +61,7 @@ export const TRow = styled("tr")<{ selected?: number }>`
   }
 `;
 
-export const TCol = styled("td")<{
+export const TCol = styled("td") <{
   width?: number | string;
   minWidth?: number | string;
   maxWidth?: number | string;
@@ -111,7 +111,7 @@ export const TotalNumber = styled("span")`
   font-weight: 500;
 `;
 
-export const WrappModalScrollBar = styled(Box)(({theme}) => `
+export const WrappModalScrollBar = styled(Box)(({ theme }) => `
   overflow-y: auto;
   max-height: 70vh;
   padding-right: 5px;
@@ -136,8 +136,8 @@ export const WrappModalScrollBar = styled(Box)(({theme}) => `
 `
 );
 
-export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number }>(
-  ({ maxHeight, height, theme }) => `
+export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number; loading?: number }>(
+  ({ maxHeight, height, theme, loading }) => `
   overflow-x: auto;
   height: ${height || "800px"};
   background: ${theme.palette.common.white};
@@ -145,7 +145,7 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number
   padding-top: 0;
   border-radius: ${theme.spacing(1.5)};
   border: 1px solid ${alpha(theme.palette.common.black, 0.1)};
-
+  ${loading ? "overflow-y: hidden;" : ""}
   ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
 
   ${theme.breakpoints.down("sm")} {
