@@ -220,10 +220,14 @@ const ProtocolParameterHistory = () => {
     } ${
       _.isEmpty(dateRangeFilter)
         ? ""
-        : `?endTime=${moment(dateRangeFilter.toDate).format("X")}&startTime=${moment(dateRangeFilter.fromDate).format(
-            "X"
-          )}`
-    }`
+        : `?endTime=${moment(dateRangeFilter.toDate).endOf("D").utc().format("X")}&startTime=${moment(
+            dateRangeFilter.fromDate
+          )
+            .startOf("D")
+            .utc()
+            .format("X")}`
+    }
+    `
   );
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
     [key: string]: any;
