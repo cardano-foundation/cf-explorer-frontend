@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
 
 import {
   timeIconUrl,
@@ -23,6 +24,8 @@ interface BlockOverviewProps {
 }
 
 const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdated }) => {
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+
   const renderConfirmationTag = () => {
     if (data && data.confirmation) {
       if (data.confirmation <= 2) {
@@ -132,7 +135,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       epoch={
         data && {
           no: data.epochNo,
-          slot: data.epochSlotNo
+          slot: currentEpoch?.no === data.epochNo ? data.epochSlotNo : MAX_SLOT_EPOCH
         }
       }
     />
