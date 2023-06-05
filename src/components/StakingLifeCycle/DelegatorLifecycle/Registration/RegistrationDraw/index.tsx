@@ -57,7 +57,7 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
         end: holdRef,
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
         startOffset: { 0: [-18, -50], sm: [-10, 0], lg: [0] },
-        endOffset: { 0: [8, -10], lg: [0] },
+        endOffset: { 0: [7.2, 1], lg: [0] },
         arrow: { 0: "top", lg: "left" },
         fold: { sm: "horizontal", lg: "none" }
       },

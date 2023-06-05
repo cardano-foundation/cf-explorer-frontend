@@ -20,7 +20,16 @@ import NoRecord from "src/components/commons/NoRecord";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { RegistrationContainer, StakeKey, StyledLink, StyledTab, StyledTabs, TabLabel, TimeDuration, WrapHeader } from "./styles";
+import {
+  RegistrationContainer,
+  StakeKey,
+  StyledLink,
+  StyledTab,
+  StyledTabs,
+  TabLabel,
+  TimeDuration,
+  WrapHeader
+} from "./styles";
 
 enum POOL_TYPE {
   REGISTRATION = "registration",

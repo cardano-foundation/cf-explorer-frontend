@@ -18,6 +18,7 @@ interface WalletAddress {
   ];
   stakeAddress: string;
   isContract: boolean;
+  verifiedContract: boolean;
 }
 
 interface WalletStake {
