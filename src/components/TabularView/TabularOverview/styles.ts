@@ -32,7 +32,7 @@ export const CardItem = styled(Card)<{ sidebar?: number }>(({ theme, sidebar }) 
     overflowX: "auto",
     "&::-webkit-scrollbar": {
       height: "0"
-    },
+    }
   }
 }));
 

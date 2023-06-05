@@ -1,6 +1,5 @@
-import { Box } from "@mui/material";
-import React from "react";
 import { useSelector } from "react-redux";
+import { Box } from "@mui/material";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
@@ -11,6 +10,7 @@ import CardAddress from "src/components/share/CardAddress";
 import Card from "src/components/commons/Card";
 import TokenAutocomplete from "src/components/TokenAutocomplete";
 import ADAicon from "src/components/commons/ADAIcon";
+import VerifyScript from "src/components/VerifyScript";
 
 import { GridContainer, GridItem, Pool, StyledAAmount } from "./styles";
 
@@ -80,7 +80,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
   ];
 
   return (
-    <Card title="Contract Detail">
+    <Card title={<VerifyScript verified={!!data?.verifiedContract} />}>
       <GridContainer container spacing={2}>
         <GridItem item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={3} height={"100%"}>

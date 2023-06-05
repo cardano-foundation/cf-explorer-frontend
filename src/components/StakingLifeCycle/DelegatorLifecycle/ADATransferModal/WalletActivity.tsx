@@ -24,20 +24,6 @@ const WalletActivity: React.FC = () => {
 
   const fetchData = useFetchList<WalletActivityIF>(API.STAKE_LIFECYCLE.WALLET_ACTIVITY(stakeId), { ...pageInfo, sort });
 
-  const trxType = {
-    SENT: "ADA sent from wallet",
-    RECEIVED: "ADA received",
-    FEE_PAID: "Transaction fee paid",
-    CERTIFICATE_FEE_PAID: "Certificate fee paid",
-    CERTIFICATE_DEPOSIT_PAID: "Certificate deposit paid",
-    CERTIFICATE_HOLD_PAID: "Certificate hold paid",
-    CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "Certificate hold deposit refunded",
-    REWARD_WITHDRAWN: "Reward withdrawn",
-    REWARD_WITHDRAWN_AND_CERTIFICATE_HOLD_PAID: "Reward withdrawn and certificate hold paid",
-    REWARD_WITHDRAWN_AND_CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "Reward withrawn and cetificate hod deposit refunded",
-    UNKNOWN: "Unknown"
-  };
-
   const columns: Column<WalletActivityIF>[] = [
     {
       title: "Amount ADA",
@@ -67,13 +53,6 @@ const WalletActivity: React.FC = () => {
       minWidth: "100px",
       render: (r) => <StyledLink to={details.transaction(r.txHash || "")}>{getShortHash(r.txHash)}</StyledLink>
     },
-
-    {
-      title: "Transaction Type",
-      key: "transactionCount",
-      minWidth: "100px",
-      render: (r) => <Box>{trxType[r.type]}</Box>
-    },
     {
       title: "Status",
       key: "status",
@@ -84,7 +63,7 @@ const WalletActivity: React.FC = () => {
   const maxHeightCalc = `calc(70vh - ${
     isTablet ? "290px" : isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"
   })`;
-  
+
   return (
     <Box>
       <UserInfo acitve="wallet" total={fetchData.total} reward={data?.totalStake || 0} stake={stakeId} />
