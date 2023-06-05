@@ -135,6 +135,7 @@ export const BlockNo = styled("small")`
   font-style: normal;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
+  color: black;
 `;
 
 export const WalletAddress = styled("small")`

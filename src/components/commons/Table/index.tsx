@@ -405,7 +405,7 @@ const Table: React.FC<TableProps> = ({
         {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord className={emptyClassName} />}
       </Wrapper>
       {showPagination && (
-        <FooterTable total={total} clearSelection={clearSelection} pagination={pagination} loading={loading || false} />
+        <FooterTable total={total} clearSelection={clearSelection} pagination={pagination} loading={!!loading} />
       )}
     </Box>
   );

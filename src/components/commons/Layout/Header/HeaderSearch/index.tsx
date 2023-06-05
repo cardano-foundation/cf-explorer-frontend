@@ -112,9 +112,6 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     if (!search) {
       setShowOption(false);
     }
-    // if (filter !== "all") {
-    //   setShowOption(false);
-    // }
   }, [search, filter]);
 
   const currentPath = history.location.pathname.split("/")[1];

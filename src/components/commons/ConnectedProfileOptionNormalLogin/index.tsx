@@ -38,7 +38,7 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
         username: localStorage.getItem("username") || ""
       });
     } catch (error) {
-      //To Do
+      console.log(error);
     } finally {
       removeAuthInfo();
       setBookmark([]);

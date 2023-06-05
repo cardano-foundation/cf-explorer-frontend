@@ -117,7 +117,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, params, setParams, s
             ...pageInfo,
             onChange: (page, size) => setPageInfo((pre) => ({ ...pre, page: page - 1, size }))
           }}
-          loading={loading || false}
+          loading={loading}
         />
       )}
     </StyledContainer>

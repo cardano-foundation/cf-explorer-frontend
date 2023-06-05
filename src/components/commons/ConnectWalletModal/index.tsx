@@ -48,7 +48,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
         }, please switch to  ${NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()}!`
       );
     } else if (error.name === "WalletExtensionNotFoundError") {
-      //To Do
+      console.log(error);
     } else {
       toast.error("Something went wrong!");
     }
@@ -61,17 +61,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
   };
   const WrapContainer: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return isModal ? (
-      <StyledModal
-        open
-        title="Connect to a wallet"
-        handleCloseModal={
-          walletConnecting
-            ? () => {
-                //To Do
-              }
-            : handleClose
-        }
-      >
+      <StyledModal open title="Connect to a wallet" handleCloseModal={walletConnecting ? () => null : handleClose}>
         <WrapContent>{children}</WrapContent>
       </StyledModal>
     ) : (

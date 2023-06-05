@@ -172,8 +172,6 @@ export { ReactComponent as NextIcon } from "./icons/Staking/nextIcon.svg";
 export { ReactComponent as PreviousIcon } from "./icons/Staking/previousIcon.svg";
 export { ReactComponent as OperatorRewardIcon } from "./icons/Staking/OperatorRewardIcon.svg";
 export { ReactComponent as PoolUpdateIcon } from "./icons/Staking/poolUpdateIcon.svg";
-export { ReactComponent as SearchDelegatorIcon } from "./icons/Staking/searchDelegator.svg";
-export { ReactComponent as SearchSPOIcon } from "./icons/Staking/searchSPO.svg";
 export { ReactComponent as TransactionIcon } from "./icons/transactionIcon.svg";
 export { ReactComponent as Wallet } from "./images/wallet-blue.svg";
 export { ReactComponent as WalletGreenIcon } from "./icons/wallet-green.svg";

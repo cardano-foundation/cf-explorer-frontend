@@ -64,7 +64,6 @@ const StakekeySummary = () => {
         link.click();
       })
       .catch((e) => {
-        //To Do
         console.log(e);
       });
   };

@@ -31,8 +31,6 @@ import PrivateNotes from "./pages/PrivateNotes";
 import ProtocolParameter from "./pages/ProtocolParameter";
 import DelegatorLifecycle from "./pages/DelegatorLifecycle";
 import SPOLifecycle from "./pages/SPOLifecycle";
-import SPOSearch from "./pages/SPOSearch";
-import DelegatorSearch from "./pages/DelegatorSearch";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -80,8 +78,6 @@ const Routes: React.FC = () => {
       <Route path={routers.SEARCH} exact component={SearchResult} />
       <Route path={routers.DELEGATOR_LIFECYCLE} exact component={DelegatorLifecycle} />
       <Route path={routers.SPO_LIFECYCLE} exact component={SPOLifecycle} />
-      <Route path={routers.SPO_SEARCH} exact component={SPOSearch} />
-      <Route path={routers.DELEGATOR_SEARCH} exact component={DelegatorSearch} />
       <Route path={routers.STAKING_LIFECYCLE_SEARCH} exact component={StakingLifeCycleSearch} />
       <Route path={routers.ACCOUNT}>
         <AccountLayout>

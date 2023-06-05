@@ -47,7 +47,6 @@ interface CardProps extends Omit<BoxProps, "title"> {
 
 const Card: React.FC<CardProps> = ({ title, marginTitle, children, underline = false, extra }) => {
   return (
-    // <CardContainer {...props}>
     <CardContainer>
       <Header>
         {title ? (

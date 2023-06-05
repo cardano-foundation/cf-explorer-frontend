@@ -110,7 +110,7 @@ export const PoolName = styled(Link)`
 
 export const ProgressContainer = styled("div")`
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
 `;
 export const ProgressTitle = styled("div")`
