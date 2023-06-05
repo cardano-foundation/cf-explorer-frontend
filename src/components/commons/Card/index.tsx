@@ -19,6 +19,7 @@ const Title = styled("h2")<{ underline: number; marginTitle?: string }>`
   text-align: left;
   padding-bottom: 8px;
   position: relative;
+  width: 100%;
   ${(props) => (props.underline ? `font-size: 1.25rem;` : "")};
   margin: ${({ marginTitle }) => (marginTitle ? marginTitle : "unset")};
   &::after {

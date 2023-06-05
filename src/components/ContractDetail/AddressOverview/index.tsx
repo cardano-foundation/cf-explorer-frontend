@@ -1,6 +1,5 @@
-import { Box } from "@mui/material";
-import React from "react";
 import { useSelector } from "react-redux";
+import { Box } from "@mui/material";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";

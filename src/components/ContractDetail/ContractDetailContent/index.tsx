@@ -1,15 +1,15 @@
-import React from "react";
 import { TabContext, TabPanel } from "@mui/lab";
 import { alpha, Box, Tab, useTheme } from "@mui/material";
 import { useHistory, useParams } from "react-router-dom";
+import React from "react";
 
 import { ReactComponent as UtxoIcon } from "src/commons/resources/images/utxoIcon.svg";
 import { details } from "src/commons/routers";
 import { ScriptIcon } from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
 
-import ScriptTab from "./ScriptTab";
 import TokenTransaction from "./TokenTransaction";
+import ScriptTab from "./ScriptTab";
 import { TabListStyled, TabTitle } from "./styles";
 
 const ContractDetailContent: React.FC = () => {

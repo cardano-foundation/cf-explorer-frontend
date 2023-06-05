@@ -1,5 +1,5 @@
 import React, { createContext, useEffect } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { HiArrowLongLeft } from "react-icons/hi2";
 
 import useFetch from "src/commons/hooks/useFetch";
@@ -13,6 +13,11 @@ export const VerifyScriptContext = createContext({
   refreshScriptTab: () => null,
   refreshOverviewAddress: () => null
 });
+
+interface IAction {
+  type: string;
+  payload: any;
+}
 
 interface IAction {
   type: string;
@@ -37,11 +42,7 @@ const reducer = (state: any, action: IAction) => {
 const ContractDetail: React.FC = () => {
   const { address } = useParams<{ address: string }>();
   const history = useHistory();
-  const { state } = useLocation<{ data?: WalletAddress }>();
-  const { data, loading, initialized, error, refresh } = useFetch<WalletAddress>(
-    state?.data ? "" : `${API.ADDRESS.DETAIL}/${address}`,
-    state?.data
-  );
+  const { data, loading, initialized, error, refresh } = useFetch<WalletAddress>(`${API.ADDRESS.DETAIL}/${address}`);
   const [stateContext, dispatch] = React.useReducer(reducer, {});
 
   useEffect(() => {
