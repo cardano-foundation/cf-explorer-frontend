@@ -203,14 +203,14 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           home && !isMobile
             ? "Search transactions, address, blocks, epochs, pools..."
             : isStakingLifecycle && !isMobile
-            ? "Search Stake key, Pool ID or Pool Name"
+            ? "Search Stake key, Pools"
             : "Search ..."
         }
         title={
           home && !isMobile
             ? "Search transactions, address, blocks, epochs, pools..."
             : isStakingLifecycle && !isMobile
-            ? "Search Stake key, Pool ID or Pool Name"
+            ? "Search Stake key, Pools"
             : "Search ..."
         }
         onChange={handleChangeSearch}
