@@ -167,12 +167,6 @@ export const getEpochSlotNo = (data: IDataEpoch) => {
   return moment().diff(moment(data.startTime).toISOString(), "seconds");
 };
 
-export function formatHash(hash: string): string {
-  const prefix = hash.slice(0, 6);
-  const suffix = hash.slice(-5);
-  return `${prefix}...${suffix}`;
-}
-
 export const truncateCustom = (text: string, first = 4, last = 8) => {
   return `${text.slice(0, first)}...${text.slice(-last)}`;
 };

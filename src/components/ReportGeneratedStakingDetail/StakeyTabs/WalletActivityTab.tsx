@@ -13,20 +13,6 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import { ADAValueLabel } from "src/components/StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
 
-const trxType = {
-  SENT: "ADA sent from wallet",
-  RECEIVED: "ADA received",
-  FEE_PAID: "Transaction fee paid",
-  CERTIFICATE_FEE_PAID: "Certificate fee paid",
-  CERTIFICATE_DEPOSIT_PAID: "Certificate deposit paid",
-  CERTIFICATE_HOLD_PAID: "Certificate hold paid",
-  CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "Certificate hold deposit refunded",
-  REWARD_WITHDRAWN: "Reward withdrawn",
-  REWARD_WITHDRAWN_AND_CERTIFICATE_HOLD_PAID: "Reward withdrawn and certificate hold paid",
-  REWARD_WITHDRAWN_AND_CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "Reward withrawn and cetificate hod deposit refunded",
-  UNKNOWN: "Unknown"
-};
-
 const WalletActitityTab = () => {
   const [sort, setSort] = useState<string>("");
   const { reportId = "" } = useParams<{ reportId: string }>();
@@ -75,13 +61,6 @@ const WalletActitityTab = () => {
       key: "transactionHash",
       minWidth: "100px",
       render: (r) => <StyledLink to={details.transaction(r.txHash || "")}>{getShortHash(r.txHash)}</StyledLink>
-    },
-
-    {
-      title: "Transaction Type",
-      key: "transactionCount",
-      minWidth: "100px",
-      render: (r) => <Box>{trxType[r.type]}</Box>
     },
     {
       title: "Status",
