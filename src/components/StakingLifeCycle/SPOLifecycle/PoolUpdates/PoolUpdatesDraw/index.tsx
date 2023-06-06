@@ -62,7 +62,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
         startPosition: { 0: ["right", "bottom"], sm: ["right", "middle"], lg: ["center", "middle"] },
         end: feeRef,
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-        startOffset: { 0: [-1.5, -50], sm: [-10, 0], lg: [0] },
+        startOffset: { 0: [-1.5, -55], sm: [-10, 0], lg: [0] },
         endOffset: { 0: [8, 0], lg: [0] },
         arrow: { 0: "top", lg: "left" },
         fold: { sm: "horizontal", lg: "none" }
@@ -70,10 +70,10 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
       {
         start: feeRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        end: cadarnoSystemRef, 
+        end: cadarnoSystemRef,
         endPosition: { 0: ["right", "top"], sm: ["right", "middle"], lg: ["left", "middle"] },
         startOffset: { 0: [8, -15], lg: [0] },
-        endOffset: { 0: [-18, 45], sm: [-10], lg: [10] },
+        endOffset: { 0: [-18, 49], sm: [-10], lg: [10] },
         fold: { sm: "vertical", lg: "none" },
         arrow: { 0: "top", sm: "right", lg: "left" }
       },
@@ -82,7 +82,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
         startPosition: { 0: ["left", "bottom"], sm: ["left", "middle"], lg: ["center", "middle"] },
         end: registrationRef,
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-        startOffset: { 0: [3, -50], sm: [10, 0], lg: [0] },
+        startOffset: { 0: [3, -55], sm: [10, 0], lg: [0] },
         fold: { sm: "horizontal", lg: "vertical" }
       },
       {
@@ -90,7 +90,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
         end: cadarnoSystemRef,
         endPosition: { 0: ["left", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
-        endOffset: { 0: [18, 45], sm: [10], lg: [0, 3] },
+        endOffset: { 0: [18, 49], sm: [10], lg: [0, 3] },
         fold: { sm: "vertical", lg: "horizontal" },
         arrow: { 0: "top", sm: "left", lg: "bottom" }
       }

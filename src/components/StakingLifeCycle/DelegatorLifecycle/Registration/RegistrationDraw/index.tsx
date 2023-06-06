@@ -67,7 +67,7 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
         end: cadarnoSystemRef,
         endPosition: { 0: ["right", "top"], sm: ["right", "middle"], lg: ["left", "middle"] },
         startOffset: { 0: [8, -15], lg: [0] },
-        endOffset: { 0: [-18, 45], sm: [-10], lg: [10] },
+        endOffset: { 0: [-18, 51], sm: [-10], lg: [10] },
         fold: { sm: "vertical", lg: "none" },
         arrow: { 0: "top", sm: "right", lg: "left" }
       },
@@ -84,7 +84,7 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
         end: cadarnoSystemRef,
         endPosition: { 0: ["left", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
-        endOffset: { 0: [18, 45], sm: [10], lg: [0, 3] },
+        endOffset: { 0: [18, 51], sm: [10], lg: [0, 3] },
         fold: { sm: "vertical", lg: "horizontal" },
         arrow: { 0: "top", sm: "left", lg: "bottom" }
       }
