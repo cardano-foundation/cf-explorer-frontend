@@ -96,13 +96,7 @@ export const CardValue = styled(Typography)(({ theme }) => ({
 export const CardValueDelegating = styled(CardValue)(({ theme }) => ({
   width: "calc(100% - 79px)",
   [theme.breakpoints.down("lg")]: {
-    width: "calc(100% - 100px)"
-  },
-  [theme.breakpoints.down("md")]: {
-    width: "calc(100% - 130px)"
-  },
-  [theme.breakpoints.down("sm")]: {
-    width: "calc(100% - 60px)"
+    width: "calc(100% - 10px)"
   }
 }));
 export const BoxStyled = styled(CardValue)(({ theme }) => ({
@@ -113,8 +107,7 @@ export const BoxStyled = styled(CardValue)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     fontSize: 20,
     lineHeight: "23px",
-    whiteSpace: "wrap",
-    wordBreak: "break-all"
+    whiteSpace: "nowrap"
   }
 }));
 export const StyledBoxDelegating = styled(Link)(() => ({
