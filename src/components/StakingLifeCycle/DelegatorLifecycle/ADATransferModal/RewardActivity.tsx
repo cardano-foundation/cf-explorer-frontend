@@ -69,7 +69,7 @@ const RewardActivity: React.FC = () => {
   const maxHeightCalc = `calc(70vh - ${
     isTablet ? "290px" : isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"
   })`;
-  
+
   return (
     <Box>
       <UserInfo acitve="reward" total={fetchData.total} reward={data?.rewardAvailable || 0} stake={stakeId} />

@@ -9,7 +9,6 @@ import AddressOverview from "../../components/ContractDetail/AddressOverview";
 import ContractDetailContent from "../../components/ContractDetail/ContractDetailContent";
 import { BackButton, BackText, StyledContainer, WrapHeader } from "./styles";
 
-
 export const VerifyScriptContext = createContext({
   refreshScriptTab: () => null,
   refreshOverviewAddress: () => null
