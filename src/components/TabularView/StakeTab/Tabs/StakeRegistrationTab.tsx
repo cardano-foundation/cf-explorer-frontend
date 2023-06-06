@@ -72,10 +72,10 @@ const StakeRegistrationTab = () => {
       minWidth: "120px",
       render: (r) => (
         <Box>
-          <AdaValue limit={6} value={new BigNumber(r.deposit).plus(new BigNumber(r.fee)).toString()} />
+          <AdaValue value={new BigNumber(r.deposit).plus(new BigNumber(r.fee)).toString()} />
           <TableSubTitle>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-              <AdaValue limit={1} value={r.deposit} color={theme.palette.grey[400]} gap="3px" fontSize="12px" />
+              <AdaValue value={r.deposit} color={theme.palette.grey[400]} gap="3px" fontSize="12px" />
               <Box mx={1}>/</Box>
               <AdaValue value={r.fee} color={theme.palette.grey[400]} gap="3px" fontSize="12px" />
             </Box>
