@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import { formatADAFull, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
 import { details } from "../../../../commons/routers";
-import { Link } from "react-router-dom";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { Header, Img, Item, ItemBox, ItemContent, TokenLink, WrapToken, Wrapper } from "./style";
@@ -33,7 +33,7 @@ const Collaterals: React.FC<CollateralProps> = ({ data }) => {
 export default Collaterals;
 
 const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "input" | "output" }) => {
-  const { isTablet, isMobile } = useScreen();
+  const { isTablet } = useScreen();
   return (
     <Box>
       {data?.map((item) => (

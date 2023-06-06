@@ -1,10 +1,20 @@
-import { Box, Skeleton } from "@mui/material";
 import { useState } from "react";
+import { Box, Skeleton } from "@mui/material";
+import { TabContext, TabList } from "@mui/lab";
 import { useHistory } from "react-router-dom";
+
+import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
+import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import CopyButton from "src/components/commons/CopyButton";
+import { details } from "src/commons/routers";
+import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { CertUpdate, ChangeIcon, PoolCert } from "src/commons/resources";
+
 import {
   CardBox,
   ChangeBox,
-  FakeLink,
+  VRFKeyText,
   HistoryList,
   Item,
   ItemList,
@@ -13,7 +23,6 @@ import {
   MinimumAdaLogoIcon,
   MinimumText,
   StyledAdaLogoIcon,
-  StyledEmptyIcon,
   StyledLink,
   StyledModal,
   StyledTab,
@@ -26,14 +35,6 @@ import {
   UpdateList,
   Value
 } from "./styles";
-import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
-import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import CopyButton from "src/components/commons/CopyButton";
-import { details } from "src/commons/routers";
-import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
-import { CertUpdate, ChangeIcon, EmptyIcon, PoolCert } from "src/commons/resources";
-import { TabContext, TabList } from "@mui/lab";
 
 interface CertificateItemType {
   label: React.ReactNode;
@@ -158,7 +159,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       content: (
         <LineData>
           <CustomTooltip title={data?.vrfKey}>
-            <FakeLink>{getShortHash(data?.vrfKey || "")}</FakeLink>
+            <VRFKeyText>{getShortHash(data?.vrfKey || "")}</VRFKeyText>
           </CustomTooltip>
           <CopyButton text={data?.vrfKey || ""} />
         </LineData>
@@ -196,7 +197,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       content: (
         <>
           <Value>{data?.margin ? numberWithCommas(data?.margin * 100, 2) : 0}%</Value>{" "}
-          {data?.previousMargin !== null && (
+          {data?.previousMargin !== null && data?.previousMargin !== data?.margin && (
             <SupperMinimumText>
               Previous: {data?.previousMargin ? numberWithCommas(data?.previousMargin * 100, 2) : 0} %
             </SupperMinimumText>
@@ -213,7 +214,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
             {formatADAFull(data?.pledge)}
             <StyledAdaLogoIcon />
           </Value>
-          {data?.previousPledge !== null && (
+          {data?.previousPledge !== null && data?.previousPledge !== data?.pledge && (
             <MinimumText>
               Previous: {formatADAFull(data?.previousPledge || 0)} <MinimumAdaLogoIcon />
             </MinimumText>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Option } from "../commons/Filter";
-import CustomIcon from "../commons/CustomIcon";
+import { Box, Button, ClickAwayListener, IconButton, MenuList } from "@mui/material";
+import moment from "moment";
+
 import {
   ArrowFromBottomIcon,
   ArrowFromTopIcon,
@@ -8,10 +9,10 @@ import {
   FilterIC,
   ResetIcon,
   SearchIcon
-} from "../../commons/resources";
+} from "src/commons/resources";
 
-import { Box, Button, ClickAwayListener, IconButton, MenuList } from "@mui/material";
-
+import CustomIcon from "../commons/CustomIcon";
+import { Option } from "../commons/Filter";
 import {
   FilterButton,
   FilterContainer,
@@ -24,7 +25,6 @@ import { StyledInput } from "../share/styled";
 import DateRangeModal, { DATETIME_PARTTEN } from "./DateRangeModal";
 import { AdditionContainer } from "./styles";
 import { StyledListItemIcon } from "../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
-import moment from "moment";
 
 interface StakingOption extends Option {
   addition?: React.FC<any>;
@@ -87,7 +87,7 @@ const StackingFilter: React.FC<StackingFilterProps> = ({
     setIsOpenSelectRange(false);
   };
   const onFilterButtonClick = () => setOpen((pre) => !pre);
-  const onOptionClick = (value: string, option: Option) => {
+  const onOptionClick = (value: string) => {
     switch (value) {
       case "latest": {
         onFilterValueChange?.({ sort: `${sortKey},DESC` });
@@ -142,7 +142,7 @@ const StackingFilter: React.FC<StackingFilterProps> = ({
                 <FilterMenuItem
                   active={+(option.value === selected)}
                   key={option.value}
-                  onClick={() => onOptionClick(option.value, option)}
+                  onClick={() => onOptionClick(option.value)}
                 >
                   <StyledListItemIcon>{option.icon}</StyledListItemIcon>
                   <FilterListItemText>{option.label}</FilterListItemText>

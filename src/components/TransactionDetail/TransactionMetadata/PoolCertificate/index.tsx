@@ -1,12 +1,14 @@
 import React from "react";
-import { CardHeader, TextLabel, TextValue } from "./styles";
-import StakeKeyBox from "./StakeKeyBox";
 import { Box, Grid, useTheme } from "@mui/material";
+
 import CopyButton from "src/components/commons/CopyButton";
-import { getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { getShortWallet } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Link from "src/components/commons/Link";
+
+import StakeKeyBox from "./StakeKeyBox";
+import { CardHeader, TextLabel, TextValue } from "./styles";
 
 interface IProps {
   data: Transaction["poolCertificates"] | null;

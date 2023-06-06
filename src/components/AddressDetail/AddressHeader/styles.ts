@@ -1,5 +1,4 @@
 import { alpha, TextField, styled, Box } from "@mui/material";
-
 import { Link } from "react-router-dom";
 
 export const TitleDetail = styled(Box)`

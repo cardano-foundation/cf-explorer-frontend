@@ -1,6 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { CgClose } from "react-icons/cg";
-import { DelegationHistoryMainIcon, FileEditIcon, LightningIcon } from "../../../commons/resources";
+import { BiChevronRight } from "react-icons/bi";
+import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
+import { useTheme } from "@emotion/react";
+
+import { DelegationHistoryMainIcon, FileEditIcon, LightningIcon } from "src/commons/resources";
+import useFetch from "src/commons/hooks/useFetch";
+import { details } from "src/commons/routers";
+import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { ReactComponent as StakeKeyHistoryIcon } from "src/commons/resources/icons/stateKeyHistory.svg";
+import { ReactComponent as TransactionIcon } from "src/commons/resources/icons/exchangeArrow.svg";
+import ModalAllAddress from "src/components/StakeDetail/ModalAllAddress";
+import { API } from "src/commons/utils/api";
+
+import ViewMoreButton from "../ViewMoreButton";
+import CustomTooltip from "../CustomTooltip";
+import CopyButton from "../CopyButton";
+import ViewAllButton from "../ViewAllButton";
+import ADAicon from "../ADAIcon";
 import {
   CloseButton,
   ViewDetailContainer,
@@ -34,22 +52,6 @@ import {
   ViewDetailHeader,
   WrapDetailInfo
 } from "./styles";
-import useFetch from "../../../commons/hooks/useFetch";
-import { BiChevronRight } from "react-icons/bi";
-import { details } from "../../../commons/routers";
-import { formatADAFull, getShortWallet } from "../../../commons/utils/helper";
-import ViewMoreButton from "../ViewMoreButton";
-import { ReactComponent as StakeKeyHistoryIcon } from "../../../commons/resources/icons/stateKeyHistory.svg";
-import { ReactComponent as TransactionIcon } from "../../../commons/resources/icons/exchangeArrow.svg";
-import CustomTooltip from "../CustomTooltip";
-import CopyButton from "../CopyButton";
-import { Link } from "react-router-dom";
-import { Box } from "@mui/material";
-import ModalAllAddress from "../../StakeDetail/ModalAllAddress";
-import { API } from "../../../commons/utils/api";
-import ViewAllButton from "../ViewAllButton";
-import ADAicon from "../ADAIcon";
-import { useTheme } from "@emotion/react";
 
 type DetailViewStakeKeyProps = {
   stakeId: string;

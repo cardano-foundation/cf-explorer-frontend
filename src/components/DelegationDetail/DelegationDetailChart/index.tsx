@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Grid, Skeleton, styled, Box, useTheme } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
+
 import { formatADAFull, formatPrice } from "src/commons/utils/helper";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+
 import {
   AnalyticsTitle,
   BoxInfo,
@@ -12,14 +15,11 @@ import {
   BoxInfoItemRight,
   Button,
   ChartContainer,
-  GridRight,
   GridWrapper,
-  Item,
   StyledContainer,
   Title,
   Value
 } from "./styles";
-import { API } from "src/commons/utils/api";
 
 interface DelegationDetailChartProps {
   poolId: string;

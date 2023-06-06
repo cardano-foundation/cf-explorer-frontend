@@ -1,16 +1,21 @@
-import DetailHeader from "../../commons/DetailHeader";
-import timeIcon from "../../../commons/resources/icons/time.svg";
-import exchageIcon from "../../../commons/resources/icons/Union.svg";
-import exchageAltIcon from "../../../commons/resources/icons/exchangeArrow.svg";
-import outputIcon from "../../../commons/resources/icons/outputIcon.svg";
-import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";
-import txConfirm from "../../../commons/resources/icons/txConfirm.svg";
-import slotIcon from "../../../commons/resources/icons/slot.svg";
 import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
+
+import {
+  timeIconUrl,
+  exchageIconUrl,
+  exchageAltIconUrl,
+  outputIconUrl,
+  cubeIconUrl,
+  txConfirmUrl,
+  slotIconUrl
+} from "src/commons/resources";
+import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import ADAicon from "src/components/commons/ADAIcon";
+import DetailHeader from "src/components/commons/DetailHeader";
+
 import { ConfirmStatus, TitleCard, WrapConfirmation } from "./styles";
-import { formatADAFull, formatDateTimeLocal } from "../../../commons/utils/helper";
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
-import ADAicon from "../../commons/ADAIcon";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
@@ -19,6 +24,8 @@ interface BlockOverviewProps {
 }
 
 const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdated }) => {
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+
   const renderConfirmationTag = () => {
     if (data && data.confirmation) {
       if (data.confirmation <= 2) {
@@ -33,7 +40,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
 
   const listOverview = [
     {
-      icon: timeIcon,
+      icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Created At </TitleCard>
@@ -42,7 +49,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       value: formatDateTimeLocal(data?.time || "")
     },
     {
-      icon: txConfirm,
+      icon: txConfirmUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Confirmation</TitleCard>
@@ -56,7 +63,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       )
     },
     {
-      icon: exchageIcon,
+      icon: exchageIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction</TitleCard>
@@ -65,7 +72,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       value: data?.txCount || 0
     },
     {
-      icon: exchageAltIcon,
+      icon: exchageAltIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction Fees </TitleCard>
@@ -78,7 +85,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       )
     },
     {
-      icon: outputIcon,
+      icon: outputIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Total Output in ADA</TitleCard>
@@ -91,7 +98,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       )
     },
     {
-      icon: cubeIcon,
+      icon: cubeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Block</TitleCard>
@@ -100,7 +107,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       value: data?.blockNo || 0
     },
     {
-      icon: slotIcon,
+      icon: slotIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Slot</TitleCard>
@@ -128,7 +135,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       epoch={
         data && {
           no: data.epochNo,
-          slot: data.epochSlotNo
+          slot: currentEpoch?.no === data.epochNo ? data.epochSlotNo : MAX_SLOT_EPOCH
         }
       }
     />

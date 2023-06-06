@@ -1,8 +1,10 @@
-import { cleanup, screen } from "@testing-library/react";
 import Router from "react-router";
-import SPOLifecycle from ".";
+import { cleanup, screen } from "@testing-library/react";
+
 import { render } from "src/test-utils";
 import { ListTabResponseSPO } from "src/pages/SPOLifecycle";
+
+import SPOLifecycle from ".";
 
 const tabConfig: ListTabResponseSPO = {
   isRegistration: true,

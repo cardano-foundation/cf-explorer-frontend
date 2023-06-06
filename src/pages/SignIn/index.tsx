@@ -1,16 +1,18 @@
-import { Box, Checkbox, FormControlLabel, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
 import { useEffect, useReducer, useState } from "react";
+import { Box, Checkbox, FormControlLabel, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
+
 import useAuth from "src/commons/hooks/useAuth";
-import useToast from "../../commons/hooks/useToast";
-import { HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
-import { routers } from "../../commons/routers";
-import { NETWORK, NETWORK_TYPES } from "../../commons/utils/constants";
-import { removeAuthInfo } from "../../commons/utils/helper";
-import { getInfo, signIn } from "../../commons/utils/userRequest";
-import ConnectWallet from "../../components/commons/Layout/Header/ConnectWallet";
-import { setUserData } from "../../stores/user";
+import useToast from "src/commons/hooks/useToast";
+import { HideIcon, LockIcon, ShowIcon } from "src/commons/resources";
+import { routers } from "src/commons/routers";
+import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
+import { removeAuthInfo } from "src/commons/utils/helper";
+import { getInfo, signIn } from "src/commons/utils/userRequest";
+import ConnectWallet from "src/components/commons/Layout/Header/ConnectWallet";
+import { setUserData } from "src/stores/user";
+
 import {
   AlertCustom,
   CloseButton,

@@ -1,10 +1,11 @@
-import { Box } from "@mui/material";
 import { useState } from "react";
-
+import { Box } from "@mui/material";
 import { useParams } from "react-router-dom";
-import useFetch from "../../../../commons/hooks/useFetch";
-import { API } from "../../../../commons/utils/api";
-import ReceivedRewardsModal from "../../../ReceivedRewardsModal";
+
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import ReceivedRewardsModal from "src/components/ReceivedRewardsModal";
+
 import RewarsDistributionDraw from "./RewardsDistributionDraw";
 
 const RewardsDistribution = () => {

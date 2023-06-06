@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
+import { useCopyToClipboard } from "react-use";
 
 import contractImg from "../../../../commons/resources/images/trx-contract.png";
 import { getShortWallet } from "../../../../commons/utils/helper";
 import CopyButton from "../../../commons/CopyButton";
-import { useCopyToClipboard } from "react-use";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import { CopyButtonMui, Img, Title, WrapAddress, Wrapper } from "./styles";
 

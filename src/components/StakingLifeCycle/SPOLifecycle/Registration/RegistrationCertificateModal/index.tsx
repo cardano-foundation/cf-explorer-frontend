@@ -1,7 +1,7 @@
 import { Box, Skeleton } from "@mui/material";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { FakeLink, Item, ItemList, Label, LineData, StyledAdaLogoIcon, StyledLink, StyledModal, Value } from "./styles";
+
 import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
 import { API } from "src/commons/utils/api";
@@ -10,6 +10,8 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import CopyButton from "src/components/commons/CopyButton";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+
+import { VRFKeyText, Item, ItemList, Label, LineData, StyledAdaLogoIcon, StyledLink, StyledModal, Value } from "./styles";
 
 interface CertificateItemType {
   label: React.ReactNode;
@@ -60,7 +62,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
       content: (
         <LineData>
           <CustomTooltip title={data?.vrfKey}>
-            <FakeLink>{getShortHash(data?.vrfKey || "")}</FakeLink>
+            <VRFKeyText>{getShortHash(data?.vrfKey || "")}</VRFKeyText>
           </CustomTooltip>
           <CopyButton text={data?.vrfKey || ""} />
         </LineData>

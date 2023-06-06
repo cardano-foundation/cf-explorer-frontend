@@ -1,10 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { ThemeProvider } from "@mui/material/styles";
+import { useLocation } from "react-router-dom";
+
 import CustomLayout from "./components/commons/Layout";
 import { RootState } from "./stores/types";
-import { ThemeProvider } from "@mui/material/styles";
 import themes from "./themes";
-import { useLocation } from "react-router-dom";
 import { SystemLoader } from "./components/SystemLoader";
 import { routers } from "./commons/routers";
 import ToastContainer from "./components/commons/Layout/ToastContainer";

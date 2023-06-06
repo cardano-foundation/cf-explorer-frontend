@@ -1,6 +1,6 @@
 import { alpha, Box, styled } from "@mui/material";
 
-import { CONFIRMATION_STATUS } from "../../../commons/utils/constants";
+import { CONFIRMATION_STATUS } from "src/commons/utils/constants";
 
 export const Flex = styled("div")`
   display: flex;
@@ -26,7 +26,7 @@ export const TitleCard = styled(Box)(({ theme }) => ({
   fontSize: "0.875rem"
 }));
 
-export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status?: keyof typeof CONFIRMATION_STATUS }>`
   color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.HIGH:

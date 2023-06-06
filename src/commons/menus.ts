@@ -1,10 +1,10 @@
-import { FaDiscord, FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
+
 import {
   BlockChainMenuIcon,
   BrowseIcon,
   DelegatePoolMenuIcon,
-  MediumIcon,
   ResourcesIcon,
   StakingLifecycleIcon,
   ProtocolParameterIcon
@@ -65,7 +65,6 @@ export const menus: Menu[] = [
 
 export const socials: Social[] = [
   { href: "https://www.linkedin.com/company/cardano-foundation/", title: "LinkedIn", icon: FaLinkedinIn },
-  { href: "#", title: "Discord", icon: FaDiscord },
   { href: "https://t.me/CardanoAnnouncements", title: "Telegram", icon: FaTelegramPlane },
   { href: "https://twitter.com/Cardano_CF", title: "Twitter", icon: FaTwitter },
   { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube", icon: FaYoutube }

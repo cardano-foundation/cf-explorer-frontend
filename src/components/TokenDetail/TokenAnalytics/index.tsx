@@ -4,7 +4,10 @@ import Highcharts from "highcharts";
 import moment from "moment";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { HighchartsReact } from "highcharts-react-official";
+
 import { useScreen } from "src/commons/hooks/useScreen";
+
 import useFetch from "../../../commons/hooks/useFetch";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { API } from "../../../commons/utils/api";
@@ -24,7 +27,6 @@ import {
   ValueInfo,
   Wrapper
 } from "./styles";
-import { HighchartsReact } from "highcharts-react-official";
 
 type AnalyticsData = { date: string; value: number };
 
@@ -40,9 +42,7 @@ const AddressAnalytics: React.FC = () => {
   const { tokenId } = useParams<{ tokenId: string }>();
   const { isMobile } = useScreen();
   const theme = useTheme();
-  // Change path API
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
-  // const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${tokenId}`);
   const dataChart = data?.map((i) => {
     const value = BigNumber(i.value);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);

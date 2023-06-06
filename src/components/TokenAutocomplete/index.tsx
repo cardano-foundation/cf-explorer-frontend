@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Autocomplete, Box, Button, Modal } from "@mui/material";
 import { BiChevronDown } from "react-icons/bi";
+import { debounce } from "lodash";
 
 import { CloseIcon, EmptyIcon, HeaderSearchIcon } from "../../commons/resources";
 import { getShortWallet, numberWithCommas } from "../../commons/utils/helper";
@@ -22,15 +23,12 @@ import { API } from "../../commons/utils/api";
 import Table, { Column } from "../commons/Table";
 import { AssetName } from "../../pages/Token/styles";
 import { details } from "../../commons/routers";
-import { debounce } from "lodash";
 import { WrappModalScrollBar } from "../commons/Table/styles";
-import { useTheme } from "@mui/material";
 
 const TokenAutocomplete = ({ address }: { address: string }) => {
   const [openModalToken, setOpenModalToken] = useState(false);
   const [selected, setSelected] = useState("");
   const [search, setSearch] = useState("");
-  const theme = useTheme();
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
   const { data, loading, total } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
     page: 0,
@@ -224,6 +222,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             data={data || []}
             columns={columns}
             total={{ title: "Total", count: fetchData.total }}
+            maxHeight={"55vh"}
             pagination={{
               page,
               size,

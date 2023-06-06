@@ -1,7 +1,9 @@
 import { screen } from "@testing-library/react";
-import RecentDelegations from ".";
 import Router from "react-router";
+
 import { render } from "src/test-utils";
+
+import RecentDelegations from ".";
 
 describe("RecentDelegations", () => {
   it("should render RecentDelegations component", async () => {

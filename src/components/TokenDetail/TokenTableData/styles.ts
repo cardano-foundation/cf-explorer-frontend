@@ -23,7 +23,7 @@ export const StyledSelect = styled(Select)`
   }
 `;
 
-export const OptionSelect = styled("option")(({ theme }) => ({
+export const OptionSelect = styled("option")(() => ({
   padding: "6px 0",
   textAlign: "center",
   height: "40px"

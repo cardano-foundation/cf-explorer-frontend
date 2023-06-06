@@ -1,6 +1,6 @@
 import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
 
-export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
+export const BoxInfo = styled(Box)<{ space: number }>(({ theme }) => ({
   background: theme.palette.secondary.dark,
   borderRadius: "10px",
   color: theme.palette.primary.contrastText,
@@ -100,7 +100,7 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const Wrapper = styled(Grid)(({ theme }) => ({
+export const Wrapper = styled(Grid)(() => ({
   borderRadius: 10,
   minHeight: "400px",
   textAlign: "left"
@@ -108,7 +108,7 @@ export const Wrapper = styled(Grid)(({ theme }) => ({
 
 export const ButtonTitle = styled("button")(({ theme }) => ({
   border: "none",
-  borderRadius: 10,
+  borderRadius: 5,
   padding: "8px 30px",
   fontWeight: "bold",
   fontSize: "1rem",

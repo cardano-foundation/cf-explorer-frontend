@@ -1,7 +1,7 @@
 import { styled, Box, Container, alpha, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const Wrapper = styled(Container)(({ theme }) => ({}));
+export const Wrapper = styled(Container)(() => ({}));
 export const ContentBox = styled(Box)(({ theme }) => ({
   display: "flex",
   background: theme.palette.background.paper,
@@ -112,8 +112,8 @@ export const StyledButtonClose = styled(Button)(({ theme }) => ({
 }));
 
 export const ModalTitle = styled("h3")`
-font - family: var(--font - family - title);
-margin - top: 0px;
+  font-family: var(--font-family-title);
+  margin-top: 0px;
 `;
 
 export const MissingItemWrapper = styled(Box)(({ theme }) => ({

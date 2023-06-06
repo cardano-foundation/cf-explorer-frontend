@@ -1,17 +1,18 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import feeImg from "src/commons/resources/images/dola.svg";
+
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortHash, getShortWallet } from "src/commons/utils/helper";
-import { Header, Img, Item, ItemContent, ItemFooter, WrapInfo, WrapUTXOs } from "./styles";
 import { useScreen } from "src/commons/hooks/useScreen";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import CopyButton from "src/components/commons/CopyButton";
 import DropdownTokens from "src/components/commons/DropdownTokens";
+
+import { Header, Img, Item, ItemContent, ItemFooter, WrapInfo, WrapUTXOs } from "./styles";
 
 interface Props {
   data: Transaction["utxOs"] | null;
@@ -31,8 +32,7 @@ export default UTXO;
 
 const Card = ({
   type,
-  items,
-  fee
+  items
 }: {
   type: "up" | "down";
   items?: Required<Transaction>["utxOs"]["inputs"];
@@ -44,7 +44,7 @@ const Card = ({
       return prv + item.value;
     }, 0);
 
-  const { isTablet, isMobile } = useScreen();
+  const { isMobile } = useScreen();
   return (
     <Box textAlign={"left"} mb={1} sx={{ background: (theme) => theme.palette.background.paper }}>
       <Header fontWeight="bold">

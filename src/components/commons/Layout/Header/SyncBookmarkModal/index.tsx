@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
-import StyledModal from "../../../StyledModal";
-import { Description, ModalTitle, StyledButton } from "./styles";
-import { StyledDarkLoadingButton } from "../../../../share/styled";
-
 import { useLocalStorage } from "react-use";
-import { addListBookmark, getAllBookmarks } from "../../../../../commons/utils/userRequest";
-import { NETWORK, NETWORK_TYPES } from "../../../../../commons/utils/constants";
+
+import { StyledDarkLoadingButton } from "src/components/share/styled";
+import { addListBookmark, getAllBookmarks } from "src/commons/utils/userRequest";
+import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
+import StyledModal from "src/components/commons/StyledModal";
+
+import { Description, ModalTitle, StyledButton } from "./styles";
 
 interface SyncBookmarkModalProps {
   open: boolean;

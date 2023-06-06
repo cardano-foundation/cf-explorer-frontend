@@ -1,22 +1,24 @@
 import React from "react";
 import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
+import { useHistory, useParams } from "react-router-dom";
+
 import {
   DelegationHistoryIcon,
   StakeKeyHistoryIcon,
-  WithdrawHistoryIcon,
+  WithdrawalHistoryIcon,
   InstantaneousHistoryIcon,
   TransactionIcon
-} from "../../../commons/resources";
-import { StyledTabList, TitleTab, WrapperTabList } from "./styles";
-import { useHistory, useParams } from "react-router-dom";
+} from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import DelegationHistoryTab from "./Tabs/DelegationHistoryTab";
 import StakeHistoryTab from "./Tabs/StakeHistoryTab";
 import WithdrawalHistoryTab from "./Tabs/WithdrawalHistoryTab";
 import InstantaneousTab from "./Tabs/InstantaneousTab";
 import TransactionTab from "./Tabs/TransactionTab";
-import { details } from "../../../commons/routers";
-import { useScreen } from "../../../commons/hooks/useScreen";
+import { StyledTabList, TitleTab, WrapperTabList } from "./styles";
 
 const StakeTab = () => {
   const { stakeId, tabActive = "delegation" } = useParams<{ stakeId: string; tabActive?: TabStakeDetail }>();
@@ -47,7 +49,7 @@ const StakeTab = () => {
       component: <StakeHistoryTab isMobile={isMobile} />
     },
     {
-      icon: WithdrawHistoryIcon,
+      icon: WithdrawalHistoryIcon,
       label: "Withdrawal History",
       key: "withdrawal",
       component: <WithdrawalHistoryTab />
@@ -74,6 +76,7 @@ const StakeTab = () => {
             onChange={handleChange}
             TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
             variant="scrollable"
+            scrollButtons={false}
           >
             {tabs.map(({ icon: Icon, key, label }) => (
               <Tab

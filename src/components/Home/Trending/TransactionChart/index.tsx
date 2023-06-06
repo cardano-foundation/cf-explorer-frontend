@@ -1,12 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import useFetch from "../../../../commons/hooks/useFetch";
 import { Box, Grid, alpha, useTheme } from "@mui/material";
-import { API } from "../../../../commons/utils/api";
-import { BoxInfo, ColorChart, InfoItem, Skeleton, Tab, Tabs, Title, TransactionContainer, WrapHeader } from "./styles";
-import { numberWithCommas } from "../../../../commons/utils/helper";
+
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import { numberWithCommas } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
+
+import { BoxInfo, ColorChart, InfoItem, Skeleton, Tab, Tabs, Title, TransactionContainer, WrapHeader } from "./styles";
 
 interface TransactionChartIF {
   date: string;

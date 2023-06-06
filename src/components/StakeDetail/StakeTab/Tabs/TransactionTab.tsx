@@ -1,26 +1,28 @@
 import { Box } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import useFetchList from "../../../../commons/hooks/useFetchList";
-import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
-import sendImg from "../../../../commons/resources/images/sendImg.svg";
-import { details } from "../../../../commons/routers";
-import { API } from "../../../../commons/utils/api";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import receiveImg from "src/commons/resources/images/receiveImg.svg";
+import sendImg from "src/commons/resources/images/sendImg.svg";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
 import {
   formatADAFull,
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
   numberWithCommas
-} from "../../../../commons/utils/helper";
-import ADAicon from "../../../commons/ADAIcon";
-import Card from "../../../commons/Card";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import DropdownTokens from "../../../commons/DropdownTokens";
-import Table, { Column } from "../../../commons/Table";
-import { SmallText } from "../../../share/styled";
-import { Img, StyledContainer, StyledLink } from "./styles";
+} from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
+import Card from "src/components/commons/Card";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import DropdownTokens from "src/components/commons/DropdownTokens";
+import Table, { Column } from "src/components/commons/Table";
+import { SmallText } from "src/components/share/styled";
 import { TransferIcon } from "src/commons/resources";
+
+import { Img, StyledContainer, StyledLink } from "./styles";
 
 const TransactionTab = () => {
   const { stakeId } = useParams<{ stakeId: string }>();
@@ -116,7 +118,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: "Fee",
+      title: "Fees",
       key: "fee",
       minWidth: 120,
       render: (r) => (

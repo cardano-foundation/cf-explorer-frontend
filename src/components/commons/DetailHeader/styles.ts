@@ -1,9 +1,11 @@
 import { alpha, Box, Grid, MenuItem, Select, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
+
+import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "src/commons/utils/constants";
+import breakpoints from "src/themes/breakpoints";
+
 import CopyButton from "../CopyButton";
-import breakpoints from "../../../themes/breakpoints";
 
 export const HeaderDetailContainer = styled(Box)`
   text-align: left;
@@ -210,7 +212,7 @@ export const BlockDefault = styled("span")`
   margin-top: 0.25rem;
 `;
 
-export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status?: keyof typeof CONFIRMATION_STATUS }>`
   color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.HIGH:
@@ -461,7 +463,7 @@ export const StyledSelect = styled(Select)(({ theme }) => ({
   }
 }));
 
-export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+export const StyledMenuItem = styled(MenuItem)(() => ({
   height: 40,
   display: "flex",
   alignItems: "center",

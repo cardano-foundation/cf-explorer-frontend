@@ -1,6 +1,8 @@
 import { Box, BoxProps, IconButton, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import BigNumber from "bignumber.js";
+
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { EyeIcon } from "../../../../commons/resources";
 import { details } from "../../../../commons/routers";
@@ -14,13 +16,12 @@ import { StyledLink, TableSubTitle } from "../styles";
 
 interface IAdaValue extends BoxProps {
   value: number | string;
-  limit?: number;
 }
 
-export const AdaValue = ({ value, gap = "8px", fontSize, color, limit, ...props }: IAdaValue) => {
+export const AdaValue = ({ value, gap = "8px", fontSize, color, ...props }: IAdaValue) => {
   return (
     <Box {...props} color={color} display="flex" alignItems="center" gap={gap} fontSize={fontSize}>
-      {formatADAFull(value, limit)}
+      {formatADAFull(value)}
       <ADAicon style={{ color }} fontSize={fontSize} />
     </Box>
   );
@@ -70,10 +71,10 @@ const StakeRegistrationTab = () => {
       minWidth: "120px",
       render: (r) => (
         <Box>
-          <AdaValue limit={5} value={r.deposit + r.fee} />
+          <AdaValue value={new BigNumber(r.deposit).plus(new BigNumber(r.fee)).toString()} />
           <TableSubTitle>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-              <AdaValue limit={1} value={r.deposit} color={theme.palette.grey[400]} gap="3px" fontSize="12px" />
+              <AdaValue value={r.deposit} color={theme.palette.grey[400]} gap="3px" fontSize="12px" />
               <Box mx={1}>/</Box>
               <AdaValue value={r.fee} color={theme.palette.grey[400]} gap="3px" fontSize="12px" />
             </Box>
@@ -85,7 +86,7 @@ const StakeRegistrationTab = () => {
       title: "Certificate",
       key: "stakeId",
       minWidth: "120px",
-      render: (r) => (
+      render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
           <EyeIcon style={{ transform: "scale(.8)" }} />
         </IconButton>

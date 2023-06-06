@@ -1,10 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
-import { Headline, StyledTabList, TabHead, TitleTab } from "./styles";
+
+import { StyledTabList, TabHead, TitleTab } from "./styles";
 import CustomIcon from "../../commons/CustomIcon";
-import { useScreen } from "../../../commons/hooks/useScreen";
-import { StakingDetailContext } from "src/components/ReportGeneratedStakingDetail";
 
 export interface StakeTabItem {
   icon: React.FC;
@@ -21,7 +20,6 @@ export interface StackTabProps {
 const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration", onChangeTab }) => {
   const [tabActive, setTabActive] = useState<string>(initTab);
   const theme = useTheme();
-  const { isMobile } = useScreen();
 
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
     setTabActive(tab);
@@ -48,7 +46,7 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration", onC
                   <TabHead active={+(key === tabActive)} display={"flex"} alignItems="center">
                     <CustomIcon
                       icon={Icon}
-                      fill={key !== "poolSize" ? "currentColor" : "none"}
+                      fill={key === "poolSize" ? "none" : "currentColor"}
                       stroke={key === "poolSize" ? "currentColor" : "none"}
                       width={25}
                     />

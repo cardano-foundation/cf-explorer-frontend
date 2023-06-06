@@ -3,6 +3,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+
 import { RootState } from "./types";
 import userReducer, { setStoreUser } from "./user";
 import userReducer2, { setStoreUser2 } from "./user2";

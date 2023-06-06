@@ -1,21 +1,22 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import useFetchList from "../../../../../commons/hooks/useFetchList";
-import { EyeIcon } from "../../../../../commons/resources";
-import { details } from "../../../../../commons/routers";
-import { API } from "../../../../../commons/utils/api";
-import { formatDateTimeLocal, getShortHash } from "../../../../../commons/utils/helper";
-import { AdaValue } from "../../../../TabularView/StakeTab/Tabs/StakeRegistrationTab";
-import CustomTooltip from "../../../../commons/CustomTooltip";
-import Table, { Column } from "../../../../commons/Table";
-import { StyledLink } from "../../../../share/styled";
+import { useParams } from "react-router-dom";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { EyeIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import { AdaValue } from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table, { Column } from "src/components/commons/Table";
+import { StyledLink } from "src/components/share/styled";
+
 import { PoolUpdateModal } from "../../PoolUpdates/PoolUpdateModal";
 import { ClickAbleLink } from "./styles";
 
 const PoolUpdateTab = () => {
   const { poolId = "" } = useParams<{ poolId: string }>();
-  const history = useHistory();
   const [selectedValue, setSelectedValue] = useState<PoolUpdateDetail | null>(null);
   const [params, setParams] = useState({
     page: 0,
@@ -50,7 +51,7 @@ const PoolUpdateTab = () => {
       key: "fee",
       title: "Fees",
       render(data) {
-        return <AdaValue limit={5} value={data.fee} />;
+        return <AdaValue value={data.fee} />;
       }
     },
     {

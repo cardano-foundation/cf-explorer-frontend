@@ -1,13 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  AccordionContainer,
-  AccordionSummary,
-  ApplyFilterButton,
-  BackButton,
-  BackText,
-  ButtonFilter,
-  FilterContainer
-} from "./styles";
+import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import _ from "lodash";
 import {
@@ -25,6 +17,8 @@ import { useList, useUpdateEffect } from "react-use";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import moment from "moment";
+import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
+import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
 
 import Card from "src/components/commons/Card";
 import Table from "src/components/commons/Table";
@@ -37,11 +31,18 @@ import ParseScriptModal from "src/components/ParseScriptModal";
 import { DateRangeIcon, EmptyIcon, FilterIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
 import DateRangeModal from "src/components/FilterReport/DateRangeModal";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
-import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
-import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
-import { Link } from "react-router-dom";
 import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+
+import {
+  AccordionContainer,
+  AccordionSummary,
+  ApplyFilterButton,
+  BackButton,
+  BackText,
+  ButtonFilter,
+  FilterContainer
+} from "./styles";
 
 const ProtocolParameter: React.FC = () => {
   const [fixedColumnKeys, { push: pushFixedColumnKeys }] = useList<string>([]);
@@ -70,7 +71,7 @@ const ProtocolParameter: React.FC = () => {
 
   const theme = useTheme();
 
-  const columnsMap = Object.keys(PROTOCOL_TYPE).map((k, idx) => ({
+  const columnsMap = Object.keys(PROTOCOL_TYPE).map((k) => ({
     title: k,
     key: k,
     render: (r: TProtocolParam) => {
@@ -176,7 +177,7 @@ const ProtocolParameter: React.FC = () => {
               <Box pt={"30px"}>
                 <Box>
                   <Box textAlign={"left"} fontWeight={"bold"} fontSize={"1.25rem"}>
-                    Non-updatable Parameters
+                    Global Constants
                   </Box>
                   {loadingFixed && (
                     <Box
@@ -211,7 +212,11 @@ export default ProtocolParameter;
 const ProtocolParameterHistory = () => {
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
-  const { data: dataHistory, loading } = useFetch<ProtocolHistory>(
+  const {
+    data: dataHistory,
+    loading,
+    initialized
+  } = useFetch<ProtocolHistory>(
     `${API.PROTOCOL_PARAMETER.HISTORY}/${
       filterParams.length === 29 || filterParams.length === 0
         ? "ALL"
@@ -219,11 +224,17 @@ const ProtocolParameterHistory = () => {
     } ${
       _.isEmpty(dateRangeFilter)
         ? ""
-        : `?endTime=${moment(dateRangeFilter.toDate).format("X")}&startTime=${moment(dateRangeFilter.fromDate).format(
-            "X"
-          )}`
-    }`
+        : `?endTime=${moment(dateRangeFilter.toDate).endOf("D").utc().format("X")}&startTime=${moment(
+            dateRangeFilter.fromDate
+          )
+            .startOf("D")
+            .utc()
+            .format("X")}`
+    }
+    `
   );
+
+  console.log("initialized", initialized);
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
     [key: string]: any;
   }>([]);
@@ -395,28 +406,33 @@ const ProtocolParameterHistory = () => {
           </Box>
         }
       >
-        {columnsTable?.length === 1 && !loading && (
-          <Box textAlign={"center"}>
-            <Box component={"img"} src={EmptyIcon} mt={3} />
-            <Box
-              component={Button}
-              width={"200px"}
-              textTransform={"capitalize"}
-              onClick={() => {
-                setResetFilter(true);
-                setShowFiter(false);
-              }}
-              mx={"auto"}
-              display={"flex"}
-              alignItems={"center"}
-              mt={3}
-              mb={2}
-              color={`#108AEF !important`}
-            >
-              <Box mr={1}>Reset</Box>
-              <ResetIcon />
+        {initialized ? (
+          columnsTable?.length === 1 &&
+          !loading && (
+            <Box textAlign={"center"}>
+              <Box component={"img"} src={EmptyIcon} mt={3} />
+              <Box
+                component={Button}
+                width={"200px"}
+                textTransform={"capitalize"}
+                onClick={() => {
+                  setResetFilter(true);
+                  setShowFiter(false);
+                }}
+                mx={"auto"}
+                display={"flex"}
+                alignItems={"center"}
+                mt={3}
+                mb={2}
+                color={`#108AEF !important`}
+              >
+                <Box mr={1}>Reset</Box>
+                <ResetIcon />
+              </Box>
             </Box>
-          </Box>
+          )
+        ) : (
+          <></>
         )}
         {columnsTable?.length > 1 && <TableStyled columns={columnsTable} data={dataTable} loading={loading} />}
       </Card>

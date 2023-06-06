@@ -1,4 +1,5 @@
 import { Typography, Box, styled, IconButton as IconButtonMui } from "@mui/material";
+
 import ADAicon from "src/components/commons/ADAIcon";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
@@ -56,14 +57,15 @@ export const FeeBox = styled(Box)(({ theme }) => ({
 export const IconButton = styled(IconButtonMui)(({ theme }) => ({
   background: theme.palette.grey[100]
 }));
-export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
+export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0
 }));
 
 export const Info = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  marginLeft: theme.spacing(2)
+  marginLeft: theme.spacing(2),
+  width: "max-content"
 }));
 export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",

@@ -1,9 +1,10 @@
+import React, { useEffect, useMemo, useState } from "react";
 import { Box, Button } from "@mui/material";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import moment from "moment";
-import React, { useEffect, useMemo, useState } from "react";
+
 import StyledModal from "../commons/StyledModal";
 import { DatePickerFooter, DateRangePickerContainer } from "./styles";
 
@@ -45,6 +46,7 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
   const isValid = useMemo(() => {
     return !(value?.fromDate && value?.toDate) || moment(value?.fromDate).isAfter(moment(value?.toDate));
   }, [value]);
+  
   return (
     <StyledModal open={open} handleCloseModal={() => onClose?.()}>
       <LocalizationProvider dateAdapter={AdapterMoment}>

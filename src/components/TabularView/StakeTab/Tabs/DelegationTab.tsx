@@ -1,6 +1,11 @@
 import { Box, IconButton } from "@mui/material";
-import { StyledLink, WrapWalletLabel, WrapperDelegationTab } from "../styles";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useContext, useState } from "react";
+
+import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
+import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+
+import { StyledLink, WrapWalletLabel, WrapperDelegationTab } from "../styles";
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
 import Table, { Column } from "../../../commons/Table";
@@ -8,13 +13,10 @@ import CustomTooltip from "../../../commons/CustomTooltip";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
 import { AdaValue } from "./StakeRegistrationTab";
-import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
-import { useContext, useState } from "react";
 import StackingFilter, { FilterParams } from "../../../StackingFilter";
 import { EyeIcon } from "../../../../commons/resources";
 import { DelegationCertificateModal } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation";
-import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 
 const DelegationTab = () => {
   const detailData = useContext(DelegatorDetailContext);
@@ -60,7 +62,7 @@ const DelegationTab = () => {
       title: "Fees",
       key: "block",
       minWidth: "120px",
-      render: (r) => <AdaValue limit={5} value={r.fee} />
+      render: (r) => <AdaValue value={r.fee} />
     },
     {
       title: "Certificate",
@@ -91,7 +93,7 @@ const DelegationTab = () => {
           <StackingFilter
             filterValue={params}
             onFilterValueChange={(params) => {
-              setParams((pre) => ({
+              setParams(() => ({
                 fromDate: undefined,
                 sort: undefined,
                 toDate: undefined,

@@ -1,11 +1,21 @@
 import { useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
+import { useSelector } from "react-redux";
 
-import { getShortWallet } from "../../commons/utils/helper";
-import DelegatorLifecycleComponent from "../../components/StakingLifeCycle/DelegatorLifecycle";
-import Tabular from "../../components/StakingLifeCycle/DelegatorLifecycle/Tabular";
-import CopyButton from "../../components/commons/CopyButton";
+import { getShortWallet } from "src/commons/utils/helper";
+import DelegatorLifecycleComponent from "src/components/StakingLifeCycle/DelegatorLifecycle";
+import Tabular from "src/components/StakingLifeCycle/DelegatorLifecycle/Tabular";
+import CopyButton from "src/components/commons/CopyButton";
+import { details } from "src/commons/routers";
+import ReportComposerModal from "src/components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import useAuth from "src/commons/hooks/useAuth";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import NoRecord from "src/components/commons/NoRecord";
+import { ChartMode, TableMode } from "src/commons/resources";
 
 import {
   BoxContainerStyled,
@@ -22,18 +32,6 @@ import {
   StyledContainer,
   Label
 } from "./styles";
-
-import { ReactComponent as ChartMode } from "../../commons/resources/icons/Staking/ChartMode.svg";
-import { ReactComponent as TableMode } from "../../commons/resources/icons/Staking/TableMode.svg";
-import { details } from "../../commons/routers";
-import ReportComposerModal from "../../components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
-import CustomTooltip from "../../components/commons/CustomTooltip";
-import useAuth from "src/commons/hooks/useAuth";
-import useFetch from "src/commons/hooks/useFetch";
-import { API } from "src/commons/utils/api";
-import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
-import NoRecord from "src/components/commons/NoRecord";
-import { useSelector } from "react-redux";
 
 interface Params {
   stakeId: string;

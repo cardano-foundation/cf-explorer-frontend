@@ -1,8 +1,10 @@
 import { useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
+
 import CardanoSystem from "src/components/commons/CardanoSystem";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
+
 import { DelegationDetail } from "../index";
 import { DrawContainer, FeeBox, MiddleGroup, StyledAdaHolder, StyledCertificateShape } from "./styles";
 

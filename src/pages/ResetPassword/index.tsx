@@ -1,9 +1,11 @@
 import { Box, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
 import { useEffect, useReducer, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { FailIcon, HideIcon, LockIcon, ShowIcon } from "../../commons/resources";
-import { routers } from "../../commons/routers";
-import { resetPassword } from "../../commons/utils/userRequest";
+
+import { FailIcon, HideIcon, LockIcon, ShowIcon } from "src/commons/resources";
+import { routers } from "src/commons/routers";
+import { resetPassword } from "src/commons/utils/userRequest";
+
 import {
   Container,
   FormHelperTextCustom,

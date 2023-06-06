@@ -1,11 +1,15 @@
 import React, { FormEvent, useState, useEffect } from "react";
 import { Backdrop, Box, SelectChangeEvent } from "@mui/material";
-import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
-import { HeaderSearchIcon } from "../../../../../commons/resources";
-import { details, routers } from "../../../../../commons/routers";
 import { stringify } from "qs";
 import { BiChevronDown } from "react-icons/bi";
 import { GoChevronRight } from "react-icons/go";
+import { useSelector } from "react-redux";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+
+import { HeaderSearchIcon } from "src/commons/resources";
+import { details, routers } from "src/commons/routers";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import {
   Form,
   Image,
@@ -17,8 +21,6 @@ import {
   SubmitButton,
   ValueOption
 } from "./style";
-import { useSelector } from "react-redux";
-import { useScreen } from "../../../../../commons/hooks/useScreen";
 
 interface FormValues {
   filter: FilterParams;
@@ -110,9 +112,6 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     if (!search) {
       setShowOption(false);
     }
-    // if (filter !== "all") {
-    //   setShowOption(false);
-    // }
   }, [search, filter]);
 
   const currentPath = history.location.pathname.split("/")[1];
@@ -204,14 +203,14 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           home && !isMobile
             ? "Search transactions, address, blocks, epochs, pools..."
             : isStakingLifecycle && !isMobile
-            ? "Search Stake key, Pool ID or Pool Name"
+            ? "Search Stake key, Pools"
             : "Search ..."
         }
         title={
           home && !isMobile
             ? "Search transactions, address, blocks, epochs, pools..."
             : isStakingLifecycle && !isMobile
-            ? "Search Stake key, Pool ID or Pool Name"
+            ? "Search Stake key, Pools"
             : "Search ..."
         }
         onChange={handleChangeSearch}

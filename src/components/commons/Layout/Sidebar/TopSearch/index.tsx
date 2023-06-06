@@ -1,6 +1,7 @@
-import { MainContent, WrapTopSearch } from "./styles";
-import HeaderSearch from "../../Header/HeaderSearch";
 import { useState } from "react";
+
+import HeaderSearch from "../../Header/HeaderSearch";
+import { MainContent, WrapTopSearch } from "./styles";
 
 type TProps = {
   open: boolean;

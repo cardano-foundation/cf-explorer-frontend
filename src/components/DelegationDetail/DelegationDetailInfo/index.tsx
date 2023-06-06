@@ -2,6 +2,7 @@ import { Box, Skeleton } from "@mui/material";
 import React, { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link, useHistory } from "react-router-dom";
+
 import {
   CalendarIcon,
   DelegatorIcon,
@@ -12,17 +13,13 @@ import {
   UserIcon
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  formatPercent,
-  getShortHash,
-  getShortWallet
-} from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatPercent, getShortWallet } from "src/commons/utils/helper";
 import BookmarkButton from "src/components/commons/BookmarkIcon";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownDetail from "src/components/commons/DropdownDetail";
+import ADAicon from "src/components/commons/ADAIcon";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import {
   BackButton,
@@ -46,8 +43,6 @@ import {
   StyledLinearProgress,
   StyledTitle
 } from "./styles";
-import ADAicon from "../../commons/ADAIcon";
-import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface IDelegationDetailInfo {
   data: DelegationOverview | null;

@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { Box, IconButton, styled, useTheme } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { range } from "lodash";
 import moment from "moment";
 import { BsFillCaretDownFill } from "react-icons/bs";
 import { IoIosArrowBack, IoIosArrowForward, IoMdClose } from "react-icons/io";
 
-import { DateRangeIcon } from "../../commons/resources";
+import { DateRangeIcon } from "src/commons/resources";
+import useComponentVisible from "src/commons/hooks/useComponentVisible";
+
 import {
   CloseButtonLeft,
   CloseButtonRight,
@@ -18,8 +20,6 @@ import {
   WrapContainerPickerStart,
   WrapCustomDatePicker
 } from "./styles";
-import useComponentVisible from "src/commons/hooks/useComponentVisible";
-
 import "react-datepicker/dist/react-datepicker.css";
 import "./index.css";
 

@@ -1,8 +1,9 @@
 import { Box, useTheme, Modal } from "@mui/material";
-
 import { JsonViewer } from "@textea/json-viewer";
+
+import { CloseIcon } from "src/commons/resources";
+
 import { ButtonClose, ModalContainer, ViewJson } from "./styles";
-import closeIcon from "../../commons/resources/icons/closeIcon.svg";
 
 interface ParseScriptModalProps {
   open: boolean;
@@ -16,7 +17,7 @@ const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ title, script, ...p
     <Modal {...props}>
       <ModalContainer>
         <ButtonClose onClick={props.onClose}>
-          <img src={closeIcon} alt="icon close" />
+          <img src={CloseIcon} alt="icon close" />
         </ButtonClose>
         <Box
           mb={3}
@@ -32,7 +33,6 @@ const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ title, script, ...p
         <ViewJson>
           <JsonViewer
             value={script || ""}
-            // value={JSON.parse(script || "")}
             displayObjectSize={false}
             displayDataTypes={false}
             enableClipboard={false}

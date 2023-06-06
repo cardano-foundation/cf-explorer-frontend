@@ -1,5 +1,6 @@
 import { Alert, Box, Button, Divider, FormHelperText, Input, styled, IconButton } from "@mui/material";
-import { User2RC } from "../../commons/resources";
+
+import { User2RC } from "src/commons/resources";
 
 export const Container = styled(Box)`
   display: flex;

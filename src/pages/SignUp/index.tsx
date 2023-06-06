@@ -2,10 +2,12 @@ import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment 
 import { useEffect, useReducer, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
+
 import useAuth from "src/commons/hooks/useAuth";
-import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "../../commons/resources";
-import { routers } from "../../commons/routers";
-import { signUp } from "../../commons/utils/userRequest";
+import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "src/commons/resources";
+import { routers } from "src/commons/routers";
+import { signUp } from "src/commons/utils/userRequest";
+
 import {
   CloseButton,
   Container,

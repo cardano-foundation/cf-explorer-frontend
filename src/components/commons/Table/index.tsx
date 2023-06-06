@@ -1,6 +1,18 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Box, PaginationRenderItemParams, IconButton, MenuItem, styled, CircularProgress, alpha } from "@mui/material";
-import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
+import { useUpdateEffect } from "react-use";
+import { useParams } from "react-router-dom";
+
+import { handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
+import {
+  ColumnType,
+  FooterTableProps,
+  TableHeaderProps,
+  TableProps,
+  TableRowProps,
+  TableTopHeaderProps
+} from "src/types/table";
+import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DownIcon,
   EmptyIcon,
@@ -12,7 +24,8 @@ import {
   SortTableDown,
   SortTableUp,
   SortTableUpDown
-} from "../../../commons/resources";
+} from "src/commons/resources";
+
 import {
   Empty,
   EmtyImage,
@@ -35,18 +48,7 @@ import {
   TableCustomTitle,
   StyledPagination
 } from "./styles";
-import {
-  ColumnType,
-  FooterTableProps,
-  TableHeaderProps,
-  TableProps,
-  TableRowProps,
-  TableTopHeaderProps
-} from "../../../types/table";
-import { useUpdateEffect } from "react-use";
-import { useParams } from "react-router-dom";
 import Filter from "../Filter";
-import { useScreen } from "../../../commons/hooks/useScreen";
 
 type TEmptyRecord = {
   className?: string;
@@ -154,7 +156,7 @@ const TableRow = <T extends ColumnType>({
     <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
       {selectable && (
         <TCol>
-          <TableCheckBox checked={isSelected?.(row)} onChange={(e) => toggleSelection?.(row)} />
+          <TableCheckBox checked={isSelected?.(row)} onChange={() => toggleSelection?.(row)} />
         </TCol>
       )}
       {columns.map((column, idx) => {
@@ -216,7 +218,7 @@ const TableBody = <T extends ColumnType>({
           </td>
         </tr>
       )}
-      {data &&
+      {(data) &&
         data.map((row, index) => (
           <TableRow
             row={row}
@@ -248,7 +250,8 @@ const TableSekeleton = () => {
 };
 
 export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, clearSelection }) => {
-  const [page, setPage] = useState(pagination?.page || 1);
+  const defaultPage = pagination?.page && (pagination?.page === 0 ? 1 : pagination?.page + 1);
+  const [page, setPage] = useState(defaultPage || 1);
   const [size, setSize] = useState(pagination?.size || 50);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
 
@@ -344,6 +347,7 @@ const Table: React.FC<TableProps> = ({
     onSelectionChange
   });
   const tableRef = useRef(null);
+  const wrapperRef = useRef<HTMLElement>(null);
   const heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, 800);
   const toggleSelectAll = (isChecked: boolean) => {
     if (data && isChecked) {
@@ -352,6 +356,12 @@ const Table: React.FC<TableProps> = ({
     }
     clearSelection();
   };
+
+  useEffect(() => {
+    if (wrapperRef.current && !loading) {
+      wrapperRef.current.scrollTop = 0;
+    }
+  }, [loading]);
 
   useEffect(() => {
     clearSelection();
@@ -370,9 +380,11 @@ const Table: React.FC<TableProps> = ({
         isSelectAll={isSelectAll}
       />
       <Wrapper
+        ref={wrapperRef}
         maxHeight={maxHeight}
         minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 400 : 150}
         height={heightTable}
+        loading={loading ? 1 : 0}
       >
         <TableFullWidth ref={tableRef}>
           <TableHeader
@@ -403,7 +415,7 @@ const Table: React.FC<TableProps> = ({
         {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord className={emptyClassName} />}
       </Wrapper>
       {showPagination && (
-        <FooterTable total={total} clearSelection={clearSelection} pagination={pagination} loading={loading || false} />
+        <FooterTable total={total} clearSelection={clearSelection} pagination={pagination} loading={!!loading} />
       )}
     </Box>
   );
@@ -532,7 +544,7 @@ const PaginationCustom = ({
                   setInputPage(+e.target.value);
                 }
               }}
-              onBlur={(e) => {
+              onBlur={() => {
                 setInputPage(page);
               }}
               disabled={loading}

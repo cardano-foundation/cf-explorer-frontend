@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import StyledModal from "../../../commons/StyledModal";
 import { TabContext, TabPanel } from "@mui/lab";
-import WalletActivity from "./WalletActivity";
-import { CustomTab, StyledTab, StyledTabs } from "./styles";
 import { Box } from "@mui/material";
 
-import RewardActivity from "./RewardActivity";
-import { BalanceIcon, RewardsIcon } from "../../../../commons/resources";
-import CustomIcon from "../../../commons/CustomIcon";
+import StyledModal from "src/components/commons/StyledModal";
+import { BalanceIcon, RewardsIcon } from "src/commons/resources";
+import CustomIcon from "src/components/commons/CustomIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
+
+import WalletActivity from "./WalletActivity";
+import RewardActivity from "./RewardActivity";
+import { CustomTab, StyledTab, StyledTabs } from "./styles";
 
 interface IProps {
   open: boolean;
@@ -35,7 +36,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
     }
   };
 
-  const { isMobile } = useScreen();
+  const { isMobile, isTablet } = useScreen();
 
   return (
     <StyledModal
@@ -43,7 +44,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
       open={open}
       handleCloseModal={handleCloseModal}
       width={1200}
-      height={isMobile ? "83vh" : "72vh"}
+      height={isMobile ? "73vh" : isTablet ? "67vh" : "72vh"}
     >
       <TabContext value={activityType}>
         <Box overflow={!isGalaxyFoldSmall ? "auto" : "hidden"} maxHeight={isMobile ? "80vh" : "70vh"}>

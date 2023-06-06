@@ -1,4 +1,5 @@
 import { styled } from "@mui/material";
+
 import HoldBox from "../HoldBox";
 
 export const HoldBoxSPO = styled(HoldBox)<{ sidebar: boolean }>(({ theme, sidebar }) => ({

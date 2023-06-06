@@ -2,6 +2,8 @@ import { Grid } from "@mui/material";
 import BigNumber from "bignumber.js";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import moment from "moment";
+
 import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
@@ -10,6 +12,9 @@ import { formatADA, formatADAFull, numberWithCommas } from "src/commons/utils/he
 import { RootState } from "src/stores/types";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import RateWithIcon from "src/components/commons/RateWithIcon";
+import { useScreen } from "src/commons/hooks/useScreen";
+import useFetch from "src/commons/hooks/useFetch";
+
 import {
   AdaPrice,
   Content,
@@ -28,9 +33,6 @@ import {
   XSmall,
   XValue
 } from "./style";
-import moment from "moment";
-import { useScreen } from "src/commons/hooks/useScreen";
-import useFetch from "src/commons/hooks/useFetch";
 
 const SkeletonBox = () => (
   <Item>
@@ -69,9 +71,7 @@ const HomeStatistic = () => {
   return (
     <StatisticContainer container spacing={2} justifyContent="space-between" alignItems="stretch">
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
-        {!usdMarket || !btcMarket?.[0] ? (
-          <SkeletonBox />
-        ) : (
+        {usdMarket && btcMarket?.[0] ? (
           <Item data-testid="ada-price-box">
             <ItemIcon
               style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
@@ -90,12 +90,12 @@ const HomeStatistic = () => {
               </TimeDuration>
             </Content>
           </Item>
+        ) : (
+          <SkeletonBox />
         )}
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
-        {!usdMarket ? (
-          <SkeletonBox />
-        ) : (
+        {usdMarket ? (
           <Item data-testid="market-cap-box">
             <ItemIcon
               style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
@@ -109,12 +109,12 @@ const HomeStatistic = () => {
               <TimeDuration>Last updated {moment(usdMarket.last_updated).fromNow()} </TimeDuration>
             </Content>
           </Item>
+        ) : (
+          <SkeletonBox />
         )}
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
-        {!currentEpoch ? (
-          <SkeletonBox />
-        ) : (
+        {currentEpoch ? (
           <Item data-testid="current-epoch-box">
             <Link to={details.epoch(currentEpoch?.no)}>
               <Content>
@@ -146,12 +146,12 @@ const HomeStatistic = () => {
               </Content>
             </Link>
           </Item>
+        ) : (
+          <SkeletonBox />
         )}
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
-        {!data || !usdMarket ? (
-          <SkeletonBox />
-        ) : (
+        {data && usdMarket ? (
           <Item data-testid="live-stake-box">
             <Content>
               <ItemIcon
@@ -199,6 +199,8 @@ const HomeStatistic = () => {
               </CustomTooltip>
             </Content>
           </Item>
+        ) : (
+          <SkeletonBox />
         )}
       </Grid>
     </StatisticContainer>

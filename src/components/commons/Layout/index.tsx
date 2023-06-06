@@ -1,14 +1,16 @@
 import * as React from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+import { setOnDetailView, setSidebar } from "src/stores/user";
+import { RootState } from "src/stores/types";
+
 import Header from "./Header";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Drawer, Layout, ToggleMenu, Main, BackDrop, MainContainer, ArrowCollapse } from "./styles";
-import { useSelector } from "react-redux";
-import { setOnDetailView, setSidebar } from "../../../stores/user";
-import { RootState } from "../../../stores/types";
 import CustomTooltip from "../CustomTooltip";
-import { useHistory } from "react-router-dom";
 
 interface Props {
   children: React.ReactNode;

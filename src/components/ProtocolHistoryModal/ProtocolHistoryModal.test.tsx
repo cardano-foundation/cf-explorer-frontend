@@ -1,6 +1,8 @@
 import { screen } from "@testing-library/react";
-import ProtocolHistoryModal from ".";
+
 import { render } from "src/test-utils";
+
+import ProtocolHistoryModal from ".";
 
 test("Check Test Protocol HistoryModal call mock api", async () => {
   const handleCloseModal = jest.fn();
