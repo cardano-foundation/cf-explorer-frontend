@@ -15,9 +15,10 @@ interface Props extends Omit<BoxProps, "title"> {
 }
 
 export const CustomModal: React.FC<Props> = forwardRef((props, ref) => {
-  const { open, onClose, closeButton, closeButtonProps, title, titleProps, children, ...contentProps } = props;
+  const { open, onClose, closeButton, closeButtonProps, title, titleProps, modalProps, children, ...contentProps } =
+    props;
   return (
-    <Modal open={open}>
+    <Modal open={open} {...modalProps}>
       <ModalContainer>
         {closeButton || (
           <CloseButton {...closeButtonProps} onClick={onClose} data-testid="close-modal-button">
