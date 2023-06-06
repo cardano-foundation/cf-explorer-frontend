@@ -47,7 +47,7 @@ export interface OverviewCardProps {
 const STATUS = {
   ACTIVE: ["Active", "rgb(0,128,0)"],
   INACTIVE: ["Inactive", "rgb(255,0,0)"],
-  RETIRING: ["Retiring ", "rgb(255,153,0)"]
+  RETIRING: ["Retiring", "rgb(255,153,0)"]
 };
 
 type TGridItem = {
@@ -109,8 +109,8 @@ const TabularOverview: React.FC = () => {
           mainIcon={<StatusIC />}
           value={
             <WrapStatus>
-              <CardValue color={STATUS[data?.status ?? "ACTIVE"][1]}>{STATUS[data?.status ?? "ACTIVE"][0]}:</CardValue>
-              <ClickAbleLink to={details.epoch(data?.epochNo)}>&nbsp; Epoch {data?.epochNo}</ClickAbleLink>
+              <CardValue noWhiteSpace={1} color={STATUS[data?.status ?? "ACTIVE"][1]}>{STATUS[data?.status ?? "ACTIVE"][0] + ": "}</CardValue>
+              <ClickAbleLink to={details.epoch(data?.epochNo)}>Epoch {data?.epochNo}</ClickAbleLink>
             </WrapStatus>
           }
         />
