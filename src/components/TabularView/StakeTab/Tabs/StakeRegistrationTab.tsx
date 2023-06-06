@@ -16,13 +16,12 @@ import { StyledLink, TableSubTitle } from "../styles";
 
 interface IAdaValue extends BoxProps {
   value: number | string;
-  limit?: number;
 }
 
-export const AdaValue = ({ value, gap = "8px", fontSize, color, limit, ...props }: IAdaValue) => {
+export const AdaValue = ({ value, gap = "8px", fontSize, color, ...props }: IAdaValue) => {
   return (
     <Box {...props} color={color} display="flex" alignItems="center" gap={gap} fontSize={fontSize}>
-      {formatADAFull(value, limit)}
+      {formatADAFull(value)}
       <ADAicon style={{ color }} fontSize={fontSize} />
     </Box>
   );
