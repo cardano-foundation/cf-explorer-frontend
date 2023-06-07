@@ -144,7 +144,7 @@ const ProtocolParameter: React.FC = () => {
       )}
       {showHistory && <ProtocolParameterHistory />}
       {!showHistory && (
-        <Card marginTitle="0px" title={"Protocol parameters"} textAlign={"left"}>
+        <Card marginTitle="0px" title={"Protocol parameters"}>
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>

@@ -75,7 +75,7 @@ const TopAddresses = () => {
 
   return (
     <StyledContainer>
-      <Card title={"Top addresses"} underline={false}>
+      <Card title={"Top addresses"}>
         <Actions>
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />
