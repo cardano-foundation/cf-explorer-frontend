@@ -104,6 +104,7 @@ export const BoxStyled = styled(CardValue)(({ theme }) => ({
   lineHeight: "28px",
   textOverflow: "ellipsis",
   overflow: "hidden",
+  textAlign: "left",
   [theme.breakpoints.down("sm")]: {
     fontSize: 20,
     lineHeight: "23px",
