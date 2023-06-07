@@ -35,9 +35,9 @@ export const CardTitle = styled(Typography)(({ theme }) => ({
   marginBottom: 4
 }));
 
-export const CardValue = styled(Typography)<{ color?: string, noWhiteSpace?: number }>(({ theme, ...rest }) => ({
+export const CardValue = styled(Typography)<{ color?: string }>(({ theme, ...rest }) => ({
   overflowWrap: "anywhere",
-  whiteSpace: rest.noWhiteSpace ? "pre" : "break-spaces",
+  whiteSpace: "break-spaces",
   fontWeight: theme.typography.fontWeightBold,
   fontSize: 16,
   color: rest.color ? rest.color : theme.palette.grey[700]
