@@ -6,7 +6,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { ADAsigntIC, EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, formatHash } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import {
   ADAValueFieldContainer,
   ADAValueLabel,
@@ -37,7 +37,7 @@ const PoolRegistrationTab = () => {
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>
-            <StyledLink to={details.transaction(data.txHash)}>{formatHash(data.txHash)}</StyledLink>
+            <StyledLink to={details.transaction(data.txHash)}>{getShortHash(data.txHash)}</StyledLink>
           </CustomTooltip>
         );
       }
