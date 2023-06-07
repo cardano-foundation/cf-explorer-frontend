@@ -218,7 +218,7 @@ const TableBody = <T extends ColumnType>({
           </td>
         </tr>
       )}
-      {data &&
+      {(data) &&
         data.map((row, index) => (
           <TableRow
             row={row}
@@ -250,7 +250,8 @@ const TableSekeleton = () => {
 };
 
 export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, clearSelection }) => {
-  const [page, setPage] = useState(pagination?.page || 1);
+  const defaultPage = pagination?.page && (pagination?.page === 0 ? 1 : pagination?.page + 1);
+  const [page, setPage] = useState(defaultPage || 1);
   const [size, setSize] = useState(pagination?.size || 50);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
 
@@ -346,6 +347,7 @@ const Table: React.FC<TableProps> = ({
     onSelectionChange
   });
   const tableRef = useRef(null);
+  const wrapperRef = useRef<HTMLElement>(null);
   const heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, 800);
   const toggleSelectAll = (isChecked: boolean) => {
     if (data && isChecked) {
@@ -354,6 +356,12 @@ const Table: React.FC<TableProps> = ({
     }
     clearSelection();
   };
+
+  useEffect(() => {
+    if (wrapperRef.current && !loading) {
+      wrapperRef.current.scrollTop = 0;
+    }
+  }, [loading]);
 
   useEffect(() => {
     clearSelection();
@@ -372,9 +380,11 @@ const Table: React.FC<TableProps> = ({
         isSelectAll={isSelectAll}
       />
       <Wrapper
+        ref={wrapperRef}
         maxHeight={maxHeight}
         minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 400 : 150}
         height={heightTable}
+        loading={loading ? 1 : 0}
       >
         <TableFullWidth ref={tableRef}>
           <TableHeader
