@@ -209,7 +209,7 @@ const ProtocolParameter: React.FC = () => {
 
 export default ProtocolParameter;
 
-const ProtocolParameterHistory = () => {
+export const ProtocolParameterHistory = () => {
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const { data: dataHistory, loading } = useFetch<ProtocolHistory>(
@@ -425,7 +425,7 @@ const ProtocolParameterHistory = () => {
   );
 };
 
-const TableStyled = styled(Table)(() => ({
+export const TableStyled = styled(Table)(() => ({
   td: {
     padding: 0
   }
@@ -450,7 +450,7 @@ interface FilterComponentProps {
   >;
 }
 
-const FilterComponent: React.FC<FilterComponentProps> = ({
+export const FilterComponent: React.FC<FilterComponentProps> = ({
   setFilterParams,
   setResetFilter,
   setSortTimeFilter,
@@ -582,6 +582,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 
         <Box>
           <ApplyFilterButton
+            data-testid="apply-filters"
             onClick={handleApplyFilter}
             disabled={filterOption.length === 0 && !sort && _.isEmpty(dateRange)}
           >
