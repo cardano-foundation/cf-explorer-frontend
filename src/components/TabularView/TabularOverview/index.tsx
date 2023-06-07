@@ -110,7 +110,13 @@ const TabularOverview: React.FC = () => {
             data?.pool?.poolId ? (
               <StyledBoxDelegating to={details.delegation(data?.pool?.poolId)}>
                 <CardValueDelegating>
-                  <BoxStyled>{data?.pool?.poolName || getShortHash(data?.pool?.poolId || "")}</BoxStyled>
+                  <BoxStyled>
+                    {data?.pool?.tickerName || data?.pool?.poolName
+                      ? `${data.pool.tickerName && data.pool.tickerName + "-"}  ${
+                          data.pool.poolName && data.pool.poolName
+                        }`
+                      : getShortHash(data?.pool?.poolId || "")}
+                  </BoxStyled>
                 </CardValueDelegating>
               </StyledBoxDelegating>
             ) : (
