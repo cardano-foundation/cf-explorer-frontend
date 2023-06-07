@@ -5,13 +5,12 @@ import { useParams } from "react-router-dom";
 import Table, { Column } from "src/components/commons/Table";
 import { Amount, Status } from "src/components/StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
 import CustomIcon from "src/components/commons/CustomIcon";
-import { ADAsigntIC, AIconGreen } from "src/commons/resources";
+import {  AIconGreen } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { StyledLink } from "src/components/share/styled";
 import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
-import { ADAValueLabel } from "src/components/StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
 
 const trxType = {
   SENT: "ADA sent from wallet",
@@ -57,17 +56,6 @@ const WalletActitityTab = () => {
       render: (r) => formatDateTimeLocal(r.time || ""),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      }
-    },
-    {
-      title: "Fees Paid",
-      key: "fees",
-      render(r) {
-        return (
-          <ADAValueLabel>
-            {formatADAFull(r.fee)} <CustomIcon icon={ADAsigntIC} width={12} />
-          </ADAValueLabel>
-        );
       }
     },
     {
