@@ -111,7 +111,8 @@ export const TotalNumber = styled("span")`
   font-weight: 500;
 `;
 
-export const WrappModalScrollBar = styled(Box)(({ theme }) => `
+export const WrappModalScrollBar = styled(Box)(
+  ({ theme }) => `
   overflow-y: auto;
   max-height: 70vh;
   padding-right: 5px;

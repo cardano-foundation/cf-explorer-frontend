@@ -8,8 +8,8 @@ import { details } from "src/commons/routers";
 import { ScriptIcon } from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
 
-import TokenTransaction from "./TokenTransaction";
 import ScriptTab from "./ScriptTab";
+import TokenTransaction from "./TokenTransaction";
 import { TabListStyled, TabTitle } from "./styles";
 
 const ContractDetailContent: React.FC = () => {

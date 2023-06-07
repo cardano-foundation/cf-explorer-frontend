@@ -15,7 +15,6 @@ const Header = styled(Box)`
 `;
 
 const Title = styled("h2")<{ underline: number; marginTitle?: string }>`
-  width: 100%;
   text-align: left;
   padding-bottom: 8px;
   position: relative;

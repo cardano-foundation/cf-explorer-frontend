@@ -6,7 +6,7 @@ const drawerWidth = 260;
 const drawerWidthMobile = 240;
 const drawerCollaspWidth = 85;
 
-export const Layout = styled(Box) <{ sidebar: number }>`
+export const Layout = styled(Box)<{ sidebar: number }>`
   display: flex;
   width: 100vw;
   height: 100vh;
