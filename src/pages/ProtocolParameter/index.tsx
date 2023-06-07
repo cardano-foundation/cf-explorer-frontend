@@ -209,7 +209,7 @@ const ProtocolParameter: React.FC = () => {
 
 export default ProtocolParameter;
 
-const ProtocolParameterHistory = () => {
+export const ProtocolParameterHistory = () => {
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const {
@@ -300,7 +300,7 @@ const ProtocolParameterHistory = () => {
               : "#"
           }
         >
-          {r[t]?.status === "ADDED" ? (
+          {r[t]?.status === "ADDED" || (r[t]?.status === "UPDATED" && !r[t]?.transactionHash) ? (
             <CustomTooltip title="No transaction">
               <Box>{r[t] ? (r[t]?.value ? r[t]?.value : r[t]?.value === 0 ? 0 : "") : ""}</Box>
             </CustomTooltip>
@@ -440,7 +440,7 @@ const ProtocolParameterHistory = () => {
   );
 };
 
-const TableStyled = styled(Table)(() => ({
+export const TableStyled = styled(Table)(() => ({
   td: {
     padding: 0
   }
@@ -465,7 +465,7 @@ interface FilterComponentProps {
   >;
 }
 
-const FilterComponent: React.FC<FilterComponentProps> = ({
+export const FilterComponent: React.FC<FilterComponentProps> = ({
   setFilterParams,
   setResetFilter,
   setSortTimeFilter,
@@ -597,6 +597,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 
         <Box>
           <ApplyFilterButton
+            data-testid="apply-filters"
             onClick={handleApplyFilter}
             disabled={filterOption.length === 0 && !sort && _.isEmpty(dateRange)}
           >
