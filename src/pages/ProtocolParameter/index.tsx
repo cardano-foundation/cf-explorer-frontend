@@ -303,7 +303,7 @@ export const ProtocolParameterHistory = () => {
               : "#"
           }
         >
-          {r[t]?.status === "ADDED" ? (
+          {r[t]?.status === "ADDED" || (r[t]?.status === "UPDATED" && !r[t]?.transactionHash) ? (
             <CustomTooltip title="No transaction">
               <Box>{r[t] ? (r[t]?.value ? r[t]?.value : r[t]?.value === 0 ? 0 : "") : ""}</Box>
             </CustomTooltip>
