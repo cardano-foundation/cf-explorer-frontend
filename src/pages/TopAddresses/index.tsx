@@ -67,7 +67,7 @@ const TopAddresses = () => {
       key: "transaction_count",
       render: (r) => (
         <Box display="flex" alignItems="center">
-          {r.txCount || 0}
+          {numberWithCommas(r.txCount) || 0}
         </Box>
       )
     }
