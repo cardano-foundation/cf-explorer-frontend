@@ -426,7 +426,7 @@ export const ProtocolParameterHistory = () => {
                 alignItems={"center"}
                 mt={3}
                 mb={2}
-                color={`#108aef !important`}
+                color={"#108aef !important"}
               >
                 <Box mr={1}>Reset</Box>
                 <ResetIcon />
