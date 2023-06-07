@@ -54,7 +54,7 @@ export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.grey[400],
   display: "block",
   [theme.breakpoints.down("sm")]: {
-    display: "none",
+    display: "none"
   }
 }));
 

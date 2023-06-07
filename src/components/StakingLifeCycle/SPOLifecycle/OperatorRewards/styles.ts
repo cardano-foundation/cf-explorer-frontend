@@ -48,3 +48,4 @@ export const ADATitle = styled(Box)(() => ({
 export const ADAAmount = styled(Box)`
   color: ${(props) => props.theme.palette.green[600]} !important;
 `;
+

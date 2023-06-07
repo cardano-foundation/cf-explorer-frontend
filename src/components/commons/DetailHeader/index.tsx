@@ -193,13 +193,16 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               size={100}
               pathWidth={8}
               percent={
-                currentEpoch && (epoch?.no || 0) === currentEpoch?.no
-                  ? ((moment(formatDateTimeLocal(epoch?.endTime || "")).diff(moment()) > 0
-                      ? epoch?.slot
-                      : MAX_SLOT_EPOCH) /
-                      MAX_SLOT_EPOCH) *
-                    100
-                  : 100
+                type === "EPOCH"
+                  ? currentEpoch && (epoch?.no || 0) === currentEpoch?.no
+                    ? ((moment(formatDateTimeLocal(epoch?.endTime || "")).diff(moment()) > 0 &&
+                      epoch?.slot < MAX_SLOT_EPOCH
+                        ? epoch?.slot
+                        : MAX_SLOT_EPOCH) /
+                        MAX_SLOT_EPOCH) *
+                      100
+                    : 100
+                  : (epoch?.slot / MAX_SLOT_EPOCH) * 100
               }
             >
               <EpochNumber is_epoch={+(type === "EPOCH")} to={details.epoch(epoch.no || 0)}>

@@ -177,7 +177,7 @@ const ProtocolParameter: React.FC = () => {
               <Box pt={"30px"}>
                 <Box>
                   <Box textAlign={"left"} fontWeight={"bold"} fontSize={"1.25rem"}>
-                    Non-updatable Parameters
+                    Global Constants
                   </Box>
                   {loadingFixed && (
                     <Box
@@ -212,7 +212,11 @@ export default ProtocolParameter;
 export const ProtocolParameterHistory = () => {
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
-  const { data: dataHistory, loading } = useFetch<ProtocolHistory>(
+  const {
+    data: dataHistory,
+    loading,
+    initialized
+  } = useFetch<ProtocolHistory>(
     `${API.PROTOCOL_PARAMETER.HISTORY}/${
       filterParams.length === 29 || filterParams.length === 0
         ? "ALL"
@@ -220,11 +224,17 @@ export const ProtocolParameterHistory = () => {
     } ${
       _.isEmpty(dateRangeFilter)
         ? ""
-        : `?endTime=${moment(dateRangeFilter.toDate).format("X")}&startTime=${moment(dateRangeFilter.fromDate).format(
-            "X"
-          )}`
-    }`
+        : `?endTime=${moment(dateRangeFilter.toDate).endOf("D").utc().format("X")}&startTime=${moment(
+            dateRangeFilter.fromDate
+          )
+            .startOf("D")
+            .utc()
+            .format("X")}`
+    }
+    `
   );
+
+  console.log("initialized", initialized);
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
     [key: string]: any;
   }>([]);
@@ -290,7 +300,7 @@ export const ProtocolParameterHistory = () => {
               : "#"
           }
         >
-          {r[t]?.status === "ADDED" ? (
+          {r[t]?.status === "ADDED" || (r[t]?.status === "UPDATED" && !r[t]?.transactionHash) ? (
             <CustomTooltip title="No transaction">
               <Box>{r[t] ? (r[t]?.value ? r[t]?.value : r[t]?.value === 0 ? 0 : "") : ""}</Box>
             </CustomTooltip>
@@ -396,28 +406,33 @@ export const ProtocolParameterHistory = () => {
           </Box>
         }
       >
-        {columnsTable?.length === 1 && !loading && (
-          <Box textAlign={"center"}>
-            <Box component={"img"} src={EmptyIcon} mt={3} />
-            <Box
-              component={Button}
-              width={"200px"}
-              textTransform={"capitalize"}
-              onClick={() => {
-                setResetFilter(true);
-                setShowFiter(false);
-              }}
-              mx={"auto"}
-              display={"flex"}
-              alignItems={"center"}
-              mt={3}
-              mb={2}
-              color={`#108AEF !important`}
-            >
-              <Box mr={1}>Reset</Box>
-              <ResetIcon />
+        {initialized ? (
+          columnsTable?.length === 1 &&
+          !loading && (
+            <Box textAlign={"center"}>
+              <Box component={"img"} src={EmptyIcon} mt={3} />
+              <Box
+                component={Button}
+                width={"200px"}
+                textTransform={"capitalize"}
+                onClick={() => {
+                  setResetFilter(true);
+                  setShowFiter(false);
+                }}
+                mx={"auto"}
+                display={"flex"}
+                alignItems={"center"}
+                mt={3}
+                mb={2}
+                color={`#108AEF !important`}
+              >
+                <Box mr={1}>Reset</Box>
+                <ResetIcon />
+              </Box>
             </Box>
-          </Box>
+          )
+        ) : (
+          <></>
         )}
         {columnsTable?.length > 1 && <TableStyled columns={columnsTable} data={dataTable} loading={loading} />}
       </Card>
