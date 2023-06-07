@@ -116,7 +116,6 @@ export const Headline = styled(Typography)<{ collapsed?: number }>`
   ${({ theme }) => theme.breakpoints.down("lg")} {
     display: ${({ collapsed }) => (collapsed ? "block" : "none")};
   }
-  width: max-content;
 `;
 
 export const WrapperDelegationTab = styled(Box)`
