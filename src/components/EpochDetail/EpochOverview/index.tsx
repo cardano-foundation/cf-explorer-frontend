@@ -79,22 +79,24 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
     }
   ];
   return (
-    <DetailHeader
-      loading={loading}
-      listItem={listOverview}
-      type="EPOCH"
-      bookmarkData={`${data?.no || ""}`}
-      title={"Epoch detail"}
-      lastUpdated={lastUpdated}
-      epoch={
-        data && {
-          no: data.no,
-          slot: slot,
-          status: data.status,
-          endTime: data.endTime
+    <Box mb={3}>
+      <DetailHeader
+        loading={loading}
+        listItem={listOverview}
+        type="EPOCH"
+        bookmarkData={`${data?.no || ""}`}
+        title={"Epoch detail"}
+        lastUpdated={lastUpdated}
+        epoch={
+          data && {
+            no: data.no,
+            slot: slot,
+            status: data.status,
+            endTime: data.endTime
+          }
         }
-      }
-    />
+      />
+    </Box>
   );
 };
 

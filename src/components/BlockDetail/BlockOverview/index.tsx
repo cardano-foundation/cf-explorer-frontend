@@ -121,21 +121,23 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
     }
   ];
   return (
-    <DetailHeader
-      loading={loading}
-      listItem={listOverview}
-      type="BLOCK"
-      hash={data?.hash}
-      bookmarkData={`${data?.blockNo || ""}`}
-      title={"Block detail"}
-      lastUpdated={lastUpdated}
-      epoch={
-        data && {
-          no: data.epochNo,
-          slot: data.epochSlotNo
+    <Box mb={3}>
+      <DetailHeader
+        loading={loading}
+        listItem={listOverview}
+        type="BLOCK"
+        hash={data?.hash}
+        bookmarkData={`${data?.blockNo || ""}`}
+        title={"Block detail"}
+        lastUpdated={lastUpdated}
+        epoch={
+          data && {
+            no: data.epochNo,
+            slot: data.epochSlotNo
+          }
         }
-      }
-    />
+      />
+    </Box>
   );
 };
 
