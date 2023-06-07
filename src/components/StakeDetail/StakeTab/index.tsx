@@ -76,6 +76,7 @@ const StakeTab = () => {
             onChange={handleChange}
             TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
             variant="scrollable"
+            visibleScrollbar
             scrollButtons={false}
           >
             {tabs.map(({ icon: Icon, key, label }) => (
